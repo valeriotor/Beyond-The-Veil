@@ -1,5 +1,5 @@
 Welcome to
-Beyond-the-Veil!
+Beyond the Veil!
 
 A Minecraft Mod inspired by the writings of H.P. Lovecraft, as well as other works based on the author.
 
