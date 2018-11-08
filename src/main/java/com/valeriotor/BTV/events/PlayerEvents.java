@@ -30,8 +30,7 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void wakeUpEvent(PlayerWakeUpEvent event) {
-		
-		event.getEntityPlayer().addItemStackToInventory(new ItemStack(Items.APPLE,1));
+
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(event.getEntityPlayer());
 		if(event.getEntityPlayer()!=null && !k.isResearchKnown("FIRSTDREAMS") && k.isResearchKnown("FIRSTSTEPS") && event.getEntityPlayer().world.getWorldTime()>23900) {
 			k.addResearch("!didDream");

@@ -24,3 +24,11 @@ research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're mere
 
 
 dweller.fisherman.greeting=Leave us alone, foreigner
+
+
+
+dreams.groundscan.iron= blocks of iron ore were found in the ground below you
+dreams.groundscan.gold= blocks of gold ore were found in the ground below you
+dreams.groundscan.diamond= blocks of diamond ore were found in the ground below you
+dreams.groundscan.emerald= blocks of emerald ore were found in the ground below you
+dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: 

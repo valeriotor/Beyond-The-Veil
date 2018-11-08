@@ -8,12 +8,16 @@ import com.valeriotor.BTV.research.BTVTab;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
@@ -39,6 +43,10 @@ public class DreamHandler {
 			dreamWeight(7, 2, 5, 9, 9, 0, k, p, SpreaderLocation);
 			}else if(aspect.equals("Aqua")) {
 			dreamWeight(4, 13, 8, 2, 1, 4, k, p, SpreaderLocation);
+			}else if(aspect.equals("Metallum")) {
+			scanGround(p, true, p.world, SpreaderLocation);
+			}else if(aspect.equals("Vitreus")) {
+			scanGround(p, false, p.world, SpreaderLocation);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -61,7 +69,7 @@ public class DreamHandler {
 		return null;
 	}
 	
-	public static void dreamWeight(int bas, int alc, int inf, int art, int gol, int aur, IPlayerKnowledge k, EntityPlayer p, BlockPos s) {
+	private static void dreamWeight(int bas, int alc, int inf, int art, int gol, int aur, IPlayerKnowledge k, EntityPlayer p, BlockPos s) {
 		int r = new Random().nextInt(100);
 		boolean didUse = true;
 		if(r<bas) {
@@ -88,6 +96,81 @@ public class DreamHandler {
 			p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
 			
 		}
+	}
+	
+	
+	/** Checks a 33*33 area centered on the player, down to bedrock. Counts the number of iron and gold ore blocks
+	 * if isMetal is true, or the number of diamond and emerald ore blocks if false. It informs the player directly
+	 * in chat of those numbers, as well as the y-level where most were found.
+	 * 
+	 * @param p The player who just woke up
+	 * @param isMetal True for Metallum, false for Vitreus
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 * 
+	 */
+	private static void scanGround(EntityPlayer p, boolean isMetal, World w, BlockPos s) {
+		int[] tracker1 = new int[p.getPosition().getY()];
+		int[] tracker2 = new int[p.getPosition().getY()];
+		int sum1 = 0;
+		int sum2 = 0;
+		for(int y = p.getPosition().getY()-1; y>=0; y--) {
+			for(int x = p.getPosition().getX()-16; x<p.getPosition().getX()+16; x++) {
+				for(int z = p.getPosition().getX()-16; z<p.getPosition().getX()+16; z++) {
+					IBlockState state = w.getBlockState(new BlockPos(x, y, z));
+					if(isMetal) {
+						// TODO: Get OreDictionary compatibility
+						if(state == Blocks.IRON_ORE.getDefaultState()) {
+							tracker1[y]++;
+							sum1++;
+						}else if(state == Blocks.GOLD_ORE.getDefaultState()) {
+							tracker2[y]++;
+							sum2++;
+						}
+					}else {
+						// TODO: Get OreDictionary compatibility
+						if(state == Blocks.DIAMOND_ORE.getDefaultState()) {
+							tracker1[y]++;
+							sum1++;
+						}else if(state == Blocks.EMERALD_ORE.getDefaultState()) {
+							tracker2[y]++;
+							sum2++;
+						}
+					}
+				}
+			}
+		}
+		int max1 = 0;
+		int highest1 = 0;
+		for(int i = 0; i < tracker1.length; i++) {
+			if(max1 < tracker1[i]) {
+				max1 = tracker1[i];
+				highest1 = i;
+			}
+		}
+		
+		int max2 = 0;
+		int highest2 = 0;
+		for(int i = 0; i < tracker2.length; i++) {
+			if(max2 < tracker2[i]) {
+				max2 = tracker2[i];
+				highest2 = i;
+			}
+		}
+		
+		if(isMetal) {
+			p.sendMessage(new TextComponentString(Integer.toString(sum1) + I18n.format("dreams.groundscan.iron") + (highest1 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest1)) : "")));
+			p.sendMessage(new TextComponentString(Integer.toString(sum2) + I18n.format("dreams.groundscan.gold") + (highest2 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest2)) : "")));
+		}else {
+			p.sendMessage(new TextComponentString(Integer.toString(sum1) + I18n.format("dreams.groundscan.diamond") + (highest1 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest1)) : "")));
+			p.sendMessage(new TextComponentString(Integer.toString(sum2) + I18n.format("dreams.groundscan.emerald") + (highest2 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest2)) : "")));
+		}
+		
+		IBlockState b = p.world.getBlockState(s);
+		p.world.getTileEntity(s).getTileData().removeTag("containing");
+		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
 	}
 }
 
