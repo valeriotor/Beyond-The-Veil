@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=east": { "model": "beyondtheveil:idol", "y" : 270 },
+        "facing=south": { "model": "beyondtheveil:idol" },
+        "facing=west": { "model": "beyondtheveil:idol", "y" : 90 },
+        "facing=north": { "model": "beyondtheveil:idol", "y" : 180 }
+    }
+}

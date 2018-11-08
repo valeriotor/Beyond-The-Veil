@@ -1,0 +1,15 @@
+{
+	"dweller_hurt": {
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:dweller_hurt"
+		]
+	},
+	"dweller_idle": {
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:dweller_idle_0",
+			"beyondtheveil:dweller_idle_1"
+		]
+	}
+}

@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "beyondtheveil:blocks/worn_bricks",
+        "top": "beyondtheveil:blocks/worn_bricks",
+        "side": "beyondtheveil:blocks/worn_bricks"
+    }
+}

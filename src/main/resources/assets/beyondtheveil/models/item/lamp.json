@@ -1,0 +1,24 @@
+{
+   "parent": "beyondtheveil:block/lamp",
+   "display": {
+	   "thirdperson_righthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "firstperson_righthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "thirdperson_lefthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "firstperson_lefthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "gui": {
+		   "rotation": [ 10, 45, 0 ],
+		   "scale": [ 0.95, 0.95, 0.95 ]
+	   },
+	   "ground": {
+		   "scale": [ 0.55, 0.55, 0.55]
+	   }
+   }
+}

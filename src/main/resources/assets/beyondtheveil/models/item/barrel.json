@@ -1,0 +1,28 @@
+{
+   "parent": "beyondtheveil:block/barrel/fish_barrel",
+   "display": {
+	   "thirdperson_righthand": {
+		   "translation": [0, 1, -2.1],
+		   "rotation": [ 30, 0, 0 ],
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "firstperson_righthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "thirdperson_lefthand": {
+		   "translation": [0, 1, -2.1],
+		   "rotation": [ 30, 0, 0 ],
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "firstperson_lefthand": {
+		   "scale": [ 0.55, 0.55, 0.55 ]
+	   },
+	   "gui": {
+		   "rotation": [ 15, 40, 0 ],
+		   "scale": [ 0.75, 0.75, 0.75 ]
+	   },
+	   "ground": {
+		   "scale": [ 0.55, 0.55, 0.55]
+	   }
+   }
+}

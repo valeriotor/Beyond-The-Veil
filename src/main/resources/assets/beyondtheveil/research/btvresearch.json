@@ -1,0 +1,19 @@
+{
+	"entries" :[
+        {
+        "key": "FIRSTDREAMS",    
+        "name": "research.FIRSTDREAMS.title",
+        "icons": [ "beyondtheveil:textures/research/bed.png" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
+		"parents": [ "!didDream" ],	
+        "stages": [
+                {
+                    "text": "research.FIRSTDREAMS.stage.1",  
+                    "recipes": ["thaumcraft:nitor","thaumcraft:nitorgroup","thaumcraft:viscrystalgroup",
+                                "thaumcraft:phial","thaumcraft:Filter","thaumcraft:MorphicResonator"]
+                }
+            ]
+        }
+	]
+}	
+	

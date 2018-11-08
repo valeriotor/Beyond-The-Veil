@@ -1,0 +1,121 @@
+package com.valeriotor.BTV.blocks;
+
+
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Predicate;
+import com.valeriotor.BTV.lib.References;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+public class BlockIdol extends Block{
+
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
+    {
+        public boolean apply(@Nullable EnumFacing p_apply_1_)
+        {
+            return p_apply_1_ != EnumFacing.DOWN && p_apply_1_ != EnumFacing.UP;
+        }
+    });
+	
+	public BlockIdol() {
+		super(Material.ROCK);
+        this.setBlockUnbreakable();
+        this.setResistance(6000001.0F);
+		this.setRegistryName(References.MODID + ":idol");
+		this.setUnlocalizedName("idol");
+		this.setCreativeTab(CreativeTabs.DECORATIONS);
+		
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+		
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+    }
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		IBlockState state = this.getDefaultState();
+		switch(meta) {
+			case 0:
+				state = state.withProperty(FACING, EnumFacing.SOUTH);
+				break;
+			case 1:
+				state = state.withProperty(FACING, EnumFacing.WEST);
+				break;
+			case 2:
+				state = state.withProperty(FACING, EnumFacing.NORTH);
+				break;
+			case 3:
+				state = state.withProperty(FACING, EnumFacing.EAST);
+				break;	
+			
+		}
+		
+		return state;
+	}
+	
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		int meta = state.getValue(FACING).getHorizontalIndex();
+		
+		return meta;
+	}
+	
+	public IBlockState withRotation(IBlockState state, Rotation rot)
+    {
+        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+    }
+	
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+    {
+        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+    }
+	
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return BlockFaceShape.UNDEFINED;
+    }
+	
+	protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {FACING});
+    }
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.8125D,0.875D,0.8125D);
+	}
+	
+	
+}
