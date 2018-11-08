@@ -1,29 +1,25 @@
 package com.valeriotor.BTV.dreams;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.FumeSpreader;
-import com.valeriotor.BTV.research.BTVTab;
+import com.valeriotor.BTV.world.BiomeRegistry;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeProvider;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-import thaumcraft.api.internal.IInternalMethodHandler;
 import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchCategory;
 
 public class DreamHandler {
 	
@@ -47,6 +43,8 @@ public class DreamHandler {
 			scanGround(p, true, p.world, SpreaderLocation);
 			}else if(aspect.equals("Vitreus")) {
 			scanGround(p, false, p.world, SpreaderLocation);
+			}else if(aspect.equals("Tenebrae")) {
+			searchInnsmouth(p, p.world, p.world.rand);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -171,6 +169,18 @@ public class DreamHandler {
 		IBlockState b = p.world.getBlockState(s);
 		p.world.getTileEntity(s).getTileData().removeTag("containing");
 		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
+	}
+	
+	private static void searchInnsmouth(EntityPlayer p, World w, Random r) {
+		final BiomeProvider provider = w.getBiomeProvider();
+		List<Biome> biomes = new ArrayList<Biome>();
+		biomes.add(BiomeRegistry.innsmouth);
+		BlockPos pos = provider.findBiomePosition(p.getPosition().getX(), p.getPosition().getZ(), 1200, biomes, r);
+		if(pos != null) {
+			p.sendMessage(new TextComponentString(I18n.format("dreams.biomesearch.innsmouth") + "x = " + pos.getX() + ", z =" + pos.getZ()));
+		}else {
+			p.sendMessage(new TextComponentString("No Voided biomes found withing 4800 block radius"));
+		}
 	}
 }
 

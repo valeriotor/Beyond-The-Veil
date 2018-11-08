@@ -53,7 +53,7 @@ public class WorldGenBTV implements IWorldGenerator{
 		BlockPos pos = new BlockPos(x,0,z);
 		if(HamletList.get(w).isTooClose(pos)) return;
 		if(w.getBiome(pos) != BiomeRegistry.innsmouth && w.getBiome(pos) != Biomes.PLAINS) return;
-		if(r.nextInt(12) < 11) return;
+		if(r.nextInt(12) < 11 && w.getBiome(pos) != BiomeRegistry.innsmouth) return;
 		if(!areChunksGood(w, pos)) {
 			pos = areaLoaded(w,pos);
 		}
@@ -73,8 +73,8 @@ public class WorldGenBTV implements IWorldGenerator{
 		BlockPos pos5 = new BlockPos(pos.getX()-3*16, pos.getY(), pos.getZ()-3*16);
 		if(!w.isAreaLoaded(pos4, pos5)) return false;
 		
-		for(int chunkX = -2; chunkX<3; chunkX++) {
-			for(int chunkZ = -2; chunkZ < 3; chunkZ++) {
+		for(int chunkX = -3; chunkX < 4; chunkX++) {
+			for(int chunkZ = -3; chunkZ < 4; chunkZ++) {
 				BlockPos pos1 = new BlockPos(pos.getX()+chunkX*16, 0, pos.getZ()+chunkZ*16);
 				if (w.getBiome(pos1) != BiomeRegistry.innsmouth && w.getBiome(pos1) != Biomes.PLAINS) return false;
 				

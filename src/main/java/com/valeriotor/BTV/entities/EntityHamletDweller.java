@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityVillager;
@@ -74,6 +75,7 @@ public class EntityHamletDweller extends EntityCreature{
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(2, new EntityAIWander(this, 0.6D));
+        this.tasks.addTask(2, new EntityAISwimming(this));
     }
 	
 	public EntityHamletDweller.ProfessionsEnum getProfession(){
@@ -84,6 +86,11 @@ public class EntityHamletDweller extends EntityCreature{
 	@Override
 	protected boolean canDespawn() {
 		return false;
+	}
+	
+	@Override
+	public boolean canBreatheUnderwater() {
+		return true;
 	}
 	
 	@Override
