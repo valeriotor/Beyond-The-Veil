@@ -11,10 +11,10 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-public class dampWood extends Block //implements IHasModel
+public class DampWood extends Block //implements IHasModel
 {
 
-	public dampWood() {
+	public DampWood() {
 		super(Material.WOOD);
 		this.setResistance(2000.0F);
 		this.setHardness(4.0F);

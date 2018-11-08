@@ -33,14 +33,14 @@ import com.valeriotor.BTV.world.StructureHamletPieces;
 import com.valeriotor.BTV.world.WorldGenBTV;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
 
-@Mod(modid = References.MODID, name = References.NAME, version = References.VERSION)
+@Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES)
 public class BeyondTheVeil
 {
-	@SidedProxy(clientSide = "com.valeriotor.BTV.Proxy.ClientProxy", serverSide = "com.valeriotor.BTV.Proxy.ServerProxy")
+	@SidedProxy(clientSide = "com.valeriotor.BTV.proxy.ClientProxy", serverSide = "com.valeriotor.BTV.proxy.ServerProxy")
     public static CommonProxy proxy;
 	
-	 @Mod.Instance
-	 public static BeyondTheVeil instance;
+	@Mod.Instance
+	public static BeyondTheVeil instance;
     
 
     private static Logger logger;

@@ -6,7 +6,6 @@ import com.valeriotor.BTV.blocks.DampLog;
 import com.valeriotor.BTV.blocks.DampStone;
 import com.valeriotor.BTV.blocks.DarkSand;
 import com.valeriotor.BTV.blocks.FumeSpreader;
-import com.valeriotor.BTV.blocks.dampWood;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.RegisterEntities;
 import com.valeriotor.BTV.entities.render.RegisterRenders;

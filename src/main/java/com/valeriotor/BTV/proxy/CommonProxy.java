@@ -1,7 +1,6 @@
 package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.dampWood;
 import com.valeriotor.BTV.capabilities.CapabilityHandler;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.entities.RegisterEntities;

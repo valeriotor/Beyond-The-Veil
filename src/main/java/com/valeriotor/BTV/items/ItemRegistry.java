@@ -2,7 +2,6 @@ package com.valeriotor.BTV.items;
 
 import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.dampWood;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

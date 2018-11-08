@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 public class BlockRegistry {
 	
 	
-	public static final dampWood DampWood = new dampWood();	
+	public static final DampWood DampWood = new DampWood();	
 	public static final FumeSpreader FumeSpreader = new FumeSpreader();
 	public static final DarkSand DarkSand = new DarkSand();
 	public static final DampStone DampStone = new DampStone();
