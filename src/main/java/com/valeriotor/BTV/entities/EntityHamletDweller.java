@@ -50,7 +50,7 @@ public class EntityHamletDweller extends EntityCreature{
 		this.setProfession(prof);
 		if(villageCenter != null) this.setVillageCenter(villageCenter);
 		if(home != null) this.setHome(home);
-		this.goWorshipTime = this.world.rand.nextInt(18000)+3000;
+		this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
 		this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
 		if(home!= null) this.setPosition(home.getX(), home.getY(), home.getZ());
 	}
@@ -100,7 +100,7 @@ public class EntityHamletDweller extends EntityCreature{
 		if(this.home == null) return;
 		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN) {
 			if(this.world.getWorldTime() == 100) {
-				this.goWorshipTime = this.world.rand.nextInt(18000)+3000;
+				this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
 				this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
 				int r = this.world.rand.nextInt(11)-5;
 				int s = r < 0 ? -5-r : 5-r;
@@ -112,7 +112,7 @@ public class EntityHamletDweller extends EntityCreature{
 				this.getNavigator().tryMoveToXYZ(this.destination.getX(), this.villageCenter.getY(), this.destination.getZ(), 1.0);
 			
 			}
-			else if(Math.abs(this.world.getWorldTime()-this.goHomeTime) < 1000) {
+			else if(Math.abs(this.world.getWorldTime() - this.goHomeTime) < 1000 || Math.abs(this.world.getWorldTime() - 23500) < 1000) {
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
 		}else if(this.profession == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ||
