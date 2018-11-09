@@ -13,6 +13,7 @@ import com.valeriotor.BTV.world.Structures.HamletHouse;
 import com.valeriotor.BTV.world.Structures.HamletHouse1;
 import com.valeriotor.BTV.world.Structures.HamletStructure;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
+import com.valeriotor.BTV.world.Structures.HamletTownHall;
 import com.valeriotor.BTV.world.Structures.Idol;
 
 import net.minecraft.block.state.IBlockState;
@@ -68,6 +69,9 @@ public class FishingHamletWIP {
 			
 			for(int i = 0; i<this.size; i++) {
 				structureList.add(hsr.getRandom(r,w));
+				if(structureList.get(i) instanceof HamletTownHall) {
+					structureList.add(0, structureList.remove(i));
+				}
 			}
 			
 			
