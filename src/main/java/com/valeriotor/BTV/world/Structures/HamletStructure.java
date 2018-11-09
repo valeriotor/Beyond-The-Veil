@@ -72,8 +72,8 @@ public abstract class HamletStructure{
 			break;
 		}
 		doorPos = center.add(doorX, doorCoords[1], doorZ);
-		
-		makeDoorRoads(8);
+		if(this.isLarge()) makeDoorRoads(12);
+		else makeDoorRoads(8);
 	}
 	
 	public int getRadius() {
@@ -177,7 +177,8 @@ public abstract class HamletStructure{
 				}
 			}
 			
-			if(shouldExecute /*&& state2.getBlock() != BlockRegistry.DampStone*/ && state2.getBlock() != BlockRegistry.DampWood && state2.getBlock()!= BlockRegistry.DampCanopy && state2.getBlock() != BlockRegistry.DampCanopyWood) this.setRoadBlocks(pos1, state, facing);
+			if(shouldExecute /*&& state2.getBlock() != BlockRegistry.DampStone*/ && state2.getBlock() != BlockRegistry.DampWood && state2.getBlock()!= BlockRegistry.DampCanopy 
+					&& state2.getBlock() != BlockRegistry.DampCanopyWood && state2.getBlock()!= BlockRegistry.DampLog) this.setRoadBlocks(pos1, state, facing);
 			//System.out.println(pos1);
 			/*if((this.world.getBlockState(pos1).getBlock() == BlockRegistry.DarkSand || this.world.getBlockState(pos1).getBlock() == Blocks.GRASS) && pos1.getY() > 2) {
 				if(shouldExecute) {
