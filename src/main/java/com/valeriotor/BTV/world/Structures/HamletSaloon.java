@@ -87,6 +87,8 @@ public class HamletSaloon extends HamletStructure{
 	@Override
 	public void spawnHamletDwellers() {
 		BlockPos home1 = this.getPosFromArray(villagerCoords1, this.facing);
+		if(this.facing == EnumFacing.NORTH) home1 = home1.add(0, 0, 1);
+		else if(this.facing == EnumFacing.WEST) home1 = home1.add(1, 0, 0);
 		EntityHamletDweller h1 = new EntityHamletDweller(this.world);
 		h1.setProfession(EntityHamletDweller.ProfessionsEnum.BARTENDER);
 		h1.setHome(home1);
