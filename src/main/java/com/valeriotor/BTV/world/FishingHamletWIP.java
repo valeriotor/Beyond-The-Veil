@@ -69,7 +69,7 @@ public class FishingHamletWIP {
 			
 			for(int i = 0; i<this.size; i++) {
 				structureList.add(hsr.getRandom(r,w));
-				if(structureList.get(i) instanceof HamletTownHall) {
+				if(structureList.get(i) instanceof HamletTownHall && i > 3) {
 					structureList.add(0, structureList.remove(i));
 				}
 			}

@@ -23,7 +23,7 @@ public class HamletStructuresRegistry {
 			counterMap.put(entry.getKey(), ints);													// Putting key and array into counterMap
 			for(int i = 1; i<=entry.getValue()[0]; i++) {											// For 'weight' times, weight being taken from the map entry for that structure
 				if(i == 1) counterMap.get(entry.getKey())[1] = list.size();							// For the first cycle, set the 'start' equal to the list's size
-				else if(i == entry.getValue()[0]) counterMap.get(entry.getKey())[2] = list.size();	// For the last cycle, set the 'end' equal to the list's size
+				if(i == entry.getValue()[0]) counterMap.get(entry.getKey())[2] = list.size();		// For the last cycle, set the 'end' equal to the list's size
 				list.add(entry.getKey());															// Every cycle, add the String ID to the list
 			}
 		}
