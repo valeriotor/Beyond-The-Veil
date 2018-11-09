@@ -39,6 +39,7 @@ public class EntityHamletDweller extends EntityCreature{
 	private BlockPos destination;
 	private int goWorshipTime;
 	private int goHomeTime;
+	private int talkCount = 0;
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityHamletDweller.class, DataSerializers.VARINT);
 	
 	public EntityHamletDweller(World worldIn) {
@@ -116,7 +117,7 @@ public class EntityHamletDweller extends EntityCreature{
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
 		}else if(this.profession == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ||
-				this.profession == EntityHamletDweller.ProfessionsEnum.STOCKPILER) {
+				this.profession == EntityHamletDweller.ProfessionsEnum.STOCKPILER || this.profession == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 			if((this.world.getWorldTime()&1023) == 0) {
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
@@ -175,11 +176,15 @@ public class EntityHamletDweller extends EntityCreature{
 	
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		if(!world.isRemote) {
-		this.setVillageCenter(this.getPosition().add(10, 0, 5));		//DEBUG
+		if(!world.isRemote) {		//DEBUG
 		//player.sendMessage(new TextComponentString(this.villageCenter.toString() + "\n" + this.home.toString() + "\n" + this.profession + "\n" + this.profession.getName() + "\n" + this.profession.getID()));
-		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN)
-			player.sendMessage(new TextComponentString(I18n.format("dweller.fisherman.greeting")));
+			//if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN)
+			//	player.sendMessage(new TextComponentString(I18n.format("dweller.fisherman.greeting")));
+		
+			if(this.profession != EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+				player.sendMessage(new TextComponentString("§5§o" + I18n.format(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), this.talkCount%this.profession.getTalkCount()))));
+				this.talkCount++;
+			}
 		}
 		return EnumActionResult.SUCCESS;
 	}
@@ -197,20 +202,20 @@ public class EntityHamletDweller extends EntityCreature{
 	
 	
 	public static enum ProfessionsEnum{
-		FISHERMAN("fisherman", 0),
-		BARTENDER("bartender", 1),
-		MINER("miner", 2),
-		LHKEEPER("lhkeeper", 3),
-		STOCKPILER("stockpiler", 4),
-		DRUNK("drunk", 5),
-		CARPENTER("carpenter", 6);
+		FISHERMAN(0, 4),
+		BARTENDER(1, 2),
+		MINER(2, 0),
+		LHKEEPER(3, 3),
+		STOCKPILER(4, 4),
+		DRUNK(5, 4),
+		CARPENTER(6, 3);
 		
-		private final String name;
 		private final int id;
+		private final int talkCount;
 		
-		private ProfessionsEnum(String name, int id) {
-			this.name = name;
+		private ProfessionsEnum(int id, int talkCount) {
 			this.id = id;
+			this.talkCount = talkCount;
 		}
 		
 		public String getName() {
@@ -219,6 +224,10 @@ public class EntityHamletDweller extends EntityCreature{
 		
 		public int getID() {
 			return this.id;
+		}
+		
+		public int getTalkCount() {
+			return this.talkCount;
 		}
 		
 	}

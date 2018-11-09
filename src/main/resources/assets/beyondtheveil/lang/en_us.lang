@@ -1,14 +1,34 @@
+item.oniric_incense.name=Oniric Incense
+item.slug.name=Slug
+item.slugcatcher.name=Slug Catcher
 item.testitem.name=Test Item
 
 
 
 
+tile.barrel.name=Barrel
+tile.bricks_blue.name=Blue Bricks
+tile.damp_canopy.name=Damp Canopy
+tile.damp_canopy_wood.name=Damp Canopy (Wood)
+tile.damp_log.name=Damp Log
+tile.damp_stone.name=Damp Stone
 tile.damp_wood.name=Damp Wood
+tile.damp_wood_fence.name=Damp Wood Fence
+tile.damp_wood_stairs.name=Damp Wood Stairs
+tile.dark_sand.name=Dark Sand
+tile.fume_spreader.name=Fume Spreader
+tile.idol.name=Idol
+tile.lamp.name=Lamp
+tile.slug_bait.name=Slug Bait
+tile.worn_bricks.name=Worn Bricks
+tile.worn_brick_stairs.name=Worn Brick Stairs
 
 
 
 
 entity.deep_one.name=Deep One
+entity.hamlet_dweller.name=Hamlet Dweller
+
 
 
 
@@ -35,7 +55,7 @@ dweller.lhkeeper.greeting2=Please, please leave us BE.
 dweller.bartender.talk0=Hmph. We don't appreciate outsiders coming here, but if you really need to, I won't deny you a single night's rest. There are beds up above.
 dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow.
 
-dweller.drunk.greeting0=
+dweller.drunk.greeting0=I ain't frum around here, fella. Me pa an' ma wer frum this Hamlet, aye, but me, I wus bo'n an' rais'd elsewher.
 
 
 dreams.groundscan.iron= blocks of iron ore were found in the ground below you
