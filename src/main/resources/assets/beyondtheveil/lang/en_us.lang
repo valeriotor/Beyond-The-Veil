@@ -23,8 +23,19 @@ research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're mere
 
 
 
-dweller.fisherman.greeting=Leave us alone, foreigner
+dweller.fisherman.greeting0=Leave us alone, outsider.
+dweller.fisherman.greeting1=Begone. We don't want you here.
+dweller.fisherman.greeting2=Outsiders are not welcome here.
+dweller.fisherman.greeting3=Please, please stop coming after us.
 
+dweller.lhkeeper.greeting0=You are no friend of ours, outsider. No one is.
+dweller.lhkeeper.greeting1=We can't trust you outsiders. No more.
+dweller.lhkeeper.greeting2=Please, please leave us BE.
+
+dweller.bartender.talk0=Hmph. We don't appreciate outsiders coming here, but if you really need to, I won't deny you a single night's rest. There are beds up above.
+dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow.
+
+dweller.drunk.greeting0=
 
 
 dreams.groundscan.iron= blocks of iron ore were found in the ground below you
