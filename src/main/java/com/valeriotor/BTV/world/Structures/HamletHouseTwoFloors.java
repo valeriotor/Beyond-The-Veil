@@ -89,7 +89,6 @@ public class HamletHouseTwoFloors extends HamletStructure{
 		h.setProfession(EntityHamletDweller.ProfessionsEnum.CARPENTER);
 		h.setHome(home);
 		h.setVillageCenter(this.villageCenter);
-		System.out.println(this.villageCenter.toString());
 		h.setPosition(home.getX(), home.getY(), home.getZ());
 		this.world.spawnEntity(h);
 		
