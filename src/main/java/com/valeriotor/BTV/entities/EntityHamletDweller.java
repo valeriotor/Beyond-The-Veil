@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -40,6 +41,10 @@ public class EntityHamletDweller extends EntityCreature{
 	private int goWorshipTime;
 	private int goHomeTime;
 	private int talkCount = 0;
+	private int drunkStatus = 0;
+	private boolean thirsty = false;
+	private boolean talking = false;
+	private int talkTime = 0;
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityHamletDweller.class, DataSerializers.VARINT);
 	
 	public EntityHamletDweller(World worldIn) {
@@ -98,6 +103,17 @@ public class EntityHamletDweller extends EntityCreature{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		if(this.world.isRemote) return;
+		
+		if(this.talking) {
+			this.talkTime++;
+			this.getNavigator().clearPath();
+			if(this.talkTime>150) {
+				this.talking = false;
+				this.talkTime = 0;
+			}
+			return;
+		}
+		
 		if(this.home == null) return;
 		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN) {
 			if(this.world.getWorldTime() == 100) {
@@ -122,6 +138,8 @@ public class EntityHamletDweller extends EntityCreature{
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
 		}
+		
+		
 	}
 	
 	public void setProfession(EntityHamletDweller.ProfessionsEnum prof) {
@@ -135,6 +153,7 @@ public class EntityHamletDweller extends EntityCreature{
 		compound.setLong("villageCenter", this.getVillageCenter().toLong());
 		compound.setLong("home", this.getHome().toLong());
 		compound.setLong("destination", this.destination.toLong());
+		compound.setInteger("drunkStatus", this.drunkStatus);
 		return super.writeToNBT(compound);
 	}
 	
@@ -146,6 +165,7 @@ public class EntityHamletDweller extends EntityCreature{
 		this.setVillageCenter(BlockPos.fromLong(compound.getLong("villageCenter")));
 		this.setHome(BlockPos.fromLong(compound.getLong("home")));
 		this.destination = BlockPos.fromLong(compound.getLong("destination"));
+		this.drunkStatus = compound.getInteger("drunkStatus");
 	}
 	
 	public void setVillageCenter(BlockPos pos) {
@@ -176,15 +196,33 @@ public class EntityHamletDweller extends EntityCreature{
 	
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		if(!world.isRemote) {		//DEBUG
-		//player.sendMessage(new TextComponentString(this.villageCenter.toString() + "\n" + this.home.toString() + "\n" + this.profession + "\n" + this.profession.getName() + "\n" + this.profession.getID()));
-			//if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN)
-			//	player.sendMessage(new TextComponentString(I18n.format("dweller.fisherman.greeting")));
-		
-			if(this.profession != EntityHamletDweller.ProfessionsEnum.BARTENDER) {
-				player.sendMessage(new TextComponentString("§5§o" + I18n.format(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), this.talkCount%this.profession.getTalkCount()))));
+
+		this.faceEntity(player, 180F, 180F);
+		this.talking = true;
+		if(!world.isRemote) {
+			
+			if(player.getHeldItem(hand).getItem() == Items.APPLE /*Test item*/ && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
+				player.getHeldItem(hand).shrink(1);
+				this.drunkStatus++;
+				this.thirsty = false;
+				if(this.drunkStatus == 7) this.talkCount = 0;
+				return EnumActionResult.SUCCESS;
+			}else if(this.getProfession() != EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+				int x = this.drunkStatus < 7 ? this.talkCount%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(this.talkCount, 7) + 28;
+				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
+				if(this.drunkStatus > 2) y = y.concat("§o");
+				if(this.drunkStatus > 5) y = "§5§o";
+				if(x > 33) y = "";
+				if(!world.isRemote)	player.sendMessage(new TextComponentString(y + I18n.format(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), x))));
+				
+				if(this.talkCount % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
+				else this.thirsty = false;
+				
 				this.talkCount++;
+				
+				
 			}
+			
 		}
 		return EnumActionResult.SUCCESS;
 	}

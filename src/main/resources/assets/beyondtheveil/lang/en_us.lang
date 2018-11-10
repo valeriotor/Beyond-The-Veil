@@ -55,7 +55,43 @@ dweller.lhkeeper.greeting2=Please, please leave us BE.
 dweller.bartender.talk0=Hmph. We don't appreciate outsiders coming here, but if you really need to, I won't deny you a single night's rest. There are beds up above.
 dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow.
 
-dweller.drunk.greeting0=I ain't frum around here, fella. Me pa an' ma wer frum this Hamlet, aye, but me, I wus bo'n an' rais'd elsewher.
+dweller.drunk.greeting0=A newcomer, aye? We dun't see many aoutsiders no'adays.
+dweller.drunk.greeting1=I ain't frum around here, fella. Me pa' an' me ma' was frum this Hamlet, aye, but me, I was bo'n an' rais'd elsewhar.
+dweller.drunk.greeting2=I dun't like life here. I dun't like life no more.
+dweller.drunk.greeting3=Hey, buy me a drink, will ye?
+dweller.drunk.greeting4=None too shabby, that rum -hic- pardon.
+dweller.drunk.greeting5=Aye, my 'friends' araound here ain't no fun to chat with. They's got.. secrets to hide.
+dweller.drunk.greeting6=Huh? No, I dunno anythin'.
+dweller.drunk.greeting7=Hey, wud ye get me 'nother drink, pal?
+dweller.drunk.greeting8=Hmm, thar's the gud stuff -hic- excuse me.
+dweller.drunk.greeting9=We may be isolat'd, but we got gold aplenty! We ain't poor! Well, per'haps I am.
+dweller.drunk.greeting10=Huh, the gold? It comes.. it comes frum below, aye, frum below.
+dweller.drunk.greeting11=Hey, off'r me 'nother round, bud!
+dweller.drunk.greeting12=Ahhh, ain't that tasty -hic- forgive me.
+dweller.drunk.greeting13=When me was a y'ung lad, me pa' told me tales o' the sea an' its dwellars. Ye know, thar's things down thar..
+dweller.drunk.greeting14=Things.. horrid, indescribable things..
+dweller.drunk.greeting15=I'm thi'sty. Got some more coin on ye?
+dweller.drunk.greeting16=Hmm mhh, hadn't had this good'a drink in years -hic- my bad.
+dweller.drunk.greeting17=Aye, horrid things.. and me mates here.. they adore 'em. Trade with 'em. Some e'en mate with 'em.
+dweller.drunk.greeting18=And then they dream...
+dweller.drunk.greeting19=Hey, I 'now I shudn't be askin', but.. y'know the drill. Fetch me a drink.
+dweller.drunk.greeting20=Ah, mebbe I'm havin' too much -hic- apologies.
+dweller.drunk.greeting21=The.. things, they gav' us fish.. an' gold! But not fur nuthin', nuh huh.
+dweller.drunk.greeting22=I ain't never killed nobody, no, but my mates.. eh.
+dweller.drunk.greeting23=Mood's low, dunno why. I say we drown it wit'another drink!
+dweller.drunk.greeting24=-hic- I shudn't be sayin' all this -hic-
+dweller.drunk.greeting25=But had we chos'n moar tradit'onal gods, then me ma' and me pa' wudn't have been kill'd, I say.
+dweller.drunk.greeting26=Killed by outsiders, sech as ye. Massacred, more like.
+dweller.drunk.greeting27='nother!
+dweller.drunk.greeting28=Wel, gud luck ye brought upon ye! Our gods, they's real!
+dweller.drunk.greeting29=The things frum the deeps, they protect us!
+dweller.drunk.greeting30=They give us food! An' gold!
+dweller.drunk.greeting31=They AVENGE us!
+dweller.drunk.greeting32=An' if ye dun't like it, then ye either leave, or.. or do as I did..
+dweller.drunk.greeting33=You.. you join us..
+dweller.drunk.greeting34=I.. enuff with the alc'hol, had enuff.
+dweller.drunk.greeting35=...
+
 
 
 dreams.groundscan.iron= blocks of iron ore were found in the ground below you
