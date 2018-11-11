@@ -209,9 +209,9 @@ public class EntityHamletDweller extends EntityCreature{
 				return EnumActionResult.SUCCESS;
 			}else if(this.getProfession() != EntityHamletDweller.ProfessionsEnum.BARTENDER) {
 				int x = this.drunkStatus < 7 ? this.talkCount%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(this.talkCount, 7) + 28;
-				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
-				if(this.drunkStatus > 2) y = y.concat("§o");
-				if(this.drunkStatus > 5) y = "§5§o";
+				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "ï¿½5ï¿½o";
+				if(this.drunkStatus > 2) y = y.concat("Â§o");
+				if(this.drunkStatus > 5) y = "Â§5Â§o";
 				if(x > 33) y = "";
 				if(!world.isRemote)	player.sendMessage(new TextComponentString(y + I18n.format(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), x))));
 				
