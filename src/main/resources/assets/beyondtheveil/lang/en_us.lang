@@ -101,3 +101,4 @@ dreams.groundscan.emerald= blocks of emerald ore were found in the ground below 
 dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: 
 
 dreams.biomesearch.innsmouth=Found Voided Biome at 
+dreams.biomesearch.fail=No Voided biomes found within 1200 block radius

@@ -44,7 +44,7 @@ public class DreamHandler {
 			}else if(aspect.equals("Vitreus")) {
 			scanGround(p, false, p.world, SpreaderLocation);
 			}else if(aspect.equals("Tenebrae")) {
-			searchInnsmouth(p, p.world, p.world.rand);
+			searchInnsmouth(p, p.world, p.world.rand, SpreaderLocation);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -171,7 +171,7 @@ public class DreamHandler {
 		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
 	}
 	
-	private static void searchInnsmouth(EntityPlayer p, World w, Random r) {
+	private static void searchInnsmouth(EntityPlayer p, World w, Random r, BlockPos s) {
 		final BiomeProvider provider = w.getBiomeProvider();
 		List<Biome> biomes = new ArrayList<Biome>();
 		biomes.add(BiomeRegistry.innsmouth);
@@ -179,8 +179,13 @@ public class DreamHandler {
 		if(pos != null) {
 			p.sendMessage(new TextComponentString(I18n.format("dreams.biomesearch.innsmouth") + "x = " + pos.getX() + ", z =" + pos.getZ()));
 		}else {
-			p.sendMessage(new TextComponentString("No Voided biomes found withing 4800 block radius"));
+			p.sendMessage(new TextComponentString(I18n.format("dreams.biomesearch.fail")));
 		}
+		
+		IBlockState b = p.world.getBlockState(s);
+		p.world.getTileEntity(s).getTileData().removeTag("containing");
+		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
+	
 	}
 }
 

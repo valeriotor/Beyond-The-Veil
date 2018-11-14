@@ -107,7 +107,7 @@ public class EntityHamletDweller extends EntityCreature{
 		if(this.talking) {
 			this.talkTime++;
 			this.getNavigator().clearPath();
-			if(this.talkTime>150) {
+			if(this.talkTime>400) {
 				this.talking = false;
 				this.talkTime = 0;
 			}
@@ -212,6 +212,8 @@ public class EntityHamletDweller extends EntityCreature{
 				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
 				if(this.drunkStatus > 2) y = y.concat("§o");
 				if(this.drunkStatus > 5) y = "§5§o";
+				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
+				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
 				if(!world.isRemote)	player.sendMessage(new TextComponentString(y + I18n.format(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), x))));
 				
