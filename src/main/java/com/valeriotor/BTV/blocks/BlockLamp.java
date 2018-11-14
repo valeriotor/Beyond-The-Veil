@@ -20,7 +20,7 @@ public class BlockLamp extends Block{
 		this.setRegistryName(References.MODID + ":lamp");
 		this.setUnlocalizedName("lamp");
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		this.setLightLevel(13);
+		this.setLightLevel(4);
 		this.setHardness(2);
 		this.setResistance(10);
 		this.setSoundType(SoundType.GLASS);
