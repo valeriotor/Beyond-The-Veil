@@ -13,6 +13,18 @@
                                 "thaumcraft:phial","thaumcraft:Filter","thaumcraft:MorphicResonator"]
                 }
             ]
+        },
+        {
+        "key": "CRYSTALDREAMS",
+        "name": "research.CRYSTALDREAMS.title",
+        "icons": [ "beyondtheveil:textures/items/testitem.png" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5,-5 ],
+        "parents": [ "FIRSTDREAMS" ],
+        "stages": [
+                {
+                    "text": "research.CRYSTALDREAMS.stage.1"
+                }
+            ]
         }
 	]
 }	
