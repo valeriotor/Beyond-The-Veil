@@ -41,14 +41,13 @@ public class PlayerEvents {
 	public static void tickevent(PlayerTickEvent event) {
 		
 		//Canoe Gifts
-		if(event.player.getRidingEntity() instanceof EntityCanoe && (event.player.world.getBiome(event.player.getPosition()) == Biomes.OCEAN 
+		if(!event.player.world.isRemote && event.player.getRidingEntity() instanceof EntityCanoe && (event.player.world.getBiome(event.player.getPosition()) == Biomes.OCEAN 
 		   || event.player.world.getBiome(event.player.getPosition()) == BiomeRegistry.innsmouth || event.player.world.getBiome(event.player.getPosition()) == Biomes.DEEP_OCEAN)) {
 			if(Math.abs(event.player.motionX) > 0.01 || Math.abs(event.player.motionZ) > 0.01) {
 				if((event.player.world.getWorldTime() & 127) == event.player.world.rand.nextInt(128)) {
-					if(!event.player.world.isRemote) event.player.sendMessage(new TextComponentString("Success!"));
 					double angle = event.player.world.rand.nextDouble()*2*Math.PI;
-					double x = Math.sin(angle)*0.8D;
-					double z = Math.cos(angle)*0.8D;
+					double x = Math.sin(angle);
+					double z = Math.cos(angle);
 					EntityItem fish = new EntityItem(event.player.world, event.player.getPosition().getX() + x, event.player.getPosition().getY(), event.player.getPosition().getZ() + z, new ItemStack(Items.FISH));
 					fish.motionX = -x + event.player.motionX;
 					fish.motionZ = -z + event.player.motionZ;
