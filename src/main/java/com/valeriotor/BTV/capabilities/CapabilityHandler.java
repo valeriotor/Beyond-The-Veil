@@ -69,7 +69,7 @@ public class CapabilityHandler {
 	}
 	
 	public static class DreamingGod implements IWorship{
-		private int level = 10;
+		private int level = 0;
 
 		@Override
 		public void setLevel(int lv) {

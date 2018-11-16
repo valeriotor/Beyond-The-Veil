@@ -44,25 +44,7 @@ public class PlayerEvents {
 		//IInternalMethodHandler.progressResearch(event.getEntityPlayer(), "FIRSTDREAMS");
 		
 	}
-	
-	@SubscribeEvent
-	public static void event2(PlayerLoggedInEvent event) {
-		event.player.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
 
-		event.player.sendMessage(new TextComponentString(Integer.toString((event.player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()))));
-		System.out.println(Boolean.toString(event.player.hasCapability(DGProvider.LEVEL_CAP, null)) + "\n\n\n\n");
-		//event.player.getCapability(DGProvider.LEVEL_CAP, null).setLevel(3);
-	}
-	
-	/*@SubscribeEvent
-	public static void event3(PlayerWakeUpEvent event) {
-		ArrayList<Entity> es = (ArrayList<Entity>) event.getEntityPlayer().world.getLoadedEntityList();
-		for(Entity e : es) {
-			if(e instanceof EntityZombie) {
-				System.out.println(e.hasCapability(DGProvider.LEVEL_CAP, null));
-			}
-		}
-	}*/
 	
 	
 }

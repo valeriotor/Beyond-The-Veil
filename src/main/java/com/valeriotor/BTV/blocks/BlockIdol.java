@@ -5,6 +5,7 @@ package com.valeriotor.BTV.blocks;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
@@ -16,14 +17,19 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class BlockIdol extends Block{
 
@@ -115,6 +121,19 @@ public class BlockIdol extends Block{
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.8125D,0.875D,0.8125D);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(playerIn);
+		if(!k.isResearchKnown("CRYSTALDREAMS")) return true;
+		if(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 0) {
+			playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
+		}
+		if(worldIn.isRemote) playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel())));
+		return true;
 	}
 	
 	
