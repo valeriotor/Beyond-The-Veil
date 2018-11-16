@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.world.Structures.HamletHouse;
 import com.valeriotor.BTV.world.Structures.HamletHouse1;
 import com.valeriotor.BTV.world.Structures.HamletStructure;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
@@ -57,8 +56,7 @@ public class FishingHamletWIP {
 			BlockPos randomised = new BlockPos(xOffset, height, zOffset);
 			Idol idol = new Idol(w);
 			idol.setCenter(randomised);
-			HamletHouse hh = new HamletHouse(w);
-			int tom = idol.getRadius() + hh.getRadius();
+			int tom = idol.getRadius() + 7;
 			int george = r.nextInt(tom*4-4)+1;
 			int x = george>tom*2 ? (george>tom*3 ? -tom : tom) : r.nextInt(17)-8;
 			int z = george<=tom*2 ? r.nextInt(17)-8 : (george<=tom ? -8 : 8); 
