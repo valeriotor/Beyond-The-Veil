@@ -19,6 +19,7 @@ public class ItemRegistry {
 	public static final ItemOniricIncense oniricIncense = new ItemOniricIncense();
 	public static final SlugCatcher slugCatcher = new SlugCatcher();
 	public static final ItemSlug slug = new ItemSlug();
+	public static final ItemCanoe canoe = new ItemCanoe();
 	
 	
     public static void initModels() {
@@ -26,6 +27,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(oniricIncense, 0, "inventory");
         ClientProxy.registerItemRenderer(slugCatcher, 0, "inventory");
         ClientProxy.registerItemRenderer(slug, 0, "inventory");
+        ClientProxy.registerItemRenderer(canoe, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -68,5 +70,6 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.oniricIncense);
     	event.getRegistry().register(ItemRegistry.slugCatcher);
     	event.getRegistry().register(ItemRegistry.slug);
+    	event.getRegistry().register(ItemRegistry.canoe);
     }
 }

@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.entities.render;
 
+import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 
@@ -7,8 +8,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class RegisterRenders {
@@ -24,8 +23,15 @@ public class RegisterRenders {
 		//Hamlet Dweller
 		RenderingRegistry.registerEntityRenderingHandler(EntityHamletDweller.class, new IRenderFactory<EntityHamletDweller>(){
 		    @Override
-		    public Render<EntityHamletDweller> createRenderFor(RenderManager manager2) 
-		    {return new RenderHamletDweller(manager2);}
+		    public Render<EntityHamletDweller> createRenderFor(RenderManager manager) 
+		    {return new RenderHamletDweller(manager);}
 		    });
+		
+		//Canoe
+		RenderingRegistry.registerEntityRenderingHandler(EntityCanoe.class, new IRenderFactory<EntityCanoe>(){
+			@Override
+			public Render<EntityCanoe> createRenderFor(RenderManager manager) 
+			{return new RenderCanoe(manager);}
+			});
 	}
 }

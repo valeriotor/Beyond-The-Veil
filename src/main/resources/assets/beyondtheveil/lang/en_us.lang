@@ -2,6 +2,7 @@ item.oniric_incense.name=Oniric Incense
 item.slug.name=Slug
 item.slugcatcher.name=Slug Catcher
 item.testitem.name=Test Item
+item.canoe.name=Canoe
 
 
 
@@ -28,6 +29,7 @@ tile.worn_brick_stairs.name=Worn Brick Stairs
 
 entity.deep_one.name=Deep One
 entity.hamlet_dweller.name=Hamlet Dweller
+entity.canoe.name=Canoe
 
 
 
