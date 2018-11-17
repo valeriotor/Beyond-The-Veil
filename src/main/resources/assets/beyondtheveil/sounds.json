@@ -11,5 +11,18 @@
 			"beyondtheveil:dweller_idle_0",
 			"beyondtheveil:dweller_idle_1"
 		]
+	},
+	"canoe_creak": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:canoe_creak_0",
+			"beyondtheveil:canoe_creak_1",
+			"beyondtheveil:canoe_creak_2",
+			"beyondtheveil:canoe_creak_3",
+			"beyondtheveil:canoe_creak_4",
+			"beyondtheveil:canoe_creak_5",
+			"beyondtheveil:canoe_creak_6",
+			"beyondtheveil:canoe_creak_7"
+		]
 	}
 }

@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BTVSounds;
 
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPlanks;
@@ -33,6 +34,7 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -76,7 +78,7 @@ public class EntityCanoe extends EntityBoat{
     private EntityCanoe.Status status;
     private EntityCanoe.Status previousStatus;
     private double lastYd;
-	
+	private int soundCounter = 160;
 	
 	
 	public EntityCanoe(World worldIn) {
@@ -271,6 +273,18 @@ public class EntityCanoe extends EntityBoat{
      */
     public void onUpdate()
     {
+    	
+    	if(this.world.isRemote) {
+    		if(Math.abs(this.motionX) < 0.05 && Math.abs(this.motionZ) < 0.05) {	
+    			if(this.soundCounter > 0) soundCounter--;
+    			else {
+    				this.world.playSound(this.posX, this.posY, this.posZ, BTVSounds.canoeCreak, SoundCategory.AMBIENT, 0.9F, 1.0F, false);
+    				this.soundCounter = 160;
+    			}
+    		}	
+    	}
+    	
+    	
         this.previousStatus = this.status;
         this.status = this.getCanoeStatus();
 
