@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.world.Structures.HamletHouse1;
 import com.valeriotor.BTV.world.Structures.HamletStructure;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
@@ -170,7 +171,8 @@ public class FishingHamletWIP {
 			boolean isOnWater = idol.isIdolOnWater();
 			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 				IBlockState state = BlockRegistry.BricksBlue.getDefaultState();
-				for(int path = 3; path<r.nextInt(20)+42; path++) {
+				int length = r.nextInt(20) + 42;
+				for(int path = 3; path < length; path++) {
 					
 					BlockPos pathPos = randomised.offset(facing, path);
 					BlockPos pathPos1 = new BlockPos(pathPos.getX(), w.getHeight(pathPos.getX(),pathPos.getZ())-1, pathPos.getZ());
@@ -207,11 +209,26 @@ public class FishingHamletWIP {
 					w.setBlockToAir(pathPos3.offset(EnumFacing.UP,2));
 					w.setBlockToAir(pathPos2.offset(EnumFacing.UP,2));
 					w.setBlockToAir(pathPos1.offset(EnumFacing.UP,2));
+					
+					if(path == length - 1 || path == length / 2 || path == length / 3 - 1) {
+						BlockPos canoePos = pathPos1.offset(facing, 4).offset(facing.rotateYCCW(), path == length - 1 ? 2 : 4);
+						if(w.getBlockState(canoePos) == Blocks.WATER.getDefaultState() || w.getBlockState(canoePos.add(0, 1, 0)) == Blocks.WATER.getDefaultState()) {
+							EntityCanoe canoe = new EntityCanoe(w);
+							canoe.setPositionAndRotation(canoePos.getX(), canoePos.getY()+1, canoePos.getZ(), r.nextFloat()*360-90, 0);
+							for(EnumFacing facing1 : EnumFacing.HORIZONTALS) {
+								w.setBlockState(canoePos.offset(facing1), Blocks.WATER.getDefaultState());
+								w.setBlockState(canoePos.offset(facing1.rotateYCCW()), Blocks.WATER.getDefaultState());
+							}
+							w.spawnEntity(canoe);
+						}
+					}
 				}
 			}
 			
 
 			idol.StartStructure(r);
+			
+			
 			
 	}
 }
