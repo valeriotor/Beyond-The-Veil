@@ -17,7 +17,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 public class BiomeInnsmouth extends Biome{
 
 	public BiomeInnsmouth() {
-		super(new BiomeProperties("Voided").setBaseHeight(-0.08F).setTemperature(0.5F).setHeightVariation(0.1F).setWaterColor(28));
+		super(new BiomeProperties("Voided").setBaseHeight(-0.083F).setTemperature(0.5F).setHeightVariation(0.07F).setWaterColor(28));
 		this.setRegistryName("biome_innsmouth");
 		this.topBlock = BlockRegistry.DarkSand.getDefaultState();
 		this.fillerBlock = BlockRegistry.DarkSand.getDefaultState();
