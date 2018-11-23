@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities;
 
 import com.valeriotor.BTV.entities.AI.AIWanderHamlet;
+import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 
@@ -201,7 +202,7 @@ public class EntityHamletDweller extends EntityCreature{
 		this.talking = true;
 		if(!world.isRemote) {
 			
-			if(player.getHeldItem(hand).getItem() == Items.APPLE /*Test item*/ && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
+			if(player.getHeldItem(hand).getItem() instanceof ItemDrink && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
 				player.getHeldItem(hand).shrink(1);
 				this.drunkStatus++;
 				this.thirsty = false;

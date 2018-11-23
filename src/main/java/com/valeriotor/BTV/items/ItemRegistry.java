@@ -20,6 +20,11 @@ public class ItemRegistry {
 	public static final SlugCatcher slugCatcher = new SlugCatcher();
 	public static final ItemSlug slug = new ItemSlug();
 	public static final ItemCanoe canoe = new ItemCanoe();
+	public static final ItemDrink rum = new ItemDrink("drink_rum", 6, 4.0F, false);
+	public static final ItemDrink wine = new ItemDrink("drink_wine", 6, 4.0F, false);
+	public static final ItemDrink ale = new ItemDrink("drink_ale", 6, 4.0F, false);
+	public static final ItemDrink vodka = new ItemDrink("drink_vodka", 6, 4.0F, false);
+	public static final ItemDrink mead = new ItemDrink("drink_mead", 6, 4.0F, false);
 	
 	
     public static void initModels() {
@@ -28,6 +33,11 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(slugCatcher, 0, "inventory");
         ClientProxy.registerItemRenderer(slug, 0, "inventory");
         ClientProxy.registerItemRenderer(canoe, 0, "inventory");
+        ClientProxy.registerItemRenderer(rum, 0, "inventory");
+        ClientProxy.registerItemRenderer(wine, 0, "inventory");
+        ClientProxy.registerItemRenderer(ale, 0, "inventory");
+        ClientProxy.registerItemRenderer(vodka, 0, "inventory");
+        ClientProxy.registerItemRenderer(mead, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -71,5 +81,10 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.slugCatcher);
     	event.getRegistry().register(ItemRegistry.slug);
     	event.getRegistry().register(ItemRegistry.canoe);
+    	event.getRegistry().register(ItemRegistry.rum);
+    	event.getRegistry().register(ItemRegistry.wine);
+    	event.getRegistry().register(ItemRegistry.ale);
+    	event.getRegistry().register(ItemRegistry.vodka);
+    	event.getRegistry().register(ItemRegistry.mead);
     }
 }
