@@ -1,6 +1,6 @@
 {
    "parent": "item/generated",
    "textures": {
-       "layer0": "beyondtheveil:items/beverages/wine"
+       "layer0": "beyondtheveil:items/beverages/cup"
    }
 }

@@ -202,7 +202,7 @@ public class EntityHamletDweller extends EntityCreature{
 		this.talking = true;
 		if(!world.isRemote) {
 			
-			if(player.getHeldItem(hand).getItem() instanceof ItemDrink && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
+			if(player.getHeldItem(hand).getItem() instanceof ItemDrink && player.getHeldItem(hand).getItem() != ItemRegistry.cup && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
 				player.getHeldItem(hand).shrink(1);
 				this.drunkStatus++;
 				this.thirsty = false;
