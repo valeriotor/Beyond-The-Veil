@@ -31,6 +31,8 @@ public class BlockRegistry {
 	public static final BricksBlue BricksBlue = new BricksBlue();
 	public static final WornBrickStairs WornBrickStairs = new WornBrickStairs(WornBricks.getDefaultState());
 	public static final DampWoodFence DampWoodFence = new DampWoodFence();
+	public static final SleepChamber SleepChamber = new SleepChamber();
+	
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -50,5 +52,6 @@ public class BlockRegistry {
 	   	event.getRegistry().register(BricksBlue);
 	   	event.getRegistry().register(WornBrickStairs);
 	   	event.getRegistry().register(DampWoodFence);
+	   	event.getRegistry().register(SleepChamber);
 	}
 }

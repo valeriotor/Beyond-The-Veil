@@ -1,0 +1,6 @@
+{
+    "variants": {
+		"half=bottom": { "model": "beyondtheveil:chamber_bottom" },
+		"half=top": { "model": "beyondtheveil:chamber_top" }
+    }
+}
