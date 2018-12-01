@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 
-public class TileFumeSpreader extends TileEntity implements ITickable{
+public class TileFumeSpreader extends TileEntity{
 	private Aspect chosenAspect;
 	public TileFumeSpreader() {
 	}
@@ -16,7 +16,7 @@ public class TileFumeSpreader extends TileEntity implements ITickable{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setString("containing", this.chosenAspect.getName());
+		if(chosenAspect != null) compound.setString("containing", this.chosenAspect.getName());
 		return compound;
 	}
 	
@@ -25,15 +25,6 @@ public class TileFumeSpreader extends TileEntity implements ITickable{
 		this.chosenAspect = thaumcraft.api.aspects.Aspect.getAspect(compound.getString("containing").toLowerCase());
 		super.readFromNBT(compound); 
 	}
-
-	@Override
-	public void update() {
-		if(this.chosenAspect!= null) {
-		//System.out.println(chosenAspect.getName());
-		}else {
-		//System.out.println("NoSuccessThisTimeMrVale");
-		}
-	}	
 	
 	public Aspect setAspect(Aspect aspect) {
 		this.chosenAspect = aspect;
