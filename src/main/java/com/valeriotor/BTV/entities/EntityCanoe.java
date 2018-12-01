@@ -85,7 +85,7 @@ public class EntityCanoe extends EntityBoat{
 		super(worldIn);
 		this.paddlePositions = new float[2];
         this.preventEntitySpawning = true;
-        this.setSize(1.375F, 0.5625F);
+        this.setSize(1.375F, 0.4625F);
 	}
 	
 	public EntityCanoe(World worldIn, double x, double y, double z) {
@@ -317,7 +317,11 @@ public class EntityCanoe extends EntityBoat{
         this.prevPosZ = this.posZ;
         super.onUpdate();
         this.tickLerp();
-
+        
+        if(this.isInWater() && this.world.getBlockState(this.getPosition().add(0, 0.2, 0)).getBlock() == Blocks.WATER) {
+        	this.motionY = 0.1;
+        }
+        
         if (this.canPassengerSteer())
         {
             if (this.getPassengers().isEmpty() || !(this.getPassengers().get(0) instanceof EntityPlayer))
@@ -604,9 +608,9 @@ public class EntityCanoe extends EntityBoat{
 
                         if (iblockstate.getMaterial() == Material.WATER)
                         {
-                            float f = BlockLiquid.getLiquidHeight(iblockstate, this.world, blockpos$pooledmutableblockpos);
+                            double f = BlockLiquid.getLiquidHeight(iblockstate, this.world, blockpos$pooledmutableblockpos) + 0.5;
                             this.waterLevel = Math.max((double)f, this.waterLevel);
-                            flag |= axisalignedbb.minY < (double)f;
+                            flag |= axisalignedbb.minY < f;
                         }
                     }
                 }
