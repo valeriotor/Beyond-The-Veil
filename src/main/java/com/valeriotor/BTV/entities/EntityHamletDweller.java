@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.entities;
 
+import javax.annotation.Nullable;
+
 import com.valeriotor.BTV.entities.AI.AIWanderHamlet;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -7,6 +9,7 @@ import com.valeriotor.BTV.lib.BTVSounds;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -17,6 +20,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,14 +35,20 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityHamletDweller extends EntityCreature{
+public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	private EntityHamletDweller.ProfessionsEnum profession;
 	private BlockPos villageCenter = this.getPosition().add(10, 0, 10);
 	private BlockPos home = this.getPosition();
 	private BlockPos destination;
+	private EntityPlayer customer;
+	private MerchantRecipeList buyingList;
 	private int goWorshipTime;
 	private int goHomeTime;
 	private int talkCount = 0;
@@ -60,6 +70,7 @@ public class EntityHamletDweller extends EntityCreature{
 		this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
 		this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
 		if(home!= null) this.setPosition(home.getX(), home.getY(), home.getZ());
+		this.populateBuyingList();
 	}
 	
 	@Override
@@ -226,6 +237,14 @@ public class EntityHamletDweller extends EntityCreature{
 				
 			}
 			
+		//}else{
+			if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+				
+				if(this.buyingList == null) this.populateBuyingList();
+				
+				this.setCustomer(player);
+				player.displayVillagerTradeGui(this);
+			}
 		}
 		return EnumActionResult.SUCCESS;
 	}
@@ -270,6 +289,66 @@ public class EntityHamletDweller extends EntityCreature{
 		public int getTalkCount() {
 			return this.talkCount;
 		}
+		
+	}
+
+
+
+	@Override
+	public void setCustomer(@Nullable EntityPlayer player) {
+		this.customer = player;
+		
+	}
+
+	@Override
+	@Nullable
+	public EntityPlayer getCustomer() {
+		return this.customer;
+	}
+
+	@Override
+	public MerchantRecipeList getRecipes(EntityPlayer player) {
+		if(this.buyingList == null) this.buyingList = new MerchantRecipeList();
+		return this.buyingList;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void setRecipes(@Nullable MerchantRecipeList recipeList) {
+		
+	}
+
+	@Override
+	public void useRecipe(MerchantRecipe recipe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void verifySellingItem(ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public World getWorld() {
+		return this.world;
+	}
+
+	@Override
+	public BlockPos getPos() {
+		return this.getPosition();
+	}
+	
+	private void populateBuyingList() {
+		if(this.buyingList == null) this.buyingList = new MerchantRecipeList();
+		
+		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 1)));
+		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_PICKAXE, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.mead, 1)));
+		this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 64), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
+		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 64), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
+		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
+		
 		
 	}
 

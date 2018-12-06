@@ -1,0 +1,21 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "x  ",
+        " x ",
+        "  x" 
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "beyondtheveil:damp_wood"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:damp_canopy",
+        "count": 6
+    }                  
+}
