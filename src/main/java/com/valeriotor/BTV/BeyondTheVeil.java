@@ -27,6 +27,7 @@ import com.valeriotor.BTV.capabilities.CapabilityHandler;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.crafting.Recipes;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.util.RegistryHandler;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.WorldGenBTV;
@@ -50,7 +51,7 @@ public class BeyondTheVeil
         logger = event.getModLog();
         proxy.preInit(event);
         RegistryHandler.registerEntities();
-        
+        BTVPacketHandler.registerPackets();
         //ClientProxy.registerEntity();
         
 
