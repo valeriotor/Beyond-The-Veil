@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 @Mod.EventBusSubscriber
-public class CapabilityHandler {
+public class WorshipHandler {
 	public static final ResourceLocation LEVEL_CAP = new ResourceLocation(References.MODID, "level");
 	
 	
@@ -64,7 +64,7 @@ public class CapabilityHandler {
 		
 		@Override
 		public IWorship call() throws Exception {
-			return new CapabilityHandler.DreamingGod();
+			return new WorshipHandler.DreamingGod();
 		}
 	}
 	

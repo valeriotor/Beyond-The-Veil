@@ -1,7 +1,7 @@
 package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.capabilities.CapabilityHandler;
+import com.valeriotor.BTV.capabilities.WorshipHandler;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.entities.RegisterEntities;
 import com.valeriotor.BTV.entities.render.RegisterRenders;

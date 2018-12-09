@@ -23,7 +23,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Strings;
 import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.proxy.CommonProxy;
-import com.valeriotor.BTV.capabilities.CapabilityHandler;
+import com.valeriotor.BTV.capabilities.WorshipHandler;
+import com.valeriotor.BTV.capabilities.FlagHandler;
+import com.valeriotor.BTV.capabilities.IFlags;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.crafting.Recipes;
 import com.valeriotor.BTV.lib.References;
@@ -55,9 +57,10 @@ public class BeyondTheVeil
         //ClientProxy.registerEntity();
         
 
-    	CapabilityManager.INSTANCE.register(IWorship.class, new CapabilityHandler.DGStorage(), new CapabilityHandler.Factory());
+    	CapabilityManager.INSTANCE.register(IWorship.class, new WorshipHandler.DGStorage(), new WorshipHandler.Factory());
+    	CapabilityManager.INSTANCE.register(IFlags.class, new FlagHandler.FlagStorage(), new FlagHandler.Factory());
 
-    	MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
+    	MinecraftForge.EVENT_BUS.register(WorshipHandler.class);
         
     }
 
