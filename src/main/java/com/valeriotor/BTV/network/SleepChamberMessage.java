@@ -1,21 +1,17 @@
 package com.valeriotor.BTV.network;
 
-import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.SleepChamber;
+import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -25,17 +21,22 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class SleepChamberMessage implements IMessage {
 
-	
+	boolean doesDream = false;
 	public SleepChamberMessage() {}
+	
+	public SleepChamberMessage(boolean dreams) {
+		this.doesDream = dreams;
+	}
 	
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		
+		this.doesDream = buf.readBoolean();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		buf.writeBoolean(this.doesDream);
 	}
 	
 	public static class SleepChamberMessageHandler implements IMessageHandler<SleepChamberMessage, IMessage>{
@@ -45,12 +46,14 @@ public class SleepChamberMessage implements IMessage {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			BlockPos pos = new BlockPos((int)player.getPosition().getX(), (int)player.getPosition().getY(), (int)player.getPosition().getZ());
 			IBlockState state = player.getServerWorld().getBlockState(pos);
-			if(state.getBlock() == BlockRegistry.SleepChamber) {
+			if(state.getBlock() instanceof SleepChamber) {
 				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(player);
 				
-				// TODO: Check whether sleep attempt was successful, only activate dreams if it was
-				// TODO: Check whether the player has slept already during the current day
-				DreamHandler.chooseDream(player, k);
+				int times = player.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt();
+				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today"));
+				if(message.doesDream && times < 1) {
+					DreamHandler.chooseDream(player, k);
+				}
 				ejectPlayer(player.getEntityWorld(), pos, state, player);
 			}
 			return null;

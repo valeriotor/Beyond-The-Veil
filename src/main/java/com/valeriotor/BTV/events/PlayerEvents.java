@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.events;
 
+import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.world.BiomeRegistry;
@@ -22,15 +23,16 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void wakeUpEvent(PlayerWakeUpEvent event) {
-
+		if(event.getEntityPlayer().world.getWorldTime()>23900) {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(event.getEntityPlayer());
-		if(event.getEntityPlayer()!=null && !k.isResearchKnown("FIRSTDREAMS") && k.isResearchKnown("FIRSTSTEPS") && event.getEntityPlayer().world.getWorldTime()>23900) {
+		if(event.getEntityPlayer()!=null && !k.isResearchKnown("FIRSTDREAMS") && k.isResearchKnown("FIRSTSTEPS")) {
 			k.addResearch("!didDream");
 			k.sync((EntityPlayerMP)event.getEntityPlayer());
-		}else if(event.getEntityPlayer() != null && k.isResearchKnown("FIRSTDREAMS") && event.getEntityPlayer().world.getWorldTime()>23900) {
+		}else if(event.getEntityPlayer() != null && k.isResearchKnown("FIRSTDREAMS")) {
 			DreamHandler.chooseDream(event.getEntityPlayer(), k);
+			event.getEntityPlayer().getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0);
 		}
-		
+		}
 		
 		
 		//IInternalMethodHandler.progressResearch(event.getEntityPlayer(), "FIRSTDREAMS");
@@ -55,6 +57,9 @@ public class PlayerEvents {
 				}
 			}
 		}
+		
+		// Reset times dreamt
+		if(event.player.world.getWorldTime() == 10) event.player.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0); 
 	}
 	
 	

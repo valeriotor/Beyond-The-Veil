@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.FumeSpreader;
+import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -48,6 +49,8 @@ public class DreamHandler {
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
+			
+			p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
 		}
 	}
 	

@@ -15,7 +15,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSleepingChamber extends GuiChat{
-	
+	// I don't have the slightest clue how the 1920x1080 black texture I made for this will work on different resolutions
+	// Also, if you do know how to make the screen progressively blacker without using such a texture, please do tell
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/black.png");
 	private int timePassed = 0;
 	
@@ -28,8 +29,12 @@ public class GuiSleepingChamber extends GuiChat{
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		//if(partialTicks > 1) drawDefaultBackground();
 		if(this.timePassed < 301) this.timePassed++;;
+		if(this.timePassed == 300) {
+			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(true));
+			this.mc.displayGuiScreen((GuiScreen)null);
+			return;
+		}
 		GlStateManager.pushMatrix();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
@@ -43,7 +48,7 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 1) {
-			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage());
+			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(false));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 		super.actionPerformed(button);
@@ -52,7 +57,7 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode == 1) {
-			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage());
+			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(false));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}else if (keyCode != 28 && keyCode != 156)
         {
