@@ -11,7 +11,9 @@ public class BTVPacketHandler {
 	private static int count = 0;
 	
 	public static void registerPackets() {
-		INSTANCE.registerMessage(SleepChamberMessage.SleepChamberMessageHandler.class, SleepChamberMessage.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageSleepChamber.SleepChamberMessageHandler.class, MessageSleepChamber.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageSetPosition.SetPositionMessageHandler.class, MessageSetPosition.class, count++, Side.SERVER);
+		
 	}
 	
 }

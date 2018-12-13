@@ -3,8 +3,10 @@ package com.valeriotor.BTV.blocks;
 import java.util.Random;
 
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.gui.GuiSleepingChamber;
+import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSetPosition;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -12,11 +14,10 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayer.SleepResult;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -25,9 +26,8 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class SleepChamber extends Block{
@@ -78,9 +78,11 @@ public class SleepChamber extends Block{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(worldIn.isRemote) Minecraft.getMinecraft().displayGuiScreen(new GuiSleepingChamber());
 		if(state.getValue(HALF) == SleepChamber.EnumHalf.TOP) pos = pos.down();
-		playerIn.setPosition(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
+		BlockPos pos1 = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSetPosition(pos1.toLong()));
+		//playerIn.setLocationAndAngles(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5, playerIn.getRotationYawHead(), 0);
+		if(worldIn.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiSleepingChamber);
 		return true;
 	}
 	
