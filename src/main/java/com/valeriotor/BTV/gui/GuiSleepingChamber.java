@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.SleepChamberMessage;
+import com.valeriotor.BTV.network.MessageSleepChamber;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -13,7 +13,10 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiSleepingChamber extends GuiChat{
 	// I don't have the slightest clue how the 1920x1080 black texture I made for this will work on different resolutions
 	// Also, if you do know how to make the screen progressively blacker without using such a texture, please do tell
@@ -31,7 +34,7 @@ public class GuiSleepingChamber extends GuiChat{
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		if(this.timePassed < 301) this.timePassed++;;
 		if(this.timePassed == 300) {
-			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(true));
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}
@@ -48,7 +51,7 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 1) {
-			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(false));
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(false));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 		super.actionPerformed(button);
@@ -57,7 +60,7 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode == 1) {
-			BTVPacketHandler.INSTANCE.sendToServer(new SleepChamberMessage(false));
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(false));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}else if (keyCode != 28 && keyCode != 156)
         {
