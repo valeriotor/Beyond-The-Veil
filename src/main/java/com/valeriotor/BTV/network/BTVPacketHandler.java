@@ -13,6 +13,7 @@ public class BTVPacketHandler {
 	public static void registerPackets() {
 		INSTANCE.registerMessage(MessageSleepChamber.SleepChamberMessageHandler.class, MessageSleepChamber.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSetPosition.SetPositionMessageHandler.class, MessageSetPosition.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageLocalizedMessage.LocalizedMessageMessageHandler.class, MessageLocalizedMessage.class, count++, Side.CLIENT);
 		
 	}
 	

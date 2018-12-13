@@ -39,6 +39,10 @@ public class CommonProxy {
     	
     }
     
+    public String localizeMessage(String a) {
+    	return a;
+    }
+    
     
     
 

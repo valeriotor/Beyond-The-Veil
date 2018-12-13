@@ -7,6 +7,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -59,6 +60,20 @@ public class ClientProxy extends CommonProxy {
     
     private void registerRenders() {
     	RegisterRenders.register();
+    }
+    
+    @Override
+    public String localizeMessage(String a) {
+    	String strings[] = a.split(":");
+    	String b = "";
+    	for(String s : strings) {
+    		if(s.startsWith("|")) {
+    			b = b.concat(I18n.format(s.substring(1)));
+    		}else {
+    			b = b.concat(s);
+    		}
+    	}
+    	return b;
     }
     
     

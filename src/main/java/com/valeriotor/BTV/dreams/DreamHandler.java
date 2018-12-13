@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.FumeSpreader;
 import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageLocalizedMessage;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -162,11 +165,11 @@ public class DreamHandler {
 		}
 		
 		if(isMetal) {
-			p.sendMessage(new TextComponentString(Integer.toString(sum1) + I18n.format("dreams.groundscan.iron") + (highest1 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest1)) : "")));
-			p.sendMessage(new TextComponentString(Integer.toString(sum2) + I18n.format("dreams.groundscan.gold") + (highest2 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest2)) : "")));
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(Integer.toString(sum1) + ":|dreams.groundscan.iron:" + (highest1 > 0 ? (":|dreams.groundscan.greatestconcentration:") + Integer.toString(highest1) : "")), (EntityPlayerMP) p);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(Integer.toString(sum2) + ":|dreams.groundscan.gold:" + (highest2 > 0 ? (":|dreams.groundscan.greatestconcentration:") + Integer.toString(highest2) : "")), (EntityPlayerMP) p);
 		}else {
-			p.sendMessage(new TextComponentString(Integer.toString(sum1) + I18n.format("dreams.groundscan.diamond") + (highest1 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest1)) : "")));
-			p.sendMessage(new TextComponentString(Integer.toString(sum2) + I18n.format("dreams.groundscan.emerald") + (highest2 > 0 ? (I18n.format("dreams.groundscan.greatestconcentration") + Integer.toString(highest2)) : "")));
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(Integer.toString(sum1) + ":|dreams.groundscan.diamond:" + (highest1 > 0 ? (":|dreams.groundscan.greatestconcentration:") + Integer.toString(highest1) : "")), (EntityPlayerMP) p);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(Integer.toString(sum2) + ":|dreams.groundscan.emerald:" + (highest2 > 0 ? (":|dreams.groundscan.greatestconcentration:") + Integer.toString(highest2) : "")), (EntityPlayerMP) p);
 		}
 		
 		IBlockState b = p.world.getBlockState(s);
@@ -180,9 +183,11 @@ public class DreamHandler {
 		biomes.add(BiomeRegistry.innsmouth);
 		BlockPos pos = provider.findBiomePosition(p.getPosition().getX(), p.getPosition().getZ(), 1200, biomes, r);
 		if(pos != null) {
-			p.sendMessage(new TextComponentString(I18n.format("dreams.biomesearch.innsmouth") + "x = " + pos.getX() + ", z =" + pos.getZ()));
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.biomesearch.innsmouth:" + "x = " + pos.getX() + ", z =" + pos.getZ()), (EntityPlayerMP) p);
+			//p.sendMessage(new TextComponentString(BeyondTheVeil.proxy.localizeMessage("dreams.biomesearch.innsmouth") + "x = " + pos.getX() + ", z =" + pos.getZ()));
 		}else {
-			p.sendMessage(new TextComponentString(I18n.format("dreams.biomesearch.fail")));
+			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.biomesearch.fail:"), (EntityPlayerMP) p);
+			//p.sendMessage(new TextComponentString(BeyondTheVeil.proxy.localizeMessage("dreams.biomesearch.fail")));
 		}
 		
 		IBlockState b = p.world.getBlockState(s);
