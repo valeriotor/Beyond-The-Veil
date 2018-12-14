@@ -2,6 +2,9 @@ package com.valeriotor.BTV.entities;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
@@ -31,6 +34,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
@@ -44,6 +48,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	private BlockPos home = this.getPosition();
 	private BlockPos destination;
 	private EntityPlayer customer;
+	private EntityPlayer talkingPlayer;
 	private MerchantRecipeList buyingList;
 	private int goWorshipTime;
 	private int goHomeTime;
@@ -110,7 +115,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.world.isRemote) return;
+		
 		
 		if(this.talking) {
 			this.talkTime++;
@@ -122,6 +127,17 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			return;
 		}
 		
+		if(this.talkingPlayer != null) {
+			this.getLookHelper().setLookPositionWithEntity(this.talkingPlayer, 180, 180);
+			//this.faceEntity(this.talkingPlayer, 3, 3);
+			this.getNavigator().clearPath();
+		}
+		
+		if(this.customer != null) {
+			this.faceEntity(this.customer, 180, 180);
+			this.getNavigator().clearPath();
+		}
+		if(this.world.isRemote) return;
 		if(this.home == null) return;
 		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN) {
 			if(this.world.getWorldTime() == 100) {
@@ -158,9 +174,12 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("profession", this.dataManager.get(PROFESSION));
-		compound.setLong("villageCenter", this.getVillageCenter().toLong());
-		compound.setLong("home", this.getHome().toLong());
-		compound.setLong("destination", this.destination.toLong());
+		if(this.getVillageCenter() != null && this.getHome() != null) {
+			compound.setLong("villageCenter", this.getVillageCenter().toLong());
+			compound.setLong("home", this.getHome().toLong());
+			
+		}
+		if(this.destination != null) compound.setLong("destination", this.destination.toLong());
 		compound.setInteger("drunkStatus", this.drunkStatus);
 		return super.writeToNBT(compound);
 	}
@@ -170,9 +189,14 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		super.readFromNBT(compound);
 		int id = compound.getInteger("profession");
 		this.setProfession(getProfessionByID(id));
-		this.setVillageCenter(BlockPos.fromLong(compound.getLong("villageCenter")));
-		this.setHome(BlockPos.fromLong(compound.getLong("home")));
-		this.destination = BlockPos.fromLong(compound.getLong("destination"));
+		if(compound.hasKey("villageCenter") && compound.hasKey("home")) {
+			this.setVillageCenter(BlockPos.fromLong(compound.getLong("villageCenter")));
+			this.setHome(BlockPos.fromLong(compound.getLong("home")));
+			
+		}
+		if(compound.hasKey("destination")) 
+			this.destination = BlockPos.fromLong(compound.getLong("destination"));
+		
 		this.drunkStatus = compound.getInteger("drunkStatus");
 	}
 	
@@ -223,7 +247,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
-				if(!world.isRemote)	BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(y + String.format(":|dweller.%s.greeting%d",  this.profession.getName().toLowerCase(), x)), (EntityPlayerMP)player);
+				BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(y + String.format(":|dweller.%s.greeting%d",  this.profession.getName().toLowerCase(), x)), (EntityPlayerMP)player);
 				if(this.talkCount % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				
@@ -234,13 +258,15 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			
 		//}else{
 			if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
-				
 				if(this.buyingList == null) this.populateBuyingList();
-				
-				this.setCustomer(player);
-				player.displayVillagerTradeGui(this);
 			}
 		}
+		
+		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(1);
+			this.talkingPlayer = player;
+			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+		}	
 		return EnumActionResult.SUCCESS;
 	}
 	
@@ -345,6 +371,14 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
 		
 		
+	}
+	
+	public EntityPlayerMP getTalkingPlayer() {
+		return (EntityPlayerMP)this.talkingPlayer;
+	}
+	
+	public void resetTalkingPlayer() {
+		this.talkingPlayer = null;
 	}
 
 }

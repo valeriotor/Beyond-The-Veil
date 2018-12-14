@@ -59,6 +59,7 @@ public class FlagHandler {
 	public static class Flags implements IFlags{
 		
 		private int timesDreamt = 0;
+		private int dialogueType = 0;
 		
 		@Override
 		public void setTimesDreamt(int times) {
@@ -69,6 +70,17 @@ public class FlagHandler {
 		@Override
 		public int getTimesDreamt() {
 			return this.timesDreamt;
+		}
+		
+		@Override
+		public void setDialogueType(int id) {
+			this.dialogueType = id;
+			
+		}
+
+		@Override
+		public int getDialogueType() {
+			return this.dialogueType;
 		}
 		
 		

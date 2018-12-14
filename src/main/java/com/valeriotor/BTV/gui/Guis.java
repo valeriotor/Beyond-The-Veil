@@ -4,7 +4,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+import com.valeriotor.BTV.entities.EntityHamletDweller;
+
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -15,6 +18,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Guis {
 	
 	public static String GuiSleepingChamber = "GSC";
+	
+	public static String GuiDialogueDweller = "GDD";
 	
 	private static HashMap<String, Class<? extends GuiScreen>> guis = new HashMap<>();
 	
@@ -32,6 +37,9 @@ public class Guis {
 	
 	public static void registerGuis() {
 		guis.put(GuiSleepingChamber, GuiSleepingChamber.class);
+		guis.put(GuiDialogueDweller, GuiDialogueDweller.class);
+		
+		
 	}
 	
 }

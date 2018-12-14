@@ -54,8 +54,8 @@ dweller.lhkeeper.greeting0=You are no friend of ours, outsider. No one is.
 dweller.lhkeeper.greeting1=We can't trust you outsiders. No more.
 dweller.lhkeeper.greeting2=Please, please leave us BE.
 
-dweller.bartender.talk0=Hmph. We don't appreciate outsiders coming here, but if you really need to, I won't deny you a single night's rest. There are beds up above.
-dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow.
+dweller.bartender.talk0={Hmph. }We don't appreciate outsiders coming here, but if you really need to, I won't deny you :a single night's rest. There are beds up above.
+dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow. 
 
 dweller.drunk.greeting0=A newcomer, aye? We dun't see many aoutsiders no'adays.
 dweller.drunk.greeting1=I ain't frum around here, fella. Me pa' an' me ma' was frum this Hamlet, aye, but me, I was bo'n an' rais'd elsewhar.
