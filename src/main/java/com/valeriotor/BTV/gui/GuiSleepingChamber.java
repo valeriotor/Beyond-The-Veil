@@ -26,26 +26,30 @@ public class GuiSleepingChamber extends GuiChat{
 	public void initGui()
     {
         super.initGui();
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 40, I18n.format("gui.sleep_chamber")));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 40, I18n.format("gui.sleep_chamber.wake")));
     }
-	
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		if(this.timePassed < 301) this.timePassed++;;
-		if(this.timePassed == 300) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
-			this.mc.displayGuiScreen((GuiScreen)null);
-			return;
-		}
 		GlStateManager.pushMatrix();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
-		GlStateManager.color(1, 1, 1, ((float)this.timePassed)/300);
+		GlStateManager.color(1, 1, 1, ((float)this.timePassed)/100);
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawTexturedModalRect(0, 0, 0, 0, width, height);
 		GlStateManager.popMatrix();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+	}
+	
+	@Override
+	public void updateScreen() {
+		if(this.timePassed < 100) this.timePassed++;
+		if(this.timePassed >= 100) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
+			this.mc.displayGuiScreen((GuiScreen)null);
+			return;
+		}
+		super.updateScreen();
 	}
 	
 	@Override
