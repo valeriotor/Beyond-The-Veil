@@ -22,12 +22,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiDialogueDweller extends GuiScreen {
 	
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/dialogue_box.png");
-	private int talkCount = -1;
+	private int talkCount = 0;
 	private int letterCount = 1;
 	private int intervalCount = 0;
 	private int interval = 2;
 	private int dialogueLength = 0;
-	private long timeStart;
 	private boolean ignoreDot = false;
 	private String dialogue = "";
 	
@@ -36,6 +35,11 @@ public class GuiDialogueDweller extends GuiScreen {
 	public void initGui() {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - 185, I18n.format("gui.dialogue.talk")));
         this.buttonList.add(new GuiButton(2, this.width / 2, this.height - 185, I18n.format("gui.dialogue.trade")));
+        if(this.getTalkingEntityId() == 3) {
+        	this.buttonList.get(1).enabled = false;
+        }
+        this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
+		this.dialogueLength = this.dialogue.length();
 		super.initGui();
 	}
 	
@@ -44,19 +48,6 @@ public class GuiDialogueDweller extends GuiScreen {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawModalRectWithCustomSizedTexture(this.width/4 - 10, this.height - 164, 0, 0, 512, 164, 512, 512);
 		if(this.talkCount >= 0) {
-			if(this.mc.world.getTotalWorldTime() - this.timeStart > 0) {
-				this.intervalCount++;
-				this.timeStart = this.mc.world.getTotalWorldTime();
-			}
-			
-			if(this.letterCount < this.dialogueLength) {
-			if(this.intervalCount >= this.interval) {
-				this.intervalCount = 0;
-				this.letterCount++;
-			}/*else {
-				this.intervalCount++;  This commented section was used to increment the intervalCount by fps and not by tick. Maybe will be back as a config option
-			}*/
-			}
 			this.setDialogueSpeed();
 			
 			String[] strings = this.splitStrings();
@@ -74,14 +65,35 @@ public class GuiDialogueDweller extends GuiScreen {
 	}
 	
 	@Override
+	public void updateScreen() {
+		if(this.talkCount >= 0) {
+			this.intervalCount++;
+			
+			if(this.letterCount < this.dialogueLength) {
+				if(this.intervalCount >= this.interval) {
+					this.intervalCount = 0;
+					this.letterCount++;
+					if(this.dialogue.charAt(this.letterCount - 2) == '.') this.intervalCount-=4;
+					else if(this.dialogue.charAt(this.letterCount - 2) == ',') this.intervalCount--;
+				}
+			}
+
+			this.setDialogueSpeed();
+		}
+		
+		
+		super.updateScreen();
+	}
+	
+	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id) {
 			case 1:
 				this.talkCount = (this.talkCount+1)%this.getTalkingEntityTalkCount();
 				this.letterCount = 1;
-				this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntity(), this.talkCount));
+				this.interval = 1;
+				this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
 				this.dialogueLength = this.dialogue.length();
-				this.timeStart = this.mc.world.getTotalWorldTime();
 				this.setDialogueSpeed();
 				break;
 			case 2:
@@ -97,6 +109,18 @@ public class GuiDialogueDweller extends GuiScreen {
 		if(keyCode == 1) {
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
+		}else if(keyCode == 42) {
+			StringBuilder sb = new StringBuilder(this.dialogue);
+			for(int i = 0; i < sb.length(); i++) {
+				char c = sb.charAt(i);
+				if(c == '{' || c == '[' || c == '}' || c == ']') {
+					sb.deleteCharAt(i);
+					i--;
+				}
+			}
+			this.dialogue = sb.toString();
+			this.dialogueLength = this.dialogue.length();
+			this.letterCount = this.dialogueLength - 1;
 		}
 		super.keyTyped(typedChar, keyCode);
 	}
@@ -115,21 +139,31 @@ public class GuiDialogueDweller extends GuiScreen {
 		super.onGuiClosed();
 	}
 	
-	private String getTalkingEntity() {
+	private String getTalkingEntityName() {
 		switch(this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType()) {
 			case 1:
 				return "bartender";
+			case 2:
+				return "carpenter";
+			case 3:
+				return "lhkeeper";
 			default:
 				return "";
 		}
 	}
 	
+	private int getTalkingEntityId() {
+		return this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType();
+	}
+	
 	private int getTalkingEntityTalkCount() {
 		switch(this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType()) {
 		case 1:
+		case 2:
+		case 3:
 			return 2;
 		default:
-			return 0;
+			return 1;
 		}
 	}
 	
@@ -157,7 +191,10 @@ public class GuiDialogueDweller extends GuiScreen {
 			this.interval = 2;
 			break;
 		case '[':
-			this.interval = 3;
+			this.interval = 5;
+			break;
+		case '|':
+			this.intervalCount -= 8;
 			break;
 		case '}':
 		case ']':
@@ -165,14 +202,6 @@ public class GuiDialogueDweller extends GuiScreen {
 			break;
 		default:
 			deleteChar = false;
-		}
-		if(this.letterCount > 1) {
-			if(this.dialogue.charAt(this.letterCount - 2) == '.') {
-				if(!this.ignoreDot) this.intervalCount-=4;
-				this.ignoreDot = true;
-			}else {
-				this.ignoreDot = false;
-			}
 		}
 		if(deleteChar) {
 			StringBuilder sb = new StringBuilder(this.dialogue);

@@ -3,6 +3,7 @@ package com.valeriotor.BTV.entities;
 import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
@@ -71,7 +72,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
 		this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
 		if(home!= null) this.setPosition(home.getX(), home.getY(), home.getZ());
-		this.populateBuyingList();
+		//this.populateBuyingList();
 	}
 	
 	@Override
@@ -116,6 +117,21 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		
+		if(this.talkingPlayer != null) {
+			this.faceEntity(this.talkingPlayer, 180, 180);
+			int n = (int) (this.world.getWorldTime() % 20);
+			if(n == 0) this.motionX = 0.002;
+			else if(n == 10) this.motionX = -0.002;
+			this.getNavigator().clearPath();
+		}
+		
+		if(this.customer != null) {
+			this.faceEntity(this.customer, 180, 180);
+			int n = (int) (this.world.getWorldTime() % 20);
+			if(n == 0) this.motionX = 0.005;
+			else if(n == 10) this.motionX = -0.005; 
+			this.getNavigator().clearPath();
+		}
 		
 		if(this.talking) {
 			this.talkTime++;
@@ -127,16 +143,6 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			return;
 		}
 		
-		if(this.talkingPlayer != null) {
-			this.getLookHelper().setLookPositionWithEntity(this.talkingPlayer, 180, 180);
-			//this.faceEntity(this.talkingPlayer, 3, 3);
-			this.getNavigator().clearPath();
-		}
-		
-		if(this.customer != null) {
-			this.faceEntity(this.customer, 180, 180);
-			this.getNavigator().clearPath();
-		}
 		if(this.world.isRemote) return;
 		if(this.home == null) return;
 		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN) {
@@ -221,15 +227,20 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		return this.home;
 	}
 	
-	private static EntityHamletDweller.ProfessionsEnum getProfessionByID(int id){
-		EntityHamletDweller.ProfessionsEnum temp = EntityHamletDweller.ProfessionsEnum.values()[id];
-		return temp;
+	public static EntityHamletDweller.ProfessionsEnum getProfessionByID(int id){
+		EntityHamletDweller.ProfessionsEnum values[] = EntityHamletDweller.ProfessionsEnum.values();
+		if(id < 0 || id >= values.length) {
+			System.out.println("ERROR: getProfessionByID has received a parameter out of range.");
+			return values[0];
+		}
+		return values[id];
 	}
 	
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 
 		this.faceEntity(player, 180F, 180F);
+		this.motionX = 0.01;
 		this.talking = true;
 		if(!world.isRemote) {
 			
@@ -239,7 +250,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				this.thirsty = false;
 				if(this.drunkStatus == 7) this.talkCount = 0;
 				return EnumActionResult.SUCCESS;
-			}else if(this.getProfession() != EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+			}else if(!this.doesOpenGui()) {
 				int x = this.drunkStatus < 7 ? this.talkCount%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(this.talkCount, 7) + 28;
 				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
 				if(this.drunkStatus > 2) y = y.concat("§o");
@@ -253,20 +264,23 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				
 				this.talkCount++;
 				
-				
 			}
 			
-		//}else{
-			if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+			if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 				if(this.buyingList == null) this.populateBuyingList();
 			}
 		}
-		
-		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+		if(this.doesOpenGui()) this.talkingPlayer = player;
+		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER ) {
 			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(1);
-			this.talkingPlayer = player;
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}	
+		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER)	{
+			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(2);
+			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
+			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(3);
+			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+		}
 		return EnumActionResult.SUCCESS;
 	}
 	
@@ -363,13 +377,16 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	private void populateBuyingList() {
 		if(this.buyingList == null) this.buyingList = new MerchantRecipeList();
-		
-		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 1)));
-		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_PICKAXE, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.mead, 1)));
-		this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 64), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
-		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 64), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
-		this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
-		
+		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_PICKAXE, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.mead, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 64), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 64), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
+		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.canoe, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 32)));
+		}
 		
 	}
 	
@@ -379,6 +396,14 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	public void resetTalkingPlayer() {
 		this.talkingPlayer = null;
+	}
+	
+	public boolean doesOpenGui() {
+		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER ||
+		   this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
+			return true;
+		}
+		return false;
 	}
 
 }

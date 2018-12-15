@@ -11,6 +11,9 @@ public interface IFlags {
 	 */
 	public void setDialogueType(int id);
 	
+	/** Gets the entity the player is talking to, for easy client side access
+	 *  @param id 0 for null, 1 for Dweller Bartender, 2 for Dweller Carpenter, 3 for Dweller Lighthouse Keeper
+	 */
 	public int getDialogueType();
 	
 	
