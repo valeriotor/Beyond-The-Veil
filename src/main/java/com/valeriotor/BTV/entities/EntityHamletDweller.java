@@ -169,6 +169,11 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			}
 		}
 		
+		if(this.isInWater() && this.world.getBlockState(this.getPosition().offset(this.getHorizontalFacing()).down()) != Blocks.WATER) {
+			this.motionY += 0.1;
+			this.setMoveForward((float) 0.3);
+		}
+		
 		
 	}
 	

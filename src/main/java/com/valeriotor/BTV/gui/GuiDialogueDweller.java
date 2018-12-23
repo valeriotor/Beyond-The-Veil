@@ -106,14 +106,14 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		if(keyCode == 1) {
+		if(keyCode == 1 || keyCode == 18) {
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
-		}else if(keyCode == 42) {
+		}else if(keyCode == 42 || keyCode == 28) {
 			StringBuilder sb = new StringBuilder(this.dialogue);
 			for(int i = 0; i < sb.length(); i++) {
 				char c = sb.charAt(i);
-				if(c == '{' || c == '[' || c == '}' || c == ']') {
+				if(c == '{' || c == '[' || c == '}' || c == ']' || c == '|') {
 					sb.deleteCharAt(i);
 					i--;
 				}
