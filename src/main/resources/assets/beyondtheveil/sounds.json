@@ -24,5 +24,11 @@
 			"beyondtheveil:canoe_creak_6",
 			"beyondtheveil:canoe_creak_7"
 		]
+	},
+	"flute":{
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:flute"
+		]
 	}
 }

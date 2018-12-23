@@ -26,6 +26,7 @@ public class ItemRegistry {
 	public static final ItemDrink vodka = new ItemDrink("drink_vodka");
 	public static final ItemDrink mead = new ItemDrink("drink_mead");
 	public static final ItemDrink cup = new ItemDrink("drink_empty");
+	public static final ItemFlute flute = new ItemFlute();
 	
 	
     public static void initModels() {
@@ -40,6 +41,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(vodka, 0, "inventory");
         ClientProxy.registerItemRenderer(mead, 0, "inventory");
         ClientProxy.registerItemRenderer(cup, 0, "inventory");
+        ClientProxy.registerItemRenderer(flute, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -91,5 +93,6 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.vodka);
     	event.getRegistry().register(ItemRegistry.mead);
     	event.getRegistry().register(ItemRegistry.cup);
+    	event.getRegistry().register(ItemRegistry.flute);
     }
 }

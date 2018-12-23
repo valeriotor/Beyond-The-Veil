@@ -17,4 +17,7 @@ public final class BTVSounds {
 	@ObjectHolder("canoe_creak")
 	public static final SoundEvent canoeCreak = new SoundEvent(new ResourceLocation(References.MODID, "canoe_creak")).setRegistryName("canoe_creak");
 	
+	@ObjectHolder("flute")
+	public static final SoundEvent flute = new SoundEvent(new ResourceLocation(References.MODID, "flute")).setRegistryName("flute");
+	
 }

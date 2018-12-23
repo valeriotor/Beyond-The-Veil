@@ -3,8 +3,9 @@ item.slug.name=Slug
 item.slugcatcher.name=Slug Catcher
 item.testitem.name=Test Item
 item.canoe.name=Canoe
+item.flute.name=Flute of the Outer Gods
 
-
+lore.flute=The sensation you get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in your world.. and yet it's there, in your hands.
 
 
 tile.barrel.name=Barrel
