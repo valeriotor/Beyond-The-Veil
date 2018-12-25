@@ -3,14 +3,17 @@ package com.valeriotor.BTV.events;
 import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.EnumHand;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,7 +43,7 @@ public class PlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void tickevent(PlayerTickEvent event) {
+	public static void tickEvent(PlayerTickEvent event) {
 		
 		//Canoe Gifts
 		if(!event.player.world.isRemote && event.player.getRidingEntity() instanceof EntityCanoe && (event.player.world.getBiome(event.player.getPosition()) == Biomes.OCEAN 
@@ -60,6 +63,24 @@ public class PlayerEvents {
 		
 		// Reset times dreamt
 		if(event.player.world.getWorldTime() == 10) event.player.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0); 
+	}
+	
+	@SubscribeEvent
+	public static void damageEvent(LivingDamageEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer)event.getEntityLiving();
+			EnumHand h = EnumHand.MAIN_HAND;
+			ItemStack stack = null;
+			if(p.getHeldItemMainhand().getItem() == ItemRegistry.flute) {
+				stack = p.getHeldItemMainhand();
+			}else if(p.getHeldItemOffhand().getItem() == ItemRegistry.flute){
+				stack = p.getHeldItemOffhand();
+			}
+			if(stack != null) {
+				if(stack.getItemDamage() < 150)
+				stack.setItemDamage(150);
+			}
+		}
 	}
 	
 	

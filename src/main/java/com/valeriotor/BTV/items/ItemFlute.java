@@ -28,6 +28,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.IPlayerWarp;
+import thaumcraft.api.capabilities.IPlayerWarp.EnumWarpType;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class ItemFlute extends Item{
 	public ItemFlute() {
@@ -68,17 +72,30 @@ public class ItemFlute extends Item{
 	
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase player) {
+		if(stack.isItemDamaged()) return super.onItemUseFinish(stack, worldIn, player);
 		stack.damageItem(240, player);
 		BlockPos pos = player.getPosition();
 		worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), BTVSounds.flute, SoundCategory.PLAYERS, 1, 1, false);
 		AxisAlignedBB bb = new AxisAlignedBB(player.getPosition().add(-10, -6, -10), player.getPosition().add(10, 6, 10));
 		List<Entity> entities = player.world.getEntitiesWithinAABBExcludingEntity(player, bb);
 		entities.forEach(e -> {
-			if(e instanceof EntityLivingBase) {
-				((EntityLivingBase) e).addPotionEffect(new PotionEffect(PotionRegistry.folly, 300));
-				((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 120));
+			if(e instanceof EntityLivingBase && e.isNonBoss()) {
+				((EntityLivingBase) e).addPotionEffect(new PotionEffect(PotionRegistry.folly, 250));
+				((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300));
 			}
 		});
+		IPlayerWarp w = ThaumcraftCapabilities.getWarp((EntityPlayer) player);
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge((EntityPlayer) player);
+		if(!k.isResearchKnown("FIRSTDREAMS")) {
+			// TODO: Change research known requirement
+			player.addPotionEffect(new PotionEffect(PotionRegistry.folly, 300));
+			if(w.get(EnumWarpType.PERMANENT) < 3 ) {
+				// TODO: Learn how much warp is 'enough'
+				player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 120));
+				w.add(EnumWarpType.PERMANENT, 1);
+				
+			}
+		}
 		return super.onItemUseFinish(stack, worldIn, player);
 	}
 	
