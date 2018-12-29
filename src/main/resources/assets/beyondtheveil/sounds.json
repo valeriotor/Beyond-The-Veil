@@ -30,5 +30,17 @@
 		"sounds": [
 			"beyondtheveil:flute"
 		]
+	},
+	"sawcleavertransform":{
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:sawcleavertransform"
+		]
+	},
+	"sawcleavertransformattack":{
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:sawcleavertransformattack"
+		]
 	}
 }

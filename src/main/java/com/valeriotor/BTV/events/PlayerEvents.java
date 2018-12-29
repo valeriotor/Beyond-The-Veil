@@ -77,7 +77,7 @@ public class PlayerEvents {
 				stack = p.getHeldItemOffhand();
 			}
 			if(stack != null) {
-				if(stack.getItemDamage() < 150)
+				if(p.getItemInUseCount() > 0)
 				stack.setItemDamage(150);
 			}
 		}

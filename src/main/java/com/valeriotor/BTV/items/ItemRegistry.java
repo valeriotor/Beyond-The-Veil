@@ -3,7 +3,9 @@ package com.valeriotor.BTV.items;
 import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -27,6 +29,7 @@ public class ItemRegistry {
 	public static final ItemDrink mead = new ItemDrink("drink_mead");
 	public static final ItemDrink cup = new ItemDrink("drink_empty");
 	public static final ItemFlute flute = new ItemFlute();
+	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
 	
 	
     public static void initModels() {
@@ -42,6 +45,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(mead, 0, "inventory");
         ClientProxy.registerItemRenderer(cup, 0, "inventory");
         ClientProxy.registerItemRenderer(flute, 0, "inventory");
+        ClientProxy.registerItemRenderer(saw_cleaver, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -94,5 +98,6 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.mead);
     	event.getRegistry().register(ItemRegistry.cup);
     	event.getRegistry().register(ItemRegistry.flute);
+    	event.getRegistry().register(ItemRegistry.saw_cleaver);
     }
 }
