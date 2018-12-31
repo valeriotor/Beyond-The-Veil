@@ -5,6 +5,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
@@ -17,7 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientEvents {
 	
-	private int lastKeyPressed = -1;
 	private int count = 0;
 	private KeyBinding binds[] = {
 			Minecraft.getMinecraft().gameSettings.keyBindForward,
@@ -29,15 +29,16 @@ public class ClientEvents {
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
 		if(event.phase.equals(Phase.END)) {
-			if(!Minecraft.getMinecraft().isGamePaused() && Minecraft.getMinecraft().player != null) {
-			if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver) {
+			EntityPlayerSP p = Minecraft.getMinecraft().player;
+			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
+			if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver && !p.isInWater()) {
 				if(ClientProxy.handler.dodge.isPressed() && count > 4) {
 					int conto = 0;
 					int direction[] = {-1,-1};
 					for(int i = 0; i < 4; i++) {
 						if(binds[i].isKeyDown()) {
 							conto++;
-							if(conto == 1) direction[0] = i;
+							if(conto > 0) direction[0] = i;
 							if(conto == 2) direction[1] = i;
 						}
 					}
@@ -76,8 +77,8 @@ public class ClientEvents {
 			mX = -mZ;
 			mZ = tmp;
 		}
-		p.motionX = mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
-		p.motionZ = mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
+		p.motionX += mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
+		p.motionZ += mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 	}
 	
 	
