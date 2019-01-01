@@ -49,6 +49,8 @@ public class DreamHandler {
 			scanGround(p, false, p.world, SpreaderLocation);
 			}else if(aspect.equals("Tenebrae")) {
 			searchInnsmouth(p, p.world, p.world.rand, SpreaderLocation);
+			}else if(aspect.equals("Cognitio")) {
+			searchVillage(p, p.world, SpreaderLocation);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -74,7 +76,7 @@ public class DreamHandler {
 	}
 	
 	private static void dreamWeight(int bas, int alc, int inf, int art, int gol, int aur, IPlayerKnowledge k, EntityPlayer p, BlockPos s) {
-		int r = new Random().nextInt(100);
+		int r = new Random().nextInt(50);
 		boolean didUse = true;
 		if(r<bas) {
 			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BASICS"), 10);
@@ -172,11 +174,21 @@ public class DreamHandler {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(Integer.toString(sum2) + ":|dreams.groundscan.emerald:" + (highest2 > 0 ? (":|dreams.groundscan.greatestconcentration:") + Integer.toString(highest2) : "")), (EntityPlayerMP) p);
 		}
 		
-		IBlockState b = p.world.getBlockState(s);
-		p.world.getTileEntity(s).getTileData().removeTag("containing");
-		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
 	}
 	
+	/** Attempts to locate a Voided Biome within a 1200 block radius. The presence of a hamlet is not guaranteed. 
+	 * It then informs the player of the coordinates, if they aren't null.
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param r A Random, usually world.rand
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
 	private static void searchInnsmouth(EntityPlayer p, World w, Random r, BlockPos s) {
 		final BiomeProvider provider = w.getBiomeProvider();
 		List<Biome> biomes = new ArrayList<Biome>();
@@ -184,16 +196,33 @@ public class DreamHandler {
 		BlockPos pos = provider.findBiomePosition(p.getPosition().getX(), p.getPosition().getZ(), 1200, biomes, r);
 		if(pos != null) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.biomesearch.innsmouth:" + "x = " + pos.getX() + ", z =" + pos.getZ()), (EntityPlayerMP) p);
-			//p.sendMessage(new TextComponentString(BeyondTheVeil.proxy.localizeMessage("dreams.biomesearch.innsmouth") + "x = " + pos.getX() + ", z =" + pos.getZ()));
 		}else {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.biomesearch.fail:"), (EntityPlayerMP) p);
-			//p.sendMessage(new TextComponentString(BeyondTheVeil.proxy.localizeMessage("dreams.biomesearch.fail")));
 		}
 		
-		IBlockState b = p.world.getBlockState(s);
-		p.world.getTileEntity(s).getTileData().removeTag("containing");
-		p.world.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(s))-5), 2);
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
 	
+	}
+	
+	/** Attempts to locate a Village, using the same method of the /locate command.
+	 * It then informs the player of the coordinates, if they aren't null.
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
+	private static void searchVillage(EntityPlayer p, World w, BlockPos s) {
+		BlockPos pos = w.findNearestStructure("Village", s, false);
+		if(pos != null) BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.villagesearch.success:" + "x = " + pos.getX() + ", z =" + pos.getZ()), (EntityPlayerMP) p);
+		else BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage("|dreams.villagesearch.fail:"), (EntityPlayerMP) p);
+		
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
 	}
 }
 

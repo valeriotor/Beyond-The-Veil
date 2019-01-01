@@ -32,7 +32,7 @@ public class PlayerEvents {
 			k.addResearch("!didDream");
 			k.sync((EntityPlayerMP)event.getEntityPlayer());
 		}else if(event.getEntityPlayer() != null && k.isResearchKnown("FIRSTDREAMS")) {
-			DreamHandler.chooseDream(event.getEntityPlayer(), k);
+			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), k);
 			event.getEntityPlayer().getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0);
 		}
 		}
