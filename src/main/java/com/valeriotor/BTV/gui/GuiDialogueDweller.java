@@ -27,6 +27,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	private int intervalCount = 0;
 	private int interval = 2;
 	private int dialogueLength = 0;
+	private int selectedOption = -1;
 	private boolean ignoreDot = false;
 	private String dialogue = "";
 	
@@ -47,16 +48,31 @@ public class GuiDialogueDweller extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawModalRectWithCustomSizedTexture(this.width/4 - 10, this.height - 164, 0, 0, 512, 164, 512, 512);
-		if(this.talkCount >= 0) {
 			this.setDialogueSpeed();
 			
-			String[] strings = this.splitStrings();
+			String[] strings = this.splitStrings(this.dialogue);
 			for(int i = 0; i < strings.length; i++) {
-				if(this.letterCount > this.getPreviousStringsLength(i)) {
-					String toWrite = strings[i].substring(0, Math.min(strings[i].length(), Math.max(0, this.letterCount - 1 - this.getPreviousStringsLength(i))));
+				if(this.letterCount > this.getPreviousStringsLength(i, this.dialogue)) {
+					String toWrite = strings[i].substring(0, Math.min(strings[i].length(), Math.max(0, this.letterCount - 1 - this.getPreviousStringsLength(i, this.dialogue))));
 					drawString(mc.fontRenderer, toWrite, this.width/4 + 12, this.height + (i * 15) - 140, 0xFFFFFF);
 				}
 			}
+			String option0 = this.getDialogueOption(0);
+			String option1 = this.getDialogueOption(1);
+			if(option0 != null && option1 != null && this.letterCount == this.dialogueLength) {
+				String[] option0split = this.splitStrings(option0);
+				for(int i = 0; i < option0split.length; i++) {
+						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, option0.length() - 1 - this.getPreviousStringsLength(i, option0))));
+						drawString(mc.fontRenderer, toWrite, this.width/4 + 62, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
+					
+				}
+				
+				String[] option1split = this.splitStrings(option1);
+				for(int i = 0; i < option1split.length; i++) {
+						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, option1.length() - 1 - this.getPreviousStringsLength(i, option1))));
+						drawString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
+					
+				}
 			
 		}
 		
@@ -66,7 +82,6 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	@Override
 	public void updateScreen() {
-		if(this.talkCount >= 0) {
 			this.intervalCount++;
 			
 			if(this.letterCount < this.dialogueLength) {
@@ -79,7 +94,6 @@ public class GuiDialogueDweller extends GuiScreen {
 			}
 
 			this.setDialogueSpeed();
-		}
 		
 		
 		super.updateScreen();
@@ -89,12 +103,8 @@ public class GuiDialogueDweller extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id) {
 			case 1:
-				this.talkCount = (this.talkCount+1)%this.getTalkingEntityTalkCount();
-				this.letterCount = 1;
-				this.interval = 1;
-				this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
-				this.dialogueLength = this.dialogue.length();
-				this.setDialogueSpeed();
+				if(this.selectedOption != -1) break;
+				proceedDialogue(false);
 				break;
 			case 2:
 				this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(0);
@@ -109,7 +119,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		if(keyCode == 1 || keyCode == 18) {
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
-		}else if(keyCode == 42 || keyCode == 28) {
+		}else if(keyCode == 42 || keyCode == 54) {
 			StringBuilder sb = new StringBuilder(this.dialogue);
 			for(int i = 0; i < sb.length(); i++) {
 				char c = sb.charAt(i);
@@ -120,10 +130,19 @@ public class GuiDialogueDweller extends GuiScreen {
 			}
 			this.dialogue = sb.toString();
 			this.dialogueLength = this.dialogue.length();
-			this.letterCount = this.dialogueLength - 1;
-		}
+			this.letterCount = this.dialogueLength;
+		}else if(keyCode == 28) {
+			if(this.letterCount != this.dialogueLength) return;
+			if(this.selectedOption != -1) {
+				proceedDialogue(true);
+			}else {
+				proceedDialogue(false);
+			}
+		}else if(keyCode == 203 && this.selectedOption == 1) this.selectedOption = 0;
+		else if(keyCode == 205 && this.selectedOption == 0) this.selectedOption = 1; 
 		super.keyTyped(typedChar, keyCode);
 	}
+	
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -171,12 +190,12 @@ public class GuiDialogueDweller extends GuiScreen {
 		}
 	}
 	
-	private String[] splitStrings() {
-		return this.dialogue.split(":");
+	private String[] splitStrings(String string) {
+		return string.split(":");
 	}
 	
-	private int getPreviousStringsLength(int index) {
-		String[] strings = this.splitStrings();
+	private int getPreviousStringsLength(int index, String string) {
+		String[] strings = this.splitStrings(string);
 		int total = 0;
 		if(index < 0 || index > strings.length -1) {
 			return 0;
@@ -192,7 +211,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		
 		switch(this.dialogue.charAt(this.letterCount - 1)) {
 		case '{':
-			this.interval = 2;
+			this.interval += 1;
 			break;
 		case '[':
 			this.interval = 5;
@@ -216,4 +235,23 @@ public class GuiDialogueDweller extends GuiScreen {
 		
 	}
 	
+	private String getDialogueOption(int id) {
+		String string = I18n.format(String.format("dweller.%s.talk%d.option%d", this.getTalkingEntityName(), this.talkCount, id));
+		if(string.substring(0, 7).equals("dweller")) string = null;
+		return string;
+	}
+	
+	private void proceedDialogue(boolean option) {
+		int tmp = this.talkCount;
+		this.talkCount = option ? -1 : (this.talkCount+1)%this.getTalkingEntityTalkCount();
+		this.letterCount = 1;
+		this.interval = 1;
+		String newDialogue = String.format("dweller.%s.talk%d", this.getTalkingEntityName(), option ? tmp : this.talkCount);
+		if(option) newDialogue = newDialogue.concat(String.format(".reply%d" , this.selectedOption));
+		this.dialogue = I18n.format(newDialogue);
+		this.dialogueLength = this.dialogue.length();
+		this.setDialogueSpeed();
+		if(this.getDialogueOption(0) != null) this.selectedOption = 0;
+		else this.selectedOption = -1;
+	}
 }

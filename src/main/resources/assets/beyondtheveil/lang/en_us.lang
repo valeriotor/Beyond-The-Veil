@@ -107,10 +107,14 @@ dweller.bartender.talk0={Hmph. }We don't appreciate outsiders coming here, but i
 dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow. 
 
 dweller.carpenter.talk0={Hmm, hmm. }:Greetings.
-dweller.carpenter.talk1=Got n'thing to say to ye.
+dweller.carpenter.talk1=Got n'thing to say to ye. 
 
 dweller.lhkeeper.talk0=Oh.| {A traveller}[... ] :Welcome.
 dweller.lhkeeper.talk1=PLACEHOLDER DIALOGUE.
+dweller.lhkeeper.talk1.option0=Test option:Please ignore
+dweller.lhkeeper.talk1.option1=Another test:Still ignore
+dweller.lhkeeper.talk1.reply0=There is no right answer. :But know that I {despise} those who think the way you do.
+dweller.lhkeeper.talk1.reply1=That is what I think as well. :But your forefather knew better, didn't they?
 
 
 dreams.groundscan.iron= blocks of iron ore were found in the ground below you
