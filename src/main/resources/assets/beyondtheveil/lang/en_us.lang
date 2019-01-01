@@ -4,9 +4,16 @@ item.slugcatcher.name=Slug Catcher
 item.testitem.name=Test Item
 item.canoe.name=Canoe
 item.flute.name=Flute of The Outer Gods
+item.saw_cleaver.name=Saw Cleaver
+item.drink_ale.name=Cup of Ale
+item.drink_mead.name=Cup of Mead
+item.drink_rum.name=Cup of Rum
+item.drink_vodka.name=Cup of Vodka
+item.drink_wine.name=Cup of Wine
+item.drink_empty.name=Empty Cup
 
 lore.flute=The sensation you get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in your world.. and yet it's there, in your hands.
-
+lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables you to dodge in the same style of its ancient owners.
 
 tile.barrel.name=Barrel
 tile.bricks_blue.name=Blue Bricks
@@ -24,10 +31,12 @@ tile.lamp.name=Lamp
 tile.slug_bait.name=Slug Bait
 tile.worn_bricks.name=Worn Bricks
 tile.worn_brick_stairs.name=Worn Brick Stairs
+tile.sleep_chamber.name=Sleep Chamber
 
 
 gui.dialogue.talk=Talk
 gui.dialogue.trade=Trade
+gui.sleep_chamber.wake=Wake Up
 
 
 entity.deep_one.name=Deep One
@@ -112,3 +121,6 @@ dreams.groundscan.greatestconcentration=, with the greatest concentration at y-l
 
 dreams.biomesearch.innsmouth=Found Voided Biome at 
 dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
+
+dreams.villagesearch.success=Found Village at 
+dreams.villagesearch.fail=No villages found

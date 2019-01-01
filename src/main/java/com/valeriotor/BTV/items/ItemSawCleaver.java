@@ -10,6 +10,8 @@ import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessagePlaySound;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -136,6 +138,12 @@ public class ItemSawCleaver extends ItemSword{
 				
 			}
 		});
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
 	
