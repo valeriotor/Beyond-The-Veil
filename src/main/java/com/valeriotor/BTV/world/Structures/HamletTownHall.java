@@ -3,6 +3,7 @@ package com.valeriotor.BTV.world.Structures;
 import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.EntityHamletDweller;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -100,6 +101,18 @@ public class HamletTownHall extends HamletStructure{
 	@Override
 	public void doorRoads() {
 		this.roadHelper(doorCoords);
+	}
+	
+	@Override
+	public void spawnHamletDwellers() {
+		BlockPos home = this.getPosFromArray(villagerCoords, this.facing);
+		EntityHamletDweller h = new EntityHamletDweller(this.world);
+		h.setProfession(EntityHamletDweller.ProfessionsEnum.SCHOLAR);
+		h.setHome(home);
+		h.setVillageCenter(this.villageCenter);
+		h.setPosition(home.getX(), home.getY(), home.getZ());
+		this.world.spawnEntity(h);
+		
 	}
 	
 	int[][] dark_sand = { 
@@ -389,5 +402,7 @@ public class HamletTownHall extends HamletStructure{
 			}; 
 			
 			int[] doorCoords = {0,-1,6};
+			
+			int[] villagerCoords = {0, 4, 0};
 	
 }

@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -162,8 +163,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			else if(Math.abs(this.world.getWorldTime() - this.goHomeTime) < 1000 || Math.abs(this.world.getWorldTime() - 23500) < 1000) {
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
-		}else if(this.profession == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ||
-				this.profession == EntityHamletDweller.ProfessionsEnum.STOCKPILER || this.profession == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
+		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK ||
+				this.getProfession() == EntityHamletDweller.ProfessionsEnum.STOCKPILER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER ||
+						this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR || this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
 			if((this.world.getWorldTime()&1023) == 0) {
 				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
 			}
@@ -285,6 +287,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
 			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(3);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR) {
+			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(4);
+			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}
 		return EnumActionResult.SUCCESS;
 	}
@@ -303,12 +308,13 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	public static enum ProfessionsEnum{
 		FISHERMAN(0, 4),
-		BARTENDER(1, 2),
+		BARTENDER(1, 0),
 		MINER(2, 0),
-		LHKEEPER(3, 3),
+		LHKEEPER(3, 0),
 		STOCKPILER(4, 4),
 		DRUNK(5, 4),
-		CARPENTER(6, 3);
+		CARPENTER(6, 0),
+		SCHOLAR(7, 0);
 		
 		private final int id;
 		private final int talkCount;
@@ -405,7 +411,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	public boolean doesOpenGui() {
 		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER ||
-		   this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
+		   this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR) {
 			return true;
 		}
 		return false;

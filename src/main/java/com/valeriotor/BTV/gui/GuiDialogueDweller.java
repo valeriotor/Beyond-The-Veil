@@ -35,7 +35,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	public void initGui() {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - 185, I18n.format("gui.dialogue.talk")));
         this.buttonList.add(new GuiButton(2, this.width / 2, this.height - 185, I18n.format("gui.dialogue.trade")));
-        if(this.getTalkingEntityId() == 3) {
+        if(this.getTalkingEntityId() == 3 || this.getTalkingEntityId() == 4) {
         	this.buttonList.get(1).enabled = false;
         }
         this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
@@ -147,6 +147,8 @@ public class GuiDialogueDweller extends GuiScreen {
 				return "carpenter";
 			case 3:
 				return "lhkeeper";
+			case 4:
+				return "scholar";
 			default:
 				return "";
 		}
@@ -161,6 +163,8 @@ public class GuiDialogueDweller extends GuiScreen {
 		case 1:
 		case 2:
 		case 3:
+			return 2;
+		case 4:
 			return 2;
 		default:
 			return 1;
