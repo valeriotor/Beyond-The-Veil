@@ -281,8 +281,10 @@ public class FumeSpreader extends Block implements ITileEntityProvider{
 			if(playerIn.getHeldItem(hand) != null) {
 				if(playerIn.getHeldItem(hand).getItem() == ItemsTC.crystalEssence && getTE(worldIn,pos).getTileData().getString("containing").isEmpty()) {
 					Aspect o = thaumcraft.api.aspects.AspectHelper.getObjectAspects(playerIn.getHeldItem(hand)).getAspects()[0];
-					getTE(worldIn, pos).setAspect(o);
-					getTE(worldIn, pos).getTileData().setString("containing", o.getName());
+					if(!worldIn.isRemote) {
+						getTE(worldIn, pos).setAspect(o);
+						getTE(worldIn, pos).getTileData().setString("containing", o.getName());
+					}	
 					playerIn.getHeldItem(hand).shrink(1);
 					
 				}else {
