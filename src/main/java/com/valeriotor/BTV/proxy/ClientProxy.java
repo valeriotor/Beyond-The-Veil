@@ -68,19 +68,6 @@ public class ClientProxy extends CommonProxy {
     	RegisterRenders.register();
     }
     
-    @Override
-    public String localizeMessage(String a) {
-    	String strings[] = a.split(":");
-    	String b = "";
-    	for(String s : strings) {
-    		if(s.startsWith("|")) {
-    			b = b.concat(I18n.format(s.substring(1)));
-    		}else {
-    			b = b.concat(s);
-    		}
-    	}
-    	return b;
-    }
     
     
 	

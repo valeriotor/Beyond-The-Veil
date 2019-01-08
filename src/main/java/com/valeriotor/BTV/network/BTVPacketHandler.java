@@ -14,7 +14,6 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSleepChamber.SleepChamberMessageHandler.class, MessageSleepChamber.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSetPosition.SetPositionMessageHandler.class, MessageSetPosition.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageOpenTradeGui.OpenTradeGuiMessageHandler.class, MessageOpenTradeGui.class, count++, Side.SERVER);
-		INSTANCE.registerMessage(MessageLocalizedMessage.LocalizedMessageMessageHandler.class, MessageLocalizedMessage.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		
 	}

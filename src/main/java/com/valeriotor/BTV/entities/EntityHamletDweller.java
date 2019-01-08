@@ -10,7 +10,6 @@ import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageLocalizedMessage;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IMerchant;
@@ -37,6 +36,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
@@ -265,7 +265,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
-				BTVPacketHandler.INSTANCE.sendTo(new MessageLocalizedMessage(y + String.format(":|dweller.%s.greeting%d",  this.profession.getName().toLowerCase(), x)), (EntityPlayerMP)player);
+				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), x)).getFormattedText()));
 				if(this.talkCount % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				

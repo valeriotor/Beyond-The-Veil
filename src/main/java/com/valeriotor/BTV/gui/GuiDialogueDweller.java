@@ -6,7 +6,6 @@ import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageLocalizedMessage;
 import com.valeriotor.BTV.network.MessageOpenTradeGui;
 
 import net.minecraft.client.Minecraft;

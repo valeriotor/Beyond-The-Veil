@@ -123,14 +123,14 @@ dweller.lhkeeper.talk1.reply0=There is no right answer. :But know that I {despis
 dweller.lhkeeper.talk1.reply1=That is what I think as well. :But your forefather knew better, didn't they?
 
 
-dreams.groundscan.iron= blocks of iron ore were found in the ground below you
-dreams.groundscan.gold= blocks of gold ore were found in the ground below you
-dreams.groundscan.diamond= blocks of diamond ore were found in the ground below you
-dreams.groundscan.emerald= blocks of emerald ore were found in the ground below you
-dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: 
+dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s
+dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s
+dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below you%2$s
+dreams.groundscan.emerald=%1$s blocks of emerald ore were found in the ground below you%2$s
+dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: %1$s
 
-dreams.biomesearch.innsmouth=Found Voided Biome at 
+dreams.biomesearch.innsmouth=Found Voided Biome at x: %1$s, z: %2$s
 dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
 
-dreams.villagesearch.success=Found Village at 
+dreams.villagesearch.success=Found Village at at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No villages found
