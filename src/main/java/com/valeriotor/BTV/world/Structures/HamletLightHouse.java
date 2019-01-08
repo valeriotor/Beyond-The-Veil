@@ -5,10 +5,13 @@ import java.util.Random;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.world.Structures.loot.LootTables;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -119,7 +122,12 @@ public class HamletLightHouse extends HamletStructure{
 			}
 		
 		thaumcraft.api.ThaumcraftInvHelper.insertStackAt(this.world, this.getPosFromArray(this.pedestal_ancient[0], this.facing), EnumFacing.UP, new ItemStack(thaumcraft.api.items.ItemsTC.curio, 1, 3), false);
-		
+		for(int[] n : this.chest) {
+			TileEntity t = world.getTileEntity(this.getPosFromArray(n, facing));
+			if(t instanceof TileEntityChest) {
+				((TileEntityChest)t).setLootTable(LootTables.hamletLightHouse, r.nextLong());
+			}
+		}
 		
 	}
 	

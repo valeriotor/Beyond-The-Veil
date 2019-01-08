@@ -4,9 +4,12 @@ import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.world.Structures.loot.LootTables;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -95,6 +98,13 @@ public class HamletTownHall extends HamletStructure{
 			for(int[] n : this.bookshelf) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.BOOKSHELF.getStateFromMeta(n[3]));
 			for(int[] n : this.web) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.WEB.getStateFromMeta(n[3]));
 			}
+		
+		for(int[] n : this.chest) {
+			TileEntity t = world.getTileEntity(this.getPosFromArray(n, facing));
+			if(t instanceof TileEntityChest) {
+				((TileEntityChest)t).setLootTable(LootTables.hamletTownHall, r.nextLong());
+			}
+		}
 		
 	}
 	
