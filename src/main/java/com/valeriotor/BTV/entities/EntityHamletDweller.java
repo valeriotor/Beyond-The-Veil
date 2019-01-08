@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.entities;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.BeyondTheVeil;
@@ -23,6 +25,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -309,7 +312,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	public static enum ProfessionsEnum{
 		FISHERMAN(0, 4),
 		BARTENDER(1, 0),
-		MINER(2, 0),
+		MINER(2, 1),
 		LHKEEPER(3, 0),
 		STOCKPILER(4, 4),
 		DRUNK(5, 4),
@@ -396,10 +399,29 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.canoe, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 48)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampCanopy, 64)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 8), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 48)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 8), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampCanopy, 64)));
 		}
 		
+	}
+	
+	private Item getRandomSweetie() {
+		Random r = world.rand;
+		int i = r.nextInt(6);
+		switch(i) {
+		case 0:
+			return Items.APPLE;
+		case 1:
+			return Items.BEETROOT;
+		case 2: 
+			return Items.CARROT;
+		case 3:
+			return Items.POTATO;
+		case 4:
+			return Items.MELON;
+		default:
+			return Items.PUMPKIN_PIE;
+		}
 	}
 	
 	public EntityPlayerMP getTalkingPlayer() {
