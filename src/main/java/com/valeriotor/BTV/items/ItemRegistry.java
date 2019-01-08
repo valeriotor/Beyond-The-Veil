@@ -30,6 +30,7 @@ public class ItemRegistry {
 	public static final ItemDrink cup = new ItemDrink("drink_empty");
 	public static final ItemFlute flute = new ItemFlute();
 	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
+	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
 	
 	
     public static void initModels() {
@@ -46,6 +47,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(cup, 0, "inventory");
         ClientProxy.registerItemRenderer(flute, 0, "inventory");
         ClientProxy.registerItemRenderer(saw_cleaver, 0, "inventory");
+        ClientProxy.registerItemRenderer(wolf_medallion, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -99,5 +101,6 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.cup);
     	event.getRegistry().register(ItemRegistry.flute);
     	event.getRegistry().register(ItemRegistry.saw_cleaver);
+    	event.getRegistry().register(ItemRegistry.wolf_medallion);
     }
 }

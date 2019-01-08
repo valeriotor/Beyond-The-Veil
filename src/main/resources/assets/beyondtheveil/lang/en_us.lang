@@ -5,6 +5,7 @@ item.testitem.name=Test Item
 item.canoe.name=Canoe
 item.flute.name=Flute of The Outer Gods
 item.saw_cleaver.name=Saw Cleaver
+item.wolf_medallion.name=Wolf Medallion
 item.drink_ale.name=Cup of Ale
 item.drink_mead.name=Cup of Mead
 item.drink_rum.name=Cup of Rum
@@ -14,6 +15,11 @@ item.drink_empty.name=Empty Cup
 
 lore.flute=The sensation you get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in your world.. and yet it's there, in your hands.
 lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables you to dodge in the same style of its ancient owners.
+lore.wolf_medallion=This metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
+
+artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
+artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
+artifact.medallion.creepers=There are creepers.
 
 tile.barrel.name=Barrel
 tile.bricks_blue.name=Blue Bricks

@@ -1,22 +1,34 @@
 package com.valeriotor.BTV.events;
 
+import java.util.List;
+
 import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
+import baubles.api.BaublesApi;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAITarget;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
@@ -44,7 +56,7 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void tickEvent(PlayerTickEvent event) {
-		
+		if(event.phase.equals(Phase.END)) {
 		//Canoe Gifts
 		if(!event.player.world.isRemote && event.player.getRidingEntity() instanceof EntityCanoe && (event.player.world.getBiome(event.player.getPosition()) == Biomes.OCEAN 
 		   || event.player.world.getBiome(event.player.getPosition()) == BiomeRegistry.innsmouth || event.player.world.getBiome(event.player.getPosition()) == Biomes.DEEP_OCEAN)) {
@@ -63,6 +75,12 @@ public class PlayerEvents {
 		
 		// Reset times dreamt
 		if(event.player.world.getWorldTime() == 10) event.player.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0); 
+		
+		// Wolf Medallion Events
+		if(!event.player.world.isRemote && BaublesApi.isBaubleEquipped(event.player, ItemRegistry.wolf_medallion) == 0) {
+			ItemRegistry.wolf_medallion.tickEvent(event);
+		}
+		}
 	}
 	
 	@SubscribeEvent
