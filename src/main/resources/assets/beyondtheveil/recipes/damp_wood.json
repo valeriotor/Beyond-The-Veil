@@ -1,0 +1,12 @@
+{
+    "type": "forge:ore_shapeless",
+    "ingredients": [
+        {
+            "item": "beyondtheveil:damp_log"
+        }
+    ],
+    "result": {
+        "item": "beyondtheveil:damp_wood",
+		"count": 4
+    }
+}

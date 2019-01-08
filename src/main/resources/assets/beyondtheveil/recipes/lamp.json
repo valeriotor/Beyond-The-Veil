@@ -1,0 +1,33 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "xxx",
+        "gsg",
+        "xtx" 
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "beyondtheveil:damp_wood"
+        },
+		"g":
+        {
+            "item": "minecraft:glass"
+        },
+		"s":
+        {
+            "item": "beyondtheveil:slug"
+        },
+		"t":
+        {
+            "item": "minecraft:torch"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:lamp",
+        "count": 1
+    }                  
+}

@@ -1,0 +1,24 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "xsx",
+        "xsx" 
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "beyondtheveil:damp_wood"
+        },
+		"s":
+        {
+            "item": "minecraft:stick"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:damp_wood_fence",
+        "count": 3
+    }                  
+}
