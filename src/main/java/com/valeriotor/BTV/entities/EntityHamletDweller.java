@@ -396,7 +396,8 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.canoe, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 32)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 48)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampCanopy, 64)));
 		}
 		
 	}
