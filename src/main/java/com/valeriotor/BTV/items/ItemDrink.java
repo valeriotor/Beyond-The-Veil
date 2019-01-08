@@ -72,4 +72,10 @@ public class ItemDrink extends Item{
     {
         return 32;
     }
+    
+    @Override
+    public int getItemBurnTime(ItemStack itemStack) {
+    	if(itemStack.getItem() == ItemRegistry.cup) return 300;
+    	return super.getItemBurnTime(itemStack);
+    }
 }
