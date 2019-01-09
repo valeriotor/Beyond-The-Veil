@@ -1,3 +1,9 @@
 {
-   "parent": "beyondtheveil:block/fume_spreader"
+   "parent": "beyondtheveil:block/fume_spreader",
+   "display": {
+	   "gui": {
+		   "rotation": [ 10, 50, 0 ],
+		   "scale": [0.75, 0.75, 0.75]
+	   }
+   }
 }

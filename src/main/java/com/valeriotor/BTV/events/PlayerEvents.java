@@ -40,10 +40,8 @@ public class PlayerEvents {
 	public static void wakeUpEvent(PlayerWakeUpEvent event) {
 		if(event.getEntityPlayer().world.getWorldTime()>23900) {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(event.getEntityPlayer());
-		if(event.getEntityPlayer()!=null && !k.isResearchKnown("FIRSTDREAMS") && k.isResearchKnown("FIRSTSTEPS")) {
-			k.addResearch("!didDream");
-			k.sync((EntityPlayerMP)event.getEntityPlayer());
-		}else if(event.getEntityPlayer() != null && k.isResearchKnown("FIRSTDREAMS")) {
+		
+		if(event.getEntityPlayer() != null && k.isResearchComplete("FIRSTDREAMS")) {
 			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), k);
 			event.getEntityPlayer().getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0);
 		}

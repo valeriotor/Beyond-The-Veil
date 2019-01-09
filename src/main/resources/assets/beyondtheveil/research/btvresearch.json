@@ -3,26 +3,50 @@
         {
         "key": "FIRSTDREAMS",    
         "name": "research.FIRSTDREAMS.title",
-        "icons": [ "beyondtheveil:textures/research/bed.png" ],
+        "icons": [ "minecraft:bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
-		"parents": [ "!didDream" ],	
+		"parents": [ "FIRSTSTEPS" ],	
         "stages": [
                 {
-                    "text": "research.FIRSTDREAMS.stage.1",  
-                    "recipes": ["thaumcraft:nitor","thaumcraft:nitorgroup","thaumcraft:viscrystalgroup",
-                                "thaumcraft:phial","thaumcraft:Filter","thaumcraft:MorphicResonator"]
+                    "text": "research.FIRSTDREAMS.stage.0"
+                },
+				{
+                    "text": "research.FIRSTDREAMS.stage.1",
+					"required_research": ["m_didDream"]
                 }
             ]
         },
         {
-        "key": "CRYSTALDREAMS",
-        "name": "research.CRYSTALDREAMS.title",
-        "icons": [ "beyondtheveil:textures/items/testitem.png" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -5,-5 ],
+        "key": "FUMESPREADER",
+        "name": "research.FUMESPREADER.title",
+        "icons": [ "beyondtheveil:fume_spreader" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,-2 ],
         "parents": [ "FIRSTDREAMS" ],
         "stages": [
+				{
+					"text": "research.FUMESPREADER.stage.0",
+					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+				},
                 {
-                    "text": "research.CRYSTALDREAMS.stage.1"
+                    "text": "research.FUMESPREADER.stage.1",
+                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                }
+            ]
+        },
+		{
+        "key": "SLEEPCHAMBER",
+        "name": "research.SLEEPCHAMBER.title",
+        "icons": [ "beyondtheveil:sleep_chamber" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,-3 ],
+        "parents": [ "FUMESPREADER" ],
+        "stages": [
+				{
+					"text": "research.CRYSTALDREAMS.stage.0",
+					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+				},
+                {
+                    "text": "research.CRYSTALDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:fume_spreader"]
                 }
             ]
         }

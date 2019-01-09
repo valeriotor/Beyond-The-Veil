@@ -28,6 +28,8 @@ import com.valeriotor.BTV.capabilities.FlagHandler;
 import com.valeriotor.BTV.capabilities.IFlags;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.crafting.Recipes;
+import com.valeriotor.BTV.events.ClientEvents;
+import com.valeriotor.BTV.events.ResearchEvents;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.util.RegistryHandler;
@@ -61,6 +63,7 @@ public class BeyondTheVeil
     	CapabilityManager.INSTANCE.register(IFlags.class, new FlagHandler.FlagStorage(), new FlagHandler.Factory());
 
     	MinecraftForge.EVENT_BUS.register(WorshipHandler.class);
+    	MinecraftForge.EVENT_BUS.register(new ResearchEvents());
         
     }
 
@@ -75,6 +78,7 @@ public class BeyondTheVeil
     	
     	
     	Recipes.initArcaneRecipes();
+    	Recipes.initCrucibleRecipes();
     	RegistryHandler.registerTileEntities();
     	
     	//The icon for the research Category was a laughably bad group of pixels I made as a test, don't laugh at it

@@ -58,9 +58,6 @@ tc.research_category.BEYOND_THE_VEIL=Beyond the Veil
 
 
 
-research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're merely a window into someone's subconscious, and yet I understand they can be so, so much more. It is in dreams that one can contact the unknown, however briefly and weakly. My recent forays into forbidden knowledge have opened my mind to all kinds of truths, both wondrous and terrifying.
-research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>I should take at least some advantage of this. For those brief moments I shall be able to know more of the soil beneath me, and I should be able to influence those dreams, maybe with an aspect different from the primal ones. Perhaps Metallum could work?
-
 
 
 dweller.fisherman.greeting0=Leave us alone, outsider.
@@ -134,3 +131,30 @@ dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
 
 dreams.villagesearch.success=Found Village at at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No villages found
+
+##################
+#RESEARCH
+##################
+
+research.FIRSTDREAMS.title=First Dreams
+research.m_didDream.text=Sleep. Dream.
+research.FIRSTDREAMS.stage.0=My journey began with a dream. A single, wondrous dream that taught me so much in so little time. <BR>And yet I can't help but wonder.. where did that knowledge come from? Was it merely hidden within my subconscious, all along?<BR>No. It can't be.<BR>...<BR>Maybe it's time to dream once more.
+research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're merely a window into someone's subconscious, and yet I understand they can be so, so much more. It is in dreams that one can contact the unknown, however briefly and weakly. My recent forays into forbidden knowledge have opened my mind to all kinds of truths, both wondrous and terrifying.
+
+research.FUMESPREADER.title=Fume Spreader
+research.FUMESPREADER.stage.0=I'm starting to believe that dreams are less abstract than one could think. It seems that they can be influenced by a great many things, and among those things are the same aspects I've spent so long studying. I should research more into this.
+research.FUMESPREADER.stage.1=Success!<BR>I've devised an object capable of affecting my dreams from the real world. I shall baptise it the Fume Spreader.<BR>This device must first be filled with Oniric Incense, a substance capable of freeing the aspects from crystals in the form of fumes.<BR>After applying the incense, I'll have to use a Vis Crystal on it.<BR>Once everything is in place, I'll simply have to sleep right next to the Spreader. The depletion of the incense will indicate success.<BR>So far, I've only tried with Primal Crystals, each of them capable, with a small chance of harmless failure, of opening my eyes towards new and undiscovered knowledge I'll make sure to use in my future research.<BR>I shall soon extend my experiments to other, non-primal aspects.
+
+
+
+research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>I should take at least some advantage of this. For those brief moments I shall be able to know more of the soil beneath me, and I should be able to influence those dreams, maybe with an aspect different from the primal ones. Perhaps Metallum could work?
+
+
+
+
+
+
+
+
+
+
