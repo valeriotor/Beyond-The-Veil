@@ -3,6 +3,7 @@
 	"textures": {
 		"0": "beyondtheveil:blocks/chamber_base_2",
 		"1": "beyondtheveil:blocks/whiteglass",
+		"2": "beyondtheveil:blocks/chamber_base_1",
 		"particle": "beyondtheveil:blocks/whiteglass"
 	},
 	"elements": [
@@ -11,7 +12,7 @@
 			"from": [1, 0, 15],
 			"to": [15, 4, 16],
 			"faces": {
-				"north": {"uv": [2, 0, 16, 4], "texture": "#0"},
+				"north": {"uv": [2, 0, 16, 4], "texture": "#2"},
 				"east": {"uv": [13, 4, 14, 8], "texture": "#0"},
 				"south": {"uv": [0, 4, 14, 8], "texture": "#0"},
 				"west": {"uv": [0, 4, 1, 8], "texture": "#0"},
@@ -140,7 +141,7 @@
 			"faces": {
 				"north": {"uv": [1, 12, 15, 16], "texture": "#0"},
 				"east": {"uv": [13, 4, 14, 8], "texture": "#0"},
-				"south": {"uv": [0, 9, 14, 13], "texture": "#0"},
+				"south": {"uv": [0, 9, 14, 13], "texture": "#2"},
 				"west": {"uv": [0, 4, 1, 8], "texture": "#0"},
 				"up": {"uv": [13, 0, 14, 14], "texture": "#0", "rotation": 90},
 				"down": {"uv": [0, 2, 1, 16], "texture": "#0", "rotation": 270}
@@ -154,7 +155,7 @@
 				"north": {"uv": [0, 4, 1, 8], "texture": "#0"},
 				"east": {"uv": [2, 0, 16, 4], "texture": "#0"},
 				"south": {"uv": [13, 4, 14, 8], "texture": "#0"},
-				"west": {"uv": [2, 12, 16, 16], "texture": "#0"},
+				"west": {"uv": [2, 12, 16, 16], "texture": "#2"},
 				"up": {"uv": [13, 0, 14, 14], "texture": "#0", "rotation": 180},
 				"down": {"uv": [0, 2, 1, 16], "texture": "#0", "rotation": 180}
 			}
@@ -165,7 +166,7 @@
 			"to": [1, 4, 15],
 			"faces": {
 				"north": {"uv": [0, 4, 1, 8], "texture": "#0"},
-				"east": {"uv": [2, 8, 16, 12], "texture": "#0"},
+				"east": {"uv": [2, 8, 16, 12], "texture": "#2"},
 				"south": {"uv": [13, 4, 14, 8], "texture": "#0"},
 				"west": {"uv": [2, 11, 16, 15], "texture": "#0"},
 				"up": {"uv": [13, 0, 14, 14], "texture": "#0", "rotation": 180},
