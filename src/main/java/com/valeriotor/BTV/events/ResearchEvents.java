@@ -17,7 +17,7 @@ public class ResearchEvents {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(p.world.getWorldTime() < 23900) return;
 		if(!k.isResearchComplete("FIRSTDREAMS")) {
-			ThaumcraftApi.internalMethods.progressResearch(p, "m_didDream");
+			ThaumcraftApi.internalMethods.progressResearch(p, "didDream");
 		}
 	}
 	

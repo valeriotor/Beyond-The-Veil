@@ -137,22 +137,25 @@ dreams.villagesearch.fail=No villages found
 ##################
 
 research.FIRSTDREAMS.title=First Dreams
-research.m_didDream.text=Sleep. Dream.
+research.didDream.text=Sleep. Dream.
 research.FIRSTDREAMS.stage.0=My journey began with a dream. A single, wondrous dream that taught me so much in so little time. <BR>And yet I can't help but wonder.. where did that knowledge come from? Was it merely hidden within my subconscious, all along?<BR>No. It can't be.<BR>...<BR>Maybe it's time to dream once more.
-research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're merely a window into someone's subconscious, and yet I understand they can be so, so much more. It is in dreams that one can contact the unknown, however briefly and weakly. My recent forays into forbidden knowledge have opened my mind to all kinds of truths, both wondrous and terrifying.
+research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder. Some say they're merely a window into someone's subconscious, and yet I now understand they can be so, so much more. <BR>It is in dreams that one can contact the unknown, however briefly and weakly. My recent forays into forbidden knowledge have opened my mind to all kinds of truths, both wondrous and terrifying.
 
 research.FUMESPREADER.title=Fume Spreader
 research.FUMESPREADER.stage.0=I'm starting to believe that dreams are less abstract than one could think. It seems that they can be influenced by a great many things, and among those things are the same aspects I've spent so long studying. I should research more into this.
 research.FUMESPREADER.stage.1=Success!<BR>I've devised an object capable of affecting my dreams from the real world. I shall baptise it the Fume Spreader.<BR>This device must first be filled with Oniric Incense, a substance capable of freeing the aspects from crystals in the form of fumes.<BR>After applying the incense, I'll have to use a Vis Crystal on it.<BR>Once everything is in place, I'll simply have to sleep right next to the Spreader. The depletion of the incense will indicate success.<BR>So far, I've only tried with Primal Crystals, each of them capable, with a small chance of harmless failure, of opening my eyes towards new and undiscovered knowledge I'll make sure to use in my future research.<BR>I shall soon extend my experiments to other, non-primal aspects.
 
+research.CRYSTALDREAMS.stage.0=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>I should take at least some advantage of this. For those brief moments I shall be able to know more of the soil beneath me, and I should be able to influence those dreams, maybe with an aspect different from the primal ones. Perhaps Metallum could work?
+research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>The Dream reacted to my use of Metallum by granting me knowledge of the presence of iron and gold in the ground below. It's as if the Dream was... sentient?<BR>I'm certain other aspects will grant other special effects. I'll keep experimenting.
+research.CRYSTALDREAMS.addenda.vitreus=Very similarly to Metallum, the aspect Vitreus has granted me knowledge of the earth beneath me, this time teaching me of the presence of crystals, namely diamonds and emeralds.
+research.CRYSTALDREAMS.addenda.cognitio=Curiously (and most fortunately), it seems that the knowledge originating from Dreams is not limited to the underground. Using Cognitio I'm able to locate the closest village, as Dreams influenced by such aspect seem reactive to the presence of human intelligence in this world, even one so dim as that of those villagers. 
+research.metallum.unlock=Your use of Metallum granted you knowledge of the metals below.
+research.vitreus.unlock=Your use of Vitreus granted you knowledge of the crystals below.
+research.cognitio.unlock=Your use of Cognitio granted you knowledge of the closest Village.
 
-
-research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>I should take at least some advantage of this. For those brief moments I shall be able to know more of the soil beneath me, and I should be able to influence those dreams, maybe with an aspect different from the primal ones. Perhaps Metallum could work?
-
-
-
-
-
+research.SLEEPCHAMBER.title=Sleep Chamber
+research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity.<BR>Oh, how ironic that now it is sleep I need, and can't get enough of it.<BR> I must Dream, keep Dreaming, again and again. Once a day, only at night, is not enough, it just isn't. I shall put my mind to the creation of some device capable of ridding me of that limit, at least partially.
+research.SLEEPCHAMBER.stage.1=This machine, which I named the Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time. For now, all I know is that the Sleep Chamber is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by the Fume Spreader.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.
 
 
 

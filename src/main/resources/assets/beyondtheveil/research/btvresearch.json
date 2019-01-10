@@ -8,11 +8,11 @@
 		"parents": [ "FIRSTSTEPS" ],	
         "stages": [
                 {
-                    "text": "research.FIRSTDREAMS.stage.0"
+                    "text": "research.FIRSTDREAMS.stage.0",
+					"required_research": ["didDream"]
                 },
 				{
-                    "text": "research.FIRSTDREAMS.stage.1",
-					"required_research": ["m_didDream"]
+                    "text": "research.FIRSTDREAMS.stage.1"
                 }
             ]
         },
@@ -20,7 +20,8 @@
         "key": "FUMESPREADER",
         "name": "research.FUMESPREADER.title",
         "icons": [ "beyondtheveil:fume_spreader" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 2,-2 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,0 ],
+		"meta": ["ROUND", "HIDDEN"],
         "parents": [ "FIRSTDREAMS" ],
         "stages": [
 				{
@@ -34,18 +35,45 @@
             ]
         },
 		{
-        "key": "SLEEPCHAMBER",
-        "name": "research.SLEEPCHAMBER.title",
-        "icons": [ "beyondtheveil:sleep_chamber" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 5,-3 ],
+        "key": "CRYSTALDREAMS",
+        "name": "research.CRYSTALDREAMS.title",
+        "icons": [ "thaumcraft:crystal_perditio" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,-2 ],
         "parents": [ "FUMESPREADER" ],
         "stages": [
 				{
 					"text": "research.CRYSTALDREAMS.stage.0",
-					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+					"required_research": ["metallumDream"]
 				},
                 {
                     "text": "research.CRYSTALDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.CRYSTALDREAMS.addenda.vitreus",
+					"required_research": ["metallumDream", "vitreusDream"]
+				},
+				{
+					"text": "research.CRYSTALDREAMS.addenda.cognitio",
+					"required_research": ["metallumDream", "cognitioDream"]
+				}
+			]
+        },
+		{
+        "key": "SLEEPCHAMBER",
+        "name": "research.SLEEPCHAMBER.title",
+        "icons": [ "beyondtheveil:sleep_chamber" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,2 ],
+        "parents": [ "FUMESPREADER" ],
+        "stages": [
+				{
+					"text": "research.SLEEPCHAMBER.stage.0",
+					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+				},
+                {
+                    "text": "research.SLEEPCHAMBER.stage.1",
                     "recipes": ["beyondtheveil:fume_spreader"]
                 }
             ]

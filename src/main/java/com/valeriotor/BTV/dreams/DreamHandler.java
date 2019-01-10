@@ -17,8 +17,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
 
 public class DreamHandler {
@@ -169,6 +171,8 @@ public class DreamHandler {
 			p.sendMessage(new TextComponentTranslation("dreams.groundscan.diamond",new Object[] {Integer.valueOf(sum1), highest1 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest1)})).getUnformattedComponentText() : ""}));
 			p.sendMessage(new TextComponentTranslation("dreams.groundscan.emerald", new Object[] {Integer.valueOf(sum2), highest2 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest2)})).getUnformattedComponentText() : ""}));
 			}
+		if(isMetal) unlockResearch(p, "metallum");
+		else unlockResearch(p, "vitreus");
 		
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
@@ -216,9 +220,24 @@ public class DreamHandler {
 		if(pos != null) p.sendMessage(new TextComponentTranslation("dreams.villagesearch.success", new Object[] {pos.getX(), pos.getZ()}));
 		else p.sendMessage(new TextComponentTranslation("dreams.villagesearch.fail"));
 		
+		unlockResearch(p, "cognitio");
+		
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
 		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
+	}
+	
+	/** Checks if the player already has the "research" (not a true entry) corresponding to that aspect.
+	 *  If not, it gives him the research as well as a status message.
+	 * @param p
+	 * @param aspect
+	 */
+	private static void unlockResearch(EntityPlayer p, String aspect) {
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		if(!k.isResearchKnown(aspect+"Dream")) {
+			ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
+			p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
+		}
 	}
 }
 

@@ -81,7 +81,6 @@ public class BeyondTheVeil
     	Recipes.initCrucibleRecipes();
     	RegistryHandler.registerTileEntities();
     	
-    	//The icon for the research Category was a laughably bad group of pixels I made as a test, don't laugh at it
     	ResearchCategories.registerCategory("BEYOND_THE_VEIL", (String)null, new AspectList(), new ResourceLocation("beyondtheveil","textures/research/tab_icon.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_1.jpg"),new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png") );
     	ThaumcraftApi.registerResearchLocation(new ResourceLocation(References.MODID, "research/btvresearch"));
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);

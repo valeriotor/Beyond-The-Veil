@@ -273,7 +273,7 @@ public class FumeSpreader extends Block implements ITileEntityProvider{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if(playerIn.getHeldItem(hand).getItem() == ItemRegistry.oniricIncense && !state.getValue(ISFULL)) {
-			playerIn.getHeldItem(hand).shrink(1);
+			if(!playerIn.capabilities.isCreativeMode) playerIn.getHeldItem(hand).shrink(1);
 			state = state.withProperty(ISFULL, true);
 			worldIn.setBlockState(pos, state, 2);
 		}else
@@ -284,8 +284,8 @@ public class FumeSpreader extends Block implements ITileEntityProvider{
 					if(!worldIn.isRemote) {
 						getTE(worldIn, pos).setAspect(o);
 						getTE(worldIn, pos).getTileData().setString("containing", o.getName());
-					}	
-					playerIn.getHeldItem(hand).shrink(1);
+					}
+					if(!playerIn.capabilities.isCreativeMode) playerIn.getHeldItem(hand).shrink(1);
 					
 				}else {
 					//System.out.println(getTE(worldIn, pos).getTileData().getString("containing"));
