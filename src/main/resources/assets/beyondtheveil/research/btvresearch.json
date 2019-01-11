@@ -5,7 +5,7 @@
         "name": "research.FIRSTDREAMS.title",
         "icons": [ "minecraft:bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
-		"parents": [ "FIRSTSTEPS" ],	
+		"parents": [ "UNLOCKELDRITCH" ],	
         "stages": [
                 {
                     "text": "research.FIRSTDREAMS.stage.0",
@@ -58,6 +58,37 @@
 				{
 					"text": "research.CRYSTALDREAMS.addenda.cognitio",
 					"required_research": ["metallumDream", "cognitioDream"]
+				}
+			]
+        },
+		{
+        "key": "EFFECTDREAMS",
+        "name": "research.EFFECTDREAMS.title",
+        "icons": [ "minecraft:skull;1;3" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,-4 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "CRYSTALDREAMS" ],
+        "stages": [
+				{
+					"text": "research.EFFECTDREAMS.stage.0",
+					"required_research": ["f_EffectDream"]
+				},
+                {
+                    "text": "research.EFFECTDREAMS.stage.1"
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.EFFECTDREAMS.addenda.potentia",
+					"required_research": ["potentiaDream"]
+				},
+				{
+					"text": "research.EFFECTDREAMS.addenda.vinculum",
+					"required_research": ["vinculumDream"]
+				},
+				{
+					"text": "research.EFFECTDREAMS.addenda.permutatio",
+					"required_research": ["permutatioDream"]
 				}
 			]
         },

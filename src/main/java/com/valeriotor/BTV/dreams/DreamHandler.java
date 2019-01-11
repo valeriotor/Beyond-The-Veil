@@ -252,6 +252,8 @@ public class DreamHandler {
 			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000));
 		});
 		
+		unlockResearch(p, "vinculum");
+		
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
 		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
@@ -270,6 +272,8 @@ public class DreamHandler {
 		effects.forEach(effect -> {
 			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()+1));
 		});
+		
+		unlockResearch(p, "potentia");
 		
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
@@ -297,7 +301,7 @@ public class DreamHandler {
 			p.removePotionEffect(effect.getPotion());
 		});
 		
-		
+		unlockResearch(p, "permutatio");
 		
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
@@ -335,6 +339,11 @@ public class DreamHandler {
 		if(!k.isResearchKnown(aspect+"Dream")) {
 			ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
 			p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
+			if(!k.isResearchKnown("f_EffectDream")) {
+				if(aspect.equals("potentia") || aspect.equals("vinculum") || aspect.equals("permutatio")) {
+					ThaumcraftApi.internalMethods.progressResearch(p, "f_EffectDream");
+				}
+			}
 		}
 	}
 }
