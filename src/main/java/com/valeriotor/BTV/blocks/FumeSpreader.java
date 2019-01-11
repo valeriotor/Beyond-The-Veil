@@ -10,7 +10,6 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBed.EnumPartType;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,6 +23,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -33,11 +34,9 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.ItemsTC;
 
 public class FumeSpreader extends Block implements ITileEntityProvider{
@@ -287,10 +286,13 @@ public class FumeSpreader extends Block implements ITileEntityProvider{
 					}
 					if(!playerIn.capabilities.isCreativeMode) playerIn.getHeldItem(hand).shrink(1);
 					
-				}else {
-					//System.out.println(getTE(worldIn, pos).getTileData().getString("containing"));
 				}
 			}
+			
+		}
+		if(playerIn.getHeldItem(hand).getItem() == Items.AIR && playerIn.isSneaking() && state.getValue(ISFULL)) {
+			worldIn.setBlockState(pos, state.withProperty(ISFULL, false));
+			if(!playerIn.capabilities.isCreativeMode) playerIn.addItemStackToInventory(new ItemStack(ItemRegistry.oniricIncense));
 		}
 		
 		return true;
