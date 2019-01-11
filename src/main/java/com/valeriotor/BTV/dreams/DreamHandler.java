@@ -1,9 +1,12 @@
 package com.valeriotor.BTV.dreams;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.FumeSpreader;
 import com.valeriotor.BTV.capabilities.FlagProvider;
@@ -12,6 +15,9 @@ import com.valeriotor.BTV.world.BiomeRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -49,6 +55,10 @@ public class DreamHandler {
 			searchInnsmouth(p, p.world, p.world.rand, SpreaderLocation);
 			}else if(aspect.equals("Cognitio")) {
 			searchVillage(p, p.world, SpreaderLocation);
+			}else if(aspect.equals("Vinculum")) {
+			extendEffects(p, p.world, SpreaderLocation);
+			}else if(aspect.equals("Permutatio")) {
+			changeEffects(p, p.world, SpreaderLocation);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -74,7 +84,7 @@ public class DreamHandler {
 	}
 	
 	private static void dreamWeight(int bas, int alc, int inf, int art, int gol, int aur, IPlayerKnowledge k, EntityPlayer p, BlockPos s) {
-		int r = new Random().nextInt(50);
+		int r = new Random().nextInt(40);
 		boolean didUse = true;
 		if(r<bas) {
 			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BASICS"), 10);
@@ -88,8 +98,7 @@ public class DreamHandler {
 			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("GOLEMANCY"), 10);
 		}else if(r<aur+gol+art+inf+alc+bas) {
 			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("AUROMANCY"), 10);
-		}else if(r<50) {
-			//p.addItemStackToInventory(new ItemStack(Items.ARROW,1));
+		}else if(r<40) {
 			didUse=false;
 		}else {
 			didUse=false;
@@ -225,6 +234,74 @@ public class DreamHandler {
 		IBlockState b = w.getBlockState(s);
 		w.getTileEntity(s).getTileData().removeTag("containing");
 		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
+	}
+	
+	/** Extends the duration of all effects on the player by 5000 ticks (= 250 seconds).
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
+	private static void extendEffects(EntityPlayer p, World w, BlockPos s) {
+		Collection<PotionEffect> effects = p.getActivePotionEffects();
+		effects.forEach(effect -> {
+			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+5000));
+		});
+		
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
+	}
+	
+	/** Finds all negative effects on the player (through Potion.isBadEffect()) and either changes them
+	 *  into their positive counterpart (only Vanilla ones) or simply removes them
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
+	private static void changeEffects(EntityPlayer p, World w, BlockPos s) {
+		Collection<PotionEffect> effects = p.getActivePotionEffects();
+		List<PotionEffect> negativeEffects = Lists.newArrayList();
+		effects.forEach(effect -> {
+			if(effect.getPotion().isBadEffect()) negativeEffects.add(effect);
+		});
+		negativeEffects.forEach(effect ->{
+			Potion newPot = getPositiveCounterpart(effect.getPotion());
+			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration(), effect.getAmplifier()));
+			p.removePotionEffect(effect.getPotion());
+		});
+		
+		
+		
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
+	}
+	
+	/** Provides the positive counterparts for some negative Vanilla effects, used by
+	 *  changeEffects
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
+	private static Potion getPositiveCounterpart(Potion p) {
+		if(p == MobEffects.BLINDNESS) return MobEffects.NIGHT_VISION;
+		else if(p == MobEffects.HUNGER) return MobEffects.SATURATION;
+		else if(p == MobEffects.POISON) return MobEffects.REGENERATION;
+		else if(p == MobEffects.MINING_FATIGUE) return MobEffects.HASTE;
+		else if(p == MobEffects.WITHER) return MobEffects.REGENERATION;
+		else if(p == MobEffects.SLOWNESS) return MobEffects.SPEED;
+		else if(p == MobEffects.WEAKNESS) return MobEffects.STRENGTH;
+		else if(p == MobEffects.UNLUCK) return MobEffects.LUCK;
+		return null;
 	}
 	
 	/** Checks if the player already has the "research" (not a true entry) corresponding to that aspect.
