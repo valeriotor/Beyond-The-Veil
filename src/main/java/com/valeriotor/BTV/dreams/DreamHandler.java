@@ -59,6 +59,8 @@ public class DreamHandler {
 			extendEffects(p, p.world, SpreaderLocation);
 			}else if(aspect.equals("Permutatio")) {
 			changeEffects(p, p.world, SpreaderLocation);
+			}else if(aspect.equals("Potentia")) {
+			amplifyEffects(p, p.world, SpreaderLocation);
 			}else if(!aspect.isEmpty()) {
 			dreamWeight(90, 2, 1, 2, 1, 2, k, p, SpreaderLocation);	
 			}
@@ -236,7 +238,7 @@ public class DreamHandler {
 		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
 	}
 	
-	/** Extends the duration of all effects on the player by 5000 ticks (= 250 seconds).
+	/** Extends the duration of all effects on the player by 3000 ticks (= 150 seconds).
 	 * 
 	 * @param p The player who just woke up
 	 * @param w The world
@@ -247,7 +249,26 @@ public class DreamHandler {
 	private static void extendEffects(EntityPlayer p, World w, BlockPos s) {
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
 		effects.forEach(effect -> {
-			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+5000));
+			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000));
+		});
+		
+		IBlockState b = w.getBlockState(s);
+		w.getTileEntity(s).getTileData().removeTag("containing");
+		w.setBlockState(s, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(w.getBlockState(s))-5), 2);
+	}
+	
+	/** Increases the amplifier of all effects on the player by 1.
+	 * 
+	 * @param p The player who just woke up
+	 * @param w The world
+	 * @param s The location of the Fume Spreader, so that its content may be deleted.
+	 * 
+	 * @author Valeriotor
+	 */
+	private static void amplifyEffects(EntityPlayer p, World w, BlockPos s) {
+		Collection<PotionEffect> effects = p.getActivePotionEffects();
+		effects.forEach(effect -> {
+			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()+1));
 		});
 		
 		IBlockState b = w.getBlockState(s);
