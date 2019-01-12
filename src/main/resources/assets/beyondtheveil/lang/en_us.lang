@@ -21,6 +21,9 @@ artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.
 
+keys.dodge=Dodge
+keys.medallion=Wolf Medallion Ability
+
 tile.barrel.name=Barrel
 tile.bricks_blue.name=Blue Bricks
 tile.damp_canopy.name=Damp Canopy

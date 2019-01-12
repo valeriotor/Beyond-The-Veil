@@ -2,26 +2,24 @@ package com.valeriotor.BTV.events;
 
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
+import com.sun.jna.platform.KeyboardUtils;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageMedallionEffect;
 import com.valeriotor.BTV.proxy.ClientProxy;
 
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -38,6 +36,8 @@ public class ClientEvents {
 			Minecraft.getMinecraft().gameSettings.keyBindBack,
 			Minecraft.getMinecraft().gameSettings.keyBindRight
 	};
+	private int wolfmedallionCount = 0;
+	
 	
 	
 	@SubscribeEvent
@@ -46,7 +46,7 @@ public class ClientEvents {
 			EntityPlayerSP p = Minecraft.getMinecraft().player;
 			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
 			if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver && !p.isInWater()) {
-				if(ClientProxy.handler.dodge.isPressed() && sawcleaverCount > 4) {
+				if(ClientProxy.handler.dodge.isPressed() && sawcleaverCount < 1) {
 					int conto = 0;
 					int direction[] = {-1,-1};
 					for(int i = 0; i < 4; i++) {
@@ -65,9 +65,23 @@ public class ClientEvents {
 				
 				
 			}
-			if(sawcleaverCount < 5) {
-				sawcleaverCount++;
+			if(sawcleaverCount > 0) sawcleaverCount--;
+			
+			
+			if(BaublesApi.isBaubleEquipped(p, ItemRegistry.wolf_medallion) == 0) {
+				if(ClientProxy.handler.medallion.isPressed()) {
+					if(wolfmedallionCount < 1) {
+						BTVPacketHandler.INSTANCE.sendToServer(new MessageMedallionEffect());
+						wolfmedallionCount = 500;
+					}else {
+						p.playSound(SoundEvents.ENTITY_PARROT_STEP, 1, 1);
+					}
+				}
+				
+				if(wolfmedallionCount > 0) wolfmedallionCount--;
 			}
+			
+			
 		}
 		}
 	}

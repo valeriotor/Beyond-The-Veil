@@ -11,10 +11,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class KeyHandler {
 	
 	public KeyBinding dodge = new KeyBinding(I18n.format("keys.dodge"), 56, "Beyond the Veil");
+	public KeyBinding medallion = new KeyBinding(I18n.format("keys.medallion"), 44, "Beyond the Veil");
 	
 	
 	public KeyHandler() {
 		ClientRegistry.registerKeyBinding(dodge);
+		ClientRegistry.registerKeyBinding(medallion);
 	}
 	
 }
