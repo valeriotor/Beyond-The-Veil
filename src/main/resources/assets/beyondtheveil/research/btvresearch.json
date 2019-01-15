@@ -26,7 +26,7 @@
         "stages": [
 				{
 					"text": "research.FUMESPREADER.stage.0",
-					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+					"required_knowledge": ["THEORY;BEYOND_THE_VEIL;1"]
 				},
                 {
                     "text": "research.FUMESPREADER.stage.1",

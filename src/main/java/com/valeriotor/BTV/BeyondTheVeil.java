@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Strings;
 import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.proxy.CommonProxy;
+import com.valeriotor.BTV.research.TCRegistries;
 import com.valeriotor.BTV.capabilities.WorshipHandler;
 import com.valeriotor.BTV.capabilities.FlagHandler;
 import com.valeriotor.BTV.capabilities.IFlags;
@@ -82,6 +83,7 @@ public class BeyondTheVeil
     	RegistryHandler.registerTileEntities();
     	
     	ResearchCategories.registerCategory("BEYOND_THE_VEIL", (String)null, new AspectList(), new ResourceLocation("beyondtheveil","textures/research/tab_icon.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_1.jpg"),new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png") );
+    	TCRegistries.register();
     	ThaumcraftApi.registerResearchLocation(new ResourceLocation(References.MODID, "research/btvresearch"));
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();

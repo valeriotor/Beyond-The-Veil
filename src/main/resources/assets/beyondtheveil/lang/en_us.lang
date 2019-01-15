@@ -1,3 +1,7 @@
+##################
+#ITEMS (Names, lore, special effects)
+##################
+
 item.oniric_incense.name=Oniric Incense
 item.slug.name=Slug
 item.slugcatcher.name=Slug Catcher
@@ -21,8 +25,10 @@ artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.
 
-keys.dodge=Dodge
-keys.medallion=Wolf Medallion Ability
+
+##################
+#BLOCKS
+##################
 
 tile.barrel.name=Barrel
 tile.bricks_blue.name=Blue Bricks
@@ -43,25 +49,30 @@ tile.worn_brick_stairs.name=Worn Brick Stairs
 tile.sleep_chamber.name=Sleep Chamber
 
 
-gui.dialogue.talk=Talk
-gui.dialogue.trade=Trade
-gui.sleep_chamber.wake=Wake Up
-
+##################
+#ENTITTIES
+##################
 
 entity.deep_one.name=Deep One
 entity.hamlet_dweller.name=Hamlet Dweller
 entity.canoe.name=Canoe
 
 
+##################
+#GUIS & KEYS
+##################
+
+gui.dialogue.talk=Talk
+gui.dialogue.trade=Trade
+gui.sleep_chamber.wake=Wake Up
+
+keys.dodge=Dodge
+keys.medallion=Wolf Medallion Ability
 
 
-
-tc.research_category.BEYOND_THE_VEIL=Beyond the Veil
-
-
-
-
-
+##################
+#DWELLER DIALOGUE
+##################
 
 dweller.fisherman.greeting0=Leave us alone, outsider.
 dweller.fisherman.greeting1=Begone. We don't want you here.
@@ -122,6 +133,9 @@ dweller.lhkeeper.talk1.option1=Another test:Still ignore
 dweller.lhkeeper.talk1.reply0=There is no right answer. :But know that I {despise} those who think the way you do.
 dweller.lhkeeper.talk1.reply1=That is what I think as well. :But your forefather knew better, didn't they?
 
+##################
+#DREAMS
+##################
 
 dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s
 dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s
@@ -135,9 +149,20 @@ dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
 dreams.villagesearch.success=Found Village at at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No villages found
 
+
+##################
+#THEORYCRAFT
+##################
+
+card.stars.name=Lore of the Cosmos
+card.stars.text=Your Dreams lead downwards, and yet those unreachable stars, up, up in the sky, prove to be a fascinating field of research in your pursuit of the Unknownable Truth. You gain 35 to 70 inspiration towards %1$s.
+
+
 ##################
 #RESEARCH
 ##################
+
+tc.research_category.BEYOND_THE_VEIL=Beyond the Veil
 
 research.FIRSTDREAMS.title=First Dreams
 research.didDream.text=Sleep. Dream.
