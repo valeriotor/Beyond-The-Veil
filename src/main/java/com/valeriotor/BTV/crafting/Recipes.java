@@ -19,7 +19,6 @@ public class Recipes {
 	static ResourceLocation defaultGroup = new ResourceLocation("");
 	
 	
-	//These recipes will temporarily not work, due to (I BELIEVE) an error in the TC API, in ThaumcraftInvHelper
 	public static void initArcaneRecipes() {
 		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(References.MODID, "fume_spreader"), new ShapedArcaneRecipe(new ResourceLocation("beyondtheveil"), "FIRSTDREAMS", 25, new AspectList().add(Aspect.ENTROPY,1), new ItemStack(BlockRegistry.FumeSpreader), 
 				new Object[] {"AGA", "G G", "AAA", 'A', new ItemStack(Items.GOLD_INGOT), 'G', new ItemStack(Blocks.GLASS)}));
