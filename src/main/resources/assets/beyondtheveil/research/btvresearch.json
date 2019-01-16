@@ -108,6 +108,45 @@
                     "recipes": ["beyondtheveil:fume_spreader"]
                 }
             ]
+        },
+		{
+        "key": "INSCRIPTIONS",
+        "name": "research.INSCRIPTIONS.title",
+        "icons": [ "beyondtheveil:tablet" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0, 5],
+		"meta": ["HIDDEN"],
+        "parents": [ "~FIRSTDREAMS", "inscriptions" ],
+        "stages": [
+				{
+					"text": "research.INSCRIPTIONS.stage.0",
+					"required_research": ["inscription_complete"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.stage.1"
+				}
+            ],
+			"addenda": [
+				{
+					"text": "research.INSCRIPTIONS.addenda0",
+					"required_research": ["inscription0"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.addenda1",
+					"required_research": ["inscription1"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.addenda2",
+					"required_research": ["inscription2"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.addenda3",
+					"required_research": ["inscription3"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.addenda4",
+					"required_research": ["inscription4"]
+				}
+			]
         }
 	]
 }	

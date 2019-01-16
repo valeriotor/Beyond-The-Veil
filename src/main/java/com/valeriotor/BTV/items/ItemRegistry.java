@@ -32,10 +32,10 @@ public class ItemRegistry {
 	public static final ItemFlute flute = new ItemFlute();
 	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
 	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
-	public static final ItemAntique tablet = new ItemAntique("tablet");
-	public static final ItemAntique old_map = new ItemAntique("old_map");
-	public static final ItemAntique scroll = new ItemAntique("scroll");
-	public static final ItemAntique depiction = new ItemAntique("depiction");
+	public static final ItemTablet tablet = new ItemTablet("tablet");
+	//public static final ItemTablet old_map = new ItemTablet("old_map");
+	//public static final ItemTablet scroll = new ItemTablet("scroll");
+	//public static final ItemTablet depiction = new ItemTablet("depiction");
 	
 	
 	

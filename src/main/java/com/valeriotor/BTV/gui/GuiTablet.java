@@ -15,7 +15,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
 
 public class GuiTablet extends GuiScreen{
@@ -23,14 +25,12 @@ public class GuiTablet extends GuiScreen{
 	/* TO-DO LIST:
 	 * Add more inscriptions
 	 * Make theorycraft card that accepts completed Tablets
-	 * Check in player's data for already completed Inscriptions. After completing them all they won't give observations
-	 * anymore, but can still be completed to then be used for research.
-	 * Completed inscriptions get automatically written in the Thaumonomicon.
+	 * Make Tablets appear as loot in Vanilla and BTV chests
 	 * 
 	 */
 	
 	
-	private static final int inscriptions = 2;
+	private static final int inscriptions = 5;
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/tablet.png");
 	private static final ResourceLocation up = new ResourceLocation(References.MODID + ":textures/gui/uparrow.png");
 	private static final ResourceLocation down = new ResourceLocation(References.MODID + ":textures/gui/downarrow.png");
@@ -69,7 +69,8 @@ public class GuiTablet extends GuiScreen{
 						stringNumber = p.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getInteger("inscription");
 						break;
 					}else {
-						int c = p.world.rand.nextInt(inscriptions);
+						int c = this.getUndiscoveredInscription();
+						if(c == -1) c = p.world.rand.nextInt(inscriptions);
 						BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncAntiqueNBT("inscription", c));
 						stringNumber = c;
 					}
@@ -228,8 +229,27 @@ public class GuiTablet extends GuiScreen{
 			return 3;
 		}
 		
-		
-		
+		return -1;
+	}
+	
+	private int getUndiscoveredInscription() {
+		EntityPlayerSP p = Minecraft.getMinecraft().player;
+		int discovered = 0;
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		for(int i = 0; i < inscriptions; i++) {
+			if(k.isResearchKnown(String.format("inscription%d", i))) discovered++;
+		}
+		int undiscovered = inscriptions - discovered;
+		int count = 0;
+		if(undiscovered == 0) return -1; 
+		int theOne = p.world.rand.nextInt(undiscovered);
+		for(int i = 0; i < inscriptions; i++) {
+			if(!k.isResearchKnown(String.format("inscription%d", i))) {
+				if(theOne == count) {
+					return i;
+				}else count++;
+			}
+		}
 		return -1;
 	}
 	

@@ -24,12 +24,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
-public class ItemAntique extends Item{
+public class ItemTablet extends Item{
 	
-	public ItemAntique(String name) {
+	public ItemTablet(String name) {
 		setRegistryName(References.MODID + ":" + name);
 		setUnlocalizedName(name);
+		//setHasSubtypes(true);
+		//setMaxDamage(0);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(CreativeTabs.MISC);
 		this.addPropertyOverride(new ResourceLocation("finished"), new IItemPropertyGetter()
@@ -48,6 +53,10 @@ public class ItemAntique extends Item{
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		if(stack.getItem() == ItemRegistry.tablet) {
+			IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(playerIn);
+			
+			if(!k.isResearchKnown("inscriptions"))
+				ThaumcraftApi.internalMethods.progressResearch(playerIn, "inscriptions");
 			
 			if(!playerIn.getHeldItem(handIn).hasTagCompound()) {
 				playerIn.getHeldItem(handIn).setTagCompound(new NBTTagCompound());
@@ -66,5 +75,9 @@ public class ItemAntique extends Item{
 			tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		}
 	}
+	
+	
+	
+	
 
 }
