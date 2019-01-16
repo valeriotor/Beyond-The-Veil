@@ -38,8 +38,10 @@ public class GuiDialogueDweller extends GuiScreen {
         if(this.getTalkingEntityId() == 3 || this.getTalkingEntityId() == 4) {
         	this.buttonList.get(1).enabled = false;
         }
+        if(this.dialogue.equals("")) {
         this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
 		this.dialogueLength = this.dialogue.length();
+        }
 		super.initGui();
 	}
 	
@@ -49,26 +51,26 @@ public class GuiDialogueDweller extends GuiScreen {
 		drawModalRectWithCustomSizedTexture(this.width/4 - 10, this.height - 164, 0, 0, 512, 164, 512, 512);
 			this.setDialogueSpeed();
 			
-			String[] strings = this.splitStrings(this.dialogue);
+			String[] strings = GuiHelper.splitStrings(this.dialogue);
 			for(int i = 0; i < strings.length; i++) {
-				if(this.letterCount > this.getPreviousStringsLength(i, this.dialogue)) {
-					String toWrite = strings[i].substring(0, Math.min(strings[i].length(), Math.max(0, this.letterCount - 1 - this.getPreviousStringsLength(i, this.dialogue))));
+				if(this.letterCount > GuiHelper.getPreviousStringsLength(i, this.dialogue)) {
+					String toWrite = strings[i].substring(0, Math.min(strings[i].length(), Math.max(0, this.letterCount - 1 - GuiHelper.getPreviousStringsLength(i, this.dialogue))));
 					drawString(mc.fontRenderer, toWrite, this.width/4 + 12, this.height + (i * 15) - 140, 0xFFFFFF);
 				}
 			}
 			String option0 = this.getDialogueOption(0);
 			String option1 = this.getDialogueOption(1);
 			if(option0 != null && option1 != null && this.letterCount == this.dialogueLength) {
-				String[] option0split = this.splitStrings(option0);
+				String[] option0split = GuiHelper.splitStrings(option0);
 				for(int i = 0; i < option0split.length; i++) {
-						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, option0.length() - 1 - this.getPreviousStringsLength(i, option0))));
+						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, option0))));
 						drawString(mc.fontRenderer, toWrite, this.width/4 + 62, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 				
-				String[] option1split = this.splitStrings(option1);
+				String[] option1split = GuiHelper.splitStrings(option1);
 				for(int i = 0; i < option1split.length; i++) {
-						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, option1.length() - 1 - this.getPreviousStringsLength(i, option1))));
+						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, option1))));
 						drawString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
@@ -189,21 +191,6 @@ public class GuiDialogueDweller extends GuiScreen {
 		}
 	}
 	
-	private String[] splitStrings(String string) {
-		return string.split(":");
-	}
-	
-	private int getPreviousStringsLength(int index, String string) {
-		String[] strings = this.splitStrings(string);
-		int total = 0;
-		if(index < 0 || index > strings.length -1) {
-			return 0;
-		}
-		for(int i = 0; i < index; i++) {
-			total+= strings[i].length();
-		}
-		return total;
-	}
 	
 	private void setDialogueSpeed() {
 		boolean deleteChar = true;
