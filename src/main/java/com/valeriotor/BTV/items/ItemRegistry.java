@@ -1,16 +1,17 @@
 package com.valeriotor.BTV.items;
 
-import com.valeriotor.BTV.proxy.ClientProxy;
-import com.valeriotor.BTV.blocks.BlockRegistry;
+import java.util.List;
+import java.util.Random;
 
-import net.minecraft.block.material.Material;
+import com.google.common.collect.Lists;
+import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.proxy.ClientProxy;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 @ObjectHolder("beyondtheveil")
@@ -31,6 +32,11 @@ public class ItemRegistry {
 	public static final ItemFlute flute = new ItemFlute();
 	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
 	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
+	public static final ItemAntique tablet = new ItemAntique("tablet");
+	public static final ItemAntique old_map = new ItemAntique("old_map");
+	public static final ItemAntique scroll = new ItemAntique("scroll");
+	public static final ItemAntique depiction = new ItemAntique("depiction");
+	
 	
 	
     public static void initModels() {
@@ -48,6 +54,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(flute, 0, "inventory");
         ClientProxy.registerItemRenderer(saw_cleaver, 0, "inventory");
         ClientProxy.registerItemRenderer(wolf_medallion, 0, "inventory");
+        ClientProxy.registerItemRenderer(tablet, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -102,5 +109,20 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.flute);
     	event.getRegistry().register(ItemRegistry.saw_cleaver);
     	event.getRegistry().register(ItemRegistry.wolf_medallion);
+    	event.getRegistry().register(ItemRegistry.tablet);
+    }
+    
+    
+    
+    public static Item getRandomArtifact(Random r) {
+    	int a = r.nextInt(3);
+    	switch(a) {
+    	case 0: return saw_cleaver;
+    	case 1: return flute;
+    	case 2: return wolf_medallion;
+    	default: return null;
+    	}
+    	
+    	
     }
 }

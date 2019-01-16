@@ -1,0 +1,14 @@
+{
+   "parent": "item/generated",
+   "textures": {
+       "layer0": "beyondtheveil:items/tablet"
+   },
+   "overrides": [
+        {
+            "predicate": {
+                "finished": 1
+            },
+            "model": "beyondtheveil:item/tablet_finished"
+        }
+    ]
+}
