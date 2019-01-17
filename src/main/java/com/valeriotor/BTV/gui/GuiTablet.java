@@ -3,6 +3,7 @@ package com.valeriotor.BTV.gui;
 import java.io.IOException;
 
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.items.ItemTablet;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -66,8 +67,7 @@ public class GuiTablet extends GuiScreen{
 			for(EnumHand h : EnumHand.values()) {
 				if(p.getHeldItem(h).getItem() == ItemRegistry.tablet) {
 					if(p.getHeldItem(h).getTagCompound().hasKey("inscription")) {
-						stringNumber = p.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getInteger("inscription");
-						break;
+						stringNumber = p.getHeldItem(h).getTagCompound().getInteger("inscription");
 					}else {
 						int c = this.getUndiscoveredInscription();
 						if(c == -1) c = p.world.rand.nextInt(inscriptions);
@@ -75,6 +75,7 @@ public class GuiTablet extends GuiScreen{
 						stringNumber = c;
 					}
 					this.hand = h;
+					break;
 				}
 			}
 			if(stringNumber == -1) {
@@ -98,7 +99,7 @@ public class GuiTablet extends GuiScreen{
 				}
 			}
 			
-			if(!p.getHeldItem(hand).getTagCompound().hasKey("oddDiff") || !p.getHeldItem(hand).getTagCompound().hasKey("evenDiff")) {
+			if(!p.getHeldItem(this.hand).getTagCompound().hasKey("oddDiff") || !p.getHeldItem(this.hand).getTagCompound().hasKey("evenDiff")) {
 				while(oddDiff == 0) oddDiff = p.world.rand.nextInt(26);
 				while(evenDiff == 0) evenDiff = p.world.rand.nextInt(26);
 			}else {
@@ -254,4 +255,10 @@ public class GuiTablet extends GuiScreen{
 		return -1;
 	}
 	
+	@Override
+	public void updateScreen() {
+		if(!(Minecraft.getMinecraft().player.getHeldItem(this.hand).getItem() instanceof ItemTablet)) {
+			this.mc.displayGuiScreen((GuiScreen)null);
+		}
+	}
 }
