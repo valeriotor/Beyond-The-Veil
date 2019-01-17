@@ -13,6 +13,7 @@ public class TCRegistries {
 	
 	public static void registerCards() {
 		thaumcraft.api.research.theorycraft.TheorycraftManager.registerCard(CardStars.class);
+		thaumcraft.api.research.theorycraft.TheorycraftManager.registerCard(CardTablet.class);
 	}
 	
 	public static void registerScanResearch() {

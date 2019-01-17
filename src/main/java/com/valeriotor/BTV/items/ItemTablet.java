@@ -38,16 +38,6 @@ public class ItemTablet extends Item{
 		setMaxDamage(0);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(CreativeTabs.MISC);
-		this.addPropertyOverride(new ResourceLocation("finished"), new IItemPropertyGetter()
-        {
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
-            {
-            	if(!stack.hasTagCompound()) return 0;
-            	if(!stack.getTagCompound().hasKey("finished")) return 0;
-                return (entityIn != null && stack.getTagCompound().getBoolean("finished")) ? 1 : 0;
-            }
-        });
 	}
 	
 	@Override
@@ -63,7 +53,6 @@ public class ItemTablet extends Item{
 				playerIn.getHeldItem(handIn).setTagCompound(new NBTTagCompound());
 				
 			}
-			if(!stack.getTagCompound().hasKey("finished")) stack.getTagCompound().setBoolean("finished", false);
 			if(worldIn.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiTablet);
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 		}
