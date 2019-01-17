@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.ItemTablet;
 
 import io.netty.buffer.ByteBuf;
@@ -71,6 +72,17 @@ public class MessageSyncAntiqueNBT implements IMessage{
 				stack.getTagCompound().setBoolean(key, message.value == 1);	
 			
 			if(key.equals("finished") && message.value == 1) {
+				
+				ItemStack newStack = new ItemStack(ItemRegistry.tablet, 1, 1);
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setInteger("inscription", stack.getTagCompound().getInteger("inscription"));
+				nbt.setInteger("oddDiff", 0);
+				nbt.setInteger("evenDiff", 0);
+				newStack.setTagCompound(nbt);
+				
+				
+				p.setHeldItem(hand, newStack);
+				
 				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 				
 				if(!k.isResearchKnown("inscription_complete"))
@@ -98,8 +110,8 @@ public class MessageSyncAntiqueNBT implements IMessage{
 		
 		private boolean isBooleanKey(String key) {
 			switch(key) {
-			case "finished":
-			return true;	
+			//case "finished":
+			//return true;	
 			}
 			return false;
 		}

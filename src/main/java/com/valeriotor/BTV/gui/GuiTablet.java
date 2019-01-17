@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
@@ -160,7 +161,7 @@ public class GuiTablet extends GuiScreen{
 		
 		EntityPlayerSP p = Minecraft.getMinecraft().player;
 		
-		if(this.evenDiff == 0 && this.oddDiff == 0 && !p.getHeldItem(hand).getTagCompound().getBoolean("finished")) {
+		if(this.evenDiff == 0 && this.oddDiff == 0 && p.getHeldItem(hand).getMetadata() == 0 ) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncAntiqueNBT("evenDiff", this.evenDiff));
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncAntiqueNBT("oddDiff", this.oddDiff));
 			Minecraft.getMinecraft().player.playSound(BTVSounds.flute, 1, 1);
@@ -172,7 +173,7 @@ public class GuiTablet extends GuiScreen{
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		if(keyCode == 1) {
+		if(keyCode == 1 || keyCode == 18) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncAntiqueNBT("evenDiff", this.evenDiff));
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncAntiqueNBT("oddDiff", this.oddDiff));
 			this.mc.displayGuiScreen((GuiScreen)null);
@@ -201,6 +202,7 @@ public class GuiTablet extends GuiScreen{
 			this.oddDiff = this.oddDiff % 26;
 			this.evenDiff = this.evenDiff % 26;
 			this.moveLetters();
+			Minecraft.getMinecraft().player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}

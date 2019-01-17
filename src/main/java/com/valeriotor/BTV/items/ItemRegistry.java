@@ -54,7 +54,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(flute, 0, "inventory");
         ClientProxy.registerItemRenderer(saw_cleaver, 0, "inventory");
         ClientProxy.registerItemRenderer(wolf_medallion, 0, "inventory");
-        ClientProxy.registerItemRenderer(tablet, 0, "inventory");
+        ClientProxy.registerItemRenderer(tablet, 0, "unfinished");
+        ClientProxy.registerItemRenderer(tablet, 1, "finished");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");

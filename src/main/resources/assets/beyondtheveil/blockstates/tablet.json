@@ -1,0 +1,13 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"unfinished":{
+			"model": "forge:item-layer", "transform": "forge:default-item",
+			"textures": { "layer0": "beyondtheveil:items/tablet"}
+		},
+		"finished":{
+			"model": "forge:item-layer", "transform": "forge:default-item",
+			"textures": { "layer0": "beyondtheveil:items/tablet", "layer1": "beyondtheveil:items/completed_antique"}
+		}
+	}
+}

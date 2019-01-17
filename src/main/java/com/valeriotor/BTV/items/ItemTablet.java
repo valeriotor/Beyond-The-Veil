@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,8 +34,8 @@ public class ItemTablet extends Item{
 	public ItemTablet(String name) {
 		setRegistryName(References.MODID + ":" + name);
 		setUnlocalizedName(name);
-		//setHasSubtypes(true);
-		//setMaxDamage(0);
+		setHasSubtypes(true);
+		setMaxDamage(0);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(CreativeTabs.MISC);
 		this.addPropertyOverride(new ResourceLocation("finished"), new IItemPropertyGetter()
@@ -75,6 +76,14 @@ public class ItemTablet extends Item{
 			tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		}
 	}
+	
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if(tab == CreativeTabs.MISC || tab == CreativeTabs.SEARCH) {
+			items.add(new ItemStack(this, 1, 0));
+		}
+	}
+	
 	
 	
 	
