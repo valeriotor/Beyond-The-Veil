@@ -94,6 +94,21 @@
 					"weight": 3
 				}
 			]
+		},
+		{
+			"name": "tablet",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"name": "beyondtheveil:tablet",
+					"weight": 1
+				},
+				{
+					"type": "empty",
+					"weight": 7
+				}
+			]
 		}
 	]
 }

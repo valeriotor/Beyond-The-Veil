@@ -26,7 +26,6 @@ public class GuiTablet extends GuiScreen{
 	
 	/* TO-DO LIST:
 	 * Add more inscriptions
-	 * Make Tablets appear as loot in Vanilla and BTV chests
 	 * 
 	 */
 	

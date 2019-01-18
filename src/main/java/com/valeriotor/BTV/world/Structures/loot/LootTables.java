@@ -13,4 +13,6 @@ public class LootTables {
 	
 	public static final ResourceLocation hamletTownHall = LootTableList.register(new ResourceLocation(References.MODID, "town_hall"));
 	
+	public static final ResourceLocation tablet = LootTableList.register(new ResourceLocation(References.MODID, "inject/tablet"));
+	
 }
