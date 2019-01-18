@@ -68,11 +68,15 @@ gui.dialogue.talk=Talk
 gui.dialogue.trade=Trade
 gui.sleep_chamber.wake=Wake Up
 
-gui.tablet.inscription0=There is nothing in the Void.:And yet everything comes from There.:That black portal to Infinity.
-gui.tablet.inscription1=Knowledge is to be feared,:not sought.:It may bring Power,:but at what cost?
-gui.tablet.inscription2=Infinite You's throughout infinite moments,:among infinite timelines:within infinite Infinities.:You are nothing. Do not forget that.
-gui.tablet.inscription3=The deepest Oceans touch the Void.:Water is unsafe, it is Chaos.:And from it comes Life.
-gui.tablet.inscription4=Deaths upon Deaths upon Deaths.:But you are not truly immortal.:You are nothing to Eternity.
+gui.tablet.inscription0=There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.
+gui.tablet.inscription1=Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?
+gui.tablet.inscription2=Infinite You's throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
+gui.tablet.inscription3=The deepest Oceans touch the Void.<BR>Water is unsafe, it is Chaos.<BR>And from it comes Life.
+gui.tablet.inscription4=Deaths upon Deaths upon Deaths.<BR>But you are not truly immortal.<BR>You are nothing to Eternity.
+gui.tablet.inscription5=The Great Dreamer<BR>filters the Veil<BR>into reality.<BR>Dreams go through Him.
+gui.tablet.inscription6=He is the gnawing sensation<BR>at the back of your mind,<BR>driving you towards unholy acts.<BR>You can't escape.
+gui.tablet.inscription7=City builders, aeons old.<BR>Even the greatest civilization<BR>is no match to Time.
+
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability
@@ -210,9 +214,3 @@ research.permutatio.unlock=Your use of Permutatio removed negative effects from 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
 research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.
-research.INSCRIPTIONS.addenda0=There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.
-research.INSCRIPTIONS.addenda1=Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?
-research.INSCRIPTIONS.addenda2=Infinite You's throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
-research.INSCRIPTIONS.addenda3=The deepest Oceans touch the Void.<BR>Water is unsafe, it is Chaos.<BR>And from it comes Life.
-research.INSCRIPTIONS.addenda4=Deaths upon Deaths upon Deaths.<BR>But you are not truly immortal.<BR>You are nothing to Eternity.
-# Yes, I know I know, I wrote them twice. I didn't feel like working around "<BR>" vs ':'. That's all.

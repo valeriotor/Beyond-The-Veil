@@ -16,11 +16,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import thaumcraft.api.ThaumcraftApi;
+import net.minecraft.util.text.TextComponentString;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-import thaumcraft.api.research.ResearchCategories;
 
 public class GuiTablet extends GuiScreen{
 	
@@ -30,7 +28,7 @@ public class GuiTablet extends GuiScreen{
 	 */
 	
 	
-	private static final int inscriptions = 5;
+	private static final int inscriptions = 8;
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/tablet.png");
 	private static final ResourceLocation up = new ResourceLocation(References.MODID + ":textures/gui/uparrow.png");
 	private static final ResourceLocation down = new ResourceLocation(References.MODID + ":textures/gui/downarrow.png");
@@ -81,8 +79,8 @@ public class GuiTablet extends GuiScreen{
 				this.mc.displayGuiScreen((GuiScreen)null);
 				return;
 			}	
-		
-			this.inscription = I18n.format(String.format("gui.tablet.inscription%d", stringNumber));
+			String placeholder = I18n.format(String.format("gui.tablet.inscription%d", stringNumber));
+			this.inscription =  placeholder.replace("<BR>", ":");
 			this.drawnInscription = this.inscription;
 			char characters[] = this.inscription.toCharArray();
 			int count = 0;
@@ -200,6 +198,8 @@ public class GuiTablet extends GuiScreen{
 			}
 			this.oddDiff = this.oddDiff % 26;
 			this.evenDiff = this.evenDiff % 26;
+			if(this.oddDiff < 0) this.oddDiff = 25;
+			if(this.evenDiff < 0) this.evenDiff = 25;
 			this.moveLetters();
 			Minecraft.getMinecraft().player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
 		}

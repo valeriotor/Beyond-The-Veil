@@ -127,24 +127,36 @@
             ],
 			"addenda": [
 				{
-					"text": "research.INSCRIPTIONS.addenda0",
+					"text": "gui.tablet.inscription0",
 					"required_research": ["inscription0"]
 				},
 				{
-					"text": "research.INSCRIPTIONS.addenda1",
+					"text": "gui.tablet.inscription1",
 					"required_research": ["inscription1"]
 				},
 				{
-					"text": "research.INSCRIPTIONS.addenda2",
+					"text": "gui.tablet.inscription2",
 					"required_research": ["inscription2"]
 				},
 				{
-					"text": "research.INSCRIPTIONS.addenda3",
+					"text": "gui.tablet.inscription3",
 					"required_research": ["inscription3"]
 				},
 				{
-					"text": "research.INSCRIPTIONS.addenda4",
+					"text": "gui.tablet.inscription4",
 					"required_research": ["inscription4"]
+				},
+				{
+					"text": "gui.tablet.inscription5",
+					"required_research": ["inscription5"]
+				},
+				{
+					"text": "gui.tablet.inscription6",
+					"required_research": ["inscription6"]
+				},
+				{
+					"text": "gui.tablet.inscription7",
+					"required_research": ["inscription7"]
 				}
 			]
         }
