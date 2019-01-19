@@ -28,7 +28,7 @@ public class GuiTablet extends GuiScreen{
 	 */
 	
 	
-	private static final int inscriptions = 8;
+	private static final int inscriptions = 10;
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/tablet.png");
 	private static final ResourceLocation up = new ResourceLocation(References.MODID + ":textures/gui/uparrow.png");
 	private static final ResourceLocation down = new ResourceLocation(References.MODID + ":textures/gui/downarrow.png");
@@ -135,6 +135,8 @@ public class GuiTablet extends GuiScreen{
 	}
 	
 	private void moveLetters() {
+		if(this.oddDiff < 0) this.oddDiff += 26;
+		if(this.evenDiff < 0) this.evenDiff += 26;
 		char characters[] = this.inscription.toCharArray();
 		char drawnCharacters[] = this.drawnInscription.toCharArray();
 		for(int i = 0; this.even[i] != -1; i++) {
@@ -198,8 +200,6 @@ public class GuiTablet extends GuiScreen{
 			}
 			this.oddDiff = this.oddDiff % 26;
 			this.evenDiff = this.evenDiff % 26;
-			if(this.oddDiff < 0) this.oddDiff = 25;
-			if(this.evenDiff < 0) this.evenDiff = 25;
 			this.moveLetters();
 			Minecraft.getMinecraft().player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
 		}
@@ -222,11 +222,11 @@ public class GuiTablet extends GuiScreen{
 			return 1;
 		}
 		if(mouseX >= (this.width/2 - (int)Math.round((double)11*xSize/48)) && mouseX <= (this.width/2 - (int)Math.round((double)5*xSize/48)) &&
-		   mouseY >= Math.round(this.height/2 + 11 * ySize / 40) && mouseY <= Math.round(this.height/2 + 27*ySize / 40)){
+		   mouseY >= Math.round(this.height/2 + 11 * ySize / 40) && mouseY <= Math.round(this.height/2 + 27*ySize / 80)){
 			return 2;
 		}
 		if(mouseX >= (this.width/2 + (int)Math.round((double)5*xSize/48)) && mouseX <= (this.width/2 + (int)Math.round((double)11*xSize/48)) &&
-		   mouseY >= Math.round(this.height/2 + 11 * ySize / 40) && mouseY <= Math.round(this.height/2 + 27*ySize / 40)){
+		   mouseY >= Math.round(this.height/2 + 11 * ySize / 40) && mouseY <= Math.round(this.height/2 + 27*ySize / 80)){
 			return 3;
 		}
 		
