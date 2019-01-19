@@ -152,6 +152,8 @@ dweller.lhkeeper.talk1.reply1=That is what I think as well. :But your forefather
 #DREAMS
 ##################
 
+dreams.maybeinthefuture=No effect came from this dream, and yet you still felt a tingling. Maybe it'll work in the future, under different circumstances.
+
 dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s
 dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s
 dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below you%2$s
@@ -161,9 +163,13 @@ dreams.groundscan.greatestconcentration=, with the greatest concentration at y-l
 dreams.biomesearch.innsmouth=Found Voided Biome at x: %1$s, z: %2$s
 dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
 
-dreams.villagesearch.success=Found Village at at x: %1$s, z: %2$s
+dreams.villagesearch.success=Found Village at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No villages found
 
+dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s
+dreams.playeritem.success=Another player is currently wielding: %1$s
+dreams.playeritem.mildsuccess=Another player was found, but he was wielding nothing.
+dreams.playersearch.fail=The Dream was unable to locate another player.
 
 ##################
 #THEORYCRAFT
@@ -195,6 +201,7 @@ research.CRYSTALDREAMS.stage.0=Dreams exist. They are entities, they leave your 
 research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>The Dream reacted to my use of Metallum by granting me knowledge of the presence of iron and gold in the ground below. It's as if the Dream was... sentient?<BR>I'm certain other aspects will grant other special effects. I'll keep experimenting.
 research.CRYSTALDREAMS.addenda.vitreus=Very similarly to Metallum, the aspect Vitreus has granted me knowledge of the earth beneath me, this time teaching me of the presence of crystals, namely diamonds and emeralds.
 research.CRYSTALDREAMS.addenda.cognitio=Curiously (and most fortunately), it seems that the knowledge originating from Dreams is not limited to the underground. Using Cognitio I'm able to locate the closest village, as Dreams influenced by such aspect seem reactive to the presence of human intelligence in this world, even one so dim as that of those villagers. 
+research.metallumDream.text=Influence your dreams with the Metallum aspect.
 research.metallum.unlock=Your use of Metallum granted you knowledge of the metals below.
 research.vitreus.unlock=Your use of Vitreus granted you knowledge of the crystals below.
 research.cognitio.unlock=Your use of Cognitio granted you knowledge of the closest Village.
@@ -213,6 +220,15 @@ research.EFFECTDREAMS.addenda.permutatio=Permutatio has shown to be extremely us
 research.potentia.unlock=Your use of Potentia amplified the potency of any Status Effects present on you.
 research.vinculum.unlock=Your use of Vinculum extended the duration of any Status Effects present on you.
 research.permutatio.unlock=Your use of Permutatio removed negative effects from you, and attempted to convert them into positive ones.
+
+research.HUMANDREAMS.title=Dreams of Others
+research.HUMANDREAMS.stage.0=PLACEHOLDER TEXT
+research.HUMANDREAMS.stage.1=PLACEHOLDER TEXT 2
+research.f_HumanDream.text=PLACEHOLDER TEXT 3
+research.HUMANDREAMS.addenda.humanus=PLACEHOLDER TEXT 4
+research.HUMANDREAMS.addenda.instrumentum=PLACEHOLDER TEXT 5
+research.humanus.unlock=PLACEHOLDER TEXT 6
+research.instrumentum.unlock=PLACEHOLDER TEXT 7
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.

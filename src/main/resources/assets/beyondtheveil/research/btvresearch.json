@@ -64,7 +64,7 @@
 		{
         "key": "EFFECTDREAMS",
         "name": "research.EFFECTDREAMS.title",
-        "icons": [ "minecraft:skull;1;3" ],
+        "icons": [ "minecraft:potion" ],
         "category": "BEYOND_THE_VEIL", "location": [ 5,-4 ],
 		"meta": ["HIDDEN"],
         "parents": [ "CRYSTALDREAMS" ],
@@ -89,6 +89,33 @@
 				{
 					"text": "research.EFFECTDREAMS.addenda.permutatio",
 					"required_research": ["permutatioDream"]
+				}
+			]
+        },
+		{
+        "key": "HUMANDREAMS",
+        "name": "research.HUMANDREAMS.title",
+        "icons": [ "minecraft:skull;1;3" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 1,-4 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "CRYSTALDREAMS" ],
+        "stages": [
+				{
+					"text": "research.HUMANDREAMS.stage.0",
+					"required_research": ["f_HumanDream"]
+				},
+                {
+                    "text": "research.HUMANDREAMS.stage.1"
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.HUMANDREAMS.addenda.humanus",
+					"required_research": ["humanusDream"]
+				},
+				{
+					"text": "research.HUMANDREAMS.addenda.instrumentum",
+					"required_research": ["instrumentumDream"]
 				}
 			]
         },
