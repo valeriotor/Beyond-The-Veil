@@ -222,13 +222,13 @@ research.vinculum.unlock=Your use of Vinculum extended the duration of any Statu
 research.permutatio.unlock=Your use of Permutatio removed negative effects from you, and attempted to convert them into positive ones.
 
 research.HUMANDREAMS.title=Dreams of Others
-research.HUMANDREAMS.stage.0=PLACEHOLDER TEXT
-research.HUMANDREAMS.stage.1=PLACEHOLDER TEXT 2
-research.f_HumanDream.text=PLACEHOLDER TEXT 3
-research.HUMANDREAMS.addenda.humanus=PLACEHOLDER TEXT 4
-research.HUMANDREAMS.addenda.instrumentum=PLACEHOLDER TEXT 5
-research.humanus.unlock=PLACEHOLDER TEXT 6
-research.instrumentum.unlock=PLACEHOLDER TEXT 7
+research.HUMANDREAMS.stage.0=Sometimes, when Dreaming, I get a bizarre feeling.<BR>People like me, even ones I have never known, start appearing in my thoughts. And yet, I feel like it's not a mere construct of my mind, of my subconscious.<BR>No. I think that our Dreams converge within the same point, that they touch each other, and that those presences within my thoughts are REAL.<BR>I believe that, through my "Dreaming expertise", I could know more about those others, that I could probe their Dreams while they remain unaware. I should look for the right aspects, while keeping this knowledge for myself. 
+research.HUMANDREAMS.stage.1=I have reason to believe that, within their own weird, a-dimensional plane of existence, Dreams are all adjacent to each other. To all others. At the same time, at all times.<BR>While their position may shift in relation to our world (such as when they go straight down through bedrock), my Dreams are tangent to all others.<BR>This is a breakthrough discovery. As a Dreamer more expert than most, I can probe the Dreams of others with my Own, learning things about them while ignoring any privacy they think they have. I should keep working on this ability, so that it may reach its full potential.<BR>Still, this new knowledge brings with itself a new fear.<BR> Fear that there could be other Dreamers, greater than myself, and that my excessive forays into Dreaming only made me more vulnerable.<BR>Other Dreamers, that could possibly not even be human.
+research.f_HumanDream.text=Find an aspect capable of probing others' Dreams.
+research.HUMANDREAMS.addenda.humanus=The effect of Humanus upon my Dreams is small, but I believe it could have great potential as I become a greater Dreamer.<BR>It enables me to know of the position of others like me. Just one of their x or z coordinates for now, for a single unnamed human other than me, provided there is at least one at the time of Dreaming.
+research.HUMANDREAMS.addenda.instrumentum=Instrumentum grants me knowledge of what others like me are wielding.<BR>It tells me of the item held in the main hand of a single human other than me, provided there is at least one at the time of Dreaming.
+research.humanus.unlock=Your use of Humanus granted you some knowledge of the position of another Player.
+research.instrumentum.unlock=Your use of Instrumentum granted you knowledge of the Item wielded by another Player.
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
