@@ -20,11 +20,11 @@ public class Recipes {
 	
 	
 	public static void initArcaneRecipes() {
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(References.MODID, "fume_spreader"), new ShapedArcaneRecipe(new ResourceLocation("beyondtheveil"), "FIRSTDREAMS", 25, new AspectList().add(Aspect.ENTROPY,1), new ItemStack(BlockRegistry.FumeSpreader), 
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(References.MODID, "fume_spreader"), new ShapedArcaneRecipe(new ResourceLocation("beyondtheveil"), "FIRSTDREAMS", 25, new AspectList().add(Aspect.WATER,1), new ItemStack(BlockRegistry.FumeSpreader), 
 				new Object[] {"AGA", "G G", "AAA", 'A', new ItemStack(Items.GOLD_INGOT), 'G', new ItemStack(Blocks.GLASS)}));
 		
-		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(References.MODID, "sleep_chamber"), new ShapedArcaneRecipe(defaultGroup, "FIRSTDREAMS", 100, new AspectList().add(Aspect.ENTROPY,1).add(Aspect.ORDER, 1).add(Aspect.WATER, 1).add(Aspect.EARTH, 1), new ItemStack(BlockRegistry.SleepChamber), 
-				new Object[] {"GGG", "ABA", "AAA", 'A', new ItemStack(thaumcraft.api.items.ItemsTC.ingots, 2), 'G', Blocks.GLASS, 'B', Blocks.BED}));
+		ThaumcraftApi.addArcaneCraftingRecipe(new ResourceLocation(References.MODID, "sleep_chamber"), new ShapedArcaneRecipe(defaultGroup, "FIRSTDREAMS", 100, new AspectList().add(Aspect.ENTROPY,1).add(Aspect.ORDER, 1).add(Aspect.WATER, 1), new ItemStack(BlockRegistry.SleepChamber), 
+				new Object[] {"GGG", "ABA", "AAA", 'A', new ItemStack(thaumcraft.api.items.ItemsTC.ingots, 1, 2), 'G', Blocks.GLASS, 'B', Blocks.BED}));
 		
 	}
 	

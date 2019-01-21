@@ -257,8 +257,11 @@ public class DreamHandler {
 			p.sendMessage(new TextComponentTranslation("dreams.playersearch.success", w.rand.nextBoolean() ? target.getPosition().getX() : target.getPosition().getZ()));
 			return true;
 		}else {
-			if(knowsDream(p, "humanus")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
-			else p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
+			if(!knowsDream(p, "metallum")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
+			else {
+				p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
+				return true;
+			}
 			return false;
 		}
 	}
@@ -284,8 +287,11 @@ public class DreamHandler {
 			
 			return true;
 		}else {
-			if(knowsDream(p, "humanus")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
-			else p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
+			if(!knowsDream(p, "metallum")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
+			else {
+				p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
+				return true;
+			}
 			return false;
 		}
 	}
@@ -301,9 +307,7 @@ public class DreamHandler {
 	 */
 	private static boolean extendEffects(EntityPlayer p, World w) {
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> {
-			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000));
-		});
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000)));
 		
 		return true;
 	}
@@ -317,9 +321,7 @@ public class DreamHandler {
 	 */
 	private static boolean amplifyEffects(EntityPlayer p, World w) {
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> {
-			p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()+1));
-		});
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()+1)));
 		
 		return true;
 	}

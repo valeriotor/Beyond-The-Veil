@@ -65,7 +65,7 @@
         "key": "EFFECTDREAMS",
         "name": "research.EFFECTDREAMS.title",
         "icons": [ "minecraft:potion" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 5,-4 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 1,-4 ],
 		"meta": ["HIDDEN"],
         "parents": [ "CRYSTALDREAMS" ],
         "stages": [
@@ -96,7 +96,7 @@
         "key": "HUMANDREAMS",
         "name": "research.HUMANDREAMS.title",
         "icons": [ "minecraft:skull;1;3" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 1,-4 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,-4 ],
 		"meta": ["HIDDEN"],
         "parents": [ "CRYSTALDREAMS" ],
         "stages": [
@@ -132,7 +132,7 @@
 				},
                 {
                     "text": "research.SLEEPCHAMBER.stage.1",
-                    "recipes": ["beyondtheveil:fume_spreader"]
+                    "recipes": ["beyondtheveil:sleep_chamber"]
                 }
             ]
         },
