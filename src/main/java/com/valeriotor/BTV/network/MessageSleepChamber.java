@@ -64,8 +64,8 @@ public class MessageSleepChamber implements IMessage {
 				int level = player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()/2 + 1; // For when I start working on worship
 				
 				if(message.doesDream && times < level * multiplier) {
-					DreamHandler.chooseDream(player, k, true);
-					if(advanced) DreamHandler.chooseDream(player, k, false);
+					if(advanced) DreamHandler.chooseDream(player, k, 2);
+					else DreamHandler.chooseDream(player, k, 1);
 				}
 				
 				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE (heh. "Release". haha)

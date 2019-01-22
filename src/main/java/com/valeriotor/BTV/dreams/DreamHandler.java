@@ -2,6 +2,7 @@ package com.valeriotor.BTV.dreams;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -33,69 +34,82 @@ import thaumcraft.api.research.ResearchCategories;
 
 public class DreamHandler {
 	
-	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k, boolean increaseTimesDreamt) {
-		BlockPos SpreaderLocation = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(FumeSpreader.ISFULL, true));
-		if(SpreaderLocation != null) {
-			boolean emptySpreader = false;
-			String aspect = p.world.getTileEntity(SpreaderLocation).getTileData().getString("containing");
-			if(aspect.equals("Aer")) {
-				emptySpreader = dreamWeight(7, 1, 8, 2, 2, 12, k, p);
-			}else if(aspect.equals("Ignis")) {
-				emptySpreader = dreamWeight(7, 4, 3, 9, 7, 2, k, p);	
-			}else if(aspect.equals("Ordo")) {
-				emptySpreader = dreamWeight(4, 2, 12, 9, 3, 2, k, p);	
-			}else if(aspect.equals("Perditio")) {
-				emptySpreader = dreamWeight(2, 10, 1, 3, 8, 8, k, p);
-			}else if(aspect.equals("Terra")) {
-				emptySpreader = dreamWeight(7, 2, 5, 9, 9, 0, k, p);
-			}else if(aspect.equals("Aqua")) {
-				emptySpreader = dreamWeight(4, 13, 8, 2, 1, 4, k, p);
-			}else if(aspect.equals("Metallum")) {
-				emptySpreader = scanGround(p, true, p.world);
-			}else if(aspect.equals("Vitreus")) {
-				emptySpreader = scanGround(p, false, p.world);
-			}else if(aspect.equals("Tenebrae")) {
-				emptySpreader = searchInnsmouth(p, p.world, p.world.rand);
-			}else if(aspect.equals("Cognitio")) {
-				emptySpreader = searchVillage(p, p.world);
-			}else if(aspect.equals("Vinculum")) {
-				emptySpreader = extendEffects(p, p.world);
-			}else if(aspect.equals("Permutatio")) {
-				emptySpreader = changeEffects(p, p.world);
-			}else if(aspect.equals("Potentia")) {
-				emptySpreader = amplifyEffects(p, p.world);
-			}else if(aspect.equals("Humanus")) {
-				emptySpreader = searchPlayer(p, p.world);
-			}else if(aspect.equals("Instrumentum")) {
-				emptySpreader = getPlayerItem(p, p.world);
-			}else if(!aspect.isEmpty()) {
-				emptySpreader = dreamWeight(90, 2, 1, 2, 1, 2, k, p);	
-			}
-			if(emptySpreader) {
-				IBlockState b = p.world.getBlockState(SpreaderLocation);
-				p.world.getTileEntity(SpreaderLocation).getTileData().removeTag("containing");
-				p.world.setBlockState(SpreaderLocation, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(SpreaderLocation))-5), 2);
-				unlockResearch(p, aspect.toLowerCase()); 
-				if(increaseTimesDreamt) p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
-			}
-			
+	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k,  int times) {
+		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(FumeSpreader.ISFULL, true), times);
+		boolean increaseTimesDreamt = false;
+		
+		// Made a "helper" string list so that in the future I may make special dreams based on aspect combos, without/before processing the single dreams.
+		List<String> aspects = Lists.newArrayList();
+		Iterator<BlockPos> iter = SpreaderLocations.iterator();
+		while(iter.hasNext()) {
+			BlockPos pos = iter.next();
+			String aspect = p.world.getTileEntity(pos).getTileData().getString("containing");
+			if(aspect == null) iter.remove();
+			else aspects.add(aspect);
 		}
+		
+		
+		for(int i = 0; i < SpreaderLocations.size(); i++) {
+			BlockPos pos = SpreaderLocations.get(i);
+			String aspect = aspects.get(i);
+			if(pos == null) break;
+			if(aspect == null) continue;
+			
+			boolean emptySpreader = processDream(aspect, k, p);
+			if(emptySpreader) increaseTimesDreamt = true;
+			
+			if(emptySpreader) {
+				IBlockState b = p.world.getBlockState(pos);
+				p.world.getTileEntity(pos).getTileData().removeTag("containing");
+				p.world.setBlockState(pos, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(pos))-5), 2);
+				unlockResearch(p, aspect.toLowerCase()); 
+			}
+		}
+		
+		if(increaseTimesDreamt) p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
+		
 	}
 	
-	public static BlockPos checkBlocks(World world, BlockPos playerPos, IBlockState state) {
+	private static boolean processDream(String aspect, IPlayerKnowledge k, EntityPlayer p) {
+		switch (aspect) {
+			case "Aer": return dreamWeight(7, 1, 8, 2, 2, 12, k, p);
+			case "Ignis": return dreamWeight(7, 4, 3, 9, 7, 2, k, p);
+			case "Ordo": return dreamWeight(4, 2, 12, 9, 3, 2, k, p);	
+			case "Perditio": return dreamWeight(2, 10, 1, 3, 8, 8, k, p);
+			case "Terra": return dreamWeight(7, 2, 5, 9, 9, 0, k, p);
+			case "Aqua": return dreamWeight(4, 13, 8, 2, 1, 4, k, p);
+			case "Metallum": return scanGround(p, true, p.world);
+			case "Vitreus": return scanGround(p, false, p.world);
+			case "Tenebrae": return searchInnsmouth(p, p.world, p.world.rand);
+			case "Cognitio": return searchVillage(p, p.world);
+			case "Vinculum": return extendEffects(p, p.world);
+			case "Permutatio": return changeEffects(p, p.world);
+			case "Potentia": return amplifyEffects(p, p.world);
+			case "Humanus": return searchPlayer(p, p.world);
+			case "Instrumentum": return getPlayerItem(p, p.world);
+			default: dreamWeight(90, 2, 1, 2, 1, 2, k, p);	
+		}
+		return false;
+	}
+	
+	public static List<BlockPos> checkBlocks(World world, BlockPos playerPos, IBlockState state, int n) {
+		if(n < 1) return null;
+		List<BlockPos> poss = Lists.newArrayList();
+		int i = 0;
 		for(int x = -2; x<3; x++) {
 			for(int z = -2; z<3; z++) {
 				for(int y = -3; y<2; y++) {
 					BlockPos posCheck = playerPos.add(x, y, z);
 					if(world.getBlockState(posCheck).getBlock() != null) {
 						if(world.getBlockState(posCheck) == state) {
-							return posCheck;
+							poss.add(posCheck);
+							if(i >= n) return poss;
 						}
 					}
 				}
 			}
 		}
-		return null;
+		return poss;
 	}
 	
 	// ***************************************** BASIC KNOWLEDGE DREAMS ***************************************** \\
