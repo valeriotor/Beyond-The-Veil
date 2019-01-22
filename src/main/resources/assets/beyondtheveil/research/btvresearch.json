@@ -137,6 +137,23 @@
             ]
         },
 		{
+        "key": "SLEEPCHAMBERADVANCED",
+        "name": "research.SLEEPCHAMBERADVANCED.title",
+        "icons": [ "beyondtheveil:sleep_chamber_advanced" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,4 ],
+        "parents": [ "SLEEPCHAMBER" ],
+        "stages": [
+				{
+					"text": "research.SLEEPCHAMBERADVANCED.stage.0",
+					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1", "THEORY;BEYOND_THE_VEIL;1"]
+				},
+                {
+                    "text": "research.SLEEPCHAMBERADVANCED.stage.1",
+                    "recipes": ["beyondtheveil:sleep_chamber_advanced"]
+                }
+            ]
+        },
+		{
         "key": "INSCRIPTIONS",
         "name": "research.INSCRIPTIONS.title",
         "icons": [ "beyondtheveil:tablet" ],

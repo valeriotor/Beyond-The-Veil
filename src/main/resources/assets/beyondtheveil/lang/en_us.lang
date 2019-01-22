@@ -49,6 +49,7 @@ tile.slug_bait.name=Slug Bait
 tile.worn_bricks.name=Worn Bricks
 tile.worn_brick_stairs.name=Worn Brick Stairs
 tile.sleep_chamber.name=Sleep Chamber
+tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
 
 
 ##################
@@ -233,3 +234,7 @@ research.instrumentum.unlock=Your use of Instrumentum granted you knowledge of t
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
 research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.
+
+research.SLEEPCHAMBERADVANCED.title=PLACEHOLDER TEXT
+research.SLEEPCHAMBERADVANCED.stage.0=PLACEHOLDER TEXT
+research.SLEEPCHAMBERADVANCED.stage.1=PLACEHOLDER TEXT

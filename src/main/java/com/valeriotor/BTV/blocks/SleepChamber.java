@@ -34,10 +34,10 @@ public class SleepChamber extends Block{
 	
 	public static final PropertyEnum<SleepChamber.EnumHalf> HALF = PropertyEnum.<SleepChamber.EnumHalf>create("half", SleepChamber.EnumHalf.class);
 	
-	public SleepChamber() {
+	public SleepChamber(String name) {
 		super(Material.IRON);
-		this.setRegistryName(References.MODID + ":sleep_chamber");
-		this.setUnlocalizedName("sleep_chamber");
+		this.setRegistryName(References.MODID, name);
+		this.setUnlocalizedName(name);
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, SleepChamber.EnumHalf.BOTTOM));
 		this.setHardness(20F);

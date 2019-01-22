@@ -42,7 +42,7 @@ public class PlayerEvents {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(event.getEntityPlayer());
 		
 		if(event.getEntityPlayer() != null && k.isResearchComplete("FIRSTDREAMS")) {
-			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), k);
+			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), k, true);
 			event.getEntityPlayer().getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0);
 		}
 		}

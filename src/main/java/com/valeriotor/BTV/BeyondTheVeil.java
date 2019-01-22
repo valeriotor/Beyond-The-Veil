@@ -78,8 +78,7 @@ public class BeyondTheVeil
     	proxy.registerEntities();
     	
     	
-    	Recipes.initArcaneRecipes();
-    	Recipes.initCrucibleRecipes();
+    	
     	RegistryHandler.registerTileEntities();
     	
     	ResearchCategories.registerCategory("BEYOND_THE_VEIL", (String)null, new AspectList(), new ResourceLocation("beyondtheveil","textures/research/tab_icon.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_1.jpg"),new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png") );

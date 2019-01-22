@@ -1,6 +1,8 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.SleepChamber;
+import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.FlagProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 
@@ -43,17 +45,30 @@ public class MessageSleepChamber implements IMessage {
 
 		@Override
 		public IMessage onMessage(MessageSleepChamber message, MessageContext ctx) {
+			
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			BlockPos pos = new BlockPos((int)player.getPosition().getX(), (int)player.getPosition().getY(), (int)player.getPosition().getZ());
 			IBlockState state = player.getServerWorld().getBlockState(pos);
+			
 			if(state.getBlock() instanceof SleepChamber) {
+				int multiplier = 0;
+				boolean advanced = false;
+				if(state.getBlock() == BlockRegistry.SleepChamber) multiplier = 1;
+				else if(state.getBlock() == BlockRegistry.SleepChamberAdvanced) {
+					multiplier = 2;
+					advanced = true;
+				}
 				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(player);
 				
 				int times = player.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt();
-				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today"));
-				if(message.doesDream && times < 1) {
-					DreamHandler.chooseDream(player, k);
+				int level = player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()/2 + 1; // For when I start working on worship
+				
+				if(message.doesDream && times < level * multiplier) {
+					DreamHandler.chooseDream(player, k, true);
+					if(advanced) DreamHandler.chooseDream(player, k, false);
 				}
+				
+				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE (heh. "Release". haha)
 				ejectPlayer(player.getEntityWorld(), pos, state, player);
 			}
 			return null;

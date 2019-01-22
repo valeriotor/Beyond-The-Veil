@@ -33,7 +33,7 @@ import thaumcraft.api.research.ResearchCategories;
 
 public class DreamHandler {
 	
-	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k) {
+	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k, boolean increaseTimesDreamt) {
 		BlockPos SpreaderLocation = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(FumeSpreader.ISFULL, true));
 		if(SpreaderLocation != null) {
 			boolean emptySpreader = false;
@@ -76,8 +76,9 @@ public class DreamHandler {
 				p.world.getTileEntity(SpreaderLocation).getTileData().removeTag("containing");
 				p.world.setBlockState(SpreaderLocation, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(SpreaderLocation))-5), 2);
 				unlockResearch(p, aspect.toLowerCase()); 
+				if(increaseTimesDreamt) p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
 			}
-			p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
+			
 		}
 	}
 	
