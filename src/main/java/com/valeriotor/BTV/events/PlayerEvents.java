@@ -2,7 +2,7 @@ package com.valeriotor.BTV.events;
 
 import java.util.List;
 
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -43,7 +43,7 @@ public class PlayerEvents {
 		
 		if(event.getEntityPlayer() != null && k.isResearchComplete("FIRSTDREAMS")) {
 			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), k, 1);
-			event.getEntityPlayer().getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0);
+			event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);
 		}
 		}
 		
@@ -72,7 +72,7 @@ public class PlayerEvents {
 		}
 		
 		// Reset times dreamt
-		if(event.player.world.getWorldTime() == 10) event.player.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(0); 
+		if(event.player.world.getWorldTime() == 10) event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);; 
 		
 		// Wolf Medallion Events
 		if(!event.player.world.isRemote && BaublesApi.isBaubleEquipped(event.player, ItemRegistry.wolf_medallion) == 0) {

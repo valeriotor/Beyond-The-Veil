@@ -2,7 +2,7 @@ package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
 
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -108,7 +108,7 @@ public class GuiDialogueDweller extends GuiScreen {
 				proceedDialogue(false);
 				break;
 			case 2:
-				this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(0);
+				this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(true));
 				break;
 		}
@@ -152,15 +152,15 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	@Override
 	public void onGuiClosed() {
-		if(this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType() != 0) {
-			this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(0);
+		if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType() != 0) {
+			this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(false));
 		}
 		super.onGuiClosed();
 	}
 	
 	private String getTalkingEntityName() {
-		switch(this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType()) {
+		switch(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType()) {
 			case 1:
 				return "bartender";
 			case 2:
@@ -175,11 +175,11 @@ public class GuiDialogueDweller extends GuiScreen {
 	}
 	
 	private int getTalkingEntityId() {
-		return this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType();
+		return this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType();
 	}
 	
 	private int getTalkingEntityTalkCount() {
-		switch(this.mc.player.getCapability(FlagProvider.FLAG_CAP, null).getDialogueType()) {
+		switch(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType()) {
 		case 1:
 		case 2:
 		case 3:

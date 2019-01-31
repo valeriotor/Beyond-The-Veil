@@ -3,7 +3,7 @@ package com.valeriotor.BTV.network;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 
 import io.netty.buffer.ByteBuf;
@@ -37,7 +37,7 @@ public class MessageOpenTradeGui implements IMessage{
 		public IMessage onMessage(MessageOpenTradeGui message, MessageContext ctx) {
 			List<EntityHamletDweller> dwellers = ctx.getServerHandler().player.world.getEntities(EntityHamletDweller.class, (entity) -> entity.getTalkingPlayer() == ctx.getServerHandler().player);
 			for(EntityHamletDweller e : dwellers) {
-				ctx.getServerHandler().player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(0);
+				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 				if(message.openGui) {
 					e.setCustomer(ctx.getServerHandler().player);
 					ctx.getServerHandler().player.displayVillagerTradeGui(e);

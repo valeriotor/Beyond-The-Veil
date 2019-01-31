@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -282,16 +282,16 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		}
 		if(this.doesOpenGui()) this.talkingPlayer = player;
 		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER ) {
-			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(1);
+			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(1);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER)	{
-			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(2);
+			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(2);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
-			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(3);
+			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(3);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR) {
-			player.getCapability(FlagProvider.FLAG_CAP, null).setDialogueType(4);
+			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(4);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}
 		return EnumActionResult.SUCCESS;

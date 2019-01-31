@@ -6,36 +6,36 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class FlagProvider implements ICapabilitySerializable<NBTTagCompound>{
+public class PlayerDataProvider implements ICapabilitySerializable<NBTTagCompound>{
 	
-	@CapabilityInject(IFlags.class)
-	public static final Capability<IFlags> FLAG_CAP = null;
+	@CapabilityInject(IPlayerData.class)
+	public static final Capability<IPlayerData> PLAYERDATA = null;
 	
-	public IFlags instance = FLAG_CAP.getDefaultInstance();
+	public IPlayerData instance = PLAYERDATA.getDefaultInstance();
 	
-	public FlagProvider() {
+	public PlayerDataProvider() {
 	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return capability == FLAG_CAP;
+		return capability == PLAYERDATA;
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return capability == FLAG_CAP ? FLAG_CAP.<T> cast(this.instance) : null;
+		return capability == PLAYERDATA ? PLAYERDATA.<T> cast(this.instance) : null;
 	}
 
 	@Override
     public NBTTagCompound serializeNBT()
     {
-        return (NBTTagCompound) FLAG_CAP.getStorage().writeNBT(FLAG_CAP, this.instance, null);
+        return (NBTTagCompound) PLAYERDATA.getStorage().writeNBT(PLAYERDATA, this.instance, null);
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt)
     {
-    	FLAG_CAP.getStorage().readNBT(FLAG_CAP, this.instance, null, nbt);
+    	PLAYERDATA.getStorage().readNBT(PLAYERDATA, this.instance, null, nbt);
 }
 
 }

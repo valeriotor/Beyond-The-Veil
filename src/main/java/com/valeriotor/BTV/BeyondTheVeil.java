@@ -25,8 +25,8 @@ import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.TCRegistries;
 import com.valeriotor.BTV.capabilities.WorshipHandler;
-import com.valeriotor.BTV.capabilities.FlagHandler;
-import com.valeriotor.BTV.capabilities.IFlags;
+import com.valeriotor.BTV.capabilities.PlayerDataHandler;
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.crafting.Recipes;
 import com.valeriotor.BTV.events.ClientEvents;
@@ -61,7 +61,7 @@ public class BeyondTheVeil
         
 
     	CapabilityManager.INSTANCE.register(IWorship.class, new WorshipHandler.DGStorage(), new WorshipHandler.Factory());
-    	CapabilityManager.INSTANCE.register(IFlags.class, new FlagHandler.FlagStorage(), new FlagHandler.Factory());
+    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
 
     	MinecraftForge.EVENT_BUS.register(WorshipHandler.class);
     	MinecraftForge.EVENT_BUS.register(new ResearchEvents());

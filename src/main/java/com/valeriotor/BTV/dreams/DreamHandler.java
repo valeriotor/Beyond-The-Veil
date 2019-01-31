@@ -9,7 +9,7 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.FumeSpreader;
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -66,7 +66,7 @@ public class DreamHandler {
 			}
 		}
 		
-		if(increaseTimesDreamt) p.getCapability(FlagProvider.FLAG_CAP, null).setTimesDreamt(p.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt()+1);
+		if(increaseTimesDreamt) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("timesDreamt", 0, false)+1, false);
 		
 	}
 	

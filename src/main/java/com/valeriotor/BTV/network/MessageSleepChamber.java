@@ -3,7 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.SleepChamber;
 import com.valeriotor.BTV.capabilities.DGProvider;
-import com.valeriotor.BTV.capabilities.FlagProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 
 import io.netty.buffer.ByteBuf;
@@ -60,7 +60,7 @@ public class MessageSleepChamber implements IMessage {
 				}
 				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(player);
 				
-				int times = player.getCapability(FlagProvider.FLAG_CAP, null).getTimesDreamt();
+				int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("timesDreamt", 0, false);
 				int level = player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()/2 + 1; // For when I start working on worship
 				
 				if(message.doesDream && times < level * multiplier) {
@@ -68,7 +68,7 @@ public class MessageSleepChamber implements IMessage {
 					else DreamHandler.chooseDream(player, k, 1);
 				}
 				
-				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE (heh. "Release". haha)
+				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE. Heh. "Release". haha
 				ejectPlayer(player.getEntityWorld(), pos, state, player);
 			}
 			return null;
