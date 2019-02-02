@@ -38,11 +38,10 @@ public class GuiDialogueDweller extends GuiScreen {
 	public void initGui() {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - 185, I18n.format("gui.dialogue.talk")));
         this.buttonList.add(new GuiButton(2, this.width / 2, this.height - 185, I18n.format("gui.dialogue.trade")));
-        if(this.getTalkingEntityId() == 3 || this.getTalkingEntityId() == 4) {
-        	this.buttonList.get(1).enabled = false;
-        }
-
+ 
         this.profession = DialogueHandler.getProfession(Minecraft.getMinecraft().player);
+        
+        if(!this.profession.equals("bartender") && !this.profession.equals("carpenter")) this.buttonList.get(1).enabled = false;
         
         if(this.dialogue.equals("")) {
         	this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
@@ -168,25 +167,6 @@ public class GuiDialogueDweller extends GuiScreen {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(false));
 		//}
 		super.onGuiClosed();
-	}
-	
-	/*private String getTalkingEntityName() {
-		switch(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType()) {
-			case 1:
-				return "bartender";
-			case 2:
-				return "carpenter";
-			case 3:
-				return "lhkeeper";
-			case 4:
-				return "scholar";
-			default:
-				return "";
-		}
-	}*/
-	
-	private int getTalkingEntityId() {
-		return this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType();
 	}
 	
 	

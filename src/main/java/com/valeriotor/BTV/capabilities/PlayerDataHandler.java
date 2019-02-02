@@ -96,20 +96,6 @@ public class PlayerDataHandler {
 		public List<String> tempStrings = Lists.newArrayList();
 		public HashMap<String, Integer> tempInts = new HashMap<>();
 		
-		private int dialogueType = 0;
-		
-		
-		
-		@Override
-		public void setDialogueType(int id) {
-			this.dialogueType = id;
-			
-		}
-
-		@Override
-		public int getDialogueType() {
-			return this.dialogueType;
-		}
 
 		@Override
 		public void addString(String string, boolean temporary) {

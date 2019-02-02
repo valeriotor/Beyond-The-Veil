@@ -287,19 +287,6 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}
 		
-		/*if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER ) {
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(1);
-			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER)	{
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(2);
-			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER) {
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(3);
-			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR) {
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(4);
-			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}*/
 		return EnumActionResult.SUCCESS;
 	}
 	
