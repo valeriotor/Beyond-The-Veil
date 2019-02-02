@@ -36,6 +36,8 @@ public class DreamHandler {
 	
 	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k,  int times) {
 		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(FumeSpreader.ISFULL, true), times);
+		if(SpreaderLocations.isEmpty()) return;
+		
 		boolean increaseTimesDreamt = false;
 		
 		// Made a "helper" string list so that in the future I may make special dreams based on aspect combos, without/before processing the single dreams.

@@ -30,6 +30,8 @@ public class GuiDialogueDweller extends GuiScreen {
 	private String dialogue = "";
 	private String branch = "";
 	private String profession = "";
+	private String option0 = "";
+	private String option1 = "";
 	
 	
 	@Override
@@ -47,6 +49,9 @@ public class GuiDialogueDweller extends GuiScreen {
         //this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
         	this.dialogueLength = this.dialogue.length();
         }
+        this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
+		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
+		
 		super.initGui();
 	}
 	
@@ -63,19 +68,17 @@ public class GuiDialogueDweller extends GuiScreen {
 					drawString(mc.fontRenderer, toWrite, this.width/4 + 12, this.height + (i * 15) - 140, 0xFFFFFF);
 				}
 			}
-			String option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
-			String option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
-			if(option0 != null && option1 != null && this.letterCount == this.dialogueLength) {
-				String[] option0split = GuiHelper.splitStrings(option0);
+			if(this.option0 != null && this.option1 != null && this.letterCount == this.dialogueLength) {
+				String[] option0split = GuiHelper.splitStrings(this.option0);
 				for(int i = 0; i < option0split.length; i++) {
-						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, option0))));
+						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, this.option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option0))));
 						drawString(mc.fontRenderer, toWrite, this.width/4 + 62, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 				
-				String[] option1split = GuiHelper.splitStrings(option1);
+				String[] option1split = GuiHelper.splitStrings(this.option1);
 				for(int i = 0; i < option1split.length; i++) {
-						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, option1))));
+						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, this.option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option1))));
 						drawString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
@@ -220,6 +223,12 @@ public class GuiDialogueDweller extends GuiScreen {
 	private void proceedDialogue(boolean option) {
 		int tmp = this.talkCount;
 		this.talkCount = option ? 0 : this.talkCount+1;
+		if(DialogueHandler.updateDialogueData(this.profession, this.branch, this.selectedOption, this.talkCount)) {
+			this.talkCount = 0;
+			this.branch = "";
+			this.selectedOption = -1;
+			option = false;
+		}
 		if(option) this.branch = DialogueHandler.getBranch(this.profession, this.branch, selectedOption);
 		if(!this.branch.equals("") && this.talkCount >= DialogueHandler.getBranchTalkCount(profession, branch)) {
 			this.talkCount = 0;
@@ -233,5 +242,8 @@ public class GuiDialogueDweller extends GuiScreen {
 		this.setDialogueSpeed();
 		if(DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch) != null) this.selectedOption = 0;
 		else this.selectedOption = -1;
+		this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
+		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
+		
 	}
 }

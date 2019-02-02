@@ -7,6 +7,8 @@ import java.util.UUID;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncDialogueData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -104,7 +106,7 @@ public class DialogueHandler {
 	
 	private static Dialogues getDialogueName(EntityPlayer p, String profession) {
 		for(Dialogues d : Dialogues.values()) {
-			if(d.getProf().equals(profession) && p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(d.getName())) {
+			if(d != Dialogues.FIRST && d.getProf().equals(profession) && p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(d.getName())) {
 				return d;
 			}
 		}
@@ -130,15 +132,21 @@ public class DialogueHandler {
 	
 	
 	private enum Dialogues{
-		MET("lhkeeper", 2),
-		FIRST("any", 0);
+		MET("lhkeeper", 2, Branches.GENOCIDEDISAGREE.getName(), 0, 0),
+		FIRST("any", 0, "", 0, 0);
 		
 		private int talkCount;
 		private String prof;
+		private String reqBranch;
+		private int reqOpt;
+		private int reqTC;
 		
-		private Dialogues(String prof, int num) {
+		private Dialogues(String prof, int num, String reqBranch, int reqOpt, int reqTC) {
 			this.talkCount = num;
 			this.prof = prof;
+			this.reqBranch = reqBranch;
+			this.reqOpt = reqOpt;
+			this.reqTC = reqTC;
 		}
 		
 		public int getTalkCount() {
@@ -151,6 +159,18 @@ public class DialogueHandler {
 		
 		public String getName() {
 			return this.name().toLowerCase();
+		}
+		
+		public String getUnlockBranch() {
+			return this.reqBranch;
+		}
+		
+		public int getUnlockOption() {
+			return this.reqOpt;
+		}
+		
+		public int getUnlockTalkCount() {
+			return this.reqTC;
 		}
 	}
 	
@@ -194,6 +214,21 @@ public class DialogueHandler {
 		}
 		
 		return "";
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
+		for(Dialogues d : Dialogues.values()) {
+			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch)) {
+				if(option == d.getUnlockOption() || (option == -1 && talkCount == d.getUnlockTalkCount())) {
+					Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
+					BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName()));
+					System.out.println("SUCCESS!!");
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	
