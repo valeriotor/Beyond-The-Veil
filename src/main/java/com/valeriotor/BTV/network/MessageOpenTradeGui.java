@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.gui.DialogueHandler;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
@@ -35,7 +36,13 @@ public class MessageOpenTradeGui implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageOpenTradeGui message, MessageContext ctx) {
-			List<EntityHamletDweller> dwellers = ctx.getServerHandler().player.world.getEntities(EntityHamletDweller.class, (entity) -> entity.getTalkingPlayer() == ctx.getServerHandler().player);
+			EntityHamletDweller e = DialogueHandler.getDweller(ctx.getServerHandler().player);
+			DialogueHandler.removeDialogue(ctx.getServerHandler().player);
+			if(e != null && message.openGui) {
+				e.setCustomer(ctx.getServerHandler().player);
+				ctx.getServerHandler().player.displayVillagerTradeGui(e);
+			}
+			/*List<EntityHamletDweller> dwellers = ctx.getServerHandler().player.world.getEntities(EntityHamletDweller.class, (entity) -> entity.getTalkingPlayer() == ctx.getServerHandler().player);
 			for(EntityHamletDweller e : dwellers) {
 				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 				if(message.openGui) {
@@ -43,7 +50,7 @@ public class MessageOpenTradeGui implements IMessage{
 					ctx.getServerHandler().player.displayVillagerTradeGui(e);
 				}
 				e.resetTalkingPlayer();
-			}
+			}*/
 			return null;
 		}
 		

@@ -146,8 +146,11 @@ dweller.lhkeeper.talk0=Oh.| {A traveller}[... ] :Welcome.
 dweller.lhkeeper.talk1=PLACEHOLDER DIALOGUE.
 dweller.lhkeeper.talk1.option0=Test option:Please ignore
 dweller.lhkeeper.talk1.option1=Another test:Still ignore
-dweller.lhkeeper.talk1.reply0=There is no right answer. :But know that I {despise} those who think the way you do.
-dweller.lhkeeper.talk1.reply1=That is what I think as well. :But your forefather knew better, didn't they?
+dweller.lhkeeper.genocidedisagreetalk0=There is no right answer. :But know that I {despise} those who think the way you do.
+dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your forefather knew better, didn't they?
+dweller.lhkeeper.genocidedisagreetalk0.option0=Soz
+dweller.lhkeeper.genocidedisagreetalk0.option1=kk bb
+
 
 ##################
 #DREAMS

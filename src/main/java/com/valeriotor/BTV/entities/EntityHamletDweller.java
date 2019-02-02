@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.gui.DialogueHandler;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -280,8 +281,13 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.buyingList == null) this.populateBuyingList();
 			}
 		}
-		if(this.doesOpenGui()) this.talkingPlayer = player;
-		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER ) {
+		if(this.doesOpenGui()) {
+			this.talkingPlayer = player;
+			DialogueHandler.newDialogue(player, this);
+			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+		}
+		
+		/*if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER ) {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(1);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER)	{
@@ -293,7 +299,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR) {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(4);
 			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
-		}
+		}*/
 		return EnumActionResult.SUCCESS;
 	}
 	
@@ -311,13 +317,13 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	public static enum ProfessionsEnum{
 		FISHERMAN(0, 4),
-		BARTENDER(1, 0),
+		BARTENDER(1, 2),
 		MINER(2, 1),
-		LHKEEPER(3, 0),
+		LHKEEPER(3, 2),
 		STOCKPILER(4, 4),
 		DRUNK(5, 4),
-		CARPENTER(6, 0),
-		SCHOLAR(7, 0);
+		CARPENTER(6, 2),
+		SCHOLAR(7, 2);
 		
 		private final int id;
 		private final int talkCount;
@@ -438,6 +444,15 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void onDeath(DamageSource cause) {
+		EntityPlayer p = DialogueHandler.getPlayer(this);
+		if(p != null) {
+			BeyondTheVeil.proxy.closeGui(p);
+		}
+		super.onDeath(cause);
 	}
 
 }

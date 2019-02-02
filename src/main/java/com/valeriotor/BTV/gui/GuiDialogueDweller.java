@@ -3,7 +3,6 @@ package com.valeriotor.BTV.gui;
 import java.io.IOException;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenTradeGui;
@@ -12,8 +11,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +28,8 @@ public class GuiDialogueDweller extends GuiScreen {
 	private int selectedOption = -1;
 	private boolean ignoreDot = false;
 	private String dialogue = "";
+	private String branch = "";
+	private String profession = "";
 	
 	
 	@Override
@@ -38,9 +39,13 @@ public class GuiDialogueDweller extends GuiScreen {
         if(this.getTalkingEntityId() == 3 || this.getTalkingEntityId() == 4) {
         	this.buttonList.get(1).enabled = false;
         }
+
+        this.profession = DialogueHandler.getProfession(Minecraft.getMinecraft().player);
+        
         if(this.dialogue.equals("")) {
-        this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
-		this.dialogueLength = this.dialogue.length();
+        	this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
+        //this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
+        	this.dialogueLength = this.dialogue.length();
         }
 		super.initGui();
 	}
@@ -58,8 +63,8 @@ public class GuiDialogueDweller extends GuiScreen {
 					drawString(mc.fontRenderer, toWrite, this.width/4 + 12, this.height + (i * 15) - 140, 0xFFFFFF);
 				}
 			}
-			String option0 = this.getDialogueOption(0);
-			String option1 = this.getDialogueOption(1);
+			String option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
+			String option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
 			if(option0 != null && option1 != null && this.letterCount == this.dialogueLength) {
 				String[] option0split = GuiHelper.splitStrings(option0);
 				for(int i = 0; i < option0split.length; i++) {
@@ -108,7 +113,8 @@ public class GuiDialogueDweller extends GuiScreen {
 				proceedDialogue(false);
 				break;
 			case 2:
-				this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
+				//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
+				//DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(true));
 				break;
 		}
@@ -118,6 +124,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode == 1 || keyCode == 18) {
+			DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}else if(keyCode == 42 || keyCode == 54) {
@@ -152,14 +159,15 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	@Override
 	public void onGuiClosed() {
-		if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType() != 0) {
-			this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
+		DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
+		//if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType() != 0) {
+			//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(false));
-		}
+		//}
 		super.onGuiClosed();
 	}
 	
-	private String getTalkingEntityName() {
+	/*private String getTalkingEntityName() {
 		switch(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType()) {
 			case 1:
 				return "bartender";
@@ -172,23 +180,10 @@ public class GuiDialogueDweller extends GuiScreen {
 			default:
 				return "";
 		}
-	}
+	}*/
 	
 	private int getTalkingEntityId() {
 		return this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType();
-	}
-	
-	private int getTalkingEntityTalkCount() {
-		switch(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType()) {
-		case 1:
-		case 2:
-		case 3:
-			return 2;
-		case 4:
-			return 2;
-		default:
-			return 1;
-		}
 	}
 	
 	
@@ -221,23 +216,22 @@ public class GuiDialogueDweller extends GuiScreen {
 		
 	}
 	
-	private String getDialogueOption(int id) {
-		String string = I18n.format(String.format("dweller.%s.talk%d.option%d", this.getTalkingEntityName(), this.talkCount, id));
-		if(string.substring(0, 7).equals("dweller")) string = null;
-		return string;
-	}
 	
 	private void proceedDialogue(boolean option) {
 		int tmp = this.talkCount;
-		this.talkCount = option ? -1 : (this.talkCount+1)%this.getTalkingEntityTalkCount();
+		this.talkCount = option ? 0 : this.talkCount+1;
+		if(option) this.branch = DialogueHandler.getBranch(this.profession, this.branch, selectedOption);
+		if(!this.branch.equals("") && this.talkCount >= DialogueHandler.getBranchTalkCount(profession, branch)) {
+			this.talkCount = 0;
+			this.branch = "";
+		}
+		this.talkCount %= DialogueHandler.getTalkCount(this.branch);
 		this.letterCount = 1;
 		this.interval = 1;
-		String newDialogue = String.format("dweller.%s.talk%d", this.getTalkingEntityName(), option ? tmp : this.talkCount);
-		if(option) newDialogue = newDialogue.concat(String.format(".reply%d" , this.selectedOption));
-		this.dialogue = I18n.format(newDialogue);
+		this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
 		this.dialogueLength = this.dialogue.length();
 		this.setDialogueSpeed();
-		if(this.getDialogueOption(0) != null) this.selectedOption = 0;
+		if(DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch) != null) this.selectedOption = 0;
 		else this.selectedOption = -1;
 	}
 }

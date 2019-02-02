@@ -39,6 +39,10 @@ public class CommonProxy {
     	
     }
     
+    public void closeGui(EntityPlayer p) {
+    	
+    }
+    
     public String localizeMessage(String a) {
     	return a;
     }

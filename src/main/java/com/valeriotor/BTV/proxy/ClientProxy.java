@@ -8,8 +8,10 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -61,6 +63,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void openGui(String id) {
     	Minecraft.getMinecraft().displayGuiScreen(Guis.getGui(id));
+    }
+    
+    @Override
+    public void closeGui(EntityPlayer p) {
+    	if(p.equals(Minecraft.getMinecraft().player))
+    	Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
     }
     
     
