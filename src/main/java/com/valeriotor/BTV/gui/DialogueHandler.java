@@ -222,7 +222,7 @@ public class DialogueHandler {
 	@SideOnly(Side.CLIENT)
 	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
 		for(Dialogues d : Dialogues.values()) {
-			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch)) {
+			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch) && d.getUnlockDIalogue().equals(getDialogueName(Minecraft.getMinecraft().player, profession).getName())) {
 				if(option == d.getUnlockOption() || (option == -1 && talkCount == d.getUnlockTalkCount())) {
 					Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
 					BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName()));
@@ -236,18 +236,20 @@ public class DialogueHandler {
 	
 	
 	private enum Dialogues{
-		MET("lhkeeper", 2, Branches.GENOCIDEDISAGREE.getName(), 0, 0),
-		FIRST("any", 0, "", 0, 0);
+		MET("lhkeeper", 2, "first", Branches.GENOCIDEDISAGREE.getName(), 0, 0),
+		FIRST("any", 0, "", "", 0, 0);
 		
 		private int talkCount;
 		private String prof;
+		private String reqDialogue;
 		private String reqBranch;
 		private int reqOpt;
 		private int reqTC;
 		
-		private Dialogues(String prof, int num, String reqBranch, int reqOpt, int reqTC) {
+		private Dialogues(String prof, int num, String reqDialogue, String reqBranch, int reqOpt, int reqTC) {
 			this.talkCount = num;
 			this.prof = prof;
+			this.reqDialogue = reqDialogue;
 			this.reqBranch = reqBranch;
 			this.reqOpt = reqOpt;
 			this.reqTC = reqTC;
@@ -263,6 +265,10 @@ public class DialogueHandler {
 		
 		public String getName() {
 			return this.name().toLowerCase();
+		}
+		
+		public String getUnlockDIalogue() {
+			return this.reqDialogue;
 		}
 		
 		public String getUnlockBranch() {
