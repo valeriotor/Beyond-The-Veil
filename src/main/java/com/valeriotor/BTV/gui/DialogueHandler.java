@@ -208,9 +208,9 @@ public class DialogueHandler {
 		return "";
 	}
 	
-	/** Iterates through Dialogues to find a dialogue that can be unlocked, based on the "req" variables,
-	 *  as well as profession. If found it adds the Dialogue.getName() to the PlayerData's strings, both client-
-	 *  and server-side.
+	/** Iterates through Dialogues to find a dialogue that can be unlocked (based on the "req" variables as
+	 *  well as profession) or removed, based on arbitrary logic. If found it adds the Dialogue.getName() 
+	 *  to the PlayerData's strings, both client- and server-side.
 	 * 
 	 * @param profession The Dweller's profession
 	 * @param branch The current branch
@@ -221,22 +221,24 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
+		String dialogueName = getDialogueName(Minecraft.getMinecraft().player, profession).getName();
 		for(Dialogues d : Dialogues.values()) {
-			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch) && d.getUnlockDIalogue().equals(getDialogueName(Minecraft.getMinecraft().player, profession).getName())) {
+			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch) && d.getUnlockDialogue().equals(dialogueName)) {
 				if(option == d.getUnlockOption() || (option == -1 && talkCount == d.getUnlockTalkCount())) {
 					Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
-					BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName()));
+					BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), false));
 					System.out.println("SUCCESS!!");
 					return true;
 				}
 			}
 		}
+		
 		return false;
 	}
 	
 	
 	private enum Dialogues{
-		MET("lhkeeper", 2, "first", Branches.GENOCIDEDISAGREE.getName(), 0, 0),
+		MET("lhkeeper", 4, "first", Branches.GENOCIDEDISAGREE.getName(), 0, 0),
 		FIRST("any", 0, "", "", 0, 0);
 		
 		private int talkCount;
@@ -267,7 +269,7 @@ public class DialogueHandler {
 			return this.name().toLowerCase();
 		}
 		
-		public String getUnlockDIalogue() {
+		public String getUnlockDialogue() {
 			return this.reqDialogue;
 		}
 		

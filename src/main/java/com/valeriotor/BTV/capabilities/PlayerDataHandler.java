@@ -105,8 +105,10 @@ public class PlayerDataHandler {
 
 		@Override
 		public void removeString(String string) {
-			strings.remove(string);
-			tempStrings.remove(string);
+			if(strings.contains(string))
+				strings.remove(string);
+			if(tempStrings.contains(string))
+				tempStrings.remove(string);
 		}
 
 		@Override
@@ -117,8 +119,10 @@ public class PlayerDataHandler {
 
 		@Override
 		public void removeInteger(String key) {
-			ints.remove(key);
-			tempInts.remove(key);
+			if(ints.containsKey(key))
+				ints.remove(key);
+			if(tempInts.containsKey(key))
+				tempInts.remove(key);
 		}
 
 		@Override
