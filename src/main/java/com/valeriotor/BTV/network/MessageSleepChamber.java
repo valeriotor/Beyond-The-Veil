@@ -1,7 +1,7 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.SleepChamber;
+import com.valeriotor.BTV.blocks.BlockSleepChamber;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
@@ -50,7 +50,7 @@ public class MessageSleepChamber implements IMessage {
 			BlockPos pos = new BlockPos((int)player.getPosition().getX(), (int)player.getPosition().getY(), (int)player.getPosition().getZ());
 			IBlockState state = player.getServerWorld().getBlockState(pos);
 			
-			if(state.getBlock() instanceof SleepChamber) {
+			if(state.getBlock() instanceof BlockSleepChamber) {
 				int multiplier = 0;
 				boolean advanced = false;
 				if(state.getBlock() == BlockRegistry.SleepChamber) multiplier = 1;

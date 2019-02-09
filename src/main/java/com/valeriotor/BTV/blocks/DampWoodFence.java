@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.BlockFence;
@@ -11,9 +12,9 @@ public class DampWoodFence extends BlockFence{
 
 	public DampWoodFence() {
 		super(Material.WOOD, Material.WOOD.getMaterialMapColor());
-		this.setRegistryName(References.MODID + ":damp_wood_fence");
-		this.setUnlocalizedName("damp_wood_fence");
-		this.setCreativeTab(CreativeTabs.DECORATIONS);
+		this.setRegistryName(References.MODID, BlockNames.DAMPWOODFENCE);
+		this.setUnlocalizedName(BlockNames.DAMPWOODFENCE);
+		this.setCreativeTab(References.BTV_TAB);
 		this.useNeighborBrightness = true;
 		this.setHardness(4);
 	}

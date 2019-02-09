@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 
 import net.minecraft.block.Block;
@@ -39,7 +40,7 @@ import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.items.ItemsTC;
 
-public class FumeSpreader extends Block implements ITileEntityProvider{
+public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
 	
 	
@@ -54,13 +55,10 @@ public class FumeSpreader extends Block implements ITileEntityProvider{
 	
 	private static final AxisAlignedBB BBox = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 11, 0.0625 * 12);
 
-	public FumeSpreader() {
-		super(Material.GLASS);
+	public BlockFumeSpreader() {
+		super(Material.GLASS, BlockNames.FUMESPREADER);
 		this.setResistance(50.0F);
 		this.setHardness(2.0F);
-		setRegistryName("fume_spreader");
-		setUnlocalizedName("fume_spreader");
-		setCreativeTab(CreativeTabs.DECORATIONS);
 		this.setSoundType(SoundType.GLASS);
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP).withProperty(ISFULL, false));

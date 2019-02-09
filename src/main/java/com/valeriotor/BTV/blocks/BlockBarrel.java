@@ -3,6 +3,7 @@ package com.valeriotor.BTV.blocks;
 import java.util.Random;
 
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileBarrel;
 
@@ -34,18 +35,15 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBarrel extends Block implements ITileEntityProvider{
+public class BlockBarrel extends ModBlock implements ITileEntityProvider{
 	
 	private static final AxisAlignedBB BBOX = new AxisAlignedBB(0.125,0.0,0.125,0.875,0.875,0.875); 
 	public static final PropertyEnum<BlockBarrel.EnumFullness> FULLNESS = PropertyEnum.<BlockBarrel.EnumFullness>create("fullness", BlockBarrel.EnumFullness.class);
 	
 	public BlockBarrel() {
-		super(Material.WOOD);
+		super(Material.WOOD, BlockNames.BARREL);
 		this.setResistance(2000.0F);
 		this.setHardness(4.0F);
-		setRegistryName(References.MODID + ":barrel");
-		setUnlocalizedName("barrel");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		this.setSoundType(SoundType.WOOD);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FULLNESS, EnumFullness.EMPTY));
 	}

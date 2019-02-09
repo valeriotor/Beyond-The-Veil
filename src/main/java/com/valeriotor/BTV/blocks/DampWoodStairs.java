@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.BlockStairs;
@@ -18,9 +19,9 @@ public class DampWoodStairs extends BlockStairs{
 
 	public DampWoodStairs(IBlockState modelState) {
 		super(modelState);
-		this.setRegistryName(References.MODID + ":damp_wood_stairs");
-		this.setUnlocalizedName("damp_wood_stairs");
-		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		this.setRegistryName(References.MODID, BlockNames.DAMPWOODSTAIRS);
+		this.setUnlocalizedName(BlockNames.DAMPWOODSTAIRS);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

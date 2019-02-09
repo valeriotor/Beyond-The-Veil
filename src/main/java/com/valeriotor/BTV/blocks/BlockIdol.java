@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.BTV.capabilities.DGProvider;
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
@@ -31,7 +32,7 @@ import net.minecraft.world.World;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
-public class BlockIdol extends Block{
+public class BlockIdol extends ModBlock{
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
     {
@@ -42,12 +43,9 @@ public class BlockIdol extends Block{
     });
 	
 	public BlockIdol() {
-		super(Material.ROCK);
+		super(Material.ROCK, BlockNames.IDOL);
         this.setBlockUnbreakable();
         this.setResistance(6000001.0F);
-		this.setRegistryName(References.MODID + ":idol");
-		this.setUnlocalizedName("idol");
-		this.setCreativeTab(CreativeTabs.DECORATIONS);
 		
 	}
 	

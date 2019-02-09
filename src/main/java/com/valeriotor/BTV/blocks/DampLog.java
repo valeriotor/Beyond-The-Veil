@@ -1,5 +1,8 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.lib.BlockNames;
+import com.valeriotor.BTV.lib.References;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockRotatedPillar;
@@ -23,11 +26,11 @@ public class DampLog extends BlockLog{
 	public static final PropertyEnum<BlockLog.EnumAxis> LOG_AXIS = PropertyEnum.<BlockLog.EnumAxis>create("axis", BlockLog.EnumAxis.class);
 	
 	public DampLog() {
-		//super(Material.WOOD);
+		super();
 		this.setHardness(4.0F);
-		setRegistryName("damp_log");
-		setUnlocalizedName("damp_log");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		setRegistryName(BlockNames.DAMPLOG);
+		setUnlocalizedName(BlockNames.DAMPLOG);
+		setCreativeTab(References.BTV_TAB);
 		this.setSoundType(SoundType.WOOD);
 	}
 	

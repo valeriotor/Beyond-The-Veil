@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
@@ -39,7 +40,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class DampCanopyWood extends Block{
+public class DampCanopyWood extends ModBlock{
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
     {
@@ -88,12 +89,9 @@ public class DampCanopyWood extends Block{
 	
 	
 	public DampCanopyWood() {
-		super(Material.WOOD);
+		super(Material.WOOD, BlockNames.DAMPCANOPYWOOD);
 		this.setResistance(2000.0F);
 		this.setHardness(4.0F);
-		setRegistryName(References.MODID+ ":damp_canopy_wood");
-		setUnlocalizedName("damp_canopy_wood");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		this.setSoundType(SoundType.WOOD);
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));

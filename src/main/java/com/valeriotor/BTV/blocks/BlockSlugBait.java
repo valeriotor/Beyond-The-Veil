@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileSlugBait;
 
@@ -12,15 +13,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.World;
 
-public class BlockSlugBait extends Block implements ITileEntityProvider{
+public class BlockSlugBait extends ModBlock implements ITileEntityProvider{
 
 	public BlockSlugBait() {
-		super(Material.WOOD);
+		super(Material.WOOD, BlockNames.SLUGBAIT);
 		this.setResistance(2000.0F);
 		this.setHardness(4.0F);
-		setRegistryName(References.MODID + ":slug_bait");
-		setUnlocalizedName("slug_bait");
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 	}
 
 	@Override

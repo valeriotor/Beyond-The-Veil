@@ -8,7 +8,7 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.FumeSpreader;
+import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
@@ -35,7 +35,7 @@ import thaumcraft.api.research.ResearchCategories;
 public class DreamHandler {
 	
 	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k,  int times) {
-		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(FumeSpreader.ISFULL, true), times);
+		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), times);
 		if(SpreaderLocations.isEmpty()) return;
 		
 		boolean increaseTimesDreamt = false;

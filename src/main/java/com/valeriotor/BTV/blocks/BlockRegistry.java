@@ -1,38 +1,36 @@
 package com.valeriotor.BTV.blocks;
 
-import com.valeriotor.BTV.proxy.ClientProxy;
-import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.blocks.flora.PlantBeanStalk;
+import com.valeriotor.BTV.lib.BlockNames;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @Mod.EventBusSubscriber
 public class BlockRegistry {
 	
 	
 	public static final DampWood DampWood = new DampWood();	
-	public static final FumeSpreader FumeSpreader = new FumeSpreader();
-	public static final DarkSand DarkSand = new DarkSand();
+	public static final BlockFumeSpreader FumeSpreader = new BlockFumeSpreader();
+	public static final BlockDarkSand DarkSand = new BlockDarkSand();
 	public static final DampStone DampStone = new DampStone();
 	public static final DampLog DampLog = new DampLog();
 	public static final DampWoodStairs DampWoodStairs = new DampWoodStairs(DampWood.getDefaultState());
 	public static final DampCanopy DampCanopy = new DampCanopy();
 	public static final DampCanopyWood DampCanopyWood = new DampCanopyWood();
-	public static final WornBricks WornBricks = new WornBricks();
+	public static final BlockWornBricks WornBricks = new BlockWornBricks();
 	public static final BlockIdol BlockIdol = new BlockIdol();
 	public static final BlockBarrel BlockBarrel = new BlockBarrel();
 	public static final BlockSlugBait BlockSlugBait = new BlockSlugBait();
 	public static final BlockLamp BlockLamp = new BlockLamp();
-	public static final BricksBlue BricksBlue = new BricksBlue();
-	public static final WornBrickStairs WornBrickStairs = new WornBrickStairs(WornBricks.getDefaultState());
+	public static final BlockBricksBlue BricksBlue = new BlockBricksBlue();
+	public static final BlockWornBrickStairs WornBrickStairs = new BlockWornBrickStairs(WornBricks.getDefaultState());
 	public static final DampWoodFence DampWoodFence = new DampWoodFence();
-	public static final SleepChamber SleepChamber = new SleepChamber("sleep_chamber");
-	public static final SleepChamber SleepChamberAdvanced = new SleepChamber("sleep_chamber_advanced");
+	public static final BlockSleepChamber SleepChamber = new BlockSleepChamber(BlockNames.SLEEPCHAMBER);
+	public static final BlockSleepChamber SleepChamberAdvanced = new BlockSleepChamber(BlockNames.SLEEPCHAMBERADVANCED);
+	public static final PlantBeanStalk PlantBeanStalk = new PlantBeanStalk();
 	
 	
 	@SubscribeEvent
@@ -55,5 +53,6 @@ public class BlockRegistry {
 	   	event.getRegistry().register(DampWoodFence);
 	   	event.getRegistry().register(SleepChamber);
 	   	event.getRegistry().register(SleepChamberAdvanced);
+	   	event.getRegistry().register(PlantBeanStalk);
 	}
 }

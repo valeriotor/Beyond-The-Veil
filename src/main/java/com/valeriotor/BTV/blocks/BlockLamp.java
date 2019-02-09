@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
@@ -14,12 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockLamp extends Block{
+public class BlockLamp extends ModBlock{
 	public BlockLamp() {
-		super(Material.GLASS);
-		this.setRegistryName(References.MODID + ":lamp");
-		this.setUnlocalizedName("lamp");
-		this.setCreativeTab(CreativeTabs.DECORATIONS);
+		super(Material.GLASS, BlockNames.LAMP);
 		this.setLightLevel(4);
 		this.setHardness(2);
 		this.setResistance(10);
