@@ -1,0 +1,12 @@
+{
+    "variants": {
+		"facing=east,source=false": { "model": "beyondtheveil:fume_spreader_wall", "y" : 90 },
+		"facing=south,source=false": { "model": "beyondtheveil:fume_spreader_wall", "y" : 180 },
+		"facing=west,source=false": { "model": "beyondtheveil:fume_spreader_wall", "y" : 270 },
+		"facing=north,source=false": { "model": "beyondtheveil:fume_spreader_wall" },
+		"facing=east,source=true": { "model": "beyondtheveil:fume_spreader_wall_incense", "y" : 90 },
+		"facing=south,source=true": { "model": "beyondtheveil:fume_spreader_wall_incense", "y" : 180 },
+		"facing=west,source=true": { "model": "beyondtheveil:fume_spreader_wall_incense", "y" : 270 },
+		"facing=north,source=true": { "model": "beyondtheveil:fume_spreader_wall_incense" }
+    }
+}
