@@ -45,11 +45,10 @@ public class MessageSyncDataToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSyncDataToClient message, MessageContext ctx) {
-			EntityPlayer p = Minecraft.getMinecraft().player;
 			if(message.value == -999)
-				p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
 			else
-				p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
 			return null;
 		}
 		
