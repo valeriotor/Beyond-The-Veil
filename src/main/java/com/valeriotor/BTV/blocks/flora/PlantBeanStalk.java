@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.blocks.flora;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
@@ -15,6 +17,8 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -23,6 +27,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -39,6 +44,7 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 	
 	public static final PropertyBool SOURCE = PropertyBool.create("source");
 	
+	private static final AxisAlignedBB BBox = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.69F, 1.0F, 0.69F);
 	
 	
 	public PlantBeanStalk() {
@@ -100,6 +106,14 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 		return false;
 	}
 	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		Block b = worldIn.getBlockState(pos.down()).getBlock();
+		if(b != Blocks.DIRT && b != Blocks.GRASS && b != Blocks.MYCELIUM && b != this) {
+			worldIn.destroyBlock(pos, true);
+		}
+	}
+	
 	protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING, SOURCE});
@@ -134,6 +148,27 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
+	}
+	
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BBox;
+	}
+	
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+			List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
+		super.addCollisionBoxToList(pos, entityBox, collidingBoxes, BBox);
+	}
+	
+	@Override
+	public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+		return true;
 	}
 
 	@Override
