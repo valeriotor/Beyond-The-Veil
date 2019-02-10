@@ -61,17 +61,34 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 			EnumHand h, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote) {
 			if(h == EnumHand.MAIN_HAND  && p.getHeldItem(h).getItem() == Items.AIR) {
-				
-				while(worldIn.getBlockState(pos.up()).getBlock().equals(this)) {
-					pos = pos.up();
-				}
-				if(worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
-					worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(SOURCE, false).withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING).rotateYCCW()));
-				}
+				this.grow(worldIn, pos);
 				return true;
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, p, h, facing, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public boolean spread(World w, BlockPos pos, int mutation, String aspect) {
+		if(super.spread(w, pos, mutation, aspect)) {
+			return true;
+		}
+		int random = w.rand.nextInt(1000);
+		if(this.spreadChance >= random) {
+			this.grow(w, pos);
+			return true;
+		}
+		return false;
+		
+	}
+	
+	public void grow(World w, BlockPos pos) {
+		while(w.getBlockState(pos.up()).getBlock().equals(this)) {
+			pos = pos.up();
+		}
+		if(w.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
+			w.setBlockState(pos.up(), this.getDefaultState().withProperty(SOURCE, false).withProperty(FACING, w.getBlockState(pos).getValue(FACING).rotateYCCW()));
+		}
 	}
 	
 	
@@ -149,7 +166,7 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
 	}
-	
+
 	@Override
 	public boolean isFullBlock(IBlockState state) {
 		return false;
@@ -176,5 +193,6 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 		return 10;
 	}
 
+	
 	
 }
