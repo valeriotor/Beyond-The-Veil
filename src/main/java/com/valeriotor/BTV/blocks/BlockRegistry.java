@@ -1,6 +1,10 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.blocks.flora.BlockGhostGrass;
+import com.valeriotor.BTV.blocks.flora.BlockRedstoneGrass;
 import com.valeriotor.BTV.blocks.flora.PlantBeanStalk;
+import com.valeriotor.BTV.blocks.flora.PlantGhostWeed;
+import com.valeriotor.BTV.blocks.flora.PlantRedstoneWeed;
 import com.valeriotor.BTV.lib.BlockNames;
 
 import net.minecraft.block.Block;
@@ -30,7 +34,11 @@ public class BlockRegistry {
 	public static final DampWoodFence DampWoodFence = new DampWoodFence();
 	public static final BlockSleepChamber SleepChamber = new BlockSleepChamber(BlockNames.SLEEPCHAMBER);
 	public static final BlockSleepChamber SleepChamberAdvanced = new BlockSleepChamber(BlockNames.SLEEPCHAMBERADVANCED);
-	public static final PlantBeanStalk PlantBeanStalk = new PlantBeanStalk();
+	public static final PlantBeanStalk PlantBeanStalk = new PlantBeanStalk(BlockNames.BEANSTALK);
+	public static final PlantRedstoneWeed PlantRedstoneWeed = new PlantRedstoneWeed(BlockNames.REDSTONEWEED);
+	public static final BlockRedstoneGrass BlockRedstoneGrass = new BlockRedstoneGrass(BlockNames.REDSTONEGRASS);
+	public static final PlantGhostWeed PlantGhostWeed = new PlantGhostWeed(BlockNames.GHOSTWEED);
+	public static final BlockGhostGrass BlockGhostGrass = new BlockGhostGrass(BlockNames.GHOSTGRASS);
 	
 	
 	@SubscribeEvent
@@ -54,5 +62,9 @@ public class BlockRegistry {
 	   	event.getRegistry().register(SleepChamber);
 	   	event.getRegistry().register(SleepChamberAdvanced);
 	   	event.getRegistry().register(PlantBeanStalk);
+	   	event.getRegistry().register(PlantRedstoneWeed);
+	   	event.getRegistry().register(BlockRedstoneGrass);
+	   	event.getRegistry().register(PlantGhostWeed);
+	   	event.getRegistry().register(BlockGhostGrass);
 	}
 }

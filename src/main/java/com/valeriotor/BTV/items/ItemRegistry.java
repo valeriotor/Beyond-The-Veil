@@ -1,15 +1,16 @@
 package com.valeriotor.BTV.items;
 
-import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.proxy.ClientProxy;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
@@ -33,10 +34,12 @@ public class ItemRegistry {
 	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
 	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
 	public static final ItemTablet tablet = new ItemTablet("tablet");
+	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockNames.REDSTONEWEED).setUnlocalizedName(BlockNames.REDSTONEWEED);
+	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
 	//public static final ItemTablet scroll = new ItemTablet("scroll");
 	//public static final ItemTablet depiction = new ItemTablet("depiction");
-	
+
 	
 	
     public static void initModels() {
@@ -56,6 +59,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(wolf_medallion, 0, "inventory");
         ClientProxy.registerItemRenderer(tablet, 0, "unfinished");
         ClientProxy.registerItemRenderer(tablet, 1, "finished");
+        ClientProxy.registerItemRenderer(redstone_weed_seeds, 0, "inventory");
+        ClientProxy.registerItemRenderer(ghost_weed_seeds, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -76,6 +81,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.SleepChamber), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.SleepChamberAdvanced), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBeanStalk), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockRedstoneGrass), 0, "inventory");
         
         
     }
@@ -100,6 +106,7 @@ public class ItemRegistry {
     	event.getRegistry().register(new ItemBlock(BlockRegistry.SleepChamber).setRegistryName(BlockRegistry.SleepChamber.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.SleepChamberAdvanced).setRegistryName(BlockRegistry.SleepChamberAdvanced.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantBeanStalk).setRegistryName(BlockRegistry.PlantBeanStalk.getRegistryName()));
+    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
     	event.getRegistry().register(ItemRegistry.testItem);
     	event.getRegistry().register(ItemRegistry.oniricIncense);
     	event.getRegistry().register(ItemRegistry.slugCatcher);
@@ -115,6 +122,8 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.saw_cleaver);
     	event.getRegistry().register(ItemRegistry.wolf_medallion);
     	event.getRegistry().register(ItemRegistry.tablet);
+    	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);
+    	event.getRegistry().register(ItemRegistry.ghost_weed_seeds);
     }
     
     

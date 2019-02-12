@@ -23,5 +23,10 @@ public class BlockNames {
 	public static final String DAMPWOODSTAIRS = "damp_wood_stairs";
 	
 	public static final String BEANSTALK = "beanstalk";
+	public static final String REDSTONEWEED = "redstone_weed";
+	public static final String REDSTONEGRASS = "redstone_grass";
+	public static final String GHOSTWEED = "ghost_weed";
+	public static final String GHOSTGRASS = "ghost_grass";
+	
 	
 }

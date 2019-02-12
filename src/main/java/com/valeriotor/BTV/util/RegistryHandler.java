@@ -1,40 +1,30 @@
 package com.valeriotor.BTV.util;
 
-import com.valeriotor.BTV.BeyondTheVeil;
+import javax.annotation.Nullable;
+
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.DampLog;
-import com.valeriotor.BTV.blocks.DampStone;
-import com.valeriotor.BTV.blocks.BlockDarkSand;
-import com.valeriotor.BTV.blocks.BlockFumeSpreader;
-import com.valeriotor.BTV.entities.EntityDeepOne;
-import com.valeriotor.BTV.entities.RegisterEntities;
-import com.valeriotor.BTV.entities.render.RegisterRenders;
-import com.valeriotor.BTV.entities.render.RenderDeepOne;
-import com.valeriotor.BTV.items.ItemOniricIncense;
 import com.valeriotor.BTV.items.ItemRegistry;
-import com.valeriotor.BTV.items.TestItem;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileBarrel;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 import com.valeriotor.BTV.tileEntities.TileSlugBait;
-import com.valeriotor.BTV.world.BiomeInnsmouth;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.BiomeProperties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ColorizerGrass;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber
 public class RegistryHandler {
@@ -62,6 +52,19 @@ public class RegistryHandler {
 		GameRegistry.registerTileEntity(TileBarrel.class, References.MODID + ":tilebarrel");
 		GameRegistry.registerTileEntity(TileSlugBait.class, References.MODID + ":tileslug_bait");
 	}
+	
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerColorHandlers() {
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor()
+        {
+            public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex)
+            {
+                return worldIn != null && pos != null ? BiomeColorHelper.getGrassColorAtPos(worldIn, pos) : ColorizerGrass.getGrassColor(0.5D, 1.0D);
+            }
+        }, new  Block[] {BlockRegistry.BlockRedstoneGrass, BlockRegistry.BlockGhostGrass});
+	}
+	
 	
 	/*@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {

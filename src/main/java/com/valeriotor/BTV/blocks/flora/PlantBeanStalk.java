@@ -47,8 +47,8 @@ public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
 	private static final AxisAlignedBB BBox = new AxisAlignedBB(0.3F, 0.0F, 0.3F, 0.69F, 1.0F, 0.69F);
 	
 	
-	public PlantBeanStalk() {
-		super(Material.PLANTS, BlockNames.BEANSTALK);
+	public PlantBeanStalk(String name) {
+		super(Material.PLANTS, name);
 		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(SOURCE, true));
 		this.spreadChance = 10;

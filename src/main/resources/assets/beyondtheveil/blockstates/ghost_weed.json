@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "age=0": { "model": "beyondtheveil:fume_spreader" },
+        "age=1": { "model": "beyondtheveil:fume_spreader" },
+        "age=2": { "model": "beyondtheveil:fume_spreader" },
+        "age=3": { "model": "beyondtheveil:fume_spreader" },
+        "age=4": { "model": "beyondtheveil:fume_spreader" }
+    }
+}

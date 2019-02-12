@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "power=none": [
+            { "model": "grass_normal" },
+            { "model": "grass_normal", "y": 90 },
+            { "model": "grass_normal", "y": 180 },
+            { "model": "grass_normal", "y": 270 }
+        ],
+        "power=passive": [
+            { "model": "grass_normal" },
+            { "model": "grass_normal", "y": 90 },
+            { "model": "grass_normal", "y": 180 },
+            { "model": "grass_normal", "y": 270 }
+        ],
+        "power=hostile": [
+            { "model": "grass_normal" },
+            { "model": "grass_normal", "y": 90 },
+            { "model": "grass_normal", "y": 180 },
+            { "model": "grass_normal", "y": 270 }
+        ],
+        "power=player": [
+            { "model": "grass_normal" },
+            { "model": "grass_normal", "y": 90 },
+            { "model": "grass_normal", "y": 180 },
+            { "model": "grass_normal", "y": 270 }
+        ]
+    }
+}

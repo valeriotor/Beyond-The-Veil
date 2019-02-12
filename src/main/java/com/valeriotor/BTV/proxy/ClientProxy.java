@@ -6,6 +6,7 @@ import com.valeriotor.BTV.gui.GuiSleepingChamber;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
+import com.valeriotor.BTV.util.RegistryHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -42,7 +43,7 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void init(FMLInitializationEvent e) {
-    	  
+    	  RegistryHandler.registerColorHandlers();
     }
     
     
