@@ -39,7 +39,7 @@ public static final AxisAlignedBB BBOX = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
 			int fortune) {
 		drops.add(new ItemStack(Blocks.DIRT));
-		drops.add(new ItemStack(ItemRegistry.redstone_weed_seeds)); // TODO
+		drops.add(new ItemStack(ItemRegistry.ghost_weed_seeds));
 	}
 	
 	@Nullable

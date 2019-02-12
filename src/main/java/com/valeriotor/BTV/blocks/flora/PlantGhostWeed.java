@@ -37,7 +37,7 @@ public class PlantGhostWeed extends BlockCrops{
 	
 	@Override
 	protected Item getSeed() {
-		return ItemRegistry.redstone_weed_seeds; // TODO
+		return ItemRegistry.ghost_weed_seeds;
 	}
 	
 	@Override
