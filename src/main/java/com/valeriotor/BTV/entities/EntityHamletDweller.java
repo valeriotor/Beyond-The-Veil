@@ -306,7 +306,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		FISHERMAN(0, 4),
 		BARTENDER(1, 2),
 		MINER(2, 1),
-		LHKEEPER(3, 2),
+		LHKEEPER(3, 3),
 		STOCKPILER(4, 4),
 		DRUNK(5, 4),
 		CARPENTER(6, 2),

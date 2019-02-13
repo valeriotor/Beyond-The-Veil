@@ -197,12 +197,8 @@ public class DialogueHandler {
 	@SideOnly(Side.CLIENT)
 	public static String getBranch(String profession, String oldBranch, int option) {
 		String dName = getDialogueName(Minecraft.getMinecraft().player, profession).getName();
-		if(dName.equals("first") && profession.equals("lhkeeper")) {
-			if(oldBranch.equals(""))
-			return option == 0 ? Branches.GENOCIDEDISAGREE.getName() : Branches.GENOCIDEAGREE.getName();
-			if(oldBranch.equals("genocidedisagree")) {
-				return option == 0 ? Branches.TEST1.getName() : Branches.TEST2.getName();
-			}
+		for(Branches b : Branches.values()) {
+			if(b.isCorrectBranch(dName, profession, oldBranch, option)) return b.getName();
 		}
 		
 		return "";
@@ -237,6 +233,7 @@ public class DialogueHandler {
 	
 	
 	private enum Dialogues{
+		LECTURE("lhkeeper", 3, 5),
 		MET("lhkeeper", 4, 2),
 		FIRST("any", 0, 0);
 		
@@ -276,17 +273,27 @@ public class DialogueHandler {
 	}
 	
 	public enum Branches{
-		TEST1("lhkeeper", 1),
-		TEST2("lhkeeper", 2),
-		GENOCIDEAGREE("lhkeeper", 1),
-		GENOCIDEDISAGREE("lhkeeper", 1);
+		HAMLETLIKE("lhkeeper", 1, "first", "", 0),
+		HAMLETARCHITECTURE("lhkeeper", 2, "first", "hamletlike", 0),
+		HAMLETLOOT("lhkeeper", 1, "first", "hamletlike", 1),
+		HAMLETARTIFACTS("lhkeeper", 1, "first", "hamletloot", 0),
+		HAMLETSLUGS("lhkeeper", 4, "first", "hamletloot", 1),
+		HAMLETDISLIKE("lhkeeper", 1, "first", "", 1),
+		HAMLETDWELLERS("lhkeeper", 1, "first", "hamletdislike", 0),
+		HAMLETIDOL("lhkeeper", 3, "first", "hamletdislike", 1);
 		
 		private int talkCount;
 		private String prof;
+		private String reqDialogue;
+		private String reqBranch;
+		private int reqOpt;
 		
-		private Branches(String prof, int num) {
+		private Branches(String prof, int num, String reqDialogue, String reqBranch, int reqOpt) {
 			this.talkCount = num;
 			this.prof = prof;
+			this.reqDialogue = reqDialogue;
+			this.reqBranch = reqBranch;
+			this.reqOpt = reqOpt;
 		}
 		
 		public int getTalkCount() {
@@ -299,6 +306,13 @@ public class DialogueHandler {
 		
 		public String getName() {
 			return this.name().toLowerCase();
+		}
+		
+		public boolean isCorrectBranch(String dialogue, String profession, String previousBranch, int option) {
+			if(dialogue.equals(this.reqDialogue) && profession.equals(this.prof) && previousBranch.equals(this.reqBranch) && option == this.reqOpt) {
+				return true;
+			}
+			return false;
 		}
 	}
 	

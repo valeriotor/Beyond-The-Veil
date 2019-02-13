@@ -21,7 +21,7 @@ public class DialogueRequirement {
 	
 	public boolean canUnlock(String dialogue, String branch, int opt, int TC) {
 		if(dialogue.equals(this.reqDialogue) && branch.equals(this.reqBranch)) {
-			if(opt == this.reqOpt || (opt == -1 && TC == this.reqTC))
+			if((opt == this.reqOpt && opt != -1) || (opt == -1 && TC == this.reqTC))
 				return true;
 		}
 		
@@ -31,8 +31,14 @@ public class DialogueRequirement {
 	private static HashMap<String, DialogueRequirement> map = new HashMap<>();
 	
 	public static void registerRequirements() {
-		map.put("met0", new DialogueRequirement("first", Branches.GENOCIDEDISAGREE.getName(), 0, 0));
-		map.put("met1", new DialogueRequirement("first", Branches.GENOCIDEDISAGREE.getName(), 1, 0));
+		//map.put("met0", new DialogueRequirement("first", Branches.GENOCIDEDISAGREE.getName(), 0, 0));
+		//map.put("met1", new DialogueRequirement("first", Branches.GENOCIDEDISAGREE.getName(), 1, 0));
+		map.put("lecture0", new DialogueRequirement("first", Branches.HAMLETARCHITECTURE.getName(), -1, 2));
+		map.put("lecture1", new DialogueRequirement("first", Branches.HAMLETARTIFACTS.getName(), -1, 1));
+		map.put("lecture2", new DialogueRequirement("first", Branches.HAMLETSLUGS.getName(), -1, 4));
+		map.put("lecture3", new DialogueRequirement("first", Branches.HAMLETDWELLERS.getName(), -1, 1));
+		map.put("lecture4", new DialogueRequirement("first", Branches.HAMLETIDOL.getName(), -1, 3));
+		
 	}
 	
 	public static HashMap<String, DialogueRequirement> getMap(){

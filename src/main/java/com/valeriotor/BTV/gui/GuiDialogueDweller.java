@@ -71,18 +71,19 @@ public class GuiDialogueDweller extends GuiScreen {
 				String[] option0split = GuiHelper.splitStrings(this.option0);
 				for(int i = 0; i < option0split.length; i++) {
 						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, this.option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option0))));
-						drawString(mc.fontRenderer, toWrite, this.width/4 + 62, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/4 + 97, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 				
 				String[] option1split = GuiHelper.splitStrings(this.option1);
 				for(int i = 0; i < option1split.length; i++) {
 						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, this.option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option1))));
-						drawString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 			
 		}
+			this.setDialogueSpeed();
 		
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -96,12 +97,13 @@ public class GuiDialogueDweller extends GuiScreen {
 				if(this.intervalCount >= this.interval) {
 					this.intervalCount = 0;
 					this.letterCount++;
-					if(this.dialogue.charAt(this.letterCount - 2) == '.') this.intervalCount-=4;
+					char c = this.dialogue.charAt(this.letterCount - 2);
+					if(c == '.' || c == '?' || c == '!') this.intervalCount-=4;
 					else if(this.dialogue.charAt(this.letterCount - 2) == ',') this.intervalCount--;
+					this.setDialogueSpeed();
 				}
 			}
 
-			this.setDialogueSpeed();
 		
 		
 		super.updateScreen();
@@ -172,13 +174,15 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	private void setDialogueSpeed() {
 		boolean deleteChar = true;
-		
-		switch(this.dialogue.charAt(this.letterCount - 1)) {
+		int offset = 0;
+		if(this.letterCount >= this.dialogueLength - 1) return;
+		if(this.letterCount == 1) offset = -1;
+		switch(this.dialogue.charAt(this.letterCount + offset)) {
 		case '{':
 			this.interval += 1;
 			break;
 		case '[':
-			this.interval = 5;
+			this.interval = 3;
 			break;
 		case '|':
 			this.intervalCount -= 8;
@@ -192,7 +196,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		}
 		if(deleteChar) {
 			StringBuilder sb = new StringBuilder(this.dialogue);
-			this.dialogue = sb.deleteCharAt(this.letterCount - 1).toString();
+			this.dialogue = sb.deleteCharAt(this.letterCount + offset).toString();
 			this.dialogueLength = this.dialogue.length();
 		}
 		
