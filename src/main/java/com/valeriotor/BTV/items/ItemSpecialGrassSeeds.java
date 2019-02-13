@@ -23,7 +23,8 @@ public class ItemSpecialGrassSeeds extends ItemSeeds{
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(worldIn.getBlockState(pos).getBlock() == Blocks.DIRT || worldIn.getBlockState(pos).getBlock() == Blocks.GRASS) {
+		Block block = worldIn.getBlockState(pos).getBlock();
+		if((block == Blocks.DIRT || block == Blocks.GRASS) && block != this.grass) {
 			worldIn.setBlockState(pos, this.grass.getDefaultState());
 			ItemStack itemstack = player.getHeldItem(hand);
 			itemstack.shrink(1);

@@ -27,6 +27,7 @@ public class BlockNames {
 	public static final String REDSTONEGRASS = "redstone_grass";
 	public static final String GHOSTWEED = "ghost_weed";
 	public static final String GHOSTGRASS = "ghost_grass";
+	public static final String VANILLAWEED = "vanilla_weed";
 	
 	
 }

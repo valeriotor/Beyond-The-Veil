@@ -36,6 +36,12 @@ public class ItemRegistry {
 	public static final ItemTablet tablet = new ItemTablet("tablet");
 	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockNames.REDSTONEWEED).setUnlocalizedName(BlockNames.REDSTONEWEED);
 	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
+	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
+	
+	
+	
+	
+	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
 	//public static final ItemTablet scroll = new ItemTablet("scroll");
 	//public static final ItemTablet depiction = new ItemTablet("depiction");
@@ -61,6 +67,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(tablet, 1, "finished");
         ClientProxy.registerItemRenderer(redstone_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(ghost_weed_seeds, 0, "inventory");
+        ClientProxy.registerItemRenderer(vanilla_weed_seeds, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -123,7 +130,11 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.wolf_medallion);
     	event.getRegistry().register(ItemRegistry.tablet);
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);
+    	BlockRegistry.PlantRedstoneWeed.setSeed(redstone_weed_seeds);
     	event.getRegistry().register(ItemRegistry.ghost_weed_seeds);
+    	BlockRegistry.PlantGhostWeed.setSeed(ghost_weed_seeds);
+    	event.getRegistry().register(ItemRegistry.vanilla_weed_seeds);
+    	BlockRegistry.PlantVanillaWeed.setSeed(vanilla_weed_seeds);
     }
     
     

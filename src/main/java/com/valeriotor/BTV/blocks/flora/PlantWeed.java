@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,12 +18,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class PlantGhostWeed extends BlockCrops{
-	
+public class PlantWeed extends BlockCrops{
+
 	public static final PropertyInteger CROP_AGE = PropertyInteger.create("age", 0, 4);
 	private static final AxisAlignedBB[] CROP_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.35D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.40D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D)};
-
-	public PlantGhostWeed(String name) {
+	private Item seed;
+	
+	public PlantWeed(String name) {
 		super();
 		this.setRegistryName(name);
 		this.setUnlocalizedName(name);
@@ -34,10 +36,13 @@ public class PlantGhostWeed extends BlockCrops{
 		return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && (soil.getBlock() == Blocks.DIRT || soil.getBlock() == Blocks.GRASS);
 	}
 	
+	public void setSeed(Item seed) {
+		this.seed = seed;
+	}
 	
 	@Override
 	protected Item getSeed() {
-		return ItemRegistry.ghost_weed_seeds;
+		return this.seed;
 	}
 	
 	@Override
@@ -68,6 +73,5 @@ public class PlantGhostWeed extends BlockCrops{
 			int fortune) {
 		drops.add(new ItemStack(this.getSeed(), 1, 0));
 		super.getDrops(drops, world, pos, state, fortune);
-	}
-	
+	}	
 }
