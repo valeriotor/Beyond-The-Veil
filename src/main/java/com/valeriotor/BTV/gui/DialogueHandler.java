@@ -223,13 +223,12 @@ public class DialogueHandler {
 	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
 		String dialogueName = getDialogueName(Minecraft.getMinecraft().player, profession).getName();
 		for(Dialogues d : Dialogues.values()) {
-			if(d.getProf().equals(profession) && d.getUnlockBranch().equals(branch) && d.getUnlockDialogue().equals(dialogueName)) {
-				if(option == d.getUnlockOption() || (option == -1 && talkCount == d.getUnlockTalkCount())) {
-					Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
-					BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), false));
-					System.out.println("SUCCESS!!");
-					return true;
-				}
+			if(d.getProf().equals(profession) && d.canUnlock(dialogueName, branch, option, talkCount)) {
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
+				BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), false));
+				System.out.println("SUCCESS!!");
+				return true;
+				
 			}
 		}
 		
@@ -238,23 +237,17 @@ public class DialogueHandler {
 	
 	
 	private enum Dialogues{
-		MET("lhkeeper", 4, "first", Branches.GENOCIDEDISAGREE.getName(), 0, 0),
-		FIRST("any", 0, "", "", 0, 0);
+		MET("lhkeeper", 4, 2),
+		FIRST("any", 0, 0);
 		
 		private int talkCount;
 		private String prof;
-		private String reqDialogue;
-		private String reqBranch;
-		private int reqOpt;
-		private int reqTC;
+		private int unlocks;
 		
-		private Dialogues(String prof, int num, String reqDialogue, String reqBranch, int reqOpt, int reqTC) {
+		private Dialogues(String prof, int num, int unlocks) {
 			this.talkCount = num;
 			this.prof = prof;
-			this.reqDialogue = reqDialogue;
-			this.reqBranch = reqBranch;
-			this.reqOpt = reqOpt;
-			this.reqTC = reqTC;
+			this.unlocks = unlocks;
 		}
 		
 		public int getTalkCount() {
@@ -269,20 +262,16 @@ public class DialogueHandler {
 			return this.name().toLowerCase();
 		}
 		
-		public String getUnlockDialogue() {
-			return this.reqDialogue;
-		}
-		
-		public String getUnlockBranch() {
-			return this.reqBranch;
-		}
-		
-		public int getUnlockOption() {
-			return this.reqOpt;
-		}
-		
-		public int getUnlockTalkCount() {
-			return this.reqTC;
+		public boolean canUnlock(String dialogue, String branch, int opt, int TC) {			
+			for(int i = 0; i < this.unlocks; i++) {
+				String name = this.getName().concat(String.valueOf(i));
+				if(DialogueRequirement.getMap().containsKey(name)) {
+					if(DialogueRequirement.getMap().get(name).canUnlock(dialogue, branch, opt, TC)) return true;
+				}else {
+					System.out.println("Warning: Dialogue Requirement not found. Report this to mod author.");
+				}
+			}
+			return false;
 		}
 	}
 	

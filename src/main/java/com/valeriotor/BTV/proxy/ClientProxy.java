@@ -2,6 +2,7 @@ package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.entities.render.RegisterRenders;
 import com.valeriotor.BTV.events.ClientEvents;
+import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.GuiSleepingChamber;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -35,6 +36,7 @@ public class ClientProxy extends CommonProxy {
         Guis.registerGuis();
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         handler = new KeyHandler();
+        DialogueRequirement.registerRequirements();
         }
 
     //@SubscribeEvent
