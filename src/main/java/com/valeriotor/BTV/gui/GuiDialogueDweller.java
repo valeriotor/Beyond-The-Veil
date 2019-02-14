@@ -1,8 +1,8 @@
 package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
+import java.util.List;
 
-import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenTradeGui;
@@ -12,7 +12,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,13 +31,20 @@ public class GuiDialogueDweller extends GuiScreen {
 	private String profession = "";
 	private String option0 = "";
 	private String option1 = "";
+	private double scaleMultiplier = 1;
+	private int xSize = 512;
+	private int ySize = 164;
+	
 	
 	
 	@Override
 	public void initGui() {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - 185, I18n.format("gui.dialogue.talk")));
-        this.buttonList.add(new GuiButton(2, this.width / 2, this.height - 185, I18n.format("gui.dialogue.trade")));
- 
+        this.scaleMultiplier = this.getScaleMultiplier();
+        this.xSize = (int) (512 * this.scaleMultiplier);
+        this.ySize = (int) (164 * this.scaleMultiplier);
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - this.ySize - 20, I18n.format("gui.dialogue.talk")));
+        this.buttonList.add(new GuiButton(2, this.width / 2, this.height - this.ySize - 20, I18n.format("gui.dialogue.trade")));
+        
         this.profession = DialogueHandler.getProfession(Minecraft.getMinecraft().player);
         
         if(!this.profession.equals("bartender") && !this.profession.equals("carpenter")) this.buttonList.get(1).enabled = false;
@@ -57,32 +63,40 @@ public class GuiDialogueDweller extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-		drawModalRectWithCustomSizedTexture(this.width/4 - 10, this.height - 164, 0, 0, 512, 164, 512, 512);
+		drawModalRectWithCustomSizedTexture(this.width/2 - this.xSize/2, this.height - this.ySize, 0F, 0F, xSize, ySize, xSize, xSize);
 			this.setDialogueSpeed();
 			
 			String[] strings = GuiHelper.splitStrings(this.dialogue);
+			int totalOffset = 0;
 			for(int i = 0; i < strings.length; i++) {
 				if(this.letterCount > GuiHelper.getPreviousStringsLength(i, this.dialogue)) {
-					String toWrite = strings[i].substring(0, Math.min(strings[i].length(), Math.max(0, this.letterCount - 1 - GuiHelper.getPreviousStringsLength(i, this.dialogue))));
-					drawString(mc.fontRenderer, toWrite, this.width/4 + 12, this.height + (i * 15) - 140, 0xFFFFFF);
-				}
+					List<String> stringettes = GuiHelper.splitStringsByWidth(strings[i], (int)(this.xSize * 0.9), mc.fontRenderer);
+					for(int j = 0; j < stringettes.size(); j++) {
+						if(this.letterCount > GuiHelper.getPreviousStringsLength(i, this.dialogue) + GuiHelper.getPreviousStringsLengthByWidth(j, strings[i], (int)(this.xSize * 0.9), mc.fontRenderer)) {
+							String toWrite = stringettes.get(j).substring(0, Math.min(stringettes.get(j).length(), Math.max(0, this.letterCount - 1 - GuiHelper.getPreviousStringsLength(i, this.dialogue) - GuiHelper.getPreviousStringsLengthByWidth(j, strings[i], (int)(this.xSize * 0.9), mc.fontRenderer))));
+							drawString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 2 + (int)(24 * this.scaleMultiplier), this.height + (int)(18*this.scaleMultiplier) + totalOffset - this.ySize, 0xFFFFFF);
+							totalOffset += 15;
+						}
+					}
+				}	
 			}
 			if(this.option0 != null && this.option1 != null && this.letterCount == this.dialogueLength) {
 				String[] option0split = GuiHelper.splitStrings(this.option0);
 				for(int i = 0; i < option0split.length; i++) {
 						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, this.option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option0))));
-						drawCenteredString(mc.fontRenderer, toWrite, this.width/4 + 97, this.height + (i * 15) - 60, (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.367), (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 				
 				String[] option1split = GuiHelper.splitStrings(this.option1);
 				for(int i = 0; i < option1split.length; i++) {
 						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, this.option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option1))));
-						drawCenteredString(mc.fontRenderer, toWrite, this.width/4 + 362, this.height + (i * 15) - 60, (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 + this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.367), (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 			
-		}
+			}	
+		
 			this.setDialogueSpeed();
 		
 		
@@ -107,6 +121,16 @@ public class GuiDialogueDweller extends GuiScreen {
 		
 		
 		super.updateScreen();
+	}
+	
+	private double getScaleMultiplier() {
+		switch(this.mc.gameSettings.guiScale) {
+		case 0: return 0.85;
+		case 1: return 1.5;
+		case 2: return 1;
+		case 3: return 0.875;
+		default: return 1;	
+		}
 	}
 	
 	@Override

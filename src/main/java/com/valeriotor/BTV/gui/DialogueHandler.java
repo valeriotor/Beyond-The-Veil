@@ -234,7 +234,6 @@ public class DialogueHandler {
 	
 	private enum Dialogues{
 		LECTURE("lhkeeper", 3, 5),
-		MET("lhkeeper", 4, 2),
 		FIRST("any", 0, 0);
 		
 		private int talkCount;
