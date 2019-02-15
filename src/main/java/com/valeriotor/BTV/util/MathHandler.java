@@ -12,7 +12,6 @@ public class MathHandler {
 	public static void removeExperience(EntityPlayer p, int amount) {
 		amount = Math.abs(amount);
 		int level = p.experienceLevel;
-		float expFloat = p.experience;
 		int exp = (int)(p.experience * getExperienceToLevel(level));
 		int expTot = p.experienceTotal;
 		
@@ -21,7 +20,8 @@ public class MathHandler {
 			p.experience = 0;
 			p.experienceTotal = 0;
 		}else if(exp > amount) {
-			p.addExperience(-amount);}else {
+			p.addExperience(-amount);
+		}else {
 			int sum = exp;
 			while(sum < amount) {
 				sum += getExperienceToLevel(--level);
@@ -49,17 +49,18 @@ public class MathHandler {
 		}
 	}
 	
-	/** Calculates the total experience required to reach a certain level, starting from zero
+	/** Calculates the total experience required to reach a certain level, starting from zero,
+	 *  based on the formulas in the Minecraft wiki.
 	 * 
 	 * @param level The exact level that needs to be unlocked, with no extra experience  
 	 */
 	public static int getTotalExperience(int level) {
 		if(level < 16) {
-			return level*level + 6 * level;
+			return level * level + 6 * level;
 		}else if(level < 31){
-			return (5*level*level - 81*level)/2 + 360;
+			return (5 * level * level - 81 * level) / 2 + 360;
 		}else {
-			return (9*level*level - 325*level)/2 + 2220;
+			return (9 * level * level - 325 * level) / 2 + 2220;
 		}
 	}
 	
