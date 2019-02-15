@@ -34,6 +34,7 @@ public class ItemRegistry {
 	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
 	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
 	public static final ItemTablet tablet = new ItemTablet("tablet");
+	public static final ItemBronzeSphere bronze_sphere= new ItemBronzeSphere();
 	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockNames.REDSTONEWEED).setUnlocalizedName(BlockNames.REDSTONEWEED);
 	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
 	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
@@ -65,6 +66,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(wolf_medallion, 0, "inventory");
         ClientProxy.registerItemRenderer(tablet, 0, "unfinished");
         ClientProxy.registerItemRenderer(tablet, 1, "finished");
+        ClientProxy.registerItemRenderer(bronze_sphere, 0, "inventory");
         ClientProxy.registerItemRenderer(redstone_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(ghost_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(vanilla_weed_seeds, 0, "inventory");
@@ -129,6 +131,9 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.saw_cleaver);
     	event.getRegistry().register(ItemRegistry.wolf_medallion);
     	event.getRegistry().register(ItemRegistry.tablet);
+    	event.getRegistry().register(ItemRegistry.bronze_sphere);
+    	
+    	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);
     	BlockRegistry.PlantRedstoneWeed.setSeed(redstone_weed_seeds);
     	event.getRegistry().register(ItemRegistry.ghost_weed_seeds);
@@ -140,14 +145,13 @@ public class ItemRegistry {
     
     
     public static Item getRandomArtifact(Random r) {
-    	int a = r.nextInt(3);
+    	int a = r.nextInt(4);
     	switch(a) {
     	case 0: return saw_cleaver;
     	case 1: return flute;
     	case 2: return wolf_medallion;
+    	case 3: return bronze_sphere;
     	default: return null;
     	}
-    	
-    	
     }
 }

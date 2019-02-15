@@ -21,6 +21,8 @@ item.tablet.name=Tablet
 lore.flute=The sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
 lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
 lore.wolf_medallion=This metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
+lore.bronze_sphere=Stuff
+tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher it?
 
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
