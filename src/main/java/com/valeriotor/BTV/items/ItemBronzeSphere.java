@@ -52,7 +52,7 @@ public class ItemBronzeSphere extends Item{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("ï¿½5ï¿½o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		int itemXp = 0;
 		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("xp")) itemXp = stack.getTagCompound().getInteger("xp");
 		tooltip.add(I18n.format("tooltip." + this.getUnlocalizedName().substring(5), itemXp));
