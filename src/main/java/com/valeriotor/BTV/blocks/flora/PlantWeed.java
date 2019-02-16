@@ -20,8 +20,8 @@ import net.minecraft.world.World;
 
 public class PlantWeed extends BlockCrops{
 
-	public static final PropertyInteger CROP_AGE = PropertyInteger.create("age", 0, 4);
-	private static final AxisAlignedBB[] CROP_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.35D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.40D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D)};
+	public static final PropertyInteger CROP_AGE = PropertyInteger.create("age", 0, 3);
+	private static final AxisAlignedBB[] CROP_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.80D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D)};
 	private Item seed;
 	
 	public PlantWeed(String name) {
@@ -33,7 +33,7 @@ public class PlantWeed extends BlockCrops{
 	public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
 	{
 		IBlockState soil = worldIn.getBlockState(pos.down());
-		return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && (soil.getBlock() == Blocks.DIRT || soil.getBlock() == Blocks.GRASS);
+		return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && (soil.getBlock() == Blocks.FARMLAND || soil.getBlock() == Blocks.DIRT || soil.getBlock() == Blocks.GRASS);
 	}
 	
 	public void setSeed(Item seed) {
@@ -52,7 +52,7 @@ public class PlantWeed extends BlockCrops{
 	
 	@Override
 	public int getMaxAge() {
-		return 4;
+		return 3;
 	}
 	
 	@Override
@@ -72,6 +72,7 @@ public class PlantWeed extends BlockCrops{
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
 			int fortune) {
 		drops.add(new ItemStack(this.getSeed(), 1, 0));
-		super.getDrops(drops, world, pos, state, fortune);
+		if(state.getValue(CROP_AGE) == this.getMaxAge())
+			super.getDrops(drops, world, pos, state, fortune);
 	}	
 }
