@@ -22,10 +22,9 @@ public class GuiDialogueDweller extends GuiScreen {
 	private int talkCount = 0;
 	private int letterCount = 1;
 	private int intervalCount = 0;
-	private int interval = 2;
+	private int interval = 1;
 	private int dialogueLength = 0;
 	private int selectedOption = -1;
-	private boolean ignoreDot = false;
 	private String dialogue = "";
 	private String branch = "";
 	private String profession = "";
@@ -56,7 +55,7 @@ public class GuiDialogueDweller extends GuiScreen {
         }
         this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
 		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
-		
+		if(this.option0 != null) this.selectedOption = 0;
 		super.initGui();
 	}
 	
@@ -84,14 +83,14 @@ public class GuiDialogueDweller extends GuiScreen {
 				String[] option0split = GuiHelper.splitStrings(this.option0);
 				for(int i = 0; i < option0split.length; i++) {
 						String toWrite = option0split[i].substring(0, Math.min(option0split[i].length(), Math.max(0, this.option0.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option0))));
-						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.367), (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.39), (this.selectedOption == 1 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 				
 				String[] option1split = GuiHelper.splitStrings(this.option1);
 				for(int i = 0; i < option1split.length; i++) {
 						String toWrite = option1split[i].substring(0, Math.min(option1split[i].length(), Math.max(0, this.option1.length() - 1 - GuiHelper.getPreviousStringsLength(i, this.option1))));
-						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 + this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.367), (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
+						drawCenteredString(mc.fontRenderer, toWrite, this.width/2 + this.xSize / 4, this.height + (i * 15) - (int)(this.ySize*0.39), (this.selectedOption == 0 ? 0xFFFFFF : 0xFFFF00));
 					
 				}
 			
@@ -112,7 +111,7 @@ public class GuiDialogueDweller extends GuiScreen {
 					this.intervalCount = 0;
 					this.letterCount++;
 					char c = this.dialogue.charAt(this.letterCount - 2);
-					if(c == '.' || c == '?' || c == '!') this.intervalCount-=4;
+					if(c == '.' || c == '?' || c == '!') this.intervalCount-=5;
 					else if(this.dialogue.charAt(this.letterCount - 2) == ',') this.intervalCount--;
 					this.setDialogueSpeed();
 				}
@@ -229,6 +228,11 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	
 	private void proceedDialogue(boolean option) {
+		if(this.doesCloseDialogue()) {
+			DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
+			this.mc.displayGuiScreen((GuiScreen)null);
+			return;
+		}
 		int tmp = this.talkCount;
 		this.talkCount = option ? 0 : this.talkCount+1;
 		if(DialogueHandler.updateDialogueData(this.profession, this.branch, this.selectedOption, this.talkCount)) {
@@ -253,5 +257,16 @@ public class GuiDialogueDweller extends GuiScreen {
 		this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
 		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
 		
+	}
+	
+	/** Whether the current conditions will close the GUI. Arbitrary logic, based on the dialogue itself.
+	 * 
+	 * @return
+	 */
+	public boolean doesCloseDialogue() {
+		if(DialogueHandler.getDialogueName(this.profession) == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) {
+			return true;
+		}
+		return false;
 	}
 }

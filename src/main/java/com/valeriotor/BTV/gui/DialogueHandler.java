@@ -59,7 +59,7 @@ public class DialogueHandler {
 		int a = getBranchTalkCount(prof, branch);
 		if(a != -1) return a;
 		
-		Dialogues d = getDialogueName(p, prof);
+		Dialogues d = getDialogueName(prof);
 		if(!d.getName().equals("first")) return d.getTalkCount();
 		
 		return e.getProfession().getTalkCount();
@@ -78,7 +78,7 @@ public class DialogueHandler {
 		String prefix = "dweller.".concat(getFriendlyhood()).concat(profession);
 		EntityPlayer p = Minecraft.getMinecraft().player;
 		
-		String dialogueName = getDialogueName(p, profession).getName();
+		String dialogueName = getDialogueName(profession).getName();
 		if(!dialogueName.equals("first")) prefix = prefix.concat(dialogueName);
 		
 		prefix = prefix.concat(".");
@@ -106,7 +106,7 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static String getLocalizedDialogue(String profession, int talkCount, String branch) {
-		return I18n.format(getDialogue(profession, talkCount, branch));
+		return I18n.format(getDialogue(profession, talkCount, branch)).concat(" ");
 	}
 	
 	/** Looks for a DialogueOption in the lang file, and attempts localization. If it fails, it
@@ -157,9 +157,11 @@ public class DialogueHandler {
 	 * 
 	 * @return The found dialogue
 	 */
-	private static Dialogues getDialogueName(EntityPlayer p, String profession) {
+	@SideOnly(Side.CLIENT)
+	public static Dialogues getDialogueName(String profession) {
+		EntityPlayer p = Minecraft.getMinecraft().player;
 		for(Dialogues d : Dialogues.values()) {
-			if(d != Dialogues.FIRST && d.getProf().equals(profession) && p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(d.getName())) {
+			if(d != Dialogues.FIRST && d.getProf().equals(profession) && p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialogue".concat(d.getName()))) {
 				return d;
 			}
 		}
@@ -196,7 +198,7 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static String getBranch(String profession, String oldBranch, int option) {
-		String dName = getDialogueName(Minecraft.getMinecraft().player, profession).getName();
+		String dName = getDialogueName(profession).getName();
 		for(Branches b : Branches.values()) {
 			if(b.isCorrectBranch(dName, profession, oldBranch, option)) return b.getName();
 		}
@@ -217,10 +219,10 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
-		String dialogueName = getDialogueName(Minecraft.getMinecraft().player, profession).getName();
+		String dialogueName = getDialogueName(profession).getName();
 		for(Dialogues d : Dialogues.values()) {
 			if(d.getProf().equals(profession) && d.canUnlock(dialogueName, branch, option, talkCount)) {
-				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(d.getName(), false);
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(d.getName()), false);
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), false));
 				System.out.println("SUCCESS!!");
 				return true;
@@ -232,8 +234,9 @@ public class DialogueHandler {
 	}
 	
 	
-	private enum Dialogues{
-		LECTURE("lhkeeper", 3, 5),
+	public enum Dialogues{
+		LECTURE2("lhkeeper", 1, 3),
+		LECTURE("lhkeeper", 2, 5),
 		FIRST("any", 0, 0);
 		
 		private int talkCount;
@@ -272,6 +275,12 @@ public class DialogueHandler {
 	}
 	
 	public enum Branches{
+		FRIENDSLECTURE("lhkeeper", 1, "lecture2", "lecture", 0),
+		LECTURE("lhkeeper", 10, "lecture2", "", 0),
+		TELLME("lhkeeper", 2, "lecture", "", 0),
+		FIEND("lhkeeper", 2, "lecture", "", 1),
+		INHUMAN("lhkeeper", 3, "lecture", "fiend", 0),
+		PREJUDICE("lhkeeper", 2, "lecture", "fiend", 1),
 		HAMLETLIKE("lhkeeper", 1, "first", "", 0),
 		HAMLETARCHITECTURE("lhkeeper", 2, "first", "hamletlike", 0),
 		HAMLETLOOT("lhkeeper", 1, "first", "hamletlike", 1),

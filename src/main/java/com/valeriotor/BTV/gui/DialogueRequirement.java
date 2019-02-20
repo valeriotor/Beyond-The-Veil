@@ -38,6 +38,10 @@ public class DialogueRequirement {
 		map.put("lecture2", new DialogueRequirement("first", Branches.HAMLETSLUGS.getName(), -1, 4));
 		map.put("lecture3", new DialogueRequirement("first", Branches.HAMLETDWELLERS.getName(), -1, 1));
 		map.put("lecture4", new DialogueRequirement("first", Branches.HAMLETIDOL.getName(), -1, 3));
+		map.put("lecture20", new DialogueRequirement("lecture", Branches.INHUMAN.getName(), -1, 3));
+		map.put("lecture21", new DialogueRequirement("lecture", Branches.PREJUDICE.getName(), -1, 2));
+		map.put("lecture22", new DialogueRequirement("lecture", Branches.TELLME.getName(), -1, 2));
+		
 		
 	}
 	

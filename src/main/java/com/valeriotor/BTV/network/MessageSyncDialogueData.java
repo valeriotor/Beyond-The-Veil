@@ -38,9 +38,9 @@ public class MessageSyncDialogueData implements IMessage{
 		@Override
 		public IMessage onMessage(MessageSyncDialogueData message, MessageContext ctx) {
 			if(message.remove)
-				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.dialogue);
+				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("dialogue".concat(message.dialogue));
 			else
-				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.dialogue, false);
+				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(message.dialogue), false);
 			return null;
 		}
 		
