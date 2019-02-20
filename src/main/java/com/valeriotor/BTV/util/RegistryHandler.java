@@ -5,8 +5,10 @@ import javax.annotation.Nullable;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.tileEntities.TileArborealGeneratorBottom;
 import com.valeriotor.BTV.tileEntities.TileBarrel;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
+import com.valeriotor.BTV.tileEntities.TileMutator;
 import com.valeriotor.BTV.tileEntities.TileSlugBait;
 
 import net.minecraft.block.Block;
@@ -51,6 +53,8 @@ public class RegistryHandler {
 		GameRegistry.registerTileEntity(TileFumeSpreader.class, References.MODID + ":tilefumespreader");
 		GameRegistry.registerTileEntity(TileBarrel.class, References.MODID + ":tilebarrel");
 		GameRegistry.registerTileEntity(TileSlugBait.class, References.MODID + ":tileslug_bait");
+		GameRegistry.registerTileEntity(TileMutator.class, References.MODID + ":tilemutator");
+		GameRegistry.registerTileEntity(TileArborealGeneratorBottom.class, References.MODID + ":tilearboreal_generator");
 	}
 	
 	

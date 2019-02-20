@@ -28,6 +28,9 @@ public class BlockNames {
 	public static final String GHOSTWEED = "ghost_weed";
 	public static final String GHOSTGRASS = "ghost_grass";
 	public static final String VANILLAWEED = "vanilla_weed";
+	public static final String ARBOREALGENERATOR = "arboreal_generator";
+	public static final String SAPLINGSHRUB = "sapling_shrub";
+	
 	
 	
 }
