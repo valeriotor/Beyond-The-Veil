@@ -32,11 +32,10 @@ import net.minecraft.world.World;
 
 public class BlockSleepChamber extends ModBlock{
 	
-	public static final PropertyEnum<EnumHalf> HALF = PropertyEnum.<EnumHalf>create("half", EnumHalf.class);
 	
 	public BlockSleepChamber(String name) {
 		super(Material.IRON, name);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, EnumHalf.BOTTOM));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(EnumHalf.HALF, EnumHalf.BOTTOM));
 		this.setHardness(20F);
 		this.setResistance(30F);
 	}
@@ -54,13 +53,13 @@ public class BlockSleepChamber extends ModBlock{
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, EnumHalf.TOP));
+		worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(EnumHalf.HALF, EnumHalf.TOP));
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 	
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if(state.getValue(HALF) == EnumHalf.BOTTOM) {
+		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) {
 			if(worldIn.getBlockState(pos.up()).getBlock() != this) {
 				worldIn.setBlockToAir(pos);
 				this.dropBlockAsItem(worldIn, pos, state, 0);
@@ -75,7 +74,7 @@ public class BlockSleepChamber extends ModBlock{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(state.getValue(HALF) == EnumHalf.TOP) pos = pos.down();
+		if(state.getValue(EnumHalf.HALF) == EnumHalf.TOP) pos = pos.down();
 		BlockPos pos1 = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageSetPosition(pos1.toLong()));
 		//playerIn.setLocationAndAngles(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5, playerIn.getRotationYawHead(), 0);
@@ -85,13 +84,13 @@ public class BlockSleepChamber extends ModBlock{
 	
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		if(state.getValue(HALF) == EnumHalf.BOTTOM) return super.getItemDropped(state, rand, fortune);
+		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) return super.getItemDropped(state, rand, fortune);
 		else return Items.AIR;
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {HALF});
+		return new BlockStateContainer(this, new IProperty[] {EnumHalf.HALF});
 	}
 	
 	@Override
@@ -111,14 +110,14 @@ public class BlockSleepChamber extends ModBlock{
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = this.getDefaultState().withProperty(HALF, meta == 0 ? EnumHalf.BOTTOM : EnumHalf.TOP);
+		IBlockState state = this.getDefaultState().withProperty(EnumHalf.HALF, meta == 0 ? EnumHalf.BOTTOM : EnumHalf.TOP);
 		
 		return state;
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int meta = state.getValue(HALF) == EnumHalf.BOTTOM ? 0 : 1;
+		int meta = state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM ? 0 : 1;
 		
 		return meta;
 	}

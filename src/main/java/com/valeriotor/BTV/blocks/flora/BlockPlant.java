@@ -44,4 +44,16 @@ public class BlockPlant extends ModBlock{
 		return this.getDefaultState();
 	}
 	
+
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	
 }

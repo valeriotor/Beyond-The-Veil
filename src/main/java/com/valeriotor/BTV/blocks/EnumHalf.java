@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumHalf implements IStringSerializable{
@@ -22,4 +23,7 @@ public enum EnumHalf implements IStringSerializable{
     {
         return this.name;
     }
+    
+    public static final PropertyEnum<EnumHalf> HALF = PropertyEnum.<EnumHalf>create("half", EnumHalf.class);
+	
 }
