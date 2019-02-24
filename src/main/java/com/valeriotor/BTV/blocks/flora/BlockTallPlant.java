@@ -25,9 +25,9 @@ public abstract class BlockTallPlant extends BlockPlant{
 	}
 	
 	@Override
-	public boolean spread(World w, BlockPos pos, int mutation, String aspect) {
+	public boolean spread(World w, BlockPos pos, int mutation, String aspect, float multiplier) {
 		if(w.getBlockState(pos).getValue(EnumHalf.HALF) == EnumHalf.BOTTOM)
-			return super.spread(w, pos, mutation, aspect);
+			return super.spread(w, pos, mutation, aspect, multiplier);
 		return false;
 	}
 	

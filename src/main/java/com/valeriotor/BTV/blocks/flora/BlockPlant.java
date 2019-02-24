@@ -18,10 +18,10 @@ public class BlockPlant extends ModBlock{
 		super(materialIn, name);
 	}
 	
-	public boolean spread(World w, BlockPos pos, int mutation, String aspect) {
+	public boolean spread(World w, BlockPos pos, int mutation, String aspect, float multiplier) {
 		if(mutation >= this.spreadMinMutation) {
 			int random = w.rand.nextInt(1000);
-			if(this.spreadChance >= random) {
+			if(this.spreadChance*multiplier >= random) {
 				for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 					BlockPos newXZ = pos.offset(facing);
 					for(int y = pos.getY() - 3; y < pos.getY() + 3; y++) {
