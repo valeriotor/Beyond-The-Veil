@@ -11,6 +11,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -38,16 +39,18 @@ public class ItemWolfMedallion extends Item implements IBauble{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add("ï¿½5ï¿½o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
-	public void tickEvent(PlayerTickEvent event) {
-		if(event.player.ticksExisted % 600 == 0) {
+	@Override
+	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
+		if(player.world.isRemote) return;
+		if(player.ticksExisted % 600 == 0) {
 			int i = 0;
 			boolean creepers = false;
-			AxisAlignedBB bb = new AxisAlignedBB(event.player.getPosition().add(-25, -10, -25), event.player.getPosition().add(25, 12, 25));
-			List<Entity> entities = event.player.world.getEntitiesWithinAABBExcludingEntity(event.player, bb);
+			AxisAlignedBB bb = new AxisAlignedBB(player.getPosition().add(-25, -10, -25), player.getPosition().add(25, 12, 25));
+			List<Entity> entities = player.world.getEntitiesWithinAABBExcludingEntity(player, bb);
 			for(Entity e : entities) {
 				if(e instanceof EntityLiving) {
 					EntityLiving l = (EntityLiving) e;
@@ -64,9 +67,9 @@ public class ItemWolfMedallion extends Item implements IBauble{
 					}
 				}
 			}
-			if(i > 1) event.player.sendMessage(new TextComponentTranslation("artifact.medallion.humming", new Object[] {Integer.valueOf(i)}));
-			else if(i == 1) event.player.sendMessage(new TextComponentTranslation("artifact.medallion.humming1"));
-			if(creepers) event.player.sendMessage(new TextComponentTranslation("artifact.medallion.creepers"));
+			if(i > 1) player.sendMessage(new TextComponentTranslation("artifact.medallion.humming", new Object[] {Integer.valueOf(i)}));
+			else if(i == 1) player.sendMessage(new TextComponentTranslation("artifact.medallion.humming1"));
+			if(creepers) player.sendMessage(new TextComponentTranslation("artifact.medallion.creepers"));
 		}
 	}
 	
