@@ -1,6 +1,6 @@
 package com.valeriotor.BTV.blocks.flora;
 
-public interface MutationCatalyst {
+public interface IMutationCatalyst {
 
 	public int increaseMutation();
 	

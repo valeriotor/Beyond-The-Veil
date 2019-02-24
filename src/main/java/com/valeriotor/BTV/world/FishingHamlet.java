@@ -28,14 +28,14 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 
-public class FishingHamletWIP {
+public class FishingHamlet {
 	
 	private int size;
 	private UUID u;
 	private final List<HamletStructure> structureList = new ArrayList<HamletStructure>();
 	private final Map<BlockPos, HamletStructure> outerRing = new HashMap<BlockPos, HamletStructure>();
 	
-	public FishingHamletWIP(World w,  Random r, BlockPos pos) {
+	public FishingHamlet(World w,  Random r, BlockPos pos) {
 		u = UUID.randomUUID();
 		StartStructure(w, r, pos);
 	}

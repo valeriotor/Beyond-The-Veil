@@ -32,7 +32,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class PlantBeanStalk extends BlockPlant implements MutationCatalyst{
+public class PlantBeanStalk extends BlockPlant implements IMutationCatalyst{
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
     {

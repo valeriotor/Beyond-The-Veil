@@ -8,9 +8,9 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 
-public class Folly extends Potion{
+public class PotionFolly extends Potion{
 
-	protected Folly(boolean isBadEffectIn, int liquidColorIn) {
+	protected PotionFolly(boolean isBadEffectIn, int liquidColorIn) {
 		super(isBadEffectIn, liquidColorIn);
 		this.setRegistryName(References.MODID + ":folly");
 	}

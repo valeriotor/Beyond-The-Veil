@@ -19,8 +19,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class SlugCatcher extends Item{
-	public SlugCatcher() {
+public class ItemSlugCatcher extends Item{
+	public ItemSlugCatcher() {
 		this.setMaxStackSize(1);
 		this.setCreativeTab(CreativeTabs.TOOLS);
 		setRegistryName(References.MODID +":slugcatcher");

@@ -60,9 +60,7 @@ public class WorldGenBTV implements IWorldGenerator{
 		}
 		
 		if(pos!=null) {
-			
-				new FishingHamletWIP(w,r,pos);
-			
+			new FishingHamlet(w,r,pos);
 		}
 		
 	}

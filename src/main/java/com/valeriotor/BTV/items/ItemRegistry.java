@@ -21,7 +21,7 @@ public class ItemRegistry {
 	
 	public static final TestItem testItem = new TestItem();
 	public static final ItemOniricIncense oniricIncense = new ItemOniricIncense();
-	public static final SlugCatcher slugCatcher = new SlugCatcher();
+	public static final ItemSlugCatcher slugCatcher = new ItemSlugCatcher();
 	public static final ItemSlug slug = new ItemSlug();
 	public static final ItemCanoe canoe = new ItemCanoe();
 	public static final ItemDrink rum = new ItemDrink("drink_rum");
