@@ -1,9 +1,11 @@
 package com.valeriotor.BTV.blocks;
 
 import com.valeriotor.BTV.blocks.flora.BlockGhostGrass;
+import com.valeriotor.BTV.blocks.flora.BlockMutator;
 import com.valeriotor.BTV.blocks.flora.BlockRedstoneGrass;
 import com.valeriotor.BTV.blocks.flora.PlantArborealGenerator;
 import com.valeriotor.BTV.blocks.flora.PlantBeanStalk;
+import com.valeriotor.BTV.blocks.flora.PlantOrdo;
 import com.valeriotor.BTV.blocks.flora.PlantSaplingShrub;
 import com.valeriotor.BTV.blocks.flora.PlantTerra;
 import com.valeriotor.BTV.blocks.flora.PlantWeed;
@@ -45,6 +47,8 @@ public class BlockRegistry {
 	public static final PlantArborealGenerator PlantArborealGenerator = new PlantArborealGenerator(BlockNames.ARBOREALGENERATOR);
 	public static final PlantSaplingShrub PlantSaplingShrub = new PlantSaplingShrub(BlockNames.SAPLINGSHRUB);
 	public static final PlantTerra PlantTerra = new PlantTerra(BlockNames.PLANTTERRA);
+	public static final PlantOrdo PlantOrdo = new PlantOrdo(BlockNames.PLANTORDO);
+	public static final BlockMutator BlockMutator = new BlockMutator(BlockNames.MUTATOR);
 	
 	
 	@SubscribeEvent
@@ -76,5 +80,7 @@ public class BlockRegistry {
 	   	event.getRegistry().register(PlantArborealGenerator);
 	   	event.getRegistry().register(PlantSaplingShrub);
 	   	event.getRegistry().register(PlantTerra);
+	   	event.getRegistry().register(PlantOrdo);
+	   	event.getRegistry().register(BlockMutator);
 	}
 }

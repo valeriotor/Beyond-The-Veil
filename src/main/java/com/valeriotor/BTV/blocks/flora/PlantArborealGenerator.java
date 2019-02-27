@@ -23,7 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PlantArborealGenerator extends BlockTallPlant implements ITileEntityProvider{
+public class PlantArborealGenerator extends BlockTallPlant implements ITileEntityProvider, IMutationCatalyst{
 	
 	
 	public PlantArborealGenerator(String name) {
@@ -37,6 +37,11 @@ public class PlantArborealGenerator extends BlockTallPlant implements ITileEntit
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if(meta == 0) return new TileArborealGeneratorBottom();
 		return null;
+	}
+
+	@Override
+	public int mutationIncrease() {
+		return 12;
 	}
 	
 	

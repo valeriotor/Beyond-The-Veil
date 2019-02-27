@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class PlantWeed extends BlockCrops{
+public class PlantWeed extends BlockCrops implements IMutationCatalyst{
 
 	public static final PropertyInteger CROP_AGE = PropertyInteger.create("age", 0, 3);
 	private static final AxisAlignedBB[] CROP_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.80D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D)};
@@ -74,5 +74,10 @@ public class PlantWeed extends BlockCrops{
 		drops.add(new ItemStack(this.getSeed(), 1, 0));
 		if(state.getValue(CROP_AGE) == this.getMaxAge())
 			super.getDrops(drops, world, pos, state, fortune);
+	}
+
+	@Override
+	public int mutationIncrease() {
+		return 2;
 	}	
 }

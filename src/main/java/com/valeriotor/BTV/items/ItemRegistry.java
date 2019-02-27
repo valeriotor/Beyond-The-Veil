@@ -10,7 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemSeeds;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
@@ -94,6 +94,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantArborealGenerator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantSaplingShrub), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantTerra), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantOrdo), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMutator), 0, "inventory");
         
         
     }
@@ -122,6 +124,8 @@ public class ItemRegistry {
     	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantTerra).setRegistryName(BlockRegistry.PlantTerra.getRegistryName()));
+    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantOrdo).setRegistryName(BlockRegistry.PlantOrdo.getRegistryName()));
+    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
     	event.getRegistry().register(ItemRegistry.testItem);
     	event.getRegistry().register(ItemRegistry.oniricIncense);
     	event.getRegistry().register(ItemRegistry.slugCatcher);
@@ -158,6 +162,16 @@ public class ItemRegistry {
     	case 2: return wolf_medallion;
     	case 3: return bronze_sphere;
     	default: return null;
+    	}
+    }
+    
+    public static ItemStack getRandomSeed(Random r, int chance) {
+    	int a = r.nextInt(3*chance);
+    	switch(a) {
+    	case 0: return new ItemStack(redstone_weed_seeds);
+    	case 1: return new ItemStack(ghost_weed_seeds);
+    	case 2: return new ItemStack(vanilla_weed_seeds);
+    	default: return ItemStack.EMPTY;
     	}
     }
 }

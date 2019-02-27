@@ -8,6 +8,7 @@ public class BlockNames {
 	public static final String FUMESPREADER = "fume_spreader";
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
+	public static final String MUTATOR = "mutator";
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
 	public static final String SLUGBAIT = "slug_bait";
@@ -31,6 +32,7 @@ public class BlockNames {
 	public static final String ARBOREALGENERATOR = "arboreal_generator";
 	public static final String SAPLINGSHRUB = "sapling_shrub";
 	public static final String PLANTTERRA = "plant_terra";
+	public static final String PLANTORDO = "plant_ordo";
 	
 	
 	

@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PlantTerra extends BlockPlant implements ITileEntityProvider{
+public class PlantTerra extends BlockPlant implements ITileEntityProvider, IMutationCatalyst{
 
 	public PlantTerra(String name) {
 		super(Material.PLANTS, name);
@@ -29,6 +29,11 @@ public class PlantTerra extends BlockPlant implements ITileEntityProvider{
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TilePlantTerra();
+	}
+
+	@Override
+	public int mutationIncrease() {
+		return 8;
 	}
 
 }
