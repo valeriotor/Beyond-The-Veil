@@ -190,7 +190,7 @@ public class PlantBeanStalk extends BlockPlant implements IMutationCatalyst{
 
 	@Override
 	public int mutationIncrease() {
-		return 10;
+		return 2;
 	}
 
 	

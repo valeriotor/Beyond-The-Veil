@@ -53,7 +53,6 @@ public class TileMutator extends TileEntity implements ITickable{
 	public void update() {
 		if(this.world.isRemote) return;
 		if(this.aspect != null && this.isCovered){
-			System.out.println(this.mutation);
 			this.counter++;
 			if(this.counter%20 == 19) {
 				for(int x = -12; x < 12; x++) {
