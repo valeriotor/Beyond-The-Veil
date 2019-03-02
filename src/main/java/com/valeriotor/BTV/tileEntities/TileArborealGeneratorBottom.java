@@ -53,11 +53,13 @@ public class TileArborealGeneratorBottom extends TileEntity implements ITickable
 					Block side = this.world.getBlockState(this.pos.offset(EnumFacing.HORIZONTALS[i])).getBlock();
 					Block down = this.world.getBlockState(this.pos.offset(EnumFacing.HORIZONTALS[i]).down()).getBlock();
 					if((side == Blocks.AIR || side == BlockRegistry.PlantSaplingShrub) &&
-						(down == Blocks.GRASS || down == Blocks.DIRT))
+						(down == Blocks.GRASS || down == Blocks.DIRT)) {
 						sideCount[i]++;
-						if(sideCount[i] > 490 || this.world.rand.nextInt(500) < sideCount[i]) {
-							sideCount[i] = 0;
-							this.progress(pos.offset(EnumFacing.HORIZONTALS[i]));
+					}else sideCount[i] = 0;
+					
+					if(sideCount[i] > 490 || this.world.rand.nextInt(500) < sideCount[i]) {
+						sideCount[i] = 0;
+						this.progress(pos.offset(EnumFacing.HORIZONTALS[i]));
 					}
 				}
 			}
