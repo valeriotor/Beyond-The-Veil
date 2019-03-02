@@ -5,9 +5,11 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,8 @@ import net.minecraft.world.World;
 
 public class PlantSaplingShrub extends BlockPlant{
 
+	private static final AxisAlignedBB BBOX = new AxisAlignedBB(0.0625*5, 0, 0.0625*5, 0.0625*11, 0.0625*6, 0.0625*11);
+	
 	public PlantSaplingShrub(String name) {
 		super(Material.PLANTS, name);
 		this.setSoundType(SoundType.PLANT);
@@ -61,6 +65,25 @@ public class PlantSaplingShrub extends BlockPlant{
 	@Override
 	public boolean isFullBlock(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BBOX;
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if(fromPos.equals(pos.down())) {
+			if(worldIn.getBlockState(fromPos).getBlock() != Blocks.GRASS && worldIn.getBlockState(fromPos).getBlock() != Blocks.DIRT) {
+				worldIn.setBlockToAir(pos);
+			}
+		}
+	}
+	
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
 	@Override

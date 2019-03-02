@@ -1,5 +1,5 @@
 {
-   "parent": "beyondtheveil:block/slug_bait",
+   "parent": "beyondtheveil:block/mutator",
    "display": {
 	   "thirdperson_righthand": {
 		   "scale": [ 0.55, 0.55, 0.55 ]

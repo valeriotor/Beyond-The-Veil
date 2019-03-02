@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "beyondtheveil:slug_bait" }
+        "normal": { "model": "beyondtheveil:mutator" }
     }
 }

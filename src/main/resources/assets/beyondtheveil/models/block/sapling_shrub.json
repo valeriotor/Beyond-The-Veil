@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "beyondtheveil:blocks/sapling_shrub"
+    }
+}

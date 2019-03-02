@@ -1,3 +1,6 @@
 {
-   "parent": "beyondtheveil:block/bricks_blue"
+   "parent": "item/generated",
+   "textures": {
+       "layer0": "beyondtheveil:blocks/sapling_shrub"
+   }
 }
