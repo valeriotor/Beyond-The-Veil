@@ -209,14 +209,16 @@ dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your fore
 
 dreams.maybeinthefuture=No effect came from this dream, and yet you still felt a tingling. Maybe it'll work in the future, under different circumstances.
 
-dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s
-dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s
-dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below you%2$s
-dreams.groundscan.emerald=%1$s blocks of emerald ore were found in the ground below you%2$s
+dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s%3$s
+dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s%3$s
+dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below you%2$s%3$s
+dreams.groundscan.emerald=%1$s blocks of emerald ore were found in the ground below you%2$s%3$s
 dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: %1$s
+dreams.groundscan.block=. At least one block is located at x: %1$s, y: %2$s, z: %3$s; 
 
 dreams.biomesearch.innsmouth=Found Voided Biome at x: %1$s, z: %2$s
 dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
+dreams.biomesearch.hamlet=An already existing Hamlet was found at x: %1$s, z: %2$s
 
 dreams.villagesearch.success=Found Village at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No villages found
@@ -256,25 +258,25 @@ research.CRYSTALDREAMS.stage.0=Dreams exist. They are entities, they leave your 
 research.CRYSTALDREAMS.stage.1=Dreams exist. They are entities, they leave your body, and disappear from our three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I can feel it. I know it.<BR>I've felt it. <PAGE>The Dream reacted to my use of Metallum by granting me knowledge of the presence of iron and gold in the ground below. It's as if the Dream was... sentient?<BR>I'm certain other aspects will grant other special effects. I'll keep experimenting.
 research.CRYSTALDREAMS.addenda.vitreus=Very similarly to Metallum, the aspect Vitreus has granted me knowledge of the earth beneath me, this time teaching me of the presence of crystals, namely diamonds and emeralds.
 research.CRYSTALDREAMS.addenda.cognitio=Curiously (and most fortunately), it seems that the knowledge originating from Dreams is not limited to the underground. Using Cognitio I'm able to locate the closest village, as Dreams influenced by such aspect seem reactive to the presence of human intelligence in this world, even one so dim as that of those villagers. 
-research.metallumDream.text=Influence your dreams with the Metallum aspect.
-research.metallum.unlock=Your use of Metallum granted you knowledge of the metals below.
-research.vitreus.unlock=Your use of Vitreus granted you knowledge of the crystals below.
-research.cognitio.unlock=Your use of Cognitio granted you knowledge of the closest Village.
+research.metallumDream.text=Influence my dreams with the Metallum aspect.
+research.metallum.unlock=My use of Metallum granted me knowledge of the metals below.
+research.vitreus.unlock=My use of Vitreus granted me knowledge of the crystals below.
+research.cognitio.unlock=My use of Cognitio granted me knowledge of the closest Village.
 
 research.SLEEPCHAMBER.title=Sleep Chamber
 research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity.<BR>Oh, how ironic that now it is sleep I need, and can't get enough of it.<BR> I must Dream, keep Dreaming, again and again. Once a day, only at night, is not enough, it just isn't. I shall put my mind to the creation of some device capable of ridding me of that limit, at least partially.
-research.SLEEPCHAMBER.stage.1=This machine, which I named the Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time. For now, all I know is that the Sleep Chamber is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by the Fume Spreader.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.
+research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time. For now, all I know is that the Sleep Chamber is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by the Fume Spreader.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.
 
-research.EFFECTDREAMS.title=Affecting yourself
+research.EFFECTDREAMS.title=Affecting myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
 research.EFFECTDREAMS.stage.1=A successful attempt was made. I have learned to handle, to a degree, the effects that are already conditioning my body, to my advantage. <BR>Or, to phrase it better, I have learned there are ways to handle such effects. I should experiment more on this branch of research.
-research.f_EffectDream.text=Find an aspect capable of affecting you.
+research.f_EffectDream.text=Find an aspect capable of affecting myself.
 research.EFFECTDREAMS.addenda.potentia=Potentia seems capable of amplifying the potency of Status Effects already conditioning me. <BR>I'd better make sure to only use it when free of negative effects.
 research.EFFECTDREAMS.addenda.vinculum=Vinculum has proven to be an excellent way of extending the duration of Status Effects on me, though that applies to both positive and negative ones.
 research.EFFECTDREAMS.addenda.permutatio=Permutatio has shown to be extremely useful. Not only is it capable of ridding me of any negative effects, it will also attempt to convert them into their positive counterparts, such as slowness turning into speed. <BR>This is quite a complex task, which only reinforces my belief that Dreams are more sentient than one could imagine.
-research.potentia.unlock=Your use of Potentia amplified the potency of any Status Effects present on you.
-research.vinculum.unlock=Your use of Vinculum extended the duration of any Status Effects present on you.
-research.permutatio.unlock=Your use of Permutatio removed negative effects from you, and attempted to convert them into positive ones.
+research.potentia.unlock=My use of Potentia amplified the potency of any Status Effects present on me.
+research.vinculum.unlock=My use of Vinculum extended the duration of any Status Effects present on me.
+research.permutatio.unlock=My use of Permutatio removed negative effects from me, and attempted to convert them into positive ones.
 
 research.HUMANDREAMS.title=Dreams of Others
 research.HUMANDREAMS.stage.0=Sometimes, when Dreaming, I get a bizarre feeling.<BR>People like me, even ones I have never known, start appearing in my thoughts. And yet, I feel like it's not a mere construct of my mind, of my subconscious.<BR>No. I think that our Dreams converge within the same point, that they touch each other, and that those presences within my thoughts are REAL.<BR>I believe that, through my "Dreaming expertise", I could know more about those others, that I could probe their Dreams while they remain unaware. I should look for the right aspects, while keeping this knowledge for myself. 
@@ -282,8 +284,8 @@ research.HUMANDREAMS.stage.1=I have reason to believe that, within their own wei
 research.f_HumanDream.text=Find an aspect capable of probing others' Dreams.
 research.HUMANDREAMS.addenda.humanus=The effect of Humanus upon my Dreams is small, but I believe it could have great potential as I become a greater Dreamer.<BR>It enables me to know of the position of others like me. Just one of their x or z coordinates for now, for a single unnamed human other than me, provided there is at least one at the time of Dreaming.
 research.HUMANDREAMS.addenda.instrumentum=Instrumentum grants me knowledge of what others like me are wielding.<BR>It tells me of the item held in the main hand of a single human other than me, provided there is at least one at the time of Dreaming.
-research.humanus.unlock=Your use of Humanus granted you some knowledge of the position of another Player.
-research.instrumentum.unlock=Your use of Instrumentum granted you knowledge of the Item wielded by another Player.
+research.humanus.unlock=My use of Humanus granted me some knowledge of the position of another Player.
+research.instrumentum.unlock=My use of Instrumentum granted me knowledge of the Item wielded by another Player.
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.

@@ -5,6 +5,7 @@ package com.valeriotor.BTV.blocks;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
@@ -130,7 +131,10 @@ public class BlockIdol extends ModBlock{
 		if(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 0) {
 			playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
 		}
-		if(worldIn.isRemote) playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel())));
+		if(worldIn.isRemote) {
+			playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel())));
+			BeyondTheVeil.proxy.cEvents.muteSounds(100);
+		}
 		return true;
 	}
 	

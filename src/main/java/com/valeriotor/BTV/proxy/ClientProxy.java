@@ -34,7 +34,8 @@ public class ClientProxy extends CommonProxy {
         super.preInit(e);
         this.registerRenders();
         Guis.registerGuis();
-        MinecraftForge.EVENT_BUS.register(new ClientEvents());
+        this.cEvents = new ClientEvents();
+        MinecraftForge.EVENT_BUS.register(this.cEvents);
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
         }

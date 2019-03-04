@@ -73,4 +73,20 @@ public class HamletList extends WorldSavedData{
 		}
 		return false;
 	}
+	
+	public BlockPos getClosestHamlet(BlockPos pos1) {
+		BlockPos shortest = null;
+		double distance = 0;
+		for(BlockPos pos2 : HPos.values()) {
+			if(pos1.equals(pos2)) return pos2;
+			double newDistance = pos2.distanceSq(pos1);
+			if(newDistance > distance || distance == 0) {
+				distance = newDistance;
+				shortest = pos2;
+			}
+		}
+		
+		return shortest;
+	}
+	
 }

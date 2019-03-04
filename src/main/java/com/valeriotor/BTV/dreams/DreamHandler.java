@@ -9,8 +9,10 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
+import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.world.BiomeRegistry;
+import com.valeriotor.BTV.world.HamletList;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,12 +76,12 @@ public class DreamHandler {
 	
 	private static boolean processDream(String aspect, IPlayerKnowledge k, EntityPlayer p) {
 		switch (aspect) {
-			case "Aer": return dreamWeight(7, 1, 8, 2, 2, 12, k, p);
-			case "Ignis": return dreamWeight(7, 4, 3, 9, 7, 2, k, p);
-			case "Ordo": return dreamWeight(4, 2, 12, 9, 3, 2, k, p);	
-			case "Perditio": return dreamWeight(2, 10, 1, 3, 8, 8, k, p);
-			case "Terra": return dreamWeight(7, 2, 5, 9, 9, 0, k, p);
-			case "Aqua": return dreamWeight(4, 13, 8, 2, 1, 4, k, p);
+			case "Aer": return dreamWeight(new int[] {7, 1, 8, 2, 2, 12}, k, p);
+			case "Ignis": return dreamWeight(new int[] {7, 4, 3, 9, 7, 2}, k, p);
+			case "Ordo": return dreamWeight(new int[] {4, 2, 12, 9, 3, 2}, k, p);	
+			case "Perditio": return dreamWeight(new int[] {2, 10, 1, 3, 8, 8}, k, p);
+			case "Terra": return dreamWeight(new int[] {7, 2, 5, 9, 9, 0}, k, p);
+			case "Aqua": return dreamWeight(new int[] {4, 13, 8, 2, 1, 4}, k, p);
 			case "Metallum": return scanGround(p, true, p.world);
 			case "Vitreus": return scanGround(p, false, p.world);
 			case "Tenebrae": return searchInnsmouth(p, p.world, p.world.rand);
@@ -89,7 +91,7 @@ public class DreamHandler {
 			case "Potentia": return amplifyEffects(p, p.world);
 			case "Humanus": return searchPlayer(p, p.world);
 			case "Instrumentum": return getPlayerItem(p, p.world);
-			default: dreamWeight(90, 2, 1, 2, 1, 2, k, p);	
+			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	
 		}
 		return false;
 	}
@@ -116,28 +118,47 @@ public class DreamHandler {
 	
 	// ***************************************** BASIC KNOWLEDGE DREAMS ***************************************** \\
 	
-	private static boolean dreamWeight(int bas, int alc, int inf, int art, int gol, int aur, IPlayerKnowledge k, EntityPlayer p) {
-		int r = new Random().nextInt(40);
-		boolean didUse = true;
-		if(r<bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BASICS"), 10);
-		}else if(r<alc+bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("ALCHEMY"), 10);
-		}else if(r<inf+alc+bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("INFUSION"), 10);
-		}else if(r<art+inf+alc+bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("ARTIFICE"), 10);
-		}else if(r<gol+art+inf+alc+bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("GOLEMANCY"), 10);
-		}else if(r<aur+gol+art+inf+alc+bas) {
-			k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("AUROMANCY"), 10);
-		}else if(r<40) {
-			didUse=false;
-		}else {
-			didUse=false;
+	private static boolean dreamWeight(int[] knowledge, IPlayerKnowledge k, EntityPlayer p) {
+		int lvl = getDreamingGodLevel(p);
+		if(lvl >= 1) {
+			int max = 0;
+			int maxPos = 0;
+			for(int i = 0; i < 6; i++) {
+				if(max < knowledge[i]) {
+					max = knowledge[i];
+					maxPos = i;
+				}
+			}
+			knowledge[maxPos] += 8;
 		}
+		int r = new Random().nextInt(getDreamingGodLevel(p) >= 1 ? 32 : 40);
+		boolean didUse = true;
+		int sum = 0;
+		for(int i = 0; i < 6; i++) {
+			sum += knowledge[i];
+			if(r < sum) {
+				k.addKnowledge(EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory(getCategoryName(i)), getKnowledgeByLevel(lvl));
+				break;
+			}
+		}
+		if(r >= sum) didUse = false;
 		return didUse;
 		//ThaumcraftApi.internalMethods.addKnowledge(p, EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BEYOND_THE_VEIL"), 1);
+	}
+	
+	private static String getCategoryName(int index) {
+		switch(index) {
+			case 0: return "BASICS";
+			case 1: return "AlCHEMY";
+			case 2: return "INFUSION";
+			case 3: return "ARTIFICE";
+			case 4: return "GOLEMANCY";
+			default: return "AUROMANCY";
+		}
+	}
+	
+	private static int getKnowledgeByLevel(int lvl) {
+		return 10 + 2 * lvl;
 	}
 	
 	// ***************************************** SCAN GROUND DREAM ***************************************** \\
@@ -159,6 +180,8 @@ public class DreamHandler {
 		int[] tracker2 = new int[p.getPosition().getY()];
 		int sum1 = 0;
 		int sum2 = 0;
+		BlockPos coord1 = null;
+		BlockPos coord2 = null;
 		for(int y = p.getPosition().getY()-1; y>=0; y--) {
 			for(int x = p.getPosition().getX()-16; x<p.getPosition().getX()+16; x++) {
 				for(int z = p.getPosition().getX()-16; z<p.getPosition().getX()+16; z++) {
@@ -166,18 +189,22 @@ public class DreamHandler {
 					if(isMetal) {
 						// TODO: Get OreDictionary compatibility
 						if(state == Blocks.IRON_ORE.getDefaultState()) {
+							if(coord1 == null && getDreamingGodLevel(p) >= 1) coord1 = new BlockPos(x, y, z);
 							tracker1[y]++;
 							sum1++;
 						}else if(state == Blocks.GOLD_ORE.getDefaultState()) {
+							if(coord2 == null && getDreamingGodLevel(p) >= 1) coord2 = new BlockPos(x, y, z);
 							tracker2[y]++;
 							sum2++;
 						}
 					}else {
 						// TODO: Get OreDictionary compatibility
 						if(state == Blocks.DIAMOND_ORE.getDefaultState()) {
+							if(coord1 == null && getDreamingGodLevel(p) >= 1) coord1 = new BlockPos(x, y, z);
 							tracker1[y]++;
 							sum1++;
 						}else if(state == Blocks.EMERALD_ORE.getDefaultState()) {
+							if(coord2 == null && getDreamingGodLevel(p) >= 1) coord2 = new BlockPos(x, y, z);
 							tracker2[y]++;
 							sum2++;
 						}
@@ -204,14 +231,31 @@ public class DreamHandler {
 		}
 		
 		if(isMetal) {
-			p.sendMessage(new TextComponentTranslation("dreams.groundscan.iron",new Object[] {Integer.valueOf(sum1), highest1 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest1)})).getUnformattedComponentText() : ""}));
-			p.sendMessage(new TextComponentTranslation("dreams.groundscan.gold", new Object[] {Integer.valueOf(sum2), highest2 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest2)})).getUnformattedComponentText() : ""}));
+				p.sendMessage(getGroundScanMessage("iron", sum1, highest1, coord1));
+				p.sendMessage(getGroundScanMessage("gold", sum2, highest2, coord2));
 			}else {
-			p.sendMessage(new TextComponentTranslation("dreams.groundscan.diamond",new Object[] {Integer.valueOf(sum1), highest1 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest1)})).getUnformattedComponentText() : ""}));
-			p.sendMessage(new TextComponentTranslation("dreams.groundscan.emerald", new Object[] {Integer.valueOf(sum2), highest2 > 0 ? (new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest2)})).getUnformattedComponentText() : ""}));
+				p.sendMessage(getGroundScanMessage("diamond", sum1, highest1, coord1));
+				p.sendMessage(getGroundScanMessage("emerald", sum2, highest2, coord2));
 			}
 		return true;
 	}
+	
+	private static TextComponentTranslation getGroundScanMessage(String ore, int sum, int highest, BlockPos coord) {
+		return new TextComponentTranslation(String.format("dreams.groundscan.%s", ore), new Object[] {Integer.valueOf(sum), getGroundScanConcentration(highest), getGroundScanBlockMessage(coord)});
+	}
+	
+	private static String getGroundScanConcentration(int highest) {
+		if(highest > 0)
+			return new TextComponentTranslation("dreams.groundscan.greatestconcentration", new Object[] {Integer.valueOf(highest)}).getUnformattedComponentText();
+		return "";
+	}
+	
+	private static String getGroundScanBlockMessage(BlockPos coord) {
+		if(coord != null)
+			return new TextComponentTranslation("dreams.groundscan.block", new Object[] {Integer.valueOf(coord.getX()), Integer.valueOf(coord.getY()), Integer.valueOf(coord.getZ())}).getUnformattedComponentText();
+		return "";
+	}
+	
 	
 	// ***************************************** SEARCH BIOME/STRUCTURE DREAMS ***************************************** \\
 	
@@ -225,17 +269,28 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean searchInnsmouth(EntityPlayer p, World w, Random r) {
+		boolean flag = false;
 		final BiomeProvider provider = w.getBiomeProvider();
 		List<Biome> biomes = new ArrayList<Biome>();
 		biomes.add(BiomeRegistry.innsmouth);
 		BlockPos pos = provider.findBiomePosition(p.getPosition().getX(), p.getPosition().getZ(), 1200, biomes, r);
 		if(pos != null) {
 			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.innsmouth", new Object[] {pos.getX(), pos.getZ()}));
-			return true;
+			
+			flag = true;
 		}else {
 			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.fail"));
-			return false;
 		}
+		
+		if(getDreamingGodLevel(p) >= 1) {
+			BlockPos hamletPos = HamletList.get(w).getClosestHamlet(p.getPosition());
+			if(hamletPos != null) {
+				p.sendMessage(new TextComponentTranslation("dreams.biomesearch.hamlet", new Object[] {Integer.valueOf(hamletPos.getX()), Integer.valueOf(hamletPos.getZ())}));
+				flag = true;
+			}
+		}
+		
+		return flag;
 		
 	
 	}
@@ -268,17 +323,20 @@ public class DreamHandler {
 	 */
 	private static boolean searchPlayer(EntityPlayer p, World w) {
 		// if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() < ??) // For later use
+		if(!youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
 		if(list.size() > 0) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
-			p.sendMessage(new TextComponentTranslation("dreams.playersearch.success", w.rand.nextBoolean() ? target.getPosition().getX() : target.getPosition().getZ()));
+			int attack = getDreamAttack(p, target);
+			if(attack == 0)
+				p.sendMessage(new TextComponentTranslation("dreams.playersearch.success", w.rand.nextBoolean() ? target.getPosition().getX() : target.getPosition().getZ()));
+			else if(attack >= 1)
+				p.sendMessage(new TextComponentTranslation("dreams.playersearch.success2", new Object[] {target.getPosition().getX(), target.getPosition().getZ()}));
+			if(attack >= 2)
+				p.sendMessage(new TextComponentTranslation("dreams.playersearch.name", target.getName()));
 			return true;
 		}else {
-			if(!knowsDream(p, "metallum")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
-			else {
-				p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
-				return true;
-			}
+			p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
 			return false;
 		}
 	}
@@ -292,6 +350,7 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean getPlayerItem(EntityPlayer p, World w) {
+		if(!youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
 		if(list.size() > 0) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
@@ -301,14 +360,19 @@ public class DreamHandler {
 			}else {
 				p.sendMessage(new TextComponentTranslation("dreams.playeritem.mildsuccess"));
 			}
+			int attack = getDreamAttack(p, target);
+			if(attack >= 1) {
+				String name = target.getName();
+				if(attack == 1)
+					p.sendMessage(new TextComponentTranslation("dreams.playeritem.firstletter", name.substring(0, 1)));
+				else
+					p.sendMessage(new TextComponentTranslation("dreams.playersearch.name", name));
+					
+			}
 			
 			return true;
 		}else {
-			if(!knowsDream(p, "metallum")) p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
-			else {
-				p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
-				return true;
-			}
+			p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
 			return false;
 		}
 	}
@@ -323,8 +387,9 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean extendEffects(EntityPlayer p, World w) {
+		if(!youDontKnowDream(p, "metallum")) return false;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000)));
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000+500*getDreamingGodLevel(p))));
 		
 		return true;
 	}
@@ -337,8 +402,10 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean amplifyEffects(EntityPlayer p, World w) {
+		if(!youDontKnowDream(p, "metallum")) return false;
+		int increase = 1 + (getDreamingGodLevel(p)+2)/3;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()+1)));
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getPotion() == MobEffects.RESISTANCE ? Math.max(3, effect.getAmplifier() + increase) : effect.getAmplifier()+increase)));
 		
 		return true;
 	}
@@ -352,6 +419,7 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean changeEffects(EntityPlayer p, World w) {
+		if(!youDontKnowDream(p, "metallum")) return false;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
 		List<PotionEffect> negativeEffects = Lists.newArrayList();
 		effects.forEach(effect -> {
@@ -359,7 +427,7 @@ public class DreamHandler {
 		});
 		negativeEffects.forEach(effect ->{
 			Potion newPot = getPositiveCounterpart(effect.getPotion());
-			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration(), effect.getAmplifier()));
+			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*getDreamingGodLevel(p), effect.getAmplifier()+getDreamingGodLevel(p)/4));
 			p.removePotionEffect(effect.getPotion());
 		});
 		
@@ -426,5 +494,24 @@ public class DreamHandler {
 		if(k.isResearchKnown(aspect+"Dream")) return true;
 		return false;
 	}
+	
+	private static boolean youDontKnowDream(EntityPlayer p, String aspect) {
+		if(!knowsDream(p, aspect)) {
+			p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
+			return false;
+		}
+		else return true;
+	}
+	
+	private static int getDreamingGodLevel(EntityPlayer p) {
+		return p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+	}
+	
+	private static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
+		return getDreamingGodLevel(attacker) - getDreamingGodLevel(target);
+	}
+	
+	
+	
 }
 

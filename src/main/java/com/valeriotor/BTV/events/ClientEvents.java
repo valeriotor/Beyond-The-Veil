@@ -1,8 +1,8 @@
 package com.valeriotor.BTV.events;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import com.sun.jna.platform.KeyboardUtils;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageMedallionEffect;
@@ -12,14 +12,9 @@ import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -38,7 +33,9 @@ public class ClientEvents {
 	};
 	private int wolfmedallionCount = 0;
 	
-	
+	private HashMap<SoundCategory, Float> map = new HashMap<>();
+	private float masterSound = -1;
+	private int soundCounter = 0;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -80,10 +77,34 @@ public class ClientEvents {
 				
 				if(wolfmedallionCount > 0) wolfmedallionCount--;
 			}
+				
 			
+			}
+			
+			if(soundCounter > 0) {
+				soundCounter--;
+				if(soundCounter == 30) 
+					Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.MASTER, this.masterSound/2);	
+				if(soundCounter == 0) {
+					Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.MASTER, this.masterSound);
+					this.masterSound = -1;
+				}
+			}
 			
 		}
-		}
+		
+		
+		
+	}
+	
+	public void muteSounds(int ticks) {
+		this.masterSound = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.MASTER);
+		Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.MASTER, 0);
+		/*for(SoundCategory sc : SoundCategory.values()) {
+			map.put(sc,Minecraft.getMinecraft().gameSettings.getSoundLevel(sc));
+			Minecraft.getMinecraft().gameSettings.setSoundLevel(sc, 0);				
+		}*/
+		this.soundCounter = ticks;
 	}
 	
 	public void movePlayer(int direction, float multiplier) {
