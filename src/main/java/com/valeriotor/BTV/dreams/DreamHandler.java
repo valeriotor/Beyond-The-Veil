@@ -11,6 +11,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
@@ -24,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -41,6 +43,7 @@ public class DreamHandler {
 		if(SpreaderLocations.isEmpty()) return;
 		
 		boolean increaseTimesDreamt = false;
+		boolean vacuos = false;
 		
 		// Made a "helper" string list so that in the future I may make special dreams based on aspect combos, without/before processing the single dreams.
 		List<String> aspects = Lists.newArrayList();
@@ -51,7 +54,10 @@ public class DreamHandler {
 			if(aspect == null) iter.remove();
 			else aspects.add(aspect);
 		}
-		
+		if(aspects.contains("Vacuos") && k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
+			vacuos = true;
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);;
+		}
 		
 		for(int i = 0; i < SpreaderLocations.size(); i++) {
 			BlockPos pos = SpreaderLocations.get(i);
@@ -69,8 +75,7 @@ public class DreamHandler {
 				unlockResearch(p, aspect.toLowerCase()); 
 			}
 		}
-		
-		if(increaseTimesDreamt) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("timesDreamt", 0, false)+1, false);
+		if(increaseTimesDreamt) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.TIMESDREAMT, p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false)+1, false);
 		
 	}
 	
@@ -91,7 +96,9 @@ public class DreamHandler {
 			case "Potentia": return amplifyEffects(p, p.world);
 			case "Humanus": return searchPlayer(p, p.world);
 			case "Instrumentum": return getPlayerItem(p, p.world);
-			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	
+			case "Vacuos": return true;
+			case "Alienis": return contactUnknown(p, k, p.world);
+			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	// TODO: Add "return" here
 		}
 		return false;
 	}
@@ -130,8 +137,10 @@ public class DreamHandler {
 				}
 			}
 			knowledge[maxPos] += 8;
+			if(p.world.rand.nextInt(50 - 4 * lvl) == 0)
+				k.addKnowledge(EnumKnowledgeType.THEORY, ResearchCategories.getResearchCategory(getCategoryName(maxPos)), 16);
 		}
-		int r = new Random().nextInt(getDreamingGodLevel(p) >= 1 ? 32 : 40);
+		int r = p.world.rand.nextInt(/*getDreamingGodLevel(p) >= 1 ? 32 : */40);
 		boolean didUse = true;
 		int sum = 0;
 		for(int i = 0; i < 6; i++) {
@@ -389,7 +398,7 @@ public class DreamHandler {
 	private static boolean extendEffects(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000+500*getDreamingGodLevel(p))));
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000+500*getDreamLevel(p))));
 		
 		return true;
 	}
@@ -403,7 +412,7 @@ public class DreamHandler {
 	 */
 	private static boolean amplifyEffects(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
-		int increase = 1 + (getDreamingGodLevel(p)+2)/3;
+		int increase = 1 + (getDreamLevel(p)+2)/3;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
 		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getPotion() == MobEffects.RESISTANCE ? Math.max(3, effect.getAmplifier() + increase) : effect.getAmplifier()+increase)));
 		
@@ -427,7 +436,7 @@ public class DreamHandler {
 		});
 		negativeEffects.forEach(effect ->{
 			Potion newPot = getPositiveCounterpart(effect.getPotion());
-			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*getDreamingGodLevel(p), effect.getAmplifier()+getDreamingGodLevel(p)/4));
+			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*getDreamLevel(p), effect.getAmplifier()+getDreamLevel(p)/4));
 			p.removePotionEffect(effect.getPotion());
 		});
 		
@@ -454,6 +463,17 @@ public class DreamHandler {
 		return null;
 	}
 	
+	// ***************************************** STORY DREAMS ***************************************** \\
+	
+	private static boolean contactUnknown(EntityPlayer p, IPlayerKnowledge k, World w) {
+		if(!knowsDream(p, "vacuos")) {
+			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere1"));
+			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere2"));
+			return false;
+		}
+		return true;
+	}
+	
 	// ***************************************** HELPER METHODS ***************************************** \\
 	
 	
@@ -467,6 +487,8 @@ public class DreamHandler {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(!k.isResearchKnown(aspect+"Dream")) {
 			ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
+			if(aspect.equals("alienis") || aspect.equals("vacuos"))
+				ThaumcraftApi.internalMethods.progressResearch(p, String.format("f_%sDream", aspect.substring(0, 1).toUpperCase().concat(aspect.substring(1))));
 			p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
 			if(!k.isResearchKnown("f_EffectDream")) {
 				if(aspect.equals("potentia") || aspect.equals("vinculum") || aspect.equals("permutatio")) {
@@ -479,6 +501,7 @@ public class DreamHandler {
 					ThaumcraftApi.internalMethods.progressResearch(p, "f_HumanDream");
 				}
 			}
+			
 		}
 	}
 	
@@ -501,6 +524,15 @@ public class DreamHandler {
 			return false;
 		}
 		else return true;
+	}
+	
+	private static int getDreamLevel(EntityPlayer p) {
+		int lvl = getDreamingGodLevel(p);
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos")) {
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");
+			lvl++;
+		}
+		return lvl;
 	}
 	
 	private static int getDreamingGodLevel(EntityPlayer p) {

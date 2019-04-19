@@ -209,10 +209,10 @@ dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your fore
 
 dreams.maybeinthefuture=No effect came from this dream, and yet you still felt a tingling. Maybe it'll work in the future, under different circumstances.
 
-dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below you%2$s%3$s
-dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below you%2$s%3$s
-dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below you%2$s%3$s
-dreams.groundscan.emerald=%1$s blocks of emerald ore were found in the ground below you%2$s%3$s
+dreams.groundscan.iron=%1$s blocks of iron ore were found in the ground below me%2$s%3$s
+dreams.groundscan.gold=%1$s blocks of gold ore were found in the ground below me%2$s%3$s
+dreams.groundscan.diamond=%1$s blocks of diamond ore were found in the ground below me%2$s%3$s
+dreams.groundscan.emerald=%1$s blocks of emerald ore were found in the ground below me%2$s%3$s
 dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: %1$s
 dreams.groundscan.block=. At least one block is located at x: %1$s, y: %2$s, z: %3$s; 
 
@@ -227,6 +227,9 @@ dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s
 dreams.playeritem.success=Another player is currently wielding: %1$s
 dreams.playeritem.mildsuccess=Another player was found, but he was wielding nothing.
 dreams.playersearch.fail=The Dream was unable to locate another player.
+
+dreams.alienis.almostthere1=I am certain this aspect will be of great aid very soon.
+dreams.alienis.almostthere2=But now is not the time. I lack the strength.
 
 ##################
 #THEORYCRAFT

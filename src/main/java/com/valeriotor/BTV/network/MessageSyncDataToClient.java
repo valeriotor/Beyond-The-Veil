@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 
 import io.netty.buffer.ByteBuf;
@@ -47,8 +48,10 @@ public class MessageSyncDataToClient implements IMessage{
 		public IMessage onMessage(MessageSyncDataToClient message, MessageContext ctx) {
 			if(message.value == -999)
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
-			else
-				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
+			else {
+				if(message.string.equals("level")) Minecraft.getMinecraft().player.getCapability(DGProvider.LEVEL_CAP, null).setLevel(message.value);
+				else Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
+			}
 			return null;
 		}
 		

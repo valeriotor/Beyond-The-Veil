@@ -1,8 +1,12 @@
 package com.valeriotor.BTV.events;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
+import org.lwjgl.opengl.GL11;
+
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.render.RenderDeepOne;
+import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageMedallionEffect;
@@ -10,11 +14,15 @@ import com.valeriotor.BTV.proxy.ClientProxy;
 
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -33,7 +41,6 @@ public class ClientEvents {
 	};
 	private int wolfmedallionCount = 0;
 	
-	private HashMap<SoundCategory, Float> map = new HashMap<>();
 	private float masterSound = -1;
 	private int soundCounter = 0;
 	
@@ -98,12 +105,9 @@ public class ClientEvents {
 	}
 	
 	public void muteSounds(int ticks) {
+		if(this.masterSound != -1) return;
 		this.masterSound = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.MASTER);
 		Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.MASTER, 0);
-		/*for(SoundCategory sc : SoundCategory.values()) {
-			map.put(sc,Minecraft.getMinecraft().gameSettings.getSoundLevel(sc));
-			Minecraft.getMinecraft().gameSettings.setSoundLevel(sc, 0);				
-		}*/
 		this.soundCounter = ticks;
 	}
 	
@@ -129,6 +133,24 @@ public class ClientEvents {
 		p.motionX += mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 		p.motionZ += mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 	}
+	
+	private final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
+	
+	
+	@SubscribeEvent
+	public void onPlayerRenderEvent(RenderPlayerEvent.Pre event) {
+		EntityPlayer p = event.getEntityPlayer();
+		BlockPos pos = p.getPosition();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
+		// Only do this for transformed players
+		// NOTE: If player is in first person and event.player == Minecraft.getMC.player, then don't render!!
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("form", 0, false) == 1) {
+			event.setCanceled(true);
+			deepOne.render((AbstractClientPlayer)p, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), p.rotationYaw, event.getPartialRenderTick());
+	}
+}	
 	
 	/*
 	@SubscribeEvent

@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.capabilities.DGProvider;
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
@@ -20,6 +25,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
@@ -53,19 +59,29 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public static void tickEvent(PlayerTickEvent event) {
 		if(event.phase.equals(Phase.END)) {
-			
+			EntityPlayer p = event.player;
 			//Canoe Gifts
-			if(!event.player.world.isRemote && event.player.getRidingEntity() instanceof EntityCanoe && (event.player.world.getBiome(event.player.getPosition()) == Biomes.OCEAN 
-			   || event.player.world.getBiome(event.player.getPosition()) == BiomeRegistry.innsmouth || event.player.world.getBiome(event.player.getPosition()) == Biomes.DEEP_OCEAN)) {
-				if(Math.abs(event.player.motionX) > 0.01 || Math.abs(event.player.motionZ) > 0.01) {
-					if((event.player.world.getWorldTime() & 127) == event.player.world.rand.nextInt(128)) {
-						double angle = event.player.world.rand.nextDouble()*2*Math.PI;
+			if(!p.world.isRemote && p.getRidingEntity() instanceof EntityCanoe && (p.world.getBiome(p.getPosition()) == Biomes.OCEAN 
+			   || p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth || p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN)) {
+				if(Math.abs(p.motionX) > 0.01 || Math.abs(p.motionZ) > 0.01) {
+					if((p.world.getWorldTime() & 127) == p.world.rand.nextInt(128)) {
+						double angle = p.world.rand.nextDouble()*2*Math.PI;
 						double x = Math.sin(angle);
 						double z = Math.cos(angle);
-						EntityItem fish = new EntityItem(event.player.world, event.player.getPosition().getX() + x, event.player.getPosition().getY(), event.player.getPosition().getZ() + z, new ItemStack(Items.FISH));
-						fish.motionX = -x + event.player.motionX;
-						fish.motionZ = -z + event.player.motionZ;
-						event.player.world.spawnEntity(fish);
+						EntityItem fish = new EntityItem(p.world, p.getPosition().getX() + x, p.getPosition().getY(), p.getPosition().getZ() + z, new ItemStack(Items.FISH));
+						fish.motionX = -x + p.motionX;
+						fish.motionZ = -z + p.motionZ;
+						p.world.spawnEntity(fish);
+						IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+						if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 2 && !data.getString(PlayerDataLib.FISHQUEST)) {
+							int currentFish = data.getInteger(PlayerDataLib.FISH_CANOE);
+							if(currentFish <= 15) {
+								data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
+							}else{
+								data.addString(PlayerDataLib.FISHQUEST, false);
+								BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.FISHQUEST), (EntityPlayerMP) p);
+							}
+						}
 					}
 				}
 			}
@@ -96,17 +112,9 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
-		if(!event.player.world.isRemote) {
-			List<String> strings = event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
-			HashMap<String, Integer> ints = event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
-			
-			for(String string : strings) {
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), (EntityPlayerMP)event.player);
-			}
-				
-			for(Entry<String, Integer> entry : ints.entrySet()) {
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(entry.getKey(), entry.getValue()), (EntityPlayerMP)event.player);	
-			}
+		if(!event.player.world.isRemote) {			
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", event.player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()), (EntityPlayerMP)event.player);
+			PlayerDataHandler.syncPlayerData(event.player);
 		}
 	}
 	
@@ -115,7 +123,8 @@ public class PlayerEvents {
 		
 		List<String> strings = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
-			
+		
+		event.getEntityPlayer().getCapability(DGProvider.LEVEL_CAP, null).setLevel(event.getOriginal().getCapability(DGProvider.LEVEL_CAP, null).getLevel());	
 		for(String string : strings) {
 			event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, false);
 		}

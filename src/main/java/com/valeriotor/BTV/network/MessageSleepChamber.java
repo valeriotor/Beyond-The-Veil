@@ -5,6 +5,7 @@ import com.valeriotor.BTV.blocks.BlockSleepChamber;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreams.DreamHandler;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
@@ -60,7 +61,7 @@ public class MessageSleepChamber implements IMessage {
 				}
 				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(player);
 				
-				int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("timesDreamt", 0, false);
+				int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 				int level = player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()/2 + 1; // For when I start working on worship
 				
 				if(message.doesDream && times < level * multiplier) {

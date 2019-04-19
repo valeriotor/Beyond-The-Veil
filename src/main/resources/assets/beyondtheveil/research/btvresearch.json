@@ -203,6 +203,38 @@
 					"required_research": ["inscription7"]
 				}
 			]
+        },
+		{
+        "key": "VOIDDREAMS",
+        "name": "research.VOIDDREAMS.title",
+        "icons": [ "thaumcraft:textures/aspects/vacuos.png" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,2 ],
+        "parents": [ "SLEEPCHAMBER", "HUMANDREAMS" ],
+        "stages": [
+				{
+					"text": "research.VOIDDREAMS.stage.0",
+					"required_research": ["f_VacuosDream"]
+				},
+                {
+                    "text": "research.VOIDDREAMS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "FIRSTCONTACT",
+        "name": "research.FIRSTCONTACT.title",
+        "icons": [ "thaumcraft:textures/aspects/alienis.png" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,2 ],
+        "parents": [ "VOIDDREAMS" ],
+        "stages": [
+				{
+					"text": "research.FIRSTCONTACT.stage.0",
+					"required_research": ["f_AlienisDream"]
+				},
+                {
+                    "text": "research.FIRSTCONTACT.stage.1"
+                }
+            ]
         }
 	]
 }	

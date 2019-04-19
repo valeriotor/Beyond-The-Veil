@@ -9,6 +9,9 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.util.DGWorshipHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,6 +23,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -127,12 +131,16 @@ public class BlockIdol extends ModBlock{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(playerIn);
-		if(!k.isResearchKnown("CRYSTALDREAMS")) return true;
-		if(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 0) {
-			playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
-		}
-		if(worldIn.isRemote) {
-			playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel())));
+		if(!k.isResearchKnown("CRYSTALDREAMS")) return true; // TODO: Change required research
+		if(!worldIn.isRemote) {
+			if(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 0) {
+				playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel()), (EntityPlayerMP)playerIn);
+			} else {
+				DGWorshipHandler.levelUp(playerIn);
+			}
+			// DEBUG playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel()))); // TODO: Delete this
+		} else {
 			BeyondTheVeil.proxy.cEvents.muteSounds(100);
 		}
 		return true;

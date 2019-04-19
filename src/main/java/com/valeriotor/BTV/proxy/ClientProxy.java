@@ -34,8 +34,6 @@ public class ClientProxy extends CommonProxy {
         super.preInit(e);
         this.registerRenders();
         Guis.registerGuis();
-        this.cEvents = new ClientEvents();
-        MinecraftForge.EVENT_BUS.register(this.cEvents);
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
         }
@@ -47,6 +45,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent e) {
     	  RegistryHandler.registerColorHandlers();
+          this.cEvents = new ClientEvents();
+          MinecraftForge.EVENT_BUS.register(this.cEvents);
     }
     
     

@@ -7,9 +7,12 @@ import java.util.concurrent.Callable;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncDataToClient;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -26,6 +29,19 @@ public class PlayerDataHandler {
 	@SubscribeEvent
 	public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
 		if((event.getObject() instanceof EntityPlayer)) event.addCapability(FLAG_CAP, new PlayerDataProvider());
+		
+	}
+	
+	public static void syncPlayerData(EntityPlayer p) {
+		List<String> strings = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
+		HashMap<String, Integer> ints = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
+		for(String string : strings) {
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), (EntityPlayerMP)p);
+		}
+			
+		for(Entry<String, Integer> entry : ints.entrySet()) {
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(entry.getKey(), entry.getValue()), (EntityPlayerMP)p);	
+		}
 		
 	}
 	
@@ -116,6 +132,16 @@ public class PlayerDataHandler {
 			if(!temporary) ints.put(key, Integer.valueOf(value));
 			else tempInts.put(key, Integer.valueOf(value));
 		}
+		
+		@Override
+		public void incrementOrSetInteger(String key, int amount, int value, boolean temporary) {
+			int currentValue = getInteger(key);
+			if(currentValue == -999) {
+				setInteger(key, value, temporary);
+			}else {
+				setInteger(key, currentValue + amount, temporary);
+			}
+		}
 
 		@Override
 		public void removeInteger(String key) {
@@ -127,6 +153,7 @@ public class PlayerDataHandler {
 
 		@Override
 		public boolean getString(String string) {
+			if(string == null) return true;
 			if(strings.contains(string) || tempStrings.contains(string)) return true;
 			return false;
 		}
