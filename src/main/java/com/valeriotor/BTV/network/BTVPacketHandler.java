@@ -19,6 +19,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncDialogueData.SyncDialogueDataMessageHandler.class, MessageSyncDialogueData.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageDreamAlienis.DreamAlienisMessageHandler.class, MessageDreamAlienis.class, count++, Side.CLIENT);
 		
 	}
 	

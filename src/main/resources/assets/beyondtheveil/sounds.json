@@ -42,5 +42,11 @@
 		"sounds": [
 			"beyondtheveil:sawcleavertransformattack"
 		]
+	},
+	"dream_alienis":{
+		"category": "neutral",
+		"sounds": [
+			"beyondtheveil:dream_alienis"
+		]
 	}
 }

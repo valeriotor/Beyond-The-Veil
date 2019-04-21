@@ -8,10 +8,15 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageDreamAlienis;
+import com.valeriotor.BTV.util.DGWorshipHandler;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
@@ -24,6 +29,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -388,7 +394,8 @@ public class DreamHandler {
 	
 	// ***************************************** EFFECT DREAMS ***************************************** \\
 	
-	/** Extends the duration of all effects on the player by 3000 ticks (= 150 seconds).
+	/** Extends the duration of all effects on the player by 3000 ticks (= 150 seconds) plus 500 ticks (= 25 seconds) for each Dreaming God level
+	 *  and for the Vacuos Dream.
 	 * 
 	 * @param p The player who just woke up
 	 * @param w The world
@@ -397,8 +404,9 @@ public class DreamHandler {
 	 */
 	private static boolean extendEffects(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
+		int lvl = getDreamLevel(p);
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
-		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000+500*getDreamLevel(p))));
+		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()+3000+500*lvl)));
 		
 		return true;
 	}
@@ -412,7 +420,8 @@ public class DreamHandler {
 	 */
 	private static boolean amplifyEffects(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
-		int increase = 1 + (getDreamLevel(p)+2)/3;
+		int lvl = getDreamLevel(p);
+		int increase = 1 + (lvl+2)/3;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
 		effects.forEach(effect -> p.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getPotion() == MobEffects.RESISTANCE ? Math.max(3, effect.getAmplifier() + increase) : effect.getAmplifier()+increase)));
 		
@@ -429,6 +438,7 @@ public class DreamHandler {
 	 */
 	private static boolean changeEffects(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
+		int lvl = getDreamLevel(p);
 		Collection<PotionEffect> effects = p.getActivePotionEffects();
 		List<PotionEffect> negativeEffects = Lists.newArrayList();
 		effects.forEach(effect -> {
@@ -436,7 +446,7 @@ public class DreamHandler {
 		});
 		negativeEffects.forEach(effect ->{
 			Potion newPot = getPositiveCounterpart(effect.getPotion());
-			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*getDreamLevel(p), effect.getAmplifier()+getDreamLevel(p)/4));
+			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*lvl, effect.getAmplifier()+lvl/4));
 			p.removePotionEffect(effect.getPotion());
 		});
 		
@@ -471,6 +481,24 @@ public class DreamHandler {
 			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere2"));
 			return false;
 		}
+		boolean knowsAlienis = knowsDream(p, "alienis");
+		if(!hasDreamtOfVoid(p) /*|| knowsAlienis*/) {
+			if(!knowsAlienis) {
+				p.sendMessage(new TextComponentTranslation("dreams.alienis.needvacuos"));
+				return false;
+			} else {
+				return searchStronghold(p, w);
+			}
+		}
+		BTVPacketHandler.INSTANCE.sendTo(new MessageDreamAlienis(), (EntityPlayerMP)p);
+		return true;
+	}
+	
+	private static boolean searchStronghold(EntityPlayer p, World w) {
+		BlockPos pos = w.findNearestStructure("Stronghold", p.getPosition(), false);
+		if(pos != null) p.sendMessage(new TextComponentTranslation("dreams.alienissearch.success", new Object[] {pos.getX(), pos.getZ()}));
+		else p.sendMessage(new TextComponentTranslation("dreams.alienissearch.fail"));
+		
 		return true;
 	}
 	
@@ -528,19 +556,22 @@ public class DreamHandler {
 	
 	private static int getDreamLevel(EntityPlayer p) {
 		int lvl = getDreamingGodLevel(p);
-		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos")) {
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");
-			lvl++;
-		}
+		if(hasDreamtOfVoid(p)) lvl++;
 		return lvl;
 	}
 	
 	private static int getDreamingGodLevel(EntityPlayer p) {
-		return p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+		return Math.max(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
 	}
 	
 	private static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
 		return getDreamingGodLevel(attacker) - getDreamingGodLevel(target);
+	}
+	
+	private static boolean hasDreamtOfVoid(EntityPlayer p) {
+		boolean flag = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos");
+		if(flag) p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");
+		return flag;
 	}
 	
 	

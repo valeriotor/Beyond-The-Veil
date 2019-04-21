@@ -225,6 +225,7 @@
         "name": "research.FIRSTCONTACT.title",
         "icons": [ "thaumcraft:textures/aspects/alienis.png" ],
         "category": "BEYOND_THE_VEIL", "location": [ 9,2 ],
+		"meta": ["HIDDEN"],
         "parents": [ "VOIDDREAMS" ],
         "stages": [
 				{

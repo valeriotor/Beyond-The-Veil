@@ -26,6 +26,9 @@ public final class BTVSounds {
 	@ObjectHolder("sawcleavertransformattack")
 	public static final SoundEvent sawcleavertransformattack = new SoundEvent(new ResourceLocation(References.MODID, "sawcleavertransformattack")).setRegistryName("sawcleavertransformattack");
 	
+	@ObjectHolder("dream_alienis")
+	public static final SoundEvent dreamAlienis = new SoundEvent(new ResourceLocation(References.MODID, "dream_alienis")).setRegistryName("dream_alienis");
+	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
 			case 0: return dwellerIdle;
@@ -34,6 +37,7 @@ public final class BTVSounds {
 			case 3: return flute;
 			case 4: return sawcleavertransform;
 			case 5: return sawcleavertransformattack;
+			case 6: return dreamAlienis;
 			default: return null;
 			
 		}
@@ -47,6 +51,7 @@ public final class BTVSounds {
 		if(sound.equals(flute)) return 3;
 		if(sound.equals(sawcleavertransform)) return 4;
 		if(sound.equals(sawcleavertransformattack)) return 5;
+		if(sound.equals(dreamAlienis)) return 6;
 		return 0;
 	}
 }

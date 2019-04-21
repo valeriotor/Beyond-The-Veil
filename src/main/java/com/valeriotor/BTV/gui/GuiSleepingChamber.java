@@ -55,8 +55,8 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 1) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(false));
 			this.mc.displayGuiScreen((GuiScreen)null);
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(false));
 		}
 		super.actionPerformed(button);
 	}
