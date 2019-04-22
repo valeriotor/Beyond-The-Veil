@@ -14,9 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /*
  * Just a class that contains and returns Gui ids
  */
-@SideOnly(Side.CLIENT)
 public class Guis {
 	
+	public static String GuiEmpty = "GE";
 	public static String GuiSleepingChamber = "GSC";
 	public static String GuiDialogueDweller = "GDD";
 	public static String GuiTablet = "GT";
@@ -25,6 +25,7 @@ public class Guis {
 	private static HashMap<String, Class<? extends GuiScreen>> guis = new HashMap<>();
 	
 	public static GuiScreen getGui(String id) {
+		if(id.equals(GuiEmpty)) return (GuiScreen)null;
 		GuiScreen gui = null;
 		try {
 			gui = guis.get(id).getConstructor().newInstance();

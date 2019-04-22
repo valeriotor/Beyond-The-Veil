@@ -18,7 +18,7 @@ public class GuiAlienisDream extends GuiScreen{
 		GlStateManager.pushMatrix();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
-		GlStateManager.color(1, 1, 1, ((float)this.timePassed)/15);
+		GlStateManager.color(1, 1, 1, 1);
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawTexturedModalRect(0, 0, 0, 0, width, height);
 		GlStateManager.popMatrix();

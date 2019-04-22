@@ -46,7 +46,6 @@ public class GuiSleepingChamber extends GuiChat{
 		if(this.timePassed < 100) this.timePassed++;
 		if(this.timePassed >= 100) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
-			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}
 		super.updateScreen();
@@ -55,8 +54,8 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 1) {
-			this.mc.displayGuiScreen((GuiScreen)null);
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(false));
+			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 		super.actionPerformed(button);
 	}

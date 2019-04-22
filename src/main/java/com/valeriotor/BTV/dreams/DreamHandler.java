@@ -12,10 +12,11 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageDreamAlienis;
+import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.util.DGWorshipHandler;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
@@ -50,6 +51,7 @@ public class DreamHandler {
 		
 		boolean increaseTimesDreamt = false;
 		boolean vacuos = false;
+		boolean alienisDream = false;
 		
 		// Made a "helper" string list so that in the future I may make special dreams based on aspect combos, without/before processing the single dreams.
 		List<String> aspects = Lists.newArrayList();
@@ -63,6 +65,9 @@ public class DreamHandler {
 		if(aspects.contains("Vacuos") && k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
 			vacuos = true;
 			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);;
+		}
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") && aspects.contains("Alienis")) {
+			alienisDream = true;
 		}
 		
 		for(int i = 0; i < SpreaderLocations.size(); i++) {
@@ -82,7 +87,7 @@ public class DreamHandler {
 			}
 		}
 		if(increaseTimesDreamt) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.TIMESDREAMT, p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false)+1, false);
-		
+		if(!alienisDream) BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
 	}
 	
 	private static boolean processDream(String aspect, IPlayerKnowledge k, EntityPlayer p) {
@@ -490,7 +495,7 @@ public class DreamHandler {
 				return searchStronghold(p, w);
 			}
 		}
-		BTVPacketHandler.INSTANCE.sendTo(new MessageDreamAlienis(), (EntityPlayerMP)p);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiAlienisDream), (EntityPlayerMP)p);
 		return true;
 	}
 	
@@ -561,7 +566,7 @@ public class DreamHandler {
 	}
 	
 	private static int getDreamingGodLevel(EntityPlayer p) {
-		return Math.max(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
+		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
 	}
 	
 	private static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
