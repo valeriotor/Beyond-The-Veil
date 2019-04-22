@@ -221,7 +221,7 @@ dreams.biomesearch.fail=No Voided biomes found within 1200 block radius
 dreams.biomesearch.hamlet=An already existing Hamlet was found at x: %1$s, z: %2$s
 
 dreams.villagesearch.success=Found Village at x: %1$s, z: %2$s
-dreams.villagesearch.fail=No villages found
+dreams.villagesearch.fail=No Villages found
 
 dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s
 dreams.playeritem.success=Another player is currently wielding: %1$s
@@ -230,6 +230,9 @@ dreams.playersearch.fail=The Dream was unable to locate another player.
 
 dreams.alienis.almostthere1=I am certain this aspect will be of great aid very soon.
 dreams.alienis.almostthere2=But now is not the time. I lack the strength.
+dreams.alienis.needvacuos=As of now, I need to have dreamt of the Void for this to work.
+dreams.alienissearch.success=Found Stronghold at x: %1$s, z: %2$s
+dreams.alienissearch.fail=No Strongholds found
 
 ##################
 #THEORYCRAFT
@@ -297,3 +300,14 @@ research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm su
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>I shall experiment ways to make it reach its full potential. Or, more probably, I shall wait for some new revelations. 
 research.SLEEPCHAMBERADVANCED.stage.1=The key was WATER. What this substance has to do with Dreaming I can't yet guess, but its addition in the Sleep Chamber's gears and wirings vastly improved its Dream-aiding capabilities.<BR>This Advanced Sleep Chamber lets me Dream twice as many times per day as the regular one. Not only that, it lets my Dream be influenced by two Fume Spreaders AT THE SAME TIME. Just think of the combinations!<BR>The only caveat is how unattractive it now looks. Oh, how I wish I had an artist to aid me in my creations! But, alas, no such thing.
+
+research.VOIDDREAMS.title=Dreams of the Void
+research.VOIDDREAMS.stage.0=Dreams go through THE VOID. <BR>THAT is where they truly depart from the known world to go where nothing can follow them... yet.<BR>I am certain of this.<BR>I need to Dream of the VOID.<BR>Of its black emptiness.<BR>So I may reach it myself.
+research.VOIDDREAMS.stage.1=Dreaming under the influence of Vacuos doesn't seem to affect me directly.<BR>However, it seems capable of affecting other Dreams of mine, whether these come after my Vacuos Dream or even at the same time. The effect, however, is truly minimal, and it applies only to very specific Dreams.<BR>And yet, I shouldn't underestimate the importance of Vacuos.<BR>I have reason to believe that such aspect slows down my Dream's descent, especially its stay in the Void. And if that is true, then my quest for knowledge might have reached a breakthrough.<BR>I NEED to learn of what, or who, is in that black emptiness. To know how Dreams work, where they go, how they gain knowledge.
+research.f_VacuosDream.text=Dream of emptiness.
+research.vacuos.unlock=My use of Vacuos will affect my next Dream's effects.
+
+research.FIRSTCONTACT.title=Contact the Unknownable
+research.FIRSTCONTACT.stage.0=If it's true that all Dreams go through the Void, then chances are I am not the only Dreamer whose quest for knowledge focuses there.<BR>It is time. Time for me to contact other Dreamers. No matter the risk, no matter how great or powerful they may be, or what intentions they may have.<BR>No matter what they may be, how different, how alien they may prove to me.<BR>No matter where they come from. From what world, time, reality.<BR>Nothing matters now. This may very well be the end of my research. If it must be like that, so be it, and I hope these notes prove useful to posterity.<BR>I must Dream of Eldritchness, under the influence of Vacuos. I must fix my ears, to hear everything that is told to me. Listen as closely as I can. And be ready for a Dream longer than most.
+research.FIRSTCONTACT.stage.1=Merciful Gods, don't let my mind crumble as I write this.<BR>A voice. It came from the Ocean. I didn't hear it, I felt it. Through my Dream it touched my body.<BR>It didn't speak to me, but through me, as if it didn't notice I was there, in my Dream.<BR>Yet I know now what I must do. The thought was imprinted in my mind.<BR>I must find the place where the darkness of the Void touches the surface, so I may see it and handle it myself.<BR>But, to be sincere, I do not know whether to continue in my search for knowledge...<BR><BR><BR>Gracious Gods, have mercy upon me.<BR>Don't let me drown.
+research.f_AlienisDream.text=Dream of the Eldritch.
