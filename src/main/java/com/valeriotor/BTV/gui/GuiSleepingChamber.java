@@ -1,7 +1,13 @@
 package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.valeriotor.BTV.blocks.BlockFumeSpreader;
+import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.dreams.DreamHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSleepChamber;
@@ -13,6 +19,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -45,7 +52,18 @@ public class GuiSleepingChamber extends GuiChat{
 	public void updateScreen() {
 		if(this.timePassed < 100) this.timePassed++;
 		if(this.timePassed >= 100) {
+			List<BlockPos> list = DreamHandler.checkBlocks(this.mc.player.world, this.mc.player.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), 3);
+			boolean flag = true;
+			List<String> aspects = Lists.newArrayList();
+			for(BlockPos pos : list) {
+				String aspect = this.mc.player.world.getTileEntity(pos).getTileData().getString("containing");
+				if(aspect != null) aspects.add(aspect);
+			}
+			if(aspects.contains("Alienis")) {
+				if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") || aspects.contains("Vacuos")) flag = false;
+			}
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
+			if(flag) this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}
 		super.updateScreen();

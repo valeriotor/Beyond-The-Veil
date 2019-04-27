@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.dreams;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -7,32 +8,45 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
-import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.Guis;
-import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenGuiToClient;
+import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.util.DGWorshipHandler;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityLlama;
+import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityParrot;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -64,7 +78,8 @@ public class DreamHandler {
 		}
 		if(aspects.contains("Vacuos") && k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
 			vacuos = true;
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);;
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("vacuos"), (EntityPlayerMP)p);
 		}
 		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") && aspects.contains("Alienis")) {
 			alienisDream = true;
@@ -87,7 +102,7 @@ public class DreamHandler {
 			}
 		}
 		if(increaseTimesDreamt) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.TIMESDREAMT, p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false)+1, false);
-		if(!alienisDream) BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
+		//if(!alienisDream) BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
 	}
 	
 	private static boolean processDream(String aspect, IPlayerKnowledge k, EntityPlayer p) {
@@ -109,6 +124,7 @@ public class DreamHandler {
 			case "Instrumentum": return getPlayerItem(p, p.world);
 			case "Vacuos": return true;
 			case "Alienis": return contactUnknown(p, k, p.world);
+			case "Bestia": return findAnimal(p, p.world);
 			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	// TODO: Add "return" here
 		}
 		return false;
@@ -507,6 +523,87 @@ public class DreamHandler {
 		return true;
 	}
 	
+	// ***************************************** HIGHER DREAMS ***************************************** \\
+	
+	private static boolean findAnimal(EntityPlayer p, World w){
+		if(!youDontHaveLevel(p, 2)) return false;
+		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
+		
+		List<Entity> ents = w.getEntitiesInAABBexcluding(p, bb, e -> e instanceof EntityItem);
+		Class<? extends EntityAnimal> animal = null;
+		for(Entity e : ents) {
+			animal = getAnimalFromItem(((EntityItem)e).getItem().getItem(), w);
+			if(animal != null) {
+				((EntityItem)e).getItem().shrink(1);
+				break;
+			}
+		}
+		if(animal == null) return false;
+		if(getDreamingGodLevel(p) == 2) {
+			List<Entity> ans = w.getEntities(animal, e -> e.getDistance(p) < 250);
+			if(!ans.isEmpty()) {
+				BlockPos pos = getEmptyArea(p, w);
+				if(pos == null) return false;								// If there's no free area
+				ans.get(0).setPosition(pos.getX(), pos.getY(), pos.getZ());
+			} else {
+				p.sendMessage(new TextComponentTranslation("dreams.animalsearch.nonefound"));
+				return false;
+			}
+		} else {
+			BlockPos pos = getEmptyArea(p, w);
+			if(pos == null) return false;	
+			EntityAnimal an = null;;
+			try {
+				an = animal.getConstructor(World.class).newInstance(w);
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e1) {
+				e1.printStackTrace();
+			}
+			if(an == null) return false;
+			an.setPosition(pos.getX(), pos.getY(), pos.getZ());
+			w.spawnEntity(an);
+		}
+		return true;
+	}
+	
+	private static Class<? extends EntityAnimal> getAnimalFromItem(Item item, World w) {
+		if(item == Items.BONE) return EntityWolf.class;
+		else if(item == Items.PORKCHOP) return EntityPig.class;
+		else if(item == Items.RABBIT) return EntityRabbit.class;
+		else if(item == Items.BEEF) return EntityCow.class;
+		else if(item == Items.MUTTON || item == Item.getItemFromBlock(Blocks.WOOL)) return EntitySheep.class;
+		else if(item == Items.CHICKEN || item == Items.EGG) return EntityChicken.class;
+		else if(item == Items.FISH) return EntityOcelot.class;
+		else if(item == Item.getItemFromBlock(Blocks.RED_MUSHROOM) || item == Item.getItemFromBlock(Blocks.BROWN_MUSHROOM)) return EntityMooshroom.class;
+		else if(item == Items.FEATHER) return w.rand.nextBoolean() ? EntityChicken.class : EntityParrot.class;
+		else if(item == Items.LEATHER) {
+			int a = w.rand.nextInt(3);
+			switch(a) {
+			case 0: return EntityCow.class;
+			case 1: return EntityHorse.class;
+			case 2: return EntityLlama.class;
+			}
+		}
+		return null;
+	}
+	// Behold the horror of five nested 'for's
+	private static BlockPos getEmptyArea(EntityPlayer p, World w) {
+		for(int x = -9; x <= 9; x+=3) {
+			for(int z = -9; z <= 9; z+=3) {
+				boolean flag = true;
+				for(int x2 = -1; x2 <=1 && flag; x2++) {
+					for(int y = 0; y <= 2 && flag; y++) {
+						for(int z2 = -1; z2 <= 1 && flag; z2++)
+							if(w.getBlockState(p.getPosition().add(x, 0, z).add(x2, y, z2)).getBlock() != Blocks.AIR) flag = false;
+							else return p.getPosition().add(x, 0, z).add(x2, y, z2);
+					}
+				}
+			}
+		}
+		p.sendMessage(new TextComponentTranslation("dreams.animalsearch.toomanyblocks"));
+		return null;
+	}
+	
 	// ***************************************** HELPER METHODS ***************************************** \\
 	
 	
@@ -557,6 +654,14 @@ public class DreamHandler {
 			return false;
 		}
 		else return true;
+	}
+	
+	private static boolean youDontHaveLevel(EntityPlayer p, int lvl) {
+		if(getDreamingGodLevel(p) < lvl) {
+			p.sendMessage(new TextComponentTranslation("dreams.lowlevel"));
+			return false;
+		}
+		return true;
 	}
 	
 	private static int getDreamLevel(EntityPlayer p) {
