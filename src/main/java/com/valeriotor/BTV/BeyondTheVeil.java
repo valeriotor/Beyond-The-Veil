@@ -1,9 +1,23 @@
 package com.valeriotor.BTV;
 
-import net.minecraft.init.Blocks;
+import org.apache.logging.log4j.Logger;
+
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.IWorship;
+import com.valeriotor.BTV.capabilities.PlayerDataHandler;
+import com.valeriotor.BTV.capabilities.WorshipCapHandler;
+import com.valeriotor.BTV.events.ResearchEvents;
+import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.proxy.CommonProxy;
+import com.valeriotor.BTV.research.TCRegistries;
+import com.valeriotor.BTV.util.RegistryHandler;
+import com.valeriotor.BTV.world.BiomeRegistry;
+import com.valeriotor.BTV.world.WorldGenBTV;
+import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
+
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.ChunkGeneratorOverworld;
-import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
@@ -12,31 +26,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchCategories;
-
-import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Strings;
-import com.valeriotor.BTV.proxy.ClientProxy;
-import com.valeriotor.BTV.proxy.CommonProxy;
-import com.valeriotor.BTV.research.TCRegistries;
-import com.valeriotor.BTV.capabilities.WorshipCapHandler;
-import com.valeriotor.BTV.capabilities.PlayerDataHandler;
-import com.valeriotor.BTV.capabilities.IPlayerData;
-import com.valeriotor.BTV.capabilities.IWorship;
-import com.valeriotor.BTV.crafting.Recipes;
-import com.valeriotor.BTV.events.ClientEvents;
-import com.valeriotor.BTV.events.ResearchEvents;
-import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.util.RegistryHandler;
-import com.valeriotor.BTV.world.BiomeRegistry;
-import com.valeriotor.BTV.world.WorldGenBTV;
-import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
 
 @Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES)
 public class BeyondTheVeil
@@ -92,5 +86,10 @@ public class BeyondTheVeil
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+    
+    @EventHandler
+    public void serverLoad(FMLServerStartingEvent event) {
+        event.registerServerCommand(new SetWorshipLevel());
     }
 }
