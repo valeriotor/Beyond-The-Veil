@@ -12,8 +12,8 @@ public interface IPlayerData {
 	public void removeInteger(String key);
 
 	public boolean getString(String string);
-	public int getInteger(String key);
-	public int getOrSetInteger(String key, int value, boolean temporary);
+	public Integer getInteger(String key);
+	public Integer getOrSetInteger(String key, int value, boolean temporary);
 	
 	public HashMap<String, Integer> getInts(boolean temporary);
 	public List<String> getStrings(boolean temporary);

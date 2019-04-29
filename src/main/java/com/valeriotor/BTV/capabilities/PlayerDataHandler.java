@@ -135,8 +135,8 @@ public class PlayerDataHandler {
 		
 		@Override
 		public void incrementOrSetInteger(String key, int amount, int value, boolean temporary) {
-			int currentValue = getInteger(key);
-			if(currentValue == -999) {
+			Integer currentValue = getInteger(key);
+			if(currentValue == null) {
 				setInteger(key, value, temporary);
 			}else {
 				setInteger(key, currentValue + amount, temporary);
@@ -159,17 +159,17 @@ public class PlayerDataHandler {
 		}
 
 		@Override
-		public int getInteger(String key) {
+		public Integer getInteger(String key) {
 			if(ints.containsKey(key)) return ints.get(key);
 			if(tempInts.containsKey(key)) return tempInts.get(key);
 			
-			return -999;
+			return null;
 		}
 		
 		@Override
-		public int getOrSetInteger(String key, int value, boolean temporary) {
-			int a = getInteger(key);
-			if(a != -999) return a;
+		public Integer getOrSetInteger(String key, int value, boolean temporary) {
+			Integer a = getInteger(key);
+			if(a != null) return a;
 			setInteger(key, value, temporary);
 			return 0;
 		}
