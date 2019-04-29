@@ -229,6 +229,10 @@ dreams.playeritem.success=Another player is currently wielding: %1$s
 dreams.playeritem.mildsuccess=Another player was found, but he was wielding nothing.
 dreams.playersearch.fail=The Dream was unable to locate another player.
 
+dreams.deathsearch.found=%1$s's last death was at x: %2$s, y: %3$s, z: %4$s. You are unaware of what dimension he was in.
+dreams.deathsearch.notrecently=%1$s doesn't seem to have died recently.
+dreams.deathsearch.toostrong=%1$s's mind is too well shielded to be breached.
+
 dreams.alienis.almostthere1=I am certain this aspect will be of great aid very soon.
 dreams.alienis.almostthere2=But now is not the time. I lack the strength.
 dreams.alienis.needvacuos=As of now, I need to have dreamt of the Void for this to work.

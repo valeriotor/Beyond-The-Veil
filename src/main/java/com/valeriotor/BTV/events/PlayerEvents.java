@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
@@ -17,7 +16,6 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 
-import baubles.api.BaublesApi;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,8 +23,9 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -131,8 +130,20 @@ public class PlayerEvents {
 			
 		for(Entry<String, Integer> entry : ints.entrySet()) {
 			event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(entry.getKey(), entry.getValue(), false);
+		}					
+	}
+	
+	@SubscribeEvent
+	public static void onDeath(LivingDeathEvent event) {
+		if(event.getEntity() instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer) event.getEntity();
+			IPlayerData cap = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			BlockPos pos = p.getPosition();
+			if(!event.isCanceled()) {
+				cap.setInteger(PlayerDataLib.DEATH_X, pos.getX(), false);
+				cap.setInteger(PlayerDataLib.DEATH_Y, pos.getY(), false);
+				cap.setInteger(PlayerDataLib.DEATH_Z, pos.getZ(), false);
+			}
 		}
-			
-		
 	}
 }

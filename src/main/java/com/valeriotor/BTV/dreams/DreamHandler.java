@@ -124,7 +124,8 @@ public class DreamHandler {
 			case "Instrumentum": return getPlayerItem(p, p.world);
 			case "Vacuos": return true;
 			case "Alienis": return contactUnknown(p, k, p.world);
-			case "Bestia": return findAnimal(p, p.world);
+			case "Bestia": return HigherDreams.findAnimal(p, p.world);
+			case "Mortuus": return HigherDreams.playerDeath(p, p.world);
 			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	// TODO: Add "return" here
 		}
 		return false;
@@ -361,7 +362,7 @@ public class DreamHandler {
 		// if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() < ??) // For later use
 		if(!youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
-		if(list.size() > 0) {
+		if(!list.isEmpty()) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
 			int attack = getDreamAttack(p, target);
 			if(attack == 0)
@@ -388,7 +389,7 @@ public class DreamHandler {
 	private static boolean getPlayerItem(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
-		if(list.size() > 0) {
+		if(!list.isEmpty()) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
 			ItemStack stack = target.getHeldItemMainhand();
 			if(stack != null && !stack.getDisplayName().equals("Air")) {
@@ -523,86 +524,6 @@ public class DreamHandler {
 		return true;
 	}
 	
-	// ***************************************** HIGHER DREAMS ***************************************** \\
-	
-	private static boolean findAnimal(EntityPlayer p, World w){
-		if(!youDontHaveLevel(p, 2)) return false;
-		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
-		
-		List<Entity> ents = w.getEntitiesInAABBexcluding(p, bb, e -> e instanceof EntityItem);
-		Class<? extends EntityAnimal> animal = null;
-		for(Entity e : ents) {
-			animal = getAnimalFromItem(((EntityItem)e).getItem().getItem(), w);
-			if(animal != null) {
-				((EntityItem)e).getItem().shrink(1);
-				break;
-			}
-		}
-		if(animal == null) return false;
-		if(getDreamingGodLevel(p) == 2) {
-			List<Entity> ans = w.getEntities(animal, e -> e.getDistance(p) < 250);
-			if(!ans.isEmpty()) {
-				BlockPos pos = getEmptyArea(p, w);
-				if(pos == null) return false;								// If there's no free area
-				ans.get(0).setPosition(pos.getX(), pos.getY(), pos.getZ());
-			} else {
-				p.sendMessage(new TextComponentTranslation("dreams.animalsearch.nonefound"));
-				return false;
-			}
-		} else {
-			BlockPos pos = getEmptyArea(p, w);
-			if(pos == null) return false;	
-			EntityAnimal an = null;;
-			try {
-				an = animal.getConstructor(World.class).newInstance(w);
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e1) {
-				e1.printStackTrace();
-			}
-			if(an == null) return false;
-			an.setPosition(pos.getX(), pos.getY(), pos.getZ());
-			w.spawnEntity(an);
-		}
-		return true;
-	}
-	
-	private static Class<? extends EntityAnimal> getAnimalFromItem(Item item, World w) {
-		if(item == Items.BONE) return EntityWolf.class;
-		else if(item == Items.PORKCHOP) return EntityPig.class;
-		else if(item == Items.RABBIT) return EntityRabbit.class;
-		else if(item == Items.BEEF) return EntityCow.class;
-		else if(item == Items.MUTTON || item == Item.getItemFromBlock(Blocks.WOOL)) return EntitySheep.class;
-		else if(item == Items.CHICKEN || item == Items.EGG) return EntityChicken.class;
-		else if(item == Items.FISH) return EntityOcelot.class;
-		else if(item == Item.getItemFromBlock(Blocks.RED_MUSHROOM) || item == Item.getItemFromBlock(Blocks.BROWN_MUSHROOM)) return EntityMooshroom.class;
-		else if(item == Items.FEATHER) return w.rand.nextBoolean() ? EntityChicken.class : EntityParrot.class;
-		else if(item == Items.LEATHER) {
-			int a = w.rand.nextInt(3);
-			switch(a) {
-			case 0: return EntityCow.class;
-			case 1: return EntityHorse.class;
-			case 2: return EntityLlama.class;
-			}
-		}
-		return null;
-	}
-	// Behold the horror of five nested 'for's
-	private static BlockPos getEmptyArea(EntityPlayer p, World w) {
-		for(int x = -9; x <= 9; x+=3) {
-			for(int z = -9; z <= 9; z+=3) {
-				boolean flag = true;
-				for(int x2 = -1; x2 <=1 && flag; x2++) {
-					for(int y = 0; y <= 2 && flag; y++) {
-						for(int z2 = -1; z2 <= 1 && flag; z2++)
-							if(w.getBlockState(p.getPosition().add(x, 0, z).add(x2, y, z2)).getBlock() != Blocks.AIR) flag = false;
-							else return p.getPosition().add(x, 0, z).add(x2, y, z2);
-					}
-				}
-			}
-		}
-		p.sendMessage(new TextComponentTranslation("dreams.animalsearch.toomanyblocks"));
-		return null;
-	}
 	
 	// ***************************************** HELPER METHODS ***************************************** \\
 	
@@ -642,13 +563,13 @@ public class DreamHandler {
 	 * 
 	 * @return True if the dream's known.
 	 */
-	private static boolean knowsDream(EntityPlayer p, String aspect) {
+	public static boolean knowsDream(EntityPlayer p, String aspect) {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(k.isResearchKnown(aspect+"Dream")) return true;
 		return false;
 	}
 	
-	private static boolean youDontKnowDream(EntityPlayer p, String aspect) {
+	public static boolean youDontKnowDream(EntityPlayer p, String aspect) {
 		if(!knowsDream(p, aspect)) {
 			p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
 			return false;
@@ -656,7 +577,7 @@ public class DreamHandler {
 		else return true;
 	}
 	
-	private static boolean youDontHaveLevel(EntityPlayer p, int lvl) {
+	public static boolean youDontHaveLevel(EntityPlayer p, int lvl) {
 		if(getDreamingGodLevel(p) < lvl) {
 			p.sendMessage(new TextComponentTranslation("dreams.lowlevel"));
 			return false;
@@ -664,21 +585,21 @@ public class DreamHandler {
 		return true;
 	}
 	
-	private static int getDreamLevel(EntityPlayer p) {
+	public static int getDreamLevel(EntityPlayer p) {
 		int lvl = getDreamingGodLevel(p);
 		if(hasDreamtOfVoid(p)) lvl++;
 		return lvl;
 	}
 	
-	private static int getDreamingGodLevel(EntityPlayer p) {
+	public static int getDreamingGodLevel(EntityPlayer p) {
 		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
 	}
 	
-	private static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
+	public static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
 		return getDreamingGodLevel(attacker) - getDreamingGodLevel(target);
 	}
 	
-	private static boolean hasDreamtOfVoid(EntityPlayer p) {
+	public static boolean hasDreamtOfVoid(EntityPlayer p) {
 		boolean flag = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos");
 		if(flag) p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");
 		return flag;
