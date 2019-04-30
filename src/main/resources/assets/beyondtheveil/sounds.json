@@ -1,12 +1,12 @@
 {
 	"dweller_hurt": {
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dweller_hurt"
 		]
 	},
 	"dweller_idle": {
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dweller_idle_0",
 			"beyondtheveil:dweller_idle_1"
@@ -26,25 +26,25 @@
 		]
 	},
 	"flute":{
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:flute"
 		]
 	},
 	"sawcleavertransform":{
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:sawcleavertransform"
 		]
 	},
 	"sawcleavertransformattack":{
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:sawcleavertransformattack"
 		]
 	},
 	"dream_alienis":{
-		"category": "neutral",
+		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dream_alienis"
 		]

@@ -2,16 +2,21 @@ package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.entities.RegisterEntities;
 import com.valeriotor.BTV.events.ClientEvents;
+import com.valeriotor.BTV.lib.BTVSounds;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-
+@Mod.EventBusSubscriber
 public class CommonProxy {
 	
 	public ClientEvents cEvents;
@@ -49,6 +54,13 @@ public class CommonProxy {
     
     public String localizeMessage(String a) {
     	return a;
+    }
+    
+    @SubscribeEvent
+    public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
+    	int number = BTVSounds.getNumberOfSounds();
+    	for(int i = 0; i < number; i++)
+    		event.getRegistry().register(BTVSounds.getSoundById(i));
     }
     
     

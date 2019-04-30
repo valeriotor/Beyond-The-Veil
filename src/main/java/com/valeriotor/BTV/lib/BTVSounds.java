@@ -41,7 +41,6 @@ public final class BTVSounds {
 			default: return null;
 			
 		}
-		
 	}
 	
 	public static int getIdBySound(SoundEvent sound) {
@@ -53,5 +52,9 @@ public final class BTVSounds {
 		if(sound.equals(sawcleavertransformattack)) return 5;
 		if(sound.equals(dreamAlienis)) return 6;
 		return 0;
+	}
+	
+	public static int getNumberOfSounds() {
+		return 7;
 	}
 }
