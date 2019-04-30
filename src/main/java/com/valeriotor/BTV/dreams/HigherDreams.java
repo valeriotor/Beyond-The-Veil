@@ -37,7 +37,7 @@ public class HigherDreams {
 	
 	public static boolean playerDeath(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontHaveLevel(p, 1)) return false;
-		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p)); // TODO: Change this and the Humanus and Instrumentum ones to get players from server rather than world
+		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		int lvl = DreamHandler.getDreamingGodLevel(p);
 		if(list.isEmpty()) p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
 		for(int i = 0; i < lvl && !list.isEmpty(); i++) {

@@ -1,6 +1,5 @@
 package com.valeriotor.BTV.dreams;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,32 +21,17 @@ import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityLlama;
-import net.minecraft.entity.passive.EntityMooshroom;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityParrot;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
@@ -361,15 +345,16 @@ public class DreamHandler {
 	private static boolean searchPlayer(EntityPlayer p, World w) {
 		// if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() < ??) // For later use
 		if(!youDontKnowDream(p, "metallum")) return false;
-		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
+		List<EntityPlayerMP> list = copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		if(!list.isEmpty()) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
+			DimensionType.getById(target.world.provider.getDimension()).getName();
 			int attack = getDreamAttack(p, target);
 			if(attack == 0)
 				p.sendMessage(new TextComponentTranslation("dreams.playersearch.success", w.rand.nextBoolean() ? target.getPosition().getX() : target.getPosition().getZ()));
 			else if(attack >= 1)
 				p.sendMessage(new TextComponentTranslation("dreams.playersearch.success2", new Object[] {target.getPosition().getX(), target.getPosition().getZ()}));
-			if(attack >= 2)
+			if(attack >= 2) 
 				p.sendMessage(new TextComponentTranslation("dreams.playersearch.name", target.getName()));
 			return true;
 		}else {
@@ -388,7 +373,7 @@ public class DreamHandler {
 	 */
 	private static boolean getPlayerItem(EntityPlayer p, World w) {
 		if(!youDontKnowDream(p, "metallum")) return false;
-		List<EntityPlayerMP> list = w.getPlayers(EntityPlayerMP.class, player -> !player.equals(p));
+		List<EntityPlayerMP> list = copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		if(!list.isEmpty()) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));
 			ItemStack stack = target.getHeldItemMainhand();
@@ -412,6 +397,29 @@ public class DreamHandler {
 			p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
 			return false;
 		}
+	}
+	
+	/** Copies a list of EntityPlayerMP (presumably gained from MinecraftServer.getPlayerList().getPlayers()) into a new list
+	 *  for safe handling
+	 * 
+	 * @param listIn The input list
+	 * @param excludedPlayers Any players that should be excluded in the copying (generally the Dreamer)
+	 * 
+	 * @return The new list
+	 */
+	public static List<EntityPlayerMP> copyPlayerList(List<EntityPlayerMP> listIn, EntityPlayerMP... excludedPlayers){
+		List<EntityPlayerMP> listOut = Lists.newArrayList();
+		listIn.forEach(p -> {
+			boolean flag = true;
+			for(EntityPlayerMP player : excludedPlayers) {
+				if(player.equals(p)) {
+					flag = false;
+					break;
+				}
+			}
+			if(flag) listOut.add(p);
+		});
+		return listOut;
 	}
 	
 	// ***************************************** EFFECT DREAMS ***************************************** \\
@@ -569,6 +577,10 @@ public class DreamHandler {
 		return false;
 	}
 	
+	/** Checks whether the Dreamer has successfully dreamt with a certain aspect. If not, sends a message to the
+	 *  player telling them they should try again in the future.
+	 * 
+	 */
 	public static boolean youDontKnowDream(EntityPlayer p, String aspect) {
 		if(!knowsDream(p, aspect)) {
 			p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
@@ -577,6 +589,11 @@ public class DreamHandler {
 		else return true;
 	}
 	
+	/** Checks whether the player's DGLevel is greater than or equal to the lvl parameter. If not, sends a message
+	 *  to the player telling them they're not strong enough.
+	 * 
+	 * @return true if the player's DG Level (without Vacuos) >= lvl
+	 */
 	public static boolean youDontHaveLevel(EntityPlayer p, int lvl) {
 		if(getDreamingGodLevel(p) < lvl) {
 			p.sendMessage(new TextComponentTranslation("dreams.lowlevel"));
@@ -585,20 +602,34 @@ public class DreamHandler {
 		return true;
 	}
 	
+	/** Returns the player's Dreaming God level *with* Vacuos bonus (and automatically removes it if so).
+	 */
 	public static int getDreamLevel(EntityPlayer p) {
 		int lvl = getDreamingGodLevel(p);
 		if(hasDreamtOfVoid(p)) lvl++;
 		return lvl;
 	}
 	
+	/** Returns the player's Dreaming God level *without* Vacuos bonus.
+	 */
 	public static int getDreamingGodLevel(EntityPlayer p) {
 		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
 	}
 	
+	/** Gets the difference in DreamingGod level between two players, one of whom is making an offensive Dream and the other
+	 *  is defending. Doesn't count Vacuos Dreams.
+	 * 
+	 * @return The difference in DreamingGod level
+	 */
 	public static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
 		return getDreamingGodLevel(attacker) - getDreamingGodLevel(target);
 	}
 	
+	/** Check whether the Dreamer has recently dreamt with Vacuos (possibly even in this Dreaming session) by checking
+	 *  PlayerData. If so, it removes the String from PlayerData.
+	 * 
+	 * @param p The Dreamer
+	 */
 	public static boolean hasDreamtOfVoid(EntityPlayer p) {
 		boolean flag = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos");
 		if(flag) p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");

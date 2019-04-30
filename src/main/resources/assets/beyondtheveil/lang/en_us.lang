@@ -224,9 +224,12 @@ dreams.biomesearch.hamlet=An already existing Hamlet was found at x: %1$s, z: %2
 dreams.villagesearch.success=Found Village at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No Villages found
 
-dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s
-dreams.playeritem.success=Another player is currently wielding: %1$s
-dreams.playeritem.mildsuccess=Another player was found, but he was wielding nothing.
+dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s. I am unaware of what dimension they're in.
+dreams.playersearch.success2=Another player is located at x: %1$s, z: %2$s. I am unaware of what dimension they're in.
+dreams.playersearch.name=Their name is %1$s.
+dreams.playeritem.success=Another player is currently wielding: %1$s.
+dreams.playeritem.mildsuccess=Another player was found, but they were wielding nothing.
+dreams.playeritem.firstletter=Their name starts with '%1$s'.
 dreams.playersearch.fail=The Dream was unable to locate another player.
 
 dreams.deathsearch.found=%1$s's last death was at x: %2$s, y: %3$s, z: %4$s. You are unaware of what dimension he was in.
