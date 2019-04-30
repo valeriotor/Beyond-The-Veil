@@ -132,14 +132,13 @@ public class HamletLightHouse extends HamletStructure{
 	}
 	
 	@Override
-	public void doorRoads() {
-		
+	public void doorRoads() {		
 		this.roadHelper(this.isItOnWater ? doorCoords2 : doorCoords);
 	}
 	
 	@Override
 	public void spawnHamletDwellers() {
-		BlockPos home = this.getPosFromArray(villagerCoords, this.facing);
+		BlockPos home = this.getPosFromArray(this.facing.getHorizontalIndex() == 3 || this.facing.getHorizontalIndex() == 0 ? villagerCoordsWN : villagerCoordsES, this.facing);
 		EntityHamletDweller h = new EntityHamletDweller(this.world);
 		h.setProfession(EntityHamletDweller.ProfessionsEnum.LHKEEPER);
 		h.setHome(home);
@@ -150,7 +149,7 @@ public class HamletLightHouse extends HamletStructure{
 	}
 	
 	
-	int[][] dark_sand = { 
+	static int[][] dark_sand = { 
 
 			{-8, -1, -6, 0}, {-8, -1, -5, 0}, {-8, -1, -4, 0}, {-8, -1, -3, 0}, {-8, -1, -2, 0}, {-8, -1, -1, 0}, {-8, -1, 0, 0}, {-8, -1, 1, 0}, {-8, -1, 2, 0}, {-8, -1, 3, 0}, 
 			{-8, -1, 4, 0}, {-8, -1, 5, 0}, {-8, -1, 6, 0}, {-8, -1, 7, 0}, {-7, -1, -6, 0}, {-7, -1, -5, 0}, {-7, -1, -4, 0}, {-7, -1, -3, 0}, {-7, -1, -2, 0}, {-7, -1, -1, 0}, 
@@ -172,7 +171,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] air = { 
+	static int[][] air = { 
 
 			{-8, 0, -5, 0}, {-8, 0, -4, 0}, {-8, 0, -3, 0}, {-8, 0, 4, 0}, {-8, 0, 5, 0}, {-8, 0, 6, 0}, {-8, 0, 7, 0}, {-8, 1, -6, 0}, {-8, 1, -5, 0}, {-8, 1, -4, 0}, 
 			{-8, 1, -3, 0}, {-8, 1, 4, 0}, {-8, 1, 5, 0}, {-8, 1, 6, 0}, {-8, 1, 7, 0}, {-8, 2, -6, 0}, {-8, 2, -5, 0}, {-8, 2, -4, 0}, {-8, 2, -3, 0}, {-8, 2, 4, 0}, 
@@ -301,7 +300,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] damp_log = { 
+	static int[][] damp_log = { 
 
 			{-8, 0, -2, 0}, {-8, 0, 3, 0}, {-8, 1, -2, 0}, {-8, 1, 3, 0}, {-8, 2, -2, 0}, {-8, 2, 3, 0}, {-8, 3, -2, 0}, {-8, 3, 3, 0}, {-8, 4, -2, 0}, {-8, 4, 3, 0}, 
 			{-8, 5, -2, 0}, {-8, 5, 3, 0}, {-8, 6, -2, 0}, {-8, 6, 3, 0}, {-2, 0, -3, 0}, {-2, 0, 4, 0}, {-2, 1, -3, 0}, {-2, 1, 4, 0}, {-2, 2, -3, 0}, {-2, 2, 4, 0}, 
@@ -320,7 +319,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] damp_wood = { 
+	static int[][] damp_wood = { 
 
 			{-8, 0, -1, 0}, {-8, 0, 0, 0}, {-8, 0, 1, 0}, {-8, 0, 2, 0}, {-8, 1, -1, 0}, {-8, 1, 0, 0}, {-8, 1, 1, 0}, {-8, 1, 2, 0}, {-8, 2, -1, 0}, {-8, 2, 0, 0}, 
 			{-8, 2, 1, 0}, {-8, 2, 2, 0}, {-8, 3, -1, 0}, {-8, 3, 0, 0}, {-8, 3, 1, 0}, {-8, 3, 2, 0}, {-8, 4, -1, 0}, {-8, 4, 0, 0}, {-8, 4, 1, 0}, {-8, 4, 2, 0}, 
@@ -337,7 +336,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] damp_canopy = { 
+	static int[][] damp_canopy = { 
 
 			{-8, 5, -4, 2}, {-8, 5, 5, 4}, {-8, 6, -3, 2}, {-8, 6, 4, 4}, {-8, 9, 0, 8}, {-8, 9, 1, 8}, {-7, 5, -4, 2}, {-7, 5, 5, 4}, {-7, 6, -3, 2}, {-7, 6, 4, 4}, 
 			{-7, 7, -2, 2}, {-7, 7, 3, 4}, {-7, 8, -1, 2}, {-7, 8, 2, 4}, {-7, 9, 0, 8}, {-7, 9, 1, 8}, {-6, 5, -4, 2}, {-6, 5, 5, 4}, {-6, 6, -3, 2}, {-6, 6, 4, 4}, 
@@ -362,25 +361,25 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] damp_canopy_wood = { 
+	static int[][] damp_canopy_wood = { 
 
 			{-8, 7, -2, 2}, {-8, 7, 3, 4}, {-8, 8, -1, 2}, {-8, 8, 2, 4}, 
 
 			}; 
 			 
-			int[][] barrel = { 
+	static int[][] barrel = { 
 
 			{-7, 0, 0, 0}, {-7, 0, 1, 0}, 
 
 			}; 
 			 
-			int[][] damp_wood_stairs = { 
+	static int[][] damp_wood_stairs = { 
 
 			{-7, 2, 0, 2}, {-7, 3, 1, 2}, {-6, 1, -1, 1}, {-6, 4, 2, 0}, {-5, 0, -1, 1}, {-5, 5, 2, 0}, 
 
 			}; 
 			
-			int[][] bricks_blue = { 
+	static int[][] bricks_blue = { 
 
 			{-2, -1, -2, 0}, {-2, -1, -1, 0}, {-2, -1, 0, 0}, {-2, -1, 1, 0}, {-2, -1, 2, 0}, {-2, -1, 3, 0}, {-1, -1, -3, 0}, {-1, -1, -2, 0}, {-1, -1, -1, 0}, {-1, -1, 0, 0}, 
 			{-1, -1, 1, 0}, {-1, -1, 2, 0}, {-1, -1, 3, 0}, {-1, -1, 4, 0}, {-1, 5, -2, 0}, {-1, 5, -1, 0}, {-1, 5, 0, 0}, {-1, 5, 1, 0}, {-1, 5, 2, 0}, {-1, 5, 3, 0}, 
@@ -415,7 +414,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] worn_bricks = { 
+	static int[][] worn_bricks = { 
 
 			{-2, 0, -2, 0}, {-2, 0, -1, 0}, {-2, 0, 2, 0}, {-2, 0, 3, 0}, {-2, 1, -2, 0}, {-2, 1, -1, 0}, {-2, 1, 2, 0}, {-2, 1, 3, 0}, {-2, 2, -2, 0}, {-2, 2, -1, 0}, 
 			{-2, 2, 0, 0}, {-2, 2, 1, 0}, {-2, 2, 2, 0}, {-2, 2, 3, 0}, {-2, 3, -1, 0}, {-2, 3, 0, 0}, {-2, 3, 1, 0}, {-2, 3, 2, 0}, {-2, 4, -1, 0}, {-2, 4, 0, 0}, 
@@ -466,7 +465,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] worn_brick_stairs = { 
+	static int[][] worn_brick_stairs = { 
 
 			{-2, 3, -3, 0}, {-2, 3, -2, 2}, {-2, 3, 3, 0}, {-2, 3, 4, 3}, {-2, 4, -3, 4}, {-2, 4, -2, 6}, {-2, 4, 3, 4}, {-2, 4, 4, 7}, {-2, 9, -3, 0}, {-2, 9, -2, 0}, 
 			{-2, 9, -1, 0}, {-2, 9, 0, 0}, {-2, 9, 1, 0}, {-2, 9, 2, 0}, {-2, 9, 3, 0}, {-2, 9, 4, 3}, {-2, 10, -3, 4}, {-2, 10, -2, 4}, {-2, 10, -1, 4}, {-2, 10, 0, 4}, 
@@ -502,7 +501,7 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] damp_wood_fence = { 
+	static int[][] damp_wood_fence = { 
 
 			{-2, 17, -3, 0}, {-2, 17, 4, 0}, {-2, 18, -3, 0}, {-2, 18, 4, 0}, {-2, 19, -3, 0}, {-2, 19, 4, 0}, {-2, 25, -1, 0}, {-2, 25, 0, 0}, {-2, 25, 1, 0}, {-2, 25, 2, 0}, 
 			{-1, 17, -4, 0}, {-1, 17, 5, 0}, {-1, 18, -4, 0}, {-1, 18, 5, 0}, {-1, 19, -4, 0}, {-1, 19, 5, 0}, {1, 25, -4, 0}, {1, 25, 5, 0}, {2, 6, -4, 0}, {2, 6, 5, 0}, 
@@ -513,7 +512,7 @@ public class HamletLightHouse extends HamletStructure{
 			
 			}; 
 			 
-			int[][] seaLantern = { 
+	static int[][] seaLantern = { 
 
 			{-1, 4, -2, 0}, {-1, 4, 3, 0}, {-1, 10, -2, 0}, {-1, 10, 3, 0}, {-1, 16, -2, 0}, {-1, 16, 3, 0}, {-1, 22, -2, 0}, {-1, 22, 3, 0}, {0, 4, -3, 0}, 
 			{0, 4, 4, 0}, {0, 10, -3, 0}, {0, 10, 4, 0}, {0, 16, -3, 0}, {0, 16, 4, 0}, {0, 22, -3, 0}, {0, 22, 4, 0}, {2, -1, 0, 0}, {2, -1, 1, 0}, {2, 5, 0, 0}, 
@@ -523,25 +522,25 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] chest = { 
+	static int[][] chest = { 
 
 			{-1, 12, -2, 5}, {-1, 12, -1, 5}, {-1, 12, 2, 5}, {-1, 12, 3, 5}, {-1, 13, -2, 5}, {-1, 13, -1, 5}, {-1, 13, 2, 5}, {-1, 13, 3, 5}, 
 
 			}; 
 			 
-			int[][] pedestal_ancient = { 
+	static int[][] pedestal_ancient = { 
 
 			{-1, 18, -1, 0}, 
 
 			}; 
 			 
-			int[][] research_table = { 
+	static int[][] research_table = { 
 
 			{-1, 18, 2, 4}, 
 
 			}; 
 			 
-			int[][] prismarine = { 
+	static int[][] prismarine = { 
 
 			{-2, 20, -3, 2}, {-2, 20, 4, 2}, {-1, 20, -4, 2}, {-1, 20, 5, 2}, {1, 24, 0, 2}, {1, 24, 1, 2}, {1, 25, 0, 2}, {1, 25, 1, 2}, {2, 24, -1, 2}, {2, 24, 2, 2}, 
 			{2, 25, -1, 2}, {2, 25, 2, 2}, {3, 24, -1, 2}, {3, 24, 2, 2}, {3, 25, -1, 2}, {3, 25, 2, 2}, {4, 24, 0, 2}, {4, 24, 1, 2}, {4, 25, 0, 2}, {4, 25, 1, 2}, 
@@ -549,22 +548,24 @@ public class HamletLightHouse extends HamletStructure{
 
 			}; 
 			 
-			int[][] hellrock = { 
+	static int[][] hellrock = { 
 
 			{2, 24, 0, 0}, {2, 24, 1, 0}, {2, 25, 0, 0}, {2, 25, 1, 0}, {3, 24, 0, 0}, {3, 24, 1, 0}, {3, 25, 0, 0}, {3, 25, 1, 0}, 
 
 			};
 			 
-			int[][] fire = { 
+	static int[][] fire = { 
 
 			{2, 26, 0, 0}, {2, 26, 1, 0}, {3, 26, 0, 0}, {3, 26, 1, 0}, 
 
 			}; 
 			
-			int[] doorCoords = {-6, -1, 3};
+	static int[] doorCoords = {-6, -1, 3};
 			
-			int[] doorCoords2 = {-6, -1, 7};
+	static int[] doorCoords2 = {-6, -1, 7};
 			
-			int[] villagerCoords = {4, 24, 3};
+	static int[] villagerCoordsES = {4, 24, 4};
+	
+	static int[] villagerCoordsWN = {4, 24, 3};
 	
 }

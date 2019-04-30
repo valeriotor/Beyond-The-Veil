@@ -110,7 +110,7 @@ public class TestItem extends Item //implements IHasModel
 			}
 		}
 		for(int i = 0; i<blocks.size(); i++) {
-			zorro.format("int[][] %s = { %n%n", names.get(i));
+			zorro.format("static int[][] %s = { %n%n", names.get(i));
 			int counter = 0;
 			for(int[] miniArray : blocks.get(i)) {
 				zorro.format("{%d, %d, %d, %d}, ", miniArray[0], miniArray[1], miniArray[2], miniArray[3]);
