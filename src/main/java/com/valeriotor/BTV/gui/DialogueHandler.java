@@ -75,7 +75,7 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static String getDialogue(String profession, int talkCount, String branch) {
-		String prefix = "dweller.".concat(getFriendlyhood()).concat(profession);
+		String prefix = "dweller."/*.concat(getFriendlyhood())*/.concat(profession);
 		EntityPlayer p = Minecraft.getMinecraft().player;
 		
 		String dialogueName = getDialogueName(profession).getName();
@@ -180,7 +180,7 @@ public class DialogueHandler {
 			return "friend";
 		if(level > 5)
 			return "trusted";
-		if(level > 2)
+		if(level > 4)
 			return "tolerated";
 		
 		return "";
@@ -236,7 +236,9 @@ public class DialogueHandler {
 	
 	public enum Dialogues{
 		LECTURE2("lhkeeper", 1, 3),
-		LECTURE("lhkeeper", 2, 5),
+		LECTURE("lhkeeper", 2, 1),
+		HASKNOWLEDGE("lhkeeper", 1, 1),
+		LACKKNOWLEDGE("lhkeeper", 2, 5),
 		FIRST("any", 0, 0);
 		
 		private int talkCount;
