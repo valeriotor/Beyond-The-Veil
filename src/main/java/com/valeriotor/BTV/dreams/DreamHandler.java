@@ -545,10 +545,12 @@ public class DreamHandler {
 	private static void unlockResearch(EntityPlayer p, String aspect) {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(!k.isResearchKnown(aspect+"Dream")) {
-			ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
-			if(aspect.equals("alienis") || aspect.equals("vacuos"))
+			if(!isLongDream(aspect))
+				ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
+			if(/*aspect.equals("alienis") || */aspect.equals("vacuos"))
 				ThaumcraftApi.internalMethods.progressResearch(p, String.format("f_%sDream", aspect.substring(0, 1).toUpperCase().concat(aspect.substring(1))));
-			p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
+			if(!aspect.equals("alienis"))
+				p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
 			if(!k.isResearchKnown("f_EffectDream")) {
 				if(aspect.equals("potentia") || aspect.equals("vinculum") || aspect.equals("permutatio")) {
 					ThaumcraftApi.internalMethods.progressResearch(p, "f_EffectDream");
@@ -562,6 +564,15 @@ public class DreamHandler {
 			}
 			
 		}
+	}
+	
+	/** Checks whether the chosen aspect causes a long Dream. If so, "aspectDream" should not be unlocked
+	 *  immediately, but only when the Dream ends.
+	 * 
+	 */
+	private static boolean isLongDream(String aspect) {
+		if(aspect.equals("alienis")) return true;
+		return false;
 	}
 	
 	/** Checks if the player already has the "research" (not a true entry) corresponding to that aspect.
