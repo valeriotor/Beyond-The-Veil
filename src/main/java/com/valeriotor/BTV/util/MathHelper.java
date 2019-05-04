@@ -2,7 +2,7 @@ package com.valeriotor.BTV.util;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MathHandler {
+public class MathHelper {
 	
 	/** Removes experience from a player (since the vanilla method addExperience won't do that).
 	 * 

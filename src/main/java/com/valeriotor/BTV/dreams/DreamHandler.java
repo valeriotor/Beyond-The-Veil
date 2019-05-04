@@ -16,7 +16,8 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.util.DGWorshipHandler;
+import com.valeriotor.BTV.util.DGWorshipHelper;
+import com.valeriotor.BTV.util.WorldHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
@@ -290,20 +291,17 @@ public class DreamHandler {
 	 * @return True if successful
 	 */
 	private static boolean searchInnsmouth(EntityPlayer p, World w, Random r) {
+		if(!youDontKnowDream(p, "alienis")) return false;
 		boolean flag = false;
-		final BiomeProvider provider = w.getBiomeProvider();
-		List<Biome> biomes = new ArrayList<Biome>();
-		biomes.add(BiomeRegistry.innsmouth);
-		BlockPos pos = provider.findBiomePosition(p.getPosition().getX(), p.getPosition().getZ(), 1200, biomes, r);
+		BlockPos pos = WorldHelper.findClosestBiomeOfType(BiomeRegistry.innsmouth, p.getPosition(), w, 6000);
 		if(pos != null) {
-			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.innsmouth", new Object[] {pos.getX(), pos.getZ()}));
-			
+			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.innsmouth", new Object[] {pos.getX(), pos.getZ()}));			
 			flag = true;
-		}else {
+		} else {
 			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.fail"));
 		}
 		
-		if(getDreamingGodLevel(p) >= 1) {
+		if(hasDreamtOfVoid(p)) {
 			BlockPos hamletPos = HamletList.get(w).getClosestHamlet(p.getPosition());
 			if(hamletPos != null) {
 				p.sendMessage(new TextComponentTranslation("dreams.biomesearch.hamlet", new Object[] {Integer.valueOf(hamletPos.getX()), Integer.valueOf(hamletPos.getZ())}));
@@ -547,7 +545,7 @@ public class DreamHandler {
 		if(!k.isResearchKnown(aspect+"Dream")) {
 			if(!isLongDream(aspect))
 				ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
-			if(/*aspect.equals("alienis") || */aspect.equals("vacuos"))
+			if(aspect.equals("tenebrae") || aspect.equals("vacuos"))
 				ThaumcraftApi.internalMethods.progressResearch(p, String.format("f_%sDream", aspect.substring(0, 1).toUpperCase().concat(aspect.substring(1))));
 			if(!aspect.equals("alienis"))
 				p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
@@ -624,7 +622,7 @@ public class DreamHandler {
 	/** Returns the player's Dreaming God level *without* Vacuos bonus.
 	 */
 	public static int getDreamingGodLevel(EntityPlayer p) {
-		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHandler.MAX_LEVEL);
+		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHelper.MAX_LEVEL);
 	}
 	
 	/** Gets the difference in DreamingGod level between two players, one of whom is making an offensive Dream and the other

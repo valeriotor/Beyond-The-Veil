@@ -3,7 +3,7 @@ package com.valeriotor.BTV.items;
 import java.util.List;
 
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.util.MathHandler;
+import com.valeriotor.BTV.util.MathHelper;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,7 +41,7 @@ public class ItemBronzeSphere extends Item{
 		int playerXp = playerIn.experienceTotal;
 		if(!playerIn.isSneaking()) {
 			stack.getTagCompound().setInteger("xp", itemXp + Math.min(playerXp, 100));
-			MathHandler.removeExperience(playerIn, 100);
+			MathHelper.removeExperience(playerIn, 100);
 		} else {
 			stack.getTagCompound().setInteger("xp", Math.max(0, itemXp - 100));
 			playerIn.addExperience(Math.min(itemXp, 100));
@@ -52,7 +52,7 @@ public class ItemBronzeSphere extends Item{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add("ï¿½5ï¿½o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		int itemXp = 0;
 		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("xp")) itemXp = stack.getTagCompound().getInteger("xp");
 		tooltip.add(I18n.format("tooltip." + this.getUnlocalizedName().substring(5), itemXp));

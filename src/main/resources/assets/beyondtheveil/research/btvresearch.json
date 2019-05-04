@@ -1,11 +1,11 @@
 {
 	"entries" :[
         {
-        "key": "FIRSTDREAMS",    
+        "key": "FIRSTDREAMS",
         "name": "research.FIRSTDREAMS.title",
         "icons": [ "minecraft:bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
-		"parents": [ "UNLOCKELDRITCH" ],	
+		"parents": [ "UNLOCKELDRITCH" ],
         "stages": [
                 {
                     "text": "research.FIRSTDREAMS.stage.0",
@@ -236,7 +236,23 @@
                     "text": "research.FIRSTCONTACT.stage.1"
                 }
             ]
+        },
+		{
+        "key": "DARKDREAMS",
+        "name": "research.DARKDREAMS.title",
+        "icons": [ "thaumcraft:textures/aspects/tenebrae.png" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,2 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "FIRSTCONTACT" ],
+        "stages": [
+				{
+					"text": "research.DARKDREAMS.stage.0",
+					"required_research": ["f_TenebraeDream"]
+				},
+                {
+                    "text": "research.DARKDREAMS.stage.1"
+                }
+            ]
         }
 	]
-}	
-	
+}

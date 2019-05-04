@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class WorldGenBTV implements IWorldGenerator{
 	
 	private ChunkPrimer cp = new ChunkPrimer();
-	
+	private static final boolean DEBUG = false;
 	public WorldGenBTV() {
 		
 	}
@@ -53,7 +53,7 @@ public class WorldGenBTV implements IWorldGenerator{
 		
 		BlockPos pos = new BlockPos(x,0,z);
 		if(HamletList.get(w).isTooClose(pos)) return;
-		if(w.getBiome(pos) != BiomeRegistry.innsmouth && w.getBiome(pos) != Biomes.PLAINS) return;
+		if(w.getBiome(pos) != BiomeRegistry.innsmouth && (w.getBiome(pos) != Biomes.PLAINS || !DEBUG)) return;
 		if(r.nextInt(12) < 11 && w.getBiome(pos) != BiomeRegistry.innsmouth) return;
 		if(!areChunksGood(w, pos)) {
 			pos = areaLoaded(w,pos);

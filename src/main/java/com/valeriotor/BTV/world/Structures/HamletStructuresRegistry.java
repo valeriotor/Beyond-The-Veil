@@ -94,7 +94,7 @@ public class HamletStructuresRegistry {
 		registerStructure(HamletSaloon.class, "HSA", 7, 1);
 		registerStructure(HamletStoreHouse2.class, "HStH2", 2, 1);
 		registerStructure(HamletTownHall.class, "HTH", 1, 1);
-		registerStructure(HamletLightHouse.class, "HLH", 6, 1);
+		registerStructure(HamletLightHouse.class, "HLH", 10, 1);
 		
 	}
 	

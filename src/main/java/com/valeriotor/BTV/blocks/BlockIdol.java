@@ -11,7 +11,7 @@ import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.util.DGWorshipHandler;
+import com.valeriotor.BTV.util.DGWorshipHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -137,7 +137,7 @@ public class BlockIdol extends ModBlock{
 				playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
 				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel()), (EntityPlayerMP)playerIn);
 			} else {
-				DGWorshipHandler.levelUp(playerIn);
+				DGWorshipHelper.levelUp(playerIn);
 			}
 			// DEBUG playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel()))); // TODO: Delete this
 		} else {

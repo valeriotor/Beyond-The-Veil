@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class DGWorshipHandler {
+public class DGWorshipHelper {
 	
 	public static final int MAX_LEVEL = 5; // Will of course change
 	

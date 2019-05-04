@@ -1,23 +1,13 @@
 package com.valeriotor.BTV.items;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
-import java.util.Random;
 
-import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.proxy.ClientProxy;
-import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.util.IHasModel;
-import com.valeriotor.BTV.util.RegistryHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,15 +18,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.capabilities.IPlayerWarp.EnumWarpType;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class TestItem extends Item //implements IHasModel
 {
