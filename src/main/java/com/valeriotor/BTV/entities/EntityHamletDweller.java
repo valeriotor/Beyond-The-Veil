@@ -269,7 +269,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
-				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s.greeting%d", this.profession.getName().toLowerCase(), x)).getFormattedText()));
+				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
 				if(this.talkCount % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				
@@ -307,7 +307,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		BARTENDER(1, 2),
 		MINER(2, 1),
 		LHKEEPER(3, 3),
-		STOCKPILER(4, 4),
+		STOCKPILER(4, 3),
 		DRUNK(5, 4),
 		CARPENTER(6, 2),
 		SCHOLAR(7, 2);
@@ -385,10 +385,10 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	private void populateBuyingList() {
 		if(this.buyingList == null) this.buyingList = new MerchantRecipeList();
 		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 3)));
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_PICKAXE, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.mead, 1)));
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 64), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 64), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 32), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.canoe, 1)));

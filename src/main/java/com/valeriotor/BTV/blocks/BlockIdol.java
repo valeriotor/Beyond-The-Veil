@@ -8,32 +8,28 @@ import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.lib.BlockNames;
-import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.util.DGWorshipHelper;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -131,7 +127,8 @@ public class BlockIdol extends ModBlock{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(playerIn);
-		if(!k.isResearchKnown("CRYSTALDREAMS")) return true; // TODO: Change required research
+		if(!k.isResearchKnown("IDOL")) return true; // TODO: Change required research
+		if(!k.isResearchComplete("IDOL")) ThaumcraftApi.internalMethods.progressResearch(playerIn, "IdolInteract");
 		if(!worldIn.isRemote) {
 			if(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 0) {
 				playerIn.getCapability(DGProvider.LEVEL_CAP, null).addLevel();

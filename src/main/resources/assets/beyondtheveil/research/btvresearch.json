@@ -253,6 +253,44 @@
                     "text": "research.DARKDREAMS.stage.1"
                 }
             ]
+        },
+		{
+        "key": "FISHINGHAMLET",
+        "name": "research.FISHINGHAMLET.title",
+        "icons": [ "beyondtheveil:damp_canopy" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,4 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "DARKDREAMS" ],
+        "stages": [
+				{
+					"text": "research.FISHINGHAMLET.stage.0",
+					"required_research": ["m_FindHamlet"]
+				},
+                {
+                    "text": "research.FISHINGHAMLET.stage.1",
+										"required_research": ["LHKeeper"]
+                },
+				                {
+				                    "text": "research.FISHINGHAMLET.stage.2"
+				                }
+            ]
+        },
+		{
+        "key": "IDOL",
+        "name": "research.IDOL.title",
+        "icons": [ "beyondtheveil:idol" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,6 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "FISHINGHAMLET" ],
+        "stages": [
+				{
+					"text": "research.IDOL.stage.0",
+					"required_research": ["IdolInteract"]
+				},
+                {
+                    "text": "research.IDOL.stage.1"
+                }
+            ]
         }
 	]
 }

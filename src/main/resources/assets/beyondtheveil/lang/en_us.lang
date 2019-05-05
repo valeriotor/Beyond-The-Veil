@@ -97,9 +97,9 @@ dweller.fisherman.greeting1=Begone. We don't want you here.
 dweller.fisherman.greeting2=Outsiders are not welcome here.
 dweller.fisherman.greeting3=Please, please stop coming after us.
 
-dweller.lhkeeper.greeting0=You are no friend of ours, outsider. No one is.
-dweller.lhkeeper.greeting1=We can't trust you outsiders. No more.
-dweller.lhkeeper.greeting2=Please, please leave us BE.
+dweller.stockpiler.greeting0=You are no friend of ours, outsider. No one is.
+dweller.stockpiler.greeting1=We can't trust you outsiders. No more.
+dweller.stockpiler.greeting2=Please, please leave us BE.
 
 dweller.drunk.greeting0=A newcomer, aye? We dun't see many aoutsiders no'adays.
 dweller.drunk.greeting1=I ain't frum around here, fella. Me pa' an' me ma' was frum this Hamlet, aye, but me, I was bo'n an' rais'd elsewhar.
@@ -202,7 +202,18 @@ dweller.lhkeeperlecture2.lecturetalk8=Nobody won in those times. And all of it f
 dweller.lhkeeperlecture2.lecturetalk9=Do you understand now why my fellow dwellers, as well as I, have such disdain for outsiders? Why we are so wary of them?
 dweller.lhkeeperlecture2.lecturetalk9.option0=Who are these:'friends' you:spoke of?
 dweller.lhkeeperlecture2.lecturetalk9.option1=I understand.:You have my sympathies.
-dweller.lhkeeperlecture2.friendslecturetalk0=That is none of your concern, for as long as you remain an outsider.
+dweller.lhkeeperlecture2.friendslecturetalk0=That is none of your concern, for as long as you remain an outsider.:But that doesn't have to stay like that.
+dweller.lhkeeperlecture2.thankstalk0=And you have my gratitude. For listening to my tale, our history.:For relieving me of the burden of knowledge.
+dweller.lhkeepergratitude.talk0=Should you need to know more, ask.
+dweller.lhkeeperdreamer.talk0=You are a Dreamer. I know that. |:You seek Truth. I know that too.
+dweller.lhkeeperdreamer.talk1=You wish to breach the Veil. To venture Beyond it. |:Well, you already did, if only in Dream, unable to recall anything.
+dweller.lhkeeperdreamer.talk2=You now desperately try to convince yourself that you can do it. Succeed where all have failed. Ridding yourself of lies.
+dweller.lhkeeperdreamer.talk2.option0=Help me.
+dweller.lhkeeperdreamer.talk2.option1=I AM SICK:OF LIES.
+dweller.lhkeeperdreamer.liestalk0=We all are, until we realise how much worse the Truth is. ||:I will help you.
+dweller.lhkeepergreatdreamer.talk0=That statue, in the central square, it represents our marine Deity. |:The Great Dreamer.
+dweller.lhkeepergreatdreamer.talk1=You seek the Truth, The Great Dreamer hides it. |:To speak with him, is to go{ Beyond the Veil.
+dweller.lhkeeperocean.talk0=Traveller, all Dreams go through water. Through The Great Dreamer. |:Look at the Ocean.
 dweller.lhkeeper.genocidedisagreetalk0=There is no right answer. :But know that I{ despise} those who think the way you do.
 dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your forefather knew better, didn't they?
 
@@ -317,17 +328,29 @@ research.SLEEPCHAMBERADVANCED.stage.1=The key was WATER. What this substance has
 
 research.VOIDDREAMS.title=Dreams of Void
 research.VOIDDREAMS.stage.0=Dreams go through THE VOID. <BR>THAT is where they truly depart from the known world to go where nothing can follow them... yet.<BR>I am certain of this.<BR>I need to Dream of the VOID.<BR>Of its black emptiness.<BR>So I may reach it myself.
-research.VOIDDREAMS.stage.1=Dreaming under the influence of Vacuos doesn't seem to affect me directly.<BR>However, it seems capable of affecting other Dreams of mine, whether these come after my Vacuos Dream or even at the same time. The effect, however, is truly minimal, and it applies only to very specific Dreams.<BR>And yet, I shouldn't underestimate the importance of Vacuos.<BR>I have reason to believe that such aspect slows down my Dream's descent, especially its stay in the Void. And if that is true, then my quest for knowledge might have reached a breakthrough.<BR>I NEED to learn of what, or who, is in that black emptiness. To know how Dreams work, where they go, how they gain knowledge.
+research.VOIDDREAMS.stage.1=Dreaming under the influence of Vacuos doesn't seem to affect me directly.<BR>However, it seems capable of affecting other Dreams of mine, whether these come after my Vacuos Dream or even at the same time. The effect, however, is truly minimal, and it applies only to very specific Dreams.<BR>And yet, I shouldn't underestimate the importance of Vacuos.<BR>I have reason to believe that such aspect slows down my Dream's descent, especially its stay in the Void. And if that is true, then my quest for knowledge might have reached a breakthrough.<BR>I NEED to learn of what, or who, is in that black emptiness. To know how Dreams work, where they go, how they gain knowledge. To know what is real and what isn't.<BR>To know the Truth.
 research.f_VacuosDream.text=Dream of emptiness.
 research.vacuos.unlock=My use of Vacuos will affect my next Dream's effects.
 
 research.FIRSTCONTACT.title=Contacting the Unknowable
-research.FIRSTCONTACT.stage.0=If it's true that all Dreams go through the Void, then chances are I am not the only Dreamer whose quest for knowledge focuses there.<BR>It is time. Time for me to contact other Dreamers. No matter the risk, no matter how great or powerful they may be, or what intentions they may have.<BR>No matter what they may be, how different, how alien they may prove to me.<BR>No matter where they come from. From what world, time, reality.<BR>Nothing matters now. This may very well be the end of my research. If it must be like that, so be it, and I hope these notes prove useful to posterity.<BR>I must Dream of Eldritchness, under the influence of Vacuos. I must fix my ears, to hear everything that is told to me. Listen as closely as I can. And be ready for a Dream longer than most.
+research.FIRSTCONTACT.stage.0=If it's true that all Dreams go through the Void, then chances are I am not the only Dreamer whose quest for knowledge focuses there.<BR>It is time to unVeil the Truth. Time for me to contact other Dreamers. No matter the risk, no matter how great or powerful they may be, or what intentions they may have.<BR>No matter what they may be, how different, how alien they may prove to me.<BR>No matter where they come from. From what world, time, reality.<BR>Nothing matters now. This may very well be the end of my research. If it must be like that, so be it, and I hope these notes prove useful to posterity.<BR>I must Dream of Eldritchness, under the influence of Vacuos. I must fix my ears, to hear everything that is told to me. Listen as closely as I can. And be ready for a Dream longer than most.
 research.FIRSTCONTACT.stage.1=Merciful Gods, don't let my mind crumble as I write this.<BR>A voice. It came from the Ocean. I didn't hear it, I felt it. Through my Dream it touched my body.<BR>It didn't speak to me, but through me, as if it didn't notice I was there, in my Dream.<BR>Yet I know now what I must do. The thought was imprinted in my mind.<BR>I must find the place where the blackness of the Void touches the surface, so I may see it and handle it myself.<BR>But, to be sincere, I do not know whether to continue in my search for knowledge...<BR><BR><BR>Gracious Gods, have mercy upon me.<BR>Don't let me drown.
 research.f_AlienisDream.text=Dream of the Eldritch.
 
 research.DARKDREAMS.title=Dreams of Dark
 research.DARKDREAMS.stage.0=Before entering the Ocean, I could feel sand beneath my...  beneath my Dream. Dark, slimy sand, the color of Void.<BR>There are indeed reports of damp, blackened beaches, and, furthermore, rumour has it that some of these "Voided" biomes are inhabited by small groups of reclusive fishermen.<BR>I wonder if they can provide any clues towards my quest for knowledge. In any case, my goal now is to Dream of Darkness.
-research.DARKDREAMS.stage.1=Far from perfect, Tenebrae Dreams still prove useful in seeking Voided Biomes within limited range.<BR>However, I fear disappointment. Could some black grains of sand truly grant me enlightenment? I think not.<BR>Maybe I should instead focus on seeking the Fishing Hamlets that are rumoured to appear in these places.<BR>I know very well that not all Voided biomes will hold a Hamlet, so my research may take very long. But I can comfort myself, knowing how much of the world I'll discover in my travels.
+research.DARKDREAMS.stage.1=Far from perfect, Tenebrae Dreams still prove useful in seeking Voided Biomes within limited range.<BR>However, I fear disappointment. Could some black grains of sand truly grant us enlightenment? I think not.<BR>Maybe I should instead focus on seeking the Fishing Hamlets that are rumoured to appear in these places.<BR>I know very well that not all Voided biomes will hold a Hamlet, so my research may take very long. But I can comfort myself, knowing how much of the world I'll discover in my travels.
 research.f_TenebraeDream.text=Dream of Darkness.
 research.tenebrae.unlock=My Tenebrae Dream sought a Voided Biome.
+
+research.FISHINGHAMLET.title=The Fishing Hamlet
+research.FISHINGHAMLET.stage.0=I need the Truth. I am sick of lies.<BR>There is a Veil of illusions clouding everyone's mind, there has to be. Everything I see, is a Lie.<BR>NOTHING BUT A LIE.<BR>I must breach it. I must see Beyond that barrier.<BR>Whether the Fishing Hamlet is the key to the Arcanum, or merely a piece of a grand puzzle, we shall see.
+research.FISHINGHAMLET.stage.1=This can't be..<BR>All this work, all this research.. led me here?!<BR>To a bunch of degenerates?! Of xenophobic nitwits?!?<BR>Nonono, I can't stop now. I can breach the Veil. I know I can. I know it. I really do.<BR>I need to talk with the Lighthouse Keeper. I hope he proves wiser than his fellow Dwellers.
+research.FISHINGHAMLET.stage.2=Look at the Ocean.. look at the Ocean..
+research.m_FindHamlet.text=Locate a Fishing Hamlet
+research.LHKeeper.text=Talk with the Lighthouse Keeper
+
+research.IDOL.title=Communion
+research.IDOL.stage.0=At times, we think of ourselves as gods. Allmighty, invincible gods to whom the whole world must bow. Gods whose creations could reshape the world entire.<BR>And we're no more than deluded fools.<BR>The Ocean.<BR>Immense, timeless, inscrutable. Could it really care of what we do? Could it really, when it dwarfs our greatest, grandest structures, when it outlives our strongest, toughest contraptions?<BR>A symbol of immensity, ever close, to remind us of our INSIGNIFICANCE.<BR>The Ocean, whose immensity the Hamlet Dwellers seem so fascinated by, is UNKNOWABLE. We could spend whole eternities in the hope of researching its every nook and cranny, and yet vainly, for in its boundlessness, as well as its ever changing, chaotic nature, the things that lie within it.. or beneath it.. will always elude us. Unless they come to us.<BR>Yes, the Ocean must be the key. In its boundless, unkowable immensity, it is SURE to conceal what we're looking for. Some kind of gateway, some sort of door that will let us see Beyond the Veil. In its bottomless depths, we must look for rifts.<BR>Water itself REEKS of Alienis, and especially in that Hamlet of bizarre degenerates worshipping some kind of.. of..<BR>Yes. Of.. of course. They're far from degenerates, for they found the solution far before US.<BR>If their Deity truly is a manifestation of what's Beyond the Veil, hiding the Truth from us all, and if their fascination with Dreams and the Ocean is of the same nature as ours.. then we must seek Communion.<BR>Communion with the Great Dreamer.
+research.IDOL.stage.1=I humbly pledge my life to You, Great Dreamer.<BR>I disavow all my previous beliefs, any gods I may have previously believed in.<BR>I am insignificant to you. The Ocean, Your presence on the Overworld, is symbol of that.<BR>You are unknowable to me. The Void, full of emptiness, is Your inscrutable substance.<BR>Beyond You lie all things. The Truth, hidden by a Veil.<BR>Grant us knowledge, so we may undo all lies.<BR>Grant us strength, so we may survive the Truth.<BR>Grant us courage.. so we may hear Your Holy Voice.
+research.IdolInteract.text=Pray at the Idol in the Hamlet.

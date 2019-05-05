@@ -14,6 +14,8 @@ public class PlayerDataLib {
 	// Strings (Non-temporary)
 	public static final String FISHQUEST = "fish_quest";
 	public static final String RITUALQUEST = "drowned";
+	public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
+	public static final String FOUND_HAMLET = "found_hamlet";
 	
 	
 }

@@ -53,8 +53,8 @@ public class FishingHamlet {
 			int zOffset = pos.getZ()+r.nextInt(17)-8;
 			int height = w.getHeight(xOffset, zOffset);
 			if(height == 0) return;
-			HamletList.get(w).registerHamlet(u, pos);
 			BlockPos randomised = new BlockPos(xOffset, height, zOffset);
+			HamletList.get(w).registerHamlet(u, randomised);
 			Idol idol = new Idol(w);
 			idol.setCenter(randomised);
 			int tom = idol.getRadius() + 7;

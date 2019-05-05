@@ -15,6 +15,7 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
+import com.valeriotor.BTV.world.HamletList;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -87,7 +89,15 @@ public class PlayerEvents {
 		
 			// Reset times dreamt
 			if(event.player.world.getWorldTime() == 10) event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);; 
-		
+			
+			// Find Hamlet
+			if(!p.world.isRemote && p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.FOUND_HAMLET)) {
+				BlockPos pos = HamletList.get(event.player.world).getClosestHamlet(p.getPosition()); 
+					if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET")) {
+						p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.FOUND_HAMLET, false);
+						ThaumcraftApi.internalMethods.progressResearch(p, "m_FindHamlet");
+					}
+			}
 		}
 	}
 	

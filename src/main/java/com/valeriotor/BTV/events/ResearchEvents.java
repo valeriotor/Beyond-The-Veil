@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.events;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 
@@ -29,15 +30,23 @@ public class ResearchEvents {
 	
 	@SubscribeEvent
 	public void researchEvent(Research event) {
+		System.out.println(event.getResearchKey());
 		switch(event.getResearchKey()) {
 		case "!minecraft:water_bucket0":
 			ThaumcraftApi.internalMethods.addKnowledge(event.getPlayer(), EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BEYOND_THE_VEIL"), 16);
 			break;
 		case "f_AlienisDream":
-			event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString("seeksKnowledge", false);
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("seeksKnowledge"), (EntityPlayerMP)event.getPlayer());
+			event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.SEEKSKNOWLEDGE, false);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.SEEKSKNOWLEDGE), (EntityPlayerMP)event.getPlayer());
+			break;
+		case "FISHINGHAMLET":
+			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "FISHINGHAMLET@1")) {
+				if(event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguegratitude")) {
+					event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialoguedreamer", false);
+					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialoguedreamer"), (EntityPlayerMP)event.getPlayer());
+				}	
+			}
 		}
 	}
-	
 	
 }

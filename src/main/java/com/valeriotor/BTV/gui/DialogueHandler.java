@@ -8,6 +8,7 @@ import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncDataToServer;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
 
 import net.minecraft.client.Minecraft;
@@ -15,6 +16,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DialogueHandler {
 	
@@ -169,18 +171,18 @@ public class DialogueHandler {
 		return Dialogues.FIRST;
 	}
 	
-	/** Currently unused, not sure if it'll ever be used. Finds a prefix for the Dialogue
-	 *  lang key based on the Player's Dreaming God level.
+	/** Finds a prefix for the Dialogue lang key based on the Player's Dreaming God level.
+	 *  Used by non-Gui Dwellers.
 	 * 
 	 * @return A prefix that indicates how friendly Dwellers are to the Player.
 	 */
-	private static String getFriendlyhood() {
-		int level = Minecraft.getMinecraft().player.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
-		if(level > 10)
-			return "friend";
+	public static String getFriendlyhood(EntityPlayer p) {
+		int level = p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
 		if(level > 5)
+			return "friend";
+		if(level > 3)
 			return "trusted";
-		if(level > 4)
+		if(level > 1)
 			return "tolerated";
 		
 		return "";
@@ -224,17 +226,26 @@ public class DialogueHandler {
 			if(d.getProf().equals(profession) && d.canUnlock(dialogueName, branch, option, talkCount)) {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(d.getName()), false);
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), false));
-				System.out.println("SUCCESS!!");
 				return true;
 				
 			}
 		}
-		
+		updateAdditionalData(profession, option, talkCount);
 		return false;
+	}
+	
+	private static void updateAdditionalData(String profession, int option, int talkCount) {
+		if(getDialogueName(profession) == Dialogues.OCEAN && !ThaumcraftCapabilities.getKnowledge(Minecraft.getMinecraft().player).isResearchComplete("FISHINGHAMLET")) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDataToServer(false, "LHKeeper"));
+		}
 	}
 	
 	
 	public enum Dialogues{
+		OCEAN("lhkeeper", 1, 1),
+		GREATDREAMER("lhkeeper", 2, 2),
+		DREAMER("lhkeeper", 3, 2),
+		GRATITUDE("lhkeeper", 1, 2),
 		LECTURE2("lhkeeper", 1, 3),
 		LECTURE("lhkeeper", 2, 1),
 		HASKNOWLEDGE("lhkeeper", 1, 1),
@@ -277,6 +288,8 @@ public class DialogueHandler {
 	}
 	
 	public enum Branches{
+		LIES("lhkeeper", 1, "dreamer", "", 1),
+		THANKS("lhkeeper", 1, "lecture2", "lecture", 1),
 		FRIENDSLECTURE("lhkeeper", 1, "lecture2", "lecture", 0),
 		LECTURE("lhkeeper", 10, "lecture2", "", 0),
 		TELLME("lhkeeper", 2, "lecture", "", 0),

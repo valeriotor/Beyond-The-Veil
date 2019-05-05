@@ -80,7 +80,7 @@ public class HamletList extends WorldSavedData{
 		for(BlockPos pos2 : HPos.values()) {
 			if(pos1.equals(pos2)) return pos2;
 			double newDistance = pos2.distanceSq(pos1);
-			if(newDistance > distance || distance == 0) {
+			if(newDistance < distance || distance == 0) {
 				distance = newDistance;
 				shortest = pos2;
 			}
