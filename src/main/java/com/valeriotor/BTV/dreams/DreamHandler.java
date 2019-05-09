@@ -111,6 +111,7 @@ public class DreamHandler {
 			case "Alienis": return contactUnknown(p, k, p.world);
 			case "Bestia": return HigherDreams.findAnimal(p, p.world);
 			case "Mortuus": return HigherDreams.playerDeath(p, p.world);
+			case "Fabrico": return HigherDreams.repairStuff(p, p.world);
 			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	// TODO: Add "return" here
 		}
 		return false;

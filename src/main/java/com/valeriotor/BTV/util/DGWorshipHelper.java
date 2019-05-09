@@ -28,7 +28,7 @@ public class DGWorshipHelper {
 	}
 	
 	public static int getRequiredSlugs(int lvl) {
-		return 30 + lvl*10;
+		return 90*(int)(1 - Math.pow(1.5, -lvl));
 	}
 	
 	public static boolean hasRequiredQuest(EntityPlayer p, int lvl) {

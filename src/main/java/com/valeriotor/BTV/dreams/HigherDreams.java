@@ -26,6 +26,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -36,11 +38,11 @@ public class HigherDreams {
 	// ***************************************** MORTUUS ***************************************** \\
 	
 	public static boolean playerDeath(EntityPlayer p, World w) {
-		if(!DreamHandler.youDontHaveLevel(p, 1)) return false;
+		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		int lvl = DreamHandler.getDreamingGodLevel(p);
 		if(list.isEmpty()) p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
-		for(int i = 0; i < lvl && !list.isEmpty(); i++) {
+		for(int i = 0; i < lvl-1 && !list.isEmpty(); i++) {
 			int index = w.rand.nextInt(list.size());
 			EntityPlayer target = list.get(index);
 			if(DreamHandler.getDreamAttack(p, target) >= 0) {
@@ -143,4 +145,28 @@ public class HigherDreams {
 			return null;
 		}
 	
+	
+	// ***************************************** FABRICO ***************************************** \\
+		
+		public static boolean repairStuff(EntityPlayer p, World w) {
+			if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
+			for(ItemStack item : p.getArmorInventoryList()) {
+				repairSingleItem(item, 0.3);
+			}
+			repairSingleItem(p.getHeldItem(EnumHand.MAIN_HAND), 0.3);
+			if(DreamHandler.getDreamingGodLevel(p) > 3) {
+				for(ItemStack item : p.inventory.mainInventory) {
+					repairSingleItem(item, 0.1);
+				}
+			}
+			
+			return true;
+		}
+		
+		private static void repairSingleItem(ItemStack item, double coefficient) {
+			if(item != null && item.isItemStackDamageable()) {
+				item.setItemDamage((int) Math.max(0, item.getItemDamage() - item.getMaxDamage()*coefficient));
+			}
+		}
+			
 }

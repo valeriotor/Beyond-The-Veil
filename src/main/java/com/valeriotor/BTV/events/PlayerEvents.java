@@ -98,6 +98,11 @@ public class PlayerEvents {
 						ThaumcraftApi.internalMethods.progressResearch(p, "m_FindHamlet");
 					}
 			}
+			
+			// Water Breathing 
+			if(!p.world.isRemote && p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() > 3 && p.getAir() < 300) {
+				p.setAir(299);
+			}
 		}
 	}
 	
