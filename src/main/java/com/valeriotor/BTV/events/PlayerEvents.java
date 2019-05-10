@@ -16,6 +16,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -63,7 +64,7 @@ public class PlayerEvents {
 	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
 		EntityPlayer p = event.getEntityPlayer();
 		if(p instanceof EntityPlayer && p != null) {
-			if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() >= 3) {
+			if(Deities.GREATDREAMER.cap(p).getLevel() >= 3) {
 				if(p.isInsideOfMaterial(Material.WATER)) {
 					if(!EnchantmentHelper.getAquaAffinityModifier(p))
 						event.setNewSpeed(event.getOriginalSpeed() * 5);					
@@ -93,7 +94,7 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
 		if(!event.player.world.isRemote) {			
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", event.player.getCapability(DGProvider.LEVEL_CAP, null).getLevel()), (EntityPlayerMP)event.player);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			PlayerDataHandler.syncPlayerData(event.player);
 		}
 	}
@@ -104,7 +105,7 @@ public class PlayerEvents {
 		List<String> strings = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		
-		event.getEntityPlayer().getCapability(DGProvider.LEVEL_CAP, null).setLevel(event.getOriginal().getCapability(DGProvider.LEVEL_CAP, null).getLevel());	
+		Deities.GREATDREAMER.cap(event.getEntityPlayer()).setLevel(Deities.GREATDREAMER.cap(event.getOriginal()).getLevel());	
 		for(String string : strings) {
 			event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, false);
 		}

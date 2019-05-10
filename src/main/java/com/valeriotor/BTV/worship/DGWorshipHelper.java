@@ -1,4 +1,4 @@
-package com.valeriotor.BTV.util;
+package com.valeriotor.BTV.worship;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
@@ -17,18 +17,18 @@ public class DGWorshipHelper {
 	public static final int MAX_LEVEL = 5; // Will of course change
 	
 	public static void levelUp(EntityPlayer p) {
-		int lvl = p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+		int lvl = Deities.GREATDREAMER.cap(p).getLevel();
 		int slugs = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
 		if(slugs >= getRequiredSlugs(lvl) && hasRequiredQuest(p, lvl)) {
-			p.getCapability(DGProvider.LEVEL_CAP, null).addLevel();
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", p.getCapability(DGProvider.LEVEL_CAP, null).getLevel()), (EntityPlayerMP)p);
+			Deities.GREATDREAMER.cap(p).addLevel();
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(p).getLevel()), (EntityPlayerMP)p);
 			p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SLUGS, 0, false);
 			PlayerDataHandler.syncPlayerData(p);
 		}
 	}
 	
 	public static int getRequiredSlugs(int lvl) {
-		return 90*(int)(1 - Math.pow(1.5, -lvl));
+		return (int) Math.ceil(90*(1 - Math.pow(1.5, -lvl)));
 	}
 	
 	public static boolean hasRequiredQuest(EntityPlayer p, int lvl) {

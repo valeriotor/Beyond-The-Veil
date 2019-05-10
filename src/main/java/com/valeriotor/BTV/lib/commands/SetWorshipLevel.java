@@ -1,7 +1,11 @@
 package com.valeriotor.BTV.lib.commands;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -41,8 +45,8 @@ public class SetWorshipLevel extends CommandBase{
 			}
 		}
 		
-		p.getPlayerByUsername(args[0]).getCapability(DGProvider.LEVEL_CAP, null).setLevel(Integer.valueOf(args[1]));
-		
+		Deities.GREATDREAMER.cap(p.getPlayerByUsername(args[0])).setLevel(Integer.valueOf(args[1]));
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Integer.valueOf(args[1])), p.getPlayerByUsername(args[0]));
 	}
 	
 }

@@ -9,6 +9,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -53,7 +54,7 @@ public class PlayerTickEvents {
 							fish.motionZ = -z + p.motionZ;
 							p.world.spawnEntity(fish);
 							IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-							if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 2 && !data.getString(PlayerDataLib.FISHQUEST)) {
+							if(Deities.GREATDREAMER.cap(p).getLevel() == 2 && !data.getString(PlayerDataLib.FISHQUEST)) {
 								int currentFish = data.getInteger(PlayerDataLib.FISH_CANOE);
 								if(currentFish <= 15) {
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
@@ -84,7 +85,7 @@ public class PlayerTickEvents {
 	
 	private static void waterPowers(EntityPlayer p) {
 		
-		if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() >= 3) {
+		if(Deities.GREATDREAMER.cap(p).getLevel() >= 3) {
 			// TODO Not apply this when transformed
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
@@ -100,7 +101,7 @@ public class PlayerTickEvents {
 		}
 		
 		if(p.world.isRemote) return;
-		if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() > 3) {
+		if(Deities.GREATDREAMER.cap(p).getLevel() > 3) {
 			if(p.getAir() < 300) p.setAir(299);
 		}
 	}

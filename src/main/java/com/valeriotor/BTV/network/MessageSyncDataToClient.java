@@ -2,6 +2,7 @@ package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.worship.Deities;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -50,7 +51,7 @@ public class MessageSyncDataToClient implements IMessage{
 			if(message.value == -999)
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
 			else {
-				if(message.string.equals("level")) Minecraft.getMinecraft().player.getCapability(DGProvider.LEVEL_CAP, null).setLevel(message.value);
+				if(message.string.equals("level")) Deities.GREATDREAMER.cap(Minecraft.getMinecraft().player).setLevel(message.value);
 				else Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
 			}
 			return null;

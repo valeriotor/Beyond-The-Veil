@@ -7,6 +7,7 @@ import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.creativetab.CreativeTabs;
@@ -37,7 +38,7 @@ public class ItemSlug extends ItemFood{
 		if (entityLiving instanceof EntityPlayer)
         {
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
-    		int lvl = entityplayer.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+    		int lvl = Deities.GREATDREAMER.cap(entityplayer).getLevel();
             entityplayer.getFoodStats().addStats(getFoodByLevel(entityplayer, lvl), 1.0F);
             worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
             getEffectsByLevel(lvl).forEach(e -> entityplayer.addPotionEffect(e));

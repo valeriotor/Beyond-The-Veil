@@ -20,6 +20,7 @@ import com.valeriotor.BTV.util.WorldHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -625,7 +626,7 @@ public class DreamHandler {
 	/** Returns the player's Dreaming God level *without* Vacuos bonus.
 	 */
 	public static int getDreamingGodLevel(EntityPlayer p) {
-		return Math.min(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel(), DGWorshipHelper.MAX_LEVEL);
+		return Math.min(Deities.GREATDREAMER.cap(p).getLevel(), DGWorshipHelper.MAX_LEVEL);
 	}
 	
 	/** Gets the difference in DreamingGod level between two players, one of whom is making an offensive Dream and the other

@@ -2,6 +2,7 @@ package com.valeriotor.BTV.events;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EntityDamageSource;
@@ -18,7 +19,7 @@ public class LivingEvents {
 		if(e.getSource() instanceof EntityDamageSource) {
 			if(e.getSource().getTrueSource() instanceof EntityPlayer) {
 				EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
-				int lvl = p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+				int lvl = Deities.GREATDREAMER.cap(p).getLevel();
 				if(lvl >= 3) {
 					if(p.isInWater()) e.setAmount((float) (e.getAmount()*2*Math.log(lvl)));
 					else e.setAmount((float) (e.getAmount()*1.1*Math.log(lvl)));

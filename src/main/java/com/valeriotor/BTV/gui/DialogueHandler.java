@@ -10,6 +10,7 @@ import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToServer;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
+import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -177,7 +178,7 @@ public class DialogueHandler {
 	 * @return A prefix that indicates how friendly Dwellers are to the Player.
 	 */
 	public static String getFriendlyhood(EntityPlayer p) {
-		int level = p.getCapability(DGProvider.LEVEL_CAP, null).getLevel();
+		int level = Deities.GREATDREAMER.cap(p).getLevel();
 		if(level > 5)
 			return "friend";
 		if(level > 3)
