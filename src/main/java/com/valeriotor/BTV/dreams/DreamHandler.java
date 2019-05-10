@@ -16,10 +16,10 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.util.DGWorshipHelper;
 import com.valeriotor.BTV.util.WorldHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,8 +49,6 @@ public class DreamHandler {
 		if(SpreaderLocations.isEmpty()) return;
 		
 		boolean increaseTimesDreamt = false;
-		boolean vacuos = false;
-		boolean alienisDream = false;
 		
 		// Made a "helper" string list so that in the future I may make special dreams based on aspect combos, without/before processing the single dreams.
 		List<String> aspects = Lists.newArrayList();
@@ -61,14 +59,7 @@ public class DreamHandler {
 			if(aspect == null) iter.remove();
 			else aspects.add(aspect);
 		}
-		if(aspects.contains("Vacuos") && k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
-			vacuos = true;
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("vacuos"), (EntityPlayerMP)p);
-		}
-		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") && aspects.contains("Alienis")) {
-			alienisDream = true;
-		}
+		DreamCombos.sortLists(aspects, SpreaderLocations);
 		
 		for(int i = 0; i < SpreaderLocations.size(); i++) {
 			BlockPos pos = SpreaderLocations.get(i);
@@ -107,14 +98,13 @@ public class DreamHandler {
 			case "Potentia": return amplifyEffects(p, p.world);
 			case "Humanus": return searchPlayer(p, p.world);
 			case "Instrumentum": return getPlayerItem(p, p.world);
-			case "Vacuos": return true;
+			case "Vacuos": return voidDream(p, k, p.world);
 			case "Alienis": return contactUnknown(p, k, p.world);
 			case "Bestia": return HigherDreams.findAnimal(p, p.world);
 			case "Mortuus": return HigherDreams.playerDeath(p, p.world);
 			case "Fabrico": return HigherDreams.repairStuff(p, p.world);
-			default: dreamWeight(new int[] {9, 2, 1, 2, 1, 2}, k, p);	// TODO: Add "return" here
+			default: return false;
 		}
-		return false;
 	}
 	
 	public static List<BlockPos> checkBlocks(World world, BlockPos playerPos, IBlockState state, int n) {
@@ -503,6 +493,18 @@ public class DreamHandler {
 	}
 	
 	// ***************************************** STORY DREAMS ***************************************** \\
+	
+	private static boolean voidDream(EntityPlayer p, IPlayerKnowledge k, World w) {
+		if(k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
+			if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos")) {
+				p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("vacuos"), (EntityPlayerMP)p);
+				return true;
+			} else
+				return false;
+		}
+		return false;
+	}
 	
 	private static boolean contactUnknown(EntityPlayer p, IPlayerKnowledge k, World w) {
 		if(!knowsDream(p, "vacuos")) {
