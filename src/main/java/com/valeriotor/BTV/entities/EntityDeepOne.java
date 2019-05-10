@@ -26,6 +26,8 @@ public class EntityDeepOne extends EntityCreature{
 	private boolean isTargetInWater = false;
 	private Block facingBlock;
 	private Block facingBlockUp;
+	private EntityPlayer ignoredPlayer;
+	
 	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
 	public EntityDeepOne(World worldIn) {
 		super(worldIn);
@@ -60,7 +62,7 @@ public class EntityDeepOne extends EntityCreature{
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.tasks.addTask(2, new AIDeepOneAttack(this, 1.5D, true));
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> p != this.ignoredPlayer));
 	 }
 	 
 	 @Override
@@ -79,22 +81,19 @@ public class EntityDeepOne extends EntityCreature{
 	 }
 	 
 	 @Override
-	    public void setAttackTarget(EntityLivingBase entitylivingbaseIn) {
-	        super.setAttackTarget(entitylivingbaseIn);
+	 public void setAttackTarget(EntityLivingBase entitylivingbaseIn) {
+		 super.setAttackTarget(entitylivingbaseIn);
 	 }
 	 
 	 @Override
-	    public boolean attackEntityAsMob(Entity entityIn) {
-	        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)((int)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue()));
+	 public boolean attackEntityAsMob(Entity entityIn) {
+		 boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)((int)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue()));
+		 return flag;
+	 }
 	 
-	        //if(flag) {
-	            //this.applyEnchantments(this, entityIn);
-	        //}
-	 
-	        return flag;
-	    }
-	 
-	
+	public void setIgnoredPlayer(EntityPlayer p) {
+		this.ignoredPlayer = p;
+	}
 	 
 	 public void onLivingUpdate() {
 		 super.onLivingUpdate();
