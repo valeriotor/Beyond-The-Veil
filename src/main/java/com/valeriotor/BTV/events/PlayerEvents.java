@@ -17,6 +17,8 @@ import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -58,54 +60,18 @@ public class PlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void tickEvent(PlayerTickEvent event) {
-		if(event.phase.equals(Phase.END)) {
-			EntityPlayer p = event.player;
-			//Canoe Gifts
-			if(!p.world.isRemote && p.getRidingEntity() instanceof EntityCanoe && (p.world.getBiome(p.getPosition()) == Biomes.OCEAN 
-			   || p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth || p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN)) {
-				if(Math.abs(p.motionX) > 0.01 || Math.abs(p.motionZ) > 0.01) {
-					if((p.world.getWorldTime() & 127) == p.world.rand.nextInt(128)) {
-						double angle = p.world.rand.nextDouble()*2*Math.PI;
-						double x = Math.sin(angle);
-						double z = Math.cos(angle);
-						EntityItem fish = new EntityItem(p.world, p.getPosition().getX() + x, p.getPosition().getY(), p.getPosition().getZ() + z, new ItemStack(Items.FISH));
-						fish.motionX = -x + p.motionX;
-						fish.motionZ = -z + p.motionZ;
-						p.world.spawnEntity(fish);
-						IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-						if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() == 2 && !data.getString(PlayerDataLib.FISHQUEST)) {
-							int currentFish = data.getInteger(PlayerDataLib.FISH_CANOE);
-							if(currentFish <= 15) {
-								data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
-							}else{
-								data.addString(PlayerDataLib.FISHQUEST, false);
-								BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.FISHQUEST), (EntityPlayerMP) p);
-							}
-						}
-					}
+	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
+		EntityPlayer p = event.getEntityPlayer();
+		if(p instanceof EntityPlayer && p != null) {
+			if(p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() >= 3) {
+				if(p.isInsideOfMaterial(Material.WATER)) {
+					if(!EnchantmentHelper.getAquaAffinityModifier(p))
+						event.setNewSpeed(event.getOriginalSpeed() * 5);					
 				}
-			}
-		
-			// Reset times dreamt
-			if(event.player.world.getWorldTime() == 10) event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);; 
-			
-			// Find Hamlet
-			if(!p.world.isRemote && p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.FOUND_HAMLET)) {
-				BlockPos pos = HamletList.get(event.player.world).getClosestHamlet(p.getPosition()); 
-					if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET")) {
-						p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.FOUND_HAMLET, false);
-						ThaumcraftApi.internalMethods.progressResearch(p, "m_FindHamlet");
-					}
-			}
-			
-			// Water Breathing 
-			if(!p.world.isRemote && p.getCapability(DGProvider.LEVEL_CAP, null).getLevel() > 3 && p.getAir() < 300) {
-				p.setAir(299);
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void damageEvent(LivingDamageEvent event) {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
