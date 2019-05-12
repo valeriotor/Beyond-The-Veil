@@ -75,7 +75,6 @@ public class ItemSawCleaver extends ItemSword{
 			if(player.getCooledAttackStrength(0) == 1 && timeSinceLastAttack < 100 && timeSinceLastAttack > 10) {
 				if(toExtend) {
 					this.extendedAttack(player, player, true);
-					System.out.println("Should do it");
 					if(!worldIn.isRemote) BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransformattack), p.toLong()), t);
 				}
 				else if(!worldIn.isRemote) BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransform), p.toLong()), t);
