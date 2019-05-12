@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities.render;
 
 import com.valeriotor.BTV.entities.EntityCanoe;
+import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 
@@ -32,6 +33,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityCanoe> createRenderFor(RenderManager manager) 
 			{return new RenderCanoe(manager);}
+			});
+		
+		//Canoe
+		RenderingRegistry.registerEntityRenderingHandler(EntityCrawlingVillager.class, new IRenderFactory<EntityCrawlingVillager>(){
+			@Override
+			public Render<EntityCrawlingVillager> createRenderFor(RenderManager manager) 
+			{return new RenderCrawlingVillager(manager);}
 			});
 	}
 }

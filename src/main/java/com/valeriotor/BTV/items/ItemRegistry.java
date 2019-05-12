@@ -38,7 +38,7 @@ public class ItemRegistry {
 	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockNames.REDSTONEWEED).setUnlocalizedName(BlockNames.REDSTONEWEED);
 	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
 	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
-	
+	public static final ItemBlackjack blackjack = new ItemBlackjack();
 	
 	
 	
@@ -70,6 +70,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(redstone_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(ghost_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(vanilla_weed_seeds, 0, "inventory");
+        ClientProxy.registerItemRenderer(blackjack, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -142,6 +143,7 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.wolf_medallion);
     	event.getRegistry().register(ItemRegistry.tablet);
     	event.getRegistry().register(ItemRegistry.bronze_sphere);
+    	event.getRegistry().register(ItemRegistry.blackjack);
     	
     	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);
