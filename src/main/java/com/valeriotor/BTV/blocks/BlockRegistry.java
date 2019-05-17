@@ -49,6 +49,7 @@ public class BlockRegistry {
 	public static final PlantTerra PlantTerra = new PlantTerra(BlockNames.PLANTTERRA);
 	public static final PlantOrdo PlantOrdo = new PlantOrdo(BlockNames.PLANTORDO);
 	public static final BlockMutator BlockMutator = new BlockMutator(BlockNames.MUTATOR);
+	public static final BlockWateryCradle BlockWateryCradle = new BlockWateryCradle(BlockNames.WATERYCRADLE);
 	
 	
 	@SubscribeEvent
@@ -82,5 +83,6 @@ public class BlockRegistry {
 	   	event.getRegistry().register(PlantTerra);
 	   	event.getRegistry().register(PlantOrdo);
 	   	event.getRegistry().register(BlockMutator);
+	   	event.getRegistry().register(BlockWateryCradle);
 	}
 }

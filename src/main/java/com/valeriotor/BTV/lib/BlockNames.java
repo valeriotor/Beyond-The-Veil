@@ -12,6 +12,7 @@ public class BlockNames {
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
 	public static final String SLUGBAIT = "slug_bait";
+	public static final String WATERYCRADLE = "watery_cradle";
 	public static final String WORNBRICKS = "worn_bricks";
 	public static final String WORNBRICKSTAIRS = "worn_brick_stairs";
 	

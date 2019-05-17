@@ -11,6 +11,7 @@ import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 import com.valeriotor.BTV.tileEntities.TileMutator;
 import com.valeriotor.BTV.tileEntities.TilePlantTerra;
 import com.valeriotor.BTV.tileEntities.TileSlugBait;
+import com.valeriotor.BTV.tileEntities.TileWateryCradle;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -57,6 +58,8 @@ public class RegistryHelper {
 		GameRegistry.registerTileEntity(TileMutator.class, References.MODID + ":tilemutator");
 		GameRegistry.registerTileEntity(TileArborealGeneratorBottom.class, References.MODID + ":tilearboreal_generator");
 		GameRegistry.registerTileEntity(TilePlantTerra.class, References.MODID + ":tileplantterra");
+		GameRegistry.registerTileEntity(TileWateryCradle.class, References.MODID + ":tilewaterycradle");
+		
 	}
 	
 	
