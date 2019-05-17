@@ -37,7 +37,7 @@ public class ItemTablet extends Item{
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.MISC);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

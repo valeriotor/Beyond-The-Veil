@@ -23,7 +23,7 @@ public class ItemDrink extends Item{
 	public ItemDrink(String name) {
 		setRegistryName(References.MODID + ":" + name);
 		setUnlocalizedName(name);
-		this.setCreativeTab(CreativeTabs.FOOD);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

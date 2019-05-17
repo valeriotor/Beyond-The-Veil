@@ -26,7 +26,7 @@ public class TestItem extends Item //implements IHasModel
 	public TestItem() {
 		setRegistryName(References.MODID +":testitem");
 		setUnlocalizedName("testitem");
-		setCreativeTab(CreativeTabs.BREWING);
+		setCreativeTab(References.BTV_TAB);
 		setMaxStackSize(1);
 	}
 	

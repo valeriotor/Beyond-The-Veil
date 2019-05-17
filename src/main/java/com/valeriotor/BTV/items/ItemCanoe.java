@@ -26,7 +26,7 @@ public class ItemCanoe extends Item{
 	public ItemCanoe() {
 		this.setRegistryName(References.MODID + ":canoe");
 		this.setUnlocalizedName("canoe");
-		this.setCreativeTab(CreativeTabs.TRANSPORTATION);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

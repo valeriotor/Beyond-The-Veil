@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class ItemSlugCatcher extends Item{
 	public ItemSlugCatcher() {
 		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.TOOLS);
+		this.setCreativeTab(References.BTV_TAB);
 		setRegistryName(References.MODID +":slugcatcher");
 		setUnlocalizedName("slugcatcher");
 	}

@@ -30,7 +30,7 @@ public class ItemSlug extends ItemFood{
 		super(4, false);
 		this.setRegistryName(References.MODID + ":slug");
 		this.setUnlocalizedName("slug");
-		this.setCreativeTab(CreativeTabs.MISC);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

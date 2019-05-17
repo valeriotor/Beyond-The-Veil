@@ -36,7 +36,7 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 public class ItemFlute extends Item{
 	public ItemFlute() {
 		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.COMBAT);
+		this.setCreativeTab(References.BTV_TAB);
 		this.setRegistryName(References.MODID + ":flute");
 		this.setUnlocalizedName("flute");
 		this.setMaxDamage(250);

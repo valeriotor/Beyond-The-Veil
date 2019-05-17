@@ -26,7 +26,7 @@ public class ItemWolfMedallion extends Item implements IBauble{
 	
 	public ItemWolfMedallion() {
 		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.TOOLS);
+		this.setCreativeTab(References.BTV_TAB);
 		setRegistryName(References.MODID +":wolf_medallion");
 		setUnlocalizedName("wolf_medallion");
 	}

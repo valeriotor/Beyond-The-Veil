@@ -51,6 +51,7 @@ public class ItemSawCleaver extends ItemSword{
             }
         });
 		this.setMaxDamage(900);
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override

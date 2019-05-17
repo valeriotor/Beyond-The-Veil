@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.items;
 
+import com.valeriotor.BTV.lib.References;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,6 +20,7 @@ public class ItemSpecialGrassSeeds extends ItemSeeds{
 	public ItemSpecialGrassSeeds(Block crops, Block grass) {
 		super(crops, Blocks.FARMLAND);
 		this.grass = grass;
+		this.setCreativeTab(References.BTV_TAB);
 	}
 	
 	@Override
