@@ -151,21 +151,11 @@ public abstract class GuiOptionWheel extends GuiScreen{
 		}
 	}
 	
-	protected boolean isNorthOptionAvailable() {
-		return false;
-	}
+	protected boolean isNorthOptionAvailable() {return false;}
+	protected boolean isWestOptionAvailable() {return false;}
+	protected boolean isSouthOptionAvailable() {return false;}
+	protected boolean isEastOptionAvailable() {return false;}
 	
-	protected boolean isWestOptionAvailable() {
-		return false;
-	}
-	
-	protected boolean isSouthOptionAvailable() {
-		return false;
-	}
-	
-	protected boolean isEastOptionAvailable() {
-		return false;
-	}
 	
 	public final ResourceLocation getOptionTexture(int option) {
 		switch(option) {
@@ -177,21 +167,11 @@ public abstract class GuiOptionWheel extends GuiScreen{
 		}
 	}
 	
-	public ResourceLocation getNorthOptionTexture() {
-		return null;
-	}
-
-	public ResourceLocation getWestOptionTexture() {
-		return null;
-	}
+	public ResourceLocation getNorthOptionTexture() {return null;}
+	public ResourceLocation getWestOptionTexture() {return null;}
+	public ResourceLocation getSouthOptionTexture() {return null;}
+	public ResourceLocation getEastOptionTexture() {return null;}
 	
-	public ResourceLocation getSouthOptionTexture() {
-		return null;
-	}
-	
-	public ResourceLocation getEastOptionTexture() {
-		return null;
-	}
 	
 	public final void doAction(int option) {
 		switch(option) {
