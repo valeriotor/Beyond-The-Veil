@@ -24,6 +24,10 @@ lore.wolf_medallion=This metal artifact gives a soft hum whenever close to monst
 lore.bronze_sphere=No no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
 tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher it?
+lore.spine=Willpower resides in the spine.
+
+iteminfo.held_villager.spineless=A villager lacking his dorsal spine.
+iteminfo.held_villager.spineful=An unconscious villager, ready for experimentation.
 
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.

@@ -39,6 +39,9 @@ public class ItemRegistry {
 	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
 	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
 	public static final ItemBlackjack blackjack = new ItemBlackjack();
+	public static final ItemMaterial spine = new ItemMaterial("spine");
+	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
+	
 	
 	
 	
@@ -71,6 +74,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(ghost_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(vanilla_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(blackjack, 0, "inventory");
+        ClientProxy.registerItemRenderer(spine, 0, "inventory");
+        ClientProxy.registerItemRenderer(held_villager, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -146,6 +151,8 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.tablet);
     	event.getRegistry().register(ItemRegistry.bronze_sphere);
     	event.getRegistry().register(ItemRegistry.blackjack);
+    	event.getRegistry().register(ItemRegistry.spine);
+    	event.getRegistry().register(ItemRegistry.held_villager);
     	
     	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);

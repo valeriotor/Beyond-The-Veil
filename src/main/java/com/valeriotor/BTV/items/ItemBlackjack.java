@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 @Mod.EventBusSubscriber
 public class ItemBlackjack extends Item{
 	
@@ -26,9 +27,10 @@ public class ItemBlackjack extends Item{
 	public static void knockoutVillager(PlayerInteractEvent.EntityInteractSpecific event) {
 		if(!(event.getTarget() instanceof EntityVillager)) return;
 		EntityVillager vil = (EntityVillager) event.getTarget();
+		if(vil.getProfession() == 5) return;
 		EntityPlayer p = (EntityPlayer)event.getEntityPlayer();
 		if(!(p.getHeldItemMainhand().getItem() instanceof ItemBlackjack)) return;
-		if(Math.abs(vil.rotationYawHead - p.rotationYawHead) < 300 && vil.getDistance(p) > 0) {
+		if(/*Math.abs(vil.rotationYawHead - p.rotationYawHead) < 300 && */vil.getDistance(p) > 0.1) {
 			BlockPos pos = vil.getPos();
 			if(!event.getWorld().isRemote) {
 				EntityCrawlingVillager worm = new EntityCrawlingVillager(event.getWorld(), true);
