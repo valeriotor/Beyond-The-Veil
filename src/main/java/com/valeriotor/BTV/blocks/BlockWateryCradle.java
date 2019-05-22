@@ -1,8 +1,8 @@
 package com.valeriotor.BTV.blocks;
 
-import java.util.List;
-
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
+import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientStatus;
+import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -12,8 +12,9 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -40,9 +41,11 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 	
 	
 	@Override
-	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(state.getValue(PART) == EnumPart.STRUCTURE) {
+		if(hand != EnumHand.MAIN_HAND) return false;
+		EnumPart part = state.getValue(PART);
+		if(part == EnumPart.STRUCTURE) {
 			for(EnumFacing dir : EnumFacing.VALUES) {
 				for(int i = 1; i <= 2; i++) {
 					if(w.getBlockState(pos.offset(dir, i)).getBlock() == this && w.getBlockState(pos.offset(dir, i)).getValue(PART) == EnumPart.STRUCTURE) {
@@ -55,8 +58,34 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 					} else break;
 				}
 			}
+		} else if(part == EnumPart.HEAD){
+			TileWateryCradle te = getTE(w, pos);
+			if(te == null) return true;
+			// System.out.println(te.getPatientStatus().toString()); //DEBUG
+			ItemStack stack = p.getHeldItem(hand);
+			PatientStatus status = PatientStatus.getPatientFromItem(stack);
+			if(w.isRemote && (stack == null || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE))) return true;
+			if(!w.isRemote) {
+				if(stack == null || stack.getItem() == Items.AIR) {
+					p.addItemStackToInventory(te.getPatientItem());
+					te.setPatient(PatientStatus.getNoPatientStatus());
+					return true;
+				} else {
+					if(status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE) {
+						te.setPatient(status);
+						stack.shrink(1);
+						return true;
+					}
+				}
+			}
 		}
-		return super.onBlockActivated(w, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return false;
+	}
+	
+	private TileWateryCradle getTE(World w, BlockPos pos) {
+		TileEntity te = w.getTileEntity(pos);
+		if(te != null && te instanceof TileWateryCradle) return (TileWateryCradle) te;
+		return null;
 	}
 	
 	@Override
