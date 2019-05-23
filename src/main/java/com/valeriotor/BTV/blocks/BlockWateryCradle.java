@@ -1,5 +1,8 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.gui.Guis;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientStatus;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
@@ -17,6 +20,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -61,7 +65,7 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 		} else if(part == EnumPart.HEAD){
 			TileWateryCradle te = getTE(w, pos);
 			if(te == null) return true;
-			// System.out.println(te.getPatientStatus().toString()); //DEBUG
+			System.out.println(te.getPatientStatus().toString()); //DEBUG
 			ItemStack stack = p.getHeldItem(hand);
 			PatientStatus status = PatientStatus.getPatientFromItem(stack);
 			if(w.isRemote && (stack == null || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE))) return true;
@@ -70,7 +74,10 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 					p.addItemStackToInventory(te.getPatientItem());
 					te.setPatient(PatientStatus.getNoPatientStatus());
 					return true;
-				} else {
+				} else if(stack.getItem() == ItemRegistry.blackjack) {
+					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle);
+				}
+				else {
 					if(status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE) {
 						te.setPatient(status);
 						stack.shrink(1);
@@ -115,6 +122,17 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
 	}
 	
 	@Override

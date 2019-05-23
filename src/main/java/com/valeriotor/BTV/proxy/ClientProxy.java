@@ -7,6 +7,8 @@ import com.valeriotor.BTV.gui.GuiSleepingChamber;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
+import com.valeriotor.BTV.tileEntities.TileWateryCradle;
+import com.valeriotor.BTV.tileEntities.renderers.TESRWateryCradle;
 import com.valeriotor.BTV.util.RegistryHelper;
 
 import net.minecraft.client.Minecraft;
@@ -18,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -47,6 +50,7 @@ public class ClientProxy extends CommonProxy {
     	  RegistryHelper.registerColorHandlers();
           this.cEvents = new ClientEvents();
           MinecraftForge.EVENT_BUS.register(this.cEvents);
+          ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
     }
     
     

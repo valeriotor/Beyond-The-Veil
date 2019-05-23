@@ -2,10 +2,15 @@ package com.valeriotor.BTV.tileEntities;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.entities.EntityCrawlingVillager;
+import com.valeriotor.BTV.entities.render.RenderCrawlingVillager;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +25,7 @@ public class TileWateryCradle extends TileEntity{
 	private boolean spineless = false;
 	private boolean filledBrain = false;
 	private boolean heartless = false;
+	private EntityLiving dummyEntity = null;
 	
 	public TileWateryCradle() {
 		
@@ -91,6 +97,19 @@ public class TileWateryCradle extends TileEntity{
 		this.filledBrain = compound.getBoolean("filledBrain");
 		this.heartless = compound.getBoolean("heartless");
 		super.readFromNBT(compound);
+	}
+
+	private EntityLiving getInternalDummyEntity(PatientTypes type) {
+		switch(type) {
+		case VILLAGER: return new EntityCrawlingVillager(this.world);
+		default: return null;
+		}
+	}
+	
+	public EntityLiving getDummyEntity() {
+		if(this.dummyEntity == null)
+			this.dummyEntity = this.getInternalDummyEntity(patient);
+		return this.dummyEntity;
 	}
 	
 	private int getIdByType(PatientTypes type) {
@@ -166,6 +185,7 @@ public class TileWateryCradle extends TileEntity{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		handleUpdateTag(pkt.getNbtCompound());
+		PatientTypes type = PatientTypes.values()[pkt.getNbtCompound().getInteger("patientType")];
 	}
 	
 	private void sendUpdates(World worldObj) {
@@ -174,7 +194,7 @@ public class TileWateryCradle extends TileEntity{
 		world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
 	}
 	
-	private IBlockState getState() {
+	public IBlockState getState() {
 		return world.getBlockState(pos);
 	}
 	

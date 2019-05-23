@@ -90,7 +90,4 @@ public class ModelCrawlingVillager extends ModelBase {
         modelRenderer.rotateAngleZ = z;
     }
     
-    public void knockUnconscious(EntityCrawlingVillager e, float partialTicks) {
-    	//this.field_78188_e.rotateAngleX = (e.getTicksToFall()-partialTicks)/20;
-    }
 }
