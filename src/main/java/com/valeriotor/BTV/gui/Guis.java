@@ -21,6 +21,7 @@ public class Guis {
 	public static String GuiDialogueDweller = "GDD";
 	public static String GuiTablet = "GT";
 	public static String GuiAlienisDream = "GAD";
+	public static String GuiWateryCradle = "GWC";
 	
 	private static HashMap<String, Class<? extends GuiScreen>> guis = new HashMap<>();
 	
@@ -42,6 +43,7 @@ public class Guis {
 		guis.put(GuiDialogueDweller, GuiDialogueDweller.class);
 		guis.put(GuiTablet, GuiTablet.class);
 		guis.put(GuiAlienisDream, GuiAlienisDream.class);
+		guis.put(GuiWateryCradle, GuiWateryCradle.class);
 		
 		
 	}

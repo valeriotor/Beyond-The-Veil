@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.valeriotor.BTV.lib.References;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,7 +29,7 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.mc.renderEngine.bindTexture(optionTexture);
+		Minecraft.getMinecraft().renderEngine.bindTexture(optionTexture);
 		int selectedOption = this.getHoveredOption(mouseX, mouseY);
 		float scale = ((float)this.counter)/(this.bootTime());
 		GlStateManager.pushMatrix();
@@ -62,7 +63,7 @@ public abstract class GuiOptionWheel extends GuiScreen{
 					
 			}
 		}
-		if(selectedOption != -1) {
+		if(selectedOption != -1 && isOptionAvailable(selectedOption)) {
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(1.6, 1.6, 1.6);
 			// TODO: Get config option to make it appear below the selected option and not on the bottom part of the screen 
@@ -95,9 +96,9 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		int option = this.getHoveredOption(mouseX, mouseY);
 		if(this.isOptionAvailable(option)) {
-			this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			this.doAction(option);
-			this.mc.displayGuiScreen((GuiScreen)null);
+			Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
