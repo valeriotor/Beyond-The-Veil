@@ -69,16 +69,19 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 			System.out.println(te.getPatientStatus().toString()); //DEBUG
 			ItemStack stack = p.getHeldItem(hand);
 			PatientStatus status = PatientStatus.getPatientFromItem(stack);
-			if(w.isRemote && (stack == null || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE))) return true;
+			if(w.isRemote) {
+				if(stack == null || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE)) return true;
+				if(stack.getItem() == ItemRegistry.blackjack) { // DEBUG 
+					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle, pos);
+					return true;
+				}
+			}
 			if(!w.isRemote) {
 				if(stack == null || stack.getItem() == Items.AIR) {
 					p.addItemStackToInventory(te.getPatientItem());
 					te.setPatient(PatientStatus.getNoPatientStatus());
 					return true;
-				} else if(stack.getItem() == ItemRegistry.blackjack) {
-					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle);
-				}
-				else {
+				} else {
 					if(status != null) {
 						if(te.getPatientStatus().getPatientType() == PatientTypes.NONE) {
 							te.setPatient(status);
