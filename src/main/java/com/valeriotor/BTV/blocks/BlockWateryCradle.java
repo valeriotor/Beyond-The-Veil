@@ -79,9 +79,11 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle);
 				}
 				else {
-					if(status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE) {
-						te.setPatient(status);
-						stack.shrink(1);
+					if(status != null) {
+						if(te.getPatientStatus().getPatientType() == PatientTypes.NONE) {
+							te.setPatient(status);
+							stack.shrink(1);
+						}
 						return true;
 					}
 				}
