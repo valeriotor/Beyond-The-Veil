@@ -15,6 +15,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -117,6 +118,19 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 				w.destroyBlock(pos, true);
 			}
 		}
+	}
+	
+	@Override
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		if(state.getValue(PART) == EnumPart.HEAD) {
+			TileWateryCradle te = this.getTE(w, pos);
+			if(te != null) {
+				ItemStack stack = te.getPatientItem();
+				EntityItem item = new EntityItem(w, pos.getX(), pos.getY(), pos.getZ(), stack);
+				w.spawnEntity(item);
+			}
+		}
+		super.breakBlock(w, pos, state);
 	}
 	
 	@Override
