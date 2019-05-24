@@ -44,7 +44,7 @@ public class CommonProxy {
     	RegisterEntities.register();
     }
     
-    public void openGui(String id) {
+    public void openGui(String id, Object... args) {
     	
     }
     

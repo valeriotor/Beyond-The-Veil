@@ -36,7 +36,6 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         this.registerRenders();
-        Guis.registerGuis();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
         }
@@ -69,8 +68,8 @@ public class ClientProxy extends CommonProxy {
     }
     
     @Override
-    public void openGui(String id) {
-    	Minecraft.getMinecraft().displayGuiScreen(Guis.getGui(id));
+    public void openGui(String id, Object... args) {
+    	Minecraft.getMinecraft().displayGuiScreen(Guis.getGui(id, args));
     }
     
     @Override
