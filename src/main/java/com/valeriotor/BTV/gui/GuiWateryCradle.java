@@ -20,12 +20,6 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	}
 	
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		System.out.print(this.coords[0]);
-		super.drawScreen(mouseX, mouseY, partialTicks);
-	}
-	
-	@Override
 	public String getGuiLangName() {
 		return "guiWateryCradle";
 	}
