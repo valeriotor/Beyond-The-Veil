@@ -104,6 +104,7 @@ public class EntityCrawlingVillager extends EntityCreature{
 			if(!this.world.isRemote) {
 				ItemStack item = new ItemStack(ItemRegistry.held_villager);
 				ItemHelper.checkTagCompound(item).setBoolean("spineless", !this.unconscious);
+				item.getTagCompound().setInteger("profession", this.getProfessionID());
 				player.addItemStackToInventory(item);
 				this.world.removeEntity(this);
 			}

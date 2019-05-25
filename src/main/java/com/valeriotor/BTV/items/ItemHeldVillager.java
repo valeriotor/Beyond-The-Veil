@@ -44,6 +44,7 @@ public class ItemHeldVillager extends Item {
 		}
 		EntityCrawlingVillager worm = new EntityCrawlingVillager(w, !spineless);
 		worm.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
+		worm.setProfession(ItemHelper.checkIntTag(player.getHeldItem(hand), "profession", 0));
 		w.spawnEntity(worm);
 		player.getHeldItem(hand).shrink(1);
 		return EnumActionResult.SUCCESS;
