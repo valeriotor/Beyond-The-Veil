@@ -41,6 +41,7 @@ public class ItemRegistry {
 	public static final ItemBlackjack blackjack = new ItemBlackjack();
 	public static final ItemMaterial spine = new ItemMaterial("spine");
 	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
+	public static final ItemMaterial surgery_tools = new ItemMaterial("surgery_tools");
 	
 	
 	
@@ -76,6 +77,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(blackjack, 0, "inventory");
         ClientProxy.registerItemRenderer(spine, 0, "inventory");
         ClientProxy.registerItemRenderer(held_villager, 0, "inventory");
+        ClientProxy.registerItemRenderer(surgery_tools, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -153,6 +155,7 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.blackjack);
     	event.getRegistry().register(ItemRegistry.spine);
     	event.getRegistry().register(ItemRegistry.held_villager);
+    	event.getRegistry().register(ItemRegistry.surgery_tools);
     	
     	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);

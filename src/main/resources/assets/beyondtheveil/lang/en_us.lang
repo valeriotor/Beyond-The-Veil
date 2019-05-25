@@ -25,6 +25,7 @@ lore.bronze_sphere=No no no, this isn't possible, this simply can't be. I KNOW t
 tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher it?
 lore.spine=Willpower resides in the spine.
+lore.surgery_tools=A set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
 
 iteminfo.held_villager.spineless=A villager lacking his dorsal spine.
 iteminfo.held_villager.spineful=An unconscious villager, ready for experimentation.

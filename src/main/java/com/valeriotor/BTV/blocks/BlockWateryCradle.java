@@ -71,7 +71,7 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 			PatientStatus status = PatientStatus.getPatientFromItem(stack);
 			if(w.isRemote) {
 				if(stack.getItem() == Items.AIR || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE)) return true;
-				if(stack.getItem() == ItemRegistry.blackjack && te.getPatientStatus().getPatientType() != PatientTypes.NONE) { // DEBUG 
+				if(stack.getItem() == ItemRegistry.surgery_tools && te.getPatientStatus().getPatientType() != PatientTypes.NONE) {
 					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle, pos);
 					return true;
 				}
