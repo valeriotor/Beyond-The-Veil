@@ -64,6 +64,7 @@ public class TileWateryCradle extends TileEntity{
 		return this.heartless;
 	}
 	
+	
 	public PatientStatus getPatientStatus() {
 		return new PatientStatus(this.patient, this.spineless, this.filledBrain, this.heartless);
 	}
@@ -127,10 +128,10 @@ public class TileWateryCradle extends TileEntity{
 	}
 	
 	public static class PatientStatus {
-		private PatientTypes patient = PatientTypes.NONE;
-		private boolean spineless = false;
-		private boolean filledBrain = false;
-		private boolean heartless = false;
+		private final PatientTypes patient;
+		private final boolean spineless;
+		private final boolean filledBrain;
+		private final boolean heartless;
 		
 		
 		private PatientStatus(PatientTypes type, boolean spineless, boolean filledBrain, boolean heartless) {
@@ -166,6 +167,11 @@ public class TileWateryCradle extends TileEntity{
 		public static PatientStatus getNoPatientStatus() {
 			return new PatientStatus(PatientTypes.NONE, false, false, false);
 		}
+		
+		public PatientStatus withSpineless(boolean spineless) {return new PatientStatus(this.patient, spineless, this.filledBrain, this.heartless);}
+		public PatientStatus withFilledBrain(boolean filledBrain) {return new PatientStatus(this.patient, this.spineless, filledBrain, this.heartless);}
+		public PatientStatus withHeartless(boolean heartless) {return new PatientStatus(this.patient, this.spineless, this.filledBrain, heartless);}
+		
 	}
 	
 	

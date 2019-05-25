@@ -48,5 +48,11 @@
 		"sounds": [
 			"beyondtheveil:dream_alienis"
 		]
+	},
+	"surgery_rip":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:surgery_rip"
+		]
 	}
 }

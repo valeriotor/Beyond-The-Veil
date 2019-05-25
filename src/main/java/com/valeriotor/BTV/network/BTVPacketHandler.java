@@ -18,6 +18,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncAntiqueNBT.SyncAntiqueNBTMessageHandler.class, MessageSyncAntiqueNBT.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSyncDialogueData.SyncDialogueDataMessageHandler.class, MessageSyncDialogueData.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSyncDataToServer.SyncDataToServerMessageHandler.class, MessageSyncDataToServer.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageWateryCradle.WateryCradleMessageHandler.class, MessageWateryCradle.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);

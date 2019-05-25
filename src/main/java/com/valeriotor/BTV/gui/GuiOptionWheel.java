@@ -43,7 +43,7 @@ public abstract class GuiOptionWheel extends GuiScreen{
 			GlStateManager.pushMatrix();
 			GlStateManager.enableAlpha();
 			GlStateManager.enableBlend();
-			if(selectedOption == i)
+			if(selectedOption == i || this.isOptionGreyedOut(i))
 				GlStateManager.color(1, 1, 1, (float) 0.2);
 			else
 				GlStateManager.color(1, 1, 1, (float) 0.6);
@@ -55,13 +55,13 @@ public abstract class GuiOptionWheel extends GuiScreen{
 			for(int i = 0; i < 4; i++) {
 				if(!this.isOptionAvailable(i)) continue;
 				if(this.getOptionTexture(i) == null) continue;
-				if(selectedOption == i) {
+				if(selectedOption == i && !this.isOptionGreyedOut(i)) {
 					GlStateManager.pushMatrix();
 					GlStateManager.scale(1.6, 1.6, 1.6);
 				}
 				this.mc.renderEngine.bindTexture(this.getOptionTexture(i));
 				drawModalRectWithCustomSizedTexture(xPos[i]+18+16*(i-2)*(i%2), yPos[i]+18+16*(i-1)*((i+1)%2), 0, 0, 60, 60, 60, 60);
-				if(selectedOption == i) {
+				if(selectedOption == i && !this.isOptionGreyedOut(i)) {
 					GlStateManager.popMatrix();
 				}
 					
@@ -99,7 +99,7 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		int option = this.getHoveredOption(mouseX, mouseY);
-		if(this.isOptionAvailable(option)) {
+		if(this.isOptionAvailable(option) && !this.isOptionGreyedOut(option)) {
 			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			this.doAction(option);
 			Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
@@ -160,6 +160,22 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	protected boolean isWestOptionAvailable() {return false;}
 	protected boolean isSouthOptionAvailable() {return false;}
 	protected boolean isEastOptionAvailable() {return false;}
+	
+
+	public final boolean isOptionGreyedOut(int option) {
+		switch(option) {
+		case 0: return this.isNorthOptionGreyedOut();
+		case 1: return this.isWestOptionGreyedOut();
+		case 2: return this.isSouthOptionGreyedOut();
+		case 3: return this.isEastOptionGreyedOut();
+		default: return false;
+		}
+	}
+	
+	protected boolean isNorthOptionGreyedOut() {return false;}
+	protected boolean isWestOptionGreyedOut() {return false;}
+	protected boolean isSouthOptionGreyedOut() {return false;}
+	protected boolean isEastOptionGreyedOut() {return false;}
 	
 	
 	public final ResourceLocation getOptionTexture(int option) {
