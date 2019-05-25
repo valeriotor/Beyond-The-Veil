@@ -48,7 +48,7 @@ public class RegistryHelper {
 	
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
-		
+		ItemRegistry.initModels();
 	}
 	
 	public static void registerTileEntities() {
