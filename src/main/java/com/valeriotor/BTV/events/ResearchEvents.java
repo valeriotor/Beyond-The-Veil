@@ -30,7 +30,6 @@ public class ResearchEvents {
 	
 	@SubscribeEvent
 	public void researchEvent(Research event) {
-		System.out.println(event.getResearchKey());
 		switch(event.getResearchKey()) {
 		case "!minecraft:water_bucket0":
 			ThaumcraftApi.internalMethods.addKnowledge(event.getPlayer(), EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BEYOND_THE_VEIL"), 16);
