@@ -12,11 +12,13 @@ public class KeyHandler {
 	
 	public KeyBinding dodge = new KeyBinding(I18n.format("keys.dodge"), 56, "Beyond the Veil");
 	public KeyBinding medallion = new KeyBinding(I18n.format("keys.medallion"), 44, "Beyond the Veil");
+	public KeyBinding power = new KeyBinding(I18n.format("keys.power"), 37, "Beyond the Veil");
 	
 	
 	public KeyHandler() {
 		ClientRegistry.registerKeyBinding(dodge);
 		ClientRegistry.registerKeyBinding(medallion);
+		ClientRegistry.registerKeyBinding(power);
 	}
 	
 }

@@ -30,26 +30,31 @@ public class Worship {
 		}
 	}
 	
-	private static final ImmutableList<IActivePower> powers = new ImmutableList.Builder<IActivePower>()
-			.add(SummonDeepOnes.getInstance())
-			.build();
+	private static final IActivePower NULL_POWER = new IActivePower() {
+		@Override public boolean hasRequirement(EntityPlayer p) {return false;}
+		@Override public int getIndex() {return 0;}
+		@Override public Deities getDeity() {return null;}
+		@Override public int getCooldownTicks() {return 0;}
+		@Override public boolean activatePower(EntityPlayer p) {return false;}
+	};
 	
 	public static IActivePower getPower(EntityPlayer p) {
-		Deities deity = getSelectedDeity(p);
-		System.out.println(deity.name());
-		if(deity == Deities.NONE) return null;
-		int index = getSelectedPower(p);
-		System.out.println(index);
-		for(IActivePower pow : powers) {
-			if(pow.getDeity() == deity && pow.getIndex() == index) {
-				if(pow.hasRequirement(p)) return pow;
-				break;
-			}
-		}
-		return null;
+		int index = getSelectedPowerID(p);
+		return getSpecificPower(p, index);
 	}
 	
-	public static int getSelectedPower(EntityPlayer p) {
+	public static IActivePower getSpecificPower(EntityPlayer p, int index) {
+		Deities deity = getSelectedDeity(p);
+		if(deity == Deities.NONE) return NULL_POWER;
+		if(deity == Deities.GREATDREAMER) {
+			switch(index) {
+			case 0: return SummonDeepOnes.getInstance();
+			}
+		}
+		return NULL_POWER;
+	}
+	
+	public static int getSelectedPowerID(EntityPlayer p) {
 		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_POWER, 0, false);
 	}
 }

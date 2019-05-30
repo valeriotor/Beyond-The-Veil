@@ -9,6 +9,8 @@ public interface IActivePower {
 	public boolean activatePower(EntityPlayer p);
 	public int getCooldownTicks();
 	public Deities getDeity();
+	public int getIndex();
+	public boolean hasRequirement(EntityPlayer p);
 	
 	
 }

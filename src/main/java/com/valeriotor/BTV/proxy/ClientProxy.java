@@ -3,6 +3,7 @@ package com.valeriotor.BTV.proxy;
 import com.valeriotor.BTV.entities.render.RegisterRenders;
 import com.valeriotor.BTV.events.ClientEvents;
 import com.valeriotor.BTV.gui.DialogueRequirement;
+import com.valeriotor.BTV.gui.GuiDeityPowers;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
@@ -47,6 +48,7 @@ public class ClientProxy extends CommonProxy {
         RegistryHelper.registerColorHandlers();
         this.cEvents = new ClientEvents();
         MinecraftForge.EVENT_BUS.register(this.cEvents);
+        MinecraftForge.EVENT_BUS.register(new GuiDeityPowers(Minecraft.getMinecraft()));
         ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
     }
     
