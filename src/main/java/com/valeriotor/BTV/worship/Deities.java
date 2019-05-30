@@ -8,9 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 
 public enum Deities {
+	NONE(""),
 	GREATDREAMER("greatdreamer"); // This is gonna stay like this for a loooooooooooooong time
 	
-	public static ImmutableMap<String, Capability<IWorship>> map = ImmutableMap.of(
+	public static final ImmutableMap<String, Capability<IWorship>> map = ImmutableMap.of(
 			"greatdreamer", DGProvider.LEVEL_CAP
 			);
 	private String key;
@@ -22,6 +23,7 @@ public enum Deities {
 	public String getKey() {return this.key;}
 	
 	public IWorship cap(EntityPlayer p) {
+		if(this == NONE) return null;
 		return p.getCapability(map.get(this.key), null);
 	}
 	

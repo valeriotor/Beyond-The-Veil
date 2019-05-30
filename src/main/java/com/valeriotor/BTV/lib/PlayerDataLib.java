@@ -9,6 +9,10 @@ public class PlayerDataLib {
 	public static final String DEATH_X = "deathX";
 	public static final String DEATH_Y = "deathY";
 	public static final String DEATH_Z = "deathZ";
+	public static final String SELECTED_DEITY = "selected_deity";
+	public static final String SELECTED_POWER = "currentPower";
+	
+	
 	
 	
 	// Strings (Non-temporary)
