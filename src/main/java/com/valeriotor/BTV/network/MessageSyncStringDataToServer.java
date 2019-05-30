@@ -12,15 +12,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import thaumcraft.api.ThaumcraftApi;
 
-public class MessageSyncDataToServer implements IMessage{
+public class MessageSyncStringDataToServer implements IMessage{
 
 	private boolean isBTV;
 	private String[] keys;
 	
-	public MessageSyncDataToServer() {}
+	public MessageSyncStringDataToServer() {}
 	
 
-	public MessageSyncDataToServer(boolean isBTV, String... keys) {
+	public MessageSyncStringDataToServer(boolean isBTV, String... keys) {
 		this.isBTV = isBTV;
 		this.keys = keys;
 	}
@@ -46,10 +46,10 @@ public class MessageSyncDataToServer implements IMessage{
 			ByteBufUtils.writeUTF8String(buf, key);
 	}
 	
-	public static class SyncDataToServerMessageHandler implements IMessageHandler<MessageSyncDataToServer, IMessage>{
+	public static class SyncDataToServerMessageHandler implements IMessageHandler<MessageSyncStringDataToServer, IMessage>{
 
 		@Override
-		public IMessage onMessage(MessageSyncDataToServer message, MessageContext ctx) {
+		public IMessage onMessage(MessageSyncStringDataToServer message, MessageContext ctx) {
 			for(String s : message.keys) {
 				if(!message.isBTV)
 					ThaumcraftApi.internalMethods.progressResearch(ctx.getServerHandler().player, s);

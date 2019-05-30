@@ -8,7 +8,7 @@ import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncDataToServer;
+import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
 import com.valeriotor.BTV.worship.Deities;
 
@@ -237,7 +237,7 @@ public class DialogueHandler {
 	
 	private static void updateAdditionalData(String profession, int option, int talkCount) {
 		if(getDialogueName(profession) == Dialogues.OCEAN && !ThaumcraftCapabilities.getKnowledge(Minecraft.getMinecraft().player).isResearchComplete("FISHINGHAMLET")) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDataToServer(false, "LHKeeper"));
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "LHKeeper"));
 		}
 	}
 	
