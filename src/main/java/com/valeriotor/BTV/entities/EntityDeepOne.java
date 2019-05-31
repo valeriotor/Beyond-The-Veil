@@ -1,6 +1,12 @@
 package com.valeriotor.BTV.entities;
 
+import java.util.UUID;
+
 import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
+import com.valeriotor.BTV.entities.AI.AIProtectMaster;
+import com.valeriotor.BTV.entities.AI.IPlayerGuardian;
+import com.valeriotor.BTV.worship.Deities;
+import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -13,6 +19,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -21,17 +28,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityDeepOne extends EntityCreature{
+public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	private int i = 0;
 	private boolean isTargetInWater = false;
 	private Block facingBlock;
 	private Block facingBlockUp;
-	private EntityPlayer ignoredPlayer;
+	private UUID master;
+	private int counter = -1;
 	
 	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
 	public EntityDeepOne(World worldIn) {
 		super(worldIn);
 		
+	}
+	
+	public EntityDeepOne(World worldIn, int time) {
+		this(worldIn);
+		this.counter = time;
 	}
 	
 	public boolean canBreatheUnderwater() {
@@ -62,7 +75,8 @@ public class EntityDeepOne extends EntityCreature{
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.tasks.addTask(2, new AIDeepOneAttack(this, 1.5D, true));
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> p != this.ignoredPlayer));
+	        this.targetTasks.addTask(1, new AIProtectMaster(this));
+	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null && Worship.getDeityLevel(p, Deities.GREATDREAMER) < 5)));
 	 }
 	 
 	 @Override
@@ -91,12 +105,23 @@ public class EntityDeepOne extends EntityCreature{
 		 return flag;
 	 }
 	 
-	public void setIgnoredPlayer(EntityPlayer p) {
-		this.ignoredPlayer = p;
+	public void setMaster(EntityPlayer p) {
+		this.master = p.getGameProfile().getId();
 	}
+
+	 @Override
+	 public EntityPlayer getMaster() {
+		return this.world.getMinecraftServer().getPlayerList().getPlayerByUUID(this.master);
+	 }
 	 
 	 public void onLivingUpdate() {
 		 super.onLivingUpdate();
+		 
+		 if(!this.world.isRemote && this.counter > -1) {
+			 this.counter--;
+			 if(this.counter == 0) this.world.removeEntity(this);
+		 }
+		 
 		 if(this.isInWater()) {
 			 i++;
 			 if (this.getHealth() < this.getMaxHealth() && i>=20)
@@ -113,9 +138,6 @@ public class EntityDeepOne extends EntityCreature{
 				 		this.motionY=0.1;
 				 		
 				 	}
-			 	
-			 
-			 
 			 
 			 double angle = Math.atan((Math.abs(this.getAttackTarget().posX-this.posX))/(Math.abs(this.getAttackTarget().posZ-this.posZ)));
 			 
@@ -145,6 +167,23 @@ public class EntityDeepOne extends EntityCreature{
 			 
 			 
 		 }
+	 }
+	 
+	 @Override
+	 public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		 if(this.master != null)
+			 compound.setString("masterID", this.master.toString());
+		 compound.setInteger("time", this.counter);
+		 return super.writeToNBT(compound);
+	 }
+	 
+	 
+	 @Override
+	 public void readFromNBT(NBTTagCompound compound) {
+		if(compound.hasKey("masterID"))
+			this.master = UUID.fromString(compound.getString("masterID"));
+		this.counter = compound.getInteger("time");
+		super.readFromNBT(compound);
 	 }
 	 
 	 

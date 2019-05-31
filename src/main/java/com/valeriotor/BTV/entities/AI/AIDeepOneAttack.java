@@ -38,7 +38,7 @@ public class AIDeepOneAttack extends EntityAIAttackMelee{
 	@Override
 	public void resetTask() {
 		super.resetTask();
-		//this.deepOne.setRaisedArm(0);
+		this.deepOne.setRaisedArm(0);
 	}
 
 }

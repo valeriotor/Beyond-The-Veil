@@ -27,10 +27,11 @@ public class SummonDeepOnes implements IActivePower{
 		for(int i = 0; i < amount; i++) {
 			for(int j = 8; j < 20; j+=4) {
 				BlockPos pos = p.getPosition().add(j*Math.sin(angle), 0, j*Math.cos(angle));
-				if(enoughSpace(p.world, pos)) {
-					EntityDeepOne deepOne = new EntityDeepOne(p.world);
-					deepOne.setIgnoredPlayer(p);
-					deepOne.setPosition(pos.getX(), pos.getY(), pos.getZ());
+				pos = checkSpace(p.world, pos);
+				if(pos != null) {
+					EntityDeepOne deepOne = new EntityDeepOne(p.world, 2000);
+					deepOne.setMaster(p);
+					deepOne.setPosition(pos.getX(), pos.getY()+2, pos.getZ());
 					p.world.spawnEntity(deepOne);
 					spawnedAtLeastOne = true;
 					break;
@@ -47,32 +48,33 @@ public class SummonDeepOnes implements IActivePower{
 	}
 	
 	private static int getAmount(EntityPlayer p) {
-		return (Deities.GREATDREAMER.cap(p).getLevel() - 2) / 2; 
+		return Math.min(6, (Deities.GREATDREAMER.cap(p).getLevel() - 2) / 2); 
 		// maybe + cap.getString("transformed") ? 1 : 0;
 	}
 	
-	private static boolean enoughSpace(World w, BlockPos pos) {
-		for(int i = 0; i > -5; i--) {
+	private static BlockPos checkSpace(World w, BlockPos pos) {
+		for(int i = 0; i > -10; i--) {
 			IBlockState state = w.getBlockState(pos.down());
-			if(!state.isTopSolid() || state.getBlock() == Blocks.WATER) pos = pos.down();
+			if(state.getBlock() == Blocks.AIR) pos = pos.down();
+			else break;
 		}
 		for(int i = 0; i < 5; i++) {
 			IBlockState state = w.getBlockState(pos);
-			if(state.getBlock() != Blocks.AIR && state.getBlock() != Blocks.WATER) pos = pos.up();
+			if(state.getBlock().causesSuffocation(state) && pos.getY() < w.getHeight()) pos = pos.up();
+			else break;
 		}
-		IBlockState state = w.getBlockState(pos);
-		IBlockState stateDown = w.getBlockState(pos.down());
-		if((state.getBlock() != Blocks.AIR && state.getBlock() != Blocks.WATER && state.causesSuffocation()) 
-			/*|| (stateDown.getBlock() == Blocks.WATER && !stateDown.isTopSolid())*/) return false;
-		for(int x = -1; x <= 2; x++) {
+		for(int x = -2; x <= 2; x++) {
 			for(int y = 0; y <= 3; y++) {
-				for(int z = -1; z <= 2; z++) {
+				for(int z = -2; z <= 2; z++) {
 					IBlockState s = w.getBlockState(pos.add(x, y, z));
-					if(state.causesSuffocation()) return false;
+					if(s.getBlock().causesSuffocation(s)) {
+						System.out.println("this dude GONNA DIE");
+						return null;
+					}
 				}
 			}
 		}
-		return true;
+		return pos;
 	}
 
 	@Override
