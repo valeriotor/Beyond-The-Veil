@@ -120,9 +120,21 @@ public class BlockIdol extends ModBlock{
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
 	
+	private static final AxisAlignedBB BBOX_BASE = new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.8125D,0.25D,0.8125D);
+	private static final AxisAlignedBB BBOX_NORTH = new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.8125D,0.875D,0.6875D);
+	private static final AxisAlignedBB BBOX_WEST = new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.6875D,0.875D,0.8125D);
+	private static final AxisAlignedBB BBOX_SOUTH = new AxisAlignedBB(0.1875D,0.0D,0.3125D,0.8125D,0.875D,0.8125D);
+	private static final AxisAlignedBB BBOX_EAST = new AxisAlignedBB(0.3125D,0.0D,0.1875D,0.8125D,0.875D,0.8125D);
+	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.1875D,0.0D,0.1875D,0.8125D,0.875D,0.8125D);
+		switch(state.getValue(FACING)) {
+		case NORTH: return BBOX_NORTH;
+		case WEST: return BBOX_WEST;
+		case SOUTH: return BBOX_SOUTH;
+		case EAST: return BBOX_EAST;
+		default: return BBOX_NORTH;
+		}
 	}
 	
 	@Override
