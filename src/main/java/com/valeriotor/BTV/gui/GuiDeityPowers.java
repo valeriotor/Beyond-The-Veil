@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.gui;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageActivatePower;
@@ -98,8 +99,8 @@ public class GuiDeityPowers{
 		}
 		
 		private void writeData(int option) {
-			this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("currentPower", option, false);
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncIntDataToServer("currentPower", option));
+			this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SELECTED_POWER, option, false);
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncIntDataToServer(PlayerDataLib.SELECTED_POWER, option));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 		
