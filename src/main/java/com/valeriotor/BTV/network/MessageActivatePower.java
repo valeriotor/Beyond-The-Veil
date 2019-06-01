@@ -25,7 +25,14 @@ public class MessageActivatePower implements IMessage{
 		public IMessage onMessage(MessageActivatePower message, MessageContext ctx) {
 			EntityPlayer p = ctx.getServerHandler().player;
 			IActivePower power = Worship.getPower(p);
-			if(power != null && power.hasRequirement(p)) power.activatePower(p);
+			if(power != null && power.hasRequirement(p)) {
+				if(Worship.getPowerCooldown(p, power.getIndex()) > 0) {
+					// TODO: Add failed activation sound
+				} else {
+					power.activatePower(p);
+					Worship.setPowerCooldown(p, power.getCooldownTicks(), power.getIndex());
+				}
+			}
 			return null;
 		}
 		

@@ -39,7 +39,7 @@ public class Worship {
 	};
 	
 	public static IActivePower getPower(EntityPlayer p) {
-		int index = getSelectedPowerID(p);
+		int index = getSelectedPowerIndex(p);
 		return getSpecificPower(p, index);
 	}
 	
@@ -54,7 +54,24 @@ public class Worship {
 		return NULL_POWER;
 	}
 	
-	public static int getSelectedPowerID(EntityPlayer p) {
+	public static int getSelectedPowerIndex(EntityPlayer p) {
 		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_POWER, 0, false);
 	}
+	
+	public static void setPowerCooldown(EntityPlayer p, int ticks) {
+		setPowerCooldown(p, ticks, getSelectedPowerIndex(p));
+	}
+	
+	public static int getPowerCooldown(EntityPlayer p) {
+		return getPowerCooldown(p, getSelectedPowerIndex(p));
+	}
+	
+	public static void setPowerCooldown(EntityPlayer p, int ticks, int powerIndex) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(String.format(PlayerDataLib.POWER_COOLDOWN, powerIndex), ticks, false);
+	}
+	
+	public static int getPowerCooldown(EntityPlayer p, int powerIndex) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.POWER_COOLDOWN, powerIndex), 0, false);
+	}
+	
 }

@@ -10,6 +10,7 @@ import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.Deities;
+import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -38,6 +39,7 @@ public class PlayerTickEvents {
 			resetTimesDreamt(p);
 			findHamlet(p);
 			waterPowers(p);
+			decreaseCooldown(p);
 		}
 	}
 	
@@ -104,6 +106,11 @@ public class PlayerTickEvents {
 		if(Deities.GREATDREAMER.cap(p).getLevel() > 3) {
 			if(p.getAir() < 300) p.setAir(299);
 		}
+	}
+	
+	private static void decreaseCooldown(EntityPlayer p) {
+		int currentTicks = Worship.getPowerCooldown(p);
+		Worship.setPowerCooldown(p, currentTicks-1);
 	}
 	
 }
