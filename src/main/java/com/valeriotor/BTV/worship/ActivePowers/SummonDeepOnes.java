@@ -68,7 +68,6 @@ public class SummonDeepOnes implements IActivePower{
 				for(int z = -2; z <= 2; z++) {
 					IBlockState s = w.getBlockState(pos.add(x, y, z));
 					if(s.getBlock().causesSuffocation(s)) {
-						System.out.println("this dude GONNA DIE");
 						return null;
 					}
 				}
