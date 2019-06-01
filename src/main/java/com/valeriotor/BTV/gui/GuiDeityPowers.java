@@ -24,7 +24,7 @@ public class GuiDeityPowers{
 	
 	private int timePressed = 0;
 	private final Minecraft mc;
-	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/items/spine.png");
+	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
 	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/items/blackjack.png");
 	
 	public GuiDeityPowers(Minecraft mc) {
@@ -58,20 +58,23 @@ public class GuiDeityPowers{
 	
 	public static class GuiGDPowers extends GuiOptionWheel {
 
-		private final int DGLevel;
+		private final int level;
+		private boolean[] availableOptions = {false,false,false,false};
 		
 		public GuiGDPowers() {
-			this.DGLevel = Deities.GREATDREAMER.cap(Minecraft.getMinecraft().player).getLevel();
+			this.level = Worship.getSelectedDeityLevel(Minecraft.getMinecraft().player);
+			for(int i = 0; i < 4; i++) 
+				this.availableOptions[i] = Worship.getSpecificPower(Minecraft.getMinecraft().player, i).hasRequirement(Minecraft.getMinecraft().player);
 		}
 		
 		@Override
 		protected boolean isNorthOptionAvailable() {
-			return Worship.getSpecificPower(this.mc.player, 0).hasRequirement(this.mc.player);
+			return this.availableOptions[0];
 		}
 		
 		@Override
 		protected boolean isWestOptionAvailable() {
-			return Worship.getSpecificPower(this.mc.player, 1).hasRequirement(this.mc.player);
+			return this.availableOptions[1];
 		}
 		
 		@Override
