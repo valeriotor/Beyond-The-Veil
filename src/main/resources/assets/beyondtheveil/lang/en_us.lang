@@ -27,8 +27,10 @@ lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher 
 lore.spine=Willpower resides in the spine.
 lore.surgery_tools=A set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
 
-iteminfo.held_villager.spineless=A villager lacking his dorsal spine.
-iteminfo.held_villager.spineful=An unconscious villager, ready for experimentation.
+tooltip.held_villager.spineless=A villager lacking his dorsal spine.
+tooltip.held_villager.spineful=An unconscious villager, ready for experimentation.
+tooltip.held_villager.spinefulheartless=A villager without a heart. Soon, he will expire.
+tooltip.held_villager.spinelessheartless=Both the spine and the heart were ripped out of this villager. Truly, a worthless wretch.
 
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
@@ -58,6 +60,7 @@ tile.worn_brick_stairs.name=Worn Brick Stairs
 tile.sleep_chamber.name=Sleep Chamber
 tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
 
+interact.idol.notyet=Nothing happens. For some reason, you feel relieved.
 
 ##################
 #ENTITTIES
