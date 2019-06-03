@@ -41,7 +41,7 @@ public class GuiDeityPowers{
 					this.timePressed++;
 					if(this.timePressed >= 15) {
 						this.timePressed = 0;
-						this.mc.displayGuiScreen(new GuiGDPowers());
+						this.mc.displayGuiScreen(new GuiSelectPower());
 					}
 				} else {
 					if(this.timePressed >= 1) {
@@ -57,12 +57,12 @@ public class GuiDeityPowers{
 	}
 	
 	
-	public static class GuiGDPowers extends GuiOptionWheel {
+	private static class GuiSelectPower extends GuiOptionWheel {
 
 		private final int level;
 		private boolean[] availableOptions = {false,false,false,false};
 		
-		public GuiGDPowers() {
+		public GuiSelectPower() {
 			this.level = Worship.getSelectedDeityLevel(Minecraft.getMinecraft().player);
 			for(int i = 0; i < 4; i++) 
 				this.availableOptions[i] = Worship.getSpecificPower(Minecraft.getMinecraft().player, i).hasRequirement(Minecraft.getMinecraft().player);
