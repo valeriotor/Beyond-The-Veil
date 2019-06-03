@@ -59,8 +59,30 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	}
 	
 	@Override
+	protected boolean isEastOptionAvailable() {
+		return true;
+	}
+	
+	@Override
+	protected boolean isEastOptionGreyedOut() {
+		return this.isAlreadyHeartless;
+	}
+	
+	private static final ResourceLocation heart = new ResourceLocation(References.MODID + ":textures/items/slug.png");
+	@Override
+	public ResourceLocation getEastOptionTexture() {
+		return heart;
+	}
+	
+	@Override
 	public void doNorthAction() {
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageWateryCradle((byte)0, pos.getX(), pos.getY(), pos.getZ()));
+		this.mc.displayGuiScreen((GuiScreen)null);
+	}
+	
+	@Override
+	public void doEastAction() {
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageWateryCradle((byte)3, pos.getX(), pos.getY(), pos.getZ()));
 		this.mc.displayGuiScreen((GuiScreen)null);
 	}
 

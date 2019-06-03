@@ -33,16 +33,16 @@ public class ItemHeldVillager extends Item {
 		if(facing != EnumFacing.UP) return EnumActionResult.FAIL;
 		if(w.isRemote) return EnumActionResult.SUCCESS;
 		boolean spineless = ItemHelper.checkBooleanTag(player.getHeldItem(hand), "spineless", false);
+		boolean heartless = ItemHelper.checkBooleanTag(player.getHeldItem(hand), "heartless", false);
 		for(int x = -1; x <= 1; x++) {
 			for(int z = -1; z <= 1; z++) {
 				IBlockState b = w.getBlockState(pos.add(x, 1, z));
 				if(b.causesSuffocation() || b.isFullBlock()) {
-					System.out.println("Fail..");
 					return EnumActionResult.FAIL;
 				}
 			}
 		}
-		EntityCrawlingVillager worm = new EntityCrawlingVillager(w, !spineless);
+		EntityCrawlingVillager worm = new EntityCrawlingVillager(w, !spineless, heartless);
 		worm.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
 		worm.setProfession(ItemHelper.checkIntTag(player.getHeldItem(hand), "profession", 0));
 		w.spawnEntity(worm);
@@ -53,7 +53,8 @@ public class ItemHeldVillager extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
-		tooltip.add("§5§o" + I18n.format(String.format("iteminfo.held_villager.%s", spineless ? "spineless" : "spineful")));
+		boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
+		tooltip.add("ï¿½5ï¿½o" + I18n.format(String.format("tooltip.held_villager.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

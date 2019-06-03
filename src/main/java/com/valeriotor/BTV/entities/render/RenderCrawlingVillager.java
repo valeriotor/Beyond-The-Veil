@@ -92,8 +92,8 @@ public class RenderCrawlingVillager extends RenderLiving<EntityCrawlingVillager>
             float f5 = 0.0F;
             float f6 = 0.0F;
             if(entity.getTicksToFall() > 0) {
-            	GlStateManager.rotate(-90*(entity.getTicksToFall()-partialTicks)/EntityCrawlingVillager.DEFAULTTICKS, 1, 0, 0);
-            	GlStateManager.translate(0, -(entity.getTicksToFall()-partialTicks)/EntityCrawlingVillager.DEFAULTTICKS, 0);
+            	GlStateManager.rotate(-90*(entity.getTicksToFall()-partialTicks)/EntityCrawlingVillager.DEFAULTTICKSTOFALL, 1, 0, 0);
+            	GlStateManager.translate(0, -(entity.getTicksToFall()-partialTicks)/EntityCrawlingVillager.DEFAULTTICKSTOFALL, 0);
             }
             if (!entity.isRiding())
             {

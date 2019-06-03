@@ -67,7 +67,7 @@ public class MessageWateryCradle implements IMessage{
 						break;
 				case 1: status = status.withFilledBrain(true);
 						break;
-				case 2: status = status.withHeartless(true);
+				case 3: status = status.withHeartless(true);
 						break;
 				}
 				w.playSound(pos.getX(), pos.getY(), pos.getZ(), BTVSounds.surgeryRip, SoundCategory.PLAYERS, 1, 1, false);

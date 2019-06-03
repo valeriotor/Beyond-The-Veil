@@ -27,9 +27,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityCrawlingVillager extends EntityCreature{
 	
 	private boolean unconscious = false; // "unconscious" is synonym of "blackjack" and opposite of "spineless"
+	private boolean heartless = false;
+	private int ticksToDie = 0;
 	private int ticksToFall = 0;
 	private int ticksToRecovery = 200;
-	public static final int DEFAULTTICKS = 12;
+	public static final int DEFAULTTICKSTOFALL = 12;
 	private static final DataParameter<Integer> TICKSTOFALL = EntityDataManager.<Integer>createKey(EntityCrawlingVillager.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
     
@@ -39,10 +41,16 @@ public class EntityCrawlingVillager extends EntityCreature{
 	
 	
 	public EntityCrawlingVillager(World worldIn, boolean blackjack) {
+		this(worldIn, blackjack, false);
+	}
+	
+	public EntityCrawlingVillager(World worldIn, boolean blackjack, boolean heartless) {
 		super(worldIn);
 		this.unconscious = blackjack;
-		this.ticksToFall = blackjack ? DEFAULTTICKS : 0;
+		this.ticksToFall = blackjack && !heartless ? DEFAULTTICKSTOFALL : 0;
 		this.dataManager.set(TICKSTOFALL, this.ticksToFall);
+		this.ticksToDie = heartless ? 40 : -1;
+	
 	}
 	
 	@Override
@@ -82,6 +90,11 @@ public class EntityCrawlingVillager extends EntityCreature{
 	
 	@Override
 	public void onEntityUpdate() {
+		if(!this.world.isRemote) {
+			if(this.ticksToDie > 0) this.ticksToDie--;
+			else if(this.ticksToDie == 0) this.setHealth(0);
+		}
+		
 		if(this.world.isRemote && this.ticksToFall > 0) {
 			this.ticksToFall--;
 		}
@@ -104,6 +117,7 @@ public class EntityCrawlingVillager extends EntityCreature{
 			if(!this.world.isRemote) {
 				ItemStack item = new ItemStack(ItemRegistry.held_villager);
 				ItemHelper.checkTagCompound(item).setBoolean("spineless", !this.unconscious);
+				item.getTagCompound().setBoolean("heartless", this.heartless);
 				item.getTagCompound().setInteger("profession", this.getProfessionID());
 				player.addItemStackToInventory(item);
 				this.world.removeEntity(this);
