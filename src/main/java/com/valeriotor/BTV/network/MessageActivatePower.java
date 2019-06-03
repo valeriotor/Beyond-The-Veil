@@ -29,8 +29,8 @@ public class MessageActivatePower implements IMessage{
 				if(Worship.getPowerCooldown(p, power.getIndex()) > 0) {
 					// TODO: Add failed activation sound
 				} else {
-					power.activatePower(p);
-					Worship.setPowerCooldown(p, power.getCooldownTicks(), power.getIndex());
+					boolean success = power.activatePower(p);
+					if(success) Worship.setPowerCooldown(p, power.getCooldownTicks(), power.getIndex());
 				}
 			}
 			return null;
