@@ -1,6 +1,5 @@
 package com.valeriotor.BTV.events;
 
-import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityCanoe;
@@ -18,7 +17,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -91,21 +92,23 @@ public class PlayerTickEvents {
 			// TODO Not apply this when transformed
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
-				double motY = p.motionY * 1.2;
+				double motY = p.motionY * 1.25;
 				double motZ = p.motionZ * 1.2;
 				boolean flying = p.capabilities.isFlying;
 				if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
-					if(Math.abs(p.motionY) < 1.3) p.motionY = motY;
+					if(p.motionY > 0 && p.motionY < 1.3) p.motionY = motY;
 					if(Math.abs(p.motionZ) < 1.3) p.motionZ = motZ;
 				}
+				p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, false, true));
+				p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, true));
 			}
 		}
 		
 		if(p.world.isRemote) return;
-		if(Deities.GREATDREAMER.cap(p).getLevel() > 3) {
+		/**if(Deities.GREATDREAMER.cap(p).getLevel() > 3) {
 			if(p.getAir() < 300) p.setAir(299);
-		}
+		}*/
 	}
 	
 	private static void decreaseCooldown(EntityPlayer p) {
