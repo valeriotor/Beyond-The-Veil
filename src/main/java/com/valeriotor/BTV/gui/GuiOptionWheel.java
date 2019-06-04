@@ -3,6 +3,7 @@ package com.valeriotor.BTV.gui;
 import java.io.IOException;
 
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -99,12 +100,20 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		int option = this.getHoveredOption(mouseX, mouseY);
-		if(this.isOptionAvailable(option) && !this.isOptionGreyedOut(option)) {
+		if(option != -1)
 			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+		if(this.isOptionAvailable(option) && !this.isOptionGreyedOut(option)) {
 			this.doAction(option);
 			Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if(keyCode == 18)
+			this.mc.displayGuiScreen((GuiScreen)null);
+		super.keyTyped(typedChar, keyCode);
 	}
 	
 	private int getXOffset(int i) {
