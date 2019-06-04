@@ -26,7 +26,7 @@ public class GuiDeityPowers{
 	private int timePressed = 0;
 	private final Minecraft mc;
 	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
-	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/items/blackjack.png");
+	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
 	
 	public GuiDeityPowers(Minecraft mc) {
 		this.mc = mc;
@@ -60,10 +60,12 @@ public class GuiDeityPowers{
 	private static class GuiSelectPower extends GuiOptionWheel {
 
 		private final int level;
+		private final Deities deity;
 		private boolean[] availableOptions = {false,false,false,false};
 		
 		public GuiSelectPower() {
 			this.level = Worship.getSelectedDeityLevel(Minecraft.getMinecraft().player);
+			this.deity = Worship.getSelectedDeity(Minecraft.getMinecraft().player);
 			for(int i = 0; i < 4; i++) 
 				this.availableOptions[i] = Worship.getSpecificPower(Minecraft.getMinecraft().player, i).hasRequirement(Minecraft.getMinecraft().player);
 		}
@@ -101,7 +103,6 @@ public class GuiDeityPowers{
 		private void writeData(int option) {
 			this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SELECTED_POWER, option, false);
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncIntDataToServer(PlayerDataLib.SELECTED_POWER, option));
-			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 		
 		@Override
