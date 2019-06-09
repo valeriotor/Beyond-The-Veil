@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -61,19 +62,26 @@ public class MessageWateryCradle implements IMessage{
 			TileWateryCradle te = (TileWateryCradle) w.getTileEntity(pos);
 			if(te != null) {
 				PatientStatus status = te.getPatientStatus();
+				SoundEvent sound = null;
 				switch(message.option) {
 				case 0: status = status.withSpineless(true);
 						p.addItemStackToInventory(new ItemStack(ItemRegistry.spine));
+						sound = BTVSounds.spineRip;
 						break;
 				case 1: status = status.withFilledBrain(true);
 						break;
 				case 3: status = status.withHeartless(true);
+						p.addItemStackToInventory(new ItemStack(ItemRegistry.heart));
+						sound = BTVSounds.heartRip;
 						break;
 				}
-				w.playSound(pos.getX(), pos.getY(), pos.getZ(), BTVSounds.surgeryRip, SoundCategory.PLAYERS, 1, 1, false);
+				
+				w.playSound(pos.getX(), pos.getY(), pos.getZ(), sound, SoundCategory.PLAYERS, 1, 1, false);
 				te.setPatient(status);
 				List<EntityPlayerMP> players = w.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(pos) < 100);
-				players.forEach(player -> BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.surgeryRip), pos.toLong()), player));
+				if(sound != null)
+					for(EntityPlayerMP player : players) 
+						BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(sound), pos.toLong()), player);
 			}
 			return null;
 		}

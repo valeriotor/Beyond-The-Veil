@@ -29,8 +29,11 @@ public final class BTVSounds {
 	@ObjectHolder("dream_alienis")
 	public static final SoundEvent dreamAlienis = new SoundEvent(new ResourceLocation(References.MODID, "dream_alienis")).setRegistryName("dream_alienis");
 	
-	@ObjectHolder("surgery_rip")
-	public static final SoundEvent surgeryRip = new SoundEvent(new ResourceLocation(References.MODID, "surgery_rip")).setRegistryName("surgery_rip");
+	@ObjectHolder("spine_rip")
+	public static final SoundEvent spineRip = new SoundEvent(new ResourceLocation(References.MODID, "spine_rip")).setRegistryName("spine_rip");
+	
+	@ObjectHolder("heart_rip")
+	public static final SoundEvent heartRip = new SoundEvent(new ResourceLocation(References.MODID, "heart_rip")).setRegistryName("heart_rip");
 	
 	
 	public static SoundEvent getSoundById(int id) {
@@ -42,7 +45,8 @@ public final class BTVSounds {
 			case 4: return sawcleavertransform;
 			case 5: return sawcleavertransformattack;
 			case 6: return dreamAlienis;
-			case 7: return surgeryRip;
+			case 7: return spineRip;
+			case 8: return heartRip;
 			default: return null;
 			
 		}
@@ -56,11 +60,12 @@ public final class BTVSounds {
 		if(sound.equals(sawcleavertransform)) return 4;
 		if(sound.equals(sawcleavertransformattack)) return 5;
 		if(sound.equals(dreamAlienis)) return 6;
-		if(sound.equals(surgeryRip)) return 7;
+		if(sound.equals(spineRip)) return 7;
+		if(sound.equals(heartRip)) return 8;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 8;
+		return 9;
 	}
 }

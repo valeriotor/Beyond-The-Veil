@@ -68,7 +68,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 		return this.isAlreadyHeartless;
 	}
 	
-	private static final ResourceLocation heart = new ResourceLocation(References.MODID + ":textures/items/slug.png");
+	private static final ResourceLocation heart = new ResourceLocation(References.MODID + ":textures/items/heart.png");
 	@Override
 	public ResourceLocation getEastOptionTexture() {
 		return heart;

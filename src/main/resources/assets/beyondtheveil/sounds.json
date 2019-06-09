@@ -49,10 +49,16 @@
 			"beyondtheveil:dream_alienis"
 		]
 	},
-	"surgery_rip":{
+	"spine_rip":{
 		"category": "ambience",
 		"sounds": [
-			"beyondtheveil:surgery_rip"
+			"beyondtheveil:spine_rip"
+		]
+	},
+	"heart_rip":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:heart_rip"
 		]
 	}
 }
