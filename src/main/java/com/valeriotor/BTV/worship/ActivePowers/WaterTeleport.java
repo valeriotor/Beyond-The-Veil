@@ -26,7 +26,7 @@ public class WaterTeleport implements IActivePower{
 		Vec3d vec3d = p.getPositionEyes(1.0F);
         Vec3d vec3d1 = p.getLook(1.0F);
         Vec3d vec3d2 = vec3d.addVector(vec3d1.x * 90, vec3d1.y * 90, vec3d1.z * 90);
-        EntityLiving e = MathHelper.getClosestLookedAtEntity(p, 150);
+        EntityLiving e = MathHelper.getClosestLookedAtEntity(p, 150, ent -> ent.isInWater());
         RayTraceResult rt = p.world.rayTraceBlocks(vec3d, vec3d2, false, true, true);
         BlockPos rtPos = null;
         if(rt != null)

@@ -2,6 +2,7 @@ package com.valeriotor.BTV.util;
 
 import java.util.List;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import net.minecraft.entity.Entity;
@@ -78,8 +79,8 @@ public class MathHelper {
 	 * @param p The player
 	 * @param dis The maximum distance the entity can be at
 	 */
-	public static EntityLiving getClosestLookedAtEntity(EntityPlayer p, double dis) {
-		List<EntityLiving> ents = getLookedAtEntities(p, dis);
+	public static EntityLiving getClosestLookedAtEntity(EntityPlayer p, double dis, Predicate<EntityLiving> predIn) {
+		List<EntityLiving> ents = getLookedAtEntities(p, dis, predIn);
 		if(ents.isEmpty()) return null;
 		double minDist = ents.get(0).getDistanceSq(p);
 		int selectedEntity = 0;
@@ -100,11 +101,12 @@ public class MathHelper {
 	 * @param dis The maximum distance the entities can be at
 	 * @return
 	 */
-	public static List<EntityLiving> getLookedAtEntities(EntityPlayer p, double dis){
+	public static List<EntityLiving> getLookedAtEntities(EntityPlayer p, double dis, Predicate<EntityLiving> predIn){
 		List<EntityLiving> list = Lists.newArrayList();
 		Vec3d lookVec = p.getLook(1.0F);
 		BlockPos pos = p.getPosition();
-		List<Entity> ents = p.world.getEntities(EntityLiving.class, e -> e != p && e.getDistanceSq(p) < dis*dis);
+		Predicate<EntityLiving> pred = e -> e.getDistanceSq(p) < dis*dis && predIn.apply(e);
+		List<EntityLiving> ents = p.world.getEntities(EntityLiving.class, pred);
 		
 		for(Entity e : ents) {
 			if(getIntersectionLineBoundingBox(pos, lookVec, e.getEntityBoundingBox().grow(1.0D)) != null) {
