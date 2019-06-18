@@ -97,18 +97,14 @@ public class PlayerTickEvents {
 				boolean flying = p.capabilities.isFlying;
 				if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
-					if(p.motionY > 0 && p.motionY < 1.3) p.motionY = motY;
+					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;
 					if(Math.abs(p.motionZ) < 1.3) p.motionZ = motZ;
 				}
-				p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, false, true));
-				p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, true));
+				p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, false, false));
+				p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, false));
 			}
 		}
 		
-		if(p.world.isRemote) return;
-		/**if(Deities.GREATDREAMER.cap(p).getLevel() > 3) {
-			if(p.getAir() < 300) p.setAir(299);
-		}*/
 	}
 	
 	private static void decreaseCooldown(EntityPlayer p) {
