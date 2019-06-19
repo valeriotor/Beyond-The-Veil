@@ -105,7 +105,11 @@ public class MathHelper {
 		List<EntityLiving> list = Lists.newArrayList();
 		Vec3d lookVec = p.getLook(1.0F);
 		BlockPos pos = p.getPosition();
-		Predicate<EntityLiving> pred = e -> e.getDistanceSq(p) < dis*dis && predIn.apply(e);
+		Predicate<EntityLiving> pred;
+		if(predIn != null)
+			pred = e -> e.getDistanceSq(p) < dis*dis && predIn.apply(e);
+		else
+			pred = e -> e.getDistanceSq(p) < dis*dis;
 		List<EntityLiving> ents = p.world.getEntities(EntityLiving.class, pred);
 		
 		for(Entity e : ents) {

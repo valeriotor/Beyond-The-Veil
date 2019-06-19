@@ -31,7 +31,7 @@ public class WaterTeleport implements IActivePower{
         BlockPos rtPos = null;
         if(rt != null)
         	rtPos = rt.getBlockPos();
-        if(e != null && e.isInWater()) {
+        if(e != null) {
         	BlockPos pos = e.getPosition();
         	double dist = pos.distanceSq(pPos.getX(), pPos.getY(), pPos.getZ());
         	if(rtPos == null || rtPos.distanceSq(pPos.getX(), pPos.getY(), pPos.getZ()) > dist) {
