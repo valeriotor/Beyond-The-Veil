@@ -1,13 +1,11 @@
 package com.valeriotor.BTV.world.Structures;
 
-import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
@@ -54,15 +52,15 @@ public class HamletStructuresRegistry {
 	
 	public static void registerStructures() {
 		
-		registerStructure(HamletHouse1.class, 9, 12);
-		registerStructure(HamletHouse2.class, 9, 12);
-		registerStructure(HamletStorehouse.class, 4, 2);
-		registerStructure(HamletHouseTwoFloors.class, 7, 9);
-		registerStructure(HamletSmallHut.class, 9, 10);
-		registerStructure(HamletSaloon.class, 7, 1);
-		registerStructure(HamletStoreHouse2.class, 2, 1);
-		registerStructure(HamletTownHall.class, 1, 1);
-		registerStructure(HamletLightHouse.class, 10, 1);
+		registerStructure(HamletHouse1::new, 9, 12);
+		registerStructure(HamletHouse2::new, 9, 12);
+		registerStructure(HamletStorehouse::new, 4, 2);
+		registerStructure(HamletHouseTwoFloors::new, 7, 9);
+		registerStructure(HamletSmallHut::new, 9, 10);
+		registerStructure(HamletSaloon::new, 7, 1);
+		registerStructure(HamletStoreHouse2::new, 2, 1);
+		registerStructure(HamletTownHall::new, 1, 1);
+		registerStructure(HamletLightHouse::new, 10, 1);
 		
 	}
 	
@@ -75,40 +73,26 @@ public class HamletStructuresRegistry {
 	 * 
 	 * @author Valeriotor
 	 */
-	public static void registerStructure(Class<? extends HamletStructure> clazz, int weight, int max) {
-		templates.add(new StructureTemplate(clazz, weight, max));
+	public static void registerStructure(Function<World, ? extends HamletStructure> supplierFunction, int weight, int max) {
+		templates.add(new StructureTemplate(supplierFunction, weight, max));
 	}
 	
 	
 	private static class StructureTemplate {
-		private final Class<? extends HamletStructure> clazz;
+		private final Function<World, ? extends HamletStructure> supplier;
 		private final int weight;
 		private final int max;
 		
-		public StructureTemplate(Class<? extends HamletStructure> clazz, int weight, int max) {
-			this.clazz = clazz;
+		public StructureTemplate(Function<World, ? extends HamletStructure> supplierFunction, int weight, int max) {
+			this.supplier = supplierFunction;
 			this.weight = weight;
 			this.max = max;
 		}
 		
-		public Class<? extends HamletStructure> getStructure() {return this.clazz;}
 		public int getWeight() {return this.weight;}
 		public int getMax() {return this.max;}
 		public HamletStructure getInstance(World w) {
-			Constructor<? extends HamletStructure> construct = null;
-			try {
-				construct = this.clazz.getConstructor(World.class);
-			} catch (NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-			}
-			if(construct == null) return new HamletHouse1(w);
-			try {
-				return construct.newInstance(w);
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			return new HamletHouse1(w);
+			return supplier.apply(w);
 		}
 		
 	}
@@ -119,7 +103,6 @@ public class HamletStructuresRegistry {
 		public StructureCounter(StructureTemplate template) {
 			this.template = template;
 		}
-		public Class<? extends HamletStructure> getStructure() {return this.template.getStructure();}
 		public int getWeight() {return this.template.getWeight();}
 		public int getMax() {return this.template.getMax();}
 		public void increase() {this.counter++;}
