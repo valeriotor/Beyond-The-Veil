@@ -1,18 +1,14 @@
 package com.valeriotor.BTV.entities.render;
 
-import org.lwjgl.opengl.GL11;
-
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.models.ModelCrawlingVillager;
 import com.valeriotor.BTV.lib.References;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
@@ -21,27 +17,19 @@ public class RenderCrawlingVillager extends RenderLiving<EntityCrawlingVillager>
 	public RenderCrawlingVillager(RenderManager rendermanagerIn) {
 		super(rendermanagerIn, new ModelCrawlingVillager(), 0.5F);
 	}
-
+	private static final ResourceLocation farmerTex = new ResourceLocation("textures/entity/villager/farmer.png");
+	private static final ResourceLocation weeperTex = new ResourceLocation(References.MODID, "textures/entity/weeper.png");
 	@Override
 	protected ResourceLocation getEntityTexture(EntityCrawlingVillager entity) {
-		if(entity.getProfessionID() == 3 || entity.getProfessionID() == 4) return new ResourceLocation("textures/entity/villager/farmer.png");
-			
+		if(entity.isWeeper()) return weeperTex;
+		if(entity.getProfessionID() == 3 || entity.getProfessionID() == 4) return farmerTex;
+		//return weeperTex;	
 		return entity.getProfession().getSkin();
 	}
 	
 	@Override
 	public void doRender(EntityCrawlingVillager entity, double x, double y, double z, float entityYaw,
 			float partialTicks) {
-		/*GL11.glPushMatrix();
-		//if(entity.getTicksToFall() > 0) GlStateManager.translate(0, 0, -1.5*(entity.getTicksToFall()-partialTicks)/10);
-		GL11.glTranslated(x, y, z);
-		
-		//((ModelCrawlingVillager)this.mainModel).knockUnconscious(entity, partialTicks);
-		//super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		GlStateManager.popMatrix();
-		GL11.glPopMatrix();
-		*/
-		
 		
 		if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<EntityCrawlingVillager>(entity, this, partialTicks, x, y, z))) return;
         GlStateManager.pushMatrix();

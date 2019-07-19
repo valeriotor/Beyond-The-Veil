@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.items;
 
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
+import com.valeriotor.BTV.entities.EntityWeeper;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.entity.EntityLiving;
@@ -32,7 +33,7 @@ public class ItemBlackjack extends Item{
 		EntityPlayer p = (EntityPlayer)event.getEntityPlayer();
 		if(!(p.getHeldItemMainhand().getItem() instanceof ItemBlackjack)) return;
 		if(!(event.getTarget() instanceof EntityVillager)) {
-			if(event.getTarget() instanceof EntityLiving && !p.world.isRemote) {
+			if(event.getTarget() instanceof EntityLiving && !p.world.isRemote && !(event.getTarget() instanceof EntityWeeper)) { //I'm letting the EntityWeeper class handle BJ
 				((EntityLiving)event.getTarget()).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 4));
 				p.getHeldItemMainhand().damageItem(3, p);
 			}

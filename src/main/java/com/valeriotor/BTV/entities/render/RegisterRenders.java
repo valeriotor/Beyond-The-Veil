@@ -4,6 +4,7 @@ import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.entities.EntityWeeper;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -40,6 +41,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityCrawlingVillager> createRenderFor(RenderManager manager) 
 			{return new RenderCrawlingVillager(manager);}
+			});
+		
+		//Weeper
+		RenderingRegistry.registerEntityRenderingHandler(EntityWeeper.class, new IRenderFactory<EntityWeeper>(){
+			@Override
+			public Render<EntityWeeper> createRenderFor(RenderManager manager) 
+			{return new RenderWeeper(manager);}
 			});
 	}
 }

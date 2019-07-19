@@ -31,7 +31,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 		if(te != null) {
 			if(te.getPatientType() != PatientTypes.NONE) {
 				this.isAlreadySpineless = te.isPatientSpineless();
-				this.isAlreadyFilledBrain = te.doesPatientHaveFilledBrain();
+				this.isAlreadyFilledBrain = te.getPatientType() == PatientTypes.WEEPER;
 				this.isAlreadyHeartless = te.isPatientHeartless();
 			} else this.mc.displayGuiScreen((GuiScreen)null);
 		} else this.mc.displayGuiScreen((GuiScreen)null);
@@ -75,6 +75,22 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	}
 	
 	@Override
+	protected boolean isWestOptionAvailable() {
+		return true;
+	}
+	
+	@Override
+	protected boolean isWestOptionGreyedOut() {
+		return this.isAlreadyFilledBrain;
+	}
+	
+	private static final ResourceLocation tears = new ResourceLocation(References.MODID + ":textures/items/held_weeper.png");
+	@Override
+	public ResourceLocation getWestOptionTexture() {
+		return tears;
+	}
+	
+	@Override
 	public void doNorthAction() {
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageWateryCradle((byte)0, pos.getX(), pos.getY(), pos.getZ()));
 		this.mc.displayGuiScreen((GuiScreen)null);
@@ -83,6 +99,12 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	@Override
 	public void doEastAction() {
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageWateryCradle((byte)3, pos.getX(), pos.getY(), pos.getZ()));
+		this.mc.displayGuiScreen((GuiScreen)null);
+	}
+	
+	@Override
+	public void doWestAction() {
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageWateryCradle((byte)1, pos.getX(), pos.getY(), pos.getZ()));
 		this.mc.displayGuiScreen((GuiScreen)null);
 	}
 

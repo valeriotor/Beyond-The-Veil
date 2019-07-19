@@ -28,6 +28,7 @@ public class EntityCrawlingVillager extends EntityCreature{
 	
 	private boolean unconscious = false; // "unconscious" is synonym of "blackjack" and opposite of "spineless"
 	private boolean heartless = false;
+	private boolean weeper = false;
 	private int ticksToDie = 0;
 	private int ticksToFall = 0;
 	private int ticksToRecovery = 200;
@@ -163,6 +164,17 @@ public class EntityCrawlingVillager extends EntityCreature{
 		this.ticksToRecovery = compound.getInteger("ticksToRecovery");
 		this.unconscious = compound.getBoolean("unconscious");
 		super.readFromNBT(compound);
+	}
+	
+	/** Just for the watery cradle texture, should not be used otherwise.
+	 * 
+	 */
+	public void setWeeper(boolean par1) {
+		this.weeper = par1;
+	}
+	
+	public boolean isWeeper() {
+		return this.weeper;
 	}
 	
 	

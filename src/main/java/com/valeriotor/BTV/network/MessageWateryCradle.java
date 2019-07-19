@@ -6,6 +6,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientStatus;
+import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,7 +69,7 @@ public class MessageWateryCradle implements IMessage{
 						p.addItemStackToInventory(new ItemStack(ItemRegistry.spine));
 						sound = BTVSounds.spineRip;
 						break;
-				case 1: status = status.withFilledBrain(true);
+				case 1: status = status.withPatient(PatientTypes.WEEPER);
 						break;
 				case 3: status = status.withHeartless(true);
 						p.addItemStackToInventory(new ItemStack(ItemRegistry.heart));

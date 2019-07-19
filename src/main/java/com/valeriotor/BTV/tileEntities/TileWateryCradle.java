@@ -3,13 +3,10 @@ package com.valeriotor.BTV.tileEntities;
 import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
-import com.valeriotor.BTV.entities.render.RenderCrawlingVillager;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -23,7 +20,6 @@ public class TileWateryCradle extends TileEntity{
 	
 	private PatientTypes patient = PatientTypes.NONE;
 	private boolean spineless = false;
-	private boolean filledBrain = false;
 	private boolean heartless = false;
 	private int villagerProfession = 0;
 	private EntityLiving dummyEntity = null;
@@ -37,13 +33,11 @@ public class TileWateryCradle extends TileEntity{
 		if(status.getPatientType() == PatientTypes.NONE) {
 			this.patient = PatientTypes.NONE;
 			this.spineless = false;
-			this.filledBrain = false;
 			this.heartless = false;
 			this.villagerProfession = 0;
 		} else {
 			this.patient = status.getPatientType();
 			this.spineless = status.isSpineless();
-			this.filledBrain = status.hasFilledBrain();
 			this.heartless = status.isHeartless();
 			this.villagerProfession = status.villagerProfession;
 		}
@@ -59,38 +53,35 @@ public class TileWateryCradle extends TileEntity{
 		return this.spineless;
 	}
 	
-	public boolean doesPatientHaveFilledBrain() {
-		return this.filledBrain;
-	}
-	
 	public boolean isPatientHeartless() {
 		return this.heartless;
 	}
 	
 	
 	public PatientStatus getPatientStatus() {
-		return new PatientStatus(this.patient, this.spineless, this.filledBrain, this.heartless, this.villagerProfession);
+		return new PatientStatus(this.patient, this.spineless, this.heartless, this.villagerProfession);
 	}
 	
 	public ItemStack getPatientItem() {
+		if(this.patient == PatientTypes.NONE) return new ItemStack(Items.AIR);
+		ItemStack stack = null;
 		if(this.patient == PatientTypes.VILLAGER) {
-			if(!this.filledBrain) {
-				ItemStack stack = new ItemStack(ItemRegistry.held_villager);
-				NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
-				nbt.setBoolean("spineless", this.spineless);
-				nbt.setBoolean("heartless", this.heartless);
-				nbt.setInteger("profession", this.villagerProfession);
-				return stack;
-			}
+			stack = new ItemStack(ItemRegistry.held_villager);
+		}else if(this.patient == PatientTypes.WEEPER) {
+			stack = new ItemStack(ItemRegistry.held_weeper);
 		}
-		return new ItemStack(Items.AIR);
+		if(stack == null) return new ItemStack(Items.AIR);
+		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+		nbt.setBoolean("spineless", this.spineless);
+		nbt.setBoolean("heartless", this.heartless);
+		nbt.setInteger("profession", this.villagerProfession);
+		return stack;
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("patientType", getIdByType(this.patient));
 		compound.setBoolean("spineless", this.spineless);
-		compound.setBoolean("filledBrain", this.filledBrain);
 		compound.setBoolean("heartless", this.heartless);
 		compound.setInteger("profession", this.villagerProfession);
 		return super.writeToNBT(compound);
@@ -100,7 +91,6 @@ public class TileWateryCradle extends TileEntity{
 	public void readFromNBT(NBTTagCompound compound) {
 		this.patient = PatientTypes.values()[compound.getInteger("patientType")];
 		this.spineless = compound.getBoolean("spineless");
-		this.filledBrain = compound.getBoolean("filledBrain");
 		this.heartless = compound.getBoolean("heartless");
 		this.villagerProfession = compound.getInteger("profession");
 		this.dummyEntity = null;
@@ -109,9 +99,12 @@ public class TileWateryCradle extends TileEntity{
 
 	private EntityLiving getInternalDummyEntity(PatientTypes type) {
 		switch(type) {
-		case VILLAGER: EntityCrawlingVillager vil = new EntityCrawlingVillager(this.world);
+		case VILLAGER:	EntityCrawlingVillager vil = new EntityCrawlingVillager(this.world);
 						vil.setProfession(this.villagerProfession);
 						return vil;
+		case WEEPER:  	EntityCrawlingVillager weeper = new EntityCrawlingVillager(this.world);
+						weeper.setWeeper(true);
+						return weeper;				
 		default: return null;
 		}
 	}
@@ -132,58 +125,56 @@ public class TileWateryCradle extends TileEntity{
 	
 	public enum PatientTypes {
 		VILLAGER,
-		ZOMBIE,
+		WEEPER,
 		NONE;
 	}
 	
 	public static class PatientStatus {
 		private final PatientTypes patient;
 		private final boolean spineless;
-		private final boolean filledBrain;
 		private final boolean heartless;
 		private final int villagerProfession;
 		
-		private PatientStatus(PatientTypes type, boolean spineless, boolean filledBrain, boolean heartless, int villagerProfession) {
+		private PatientStatus(PatientTypes type, boolean spineless, boolean heartless, int villagerProfession) {
 			this.patient = type;
 			this.spineless = spineless;
-			this.filledBrain = filledBrain;
 			this.heartless = heartless;
 			this.villagerProfession = villagerProfession;
 		}
 
 		public PatientTypes getPatientType() {return this.patient;}
 		public boolean isSpineless() {return this.spineless;}
-		public boolean hasFilledBrain() {return this.filledBrain;}
 		public boolean isHeartless() {return this.heartless;}
 		public int getVillagerProfession() {return this.villagerProfession;}
 		
 		@Override
 		public String toString() {
 			String first = this.spineless ? "spineless " : "";
-			String second = this.filledBrain ? "filled brain " : "";
-			String third = this.heartless ? "heartless" : "";
-			return String.format("Patient type: %s. Traits: %s%s%s ", this.patient.name(), first, second, third);
+			String second = this.heartless ? "heartless" : "";
+			return String.format("Patient type: %s. Traits: %s%s ", this.patient.name(), first, second);
 		}
 
 		public static PatientStatus getPatientFromItem(ItemStack stack) {
 			if(stack.getItem() == ItemRegistry.held_villager) {
 				boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
-				boolean filledBrain = false; // Filled brain should be a different held_villager item
 				boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
 				int profession = ItemHelper.checkIntTag(stack, "profession", 0);
-				return new PatientStatus(PatientTypes.VILLAGER, spineless, filledBrain, heartless, profession);
+				return new PatientStatus(PatientTypes.VILLAGER, spineless, heartless, profession);
+			}else if(stack.getItem() == ItemRegistry.held_weeper) {
+				boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
+				boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
+				return new PatientStatus(PatientTypes.WEEPER, spineless, heartless, 0);
 			}
 			return null;
 		}
 		
 		public static PatientStatus getNoPatientStatus() {
-			return new PatientStatus(PatientTypes.NONE, false, false, false, 0);
+			return new PatientStatus(PatientTypes.NONE, false, false, 0);
 		}
 		
-		public PatientStatus withSpineless(boolean spineless) {return new PatientStatus(this.patient, spineless, this.filledBrain, this.heartless, this.villagerProfession);}
-		public PatientStatus withFilledBrain(boolean filledBrain) {return new PatientStatus(this.patient, this.spineless, filledBrain, this.heartless, this.villagerProfession);}
-		public PatientStatus withHeartless(boolean heartless) {return new PatientStatus(this.patient, this.spineless, this.filledBrain, heartless, this.villagerProfession);}
-		
+		public PatientStatus withSpineless(boolean spineless) {return new PatientStatus(this.patient, spineless, this.heartless, this.villagerProfession);}
+		public PatientStatus withHeartless(boolean heartless) {return new PatientStatus(this.patient, this.spineless, heartless, this.villagerProfession);}
+		public PatientStatus withPatient(PatientTypes type) {return new PatientStatus(type, this.spineless, heartless, this.villagerProfession);}
 	}
 	
 	
