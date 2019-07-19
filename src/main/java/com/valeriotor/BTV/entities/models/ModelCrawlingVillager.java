@@ -53,13 +53,13 @@ public class ModelCrawlingVillager extends ModelBase {
         this.field_78189_b1.addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, 0.5F);
         this.setRotateAngle(field_78189_b1, 1.4311699866353502F, 0.0F, 0.0F);
         this.field_78191_aChild = new ModelRenderer(this, 24, 0);
-        this.field_78191_aChild.setRotationPoint(0.0F, -2.0F, 0.0F);
+        this.field_78191_aChild.setRotationPoint(0.0F, 17.0F, -10.0F);
         this.field_78191_aChild.addBox(-1.0F, -1.0F, -6.0F, 2, 4, 2, 0.0F);
         this.field_78189_b0 = new ModelRenderer(this, 16, 20);
         this.field_78189_b0.setRotationPoint(0.0F, 18.0F, -10.0F);
         this.field_78189_b0.addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, 0.0F);
         this.setRotateAngle(field_78189_b0, 1.4311699866353502F, 0.0F, 0.0F);
-        this.field_78191_a.addChild(this.field_78191_aChild);
+        //this.field_78191_a.addChild(this.field_78191_aChild);
         /*this.field_78188_e.addChild(this.field_78189_b0);
         this.field_78188_e.addChild(this.field_78189_b1);
         this.field_78188_e.addChild(this.field_78191_a);
@@ -79,6 +79,10 @@ public class ModelCrawlingVillager extends ModelBase {
         this.field_78190_c1.render(f5);
         this.field_78189_b1.render(f5);
         this.field_78189_b0.render(f5);
+        if(!((EntityCrawlingVillager)entity).isWeeper())
+        	this.field_78191_aChild.render(f5);
+        
+        	
     }
 
     /**
