@@ -126,6 +126,12 @@ public class PlayerDataHandler {
 			if(tempStrings.contains(string))
 				tempStrings.remove(string);
 		}
+		
+		@Override
+		public void removeAllStrings() {
+			tempStrings.clear();
+			strings.clear();
+		}
 
 		@Override
 		public void setInteger(String key, int value, boolean temporary) {

@@ -25,4 +25,8 @@ public class PlayerDataLib {
 	public static final String FOUND_HAMLET = "found_hamlet";
 	
 	
+	
+	// Used to clear client-side data in one fell swoop.
+	public static final String ALL = "all";
+	
 }

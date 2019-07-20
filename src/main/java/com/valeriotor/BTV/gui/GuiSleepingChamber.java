@@ -6,12 +6,15 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.blocks.BlockSleepChamber;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.dreams.DreamHandler;
+import com.valeriotor.BTV.dreaming.DreamHandler;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSleepChamber;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiChat;
@@ -52,14 +55,16 @@ public class GuiSleepingChamber extends GuiChat{
 	public void updateScreen() {
 		if(this.timePassed < 100) this.timePassed++;
 		if(this.timePassed >= 100) {
-			List<BlockPos> list = DreamHandler.checkBlocks(this.mc.player.world, this.mc.player.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), 3);
+			Block b = this.searchChamber();
+			List<BlockPos> list = DreamHandler.checkBlocks(this.mc.player.world, this.mc.player.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), DreamHandler.getMaxDreamsPerTime(this.mc.player, b));
 			boolean flag = true;
 			List<String> aspects = Lists.newArrayList();
 			for(BlockPos pos : list) {
 				String aspect = this.mc.player.world.getTileEntity(pos).getTileData().getString("containing");
 				if(aspect != null) aspects.add(aspect);
 			}
-			if(aspects.contains("Alienis")) {
+			int timesDreamt = this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getInteger(PlayerDataLib.TIMESDREAMT);
+			if(aspects.contains("Alienis") && timesDreamt < DreamHandler.getMaxDreamsPerDay(this.mc.player, b)) {
 				if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") || aspects.contains("Vacuos")) flag = false;
 			}
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
@@ -68,6 +73,17 @@ public class GuiSleepingChamber extends GuiChat{
 		}
 		super.updateScreen();
 	}
+	
+	private Block searchChamber() {
+		for(int x = -1; x <= 1; x++) {
+			for(int z = -1; z <= 1; z++) {
+				Block b = this.mc.player.world.getBlockState(this.mc.player.getPosition().add(x, 0, z)).getBlock();
+				if(b instanceof BlockSleepChamber) return b;
+			}
+		}
+		return null;
+	}
+	
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {

@@ -8,7 +8,7 @@ import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.dreams.DreamHandler;
+import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;

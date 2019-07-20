@@ -7,6 +7,7 @@ public interface IPlayerData {
 	
 	public void addString(String string, boolean temporary);
 	public void removeString(String string);
+	public void removeAllStrings();
 	public void setInteger(String key, int value, boolean temporary);
 	public void incrementOrSetInteger(String key, int amount, int value, boolean temporary);
 	public void removeInteger(String key);
