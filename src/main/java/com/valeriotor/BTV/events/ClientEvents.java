@@ -38,9 +38,7 @@ public class ClientEvents {
 			Minecraft.getMinecraft().gameSettings.keyBindLeft,
 			Minecraft.getMinecraft().gameSettings.keyBindBack,
 			Minecraft.getMinecraft().gameSettings.keyBindRight
-	};
-	private int wolfmedallionCount = 0;
-	                       
+	};               
 	private int soundCounter = 0;
 	
 	@SubscribeEvent
@@ -60,29 +58,15 @@ public class ClientEvents {
 							if(conto == 2) direction[1] = i;
 						}
 					}
-					for(int i = 0; i < conto && i < 3; i++) {
-						this.movePlayer(direction[i], 1 / ((float) conto));
-					}
-					sawcleaverCount = 0;	
-				}  
-			}
-			if(sawcleaverCount > 0) sawcleaverCount--;
-			
-			
-			if(BaublesApi.isBaubleEquipped(p, ItemRegistry.wolf_medallion) == 0) {
-				if(ClientProxy.handler.medallion.isPressed()) {
-					if(wolfmedallionCount < 1) {
-						BTVPacketHandler.INSTANCE.sendToServer(new MessageMedallionEffect());
-						wolfmedallionCount = 500;
-					}else {
-						p.playSound(SoundEvents.ENTITY_PARROT_STEP, 1, 1);
-					}
+						for(int i = 0; i < conto && i < 3; i++) {
+							this.movePlayer(direction[i], 1 / ((float) conto));
+						}
+						sawcleaverCount = 0;	
+					}  
 				}
-				
-				if(wolfmedallionCount > 0) wolfmedallionCount--;
-			}	
+				if(sawcleaverCount > 0) sawcleaverCount--;
 			}
-			
+				
 			if(soundCounter > 0) {
 				soundCounter--;
 			}	

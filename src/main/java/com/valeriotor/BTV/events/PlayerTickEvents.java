@@ -110,6 +110,13 @@ public class PlayerTickEvents {
 	private static void decreaseCooldown(EntityPlayer p) {
 		int currentTicks = Worship.getPowerCooldown(p);
 		Worship.setPowerCooldown(p, currentTicks-1);
+		int selectedBauble = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
+		if(selectedBauble != -1) {
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(
+					String.format(PlayerDataLib.BAUBLE_COOLDOWN, selectedBauble), 0, false) <= 0) return;
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).incrementOrSetInteger(
+					String.format(PlayerDataLib.BAUBLE_COOLDOWN, selectedBauble), -1, 0, false);
+		}
 	}
 	
 }

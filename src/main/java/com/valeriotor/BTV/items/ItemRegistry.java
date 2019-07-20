@@ -3,6 +3,7 @@ package com.valeriotor.BTV.items;
 import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.items.baubles.ItemWolfMedallion;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.proxy.ClientProxy;
 

@@ -11,7 +11,9 @@ public class PlayerDataLib {
 	public static final String DEATH_Z = "deathZ";
 	public static final String SELECTED_DEITY = "selected_deity";
 	public static final String SELECTED_POWER = "currentPower";
+	public static final String SELECTED_BAUBLE = "currentBauble";
 	public static final String POWER_COOLDOWN = "powCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. powCooldown1
+	public static final String BAUBLE_COOLDOWN = "bauCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. bauCooldown1
 	
 	
 	

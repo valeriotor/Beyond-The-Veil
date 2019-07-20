@@ -1,4 +1,4 @@
-package com.valeriotor.BTV.items;
+package com.valeriotor.BTV.items.baubles;
 
 import java.util.List;
 
@@ -8,21 +8,22 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-public class ItemWolfMedallion extends Item implements IBauble{
+public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble{
 	
 	public ItemWolfMedallion() {
 		this.setMaxStackSize(1);
@@ -71,6 +72,25 @@ public class ItemWolfMedallion extends Item implements IBauble{
 			else if(i == 1) player.sendMessage(new TextComponentTranslation("artifact.medallion.humming1"));
 			if(creepers) player.sendMessage(new TextComponentTranslation("artifact.medallion.creepers"));
 		}
+	}
+
+
+	@Override
+	public boolean activate(EntityPlayer p) {
+		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-25, -10, -25), p.getPosition().add(25, 12, 25));
+		List<Entity> entities = p.world.getEntitiesWithinAABBExcludingEntity(p, bb);
+		entities.forEach(e -> {
+			if(e instanceof EntityLivingBase) {
+				((EntityLivingBase)e).addPotionEffect(new PotionEffect(MobEffects.GLOWING, 80, 1, false, true));
+			}
+		});
+		return true;
+	}
+
+
+	@Override
+	public int getCooldown() {
+		return 30*20;
 	}
 	
 	
