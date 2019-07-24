@@ -5,6 +5,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
 import com.valeriotor.BTV.worship.ActivePowers.SummonDeepOnes;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 import com.valeriotor.BTV.worship.ActivePowers.WaterTeleport;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,7 +51,8 @@ public class Worship {
 		if(deity == Deities.GREATDREAMER) {
 			switch(index) {
 			case 0: return SummonDeepOnes.getInstance();
-			case 1: return WaterTeleport.getInstance();
+			case 1: return TransformDeepOne.getInstance();
+			case 3: return WaterTeleport.getInstance();
 			}
 		}
 		return NULL_POWER;

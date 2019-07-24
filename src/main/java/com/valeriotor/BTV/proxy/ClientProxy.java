@@ -2,6 +2,7 @@ package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.entities.render.RegisterRenders;
 import com.valeriotor.BTV.events.ClientEvents;
+import com.valeriotor.BTV.events.RenderEvents;
 import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
@@ -43,7 +44,9 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent e) {
         RegistryHelper.registerColorHandlers();
         this.cEvents = new ClientEvents();
+        renderEvents = new RenderEvents();
         MinecraftForge.EVENT_BUS.register(this.cEvents);
+        MinecraftForge.EVENT_BUS.register(this.renderEvents);
         MinecraftForge.EVENT_BUS.register(new OpenGuiSelector(Minecraft.getMinecraft()));
         ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
     }

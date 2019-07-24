@@ -1,16 +1,13 @@
 package com.valeriotor.BTV.worship;
 
-import com.valeriotor.BTV.capabilities.DGProvider;
-import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DGWorshipHelper {
 	
@@ -23,7 +20,7 @@ public class DGWorshipHelper {
 			Deities.GREATDREAMER.cap(p).addLevel();
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(p).getLevel()), (EntityPlayerMP)p);
 			p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SLUGS, 0, false);
-			PlayerDataHandler.syncPlayerData(p);
+			SyncUtil.syncPlayerData(p);
 		}
 	}
 	
@@ -42,6 +39,10 @@ public class DGWorshipHelper {
 			case 3: return PlayerDataLib.RITUALQUEST;
 			default: return null;
 		}
+	}
+	
+	public static boolean canTransform(EntityPlayer p) {
+		return true; // will later use research to track progress
 	}
 	
 	// Remove old keys from pData

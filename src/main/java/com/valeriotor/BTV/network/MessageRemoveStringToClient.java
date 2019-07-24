@@ -32,10 +32,14 @@ public class MessageRemoveStringToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageRemoveStringToClient message, MessageContext ctx) {
-			if(message.key.equals(PlayerDataLib.ALL)) 
+			if(message.key.equals(PlayerDataLib.ALL)) {
+				System.out.println("Removing all strings");
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeAllStrings();
-			else
+			}
+			else {
+				System.out.println(message.key);
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.key);
+			}
 			return null;
 		}
 		

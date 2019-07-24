@@ -74,7 +74,7 @@ public class WaterTeleport implements IActivePower{
 
 	@Override
 	public int getIndex() {
-		return 1;
+		return 3;
 	}
 
 	@Override

@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiDeityPowers extends GuiOptionWheel{
 	
 	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
-	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
+	private static final ResourceLocation GD_EAST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
 	
 	private final int level;
 	private final Deities deity;
@@ -50,6 +50,11 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	}
 	
 	@Override
+	protected boolean isEastOptionAvailable() {
+		return this.availableOptions[3];
+	}
+	
+	@Override
 	public void doNorthAction() {
 		this.writeData(0);
 	}
@@ -57,6 +62,11 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	@Override
 	public void doWestAction() {
 		this.writeData(1);
+	}
+	
+	@Override
+	public void doEastAction() {
+		this.writeData(3);
 	}
 	
 	@Override
@@ -70,10 +80,19 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	@Override
 	public ResourceLocation getWestOptionTexture() {
 		switch(deity) {
-		case GREATDREAMER: return GD_WEST_TEXTURE;
+		case GREATDREAMER: return GD_EAST_TEXTURE; // TODO: Change texture
 		default: return null;
 		}
 	}
+	
+	@Override
+	public ResourceLocation getEastOptionTexture() {
+		switch(deity) {
+		case GREATDREAMER: return GD_EAST_TEXTURE;
+		default: return null;
+		}
+	}
+	
 	
 	private void writeData(int option) {
 		this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SELECTED_POWER, option, false);

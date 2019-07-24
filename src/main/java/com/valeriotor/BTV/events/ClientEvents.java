@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageMedallionEffect;
 import com.valeriotor.BTV.proxy.ClientProxy;
@@ -106,63 +107,6 @@ public class ClientEvents {
 		}
 		p.motionX += mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 		p.motionZ += mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
-	}
-	
-	private final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
-	
-	
-	@SubscribeEvent
-	public void onPlayerRenderEvent(RenderPlayerEvent.Pre event) {
-		EntityPlayer p = event.getEntityPlayer();
-		BlockPos pos = p.getPosition();
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
-		// Only do this for transformed players
-		// NOTE: If player is in first person and event.player == Minecraft.getMC.player, then don't render!!
-		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger("form", 0, false) == 1) {
-			event.setCanceled(true);
-			deepOne.render((AbstractClientPlayer)p, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), p.rotationYaw, event.getPartialRenderTick());
-	}
-}	
-	
-	/*
-	@SubscribeEvent
-	public void onDrawBlockHighlightEvent(DrawBlockHighlightEvent evt){
-		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(BaublesApi.isBaubleEquipped(player, ItemRegistry.wolf_medallion) != 0) return;
-		
-		AxisAlignedBB bb = new AxisAlignedBB(player.getPosition().add(-25, -10, -25), player.getPosition().add(25, 12, 25));
-		List<Entity> entities = player.world.getEntitiesWithinAABBExcludingEntity(player, bb);
-		GL11.glPushMatrix();
-		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);	
-		GL11.glColor4f(1F, 0F, 1F, 0F); 
-		double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)evt.getPartialTicks();
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)evt.getPartialTicks();
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)evt.getPartialTicks();
-        Vec3d pos = new Vec3d(d0, d1, d2);
-        GL11.glTranslated(-pos.x, -pos.y, -pos.z);
-		for(Entity e : entities) {
-			Vec3d blockA = new Vec3d(e.posX-1, e.posY-1, e.posZ-1);
-			Vec3d blockB = new Vec3d(e.posX+1, e.posY+1, e.posZ+1);
-			GL11.glBegin(GL11.GL_LINE_STRIP);
-
-			GL11.glVertex3d(blockA.x, blockA.y, blockA.z);
-			GL11.glVertex3d(blockB.x, blockB.y, blockB.z);
-
-			GL11.glEnd();
-			
-			
-			
-			
-		}
-		GL11.glPopAttrib();
-		GL11.glPopMatrix();
-	}
-	*/
-	
+	}	
 	
 }

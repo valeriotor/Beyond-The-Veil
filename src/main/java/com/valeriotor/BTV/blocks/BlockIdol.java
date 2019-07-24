@@ -6,11 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.capabilities.DGProvider;
-import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.lib.BlockNames;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
@@ -23,7 +20,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
@@ -150,7 +146,7 @@ public class BlockIdol extends ModBlock{
 		if(!k.isResearchComplete("IDOL")) ThaumcraftApi.internalMethods.progressResearch(playerIn, "IdolInteract");
 		if(!worldIn.isRemote) {
 			if(Worship.getSelectedDeity(playerIn) != Deities.GREATDREAMER) Worship.setSelectedDeity(playerIn, Deities.GREATDREAMER);
-			PlayerDataHandler.syncPlayerData(playerIn);
+			SyncUtil.syncCapabilityData(playerIn);
 			if(Deities.GREATDREAMER.cap(playerIn).getLevel() == 0) {
 				Deities.GREATDREAMER.cap(playerIn).addLevel();
 				//BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(playerIn).getLevel()), (EntityPlayerMP)playerIn);

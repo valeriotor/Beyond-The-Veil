@@ -4,27 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.IPlayerData;
-import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
-import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.world.BiomeRegistry;
-import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Biomes;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -35,9 +28,6 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -95,7 +85,7 @@ public class PlayerEvents {
 	public static void loginEvent(PlayerLoggedInEvent event) {
 		if(!event.player.world.isRemote) {			
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
-			PlayerDataHandler.syncPlayerData(event.player);
+			SyncUtil.syncPlayerData(event.player);
 		}
 	}
 	

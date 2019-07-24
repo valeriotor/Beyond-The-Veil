@@ -2,6 +2,7 @@ package com.valeriotor.BTV.proxy;
 
 import com.valeriotor.BTV.entities.RegisterEntities;
 import com.valeriotor.BTV.events.ClientEvents;
+import com.valeriotor.BTV.events.RenderEvents;
 import com.valeriotor.BTV.lib.BTVSounds;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CommonProxy {
 	
 	public ClientEvents cEvents;
+	public RenderEvents renderEvents;
 	
 	public void preInit(FMLPreInitializationEvent e) {
     }

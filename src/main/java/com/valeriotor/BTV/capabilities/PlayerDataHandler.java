@@ -6,9 +6,13 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
 import com.google.common.collect.Lists;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,18 +36,6 @@ public class PlayerDataHandler {
 		
 	}
 	
-	public static void syncPlayerData(EntityPlayer p) {
-		List<String> strings = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
-		HashMap<String, Integer> ints = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
-		for(String string : strings) {
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), (EntityPlayerMP)p);
-		}
-			
-		for(Entry<String, Integer> entry : ints.entrySet()) {
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(entry.getKey(), entry.getValue()), (EntityPlayerMP)p);	
-		}
-		
-	}
 	
 	public static class DataStorage implements Capability.IStorage<IPlayerData>{
 

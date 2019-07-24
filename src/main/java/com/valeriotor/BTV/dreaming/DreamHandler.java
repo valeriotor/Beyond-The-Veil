@@ -1,28 +1,20 @@
 package com.valeriotor.BTV.dreaming;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
-import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.util.WorldHelper;
-import com.valeriotor.BTV.world.BiomeRegistry;
-import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
@@ -30,20 +22,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-import thaumcraft.api.research.ResearchCategories;
 
 public class DreamHandler {
 	
@@ -74,7 +58,7 @@ public class DreamHandler {
 		
 		if(increaseTimesDreamt) {
 			p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.TIMESDREAMT, p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false)+1, false);		
-			PlayerDataHandler.syncPlayerData(p);
+			SyncUtil.syncCapabilityData(p);
 		}
 		
 		

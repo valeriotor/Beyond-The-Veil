@@ -1,23 +1,16 @@
 package com.valeriotor.BTV.entities.render;
 
-import org.lwjgl.util.vector.Quaternion;
-
 import com.valeriotor.BTV.entities.models.ModelDeepOne;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos;
 
 public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
 
@@ -45,6 +38,7 @@ public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
         //GlStateManager.
         //GlStateManager.rotate(entity.renderYawOffset, 0, 1, 0);
 		GlStateManager.translate(0, -1.5, 0);
+		GlStateManager.translate(x, y, z);
 		float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
         float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
         float f2 = f1 - f;
