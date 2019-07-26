@@ -2,6 +2,7 @@ package com.valeriotor.BTV.entities.render;
 
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.models.ModelCrawlingVillager;
+import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 public class RenderCrawlingVillager extends RenderLiving<EntityCrawlingVillager>{
 	
 	public RenderCrawlingVillager(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelCrawlingVillager(), 0.5F);
+		super(rendermanagerIn, ModelRegistry.crawling_villager, 0.5F);
 	}
 	private static final ResourceLocation farmerTex = new ResourceLocation("textures/entity/villager/farmer.png");
 	private static final ResourceLocation weeperTex = new ResourceLocation(References.MODID, "textures/entity/weeper.png");

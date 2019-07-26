@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.proxy;
 
+import com.valeriotor.BTV.animations.AnimationRegistry;
+import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.entities.render.RegisterRenders;
 import com.valeriotor.BTV.events.ClientEvents;
 import com.valeriotor.BTV.events.RenderEvents;
@@ -31,6 +33,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
+        ModelRegistry.registerModels();
         this.registerRenders();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
@@ -49,6 +52,7 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(this.renderEvents);
         MinecraftForge.EVENT_BUS.register(new OpenGuiSelector(Minecraft.getMinecraft()));
         ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
+        loadCustomResources();
     }
     
     @Override
@@ -79,6 +83,11 @@ public class ClientProxy extends CommonProxy {
     
     private void registerRenders() {
     	RegisterRenders.register();
+    }
+    
+    @Override
+    public void loadCustomResources() {
+    	AnimationRegistry.loadAnimations();
     }
     
     

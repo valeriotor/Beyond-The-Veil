@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities.render;
 
 import com.valeriotor.BTV.entities.EntityWeeper;
+import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.entities.models.ModelWeeper;
 import com.valeriotor.BTV.lib.References;
 
@@ -12,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 public class RenderWeeper extends RenderLiving<EntityWeeper>{
 
 	public RenderWeeper(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelWeeper(), 0.5F);
+		super(rendermanagerIn, ModelRegistry.weeper, 0.5F);
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID, "textures/entity/weeper.png");

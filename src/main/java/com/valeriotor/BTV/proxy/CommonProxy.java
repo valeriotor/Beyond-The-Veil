@@ -65,6 +65,8 @@ public class CommonProxy {
     		event.getRegistry().register(BTVSounds.getSoundById(i));
     }
     
+    public void loadCustomResources() {}
+    
     
     
 

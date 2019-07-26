@@ -8,6 +8,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.WorshipCapHandler;
 import com.valeriotor.BTV.events.ResearchEvents;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.lib.commands.ReloadResources;
 import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
@@ -91,5 +92,6 @@ public class BeyondTheVeil
     @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new SetWorshipLevel());
+        event.registerServerCommand(new ReloadResources());
     }
 }

@@ -2,6 +2,8 @@ package com.valeriotor.BTV.entities;
 
 import java.util.UUID;
 
+import com.valeriotor.BTV.animations.Animation;
+import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
 import com.valeriotor.BTV.entities.AI.IPlayerGuardian;
@@ -35,6 +37,8 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	private Block facingBlockUp;
 	private UUID master;
 	private int counter = -1;
+	private Animation currentAnim = null;
+	private int animResetTicks = 1;
 	
 	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
 	public EntityDeepOne(World worldIn) {
@@ -117,6 +121,21 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 public void onLivingUpdate() {
 		 super.onLivingUpdate();
 		 
+		 if(this.world.isRemote && this.isInWater()) {
+			 if(this.currentAnim == null) {
+				 if((this.world.getWorldTime() & 63) == 0) {
+					 this.currentAnim = new Animation(AnimationRegistry.deep_one_test);
+					 this.animResetTicks = 1;
+				 }
+			 }else {
+				 if(this.currentAnim.isDone()) {
+					 this.animResetTicks--;
+					 if(this.animResetTicks == 0) this.currentAnim = null;
+				 }
+				 else this.currentAnim.update();
+			 }
+		 }
+		 
 		 if(!this.world.isRemote && this.counter > -1) {
 			 this.counter--;
 			 if(this.counter == 0) this.world.removeEntity(this);
@@ -184,6 +203,11 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 			this.master = UUID.fromString(compound.getString("masterID"));
 		this.counter = compound.getInteger("time");
 		super.readFromNBT(compound);
+	 }
+	 
+	 @SideOnly(Side.CLIENT)
+	 public Animation getCurrentAnim() {
+		 return this.currentAnim;
 	 }
 	 
 	 

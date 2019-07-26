@@ -2,6 +2,7 @@ package com.valeriotor.BTV.entities.render;
 
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.models.ModelDeepOne;
+import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.model.ModelBase;
@@ -22,7 +23,7 @@ public class RenderDeepOne extends RenderLiving<EntityDeepOne>{
 
 
 	public RenderDeepOne(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelDeepOne(), 0.5F);
+		super(rendermanagerIn, ModelRegistry.deep_one, 0.5F);
 	}
 
 	@Override
