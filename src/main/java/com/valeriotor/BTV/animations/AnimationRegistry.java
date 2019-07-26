@@ -7,8 +7,6 @@ public class AnimationRegistry {
 	public static void loadAnimations() {
 		deep_one_test = new AnimationTemplate("deep_one_test");
 		
-		//DEBUG
-		deep_one_test.debug();
 	}
 	
 }
