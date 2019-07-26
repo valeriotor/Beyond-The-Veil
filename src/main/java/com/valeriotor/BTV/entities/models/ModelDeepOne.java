@@ -35,55 +35,76 @@ public class ModelDeepOne extends ModelAnimated {
     public ModelRenderer RightUpperArm;
     public ModelRenderer RightLowerArm;
     public ModelRenderer HeadFin;
+    public ModelRenderer LeftMouth;
+    public ModelRenderer RightMouth;
+    public ModelRenderer BottomMouth;
+    public ModelRenderer BackMouth;
     
     
     public ModelDeepOne() {
-        this.textureWidth = 128;
+    	this.textureWidth = 128;
         this.textureHeight = 32;
-        this.LeftLowerLeg = new ModelRenderer(this, 94, 0);
-        this.LeftLowerLeg.setRotationPoint(5.0F, 12.0F, -3.5F);
-        this.LeftLowerLeg.addBox(-6.5F, 0.0F, 3.0F, 3, 12, 3, 0.0F);
-        this.RightLowerLeg = new ModelRenderer(this, 94, 0);
-        this.RightLowerLeg.setRotationPoint(-5.0F, 12.0F, -3.5F);
-        this.RightLowerLeg.addBox(3.5F, 0.0F, 3.0F, 3, 12, 3, 0.0F);
-        this.LowerBody = new ModelRenderer(this, 94, 0);
-        this.LowerBody.setRotationPoint(0.0F, 1.0F, 0.0F);
-        this.LowerBody.addBox(-5.0F, 0.0F, -1.0F, 10, 10, 7, 0.0F);
+        this.Head = new ModelRenderer(this, 50, 16);
+        this.Head.setRotationPoint(0.0F, -8.0F, -5.73F);
+        this.Head.addBox(-4.0F, -8.0F, -4.0F, 8, 6, 8, 0.0F);
+        this.DorsalFin = new ModelRenderer(this, 52, 3);
+        this.DorsalFin.setRotationPoint(0.0F, 0.0F, 8.0F);
+        this.DorsalFin.addBox(-0.5F, -11.0F, 0.0F, 1, 11, 3, 0.0F);
         this.LeftUpperLeg = new ModelRenderer(this, 94, 0);
         this.LeftUpperLeg.setRotationPoint(5.0F, 8.0F, 3.0F);
         this.LeftUpperLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 10, 4, 0.0F);
         this.LeftLowerArm = new ModelRenderer(this, 94, 0);
         this.LeftLowerArm.setRotationPoint(11.800000190734863F, 3.0F, 0.0F);
         this.LeftLowerArm.addBox(-12.4F, 5.0F, 5.0F, 2, 11, 2, 0.0F);
-        this.RightUpperLeg = new ModelRenderer(this, 94, 0);
-        this.RightUpperLeg.setRotationPoint(-5.0F, 8.0F, 3.0F);
-        this.RightUpperLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 10, 4, 0.0F);
-        this.DorsalFin = new ModelRenderer(this, 52, 0);
-        this.DorsalFin.setRotationPoint(0.0F, 0.0F, 8.0F);
-        this.DorsalFin.addBox(-0.5F, -11.0F, 0.0F, 1, 11, 3, 0.0F);
-        this.Head = new ModelRenderer(this, 52, 16);
-        this.Head.setRotationPoint(0.0F, -8.0F, -5.733333110809326F);
-        this.Head.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
-        this.HeadFin = new ModelRenderer(this, 85, 12);
-        this.HeadFin.setRotationPoint(0.0F, -21.0F, -2.0F);
-        this.HeadFin.addBox(-0.5F, 3.0F, 8.3F, 1, 9, 11, 0.0F);
-        this.LeftUpperArm = new ModelRenderer(this, 94, 0);
-        this.LeftUpperArm.setRotationPoint(7.0F, -7.0F, 0.0F);
-        this.LeftUpperArm.addBox(-1.5F, 0.0F, -1.399999976158142F, 3, 12, 3, 0.0F);
-        this.RightUpperArm = new ModelRenderer(this, 94, 0);
-        this.RightUpperArm.setRotationPoint(-7.0F, -7.0F, 0.0F);
-        this.RightUpperArm.addBox(-1.5F, 0.0F, -1.399999976158142F, 3, 12, 3, 0.0F);
+        this.LeftMouth = new ModelRenderer(this, 81, 15);
+        this.LeftMouth.setRotationPoint(3.0F, -2.0F, 1.0F);
+        this.LeftMouth.addBox(0.0F, 0.0F, -5.0F, 1, 2, 5, 0.0F);
+        this.BottomMouth = new ModelRenderer(this, 106, 25);
+        this.BottomMouth.setRotationPoint(0.0F, -2.0F, 1.0F);
+        this.BottomMouth.addBox(-3.0F, 0.0F, -5.0F, 6, 2, 5, 0.0F);
         this.Body = new ModelRenderer(this, 0, 0);
         this.Body.setRotationPoint(0.0F, -8.0F, -7.0F);
         this.Body.addBox(-7.5F, 0.0F, 0.0F, 15, 13, 11, 0.0F);
+        this.RightLowerLeg = new ModelRenderer(this, 94, 0);
+        this.RightLowerLeg.setRotationPoint(-5.0F, 12.0F, -3.5F);
+        this.RightLowerLeg.addBox(3.5F, 0.0F, 3.0F, 3, 12, 3, 0.0F);
+        this.LeftUpperArm = new ModelRenderer(this, 94, 0);
+        this.LeftUpperArm.setRotationPoint(7.0F, -7.0F, 0.0F);
+        this.LeftUpperArm.addBox(-1.5F, 0.0F, -1.399999976158142F, 3, 12, 3, 0.0F);
+        this.RightMouth = new ModelRenderer(this, 81, 15);
+        this.RightMouth.mirror = true;
+        this.RightMouth.setRotationPoint(-4.0F, -2.0F, 1.0F);
+        this.RightMouth.addBox(0.0F, 0.0F, -5.0F, 1, 2, 5, 0.0F);
+        this.LeftLowerLeg = new ModelRenderer(this, 94, 0);
+        this.LeftLowerLeg.setRotationPoint(5.0F, 12.0F, -3.5F);
+        this.LeftLowerLeg.addBox(-6.5F, 0.0F, 3.0F, 3, 12, 3, 0.0F);
+        this.RightUpperLeg = new ModelRenderer(this, 94, 0);
+        this.RightUpperLeg.setRotationPoint(-5.0F, 8.0F, 3.0F);
+        this.RightUpperLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 10, 4, 0.0F);
+        this.BackMouth = new ModelRenderer(this, 106, 20);
+        this.BackMouth.setRotationPoint(-4.0F, -2.0F, 1.0F);
+        this.BackMouth.addBox(0.0F, 0.0F, 0.0F, 8, 2, 3, 0.0F);
+        this.RightUpperArm = new ModelRenderer(this, 94, 0);
+        this.RightUpperArm.setRotationPoint(-7.0F, -7.0F, 0.0F);
+        this.RightUpperArm.addBox(-1.5F, 0.0F, -1.399999976158142F, 3, 12, 3, 0.0F);
         this.RightLowerArm = new ModelRenderer(this, 94, 0);
         this.RightLowerArm.setRotationPoint(-11.800000190734863F, 3.0F, 0.0F);
         this.RightLowerArm.addBox(10.5F, 5.0F, 5.0F, 2, 11, 2, 0.0F);
+        this.HeadFin = new ModelRenderer(this, 82, 11);
+        this.HeadFin.setRotationPoint(0.0F, -21.0F, -2.0F);
+        this.HeadFin.addBox(-0.5F, 3.0F, 8.3F, 1, 9, 11, 0.0F);
+        this.LowerBody = new ModelRenderer(this, 94, 0);
+        this.LowerBody.setRotationPoint(0.0F, 1.0F, 0.0F);
+        this.LowerBody.addBox(-5.0F, 0.0F, -1.0F, 10, 10, 7, 0.0F);
         this.RightUpperArm.addChild(RightLowerArm);
         this.LeftUpperArm.addChild(LeftLowerArm);
         this.LeftUpperLeg.addChild(LeftLowerLeg);
         this.RightUpperLeg.addChild(RightLowerLeg);
         this.Head.addChild(HeadFin);
+        this.Head.addChild(this.LeftMouth);
+        this.Head.addChild(this.BottomMouth);
+        this.Head.addChild(this.RightMouth);
+        this.Head.addChild(this.BackMouth);
     	bodyParts.add(Body);
     	bodyParts.add(LowerBody);
     	bodyParts.add(LeftUpperLeg);
@@ -97,6 +118,10 @@ public class ModelDeepOne extends ModelAnimated {
     	bodyParts.add(RightUpperArm);
     	bodyParts.add(RightLowerArm);
     	bodyParts.add(HeadFin);
+    	bodyParts.add(LeftMouth);
+    	bodyParts.add(RightMouth);
+    	bodyParts.add(BottomMouth);
+    	bodyParts.add(BackMouth);
     	this.setAngles();
     	for(ModelRenderer mr : bodyParts) {
     		if(!defaultAngles.containsKey(mr)) {
@@ -111,19 +136,14 @@ public class ModelDeepOne extends ModelAnimated {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        //this.LeftLowerLeg.render(f5);
-        //this.RightLowerLeg.render(f5);
         this.LowerBody.render(f5);
         this.LeftUpperLeg.render(f5);
-        //this.LeftLowerArm.render(f5);
         this.RightUpperLeg.render(f5);
         this.DorsalFin.render(f5);
         this.Head.render(f5);
-        //this.HeadFin.render(f5);
         this.LeftUpperArm.render(f5);
         this.RightUpperArm.render(f5);
         this.Body.render(f5);
-        //this.RightLowerArm.render(f5);
     }
     
     public void setAngles() {
@@ -138,6 +158,10 @@ public class ModelDeepOne extends ModelAnimated {
     	this.setRotateAngle(RightUpperArm, 0.0F, -0.0F, 0.43633231520652765F);
     	this.setRotateAngle(Body, 0.37178611755371094F, -0.0F, 0.0F);
     	this.setRotateAngle(RightLowerArm, -0.855108082294464F, -0.0F, 0.0F);
+    	this.setRotateAngle(LeftMouth, 0, 0, 0);
+    	this.setRotateAngle(RightMouth, 0, 0, 0);
+    	this.setRotateAngle(BottomMouth, 0, 0, 0);
+    	this.setRotateAngle(Head, 0, 0, 0);
         
     }
 

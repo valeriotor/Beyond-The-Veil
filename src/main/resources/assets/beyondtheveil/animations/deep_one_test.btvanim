@@ -1,4 +1,4 @@
-length: 30
+length: 25
 model: deep_one
 keys
     Body: 0
@@ -6,8 +6,11 @@ keys
     Fin: 7
     RUArm: 10
     LUArm: 8
+	RMouth: 14
+	LMouth: 13
+	BMouth: 15
 end
-start: 0: 5
+start: 0: 3
     Body: rotx: 0.3
     Body: traz: -0.2
     Body: tray: 0.3
@@ -21,8 +24,25 @@ start: 0: 5
     RUArm: tray: 0.2
     LUArm: rotz: -1
     LUArm: tray: 0.2
+	RMouth: roty: 0.7
+	LMouth: roty: -0.7
+	BMouth: rotx: 1.0
 end
-start: 20: 30
+start: 4: 6
+	Head: rotz: 0.3
+end
+start: 7: 12
+	Head: rotz: -0.6
+end
+start: 13: 25
+	Head: rotz: 0.3
+end
+start: 13: 18
+	RMouth: roty: -0.7
+	LMouth: roty: 0.7
+	BMouth: rotx: -1.0
+end
+start: 15: 25
     Body: traz: 0.2
     Body: rotx: -0.3
     Body: tray: -0.3
