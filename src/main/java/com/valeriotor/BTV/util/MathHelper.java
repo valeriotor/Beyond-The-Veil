@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -79,13 +80,13 @@ public class MathHelper {
 	 * @param p The player
 	 * @param dis The maximum distance the entity can be at
 	 */
-	public static EntityLiving getClosestLookedAtEntity(EntityPlayer p, double dis, Predicate<EntityLiving> predIn) {
-		List<EntityLiving> ents = getLookedAtEntities(p, dis, predIn);
+	public static EntityLivingBase getClosestLookedAtEntity(EntityPlayer p, double dis, Predicate<EntityLivingBase> predIn) {
+		List<EntityLivingBase> ents = getLookedAtEntities(p, dis, predIn);
 		if(ents.isEmpty()) return null;
 		double minDist = ents.get(0).getDistanceSq(p);
 		int selectedEntity = 0;
 		for(int i = 1; i < ents.size(); i++) {
-			EntityLiving e = ents.get(i);
+			EntityLivingBase e = ents.get(i);
 			double newDist = e.getDistanceSq(p);
 			if(newDist < minDist) {
 				minDist = newDist;
@@ -101,20 +102,20 @@ public class MathHelper {
 	 * @param dis The maximum distance the entities can be at
 	 * @return
 	 */
-	public static List<EntityLiving> getLookedAtEntities(EntityPlayer p, double dis, Predicate<EntityLiving> predIn){
-		List<EntityLiving> list = Lists.newArrayList();
+	public static List<EntityLivingBase> getLookedAtEntities(EntityPlayer p, double dis, Predicate<EntityLivingBase> predIn){
+		List<EntityLivingBase> list = Lists.newArrayList();
 		Vec3d lookVec = p.getLook(1.0F);
 		BlockPos pos = p.getPosition();
-		Predicate<EntityLiving> pred;
+		Predicate<EntityLivingBase> pred;
 		if(predIn != null)
 			pred = e -> e.getDistanceSq(p) < dis*dis && predIn.apply(e);
 		else
 			pred = e -> e.getDistanceSq(p) < dis*dis;
-		List<EntityLiving> ents = p.world.getEntities(EntityLiving.class, pred);
+		List<EntityLivingBase> ents = p.world.getEntities(EntityLivingBase.class, pred);
 		
 		for(Entity e : ents) {
 			if(getIntersectionLineBoundingBox(pos, lookVec, e.getEntityBoundingBox().grow(1.0D)) != null) {
-				list.add((EntityLiving)e);
+				list.add((EntityLivingBase)e);
 			}
 		}
 		return list;
