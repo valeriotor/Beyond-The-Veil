@@ -28,6 +28,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncTransformedPlayer.SyncTransformedPlayerMessageHandler.class, MessageSyncTransformedPlayer.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageReloadResources.ReloadResourcesMessageHandler.class, MessageReloadResources.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessagePlayerAnimation.PlayerAnimationMessageHandler.class, MessagePlayerAnimation.class, count++, Side.CLIENT);
 		
 	}
 	

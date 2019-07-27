@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationTemplate.Transformation;
 import com.valeriotor.BTV.entities.EntityDeepOne;
@@ -185,14 +186,19 @@ public class ModelDeepOne extends ModelAnimated {
     	this.setAngles();
     	this.resetOffsets(bodyParts);
     	if(entityIn instanceof EntityPlayer) {
-        	this.Head.rotateAngleY = netHeadYaw * 0.01745F;
-        	this.Head.rotateAngleX = headPitch * 0.01745F;
-        	this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
-        	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    		if(((EntityPlayer)entityIn).getPrimaryHand() == EnumHandSide.RIGHT)
-    			this.RightUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);
-    		else
-    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);    			
+    		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)entityIn);
+    		if(anim != null) {
+    			if(!anim.isDone()) anim.applyTransformations(bodyParts, 0D);
+    		}else {
+	        	this.Head.rotateAngleY = netHeadYaw * 0.01745F;
+	        	this.Head.rotateAngleX = headPitch * 0.01745F;
+	        	this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
+	        	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
+	    		if(((EntityPlayer)entityIn).getPrimaryHand() == EnumHandSide.RIGHT)
+	    			this.RightUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);
+	    		else
+	    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);  
+    		}
     	}else if(entityIn instanceof EntityDeepOne){
     		Animation anim = ((EntityDeepOne)entityIn).getCurrentAnim();
     		if(anim != null) {

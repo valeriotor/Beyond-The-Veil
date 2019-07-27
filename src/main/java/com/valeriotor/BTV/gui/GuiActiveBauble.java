@@ -32,6 +32,7 @@ public class GuiActiveBauble extends GuiOptionWheel{
 	private ResourceLocation[] textures = {null,null,null,null};
 	
 	public GuiActiveBauble() {
+		if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return;
 		IBaublesItemHandler handler = BaublesApi.getBaublesHandler(Minecraft.getMinecraft().player);
 		for(int i = 0; i < 4; i++) {
 			ItemStack stack = handler.getStackInSlot(i);

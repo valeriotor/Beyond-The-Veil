@@ -1,28 +1,21 @@
 package com.valeriotor.BTV.events;
 
-import org.lwjgl.opengl.GL11;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
+import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.items.ItemRegistry;
-import com.valeriotor.BTV.lib.PlayerDataLib;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageMedallionEffect;
 import com.valeriotor.BTV.proxy.ClientProxy;
 
-import baubles.api.BaublesApi;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -32,6 +25,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents {
+	
+	public final Map<EntityPlayer, Animation> playerAnimations = new HashMap<>();
 	
 	private int sawcleaverCount = 0;
 	private KeyBinding binds[] = {
@@ -66,11 +61,18 @@ public class ClientEvents {
 					}  
 				}
 				if(sawcleaverCount > 0) sawcleaverCount--;
+				
+				playerAnimations.entrySet().forEach(e -> e.getValue().update());
+				playerAnimations.entrySet().removeIf(e -> e.getValue().isDone());
+				
 			}
 				
 			if(soundCounter > 0) {
 				soundCounter--;
 			}	
+			
+			
+			
 		}
 	}
 	
