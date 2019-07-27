@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
+import com.valeriotor.BTV.entities.AI.AIDeepOneRoar;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
 import com.valeriotor.BTV.entities.AI.IPlayerGuardian;
 import com.valeriotor.BTV.worship.Deities;
@@ -38,9 +39,10 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	private UUID master;
 	private int counter = -1;
 	private Animation currentAnim = null;
-	private int animResetTicks = 1;
+	private int roarCooldown = 300;
 	
 	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> ROARING = EntityDataManager.<Boolean>createKey(EntityDeepOne.class, DataSerializers.BOOLEAN);
 	public EntityDeepOne(World worldIn) {
 		super(worldIn);
 		
@@ -79,6 +81,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.tasks.addTask(2, new AIDeepOneAttack(this, 1.5D, true));
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
+	        this.tasks.addTask(2, new AIDeepOneRoar(this));
 	        this.targetTasks.addTask(1, new AIProtectMaster(this));
 	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null && Worship.getDeityLevel(p, Deities.GREATDREAMER) < 5)));
 	 }
@@ -87,6 +90,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(ARM_RAISED, -1);
+		this.dataManager.register(ROARING, false);
 	 }
 	 
 	 @SideOnly(Side.CLIENT)
@@ -121,24 +125,25 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 public void onLivingUpdate() {
 		 super.onLivingUpdate();
 		 
-		 if(this.world.isRemote && this.isInWater()) {
-			 if(this.currentAnim == null) {
-				 if((this.world.getWorldTime() & 63) == 0) {
+		 if(this.world.isRemote) {
+			 if(this.getDataManager().get(ROARING)) {
+				 if(this.currentAnim == null)
 					 this.currentAnim = new Animation(AnimationRegistry.deep_one_test);
-					 this.animResetTicks = 1;
-				 }
-			 }else {
-				 if(this.currentAnim.isDone()) {
-					 this.animResetTicks--;
-					 if(this.animResetTicks == 0) this.currentAnim = null;
-				 }
 				 else this.currentAnim.update();
+			 }else {
+				 if(this.currentAnim != null) {
+					 if(this.currentAnim.isDone()) this.currentAnim = null;
+					 else this.currentAnim.update();
+				 }
 			 }
 		 }
 		 
-		 if(!this.world.isRemote && this.counter > -1) {
-			 this.counter--;
-			 if(this.counter == 0) this.world.removeEntity(this);
+		 if(!this.world.isRemote) {
+			 if(this.counter > -1) {
+				 this.counter--;
+				 if(this.counter == 0) this.world.removeEntity(this);
+			 }
+			 if(this.roarCooldown > 0) this.roarCooldown--;
 		 }
 		 
 		 if(this.isInWater()) {
@@ -152,27 +157,31 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 				 if(this.world.getBlockState(this.getPosition().add(0, 1, 0)).getBlock() != Blocks.WATER) {
 					 if(this.getAttackTarget().posY>this.posY+0.3 && isTargetInWater) {
 					 		this.motionY=0.1;
-				 }
+					 }
 				 }else if(this.getAttackTarget().posY>this.posY) {
 				 		this.motionY=0.1;
 				 		
-				 	}
+				 }
 			 
 			 double angle = Math.atan((Math.abs(this.getAttackTarget().posX-this.posX))/(Math.abs(this.getAttackTarget().posZ-this.posZ)));
-			 
-			 if(this.getAttackTarget().posX>this.posX) {
-			 	 this.motionX = Math.sin(angle)/6;
-			 	 
-			 }else {
-			 	 this.motionX = -Math.sin(angle)/6;
-			 	 
-			 }
-			 if(this.getAttackTarget().posZ>this.posZ) {
-			 	 this.motionZ = Math.cos(angle)/6;
-			 	 
-			 }else {
-			 	 this.motionZ = -Math.cos(angle)/6;
-			 	 
+			 double horizontalDist = Math.sqrt(Math.pow(this.getAttackTarget().posX-this.posX,2)+Math.pow(this.getAttackTarget().posZ-this.posZ,2));
+			 if(horizontalDist > 0.7) {
+				 if(this.getAttackTarget().posX>this.posX) {
+				 	 this.motionX = Math.sin(angle)/4.5;
+				 	 
+				 }else {
+				 	 this.motionX = -Math.sin(angle)/4.5;
+				 	 
+				 }
+				 if(this.getAttackTarget().posZ>this.posZ) {
+				 	 this.motionZ = Math.cos(angle)/4.5;
+				 	 
+				 }else {
+				 	 this.motionZ = -Math.cos(angle)/4.5;
+				 	 
+				 }
+			 }else if(this.getAttackTarget().posY < this.posY) {
+				 this.motionY = -0.3;
 			 }
 			 this.faceEntity(this.getAttackTarget(), 180, 180);
 			 
@@ -208,6 +217,15 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 @SideOnly(Side.CLIENT)
 	 public Animation getCurrentAnim() {
 		 return this.currentAnim;
+	 }
+	 
+	 public void setRoaring(boolean roaring) {
+		 this.getDataManager().set(ROARING, roaring);
+		 this.roarCooldown = 300;
+	 }
+	 
+	 public int getRoarCooldown() {
+		 return this.roarCooldown;
 	 }
 	 
 	 

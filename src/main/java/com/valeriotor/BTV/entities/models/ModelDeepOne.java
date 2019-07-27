@@ -197,7 +197,6 @@ public class ModelDeepOne extends ModelAnimated {
     		Animation anim = ((EntityDeepOne)entityIn).getCurrentAnim();
     		if(anim != null) {
     			if(!anim.isDone()) anim.applyTransformations(bodyParts, (double)0);
-    			//else this.resetModel(bodyParts);
     		}else {
     			this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	    	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;

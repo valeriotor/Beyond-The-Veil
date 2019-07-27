@@ -35,6 +35,9 @@ public final class BTVSounds {
 	@ObjectHolder("heart_rip")
 	public static final SoundEvent heartRip = new SoundEvent(new ResourceLocation(References.MODID, "heart_rip")).setRegistryName("heart_rip");
 	
+	@ObjectHolder("deep_one_roar")
+	public static final SoundEvent deepOneRoar = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_roar")).setRegistryName("deep_one_roar");
+	
 	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
@@ -47,6 +50,7 @@ public final class BTVSounds {
 			case 6: return dreamAlienis;
 			case 7: return spineRip;
 			case 8: return heartRip;
+			case 9: return deepOneRoar;
 			default: return null;
 			
 		}
@@ -62,10 +66,11 @@ public final class BTVSounds {
 		if(sound.equals(dreamAlienis)) return 6;
 		if(sound.equals(spineRip)) return 7;
 		if(sound.equals(heartRip)) return 8;
+		if(sound.equals(deepOneRoar)) return 9;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 9;
+		return 10;
 	}
 }

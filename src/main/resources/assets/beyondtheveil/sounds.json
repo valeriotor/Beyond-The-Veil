@@ -60,5 +60,11 @@
 		"sounds": [
 			"beyondtheveil:heart_rip"
 		]
+	},
+	"deep_one_roar":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:deep_one_roar"
+		]
 	}
 }

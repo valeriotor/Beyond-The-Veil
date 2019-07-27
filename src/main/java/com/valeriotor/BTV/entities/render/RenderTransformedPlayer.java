@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities.render;
 
 import com.valeriotor.BTV.entities.models.ModelDeepOne;
+import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,7 @@ public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
 
 	
 	public RenderTransformedPlayer(RenderManager renderManager) {
-		super(renderManager, new ModelDeepOne(), 0.5F);
+		super(renderManager, ModelRegistry.deep_one, 0.5F);
 	}
 	
 	public void render(EntityPlayer entity, double x, double y, double z, float entityYaw,

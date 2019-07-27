@@ -38,9 +38,9 @@ start: 13: 25
 	Head: rotz: 0.3
 end
 start: 13: 18
-	RMouth: roty: -0.7
-	LMouth: roty: 0.7
-	BMouth: rotx: -1.0
+	RMouth: roty: -0.7: quadratic
+	LMouth: roty: 0.7: quadratic
+	BMouth: rotx: -1.0: quadratic
 end
 start: 15: 25
     Body: traz: 0.2
