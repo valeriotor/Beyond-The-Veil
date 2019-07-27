@@ -25,6 +25,7 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	
 	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
 	private static final ResourceLocation GD_EAST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
+	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/transform_deep_one.png");
 	
 	private final int level;
 	private final Deities deity;
@@ -80,7 +81,7 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	@Override
 	public ResourceLocation getWestOptionTexture() {
 		switch(deity) {
-		case GREATDREAMER: return GD_EAST_TEXTURE; // TODO: Change texture
+		case GREATDREAMER: return GD_WEST_TEXTURE;
 		default: return null;
 		}
 	}
