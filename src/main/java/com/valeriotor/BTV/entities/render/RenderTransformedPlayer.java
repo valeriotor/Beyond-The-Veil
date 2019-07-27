@@ -4,16 +4,16 @@ import com.valeriotor.BTV.entities.models.ModelDeepOne;
 import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.lib.References;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 
-public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
+public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlayer>{
 
 	public static final ResourceLocation deepOneTexture = new ResourceLocation(References.MODID +":textures/entity/deep_one.png");
 
@@ -22,7 +22,7 @@ public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
 		super(renderManager, ModelRegistry.deep_one, 0.5F);
 	}
 	
-	public void render(EntityPlayer entity, double x, double y, double z, float entityYaw,
+	public void render(AbstractClientPlayer entity, double x, double y, double z, float entityYaw,
 			float partialTicks) {
 		
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
@@ -70,21 +70,26 @@ public class RenderTransformedPlayer extends RenderLivingBase<EntityLivingBase>{
         this.mainModel.setRotationAngles(f6, f5, f8, f2, f7, 0.06F, entity);
 
 		this.mainModel.render(entity, f6, f5, 1, f2, f7, 0.06F);
-
+		GlStateManager.depthMask(true);
+        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.enableTexture2D();
+        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.enableCull();
         GlStateManager.popMatrix();
 
         GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<AbstractClientPlayer>(entity, this, partialTicks, x, y, z));
 	}
 	
 	@Override
-	public void doRender(EntityLivingBase entity, double x, double y, double z, float entityYaw,
+	public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw,
 			float partialTicks) {
 		
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(EntityLivingBase entity) {
+	public ResourceLocation getEntityTexture(AbstractClientPlayer entity) {
 		
 		return deepOneTexture;
 		
