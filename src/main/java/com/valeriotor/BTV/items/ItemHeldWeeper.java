@@ -37,7 +37,7 @@ public class ItemHeldWeeper extends Item {
 				}
 			}
 		}
-		EntityWeeper weeper = new EntityWeeper(w);
+		EntityWeeper weeper = new EntityWeeper(w, spineless);
 		weeper.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
 		weeper.setHeartless(heartless);
 		w.spawnEntity(weeper);
