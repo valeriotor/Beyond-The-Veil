@@ -1,12 +1,17 @@
 package com.valeriotor.BTV.items;
 
+import java.util.List;
+
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -42,6 +47,11 @@ public class ItemHeldFletum extends Item{
 		w.spawnEntity(fletum);
 		player.getHeldItem(hand).shrink(1);
 		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("§5§o" + I18n.format("tooltip.held_fletum"));
 	}
 	
 }
