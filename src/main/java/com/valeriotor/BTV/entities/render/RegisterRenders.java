@@ -3,6 +3,7 @@ package com.valeriotor.BTV.entities.render;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.entities.EntityWeeper;
 
@@ -48,6 +49,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityWeeper> createRenderFor(RenderManager manager) 
 			{return new RenderWeeper(manager);}
+			});
+		
+		//Weeper
+		RenderingRegistry.registerEntityRenderingHandler(EntityFletum.class, new IRenderFactory<EntityFletum>(){
+			@Override
+			public Render<EntityFletum> createRenderFor(RenderManager manager) 
+			{return new RenderFletum(manager);}
 			});
 	}
 }

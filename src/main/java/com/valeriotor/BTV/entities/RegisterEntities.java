@@ -13,6 +13,7 @@ public class RegisterEntities {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":canoe"), EntityCanoe.class, "canoe", 103 , BeyondTheVeil.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crawling_villager"), EntityCrawlingVillager.class, "crawling_villager", 105 , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":weeper"), EntityWeeper.class, "weeper", 106 , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":fletum"), EntityFletum.class, "fletum", 107 , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		
 	}
 }

@@ -1,11 +1,12 @@
 package com.valeriotor.BTV.events;
 
-import com.valeriotor.BTV.capabilities.DGProvider;
-import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,6 +25,10 @@ public class LivingEvents {
 					if(p.isInWater()) e.setAmount((float) (e.getAmount()*2*Math.log(lvl)));
 					else e.setAmount((float) (e.getAmount()*1.1*Math.log(lvl)));
 				}
+			}
+		}else if(e.getSource() == DamageSource.FALL) {
+			if(e.getEntity() instanceof EntityFletum) {
+				e.setCanceled(true);
 			}
 		}
 	}
