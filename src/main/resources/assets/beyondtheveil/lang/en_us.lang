@@ -102,6 +102,11 @@ gui.activebauble.bauble3=Belt
 gui.activebauble.bauble4=Head
 gui.activebauble.bauble5=Body
 gui.activebauble.bauble6=Trinket
+gui.activebauble.help=Left click to set as current active bauble (only one allowed)./Right click to toggle passive effect./Green: Active Bauble, passive on./Yellow: Active Bauble, passive off./Purple: Non Active Bauble, passive on./Red: Non Active Bauble, passive off.
+gui.activebauble.active=Currently active.
+gui.activebauble.inactive=Currently not active.
+gui.activebauble.passiveon=Passive on.
+gui.activebauble.passiveoff=Passive off.
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

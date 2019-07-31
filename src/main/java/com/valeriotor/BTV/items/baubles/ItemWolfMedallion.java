@@ -2,6 +2,8 @@ package com.valeriotor.BTV.items.baubles;
 
 import java.util.List;
 
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 
 import baubles.api.BaubleType;
@@ -47,7 +49,7 @@ public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble{
 	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
 		if(player.world.isRemote) return;
-		if(player.ticksExisted % 600 == 0) {
+		if(player.ticksExisted % 600 == 0 && player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 0), 1, false) == 1) {
 			int i = 0;
 			boolean creepers = false;
 			AxisAlignedBB bb = new AxisAlignedBB(player.getPosition().add(-25, -10, -25), player.getPosition().add(25, 12, 25));
