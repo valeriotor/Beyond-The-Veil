@@ -22,15 +22,14 @@ public class PotionFolly extends Potion{
 			((EntityMob) e).setAttackTarget(null);
 			e.setRotationYawHead(e.world.rand.nextInt(360));
 		}
-		if(e instanceof EntityPlayer) e.rotationYaw = e.world.rand.nextInt(360);
-		e.rotationPitch = e.world.rand.nextInt(180)-90;
+		if(e instanceof EntityPlayer) e.rotationYaw += e.world.rand.nextInt(20 + 10*amplifier)- 10 - 5*amplifier;
+		e.rotationPitch += e.world.rand.nextInt(20 + 10*amplifier)- 10 - 5*amplifier + (e.rotationPitch > 100 ? -10 : (e.rotationPitch < -100 ? +10 : 0));
 		super.performEffect(e, amplifier);
 	}
 	
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		if((duration & 3) == 0) return true;
-		return false;
+		return true;
 	}
 
 }
