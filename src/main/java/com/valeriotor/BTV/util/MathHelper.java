@@ -80,6 +80,16 @@ public class MathHelper {
 	 * @param p The player
 	 * @param dis The maximum distance the entity can be at
 	 */
+	public static EntityLivingBase getClosestLookedAtEntity(EntityPlayer p, double dis) {
+		return getClosestLookedAtEntity(p, dis, e -> true);
+	}
+	
+	/** Returns the closest entity the player is looking at
+	 * 
+	 * @param p The player
+	 * @param dis The maximum distance the entity can be at
+	 * @param predIn A condition that must be true for the looked at entities to be considered
+	 */
 	public static EntityLivingBase getClosestLookedAtEntity(EntityPlayer p, double dis, Predicate<EntityLivingBase> predIn) {
 		List<EntityLivingBase> ents = getLookedAtEntities(p, dis, predIn);
 		if(ents.isEmpty()) return null;

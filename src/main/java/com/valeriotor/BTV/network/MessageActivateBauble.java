@@ -6,6 +6,7 @@ import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.items.baubles.IActiveBauble;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.potions.PotionRegistry;
 
 import baubles.api.BaublesApi;
 import io.netty.buffer.ByteBuf;
@@ -39,7 +40,9 @@ public class MessageActivateBauble implements IMessage{
 			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 				p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 				 .forEach(e -> {
-				 if(e != p) e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 80, 10));
+				 if(e != p && !(e instanceof EntityDeepOne)) {
+					 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
+				 }
 				 if(e instanceof EntityPlayerMP) {
 					 BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deepOneRoar), e.getPosition().toLong()), (EntityPlayerMP)e);
 				 }
