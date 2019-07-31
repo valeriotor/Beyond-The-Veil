@@ -19,7 +19,7 @@ public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlay
 
 	
 	public RenderTransformedPlayer(RenderManager renderManager) {
-		super(renderManager, ModelRegistry.deep_one, 0.5F);
+		super(renderManager, new ModelDeepOne(), 0.5F);
 	}
 	
 	public void render(AbstractClientPlayer entity, double x, double y, double z, float entityYaw,

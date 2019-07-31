@@ -48,7 +48,7 @@ public class ModelDeepOne extends ModelAnimated {
         this.Head = new ModelRenderer(this, 50, 16);
         this.Head.setRotationPoint(0.0F, -8.0F, -5.73F);
         this.Head.addBox(-4.0F, -8.0F, -4.0F, 8, 6, 8, 0.0F);
-        this.DorsalFin = new ModelRenderer(this, 52, 3);
+        this.DorsalFin = new ModelRenderer(this, 52, 2);
         this.DorsalFin.setRotationPoint(0.0F, 0.0F, 8.0F);
         this.DorsalFin.addBox(-0.5F, -11.0F, 0.0F, 1, 11, 3, 0.0F);
         this.LeftUpperLeg = new ModelRenderer(this, 94, 0);
@@ -148,6 +148,9 @@ public class ModelDeepOne extends ModelAnimated {
     }
     
     public void setAngles() {
+    	this.setRotateAngle(LeftMouth, 0, 0, 0);
+    	this.setRotateAngle(RightMouth, 0, 0, 0);
+    	this.setRotateAngle(BottomMouth, 0, 0, 0);
     	this.setRotateAngle(LeftLowerLeg, 0.9F, -0.0F, 0.0F);
     	this.setRotateAngle(RightLowerLeg, 0.9F, -0.0F, 0.0F);
     	this.setRotateAngle(LeftUpperLeg, -0.6F, -0.0F, 0.0F);
@@ -159,9 +162,6 @@ public class ModelDeepOne extends ModelAnimated {
     	this.setRotateAngle(RightUpperArm, 0.0F, -0.0F, 0.43633231520652765F);
     	this.setRotateAngle(Body, 0.37178611755371094F, -0.0F, 0.0F);
     	this.setRotateAngle(RightLowerArm, -0.855108082294464F, -0.0F, 0.0F);
-    	this.setRotateAngle(LeftMouth, 0, 0, 0);
-    	this.setRotateAngle(RightMouth, 0, 0, 0);
-    	this.setRotateAngle(BottomMouth, 0, 0, 0);
     	this.setRotateAngle(Head, 0, 0, 0);
         
     }
@@ -182,34 +182,49 @@ public class ModelDeepOne extends ModelAnimated {
     
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-    	//super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    	
+    	if((entityIn instanceof EntityPlayer && BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)entityIn) == null)
+    		|| (entityIn instanceof EntityDeepOne)	&& ((EntityDeepOne)entityIn).getCurrentAnim() == null) {
+    		this.Head.rotateAngleY = netHeadYaw * 0.01745F;
+        	this.Head.rotateAngleX = headPitch * 0.01745F;
+    	}
+    	//System.out.println((entityIn instanceof EntityPlayer) + " " + this.BackMouth.offsetX + " " + this.BackMouth.offsetY + " " + this.BackMouth.offsetZ);
+    }
+    
+    public void resetOffsets(List<ModelRenderer> list) {
+    	for(ModelRenderer mr : list) {
+    		mr.offsetX = 0;
+    		mr.offsetY = 0;
+    		mr.offsetZ = 0;
+    	}
+    }
+    
+    @Override
+    public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
+    		float partialTickTime) {
     	this.setAngles();
     	this.resetOffsets(bodyParts);
-    	if(entityIn instanceof EntityPlayer) {
-    		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)entityIn);
+    	if(e instanceof EntityPlayer) {
+    		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)e);
     		if(anim != null) {
-    			if(!anim.isDone()) anim.applyTransformations(bodyParts, 0D);
+    			if(!anim.isDone()) anim.applyTransformations(bodyParts, partialTickTime);
     		}else {
-	        	this.Head.rotateAngleY = netHeadYaw * 0.01745F;
-	        	this.Head.rotateAngleX = headPitch * 0.01745F;
 	        	this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
 	        	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-	    		if(((EntityPlayer)entityIn).getPrimaryHand() == EnumHandSide.RIGHT)
-	    			this.RightUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);
+	    		if(((EntityPlayer)e).getPrimaryHand() == EnumHandSide.RIGHT)
+	    			this.RightUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)e).swingProgress * 2.5F);
 	    		else
-	    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)entityIn).swingProgress * 2.5F);  
+	    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)e).swingProgress * 2.5F);  
     		}
-    	}else if(entityIn instanceof EntityDeepOne){
-    		Animation anim = ((EntityDeepOne)entityIn).getCurrentAnim();
+    	}else if(e instanceof EntityDeepOne){
+    		Animation anim = ((EntityDeepOne)e).getCurrentAnim();
     		if(anim != null) {
-    			if(!anim.isDone()) anim.applyTransformations(bodyParts, (double)0);
+    			if(!anim.isDone()) anim.applyTransformations(bodyParts, partialTickTime);
     		}else {
     			this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	    	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    	    	this.Head.rotateAngleY = netHeadYaw * 0.01745F;
-    	    	this.Head.rotateAngleX = headPitch * 0.01745F;
     		}
-    		switch(((EntityDeepOne)entityIn).getRaisedArm()) {
+    		switch(((EntityDeepOne)e).getRaisedArm()) {
     			case 0:
     				this.RightUpperArm.rotateAngleX = 0F;
     				this.LeftUpperArm.rotateAngleX = 0F; 
@@ -224,22 +239,6 @@ public class ModelDeepOne extends ModelAnimated {
     				this.LeftUpperArm.rotateAngleX = -1.3F;
     				this.RightUpperArm.rotateAngleX = -1.3F;
     		}
-    		
-    	}
-    }
-    
-    public void resetOffsets(List<ModelRenderer> list) {
-    	for(ModelRenderer mr : list) {
-    		mr.offsetX = 0;
-    		mr.offsetY = 0;
-    		mr.offsetZ = 0;
-    	}
-    }
-    
-    @Override
-    public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
-    		float partialTickTime) {
-    	if(e instanceof EntityDeepOne) {
     		
     	}
     }
