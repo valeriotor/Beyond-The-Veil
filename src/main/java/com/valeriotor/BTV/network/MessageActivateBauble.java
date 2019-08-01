@@ -42,6 +42,7 @@ public class MessageActivateBauble implements IMessage{
 				p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 				 .forEach(e -> {
 				 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
+					 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
 					 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
 				 }
 				 if(e instanceof EntityPlayerMP) {

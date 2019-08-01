@@ -23,7 +23,7 @@ public class PotionTerror extends Potion{
 	public void performEffect(EntityLivingBase e, int amplifier) {
 		if(e instanceof EntityPlayer) {
 			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
-			if(entity != null) {
+			if(entity != null && BTVEntityRegistry.isScaryEntity(entity)) {
 				if(e.world.rand.nextBoolean()) {
 					e.rotationYaw += e.world.rand.nextBoolean() ? 60 : -60;
 				}
@@ -36,7 +36,7 @@ public class PotionTerror extends Potion{
 				}
 			}
 		}else if(!BTVEntityRegistry.isFearlessEntity(e)){
-			List<EntityLivingBase> ents = e.world.getEntities(EntityLivingBase.class, ent -> ent.getDistance(e) < 7 && (ent instanceof EntityPlayer || BTVEntityRegistry.isScaryEntity(ent)));
+			List<EntityLivingBase> ents = e.world.getEntities(EntityLivingBase.class, ent -> ent.getDistance(e) < 7 && BTVEntityRegistry.isScaryEntity(ent));
 			for(EntityLivingBase entity : ents) {
 				double xDist = entity.posX - e.posX;
 				double zDist = entity.posZ - e.posZ;
