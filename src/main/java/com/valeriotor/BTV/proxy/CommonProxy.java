@@ -1,6 +1,6 @@
 package com.valeriotor.BTV.proxy;
 
-import com.valeriotor.BTV.entities.RegisterEntities;
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.events.ClientEvents;
 import com.valeriotor.BTV.events.RenderEvents;
 import com.valeriotor.BTV.lib.BTVSounds;
@@ -43,7 +43,7 @@ public class CommonProxy {
     }
     
     public static void registerEntities() {
-    	RegisterEntities.register();
+    	BTVEntityRegistry.register();
     }
     
     public void openGui(String id, Object... args) {
