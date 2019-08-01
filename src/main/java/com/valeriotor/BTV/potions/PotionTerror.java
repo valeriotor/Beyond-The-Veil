@@ -1,5 +1,9 @@
 package com.valeriotor.BTV.potions;
 
+import java.util.List;
+
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
+import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.MathHelper;
 
@@ -18,14 +22,27 @@ public class PotionTerror extends Potion{
 	@Override
 	public void performEffect(EntityLivingBase e, int amplifier) {
 		if(e instanceof EntityPlayer) {
-			if(MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e) != null) {
+			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
+			if(entity != null) {
 				if(e.world.rand.nextBoolean()) {
 					e.rotationYaw += e.world.rand.nextBoolean() ? 60 : -60;
 				}
 				else {
-					e.motionZ = -Math.cos(e.rotationYawHead);
-					e.motionX = Math.sin(e.rotationYawHead);
+					double xDist = entity.posX - e.posX;
+					double zDist = entity.posZ - e.posZ;
+					double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
+					e.motionZ = - zDist / dist;
+					e.motionX = - xDist / dist;
 				}
+			}
+		}else if(!BTVEntityRegistry.isFearlessEntity(e)){
+			List<EntityLivingBase> ents = e.world.getEntities(EntityLivingBase.class, ent -> ent.getDistance(e) < 7 && (ent instanceof EntityPlayer || BTVEntityRegistry.isScaryEntity(ent)));
+			for(EntityLivingBase entity : ents) {
+				double xDist = entity.posX - e.posX;
+				double zDist = entity.posZ - e.posZ;
+				double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
+				e.motionZ = - zDist / dist;
+				e.motionX = - xDist / dist;
 			}
 		}
 		super.performEffect(e, amplifier);

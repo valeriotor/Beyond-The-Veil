@@ -2,6 +2,7 @@ package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.items.baubles.IActiveBauble;
 import com.valeriotor.BTV.lib.BTVSounds;
@@ -40,7 +41,7 @@ public class MessageActivateBauble implements IMessage{
 			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 				p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 				 .forEach(e -> {
-				 if(e != p && !(e instanceof EntityDeepOne)) {
+				 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
 					 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
 				 }
 				 if(e instanceof EntityPlayerMP) {

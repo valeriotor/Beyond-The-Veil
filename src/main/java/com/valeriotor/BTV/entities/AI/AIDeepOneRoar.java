@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.entities.AI;
 
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 
 public class AIDeepOneRoar extends EntityAIBase{
 	
@@ -38,8 +40,9 @@ public class AIDeepOneRoar extends EntityAIBase{
 		this.entity.rotationYawHead = 0;
 		this.entity.setRoaring(true);
 		this.roarTime = 30;
-		this.entity.world.getEntities(EntityLivingBase.class, e -> !(e instanceof EntityDeepOne) && e.getDistance(this.entity) < 25)
+		this.entity.world.getEntities(EntityLivingBase.class, e -> !BTVEntityRegistry.isFearlessEntity(e) && e.getDistance(this.entity) < 25)
 						 .forEach(e -> {
+						 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
 						 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
 						 if(e instanceof EntityPlayerMP) {
 							 BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deepOneRoar), e.getPosition().toLong()), (EntityPlayerMP)e);
