@@ -3,6 +3,7 @@ package com.valeriotor.BTV.items;
 import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.items.baubles.ItemBoneTiara;
 import com.valeriotor.BTV.items.baubles.ItemWolfMedallion;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.proxy.ClientProxy;
@@ -47,6 +48,7 @@ public class ItemRegistry {
 	public static final ItemHeldWeeper held_weeper = new ItemHeldWeeper("held_weeper");
 	public static final ItemHeldFletum held_fletum = new ItemHeldFletum("held_fletum");
 	public static final ItemMaterial surgery_tools = new ItemMaterial("surgery_tools");
+	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara();
 	
 	
 	
@@ -87,6 +89,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(held_weeper, 0, "inventory");
         ClientProxy.registerItemRenderer(held_fletum, 0, "inventory");
         ClientProxy.registerItemRenderer(surgery_tools, 0, "inventory");
+        ClientProxy.registerItemRenderer(bone_tiara, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -169,6 +172,7 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.held_weeper);
     	event.getRegistry().register(ItemRegistry.held_fletum);
     	event.getRegistry().register(ItemRegistry.surgery_tools);
+    	event.getRegistry().register(ItemRegistry.bone_tiara);
     	
     	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);

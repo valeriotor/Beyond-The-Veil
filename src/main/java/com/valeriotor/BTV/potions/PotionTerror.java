@@ -2,13 +2,18 @@ package com.valeriotor.BTV.potions;
 
 import java.util.List;
 
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.MathHelper;
 
+import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
 public class PotionTerror extends Potion{
@@ -22,6 +27,10 @@ public class PotionTerror extends Potion{
 	@Override
 	public void performEffect(EntityLivingBase e, int amplifier) {
 		if(e instanceof EntityPlayer) {
+			ItemStack stack = BaublesApi.getBaublesHandler((EntityPlayer)e).getStackInSlot(4);
+			if(stack.getItem() == ItemRegistry.bone_tiara && 
+			  ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) return;
+			
 			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
 			if(entity != null && BTVEntityRegistry.isScaryEntity(entity)) {
 				if(e.world.rand.nextBoolean()) {
