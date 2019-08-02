@@ -62,24 +62,6 @@ public class PlayerEvents {
 			}
 		}
 	}
-
-	@SubscribeEvent
-	public static void damageEvent(LivingDamageEvent event) {
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer)event.getEntityLiving();
-			EnumHand h = EnumHand.MAIN_HAND;
-			ItemStack stack = null;
-			if(p.getHeldItemMainhand().getItem() == ItemRegistry.flute) {
-				stack = p.getHeldItemMainhand();
-			}else if(p.getHeldItemOffhand().getItem() == ItemRegistry.flute){
-				stack = p.getHeldItemOffhand();
-			}
-			if(stack != null) {
-				if(p.getItemInUseCount() > 0)
-				stack.setItemDamage(150);
-			}
-		}
-	}
 	
 	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
