@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.dreaming;
 
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,8 +41,8 @@ public class DreamHandler {
 		Map<BlockPos, AbstractDream> dreams = SpreaderLocations.stream()
 												.filter(pos -> p.world.getTileEntity(pos).getTileData().hasKey("containing"))
 												.filter(pos -> DreamRegistry.dreams.containsKey(p.world.getTileEntity(pos).getTileData().getString("containing")))
-												.sorted(Comparator.comparingInt(pos -> -DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing")).priority)) 
-												.collect(Collectors.toMap(pos -> pos, pos -> DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing"))));
+												.sorted(Comparator.comparingInt(pos -> DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing")).priority)) 
+												.collect(Collectors.toMap(pos -> pos, pos -> DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing")), (x,y) -> x, LinkedHashMap::new));
 		
 		for(Entry<BlockPos, AbstractDream> entry : dreams.entrySet()) {
 			BlockPos pos = entry.getKey();

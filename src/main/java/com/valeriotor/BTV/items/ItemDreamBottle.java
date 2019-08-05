@@ -61,7 +61,7 @@ public class ItemDreamBottle extends Item{
 					dreams.put(i, DreamRegistry.dreams.get(AspectHelper.getObjectAspects(stack2).getAspects()[0].getName()));
 			}
 		}
-		SortedSet<Map.Entry<Integer, AbstractDream>> set = new TreeSet<Map.Entry<Integer, AbstractDream>>(Comparator.comparingInt(e -> -e.getValue().priority));
+		SortedSet<Map.Entry<Integer, AbstractDream>> set = new TreeSet<Map.Entry<Integer, AbstractDream>>(Comparator.comparingInt(e -> e.getValue().priority));
 		set.addAll(dreams.entrySet());
 		for(Entry<Integer, AbstractDream> entry : set) {
 			if(entry.getValue().activate(playerIn, playerIn.world, ThaumcraftCapabilities.getKnowledge(playerIn)))
