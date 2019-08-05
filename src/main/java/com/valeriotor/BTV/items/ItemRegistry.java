@@ -51,6 +51,7 @@ public class ItemRegistry {
 	public static final ItemMaterial surgery_tools = new ItemMaterial("surgery_tools");
 	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara();
 	public static final ItemBleedingBelt bleeding_belt = new ItemBleedingBelt("bleeding_belt");
+	public static final ItemDreamBottle dream_bottle = new ItemDreamBottle("dream_bottle");
 	
 	
 	
@@ -93,6 +94,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(surgery_tools, 0, "inventory");
         ClientProxy.registerItemRenderer(bone_tiara, 0, "inventory");
         ClientProxy.registerItemRenderer(bleeding_belt, 0, "inventory");
+        ClientProxy.registerItemRenderer(dream_bottle, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -177,6 +179,7 @@ public class ItemRegistry {
     	event.getRegistry().register(ItemRegistry.surgery_tools);
     	event.getRegistry().register(ItemRegistry.bone_tiara);
     	event.getRegistry().register(ItemRegistry.bleeding_belt);
+    	event.getRegistry().register(ItemRegistry.dream_bottle);
     	
     	
     	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);

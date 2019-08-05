@@ -10,6 +10,11 @@ public class ItemHelper {
 		return stack.getTagCompound();
 	}
 	
+	public static NBTTagCompound checkTagCompound(NBTTagCompound nbt, String key) {
+		if(!nbt.hasKey(key)) nbt.setTag(key, new NBTTagCompound());
+		return (NBTTagCompound) nbt.getTag(key);
+	}
+	
 	public static boolean checkBooleanTag(ItemStack stack, String key, boolean defaultValue) {
 		if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
 		if(!stack.getTagCompound().hasKey(key)) {

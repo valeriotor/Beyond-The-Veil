@@ -7,6 +7,7 @@ import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.WorshipCapHandler;
 import com.valeriotor.BTV.events.ResearchEvents;
+import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.lib.commands.ReloadResources;
 import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
@@ -81,6 +83,7 @@ public class BeyondTheVeil
     	ThaumcraftApi.registerResearchLocation(new ResourceLocation(References.MODID, "research/btvresearch"));
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
+    	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
     	
     }
     
