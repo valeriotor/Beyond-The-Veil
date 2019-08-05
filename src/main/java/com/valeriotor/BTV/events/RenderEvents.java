@@ -13,8 +13,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,4 +45,15 @@ public class RenderEvents {
 			deepOne.render((AbstractClientPlayer)p, d3-d0, d4-d1, d2-d5, p.rotationYaw, event.getPartialRenderTick());
 		}
 	}
+	
+	
+	@SubscribeEvent
+	public void entityViewRenderEvent(RenderTickEvent event) {
+		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused()) return;
+		if(transformedPlayers.contains(Minecraft.getMinecraft().player))
+			Minecraft.getMinecraft().player.eyeHeight = 2;
+		else
+			Minecraft.getMinecraft().player.eyeHeight = 1.62F;
+	}
+	
 }
