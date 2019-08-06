@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.potions.PotionRegistry;
 import com.valeriotor.BTV.proxy.ClientProxy;
 
 import net.minecraft.block.Block;
@@ -42,29 +44,8 @@ public class ClientEvents {
 		if(event.phase.equals(Phase.END)) {
 			EntityPlayerSP p = Minecraft.getMinecraft().player;
 			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
-			if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver && !p.isInsideOfMaterial(Material.WATER) && !p.isInWater() && !p.isInLava() && !p.capabilities.isFlying) {
-				Block block = p.world.getBlockState(p.getPosition().down()).getBlock();
-				if(ClientProxy.handler.dodge.isPressed() && sawcleaverCount < 1 && block != Blocks.WATER && block != Blocks.AIR) {
-					int conto = 0;
-					int direction[] = {-1,-1};
-					for(int i = 0; i < 4; i++) {
-						if(binds[i].isKeyDown()) {
-							conto++;
-							if(conto > 0) direction[0] = i;
-							if(conto == 2) direction[1] = i;
-						}
-					}
-						for(int i = 0; i < conto && i < 3; i++) {
-							this.movePlayer(direction[i], 1 / ((float) conto));
-						}
-						sawcleaverCount = 0;	
-					}  
-				}
-				if(sawcleaverCount > 0) sawcleaverCount--;
-				
-				playerAnimations.entrySet().forEach(e -> e.getValue().update());
-				playerAnimations.entrySet().removeIf(e -> e.getValue().isDone());
-				
+				sawCleaverDodge(p);
+				playerAnimationUpdate();
 			}
 				
 			if(soundCounter > 0) {
@@ -75,6 +56,34 @@ public class ClientEvents {
 			
 		}
 	}
+	
+	public void sawCleaverDodge(EntityPlayer p) {
+		if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver && !p.isInsideOfMaterial(Material.WATER) && !p.isInWater() && !p.isInLava() && !p.capabilities.isFlying) {
+			Block block = p.world.getBlockState(p.getPosition().down()).getBlock();
+			if(ClientProxy.handler.dodge.isPressed() && sawcleaverCount < 1 && block != Blocks.WATER && block != Blocks.AIR) {
+				int conto = 0;
+				int direction[] = {-1,-1};
+				for(int i = 0; i < 4; i++) {
+					if(binds[i].isKeyDown()) {
+						conto++;
+						if(conto > 0) direction[0] = i;
+						if(conto == 2) direction[1] = i;
+					}
+				}
+					for(int i = 0; i < conto && i < 3; i++) {
+						this.movePlayer(direction[i], 1 / ((float) conto));
+					}
+					sawcleaverCount = 0;	
+				}  
+			}
+			if(sawcleaverCount > 0) sawcleaverCount--;
+	}
+	
+	public void playerAnimationUpdate() {
+		playerAnimations.entrySet().forEach(e -> e.getValue().update());
+		playerAnimations.entrySet().removeIf(e -> e.getValue().isDone());
+	}
+	
 	
 	@SubscribeEvent
 	public void soundEvent(PlaySoundEvent event) {
