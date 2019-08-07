@@ -9,6 +9,7 @@ import com.valeriotor.BTV.blocks.flora.PlantOrdo;
 import com.valeriotor.BTV.blocks.flora.PlantSaplingShrub;
 import com.valeriotor.BTV.blocks.flora.PlantTerra;
 import com.valeriotor.BTV.blocks.flora.PlantWeed;
+import com.valeriotor.BTV.blocks.fluid.BlockFluidTears;
 import com.valeriotor.BTV.lib.BlockNames;
 
 import net.minecraft.block.Block;
@@ -50,6 +51,11 @@ public class BlockRegistry {
 	public static final PlantOrdo PlantOrdo = new PlantOrdo(BlockNames.PLANTORDO);
 	public static final BlockMutator BlockMutator = new BlockMutator(BlockNames.MUTATOR);
 	public static final BlockWateryCradle BlockWateryCradle = new BlockWateryCradle(BlockNames.WATERYCRADLE);
+	public static final BlockLacrymatory BlockLacrymatory = new BlockLacrymatory(BlockNames.LACRYMATORY);
+	
+	
+	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
+	public static BlockFluidTears BlockFluidTears;
 	
 	
 	@SubscribeEvent
@@ -84,5 +90,7 @@ public class BlockRegistry {
 	   	event.getRegistry().register(PlantOrdo);
 	   	event.getRegistry().register(BlockMutator);
 	   	event.getRegistry().register(BlockWateryCradle);
+	   	event.getRegistry().register(BlockLacrymatory);
+	   	event.getRegistry().register(BlockFluidTears);
 	}
 }

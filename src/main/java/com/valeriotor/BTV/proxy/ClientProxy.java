@@ -5,6 +5,7 @@ import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.entities.render.RegisterRenders;
 import com.valeriotor.BTV.events.ClientEvents;
 import com.valeriotor.BTV.events.RenderEvents;
+import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
@@ -37,6 +38,7 @@ public class ClientProxy extends CommonProxy {
         this.registerRenders();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
+        ModFluids.renderFluids();
         }
 
     //@SubscribeEvent

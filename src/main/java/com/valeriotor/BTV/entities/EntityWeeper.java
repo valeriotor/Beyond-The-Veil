@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities;
 
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.entity.EntityCreature;
@@ -8,7 +9,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -16,10 +16,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,6 +35,7 @@ public class EntityWeeper extends EntityCreature{
 	private int tearTicks;
 	private boolean increase = true;
 	private boolean heartless = false;
+	private BlockPos lacrymatory;
 	private static final DataParameter<Boolean> SPINELESS = EntityDataManager.<Boolean>createKey(EntityWeeper.class, DataSerializers.BOOLEAN);
 	
 	public EntityWeeper(World worldIn) {
@@ -81,12 +85,36 @@ public class EntityWeeper extends EntityCreature{
 			}
 			this.tearTicks--;
 			if(this.tearTicks == 0) {
+				/*
 				this.tearTicks = world.rand.nextInt(20*60*5)+20*60*3;
 				EntityItem item = new EntityItem(this.world, posX, posY, posZ, new ItemStack(ItemRegistry.tears));
-				this.world.spawnEntity(item);
+				this.world.spawnEntity(item);*/
+				if(this.lacrymatory != null) {
+					TileEntity te = this.world.getTileEntity(lacrymatory);
+					if(!(te instanceof TileLacrymatory)) this.lacrymatory = null;
+					else {
+						TileLacrymatory tl = (TileLacrymatory) te;
+						if(tl.getWeeper() == null) tl.setWeeper(this);
+						else if(tl.getWeeper() == this) {
+							
+						}else this.lacrymatory = null;
+					}
+				}
 			}
 		}
 		
+	}
+	
+	@Override
+	public void onDeath(DamageSource cause) {
+		if(this.lacrymatory != null) {
+			TileEntity te = this.world.getTileEntity(lacrymatory);
+			if(te instanceof TileLacrymatory) {
+				TileLacrymatory tl = (TileLacrymatory) te;
+				tl.setWeeper(null);
+			}
+		}
+		super.onDeath(cause);
 	}
 	
 	protected void applyEntityAttributes() {
@@ -123,6 +151,8 @@ public class EntityWeeper extends EntityCreature{
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setBoolean("heartless", this.heartless);
 		compound.setInteger("tearTicks", this.tearTicks);
+		if(this.lacrymatory != null)
+			compound.setLong("lacrymatory", this.lacrymatory.toLong());
 		return super.writeToNBT(compound);
 	}
 	
@@ -130,6 +160,8 @@ public class EntityWeeper extends EntityCreature{
 	public void readFromNBT(NBTTagCompound compound) {
 		this.heartless = compound.getBoolean("heartless");
 		this.tearTicks = compound.getInteger("tearTicks");
+		if(compound.hasKey("lacrymatory"))
+			this.lacrymatory = BlockPos.fromLong(compound.getLong("lacrymatory"));
 		super.readFromNBT(compound);
 	}
 	
@@ -143,6 +175,14 @@ public class EntityWeeper extends EntityCreature{
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		if(player.getHeldItem(hand).getItem() == ItemRegistry.blackjack) {
+			if(this.lacrymatory != null) {
+				TileEntity te = this.world.getTileEntity(lacrymatory);
+				if(te instanceof TileLacrymatory) {
+					System.out.println("Been here");
+					TileLacrymatory tl = (TileLacrymatory) te;
+					tl.setWeeper(null);
+				}
+			}
 			if(!this.world.isRemote) {
 				ItemStack item = this.getItemForm();
 				player.addItemStackToInventory(item);
@@ -151,6 +191,10 @@ public class EntityWeeper extends EntityCreature{
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
+	}
+	
+	public void setLacrymatory(BlockPos pos) {
+		this.lacrymatory = pos;
 	}
 
 }

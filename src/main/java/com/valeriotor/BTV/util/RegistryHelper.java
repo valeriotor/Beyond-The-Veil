@@ -8,6 +8,7 @@ import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileArborealGeneratorBottom;
 import com.valeriotor.BTV.tileEntities.TileBarrel;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
+import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileMutator;
 import com.valeriotor.BTV.tileEntities.TilePlantTerra;
 import com.valeriotor.BTV.tileEntities.TileSlugBait;
@@ -59,6 +60,7 @@ public class RegistryHelper {
 		GameRegistry.registerTileEntity(TileArborealGeneratorBottom.class, References.MODID + ":tilearboreal_generator");
 		GameRegistry.registerTileEntity(TilePlantTerra.class, References.MODID + ":tileplantterra");
 		GameRegistry.registerTileEntity(TileWateryCradle.class, References.MODID + ":tilewaterycradle");
+		GameRegistry.registerTileEntity(TileLacrymatory.class, References.MODID + ":tilelacrymatory");
 		
 	}
 	

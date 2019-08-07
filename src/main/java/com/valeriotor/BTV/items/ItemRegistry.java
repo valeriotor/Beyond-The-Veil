@@ -122,6 +122,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantOrdo), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMutator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockWateryCradle), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockLacrymatory), 0, "inventory");
         
         
     }
@@ -153,6 +154,7 @@ public class ItemRegistry {
     	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantOrdo).setRegistryName(BlockRegistry.PlantOrdo.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockWateryCradle).setRegistryName(BlockRegistry.BlockWateryCradle.getRegistryName()));
+    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockLacrymatory).setRegistryName(BlockRegistry.BlockLacrymatory.getRegistryName()));
     	event.getRegistry().register(ItemRegistry.testItem);
     	event.getRegistry().register(ItemRegistry.oniricIncense);
     	event.getRegistry().register(ItemRegistry.slugCatcher);

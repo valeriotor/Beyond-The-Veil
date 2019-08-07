@@ -7,6 +7,7 @@ import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.WorshipCapHandler;
 import com.valeriotor.BTV.events.ResearchEvents;
+import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.lib.commands.ReloadResources;
@@ -22,6 +23,7 @@ import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -46,10 +48,15 @@ public class BeyondTheVeil
     
 
     private static Logger logger;
+    
+    static {
+    	FluidRegistry.enableUniversalBucket();
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	ModFluids.registerFluids();
         logger = event.getModLog();
         proxy.preInit(event);
         RegistryHelper.registerEntities();

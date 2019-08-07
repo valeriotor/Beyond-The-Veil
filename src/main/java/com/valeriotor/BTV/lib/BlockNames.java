@@ -8,6 +8,7 @@ public class BlockNames {
 	public static final String FUMESPREADER = "fume_spreader";
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
+	public static final String LACRYMATORY = "lacrymatory";
 	public static final String MUTATOR = "mutator";
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
