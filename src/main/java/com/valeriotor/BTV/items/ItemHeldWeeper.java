@@ -52,7 +52,7 @@ public class ItemHeldWeeper extends Item {
 		if(tl != null && tl.setWeeper(weeper)) {
 			weeper.setLacrymatory(pos);
 		}else if(tl != null) {
-			player.sendMessage(new TextComponentTranslation("lacrymatory.full"));
+			player.sendMessage(new TextComponentTranslation("interact.lacrymatory.full"));
 			return EnumActionResult.FAIL;
 		}
 		BlockPos weeperPos = pos;
@@ -69,6 +69,8 @@ public class ItemHeldWeeper extends Item {
 				}
 			}
 		}
+
+		if(tl != null) player.sendMessage(new TextComponentTranslation("interact.lacrymatory.success", new TextComponentTranslation("entity.weeper.name")));
 		
 		weeper.setPosition(weeperPos.getX(), weeperPos.getY(), weeperPos.getZ());
 		weeper.setHeartless(heartless);

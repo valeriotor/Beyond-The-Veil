@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.entities;
 
+import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -25,10 +26,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityWeeper extends EntityCreature{
+public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 	
 	private int animationTicks = 0;
 	private int fletumTicks = 10;
@@ -44,7 +46,7 @@ public class EntityWeeper extends EntityCreature{
 	
 	public EntityWeeper(World worldIn, boolean spineless) {
 		super(worldIn);
-		this.tearTicks = worldIn.rand.nextInt(20*60*5)+20*60*3;
+		this.tearTicks = 300;
 		this.getDataManager().set(SPINELESS, spineless);
 	}
 	
@@ -80,26 +82,23 @@ public class EntityWeeper extends EntityCreature{
 					EntityFletum fletum = new EntityFletum(this.world);
 					fletum.setPosition(posX, posY+1.8, posZ);
 					this.world.spawnEntity(fletum);
+					if(this.lacrymatory != null) {
+						TileEntity te = this.world.getTileEntity(lacrymatory);
+						if(te instanceof TileLacrymatory) {
+							TileLacrymatory tl = (TileLacrymatory) te;
+							tl.setWeeper(null);
+							tl.setWeeper(fletum);
+							fletum.setLacrymatory(lacrymatory);
+						}
+					}
 					this.world.removeEntity(this);
+					return;
 				}
 			}
 			this.tearTicks--;
-			if(this.tearTicks == 0) {
-				/*
-				this.tearTicks = world.rand.nextInt(20*60*5)+20*60*3;
-				EntityItem item = new EntityItem(this.world, posX, posY, posZ, new ItemStack(ItemRegistry.tears));
-				this.world.spawnEntity(item);*/
-				if(this.lacrymatory != null) {
-					TileEntity te = this.world.getTileEntity(lacrymatory);
-					if(!(te instanceof TileLacrymatory)) this.lacrymatory = null;
-					else {
-						TileLacrymatory tl = (TileLacrymatory) te;
-						if(tl.getWeeper() == null) tl.setWeeper(this);
-						else if(tl.getWeeper() == this) {
-							
-						}else this.lacrymatory = null;
-					}
-				}
+			if(this.tearTicks <= 0) {
+				TileLacrymatory.fillWithTears(this);
+				this.tearTicks = 300;
 			}
 		}
 		
@@ -178,7 +177,6 @@ public class EntityWeeper extends EntityCreature{
 			if(this.lacrymatory != null) {
 				TileEntity te = this.world.getTileEntity(lacrymatory);
 				if(te instanceof TileLacrymatory) {
-					System.out.println("Been here");
 					TileLacrymatory tl = (TileLacrymatory) te;
 					tl.setWeeper(null);
 				}
@@ -193,8 +191,14 @@ public class EntityWeeper extends EntityCreature{
 		return EnumActionResult.PASS;
 	}
 	
+	@Override
 	public void setLacrymatory(BlockPos pos) {
 		this.lacrymatory = pos;
+	}
+
+	@Override
+	public BlockPos getLacrymatory() {
+		return this.lacrymatory;
 	}
 
 }
