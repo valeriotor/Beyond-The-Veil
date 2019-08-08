@@ -46,6 +46,10 @@ public class MessageSyncDataToClient implements IMessage{
 		@Override
 		public IMessage onMessage(MessageSyncDataToClient message, MessageContext ctx) {
 			if(message.string == null) return null;
+			if(Minecraft.getMinecraft().player == null) {
+				System.err.println("BTV sync error: null player. No data was lost, but it wasn't synchronized to client.");
+				return null;
+			}
 			if(message.value == -999)
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
 			else {

@@ -32,8 +32,11 @@ public class MessageRemoveStringToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageRemoveStringToClient message, MessageContext ctx) {
+			if(Minecraft.getMinecraft().player == null) {
+				System.err.println("BTV sync error: null player. No data was lost, but it wasn't synchronized to client.");
+				return null;
+			}
 			if(message.key.equals(PlayerDataLib.ALL)) {
-				System.out.println("Removing all strings");
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeAllStrings();
 			}
 			else {
