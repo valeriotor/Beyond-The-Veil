@@ -17,6 +17,20 @@ item.drink_vodka.name=Cup of Vodka
 item.drink_wine.name=Cup of Wine
 item.drink_empty.name=Empty Cup
 item.tablet.name=Tablet
+item.bronze_sphere.name=Bronze Sphere
+item.blackjack.name=Blackjack
+item.spine.name=Dorsal Spine
+item.heart.name=Heart
+item.held_villager.name=Villager
+item.held_weeper.name=Weeper
+item.held_fletum.name=Fletum
+item.surgery_tools.name=Surgery Tools
+item.bone_tiara.name=Bone Tiara
+item.bleeding_belt.name=Bleeding Belt
+item.dream_bottle.name=Dream Bottle
+item.redstone_weed.name=Redstone Grass Seeds
+item.ghost_weed.name=Ghost Grass Seeds
+item.vanilla_weed.name=Vanilla Grass Seeds
 
 lore.flute=The sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
 lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
@@ -64,8 +78,21 @@ tile.worn_bricks.name=Worn Bricks
 tile.worn_brick_stairs.name=Worn Brick Stairs
 tile.sleep_chamber.name=Sleep Chamber
 tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
+tile.beanstalk.name=Beanstalk
+tile.redstone_grass.name=Redstone Grass
+tile.arboreal_generator.name=Arboreal Generator
+tile.sapling_shrub.name=Sapling Shrub
+tile.plant_terra.name=Terra Plant
+tile.plant_ordo.name=Ordo Plant
+tile.mutator.name=Plant Mutator
+tile.watery_cradle.name=Watery Cradle
+tile.lacrymatory.name=Lacrymatory
 
-interact.idol.notyet=Nothing happens. For some reason, you feel relieved.
+fluid.tears=Tears
+
+interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
+interact.lacrymatory.full=This Lacrymatory is already bound.
+interact.lacrymatory.success=The %1$s is now bound to the Lacrymatory.
 
 ##################
 #ENTITTIES
@@ -74,6 +101,9 @@ interact.idol.notyet=Nothing happens. For some reason, you feel relieved.
 entity.deep_one.name=Deep One
 entity.hamlet_dweller.name=Hamlet Dweller
 entity.canoe.name=Canoe
+entity.crawling_villager.name=Crawling Villager
+entity.weeper.name=Weeper
+entity.fletum.name=Fletum
 
 
 ##################
@@ -107,6 +137,15 @@ gui.activebauble.active=Currently active.
 gui.activebauble.inactive=Currently not active.
 gui.activebauble.passiveon=Passive on.
 gui.activebauble.passiveoff=Passive off.
+
+gui.optionwheel.power.greatdreamer.0=Summon Deep Ones
+gui.optionwheel.power.greatdreamer.1=Transform
+gui.optionwheel.power.greatdreamer.3=Water Teleport
+
+gui.optionwheel.waterycradle.0=Rip Spine
+gui.optionwheel.waterycradle.1=Fill with Water
+gui.optionwheel.waterycradle.3=Rend Heart
+
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

@@ -39,7 +39,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	
 	@Override
 	public String getGuiLangName() {
-		return "guiWateryCradle";
+		return "waterycradle";
 	}
 	
 	@Override

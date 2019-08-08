@@ -35,7 +35,7 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	public GuiDeityPowers() {
 		this.level = Worship.getSelectedDeityLevel(Minecraft.getMinecraft().player);
 		this.deity = Worship.getSelectedDeity(Minecraft.getMinecraft().player);
-		this.guiName = "guiPower" + this.deity.name();
+		this.guiName = "power." + this.deity.name().toLowerCase();
 		for(int i = 0; i < 4; i++) 
 			this.availableOptions[i] = Worship.getSpecificPower(Minecraft.getMinecraft().player, i).hasRequirement(Minecraft.getMinecraft().player);
 	}
