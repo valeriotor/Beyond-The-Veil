@@ -10,7 +10,9 @@ import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
 import com.valeriotor.BTV.lib.KeyHandler;
+import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
+import com.valeriotor.BTV.tileEntities.renderers.TESRLacrymatory;
 import com.valeriotor.BTV.tileEntities.renderers.TESRWateryCradle;
 import com.valeriotor.BTV.util.RegistryHelper;
 
@@ -35,7 +37,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         ModelRegistry.registerModels();
-        this.registerRenders();
+        this.registerEntityRenders();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
         ModFluids.renderFluids();
@@ -53,8 +55,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(this.cEvents);
         MinecraftForge.EVENT_BUS.register(this.renderEvents);
         MinecraftForge.EVENT_BUS.register(new OpenGuiSelector(Minecraft.getMinecraft()));
-        ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
         loadCustomResources();
+        registerTileEntitySpecialRenderers();
     }
     
     @Override
@@ -83,8 +85,13 @@ public class ClientProxy extends CommonProxy {
     }
     
     
-    private void registerRenders() {
+    private void registerEntityRenders() {
     	RegisterRenders.register();
+    }
+    
+    private void registerTileEntitySpecialRenderers() {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileLacrymatory.class, new TESRLacrymatory());
     }
     
     @Override
