@@ -52,8 +52,8 @@ tooltip.held_weeper.spinelessheartless=A Weeper without its spine is nothing but
 tooltip.held_fletum=A disembodied head, content in its sorrow.
 
 tooltip.dream_bottle.containing=Containing: 
-tooltip.dream_bottle.charges=Charges: %1$s
-tooltip.dream_bottle.none=None
+tooltip.dream_bottle.charges=Stored tears: %1$s mB
+tooltip.dream_bottle.none=NONE
 
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
@@ -150,6 +150,7 @@ gui.optionwheel.waterycradle.0=Rip Spine
 gui.optionwheel.waterycradle.1=Fill with Water
 gui.optionwheel.waterycradle.3=Rend Heart
 
+gui.dream_bottle.charges=Charges: %1$s
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

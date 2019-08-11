@@ -113,26 +113,6 @@ public class ItemDreamBottle extends Item{
 	}
 	
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer p, World w, BlockPos pos, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		TileEntity te = w.getTileEntity(pos);
-		if(te == null || !te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) return EnumActionResult.FAIL;
-		if(p.getHeldItemMainhand().getItem() != this) return EnumActionResult.FAIL;
-		IFluidHandler fluidBlock = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-		IFluidHandler fluidItem = p.getHeldItemMainhand().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-		if(!p.isSneaking()) {
-			if(FluidHelper.exactFluidTransfer(fluidItem, fluidBlock, new FluidStack(ModFluids.tears, 1000))) {
-				w.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1, true);
-			}
-		} else {
-			if(FluidHelper.exactFluidTransfer(fluidBlock, fluidItem, new FluidStack(ModFluids.tears, 1000))) {
-				w.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1, true);
-			}
-		}
-		return EnumActionResult.SUCCESS;
-	}
-	
-	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		
 		String aspects = I18n.format("tooltip.dream_bottle.containing");
@@ -140,10 +120,11 @@ public class ItemDreamBottle extends Item{
 		boolean none = true;
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
 			if(nbt.hasKey(String.format("slot%d", i))) {
-				none = false;
 				ItemStack stack2 = new ItemStack(nbt.getCompoundTag(String.format("slot%d", i)));
-				if(stack2.getItem() == ItemsTC.crystalEssence)
+				if(stack2.getItem() == ItemsTC.crystalEssence) {
 					aspects = aspects.concat(AspectHelper.getObjectAspects(stack2).getAspects()[0].getName().toUpperCase() + " ");
+					none = false;
+				}
 			}
 		}
 		if(none) aspects = aspects.concat(I18n.format("tooltip.dream_bottle.none"));
@@ -153,7 +134,7 @@ public class ItemDreamBottle extends Item{
 			FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
 			int amount = 0;
 			if(fluid != null) amount = fluid.amount;
-			tooltip.add(I18n.format("tooltip.dream_bottle.charges", amount/1000));
+			tooltip.add(I18n.format("tooltip.dream_bottle.charges", amount));
 		}
 		
 		super.addInformation(stack, worldIn, tooltip, flagIn);

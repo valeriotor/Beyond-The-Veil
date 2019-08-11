@@ -52,7 +52,7 @@ public class BlockLacrymatory extends ModBlock implements ITileEntityProvider{
 		if(hand != EnumHand.MAIN_HAND) return false;
 		IFluidHandler fh = getFluidHandler(w, pos);
 		ItemStack stack = p.getHeldItemMainhand();
-		if(fh != null && stack.getItem() != ItemRegistry.dream_bottle) {
+		if(fh != null) {
 			boolean success = FluidUtil.interactWithFluidHandler(p, hand, fh);
 			return FluidUtil.getFluidHandler(stack) != null;
 		}
