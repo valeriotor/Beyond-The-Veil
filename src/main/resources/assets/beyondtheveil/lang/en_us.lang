@@ -51,6 +51,10 @@ tooltip.held_weeper.spinefulheartless=One does not need a heart to weep. It will
 tooltip.held_weeper.spinelessheartless=A Weeper without its spine is nothing but its head.
 tooltip.held_fletum=A disembodied head, content in its sorrow.
 
+tooltip.dream_bottle.containing=Containing: 
+tooltip.dream_bottle.charges=Charges: %1$s
+tooltip.dream_bottle.none=None
+
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.

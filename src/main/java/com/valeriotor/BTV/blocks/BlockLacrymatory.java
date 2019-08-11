@@ -2,6 +2,7 @@ package com.valeriotor.BTV.blocks;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -51,7 +52,7 @@ public class BlockLacrymatory extends ModBlock implements ITileEntityProvider{
 		if(hand != EnumHand.MAIN_HAND) return false;
 		IFluidHandler fh = getFluidHandler(w, pos);
 		ItemStack stack = p.getHeldItemMainhand();
-		if(fh != null) {
+		if(fh != null && stack.getItem() != ItemRegistry.dream_bottle) {
 			boolean success = FluidUtil.interactWithFluidHandler(p, hand, fh);
 			return FluidUtil.getFluidHandler(stack) != null;
 		}

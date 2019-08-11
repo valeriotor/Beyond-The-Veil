@@ -5,17 +5,21 @@ import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiDreamBottle extends GuiContainer{
 
 	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/dream_bottle.png");
+	private static final ResourceLocation textureCharges = new ResourceLocation(References.MODID + ":textures/gui/dream_bottle_charges.png");
+	private int charges = 0;
 	
-	public GuiDreamBottle(ContainerDreamBottle inventorySlotsIn) {
+	public GuiDreamBottle(ContainerDreamBottle inventorySlotsIn, int charges) {
 		super(inventorySlotsIn);
 		this.xSize = 175;
 		this.ySize = 196;
+		this.charges = charges/1000;
 	}
 
 	@Override
@@ -24,6 +28,14 @@ public class GuiDreamBottle extends GuiContainer{
 		int x = (this.width - this.xSize)/2;
 		int y = (this.height)/2 - 115;
 		drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+		
+		Minecraft.getMinecraft().renderEngine.bindTexture(textureCharges);
+		drawModalRectWithCustomSizedTexture(this.width/2 + 60, this.height/2 - 60, 0, 0, 32, 44, 64, 64);
+		drawModalRectWithCustomSizedTexture(this.width/2 + 62, this.height/2 - 58 + 10 * (4 - charges), 34, 2 + 10 * (4 - charges), 28, 10 * charges, 64, 64);
+		if(mouseX > width/2 + 60 && mouseX < width/2 + 92 && mouseY > height/2 - 60 && mouseY < height/2 - 16) {
+			drawModalRectWithCustomSizedTexture(mouseX - 64, mouseY, 0, 46, 64, 18, 64, 64);
+			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("tooltip.dream_bottle.charges", this.charges), mouseX - 60, mouseY + 4, 0xFFFFFF);
+		}
 	}
 	
 	@Override
@@ -31,6 +43,8 @@ public class GuiDreamBottle extends GuiContainer{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
+
+		
 	}
 
 }
