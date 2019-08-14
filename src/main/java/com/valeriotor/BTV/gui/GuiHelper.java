@@ -43,5 +43,13 @@ public class GuiHelper {
 	public static double getScaleMultiplier() {
 		return ((double)(5 + 1.25*((Minecraft.getMinecraft().gameSettings.guiScale - 1) & 3))) / 6.25;
 	}
+	
+	public static int getPreviousStringsLength(List<String> strings, int index) {
+		int len = 0;
+		for(int i = 0; i < strings.size() && i < index; i++) {
+			len += strings.get(i).length();
+		}
+		return len;
+	}
 
 }

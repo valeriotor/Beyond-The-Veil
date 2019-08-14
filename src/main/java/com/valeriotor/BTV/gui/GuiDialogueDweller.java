@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.valeriotor.BTV.lib.References;
@@ -30,6 +31,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	private String profession = "";
 	private String option0 = "";
 	private String option1 = "";
+	private List<String> strings = new ArrayList<>();
 	private double scaleMultiplier = 1;
 	private int xSize = 512;
 	private int ySize = 164;
@@ -56,6 +58,7 @@ public class GuiDialogueDweller extends GuiScreen {
         this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
 		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
 		if(this.option0 != null) this.selectedOption = 0;
+		this.splitDialogue();
 		super.initGui();
 	}
 	
@@ -65,20 +68,18 @@ public class GuiDialogueDweller extends GuiScreen {
 		drawModalRectWithCustomSizedTexture(this.width/2 - this.xSize/2, this.height - this.ySize, 0F, 0F, xSize, ySize, xSize, xSize);
 			this.setDialogueSpeed();
 			
-			String[] strings = GuiHelper.splitStrings(this.dialogue);
 			int totalOffset = 0;
-			for(int i = 0; i < strings.length; i++) {
-				if(this.letterCount > GuiHelper.getPreviousStringsLength(i, this.dialogue)) {
-					List<String> stringettes = GuiHelper.splitStringsByWidth(strings[i], (int)(this.xSize * 0.9), mc.fontRenderer);
-					for(int j = 0; j < stringettes.size(); j++) {
-						if(this.letterCount > GuiHelper.getPreviousStringsLength(i, this.dialogue) + GuiHelper.getPreviousStringsLengthByWidth(j, strings[i], (int)(this.xSize * 0.9), mc.fontRenderer)) {
-							String toWrite = stringettes.get(j).substring(0, Math.min(stringettes.get(j).length(), Math.max(0, this.letterCount - 1 - GuiHelper.getPreviousStringsLength(i, this.dialogue) - GuiHelper.getPreviousStringsLengthByWidth(j, strings[i], (int)(this.xSize * 0.9), mc.fontRenderer))));
-							drawString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 2 + (int)(24 * this.scaleMultiplier), this.height + (int)(18*this.scaleMultiplier) + totalOffset - this.ySize, 0xFFFFFF);
-							totalOffset += 15;
-						}
-					}
-				}	
+			for(int i = 0; i < strings.size(); i++) {
+				int prevLength = GuiHelper.getPreviousStringsLength(strings, i);
+				if(this.letterCount > prevLength) {
+					String s = strings.get(i);
+					String toWrite = s.substring(0, Math.min(s.length(), Math.max(0, this.letterCount - 1 - prevLength)));
+					//String toWrite = strings.get(i).substring(0, Math.min(stringettes.get(j).length(), Math.max(0, this.letterCount - 1 - GuiHelper.getPreviousStringsLength(i, this.dialogue) - GuiHelper.getPreviousStringsLengthByWidth(j, strings[i], (int)(this.xSize * 0.9), mc.fontRenderer))));
+					drawString(mc.fontRenderer, toWrite, this.width/2 - this.xSize / 2 + (int)(24 * this.scaleMultiplier), this.height + (int)(18*this.scaleMultiplier) + totalOffset - this.ySize, 0xFFFFFF);
+					totalOffset += 15;
+				} else break;
 			}
+			
 			if(this.option0 != null && this.option1 != null && this.letterCount == this.dialogueLength) {
 				String[] option0split = GuiHelper.splitStrings(this.option0);
 				for(int i = 0; i < option0split.length; i++) {
@@ -136,8 +137,8 @@ public class GuiDialogueDweller extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id) {
 			case 1:
-				if(this.selectedOption != -1) break;
-				proceedDialogue(false);
+				if(this.selectedOption != -1) proceedDialogue(true);
+				else proceedDialogue(false);
 				break;
 			case 2:
 				//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
@@ -166,6 +167,7 @@ public class GuiDialogueDweller extends GuiScreen {
 			this.dialogue = sb.toString();
 			this.dialogueLength = this.dialogue.length();
 			this.letterCount = this.dialogueLength;
+			this.splitDialogue();
 		}else if(keyCode == 28) {
 			if(this.letterCount != this.dialogueLength) return;
 			if(this.selectedOption != -1) {
@@ -221,11 +223,19 @@ public class GuiDialogueDweller extends GuiScreen {
 			StringBuilder sb = new StringBuilder(this.dialogue);
 			this.dialogue = sb.deleteCharAt(this.letterCount + offset).toString();
 			this.dialogueLength = this.dialogue.length();
+			this.splitDialogue();
 		}
 		
 		
 	}
 	
+	private void splitDialogue() {
+		String[] strings = GuiHelper.splitStrings(dialogue);
+		this.strings.clear();
+		for(String s : strings) {
+			this.strings.addAll(GuiHelper.splitStringsByWidth(s, (int) (this.xSize * 0.9), mc.fontRenderer));
+		}
+	}
 	
 	private void proceedDialogue(boolean option) {
 		if(this.doesCloseDialogue()) {
@@ -251,6 +261,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		this.interval = 1;
 		this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
 		this.dialogueLength = this.dialogue.length();
+		this.splitDialogue();
 		this.setDialogueSpeed();
 		if(DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch) != null) this.selectedOption = 0;
 		else this.selectedOption = -1;
