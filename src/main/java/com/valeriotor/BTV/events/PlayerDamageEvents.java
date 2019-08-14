@@ -8,17 +8,27 @@ import baubles.api.BaublesApi;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
 public class PlayerDamageEvents {
 	
+	@SubscribeEvent
+	public static void hurtEvent(LivingHurtEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			if(event.getEntityLiving().world.isRemote) return;
+			GreatDreamerBuffs.applyDefenseModifier(event);
+		}
+	}	
 
 	@SubscribeEvent
 	public static void damageEvent(LivingDamageEvent event) {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
+			if(event.getEntityLiving().world.isRemote) return;
 			resetFlute(event);
+			GreatDreamerBuffs.applyDamageCap(event);
 			applyBleedingBelt(event);
 		}
 	}

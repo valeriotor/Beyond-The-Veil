@@ -1,6 +1,5 @@
 package com.valeriotor.BTV.worship;
 
-import com.google.common.collect.ImmutableList;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
@@ -9,6 +8,7 @@ import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 import com.valeriotor.BTV.worship.ActivePowers.WaterTeleport;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public class Worship {
 	
@@ -38,6 +38,7 @@ public class Worship {
 		@Override public Deities getDeity() {return null;}
 		@Override public int getCooldownTicks() {return 0;}
 		@Override public boolean activatePower(EntityPlayer p) {return false;}
+		@Override public ResourceLocation getGuiTexture() {return null;}
 	};
 	
 	public static IActivePower getPower(EntityPlayer p) {

@@ -19,6 +19,7 @@ import com.valeriotor.BTV.util.RegistryHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.WorldGenBTV;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -91,6 +92,7 @@ public class BeyondTheVeil
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
     	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
+		DGWorshipHelper.loadDreamerResearch();
     	
     }
     

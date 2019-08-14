@@ -12,6 +12,7 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.util.SyncUtil;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.material.Material;
@@ -68,6 +69,7 @@ public class PlayerEvents {
 		if(!event.player.world.isRemote) {			
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
+			DGWorshipHelper.calculateModifier(event.player, ThaumcraftCapabilities.getKnowledge(event.player));
 		}
 	}
 	

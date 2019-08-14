@@ -6,7 +6,9 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.lib.BlockNames;
+import com.valeriotor.BTV.util.DelayedMessage;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
@@ -146,18 +148,18 @@ public class BlockIdol extends ModBlock{
 		if(!k.isResearchComplete("IDOL")) ThaumcraftApi.internalMethods.progressResearch(playerIn, "IdolInteract");
 		if(!worldIn.isRemote) {
 			if(Worship.getSelectedDeity(playerIn) != Deities.GREATDREAMER) Worship.setSelectedDeity(playerIn, Deities.GREATDREAMER);
-			SyncUtil.syncCapabilityData(playerIn);
-			if(Deities.GREATDREAMER.cap(playerIn).getLevel() == 0) {
-				Deities.GREATDREAMER.cap(playerIn).addLevel();
-				//BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(playerIn).getLevel()), (EntityPlayerMP)playerIn);
-			} else {
-				DGWorshipHelper.levelUp(playerIn);
-			}
-			// DEBUG playerIn.sendMessage(new TextComponentString(Integer.toString(playerIn.getCapability(DGProvider.LEVEL_CAP, null).getLevel()))); // TODO: Delete this
+			DGWorshipHelper.levelUp(playerIn);
 		} else {
 			BeyondTheVeil.proxy.cEvents.muteSounds(100);
 		}
 		return true;
+	}
+	
+	@Override
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		// WIP
+		if(!worldIn.isRemote) ServerTickEvents.addMessage(new DelayedMessage(60, new TextComponentTranslation("innervoice.idol"), playerIn));
+		super.onBlockClicked(worldIn, pos, playerIn);
 	}
 	
 	

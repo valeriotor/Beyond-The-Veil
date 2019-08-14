@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.events;
 
 import com.valeriotor.BTV.entities.EntityFletum;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,12 +20,7 @@ public class LivingEvents {
 		if(e.getEntity().world.isRemote) return;
 		if(e.getSource() instanceof EntityDamageSource) {
 			if(e.getSource().getTrueSource() instanceof EntityPlayer) {
-				EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
-				int lvl = Deities.GREATDREAMER.cap(p).getLevel();
-				if(lvl >= 3) {
-					if(p.isInWater()) e.setAmount((float) (e.getAmount()*2*Math.log(lvl)));
-					else e.setAmount((float) (e.getAmount()*1.1*Math.log(lvl)));
-				}
+				GreatDreamerBuffs.applyAttackModifier(e);
 			}
 		}else if(e.getSource() == DamageSource.FALL) {
 			if(e.getEntity() instanceof EntityFletum) {

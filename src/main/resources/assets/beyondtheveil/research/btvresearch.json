@@ -291,6 +291,42 @@
                     "text": "research.IDOL.stage.1"
                 }
             ]
+        },
+		{
+        "key": "SLUGS",
+        "name": "research.SLUGS.title",
+        "icons": [ "beyondtheveil:slug" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 13,6 ],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.SLUGS.stage.0",
+					"required_research": ["!SLUGS"]
+				},
+                {
+                    "text": "research.SLUGS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "CANOE",
+        "name": "research.CANOE.title",
+        "icons": [ "beyondtheveil:slug" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
+        "parents": [ "SLUGS" ],
+        "stages": [
+				{
+					"text": "research.CANOE.stage.0",
+					"required_research": ["!carpenter"]
+				},
+                {
+                    "text": "research.CANOE.stage.1",
+					"required_research": ["!CANOE"]
+                },
+                {
+                    "text": "research.CANOE.stage.2"
+                }
+            ]
         }
 	]
 }
