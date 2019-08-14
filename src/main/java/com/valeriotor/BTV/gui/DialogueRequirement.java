@@ -69,6 +69,8 @@ public class DialogueRequirement {
 		map.put("greatdreamer0", new DialogueRequirement("dreamer", "", 0, 0, null));
 		map.put("greatdreamer1", new DialogueRequirement("dreamer", Branches.LIES.getName(), -1, 1, null));
 		map.put("ocean0", new DialogueRequirement("greatdreamer", "", -1, 2, null));
+		map.put("canoe0", new DialogueRequirement("impressed", "", -1, 3, null));
+		map.put("ritualintro0", new DialogueRequirement("impressed", "", -1, 3, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchComplete("CANOE")));
 		
 	}
 	

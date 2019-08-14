@@ -243,6 +243,10 @@ public class DialogueHandler {
 	
 	
 	public enum Dialogues{
+		RITUALINTRO("lhkeeper", 1, 1),
+		CANOE("lhkeeper", 1, 1),
+		IMPRESSED("lhkeeper", 3, 0),
+		NEWYOU("lhkeeper", 2, 0),
 		OCEAN("lhkeeper", 1, 1),
 		GREATDREAMER("lhkeeper", 2, 2),
 		DREAMER("lhkeeper", 3, 2),

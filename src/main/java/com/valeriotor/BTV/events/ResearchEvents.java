@@ -45,7 +45,27 @@ public class ResearchEvents {
 					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialoguedreamer"), (EntityPlayerMP)event.getPlayer());
 				}	
 			}
-		}
+			break;
+		case "IDOL":
+			unlockDialogue("newyou", event.getPlayer());
+			break;
+		case "SLUGS":
+			unlockDialogue("impressed", event.getPlayer());			
+			break;
+		case "CANOE":
+			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "CANOE@1")) {
+				if(event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguecanoe")) {
+					unlockDialogue("ritual", event.getPlayer());
+				}			
+			}
+			break;
+				
+		}	
+	}
+	
+	private void unlockDialogue(String name, EntityPlayer p) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(name), false);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialogue".concat(name)), (EntityPlayerMP)p);		
 	}
 	
 }
