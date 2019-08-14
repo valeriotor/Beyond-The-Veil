@@ -2,11 +2,13 @@ package com.valeriotor.BTV.worship.ActivePowers;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public class TransformDeepOne implements IActivePower{
 	
@@ -44,6 +46,13 @@ public class TransformDeepOne implements IActivePower{
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
 		return DGWorshipHelper.canTransform(p);
+	}
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/transform_deep_one.png");
+	
+	@Override
+	public ResourceLocation getGuiTexture() {
+		return TEXTURE;
 	}
 	
 

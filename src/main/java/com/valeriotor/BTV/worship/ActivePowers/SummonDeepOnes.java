@@ -2,11 +2,13 @@ package com.valeriotor.BTV.worship.ActivePowers;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -89,6 +91,13 @@ public class SummonDeepOnes implements IActivePower{
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
 		return true; // TODO: Change this to check for research
+	}
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
+	
+	@Override
+	public ResourceLocation getGuiTexture() {
+		return TEXTURE;
 	}
 	
 }

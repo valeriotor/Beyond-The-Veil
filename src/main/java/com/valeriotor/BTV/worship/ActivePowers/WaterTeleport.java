@@ -1,11 +1,13 @@
 package com.valeriotor.BTV.worship.ActivePowers;
 
+import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.MathHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -80,6 +82,13 @@ public class WaterTeleport implements IActivePower{
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
 		return true; // TODO: Change this to check for research
+	}
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
+	
+	@Override
+	public ResourceLocation getGuiTexture() {
+		return TEXTURE;
 	}
 
 }

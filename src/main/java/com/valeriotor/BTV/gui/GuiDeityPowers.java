@@ -9,6 +9,7 @@ import com.valeriotor.BTV.network.MessageSyncIntDataToServer;
 import com.valeriotor.BTV.proxy.ClientProxy;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
+import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -23,21 +24,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiDeityPowers extends GuiOptionWheel{
 	
-	private static final ResourceLocation GD_NORTH_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");
-	private static final ResourceLocation GD_EAST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");
-	private static final ResourceLocation GD_WEST_TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/transform_deep_one.png");
-	
-	private final int level;
-	private final Deities deity;
 	private boolean[] availableOptions = {false,false,false,false};
+	private ResourceLocation[] textures = new ResourceLocation[4];
 	private final String guiName;
 	
 	public GuiDeityPowers() {
-		this.level = Worship.getSelectedDeityLevel(Minecraft.getMinecraft().player);
-		this.deity = Worship.getSelectedDeity(Minecraft.getMinecraft().player);
-		this.guiName = "power." + this.deity.name().toLowerCase();
-		for(int i = 0; i < 4; i++) 
-			this.availableOptions[i] = Worship.getSpecificPower(Minecraft.getMinecraft().player, i).hasRequirement(Minecraft.getMinecraft().player);
+		Deities deity = Worship.getSelectedDeity(Minecraft.getMinecraft().player);
+		this.guiName = "power." + deity.name().toLowerCase();
+		for(int i = 0; i < 4; i++) {
+			IActivePower pow = Worship.getSpecificPower(Minecraft.getMinecraft().player, i);
+			this.availableOptions[i] = pow.hasRequirement(Minecraft.getMinecraft().player);
+			this.textures[i] = pow.getGuiTexture();
+		}
 	}
 	
 	@Override
@@ -72,26 +70,17 @@ public class GuiDeityPowers extends GuiOptionWheel{
 	
 	@Override
 	public ResourceLocation getNorthOptionTexture() {
-		switch(deity) {
-		case GREATDREAMER: return GD_NORTH_TEXTURE;
-		default: return null;
-		}
+		return this.textures[0];
 	}
 	
 	@Override
 	public ResourceLocation getWestOptionTexture() {
-		switch(deity) {
-		case GREATDREAMER: return GD_WEST_TEXTURE;
-		default: return null;
-		}
+		return this.textures[1];
 	}
 	
 	@Override
 	public ResourceLocation getEastOptionTexture() {
-		switch(deity) {
-		case GREATDREAMER: return GD_EAST_TEXTURE;
-		default: return null;
-		}
+		return this.textures[3];
 	}
 	
 	
