@@ -128,7 +128,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 		 if(this.world.isRemote) {
 			 if(this.getDataManager().get(ROARING)) {
 				 if(this.currentAnim == null)
-					 this.currentAnim = new Animation(AnimationRegistry.deep_one_test);
+					 this.currentAnim = new Animation(AnimationRegistry.deep_one_roar);
 				 else this.currentAnim.update();
 			 }else {
 				 if(this.currentAnim != null) {
