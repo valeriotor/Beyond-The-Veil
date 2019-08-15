@@ -95,7 +95,9 @@ public class BTVAnimHelper {
 			break;
 		case "sin": op = (a, b) -> b+Math.sin((a-start)/(end-start)*Math.PI/2)*amount;
 			break;
-		case "rsin": op = (a, b) -> b+Math.sin((a-start)/(end-start)*Math.PI)*amount;
+		case "costant": op = (a, b) -> b+amount;
+			break; 
+		case "newcostant": op = (a, b) -> amount;
 			break; 
 		}
 		return op;

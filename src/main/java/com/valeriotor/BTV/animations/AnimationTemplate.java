@@ -89,6 +89,6 @@ public class AnimationTemplate {
 	
 	
 	public enum Transformation{
-		ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ;	
+		ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ, VISI;	
 	}
 }

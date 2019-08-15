@@ -45,7 +45,7 @@ public abstract class Transformator {
 		IntervalDoubleBiOperator op, lastOp = null;
 		for(int i = 0; i < list.size(); i++) {
 			op  = list.get(i);
-			if(i > 0 && op.start > lastOp.end+1) map.put(new IntervalDoubleBiOperator((a,b) -> b, lastOp.end+1, op.start-1, 0), amount);
+			if(i > 0 && op.start > lastOp.end+1) map.put(new IntervalDoubleBiOperator((a,b) -> b, lastOp.end+1, op.start-1, 0), trans != Transformation.VISI ? amount : lastOp.amount);
 			map.put(op, amount);
 			amount += op.amount;
 			lastOp = op;
@@ -60,6 +60,7 @@ public abstract class Transformator {
 		case TRAX: return new TraslatorX(map);
 		case TRAY: return new TraslatorY(map);
 		case TRAZ: return new TraslatorZ(map);
+		case VISI: return new Hider(map);
 		
 		}
 		return null;
@@ -121,6 +122,16 @@ public abstract class Transformator {
 		@Override
 		public void modify(ModelRenderer bodyPart, double ticks, double startAmount, IntervalDoubleBiOperator op) {
 			bodyPart.offsetZ = (float) op.applyAsDouble(ticks, startAmount);
+		}
+		
+	}
+	
+	public static class Hider extends Transformator{
+		public Hider(HashMap<IntervalDoubleBiOperator, Double> ops) {super(ops);}
+
+		@Override
+		public void modify(ModelRenderer bodyPart, double ticks, double startAmount, IntervalDoubleBiOperator op) {
+			bodyPart.isHidden = op.applyAsDouble(ticks, startAmount) < 0;
 		}
 		
 	}
