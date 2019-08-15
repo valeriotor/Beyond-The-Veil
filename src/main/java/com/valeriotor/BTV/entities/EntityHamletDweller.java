@@ -6,13 +6,14 @@ import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.DialogueHandler;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
-import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IMerchant;
@@ -25,7 +26,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,7 +58,6 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	private MerchantRecipeList buyingList;
 	private int goWorshipTime;
 	private int goHomeTime;
-	private int talkCount = 0;
 	private int drunkStatus = 0;
 	private boolean thirsty = false;
 	private boolean talking = false;
@@ -254,15 +253,17 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.motionX = 0.01;
 		this.talking = true;
 		if(!world.isRemote) {
-			
+			IPlayerData data = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			String key = String.format(PlayerDataLib.TALK_COUNT, this.profession.name());
 			if(player.getHeldItem(hand).getItem() instanceof ItemDrink && player.getHeldItem(hand).getItem() != ItemRegistry.cup && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
 				player.getHeldItem(hand).shrink(1);
 				this.drunkStatus++;
 				this.thirsty = false;
-				if(this.drunkStatus == 7) this.talkCount = 0;
+				if(this.drunkStatus == 7) data.setInteger(key, 0, true);
 				return EnumActionResult.SUCCESS;
 			}else if(!this.doesOpenGui()) {
-				int x = this.drunkStatus < 7 ? this.talkCount%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(this.talkCount, 7) + 28;
+				int tc = data.getOrSetInteger(key, 0, true);
+				int x = this.drunkStatus < 7 ? tc%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(tc, 7) + 28;
 				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
 				if(this.drunkStatus > 2) y = y.concat("§o");
 				if(this.drunkStatus > 5) y = "§5§o";
@@ -270,10 +271,10 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
 				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
-				if(this.talkCount % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
+				if(tc % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				
-				this.talkCount++;
+				data.incrementOrSetInteger(key, 1, 0, true);
 				
 			}
 			
