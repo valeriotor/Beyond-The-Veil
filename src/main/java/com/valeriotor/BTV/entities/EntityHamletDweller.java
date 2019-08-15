@@ -270,7 +270,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) y = "";
-				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
+				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", this.profession == ProfessionsEnum.DRUNK ? "" : DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
 				if(tc % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				

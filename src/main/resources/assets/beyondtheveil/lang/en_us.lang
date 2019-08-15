@@ -165,9 +165,18 @@ dweller.fisherman.greeting1=Begone. We don't want you here.
 dweller.fisherman.greeting2=Outsiders are not welcome here.
 dweller.fisherman.greeting3=Please, please stop coming after us.
 
+dweller.trustedfisherman.greeting0=Hmph. 
+dweller.trustedfisherman.greeting1=You did well to join us.
+dweller.trustedfisherman.greeting2=Being a fisherman isn't hard here, the fish just come to us.
+dweller.trustedfisherman.greeting3=Don't like the slugs? You'll soon appreciate them.
+
 dweller.stockpiler.greeting0=You are no friend of ours, outsider. No one is.
 dweller.stockpiler.greeting1=We can't trust you outsiders. No more.
 dweller.stockpiler.greeting2=Please, please leave us BE.
+
+dweller.trustedstockpiler.greeting0=I was mistaken to think ill of you, outsider.
+dweller.trustedstockpiler.greeting1=Truly, we deem you a friend now.
+dweller.trustedstockpiler.greeting2=Feel free to take anything from the storehouse.
 
 dweller.drunk.greeting0=A newcomer, aye? We dun't see many aoutsiders no'adays.
 dweller.drunk.greeting1=I ain't frum around here, fella. Me pa' an' me ma' was frum this Hamlet, aye, but me, I was bo'n an' rais'd elsewhar.
@@ -208,6 +217,12 @@ dweller.drunk.greeting35=...
 
 dweller.bartender.talk0={Hmph. }We don't appreciate outsiders coming here, but if you really need to, I won't deny you a single night's rest. There are beds up above.
 dweller.bartender.talk1=Don't mind the one in the red suit. He's a drunken fool, and spits out lies like no tomorrow.
+dweller.bartendertrustedbar.talk0=Hey, there are beds up above if you need some rest.
+dweller.bartendertrustedbar.talk1=Want a drink? Just ask. First one's on the house.
+dweller.bartendertrustedbar.talk1.option0=Thanks:I'll take it.
+dweller.bartendertrustedbar.talk1.option1=Not now,:thanks.
+dweller.bartenderrum.talk0=There you go, finest quality rum you'll find.
+dweller.bartenderenjoy.talk0=Enjoy your stay.
 
 dweller.carpenter.talk0={Hmm, hmm. }:Greetings.
 dweller.carpenter.talk1=Got n'thing to say to ye.
@@ -432,9 +447,9 @@ research.IdolInteract.text=Pray at the Idol in the Hamlet.
 
 research.SLUGS.title=Slugs
 research.SLUGS.stage.0=To commune with The Great Dreamer is an honor of the highest order. Truly, to have made an impression on Him so as to have sparked His interest is, undoubtedly, the greatest achievement I have ever accomplished.<BR>Yet the strength of the communion is ever faint, for I am weak, and my presence hopelessly bound to the Overworld.<BR>He knows that. He wishes to aid me. Really, He does!<BR>Slimy, shapeless, uncatchable like the water from which they are born. Such are the white slugs on which some Dwellers of the Hamlet feed. They are the key.<BR>I need a bait, and The Great Dreamer provides me with knowledge of how to create one. How ironic, though meaningful, that those shapeless chaotic slugs are so attracted by the perfect, orderly shape of common salt!<BR>The slug bait must be placed in the water of a Voided biome. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<BR>Then.. I must eat them. It's the only way. I won't like, but I must.<BR>Once I've eaten a few, say, 30 or so, I must interact with the Idol again.
-research.SLUGS.stage.1=My Dreams have become stronger, I know it, I know it I know it I KNOW IT.<BR>HE HEARD ME. THE GREAT DREAMER HEARD MY PRAYERS.<BR>I realize now that to worship The Great Dreamer is not an occasional prayer. It is, instead, a way of life.<BR>From now on, our course of action should be to eat slugs upon slugs, with a pinch of slugs, dipped in slugs. They'll start to taste less and less awful, I am certain.<BR>I must also get closer and closer to the Dwellers, and learn from them. Do deeds which make me more like them. They have known best for generations, after all. And my ancestors couldn't see it.<BR>Once all is done, I must interact with the Idol.
+research.SLUGS.stage.1=My Dreams have become stronger, I know it, I know it I know it I KNOW IT.<BR>HE HEARD ME. THE GREAT DREAMER HEARD MY PRAYERS.<BR>I realize now that to worship The Great Dreamer is not just an occasional prayer. It is, instead, a way of life.<BR>From now on, our course of action should be to eat slugs upon slugs, with a pinch of slugs, dipped in slugs. They'll start to taste less and less awful, I am certain.<BR>I must also get closer and closer to the Dwellers, and learn from them. Do deeds which make me more like them. They have known best for generations, after all. And my ancestors couldn't see it.<BR>Once all is done, I must interact with the Idol.
 research.!SLUGS.text=Eat 30 slugs, interact with Idol.
 
 research.CANOE.title=Gifts from the Deep
-research.CANOE.stage.0=The Dwellers of the Hamlet eat, along with slugs, a lot of fish.  
+research.CANOE.stage.0=The Hamlet Dwellers' diet, other than slugs, consist mostly of fish. Their barrels are full of cod.<BR>It seems they use their canoes to go fishing. These are built by the carpenters, the Dwellers with dark brown suits who live in two-story houses with normal oak ladders.<BR>Not every Hamlet has carpenters, but they're fairly common.  
 

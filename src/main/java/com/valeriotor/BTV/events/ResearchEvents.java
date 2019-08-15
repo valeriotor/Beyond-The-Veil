@@ -47,15 +47,17 @@ public class ResearchEvents {
 			}
 			break;
 		case "IDOL":
-			unlockDialogue("newyou", event.getPlayer());
+			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "IDOL@0"))
+				unlockDialogue(event.getPlayer(), "newyou", "trustedbar");
 			break;
 		case "SLUGS":
-			unlockDialogue("impressed", event.getPlayer());			
+			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "IDOL@0"))
+				unlockDialogue(event.getPlayer(), "impressed");			
 			break;
 		case "CANOE":
 			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "CANOE@1")) {
 				if(event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguecanoe")) {
-					unlockDialogue("ritual", event.getPlayer());
+					unlockDialogue(event.getPlayer(), "ritual");
 				}			
 			}
 			break;
@@ -63,9 +65,11 @@ public class ResearchEvents {
 		}	
 	}
 	
-	private void unlockDialogue(String name, EntityPlayer p) {
-		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(name), false);
-		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialogue".concat(name)), (EntityPlayerMP)p);		
+	private void unlockDialogue(EntityPlayer p, String... names) {
+		for(String name : names) {
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(name), false);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialogue".concat(name)), (EntityPlayerMP)p);	
+		}	
 	}
 	
 }

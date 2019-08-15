@@ -71,6 +71,8 @@ public class DialogueRequirement {
 		map.put("ocean0", new DialogueRequirement("greatdreamer", "", -1, 2, null));
 		map.put("canoe0", new DialogueRequirement("impressed", "", -1, 3, null));
 		map.put("ritualintro0", new DialogueRequirement("impressed", "", -1, 3, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchComplete("CANOE")));
+		map.put("rum0", new DialogueRequirement("trustedbar", "", 0, 0, null));
+		map.put("enjoy0", new DialogueRequirement("rum", "", -1, 1, null));
 		
 	}
 	

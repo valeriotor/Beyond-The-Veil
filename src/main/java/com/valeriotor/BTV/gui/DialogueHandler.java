@@ -4,17 +4,18 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
+import com.valeriotor.BTV.network.MessageGiveItem;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
-import com.valeriotor.BTV.worship.Deities;
+import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
@@ -178,6 +179,9 @@ public class DialogueHandler {
 	 * @return A prefix that indicates how friendly Dwellers are to the Player.
 	 */
 	public static String getFriendlyhood(EntityPlayer p) {
+		if(ThaumcraftCapabilities.knowsResearchStrict(p, "TRANSFORM")) return "friend";
+		if(ThaumcraftCapabilities.knowsResearchStrict(p, "IDOL")) return "trusted";
+		return "";/*
 		int level = Deities.GREATDREAMER.cap(p).getLevel();
 		if(level > 5)
 			return "friend";
@@ -186,7 +190,7 @@ public class DialogueHandler {
 		if(level > 1)
 			return "tolerated";
 		
-		return "";
+		return "";*/
 		
 	}
 	
@@ -222,6 +226,7 @@ public class DialogueHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static boolean updateDialogueData(String profession, String branch, int option, int talkCount) {
+		performAdditionalEffects(profession, option, talkCount);
 		String dialogueName = getDialogueName(profession).getName();
 		for(Dialogues d : Dialogues.values()) {
 			if(d.getProf().equals(profession) && d.canUnlock(dialogueName, branch, option, talkCount)) {
@@ -241,8 +246,15 @@ public class DialogueHandler {
 		}
 	}
 	
+	private static void performAdditionalEffects(String profession, int option, int talkCount) {
+		if(getDialogueName(profession) == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveItem(new ItemStack(ItemRegistry.rum)));
+	}
+	
 	
 	public enum Dialogues{
+		ENJOY("bartender", 1, 1),
+		RUM("bartender", 1, 1),
+		TRUSTEDBAR("bartender", 2, 0),
 		RITUALINTRO("lhkeeper", 1, 1),
 		CANOE("lhkeeper", 1, 1),
 		IMPRESSED("lhkeeper", 3, 0),

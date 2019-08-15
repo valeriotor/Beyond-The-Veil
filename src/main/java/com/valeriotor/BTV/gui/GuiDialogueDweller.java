@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.valeriotor.BTV.gui.DialogueHandler.Dialogues;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenTradeGui;
@@ -275,9 +276,8 @@ public class GuiDialogueDweller extends GuiScreen {
 	 * @return
 	 */
 	public boolean doesCloseDialogue() {
-		if(DialogueHandler.getDialogueName(this.profession) == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) {
-			return true;
-		}
+		if(DialogueHandler.getDialogueName(this.profession) == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) return true;
+		if(DialogueHandler.getDialogueName(profession) == Dialogues.TRUSTEDBAR && this.selectedOption == 1) return true;
 		return false;
 	}
 }
