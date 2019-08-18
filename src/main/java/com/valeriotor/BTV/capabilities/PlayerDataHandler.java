@@ -1,22 +1,16 @@
 package com.valeriotor.BTV.capabilities;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.google.common.collect.Lists;
-import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageRemoveStringToClient;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
-import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
-import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -44,7 +38,7 @@ public class PlayerDataHandler {
 			final NBTTagCompound tag = new NBTTagCompound();
 			
 			HashMap<String, Integer> ints = instance.getInts(false);
-			List<String> strings = instance.getStrings(false);
+			Set<String> strings = instance.getStrings(false);
 			
 			NBTTagCompound intTag = new NBTTagCompound();
 			for(Entry<String, Integer> entry : ints.entrySet()) {
@@ -99,9 +93,9 @@ public class PlayerDataHandler {
 	
 	public static class PlayerData implements IPlayerData{
 		
-		public List<String> strings = Lists.newArrayList();
+		public Set<String> strings = new HashSet<>();
 		public HashMap<String, Integer> ints = new HashMap<>();
-		public List<String> tempStrings = Lists.newArrayList();
+		public Set<String> tempStrings = new HashSet<>();
 		public HashMap<String, Integer> tempInts = new HashMap<>();
 		
 
@@ -179,7 +173,7 @@ public class PlayerDataHandler {
 		}
 
 		@Override
-		public List<String> getStrings(boolean temporary) {
+		public Set<String> getStrings(boolean temporary) {
 			if(temporary) return tempStrings;
 			else return strings;
 		}

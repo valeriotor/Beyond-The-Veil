@@ -2,6 +2,7 @@ package com.valeriotor.BTV.capabilities;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface IPlayerData {
 	
@@ -21,6 +22,6 @@ public interface IPlayerData {
 	public Integer getOrSetInteger(String key, int value, boolean temporary);
 	
 	public HashMap<String, Integer> getInts(boolean temporary);
-	public List<String> getStrings(boolean temporary);
+	public Set<String> getStrings(boolean temporary);
 	
 }
