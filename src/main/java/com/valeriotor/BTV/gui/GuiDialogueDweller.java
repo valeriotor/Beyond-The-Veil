@@ -69,7 +69,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		drawModalRectWithCustomSizedTexture(this.width/2 - this.xSize/2, this.height - this.ySize, 0F, 0F, xSize, ySize, xSize, xSize);
 			this.setDialogueSpeed();
 			
-			int totalOffset = 0;
+			int totalOffset = 5;
 			for(int i = 0; i < strings.size(); i++) {
 				int prevLength = GuiHelper.getPreviousStringsLength(strings, i);
 				if(this.letterCount > prevLength) {
@@ -138,8 +138,11 @@ public class GuiDialogueDweller extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id) {
 			case 1:
-				if(this.selectedOption != -1) proceedDialogue(true);
-				else proceedDialogue(false);
+				if(this.letterCount != this.dialogueLength) completeDialogue();
+				else {
+					if(this.selectedOption != -1) proceedDialogue(true);
+					else proceedDialogue(false); 
+				}
 				break;
 			case 2:
 				//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
@@ -157,18 +160,7 @@ public class GuiDialogueDweller extends GuiScreen {
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}else if(keyCode == 42 || keyCode == 54) {
-			StringBuilder sb = new StringBuilder(this.dialogue);
-			for(int i = 0; i < sb.length(); i++) {
-				char c = sb.charAt(i);
-				if(c == '{' || c == '[' || c == '}' || c == ']' || c == '|') {
-					sb.deleteCharAt(i);
-					i--;
-				}
-			}
-			this.dialogue = sb.toString();
-			this.dialogueLength = this.dialogue.length();
-			this.letterCount = this.dialogueLength;
-			this.splitDialogue();
+			completeDialogue();
 		}else if(keyCode == 28) {
 			if(this.letterCount != this.dialogueLength) return;
 			if(this.selectedOption != -1) {
@@ -179,6 +171,21 @@ public class GuiDialogueDweller extends GuiScreen {
 		}else if(keyCode == 203 && this.selectedOption == 1) this.selectedOption = 0;
 		else if(keyCode == 205 && this.selectedOption == 0) this.selectedOption = 1; 
 		super.keyTyped(typedChar, keyCode);
+	}
+	
+	private void completeDialogue() {
+		StringBuilder sb = new StringBuilder(this.dialogue);
+		for(int i = 0; i < sb.length(); i++) {
+			char c = sb.charAt(i);
+			if(c == '{' || c == '[' || c == '}' || c == ']' || c == '|') {
+				sb.deleteCharAt(i);
+				i--;
+			}
+		}
+		this.dialogue = sb.toString();
+		this.dialogueLength = this.dialogue.length();
+		this.letterCount = this.dialogueLength;
+		this.splitDialogue();
 	}
 	
 	
