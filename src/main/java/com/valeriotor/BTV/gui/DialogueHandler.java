@@ -243,6 +243,8 @@ public class DialogueHandler {
 	private static void updateAdditionalData(String profession, int option, int talkCount) {
 		if(getDialogueName(profession) == Dialogues.OCEAN && !ThaumcraftCapabilities.getKnowledge(Minecraft.getMinecraft().player).isResearchComplete("FISHINGHAMLET")) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "LHKeeper"));
+		} else if(getDialogueName(profession) == Dialogues.EASYJOB && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "CANOE@2")){
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "carpenter"));
 		}
 	}
 	
@@ -252,6 +254,9 @@ public class DialogueHandler {
 	
 	
 	public enum Dialogues{
+		EASYJOB("carpenter", 2, 2),
+		CANOECAR("carpenter", 1, 0),
+		TRUSTEDCAR("carpenter", 1, 0),
 		ENJOY("bartender", 1, 1),
 		RUM("bartender", 1, 1),
 		TRUSTEDBAR("bartender", 2, 0),
@@ -297,7 +302,7 @@ public class DialogueHandler {
 				if(DialogueRequirement.getMap().containsKey(name)) {
 					if(DialogueRequirement.getMap().get(name).canUnlock(dialogue, branch, opt, TC)) return true;
 				}else {
-					System.out.println("Warning: Dialogue Requirement not found. Report this to mod author.");
+					System.out.println("Warning: Dialogue Requirement not found. Report this to valeriotor.");
 				}
 			}
 			return false;
@@ -305,6 +310,8 @@ public class DialogueHandler {
 	}
 	
 	public enum Branches{
+		CANOESFOR("carpenter", 1, "canoecar", "", 1),
+		DONTFISH("carpenter", 1, "canoecar", "", 0),
 		LIES("lhkeeper", 1, "dreamer", "", 1),
 		THANKS("lhkeeper", 1, "lecture2", "lecture", 1),
 		FRIENDSLECTURE("lhkeeper", 1, "lecture2", "lecture", 0),

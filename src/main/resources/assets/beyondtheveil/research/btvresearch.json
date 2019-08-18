@@ -317,7 +317,7 @@
         "stages": [
 				{
 					"text": "research.CANOE.stage.0",
-					"required_research": ["!carpenter"]
+					"required_research": ["carpenter"]
 				},
                 {
                     "text": "research.CANOE.stage.1",
