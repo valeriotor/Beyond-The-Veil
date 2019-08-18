@@ -49,7 +49,6 @@ public class BeyondTheVeil
     
 
     private static Logger logger;
-    
     static {
     	FluidRegistry.enableUniversalBucket();
     }
@@ -69,7 +68,6 @@ public class BeyondTheVeil
     	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
 
     	MinecraftForge.EVENT_BUS.register(WorshipCapHandler.class);
-    	MinecraftForge.EVENT_BUS.register(new ResearchEvents());
         
     }
 

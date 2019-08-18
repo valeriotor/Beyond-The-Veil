@@ -1,8 +1,8 @@
 package com.valeriotor.BTV.util;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -23,7 +23,7 @@ public class SyncUtil {
 	}
 	
 	public static void syncCapabilityData(EntityPlayer p) {
-		List<String> strings = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
+		Set<String> strings = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveStringToClient(PlayerDataLib.ALL), (EntityPlayerMP)p);
 		for(String string : strings) {
