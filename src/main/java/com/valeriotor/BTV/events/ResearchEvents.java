@@ -1,5 +1,9 @@
 package com.valeriotor.BTV.events;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -28,47 +32,69 @@ public class ResearchEvents {
 		}
 	}
 	
+	private Set<String> dialogueResearches = ImmutableSet.of(
+			"f_AlienisDream",
+			"FISHINGHAMLET",
+			"IDOL",
+			"SLUGS",
+			"CANOE");
+	
+	public void checkResearches(EntityPlayer p) {
+		for(String s : dialogueResearches) {
+			if(ThaumcraftCapabilities.knowsResearchStrict(p, s)) dialogueResearches(p, s);
+		}
+	}
+	
 	@SubscribeEvent
 	public void researchEvent(Research event) {
 		switch(event.getResearchKey()) {
 		case "!minecraft:water_bucket0":
 			ThaumcraftApi.internalMethods.addKnowledge(event.getPlayer(), EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BEYOND_THE_VEIL"), 16);
 			break;
-		case "f_AlienisDream":
-			event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.SEEKSKNOWLEDGE, false);
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.SEEKSKNOWLEDGE), (EntityPlayerMP)event.getPlayer());
-			break;
-		case "FISHINGHAMLET":
-			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "FISHINGHAMLET@1")) {
-				if(event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguegratitude")) {
-					event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialoguedreamer", false);
-					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialoguedreamer"), (EntityPlayerMP)event.getPlayer());
-				}	
-			}
-			break;
-		case "IDOL":
-			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "IDOL@0"))
-				unlockDialogue(event.getPlayer(), "newyou", "trustedbar");
-			break;
-		case "SLUGS":
-			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "IDOL@0"))
-				unlockDialogue(event.getPlayer(), "impressed");			
-			break;
-		case "CANOE":
-			if(ThaumcraftCapabilities.knowsResearchStrict(event.getPlayer(), "CANOE@1")) {
-				if(event.getPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguecanoe")) {
-					unlockDialogue(event.getPlayer(), "ritual");
-				}			
-			}
-			break;
+		default: dialogueResearches(event.getPlayer(), event.getResearchKey());
 				
 		}	
 	}
 	
+	public void dialogueResearches(EntityPlayer p, String s) {
+		switch(s) {
+		case "f_AlienisDream":
+			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.SEEKSKNOWLEDGE, false);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.SEEKSKNOWLEDGE), (EntityPlayerMP)p);
+			break;
+		case "FISHINGHAMLET":
+			if(ThaumcraftCapabilities.knowsResearchStrict(p, "FISHINGHAMLET@1")) {
+				if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguegratitude")) {
+					p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialoguedreamer", false);
+					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialoguedreamer"), (EntityPlayerMP)p);
+				}	
+			}
+			break;
+		case "IDOL":
+			if(ThaumcraftCapabilities.knowsResearchStrict(p, "IDOL@0"))
+				unlockDialogue(p, "newyou", "trustedbar", "trustedcar");
+			break;
+		case "SLUGS":
+			if(ThaumcraftCapabilities.knowsResearchStrict(p, "SLUGS@0"))
+				unlockDialogue(p, "impressed", "canoecar");			
+			break;
+		case "CANOE":
+			if(ThaumcraftCapabilities.knowsResearchStrict(p, "CANOE@1")) {
+				if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("dialoguecanoe")) { // Otherwise handled by normal dialogue unlocking
+					unlockDialogue(p, "ritual");
+				}			
+			}
+			break;
+		}
+	}
+	
 	private void unlockDialogue(EntityPlayer p, String... names) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		for(String name : names) {
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(name), false);
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialogue".concat(name)), (EntityPlayerMP)p);	
+			if(!data.getString(name)) {
+				data.addString("dialogue".concat(name), false);
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("dialogue".concat(name)), (EntityPlayerMP)p);	
+			}
 		}	
 	}
 	

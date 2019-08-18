@@ -1,13 +1,13 @@
 package com.valeriotor.BTV.events;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
-import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
@@ -19,10 +19,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
@@ -70,13 +67,14 @@ public class PlayerEvents {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
 			DGWorshipHelper.calculateModifier(event.player, ThaumcraftCapabilities.getKnowledge(event.player));
+			BeyondTheVeil.proxy.researchEvents.checkResearches(event.player);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void cloneEvent(PlayerEvent.Clone event) {
 		
-		List<String> strings = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
+		Set<String> strings = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = event.getOriginal().getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		
 		Deities.GREATDREAMER.cap(event.getEntityPlayer()).setLevel(Deities.GREATDREAMER.cap(event.getOriginal()).getLevel());	
