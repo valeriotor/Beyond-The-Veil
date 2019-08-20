@@ -7,6 +7,7 @@ public class ModelRegistry {
 	public static ModelDeepOne deep_one;
 	public static ModelFletum fletum;
 	public static ModelWeeper weeper;
+	public static ModelStarspawn starspawn;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -14,6 +15,7 @@ public class ModelRegistry {
 		deep_one = new ModelDeepOne();
 		fletum = new ModelFletum();
 		weeper = new ModelWeeper();
+		starspawn = new ModelStarspawn();
 	}
 	
 }

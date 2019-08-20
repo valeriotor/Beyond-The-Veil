@@ -5,6 +5,7 @@ import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.entities.EntityStarspawn;
 import com.valeriotor.BTV.entities.EntityWeeper;
 
 import net.minecraft.client.renderer.entity.Render;
@@ -56,6 +57,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityFletum> createRenderFor(RenderManager manager) 
 			{return new RenderFletum(manager);}
+			});
+		
+		//Starspawn
+		RenderingRegistry.registerEntityRenderingHandler(EntityStarspawn.class, new IRenderFactory<EntityStarspawn>(){
+			@Override
+			public Render<EntityStarspawn> createRenderFor(RenderManager manager) 
+			{return new RenderStarspawn(manager);}
 			});
 	}
 }
