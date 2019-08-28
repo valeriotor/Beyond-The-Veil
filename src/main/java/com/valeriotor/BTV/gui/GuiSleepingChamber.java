@@ -63,7 +63,7 @@ public class GuiSleepingChamber extends GuiChat{
 				String aspect = this.mc.player.world.getTileEntity(pos).getTileData().getString("containing");
 				if(aspect != null) aspects.add(aspect);
 			}
-			int timesDreamt = this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getInteger(PlayerDataLib.TIMESDREAMT);
+			int timesDreamt = this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 			if(aspects.contains("Alienis") && timesDreamt < DreamHandler.getMaxDreamsPerDay(this.mc.player, b)) {
 				if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") || aspects.contains("Vacuos")) flag = false;
 			}
