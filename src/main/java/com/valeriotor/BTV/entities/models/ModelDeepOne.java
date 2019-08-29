@@ -123,7 +123,7 @@ public class ModelDeepOne extends ModelAnimated {
     	bodyParts.add(RightMouth);
     	bodyParts.add(BottomMouth);
     	bodyParts.add(BackMouth);
-    	this.setAngles();
+    	this.setAngles(true);
     	for(ModelRenderer mr : bodyParts) {
     		if(!defaultAngles.containsKey(mr)) {
     			EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
@@ -147,37 +147,39 @@ public class ModelDeepOne extends ModelAnimated {
         this.Body.render(f5);
     }
     
-    public void setAngles() {
-    	this.setRotateAngle(LeftMouth, 0, 0, 0);
-    	this.setRotateAngle(RightMouth, 0, 0, 0);
-    	this.setRotateAngle(BottomMouth, 0, 0, 0);
-    	this.setRotateAngle(LeftLowerLeg, 0.9F, -0.0F, 0.0F);
-    	this.setRotateAngle(RightLowerLeg, 0.9F, -0.0F, 0.0F);
-    	this.setRotateAngle(LeftUpperLeg, -0.6F, -0.0F, 0.0F);
-    	this.setRotateAngle(LeftLowerArm, -0.855108082294464F, -0.0F, 0.0F);
-    	this.setRotateAngle(RightUpperLeg, -0.6F, -0.0F, 0.0F);
-    	this.setRotateAngle(DorsalFin, 0.40896472334861755F, -0.0F, 0.0F);
-    	this.setRotateAngle(HeadFin, -0.6108652353286743F, -0.0F, 0.0F);
-    	this.setRotateAngle(LeftUpperArm, 0.0F, -0.0F, -0.43633231520652765F);
-    	this.setRotateAngle(RightUpperArm, 0.0F, -0.0F, 0.43633231520652765F);
-    	this.setRotateAngle(Body, 0.37178611755371094F, -0.0F, 0.0F);
-    	this.setRotateAngle(RightLowerArm, -0.855108082294464F, -0.0F, 0.0F);
-    	this.setRotateAngle(Head, 0, 0, 0);
+    public void setAngles(boolean addToDefault) {
+    	this.setRotateAngle(LeftMouth, 0, 0, 0, addToDefault);
+    	this.setRotateAngle(RightMouth, 0, 0, 0, addToDefault);
+    	this.setRotateAngle(BottomMouth, 0, 0, 0, addToDefault);
+    	this.setRotateAngle(LeftLowerLeg, 0.9F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(RightLowerLeg, 0.9F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(LeftUpperLeg, -0.6F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(LeftLowerArm, -0.855108082294464F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(RightUpperLeg, -0.6F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(DorsalFin, 0.40896472334861755F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(HeadFin, -0.6108652353286743F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(LeftUpperArm, 0.0F, -0.0F, -0.43633231520652765F, addToDefault);
+    	this.setRotateAngle(RightUpperArm, 0.0F, -0.0F, 0.43633231520652765F, addToDefault);
+    	this.setRotateAngle(Body, 0.37178611755371094F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(RightLowerArm, -0.855108082294464F, -0.0F, 0.0F, addToDefault);
+    	this.setRotateAngle(Head, 0, 0, 0, addToDefault);
         
     }
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z, boolean addToDefault) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
-        EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
-        map.put(Transformation.ROTX, x);
-        map.put(Transformation.ROTY, y);
-        map.put(Transformation.ROTZ, z);
-        defaultAngles.put(modelRenderer, map);
+        if(addToDefault) {
+	        EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
+	        map.put(Transformation.ROTX, x);
+	        map.put(Transformation.ROTY, y);
+	        map.put(Transformation.ROTZ, z);
+	        defaultAngles.put(modelRenderer, map);
+        }
     }
     
     @Override
@@ -202,7 +204,7 @@ public class ModelDeepOne extends ModelAnimated {
     @Override
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
-    	this.setAngles();
+    	this.setAngles(false);
     	this.resetOffsets(bodyParts);
     	if(e instanceof EntityPlayer) {
     		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)e);
