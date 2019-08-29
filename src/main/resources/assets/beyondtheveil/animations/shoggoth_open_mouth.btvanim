@@ -1,0 +1,23 @@
+length: 30
+model: shoggoth
+keys
+    UpperTooth1: 18
+	UpperTooth2: 19
+	UpperTooth3: 20
+	LowerTooth1: 12
+	LowerTooth2: 13
+end
+start: 0: 6
+	UpperTooth1: rotx: -1.8: quadratic
+	UpperTooth2: rotx: -1.8: quadratic
+	UpperTooth3: rotx: -1.8: quadratic
+	LowerTooth1: rotx: 1.5: quadratic
+	LowerTooth2: rotx: 1.5: quadratic
+end
+start: 25: 29
+	UpperTooth1: rotx: 1.8
+	UpperTooth2: rotx: 1.8
+	UpperTooth3: rotx: 1.8
+	LowerTooth1: rotx: -1.5
+	LowerTooth2: rotx: -1.5
+end	

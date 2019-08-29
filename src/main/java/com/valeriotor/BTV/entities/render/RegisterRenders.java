@@ -5,6 +5,7 @@ import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.entities.EntityShoggoth;
 import com.valeriotor.BTV.entities.EntityStarspawn;
 import com.valeriotor.BTV.entities.EntityWeeper;
 
@@ -64,6 +65,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityStarspawn> createRenderFor(RenderManager manager) 
 			{return new RenderStarspawn(manager);}
+			});
+		
+		//Shoggoth
+		RenderingRegistry.registerEntityRenderingHandler(EntityShoggoth.class, new IRenderFactory<EntityShoggoth>(){
+			@Override
+			public Render<EntityShoggoth> createRenderFor(RenderManager manager) 
+			{return new RenderShoggoth(manager);}
 			});
 	}
 }

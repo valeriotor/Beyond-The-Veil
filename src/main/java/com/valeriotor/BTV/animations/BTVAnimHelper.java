@@ -78,6 +78,7 @@ public class BTVAnimHelper {
 	private ModelAnimated getModel(String s){
 		switch(s) {
 		case "deep_one": return ModelRegistry.deep_one;
+		case "shoggoth": return ModelRegistry.shoggoth;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;
