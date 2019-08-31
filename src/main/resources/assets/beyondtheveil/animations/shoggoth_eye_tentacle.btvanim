@@ -1,0 +1,33 @@
+length: 65
+model: shoggoth
+keys
+    Lower: 9
+	Mid: 22
+	Upper: 23
+end
+start: 0: 16
+	Lower: rotx: 0.25
+	Lower: roty: -0.6
+end
+start: 0: 20
+	Mid: roty: -0.5
+	Upper: roty: -0.5
+end
+start: 17: 32
+	Lower: roty: 1.2: quadratic
+	Lower: rotx: -0.25
+end
+start: 21: 35
+	Mid: roty: 1
+	Upper: roty: 0.5
+end
+start: 40: 50
+	Lower: roty: -1.2
+	Mid: roty: -1
+	Upper: roty: -1
+end
+start: 55: 64
+	Lower: roty: 0.6
+	Mid: roty: 0.5
+	Upper: roty: 1
+end

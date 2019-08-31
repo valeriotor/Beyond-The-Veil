@@ -317,6 +317,16 @@ public class ModelShoggoth extends ModelAnimated {
     	mouthUpper.offsetY = offset;
     	otherChunk.offsetX = offset*2;
     	sideLarge.offsetY = -offset;
+    	rightTentacleLower.offsetY = offset;
+    	rightTentacleLower.rotateAngleZ = -1.1838568316277536F + offset * 2;
+    	leftTentacleLower.offsetY = offset;
+    	leftTentacleUpper.rotateAngleZ = 0.27314402793711257F + offset * 4;
+    	eyeTentacleLower.offsetY = offset;
+    	bRightTentacle1.rotateAngleY = 0.7285004297824331F + offset * 1.5F;
+    	bBackTentacle1.rotateAngleY = 2.86844862565268F + offset * 1.5F;
+    	bLeftTentacle3.rotateAngleY = offset * 2;
+    	bRightTentacle4.rotateAngleY = offset * 2;
+    	bBackTentacle4.rotateAngleY = offset * 2;
     	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95)/16;
     	mouthBack.offsetX = offset/2;
     	mouthBottom.offsetX = offset/2;
@@ -325,7 +335,16 @@ public class ModelShoggoth extends ModelAnimated {
     	mouthUpper.offsetX = offset/2;
     	otherChunk.offsetY = offset;
     	sideSmall.offsetY = -offset;
+    	rightTentacleUpper.rotateAngleZ = 0.27314402793711257F +offset * 4;
+    	leftTentacleLower.rotateAngleZ =0.36425021489121656F + offset * 2;
+    	eyeTentacleLower.offsetX = offset/2;
+    	bLeftTentacle1.rotateAngleY = -1.1838568316277536F + offset * 1.5F;
+    	bRightTentacle3.rotateAngleY = offset * 2;
+    	bBackTentacle3.rotateAngleY = offset * 2;
+    	bLeftTentacle4.rotateAngleY = offset * 2;
     	Animation openMouth = sh.getOpenMouthAnim();
     	if(openMouth != null) openMouth.applyTransformations(bodyParts, partialTickTime);
+    	Animation eyeTentacle = sh.getEyeTentacleAnim();
+    	if(eyeTentacle != null) eyeTentacle.applyTransformations(bodyParts, partialTickTime);
     }
 }

@@ -12,6 +12,7 @@ public class EntityShoggoth extends EntityLiving{
 	
 	private int animTicks = 0;
 	private Animation openMouthAnim = null;
+	private Animation eyeTentacleAnim = null;
 	
 	public EntityShoggoth(World worldIn) {
 		super(worldIn);
@@ -25,9 +26,14 @@ public class EntityShoggoth extends EntityLiving{
 				openMouthAnim.update();
 				if(openMouthAnim.isDone()) openMouthAnim = null;
 			}
+			if(eyeTentacleAnim != null) {
+				eyeTentacleAnim.update();
+				if(eyeTentacleAnim.isDone()) eyeTentacleAnim = null;
+			}
 			animTicks++;
 			animTicks%=1000;
 			if(animTicks == 999 && openMouthAnim == null) this.openMouthAnim = new Animation(AnimationRegistry.shoggoth_open_mouth);
+			if(animTicks%400 == 0 && animTicks != 0 && eyeTentacleAnim == null) this.eyeTentacleAnim = new Animation(AnimationRegistry.shoggoth_eye_tentacle);
 		}
 	}
 	
@@ -39,6 +45,11 @@ public class EntityShoggoth extends EntityLiving{
 	@SideOnly(Side.CLIENT)
 	public Animation getOpenMouthAnim() {
 		return this.openMouthAnim;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public Animation getEyeTentacleAnim() {
+		return this.eyeTentacleAnim;
 	}
 	
 }
