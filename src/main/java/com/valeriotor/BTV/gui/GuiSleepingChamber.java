@@ -28,9 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiSleepingChamber extends GuiChat{
-	// I don't have the slightest clue how the 1920x1080 black texture I made for this will work on different resolutions
-	// Also, if you do know how to make the screen progressively blacker without using such a texture, please do tell
-	private static final ResourceLocation texture = new ResourceLocation(References.MODID + ":textures/gui/black.png");
 	private int timePassed = 0;
 	
 	public void initGui()
@@ -41,13 +38,7 @@ public class GuiSleepingChamber extends GuiChat{
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GlStateManager.pushMatrix();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.color(1, 1, 1, ((float)this.timePassed)/100);
-		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-		drawTexturedModalRect(0, 0, 0, 0, width, height);
-		GlStateManager.popMatrix();
+		drawRect(0, 0, this.width, this.height, (int)(((float)this.timePassed)/100 * 255) << 24);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
