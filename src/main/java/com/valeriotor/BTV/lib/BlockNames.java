@@ -4,6 +4,7 @@ public class BlockNames {
 	
 	public static final String BARREL = "barrel";
 	public static final String BRICKSBLUE = "bricks_blue";
+	public static final String CITYMAPPER = "city_mapper";
 	public static final String DARKSAND = "dark_sand";
 	public static final String FUMESPREADER = "fume_spreader";
 	public static final String IDOL = "idol";

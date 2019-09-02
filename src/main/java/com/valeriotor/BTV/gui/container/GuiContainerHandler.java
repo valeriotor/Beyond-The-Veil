@@ -1,12 +1,15 @@
 package com.valeriotor.BTV.gui.container;
 
+import com.valeriotor.BTV.gui.GuiCityMapper;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
 import com.valeriotor.BTV.items.container.InventoryDreamBottle;
+import com.valeriotor.BTV.tileEntities.TileCityMapper;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -28,7 +31,12 @@ public class GuiContainerHandler implements IGuiHandler{
 				InventoryDreamBottle db = new InventoryDreamBottle("Dream Bottle", false, 4, p.getHeldItemMainhand());
 				return new ContainerDreamBottle(p.inventory, db);
 			}
-		}
+		} /*else if(ID == 1) {
+			BlockPos pos = new BlockPos(x, y, z);
+			if(world.getTileEntity(pos) instanceof TileCityMapper) {
+				
+			}
+		}*/
 		return null;
 	}
 
@@ -44,6 +52,11 @@ public class GuiContainerHandler implements IGuiHandler{
 					if(fluid != null) amount = fluid.amount;
 				}
 				return new GuiDreamBottle(new ContainerDreamBottle(p.inventory, db), amount);
+			}
+		} else if(ID == 1) {
+			BlockPos pos = new BlockPos(x, y, z);
+			if(world.getTileEntity(pos) instanceof TileCityMapper) {
+				return new GuiCityMapper(pos);
 			}
 		}
 		return null;

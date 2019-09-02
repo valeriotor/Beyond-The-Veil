@@ -52,6 +52,7 @@ public class BlockRegistry {
 	public static final BlockMutator BlockMutator = new BlockMutator(BlockNames.MUTATOR);
 	public static final BlockWateryCradle BlockWateryCradle = new BlockWateryCradle(BlockNames.WATERYCRADLE);
 	public static final BlockLacrymatory BlockLacrymatory = new BlockLacrymatory(BlockNames.LACRYMATORY);
+	public static final BlockCityMapper BlockCityMapper = new BlockCityMapper(BlockNames.CITYMAPPER);
 	
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
@@ -91,6 +92,9 @@ public class BlockRegistry {
 	   	event.getRegistry().register(BlockMutator);
 	   	event.getRegistry().register(BlockWateryCradle);
 	   	event.getRegistry().register(BlockLacrymatory);
+	   	event.getRegistry().register(BlockCityMapper);
+	   	
+	   	
 	   	event.getRegistry().register(BlockFluidTears);
 	}
 }
