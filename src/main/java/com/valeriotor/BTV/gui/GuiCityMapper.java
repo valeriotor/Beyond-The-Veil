@@ -2,6 +2,7 @@ package com.valeriotor.BTV.gui;
 
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.tileentity.TileEntity;
@@ -24,14 +25,14 @@ public class GuiCityMapper extends GuiScreen{
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		for(int x = 0; x < 201; x++) {
 			for(int y = 0; y < 201; y++) {
-				int cah = te.colorsAndHeights[x][y];
-				int height = cah >> 24;
+				int rgb = MapColor.COLORS[te.colors[x][y]].colorValue;
+				int height = te.heights[x][y];
 				int offset = (pos.getY() - height) * 4;
 				int x2 = this.width / 2 - 100 + x;
 				int y2 = this.height / 2 - 100 + y;
-				int r = inBetween(0, 255, ((cah >> 16) & 255) - offset);
-				int g = inBetween(0, 255, ((cah >> 8) & 255) - offset);
-				int b = inBetween(0, 255, ((cah) & 255) - offset);
+				int r = inBetween(0, 255, ((rgb >> 16) & 255) - offset);
+				int g = inBetween(0, 255, ((rgb >> 8) & 255) - offset);
+				int b = inBetween(0, 255, ((rgb) & 255) - offset);
 				drawRect(x2, y2, x2+1, y2+1, 0xFF000000 | (r << 16) | (g << 8) | b);
 			}
 		}

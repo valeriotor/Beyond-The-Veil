@@ -14,11 +14,14 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 
 public class TileCityMapper extends TileEntity implements ITickable{
 	
-	public int[][] colorsAndHeights = new int[201][201]; // Colors are stored in the right-most 3 bytes of the ints, height is in the left-most byte
-	private int timer = -100;
+	public byte[][] colors = new byte[201][201];
+	public byte[][] heights = new byte[201][201];
+	
+	public int timer = -100;
 	
 	@Override
 	public void update() {
+		if(world.isRemote) return;
 		if(timer <= 100) {
 			final int x = this.pos.getX() + timer;
 			for(int z = this.pos.getZ() - 100; z <= this.pos.getZ() + 100; z++) {
@@ -30,7 +33,9 @@ public class TileCityMapper extends TileEntity implements ITickable{
 					state = this.world.getBlockState(pos);
 				}
 				if(pos.getY() > 1) {
-					colorsAndHeights[timer + 100][z - this.pos.getZ() + 100] = (pos.getY() << 24) | (this.world.getBlockState(pos).getMapColor(this.world, this.pos).colorValue & 16777215);
+					colors[timer + 100][z - this.pos.getZ() + 100] = (byte) state.getMapColor(this.world, this.pos).colorIndex;
+					heights[timer + 100][z - this.pos.getZ() + 100] = (byte) pos.getY();
+					//colorsAndHeights[timer + 100][z - this.pos.getZ() + 100] = (pos.getY() << 24) | (this.world.getBlockState(pos).getMapColor(this.world, this.pos).colorValue & 16777215);
 				}
 			}
 			timer++;
@@ -43,8 +48,10 @@ public class TileCityMapper extends TileEntity implements ITickable{
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		for(int i = 0; i < 201; i++)
-			compound.setIntArray(String.format("cah%d", i), colorsAndHeights[i]);
+		for(int i = 0; i < 201; i++) {
+			compound.setByteArray(String.format("c%d", i), colors[i]);
+			compound.setByteArray(String.format("h%d", i), heights[i]);
+		}
 		compound.setInteger("timer", timer);
 		return super.writeToNBT(compound);
 	}
@@ -52,8 +59,9 @@ public class TileCityMapper extends TileEntity implements ITickable{
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		for(int i = 0; i < 201; i++) {
-			if(compound.hasKey(String.format("cah%d", i))) {
-				colorsAndHeights[i] = compound.getIntArray(String.format("cah%d", i));
+			if(compound.hasKey(String.format("c%d", i))) {
+				colors[i] = compound.getByteArray(String.format("c%d", i));
+				heights[i] = compound.getByteArray(String.format("h%d", i));
 			}
 		}
 		this.timer = compound.getInteger("timer");
