@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class BlockCityMapper extends ModBlock implements ITileEntityProvider{
@@ -27,8 +28,20 @@ public class BlockCityMapper extends ModBlock implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(BeyondTheVeil.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		if(hand == EnumHand.OFF_HAND) return false;
+		TileEntity te = worldIn.getTileEntity(pos);
+		if(te instanceof TileCityMapper) {
+			TileCityMapper tc = (TileCityMapper) te;
+			if(tc.timer < 102) {
+				if(!worldIn.isRemote)
+					playerIn.sendMessage(new TextComponentTranslation("interact.citymapper.loading"));
+				return false;
+			} else {
+				playerIn.openGui(BeyondTheVeil.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
