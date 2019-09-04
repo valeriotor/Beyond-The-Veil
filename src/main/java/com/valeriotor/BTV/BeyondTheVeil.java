@@ -15,6 +15,7 @@ import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.TCRegistries;
+import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.util.RegistryHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.WorldGenBTV;
@@ -89,9 +90,9 @@ public class BeyondTheVeil
     	ThaumcraftApi.registerResearchLocation(new ResourceLocation(References.MODID, "research/btvresearch"));
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
+    	BuildingRegistry.registerBuildings();
     	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
 		DGWorshipHelper.loadDreamerResearch();
-    	
     }
     
     @Mod.EventHandler

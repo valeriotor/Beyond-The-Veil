@@ -35,7 +35,7 @@ public class BlockCityMapper extends ModBlock implements ITileEntityProvider{
 			if(tc.timer < 102) {
 				if(!worldIn.isRemote)
 					playerIn.sendMessage(new TextComponentTranslation("interact.citymapper.loading"));
-				return false;
+				return true;
 			} else {
 				playerIn.openGui(BeyondTheVeil.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
 				return true;

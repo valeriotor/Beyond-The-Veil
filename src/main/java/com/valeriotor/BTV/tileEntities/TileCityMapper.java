@@ -1,6 +1,11 @@
 package com.valeriotor.BTV.tileEntities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
+
+import com.valeriotor.BTV.shoggoth.Building2D;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -16,7 +21,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 	
 	public byte[][] colors = new byte[201][201];
 	public byte[][] heights = new byte[201][201];
-	
+	public List<Building2D> buildings = new ArrayList<>();
 	public int timer = -100;
 	
 	@Override
@@ -53,6 +58,10 @@ public class TileCityMapper extends TileEntity implements ITickable{
 			compound.setByteArray(String.format("h%d", i), heights[i]);
 		}
 		compound.setInteger("timer", timer);
+		for(int i = 0; i < buildings.size(); i++) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			compound.setTag(String.format("b%d", i), this.buildings.get(i).writeToNBT(nbt));
+		}
 		return super.writeToNBT(compound);
 	}
 	
@@ -65,6 +74,10 @@ public class TileCityMapper extends TileEntity implements ITickable{
 			}
 		}
 		this.timer = compound.getInteger("timer");
+		int i = 0;
+		while(compound.hasKey(String.format("b%d", i))) {
+			this.buildings.add(new Building2D(compound.getCompoundTag(String.format("b%d", i++))));
+		}
 		super.readFromNBT(compound);
 	}
 	
