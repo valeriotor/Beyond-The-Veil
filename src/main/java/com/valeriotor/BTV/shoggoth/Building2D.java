@@ -51,7 +51,7 @@ public class Building2D {
 	
 	public boolean intersects(Building2D hover, int centerX, int centerY, int width, int height) {
 		if(hover == this) return false; // A building can intersect itself
-		centerX -= (width/2 - 100);
+		centerX -= (width/2 - 115);
 		centerY -= (height / 2 - 100);
 		int hTop = centerY - hover.getHeight()/2;
 		int hLeft = centerX - hover.getWidth()/2;
@@ -66,7 +66,7 @@ public class Building2D {
 	}
 	
 	public boolean containsPoint(int x, int y, int width, int height) {
-		x -= (width/2 - 100);
+		x -= (width/2 - 115);
 		y -= (height / 2 - 100);
 		if(x > left() && x < right() && y > top() && y < bottom()) return true;
 		return false;
@@ -86,7 +86,7 @@ public class Building2D {
 	public void render(GuiCityMapper gui) {
 		if(!this.isLongBuilding()) {
 			GlStateManager.pushMatrix();
-			GlStateManager.translate((gui.width/2 - 100) + centerX, (gui.height/2 - 100) + centerY, 0);
+			GlStateManager.translate((gui.width/2 - 115) + centerX, (gui.height/2 - 100) + centerY, 0);
 			//GlStateManager.rotate(1, 0, 0, 1);
 			GlStateManager.translate(-16, -16, 0);
 			building.drawScaledTexture(gui, 0, 0, 1);
