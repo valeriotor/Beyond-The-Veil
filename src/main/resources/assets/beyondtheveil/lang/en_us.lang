@@ -166,6 +166,15 @@ keys.medallion=Wolf Medallion Ability
 
 
 ##################
+#SHOGGOTH
+##################
+
+building.tower=Tower
+building.largetower=Large Tower
+building.pyramid=Pyramid
+
+
+##################
 #DWELLER DIALOGUE
 ##################
 

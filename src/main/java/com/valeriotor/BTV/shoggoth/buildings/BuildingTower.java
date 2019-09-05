@@ -5,8 +5,8 @@ import com.valeriotor.BTV.shoggoth.BuildingTemplate;
 
 public class BuildingTower extends BuildingTemplate{
 
-	public BuildingTower(int index) {
-		super(16, 16, false, index);
+	public BuildingTower(String name, int index) {
+		super(16, 16, false, index, name);
 	}
 
 	@Override

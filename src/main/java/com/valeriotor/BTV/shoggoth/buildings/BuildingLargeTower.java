@@ -8,8 +8,8 @@ import net.minecraft.client.Minecraft;
 
 public class BuildingLargeTower extends BuildingTemplate{
 
-	public BuildingLargeTower(int index) {
-		super(24, 24, false, index);
+	public BuildingLargeTower(String name, int index) {
+		super(24, 24, false, index, name);
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 package com.valeriotor.BTV.gui;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.ImmutableList;
 import com.valeriotor.BTV.lib.References;
@@ -17,6 +19,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +34,7 @@ public class GuiCityMapper extends GuiScreen{
 	private int scrollOffset = 0;
 	private Building2D selectedBuilding = null;
 	private int selectedIndex = -1;
+	private final DynamicTexture map;
 	
 	public GuiCityMapper(BlockPos pos) {
 		this.pos = pos;
@@ -45,6 +49,19 @@ public class GuiCityMapper extends GuiScreen{
 				temp.add(template);
 		}
 		availableBuildings = ImmutableList.copyOf(temp);
+		BufferedImage map = new BufferedImage(201, 201, BufferedImage.TYPE_INT_ARGB);
+		for(int x = 0; x < 201; x++) {
+			for(int y = 0; y < 201; y++) {
+				int rgb = MapColor.COLORS[this.te.colors[x][y]].colorValue;
+				int height = this.te.heights[x][y];
+				int offset = (pos.getY() - height) * 4;
+				int r = inBetween(0, 255, ((rgb >> 16) & 255) - offset);
+				int g = inBetween(0, 255, ((rgb >> 8) & 255) - offset);
+				int b = inBetween(0, 255, ((rgb) & 255) - offset);
+				map.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
+			}
+		}
+		this.map = new DynamicTexture(map);
 	}
 	
 	@Override
@@ -60,9 +77,10 @@ public class GuiCityMapper extends GuiScreen{
 		if(this.selectedBuilding != null) {
 			int xOffset = this.selectedIndex == -1 ? 0 : this.pos.getX() - 100;
 			int yOffset = this.selectedIndex == -1 ? 0 : this.pos.getZ() - 100;
-			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingx", xOffset + this.selectedBuilding.centerX), this.width/2 - 220, this.height/2 - 98, 0xFFFFFFFF);
-			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingy", yOffset + this.selectedBuilding.centerY), this.width/2 - 220, this.height/2 - 83, 0xFFFFFFFF);
-			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingrot", I18n.format(String.format("gui.city_mapper.rot%d", this.selectedBuilding.rotation))), this.width/2 - 220, this.height/2 - 68, 0xFFFFFFFF);
+			drawString(Minecraft.getMinecraft().fontRenderer, this.selectedBuilding.getLocalizedName(), this.width/2 - 220, this.height/2 - 98, 0xFFFFFFFF);
+			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingx", xOffset + this.selectedBuilding.centerX), this.width/2 - 220, this.height/2 - 83, 0xFFFFFFFF);
+			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingy", yOffset + this.selectedBuilding.centerY), this.width/2 - 220, this.height/2 - 68, 0xFFFFFFFF);
+			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingrot", I18n.format(String.format("gui.city_mapper.rot%d", this.selectedBuilding.rotation))), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
 		}
 		int i = this.getHoveredMenuBuilding(mouseX, mouseY);
 		if(i != -1) {
@@ -70,26 +88,14 @@ public class GuiCityMapper extends GuiScreen{
 			int top = this.height / 2 - 100 + 64 * (i/2 - this.scrollOffset);
 			drawRect(left, top, left + 64, top + 64, 0x55FFFFFF);
 		}
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, map.getGlTextureId());
+		drawTexturedModalRect(this.width/2 - 115, this.height/2 - 100, 0, 0, 201, 201);
 		GlStateManager.enableBlend();
 		GlStateManager.color(1, 1, 1, 1);
 		for(i = this.scrollOffset*2; i < numBuildings && i < this.scrollOffset*2 + 6; i++) {
 			availableBuildings.get(i).drawTexture(this, this.width / 2 + 93 + 64 * (i%2), this.height / 2 - 100 + 64 * (i/2 - this.scrollOffset));
 		}
-		GlStateManager.disableBlend();
-		for(int x = 0; x < 201; x++) {
-			for(int y = 0; y < 201; y++) {
-				int rgb = MapColor.COLORS[te.colors[x][y]].colorValue;
-				int height = te.heights[x][y];
-				int offset = (pos.getY() - height) * 4;
-				int x2 = this.width / 2 - 115 + x;
-				int y2 = this.height / 2 - 100 + y;
-				int r = inBetween(0, 255, ((rgb >> 16) & 255) - offset);
-				int g = inBetween(0, 255, ((rgb >> 8) & 255) - offset);
-				int b = inBetween(0, 255, ((rgb) & 255) - offset);
-				drawRect(x2, y2, x2+1, y2+1, 0xFF000000 | (r << 16) | (g << 8) | b);
-			}
-		}
-		GlStateManager.enableBlend();
+		
 		GlStateManager.color(1, 1, 1, 1);
 		for(Building2D b : te.buildings) b.render(this);
 		if(this.selectedBuilding != null) {
@@ -192,6 +198,10 @@ public class GuiCityMapper extends GuiScreen{
 				mouseY > cy - 100 + selectedBuilding.getHeight()/2 && mouseY < cy + 100 - selectedBuilding.getHeight()/2;
 	}
 	
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
 	
 	
 }

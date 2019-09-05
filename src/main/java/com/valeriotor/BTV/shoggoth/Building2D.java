@@ -48,6 +48,10 @@ public class Building2D {
 		return this.building.index;
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public String getLocalizedName() {
+		return this.building.getLocalizedName();
+	}
 	
 	public boolean intersects(Building2D hover, int centerX, int centerY, int width, int height) {
 		if(hover == this) return false; // A building can intersect itself

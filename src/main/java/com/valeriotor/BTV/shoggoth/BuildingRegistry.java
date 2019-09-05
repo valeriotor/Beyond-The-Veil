@@ -19,9 +19,9 @@ public class BuildingRegistry {
 	public static final ResourceLocation GuiIcons = new ResourceLocation(References.MODID, "textures/gui/city_buildings.png");
 	
 	public static void registerBuildings() {
-		tower = new BuildingTower(0);
-		largeTower = new BuildingLargeTower(1);
-		pyramid = new BuildingPyramid(2);
+		tower = new BuildingTower("tower", 0);
+		largeTower = new BuildingLargeTower("largetower", 1);
+		pyramid = new BuildingPyramid("pyramid", 2);
 	}
 	
 }

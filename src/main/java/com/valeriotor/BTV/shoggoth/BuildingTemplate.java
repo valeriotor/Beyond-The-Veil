@@ -3,6 +3,7 @@ package com.valeriotor.BTV.shoggoth;
 import com.valeriotor.BTV.gui.GuiCityMapper;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,13 +14,15 @@ public abstract class BuildingTemplate {
 	public final int height;
 	public final boolean longBuilding;
 	public final int index;
+	public final String name;
 	
-	public BuildingTemplate(int width, int height, boolean longBuilding, int index) {
+	public BuildingTemplate(int width, int height, boolean longBuilding, int index, String name) {
 		this.width = width;
 		this.height = height;
 		this.longBuilding = longBuilding;
 		this.index = index;
 		BuildingRegistry.templates[index] = this;
+		this.name = name;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -38,6 +41,11 @@ public abstract class BuildingTemplate {
 	public abstract boolean isDefault();
 	public boolean playerKnowsBuilding(EntityPlayer p) {
 		return false;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public String getLocalizedName() {
+		return I18n.format("building." + name);
 	}
 	
 }

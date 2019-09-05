@@ -75,6 +75,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 		}
 		this.timer = compound.getInteger("timer");
 		int i = 0;
+		this.buildings.clear();
 		while(compound.hasKey(String.format("b%d", i))) {
 			this.buildings.add(new Building2D(compound.getCompoundTag(String.format("b%d", i++))));
 		}
