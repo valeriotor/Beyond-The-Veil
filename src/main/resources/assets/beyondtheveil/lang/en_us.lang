@@ -98,9 +98,16 @@ interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
 interact.lacrymatory.full=This Lacrymatory is already bound.
 interact.lacrymatory.success=The %1$s is now bound to the Lacrymatory.
 interact.citymapper.loading=The City Mapper is slowly loading the surrounding environment.
+interact.citymapper.player0=Someone else is currently using the City Mapper.
+interact.citymapper.player1=Someone else is still using the City Mapper.
+interact.citymapper.player2=I still can't use the City Mapper.. because of someone else.
+interact.citymapper.player3=Some damn fool is still using the City Mapper, preventing me from using it.
+interact.citymapper.player4=Someone else's still using the Mapper.. we should get rid of them.
+interact.citymapper.player5=Someone else is currently using the City Mapper.
+
 
 ##################
-#ENTITTIES
+#ENTITIES
 ##################
 
 entity.deep_one.name=Deep One
@@ -160,6 +167,9 @@ gui.city_mapper.rot0=North
 gui.city_mapper.rot1=East
 gui.city_mapper.rot2=South
 gui.city_mapper.rot3=West
+gui.city_mapper.create=Create
+gui.city_mapper.save=Save Changes
+gui.city_mapper.reloadmap=Reload Map
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

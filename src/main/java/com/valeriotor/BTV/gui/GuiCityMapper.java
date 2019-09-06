@@ -10,6 +10,8 @@ import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.ImmutableList;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageCityMapper;
 import com.valeriotor.BTV.shoggoth.Building2D;
 import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.shoggoth.BuildingTemplate;
@@ -17,10 +19,12 @@ import com.valeriotor.BTV.tileEntities.TileCityMapper;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,8 +39,10 @@ public class GuiCityMapper extends GuiScreen{
 	private Building2D selectedBuilding = null;
 	private int selectedIndex = -1;
 	private final DynamicTexture map;
+	private boolean changes = false;
 	
 	public GuiCityMapper(BlockPos pos) {
+		this.mc = Minecraft.getMinecraft();
 		this.pos = pos;
 		TileEntity te = Minecraft.getMinecraft().player.world.getTileEntity(pos);
 		if(te instanceof TileCityMapper) {
@@ -53,8 +59,8 @@ public class GuiCityMapper extends GuiScreen{
 		for(int x = 0; x < 201; x++) {
 			for(int y = 0; y < 201; y++) {
 				int rgb = MapColor.COLORS[this.te.colors[x][y]].colorValue;
-				int height = this.te.heights[x][y];
-				int offset = (pos.getY() - height) * 4;
+				int height = this.te.heights[x][y] + 128;
+				int offset = inBetween(-40, 40, (pos.getY() - height) * 4);
 				int r = inBetween(0, 255, ((rgb >> 16) & 255) - offset);
 				int g = inBetween(0, 255, ((rgb >> 8) & 255) - offset);
 				int b = inBetween(0, 255, ((rgb) & 255) - offset);
@@ -62,6 +68,28 @@ public class GuiCityMapper extends GuiScreen{
 			}
 		}
 		this.map = new DynamicTexture(map);
+	}
+	
+	@Override
+	public void initGui() {
+		super.initGui();
+		this.buttonList.add(new GuiButton(0, this.width/2 - 115 - 107, this.height/2 + 99 - 18, 100, 20, I18n.format("gui.city_mapper.create")));
+		this.buttonList.add(new GuiButton(1, this.width/2 - 115 - 107, this.height/2 + 99 - 37, 100, 20, I18n.format("gui.city_mapper.save")));
+		this.buttonList.add(new GuiButton(2, this.width/2 - 115 - 107, this.height/2 + 99 - 56, 100, 20, I18n.format("gui.city_mapper.reloadmap")));
+		this.buttonList.get(1).enabled = changes;
+	}
+	
+	@Override
+	public void updateScreen() {
+		this.te.viewingPlayer = null;
+		this.buttonList.get(1).enabled = changes;
+		if(!(this.mc.player.world.getTileEntity(pos) instanceof TileCityMapper)) this.mc.displayGuiScreen(null);
+		super.updateScreen();
+	}
+	
+	@Override
+	public void onGuiClosed() {
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageCityMapper(MessageCityMapper.RESET_PLAYER, this.pos));
 	}
 	
 	@Override
@@ -113,14 +141,26 @@ public class GuiCityMapper extends GuiScreen{
 	}
 	
 	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if(keyCode == 18) {
+			mc.displayGuiScreen(null);
+			return;
+		}
+		super.keyTyped(typedChar, keyCode);
+	}
+	
+	@Override
 	public void handleMouseInput() throws IOException {
 		int i = -Integer.signum(Mouse.getEventDWheel());
-		if(this.selectedBuilding == null) {
-			this.scrollOffset = inBetween(0, (availableBuildings.size() - 1)/2, this.scrollOffset + i);
-		}
-		else{
-			this.selectedBuilding.rotation = (this.selectedBuilding.rotation + i + 4)%4;
-		}
+		if(i != 0) {
+			if(this.selectedBuilding == null) {
+				this.scrollOffset = inBetween(0, (availableBuildings.size() - 1)/2, this.scrollOffset + i);
+			}
+			else{
+				this.selectedBuilding.rotation = (this.selectedBuilding.rotation + i + 4)%4;
+				if(this.selectedIndex != -1) this.changes = true;
+			}
+		}	
 		super.handleMouseInput();
 	}
 	
@@ -151,6 +191,7 @@ public class GuiCityMapper extends GuiScreen{
 					if(this.selectedIndex == -1) te.buildings.add(this.selectedBuilding);
 					this.selectedBuilding = null;
 					this.selectedIndex = -1;
+					this.changes = true;
 				}
 			} else {
 				if(this.selectedIndex == -1) this.selectedBuilding = null;
@@ -158,10 +199,22 @@ public class GuiCityMapper extends GuiScreen{
 					this.te.buildings.remove(selectedIndex);
 					this.selectedBuilding = null;
 					this.selectedIndex = -1;
+					this.changes = true;
 				}
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if(button.id == 1) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageCityMapper(MessageCityMapper.UPDATE_BUILDINGS, pos, te.writeBuildingsToNBT(new NBTTagCompound())));
+			this.changes = false;
+		} else if(button.id == 2) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageCityMapper(MessageCityMapper.RESET_MAP, pos));		
+			this.mc.displayGuiScreen(null);
+		}
 	}
 	
 	private int getHoveredMenuBuilding(int mx, int my) {
@@ -194,7 +247,7 @@ public class GuiCityMapper extends GuiScreen{
 	private boolean isSelectedInsideMap(int mouseX, int mouseY) {
 		if(this.selectedBuilding == null) return false;
 		int cx = this.width/2, cy = this.height/2;
-		return mouseX > cx - 115 + selectedBuilding.getWidth()/2 && mouseX < cx + 115 - selectedBuilding.getWidth()/2 &&
+		return mouseX > cx - 115 + selectedBuilding.getWidth()/2 && mouseX < cx + 87 - selectedBuilding.getWidth()/2 &&
 				mouseY > cy - 100 + selectedBuilding.getHeight()/2 && mouseY < cy + 100 - selectedBuilding.getHeight()/2;
 	}
 	

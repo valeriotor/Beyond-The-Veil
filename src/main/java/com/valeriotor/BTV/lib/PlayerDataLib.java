@@ -18,7 +18,7 @@ public class PlayerDataLib {
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
-	
+	public static final String MAPPER_PLAYER_INTERACT = "mpi"; // This isn't used as a key by itself, but only with an int added to the end e.g. mpi1
 	
 	// Strings (Non-temporary)
 	public static final String FISHQUEST = "fish_quest";
