@@ -7,9 +7,25 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class Building2D {
+public abstract class Building2D {
 	
-	private final BuildingTemplate building;
+	public static Building2D getFromNBT(NBTTagCompound nbt) {
+		int index = nbt.getInteger("index");
+		if(BuildingRegistry.templates[index].longBuilding) return new LongBuilding2D(nbt);
+		return new BaseBuilding2D(nbt);
+	}
+	
+	public static Building2D getFromIndex(int index) {
+		if(BuildingRegistry.templates[index].longBuilding) return new LongBuilding2D(index);
+		return new BaseBuilding2D(index);
+	}
+	
+	public static Building2D getFromTemplate(BuildingTemplate template) {
+		if(template.longBuilding) return new LongBuilding2D(template);
+		return new BaseBuilding2D(template);
+	}
+	
+	protected final BuildingTemplate building;
 	public int centerX = 0;
 	public int centerY = 0;
 	public int rotation = 0; // 0 = North, 1 = East, 2 = South, 3 = West. Defines door of the building
@@ -18,10 +34,9 @@ public class Building2D {
 		this.building = BuildingRegistry.templates[index];
 	}
 	
-	/*public Building2D(BuildingCustom building) {
-		this.building = building;
-		this.buildingIndex = -1;
-	}*/
+	public Building2D(BuildingTemplate template) {
+		this.building = template;
+	}
 	
 	public Building2D(NBTTagCompound nbt) {
 		int index = nbt.getInteger("index");
@@ -39,28 +54,33 @@ public class Building2D {
 	public int getHeight() {
 		return (rotation & 1) == 1 ? building.width : building.height;
 	}
-	
-	public boolean isLongBuilding() {
-		return this.building.longBuilding;
-	}
-	
+
 	public int getIndex() {
 		return this.building.index;
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public String getLocalizedName() {
-		return this.building.getLocalizedName();
+	public int top() {return this.centerY - this.getHeight()/2;}
+	public int left() {return this.centerX - this.getWidth()/2;}
+	public int bottom() {return this.centerY + this.getHeight()/2;}
+	public int right() {return this.centerX + this.getWidth()/2;}
+	
+	public void setCenter(int x, int y) {
+		this.centerX = x;
+		this.centerY = y;
 	}
 	
 	public boolean intersects(Building2D hover, int centerX, int centerY, int width, int height) {
 		if(hover == this) return false; // A building can intersect itself
+		return intersects(hover.getWidth(), hover.getHeight(), centerX, centerY, width, height);
+	}
+	
+	public boolean intersects(int hwidth, int hheight, int centerX, int centerY, int width, int height) {
 		centerX -= (width/2 - 115);
 		centerY -= (height / 2 - 100);
-		int hTop = centerY - hover.getHeight()/2;
-		int hLeft = centerX - hover.getWidth()/2;
-		int hBottom = centerY + hover.getHeight()/2;
-		int hRight = centerX + hover.getWidth()/2;
+		int hTop = centerY - hheight/2;
+		int hLeft = centerX - hwidth/2;
+		int hBottom = centerY + hheight/2;
+		int hRight = centerX + hwidth/2;
 		int top = top(), left = left(), bottom = bottom(), right = right();
 		if((hTop < top && hBottom >= top || hBottom > bottom && hTop <= bottom || hBottom < bottom && hTop > top)
 		&& (hLeft < left && hRight >= left || hRight > right && hLeft <= right || hRight < right && hLeft > left)) {
@@ -76,26 +96,20 @@ public class Building2D {
 		return false;
 	}
 	
-	public int top() {return this.centerY - this.getHeight()/2;}
-	public int left() {return this.centerX - this.getWidth()/2;}
-	public int bottom() {return this.centerY + this.getHeight()/2;}
-	public int right() {return this.centerX + this.getWidth()/2;}
-	
-	public void setCenter(int x, int y) {
-		this.centerX = x;
-		this.centerY = y;
+	@SideOnly(Side.CLIENT)
+	public String getLocalizedName() {
+		return this.building.getLocalizedName();
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void render(GuiCityMapper gui) {
-		if(!this.isLongBuilding()) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate((gui.width/2 - 115) + centerX, (gui.height/2 - 100) + centerY, 0);
-			//GlStateManager.rotate(1, 0, 0, 1);
-			GlStateManager.translate(-16, -16, 0);
-			building.drawScaledTexture(gui, 0, 0, 1);
-			GlStateManager.popMatrix();
-		}
+		GlStateManager.pushMatrix();
+		GlStateManager.translate((gui.width/2 - 115) + centerX, (gui.height/2 - 100) + centerY, 0);
+		//GlStateManager.rotate(1, 0, 0, 1);
+		GlStateManager.translate(-16, -16, 0);
+		building.drawScaledTexture(gui, 0, 0, 1);
+		GlStateManager.popMatrix();
+		
 	}
 	
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -104,22 +118,6 @@ public class Building2D {
 		nbt.setInteger("centerY", this.centerY);
 		nbt.setInteger("rot", this.rotation);
 		return nbt;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(obj == this) return true;
-		if(!(obj instanceof Building2D)) return false;
-		Building2D b = (Building2D) obj;
-		return b.centerX == this.centerX && b.centerY == this.centerY && b.rotation == this.rotation;
-	}
-	
-	@Override
-	public int hashCode() {
-		int result = Integer.hashCode(this.centerX);			// Thanks Joshua
-		result = 31 * result + Integer.hashCode(this.centerY);
-		result = 31 * result + Integer.hashCode(this.rotation);
-		return result;
 	}
 	
 }

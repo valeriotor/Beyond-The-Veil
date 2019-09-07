@@ -2,14 +2,13 @@ package com.valeriotor.BTV.tileEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.shoggoth.BaseBuilding2D;
 import com.valeriotor.BTV.shoggoth.Building2D;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -99,7 +98,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 		int i = 0;
 		this.buildings.clear();
 		while(compound.hasKey(String.format("b%d", i))) {
-			this.buildings.add(new Building2D(compound.getCompoundTag(String.format("b%d", i++))));
+			this.buildings.add(Building2D.getFromNBT(compound.getCompoundTag(String.format("b%d", i++))));
 		}
 	}
 	
