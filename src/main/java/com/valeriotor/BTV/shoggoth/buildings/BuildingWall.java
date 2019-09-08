@@ -22,7 +22,7 @@ public class BuildingWall extends BuildingTemplate{
 		for(int x = 0; x < 32; x++) {
 			for(int y = 14; y < 16; y++) {
 				if(((y + x) & 1) == 0) image.setRGB(x, y, 0xFF94ADAD);
-				else image.setRGB(x, y, 0xFF404040);
+				else image.setRGB(x, y, 0xFF7085AA);
 			}
 		}
 		texture = new DynamicTexture(image);

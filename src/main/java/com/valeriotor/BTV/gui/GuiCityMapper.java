@@ -43,6 +43,8 @@ public class GuiCityMapper extends GuiScreen{
 	private final DynamicTexture map;
 	private boolean changes = false;
 	private Point placedEnd = null;
+	private int mapTopLeftX = 0;
+	private int mapTopLeftY = 0;
 	
 	public GuiCityMapper(BlockPos pos) {
 		this.mc = Minecraft.getMinecraft();
@@ -76,9 +78,11 @@ public class GuiCityMapper extends GuiScreen{
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.buttonList.add(new GuiButton(0, this.width/2 - 115 - 107, this.height/2 + 99 - 18, 100, 20, I18n.format("gui.city_mapper.create")));
-		this.buttonList.add(new GuiButton(1, this.width/2 - 115 - 107, this.height/2 + 99 - 37, 100, 20, I18n.format("gui.city_mapper.save")));
-		this.buttonList.add(new GuiButton(2, this.width/2 - 115 - 107, this.height/2 + 99 - 56, 100, 20, I18n.format("gui.city_mapper.reloadmap")));
+		this.mapTopLeftX = this.width / 2 - 115;
+		this.mapTopLeftY = this.height / 2 - 100;
+		this.buttonList.add(new GuiButton(0, this.mapTopLeftX - 107, this.height/2 + 99 - 18, 100, 20, I18n.format("gui.city_mapper.create")));
+		this.buttonList.add(new GuiButton(1, this.mapTopLeftX - 107, this.height/2 + 99 - 37, 100, 20, I18n.format("gui.city_mapper.save")));
+		this.buttonList.add(new GuiButton(2, this.mapTopLeftX - 107, this.height/2 + 99 - 56, 100, 20, I18n.format("gui.city_mapper.reloadmap")));
 		this.buttonList.get(1).enabled = changes;
 	}
 	
@@ -101,9 +105,9 @@ public class GuiCityMapper extends GuiScreen{
 		int numBuildings = this.availableBuildings.size();
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawModalRectWithCustomSizedTexture(this.width / 2 - 229, this.height/2 - 107, 0, 0, 466, 215, 512, 512);
-		int scrollBarOffset = this.height/2 - 100;
+		int scrollBarOffset = this.mapTopLeftY;
 		if(numBuildings > 2) {
-			scrollBarOffset += 182 * this.scrollOffset / (numBuildings / 2);
+			scrollBarOffset += 182 * this.scrollOffset / ((numBuildings-1) / 2);
 		}
 		drawModalRectWithCustomSizedTexture(this.width / 2 + 93 + 129, scrollBarOffset, 467, 0, 9, 19, 512, 512);
 		if(this.selectedBuilding != null) {
@@ -112,7 +116,10 @@ public class GuiCityMapper extends GuiScreen{
 			drawString(Minecraft.getMinecraft().fontRenderer, this.selectedBuilding.getLocalizedName(), this.width/2 - 220, this.height/2 - 98, 0xFFFFFFFF);
 			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingx", xOffset + this.selectedBuilding.centerX), this.width/2 - 220, this.height/2 - 83, 0xFFFFFFFF);
 			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingy", yOffset + this.selectedBuilding.centerY), this.width/2 - 220, this.height/2 - 68, 0xFFFFFFFF);
-			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingrot", I18n.format(String.format("gui.city_mapper.rot%d", this.selectedBuilding.rotation))), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
+			if(!(this.selectedBuilding instanceof LongBuilding2D))
+				drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingrot", I18n.format(String.format("gui.city_mapper.rot%d", this.selectedBuilding.rotation))), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
+			else
+				drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildinglength", ((LongBuilding2D)selectedBuilding).getLength()), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
 		}
 		int i = this.getHoveredMenuBuilding(mouseX, mouseY);
 		if(i != -1) {
@@ -121,11 +128,11 @@ public class GuiCityMapper extends GuiScreen{
 			drawRect(left, top, left + 64, top + 64, 0x55FFFFFF);
 		}
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, map.getGlTextureId());
-		drawTexturedModalRect(this.width/2 - 115, this.height/2 - 100, 0, 0, 201, 201);
+		drawTexturedModalRect(this.mapTopLeftX, this.mapTopLeftY, 0, 0, 201, 201);
 		GlStateManager.enableBlend();
 		GlStateManager.color(1, 1, 1, 1);
 		for(i = this.scrollOffset*2; i < numBuildings && i < this.scrollOffset*2 + 6; i++) {
-			availableBuildings.get(i).drawTexture(this, this.width / 2 + 93 + 64 * (i%2), this.height / 2 - 100 + 64 * (i/2 - this.scrollOffset));
+			availableBuildings.get(i).drawTexture(this, this.width / 2 + 93 + 64 * (i%2), this.mapTopLeftY + 64 * (i/2 - this.scrollOffset));
 		}
 		
 		GlStateManager.color(1, 1, 1, 1);
@@ -158,6 +165,9 @@ public class GuiCityMapper extends GuiScreen{
 					drawRect(left, top, right, bottom, this.intersectsLong(this.getMapY(top), this.getMapX(left), this.getMapY(bottom), this.getMapX(right)) || !this.isSelectedInsideMap(mouseX, mouseY) ? 0x99FF0000 : 0x9900FF00);
 				}
 			}
+		} else {
+			int b = this.getHoveredMapBuilding(mapX, mapY);
+			if(b != -1) te.buildings.get(b).highlight(this);
 		}
 		GlStateManager.disableBlend();
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -182,12 +192,12 @@ public class GuiCityMapper extends GuiScreen{
 	
 	@Override
 	public void handleMouseInput() throws IOException {
-		int i = -Integer.signum(Mouse.getEventDWheel());
+		int i = Integer.signum(Mouse.getEventDWheel());
 		if(i != 0) {
 			if(this.selectedBuilding == null) {
-				this.scrollOffset = inBetween(0, (availableBuildings.size() - 1)/2, this.scrollOffset + i);
+				this.scrollOffset = inBetween(0, (availableBuildings.size() - 1)/2, this.scrollOffset - i);
 			}
-			else{
+			else if(!(this.selectedBuilding instanceof LongBuilding2D)){
 				this.selectedBuilding.rotation = (this.selectedBuilding.rotation + i + 4)%4;
 				if(this.selectedIndex != -1) this.changes = true;
 			}
@@ -204,7 +214,7 @@ public class GuiCityMapper extends GuiScreen{
 				if(i != -1) {
 					this.selectedBuilding = Building2D.getFromTemplate(this.availableBuildings.get(i));
 				} else {
-					int j = this.getHoveredMapBuilding(mouseX, mouseY);
+					int j = this.getHoveredMapBuilding(mapX, mapY);
 					if(j != -1) {
 						this.selectedBuilding = te.buildings.get(j);
 						this.selectedIndex = j;
@@ -231,6 +241,7 @@ public class GuiCityMapper extends GuiScreen{
 							this.placedEnd = new Point(mapX, mapY);
 					}
 					else {
+						if(mapX == placedEnd.x && mapY == placedEnd.y) return;
 						boolean horizontal = this.isLongBuildingHorizontal(mouseX, mouseY);
 						LongBuilding2D building = (LongBuilding2D) this.selectedBuilding;
 						int mleft = placedEnd.x, mtop = placedEnd.y, mright = horizontal ? mapX : placedEnd.x, mbottom =  horizontal ? placedEnd.y : mapY; 
@@ -242,10 +253,10 @@ public class GuiCityMapper extends GuiScreen{
 							mleft -= building.getDefaultWidth()/2;
 							mright += building.getDefaultWidth()/2;
 						}
-						int centerX = horizontal ? (placedEnd.x + mapX)/2 : placedEnd.x; // Coords of the building's center
-						int centerY = horizontal ? placedEnd.y : (placedEnd.y + mapY)/2;
 						if(this.intersectsLong(mtop, mleft, mbottom, mright)) return;
 						building.vertex1 = new Point(this.placedEnd);
+						int centerX = horizontal ? (placedEnd.x + mapX)/2 : placedEnd.x; // Coords of the building's center
+						int centerY = horizontal ? placedEnd.y : (placedEnd.y + mapY)/2;
 						int x = horizontal ? mapX : this.placedEnd.x;
 						int y = horizontal ? this.placedEnd.y : mapY;
 						building.vertex2 = new Point(x, y);
@@ -296,9 +307,9 @@ public class GuiCityMapper extends GuiScreen{
 		return -1;
 	}
 	
-	private int getHoveredMapBuilding(int mouseX, int mouseY) {
+	private int getHoveredMapBuilding(int mapX, int mapY) {
 		for(int i = 0; i < te.buildings.size(); i++) {
-			if(te.buildings.get(i).containsPoint(mouseX, mouseY, this.width, this.height)) return i;
+			if(te.buildings.get(i).containsPoint(mapX, mapY)) return i;
 		}
 		return -1;
 	}
@@ -328,7 +339,7 @@ public class GuiCityMapper extends GuiScreen{
 	 */
 	private boolean intersectsLong(int top, int left, int bottom, int right) {
 		for(Building2D b : te.buildings) {
-			if(b.intersects(top, left, bottom, right)) {
+			if(b.intersects(selectedBuilding, top, left, bottom, right)) {
 				return true;
 			}
 		}
@@ -348,20 +359,26 @@ public class GuiCityMapper extends GuiScreen{
 	}
 	
 	public int getMapX(int mouseX) {
-		return mouseX - (this.width / 2 - 115);
+		return mouseX - this.mapTopLeftX;
 	}
 	
 	public int getMapY(int mouseY) {
-		return mouseY - (this.height / 2 - 100);
+		return mouseY - this.mapTopLeftY;
 	}
 	
 	public int getScreenX(int x) {
-		return x + (this.width / 2 - 115);
+		return x + this.mapTopLeftX;
 	}
 	
 	public int getScreenY(int y) {
-		return y + (this.height / 2 - 100);
+		return y + this.mapTopLeftY;
 	}
 	
+	public void translate() {
+		GlStateManager.translate(this.mapTopLeftX, this.mapTopLeftY, 0);
+	}
+	
+	@Override public void drawVerticalLine(int x, int startY, int endY, int color) {super.drawVerticalLine(x, startY, endY, color);}
+	@Override public void drawHorizontalLine(int startX, int endX, int y, int color) {super.drawHorizontalLine(startX, endX, y, color);}
 	
 }

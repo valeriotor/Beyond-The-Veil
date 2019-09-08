@@ -78,10 +78,11 @@ public abstract class Building2D {
 		int hBottom = centerY + hheight/2;
 		int hRight = centerX + hwidth/2;
 		
-		return intersects(hTop, hLeft, hBottom, hRight);
+		return intersects(hover, hTop, hLeft, hBottom, hRight);
 	}
 	
-	public boolean intersects(int hTop, int hLeft, int hBottom, int hRight) {
+	public boolean intersects(Building2D hover, int hTop, int hLeft, int hBottom, int hRight) {
+		if(hover == this) return false; // A building can intersect itself
 		int top = top(), left = left(), bottom = bottom(), right = right();
 		if (hLeft > hRight)
         {
@@ -103,10 +104,8 @@ public abstract class Building2D {
 		return false;
 	}
 	
-	public boolean containsPoint(int x, int y, int width, int height) {
-		x -= (width/2 - 115);
-		y -= (height / 2 - 100);
-		if(x > left() && x < right() && y > top() && y < bottom()) return true;
+	public boolean containsPoint(int x, int y) {
+		if(x >= left() && x <= right() && y >= top() && y <= bottom()) return true;
 		return false;
 	}
 	
@@ -119,11 +118,22 @@ public abstract class Building2D {
 	public void render(GuiCityMapper gui) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((gui.width/2 - 115) + centerX, (gui.height/2 - 100) + centerY, 0);
-		//GlStateManager.rotate(1, 0, 0, 1);
+		GlStateManager.rotate(this.rotation * 90, 0, 0, 1);
 		GlStateManager.translate(-16, -16, 0);
 		building.drawScaledTexture(gui, 0, 0, 1);
 		GlStateManager.popMatrix();
-		
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void highlight(GuiCityMapper gui) {
+		GlStateManager.pushMatrix();
+		gui.translate();
+		int top = top(), left = left(), bottom = bottom(), right = right();
+		gui.drawVerticalLine(left, top, bottom, 0xFFFFFFFF);
+		gui.drawVerticalLine(right, top, bottom, 0xFFFFFFFF);
+		gui.drawHorizontalLine(left, right, top, 0xFFFFFFFF);
+		gui.drawHorizontalLine(left, right, bottom, 0xFFFFFFFF);
+		GlStateManager.popMatrix();
 	}
 	
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {

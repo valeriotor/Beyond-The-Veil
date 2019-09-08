@@ -33,6 +33,38 @@ public class LongBuilding2D extends Building2D{
 			super.setCenter(vertex1.x, (vertex1.y + vertex2.y)/2);
 	}
 	
+	@Override 
+	public int top() {
+		boolean horizontal = horizontal();
+		int value = getFirstVertex(horizontal()).y;
+		if(horizontal) value -= this.getDefaultHeight() / 2;
+		return value;
+	}
+	
+	@Override 
+	public int left() {
+		boolean horizontal = horizontal();
+		int value = getFirstVertex(horizontal()).x;
+		if(!horizontal) value -= this.getDefaultWidth() / 2;
+		return value;
+	}
+	
+	@Override 
+	public int bottom() {
+		boolean horizontal = horizontal();
+		int value = getSecondVertex(horizontal()).y;
+		if(horizontal) value += this.getDefaultHeight() / 2;
+		return value;
+	}
+	
+	@Override 
+	public int right() {
+		boolean horizontal = horizontal();
+		int value = getSecondVertex(horizontal()).x;
+		if(!horizontal) value += this.getDefaultWidth() / 2;
+		return value;
+		}
+	
 	@Override
 	public int getWidth() {
 		return !horizontal() ? this.building.width : Math.abs(vertex1.x - vertex2.x);
@@ -41,6 +73,10 @@ public class LongBuilding2D extends Building2D{
 	@Override
 	public int getHeight() {
 		return horizontal() ? this.building.height : Math.abs(vertex1.y - vertex2.y);
+	}
+	
+	public int getLength() {
+		return horizontal() ? getWidth() : getHeight();
 	}
 	
 	public int getDefaultWidth() {

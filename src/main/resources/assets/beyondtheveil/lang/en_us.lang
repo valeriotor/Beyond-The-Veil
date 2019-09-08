@@ -163,6 +163,7 @@ gui.dream_bottle.charges=Charges: %1$s
 gui.city_mapper.buildingx=Center X: %1$s
 gui.city_mapper.buildingy=Center Y: %1$s
 gui.city_mapper.buildingrot=Facing: %1$s
+gui.city_mapper.buildinglength=Length: %1$s 
 gui.city_mapper.rot0=North
 gui.city_mapper.rot1=East
 gui.city_mapper.rot2=South
@@ -182,6 +183,7 @@ keys.medallion=Wolf Medallion Ability
 building.tower=Tower
 building.largetower=Large Tower
 building.pyramid=Pyramid
+building.wall=Wall
 
 
 ##################
