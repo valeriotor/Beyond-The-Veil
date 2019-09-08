@@ -69,19 +69,33 @@ public abstract class Building2D {
 		this.centerY = y;
 	}
 	
-	public boolean intersects(Building2D hover, int centerX, int centerY, int width, int height) {
+	public boolean intersects(Building2D hover, int centerX, int centerY) {
 		if(hover == this) return false; // A building can intersect itself
-		return intersects(hover.getWidth(), hover.getHeight(), centerX, centerY, width, height);
-	}
-	
-	public boolean intersects(int hwidth, int hheight, int centerX, int centerY, int width, int height) {
-		centerX -= (width/2 - 115);
-		centerY -= (height / 2 - 100);
+		int hwidth = hover.getWidth();
+		int hheight = hover.getHeight();
 		int hTop = centerY - hheight/2;
 		int hLeft = centerX - hwidth/2;
 		int hBottom = centerY + hheight/2;
 		int hRight = centerX + hwidth/2;
+		
+		return intersects(hTop, hLeft, hBottom, hRight);
+	}
+	
+	public boolean intersects(int hTop, int hLeft, int hBottom, int hRight) {
 		int top = top(), left = left(), bottom = bottom(), right = right();
+		if (hLeft > hRight)
+        {
+            int i = hLeft;
+            hLeft = hRight;
+            hRight = i;
+        }
+
+        if (hTop > hBottom)
+        {
+            int j = hTop;
+            hTop = hBottom;
+            hBottom = j;
+        }
 		if((hTop < top && hBottom >= top || hBottom > bottom && hTop <= bottom || hBottom < bottom && hTop > top)
 		&& (hLeft < left && hRight >= left || hRight > right && hLeft <= right || hRight < right && hLeft > left)) {
 			return true;

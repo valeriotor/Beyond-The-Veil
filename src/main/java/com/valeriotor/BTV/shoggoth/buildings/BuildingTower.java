@@ -15,7 +15,7 @@ public class BuildingTower extends BuildingTemplate{
 	}
 
 	@Override
-	public void drawScaledTexture(GuiCityMapper gui, int xTopLeft, int yTopLeft, float scale) {
+	public void drawScaledTexture(GuiCityMapper gui, int xTopLeft, int yTopLeft, float scale, int width, int height) {
 		this.drawHelper(gui, xTopLeft, yTopLeft, 0, 0, scale);
 	}
 	

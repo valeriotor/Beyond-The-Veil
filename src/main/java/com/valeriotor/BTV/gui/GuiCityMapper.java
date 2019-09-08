@@ -97,6 +97,7 @@ public class GuiCityMapper extends GuiScreen{
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		int mapX = this.getMapX(mouseX), mapY = this.getMapY(mouseY);
 		int numBuildings = this.availableBuildings.size();
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawModalRectWithCustomSizedTexture(this.width / 2 - 229, this.height/2 - 107, 0, 0, 466, 215, 512, 512);
@@ -132,19 +133,29 @@ public class GuiCityMapper extends GuiScreen{
 		if(this.selectedBuilding != null) {
 			if(!(this.selectedBuilding instanceof LongBuilding2D)) {
 				int hwidth = selectedBuilding.getWidth()/2, hheight = selectedBuilding.getHeight()/2;
-				drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mouseX, mouseY) && this.isSelectedInsideMap(mouseX, mouseY));
+				drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mapX, mapY) && this.isSelectedInsideMap(mouseX, mouseY));
 			} else {
 				LongBuilding2D building = (LongBuilding2D) this.selectedBuilding;
 				if(this.placedEnd == null) {
 					int hwidth = building.getDefaultWidth()/2, hheight = building.getDefaultHeight()/2;
-					drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mouseX, mouseY) && this.isSelectedInsideMap(mouseX, mouseY));
+					drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mapX, mapY) && this.isSelectedInsideMap(mouseX, mouseY));
 				} else {
+					int screenPlacedX = this.getScreenX(placedEnd.x), screenPlacedY = this.getScreenY(placedEnd.y);
 					boolean horizontal = isLongBuildingHorizontal(mouseX, mouseY);
 					int width = horizontal ? Math.abs(this.getMapX(mouseX) - placedEnd.x) : building.getDefaultWidth();
 					int height = horizontal ? building.getDefaultHeight() :  Math.abs(this.getMapY(mouseY) - placedEnd.y);
 					int x = horizontal ? (placedEnd.x + this.getMapX(mouseX))/2 : placedEnd.x; // Coords of the building's center
 					int y = horizontal ? placedEnd.y : (placedEnd.y + this.getMapY(mouseY))/2;
-					drawHover(this.getScreenX(x), this.getScreenY(y), width/2, height/2, !this.intersectsLong(width, height, x, y) && this.isSelectedInsideMap(mouseX, mouseY));
+					int left = screenPlacedX, top = screenPlacedY, right = horizontal ? mouseX : screenPlacedX, bottom =  horizontal ? screenPlacedY : mouseY;
+					if(horizontal) {
+						top -= building.getDefaultHeight()/2;
+						bottom += building.getDefaultHeight()/2;
+					}
+					else {
+						left -= building.getDefaultWidth()/2;
+						right += building.getDefaultWidth()/2;
+					}
+					drawRect(left, top, right, bottom, this.intersectsLong(this.getMapY(top), this.getMapX(left), this.getMapY(bottom), this.getMapX(right)) || !this.isSelectedInsideMap(mouseX, mouseY) ? 0x99FF0000 : 0x9900FF00);
 				}
 			}
 		}
@@ -186,6 +197,7 @@ public class GuiCityMapper extends GuiScreen{
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		int mapX = this.getMapX(mouseX), mapY = this.getMapY(mouseY);
 		if(this.selectedBuilding == null) {
 			if(mouseButton == 0) {
 				int i = this.getHoveredMenuBuilding(mouseX, mouseY);
@@ -207,28 +219,35 @@ public class GuiCityMapper extends GuiScreen{
 			}
 			else if(isSelectedInsideMap(mouseX, mouseY)) {
 				if(!(this.selectedBuilding instanceof LongBuilding2D)) {
-					if(this.intersects(mouseX, mouseY)) return;
-					this.selectedBuilding.setCenter(mouseX - (this.width / 2 - 115), mouseY - (this.height / 2 - 100));
+					if(this.intersects(mapX, mapY)) return;
+					this.selectedBuilding.setCenter(mapX, mapY);
 					if(this.selectedIndex == -1) te.buildings.add(this.selectedBuilding);
 					this.selectedBuilding = null;
 					this.selectedIndex = -1;
 					this.changes = true;
 				} else {
 					if(this.placedEnd == null) {
-						if(!this.intersects(mouseX, mouseY))
-							this.placedEnd = new Point(this.getMapX(mouseX), this.getMapY(mouseY));
+						if(!this.intersects(mapX, mapY))
+							this.placedEnd = new Point(mapX, mapY);
 					}
 					else {
 						boolean horizontal = this.isLongBuildingHorizontal(mouseX, mouseY);
 						LongBuilding2D building = (LongBuilding2D) this.selectedBuilding;
-						int width = horizontal ? Math.abs(this.getMapX(mouseX) - placedEnd.x) : building.getDefaultWidth();
-						int height = horizontal ? building.getDefaultHeight() :  Math.abs(this.getMapY(mouseY) - placedEnd.y);
-						int centerX = horizontal ? (placedEnd.x + this.getMapX(mouseX))/2 : placedEnd.x; // Coords of the building's center
-						int centerY = horizontal ? placedEnd.y : (placedEnd.y + this.getMapY(mouseY))/2;
-						if(this.intersectsLong(width, height, centerX, centerY)) return;
+						int mleft = placedEnd.x, mtop = placedEnd.y, mright = horizontal ? mapX : placedEnd.x, mbottom =  horizontal ? placedEnd.y : mapY; 
+						if(horizontal) {
+							mtop -= building.getDefaultHeight()/2;
+							mbottom += building.getDefaultHeight()/2;
+						}
+						else {
+							mleft -= building.getDefaultWidth()/2;
+							mright += building.getDefaultWidth()/2;
+						}
+						int centerX = horizontal ? (placedEnd.x + mapX)/2 : placedEnd.x; // Coords of the building's center
+						int centerY = horizontal ? placedEnd.y : (placedEnd.y + mapY)/2;
+						if(this.intersectsLong(mtop, mleft, mbottom, mright)) return;
 						building.vertex1 = new Point(this.placedEnd);
-						int x = horizontal ? this.getMapX(mouseX) : this.placedEnd.x;
-						int y = horizontal ? this.placedEnd.y : this.getMapY(mouseY);
+						int x = horizontal ? mapX : this.placedEnd.x;
+						int y = horizontal ? this.placedEnd.y : mapY;
 						building.vertex2 = new Point(x, y);
 						building.rotation = horizontal ? 1 : 0;
 						building.setCenter(centerX, centerY);
@@ -294,18 +313,22 @@ public class GuiCityMapper extends GuiScreen{
 		return true;
 	}
 	
-	private boolean intersects(int mouseX, int mouseY) {
+	/** Map coords required
+	 */
+	private boolean intersects(int mapX, int mapY) {
 		for(Building2D b : te.buildings) {
-			if(b.intersects(selectedBuilding, mouseX, mouseY, this.width, this.height)) {
+			if(b.intersects(selectedBuilding, mapX, mapY)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	private boolean intersectsLong(int width, int height, int x, int y) {
+	/** Map coords required
+	 */
+	private boolean intersectsLong(int top, int left, int bottom, int right) {
 		for(Building2D b : te.buildings) {
-			if(b.intersects(width, height, this.getScreenX(x), this.getScreenY(y), this.width, this.height)) {
+			if(b.intersects(top, left, bottom, right)) {
 				return true;
 			}
 		}

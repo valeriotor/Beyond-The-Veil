@@ -51,18 +51,26 @@ public class LongBuilding2D extends Building2D{
 		return this.building.height;
 	}
 	
+	private Point getFirstVertex(boolean horizontal) {
+		if(horizontal) return vertex1.x < vertex2.x ? vertex1 : vertex2;
+		else return vertex1.y < vertex2.y ? vertex1 : vertex2;
+	}
+	
+	private Point getSecondVertex(boolean horizontal) {
+		if(horizontal) return vertex1.x > vertex2.x ? vertex1 : vertex2;
+		else return vertex1.y > vertex2.y ? vertex1 : vertex2;
+	}
+	
 	@Override
 	public void render(GuiCityMapper gui) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate((gui.width/2 - 115) + centerX, (gui.height/2 - 100) + centerY, 0);
+		Point p = getFirstVertex(horizontal());
+		GlStateManager.translate((gui.width/2 - 115) + p.x, (gui.height/2 - 100) + p.y, 0);
 		if(horizontal()) {
-			for(int x = -this.getWidth()/2; x < this.getWidth()/2; x += this.getDefaultWidth()) {
-				building.drawScaledTexture(gui, x - 16, -16, 1);
-			}
+			building.drawScaledTexture(gui, 0, -15, 1, getWidth(), 32);
 		}else {
-			for(int y = -this.getHeight()/2; y < this.getHeight()/2; y += this.getDefaultHeight()) {
-				building.drawScaledTexture(gui, -16, y - 16, 1);
-			}
+			GlStateManager.rotate(90, 0, 0, 1);
+			building.drawScaledTexture(gui, 0, -15, 1, getHeight(), 32);
 		}
 		
 		GlStateManager.popMatrix();
