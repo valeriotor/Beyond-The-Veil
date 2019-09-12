@@ -3,6 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +17,7 @@ public class MessageCityMapper implements IMessage{
 	public static final byte RESET_MAP = 0;
 	public static final byte RESET_PLAYER = 1;
 	public static final byte UPDATE_BUILDINGS = 2;
+	public static final byte CREATE_MAP = 3;
 	
 	public byte mode;
 	public BlockPos pos;
@@ -62,6 +64,11 @@ public class MessageCityMapper implements IMessage{
 				tc.viewingPlayer = null;
 			}else if(message.mode == 2) {
 				tc.readBuildingsFromNBT(message.nbt);
+			}else if(message.mode == 3) {
+				if(tc.buildings.size() > 0) {
+					ItemStack stack = tc.create();
+					ctx.getServerHandler().player.addItemStackToInventory(stack);
+				}
 			}
 			tc.sendSmallUpdates();
 			return null;

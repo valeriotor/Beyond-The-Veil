@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.valeriotor.BTV.shoggoth.BaseBuilding2D;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.shoggoth.Building2D;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -34,6 +35,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 			final int x = this.pos.getX() + timer;
 			for(int z = this.pos.getZ() - 100; z <= this.pos.getZ() + 100; z++) {
 				int y = this.world.getHeight(x, z);
+				//System.out.println(x + " " + z);
 				MutableBlockPos pos = new MutableBlockPos(x, y, z);
 				IBlockState state = this.world.getBlockState(pos);
 				while(pos.getY() > 1 && !state.isFullBlock() && state.getBlock() != Blocks.WATER) {
@@ -130,6 +132,18 @@ public class TileCityMapper extends TileEntity implements ITickable{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		handleUpdateTag(pkt.getNbtCompound());
+	}
+	
+	public ItemStack create() {
+		ItemStack map = new ItemStack(ItemRegistry.shoggoth_map);
+		NBTTagCompound nbt = new NBTTagCompound();
+		
+		nbt.setInteger("num", buildings.size());
+		int i = 0;
+		for(Building2D building : buildings) {
+			nbt.setTag(String.format("b%d", i++), building.writeToNBTCorrected(new NBTTagCompound(), pos));
+		}
+		return map;
 	}
 
 }

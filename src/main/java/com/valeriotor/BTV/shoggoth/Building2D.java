@@ -4,6 +4,7 @@ import com.valeriotor.BTV.gui.GuiCityMapper;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -140,6 +141,14 @@ public abstract class Building2D {
 		nbt.setInteger("index", this.building.index);
 		nbt.setInteger("centerX", this.centerX);
 		nbt.setInteger("centerY", this.centerY);
+		nbt.setInteger("rot", this.rotation);
+		return nbt;
+	}
+	
+	public NBTTagCompound writeToNBTCorrected(NBTTagCompound nbt, BlockPos pos) {
+		nbt.setInteger("index", this.building.index);
+		nbt.setInteger("centerX", this.centerX + pos.getX());
+		nbt.setInteger("centerY", this.centerY + pos.getZ());
 		nbt.setInteger("rot", this.rotation);
 		return nbt;
 	}

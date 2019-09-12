@@ -6,6 +6,7 @@ import com.valeriotor.BTV.gui.GuiCityMapper;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 
 public class LongBuilding2D extends Building2D{
 	
@@ -123,6 +124,15 @@ public class LongBuilding2D extends Building2D{
 		nbt.setInteger("v2x", vertex2.x);
 		nbt.setInteger("v2y", vertex2.y);
 		return super.writeToNBT(nbt);
+	}
+	
+	@Override
+	public NBTTagCompound writeToNBTCorrected(NBTTagCompound nbt, BlockPos pos) {
+		nbt.setInteger("v1x", vertex1.x + pos.getX());
+		nbt.setInteger("v1y", vertex1.y + pos.getZ());
+		nbt.setInteger("v2x", vertex2.x + pos.getX());
+		nbt.setInteger("v2y", vertex2.y + pos.getZ());
+		return super.writeToNBTCorrected(nbt, pos);
 	}
 
 }

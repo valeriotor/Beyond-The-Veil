@@ -84,12 +84,14 @@ public class GuiCityMapper extends GuiScreen{
 		this.buttonList.add(new GuiButton(1, this.mapTopLeftX - 107, this.height/2 + 99 - 37, 100, 20, I18n.format("gui.city_mapper.save")));
 		this.buttonList.add(new GuiButton(2, this.mapTopLeftX - 107, this.height/2 + 99 - 56, 100, 20, I18n.format("gui.city_mapper.reloadmap")));
 		this.buttonList.get(1).enabled = changes;
+		this.buttonList.get(0).enabled = !changes;
 	}
 	
 	@Override
 	public void updateScreen() {
 		this.te.viewingPlayer = null;
 		this.buttonList.get(1).enabled = changes;
+		this.buttonList.get(0).enabled = !changes;
 		if(!(this.mc.player.world.getTileEntity(pos) instanceof TileCityMapper)) this.mc.displayGuiScreen(null);
 		super.updateScreen();
 	}
@@ -102,6 +104,9 @@ public class GuiCityMapper extends GuiScreen{
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		int mapX = this.getMapX(mouseX), mapY = this.getMapY(mouseY);
+		if(this.isPointInsideMap(mouseX, mouseY)) {
+			drawCenteredString(mc.fontRenderer, String.format("x: %d   z: %d", mapX + this.pos.getX() - 100, mapY + this.pos.getZ() - 100), this.mapTopLeftX + 100, this.height / 2 - 115, 0xFFFFFFFF);
+		}
 		int numBuildings = this.availableBuildings.size();
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawModalRectWithCustomSizedTexture(this.width / 2 - 229, this.height/2 - 107, 0, 0, 466, 215, 512, 512);
@@ -127,8 +132,8 @@ public class GuiCityMapper extends GuiScreen{
 			int top = this.height / 2 - 100 + 64 * (i/2 - this.scrollOffset);
 			drawRect(left, top, left + 64, top + 64, 0x55FFFFFF);
 		}
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, map.getGlTextureId());
-		drawTexturedModalRect(this.mapTopLeftX, this.mapTopLeftY, 0, 0, 201, 201);
+		GlStateManager.bindTexture(map.getGlTextureId());
+		drawModalRectWithCustomSizedTexture(this.mapTopLeftX, this.mapTopLeftY, 0, 0, 201, 201, 201, 201);
 		GlStateManager.enableBlend();
 		GlStateManager.color(1, 1, 1, 1);
 		for(i = this.scrollOffset*2; i < numBuildings && i < this.scrollOffset*2 + 6; i++) {
@@ -287,7 +292,9 @@ public class GuiCityMapper extends GuiScreen{
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if(button.id == 1) {
+		if(button.id == 0) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageCityMapper(MessageCityMapper.CREATE_MAP, pos));
+		} else if(button.id == 1) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageCityMapper(MessageCityMapper.UPDATE_BUILDINGS, pos, te.writeBuildingsToNBT(new NBTTagCompound())));
 			this.changes = false;
 		} else if(button.id == 2) {
@@ -351,6 +358,10 @@ public class GuiCityMapper extends GuiScreen{
 		int cx = this.width/2, cy = this.height/2;
 		return mouseX > cx - 115 + selectedBuilding.getWidth()/2 && mouseX < cx + 87 - selectedBuilding.getWidth()/2 &&
 				mouseY > cy - 100 + selectedBuilding.getHeight()/2 && mouseY < cy + 100 - selectedBuilding.getHeight()/2;
+	}
+	
+	private boolean isPointInsideMap(int x, int y) {
+		return x >= this.mapTopLeftX && x <= this.mapTopLeftX + 200 && y >= this.mapTopLeftY && y <= this.mapTopLeftY + 200;
 	}
 	
 	@Override
