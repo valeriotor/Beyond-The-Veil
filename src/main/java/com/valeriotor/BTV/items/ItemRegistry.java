@@ -13,9 +13,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.registries.IForgeRegistry;
 
 
 @ObjectHolder("beyondtheveil")
@@ -42,16 +44,17 @@ public class ItemRegistry {
 	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
 	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
 	public static final ItemBlackjack blackjack = new ItemBlackjack();
-	public static final ItemMaterial spine = new ItemMaterial("spine");
-	public static final ItemMaterial heart = new ItemMaterial("heart");
-	public static final ItemMaterial tears = new ItemMaterial("tears");
+	public static final ModItem spine = new ModItem("spine");
+	public static final ModItem heart = new ModItem("heart");
+	public static final ModItem tears = new ModItem("tears");
 	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
 	public static final ItemHeldWeeper held_weeper = new ItemHeldWeeper("held_weeper");
 	public static final ItemHeldFletum held_fletum = new ItemHeldFletum("held_fletum");
-	public static final ItemMaterial surgery_tools = new ItemMaterial("surgery_tools");
+	public static final ModItem surgery_tools = new ModItem("surgery_tools");
 	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara();
 	public static final ItemBleedingBelt bleeding_belt = new ItemBleedingBelt("bleeding_belt");
 	public static final ItemDreamBottle dream_bottle = new ItemDreamBottle("dream_bottle");
+	public static final Item shoggoth_map = new ModItem("shoggoth_map").setMaxStackSize(1);
 	
 	
 	
@@ -95,6 +98,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(bone_tiara, 0, "inventory");
         ClientProxy.registerItemRenderer(bleeding_belt, 0, "inventory");
         ClientProxy.registerItemRenderer(dream_bottle, 0, "inventory");
+        ClientProxy.registerItemRenderer(shoggoth_map, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -124,73 +128,85 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockWateryCradle), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockLacrymatory), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockCityMapper), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockStoneElderBrick), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockStoneElderBrickChiseled), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockElderBrick), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockStoneElderBrickStairs), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.SlabElderHalf), 0, "inventory");
         
         
     }
     
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampWood).setRegistryName(BlockRegistry.DampWood.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.FumeSpreader).setRegistryName(BlockRegistry.FumeSpreader.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DarkSand).setRegistryName(BlockRegistry.DarkSand.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampStone).setRegistryName(BlockRegistry.DampStone.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampLog).setRegistryName(BlockRegistry.DampLog.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampWoodStairs).setRegistryName(BlockRegistry.DampWoodStairs.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampCanopy).setRegistryName(BlockRegistry.DampCanopy.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampCanopyWood).setRegistryName(BlockRegistry.DampCanopyWood.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.WornBricks).setRegistryName(BlockRegistry.WornBricks.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockIdol).setRegistryName(BlockRegistry.BlockIdol.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockBarrel).setRegistryName(BlockRegistry.BlockBarrel.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockSlugBait).setRegistryName(BlockRegistry.BlockSlugBait.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockLamp).setRegistryName(BlockRegistry.BlockLamp.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BricksBlue).setRegistryName(BlockRegistry.BricksBlue.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.WornBrickStairs).setRegistryName(BlockRegistry.WornBrickStairs.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.DampWoodFence).setRegistryName(BlockRegistry.DampWoodFence.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.SleepChamber).setRegistryName(BlockRegistry.SleepChamber.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.SleepChamberAdvanced).setRegistryName(BlockRegistry.SleepChamberAdvanced.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantBeanStalk).setRegistryName(BlockRegistry.PlantBeanStalk.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantTerra).setRegistryName(BlockRegistry.PlantTerra.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.PlantOrdo).setRegistryName(BlockRegistry.PlantOrdo.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockWateryCradle).setRegistryName(BlockRegistry.BlockWateryCradle.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockLacrymatory).setRegistryName(BlockRegistry.BlockLacrymatory.getRegistryName()));
-    	event.getRegistry().register(new ItemBlock(BlockRegistry.BlockCityMapper).setRegistryName(BlockRegistry.BlockCityMapper.getRegistryName()));
-    	event.getRegistry().register(ItemRegistry.testItem);
-    	event.getRegistry().register(ItemRegistry.oniricIncense);
-    	event.getRegistry().register(ItemRegistry.slugCatcher);
-    	event.getRegistry().register(ItemRegistry.slug);
-    	event.getRegistry().register(ItemRegistry.canoe);
-    	event.getRegistry().register(ItemRegistry.rum);
-    	event.getRegistry().register(ItemRegistry.wine);
-    	event.getRegistry().register(ItemRegistry.ale);
-    	event.getRegistry().register(ItemRegistry.vodka);
-    	event.getRegistry().register(ItemRegistry.mead);
-    	event.getRegistry().register(ItemRegistry.cup);
-    	event.getRegistry().register(ItemRegistry.flute);
-    	event.getRegistry().register(ItemRegistry.saw_cleaver);
-    	event.getRegistry().register(ItemRegistry.wolf_medallion);
-    	event.getRegistry().register(ItemRegistry.tablet);
-    	event.getRegistry().register(ItemRegistry.bronze_sphere);
-    	event.getRegistry().register(ItemRegistry.blackjack);
-    	event.getRegistry().register(ItemRegistry.spine);
-    	event.getRegistry().register(ItemRegistry.heart);
-    	event.getRegistry().register(ItemRegistry.tears);
-    	event.getRegistry().register(ItemRegistry.held_villager);
-    	event.getRegistry().register(ItemRegistry.held_weeper);
-    	event.getRegistry().register(ItemRegistry.held_fletum);
-    	event.getRegistry().register(ItemRegistry.surgery_tools);
-    	event.getRegistry().register(ItemRegistry.bone_tiara);
-    	event.getRegistry().register(ItemRegistry.bleeding_belt);
-    	event.getRegistry().register(ItemRegistry.dream_bottle);
+    	IForgeRegistry<Item> registry = event.getRegistry();
+    	registry.register(new ItemBlock(BlockRegistry.DampWood).setRegistryName(BlockRegistry.DampWood.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.FumeSpreader).setRegistryName(BlockRegistry.FumeSpreader.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DarkSand).setRegistryName(BlockRegistry.DarkSand.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampStone).setRegistryName(BlockRegistry.DampStone.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampLog).setRegistryName(BlockRegistry.DampLog.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampWoodStairs).setRegistryName(BlockRegistry.DampWoodStairs.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampCanopy).setRegistryName(BlockRegistry.DampCanopy.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampCanopyWood).setRegistryName(BlockRegistry.DampCanopyWood.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.WornBricks).setRegistryName(BlockRegistry.WornBricks.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockIdol).setRegistryName(BlockRegistry.BlockIdol.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockBarrel).setRegistryName(BlockRegistry.BlockBarrel.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockSlugBait).setRegistryName(BlockRegistry.BlockSlugBait.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockLamp).setRegistryName(BlockRegistry.BlockLamp.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BricksBlue).setRegistryName(BlockRegistry.BricksBlue.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.WornBrickStairs).setRegistryName(BlockRegistry.WornBrickStairs.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.DampWoodFence).setRegistryName(BlockRegistry.DampWoodFence.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.SleepChamber).setRegistryName(BlockRegistry.SleepChamber.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.SleepChamberAdvanced).setRegistryName(BlockRegistry.SleepChamberAdvanced.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantBeanStalk).setRegistryName(BlockRegistry.PlantBeanStalk.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantTerra).setRegistryName(BlockRegistry.PlantTerra.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantOrdo).setRegistryName(BlockRegistry.PlantOrdo.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockWateryCradle).setRegistryName(BlockRegistry.BlockWateryCradle.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockLacrymatory).setRegistryName(BlockRegistry.BlockLacrymatory.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockCityMapper).setRegistryName(BlockRegistry.BlockCityMapper.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockStoneElderBrick).setRegistryName(BlockRegistry.BlockStoneElderBrick.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockStoneElderBrickChiseled).setRegistryName(BlockRegistry.BlockStoneElderBrickChiseled.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockElderBrick).setRegistryName(BlockRegistry.BlockElderBrick.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockStoneElderBrickStairs).setRegistryName(BlockRegistry.BlockStoneElderBrickStairs.getRegistryName()));
+    	registry.register(new ItemSlab(BlockRegistry.SlabElderHalf, BlockRegistry.SlabElderHalf, BlockRegistry.SlabElderDouble).setRegistryName(BlockRegistry.SlabElderHalf.getRegistryName()));
+    	registry.register(ItemRegistry.testItem);
+    	registry.register(ItemRegistry.oniricIncense);
+    	registry.register(ItemRegistry.slugCatcher);
+    	registry.register(ItemRegistry.slug);
+    	registry.register(ItemRegistry.canoe);
+    	registry.register(ItemRegistry.rum);
+    	registry.register(ItemRegistry.wine);
+    	registry.register(ItemRegistry.ale);
+    	registry.register(ItemRegistry.vodka);
+    	registry.register(ItemRegistry.mead);
+    	registry.register(ItemRegistry.cup);
+    	registry.register(ItemRegistry.flute);
+    	registry.register(ItemRegistry.saw_cleaver);
+    	registry.register(ItemRegistry.wolf_medallion);
+    	registry.register(ItemRegistry.tablet);
+    	registry.register(ItemRegistry.bronze_sphere);
+    	registry.register(ItemRegistry.blackjack);
+    	registry.register(ItemRegistry.spine);
+    	registry.register(ItemRegistry.heart);
+    	registry.register(ItemRegistry.tears);
+    	registry.register(ItemRegistry.held_villager);
+    	registry.register(ItemRegistry.held_weeper);
+    	registry.register(ItemRegistry.held_fletum);
+    	registry.register(ItemRegistry.surgery_tools);
+    	registry.register(ItemRegistry.bone_tiara);
+    	registry.register(ItemRegistry.bleeding_belt);
+    	registry.register(ItemRegistry.dream_bottle);
+    	registry.register(ItemRegistry.shoggoth_map);
     	
     	
-    	event.getRegistry().register(ItemRegistry.redstone_weed_seeds);
+    	registry.register(ItemRegistry.redstone_weed_seeds);
     	BlockRegistry.PlantRedstoneWeed.setSeed(redstone_weed_seeds);
-    	event.getRegistry().register(ItemRegistry.ghost_weed_seeds);
+    	registry.register(ItemRegistry.ghost_weed_seeds);
     	BlockRegistry.PlantGhostWeed.setSeed(ghost_weed_seeds);
-    	event.getRegistry().register(ItemRegistry.vanilla_weed_seeds);
+    	registry.register(ItemRegistry.vanilla_weed_seeds);
     	BlockRegistry.PlantVanillaWeed.setSeed(vanilla_weed_seeds);
     }
     

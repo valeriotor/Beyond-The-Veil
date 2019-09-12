@@ -13,9 +13,11 @@ import com.valeriotor.BTV.blocks.fluid.BlockFluidTears;
 import com.valeriotor.BTV.lib.BlockNames;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber
 public class BlockRegistry {
@@ -53,7 +55,12 @@ public class BlockRegistry {
 	public static final BlockWateryCradle BlockWateryCradle = new BlockWateryCradle(BlockNames.WATERYCRADLE);
 	public static final BlockLacrymatory BlockLacrymatory = new BlockLacrymatory(BlockNames.LACRYMATORY);
 	public static final BlockCityMapper BlockCityMapper = new BlockCityMapper(BlockNames.CITYMAPPER);
-	
+	public static final Block BlockStoneElderBrick = new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK).setHardness(10).setResistance(3000);
+	public static final Block BlockStoneElderBrickChiseled = new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK_CHISEL).setHardness(10).setResistance(3000);
+	public static final Block BlockElderBrick = new ModBlock(Material.ROCK, BlockNames.ELDER_BRICK).setHardness(10).setResistance(3000);
+	public static final ModSlab SlabElderHalf = (ModSlab) new ModSlab(BlockNames.ELDER_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
+	public static final ModSlab SlabElderDouble = (ModSlab) new ModSlab(BlockNames.ELDER_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
+	public static final ModStairs BlockStoneElderBrickStairs = new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -61,40 +68,46 @@ public class BlockRegistry {
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-	   	event.getRegistry().register(DampWood);;
-	   	event.getRegistry().register(FumeSpreader);
-	   	event.getRegistry().register(DarkSand);
-	   	event.getRegistry().register(DampStone);
-	   	event.getRegistry().register(DampLog);
-	   	event.getRegistry().register(DampWoodStairs);
-	   	event.getRegistry().register(DampCanopy);
-	   	event.getRegistry().register(DampCanopyWood); 
-	   	event.getRegistry().register(WornBricks);
-	   	event.getRegistry().register(BlockIdol);
-	   	event.getRegistry().register(BlockBarrel);
-	   	event.getRegistry().register(BlockSlugBait);
-	   	event.getRegistry().register(BlockLamp);
-	   	event.getRegistry().register(BricksBlue);
-	   	event.getRegistry().register(WornBrickStairs);
-	   	event.getRegistry().register(DampWoodFence);
-	   	event.getRegistry().register(SleepChamber);
-	   	event.getRegistry().register(SleepChamberAdvanced);
-	   	event.getRegistry().register(PlantBeanStalk);
-	   	event.getRegistry().register(PlantRedstoneWeed);
-	   	event.getRegistry().register(BlockRedstoneGrass);
-	   	event.getRegistry().register(PlantGhostWeed);
-	   	event.getRegistry().register(BlockGhostGrass);
-	   	event.getRegistry().register(PlantVanillaWeed);
-	   	event.getRegistry().register(PlantArborealGenerator);
-	   	event.getRegistry().register(PlantSaplingShrub);
-	   	event.getRegistry().register(PlantTerra);
-	   	event.getRegistry().register(PlantOrdo);
-	   	event.getRegistry().register(BlockMutator);
-	   	event.getRegistry().register(BlockWateryCradle);
-	   	event.getRegistry().register(BlockLacrymatory);
-	   	event.getRegistry().register(BlockCityMapper);
+		IForgeRegistry<Block> registry = event.getRegistry();
+		registry.register(DampWood);;
+		registry.register(FumeSpreader);
+		registry.register(DarkSand);
+		registry.register(DampStone);
+		registry.register(DampLog);
+	   	registry.register(DampWoodStairs);
+	   	registry.register(DampCanopy);
+	   	registry.register(DampCanopyWood); 
+	   	registry.register(WornBricks);
+	   	registry.register(BlockIdol);
+	   	registry.register(BlockBarrel);
+	   	registry.register(BlockSlugBait);
+	   	registry.register(BlockLamp);
+	   	registry.register(BricksBlue);
+	   	registry.register(WornBrickStairs);
+	   	registry.register(DampWoodFence);
+	   	registry.register(SleepChamber);
+	   	registry.register(SleepChamberAdvanced);
+	   	registry.register(PlantBeanStalk);
+	   	registry.register(PlantRedstoneWeed);
+	   	registry.register(BlockRedstoneGrass);
+	   	registry.register(PlantGhostWeed);
+	   	registry.register(BlockGhostGrass);
+	   	registry.register(PlantVanillaWeed);
+	   	registry.register(PlantArborealGenerator);
+	   	registry.register(PlantSaplingShrub);
+	   	registry.register(PlantTerra);
+	   	registry.register(PlantOrdo);
+	   	registry.register(BlockMutator);
+	   	registry.register(BlockWateryCradle);
+	   	registry.register(BlockLacrymatory);
+	   	registry.register(BlockCityMapper);
+	   	registry.register(BlockStoneElderBrick);
+	   	registry.register(BlockStoneElderBrickChiseled);
+	   	registry.register(BlockElderBrick);
+	   	registry.register(BlockStoneElderBrickStairs);
 	   	
+	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	
-	   	event.getRegistry().register(BlockFluidTears);
+	   	registry.register(BlockFluidTears);
 	}
 }

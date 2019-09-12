@@ -6,6 +6,12 @@ public class BlockNames {
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
 	public static final String DARKSAND = "dark_sand";
+	public static final String ELDER_BRICK = "elder_bricks";
+	public static final String ELDER_STONE_BRICK = "elder_stone_bricks";
+	public static final String ELDER_STONE_BRICK_STAIRS = "elder_stone_brick_stairs";
+	public static final String ELDER_STONE_BRICK_CHISEL = "elder_bricks_chiseled";
+	public static final String ELDER_SLAB = "elder_slab";
+	public static final String ELDER_SLAB_DOUBLE = "elder_slab_double";
 	public static final String FUMESPREADER = "fume_spreader";
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";

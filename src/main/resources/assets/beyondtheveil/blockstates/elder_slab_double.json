@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=bottom,variant=default": { "model": "beyondtheveil:elder_slab_double" },
+        "half=top,variant=default": { "model": "beyondtheveil:elder_slab_double" }
+    }
+}

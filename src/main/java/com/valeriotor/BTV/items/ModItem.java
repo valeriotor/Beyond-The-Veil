@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemMaterial extends Item{
+public class ModItem extends Item{
 	
-	public ItemMaterial(String name) {
+	public ModItem(String name) {
 		this.setRegistryName(References.MODID, name);
 		this.setUnlocalizedName(name);
 		this.setCreativeTab(References.BTV_TAB);
