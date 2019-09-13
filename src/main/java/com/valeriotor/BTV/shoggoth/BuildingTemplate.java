@@ -16,6 +16,7 @@ public abstract class BuildingTemplate {
 	public final boolean longBuilding;
 	public final int index;
 	public final String name;
+	protected BlockBuffer buffer;
 	
 	public BuildingTemplate(int width, int height, boolean longBuilding, int index, String name) {
 		this.width = width;
@@ -51,6 +52,10 @@ public abstract class BuildingTemplate {
 	public abstract boolean isDefault();
 	public boolean playerKnowsBuilding(EntityPlayer p) {
 		return false;
+	}
+	
+	public BlockBuffer getBlockBuffer() {
+		return this.buffer;
 	}
 	
 	@SideOnly(Side.CLIENT)

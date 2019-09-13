@@ -6,7 +6,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.items.ItemRegistry;
-import com.valeriotor.BTV.shoggoth.Building2D;
+import com.valeriotor.BTV.shoggoth.FlatBuilding;
+import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -23,7 +24,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 	
 	public byte[][] colors = new byte[201][201];
 	public byte[][] heights = new byte[201][201];
-	public List<Building2D> buildings = new ArrayList<>();
+	public List<FlatBuilding> buildings = new ArrayList<>();
 	public int timer = -100;
 	public String viewingPlayer = null;
 	private boolean smallUpdates = false;
@@ -100,7 +101,7 @@ public class TileCityMapper extends TileEntity implements ITickable{
 		int i = 0;
 		this.buildings.clear();
 		while(compound.hasKey(String.format("b%d", i))) {
-			this.buildings.add(Building2D.getFromNBT(compound.getCompoundTag(String.format("b%d", i++))));
+			this.buildings.add(FlatBuilding.getFromNBT(compound.getCompoundTag(String.format("b%d", i++))));
 		}
 	}
 	
@@ -140,9 +141,10 @@ public class TileCityMapper extends TileEntity implements ITickable{
 		
 		nbt.setInteger("num", buildings.size());
 		int i = 0;
-		for(Building2D building : buildings) {
+		for(FlatBuilding building : buildings) {
 			nbt.setTag(String.format("b%d", i++), building.writeToNBTCorrected(new NBTTagCompound(), pos));
 		}
+		ItemHelper.checkTagCompound(map).setTag("schematic", nbt);
 		return map;
 	}
 

@@ -8,22 +8,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class Building2D {
+public abstract class FlatBuilding {
 	
-	public static Building2D getFromNBT(NBTTagCompound nbt) {
+	public static FlatBuilding getFromNBT(NBTTagCompound nbt) {
 		int index = nbt.getInteger("index");
-		if(BuildingRegistry.templates[index].longBuilding) return new LongBuilding2D(nbt);
-		return new BaseBuilding2D(nbt);
+		if(BuildingRegistry.templates[index].longBuilding) return new FlatLongBuilding(nbt);
+		return new FlatBaseBuilding(nbt);
 	}
 	
-	public static Building2D getFromIndex(int index) {
-		if(BuildingRegistry.templates[index].longBuilding) return new LongBuilding2D(index);
-		return new BaseBuilding2D(index);
+	public static FlatBuilding getFromIndex(int index) {
+		if(BuildingRegistry.templates[index].longBuilding) return new FlatLongBuilding(index);
+		return new FlatBaseBuilding(index);
 	}
 	
-	public static Building2D getFromTemplate(BuildingTemplate template) {
-		if(template.longBuilding) return new LongBuilding2D(template);
-		return new BaseBuilding2D(template);
+	public static FlatBuilding getFromTemplate(BuildingTemplate template) {
+		if(template.longBuilding) return new FlatLongBuilding(template);
+		return new FlatBaseBuilding(template);
 	}
 	
 	protected final BuildingTemplate building;
@@ -31,15 +31,15 @@ public abstract class Building2D {
 	public int centerY = 0;
 	public int rotation = 0; // 0 = North, 1 = East, 2 = South, 3 = West. Defines door of the building
 	
-	public Building2D(int index) {
+	public FlatBuilding(int index) {
 		this.building = BuildingRegistry.templates[index];
 	}
 	
-	public Building2D(BuildingTemplate template) {
+	public FlatBuilding(BuildingTemplate template) {
 		this.building = template;
 	}
 	
-	public Building2D(NBTTagCompound nbt) {
+	public FlatBuilding(NBTTagCompound nbt) {
 		int index = nbt.getInteger("index");
 		//if(index >= 0) 	// for later use with custom buildings, where this.building = player.getcapability.sumthin' (capability will only instantiate 
 							// the custombuildings when asked to, and will keep them stored
@@ -70,7 +70,7 @@ public abstract class Building2D {
 		this.centerY = y;
 	}
 	
-	public boolean intersects(Building2D hover, int centerX, int centerY) {
+	public boolean intersects(FlatBuilding hover, int centerX, int centerY) {
 		if(hover == this) return false; // A building can intersect itself
 		int hwidth = hover.getWidth();
 		int hheight = hover.getHeight();
@@ -82,7 +82,7 @@ public abstract class Building2D {
 		return intersects(hover, hTop, hLeft, hBottom, hRight);
 	}
 	
-	public boolean intersects(Building2D hover, int hTop, int hLeft, int hBottom, int hRight) {
+	public boolean intersects(FlatBuilding hover, int hTop, int hLeft, int hBottom, int hRight) {
 		if(hover == this) return false; // A building can intersect itself
 		int top = top(), left = left(), bottom = bottom(), right = right();
 		if (hLeft > hRight)
@@ -147,8 +147,8 @@ public abstract class Building2D {
 	
 	public NBTTagCompound writeToNBTCorrected(NBTTagCompound nbt, BlockPos pos) {
 		nbt.setInteger("index", this.building.index);
-		nbt.setInteger("centerX", this.centerX + pos.getX());
-		nbt.setInteger("centerY", this.centerY + pos.getZ());
+		nbt.setInteger("centerX", this.centerX + pos.getX() - 100);
+		nbt.setInteger("centerZ", this.centerY + pos.getZ() - 100);
 		nbt.setInteger("rot", this.rotation);
 		return nbt;
 	}

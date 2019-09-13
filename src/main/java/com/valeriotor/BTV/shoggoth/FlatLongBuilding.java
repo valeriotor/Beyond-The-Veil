@@ -8,22 +8,22 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
-public class LongBuilding2D extends Building2D{
+public class FlatLongBuilding extends FlatBuilding{
 	
 	public Point vertex1 = new Point();
 	public Point vertex2 = new Point();
 	
-	public LongBuilding2D(int index) {
+	public FlatLongBuilding(int index) {
 		super(index);
 	}
 	
-	public LongBuilding2D(NBTTagCompound nbt) {
+	public FlatLongBuilding(NBTTagCompound nbt) {
 		super(nbt);
 		vertex1.move(nbt.getInteger("v1x"), nbt.getInteger("v1y"));
 		vertex2.move(nbt.getInteger("v2x"), nbt.getInteger("v2y"));
 	}
 	
-	public LongBuilding2D(BuildingTemplate template) {
+	public FlatLongBuilding(BuildingTemplate template) {
 		super(template);
 	}
 	
@@ -64,7 +64,7 @@ public class LongBuilding2D extends Building2D{
 		int value = getSecondVertex(horizontal()).x;
 		if(!horizontal) value += this.getDefaultWidth() / 2;
 		return value;
-		}
+	}
 	
 	@Override
 	public int getWidth() {
@@ -128,11 +128,29 @@ public class LongBuilding2D extends Building2D{
 	
 	@Override
 	public NBTTagCompound writeToNBTCorrected(NBTTagCompound nbt, BlockPos pos) {
-		nbt.setInteger("v1x", vertex1.x + pos.getX());
-		nbt.setInteger("v1y", vertex1.y + pos.getZ());
-		nbt.setInteger("v2x", vertex2.x + pos.getX());
-		nbt.setInteger("v2y", vertex2.y + pos.getZ());
+		nbt.setInteger("v1x", vertex1.x + pos.getX() - 100);
+		nbt.setInteger("v1y", vertex1.y + pos.getZ() - 100);
+		nbt.setInteger("v2x", vertex2.x + pos.getX() - 100);
+		nbt.setInteger("v2y", vertex2.y + pos.getZ() - 100);
 		return super.writeToNBTCorrected(nbt, pos);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this) return true;
+		if(!(obj instanceof FlatLongBuilding)) return false;
+		FlatLongBuilding b = (FlatLongBuilding) obj;
+		return b.centerX == this.centerX && b.centerY == this.centerY && b.rotation == this.rotation && b.vertex1.equals(this.vertex1) && b.vertex2.equals(this.vertex2);
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = Integer.hashCode(this.centerX);			// Thanks Joshua
+		result = 31 * result + Integer.hashCode(this.centerY);
+		result = 31 * result + Integer.hashCode(this.rotation);
+		result = 31 * result + this.vertex1.hashCode();
+		result = 31 * result + this.vertex2.hashCode();
+		return result;
 	}
 
 }

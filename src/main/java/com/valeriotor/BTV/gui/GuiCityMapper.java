@@ -13,10 +13,10 @@ import com.google.common.collect.ImmutableList;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageCityMapper;
-import com.valeriotor.BTV.shoggoth.Building2D;
+import com.valeriotor.BTV.shoggoth.FlatBuilding;
 import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.shoggoth.BuildingTemplate;
-import com.valeriotor.BTV.shoggoth.LongBuilding2D;
+import com.valeriotor.BTV.shoggoth.FlatLongBuilding;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
 
 import net.minecraft.block.material.MapColor;
@@ -38,7 +38,7 @@ public class GuiCityMapper extends GuiScreen{
 	private TileCityMapper te;
 	private final List<BuildingTemplate> availableBuildings;
 	private int scrollOffset = 0;
-	private Building2D selectedBuilding = null;
+	private FlatBuilding selectedBuilding = null;
 	private int selectedIndex = -1;
 	private final DynamicTexture map;
 	private boolean changes = false;
@@ -121,10 +121,10 @@ public class GuiCityMapper extends GuiScreen{
 			drawString(Minecraft.getMinecraft().fontRenderer, this.selectedBuilding.getLocalizedName(), this.width/2 - 220, this.height/2 - 98, 0xFFFFFFFF);
 			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingx", xOffset + this.selectedBuilding.centerX), this.width/2 - 220, this.height/2 - 83, 0xFFFFFFFF);
 			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingy", yOffset + this.selectedBuilding.centerY), this.width/2 - 220, this.height/2 - 68, 0xFFFFFFFF);
-			if(!(this.selectedBuilding instanceof LongBuilding2D))
+			if(!(this.selectedBuilding instanceof FlatLongBuilding))
 				drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildingrot", I18n.format(String.format("gui.city_mapper.rot%d", this.selectedBuilding.rotation))), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
 			else
-				drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildinglength", ((LongBuilding2D)selectedBuilding).getLength()), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
+				drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.city_mapper.buildinglength", ((FlatLongBuilding)selectedBuilding).getLength()), this.width/2 - 220, this.height/2 - 53, 0xFFFFFFFF);
 		}
 		int i = this.getHoveredMenuBuilding(mouseX, mouseY);
 		if(i != -1) {
@@ -141,13 +141,13 @@ public class GuiCityMapper extends GuiScreen{
 		}
 		
 		GlStateManager.color(1, 1, 1, 1);
-		for(Building2D b : te.buildings) b.render(this);
+		for(FlatBuilding b : te.buildings) b.render(this);
 		if(this.selectedBuilding != null) {
-			if(!(this.selectedBuilding instanceof LongBuilding2D)) {
+			if(!(this.selectedBuilding instanceof FlatLongBuilding)) {
 				int hwidth = selectedBuilding.getWidth()/2, hheight = selectedBuilding.getHeight()/2;
 				drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mapX, mapY) && this.isSelectedInsideMap(mouseX, mouseY));
 			} else {
-				LongBuilding2D building = (LongBuilding2D) this.selectedBuilding;
+				FlatLongBuilding building = (FlatLongBuilding) this.selectedBuilding;
 				if(this.placedEnd == null) {
 					int hwidth = building.getDefaultWidth()/2, hheight = building.getDefaultHeight()/2;
 					drawHover(mouseX, mouseY, hwidth, hheight, !this.intersects(mapX, mapY) && this.isSelectedInsideMap(mouseX, mouseY));
@@ -202,7 +202,7 @@ public class GuiCityMapper extends GuiScreen{
 			if(this.selectedBuilding == null) {
 				this.scrollOffset = inBetween(0, (availableBuildings.size() - 1)/2, this.scrollOffset - i);
 			}
-			else if(!(this.selectedBuilding instanceof LongBuilding2D)){
+			else if(!(this.selectedBuilding instanceof FlatLongBuilding)){
 				this.selectedBuilding.rotation = (this.selectedBuilding.rotation + i + 4)%4;
 				if(this.selectedIndex != -1) this.changes = true;
 			}
@@ -217,7 +217,7 @@ public class GuiCityMapper extends GuiScreen{
 			if(mouseButton == 0) {
 				int i = this.getHoveredMenuBuilding(mouseX, mouseY);
 				if(i != -1) {
-					this.selectedBuilding = Building2D.getFromTemplate(this.availableBuildings.get(i));
+					this.selectedBuilding = FlatBuilding.getFromTemplate(this.availableBuildings.get(i));
 				} else {
 					int j = this.getHoveredMapBuilding(mapX, mapY);
 					if(j != -1) {
@@ -233,7 +233,7 @@ public class GuiCityMapper extends GuiScreen{
 				this.placedEnd = null;			
 			}
 			else if(isSelectedInsideMap(mouseX, mouseY)) {
-				if(!(this.selectedBuilding instanceof LongBuilding2D)) {
+				if(!(this.selectedBuilding instanceof FlatLongBuilding)) {
 					if(this.intersects(mapX, mapY)) return;
 					this.selectedBuilding.setCenter(mapX, mapY);
 					if(this.selectedIndex == -1) te.buildings.add(this.selectedBuilding);
@@ -248,7 +248,7 @@ public class GuiCityMapper extends GuiScreen{
 					else {
 						if(mapX == placedEnd.x && mapY == placedEnd.y) return;
 						boolean horizontal = this.isLongBuildingHorizontal(mouseX, mouseY);
-						LongBuilding2D building = (LongBuilding2D) this.selectedBuilding;
+						FlatLongBuilding building = (FlatLongBuilding) this.selectedBuilding;
 						int mleft = placedEnd.x, mtop = placedEnd.y, mright = horizontal ? mapX : placedEnd.x, mbottom =  horizontal ? placedEnd.y : mapY; 
 						if(horizontal) {
 							mtop -= building.getDefaultHeight()/2;
@@ -334,7 +334,7 @@ public class GuiCityMapper extends GuiScreen{
 	/** Map coords required
 	 */
 	private boolean intersects(int mapX, int mapY) {
-		for(Building2D b : te.buildings) {
+		for(FlatBuilding b : te.buildings) {
 			if(b.intersects(selectedBuilding, mapX, mapY)) {
 				return true;
 			}
@@ -345,7 +345,7 @@ public class GuiCityMapper extends GuiScreen{
 	/** Map coords required
 	 */
 	private boolean intersectsLong(int top, int left, int bottom, int right) {
-		for(Building2D b : te.buildings) {
+		for(FlatBuilding b : te.buildings) {
 			if(b.intersects(selectedBuilding, top, left, bottom, right)) {
 				return true;
 			}

@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BaseBuilding2D extends Building2D{
+public class FlatBaseBuilding extends FlatBuilding{
 	
-	public BaseBuilding2D(int index) {
+	public FlatBaseBuilding(int index) {
 		super(index);
 	}
 	
@@ -18,19 +18,19 @@ public class BaseBuilding2D extends Building2D{
 		this.buildingIndex = -1;
 	}*/
 	
-	public BaseBuilding2D(NBTTagCompound nbt) {
+	public FlatBaseBuilding(NBTTagCompound nbt) {
 		super(nbt);
 	}
 	
-	public BaseBuilding2D(BuildingTemplate template) {
+	public FlatBaseBuilding(BuildingTemplate template) {
 		super(template);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == this) return true;
-		if(!(obj instanceof BaseBuilding2D)) return false;
-		BaseBuilding2D b = (BaseBuilding2D) obj;
+		if(!(obj instanceof FlatBaseBuilding)) return false;
+		FlatBaseBuilding b = (FlatBaseBuilding) obj;
 		return b.centerX == this.centerX && b.centerY == this.centerY && b.rotation == this.rotation;
 	}
 	

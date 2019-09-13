@@ -1,14 +1,14 @@
 package com.valeriotor.BTV.shoggoth.buildings;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
-import org.lwjgl.opengl.GL11;
-
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.gui.GuiCityMapper;
-import com.valeriotor.BTV.shoggoth.BuildingRegistry;
+import com.valeriotor.BTV.shoggoth.BlockBuffer;
 import com.valeriotor.BTV.shoggoth.BuildingTemplate;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 
@@ -26,6 +26,9 @@ public class BuildingWall extends BuildingTemplate{
 			}
 		}
 		texture = new DynamicTexture(image);
+		HashMap<Block, byte[][]> map = new HashMap<>();
+		map.put(BlockRegistry.BlockStoneElderBrick, this.elderStoneBricks);
+		this.buffer = new BlockBuffer(map, 1, 3, 2);
 	}
 	
 	
@@ -42,5 +45,8 @@ public class BuildingWall extends BuildingTemplate{
 	public boolean isDefault() {
 		return true;
 	}
-
+	
+	
+	byte[][] elderStoneBricks = {{0,0,0,0}, {0,1,0,0}, {0,2,0,0}, {0,0,-1,0}, {0,1,-1,0}, {0,2,-1,0}};
+	
 }
