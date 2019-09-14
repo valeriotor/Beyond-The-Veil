@@ -43,7 +43,7 @@ public abstract class ShoggothBuilding {
 	public void placeBlock(World w) {
 		int[] coords = {buffer.getX(progress % total), buffer.getY(progress % total), buffer.getZ(progress % total)};
 		Block b = buffer.getBlock(coords[0], coords[1], coords[2]);
-		while(coords[1] > 4 && b == Blocks.AIR || b == w.getBlockState(new BlockPos(coords[0], coords[1], coords[2])).getBlock()) {
+		while(coords[1] > 4 && b == Blocks.AIR) {
 			progress++;
 			coords[0] = buffer.getX(progress % total);
 			coords[1] = buffer.getY(progress % total);

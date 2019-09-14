@@ -23,10 +23,16 @@ public class BlockBuffer {
 		if(!blockCoords.containsKey(Blocks.AIR)) air = true;
 		blocks = new Block[air ? size+1 : size];
 		short i = 0;
-		if(air) blocks[i++] = Blocks.AIR;
+		blocks[i++] = Blocks.AIR;
 		this.coords = new short[xSize][ySize][zSize];
 		this.metadata = new byte[xSize][ySize][zSize];
+		if(!air) {
+			for(byte[] a : blockCoords.get(Blocks.AIR)) {
+				this.coords[a[0] + xSize / 2][a[1]][a[2] + zSize / 2] = (short) 0;
+			}
+		}
 		for(Entry<Block, byte[][]> entry : blockCoords.entrySet()) {
+			if(entry.getKey() == Blocks.AIR) continue;
 			blocks[i] = entry.getKey();
 			for(byte[] a : entry.getValue()) {
 				this.coords[a[0] + xSize / 2][a[1]][a[2] + zSize / 2] = (short) i;
