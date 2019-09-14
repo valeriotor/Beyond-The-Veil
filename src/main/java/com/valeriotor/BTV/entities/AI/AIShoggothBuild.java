@@ -34,14 +34,16 @@ public class AIShoggothBuild extends EntityAIBase{
 			}
 			//System.out.println(shoggoth.building.progress);
 			int rotation = shoggoth.building.rotation + (shoggoth.building instanceof ShoggothLongBuilding ? 3 : 2);
-			BlockPos pos = new BlockPos(shoggoth.building.centerX, shoggoth.building.centerY, shoggoth.building.centerZ).offset(EnumFacing.getHorizontal(rotation), 5);
-			timer--;
-			if(timer < 0) {
-				timer = 10;
-				shoggoth.getNavigator().setPath(shoggoth.getNavigator().getPathToPos(pos), 1.5);
-			}
+			BlockPos pos = new BlockPos(shoggoth.building.centerX, shoggoth.building.centerY, shoggoth.building.centerZ).offset(EnumFacing.getHorizontal(rotation), 5 + shoggoth.building.building.height/2);
+			int y = shoggoth.world.getHeight(pos.getX(), pos.getZ());
+			pos = new BlockPos(pos.getX(),y, pos.getZ());
+			if(timer > -1) timer--;
+			
 			if(Math.abs(shoggoth.posX - pos.getX()) < 5 && Math.abs(shoggoth.posZ - pos.getZ()) < 5) {
 				shoggoth.building.placeBlock(shoggoth.world);
+			} else if(timer < 0) {
+				timer = 10;
+				shoggoth.getNavigator().setPath(shoggoth.getNavigator().getPathToPos(pos), 1.5);
 			}
 			if(shoggoth.building.isDone()) {
 				shoggoth.progress++;
