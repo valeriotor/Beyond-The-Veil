@@ -6,13 +6,20 @@ import com.valeriotor.BTV.entities.AI.AIShoggothBuild;
 import com.valeriotor.BTV.shoggoth.ShoggothBuilding;
 import com.valeriotor.BTV.util.ItemHelper;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
@@ -20,7 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityShoggoth extends EntityLiving{
+public class EntityShoggoth extends EntityMob{
+	
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityShoggoth.class, DataSerializers.BYTE);
 	
 	private int animTicks = 0;
 	private Animation openMouthAnim = null;
@@ -31,40 +40,52 @@ public class EntityShoggoth extends EntityLiving{
 	
 	public EntityShoggoth(World worldIn) {
 		super(worldIn);
+		this.setSize(3, 3);
 	}
 	
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
 	
-	/*@Override
-	public boolean isOnLadder() {
-        return this.isBesideClimbableBlock();
-    }*/
-	
 	protected void applyEntityAttributes() {
 	    super.applyEntityAttributes(); 
 
-	    // standard attributes registered to EntityLivingBase
 	   getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);
 	   getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 	   getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 	   getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
 	   
 	
-	    // need to register any additional attributes
-	   getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+	   //getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 	   getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D);
 	}
 	
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(CLIMBING, Byte.valueOf((byte)0));
+	}
+	
 	 protected void initEntityAI() {
-        //this.tasks.addTask(0, new EntityAISwimming(this));
-        //this.tasks.addTask(1, new AISwim(this));
-		 this.tasks.addTask(0, new AIShoggothBuild(this));
-		 this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		 this.tasks.addTask(8, new EntityAILookIdle(this));
+		//this.tasks.addTask(0, new EntityAISwimming(this));
+		//this.tasks.addTask(1, new AISwim(this));
+		this.tasks.addTask(0, new EntityAIAttackMelee(this, 2, true));
+		this.tasks.addTask(2, new AIShoggothBuild(this));
+		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(8, new EntityAILookIdle(this));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false, null));
+		 
 	 }
 	
+	 
+	 public void onUpdate() {
+	        super.onUpdate();
+
+	        if (!this.world.isRemote) {
+	            this.setBesideClimbableBlock(this.collidedHorizontally);
+	        }
+	 }
+	 
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
@@ -102,8 +123,10 @@ public class EntityShoggoth extends EntityLiving{
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-		if(stack.getTagCompound().hasKey("schematic")) {
-			this.map = ItemHelper.checkTagCompound(stack).getCompoundTag("schematic");
+		if(!player.world.isRemote && ItemHelper.checkTagCompound(stack).hasKey("schematic")) {
+			this.map = ItemHelper.checkTagCompound(stack).getCompoundTag("schematic").copy();
+			this.progress = 0;
+			this.building = null;
 			return EnumActionResult.SUCCESS;
 		}
 		return super.applyPlayerInteraction(player, vec, hand);
@@ -126,6 +149,36 @@ public class EntityShoggoth extends EntityLiving{
 		if(compound.hasKey("map")) map = (NBTTagCompound) compound.getTag("map");
 		this.progress = compound.getInteger("progress");
 		super.readFromNBT(compound);
+	}
+	
+	public boolean isBesideClimbableBlock() {
+        return (((Byte)this.dataManager.get(CLIMBING)).byteValue() & 1) != 0;
+    }
+	
+	public void setBesideClimbableBlock(boolean climbing) {
+        byte b0 = ((Byte)this.dataManager.get(CLIMBING)).byteValue();
+
+        if (climbing)
+        {
+            b0 = (byte)(b0 | 1);
+        }
+        else
+        {
+            b0 = (byte)(b0 & -2);
+        }
+
+        this.dataManager.set(CLIMBING, Byte.valueOf(b0));
+    }
+	
+
+	@Override
+	public boolean isOnLadder() {
+        return this.isBesideClimbableBlock();
+    }
+	
+	@Override
+	protected PathNavigate createNavigator(World worldIn) {
+		return new PathNavigateClimber(this, worldIn);
 	}
 	
 }

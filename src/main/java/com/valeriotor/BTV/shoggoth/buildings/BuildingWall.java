@@ -28,7 +28,7 @@ public class BuildingWall extends BuildingTemplate{
 		texture = new DynamicTexture(image);
 		HashMap<Block, byte[][]> map = new HashMap<>();
 		map.put(BlockRegistry.BlockStoneElderBrick, this.elderStoneBricks);
-		this.buffer = new BlockBuffer(map, 1, 3, 2);
+		this.buffer = new BlockBuffer(map, 2, 3, 1);
 	}
 	
 	
@@ -47,6 +47,6 @@ public class BuildingWall extends BuildingTemplate{
 	}
 	
 	
-	byte[][] elderStoneBricks = {{0,0,0,0}, {0,1,0,0}, {0,2,0,0}, {0,0,-1,0}, {0,1,-1,0}, {0,2,-1,0}};
+	byte[][] elderStoneBricks = {{0,0,0,0}, {0,1,0,0}, {0,2,0,0}, {-1,0,0,0}, {-1,1,0,0}, {-1,2,0,0}};
 	
 }

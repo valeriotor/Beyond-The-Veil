@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.shoggoth;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,11 +42,13 @@ public abstract class ShoggothBuilding {
 	
 	public void placeBlock(World w) {
 		int[] coords = {buffer.getX(progress % total), buffer.getY(progress % total), buffer.getZ(progress % total)};
-		while(coords[1] > 4 && buffer.getBlock(coords[0], coords[1], coords[2]) == Blocks.AIR) {
+		Block b = buffer.getBlock(coords[0], coords[1], coords[2]);
+		while(coords[1] > 4 && b == Blocks.AIR || b == w.getBlockState(new BlockPos(coords[0], coords[1], coords[2])).getBlock()) {
 			progress++;
-			coords[0] = buffer.getX(progress);
-			coords[1] = buffer.getY(progress);
-			coords[2] = buffer.getZ(progress);
+			coords[0] = buffer.getX(progress % total);
+			coords[1] = buffer.getY(progress % total);
+			coords[2] = buffer.getZ(progress % total);
+			b = buffer.getBlock(coords[0], coords[1], coords[2]);
 		}
 		IBlockState state = buffer.getRotatedBlockState(coords[0], coords[1], coords[2], rotation);
 		this.placeBlockInternal(w, coords, state);

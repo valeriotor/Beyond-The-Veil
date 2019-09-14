@@ -24,8 +24,8 @@ public class BlockBuffer {
 		blocks = new Block[air ? size+1 : size];
 		short i = 0;
 		if(air) blocks[i++] = Blocks.AIR;
-		this.coords = new short[xSize + 1][ySize][zSize + 1];
-		this.metadata = new byte[xSize + 1][ySize][zSize + 1];
+		this.coords = new short[xSize][ySize][zSize];
+		this.metadata = new byte[xSize][ySize][zSize];
 		for(Entry<Block, byte[][]> entry : blockCoords.entrySet()) {
 			blocks[i] = entry.getKey();
 			for(byte[] a : entry.getValue()) {

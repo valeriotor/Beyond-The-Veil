@@ -37,7 +37,7 @@ public class ShoggothLongBuilding extends ShoggothBuilding{
 			}
 			this.length = Math.abs(vertex1.y - vertex2.y);
 		}
-		int[] coords = {0, 0, progress / buffer.xSize / buffer.ySize};
+		int[] coords = {progress / buffer.zSize / buffer.ySize, 0, 0};
 		orderUp(coords);
 		height = w.getHeight(vertex1.x + coords[0], vertex1.y + coords[2]);
 	}
@@ -49,10 +49,9 @@ public class ShoggothLongBuilding extends ShoggothBuilding{
 	
 	@Override
 	protected void placeBlockInternal(World w, int[] coords, IBlockState state) {
-		coords[0] = progress / buffer.zSize / buffer.ySize;
+		coords[2] = progress / buffer.xSize / buffer.ySize;
 		orderUp(coords);
-		if(coords[1] > 2) System.out.println("EH??!?");
-		if(progress % (buffer.zSize * buffer.ySize) == 0) height = world.getHeight(vertex1.x + coords[0], vertex1.y + coords[2]);
+		if(progress % (buffer.xSize * buffer.ySize) == 0) height = world.getHeight(vertex1.x + coords[0], vertex1.y + coords[2]);
 		BlockPos pos = new BlockPos(vertex1.x + coords[0], height + coords[1], vertex1.y + coords[2]);
 		w.setBlockState(pos, state);
 		progress++;
@@ -65,6 +64,16 @@ public class ShoggothLongBuilding extends ShoggothBuilding{
 		nbt.setInteger("v2x", vertex2.x);
 		nbt.setInteger("v2y", vertex2.y);
 		return super.writeToNBT(nbt);
+	}
+	
+	@Override
+	protected int[] orderUp(int[] coords) {
+		if(horizontal()) {
+			int temp = coords[0];
+			coords[0] = coords[2];
+			coords[2] = -temp;
+		}
+		return coords;
 	}
 	
 }
