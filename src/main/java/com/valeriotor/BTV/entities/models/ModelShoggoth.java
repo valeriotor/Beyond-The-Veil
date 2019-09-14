@@ -309,7 +309,7 @@ public class ModelShoggoth extends ModelAnimated {
     	// this.resetOffsets(bodyParts); // should be used if I add anims that change offsets
     	EntityShoggoth sh = (EntityShoggoth) entitylivingbaseIn;
     	int animTicks = sh.getAnimTicks();
-    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/20;
+    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/20 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 5;
     	mouthBack.offsetY = offset;
     	mouthBottom.offsetY = offset;
     	mouthLeft.offsetY = offset;
@@ -327,7 +327,7 @@ public class ModelShoggoth extends ModelAnimated {
     	bLeftTentacle3.rotateAngleY = offset * 2;
     	bRightTentacle4.rotateAngleY = offset * 2;
     	bBackTentacle4.rotateAngleY = offset * 2;
-    	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95)/16;
+    	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95)/16 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 5;
     	mouthBack.offsetX = offset/2;
     	mouthBottom.offsetX = offset/2;
     	mouthLeft.offsetX = offset/2;
