@@ -73,7 +73,7 @@ public class TestItem extends Item //implements IHasModel
 		
 		List<ArrayList<int[]>> blocks = new ArrayList();
 		List<String> names = new ArrayList();
-		BlockPos center = new BlockPos(Math.floor((pos1.getX()+pos2.getX())/2), Math.min(pos1.getY(), pos2.getY())+1, Math.floor((pos1.getZ()+pos2.getZ())/2));
+		BlockPos center = new BlockPos(Math.ceil(((double)pos1.getX()+pos2.getX())/2), Math.min(pos1.getY(), pos2.getY()), Math.ceil(((double)pos1.getZ()+pos2.getZ())/2));
 		for(int x = Math.min(pos1.getX(), pos2.getX()); x<=Math.max(pos1.getX(), pos2.getX());x++) {
 			for(int y = Math.min(pos1.getY(), pos2.getY()); y<=Math.max(pos1.getY(), pos2.getY());y++) {
 				for(int z = Math.min(pos1.getZ(), pos2.getZ()); z<=Math.max(pos1.getZ(), pos2.getZ());z++) {
@@ -86,7 +86,7 @@ public class TestItem extends Item //implements IHasModel
 					}
 					int a = names.indexOf(block.getUnlocalizedName().substring(5));
 					int[] array = {(x-center.getX()), (y-center.getY()), (z-center.getZ()), meta};
-					if(array[1] > 6 && block.getUnlocalizedName().substring(5).equals("air")) continue;
+					if(array[1] > 3 && block.getUnlocalizedName().substring(5).equals("air")) continue;
 					blocks.get(a).add(array);
 				}
 			}
