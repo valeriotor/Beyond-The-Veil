@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.potions;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
@@ -22,6 +23,7 @@ public class PotionFolly extends Potion{
 	
 	@Override
 	public void performEffect(EntityLivingBase e, int amplifier) {
+		if(BTVEntityRegistry.isFearlessEntity(e)) return;
 		if(e instanceof EntityMob) {
 			
 			((EntityMob) e).setAttackTarget(null);

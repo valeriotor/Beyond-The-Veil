@@ -41,7 +41,7 @@ public class BTVEntityRegistry {
 	 * @return
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
-		return e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth;
+		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth;
 	}
 	
 	
