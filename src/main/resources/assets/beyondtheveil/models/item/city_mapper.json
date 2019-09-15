@@ -1,5 +1,5 @@
 {
-   "parent": "beyondtheveil:block/mutator",
+   "parent": "beyondtheveil:block/city_mapper",
    "display": {
 	   "thirdperson_righthand": {
 		   "scale": [ 0.55, 0.55, 0.55 ]

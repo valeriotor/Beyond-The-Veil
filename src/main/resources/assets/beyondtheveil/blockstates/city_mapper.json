@@ -1,5 +1,8 @@
 {
     "variants": {
-        "normal": { "model": "beyondtheveil:mutator" }
+        "facing=east": { "model": "beyondtheveil:city_mapper", "y" : 90 },
+        "facing=south": { "model": "beyondtheveil:city_mapper", "y" : 180 },
+        "facing=west": { "model": "beyondtheveil:city_mapper", "y" : 270 },
+        "facing=north": { "model": "beyondtheveil:city_mapper" }
     }
 }

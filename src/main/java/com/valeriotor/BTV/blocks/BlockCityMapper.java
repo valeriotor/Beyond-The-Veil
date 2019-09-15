@@ -1,5 +1,10 @@
 package com.valeriotor.BTV.blocks;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
@@ -8,18 +13,23 @@ import com.valeriotor.BTV.tileEntities.TileCityMapper;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCityMapper extends ModBlock implements ITileEntityProvider{
-
+public class BlockCityMapper extends ModBlockFacing implements ITileEntityProvider{
+	
 	public BlockCityMapper(String name) {
 		super(Material.IRON, name);
 	}
@@ -57,5 +67,21 @@ public class BlockCityMapper extends ModBlock implements ITileEntityProvider{
 		}
 		return false;
 	}
-
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	private static final AxisAlignedBB BBOX = new AxisAlignedBB(0.0625D * 5,0.0D,0.0625D * 5,0.0625D * 11,0.0625D * 13,0.0625D * 11);
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BBOX;
+	}
 }
