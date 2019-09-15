@@ -53,8 +53,14 @@ public class ShoggothLongBuilding extends ShoggothBuilding{
 		orderUp(coords);
 		if(progress % (buffer.xSize * buffer.ySize) == 0) height = world.getHeight(vertex1.x + coords[0], vertex1.y + coords[2]);
 		BlockPos pos = new BlockPos(vertex1.x + coords[0], height + coords[1], vertex1.y + coords[2]);
-		w.setBlockState(pos, state);
-		progress++;
+		IBlockState currentState = w.getBlockState(pos);
+		if((currentState.getBlockHardness(this.world, pos) < 0 || state.getBlock() == currentState.getBlock()) && !isDone()) {
+			progress++;
+			this.placeBlock(w);
+		} else {
+			w.setBlockState(pos, state);
+			progress++;
+		}
 	}
 	
 	@Override
@@ -71,7 +77,7 @@ public class ShoggothLongBuilding extends ShoggothBuilding{
 		if(horizontal()) {
 			int temp = coords[0];
 			coords[0] = coords[2];
-			coords[2] = -temp;
+			coords[2] = -temp - 1;
 		}
 		return coords;
 	}

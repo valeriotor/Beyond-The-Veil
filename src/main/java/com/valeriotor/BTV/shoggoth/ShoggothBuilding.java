@@ -56,8 +56,15 @@ public abstract class ShoggothBuilding {
 	
 	protected void placeBlockInternal(World w, int[] coords, IBlockState state) {
 		orderUp(coords);
-		w.setBlockState(new BlockPos(centerX + coords[0], centerY + coords[1], centerZ + coords[2]), state);
-		progress++;
+		BlockPos pos = new BlockPos(centerX + coords[0], centerY + coords[1], centerZ + coords[2]);
+		IBlockState currentState = w.getBlockState(pos);
+		if((currentState.getBlockHardness(this.world, pos) < 0 || state.getBlock() == currentState.getBlock()) && !isDone()) {
+			progress++;
+			this.placeBlock(w);
+		} else {
+			w.setBlockState(pos, state);
+			progress++;
+		}
 	}
 	
 	protected int[] orderUp(int[] coords) {
