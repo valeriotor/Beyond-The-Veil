@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiScreen;
 
 // Just some methods to help me out with drawing strings. There's probably methods I haven't looked in that would help me the same way, if not better. BUT EH!
 public class GuiHelper {
@@ -50,6 +51,14 @@ public class GuiHelper {
 			len += strings.get(i).length();
 		}
 		return len;
+	}
+	
+	public static void drawCenteredParagraph(GuiScreen screen, FontRenderer f, String s, int width, int topLeftX, int topY) {
+		List<String> ss = splitStringsByWidth(s, width, f);
+		int i = 0;
+		for(String s1 : ss) {
+			screen.drawCenteredString(f, s1, topLeftX + width/2, topY + 15*(i++), 0xFFFFFFFF);
+		}
 	}
 
 }

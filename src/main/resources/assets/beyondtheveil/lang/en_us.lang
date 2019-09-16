@@ -171,6 +171,7 @@ gui.city_mapper.rot3=West
 gui.city_mapper.create=Create
 gui.city_mapper.save=Save Changes
 gui.city_mapper.reloadmap=Reload Map
+gui.city_mapper.incsize=TIP: It is recommended to increase GUI size for the purpose of this task.
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

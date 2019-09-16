@@ -103,6 +103,9 @@ public class GuiCityMapper extends GuiScreen{
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		if(this.mc.gameSettings.guiScale == 1 || this.mc.gameSettings.guiScale == 2) {
+			GuiHelper.drawCenteredParagraph(this, mc.fontRenderer, I18n.format("gui.city_mapper.incsize"), 90, 10, 10);
+		}
 		int mapX = this.getMapX(mouseX), mapY = this.getMapY(mouseY);
 		if(this.isPointInsideMap(mouseX, mouseY)) {
 			drawCenteredString(mc.fontRenderer, String.format("x: %d   z: %d", mapX + this.pos.getX() - 100, mapY + this.pos.getZ() - 100), this.mapTopLeftX + 100, this.height / 2 - 115, 0xFFFFFFFF);
