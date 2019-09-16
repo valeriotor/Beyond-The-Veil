@@ -117,6 +117,10 @@ entity.crawling_villager.name=Crawling Villager
 entity.weeper.name=Weeper
 entity.fletum.name=Fletum
 
+shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
+shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
+shoggoth.hasmapalready2=Only a fool would try to divert a Shoggoth's attention upon themselves.. and I am no fool, am I??
+shoggoth.hasmapalready3=Stop.
 
 ##################
 #GUIS & KEYS

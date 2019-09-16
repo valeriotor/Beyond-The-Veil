@@ -23,6 +23,7 @@ import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,6 +38,7 @@ public class EntityShoggoth extends EntityMob{
 	public NBTTagCompound map = null;
 	public int progress = -1;
 	public ShoggothBuilding building;
+	private int talkCount = 0;
 	
 	public EntityShoggoth(World worldIn) {
 		super(worldIn);
@@ -117,6 +119,11 @@ public class EntityShoggoth extends EntityMob{
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 		if(!player.world.isRemote && ItemHelper.checkTagCompound(stack).hasKey("schematic")) {
+			if(this.map != null) {
+				player.sendMessage(new TextComponentTranslation(String.format("shoggoth.hasmapalready%d", this.talkCount++)));
+				if(this.talkCount > 3) this.talkCount = 3;
+				return EnumActionResult.FAIL;
+			}
 			this.map = ItemHelper.checkTagCompound(stack).getCompoundTag("schematic").copy();
 			this.progress = 0;
 			this.building = null;

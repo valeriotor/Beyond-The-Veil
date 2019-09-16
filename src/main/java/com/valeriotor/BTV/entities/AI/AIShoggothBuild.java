@@ -49,6 +49,10 @@ public class AIShoggothBuild extends EntityAIBase{
 				shoggoth.progress++;
 				if(shoggoth.map.hasKey(String.format("b%d", shoggoth.progress))) {
 					shoggoth.building = ShoggothBuilding.getBuilding(shoggoth.world, shoggoth.map.getCompoundTag(String.format("b%d", shoggoth.progress)));
+				} else {
+					shoggoth.map = null;
+					shoggoth.progress = -1;
+					return false;
 				}
 			}
 		}
