@@ -8,6 +8,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
 
@@ -57,8 +58,8 @@ public class PlayerTickEvents {
 							fish.motionZ = -z + p.motionZ;
 							p.world.spawnEntity(fish);
 							IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-							if(Deities.GREATDREAMER.cap(p).getLevel() == 2 && !data.getString(PlayerDataLib.FISHQUEST)) {
-								int currentFish = data.getInteger(PlayerDataLib.FISH_CANOE);
+							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p)) && !data.getString(PlayerDataLib.FISHQUEST)) {
+								int currentFish = data.getOrSetInteger(PlayerDataLib.FISH_CANOE, 0, false);
 								if(currentFish <= 15) {
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
 								}else{

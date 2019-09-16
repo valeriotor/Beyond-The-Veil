@@ -297,6 +297,7 @@
         "name": "research.SLUGS.title",
         "icons": [ "beyondtheveil:slug" ],
         "category": "BEYOND_THE_VEIL", "location": [ 13,6 ],
+		"meta": ["HIDDEN"],
         "parents": [ "IDOL" ],
         "stages": [
 				{
@@ -311,7 +312,7 @@
 		{
         "key": "CANOE",
         "name": "research.CANOE.title",
-        "icons": [ "beyondtheveil:slug" ],
+        "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
         "parents": [ "SLUGS" ],
         "stages": [

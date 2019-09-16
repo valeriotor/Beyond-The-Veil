@@ -99,7 +99,7 @@ public class DGWorshipHelper {
 		return defenseMultipliers.get(p);
 	}
 	
-	private static class DGResearch {
+	public static class DGResearch {
 		private final String key;
 		public final double attackIncrement;
 		public final double defenseIncrement;
