@@ -37,6 +37,7 @@ public class GuiCityMapper extends GuiScreen{
 	private final BlockPos pos;
 	private TileCityMapper te;
 	private final List<BuildingTemplate> availableBuildings;
+	private final List<String> hoveredInfo = new ArrayList<>();
 	private int scrollOffset = 0;
 	private FlatBuilding selectedBuilding = null;
 	private int selectedIndex = -1;
@@ -139,11 +140,10 @@ public class GuiCityMapper extends GuiScreen{
 		drawModalRectWithCustomSizedTexture(this.mapTopLeftX, this.mapTopLeftY, 0, 0, 201, 201, 201, 201);
 		GlStateManager.enableBlend();
 		GlStateManager.color(1, 1, 1, 1);
-		for(i = this.scrollOffset*2; i < numBuildings && i < this.scrollOffset*2 + 6; i++) {
-			availableBuildings.get(i).drawTexture(this, this.width / 2 + 93 + 64 * (i%2), this.mapTopLeftY + 64 * (i/2 - this.scrollOffset));
+		for(int j = this.scrollOffset*2; j < numBuildings && j < this.scrollOffset*2 + 6; j++) {
+			availableBuildings.get(j).drawTexture(this, this.width / 2 + 93 + 64 * (j%2), this.mapTopLeftY + 64 * (j/2 - this.scrollOffset));
 		}
 		
-		GlStateManager.color(1, 1, 1, 1);
 		for(FlatBuilding b : te.buildings) b.render(this);
 		if(this.selectedBuilding != null) {
 			if(!(this.selectedBuilding instanceof FlatLongBuilding)) {
@@ -177,8 +177,19 @@ public class GuiCityMapper extends GuiScreen{
 			int b = this.getHoveredMapBuilding(mapX, mapY);
 			if(b != -1) te.buildings.get(b).highlight(this);
 		}
+		
 		GlStateManager.disableBlend();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		if(i != -1) {
+			BuildingTemplate b = this.availableBuildings.get(i);
+			hoveredInfo.clear();
+			hoveredInfo.add(b.getLocalizedName());
+			if(b.longBuilding) hoveredInfo.add(I18n.format("gui.city_mapper.buildingwidth", b.width));
+			else hoveredInfo.add(I18n.format("gui.city_mapper.buildingsize", b.height, b.width));
+			drawHoveringText(hoveredInfo, mouseX, mouseY);
+		}
+		
 	}
 	
 	private void drawHover(int centerX, int centerY, int hwidth, int hheight, boolean green) {
