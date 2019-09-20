@@ -33,8 +33,7 @@ public class GuiDreamBottle extends GuiContainer{
 		drawModalRectWithCustomSizedTexture(this.width/2 + 60, this.height/2 - 60, 0, 0, 32, 44, 64, 64);
 		drawModalRectWithCustomSizedTexture(this.width/2 + 62, this.height/2 - 58 + 2 * (20 - fifthbuckets), 34, 2 + 2 * (20 - fifthbuckets), 28, 2 * fifthbuckets, 64, 64);
 		if(mouseX > width/2 + 60 && mouseX < width/2 + 92 && mouseY > height/2 - 60 && mouseY < height/2 - 16) {
-			drawModalRectWithCustomSizedTexture(mouseX - 64, mouseY, 0, 46, 64, 18, 64, 64);
-			drawString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.dream_bottle.charges", this.fifthbuckets/5), mouseX - 60, mouseY + 4, 0xFFFFFF);
+			drawHoveringText(I18n.format("gui.dream_bottle.charges", this.fifthbuckets/5), mouseX - 64, mouseY);
 		}
 	}
 	
