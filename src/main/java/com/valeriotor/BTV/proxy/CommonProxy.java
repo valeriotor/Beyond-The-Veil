@@ -71,7 +71,7 @@ public class CommonProxy {
     
     public void loadCustomResources() {}
     
-    
+    public EntityPlayer getPlayer() {return null;}
     
 
 }

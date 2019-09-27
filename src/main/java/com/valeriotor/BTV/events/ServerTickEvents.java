@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.util.DelayedMessage;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,7 @@ public class ServerTickEvents {
 		while(iter.hasNext()) {
 			if(iter.next().update()) iter.remove();
 		}
+		DrowningRitualEvents.update();
 	}
 	
 

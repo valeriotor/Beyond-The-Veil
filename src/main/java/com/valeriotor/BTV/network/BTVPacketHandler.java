@@ -1,6 +1,8 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
+import com.valeriotor.BTV.network.ritual.MessageRitualToServer;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -24,12 +26,14 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageWateryCradle.WateryCradleMessageHandler.class, MessageWateryCradle.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageGiveItem.GiveItemMessageHandler.class, MessageGiveItem.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageCityMapper.CityMapperMessageHandler.class, MessageCityMapper.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageRitualToServer.RitualToServerMessageHandler.class, MessageRitualToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncTransformedPlayer.SyncTransformedPlayerMessageHandler.class, MessageSyncTransformedPlayer.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageReloadResources.ReloadResourcesMessageHandler.class, MessageReloadResources.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePlayerAnimation.PlayerAnimationMessageHandler.class, MessagePlayerAnimation.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessagePerformHurtAnimation.PerformHurtAnimationMessageHandler.class, MessagePerformHurtAnimation.class, count++, Side.CLIENT);
 		
 	}
 	

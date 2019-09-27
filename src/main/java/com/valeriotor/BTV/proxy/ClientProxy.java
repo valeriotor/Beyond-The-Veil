@@ -99,6 +99,10 @@ public class ClientProxy extends CommonProxy {
     	AnimationRegistry.loadAnimations();
     }
     
+    @Override
+    public EntityPlayer getPlayer() {
+    	return Minecraft.getMinecraft().player;
+    }
     
     
 	

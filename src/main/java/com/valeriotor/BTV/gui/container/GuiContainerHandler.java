@@ -1,20 +1,20 @@
 package com.valeriotor.BTV.gui.container;
 
+import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.gui.GuiCityMapper;
+import com.valeriotor.BTV.gui.GuiDrowned;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
 import com.valeriotor.BTV.items.container.InventoryDreamBottle;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
-import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.worship.DrowningRitual;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -36,7 +36,9 @@ public class GuiContainerHandler implements IGuiHandler{
 			if(world.getTileEntity(pos) instanceof TileCityMapper) {
 				
 			}
-		}*/
+		}*/ else if(ID == 2) {
+			return new DummyContainer();
+		}
 		return null;
 	}
 
@@ -58,8 +60,19 @@ public class GuiContainerHandler implements IGuiHandler{
 			if(world.getTileEntity(pos) instanceof TileCityMapper) {
 				return new GuiCityMapper(pos);
 			}
+		} else if(ID == 2) {
+			return new GuiDrowned((byte)DrowningRitualEvents.rituals.get(p).phase.ordinal());
 		}
 		return null;
 	}
+	
+	public static class DummyContainer extends Container {
 
+		@Override
+		public boolean canInteractWith(EntityPlayer playerIn) {
+			return true;
+		}
+		
+	}	
+	
 }
