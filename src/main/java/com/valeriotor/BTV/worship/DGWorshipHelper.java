@@ -30,6 +30,7 @@ public class DGWorshipHelper {
 	public static void loadDreamerResearch() {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 30, true, 0));
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 30, false, 1));
+		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
 	}
 	
 	public static void levelUp(EntityPlayer p) {

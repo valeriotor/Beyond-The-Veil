@@ -349,6 +349,14 @@ dweller.lhkeeperimpressed.talk1=I am impressed by your open mind, realising the 
 dweller.lhkeeperimpressed.talk2=Be wary of disappointment. Sooner or later, it'll come. It'll sting.
 dweller.lhkeepercanoe.talk0=For now, get on a canoe and sail. Talk to a carpenter.
 dweller.lhkeeperritualintro.talk0=But now, it's time you take the next step. 
+dweller.lhkeeperritual.talk0=We Dwellers can't breathe water from the moment we're born. No, it comes later.
+dweller.lhkeeperritual.talk1=It is only through endless devotion to The Great Dreamer that an outsider such as you may be granted this Gift. :To us it's different. Genetic. I won't mention the details.
+dweller.lhkeeperritual.talk2=But ultimately, for both of our kinds it is only through an act of faith that we may be granted the Gift. |:You must drown.
+dweller.lhkeeperritual.talk3=There is a ritual that must be made. I could explain it to you, yet I am certain that that voice in your head will take care of that.
+dweller.lhkeeperritual.talk4=I still remember when I underwent the ritual. You will too.
+dweller.lhkeeperritual.talk5=I was under the water, I couldn't breathe, I was going to die, I knew I was and I regretted it, I regretted everything and I couldn't breathe and they had lied to me and they had left me to drown and I had to believe but I couldn't and I was dying and I BREATHE. :In. And out. In. And out. Again. And again.
+dweller.lhkeeperritual.talk6=That was my Baptism. Soon, you shall have yours.
+dweller.lhkeeperfriend.talk0=Good luck, friend.
 dweller.lhkeeper.genocidedisagreetalk0=There is no right answer. :But know that I{ despise} those who think the way you do.
 dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your forefather knew better, didn't they?
 
@@ -501,3 +509,11 @@ research.CANOE.stage.1=According to the carpenter, the Dweller Fishermen ride th
 research.CANOE.stage.2=The Ocean itself.. it answers to me, its crashing waves a soothing voice, its blue immensity a vigilant eye, its shapeless water a loving hand.<BR>I have a link with the Ocean now, I am stronger because of it, especially in the water that binds us.<BR>And yet, our link is not strong enough.. I am still a creature of the surface, am I not?
 research.carpenter.text=Talk with the Hamlet's carpenter.
 research.!CANOE.text=Sail the Ocean with a Canoe.
+
+
+research.BAPTISM.title=Baptism
+research.BAPTISM.stage.0=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>So why can't I breathe it? Why does it still hinder my movement?<BR>It makes me strong, and at the same time weakens me.<BR>It grants me life, and yet it can kill me.<BR><BR>The Dwellers though.. they bask in its touch, even its depths. So why can't I?<BR>We must ask the Lighthouse Keeper, one last time.
+research.BAPTISM.stage.1=I am immortal. Right? I am, am I not?<BR>Maybe it isn't death I fear, but failure. A fate even worse, I reckon. Over and over, it will drive me to madness. And what good is immortality then?<BR>The pool must be tight. One by one wide, and exactly five blocks deep, all of still water.<BR>I must let myself sink in it, and once I reach the bottom, I must stay still. STILL. The slightest movement will ruin everything.<BR>Then I'll wait. And I will believe, like never before.<BR>Merciful God, don't let me drown.
+##research.BAPTISM.stage.2=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>Now, I am water.<BR>O Great Dreamer, only now will I truly bask in your grandieur.
+research.lhbaptism.text=Talk with the Lighthouse Keeper.
+research.!BAPTISM.text=Drown. Then the Idol. 

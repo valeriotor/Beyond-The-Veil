@@ -245,6 +245,8 @@ public class DialogueHandler {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "LHKeeper"));
 		} else if(getDialogueName(profession) == Dialogues.EASYJOB && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "CANOE@2")){
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "carpenter"));
+		} else if(getDialogueName(profession) == Dialogues.RITUAL && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "BAPTISM@2") && talkCount == 6){
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "lhbaptism"));
 		}
 	}
 	
@@ -260,6 +262,8 @@ public class DialogueHandler {
 		ENJOY("bartender", 1, 1),
 		RUM("bartender", 1, 1),
 		TRUSTEDBAR("bartender", 2, 0),
+		FRIEND("lhkeeper", 1, 1),
+		RITUAL("lhkeeper", 7, 1),
 		RITUALINTRO("lhkeeper", 1, 1),
 		CANOE("lhkeeper", 1, 1),
 		IMPRESSED("lhkeeper", 3, 0),

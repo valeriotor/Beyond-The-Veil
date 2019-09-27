@@ -328,6 +328,26 @@
                     "text": "research.CANOE.stage.2"
                 }
             ]
+        },
+		{
+        "key": "BAPTISM",
+        "name": "research.BAPTISM.title",
+        "icons": [ "minecraft:water" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
+        "parents": [ "CANOE" ],
+        "stages": [
+				{
+					"text": "research.BAPTISM.stage.0",
+					"required_research": ["lhbaptism"]
+				},
+                {
+                    "text": "research.BAPTISM.stage.1",
+					"required_research": ["!BAPTISM"]
+                },
+                {
+                    "text": "research.BAPTISM.stage.2"
+                }
+            ]
         }
 	]
 }
