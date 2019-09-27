@@ -50,6 +50,7 @@ public class ItemRegistry {
 	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
 	public static final ItemHeldWeeper held_weeper = new ItemHeldWeeper("held_weeper");
 	public static final ItemHeldFletum held_fletum = new ItemHeldFletum("held_fletum");
+	public static final ItemHeldShoggoth held_shoggoth = new ItemHeldShoggoth("held_shoggoth");
 	public static final ModItem surgery_tools = new ModItem("surgery_tools");
 	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara();
 	public static final ItemBleedingBelt bleeding_belt = new ItemBleedingBelt("bleeding_belt");
@@ -99,6 +100,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(bleeding_belt, 0, "inventory");
         ClientProxy.registerItemRenderer(dream_bottle, 0, "inventory");
         ClientProxy.registerItemRenderer(shoggoth_map, 0, "inventory");
+        ClientProxy.registerItemRenderer(held_shoggoth, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -200,6 +202,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.bleeding_belt);
     	registry.register(ItemRegistry.dream_bottle);
     	registry.register(ItemRegistry.shoggoth_map);
+    	registry.register(ItemRegistry.held_shoggoth);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
