@@ -18,12 +18,14 @@ public class GuiDrowned extends GuiScreen{
 	private final byte phase;
 	private int yourselfTimer = 100;
 	private int knowTimer = -999;
-	private String s;
+	private String gnawingFull;
+	private String gnawingShown = "";
 	
 	public GuiDrowned(byte phase) {
 		this.phase = phase;
 		Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_DEATH, 1, 1);
 		Minecraft.getMinecraft().player.performHurtAnimation();
+		this.gnawingFull = I18n.format("gui.drowned.gnawing");
 	}
 	
 	@Override
@@ -40,22 +42,68 @@ public class GuiDrowned extends GuiScreen{
 			this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 72, I18n.format("gui.drowned.believe")));
 			this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 96, I18n.format("gui.drowned.know")));
 		}
+		if(this.phase == Phase.YOURSELF.ordinal() && this.yourselfTimer >= 1)  
+			for(GuiButton b : this.buttonList) b.visible = false;
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
+        if(this.phase == Phase.YOURSELF.ordinal() && this.yourselfTimer >= 0) {
+        	this.drawMeanStrings(partialTicks);
+        } else {
+            this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
+	        GlStateManager.pushMatrix();
+	        GlStateManager.scale(2.0F, 2.0F, 2.0F);
+	        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youdrowned"), this.width / 2 / 2, 30, 16777215);
+	        GlStateManager.popMatrix();
+        }
+		super.drawScreen(mouseX, mouseY, partialTicks);
+	}
+	
+	private void drawMeanStrings(float partialTicks) {
+		if((yourselfTimer & 1) == 0) 
+	        this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
-        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youdrowned"), this.width / 2 / 2, 30, 16777215);
+        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youare"), this.width / 2 / 2, this.height / 2 / 2 - 10, 16777215);
+        if((this.yourselfTimer % 8 != 0 && this.yourselfTimer - 1 % 30 != 0) || this.yourselfTimer == 88) {
+        	String s = getStringSuffix(yourselfTimer / 30);
+	        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned." + s), this.width / 2  / 2, this.height / 2 / 2 + 10, 16777215);
+        }
         GlStateManager.popMatrix();
-		super.drawScreen(mouseX, mouseY, partialTicks);
+        for(int i = 0; i < (100 - yourselfTimer) / 2; i++) {
+        	int y = this.height - 24 * (i + 1);
+        	if(y > -16) {
+        		String s = I18n.format("gui.drowned.youare").concat(I18n.format("gui.drowned.".concat(getStringSuffix(i%3))));
+        		this.drawCenteredString(mc.fontRenderer, s, this.width / 4, y, 0xFFFFFFFF);
+        		this.drawCenteredString(mc.fontRenderer, s, 3 * this.width / 4, y, 0xFFFFFFFF);
+        	}
+        }
+        this.drawCenteredString(mc.fontRenderer, gnawingShown, this.width / 2, this.height / 4, 0xFFFFFFFF);
+        this.drawCenteredString(mc.fontRenderer, gnawingShown, this.width / 2, 3 * this.height / 4, 0xFFFFFFFF);
+	}
+	
+	private String getStringSuffix(int num) {
+		switch(num) {
+		case 0: return "insignificant";
+    	case 1: return "worthless";
+    	case 2:
+    	default: return "nothing";
+		}
 	}
 	
 	@Override
 	public void updateScreen() {
 		if(this.phase == Phase.YOURSELF.ordinal() && this.yourselfTimer >= 0) {
+			if(this.yourselfTimer == 0) {
+				for(GuiButton b : this.buttonList) b.visible = true;
+			}	
 			this.yourselfTimer--;
+			if(this.gnawingShown.length() < this.gnawingFull.length()) {
+				this.gnawingShown = this.gnawingFull.substring(0, this.gnawingShown.length() + 1);
+			} else {
+				this.gnawingShown = "";
+			}
 		} else if(this.knowTimer > 0) {
 			this.knowTimer--;
 			if(this.knowTimer <= 0) {

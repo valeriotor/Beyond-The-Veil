@@ -6,6 +6,9 @@ import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.BlockPos;
 
 public class DrowningRitual {
@@ -22,17 +25,19 @@ public class DrowningRitual {
 	}
 	
 	public void update() {
-		//System.out.println("Updating..");
 		if(this.progressing) {
-			//System.out.println("Progressing..");
 			this.progress--;
-			if((this.progress & 31) == 0 && this.phase == phase.START && this.progress > 0 && p.getHealth() > this.progress / 32) {
-				//System.out.println("Damaging..");
-				this.p.setHealth(this.progress/32);
-				BTVPacketHandler.INSTANCE.sendTo(new MessagePerformHurtAnimation(MessagePerformHurtAnimation.DROWN), (EntityPlayerMP)p);
+			if((this.progress & 31) == 0) {
+				if(this.phase == phase.START && this.progress > 0 && p.getHealth() > this.progress / 32) {
+					this.p.setHealth(this.progress/32);
+					BTVPacketHandler.INSTANCE.sendTo(new MessagePerformHurtAnimation(MessagePerformHurtAnimation.DROWN), (EntityPlayerMP)p);
+				}
+				FoodStats f = p.getFoodStats();
+				if(f.getFoodLevel() > 16) f.setFoodLevel(f.getFoodLevel() - 1);
+				p.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 1000, 100));
 			}
 			if(this.progress == 0) {
-				if(this.phase == Phase.START || this.phase == Phase.YOURSELF)
+				if(this.phase == Phase.START)
 					this.phase = this.phase.getNext();
 				
 				this.progressing = false;	

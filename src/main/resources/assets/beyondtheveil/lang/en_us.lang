@@ -186,6 +186,11 @@ gui.drowned.ancientgods=Believe in the gods of your ancestors
 gui.drowned.yourself=Believe in Yourself
 gui.drowned.believe=Believe
 gui.drowned.know=Know
+gui.drowned.youare=YOU ARE 
+gui.drowned.nothing=NOTHING
+gui.drowned.insignificant=INSIGNIFICANT
+gui.drowned.worthless=WORTHLESS
+gui.drowned.gnawing=I am the Gnawing Sensation at the back of your mind
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

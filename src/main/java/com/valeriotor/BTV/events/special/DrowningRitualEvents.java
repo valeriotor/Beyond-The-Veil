@@ -28,6 +28,7 @@ public class DrowningRitualEvents {
 			}
 		}
 		rituals.put(p, new DrowningRitual(p));
+		p.world.setBlockState(p.getPosition().offset(EnumFacing.UP, 4), Blocks.PACKED_ICE.getDefaultState());
 	}
 	
 	public static void update() {

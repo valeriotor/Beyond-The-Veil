@@ -5,6 +5,7 @@ import com.valeriotor.BTV.worship.DrowningRitual;
 import com.valeriotor.BTV.worship.DrowningRitual.Phase;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.init.MobEffects;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -55,6 +56,7 @@ public class MessageRitualToServer implements IMessage{
 				dr.setNewPhase(Phase.BELIEVE);
 			} else if(message.mode == 4) {
 				DrowningRitualEvents.rituals.remove(ctx.getServerHandler().player);
+				ctx.getServerHandler().player.removePotionEffect(MobEffects.MINING_FATIGUE);
 			}
 			return null;
 		}
