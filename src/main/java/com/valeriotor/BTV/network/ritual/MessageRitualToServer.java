@@ -5,6 +5,8 @@ import com.valeriotor.BTV.worship.DrowningRitual;
 import com.valeriotor.BTV.worship.DrowningRitual.Phase;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,7 +43,8 @@ public class MessageRitualToServer implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageRitualToServer message, MessageContext ctx) {
-			DrowningRitual dr = DrowningRitualEvents.rituals.get(ctx.getServerHandler().player);
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			DrowningRitual dr = DrowningRitualEvents.rituals.get(p);
 			if(message.mode == 0) {
 				dr.greatDreamer = true;
 				if(dr.ancientGods) dr.setNewPhase(Phase.DEITYYOURSELFCHOOSE);
@@ -55,8 +58,12 @@ public class MessageRitualToServer implements IMessage{
 			} else if(message.mode == 3) {
 				dr.setNewPhase(Phase.BELIEVE);
 			} else if(message.mode == 4) {
-				DrowningRitualEvents.rituals.remove(ctx.getServerHandler().player);
-				ctx.getServerHandler().player.removePotionEffect(MobEffects.MINING_FATIGUE);
+				DrowningRitualEvents.rituals.remove(p);
+				p.removePotionEffect(MobEffects.MINING_FATIGUE);
+				p.setHealth(p.getMaxHealth());
+				p.setAir(200);
+				if(p.world.getBlockState(p.getPosition().up(4)).getBlock() == Blocks.PACKED_ICE)
+					p.world.setBlockState(p.getPosition().up(4), Blocks.WATER.getDefaultState());
 			}
 			return null;
 		}

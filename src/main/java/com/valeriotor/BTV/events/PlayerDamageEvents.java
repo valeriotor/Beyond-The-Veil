@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.events;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 
@@ -20,6 +21,7 @@ public class PlayerDamageEvents {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			if(event.getEntityLiving().world.isRemote) return;
 			GreatDreamerBuffs.applyDefenseModifier(event);
+			DrowningRitualEvents.preventDamage(event);
 		}
 	}	
 

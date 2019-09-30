@@ -66,5 +66,11 @@
 		"sounds": [
 			"beyondtheveil:deep_one_roar"
 		]
+	},
+	"worthless":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:worthless"
+		]
 	}
 }

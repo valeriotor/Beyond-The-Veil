@@ -2,6 +2,7 @@ package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
 
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.ritual.MessageRitualToServer;
 import com.valeriotor.BTV.worship.DrowningRitual.Phase;
@@ -20,12 +21,17 @@ public class GuiDrowned extends GuiScreen{
 	private int knowTimer = -999;
 	private String gnawingFull;
 	private String gnawingShown = "";
+	private boolean greatDreamer;
+	private boolean ancientGods;
 	
-	public GuiDrowned(byte phase) {
+	public GuiDrowned(byte phase, boolean greatDreamer, boolean ancientGods) {
 		this.phase = phase;
 		Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_DEATH, 1, 1);
 		Minecraft.getMinecraft().player.performHurtAnimation();
 		this.gnawingFull = I18n.format("gui.drowned.gnawing");
+		if(this.phase == Phase.YOURSELF.ordinal()) Minecraft.getMinecraft().player.playSound(BTVSounds.worthless, 0.5F, 1);
+		this.greatDreamer = greatDreamer;
+		this.ancientGods = ancientGods;
 	}
 	
 	@Override
@@ -56,6 +62,10 @@ public class GuiDrowned extends GuiScreen{
 	        GlStateManager.scale(2.0F, 2.0F, 2.0F);
 	        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youdrowned"), this.width / 2 / 2, 30, 16777215);
 	        GlStateManager.popMatrix();
+	        if(this.phase == Phase.DEITYCHOOSE.ordinal() || this.phase == Phase.DEITYYOURSELFCHOOSE.ordinal()) {
+	        	if(greatDreamer) this.drawCenteredString(mc.fontRenderer, I18n.format("gui.drowned.nogd"), this.width / 2, this.height / 4 * 3, 16777215);
+	        	if(ancientGods) this.drawCenteredString(mc.fontRenderer, I18n.format("gui.drowned.noac"), this.width / 2, this.height / 4 * 3 + 25, 16777215);
+	        }
         }
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

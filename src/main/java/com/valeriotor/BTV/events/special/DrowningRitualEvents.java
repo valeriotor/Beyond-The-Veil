@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +30,10 @@ public class DrowningRitualEvents {
 		}
 		rituals.put(p, new DrowningRitual(p));
 		p.world.setBlockState(p.getPosition().offset(EnumFacing.UP, 4), Blocks.PACKED_ICE.getDefaultState());
+	}
+	
+	public static void preventDamage(LivingHurtEvent event) {
+		if(rituals.containsKey((EntityPlayer)event.getEntityLiving())) event.setCanceled(true);
 	}
 	
 	public static void update() {

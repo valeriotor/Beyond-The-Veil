@@ -192,6 +192,8 @@ gui.drowned.nothing=NOTHING
 gui.drowned.insignificant=INSIGNIFICANT
 gui.drowned.worthless=WORTHLESS
 gui.drowned.gnawing=I am the Gnawing Sensation at the back of your mind
+gui.drowned.nogd=The Great Dreamer won't listen to you.
+gui.drowned.noac=The gods of your ancestors do not exist.
 
 keys.dodge=Dodge
 keys.medallion=Wolf Medallion Ability

@@ -38,6 +38,9 @@ public final class BTVSounds {
 	@ObjectHolder("deep_one_roar")
 	public static final SoundEvent deepOneRoar = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_roar")).setRegistryName("deep_one_roar");
 	
+	@ObjectHolder("worthless")
+	public static final SoundEvent worthless = new SoundEvent(new ResourceLocation(References.MODID, "worthless")).setRegistryName("worthless");
+	
 	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
@@ -51,6 +54,7 @@ public final class BTVSounds {
 			case 7: return spineRip;
 			case 8: return heartRip;
 			case 9: return deepOneRoar;
+			case 10: return worthless;
 			default: return null;
 			
 		}
@@ -67,6 +71,7 @@ public final class BTVSounds {
 		if(sound.equals(spineRip)) return 7;
 		if(sound.equals(heartRip)) return 8;
 		if(sound.equals(deepOneRoar)) return 9;
+		if(sound.equals(worthless)) return 10;
 		return 0;
 	}
 	

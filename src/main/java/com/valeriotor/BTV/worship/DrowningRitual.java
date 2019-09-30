@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.worship;
 
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
 
@@ -14,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 public class DrowningRitual {
 	
 	public Phase phase = Phase.START;
-	private int progress = 320;
+	private int progress = 480;
 	public boolean greatDreamer = false;
 	public boolean ancientGods = false;
 	public boolean progressing = true;
@@ -25,12 +26,19 @@ public class DrowningRitual {
 	}
 	
 	public void update() {
+		if(p.getAir() > 10) p.setAir(p.getAir() - 5);
+		else p.setAir(10);
 		if(this.progressing) {
 			this.progress--;
 			if((this.progress & 31) == 0) {
-				if(this.phase == phase.START && this.progress > 0 && p.getHealth() > this.progress / 32) {
-					this.p.setHealth(this.progress/32);
-					BTVPacketHandler.INSTANCE.sendTo(new MessagePerformHurtAnimation(MessagePerformHurtAnimation.DROWN), (EntityPlayerMP)p);
+				if(this.progress > 0) {
+					if(this.phase == Phase.START) {
+						if(p.getHealth() > this.progress / 32)
+							this.p.setHealth(this.progress/32);
+						BTVPacketHandler.INSTANCE.sendTo(new MessagePerformHurtAnimation(MessagePerformHurtAnimation.DROWN), (EntityPlayerMP)p);
+					} else if((progress & 63) == 0 && phase == Phase.YOURSELF){
+						this.p.setHealth(p.getHealth() + 1);
+					}
 				}
 				FoodStats f = p.getFoodStats();
 				if(f.getFoodLevel() > 16) f.setFoodLevel(f.getFoodLevel() - 1);
@@ -39,13 +47,13 @@ public class DrowningRitual {
 			if(this.progress == 0) {
 				if(this.phase == Phase.START)
 					this.phase = this.phase.getNext();
-				
+				this.p.setHealth(1);
 				this.progressing = false;	
 				BlockPos pos = p.getPosition();
 				p.openGui(BeyondTheVeil.instance, 2, p.world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		}
-		
+		if(!p.isInWater()) DrowningRitualEvents.rituals.remove(p);
 	}
 	
 	public void setNewPhase(Phase phase) {
@@ -60,7 +68,7 @@ public class DrowningRitual {
 	}
 	
 	public static enum Phase {
-		START(320), DEITYCHOOSE(80), DEITYYOURSELFCHOOSE(80), YOURSELF(140), BELIEVE(35);
+		START(480), DEITYCHOOSE(80), DEITYYOURSELFCHOOSE(80), YOURSELF(140), BELIEVE(35);
 		
 		public final int timer;
 		

@@ -61,7 +61,8 @@ public class GuiContainerHandler implements IGuiHandler{
 				return new GuiCityMapper(pos);
 			}
 		} else if(ID == 2) {
-			return new GuiDrowned((byte)DrowningRitualEvents.rituals.get(p).phase.ordinal());
+			DrowningRitual dr = DrowningRitualEvents.rituals.get(p);
+			return new GuiDrowned((byte)dr.phase.ordinal(), dr.greatDreamer, dr.ancientGods);
 		}
 		return null;
 	}
