@@ -1,22 +1,22 @@
 package com.valeriotor.BTV.worship;
 
+import static com.valeriotor.BTV.lib.PlayerDataLib.FISHQUEST;
+import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
+import static com.valeriotor.BTV.lib.PlayerDataLib.SLUGS;
+
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentTranslation;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-
-import static com.valeriotor.BTV.lib.PlayerDataLib.*;
 
 public class DGWorshipHelper {
 	
@@ -37,6 +37,7 @@ public class DGWorshipHelper {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int slugs = data.getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		boolean atLeastOne = false, notEnoughSlugs = false;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {
 			DGResearch res = entry.getValue();
 			if((data.getString(entry.getKey()) || entry.getKey().equals(SLUGS)) && res.canBeUnlocked(k) && !res.isRequirementUnlocked(k)) {
@@ -44,9 +45,13 @@ public class DGWorshipHelper {
 					res.unlock(p);
 					slugs -= res.getRequiredSlugs();
 					data.removeString(entry.getKey());
+					atLeastOne = true;
+				} else {
+					notEnoughSlugs = true;
 				}
 			}
 		}
+		if(notEnoughSlugs && !atLeastOne) p.sendMessage(new TextComponentTranslation("interact.idol.moreslugs"));
 		data.setInteger(PlayerDataLib.SLUGS, slugs, false);
 		calculateModifier(p, k);
 		SyncUtil.syncCapabilityData(p);

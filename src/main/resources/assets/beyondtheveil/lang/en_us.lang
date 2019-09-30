@@ -96,6 +96,7 @@ tile.lacrymatory.name=Lacrymatory
 fluid.tears=Tears
 
 interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
+interact.idol.moreslugs=More slugs must be consumed to commune.
 interact.lacrymatory.full=This Lacrymatory is already bound.
 interact.lacrymatory.success=The %1$s is now bound to the Lacrymatory.
 interact.citymapper.loading=The City Mapper is slowly loading the surrounding environment.
