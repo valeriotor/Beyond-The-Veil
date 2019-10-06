@@ -13,7 +13,7 @@ import net.minecraft.init.Blocks;
 public class BuildingTower extends BuildingTemplate{
 
 	public BuildingTower(String name, int index) {
-		super(12, 12, false, index, name);
+		super(12, 12, false, name, index);
 		HashMap<Block, byte[][]> map = new HashMap<>();
 		map.put(Blocks.AIR, this.air);
 		map.put(BlockRegistry.BlockElderBrick, this.elder_bricks);

@@ -18,7 +18,7 @@ public abstract class BuildingTemplate {
 	public final String name;
 	protected BlockBuffer buffer;
 	
-	public BuildingTemplate(int width, int height, boolean longBuilding, int index, String name) {
+	public BuildingTemplate(int width, int height, boolean longBuilding, String name, int index) {
 		this.width = width;
 		this.height = height;
 		this.longBuilding = longBuilding;

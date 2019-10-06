@@ -6,7 +6,7 @@ import com.valeriotor.BTV.shoggoth.BuildingTemplate;
 public class BuildingPyramid extends BuildingTemplate{
 
 	public BuildingPyramid(String name, int index) {
-		super(28, 28, false, index, name);
+		super(28, 28, false, name, index);
 	}
 
 	@Override

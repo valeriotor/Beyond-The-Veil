@@ -17,7 +17,7 @@ public class BuildingWall extends BuildingTemplate{
 	private final DynamicTexture texture;
 	
 	public BuildingWall(String name, int index) {
-		super(2, 2, true, index, name);
+		super(2, 2, true, name, index);
 		BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 		for(int x = 0; x < 32; x++) {
 			for(int y = 14; y < 16; y++) {
