@@ -118,6 +118,7 @@ public class GuiDrowned extends GuiScreen{
 			this.knowTimer--;
 			if(this.knowTimer <= 0) {
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageRitualToServer((byte)4));
+				this.mc.player.playSound(BTVSounds.breathe, 0.5F, 1);
 				this.mc.displayGuiScreen((GuiScreen)null);
 			}
 		}
@@ -129,8 +130,8 @@ public class GuiDrowned extends GuiScreen{
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageRitualToServer((byte)button.id));
 			this.mc.displayGuiScreen((GuiScreen)null);
 		} else if(button.id == 4){
-			this.knowTimer = 80;
-			// Play sound
+			this.knowTimer = 230;
+			this.mc.player.playSound(BTVSounds.tension, 0.5F, 1);
 			for(GuiButton b : this.buttonList) b.enabled = false;
 		}
 	}

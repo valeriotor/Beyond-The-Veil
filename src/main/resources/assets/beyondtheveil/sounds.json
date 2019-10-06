@@ -72,5 +72,17 @@
 		"sounds": [
 			"beyondtheveil:worthless"
 		]
+	},
+	"tension":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:tension"
+		]
+	},
+	"breathe":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:breathe"
+		]
 	}
 }
