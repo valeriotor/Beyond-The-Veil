@@ -23,6 +23,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
@@ -42,10 +43,9 @@ public class ItemSlug extends ItemFood{
         {
             EntityPlayer p = (EntityPlayer)entityLiving;
             IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-    		int lvl = Deities.GREATDREAMER.cap(p).getLevel();
-            p.getFoodStats().addStats(getFoodByLevel(p, lvl), 1.0F);
+            p.getFoodStats().addStats(getFoodByLevel(p), 1.0F);
             worldIn.playSound((EntityPlayer)null, p.posX, p.posY, p.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
-            getEffectsByLevel(lvl).forEach(e -> p.addPotionEffect(e));
+            getEffectsByLevel(p).forEach(e -> p.addPotionEffect(e));
             
             p.addStat(StatList.getObjectUseStats(this));
 
@@ -63,33 +63,28 @@ public class ItemSlug extends ItemFood{
         return stack;
 	}
 	
-	private static int getFoodByLevel(EntityPlayer p, int lvl) {
-		switch(lvl) {
-			case 0: return 0;
-			case 1:
-			case 2:	
-				return 2;
-			case 3:
-			case 4:
-				return 4;
-			default:
-				return 6;
+	private static int getFoodByLevel(EntityPlayer p) {
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(k)) {
+			return 1;
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(k)){
+			return 2;
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(k)){
+			return 3;
 		}
+		return 4;
 	}
 	
-	private static List<PotionEffect> getEffectsByLevel(int lvl){
+	private static List<PotionEffect> getEffectsByLevel(EntityPlayer p){
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		List<PotionEffect> effects = Lists.newArrayList();
-		switch(lvl) {
-			case 0:
-				effects.add(new PotionEffect(MobEffects.POISON, 200, 2));
-				effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
-				break;
-			case 1:
-				effects.add(new PotionEffect(MobEffects.NAUSEA, 80));
-				break;
-			case 4:
-			case 5:
-				effects.add(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, -4 + lvl));
+		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(k)) {
+			effects.add(new PotionEffect(MobEffects.POISON, 200, 2));
+			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(k)){
+			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(k)){
+			
 		}
 		return effects;
 	}

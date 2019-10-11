@@ -23,6 +23,10 @@ public class DrowningRitual {
 	
 	public DrowningRitual(EntityPlayer p) {
 		this.p = p;
+		p.removeActivePotionEffect(MobEffects.WATER_BREATHING);
+		p.removeActivePotionEffect(MobEffects.HASTE);
+		p.removeActivePotionEffect(MobEffects.REGENERATION);
+		
 	}
 	
 	public void update() {

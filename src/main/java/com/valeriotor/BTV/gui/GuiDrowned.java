@@ -37,13 +37,15 @@ public class GuiDrowned extends GuiScreen{
 	@Override
 	public void initGui() {
 		if(this.phase == 1 || this.phase == 2) {
-			this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, I18n.format("gui.drowned.greatdreamer")));
-			this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("gui.drowned.ancientgods")));
+			this.buttonList.add(new GuiButton(0, this.width / 2 - 120, this.height / 4 + 72, 240, 20, I18n.format(!greatDreamer ? "gui.drowned.greatdreamer" : "gui.drowned.nogd")));
+			this.buttonList.add(new GuiButton(1, this.width / 2 - 120, this.height / 4 + 96, 240, 20, I18n.format(!ancientGods ? "gui.drowned.ancientgods" : "gui.drowned.noac")));
 			if(this.phase == 2) {
-				this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.drowned.yourself")));
+				this.buttonList.add(new GuiButton(2, this.width / 2 - 120, this.height / 4 + 120, 240, 20, I18n.format("gui.drowned.yourself")));
 				this.buttonList.get(0).enabled = false;
 				this.buttonList.get(1).enabled = false;
 			}
+			if(greatDreamer) buttonList.get(0).enabled = false;
+			if(ancientGods) buttonList.get(1).enabled = false;
 		} else {
 			this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 72, I18n.format("gui.drowned.believe")));
 			this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 96, I18n.format("gui.drowned.know")));
@@ -62,10 +64,6 @@ public class GuiDrowned extends GuiScreen{
 	        GlStateManager.scale(2.0F, 2.0F, 2.0F);
 	        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youdrowned"), this.width / 2 / 2, 30, 16777215);
 	        GlStateManager.popMatrix();
-	        if(this.phase == Phase.DEITYCHOOSE.ordinal() || this.phase == Phase.DEITYYOURSELFCHOOSE.ordinal()) {
-	        	if(greatDreamer) this.drawCenteredString(mc.fontRenderer, I18n.format("gui.drowned.nogd"), this.width / 2, this.height / 4 * 3, 16777215);
-	        	if(ancientGods) this.drawCenteredString(mc.fontRenderer, I18n.format("gui.drowned.noac"), this.width / 2, this.height / 4 * 3 + 25, 16777215);
-	        }
         }
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

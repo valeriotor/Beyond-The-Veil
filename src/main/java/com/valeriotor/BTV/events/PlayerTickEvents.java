@@ -89,7 +89,7 @@ public class PlayerTickEvents {
 	
 	private static void waterPowers(EntityPlayer p) {
 		
-		if(Deities.GREATDREAMER.cap(p).getLevel() >= 3) {
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.RITUALQUEST)) {
 			// TODO Not apply this when transformed
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
