@@ -26,6 +26,7 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -69,6 +70,12 @@ public class PlayerEvents {
 			DGWorshipHelper.calculateModifier(event.player, ThaumcraftCapabilities.getKnowledge(event.player));
 			BeyondTheVeil.proxy.researchEvents.checkResearches(event.player);
 		}
+	}
+	
+	@SubscribeEvent
+	public static void logoutEvent(PlayerLoggedOutEvent event) {
+		System.out.println("Logged out");
+		if(event.player.world.isRemote) BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
 	}
 	
 	@SubscribeEvent

@@ -1,21 +1,30 @@
 package com.valeriotor.BTV.events;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.lwjgl.opengl.GL11;
 
 import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
+import com.valeriotor.BTV.util.MathHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderEvents {
 	
 	public final Set<EntityPlayer> transformedPlayers = new HashSet();
-	private final Set<UUID> covenantPlayers = new HashSet<>();
+	public HashMap<String, BlockPos> covenantPlayers = new HashMap();
 	private static final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
 	
 	@SubscribeEvent
@@ -75,12 +84,66 @@ public class RenderEvents {
         float f = renderManager.playerViewY;
         float f1 = renderManager.playerViewX;
         boolean flag1 = renderManager.options.thirdPersonView == 2;
-		for(UUID u : covenantPlayers) {
-			EntityPlayer e = p.world.getPlayerEntityByUUID(u);
-			if(e == null) continue;
-			float dist = (float)Math.sqrt(e.getDistanceSq(p));
-            EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getName(), 10*(float)(e.posX - d0)/dist, 10*(float)(e.posY - d1)/dist, 10*(float)(e.posZ - d2)/dist, 0, f, f1, flag1, false);
+        
+        // Test code that *works* (for entities, not players).
+        /*List<EntityLiving> ents = p.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(p) < 1000);
+        BlockPos nearestTestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), ents.stream().map(EntityLiving::getPosition).collect(Collectors.toList()), Math.PI / 16);
+        for(EntityLiving e : ents) {
+        	BlockPos pos = e.getPosition();
+        	float dist = (float)Math.sqrt(p.getDistanceSq(pos));
+        	if(pos.equals(nearestTestPos)) dist *= 1.5;
+            drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getName(), 10*(float)(pos.getX() - d0)/dist, 10*(float)(pos.getY() - d1)/dist + 1.5F, 10*(float)(pos.getZ() - d2)/dist, 0, f, f1, flag1, pos.equals(nearestTestPos));
+        }
+        */
+        BlockPos nearestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), covenantPlayers, Math.PI / 16);
+		for(HashMap.Entry<String, BlockPos> e : covenantPlayers.entrySet()) {
+			BlockPos pos = e.getValue();
+			if(e.getValue() == null) continue;
+			float dist = (float)Math.sqrt(p.getDistanceSq(pos)) * 1.2F;
+        	if(pos.equals(nearestPos)) dist *= 1.5;
+            drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getKey(), 10*(float)(pos.getX() - d0)/dist, 10*(float)(pos.getY() - d1)/dist + 1.5F, 10*(float)(pos.getZ() - d2)/dist, 0, f, f1, flag1, pos.equals(nearestPos));
         }
 	}
+	
+	
+	// Literally copied and pasted from EntityRenderer, only changing the enableDepth call and the isSneaking parameter (to isLooking)
+	private static void drawNameplate(FontRenderer fontRendererIn, String str, float x, float y, float z, int verticalShift, float viewerYaw, float viewerPitch, boolean isThirdPersonFrontal, boolean isLooking)
+    {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
+        GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate((float)(isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(-0.025F, -0.025F, 0.025F);
+        GlStateManager.disableLighting();
+        GlStateManager.depthMask(false);
+
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        int i = fontRendererIn.getStringWidth(str) / 2;
+        GlStateManager.disableTexture2D();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        bufferbuilder.pos((double)(-i - 1), (double)(-1 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        bufferbuilder.pos((double)(-i - 1), (double)(8 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        bufferbuilder.pos((double)(i + 1), (double)(8 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        bufferbuilder.pos((double)(i + 1), (double)(-1 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+
+        fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, 553648127);
+        
+
+        GlStateManager.depthMask(true);
+        fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, isLooking ? -1000 : -1);
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.popMatrix();
+
+        GlStateManager.enableDepth();
+    }
+
 	
 }

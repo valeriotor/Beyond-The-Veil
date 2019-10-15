@@ -34,6 +34,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageReloadResources.ReloadResourcesMessageHandler.class, MessageReloadResources.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePlayerAnimation.PlayerAnimationMessageHandler.class, MessagePlayerAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePerformHurtAnimation.PerformHurtAnimationMessageHandler.class, MessagePerformHurtAnimation.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageCovenantData.CovenantDataMessageHandler.class, MessageCovenantData.class, count++, Side.CLIENT);
 		
 	}
 	

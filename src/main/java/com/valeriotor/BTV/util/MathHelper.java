@@ -1,12 +1,13 @@
 package com.valeriotor.BTV.util;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -113,9 +114,6 @@ public class MathHelper {
 	 * @return
 	 */
 	public static List<EntityLivingBase> getLookedAtEntities(EntityPlayer p, double dis, Predicate<EntityLivingBase> predIn){
-		List<EntityLivingBase> list = Lists.newArrayList();
-		Vec3d lookVec = p.getLook(1.0F);
-		BlockPos pos = p.getPosition();
 		Predicate<EntityLivingBase> pred;
 		if(predIn != null)
 			pred = e -> e.getDistanceSq(p) < dis*dis && predIn.apply(e);
@@ -123,13 +121,26 @@ public class MathHelper {
 			pred = e -> e.getDistanceSq(p) < dis*dis;
 		List<EntityLivingBase> ents = p.world.getEntities(EntityLivingBase.class, pred);
 		
+		return getLookedAtEntities(p, ents);
+		
+	}
+	
+	/** Returns a List of entities the player is looking at, filtering from the passed list.
+	 * 
+	 * @param p The player
+	 * @param ents The entities that are to be checked
+	 * @return
+	 */
+	public static List<EntityLivingBase> getLookedAtEntities(EntityPlayer p, List<EntityLivingBase> ents){
+		List<EntityLivingBase> list = Lists.newArrayList();
+		Vec3d lookVec = p.getLook(1.0F);
+		BlockPos pos = p.getPosition();
 		for(Entity e : ents) {
 			if(getIntersectionLineBoundingBox(pos, lookVec, e.getEntityBoundingBox().grow(1.0D)) != null) {
 				list.add((EntityLivingBase)e);
 			}
 		}
 		return list;
-		
 	}
 	
 	/** Finds the intersection between a one-way line (defined by a starting point and a directional vector) and a
@@ -221,6 +232,29 @@ public class MathHelper {
 	 */
 	public static boolean isBetween(double par1, double par2, double par3) {
 		return par1 > par2 && par1 < par3;
+	}
+	
+	public static BlockPos minimumLookAngle(BlockPos startPos, Vec3d vec, List<BlockPos> poss, double maxAngle) {
+		if(poss.isEmpty()) return null;
+		BlockPos pos, minPos = poss.get(0);
+		Vec3d cVec;
+		double angle, minAngle = 0;
+		for(int i = 0; i < poss.size(); i++) {
+			pos = poss.get(i);
+			cVec = new Vec3d(pos.getX() - startPos.getX(), pos.getY() - startPos.getY(), pos.getZ() - startPos.getZ());
+			angle = Math.acos(vec.dotProduct(cVec)/(vec.lengthVector() * cVec.lengthVector()));
+			if(i == 0) minAngle = angle;
+			else if(minAngle > angle) {
+				minAngle = angle;
+				minPos = poss.get(i);
+			}
+		}
+		if(minAngle > maxAngle) return null;
+		return minPos;
+	}
+	
+	public static BlockPos minimumLookAngle(BlockPos startPos, Vec3d vec, HashMap<?, BlockPos> poss, double maxAngle) {
+		return minimumLookAngle(startPos, vec, poss.entrySet().stream().map(HashMap.Entry::getValue).collect(Collectors.toList()), maxAngle);
 	}
 	
 }

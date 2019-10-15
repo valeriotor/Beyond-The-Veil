@@ -57,8 +57,8 @@ public class MessageActivateBauble implements IMessage{
 				if(stack.getItem() instanceof IActiveBauble) {
 					String key = String.format(PlayerDataLib.BAUBLE_COOLDOWN, selected);
 					if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(key, 0, false) > 0) return null; //Maybe add audio clue?
-					((IActiveBauble)stack.getItem()).activate(p);
-					p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(key, ((IActiveBauble)stack.getItem()).getCooldown(), false);
+					if(((IActiveBauble)stack.getItem()).activate(p))
+						p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(key, ((IActiveBauble)stack.getItem()).getCooldown(), false);
 				}
 			}
 			return null;

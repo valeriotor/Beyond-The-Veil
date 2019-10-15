@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.items.baubles.ItemBleedingBelt;
+import com.valeriotor.BTV.items.baubles.ItemBloodCovenant;
 import com.valeriotor.BTV.items.baubles.ItemBoneTiara;
 import com.valeriotor.BTV.items.baubles.ItemWolfMedallion;
 import com.valeriotor.BTV.lib.BlockNames;
@@ -56,6 +57,7 @@ public class ItemRegistry {
 	public static final ItemBleedingBelt bleeding_belt = new ItemBleedingBelt("bleeding_belt");
 	public static final ItemDreamBottle dream_bottle = new ItemDreamBottle("dream_bottle");
 	public static final Item shoggoth_map = new ModItem("shoggoth_map").setMaxStackSize(1);
+	public static final Item blood_covenant = new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
 	
 	
 	
@@ -101,6 +103,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(dream_bottle, 0, "inventory");
         ClientProxy.registerItemRenderer(shoggoth_map, 0, "inventory");
         ClientProxy.registerItemRenderer(held_shoggoth, 0, "inventory");
+        ClientProxy.registerItemRenderer(blood_covenant, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -203,6 +206,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.dream_bottle);
     	registry.register(ItemRegistry.shoggoth_map);
     	registry.register(ItemRegistry.held_shoggoth);
+    	registry.register(ItemRegistry.blood_covenant);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
