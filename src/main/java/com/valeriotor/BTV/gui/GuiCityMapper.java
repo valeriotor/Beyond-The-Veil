@@ -165,11 +165,16 @@ public class GuiCityMapper extends GuiScreen{
 					if(horizontal) {
 						top -= building.getDefaultHeight()/2;
 						bottom += building.getDefaultHeight()/2;
+						if(mouseX < left) left+= 1;
+						else if(mouseX != left) left -= 1;
 					}
 					else {
 						left -= building.getDefaultWidth()/2;
 						right += building.getDefaultWidth()/2;
+						if(mouseY < top) top += 1;
+						else if(mouseY != top) top -= 1;
 					}
+					
 					drawRect(left, top, right, bottom, this.intersectsLong(this.getMapY(top), this.getMapX(left), this.getMapY(bottom), this.getMapX(right)) || !this.isSelectedInsideMap(mouseX, mouseY) ? 0x99FF0000 : 0x9900FF00);
 				}
 			}
@@ -265,10 +270,14 @@ public class GuiCityMapper extends GuiScreen{
 						FlatLongBuilding building = (FlatLongBuilding) this.selectedBuilding;
 						int mleft = placedEnd.x, mtop = placedEnd.y, mright = horizontal ? mapX : placedEnd.x, mbottom =  horizontal ? placedEnd.y : mapY; 
 						if(horizontal) {
+							if(mapX < placedEnd.x) placedEnd.x += 1;
+							else if(mapX != placedEnd.x) placedEnd.x -= 1;
 							mtop -= building.getDefaultHeight()/2;
 							mbottom += building.getDefaultHeight()/2;
 						}
 						else {
+							if(mapY < placedEnd.y) placedEnd.y += 1;
+							else if(mapY != placedEnd.y) placedEnd.y -= 1;
 							mleft -= building.getDefaultWidth()/2;
 							mright += building.getDefaultWidth()/2;
 						}
