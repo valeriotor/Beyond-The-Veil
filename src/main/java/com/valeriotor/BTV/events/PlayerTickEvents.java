@@ -17,6 +17,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -37,15 +38,16 @@ public class PlayerTickEvents {
 	public static void tickEvent(PlayerTickEvent event) {
 		if(event.phase.equals(Phase.END)) {
 			EntityPlayer p = event.player;
-			canoeFishing(p);
-			resetTimesDreamt(p);
-			findHamlet(p);
-			waterPowers(p);
-			decreaseCooldown(p);
+			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			canoeFishing(p, data);
+			resetTimesDreamt(p, data);
+			findHamlet(p, data);
+			waterPowers(p, data);
+			decreaseCooldown(p, data);
 		}
 	}
 	
-	private static void canoeFishing(EntityPlayer p) {
+	private static void canoeFishing(EntityPlayer p, IPlayerData data) {
 		if(!p.world.isRemote && p.getRidingEntity() instanceof EntityCanoe && (p.world.getBiome(p.getPosition()) == Biomes.OCEAN 
 				   || p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth || p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN)) {
 					if(Math.abs(p.motionX) > 0.01 || Math.abs(p.motionZ) > 0.01) {
@@ -57,7 +59,6 @@ public class PlayerTickEvents {
 							fish.motionX = -x + p.motionX;
 							fish.motionZ = -z + p.motionZ;
 							p.world.spawnEntity(fish);
-							IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p)) && !data.getString(PlayerDataLib.FISHQUEST)) {
 								int currentFish = data.getOrSetInteger(PlayerDataLib.FISH_CANOE, 0, false);
 								if(currentFish <= 15) {
@@ -72,24 +73,24 @@ public class PlayerTickEvents {
 				}
 	}
 	
-	private static void resetTimesDreamt(EntityPlayer p) {
-		if(p.world.getWorldTime() == 10) p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);
+	private static void resetTimesDreamt(EntityPlayer p, IPlayerData data) {
+		if(p.world.getWorldTime() == 10) data.setInteger("timesDreamt", 0, false);
 		
 	}
 	
-	private static void findHamlet(EntityPlayer p) {
-		if(!p.world.isRemote && p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.FOUND_HAMLET)) {
+	private static void findHamlet(EntityPlayer p, IPlayerData data) {
+		if(!p.world.isRemote && p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !data.getString(PlayerDataLib.FOUND_HAMLET)) {
 			BlockPos pos = HamletList.get(p.world).getClosestHamlet(p.getPosition()); 
 				if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET")) {
-					p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.FOUND_HAMLET, false);
+					data.addString(PlayerDataLib.FOUND_HAMLET, false);
 					ThaumcraftApi.internalMethods.progressResearch(p, "m_FindHamlet");
 				}
 		}
 	}
 	
-	private static void waterPowers(EntityPlayer p) {
+	private static void waterPowers(EntityPlayer p, IPlayerData data) {
 		
-		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.RITUALQUEST)) {
+		if(data.getString(PlayerDataLib.RITUALQUEST)) {
 			// TODO Not apply this when transformed
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
@@ -108,14 +109,14 @@ public class PlayerTickEvents {
 		
 	}
 	
-	private static void decreaseCooldown(EntityPlayer p) {
+	private static void decreaseCooldown(EntityPlayer p, IPlayerData data) {
 		int currentTicks = Worship.getPowerCooldown(p);
 		Worship.setPowerCooldown(p, currentTicks-1);
-		int selectedBauble = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
+		int selectedBauble = data.getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
 		if(selectedBauble != -1) {
-			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(
+			if(data.getOrSetInteger(
 					String.format(PlayerDataLib.BAUBLE_COOLDOWN, selectedBauble), 0, false) <= 0) return;
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).incrementOrSetInteger(
+			data.incrementOrSetInteger(
 					String.format(PlayerDataLib.BAUBLE_COOLDOWN, selectedBauble), -1, 0, false);
 		}
 	}
