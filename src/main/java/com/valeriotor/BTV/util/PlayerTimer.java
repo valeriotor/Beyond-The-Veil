@@ -1,28 +1,35 @@
 package com.valeriotor.BTV.util;
 
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageCovenantData;
+import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 
 public class PlayerTimer {
 	public final EntityPlayer player;
-	private int timer = 100;
+	private int timer;
+	private final Consumer<EntityPlayer> action;
 	
 	public PlayerTimer(EntityPlayer player) {
-		this.player = player;
+		this(player, null, 100);
 	}
 	
-	public PlayerTimer(EntityPlayer player, int timer) {
+	public PlayerTimer(EntityPlayer player, Consumer<EntityPlayer> action) {
+		this(player, null, 100);
+	}
+	
+	public PlayerTimer(EntityPlayer player, Consumer<EntityPlayer> action, int timer) {
 		this.player = player;
 		this.timer = timer;
+		this.action = action;
 	}
 	
 	public boolean update() {
 		if(timer > 0) {
 			timer--;
 			return false;
+		} else if(timer == 0) {
+			timer--;
+			if(action != null) action.accept(player);
 		}
 		return true;
 		
