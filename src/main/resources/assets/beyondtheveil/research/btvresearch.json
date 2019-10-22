@@ -332,7 +332,7 @@
 		{
         "key": "BAPTISM",
         "name": "research.BAPTISM.title",
-        "icons": [ "minecraft:water" ],
+        "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
         "parents": [ "CANOE" ],
         "stages": [
@@ -346,6 +346,30 @@
                 },
                 {
                     "text": "research.BAPTISM.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "ALLIANCE",
+        "name": "research.ALLIANCE.title",
+        "icons": [ "beyondtheveil:canoe" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,10 ],
+        "parents": [ "BAPTISM" ],
+        "stages": [
+				{
+					"text": "research.ALLIANCE.stage.0",
+					"required_research": ["wait"]
+				},
+                {
+                    "text": "research.ALLIANCE.stage.1",
+					"required_research": ["hearing"]
+                },
+                {
+                    "text": "research.ALLIANCE.stage.2",
+					"required_research": ["!ALLIANCE"]
+                },
+                {
+                    "text": "research.ALLIANCE.stage.3"
                 }
             ]
         }

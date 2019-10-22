@@ -211,8 +211,25 @@ building.wall=Wall
 
 
 ##################
+#DAGON DIALOGUE
+##################
+
+dagon.greeting.0=IT IS NOT ALLIANCE I SEEK
+dagon.greeting.1=YOU WILL SERVE ME
+dagon.greeting.2=GRAND REWARDS AWAIT YOUR SUCCESS
+dagon.greeting.3=UNSPEAKABLE CONSEQUENCES WILL FOLLOW YOUR FAILURES
+dagon.greeting.4=YOU ARE MY HERALD
+dagon.greeting.5=BRING THESE GOLDEN JEWELS TO THE DWELLERS
+dagon.greeting.6=SO THAT THEY MAY KNOW YOU AS MY AMBASSADOR
+dagon.greeting.7=THEN COMMUNE WITH THE HOLY ONE'S IDOL
+dagon.greeting.8=I WILL HEAR YOU
+
+
+##################
 #DWELLER DIALOGUE
 ##################
+
+dweller.fisherman.dagon=Through Dagon, The Great Dreamer blesses us once more.
 
 dweller.fisherman.greeting0=Leave us alone, outsider.
 dweller.fisherman.greeting1=Begone. We don't want you here.
@@ -527,10 +544,15 @@ research.CANOE.stage.2=The Ocean itself.. it answers to me, its crashing waves a
 research.carpenter.text=Talk with the Hamlet's carpenter.
 research.!CANOE.text=Sail the Ocean with a Canoe.
 
-
 research.BAPTISM.title=Baptism
 research.BAPTISM.stage.0=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>So why can't I breathe it? Why does it still hinder my movement?<BR>It makes me strong, and at the same time weakens me.<BR>It grants me life, and yet it can kill me.<BR><BR>The Dwellers though.. they bask in its touch, even its depths. So why can't I?<BR>We must ask the Lighthouse Keeper, one last time.
-research.BAPTISM.stage.1=I am immortal. Right? I am, am I not?<BR>Maybe it isn't death I fear, but failure. A fate even worse, I reckon. Over and over, it will drive me to madness. And what good is immortality then?<BR>The pool must be tight. One by one wide, and exactly five blocks deep, all of still water.<BR>I must let myself sink in it, and once I reach the bottom, I must stay still. STILL. The slightest movement will ruin everything.<BR>Then I'll wait. And I will believe, like never before.<BR>Merciful God, don't let me drown.
+research.BAPTISM.stage.1=I am immortal. Right? I am, am I not?<BR>Maybe it isn't death I fear, but failure. A fate even worse, I reckon. Over and over, it will drive me to madness. And what good is immortality then?<BR>The pool must be tight. One by one wide, and exactly five blocks deep, all of it filled by still water.<BR>I must let myself sink in it, and once I reach the bottom, I must commune, eating a slug.<BR>Then I'll wait. And I will believe, like never before.<BR>Merciful God, don't let me drown.
 research.BAPTISM.stage.2=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>Now, I am water.<BR>Now, I am something. I hope.<BR>To know more of the Truth means to know less of myself. Am I truly a worthless wretch?<BR>My certainties grow weaker.
 research.lhbaptism.text=Talk with the Lighthouse Keeper.
 research.!BAPTISM.text=Drown. Then the Idol. 
+
+research.ALLIANCE.title=Alliance
+research.ALLIANCE.stage.0=In time, I shall grow yet stronger.<BR>But where is it I go from now?<BR>I must wait for signs. There is nothing I can do by myself.. nothing.
+research.ALLIANCE.stage.1=DAGON.<BR>Ancient scrolls speak of Him in hushed tones, proclaiming Him the Ruler of the Abyss, King of the Deep Ones.<BR>The first and foremost worshipper of The Great Dreamer.<BR>He noticed me. He sent a Deep One to my aid, though temporarily.<BR>Have I impressed Him? Could He be seeking an Alliance of sorts?<BR>Now that my research leaves the scope of the Dwellers' knowledge, it is time to seek greater aid.<BR>Dagon, I accept Your offer, and I shall speak with You again at the bottom of the Ocean.
+research.wait.text=Wait. Hope.
+research.hearing.text=Eat a slug in the deepest oceans.

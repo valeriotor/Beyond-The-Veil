@@ -2,11 +2,13 @@ package com.valeriotor.BTV.gui.container;
 
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.gui.GuiCityMapper;
+import com.valeriotor.BTV.gui.GuiDagon;
 import com.valeriotor.BTV.gui.GuiDrowned;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
 import com.valeriotor.BTV.items.container.InventoryDreamBottle;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
+import com.valeriotor.BTV.worship.DagonDialogues;
 import com.valeriotor.BTV.worship.DrowningRitual;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,10 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class GuiContainerHandler implements IGuiHandler{
 	
 	public static final int DREAM_BOTTLE = 0;
+	public static final int CITY_MAPPER = 1;
+	public static final int DROWNED = 2;
+	public static final int DAGON = 3;
+	
 	
 	
 	@Override
@@ -37,6 +43,8 @@ public class GuiContainerHandler implements IGuiHandler{
 				
 			}
 		}*/ else if(ID == 2) {
+			return new DummyContainer();
+		} else if(ID == 3) {
 			return new DummyContainer();
 		}
 		return null;
@@ -63,6 +71,9 @@ public class GuiContainerHandler implements IGuiHandler{
 		} else if(ID == 2) {
 			DrowningRitual dr = DrowningRitualEvents.rituals.get(p);
 			return new GuiDrowned((byte)dr.phase.ordinal(), dr.greatDreamer, dr.ancientGods);
+		} else if(ID == 3) {
+			GuiDagon gui = DagonDialogues.getGui(p);
+			if(gui != null) return gui;
 		}
 		return null;
 	}

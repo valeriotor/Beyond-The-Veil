@@ -84,5 +84,17 @@
 		"sounds": [
 			"beyondtheveil:breathe"
 		]
+	},
+	"dagon_tension":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:dagon_tension"
+		]
+	},
+	"dagon_thump":{
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:dagon_thump"
+		]
 	}
 }

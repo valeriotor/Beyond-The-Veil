@@ -3,9 +3,11 @@ package com.valeriotor.BTV.items;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
+import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -15,6 +17,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
@@ -56,8 +59,12 @@ public class ItemSlug extends ItemFood{
             int currentSlugs = data.getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
             data.setInteger(PlayerDataLib.SLUGS, currentSlugs+1, false);
             stack.shrink(1);
-            if(!worldIn.isRemote && !data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p))) 
-            	DrowningRitualEvents.checkRitual(p);
+            if(!worldIn.isRemote ) 
+            	if(!data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p))) {
+            		DrowningRitualEvents.checkRitual(p);
+            	}else if(p.isInWater() && p.posY < 40 && p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN) {
+            		p.openGui(BeyondTheVeil.instance, GuiContainerHandler.DAGON, worldIn, (int) p.posX, (int) p.posY, (int) p.posZ);
+            	}
         }
 
         return stack;

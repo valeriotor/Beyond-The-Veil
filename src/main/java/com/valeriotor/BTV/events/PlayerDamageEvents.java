@@ -1,17 +1,23 @@
 package com.valeriotor.BTV.events;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import baubles.api.BaublesApi;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 @Mod.EventBusSubscriber
 public class PlayerDamageEvents {
@@ -22,6 +28,7 @@ public class PlayerDamageEvents {
 			if(event.getEntityLiving().world.isRemote) return;
 			GreatDreamerBuffs.applyDefenseModifier(event);
 			DrowningRitualEvents.preventDamage(event);
+			dagonProtect(event);
 		}
 	}	
 
@@ -62,6 +69,21 @@ public class PlayerDamageEvents {
 				p.getFoodStats().setFoodLevel(0);
 				event.setAmount(damage - food);
 			}
+		}
+	}
+	
+	private static void dagonProtect(LivingHurtEvent event) {
+		if(!(event.getSource().getTrueSource() instanceof EntityLiving)) return;
+		EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		
+		if(k.isResearchKnown("ALLIANCE@0") && !k.isResearchComplete("wait")) {
+			EntityDeepOne guardian = new EntityDeepOne(p.world, 500);
+			guardian.setPosition(p.posX, p.posY, p.posZ);
+			guardian.setAttackTarget((EntityLivingBase)event.getSource().getTrueSource());
+			guardian.setMaster(p);
+			p.world.spawnEntity(guardian);
+			ThaumcraftApi.internalMethods.progressResearch(p, "wait");
 		}
 	}
 	

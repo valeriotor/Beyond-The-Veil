@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.worship;
 
+import static com.valeriotor.BTV.lib.PlayerDataLib.DAGONQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.FISHQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.SLUGS;
@@ -31,6 +32,7 @@ public class DGWorshipHelper {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 30, true, 0));
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 30, false, 1));
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
+		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 2));
 	}
 	
 	public static void levelUp(EntityPlayer p) {

@@ -15,6 +15,7 @@ public class PlayerDataLib {
 	public static final String PASSIVE_BAUBLE = "passiveBauble%d"; // This isn't used as a key by itself, but only with 0-6 added to the end e.g. passiveBauble3
 	public static final String POWER_COOLDOWN = "powCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. powCooldown1
 	public static final String BAUBLE_COOLDOWN = "bauCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. bauCooldown1
+	public static final String DAGON_DIALOGUE = "dagonDialogue";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
@@ -23,6 +24,7 @@ public class PlayerDataLib {
 	// Strings (Non-temporary)
 	public static final String FISHQUEST = "fish_quest";
 	public static final String RITUALQUEST = "drowned";
+	public static final String DAGONQUEST = "dagon_gold";
 	public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
 	public static final String FOUND_HAMLET = "found_hamlet";
 	public static final String TRANSFORMED = "transformed";

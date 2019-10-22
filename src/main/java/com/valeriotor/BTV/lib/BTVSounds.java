@@ -47,6 +47,11 @@ public final class BTVSounds {
 	@ObjectHolder("breathe")
 	public static final SoundEvent breathe = new SoundEvent(new ResourceLocation(References.MODID, "breathe")).setRegistryName("breathe");
 	
+	@ObjectHolder("dagon_thump")
+	public static final SoundEvent dagonThump = new SoundEvent(new ResourceLocation(References.MODID, "dagon_thump")).setRegistryName("dagon_thump");
+
+	@ObjectHolder("dagon_tension")
+	public static final SoundEvent dagonTension = new SoundEvent(new ResourceLocation(References.MODID, "dagon_tension")).setRegistryName("dagon_tension");
 	
 	
 	public static SoundEvent getSoundById(int id) {
@@ -64,6 +69,8 @@ public final class BTVSounds {
 			case 10: return worthless;
 			case 11: return tension;
 			case 12: return breathe;
+			case 13: return dagonThump;
+			case 14: return dagonTension;
 			default: return null;
 			
 		}
@@ -83,10 +90,12 @@ public final class BTVSounds {
 		if(sound.equals(worthless)) return 10;
 		if(sound.equals(tension)) return 11;
 		if(sound.equals(breathe)) return 12;
+		if(sound.equals(dagonThump)) return 13;
+		if(sound.equals(dagonTension)) return 14;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 13;
+		return 15;
 	}
 }
