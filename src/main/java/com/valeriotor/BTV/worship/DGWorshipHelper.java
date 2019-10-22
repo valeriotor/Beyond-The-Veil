@@ -44,7 +44,7 @@ public class DGWorshipHelper {
 				if(slugs >= res.getRequiredSlugs()) {
 					res.unlock(p);
 					slugs -= res.getRequiredSlugs();
-					data.removeString(entry.getKey());
+					//data.removeString(entry.getKey()); Do I need this?
 					atLeastOne = true;
 				} else {
 					notEnoughSlugs = true;
