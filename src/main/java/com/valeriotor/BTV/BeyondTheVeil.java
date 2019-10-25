@@ -11,6 +11,7 @@ import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.lib.commands.ReloadResources;
+import com.valeriotor.BTV.lib.commands.SetPlayerData;
 import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
@@ -104,5 +105,6 @@ public class BeyondTheVeil
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new SetWorshipLevel());
         event.registerServerCommand(new ReloadResources());
+        event.registerServerCommand(new SetPlayerData());
     }
 }
