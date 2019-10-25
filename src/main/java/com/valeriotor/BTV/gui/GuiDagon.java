@@ -17,8 +17,8 @@ public class GuiDagon extends GuiScreen{
 	private final int maxCount;
 	private final String translateKey;
 	private String displayString = "";
-	private static final int SINGLE_THUMP_TIME = 50;
-	private static final int TENSION_TIME = 20 * 32;
+	private int SINGLE_THUMP_TIME = 50;
+	private static final int TENSION_TIME = 20 * 30;
 	
 	public GuiDagon(DagonDialogues dd) {
 		this.maxCount = dd.talkCount;
@@ -49,8 +49,16 @@ public class GuiDagon extends GuiScreen{
 			if(this.thumpTimer == 0) {
 				mc.player.playSound(BTVSounds.dagonThump, 5, 1);
 				this.count++;
-				if(this.count < this.maxCount) this.displayString = I18n.format("dagon." + translateKey + "." +  String.valueOf(count));
-				else if(this.count == this.maxCount) this.displayString = "";
+				if(this.count < this.maxCount) {
+					this.displayString = I18n.format("dagon." + translateKey + "." +  String.valueOf(count));
+					if(this.count % (this.maxCount / 3) == 0) {
+						this.SINGLE_THUMP_TIME -= 10;
+					}
+				}
+				else if(this.count == this.maxCount) {
+					this.displayString = "";
+					this.SINGLE_THUMP_TIME += 20;
+				}
 				else {
 					BTVPacketHandler.INSTANCE.sendToServer(new MessageDagonDialogue());
 					mc.displayGuiScreen((GuiScreen)null);
