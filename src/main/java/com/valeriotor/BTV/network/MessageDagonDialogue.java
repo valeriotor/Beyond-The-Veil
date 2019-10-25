@@ -3,6 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +33,7 @@ public class MessageDagonDialogue implements IMessage{
 				ThaumcraftApi.internalMethods.progressResearch(p, "hearing");
 				break;
 			}
+			SyncUtil.syncCapabilityData(p);
 			return null;
 		}
 		
