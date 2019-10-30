@@ -5,6 +5,7 @@ import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -26,8 +27,9 @@ public class MessageActivatePower implements IMessage{
 			EntityPlayer p = ctx.getServerHandler().player;
 			IActivePower power = Worship.getPower(p);
 			if(power != null && power.hasRequirement(p)) {
-				if(Worship.getPowerCooldown(p, power.getIndex()) > 0) {
-					// TODO: Add failed activation sound
+				int cooldown = Worship.getPowerCooldown(p, power.getIndex());
+				if(cooldown > 0) {
+					p.sendMessage(new TextComponentTranslation("power.cooldown", cooldown/20));
 				} else {
 					boolean success = power.activatePower(p);
 					if(success) Worship.setPowerCooldown(p, power.getCooldownTicks(), power.getIndex());

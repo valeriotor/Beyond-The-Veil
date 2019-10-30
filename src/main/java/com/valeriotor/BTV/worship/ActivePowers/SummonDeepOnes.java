@@ -1,7 +1,9 @@
 package com.valeriotor.BTV.worship.ActivePowers;
 
 import com.valeriotor.BTV.capabilities.DGProvider;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.worship.Deities;
 
@@ -50,7 +52,7 @@ public class SummonDeepOnes implements IActivePower{
 	}
 	
 	private static int getAmount(EntityPlayer p) {
-		return Math.min(6, (Deities.GREATDREAMER.cap(p).getLevel() - 2) / 2); 
+		return 1; 
 		// maybe + cap.getString("transformed") ? 1 : 0;
 	}
 	
@@ -90,7 +92,7 @@ public class SummonDeepOnes implements IActivePower{
 
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
-		return true; // TODO: Change this to check for research
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.DAGONQUEST); // TODO: Change this to check for research
 	}
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");

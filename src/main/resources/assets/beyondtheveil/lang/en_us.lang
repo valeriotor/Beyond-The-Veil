@@ -97,6 +97,7 @@ fluid.tears=Tears
 
 interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
 interact.idol.moreslugs=More slugs must be consumed to commune.
+interact.idol.power=NEW POWER: Hold Power key ('R' by default) to choose Power, tap it to cast.
 interact.lacrymatory.full=This Lacrymatory is already bound.
 interact.lacrymatory.success=The %1$s is now bound to the Lacrymatory.
 interact.citymapper.loading=The City Mapper is slowly loading the surrounding environment.
@@ -219,11 +220,11 @@ dagon.greeting.1=YOU WILL SERVE ME
 dagon.greeting.2=GRAND REWARDS AWAIT YOUR SUCCESS
 dagon.greeting.3=UNSPEAKABLE CONSEQUENCES WILL FOLLOW YOUR FAILURES
 dagon.greeting.4=YOU ARE MY HERALD
-dagon.greeting.5=BRING THESE GOLDEN JEWELS TO THE DWELLERS
+dagon.greeting.5=BRING THIS GOLD TO THE DWELLERS
 dagon.greeting.6=SO THAT THEY MAY KNOW YOU AS MY AMBASSADOR
 dagon.greeting.7=THEN COMMUNE WITH THE HOLY ONE'S IDOL
 dagon.greeting.8=I WILL HEAR YOU
-
+dagon.bringgold=This three golden blocks must be brought to the Fisherman Dwellers. We should make haste.
 
 ##################
 #DWELLER DIALOGUE
@@ -554,5 +555,15 @@ research.!BAPTISM.text=Drown. Then the Idol.
 research.ALLIANCE.title=Alliance
 research.ALLIANCE.stage.0=In time, I shall grow yet stronger.<BR>But where is it I go from now?<BR>I must wait for signs. There is nothing I can do by myself.. nothing.
 research.ALLIANCE.stage.1=DAGON.<BR>Ancient scrolls speak of Him in hushed tones, proclaiming Him the Ruler of the Abyss, King of the Deep Ones.<BR>The first and foremost worshipper of The Great Dreamer.<BR>He noticed me. He sent a Deep One to my aid, though temporarily.<BR>Have I impressed Him? Could He be seeking an Alliance of sorts?<BR>Now that my research leaves the scope of the Dwellers' knowledge, it is time to seek greater aid.<BR>Dagon, I accept Your offer, and I shall speak with You again at the bottom of the Ocean.
+research.ALLIANCE.stage.2=It RINGS inside of me.<BR>His voice, like a booming drum of war, not asking but COMMANDING.<BR>Three golden blocks I've been given. I shall give them to the grey robed fisherman Dwellers of the Hamlet, then commune.<BR>I have no intention to learn what would happen were I to disobey.<BR>Oh, what have I gotten myself into.
+research.ALLIANCE.stage.3=By The Great Dreamer.. I was mistaken.<BR>Dagon has offered me a boon like no other.<BR>By holding myself into a stance of power I am capable of summoning a Deep One to my aid. Hold to choose, tap to cast.<BR>Is this power worth it? And the knowledge that comes with it?<BR>I will journey forth. After all.. do I have any choice?
 research.wait.text=Wait. Hope.
 research.hearing.text=Eat a slug in the deepest oceans.
+research.!ALLIANCE.text=Bring the gold to the Dwellers. Commune.
+
+
+##################
+#MISC
+##################
+
+power.cooldown=The Power requires %1$s more seconds of cooldown.

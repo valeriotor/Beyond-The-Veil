@@ -15,6 +15,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -61,6 +62,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	private int drunkStatus = 0;
 	private boolean thirsty = false;
 	private boolean talking = false;
+	private boolean receivedGold = false;
 	private int talkTime = 0;
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityHamletDweller.class, DataSerializers.VARINT);
 	
@@ -254,6 +256,19 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.talking = true;
 		if(!world.isRemote) {
 			IPlayerData data = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			if(this.profession == ProfessionsEnum.FISHERMAN && data.getInteger(PlayerDataLib.DAGON_DIALOGUE) == 1 && !data.getString(PlayerDataLib.DAGONQUEST)) {
+				if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
+					player.getHeldItem(hand).shrink(1);
+					this.receivedGold = true;
+					player.sendMessage(new TextComponentString("§5§o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
+					data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
+					if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
+						data.addString(PlayerDataLib.DAGONQUEST, false);
+						data.removeInteger(PlayerDataLib.DAGON_GOLD);
+					}
+					return EnumActionResult.SUCCESS;
+				}
+			}
 			String key = String.format(PlayerDataLib.TALK_COUNT, this.profession.name());
 			if(player.getHeldItem(hand).getItem() instanceof ItemDrink && player.getHeldItem(hand).getItem() != ItemRegistry.cup && this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK && this.thirsty) {
 				player.getHeldItem(hand).shrink(1);

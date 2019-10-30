@@ -32,7 +32,7 @@ public class DGWorshipHelper {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 30, true, 0));
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 30, false, 1));
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
-		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 2));
+		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 3));
 	}
 	
 	public static void levelUp(EntityPlayer p) {
@@ -48,6 +48,7 @@ public class DGWorshipHelper {
 					slugs -= res.getRequiredSlugs();
 					//data.removeString(entry.getKey()); Do I need this?
 					atLeastOne = true;
+					if(entry.getKey().equals(DAGONQUEST)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
 				} else {
 					notEnoughSlugs = true;
 				}
