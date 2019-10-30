@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.gui;
 
+import java.io.IOException;
+
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageDagonDialogue;
@@ -42,12 +44,12 @@ public class GuiDagon extends GuiScreen{
 	public void updateScreen() {
 		this.tensionTimer = (this.tensionTimer + 1) % TENSION_TIME;
 		if(this.tensionTimer == 0) 
-			mc.player.playSound(BTVSounds.dagonTension, 0.75F, 1);
+			mc.player.playSound(BTVSounds.dagonTension, 0.45F, 1);
 		
 		this.thumpTimer = (this.thumpTimer + 1) % (SINGLE_THUMP_TIME * 3);
 		if(this.thumpTimer % SINGLE_THUMP_TIME == 0) {
 			if(this.thumpTimer == 0) {
-				mc.player.playSound(BTVSounds.dagonThump, 5, 1);
+				mc.player.playSound(BTVSounds.dagonThump, 10, 1);
 				this.count++;
 				if(this.count < this.maxCount) {
 					this.displayString = I18n.format("dagon." + translateKey + "." +  String.valueOf(count));
@@ -56,16 +58,16 @@ public class GuiDagon extends GuiScreen{
 					}
 				}
 				else if(this.count == this.maxCount) {
+					BTVPacketHandler.INSTANCE.sendToServer(new MessageDagonDialogue());
 					this.displayString = "";
 					this.SINGLE_THUMP_TIME += 20;
 				}
 				else {
-					BTVPacketHandler.INSTANCE.sendToServer(new MessageDagonDialogue());
 					mc.displayGuiScreen((GuiScreen)null);
 				}
 			}
 			else {
-				mc.player.playSound(BTVSounds.dagonThump, 1, 1);
+				mc.player.playSound(BTVSounds.dagonThump, 5, 1);
 			}
 		}
 		
@@ -76,5 +78,8 @@ public class GuiDagon extends GuiScreen{
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
+	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {}
 	
 }
