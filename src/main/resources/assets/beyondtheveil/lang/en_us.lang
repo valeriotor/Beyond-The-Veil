@@ -209,6 +209,7 @@ building.tower=Tower
 building.largetower=Large Tower
 building.pyramid=Pyramid
 building.wall=Wall
+building.road=Road
 
 
 ##################

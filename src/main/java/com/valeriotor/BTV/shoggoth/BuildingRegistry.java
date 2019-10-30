@@ -3,6 +3,7 @@ package com.valeriotor.BTV.shoggoth;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.shoggoth.buildings.BuildingLargeTower;
 import com.valeriotor.BTV.shoggoth.buildings.BuildingPyramid;
+import com.valeriotor.BTV.shoggoth.buildings.BuildingRoad;
 import com.valeriotor.BTV.shoggoth.buildings.BuildingTallTower;
 import com.valeriotor.BTV.shoggoth.buildings.BuildingTower;
 import com.valeriotor.BTV.shoggoth.buildings.BuildingWall;
@@ -17,6 +18,7 @@ public class BuildingRegistry {
 	public static BuildingTemplate largeTower;
 	public static BuildingTemplate pyramid;
 	public static BuildingTemplate wall;
+	public static BuildingTemplate road;
 	
 	public static final BuildingTemplate[] templates = new BuildingTemplate[64];
 	
@@ -30,6 +32,7 @@ public class BuildingRegistry {
 		tallTower = new BuildingTallTower("talltower", count++);
 		pyramid = new BuildingPyramid("pyramid", count++);
 		wall = new BuildingWall("wall", count++);
+		road = new BuildingRoad("road", count++);
 	}
 	
 }
