@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 @Mod.EventBusSubscriber
@@ -22,9 +23,11 @@ public class ServerTickEvents {
 	
 	@SubscribeEvent
 	public static void serverTickEvent(ServerTickEvent e) {
-		decreaseMessageTimers();
-		decreaseCovenantTimers();
-		decreasePlayerTimers();
+		if(e.phase == TickEvent.Phase.END) {
+			decreaseMessageTimers();
+			decreaseCovenantTimers();
+			decreasePlayerTimers();
+		}
 		DrowningRitualEvents.update();
 	}
 	
