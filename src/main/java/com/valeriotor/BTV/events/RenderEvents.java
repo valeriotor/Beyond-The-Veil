@@ -84,29 +84,25 @@ public class RenderEvents {
         float f = renderManager.playerViewY;
         float f1 = renderManager.playerViewX;
         boolean flag1 = renderManager.options.thirdPersonView == 2;
-        
-        // Test code that *works* (for entities, not players).
-        /*List<EntityLiving> ents = p.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(p) < 1000);
-        BlockPos nearestTestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), ents.stream().map(EntityLiving::getPosition).collect(Collectors.toList()), Math.PI / 16);
-        for(EntityLiving e : ents) {
-        	BlockPos pos = e.getPosition();
-        	float dist = (float)Math.sqrt(p.getDistanceSq(pos));
-        	if(pos.equals(nearestTestPos)) dist *= 1.5;
-            drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getName(), 10*(float)(pos.getX() - d0)/dist, 10*(float)(pos.getY() - d1)/dist + 1.5F, 10*(float)(pos.getZ() - d2)/dist, 0, f, f1, flag1, pos.equals(nearestTestPos));
-        }
-        */
         BlockPos nearestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), covenantPlayers, Math.PI / 16);
 		for(HashMap.Entry<String, BlockPos> e : covenantPlayers.entrySet()) {
 			BlockPos pos = e.getValue();
 			if(e.getValue() == null) continue;
 			float dist = (float)Math.sqrt(p.getDistanceSq(pos)) * 1.2F;
-        	if(pos.equals(nearestPos)) dist *= 1.5;
-            drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getKey(), 10*(float)(pos.getX() - d0)/dist, 10*(float)(pos.getY() - d1)/dist + 1.5F, 10*(float)(pos.getZ() - d2)/dist, 0, f, f1, flag1, pos.equals(nearestPos));
-        }
+			float offset = 1.5F;
+        	if(pos.equals(nearestPos)) {
+        		dist *= 1.5;
+        		offset += 0.04;
+        	}
+        	GlStateManager.pushMatrix();
+        	//GlStateManager.scale(3, 3, 3);
+            drawNameplate(Minecraft.getMinecraft().fontRenderer, e.getKey(), (float)(pos.getX() - d0)/dist, (float)(pos.getY() - d1)/dist + offset, (float)(pos.getZ() - d2)/dist, 0, f, f1, flag1, pos.equals(nearestPos));
+            GlStateManager.popMatrix();
+		}
 	}
 	
 	
-	// Literally copied and pasted from EntityRenderer, only changing the enableDepth call and the isSneaking parameter (to isLooking)
+	// Literally copied and pasted from EntityRenderer, only changing the enableDepth call, the isSneaking parameter (to isLooking) and the scale factors
 	private static void drawNameplate(FontRenderer fontRendererIn, String str, float x, float y, float z, int verticalShift, float viewerYaw, float viewerPitch, boolean isThirdPersonFrontal, boolean isLooking)
     {
         GlStateManager.pushMatrix();
@@ -114,7 +110,7 @@ public class RenderEvents {
         GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float)(isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(-0.025F, -0.025F, 0.025F);
+        GlStateManager.scale(-0.0025F, -0.0025F, 0.0025F);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(false);
 

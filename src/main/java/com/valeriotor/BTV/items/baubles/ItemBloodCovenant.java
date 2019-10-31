@@ -43,7 +43,7 @@ public class ItemBloodCovenant extends ModItem implements IBauble, IActiveBauble
 				return false;
 			}
 			ServerTickEvents.removeCovenantTimer(p);
-			p.setPosition(nearestPos.getX(), nearestPos.getY(), nearestPos.getZ());
+			p.setPositionAndUpdate(nearestPos.getX(), nearestPos.getY(), nearestPos.getZ());
 			return true;
 		} else {
 			makeTimer(p, playerss);
