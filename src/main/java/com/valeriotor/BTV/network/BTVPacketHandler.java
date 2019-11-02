@@ -1,6 +1,8 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.baubles.MessageRevelationRingToClient;
+import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
 import com.valeriotor.BTV.network.ritual.MessageRitualToServer;
 
@@ -28,6 +30,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageCityMapper.CityMapperMessageHandler.class, MessageCityMapper.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageRitualToServer.RitualToServerMessageHandler.class, MessageRitualToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageDagonDialogue.DagonDialogueMessageHandler.class, MessageDagonDialogue.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageRevelationRingToServer.RevelationRingToServerMessageHandler.class, MessageRevelationRingToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);
@@ -36,6 +39,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessagePlayerAnimation.PlayerAnimationMessageHandler.class, MessagePlayerAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePerformHurtAnimation.PerformHurtAnimationMessageHandler.class, MessagePerformHurtAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCovenantData.CovenantDataMessageHandler.class, MessageCovenantData.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageRevelationRingToClient.RevelationRingToClientMessageHandler.class, MessageRevelationRingToClient.class, count++, Side.CLIENT);
 		
 	}
 	

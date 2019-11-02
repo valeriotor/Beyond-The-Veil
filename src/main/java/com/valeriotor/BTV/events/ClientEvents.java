@@ -38,6 +38,7 @@ public class ClientEvents {
 			Minecraft.getMinecraft().gameSettings.keyBindRight
 	};               
 	private int soundCounter = 0;
+	private int revelationRingCounter = 12000;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -52,6 +53,12 @@ public class ClientEvents {
 				soundCounter--;
 			}	
 			
+			if(revelationRingCounter > 0) {
+				revelationRingCounter--;
+			} else {
+				revelationRingCounter = 12000;
+				BeyondTheVeil.proxy.renderEvents.cleanseList();
+			}
 			
 			
 		}

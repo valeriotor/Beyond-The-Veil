@@ -1,30 +1,37 @@
 package com.valeriotor.BTV.events;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.lwjgl.opengl.GL11;
 
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
+import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.BTV.util.MathHelper;
 
+import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -66,6 +73,42 @@ public class RenderEvents {
 			Minecraft.getMinecraft().player.eyeHeight = 2;
 		else
 			Minecraft.getMinecraft().player.eyeHeight = 1.62F;
+	}
+	
+	@SubscribeEvent
+	public void livingRenderEvent(RenderLivingEvent.Pre event) {
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		if(p == null || Minecraft.getMinecraft().isGamePaused()) return;
+		revelationRing(p, event);
+	}
+	
+	
+	private List<Integer> invisibleEnts = new ArrayList<>();	
+	private void revelationRing(EntityPlayer p, RenderLivingEvent.Pre event) {
+		int slot = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
+		if(slot == -1) return;
+		EntityLivingBase e = event.getEntity();
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, slot), 0, false) == 1) {
+			if(e.isInvisible()) {
+				invisibleEnts.add(e.getEntityId());
+				e.setInvisible(false);
+			}
+		} else {
+			if(!invisibleEnts.isEmpty()) {
+				cleanseList();
+			}
+		}
+	}
+	
+	public void cleanseList() {
+		invisibleEnts.forEach(i -> BTVPacketHandler.INSTANCE.sendToServer(new MessageRevelationRingToServer(i)));
+		invisibleEnts.clear();
+	}
+	
+	public void invisibilificationator(int id) {
+		if(Minecraft.getMinecraft().player == null) return;
+		Entity e = Minecraft.getMinecraft().player.world.getEntityByID(id);
+		if(e != null) e.setInvisible(true);
 	}
 	
 	@SubscribeEvent
