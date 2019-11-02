@@ -1,8 +1,10 @@
 package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
@@ -30,14 +32,12 @@ public class GuiActiveBauble extends GuiScreen{
 	private TextureAtlasSprite[] bTextures = new TextureAtlasSprite[7];
 	private BaubleStatus[] status = new BaubleStatus[8];
 	protected int counter = 1;
-	private static final String[] helpText = I18n.format("gui.activebauble.help").split("/"); 
+	private static final List<String> helpText = Lists.newArrayList(I18n.format("gui.activebauble.help").split("/"));; 
 	private static final ResourceLocation optionTexture = new ResourceLocation(References.MODID + ":textures/gui/bauble_option.png");
 	private static final ResourceLocation questionMark = new ResourceLocation(References.MODID + ":textures/gui/question_mark.png");
-	private static final ResourceLocation emptyBackground = new ResourceLocation(References.MODID + ":textures/gui/empty_background.png");
 	
 	public GuiActiveBauble() {
 		this.updateBaubles();
-		
 	}
 	
 	private void updateBaubles() {
@@ -87,21 +87,14 @@ public class GuiActiveBauble extends GuiScreen{
 		int yCoord = (int) (Math.sin(7*Math.PI/4 + 5*Math.PI/8)*100 + 24);
 		drawModalRectWithCustomSizedTexture(xCoord, -yCoord, 0, 0, 48, 48, 48, 48);
 		if(selectedOp == 7) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(emptyBackground);
-			drawModalRectWithCustomSizedTexture(-165, -84, 0, 0, 192, 192, 192, 192);
-			int j = 0;
-			for(String s : helpText) {
-				List<String> ss = GuiHelper.splitStringsByWidth(s, 175, mc.fontRenderer);
-				for(String sss : ss) {
-					drawString(mc.fontRenderer, sss, -158, -76+(j++)*15, 0xFFFF00);
-				}
-			}
+			GlStateManager.translate(-(this.width/2)/scale, -(this.height/2)/scale, 0);
+			this.drawHoveringText(helpText, mouseX, mouseY);
 		}else if(selectedOp != -1){
-			drawCenteredString(mc.fontRenderer, this.getLocalizedBaubleName(selectedOp), 0, 0, 0xFFFF00);
+			drawCenteredString(mc.fontRenderer, this.getLocalizedBaubleName(selectedOp), 0, 10, 0xFFFF00);
 			String s1 = status[selectedOp] == BaubleStatus.ACTIVE || status[selectedOp] == BaubleStatus.ACTIVEPASSIVE ? I18n.format("gui.activebauble.active") : I18n.format("gui.activebauble.inactive");
 			String s2 = status[selectedOp] == BaubleStatus.PASSIVE || status[selectedOp] == BaubleStatus.ACTIVEPASSIVE ? I18n.format("gui.activebauble.passiveon") : I18n.format("gui.activebauble.passiveoff");
-			drawCenteredString(mc.fontRenderer, s1, 0, 15, 0xFFFF00);
-			drawCenteredString(mc.fontRenderer, s2, 0, 30, 0xFFFF00);
+			drawCenteredString(mc.fontRenderer, s1, 0, 25, 0xFFFF00);
+			drawCenteredString(mc.fontRenderer, s2, 0, 40, 0xFFFF00);
 		}
 		
 		GlStateManager.popMatrix();
