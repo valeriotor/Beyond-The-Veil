@@ -5,6 +5,8 @@ import java.util.List;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.baubles.MessageWolfMedallionToClient;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
@@ -17,10 +19,10 @@ import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -81,11 +83,8 @@ public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble{
 	public boolean activate(EntityPlayer p) {
 		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-25, -10, -25), p.getPosition().add(25, 12, 25));
 		List<Entity> entities = p.world.getEntitiesWithinAABBExcludingEntity(p, bb);
-		entities.forEach(e -> {
-			if(e instanceof EntityLivingBase) {
-				((EntityLivingBase)e).addPotionEffect(new PotionEffect(MobEffects.GLOWING, 80, 1, false, true));
-			}
-		});
+		List<EntityLivingBase> ents = p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 50 && !e.isPotionActive(MobEffects.GLOWING));
+		BTVPacketHandler.INSTANCE.sendTo(new MessageWolfMedallionToClient(ents), (EntityPlayerMP) p);
 		return true;
 	}
 

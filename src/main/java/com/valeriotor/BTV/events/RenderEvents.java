@@ -111,6 +111,28 @@ public class RenderEvents {
 		if(e != null) e.setInvisible(true);
 	}
 	
+	private List<Integer> glowingEnts = new ArrayList();
+	public void glowificator(int id) {
+		if(Minecraft.getMinecraft().player == null) return;
+		Entity e = Minecraft.getMinecraft().player.world.getEntityByID(id);
+		if(e != null) {
+			e.setGlowing(true);
+			glowingEnts.add(id);
+		}
+	}
+	
+	public void deGlowificator() {
+		if(Minecraft.getMinecraft().player != null) {
+			for(Integer i : glowingEnts) {
+				Entity e = Minecraft.getMinecraft().player.world.getEntityByID(i);
+				if(e != null) {
+					e.setGlowing(false);
+				}
+			}
+		}
+		glowingEnts.clear();
+	}
+	
 	@SubscribeEvent
 	public void onOverlayRenderEvent(RenderWorldLastEvent event) {
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused() || Minecraft.getMinecraft().player.world == null) return;

@@ -39,6 +39,7 @@ public class ClientEvents {
 	};               
 	private int soundCounter = 0;
 	private int revelationRingCounter = 12000;
+	private int wolfMedallionCounter = -1;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -60,8 +61,19 @@ public class ClientEvents {
 				BeyondTheVeil.proxy.renderEvents.cleanseList();
 			}
 			
+			if(wolfMedallionCounter > 0) {
+				wolfMedallionCounter--;
+				if(wolfMedallionCounter == 0) {
+					wolfMedallionCounter--;
+					BeyondTheVeil.proxy.renderEvents.deGlowificator();
+				}
+			}
 			
 		}
+	}
+	
+	public void startWolfMedallionCounter() {
+		this.wolfMedallionCounter = 20 * 8;
 	}
 	
 	public void sawCleaverDodge(EntityPlayer p) {

@@ -3,6 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToClient;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
+import com.valeriotor.BTV.network.baubles.MessageWolfMedallionToClient;
 import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
 import com.valeriotor.BTV.network.ritual.MessageRitualToServer;
 
@@ -40,6 +41,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessagePerformHurtAnimation.PerformHurtAnimationMessageHandler.class, MessagePerformHurtAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCovenantData.CovenantDataMessageHandler.class, MessageCovenantData.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRevelationRingToClient.RevelationRingToClientMessageHandler.class, MessageRevelationRingToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageWolfMedallionToClient.WolfMedallionToClientMessageHandler.class, MessageWolfMedallionToClient.class, count++, Side.CLIENT);
 		
 	}
 	
