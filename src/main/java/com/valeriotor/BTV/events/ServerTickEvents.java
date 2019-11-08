@@ -78,7 +78,6 @@ public class ServerTickEvents {
 	}
 	
 	public static void addCovenantTimer(PlayerTimer ct) {
-		if(covenants.contains(ct)) covenants.remove(ct);
 		covenants.add(ct);
 	}
 	
@@ -105,6 +104,7 @@ public class ServerTickEvents {
 	// ******************************************* PLAYER TIMERS ****************************************** \\
 	
 	private static List<PlayerTimer> timers = new ArrayList<>();
+	private static List<PlayerTimer> timerBuffer = new ArrayList<>();
 	
 	private static void decreasePlayerTimers() {
 		if(timers.isEmpty()) return;
@@ -115,16 +115,21 @@ public class ServerTickEvents {
 				iterator.remove();
 			}
 		}
+		for(PlayerTimer pt : timerBuffer) timers.add(pt);
+		timerBuffer.clear();
 	}
 	
-	public static void addPlayerTimer(PlayerTimer ct) {
-		if(timers.contains(ct)) timers.remove(ct);
-		timers.add(ct);
+	public static void addPlayerTimer(PlayerTimer pt) {
+		timers.add(pt);
+	}
+	
+	public static void addBufferedTimer(PlayerTimer pt) {
+		timerBuffer.add(pt);
 	}
 	
 	public static boolean containsPlayerTimer(EntityPlayer p) {
-		for(PlayerTimer ct : timers) {
-			if(ct.player.equals(p)) return true;
+		for(PlayerTimer pt : timers) {
+			if(pt.player.equals(p)) return true;
 		}
 		return false;
 	}
