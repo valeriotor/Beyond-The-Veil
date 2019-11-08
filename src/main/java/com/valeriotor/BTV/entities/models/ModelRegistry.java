@@ -9,6 +9,7 @@ public class ModelRegistry {
 	public static ModelWeeper weeper;
 	public static ModelStarspawn starspawn;
 	public static ModelShoggoth shoggoth;
+	public static ModelParasite parasite;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -18,6 +19,7 @@ public class ModelRegistry {
 		weeper = new ModelWeeper();
 		starspawn = new ModelStarspawn();
 		shoggoth = new ModelShoggoth();
+		parasite = new ModelParasite();
 	}
 	
 }

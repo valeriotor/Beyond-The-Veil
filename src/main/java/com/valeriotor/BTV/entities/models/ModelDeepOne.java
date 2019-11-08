@@ -208,7 +208,7 @@ public class ModelDeepOne extends ModelAnimated {
     	this.resetOffsets(bodyParts);
     	if(e instanceof EntityPlayer) {
     		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)e);
-    		if(anim != null) {
+    		if(anim != null && anim.type.modelType instanceof ModelDeepOne) {
     			if(!anim.isDone()) anim.applyTransformations(bodyParts, partialTickTime);
     		}else {
 	        	this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;

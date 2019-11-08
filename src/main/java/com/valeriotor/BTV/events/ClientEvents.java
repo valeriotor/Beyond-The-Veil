@@ -40,6 +40,8 @@ public class ClientEvents {
 	private int soundCounter = 0;
 	private int revelationRingCounter = 12000;
 	private int wolfMedallionCounter = -1;
+	/**A counter for genering ticking animations */
+	private int animationCounter = 0;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -48,26 +50,16 @@ public class ClientEvents {
 			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
 				sawCleaverDodge(p);
 				playerAnimationUpdate();
+				updateAnimationCounter();
 			}
 				
 			if(soundCounter > 0) {
 				soundCounter--;
 			}	
 			
-			if(revelationRingCounter > 0) {
-				revelationRingCounter--;
-			} else {
-				revelationRingCounter = 12000;
-				BeyondTheVeil.proxy.renderEvents.cleanseList();
-			}
+			updateRevelationRing();
+			updateWolfMedallion();
 			
-			if(wolfMedallionCounter > 0) {
-				wolfMedallionCounter--;
-				if(wolfMedallionCounter == 0) {
-					wolfMedallionCounter--;
-					BeyondTheVeil.proxy.renderEvents.deGlowificator();
-				}
-			}
 			
 		}
 	}
@@ -138,5 +130,33 @@ public class ClientEvents {
 		p.motionX += mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 		p.motionZ += mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
 	}	
+	
+	private void updateRevelationRing() {
+		if(revelationRingCounter > 0) {
+			revelationRingCounter--;
+		} else {
+			revelationRingCounter = 12000;
+			BeyondTheVeil.proxy.renderEvents.cleanseList();
+		}
+	}
+	
+	private void updateWolfMedallion() {
+		if(wolfMedallionCounter > 0) {
+			wolfMedallionCounter--;
+			if(wolfMedallionCounter == 0) {
+				wolfMedallionCounter--;
+				BeyondTheVeil.proxy.renderEvents.deGlowificator();
+			}
+		}
+	}
+	
+	private void updateAnimationCounter() {
+		this.animationCounter++;
+		this.animationCounter &= 1023;
+	}
+	
+	public int getAnimationCounter() {
+		return this.animationCounter;
+	}
 	
 }
