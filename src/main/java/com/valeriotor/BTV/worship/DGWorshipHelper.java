@@ -108,6 +108,10 @@ public class DGWorshipHelper {
 		return defenseMultipliers.get(p);
 	}
 	
+	public static boolean areDeepOnesFriendly(EntityPlayer p) {
+		return researches.get(DAGONQUEST).isUnlocked(ThaumcraftCapabilities.getKnowledge(p));
+	}
+	
 	public static class DGResearch {
 		private final String key;
 		public final double attackIncrement;

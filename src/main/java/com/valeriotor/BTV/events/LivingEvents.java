@@ -1,8 +1,12 @@
 package com.valeriotor.BTV.events;
 
+import java.util.List;
+
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityShoggoth;
+import com.valeriotor.BTV.entities.IPlayerGuardian;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -21,6 +25,7 @@ public class LivingEvents {
 		if(e.getSource() instanceof EntityDamageSource) {
 			if(e.getSource().getTrueSource() instanceof EntityPlayer) {
 				GreatDreamerBuffs.applyAttackModifier(e);
+				commandMinions(e);
 			}
 		}
 		e.setCanceled(cancelDamage(e));
@@ -40,6 +45,14 @@ public class LivingEvents {
 		}
 		
 		return false;
+	}
+	
+	public static void commandMinions(LivingHurtEvent e) {
+		EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
+		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, ent -> ent instanceof IPlayerGuardian && ((IPlayerGuardian)ent).getMaster() == p);
+		for(EntityLiving ent : minions) {
+			((IPlayerGuardian)ent).setTarget(e.getEntityLiving());
+		}
 	}
 	
 }

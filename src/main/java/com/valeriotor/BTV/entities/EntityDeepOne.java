@@ -7,7 +7,7 @@ import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
 import com.valeriotor.BTV.entities.AI.AIDeepOneRoar;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
-import com.valeriotor.BTV.entities.AI.IPlayerGuardian;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
 
@@ -83,7 +83,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
 	        this.tasks.addTask(2, new AIDeepOneRoar(this));
 	        this.targetTasks.addTask(1, new AIProtectMaster(this));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null && Worship.getDeityLevel(p, Deities.GREATDREAMER) < 5)));
+	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null && !DGWorshipHelper.areDeepOnesFriendly(p))));
 	 }
 	 
 	 @Override

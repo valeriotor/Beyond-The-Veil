@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.entities.AI;
 
+import com.valeriotor.BTV.entities.IPlayerGuardian;
+
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
