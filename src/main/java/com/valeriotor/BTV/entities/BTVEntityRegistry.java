@@ -5,7 +5,9 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -42,6 +44,16 @@ public class BTVEntityRegistry {
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
 		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth;
+	}
+	
+	
+	public static boolean isHostileEntity(EntityLivingBase ent) {
+		if(ent.isCreatureType(EnumCreatureType.MONSTER, false)) return true;
+		if(ent instanceof EntityLiving) {
+			EntityLiving e = (EntityLiving) ent;
+			if(!e.targetTasks.taskEntries.isEmpty()) return true;
+		}
+		return false;
 	}
 	
 	

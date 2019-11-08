@@ -45,7 +45,7 @@ public class MessageActivateBauble implements IMessage{
 				 .forEach(e -> {
 				 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
 					 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
-					 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
+					 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 0));
 				 }
 				 if(e instanceof EntityPlayerMP) {
 					 BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deepOneRoar), e.getPosition().toLong()), (EntityPlayerMP)e);

@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.BTVEntityRegistry;
-import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.MathHelper;
+import com.valeriotor.BTV.util.PlayerTimer;
+import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 
 import baubles.api.BaublesApi;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,26 +35,20 @@ public class PotionTerror extends Potion{
 			  ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) return;
 			
 			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
-			if(entity != null && BTVEntityRegistry.isScaryEntity(entity)) {
+			if(entity != null && isScaredByEntity(entity, amplifier)) {
 				if(e.world.rand.nextBoolean()) {
-					e.rotationYaw += e.world.rand.nextBoolean() ? 60 : -60;
+					boolean left = e.world.rand.nextBoolean();
+					PlayerTimer pt = new PlayerTimerBuilder((EntityPlayer)e).setTimer(7).addContinuosAction(p -> p.rotationYaw += (left ? -12 : 12)).toPlayerTimer();
+					ServerTickEvents.addPlayerTimer(pt);
 				}
 				else {
-					double xDist = entity.posX - e.posX;
-					double zDist = entity.posZ - e.posZ;
-					double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
-					e.motionZ = - zDist / dist;
-					e.motionX = - xDist / dist;
+					this.moveEntity(entity, e);
 				}
 			}
 		}else if(!BTVEntityRegistry.isFearlessEntity(e)){
-			List<EntityLivingBase> ents = e.world.getEntities(EntityLivingBase.class, ent -> ent.getDistance(e) < 7 && BTVEntityRegistry.isScaryEntity(ent));
+			List<EntityLivingBase> ents = e.world.getEntities(EntityLivingBase.class, ent -> ent.getDistance(e) < 7 && isScaredByEntity(ent, amplifier));
 			for(EntityLivingBase entity : ents) {
-				double xDist = entity.posX - e.posX;
-				double zDist = entity.posZ - e.posZ;
-				double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
-				e.motionZ = - zDist / dist;
-				e.motionX = - xDist / dist;
+				this.moveEntity(entity, e);
 			}
 		}
 		super.performEffect(e, amplifier);
@@ -59,7 +56,23 @@ public class PotionTerror extends Potion{
 	
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		if(duration % (15/ (amplifier+1) + 1) == 0) return true;
+		if(duration % 5 == 0) return true;
+		return false;
+	}
+	
+	private void moveEntity(EntityLivingBase entity, EntityLivingBase e) {
+		double xDist = entity.posX - e.posX;
+		double zDist = entity.posZ - e.posZ;
+		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
+		e.motionZ = - zDist / dist;
+		e.motionX = - xDist / dist;		
+	}
+	
+	private boolean isScaredByEntity(EntityLivingBase lookedAt, int amplifier) {
+		if(BTVEntityRegistry.isScaryEntity(lookedAt)) return true;
+		if(amplifier > 0 && lookedAt instanceof EntityPlayer) return true;
+		if(amplifier > 1 && BTVEntityRegistry.isHostileEntity(lookedAt) ) return true;
+		if(amplifier > 2) return true;
 		return false;
 	}
 

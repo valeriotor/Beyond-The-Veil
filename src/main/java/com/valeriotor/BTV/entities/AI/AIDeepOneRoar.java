@@ -42,8 +42,10 @@ public class AIDeepOneRoar extends EntityAIBase{
 		this.roarTime = 30;
 		this.entity.world.getEntities(EntityLivingBase.class, e -> !BTVEntityRegistry.isFearlessEntity(e) && e.getDistance(this.entity) < 25)
 						 .forEach(e -> {
-						 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
-						 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 2));
+						 if(!e.equals(entity.getMaster())) {
+							 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
+							 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 20 * 6, 0));
+						 }
 						 if(e instanceof EntityPlayerMP) {
 							 BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deepOneRoar), e.getPosition().toLong()), (EntityPlayerMP)e);
 						 }
