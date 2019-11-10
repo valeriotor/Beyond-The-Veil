@@ -64,8 +64,10 @@ public class PotionTerror extends Potion{
 		double xDist = entity.posX - e.posX;
 		double zDist = entity.posZ - e.posZ;
 		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
-		e.motionZ = - zDist / dist;
-		e.motionX = - xDist / dist;		
+		if(dist != 0) {
+			e.motionZ = - zDist / dist;
+			e.motionX = - xDist / dist;		
+		}
 	}
 	
 	private boolean isScaredByEntity(EntityLivingBase lookedAt, int amplifier) {
