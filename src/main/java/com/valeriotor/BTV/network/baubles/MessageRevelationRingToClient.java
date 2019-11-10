@@ -29,7 +29,7 @@ public class MessageRevelationRingToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageRevelationRingToClient message, MessageContext ctx) {
-			BeyondTheVeil.proxy.renderEvents.reInvisibilificationator(message.id);
+			BeyondTheVeil.proxy.renderEvents.invisibilificationator(message.id);
 			return null;
 		}
 		
