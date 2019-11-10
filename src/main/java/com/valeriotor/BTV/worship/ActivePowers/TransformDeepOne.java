@@ -3,12 +3,15 @@ package com.valeriotor.BTV.worship.ActivePowers;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.util.SyncUtil;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.Packet;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.WorldServer;
 
 public class TransformDeepOne implements IActivePower{
 	
@@ -22,9 +25,7 @@ public class TransformDeepOne implements IActivePower{
 		boolean transformed = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED);
 		if(transformed) p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(PlayerDataLib.TRANSFORMED);
 		else p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.TRANSFORMED, false);
-		for(EntityPlayer player : p.getServer().getPlayerList().getPlayers()) {
-			SyncUtil.syncTransformData(player);
-		}
+		((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncTransformedPlayer(p.getPersistentID(), !transformed)));
 		return true;
 	}
 

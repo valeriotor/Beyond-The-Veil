@@ -7,20 +7,18 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSyncTransformedPlayer implements IMessage{
-	
+public class MessageSyncParasitePlayer implements IMessage{
+
 	public UUID uuid;
 	public boolean add;
 	
-	public MessageSyncTransformedPlayer() {}
-	
-	public MessageSyncTransformedPlayer(UUID uuid, boolean add) {
+	public MessageSyncParasitePlayer() {}
+	public MessageSyncParasitePlayer(UUID uuid, boolean add) {
 		this.uuid = uuid;
 		this.add = add;
 	}
@@ -39,19 +37,19 @@ public class MessageSyncTransformedPlayer implements IMessage{
 		buf.writeBoolean(this.add);
 	}
 	
-	public static class SyncTransformedPlayerMessageHandler implements IMessageHandler<MessageSyncTransformedPlayer, IMessage>{
+	public static class SyncParasitePlayerMessageHandler implements IMessageHandler<MessageSyncParasitePlayer, IMessage>{
 
 		@Override
-		public IMessage onMessage(MessageSyncTransformedPlayer message, MessageContext ctx) {
+		public IMessage onMessage(MessageSyncParasitePlayer message, MessageContext ctx) {
 			Minecraft minecraft = Minecraft.getMinecraft();
 		    final WorldClient worldClient = minecraft.world;
 		    minecraft.addScheduledTask(new Runnable()
 		    {
 		      public void run() {
-				if(message.add)
-					BeyondTheVeil.proxy.renderEvents.transformedPlayers.add(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
-				else
-					BeyondTheVeil.proxy.renderEvents.transformedPlayers.remove(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
+		    	  if(message.add)
+						BeyondTheVeil.proxy.renderEvents.parasitePlayers.add(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
+					else
+						BeyondTheVeil.proxy.renderEvents.parasitePlayers.remove(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));	
 		      }
 		    });
 			return null;

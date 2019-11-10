@@ -5,11 +5,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
+import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +23,7 @@ public class SyncUtil {
 	public static void syncPlayerData(EntityPlayer p) {
 		syncCapabilityData(p);
 		syncTransformData(p);
+		syncParasiteData(p);
 	}
 	
 	public static void syncCapabilityData(EntityPlayer p) {
@@ -36,11 +40,14 @@ public class SyncUtil {
 	}
 	
 	public static void syncTransformData(EntityPlayer p) {
-		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(true), (EntityPlayerMP)p);
-		for(EntityPlayer player : p.getServer().getPlayerList().getPlayers()) {
-			if(player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(false, player.getPersistentID(), true), (EntityPlayerMP)p);
-			}
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED))
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
+	}
+	
+	public static void syncParasiteData(EntityPlayer p) {
+		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(p);
+		if(ap != null && ap.renderParasite()) {
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
 		}
 	}
 	

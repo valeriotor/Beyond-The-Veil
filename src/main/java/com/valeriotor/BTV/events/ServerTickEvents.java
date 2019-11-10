@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageCovenantData;
@@ -27,6 +28,7 @@ public class ServerTickEvents {
 			decreaseMessageTimers();
 			decreaseCovenantTimers();
 			decreasePlayerTimers();
+			AzacnoParasiteEvents.updateParasites();
 		}
 		DrowningRitualEvents.update();
 	}

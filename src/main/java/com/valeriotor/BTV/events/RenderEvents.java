@@ -43,6 +43,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderEvents {
 	
 	public final Set<EntityPlayer> transformedPlayers = new HashSet();
+	public final Set<EntityPlayer> parasitePlayers = new HashSet();
 	public HashMap<String, BlockPos> covenantPlayers = new HashMap();
 	private static final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
 	private static final RenderParasite parasite = new RenderParasite(Minecraft.getMinecraft().getRenderManager());
@@ -63,7 +64,7 @@ public class RenderEvents {
 	        double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)event.getPartialRenderTick();
 			event.setCanceled(true);
 			deepOne.render((AbstractClientPlayer)p, d3-d0, d4-d1, d2-d5, p.rotationYaw, event.getPartialRenderTick());
-		} else {
+		} else if(parasitePlayers.contains(p)){
 	        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
 	        double d0 = p.lastTickPosX + (p.posX - p.lastTickPosX) * (double)event.getPartialRenderTick();
 	        double d1 = p.lastTickPosY + (p.posY - p.lastTickPosY) * (double)event.getPartialRenderTick();
@@ -71,8 +72,16 @@ public class RenderEvents {
 	        double d3 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)event.getPartialRenderTick();
 	        double d4 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)event.getPartialRenderTick();
 	        double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)event.getPartialRenderTick();
-			//parasite.render((AbstractClientPlayer)p, d3-d0, d4-d1 + 0.07, d2-d5, p.rotationYaw, event.getPartialRenderTick());
-	        //p.world.spawnParticle(EnumParticleTypes.REDSTONE, p.posX - Math.cos(p.rotationYaw * Math.PI / 180) / 5, p.posY + 1.5, p.posZ - Math.sin(p.rotationYaw * Math.PI / 180) / 5, 0.5, 0.03, 0);
+			parasite.render((AbstractClientPlayer)p, d3-d0, d4-d1 + 0.07, d2-d5, p.rotationYaw, event.getPartialRenderTick());
+	         if(p.canRenderOnFire()) {
+	        	 for(int i = 0; i < 9; i++) {
+	        		 double sin = Math.sin(p.rotationYaw * Math.PI / 180);
+	        		 double cos = Math.cos(p.rotationYaw * Math.PI / 180);
+	        		 p.world.spawnParticle(EnumParticleTypes.FLAME, p.posX - cos / 2.5 + cos * (i%3) / 7, p.posY + 1.55, p.posZ - sin / 2.5 + sin * (i/3) / 7, 0, 0, 0);
+	        	 }
+	        } else {
+	        	p.world.spawnParticle(EnumParticleTypes.REDSTONE, p.posX - Math.cos(p.rotationYaw * Math.PI / 180) / 5, p.posY + 1.5, p.posZ - Math.sin(p.rotationYaw * Math.PI / 180) / 5, 0.5, 0.03, 0);
+	        }
 		}
 	}
 	
