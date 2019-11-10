@@ -146,4 +146,11 @@ public class ServerTickEvents {
 		return false;
 	}
 	
+	public static PlayerTimer getPlayerTimer(String name, EntityPlayer player) {
+		for(PlayerTimer pt : timers) {
+			if(pt.corresponds(name, player)) return pt;
+		}
+		return null;
+	}
+	
 }

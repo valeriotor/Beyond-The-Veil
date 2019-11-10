@@ -13,6 +13,7 @@ public class PlayerTimer {
 	private int timer;
 	private final List<Consumer<EntityPlayer>> finalActions;
 	private final List<Consumer<EntityPlayer>> continuosActions;
+	private String name = "";
 	
 	public PlayerTimer(EntityPlayer player) {
 		this(player, null, 100);
@@ -53,12 +54,43 @@ public class PlayerTimer {
 		return timer <= 0;
 	}
 	
+	public int getTimer() {
+		return this.timer;
+	}
+	
+	public PlayerTimer setName(String name) {
+		this.name = name;
+		return this;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean corresponds(String name, EntityPlayer player) {
+		return this.name.equals(name) && this.player.equals(player);
+	}
+	
+	public boolean equals(Object object) {
+		if(!(object instanceof PlayerTimer)) return false;
+		PlayerTimer timer = (PlayerTimer) object;
+		return timer.getName().equals(this.name) && timer.player.equals(this.player);
+	}
+	
+	@Override
+	public int hashCode() {
+		int code = this.name.hashCode();
+		code = 31 * code + player.hashCode();
+		return code;
+	}
+	
 	public static class PlayerTimerBuilder {
 		
 		private List<Consumer<EntityPlayer>> finalActions = new ArrayList<>();
 		private List<Consumer<EntityPlayer>> continuosActions = new ArrayList<>();
 		private int timer = 100;
 		private final EntityPlayer player;
+		private String name = "";
 		
 		public PlayerTimerBuilder(EntityPlayer player) {
 			this.player = player;
@@ -79,8 +111,13 @@ public class PlayerTimer {
 			return this;
 		}
 		
+		public PlayerTimerBuilder setName(String name) {
+			this.name = name;
+			return this;
+		}
+		
 		public PlayerTimer toPlayerTimer() {
-			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions);
+			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions).setName(this.name);
 		}
 		
 	}

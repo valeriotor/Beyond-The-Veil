@@ -56,9 +56,11 @@ public class MessageActivateBauble implements IMessage{
 					 });
 					BTVPacketHandler.INSTANCE.sendToAll(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_roar)));
 					data.addString(PlayerDataLib.ROAR, true);
-					ServerTickEvents.addPlayerTimer(new PlayerTimer(p, player -> player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(PlayerDataLib.ROAR), 100));
+					ServerTickEvents.addPlayerTimer(new PlayerTimer(p, player -> player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(PlayerDataLib.ROAR), 400).setName("roar"));
 				} else {
-					p.sendMessage(new TextComponentTranslation("roar.cooldown"));
+					PlayerTimer pt = ServerTickEvents.getPlayerTimer("roar", p);
+					if(pt != null)
+						p.sendMessage(new TextComponentTranslation("roar.cooldown", pt.getTimer()/20));
 				}
 			}else {
 				int selected = data.getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
