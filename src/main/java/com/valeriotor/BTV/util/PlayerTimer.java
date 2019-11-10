@@ -27,7 +27,10 @@ public class PlayerTimer {
 		this.player = player;
 		this.timer = timer;
 		this.continuosActions = ImmutableList.of();
-		this.finalActions = ImmutableList.of(action);
+		if(action != null)
+			this.finalActions = ImmutableList.of(action);
+		else 
+			this.finalActions = ImmutableList.of();
 	}
 	
 	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions) {
@@ -39,8 +42,10 @@ public class PlayerTimer {
 	
 	public boolean update() {
 		if(timer > 0) {
-			timer--;
-			for(Consumer<EntityPlayer> action : continuosActions) action.accept(player);
+			if(!player.isDead) {
+				timer--;
+				for(Consumer<EntityPlayer> action : continuosActions) action.accept(player);
+			}
 			return false;
 		} else if(timer == 0) {
 			timer--;
@@ -82,6 +87,10 @@ public class PlayerTimer {
 		int code = this.name.hashCode();
 		code = 31 * code + player.hashCode();
 		return code;
+	}
+	
+	public PlayerTimer copyForNewPlayer(EntityPlayer player) {
+		return new PlayerTimer(player, timer, continuosActions, finalActions).setName(name);
 	}
 	
 	public static class PlayerTimerBuilder {

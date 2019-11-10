@@ -155,4 +155,18 @@ public class ServerTickEvents {
 		return null;
 	}
 	
+	public static void updateForDeadPlayer(EntityPlayer original, EntityPlayer player) {
+		List<PlayerTimer> newTimers = new ArrayList<>();
+		Iterator<PlayerTimer> iter = timers.iterator();
+		while(iter.hasNext()) {
+			PlayerTimer pt = iter.next();
+			if(pt.player.equals(original)) {
+				iter.remove();
+				newTimers.add(pt.copyForNewPlayer(player));
+			}
+		}
+		timers.addAll(newTimers);
+			
+	}
+	
 }

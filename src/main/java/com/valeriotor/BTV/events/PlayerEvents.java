@@ -103,6 +103,7 @@ public class PlayerEvents {
 			AzacnoParasiteEvents.parasites.remove(original);
 			AzacnoParasiteEvents.parasites.put(player, new AzacnoParasite(player, ap.getProgress()));
 		}
+		ServerTickEvents.updateForDeadPlayer(original, player);
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		
