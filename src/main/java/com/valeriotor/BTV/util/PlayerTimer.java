@@ -2,14 +2,17 @@ package com.valeriotor.BTV.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 
 public class PlayerTimer {
-	public final EntityPlayer player;
+	public final UUID player;
+	private final MinecraftServer server;
 	private int timer;
 	private final List<Consumer<EntityPlayer>> finalActions;
 	private final List<Consumer<EntityPlayer>> continuosActions;
@@ -24,7 +27,8 @@ public class PlayerTimer {
 	}
 	
 	public PlayerTimer(EntityPlayer player, Consumer<EntityPlayer> action, int timer) {
-		this.player = player;
+		this.player = player.getPersistentID();
+		this.server = player.getServer();
 		this.timer = timer;
 		this.continuosActions = ImmutableList.of();
 		if(action != null)
@@ -34,7 +38,8 @@ public class PlayerTimer {
 	}
 	
 	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions) {
-		this.player = player;
+		this.player = player.getPersistentID();
+		this.server = player.getServer();
 		this.timer = timer;
 		this.continuosActions = ImmutableList.copyOf(continuosActions);
 		this.finalActions = ImmutableList.copyOf(finalActions);
@@ -42,14 +47,15 @@ public class PlayerTimer {
 	
 	public boolean update() {
 		if(timer > 0) {
-			if(!player.isDead) {
+			if(!this.getPlayer().isDead) {
 				timer--;
-				for(Consumer<EntityPlayer> action : continuosActions) action.accept(player);
+				for(Consumer<EntityPlayer> action : continuosActions) action.accept(this.getPlayer());
 			}
+			System.out.println(this.getPlayer().getEntityId());
 			return false;
 		} else if(timer == 0) {
 			timer--;
-			for(Consumer<EntityPlayer> action : finalActions) action.accept(player);
+			for(Consumer<EntityPlayer> action : finalActions) action.accept(this.getPlayer());
 		}
 		return true;
 		
@@ -63,6 +69,10 @@ public class PlayerTimer {
 		return this.timer;
 	}
 	
+	public EntityPlayer getPlayer() {
+		return this.server.getPlayerList().getPlayerByUUID(player);
+	}
+	
 	public PlayerTimer setName(String name) {
 		this.name = name;
 		return this;
@@ -73,7 +83,7 @@ public class PlayerTimer {
 	}
 	
 	public boolean corresponds(String name, EntityPlayer player) {
-		return this.name.equals(name) && this.player.equals(player);
+		return this.name.equals(name) && this.player.equals(player.getPersistentID());
 	}
 	
 	public boolean equals(Object object) {

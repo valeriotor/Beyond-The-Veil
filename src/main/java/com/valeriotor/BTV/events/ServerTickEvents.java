@@ -74,7 +74,7 @@ public class ServerTickEvents {
 			PlayerTimer ct = iterator.next();
 			if(ct.update()) {
 				iterator.remove();
-				BTVPacketHandler.INSTANCE.sendTo(new MessageCovenantData(true, null), (EntityPlayerMP)ct.player);
+				BTVPacketHandler.INSTANCE.sendTo(new MessageCovenantData(true, null), (EntityPlayerMP)ct.getPlayer());
 			}
 		}
 	}
@@ -85,7 +85,7 @@ public class ServerTickEvents {
 	
 	public static boolean containsCovenantTimer(EntityPlayer p) {
 		for(PlayerTimer ct : covenants) {
-			if(ct.player.equals(p)) return true;
+			if(ct.getPlayer().equals(p)) return true;
 		}
 		return false;
 	}
@@ -94,7 +94,7 @@ public class ServerTickEvents {
 		if(covenants.isEmpty()) return false;		
 		Iterator<PlayerTimer> iterator = covenants.iterator();
 		while(iterator.hasNext()) {
-			if(iterator.next().player == p) {
+			if(iterator.next().getPlayer() == p) {
 				iterator.remove();
 				BTVPacketHandler.INSTANCE.sendTo(new MessageCovenantData(true, null), (EntityPlayerMP)p);
 				return true;
@@ -131,7 +131,7 @@ public class ServerTickEvents {
 	
 	public static boolean containsPlayerTimer(EntityPlayer p) {
 		for(PlayerTimer pt : timers) {
-			if(pt.player.equals(p)) return true;
+			if(pt.getPlayer().equals(p)) return true;
 		}
 		return false;
 	}
@@ -140,7 +140,7 @@ public class ServerTickEvents {
 		if(timers.isEmpty()) return false;		
 		Iterator<PlayerTimer> iterator = timers.iterator();
 		while(iterator.hasNext()) {
-			if(iterator.next().player == p) {
+			if(iterator.next().getPlayer() == p) {
 				iterator.remove();
 				return true;
 			}
@@ -160,7 +160,7 @@ public class ServerTickEvents {
 		Iterator<PlayerTimer> iter = timers.iterator();
 		while(iter.hasNext()) {
 			PlayerTimer pt = iter.next();
-			if(pt.player.equals(original)) {
+			if(pt.getPlayer().equals(original)) {
 				iter.remove();
 				newTimers.add(pt.copyForNewPlayer(player));
 			}

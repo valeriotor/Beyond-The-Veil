@@ -99,7 +99,6 @@ public class PlayerEvents {
 		EntityPlayer original = event.getOriginal();
 		EntityPlayer player = event.getEntityPlayer();
 		
-		//ServerTickEvents.updateForDeadPlayer(original, player);
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		

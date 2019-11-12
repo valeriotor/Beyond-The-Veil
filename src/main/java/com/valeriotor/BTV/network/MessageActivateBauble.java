@@ -43,7 +43,8 @@ public class MessageActivateBauble implements IMessage{
 			EntityPlayer p = ctx.getServerHandler().player;
 			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			if(data.getString(PlayerDataLib.TRANSFORMED)) {
-				if(!data.getString(PlayerDataLib.ROAR)) {
+				PlayerTimer pt = ServerTickEvents.getPlayerTimer("roar", p);
+				if(pt == null) {
 					p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 					 .forEach(e -> {
 					 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
@@ -55,12 +56,9 @@ public class MessageActivateBauble implements IMessage{
 					 }
 					 });
 					BTVPacketHandler.INSTANCE.sendToAll(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_roar)));
-					data.addString(PlayerDataLib.ROAR, true);
-					ServerTickEvents.addPlayerTimer(new PlayerTimer(p, player -> player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(PlayerDataLib.ROAR), 400).setName("roar"));
+					ServerTickEvents.addPlayerTimer(new PlayerTimer(p, null, 400).setName("roar"));
 				} else {
-					PlayerTimer pt = ServerTickEvents.getPlayerTimer("roar", p);
-					if(pt != null)
-						p.sendMessage(new TextComponentTranslation("roar.cooldown", pt.getTimer()/20));
+					p.sendMessage(new TextComponentTranslation("roar.cooldown", pt.getTimer()/20));
 				}
 			}else {
 				int selected = data.getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);

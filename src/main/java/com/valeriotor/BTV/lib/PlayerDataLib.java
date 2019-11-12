@@ -32,7 +32,6 @@ public class PlayerDataLib {
 	public static final String TRANSFORMED = "transformed";
 	
 	// Strings (Temporary)
-	public static final String ROAR = "roar";
 	
 	// Used to clear client-side data in one fell swoop.
 	public static final String ALL = "all";

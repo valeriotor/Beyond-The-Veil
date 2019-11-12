@@ -57,7 +57,7 @@ public class DrowningRitual {
 				p.openGui(BeyondTheVeil.instance, 2, p.world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		}
-		if(!p.isInWater()) DrowningRitualEvents.rituals.remove(p);
+		if(!p.isInWater() || p.isDead) DrowningRitualEvents.rituals.remove(p.getPersistentID());
 	}
 	
 	public void setNewPhase(Phase phase) {
