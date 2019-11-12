@@ -96,5 +96,19 @@
 		"sounds": [
 			"beyondtheveil:dagon_thump"
 		]
+	},
+	"parasite_hurt": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:parasite_hurt_0",
+			"beyondtheveil:parasite_hurt_1",
+			"beyondtheveil:parasite_hurt_2"
+		]
+	},
+	"parasite_death": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:parasite_death"
+		]
 	}
 }

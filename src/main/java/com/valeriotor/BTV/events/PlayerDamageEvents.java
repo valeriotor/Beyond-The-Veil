@@ -1,10 +1,15 @@
 package com.valeriotor.BTV.events;
 
+import java.util.Map.Entry;
+import java.util.UUID;
+
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLiving;
@@ -26,6 +31,7 @@ public class PlayerDamageEvents {
 	public static void hurtEvent(LivingHurtEvent event) {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			if(event.getEntityLiving().world.isRemote) return;
+			damageParasite(event);
 			GreatDreamerBuffs.applyDefenseModifier(event);
 			DrowningRitualEvents.preventDamage(event);
 			dagonProtect(event);
@@ -85,6 +91,16 @@ public class PlayerDamageEvents {
 			p.world.spawnEntity(guardian);
 			ThaumcraftApi.internalMethods.progressResearch(p, "wait");
 		}
+	}
+	
+	private static void damageParasite(LivingHurtEvent event) {
+		if(event.getSource().isFireDamage()) {
+			EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+			if(AzacnoParasiteEvents.parasites.containsKey(p.getPersistentID())) {
+				AzacnoParasiteEvents.parasites.get(p.getPersistentID()).damageParasite((int)event.getAmount());
+			}
+		}
+		
 	}
 	
 }

@@ -71,7 +71,7 @@ public class PlayerEvents {
 		if(!event.player.world.isRemote) {
 			int parasiteProgress = event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.PARASITE_PROGRESS, 0, false);
 			if(parasiteProgress > 0)
-				AzacnoParasiteEvents.parasites.put(event.player, new AzacnoParasite(event.player, parasiteProgress));
+				AzacnoParasiteEvents.parasites.put(event.player.getPersistentID(), new AzacnoParasite(event.player, parasiteProgress));
 			event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(PlayerDataLib.PARASITE_PROGRESS);
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
@@ -87,8 +87,9 @@ public class PlayerEvents {
 			BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.parasitePlayers.clear();
 		} else {
-			if(AzacnoParasiteEvents.parasites.containsKey(event.player)) {
-				event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.PARASITE_PROGRESS, AzacnoParasiteEvents.parasites.get(event.player).getProgress(), false);
+			if(AzacnoParasiteEvents.parasites.containsKey(event.player.getPersistentID())) {
+				event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.PARASITE_PROGRESS, AzacnoParasiteEvents.parasites.get(event.player.getPersistentID()).getProgress(), false);
+				AzacnoParasiteEvents.parasites.remove(event.player.getPersistentID());
 			}
 		}
 	}
@@ -98,12 +99,7 @@ public class PlayerEvents {
 		EntityPlayer original = event.getOriginal();
 		EntityPlayer player = event.getEntityPlayer();
 		
-		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(original);
-		if(ap != null) {
-			AzacnoParasiteEvents.parasites.remove(original);
-			AzacnoParasiteEvents.parasites.put(player, new AzacnoParasite(player, ap.getProgress()));
-		}
-		ServerTickEvents.updateForDeadPlayer(original, player);
+		//ServerTickEvents.updateForDeadPlayer(original, player);
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		
@@ -114,7 +110,8 @@ public class PlayerEvents {
 			
 		for(Entry<String, Integer> entry : ints.entrySet()) {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(entry.getKey(), entry.getValue(), false);
-		}					
+		}
+		SyncUtil.syncCapabilityData(player);
 	}
 	
 	@SubscribeEvent
@@ -138,7 +135,7 @@ public class PlayerEvents {
 			if(target.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(target.getPersistentID(), true), (EntityPlayerMP)event.getEntityPlayer());
 			}
-			if(AzacnoParasiteEvents.parasites.containsKey(target) && AzacnoParasiteEvents.parasites.get(target).renderParasite())
+			if(AzacnoParasiteEvents.parasites.containsKey(target.getPersistentID()) && AzacnoParasiteEvents.parasites.get(target.getPersistentID()).renderParasite())
 				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(target.getPersistentID(), true), (EntityPlayerMP)event.getEntityPlayer());
 		}
 	}

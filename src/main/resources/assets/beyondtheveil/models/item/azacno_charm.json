@@ -1,6 +1,6 @@
 {
    "parent": "item/generated",
    "textures": {
-       "layer0": "beyondtheveil:items/revelation_ring"
+       "layer0": "beyondtheveil:items/azacno_charm"
    }
 }

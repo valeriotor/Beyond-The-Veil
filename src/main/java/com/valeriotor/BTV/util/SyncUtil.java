@@ -45,7 +45,7 @@ public class SyncUtil {
 	}
 	
 	public static void syncParasiteData(EntityPlayer p) {
-		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(p);
+		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(p.getPersistentID());
 		if(ap != null && ap.renderParasite()) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
 		}

@@ -1,31 +1,35 @@
 package com.valeriotor.BTV.worship;
 
+import java.util.UUID;
+
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessagePlaySound;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.potions.PotionRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.server.SPacketEntity;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-import thaumcraft.common.lib.network.misc.PacketSealFilterToClient;
 
 public class AzacnoParasite {
 	
-	private final EntityPlayer player;
+	private final UUID player;
+	private final MinecraftServer server;
 	private int progress = 0;
 	private int phase = 0;
 	
 	public AzacnoParasite(EntityPlayer player) {
-		this.player = player;
+		this.player = player.getPersistentID();
+		this.server = player.getServer();
 	}
 	
 	public AzacnoParasite(EntityPlayer player, int progress) {
-		this.player = player;
+		this.player = player.getPersistentID();
+		this.server = player.getServer();
 		this.progress = progress;
 		this.phase = progress / 2500;
 		if(this.renderParasite()) {
@@ -36,9 +40,9 @@ public class AzacnoParasite {
 	public boolean update() {
 		if(progress < 0)
 			return true;
-		if(player.isDead)
-			return true;
-		
+		if(this.getPlayer().isDead) {
+			return false;
+		}
 		if(progress < 500 * 20) {
 			progress++;
 			if(progress % 2500 == 0) {
@@ -50,29 +54,38 @@ public class AzacnoParasite {
 		}
 		
 		if(phase >= 4)
-			player.addPotionEffect(new PotionEffect(PotionRegistry.terror, 15 * 20 + 15, 3, true, false));
+			this.getPlayer().addPotionEffect(new PotionEffect(PotionRegistry.terror, 15 * 20 + 15, 3, true, false));
 		
-		int random = player.world.rand.nextInt(20000);
+		int random = this.getPlayer().world.rand.nextInt(20000);
 		if(random < 10 && phase >= 0)
-			player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 10 * 20, 4));
+			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.HUNGER, 10 * 20, 4));
 		else if(random < 20 && phase >= 1)
-			player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 10 * 20, 3));
+			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 10 * 20, 3));
 		else if(random < 30 && phase >= 2) {
-			player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30));
-			player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30));
+			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 50));
+			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 50));
 		}
 		else if(random < 40 && phase >= 3)
-			player.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 1, 2));
+			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE));
 		
 		return false;
 	}
 	
 	public void damageParasite(int amount) {
-		this.progress -= amount;
+		this.progress -= amount * 120;
 		boolean rendersNow = this.renderParasite();
 		this.phase = this.progress / 2500;
-		if(rendersNow && !this.renderParasite()) {
-			updatePlayers(false);
+		if(rendersNow) {
+			if(!this.renderParasite()) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.parasiteDeath), this.getPlayer().getPosition().toLong()), (EntityPlayerMP) this.getPlayer());
+				BTVPacketHandler.INSTANCE.sendToAllTracking(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.parasiteDeath), this.getPlayer().getPosition().toLong()), this.getPlayer());
+				updatePlayers(false);
+			} else {
+				if(this.getPlayer().world.rand.nextBoolean()) {
+					BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.parasiteHurt), this.getPlayer().getPosition().toLong()), (EntityPlayerMP) this.getPlayer());
+					BTVPacketHandler.INSTANCE.sendToAllTracking(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.parasiteHurt), this.getPlayer().getPosition().toLong()), this.getPlayer());
+				}
+			}	
 		}
 	}
 	
@@ -89,6 +102,10 @@ public class AzacnoParasite {
 	}
 	
 	private void updatePlayers(boolean add) {
-		((WorldServer)player.world).getEntityTracker().sendToTrackingAndSelf(player, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncParasitePlayer(player.getPersistentID(), add)));
+		((WorldServer)this.getPlayer().world).getEntityTracker().sendToTrackingAndSelf(this.getPlayer(), BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncParasitePlayer(player, add)));
+	}
+	
+	public EntityPlayer getPlayer() {
+		return this.server.getPlayerList().getPlayerByUUID(player);
 	}
 }
