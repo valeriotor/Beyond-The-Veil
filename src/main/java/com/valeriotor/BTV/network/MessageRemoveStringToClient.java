@@ -5,6 +5,7 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -32,9 +33,21 @@ public class MessageRemoveStringToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageRemoveStringToClient message, MessageContext ctx) {
+			Minecraft minecraft = Minecraft.getMinecraft();
+		    final WorldClient worldClient = minecraft.world;
+		    minecraft.addScheduledTask(new Runnable()
+		    {
+		      public void run() {
+				processMessage(message, ctx);
+		      }
+		    });
+			return null;
+		}
+		
+		public void processMessage(MessageRemoveStringToClient message, MessageContext ctx) {
 			if(Minecraft.getMinecraft().player == null) {
 				System.err.println("BTV sync error: null player. No data was lost, but it wasn't synchronized to client.");
-				return null;
+				return;
 			}
 			if(message.key.equals(PlayerDataLib.ALL)) {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeAllStrings();
@@ -43,7 +56,6 @@ public class MessageRemoveStringToClient implements IMessage{
 				System.out.println(message.key);
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.key);
 			}
-			return null;
 		}
 		
 	}

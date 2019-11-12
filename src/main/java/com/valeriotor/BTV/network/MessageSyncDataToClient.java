@@ -1,10 +1,12 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.worship.Deities;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -45,10 +47,23 @@ public class MessageSyncDataToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSyncDataToClient message, MessageContext ctx) {
-			if(message.string == null) return null;
+			Minecraft minecraft = Minecraft.getMinecraft();
+		    final WorldClient worldClient = minecraft.world;
+		    minecraft.addScheduledTask(new Runnable()
+		    {
+		      public void run() {
+				processMessage(message, ctx);
+		      }
+		    });
+			return null;
+			
+		}
+		
+		public void processMessage(MessageSyncDataToClient message, MessageContext ctx) {
+			if(message.string == null) return;
 			if(Minecraft.getMinecraft().player == null) {
 				System.err.println("BTV sync error: null player. No data was lost, but it wasn't synchronized to client.");
-				return null;
+				return;
 			}
 			if(message.value == -999)
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
@@ -56,7 +71,6 @@ public class MessageSyncDataToClient implements IMessage{
 				if(message.string.equals("level")) Minecraft.getMinecraft().player.getCapability(Deities.map.get(Deities.GREATDREAMER.getKey()), null).setLevel(message.value);
 				else Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
 			}
-			return null;
 		}
 		
 	}
