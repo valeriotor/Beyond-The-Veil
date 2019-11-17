@@ -46,16 +46,17 @@ public class PlayerTimer {
 	}
 	
 	public boolean update() {
+		EntityPlayer p = this.getPlayer();
+		if(p == null) return false;
 		if(timer > 0) {
-			if(!this.getPlayer().isDead) {
+			if(!p.isDead) {
 				timer--;
-				for(Consumer<EntityPlayer> action : continuosActions) action.accept(this.getPlayer());
+				for(Consumer<EntityPlayer> action : continuosActions) action.accept(p);
 			}
-			System.out.println(this.getPlayer().getEntityId());
 			return false;
 		} else if(timer == 0) {
 			timer--;
-			for(Consumer<EntityPlayer> action : finalActions) action.accept(this.getPlayer());
+			for(Consumer<EntityPlayer> action : finalActions) action.accept(p);
 		}
 		return true;
 		

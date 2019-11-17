@@ -40,7 +40,8 @@ public class AzacnoParasite {
 	public boolean update() {
 		if(progress < 0)
 			return true;
-		if(this.getPlayer().isDead) {
+		EntityPlayer p = this.getPlayer();
+		if(p == null || p.isDead) {
 			return false;
 		}
 		if(progress < 500 * 20) {
@@ -54,19 +55,19 @@ public class AzacnoParasite {
 		}
 		
 		if(phase >= 4)
-			this.getPlayer().addPotionEffect(new PotionEffect(PotionRegistry.terror, 15 * 20 + 15, 3, true, false));
+			p.addPotionEffect(new PotionEffect(PotionRegistry.terror, 15 * 20 + 15, 3, true, false));
 		
-		int random = this.getPlayer().world.rand.nextInt(20000);
+		int random = p.world.rand.nextInt(20000);
 		if(random < 10 && phase >= 0)
-			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.HUNGER, 10 * 20, 4));
+			p.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 10 * 20, 4));
 		else if(random < 20 && phase >= 1)
-			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 10 * 20, 3));
+			p.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 10 * 20, 3));
 		else if(random < 30 && phase >= 2) {
-			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 50));
-			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 50));
+			p.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 50));
+			p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 50));
 		}
 		else if(random < 40 && phase >= 3)
-			this.getPlayer().addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE));
+			p.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE));
 		
 		return false;
 	}
