@@ -19,6 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class MessageWateryCradle implements IMessage{
 	
@@ -64,16 +67,23 @@ public class MessageWateryCradle implements IMessage{
 			if(te != null) {
 				PatientStatus status = te.getPatientStatus();
 				SoundEvent sound = null;
+				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 				switch(message.option) {
 				case 0: status = status.withSpineless(true);
 						p.addItemStackToInventory(new ItemStack(ItemRegistry.spine));
 						sound = BTVSounds.spineRip;
+						if(!k.isResearchKnown("SPINES@2"))
+							ThaumcraftApi.internalMethods.progressResearch(p, "extractedspine");
 						break;
 				case 1: status = status.withPatient(PatientTypes.WEEPER);
+						if(!k.isResearchKnown("WEEPERS@2"))
+							ThaumcraftApi.internalMethods.progressResearch(p, "filledtears");
 						break;
 				case 3: status = status.withHeartless(true);
 						p.addItemStackToInventory(new ItemStack(ItemRegistry.heart));
 						sound = BTVSounds.heartRip;
+						if(!k.isResearchKnown("HEARTS@2"))
+							ThaumcraftApi.internalMethods.progressResearch(p, "tornheart");
 						break;
 				}
 				

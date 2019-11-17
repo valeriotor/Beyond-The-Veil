@@ -372,6 +372,75 @@
                     "text": "research.ALLIANCE.stage.3"
                 }
             ]
+        },
+		{
+        "key": "WATERYCRADLE",
+        "name": "research.WATERYCRADLE.title",
+        "icons": [ "beyondtheveil:watery_cradle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,9 ],
+		"meta": ["HIDDEN"],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.WATERYCRADLE.stage.0",
+					"required_research": ["craftedcradle"]
+				},
+                {
+                    "text": "research.WATERYCRADLE.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "SPINES",
+        "name": "research.SPINES.title",
+        "icons": [ "beyondtheveil:spine" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,11 ],
+        "parents": [ "WATERYCRADLE" ],
+        "stages": [
+				{
+					"text": "research.SPINES.stage.0",
+					"required_research": ["extractedspine"]
+				},
+                {
+                    "text": "research.SPINES.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "HEARTS",
+        "name": "research.HEARTS.title",
+        "icons": [ "beyondtheveil:heart" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,7 ],
+        "parents": [ "WATERYCRADLE" ],
+        "stages": [
+				{
+					"text": "research.HEARTS.stage.0",
+					"required_research": ["tornheart"]
+				},
+                {
+                    "text": "research.HEARTS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "WEEPERS",
+        "name": "research.WEEPERS.title",
+        "icons": [ "beyondtheveil:held_fletum" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,9 ],
+        "parents": [ "SPINES", "HEARTS" ],
+        "stages": [
+				{
+					"text": "research.WEEPERS.stage.0",
+					"required_research": ["filledtears"]
+                },
+                {
+					"text": "research.WEEPERS.stage.1",
+					"required_research": ["craftedlacrymatory"]
+				},
+                {
+                    "text": "research.WEEPERS.stage.2"
+                }
+            ]
         }
 	]
 }

@@ -574,6 +574,27 @@ research.wait.text=Wait. Hope.
 research.hearing.text=Eat a slug in the deepest oceans.
 research.!ALLIANCE.text=Bring the gold to the Dwellers. Commune.
 
+research.WATERYCRADLE.title=Watery Cradle
+research.WATERYCRADLE.stage.0=Useless worms plague this world, living in their placid isles of ignorance.<BR>The Great Dreamer teaches me how best to employ them.<BR>I will make their bodies, maybe their corpses, mine to experiment upon.<BR>They are insignificant, after all.
+research.WATERYCRADLE.stage.1=Villagers don't serve much use to the world, do they?<BR>Now they will. Through me.<BR>The Watery Cradle, where patients drift off in Dreams, giving me right and duty to do with their bodies what I wish, through the use of Surgery Tools.<BR>Three units of a Watery Cradle must be put in a line, then I shall interact with one of its ends.<BR>Patients will come through the use of a very simple blackjack, made to stun them into unconsciousness. Using it upon a Villager will put him on the ground, ready to be picked up by interacting with him while sneaking.<BR>I can then place the Held VIllager into the Watery Cradle's head, and find ways to experiment.<BR>It is none other than The Great Dreamer Himself who grants this knowledge upon me. Oh, the honor!
+research.craftedcradle.text=Craft three Watery Cradles.
+
+research.SPINES.title=Ripping spines
+research.SPINES.stage.0=A God among men is indistinguishable from a man among worms.<BR>Rip their spines and make them CRAWL.
+research.SPINES.stage.1=Willpower resides in the spine. Without it, the Villager will never get up, never rebel.<BR>The Villager is defenseless, in body and mind. No order of mine will remain unanswered.<BR>Problem is, there is nothing for them to do, in this new status of even greater uselessness. I must find a way to employ their servitude.<BR>Meanwhile, the spines themselves are an interesting boon. Besides the obvious bonemeal they provide, they are sources of willpower, the will to keep standing.<BR>And of fear. A ripped spine is no pretty sight, until one gets used to it that is.<BR>I'll surely find uses for them, soon enough.
+research.extractedspine.text=Rip a spine.
+
+research.HEARTS.title=Tearing hearts
+research.HEARTS.stage.0=Blood is life.<BR>Blood is water. Water is life.<BR>The relation is clear. And so is the irony.<BR>To gain life, I must grant death.
+research.HEARTS.stage.1=A heartless Villager has no life left to live. He'll expire in moments.<BR>Their hearts, however, will keep living, beating.<BR>When placed on the ground, it'll attract undead, for they seek life.<BR>And yet, as a symbol of life, I am sure there's more that can be done with them.
+research.tornheart.text=Tear a heart.
+
+research.WEEPERS.title=Weepers
+research.WEEPERS.stage.0=The person I once was would've reeled in disgust at the idea of ripping spines and tearing hearts. Now I barely flinch.<BR>But this..? This new idea that springs forth in my mind, through the uncanny doings of The Great Dreamer? Even now my hands tremble.<BR>To fill their brains with water, to make them SEE things as they truly are. Their brains filled, so they may only weep.
+research.WEEPERS.stage.1=A tear is a revelation. All should fear the ones who weep, for they know more than most.<BR>A Weeper is a Villager whose head was enlarged to monstruos size, filled by water.<BR>A Fletum is a Weeper who's lost its spine. It needs no body, it is whole within its head.<BR>They Dream, they learn, they weep. I must harvest their tears, they are knowledge.
+research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Weeper can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Weeper or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
+research.filledtears.text=Fill a brain with water.
+research.craftedlacrymatory.text=Craft a Lacrymatory.
 
 ##################
 #MISC

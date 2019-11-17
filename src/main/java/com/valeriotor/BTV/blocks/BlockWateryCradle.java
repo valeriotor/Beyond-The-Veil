@@ -2,6 +2,7 @@ package com.valeriotor.BTV.blocks;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.gui.Guis;
+import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientStatus;
@@ -66,13 +67,13 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 		} else if(part == EnumPart.HEAD){
 			TileWateryCradle te = getTE(w, pos);
 			if(te == null) return true;
-			System.out.println(te.getPatientStatus().toString()); //DEBUG
 			ItemStack stack = p.getHeldItem(hand);
 			PatientStatus status = PatientStatus.getPatientFromItem(stack);
 			if(w.isRemote) {
 				if(stack.getItem() == Items.AIR || (status != null && te.getPatientStatus().getPatientType() == PatientTypes.NONE)) return true;
 				if(stack.getItem() == ItemRegistry.surgery_tools && te.getPatientStatus().getPatientType() != PatientTypes.NONE) {
-					BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle, pos);
+					//BeyondTheVeil.proxy.openGui(Guis.GuiWateryCradle, pos);
+					p.openGui(BeyondTheVeil.instance, GuiContainerHandler.CRADLE, w, pos.getX(), pos.getY(), pos.getZ());
 					return true;
 				}
 			}

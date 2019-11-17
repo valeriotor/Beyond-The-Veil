@@ -31,8 +31,7 @@ public class Guis {
 		case GuiSleepingChamber: return new GuiSleepingChamber();
 		case GuiDialogueDweller: return new GuiDialogueDweller();
 		case GuiTablet: return new GuiTablet();
-		case GuiAlienisDream: return new GuiAlienisDream();
-		case GuiWateryCradle: return new GuiWateryCradle((BlockPos)args[0]);	
+		case GuiAlienisDream: return new GuiAlienisDream();	
 		}
 		
 		return null;

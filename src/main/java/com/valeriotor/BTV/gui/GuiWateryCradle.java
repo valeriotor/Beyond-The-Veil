@@ -19,9 +19,11 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	private boolean isAlreadySpineless = false;
 	private boolean isAlreadyFilledBrain = false;
 	private boolean isAlreadyHeartless = false;
+	private boolean[] options;
 	
-	public GuiWateryCradle(BlockPos pos) {
+	public GuiWateryCradle(BlockPos pos, boolean[] options) {
 		this.pos = pos;
+		this.options = options;
 	}
 	
 	@Override
@@ -44,7 +46,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	
 	@Override
 	protected boolean isNorthOptionAvailable() {
-		return true;
+		return options[0];
 	}
 	
 	@Override
@@ -60,7 +62,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	
 	@Override
 	protected boolean isEastOptionAvailable() {
-		return true;
+		return options[3];
 	}
 	
 	@Override
@@ -76,7 +78,7 @@ public class GuiWateryCradle extends GuiOptionWheel{
 	
 	@Override
 	protected boolean isWestOptionAvailable() {
-		return true;
+		return options[1];
 	}
 	
 	@Override
