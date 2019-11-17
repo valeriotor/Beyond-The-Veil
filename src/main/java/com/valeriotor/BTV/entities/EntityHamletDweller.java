@@ -9,6 +9,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.DialogueHandler;
+import com.valeriotor.BTV.gui.DialogueHandler.Dialogues;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -260,7 +261,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
 					player.getHeldItem(hand).shrink(1);
 					this.receivedGold = true;
-					player.sendMessage(new TextComponentString("§5§o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
+					player.sendMessage(new TextComponentString("ï¿½5ï¿½o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
 					data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
 					if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
 						data.addString(PlayerDataLib.DAGONQUEST, false);
@@ -284,7 +285,13 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 				if(this.drunkStatus > 5) y = "Â§5Â§o";
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
-				if(x > 33) y = "";
+				if(x > 33) {
+					y = "";
+					if(!data.getString(PlayerDataLib.OLDTRUTH) && data.getString("dialogue" + Dialogues.IMPRESSED.getName())) {
+						data.addString(PlayerDataLib.OLDTRUTH, false);
+						data.addString("dialogue" + Dialogues.IKNOW.getName(), false);
+					}
+				}
 				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", this.profession == ProfessionsEnum.DRUNK ? "" : DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
 				if(tc % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;

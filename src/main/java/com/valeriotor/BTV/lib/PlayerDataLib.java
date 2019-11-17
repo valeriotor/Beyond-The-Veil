@@ -30,6 +30,7 @@ public class PlayerDataLib {
 	public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
 	public static final String FOUND_HAMLET = "found_hamlet";
 	public static final String TRANSFORMED = "transformed";
+	public static final String OLDTRUTH = "old_truth";
 	
 	// Strings (Temporary)
 	

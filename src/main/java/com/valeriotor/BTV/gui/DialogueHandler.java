@@ -247,11 +247,20 @@ public class DialogueHandler {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "carpenter"));
 		} else if(getDialogueName(profession) == Dialogues.RITUAL && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "BAPTISM@2") && talkCount == 6){
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "lhbaptism"));
+		} else if(getDialogueName(profession) == Dialogues.PAST){
+			removeDialogue(Dialogues.IKNOW);
+			removeDialogue(Dialogues.OLDTRUTH);
+			removeDialogue(Dialogues.PAST);
 		}
 	}
 	
 	private static void performAdditionalEffects(String profession, int option, int talkCount) {
 		if(getDialogueName(profession) == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveItem(new ItemStack(ItemRegistry.rum)));
+	}
+	
+	private static void removeDialogue(Dialogues d) {
+		Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("dialogue".concat(d.getName()));
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncDialogueData(d.getName(), true));
 	}
 	
 	
@@ -262,6 +271,9 @@ public class DialogueHandler {
 		ENJOY("bartender", 1, 1),
 		RUM("bartender", 1, 1),
 		TRUSTEDBAR("bartender", 2, 0),
+		PAST("lhkeeper", 1, 2),
+		OLDTRUTH("lhkeeper", 4, 2),
+		IKNOW("lhkeeper", 1, 0),
 		FRIEND("lhkeeper", 1, 1),
 		RITUAL("lhkeeper", 7, 1),
 		RITUALINTRO("lhkeeper", 1, 1),
@@ -316,6 +328,10 @@ public class DialogueHandler {
 	public enum Branches{
 		CANOESFOR("carpenter", 1, "canoecar", "", 1),
 		DONTFISH("carpenter", 1, "canoecar", "", 0),
+		GENOCIDEDISAGREE("lhkeeper", 1, "oldtruth", "", 0),
+		GENOCIDEAGREE("lhkeeper", 1, "oldtruth", "", 1),
+		DRUNK("lhkeeper", 1, "iknow", "", 0),
+		VICTIMS("lhkeeper", 1, "iknow", "", 1),
 		LIES("lhkeeper", 1, "dreamer", "", 1),
 		THANKS("lhkeeper", 1, "lecture2", "lecture", 1),
 		FRIENDSLECTURE("lhkeeper", 1, "lecture2", "lecture", 0),

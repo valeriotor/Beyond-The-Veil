@@ -73,6 +73,10 @@ public class DialogueRequirement {
 		map.put("ritualintro0", new DialogueRequirement("impressed", "", -1, 3, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchComplete("CANOE")));
 		map.put("ritual0", new DialogueRequirement("ritualintro", "", -1, 1, null));
 		map.put("friend0", new DialogueRequirement("ritual", "", -1, 7, null));
+		map.put("oldtruth0", new DialogueRequirement("iknow", Branches.DRUNK.getName(), -1, 1, null));
+		map.put("oldtruth1", new DialogueRequirement("iknow", Branches.VICTIMS.getName(), -1, 1, null));
+		map.put("past0", new DialogueRequirement("oldtruth", Branches.GENOCIDEDISAGREE.getName(), -1, 1, null));
+		map.put("past1", new DialogueRequirement("oldtruth", Branches.GENOCIDEAGREE.getName(), -1, 1, null));
 		map.put("rum0", new DialogueRequirement("trustedbar", "", 0, 0, null));
 		map.put("enjoy0", new DialogueRequirement("rum", "", -1, 1, null));
 		map.put("easyjob0", new DialogueRequirement("canoecar", Branches.DONTFISH.getName(), -1, 1, null));

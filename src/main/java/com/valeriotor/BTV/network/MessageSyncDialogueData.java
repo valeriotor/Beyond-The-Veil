@@ -3,6 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -37,10 +38,14 @@ public class MessageSyncDialogueData implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSyncDialogueData message, MessageContext ctx) {
-			if(message.remove)
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServer().addScheduledTask(() -> {
+			if(message.remove) {
 				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("dialogue".concat(message.dialogue));
-			else
+			} else {
 				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(message.dialogue), false);
+			}
+			});
 			return null;
 		}
 		

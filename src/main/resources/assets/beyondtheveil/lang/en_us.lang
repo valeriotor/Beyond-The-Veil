@@ -393,8 +393,20 @@ dweller.lhkeeperritual.talk4=I still remember when I underwent the ritual. You w
 dweller.lhkeeperritual.talk5=I was under the water, I couldn't breathe, I was going to die, I knew I was and I regretted it, I regretted everything and I couldn't breathe and they had lied to me and they had left me to drown and I had to believe but I couldn't and I was dying and I BREATHE. :In. And out. In. And out. Again. And again.
 dweller.lhkeeperritual.talk6=That was my Baptism. Soon, you shall have yours.
 dweller.lhkeeperfriend.talk0=Good luck, friend.
-dweller.lhkeeper.genocidedisagreetalk0=There is no right answer. :But know that I{ despise} those who think the way you do.
-dweller.lhkeeper.genocideagreetalk0=That is what I think as well. :But your forefather knew better, didn't they?
+dweller.lhkeeperiknow.talk0=Ah, I Dreamt of you tonight. You wish to tell me something.
+dweller.lhkeeperiknow.talk0.option0=The drunken one:told me:everything.
+dweller.lhkeeperiknow.talk0.option1=Have you:always been:victims?
+dweller.lhkeeperiknow.drunktalk0=And you would trust the words of an old, insane drunken fool? |:Why, of course you should. You'll find that insanity brings one closer to Truth, for better or worse.
+dweller.lhkeeperiknow.victimstalk0=The drunken one appeared in my Dream as well. :It was him who told you something, wasn't he?
+dweller.lhkeeperoldtruth.talk0=From his words, an old Truth arises. :MY ancestors' traditions went too far at times. Sacrifices, murders, experiments.
+dweller.lhkeeperoldtruth.talk1=Blood lays in the black sand beneath us. They did it for power, through unholy pacts. The Great Dreamer, or rather, his ArchPriest, demanded payment.
+dweller.lhkeeperoldtruth.talk2=You didn't need this Truth. It would've only dissuaded you from your goal. :You see? I had to hide it.  My own Veil, of sorts.
+dweller.lhkeeperoldtruth.talk3=That, however, does not excuse in the slightest that which happened to us. :No sin is great enough to justify GENOCIDE.
+dweller.lhkeeperoldtruth.talk3.option0=You did wrong.:Punishment was:due.
+dweller.lhkeeperoldtruth.talk3.option1=Your actions did:not deserve such:punishment.
+dweller.lhkeeperoldtruth.genocidedisagreetalk0=There is no right answer. :But know that I{ despise} those who think the way you do.
+dweller.lhkeeperoldtruth.genocideagreetalk0=That is what we think as well. :Yet your forefathers knew better, it seems.
+dweller.lhkeeperpast.talk0=It matters not. Let the past stay past, we are not the ones who may walk through time. Only speak.
 
 ##################
 #DREAMS
