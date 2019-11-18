@@ -43,6 +43,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageRevelationRingToClient.RevelationRingToClientMessageHandler.class, MessageRevelationRingToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageWolfMedallionToClient.WolfMedallionToClientMessageHandler.class, MessageWolfMedallionToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncParasitePlayer.SyncParasitePlayerMessageHandler.class, MessageSyncParasitePlayer.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageCameraRotatorClient.CameraRotatorClientMessageHandler.class, MessageCameraRotatorClient.class, count++, Side.CLIENT);
 		
 	}
 	

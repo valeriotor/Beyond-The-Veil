@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.lwjgl.opengl.GL11;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.render.RenderParasite;
 import com.valeriotor.BTV.entities.render.RenderTransformedPlayer;
@@ -15,6 +16,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
+import com.valeriotor.BTV.util.CameraRotatorClient;
 import com.valeriotor.BTV.util.MathHelper;
 
 import baubles.api.BaublesApi;
@@ -89,6 +91,11 @@ public class RenderEvents {
 	@SubscribeEvent
 	public void entityViewRenderEvent(RenderTickEvent event) {
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused()) return;
+		CameraRotatorClient cr = BeyondTheVeil.proxy.cEvents.cameraRotator;
+		if(cr != null) {
+			Minecraft.getMinecraft().player.rotationYaw = cr.getYaw(event.renderTickTime);
+			Minecraft.getMinecraft().player.rotationPitch = cr.getPitch(event.renderTickTime);
+		}
 		if(transformedPlayers.contains(Minecraft.getMinecraft().player))
 			Minecraft.getMinecraft().player.eyeHeight = 2;
 		else

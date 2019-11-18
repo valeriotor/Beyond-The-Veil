@@ -8,14 +8,16 @@ import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageCameraRotatorClient;
 import com.valeriotor.BTV.util.MathHelper;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 
 import baubles.api.BaublesApi;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
@@ -37,10 +39,11 @@ public class PotionTerror extends Potion{
 			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
 			if(entity != null && isScaredByEntity(entity, amplifier)) {
 				if(e.world.rand.nextBoolean()) {
-					boolean left = e.world.rand.nextBoolean();
-					PlayerTimer pt = new PlayerTimerBuilder((EntityPlayer)e).setTimer(7).addContinuosAction(p -> p.rotationYaw += (left ? -12 : 12)).toPlayerTimer();
-					ServerTickEvents.addPlayerTimer(pt);
-				}
+					if(!e.world.isRemote) {
+						boolean left = e.world.rand.nextBoolean();
+						BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient(left ? -84 : 84, 0, 7), (EntityPlayerMP)e);
+					}
+				}	
 				else {
 					this.moveEntity(entity, e);
 				}

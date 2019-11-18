@@ -10,6 +10,7 @@ import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.potions.PotionRegistry;
 import com.valeriotor.BTV.proxy.ClientProxy;
+import com.valeriotor.BTV.util.CameraRotatorClient;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ClientEvents {
 	
 	public final Map<EntityPlayer, Animation> playerAnimations = new HashMap<>();
+	public CameraRotatorClient cameraRotator = null;
 	
 	private int sawcleaverCount = 0;
 	private KeyBinding binds[] = {
@@ -40,7 +42,7 @@ public class ClientEvents {
 	private int soundCounter = 0;
 	private int revelationRingCounter = 12000;
 	private int wolfMedallionCounter = -1;
-	/**A counter for genering ticking animations */
+	/**A counter for generic ticking animations */
 	private int animationCounter = 0;
 	
 	@SubscribeEvent
@@ -59,7 +61,9 @@ public class ClientEvents {
 			
 			updateRevelationRing();
 			updateWolfMedallion();
-			
+			if(cameraRotator != null)
+				if(cameraRotator.update())
+					cameraRotator = null;
 			
 		}
 	}
