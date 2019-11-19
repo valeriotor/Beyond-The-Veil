@@ -15,6 +15,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
+import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -95,6 +96,12 @@ public class PlayerEvents {
 			if(AzacnoParasiteEvents.parasites.containsKey(event.player.getPersistentID())) {
 				event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.PARASITE_PROGRESS, AzacnoParasiteEvents.parasites.get(event.player.getPersistentID()).getProgress(), false);
 				AzacnoParasiteEvents.parasites.remove(event.player.getPersistentID());
+			}
+			PlayerTimer pt = ServerTickEvents.getPlayerTimer("bcrown1", event.player);
+			if(pt != null) {
+				pt.terminateEarly();
+				ServerTickEvents.removePlayerTimer("bcrown1", event.player);
+				ServerTickEvents.removePlayerTimer("bcrown2", event.player);
 			}
 		}
 	}

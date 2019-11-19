@@ -1,15 +1,13 @@
 package com.valeriotor.BTV.events;
 
-import java.util.Map.Entry;
-import java.util.UUID;
-
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
-import com.valeriotor.BTV.worship.AzacnoParasite;
+import com.valeriotor.BTV.util.PlayerTimer;
+import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 
 import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLiving;
@@ -45,6 +43,7 @@ public class PlayerDamageEvents {
 			resetFlute(event);
 			GreatDreamerBuffs.applyDamageCap(event);
 			applyBleedingBelt(event);
+			applyBloodCrown(event);
 		}
 	}
 	
@@ -99,8 +98,30 @@ public class PlayerDamageEvents {
 			if(AzacnoParasiteEvents.parasites.containsKey(p.getPersistentID())) {
 				AzacnoParasiteEvents.parasites.get(p.getPersistentID()).damageParasite((int)event.getAmount());
 			}
+		}		
+	}
+	
+	private static void applyBloodCrown(LivingDamageEvent event) {
+		EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+		if(event.getAmount() > p.getHealth()) {
+			if(BaublesApi.getBaublesHandler(p).getStackInSlot(4).getItem() == ItemRegistry.blood_crown &&
+					p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) {
+				if(ServerTickEvents.getPlayerTimer("bcrown1", p) == null && ServerTickEvents.getPlayerTimer("bcrown2", p) == null) {
+					final float a = event.getAmount();
+					PlayerTimer nested = new PlayerTimerBuilder(p).setName("bcrown2")
+										.addInterrupt(player -> player.isDead)
+										.toPlayerTimer();
+					PlayerTimer pt = new PlayerTimerBuilder(p).setTimer(300)
+										.addFinalAction(player -> player.attackEntityFrom(event.getSource(), a))
+										.addFinalAction(player -> ServerTickEvents.addBufferedTimer(nested))
+										.addInterrupt(player -> player.isDead)
+										.setName("bcrown1")
+										.toPlayerTimer();
+					event.setAmount(0);			
+					ServerTickEvents.addPlayerTimer(pt);
+				}
+			}
 		}
-		
 	}
 	
 }
