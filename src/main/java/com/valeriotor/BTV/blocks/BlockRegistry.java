@@ -61,6 +61,7 @@ public class BlockRegistry {
 	public static final ModSlab SlabElderHalf = (ModSlab) new ModSlab(BlockNames.ELDER_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
 	public static final ModSlab SlabElderDouble = (ModSlab) new ModSlab(BlockNames.ELDER_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
 	public static final ModStairs BlockStoneElderBrickStairs = new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
+	public static final Block BlockHeart = new BlockHeart(Material.SPONGE, "heart");
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -105,6 +106,7 @@ public class BlockRegistry {
 	   	registry.register(BlockStoneElderBrickChiseled);
 	   	registry.register(BlockElderBrick);
 	   	registry.register(BlockStoneElderBrickStairs);
+	   	registry.register(BlockHeart);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	

@@ -2,6 +2,7 @@ package com.valeriotor.BTV.network;
 
 import java.util.List;
 
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
@@ -80,7 +81,7 @@ public class MessageWateryCradle implements IMessage{
 							ThaumcraftApi.internalMethods.progressResearch(p, "filledtears");
 						break;
 				case 3: status = status.withHeartless(true);
-						p.addItemStackToInventory(new ItemStack(ItemRegistry.heart));
+						p.addItemStackToInventory(new ItemStack(BlockRegistry.BlockHeart));
 						sound = BTVSounds.heartRip;
 						if(!k.isResearchKnown("HEARTS@2"))
 							ThaumcraftApi.internalMethods.progressResearch(p, "tornheart");
