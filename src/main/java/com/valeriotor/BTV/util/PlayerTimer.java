@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import com.google.common.collect.ImmutableList;
 
@@ -16,6 +17,7 @@ public class PlayerTimer {
 	private int timer;
 	private final List<Consumer<EntityPlayer>> finalActions;
 	private final List<Consumer<EntityPlayer>> continuosActions;
+	private final List<Predicate<EntityPlayer>> interrupts;
 	private String name = "";
 	
 	public PlayerTimer(EntityPlayer player) {
@@ -31,23 +33,26 @@ public class PlayerTimer {
 		this.server = player.getServer();
 		this.timer = timer;
 		this.continuosActions = ImmutableList.of();
+		this.interrupts = ImmutableList.of();
 		if(action != null)
 			this.finalActions = ImmutableList.of(action);
 		else 
 			this.finalActions = ImmutableList.of();
 	}
 	
-	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions) {
+	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions, List<Predicate<EntityPlayer>> interrupts) {
 		this.player = player.getPersistentID();
 		this.server = player.getServer();
 		this.timer = timer;
 		this.continuosActions = ImmutableList.copyOf(continuosActions);
 		this.finalActions = ImmutableList.copyOf(finalActions);
+		this.interrupts = ImmutableList.copyOf(interrupts);
 	}
 	
 	public boolean update() {
 		EntityPlayer p = this.getPlayer();
-		if(p == null) return false;
+		if(p == null) return true;
+		for(Predicate<EntityPlayer> interrupt : interrupts) if(interrupt.test(p)) return true;
 		if(timer > 0) {
 			if(!p.isDead) {
 				timer--;
@@ -100,14 +105,20 @@ public class PlayerTimer {
 		return code;
 	}
 	
+	public void terminateEarly() {
+		this.timer = -1;
+		for(Consumer<EntityPlayer> action : finalActions) action.accept(this.getPlayer());
+	}
+	
 	public PlayerTimer copyForNewPlayer(EntityPlayer player) {
-		return new PlayerTimer(player, timer, continuosActions, finalActions).setName(name);
+		return new PlayerTimer(player, timer, continuosActions, finalActions, interrupts).setName(name);
 	}
 	
 	public static class PlayerTimerBuilder {
 		
 		private List<Consumer<EntityPlayer>> finalActions = new ArrayList<>();
 		private List<Consumer<EntityPlayer>> continuosActions = new ArrayList<>();
+		private List<Predicate<EntityPlayer>> interrupts = new ArrayList<>();
 		private int timer = 100;
 		private final EntityPlayer player;
 		private String name = "";
@@ -131,13 +142,18 @@ public class PlayerTimer {
 			return this;
 		}
 		
+		public PlayerTimerBuilder addInterrupt(Predicate<EntityPlayer> action) {
+			interrupts.add(action);
+			return this;
+		}
+		
 		public PlayerTimerBuilder setName(String name) {
 			this.name = name;
 			return this;
 		}
 		
 		public PlayerTimer toPlayerTimer() {
-			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions).setName(this.name);
+			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions, this.interrupts).setName(this.name);
 		}
 		
 	}
