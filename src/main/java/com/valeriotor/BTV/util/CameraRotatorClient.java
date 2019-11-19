@@ -36,11 +36,11 @@ public class CameraRotatorClient {
 	}
 	
 	public float getYaw(float partialTicks) {
-		return (float) (this.startYaw + this.rotationYaw * this.funcYaw.op.applyAsDouble((counter + partialTicks)/time));
+		return (float) (this.startYaw + this.rotationYaw * this.funcYaw.applyFunction((counter + partialTicks)/time));
 	}
 	
 	public float getPitch(float partialTicks) {
-		return (float) (this.startPitch + this.rotationPitch * this.funcPitch.op.applyAsDouble((counter + partialTicks)/time));
+		return (float) (this.startPitch + this.rotationPitch * this.funcPitch.applyFunction((counter + partialTicks)/time));
 	}
 	
 	
@@ -48,10 +48,14 @@ public class CameraRotatorClient {
 		LINEAR(a -> a),
 		QUADRATIC(a -> a*a);
 		
-		DoubleUnaryOperator op;
+		private final DoubleUnaryOperator op;
 		
 		private RotatorFunction(DoubleUnaryOperator op) {
 			this.op = op;
+		}
+		
+		public double applyFunction(double d) {
+			return this.op.applyAsDouble(d);
 		}
 		
 	}
