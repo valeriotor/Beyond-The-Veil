@@ -1,9 +1,14 @@
 package com.valeriotor.BTV.items;
 
+import java.util.List;
+
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.util.ItemHelper;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,11 +20,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class ItemCoralStaff extends ModItem{
 
 	public ItemCoralStaff(String name) {
 		super(name);
+		this.setMaxStackSize(1);
 	}
 	
 	@Override
@@ -90,6 +97,18 @@ public class ItemCoralStaff extends ModItem{
 			}
 		}
 		return EnumActionResult.PASS;
+	}
+	
+	public void commandUndead(LivingHurtEvent event) {
+		if(((EntityPlayer)event.getSource().getTrueSource()).getHeldItemMainhand().getItem() == this) {
+			EntityLivingBase hurt = event.getEntityLiving();
+			if(!hurt.isEntityUndead()) {
+				List<EntityLiving> undead = hurt.world.getEntities(EntityLiving.class, e -> e.getDistance(hurt) < 20 && e.isEntityUndead() && !(e instanceof IPlayerGuardian));
+				for(EntityLiving ent : undead) {
+					ent.setAttackTarget(hurt);
+				}
+			}
+		}
 	}
 
 }

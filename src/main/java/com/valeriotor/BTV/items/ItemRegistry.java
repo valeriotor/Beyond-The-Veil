@@ -63,7 +63,7 @@ public class ItemRegistry {
 	public static final Item revelation_ring = new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
 	public static final Item azacno_charm = new ItemAzacnoCharm("azacno_charm").setMaxStackSize(1);
 	public static final Item blood_crown = new ItemBloodCrown("blood_crown").setMaxStackSize(1);
-	public static final Item coral_staff = new ItemCoralStaff("coral_staff").setMaxStackSize(1);
+	public static final ItemCoralStaff coral_staff = new ItemCoralStaff("coral_staff");
 	
 	
 	

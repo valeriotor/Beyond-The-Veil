@@ -6,6 +6,7 @@ import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityShoggoth;
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
+import com.valeriotor.BTV.items.ItemRegistry;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,6 +29,7 @@ public class LivingEvents {
 				GreatDreamerBuffs.applyAttackModifier(e);
 				commandMinions(e);
 				AzacnoParasiteEvents.damageEntity(e);
+				ItemRegistry.coral_staff.commandUndead(e);
 			}
 		}
 		e.setCanceled(cancelDamage(e));
