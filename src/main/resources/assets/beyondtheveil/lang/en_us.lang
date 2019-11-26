@@ -60,6 +60,9 @@ artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.
 
+use.coral_staff.lastlinked=The last clicked heart is at coordinates x: %1$s, y: %2$s, z: %3$s.
+use.coral_staff.clear=Cleared the last stored position.
+
 
 ##################
 #BLOCKS
@@ -107,7 +110,13 @@ interact.citymapper.player2=I still can't use the City Mapper.. because of someo
 interact.citymapper.player3=Some damn fool is still using the City Mapper, preventing me from using it.
 interact.citymapper.player4=Someone else's still using the Mapper.. we should get rid of them.
 interact.citymapper.player5=Someone else is currently using the City Mapper.
-
+interact.heart.toofar=The other heart is too far away.
+interact.heart.notfound=something may have happened to the other heart. I should go check.
+interact.heart.stored=This heart's position is now stored in my coral staff.
+interact.heart.printlink=This heart is linked to coordinates x: %1$s, y: %2$s, z: %3$s.
+interact.heart.nolink=This heart is not linked.
+interact.heart.cleared=This heart's link has been cleared.
+interact.heart.linked=Thie heart at coordinates x: %1$s, y: %2$s, z: %3$s is now linked to this one.
 
 ##################
 #ENTITIES
