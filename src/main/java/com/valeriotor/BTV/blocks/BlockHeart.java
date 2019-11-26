@@ -14,12 +14,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockHeart extends ModBlock implements ITileEntityProvider{
-
+	
+	private static final double a = 0.0625;
+	private static final AxisAlignedBB BBOX = new AxisAlignedBB(a*7, 0, a*7, a*9, a*5, a*9);
+	
 	public BlockHeart(Material materialIn, String name) {
 		super(materialIn, name);
 	}
@@ -35,6 +40,11 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	}
 	
 	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+	
+	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
@@ -43,5 +53,16 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileHeart();
 	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BBOX;
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+    {
+        return NULL_AABB;
+    }
 
 }

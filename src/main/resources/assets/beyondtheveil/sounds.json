@@ -110,5 +110,11 @@
 		"sounds": [
 			"beyondtheveil:parasite_death"
 		]
+	},
+	"heartbeat": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:heartbeat"
+		]
 	}
 }

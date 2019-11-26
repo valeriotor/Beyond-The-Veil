@@ -58,6 +58,9 @@ public final class BTVSounds {
 	
 	@ObjectHolder("parasite_death")
 	public static final SoundEvent parasiteDeath = new SoundEvent(new ResourceLocation(References.MODID, "parasite_death")).setRegistryName("parasite_death");
+
+	@ObjectHolder("heartbeat")
+	public static final SoundEvent heartbeat = new SoundEvent(new ResourceLocation(References.MODID, "heartbeat")).setRegistryName("heartbeat");
 	
 	
 	public static SoundEvent getSoundById(int id) {
@@ -79,6 +82,7 @@ public final class BTVSounds {
 			case 14: return dagonTension;
 			case 15: return parasiteHurt;
 			case 16: return parasiteDeath;
+			case 17: return heartbeat;
 			default: return null;
 			
 		}
@@ -102,10 +106,11 @@ public final class BTVSounds {
 		if(sound.equals(dagonTension)) return 14;
 		if(sound.equals(parasiteHurt)) return 15;
 		if(sound.equals(parasiteDeath)) return 16;
+		if(sound.equals(heartbeat)) return 17;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 17;
+		return 18;
 	}
 }

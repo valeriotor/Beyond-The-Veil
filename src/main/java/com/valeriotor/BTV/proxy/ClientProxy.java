@@ -10,8 +10,10 @@ import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
 import com.valeriotor.BTV.lib.KeyHandler;
+import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
+import com.valeriotor.BTV.tileEntities.renderers.TESRHeart;
 import com.valeriotor.BTV.tileEntities.renderers.TESRLacrymatory;
 import com.valeriotor.BTV.tileEntities.renderers.TESRWateryCradle;
 import com.valeriotor.BTV.util.RegistryHelper;
@@ -92,6 +94,7 @@ public class ClientProxy extends CommonProxy {
     private void registerTileEntitySpecialRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
         ClientRegistry.bindTileEntitySpecialRenderer(TileLacrymatory.class, new TESRLacrymatory());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileHeart.class, new TESRHeart());
     }
     
     @Override
