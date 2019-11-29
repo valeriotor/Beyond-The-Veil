@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "beyondtheveil:blocks/elder_slab_top",
+        "side": "beyondtheveil:blocks/elder_slab_side"
+    }
+}

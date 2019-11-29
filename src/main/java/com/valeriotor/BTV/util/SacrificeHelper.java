@@ -50,8 +50,7 @@ public class SacrificeHelper extends TileEntity{
 		List<EntityItem> items = p.world.getEntities(EntityItem.class, e -> e.getDistanceSq(pos) < 4);
 		if(!items.isEmpty()) {
 			for(EntityItem item : items) {
-				if(useItem(p, pos, item.getItem().getItem())) {
-					item.getItem().shrink(1);
+				if(useItem(p, pos, item.getItem())) {
 					break;
 				}
 			}
@@ -61,10 +60,16 @@ public class SacrificeHelper extends TileEntity{
 		removeHearts(p.world, pos);
 	}
 	
-	public static boolean useItem(EntityPlayer p, BlockPos pos, Item item) {
-		if(Block.getBlockFromItem(item) == Blocks.PRISMARINE) {
+	public static boolean useItem(EntityPlayer p, BlockPos pos, ItemStack item) {
+		if(Block.getBlockFromItem(item.getItem()) == Blocks.PRISMARINE) {
 			EntityItem coral_staff = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ItemRegistry.coral_staff));
 			p.world.spawnEntity(coral_staff);
+			item.shrink(1);
+			return true;
+		} else if(Block.getBlockFromItem(item.getItem()) == Blocks.STONEBRICK) {
+			EntityItem blood_bricks = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(BlockRegistry.BlockBloodBrick, item.getCount()));
+			p.world.spawnEntity(blood_bricks);
+			item.setCount(0);
 			return true;
 		}
 		return false;

@@ -3,6 +3,10 @@ package com.valeriotor.BTV.lib;
 public class BlockNames {
 	
 	public static final String BARREL = "barrel";
+	public static final String BLOODBRICKS = "blood_bricks";
+	public static final String BLOOD_BRICKS_SLAB = "blood_bricks_slab";
+	public static final String BLOOD_BRICKS_SLAB_DOUBLE = "blood_bricks_slab_double";
+	public static final String BLOOD_BRICKS_STAIRS = "blood_bricks_stairs";
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
 	public static final String DARKSAND = "dark_sand";
@@ -13,10 +17,12 @@ public class BlockNames {
 	public static final String ELDER_SLAB = "elder_slab";
 	public static final String ELDER_SLAB_DOUBLE = "elder_slab_double";
 	public static final String FUMESPREADER = "fume_spreader";
+	public static final String HEART = "heart";
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
 	public static final String LACRYMATORY = "lacrymatory";
 	public static final String MUTATOR = "mutator";
+	public static final String SACRIFICE_ALTAR = "sacrifice_altar";
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
 	public static final String SLUGBAIT = "slug_bait";
