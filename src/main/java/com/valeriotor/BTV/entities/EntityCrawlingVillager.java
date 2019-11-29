@@ -1,8 +1,13 @@
 package com.valeriotor.BTV.entities;
 
+import java.util.UUID;
+
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.SacrificeHelper;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -32,6 +37,8 @@ public class EntityCrawlingVillager extends EntityCreature{
 	private int ticksToDie = 0;
 	private int ticksToFall = 0;
 	private int ticksToRecovery = 200;
+	private BlockPos altar;
+	private UUID master;
 	public static final int DEFAULTTICKSTOFALL = 12;
 	private static final DataParameter<Integer> TICKSTOFALL = EntityDataManager.<Integer>createKey(EntityCrawlingVillager.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
@@ -93,21 +100,30 @@ public class EntityCrawlingVillager extends EntityCreature{
 	public void onEntityUpdate() {
 		if(!this.world.isRemote) {
 			if(this.ticksToDie > 0) this.ticksToDie--;
-			else if(this.ticksToDie == 0) this.setHealth(0);
+			else if(this.ticksToDie == 0) {
+				if(this.altar != null) {
+					Block block = world.getBlockState(altar).getBlock();
+					if(block == BlockRegistry.BlockSacrificeAltar && master != null) {
+						SacrificeHelper.doEffect(world.getPlayerEntityByUUID(master), altar);
+					}
+				}
+				this.setHealth(0);
+			}
+			
+			if(this.unconscious) {
+				if(this.ticksToRecovery > 0) this.ticksToRecovery--;
+				else {
+					EntityVillager vil = new EntityVillager(this.world, this.getProfessionID());
+					BlockPos p = this.getPosition();
+					vil.setPosition(p.getX(), p.getY(), p.getZ());
+					this.world.spawnEntity(vil);
+					this.world.removeEntity(this);
+				}
+			}
 		}
 		
 		if(this.world.isRemote && this.ticksToFall > 0) {
 			this.ticksToFall--;
-		}
-		if(!this.world.isRemote && this.unconscious) {
-			if(this.ticksToRecovery > 0) this.ticksToRecovery--;
-			else {
-				EntityVillager vil = new EntityVillager(this.world, this.getProfessionID());
-				BlockPos p = this.getPosition();
-				vil.setPosition(p.getX(), p.getY(), p.getZ());
-				this.world.spawnEntity(vil);
-				this.world.removeEntity(this);
-			}
 		}
 		super.onEntityUpdate();
 	}
@@ -155,6 +171,8 @@ public class EntityCrawlingVillager extends EntityCreature{
 		compound.setInteger("profession", this.dataManager.get(PROFESSION));
 		compound.setInteger("ticksToRecovery", this.ticksToRecovery);
 		compound.setBoolean("unconscious", this.unconscious);
+		if(master != null) compound.setString("master", master.toString());
+		if(altar != null) compound.setLong("altar", altar.toLong());
 		return super.writeToNBT(compound);
 	}
 	
@@ -163,6 +181,8 @@ public class EntityCrawlingVillager extends EntityCreature{
 		this.setProfession(compound.getInteger("profession"));
 		this.ticksToRecovery = compound.getInteger("ticksToRecovery");
 		this.unconscious = compound.getBoolean("unconscious");
+		if(compound.hasKey("master")) this.master = UUID.fromString(compound.getString("master"));
+		if(compound.hasKey("altar")) this.altar = BlockPos.fromLong(compound.getLong("altar"));
 		super.readFromNBT(compound);
 	}
 	
@@ -177,7 +197,16 @@ public class EntityCrawlingVillager extends EntityCreature{
 		return this.weeper;
 	}
 	
+	public void setAltar(BlockPos pos) {
+		this.altar = pos;
+	}
 	
+	public void setMaster(EntityPlayer player) {
+		this.master = player.getPersistentID();
+	}
 	
+	public EntityPlayer getMaster() {
+		return world.getPlayerEntityByUUID(master);
+	}
 
 }

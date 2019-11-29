@@ -2,10 +2,13 @@ package com.valeriotor.BTV.items;
 
 import java.util.List;
 
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.SacrificeHelper;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -43,18 +46,29 @@ public class ItemHeldVillager extends Item {
 			}
 		}
 		EntityCrawlingVillager worm = new EntityCrawlingVillager(w, !spineless, heartless);
-		worm.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
-		worm.setProfession(ItemHelper.checkIntTag(player.getHeldItem(hand), "profession", 0));
-		w.spawnEntity(worm);
-		player.getHeldItem(hand).shrink(1);
-		return EnumActionResult.SUCCESS;
+		Block block = w.getBlockState(pos).getBlock();
+		boolean sacrifice = false;
+		if(block == BlockRegistry.BlockSacrificeAltar && SacrificeHelper.checkStructure(player, pos) && heartless) {
+			sacrifice = true;
+			worm.setAltar(pos);
+		}
+		if(sacrifice ||  block != BlockRegistry.BlockSacrificeAltar || !heartless) {
+			worm.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
+			worm.setProfession(ItemHelper.checkIntTag(player.getHeldItem(hand), "profession", 0));
+			worm.setMaster(player);
+			w.spawnEntity(worm);
+			player.getHeldItem(hand).shrink(1);
+			return EnumActionResult.SUCCESS;
+		}
+		else
+			return EnumActionResult.FAIL;
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
 		boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
-		tooltip.add("§5§o" + I18n.format(String.format("tooltip.held_villager.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
+		tooltip.add("ï¿½5ï¿½o" + I18n.format(String.format("tooltip.held_villager.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
