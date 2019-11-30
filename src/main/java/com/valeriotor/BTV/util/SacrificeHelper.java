@@ -12,12 +12,12 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class SacrificeHelper extends TileEntity{
@@ -30,6 +30,7 @@ public class SacrificeHelper extends TileEntity{
 				if(x == 0 && z == 0) continue;
 				IBlockState state = w.getBlockState(pos.add(x, 0, z));
 				if(state.getBlock() != Blocks.PRISMARINE || state.getProperties().get(BlockPrismarine.VARIANT) != BlockPrismarine.EnumType.DARK) {
+					incompleteStructureMessage(p);
 					return false;
 				}
 			}
@@ -38,12 +39,19 @@ public class SacrificeHelper extends TileEntity{
 			BlockPos pos1 = pos.offset(facing, 2).offset(facing.rotateYCCW(), 2).up();
 			IBlockState state = w.getBlockState(pos1);
 			if(state.getBlock() != Blocks.PRISMARINE || state.getProperties().get(BlockPrismarine.VARIANT) != BlockPrismarine.EnumType.BRICKS) {
+				incompleteStructureMessage(p);
 				return false;
 			}
-			if(w.getBlockState(pos1.up()).getBlock() != BlockRegistry.BlockHeart)
+			if(w.getBlockState(pos1.up()).getBlock() != BlockRegistry.BlockHeart) {
+				incompleteStructureMessage(p);
 				return false;
+			}
 		}
 		return true;
+	}
+	
+	private static void incompleteStructureMessage(EntityPlayer p) {
+		p.sendMessage(new TextComponentTranslation("interact.sacrificial_altar.incomplete"));
 	}
 	
 	public static void doEffect(EntityPlayer p, BlockPos pos) {
@@ -66,8 +74,8 @@ public class SacrificeHelper extends TileEntity{
 			p.world.spawnEntity(coral_staff);
 			item.shrink(1);
 			return true;
-		} else if(Block.getBlockFromItem(item.getItem()) == Blocks.STONEBRICK) {
-			EntityItem blood_bricks = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(BlockRegistry.BlockBloodBrick, item.getCount()));
+		} else if(getBricks(Block.getBlockFromItem(item.getItem())) != null) {
+			EntityItem blood_bricks = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(getBricks(Block.getBlockFromItem(item.getItem())), item.getCount()));
 			p.world.spawnEntity(blood_bricks);
 			item.setCount(0);
 			return true;
@@ -82,6 +90,13 @@ public class SacrificeHelper extends TileEntity{
 				w.setBlockState(pos1, Blocks.AIR.getDefaultState());
 			}
 		}
+	}
+	
+	public static Block getBricks(Block b) {
+		if(b == Blocks.STONEBRICK) return BlockRegistry.BlockBloodBrick;
+		if(b == Blocks.STONE_BRICK_STAIRS) return BlockRegistry.BlockBloodBrickStairs;
+		if(b == Blocks.STONE_SLAB) return BlockRegistry.SlabBloodHalf;
+		return null;
 	}
 	
 }

@@ -116,7 +116,8 @@ interact.heart.stored=This heart's position is now stored in my coral staff.
 interact.heart.printlink=This heart is linked to coordinates x: %1$s, y: %2$s, z: %3$s.
 interact.heart.nolink=This heart is not linked.
 interact.heart.cleared=This heart's link has been cleared.
-interact.heart.linked=Thie heart at coordinates x: %1$s, y: %2$s, z: %3$s is now linked to this one.
+interact.heart.linked=The heart at coordinates x: %1$s, y: %2$s, z: %3$s is now linked to this one.
+interact.sacrificial_altar.incomplete=This altar's structure is incomplete.
 
 ##################
 #ENTITIES
