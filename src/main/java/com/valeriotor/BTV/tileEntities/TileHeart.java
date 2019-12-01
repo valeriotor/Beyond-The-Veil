@@ -24,12 +24,15 @@ public class TileHeart extends TileEntity implements ITickable{
 	
 	private int counter = 99;
 	private int animCounter = 0;
+	private int wellCounter = -1;
 	private BlockPos link;
 	private Set<EntityLiving> damned = new HashSet<>();
 	
 	@Override
 	public void update() {
 		if(this.world.isRemote) {
+			if(this.wellCounter > 0) 
+				this.wellCounter--;
 			this.animCounter++;
 			if(this.animCounter >= 30) {
 				this.animCounter = 0;
@@ -37,6 +40,10 @@ public class TileHeart extends TileEntity implements ITickable{
 			}
 			
 		} else {
+			if(this.wellCounter > 0) {
+				this.wellCounter--;
+				System.out.println("TEST");
+			}
 			counter--;
 			if(counter % 10 == 0) {
 				if(this.link != null) {
@@ -89,6 +96,10 @@ public class TileHeart extends TileEntity implements ITickable{
 	@SideOnly(Side.CLIENT)
 	public int getAnimCounter() {
 		return this.animCounter;
+	}
+	
+	public void startWell() {
+		this.wellCounter = 60;
 	}
 
 }
