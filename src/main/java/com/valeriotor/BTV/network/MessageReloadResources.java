@@ -1,9 +1,10 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.proxy.ClientProxy;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -24,7 +25,15 @@ public class MessageReloadResources implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageReloadResources message, MessageContext ctx) {
-			BeyondTheVeil.proxy.loadCustomResources();
+
+			Minecraft minecraft = Minecraft.getMinecraft();
+		    final WorldClient worldClient = minecraft.world;
+		    minecraft.addScheduledTask(new Runnable()
+		    {
+				public void run() {
+			    	BeyondTheVeil.proxy.loadCustomResources();
+				}
+		    });
 			return null;
 		}
 		

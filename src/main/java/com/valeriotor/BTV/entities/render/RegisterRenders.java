@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.entities.render;
 
+import com.valeriotor.BTV.entities.EntityBloodZombie;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.entities.EntityDeepOne;
@@ -72,6 +73,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityShoggoth> createRenderFor(RenderManager manager) 
 			{return new RenderShoggoth(manager);}
+			});
+		
+		//Blood Zombie
+		RenderingRegistry.registerEntityRenderingHandler(EntityBloodZombie.class, new IRenderFactory<EntityBloodZombie>(){
+			@Override
+			public Render<EntityBloodZombie> createRenderFor(RenderManager manager) 
+			{return new RenderBloodZombie(manager);}
 			});
 	}
 }

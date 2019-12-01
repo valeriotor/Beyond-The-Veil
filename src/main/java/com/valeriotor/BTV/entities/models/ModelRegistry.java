@@ -10,6 +10,7 @@ public class ModelRegistry {
 	public static ModelStarspawn starspawn;
 	public static ModelShoggoth shoggoth;
 	public static ModelParasite parasite;
+	public static ModelBloodZombie blood_zombie;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -20,6 +21,7 @@ public class ModelRegistry {
 		starspawn = new ModelStarspawn();
 		shoggoth = new ModelShoggoth();
 		parasite = new ModelParasite();
+		blood_zombie = new ModelBloodZombie();
 	}
 	
 }

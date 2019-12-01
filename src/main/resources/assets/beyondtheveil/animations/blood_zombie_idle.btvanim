@@ -1,0 +1,103 @@
+length: 110
+model: blood_zombie
+keys
+	LArm: 6
+	RArm: 7
+	Head: 8
+	LFArm: 9
+	RFArm: 10
+end
+start: 0: 10
+    LArm: rotx: -0.55
+	LArm: roty: 0.6
+	LArm: rotz: 0
+	LFArm: rotz: 1
+	RArm: trax: 0
+	RArm: traz: 0
+	RArm: roty: 0
+	RArm: rotz: 0
+	RArm: rotx: 0
+	Head: rotx: 0
+	RArm: tray: 0
+end
+start: 16: 25
+	LArm: rotx: 0.55
+	LArm: roty: -0.6
+	RArm: trax: 0.3
+	RArm: traz: -0.5
+	RArm: roty: -0.9
+	RArm: rotz: -0.3
+end
+start: 35: 40
+	Head: rotx: 0.1
+	LArm: rotx: -0.6
+	RArm: tray: -0.55
+	RArm: traz: -0.2
+	RArm: trax: -0.2
+	RArm: roty: 0.3
+end
+start: 50: 55
+	LArm: rotx: -1.4
+	Head: rotx: -0.1
+	LArm: rotz: 1.5
+	RArm: trax: 0.3
+	RArm: tray: 0.4
+	RArm: traz: 0.75
+	RArm: rotx: -0.77
+	RArm: rotz: -0.9
+	RArm: roty: -0.9
+end
+start: 56: 60
+	LFArm: rotz: 0.70
+	RArm: traz: 0.3
+	RArm: tray: 0.2
+	RArm: trax: -0.3
+end
+start: 61: 65
+	LFArm: rotz: -0.70
+	RArm: traz: -0.3
+	RArm: tray: -0.2
+	RArm: trax: 0.3
+end
+start: 66: 70
+	LFArm: rotz: 0.70
+	RArm: traz: 0.3
+	RArm: tray: 0.2
+	RArm: trax: -0.3
+end
+start: 71: 75
+	LFArm: rotz: -0.70
+	RArm: traz: -0.3
+	RArm: tray: -0.2
+	RArm: trax: 0.3
+end
+start: 76: 82
+	LArm: rotx: 1.4
+	LArm: rotz: -1.5
+	RArm: trax: -0.3
+	RArm: tray: -0.4
+	RArm: traz: -0.75
+	RArm: rotx: 0.77
+	RArm: rotz: 0.9
+	RArm: roty: 0.9
+end
+start: 83: 90
+	LArm: rotx: 0.6
+	RArm: tray: 0.55
+	RArm: traz: 0.2
+	RArm: trax: 0.2
+	RArm: roty: -0.3
+end
+start: 91: 100
+	LArm: rotx: -0.55
+	LArm: roty: 0.6
+	RArm: trax: -0.3
+	RArm: traz: 0.5
+	RArm: roty: 0.9
+	RArm: rotz: 0.3
+end	
+start: 101: 109
+	LArm: rotx: 0.55
+	LArm: roty: -0.6
+	LFArm: rotz: -1
+end	

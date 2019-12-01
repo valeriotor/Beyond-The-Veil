@@ -79,6 +79,7 @@ public class BTVAnimHelper {
 		switch(s) {
 		case "deep_one": return ModelRegistry.deep_one;
 		case "shoggoth": return ModelRegistry.shoggoth;
+		case "blood_zombie": return ModelRegistry.blood_zombie;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;
