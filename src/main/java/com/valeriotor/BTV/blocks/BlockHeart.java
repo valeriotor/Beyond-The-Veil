@@ -74,24 +74,13 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	@Override
 	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		boolean well = true;
-		for(int x = -2; x <= 2 && well; x++ ) {
-			for(int z = -2; z <= 2 && well; z++) {
-				if(w.getBlockState(pos.add(x, 0, z)).getBlock() != BlockRegistry.BlockBloodBrick)
-					well = false;
-				if(well && (x == z || x == - z) && (z == 2 || z == -2)) {
-					if(w.getBlockState(pos.add(x, 1, z)).getBlock() != BlockRegistry.BlockBloodBrick ||
-					   w.getBlockState(pos.add(x, 2, z)).getBlock() != BlockRegistry.BlockBloodBrick) {
-						well = false;
-					}
-				}
-				if(x != -2 && x != 2) z += 3;
+		boolean well = BlockRegistry.BlockBloodWell.checkStructure(pos, w);
+		if(well) {
+			TileEntity te = w.getTileEntity(pos);
+			if(te instanceof TileHeart) {
+				TileHeart th = (TileHeart) te;
+				th.startWell();
 			}
-		}
-		TileEntity te = w.getTileEntity(pos);
-		if(te instanceof TileHeart) {
-			TileHeart th = (TileHeart) te;
-			if(well) th.startWell();
 		}
 		super.onBlockPlacedBy(w, pos, state, placer, stack);
 	}

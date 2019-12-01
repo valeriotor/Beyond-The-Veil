@@ -65,7 +65,15 @@ public class TESRHeart extends FastTESR<TileHeart>{
         buffer.pos(0.4675 - radius, height - radius, 0.5325 - radius).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(3), tex.getInterpolatedV(4)).lightmap(upLMa, upLMb).endVertex();
         buffer.pos(0.4675 + radius, height - radius, 0.5325 - radius).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(0), tex.getInterpolatedV(4)).lightmap(upLMa, upLMb).endVertex();
        
-        
+        int well = te.getWellCounter();
+        if(well > -1) {
+	        tex = bm.getTexture(BlockRegistry.BlockBloodWell.getDefaultState());
+	        
+	        buffer.pos(-1, (60 - well + partialTicks) / 64D, -1).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(0), tex.getInterpolatedV(0)).lightmap(upLMa, upLMb).endVertex();
+	        buffer.pos(2, (60 - well + partialTicks) / 64D, -1).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(16), tex.getInterpolatedV(0)).lightmap(upLMa, upLMb).endVertex();
+	        buffer.pos(2, (60 - well + partialTicks) / 64D, 2).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(16), tex.getInterpolatedV(16)).lightmap(upLMa, upLMb).endVertex();
+	        buffer.pos(-1, (60 - well + partialTicks) / 64D, 2).color(1, 1, 1, 1F).tex(tex.getInterpolatedU(0), tex.getInterpolatedV(16)).lightmap(upLMa, upLMb).endVertex();
+        }
 	}
 
 }

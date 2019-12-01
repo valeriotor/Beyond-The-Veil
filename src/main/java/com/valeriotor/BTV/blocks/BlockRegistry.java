@@ -67,6 +67,7 @@ public class BlockRegistry {
 	public static final ModSlab SlabBloodHalf = (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
 	public static final ModSlab SlabBloodDouble = (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
 	public static final ModStairs BlockBloodBrickStairs = new ModStairs(BlockBloodBrick.getDefaultState(), BlockNames.BLOOD_BRICKS_STAIRS);
+	public static final BlockBloodWell BlockBloodWell = new BlockBloodWell(Material.PORTAL, BlockNames.BLOOD_WELL);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -115,6 +116,7 @@ public class BlockRegistry {
 	   	registry.register(BlockSacrificeAltar);
 	   	registry.register(BlockBloodBrick);
 	   	registry.register(BlockBloodBrickStairs);
+	   	registry.register(BlockBloodWell);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);

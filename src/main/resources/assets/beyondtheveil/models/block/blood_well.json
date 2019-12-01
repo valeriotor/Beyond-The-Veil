@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "beyondtheveil:blocks/blood",
+		"particle": "beyondtheveil:blocks/blood"
+	},
+	"elements": [
+		{
+			"from": [-16, 14, -16],
+			"to": [32, 15, 32],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0.666], "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 0.666], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 0.666], "texture": "#0"},
+				"west": {"uv": [0, 0, 15.999, 0.666], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	]
+}

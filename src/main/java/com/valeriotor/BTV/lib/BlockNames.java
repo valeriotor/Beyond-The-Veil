@@ -7,6 +7,7 @@ public class BlockNames {
 	public static final String BLOOD_BRICKS_SLAB = "blood_bricks_slab";
 	public static final String BLOOD_BRICKS_SLAB_DOUBLE = "blood_bricks_slab_double";
 	public static final String BLOOD_BRICKS_STAIRS = "blood_bricks_stairs";
+	public static final String BLOOD_WELL = "blood_well";
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
 	public static final String DARKSAND = "dark_sand";

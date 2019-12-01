@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.lib.BTVSounds;
 
 import net.minecraft.entity.EntityLiving;
@@ -22,7 +24,7 @@ public class TileHeart extends TileEntity implements ITickable{
 	
 	}
 	
-	private int counter = 99;
+	private int counter = 69;
 	private int animCounter = 0;
 	private int wellCounter = -1;
 	private BlockPos link;
@@ -42,7 +44,8 @@ public class TileHeart extends TileEntity implements ITickable{
 		} else {
 			if(this.wellCounter > 0) {
 				this.wellCounter--;
-				System.out.println("TEST");
+				if(this.wellCounter == 0)
+					this.world.setBlockState(pos, BlockRegistry.BlockBloodWell.getDefaultState());
 			}
 			counter--;
 			if(counter % 10 == 0) {
@@ -51,19 +54,19 @@ public class TileHeart extends TileEntity implements ITickable{
 					while(iter.hasNext()) {
 						EntityLiving e = iter.next();
 						if(e == null || e.isDead) iter.remove();
-						else if(e.getDistanceSq(link) < 16) iter.remove();
+						else if(e.getDistanceSq(link) < 9) iter.remove();
 						else e.getNavigator().setPath(e.getNavigator().getPathToPos(this.link), 0.9);
 					}
 				} else damned.clear();
 			}
 			if(counter <= 0) {
-				counter = 99;
-				List<EntityLiving> undead = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 324 && e.getDistanceSq(pos) > 16);
+				counter = 69;
+				List<EntityLiving> undead = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 324 && e.getDistanceSq(pos) > 16 && !(e instanceof IPlayerGuardian));
 				for(EntityLiving e : undead) {
 					if(!damned.contains(e)) e.getNavigator().setPath(e.getNavigator().getPathToPos(this.pos), 0.9);
 				}
 				if(link != null) {
-					List<EntityLiving> undead2 = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 16);
+					List<EntityLiving> undead2 = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 20 && !(e instanceof IPlayerGuardian));
 					for(EntityLiving e : undead2) {
 						damned.add(e);
 						e.getNavigator().setPath(e.getNavigator().getPathToPos(this.link), 0.9);
@@ -100,6 +103,10 @@ public class TileHeart extends TileEntity implements ITickable{
 	
 	public void startWell() {
 		this.wellCounter = 60;
+	}
+	
+	public int getWellCounter() {
+		return this.wellCounter;
 	}
 
 }
