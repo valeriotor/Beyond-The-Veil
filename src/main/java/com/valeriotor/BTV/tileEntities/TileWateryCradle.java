@@ -2,6 +2,7 @@ package com.valeriotor.BTV.tileEntities;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.blocks.BlockWateryCradle;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -14,6 +15,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileWateryCradle extends TileEntity{
@@ -205,6 +209,15 @@ public class TileWateryCradle extends TileEntity{
 	
 	public IBlockState getState() {
 		return world.getBlockState(pos);
+	}
+	
+	private AxisAlignedBB BBOX;
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		if(BBOX == null) {
+			BBOX = new AxisAlignedBB(pos.add(-2, 0, -2), pos.add(2, 0, 2));
+		}
+		return BBOX;
 	}
 	
 }

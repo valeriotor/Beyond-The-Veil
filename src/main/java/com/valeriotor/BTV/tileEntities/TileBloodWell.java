@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
@@ -124,6 +125,12 @@ public class TileBloodWell extends TileEntity implements ITickable{
 			return guardian;
 		}
 		
+	}
+	
+	private final AxisAlignedBB BBOX = new AxisAlignedBB(-1, 0, -1, 1, 1, 1);
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return BBOX;
 	}
 
 }
