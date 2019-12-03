@@ -377,7 +377,7 @@
         "key": "WATERYCRADLE",
         "name": "research.WATERYCRADLE.title",
         "icons": [ "beyondtheveil:watery_cradle" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 9,9 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,11],
 		"meta": ["HIDDEN"],
         "parents": [ "IDOL" ],
         "stages": [
@@ -394,7 +394,7 @@
         "key": "SPINES",
         "name": "research.SPINES.title",
         "icons": [ "beyondtheveil:spine" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 7,11 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,13 ],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
 				{
@@ -410,7 +410,7 @@
         "key": "HEARTS",
         "name": "research.HEARTS.title",
         "icons": [ "beyondtheveil:heart" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 7,7 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,9 ],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
 				{
@@ -426,7 +426,7 @@
         "key": "WEEPERS",
         "name": "research.WEEPERS.title",
         "icons": [ "beyondtheveil:held_fletum" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 5,9 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,11 ],
         "parents": [ "SPINES", "HEARTS" ],
         "stages": [
 				{
@@ -440,6 +440,102 @@
                 {
                     "text": "research.WEEPERS.stage.2"
                 }
+            ]
+        },
+		{
+        "key": "REVELATIONRING",
+        "name": "research.REVELATIONRING.title",
+        "icons": [ "beyondtheveil:revelation_ring" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,11 ],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+					"text": "research.REVELATIONRING.stage.0",
+					"required_research": ["craftedrevelationring"]
+                },
+                {
+					"text": "research.REVELATIONRING.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "BONETIARA",
+        "name": "research.BONETIARA.title",
+        "icons": [ "beyondtheveil:bone_tiara" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,13 ],
+        "parents": [ "SPINES" ],
+        "stages": [
+				{
+					"text": "research.BONETIARA.stage.0",
+					"required_research": ["craftedbonetiara"]
+                },
+                {
+					"text": "research.BONETIARA.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "BLEEDINGBELT",
+        "name": "research.BLEEDINGBELT.title",
+        "icons": [ "beyondtheveil:bleeding_belt" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,9 ],
+        "parents": [ "HEARTS" ],
+        "stages": [
+				{
+					"text": "research.BLEEDINGBELT.stage.0",
+					"required_research": ["craftedbleedingbelt"]
+                },
+                {
+					"text": "research.BLEEDINGBELT.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "BLOODCOVENANT",
+        "name": "research.BLOODCOVENANT.title",
+        "icons": [ "beyondtheveil:blood_covenant" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 1,10 ],
+        "parents": [ "BLEEDINGBELT", "REVELATIONRING" ],
+        "stages": [
+				{
+					"text": "research.BLOODCOVENANT.stage.0",
+					"required_research": ["craftedbloodcovenant"]
+                },
+                {
+					"text": "research.BLOODCOVENANT.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "BLOODCROWN",
+        "name": "research.BLOODCROWN.title",
+        "icons": [ "beyondtheveil:blood_crown" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,12],
+        "parents": [ "BLEEDINGBELT", "BONETIARA" ],
+        "stages": [
+				{
+					"text": "research.BLOODCROWN.stage.0",
+					"required_research": ["craftedbloodcrown"]
+                },
+                {
+					"text": "research.BLOODCROWN.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "AZACNOCHARM",
+        "name": "research.AZACNOCHARM.title",
+        "icons": [ "beyondtheveil:azacno_charm" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -3,11],
+        "parents": [ "BLOODCOVENANT", "BLOODCROWN" ],
+        "stages": [
+				{
+					"text": "research.AZACNOCHARM.stage.0",
+					"required_research": ["craftedazacnocharm"]
+                },
+                {
+					"text": "research.AZACNOCHARM.stage.1"
+				}
             ]
         }
 	]

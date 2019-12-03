@@ -610,6 +610,37 @@ research.WEEPERS.stage.2=It is most natural to weep when one learns something. T
 research.filledtears.text=Fill a brain with water.
 research.craftedlacrymatory.text=Craft a Lacrymatory.
 
+research.REVELATIONRING.title=Ring of Revelation
+research.REVELATIONRING.stage.0=Weepers and Fleti lack eyes, yet they see more than most.<BR>Their tears are precious, and I shall dampen a ring with them.
+research.REVELATIONRING.stage.1=The Ring of Revelation lets me see the unseen.<BR>When its passive effect is turned on, all invisible entities shall be revealed to me.<BR>When its active power is used, all such entities will outright lose their invisibility, leaving them for the whole world to see.<BR>Nothing shall lie unseen to me again.
+research.craftedrevelationring.text=Craft a Ring of Revelation.
+
+research.BLEEDINGBELT.title=Bleeding Belt
+research.BLEEDINGBELT.stage.0=As my knowledge grows, so does my life become more precious.<BR>It must be preserved.<BR>I will gladly make sacrifices, of all kinds.<BR>Blood is the key.
+research.BLEEDINGBELT.stage.1=When worn, the Bleeding Belt oozes the dark red fluid, of unknown origin for it isn't mine.<BR>What I do know is that, when its passive effect is enabled, it bathes me with life in exchange for hunger.<BR>Any time I am struck, my health shall be unharmed for as long as my stomach isn't empty.
+research.craftedbleedingbelt.text=Craft a Bleeding Belt.
+
+research.BONETIARA.title=Bone Tiara
+research.BONETIARA.stage.0=If it is true that one must fight fire with fire, then I shall be the first to fight fear with fear.<BR>No terrors shall break my will.
+research.BONETIARA.stage.1=The things I see as my knowledge grows send shivers down my spine.<BR>Hopefully, they'll know send them through someone else's.<BR>A tiara of bones will now adorn my head. As long as its passive effect is on, I shall be immune to Terror and Folly. My will will not break.<BR>Not yet.
+research.craftedbonetiara.text=Craft a Bone Tiara.
+
+research.BLOODCOVENANT.title=Covenant of Blood
+research.BLOODCOVENANT.stage.0=Through blood, different lives are linked.<BR>The dark red fluid is not of this world, and the links are of eldritch nature. I may find use for such bonds, yet this time I cannot do it alone.
+research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all others who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally. 
+research.craftedbloodcovenant.text=Craft a Covenant of Blood.
+
+research.BLOODCROWN.title=Crown of Thorns
+research.BLOODCROWN.stage.0=If I am ever to be struck down, I want it to be by my own hand.<BR>Until then, I must defy death. Again and again.<BR>I need the WILL to LIVE.
+research.BLOODCROWN.stage.1=Sprinkled with blood and dust of dorsal spines, the Crown of Thorns is a thing of horror.<BR>When its passive effect is active, it grants me the will and strength to keep standing after a blow that would've been final, piercing my forehead and bathing me in my own blood.<BR>Yet no boon comes without a price. After the effect takes hold I will be mortal again for a short periodo, at the end of which the damage that was negated will finally be dealt.<BR>I must use the Crown wisely, and be ready to heal.
+research.craftedbloodcrown.text=Craft a Crown of Thorns.
+
+research.AZACNOCHARM.title=Charm of Azacno
+research.AZACNOCHARM.stage.0=Aeons ago, a great parasite fell from the Cosmos.<BR>Unknown in shape and intent, it laid its nest in the deepest Oceans.<BR>Sucking blood, bringing fear and granting knowledge. To know him is to reach a culmination of my experiments.
+research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
+research.craftedazacnocharm.text=Craft a Charm of Azacno.
+
+
 ##################
 #MISC
 ##################
