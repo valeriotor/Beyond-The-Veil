@@ -114,7 +114,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 }
 	 
 	public void setMaster(EntityPlayer p) {
-		this.master = p.getGameProfile().getId();
+		this.master = p.getPersistentID();
 	}
 
 	 @Override
@@ -227,6 +227,11 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	 public int getRoarCooldown() {
 		 return this.roarCooldown;
 	 }
+
+	@Override
+	public UUID getMasterID() {
+		return this.master;
+	}
 	 
 	 
 	 

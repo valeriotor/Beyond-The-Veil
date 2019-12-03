@@ -1,12 +1,16 @@
 package com.valeriotor.BTV.blocks;
 
+import com.valeriotor.BTV.items.ItemBloodSigil;
 import com.valeriotor.BTV.tileEntities.TileBloodWell;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -68,6 +72,19 @@ public class BlockBloodWell extends ModBlock implements ITileEntityProvider{
 			}
 		}
 		return well;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if(worldIn.isRemote) return true;
+		if(hand == EnumHand.OFF_HAND) return false;
+		if(playerIn.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemBloodSigil) return false; 
+		TileEntity te = worldIn.getTileEntity(pos);
+		if(te instanceof TileBloodWell) {
+			((TileBloodWell)te).sendInfo(playerIn);
+		}
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 	
 

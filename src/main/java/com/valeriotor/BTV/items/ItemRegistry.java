@@ -12,6 +12,7 @@ import com.valeriotor.BTV.items.baubles.ItemRevelationRing;
 import com.valeriotor.BTV.items.baubles.ItemWolfMedallion;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.proxy.ClientProxy;
+import com.valeriotor.BTV.tileEntities.TileBloodWell.BloodMobs;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -64,7 +65,7 @@ public class ItemRegistry {
 	public static final Item azacno_charm = new ItemAzacnoCharm("azacno_charm").setMaxStackSize(1);
 	public static final Item blood_crown = new ItemBloodCrown("blood_crown").setMaxStackSize(1);
 	public static final ItemCoralStaff coral_staff = new ItemCoralStaff("coral_staff");
-	
+	public static final ItemBloodSigil sigil_zombie = new ItemBloodSigil("sigil_zombie", BloodMobs.BLOOD_ZOMBIE);
 	
 	
 	
@@ -113,6 +114,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(azacno_charm, 0, "inventory");
         ClientProxy.registerItemRenderer(blood_crown, 0, "inventory");
         ClientProxy.registerItemRenderer(coral_staff, 0, "inventory");
+        ClientProxy.registerItemRenderer(sigil_zombie, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -231,6 +233,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.azacno_charm);
     	registry.register(ItemRegistry.blood_crown);
     	registry.register(ItemRegistry.coral_staff);
+    	registry.register(ItemRegistry.sigil_zombie);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);

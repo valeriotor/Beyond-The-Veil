@@ -62,6 +62,9 @@ artifact.medallion.creepers=There are creepers.
 
 use.coral_staff.lastlinked=The last clicked heart is at coordinates x: %1$s, y: %2$s, z: %3$s.
 use.coral_staff.clear=Cleared the last stored position.
+use.blood_sigil.amount=This Sigil is now linked to %1$s undead.
+use.blood_sigil.emptysigil=This Sigil is empty.
+use.blood_sigil.emptywell=This Well has no more of these undead.
 
 
 ##################
@@ -118,6 +121,7 @@ interact.heart.nolink=This heart is not linked.
 interact.heart.cleared=This heart's link has been cleared.
 interact.heart.linked=The heart at coordinates x: %1$s, y: %2$s, z: %3$s is now linked to this one.
 interact.sacrificial_altar.incomplete=This altar's structure is incomplete.
+interact.blood_well.amount=%1$s Blood Skeletons and %2$s Blood Zombies are stored in this well. Or, rather, the otherworldly place it is linked to.
 
 ##################
 #ENTITIES
