@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
+import com.valeriotor.BTV.entities.AI.AIRevenge;
 
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -50,7 +51,8 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.targetTasks.addTask(1, new AIProtectMaster(this));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null)));
+        this.targetTasks.addTask(2, new AIRevenge(this));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null)));
 	}
 	
 	@Override
@@ -64,8 +66,8 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
 					if(this.idle_animation.isDone()) this.idle_animation = null;
 				}	
 			} else {
-				if(this.animCounter == 0) this.idle_animation = new Animation(AnimationRegistry.blood_zombie_idle);
-				animCounter = world.rand.nextInt(150)*200 + 800;
+				if(this.animCounter == 0 && Math.abs(this.motionX) < 0.005 && Math.abs(this.motionZ) < 0.005 ) this.idle_animation = new Animation(AnimationRegistry.blood_zombie_idle);
+				animCounter = world.rand.nextInt(15)*200 + 800;
 			}
 		}
 	}
