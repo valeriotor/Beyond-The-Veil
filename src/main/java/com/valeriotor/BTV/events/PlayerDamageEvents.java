@@ -8,6 +8,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLiving;
@@ -107,9 +108,12 @@ public class PlayerDamageEvents {
 			if(BaublesApi.getBaublesHandler(p).getStackInSlot(4).getItem() == ItemRegistry.blood_crown &&
 					p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) {
 				if(ServerTickEvents.getPlayerTimer("bcrown1", p) == null && ServerTickEvents.getPlayerTimer("bcrown2", p) == null) {
-					final float a = event.getAmount();
+					CrawlerWorship cw = ServerTickEvents.getWorship(p);
+					boolean cwImp = cw != null && cw.improvesCrownOfThorns();
+					final float a = event.getAmount() / (cwImp ? 3 : 1);
 					PlayerTimer nested = new PlayerTimerBuilder(p).setName("bcrown2")
 										.addInterrupt(player -> player.isDead)
+										.setTimer(cwImp ? 5 : 100)
 										.toPlayerTimer();
 					PlayerTimer pt = new PlayerTimerBuilder(p).setTimer(300)
 										.addFinalAction(player -> player.attackEntityFrom(event.getSource(), a))

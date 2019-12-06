@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCrawlingVillager extends EntityCreature{
+public class EntityCrawlingVillager extends EntityCreature implements IPlayerMinion{
 	
 	private boolean unconscious = false; // "unconscious" is synonym of "blackjack" and opposite of "spineless"
 	private boolean heartless = false;
@@ -206,7 +206,13 @@ public class EntityCrawlingVillager extends EntityCreature{
 	}
 	
 	public EntityPlayer getMaster() {
-		return world.getPlayerEntityByUUID(master);
+		return world.getMinecraftServer().getPlayerList().getPlayerByUUID(this.master);
+	}
+
+
+	@Override
+	public UUID getMasterID() {
+		return this.master;
 	}
 
 }

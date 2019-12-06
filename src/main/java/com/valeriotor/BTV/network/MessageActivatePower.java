@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.events.ServerTickEvents;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.Worship;
 import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
 
@@ -32,7 +34,12 @@ public class MessageActivatePower implements IMessage{
 					p.sendMessage(new TextComponentTranslation("power.cooldown", cooldown/20));
 				} else {
 					boolean success = power.activatePower(p);
-					if(success) Worship.setPowerCooldown(p, power.getCooldownTicks(), power.getIndex());
+					if(success) {
+						int newCooldown = power.getCooldownTicks();
+						CrawlerWorship cw = ServerTickEvents.getWorship(p);
+						if(cw != null) newCooldown = cw.getPowerCooldown(newCooldown);
+						Worship.setPowerCooldown(p, newCooldown, power.getIndex());
+					}
 				}
 			}
 			return null;

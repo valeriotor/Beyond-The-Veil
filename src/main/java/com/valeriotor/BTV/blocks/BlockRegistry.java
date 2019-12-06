@@ -11,6 +11,7 @@ import com.valeriotor.BTV.blocks.flora.PlantTerra;
 import com.valeriotor.BTV.blocks.flora.PlantWeed;
 import com.valeriotor.BTV.blocks.fluid.BlockFluidTears;
 import com.valeriotor.BTV.lib.BlockNames;
+import com.valeriotor.BTV.worship.CrawlerWorship.WorshipType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -68,6 +69,9 @@ public class BlockRegistry {
 	public static final ModSlab SlabBloodDouble = (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
 	public static final ModStairs BlockBloodBrickStairs = new ModStairs(BlockBloodBrick.getDefaultState(), BlockNames.BLOOD_BRICKS_STAIRS);
 	public static final BlockBloodWell BlockBloodWell = new BlockBloodWell(Material.PORTAL, BlockNames.BLOOD_WELL);
+	public static final BlockStatue BlockStatue = new BlockStatue(Material.ROCK, BlockNames.STATUE, WorshipType.DEFAULT);
+	public static final BlockStatue BlockSacrificeStatue = new BlockStatue(Material.ROCK, BlockNames.SACRIFICE_STATUE, WorshipType.SACRIFICE);
+	public static final BlockStatue BlockPenitenceStatue = new BlockStatue(Material.ROCK, BlockNames.PENITENCE_STATUE, WorshipType.PENITENCE);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -117,6 +121,9 @@ public class BlockRegistry {
 	   	registry.register(BlockBloodBrick);
 	   	registry.register(BlockBloodBrickStairs);
 	   	registry.register(BlockBloodWell);
+	   	registry.register(BlockStatue);
+	   	registry.register(BlockSacrificeStatue);
+	   	registry.register(BlockPenitenceStatue);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);

@@ -10,6 +10,7 @@ import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.potions.PotionRegistry;
 import com.valeriotor.BTV.util.PlayerTimer;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import baubles.api.BaublesApi;
 import io.netty.buffer.ByteBuf;
@@ -69,8 +70,12 @@ public class MessageActivateBauble implements IMessage{
 					int cooldown = data.getOrSetInteger(key, 0, false);
 					if(cooldown > 0) 
 						p.sendMessage(new TextComponentTranslation("bauble.cooldown", cooldown/20));
-					else if(((IActiveBauble)stack.getItem()).activate(p))
-						data.setInteger(key, ((IActiveBauble)stack.getItem()).getCooldown(), false);
+					else if(((IActiveBauble)stack.getItem()).activate(p)) {
+						int newCooldown = ((IActiveBauble)stack.getItem()).getCooldown();
+						CrawlerWorship cw = ServerTickEvents.getWorship(p);
+						if(cw != null) newCooldown = cw.getBaubleCooldown(newCooldown);
+						data.setInteger(key, newCooldown, false);
+					}
 				}
 			}
 			return null;

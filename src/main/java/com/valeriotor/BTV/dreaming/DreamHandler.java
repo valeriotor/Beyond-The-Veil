@@ -12,10 +12,12 @@ import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.util.SyncUtil;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
@@ -187,6 +189,8 @@ public class DreamHandler {
 	public static int getDreamLevel(EntityPlayer p) {
 		int lvl = getDreamingGodLevel(p);
 		if(hasDreamtOfVoid(p)) lvl++;
+		CrawlerWorship cw = ServerTickEvents.getWorship(p);
+		if(cw != null) lvl += cw.getDreamBonusStrength();
 		return lvl;
 	}
 	

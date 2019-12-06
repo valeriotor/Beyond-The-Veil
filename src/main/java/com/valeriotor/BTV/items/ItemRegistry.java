@@ -155,6 +155,9 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockBloodBrickStairs), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.SlabBloodHalf), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockBloodWell), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockStatue), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockSacrificeStatue), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockPenitenceStatue), 0, "inventory");
         
         
     }
@@ -200,6 +203,9 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockBloodBrickStairs).setRegistryName(BlockRegistry.BlockBloodBrickStairs.getRegistryName()));
     	registry.register(new ItemSlab(BlockRegistry.SlabBloodHalf, BlockRegistry.SlabBloodHalf, BlockRegistry.SlabBloodDouble).setRegistryName(BlockRegistry.SlabBloodHalf.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockBloodWell).setRegistryName(BlockRegistry.BlockBloodWell.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockStatue).setRegistryName(BlockRegistry.BlockStatue.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockSacrificeStatue).setRegistryName(BlockRegistry.BlockSacrificeStatue.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockPenitenceStatue).setRegistryName(BlockRegistry.BlockPenitenceStatue.getRegistryName()));
     	registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);

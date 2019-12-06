@@ -3,8 +3,10 @@ package com.valeriotor.BTV.worship.ActivePowers;
 import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.state.IBlockState;
@@ -52,7 +54,10 @@ public class SummonDeepOnes implements IActivePower{
 	}
 	
 	private static int getAmount(EntityPlayer p) {
-		return 1; 
+		int amount = 0;
+		CrawlerWorship cw = ServerTickEvents.getWorship(p);
+		if(cw != null) amount += cw.getDeepOneBonus();
+		return amount + 1; 
 		// maybe + cap.getString("transformed") ? 1 : 0;
 	}
 	

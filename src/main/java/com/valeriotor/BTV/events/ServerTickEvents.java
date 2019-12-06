@@ -1,8 +1,12 @@
 package com.valeriotor.BTV.events;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
@@ -10,6 +14,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageCovenantData;
 import com.valeriotor.BTV.util.DelayedMessage;
 import com.valeriotor.BTV.util.PlayerTimer;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,6 +33,7 @@ public class ServerTickEvents {
 			decreaseMessageTimers();
 			decreaseCovenantTimers();
 			decreasePlayerTimers();
+			updateWorships();
 			AzacnoParasiteEvents.updateParasites();
 		}
 		DrowningRitualEvents.update();
@@ -175,6 +181,34 @@ public class ServerTickEvents {
 		}
 		timers.addAll(newTimers);
 			
+	}
+
+	// ******************************************* CRAWLER WORSHIP **************************************** \\
+	
+	private static Map<UUID, CrawlerWorship> worshipped = new HashMap<>();
+	
+	public static CrawlerWorship getWorship(EntityPlayer p) {
+		return getWorship(p.getPersistentID());
+	}
+	
+	public static CrawlerWorship getWorship(UUID u) {
+		return worshipped.get(u);
+	}
+	
+	public static void putWorship(EntityPlayer p, CrawlerWorship w) {
+		putWorship(p.getPersistentID(), w);
+	}
+	
+	public static void putWorship(UUID u, CrawlerWorship w) {
+		worshipped.put(u, w);
+	}
+	
+	public static void updateWorships() {
+		if(worshipped.isEmpty()) return;
+		for(Entry<UUID, CrawlerWorship> entry : worshipped.entrySet()) {
+			entry.getValue().update();
+		}
+		worshipped.values().removeIf(CrawlerWorship::isDone);
 	}
 	
 }
