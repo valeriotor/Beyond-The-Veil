@@ -10,12 +10,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockStatue extends ModBlock implements ITileEntityProvider{
 	
 	public final WorshipType type;
+	private static final double a = 0.0625;
+	private static final AxisAlignedBB BBOX = new AxisAlignedBB(a*6, 0, a*6, a*10, a*15, a*10);
 	
 	public BlockStatue(Material material, String name, WorshipType type) {
 		super(material, name);
@@ -37,6 +42,21 @@ public class BlockStatue extends ModBlock implements ITileEntityProvider{
 			}
 		}
 		super.onBlockPlacedBy(w, pos, state, placer, stack);
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BBOX;
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
 	}
 
 }
