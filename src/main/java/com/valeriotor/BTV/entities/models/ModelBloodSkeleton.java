@@ -1,8 +1,11 @@
 package com.valeriotor.BTV.entities.models;
 
+import java.util.EnumMap;
+
+import com.valeriotor.BTV.animations.Animation;
+import com.valeriotor.BTV.animations.AnimationTemplate.Transformation;
 import com.valeriotor.BTV.entities.EntityBloodSkeleton;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,36 +15,36 @@ import net.minecraft.util.math.MathHelper;
  * BloodSkeleton - valeriotor
  * Created using Tabula 7.0.0
  */
-public class ModelBloodSkeleton extends ModelBase {
-    public ModelRenderer clavicle;
-    public ModelRenderer spine;
-    public ModelRenderer pelvis;
-    public ModelRenderer left_thigh;
-    public ModelRenderer right_thigh;
-    public ModelRenderer left_arm;
-    public ModelRenderer right_arm;
-    public ModelRenderer head;
-    public ModelRenderer left_forearm;
-    public ModelRenderer right_forearm;
-    public ModelRenderer shape29;
-    public ModelRenderer rib_left_first;
-    public ModelRenderer rib_left_second;
-    public ModelRenderer rib_left_third;
-    public ModelRenderer rib_left_fourth;
-    public ModelRenderer rib_right_first;
-    public ModelRenderer rib_right_second;
-    public ModelRenderer rib_right_third;
-    public ModelRenderer rib_right_fourth;
-    public ModelRenderer rib2_left_first;
-    public ModelRenderer rib2_left_second;
-    public ModelRenderer rib2_left_third;
-    public ModelRenderer rib2_left_fourth;
-    public ModelRenderer rib2_right_first;
-    public ModelRenderer rib2_right_second;
-    public ModelRenderer rib2_right_third;
-    public ModelRenderer rib2_right_fourth;
-    public ModelRenderer left_leg;
-    public ModelRenderer right_leg;
+public class ModelBloodSkeleton extends ModelAnimated {
+    public ModelRenderer clavicle;					// 0
+    public ModelRenderer spine;						// 1
+    public ModelRenderer pelvis;					// 2
+    public ModelRenderer left_thigh;				// 3
+    public ModelRenderer right_thigh;				// 4
+    public ModelRenderer left_arm;					// 5
+    public ModelRenderer right_arm;					// 6
+    public ModelRenderer head;						// 7
+    public ModelRenderer left_forearm;				// 8
+    public ModelRenderer right_forearm;				// 9
+    public ModelRenderer shape29;					// 10
+    public ModelRenderer rib_left_first;			// 11
+    public ModelRenderer rib_left_second;			// 12
+    public ModelRenderer rib_left_third;			// 13
+    public ModelRenderer rib_left_fourth;			// 14
+    public ModelRenderer rib_right_first;			// 15
+    public ModelRenderer rib_right_second;			// 16
+    public ModelRenderer rib_right_third;			// 17
+    public ModelRenderer rib_right_fourth;			// 18
+    public ModelRenderer rib2_left_first;			// 19
+    public ModelRenderer rib2_left_second;			// 20
+    public ModelRenderer rib2_left_third;			// 21
+    public ModelRenderer rib2_left_fourth;			// 22
+    public ModelRenderer rib2_right_first;			// 23
+    public ModelRenderer rib2_right_second;			// 24
+    public ModelRenderer rib2_right_third;			// 25
+    public ModelRenderer rib2_right_fourth;			// 26
+    public ModelRenderer left_leg;					// 27
+    public ModelRenderer right_leg;					// 28
 
     public ModelBloodSkeleton() {
         this.textureWidth = 64;
@@ -112,7 +115,6 @@ public class ModelBloodSkeleton extends ModelBase {
         this.left_leg = new ModelRenderer(this, 0, 6);
         this.left_leg.setRotationPoint(-0.1F, 7.0F, -0.2F);
         this.left_leg.addBox(-1.0F, 0.0F, 0.0F, 2, 10, 2, 0.0F);
-        this.setRotateAngle(left_leg, 0.27314402793711257F, 0.0F, 0.0F);
         this.rib2_left_first = new ModelRenderer(this, 0, 0);
         this.rib2_left_first.setRotationPoint(4.0F, 0.0F, -1.0F);
         this.rib2_left_first.addBox(0.0F, 0.0F, -3.0F, 1, 1, 4, 0.0F);
@@ -158,7 +160,45 @@ public class ModelBloodSkeleton extends ModelBase {
         this.right_thigh.addChild(this.right_leg);
         this.rib_left_third.addChild(this.rib2_left_third);
         this.rib_right_first.addChild(this.rib2_right_first);
+        bodyParts.add(clavicle);
+        bodyParts.add(spine);
+        bodyParts.add(pelvis);
+        bodyParts.add(left_thigh);
+        bodyParts.add(right_thigh);
+        bodyParts.add(left_arm);
+        bodyParts.add(right_arm);
+        bodyParts.add(head);
+        bodyParts.add(left_forearm);
+        bodyParts.add(right_forearm);
+        bodyParts.add(shape29);
+        bodyParts.add(rib_left_first);
+        bodyParts.add(rib_left_second);
+        bodyParts.add(rib_left_third);
+        bodyParts.add(rib_left_fourth);
+        bodyParts.add(rib_right_first);
+        bodyParts.add(rib_right_second);
+        bodyParts.add(rib_right_third);
+        bodyParts.add(rib_right_fourth);
+        bodyParts.add(rib2_left_first);
+        bodyParts.add(rib2_left_second);
+        bodyParts.add(rib2_left_third);
+        bodyParts.add(rib2_left_fourth);
+        bodyParts.add(rib2_right_first);
+        bodyParts.add(rib2_right_second);
+        bodyParts.add(rib2_right_third);
+        bodyParts.add(rib2_right_fourth);
+        bodyParts.add(left_leg);
+        bodyParts.add(right_leg);
         this.setAngles(true);
+        for(ModelRenderer mr : bodyParts) {
+    		if(!defaultAngles.containsKey(mr)) {
+    			EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
+    	        map.put(Transformation.ROTX, 0F);
+    	        map.put(Transformation.ROTY, 0F);
+    	        map.put(Transformation.ROTZ, 0F);
+    	        defaultAngles.put(mr, map);
+    		}
+    	}
     }
 
     @Override
@@ -171,38 +211,66 @@ public class ModelBloodSkeleton extends ModelBase {
     }
     
     public void setAngles(boolean addToDefault) {
-        this.setRotateAngle(rib_left_second, 0.0F, 0.5235987755982988F, 0.0F);
-        this.setRotateAngle(rib_left_first, 0.0F, 0.5385161049805922F, 0.0F);
-        this.setRotateAngle(rib_right_second, 0.0F, -0.5235987755982988F, 0.0F);
-        this.setRotateAngle(right_forearm, -0.136659280431156F, 0.0F, 0.0F);
-        this.setRotateAngle(shape29, 0.08203784098300857F, 0.0F, 0.0F);
-        this.setRotateAngle(rib_right_fourth, 0.0F, -0.5235987755982988F, 0.0F);
-        this.setRotateAngle(rib_right_third, 0.0F, -0.5235987755982988F, 0.0F);
-        this.setRotateAngle(left_forearm, -0.136659280431156F, 0.0F, 0.0F);
-        this.setRotateAngle(rib_left_third, 0.0F, 0.5235987755982988F, 0.0F);
-        this.setRotateAngle(rib_left_fourth, 0.0F, 0.5235987755982988F, 0.0F);
-        this.setRotateAngle(rib_right_first, 0.0F, -0.5235987755982988F, 0.0F);
-        this.setRotateAngle(right_leg, 0.27314402793711257F, 0.0F, 0.0F);
-        this.setRotateAngle(left_thigh, -0.18203784098300857F, 0.0F, 0.0F);
-        this.setRotateAngle(right_thigh, -0.19198621771937624F, 0.0F, 0.0F);
+        this.setRotateAngle(rib_left_second, 0.0F, 0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_left_first, 0.0F, 0.5385161049805922F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_right_second, 0.0F, -0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(right_forearm, -0.136659280431156F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(shape29, 0.08203784098300857F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_right_fourth, 0.0F, -0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_right_third, 0.0F, -0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(left_forearm, -0.136659280431156F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_left_third, 0.0F, 0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_left_fourth, 0.0F, 0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(rib_right_first, 0.0F, -0.5235987755982988F, 0.0F, addToDefault);
+        this.setRotateAngle(left_leg, 0.27314402793711257F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(right_leg, 0.27314402793711257F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(left_thigh, -0.18203784098300857F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(right_thigh, -0.19198621771937624F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(right_arm, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(right_forearm, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(left_arm, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(left_forearm, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(head, 0, 0.0F, 0.0F, addToDefault);
     }
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z, boolean addToDefault) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+        if(addToDefault) {
+	        EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
+	        map.put(Transformation.ROTX, x);
+	        map.put(Transformation.ROTY, y);
+	        map.put(Transformation.ROTZ, z);
+	        defaultAngles.put(modelRenderer, map);
+        }
+    }
+    
+    public void resetOffsets() {
+    	this.head.offsetX = 0;
+    	this.head.offsetY = 0;
+    	this.head.offsetZ = 0;
     }
     
     @Override
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
+    	this.setAngles(false);
+    	this.resetOffsets();
     	int animTicks = ((EntityBloodSkeleton)e).getAnimCounter();
     	this.left_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.right_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    	//this.shape29.rotateAngleX = 0.08203784098300857F + (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366)/20;
+    	float offset = (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366);
+    	this.shape29.rotateAngleY = offset/40;
+    	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95);
+    	this.shape29.rotateAngleX = 0.08203784098300857F + offset / 40;
+    	Animation idle = ((EntityBloodSkeleton)e).getIdleAnimation();
+    	if(idle != null) {
+    		idle.applyTransformations(bodyParts, partialTickTime);
+    	}
     	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }
 }

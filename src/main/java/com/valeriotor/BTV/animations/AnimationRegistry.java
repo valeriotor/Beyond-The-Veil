@@ -6,9 +6,11 @@ public class AnimationRegistry {
 	public static AnimationTemplate shoggoth_open_mouth;
 	public static AnimationTemplate shoggoth_eye_tentacle;
 	public static AnimationTemplate blood_zombie_idle;
+	public static AnimationTemplate blood_skeleton_idle;
 	
 	public static void loadAnimations() {
 		blood_zombie_idle = new AnimationTemplate("blood_zombie_idle");
+		blood_skeleton_idle = new AnimationTemplate("blood_skeleton_idle");
 		deep_one_roar = new AnimationTemplate("deep_one_roar");
 		shoggoth_open_mouth = new AnimationTemplate("shoggoth_open_mouth");
 		shoggoth_eye_tentacle = new AnimationTemplate("shoggoth_eye_tentacle");
@@ -19,6 +21,7 @@ public class AnimationRegistry {
 		if(anim == shoggoth_open_mouth) return 1;
 		if(anim == shoggoth_eye_tentacle) return 2;
 		if(anim == blood_zombie_idle) return 3;
+		if(anim == blood_skeleton_idle) return 3;
 		return -1;
 	}
 	
@@ -28,6 +31,7 @@ public class AnimationRegistry {
 			case 1: return shoggoth_open_mouth;
 			case 2: return shoggoth_eye_tentacle;
 			case 3: return blood_zombie_idle;
+			case 4: return blood_skeleton_idle;
 		}
 		return null;
 	}
