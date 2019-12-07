@@ -57,15 +57,19 @@ public class TileStatue extends TileEntity implements ITickable{
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setInteger("type", this.type.ordinal());
-		compound.setString("master", this.master.toString());
+		if(this.type != null)
+			compound.setInteger("type", this.type.ordinal());
+		if(this.master != null)
+			compound.setString("master", this.master.toString());
 		return super.writeToNBT(compound);
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		this.type = WorshipType.values()[compound.getInteger("type")];
-		this.master = UUID.fromString(compound.getString("master"));
+		if(compound.hasKey("type"))
+			this.type = WorshipType.values()[compound.getInteger("type")];
+		if(compound.hasKey("master"))
+			this.master = UUID.fromString(compound.getString("master"));
 		super.readFromNBT(compound);
 	}
 
