@@ -2,6 +2,7 @@ package com.valeriotor.BTV.worship;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 
@@ -24,10 +25,11 @@ public class CrawlerWorship {
 	private int timer = 200;
 	private int strength = 0;
 	private WorshipType wType = WorshipType.DEFAULT;
+	private UUID playerID;
 	
 	public boolean update() {
 		this.timer--;
-		return this.timer <= 0;
+		return this.isDone();
 	}
 	
 	public boolean isDone() {
@@ -54,6 +56,20 @@ public class CrawlerWorship {
 	
 	public int getStrength() {
 		return this.strength;
+	}
+	
+	public CrawlerWorship setPlayer(EntityPlayer player) {
+		this.playerID = player.getPersistentID();
+		return this;
+	}
+	
+	public CrawlerWorship setPlayer(UUID playerID) {
+		this.playerID = playerID;
+		return this;
+	}
+	
+	public UUID getPlayerID() {
+		return this.playerID;
 	}
 	
 	public int getBaubleCooldown(int defaultVal) {

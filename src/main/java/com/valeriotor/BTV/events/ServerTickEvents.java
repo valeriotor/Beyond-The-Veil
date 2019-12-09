@@ -185,14 +185,19 @@ public class ServerTickEvents {
 
 	// ******************************************* CRAWLER WORSHIP **************************************** \\
 	
-	private static Map<UUID, CrawlerWorship> worshipped = new HashMap<>();
+	private static List<CrawlerWorship> worshipped = new ArrayList();
 	
 	public static CrawlerWorship getWorship(EntityPlayer p) {
 		return getWorship(p.getPersistentID());
 	}
 	
 	public static CrawlerWorship getWorship(UUID u) {
-		return worshipped.get(u);
+		if(u.equals(null)) return null;
+		for(CrawlerWorship cw : worshipped) {
+			if(u.equals(cw.getPlayerID()))
+				return cw;
+		}
+		return null;
 	}
 	
 	public static void putWorship(EntityPlayer p, CrawlerWorship w) {
@@ -200,15 +205,16 @@ public class ServerTickEvents {
 	}
 	
 	public static void putWorship(UUID u, CrawlerWorship w) {
-		worshipped.put(u, w);
+		worshipped.add(w.setPlayer(u));
 	}
 	
 	public static void updateWorships() {
 		if(worshipped.isEmpty()) return;
-		for(Entry<UUID, CrawlerWorship> entry : worshipped.entrySet()) {
-			entry.getValue().update();
+		Iterator<CrawlerWorship> iter = worshipped.iterator();
+		while(iter.hasNext()) {
+			if(iter.next().update())
+				iter.remove();
 		}
-		worshipped.values().removeIf(CrawlerWorship::isDone);
 	}
 	
 }
