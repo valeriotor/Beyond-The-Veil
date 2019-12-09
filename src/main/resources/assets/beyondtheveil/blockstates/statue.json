@@ -1,5 +1,8 @@
 {
     "variants": {
-        "normal": { "model": "beyondtheveil:statue" }
+        "horizontal_facing=east": { "model": "beyondtheveil:statue", "y" : 270 },
+        "horizontal_facing=south": { "model": "beyondtheveil:statue" },
+        "horizontal_facing=west": { "model": "beyondtheveil:statue", "y" : 90 },
+        "horizontal_facing=north": { "model": "beyondtheveil:statue", "y" : 180 }
     }
 }
