@@ -66,6 +66,7 @@ public class ItemRegistry {
 	public static final Item blood_crown = new ItemBloodCrown("blood_crown").setMaxStackSize(1);
 	public static final ItemCoralStaff coral_staff = new ItemCoralStaff("coral_staff");
 	public static final ItemBloodSigil sigil_zombie = new ItemBloodSigil("sigil_zombie", BloodMobs.BLOOD_ZOMBIE);
+	public static final ItemBloodSigil sigil_skellie = new ItemBloodSigil("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
 	
 	
 	
@@ -115,6 +116,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(blood_crown, 0, "inventory");
         ClientProxy.registerItemRenderer(coral_staff, 0, "inventory");
         ClientProxy.registerItemRenderer(sigil_zombie, 0, "inventory");
+        ClientProxy.registerItemRenderer(sigil_skellie, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -240,6 +242,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.blood_crown);
     	registry.register(ItemRegistry.coral_staff);
     	registry.register(ItemRegistry.sigil_zombie);
+    	registry.register(ItemRegistry.sigil_skellie);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);

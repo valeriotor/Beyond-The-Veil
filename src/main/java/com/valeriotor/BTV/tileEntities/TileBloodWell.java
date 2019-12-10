@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.EntityBloodSkeleton;
 import com.valeriotor.BTV.entities.EntityBloodZombie;
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.lib.BTVSounds;
@@ -112,7 +113,7 @@ public class TileBloodWell extends TileEntity implements ITickable{
 	
 	public static enum BloodMobs {
 		BLOOD_ZOMBIE(w -> new EntityBloodZombie(w)),
-		BLOOD_SKELLIE(w -> null);
+		BLOOD_SKELLIE(w -> new EntityBloodSkeleton(w));
 		
 		private Function<World, IPlayerGuardian> func;
 		private BloodMobs(Function<World, IPlayerGuardian> func) {

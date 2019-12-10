@@ -36,7 +36,7 @@ public class BTVEntityRegistry {
 	 */
 	public static boolean isScaryEntity(EntityLivingBase e) {
 		if(e instanceof EntityPlayer && ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return true;
-		return e instanceof EntityDeepOne || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie;
+		return e instanceof EntityDeepOne || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityBloodSkeleton;
 	}
 	
 	/** Used for terror and possibly other effects.

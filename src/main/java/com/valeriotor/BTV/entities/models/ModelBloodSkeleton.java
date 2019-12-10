@@ -226,11 +226,11 @@ public class ModelBloodSkeleton extends ModelAnimated {
         this.setRotateAngle(right_leg, 0.27314402793711257F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(left_thigh, -0.18203784098300857F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(right_thigh, -0.19198621771937624F, 0.0F, 0.0F, addToDefault);
-        this.setRotateAngle(right_arm, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(right_arm, 0, 0.0F, 0.1F, addToDefault);
         this.setRotateAngle(right_forearm, 0, 0.0F, 0.0F, addToDefault);
-        this.setRotateAngle(left_arm, 0, 0.0F, 0.0F, addToDefault);
-        this.setRotateAngle(left_forearm, 0, 0.0F, 0.0F, addToDefault);
-        this.setRotateAngle(head, 0, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(left_arm, 0, 0.0F, -0.1F, addToDefault);
+        this.setRotateAngle(left_forearm, -0.1F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(head, -0.1F, 0.0F, 0.0F, addToDefault);
     }
 
     /**
@@ -267,10 +267,22 @@ public class ModelBloodSkeleton extends ModelAnimated {
     	this.shape29.rotateAngleY = offset/40;
     	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95);
     	this.shape29.rotateAngleX = 0.08203784098300857F + offset / 40;
-    	Animation idle = ((EntityBloodSkeleton)e).getIdleAnimation();
-    	if(idle != null) {
-    		idle.applyTransformations(bodyParts, partialTickTime);
+    	Animation spook = ((EntityBloodSkeleton)e).getSpookAnimation();
+    	if(spook != null)
+    		spook.applyTransformations(bodyParts, partialTickTime);
+    	else {
+	    	Animation idle = ((EntityBloodSkeleton)e).getIdleAnimation();
+	    	if(idle != null) {
+	    		idle.applyTransformations(bodyParts, partialTickTime);
+	    	} else {
+	    			this.right_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount / 3;
+	    			this.left_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount / 3;
+	    			this.right_arm.rotateAngleZ = 0.1F;
+	    			this.left_arm.rotateAngleZ = -0.1F;
+	    			this.right_forearm.rotateAngleX = - 0.2F;
+	    			this.left_forearm.rotateAngleX = - 0.2F;
+	    		
+	    	}
     	}
-    	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }
 }

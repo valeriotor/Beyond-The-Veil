@@ -1,0 +1,173 @@
+length: 80
+model: blood_skeleton
+keys
+	RArm: 6
+	RFArm: 9
+	LArm: 5
+	LFArm: 8
+	Head: 7
+	RL1: 11
+	RL2: 12
+	RL3: 13
+	RL4: 14
+	RR1: 15
+	RR2: 16
+	RR3: 17
+	RR4: 18
+end
+start: 0: 9
+	RArm: rotx: -1.7
+	RArm: roty: 0
+	RArm: rotz: 0.7
+	RFArm: rotx: -1.5
+	LArm: rotx: 0
+	LArm: rotz: 0
+	LFArm: rotz: 0
+	Head: trax: 0
+	Head: tray: 0
+	Head: traz: 0
+	RL4: roty: 0
+	RR4: roty: 0
+	RL3: roty: 0
+	RR3: roty: 0
+	RL2: roty: 0
+	RR2: roty: 0
+	RL1: roty: 0
+	RR1: roty: 0
+end
+start: 11: 16
+	RArm: rotx: 1
+	RArm: roty: 0.3
+	RArm: rotz: -0.7
+	RFArm: rotx: 0.75
+	Head: trax: -0.6
+	Head: tray: 0.45
+	Head: traz: -0.5
+end
+start: 14: 20
+	LArm: rotx: -3.14
+	LArm: rotz: 1.9
+	LFArm: rotz: 0.2
+	RR1: roty: 1
+	RL1: roty: -1
+	RR3: roty: 1
+	RL3: roty: -1
+end
+start: 21: 25
+	LArm: rotz: -0.2
+	LFArm: rotz: -0.7
+	RR4: roty: 1
+	RL4: roty: -1
+	RR2: roty: 1
+	RL2: roty: -1
+	RR1: roty: -1
+	RL1: roty: 1
+	RR3: roty: -1
+	RL3: roty: 1
+end
+start: 26: 30
+	LArm: rotz: 0.2
+	LFArm: rotz: 0.7
+	RR4: roty: -1
+	RL4: roty: 1
+	RR2: roty: -1
+	RL2: roty: 1
+	RR1: roty: 1
+	RL1: roty: -1
+	RR3: roty: 1
+	RL3: roty: -1
+end
+start: 31: 35
+	LArm: rotz: -0.2
+	LFArm: rotz: -0.7
+	RR4: roty: 1
+	RL4: roty: -1
+	RR2: roty: 1
+	RL2: roty: -1
+	RR1: roty: -1
+	RL1: roty: 1
+	RR3: roty: -1
+	RL3: roty: 1
+end
+start: 36: 40
+	LArm: rotz: 0.2
+	LFArm: rotz: 0.7
+	RR4: roty: -1
+	RL4: roty: 1
+	RR2: roty: -1
+	RL2: roty: 1
+	RR1: roty: 1
+	RL1: roty: -1
+	RR3: roty: 1
+	RL3: roty: -1
+end
+start: 41: 45
+	LArm: rotz: -0.2
+	LFArm: rotz: -0.7
+	RR4: roty: 1
+	RL4: roty: -1
+	RR2: roty: 1
+	RL2: roty: -1
+	RR1: roty: -1
+	RL1: roty: 1
+	RR3: roty: -1
+	RL3: roty: 1
+end
+start: 46: 50
+	LArm: rotz: 0.2
+	LFArm: rotz: 0.7
+	RR4: roty: -1
+	RL4: roty: 1
+	RR2: roty: -1
+	RL2: roty: 1
+	RR1: roty: 1
+	RL1: roty: -1
+	RR3: roty: 1
+	RL3: roty: -1
+end
+start: 51: 55
+	LArm: rotz: -0.2
+	LFArm: rotz: -0.7
+	RR4: roty: 1
+	RL4: roty: -1
+	RR2: roty: 1
+	RL2: roty: -1
+	RR1: roty: -1
+	RL1: roty: 1
+	RR3: roty: -1
+	RL3: roty: 1
+end
+start: 56: 60
+	LArm: rotz: 0.2
+	LFArm: rotz: 0.7
+	RR4: roty: -1
+	RL4: roty: 1
+	RR2: roty: -1
+	RL2: roty: 1
+	RR1: roty: 1
+	RL1: roty: -1
+	RR3: roty: 1
+	RL3: roty: -1
+end
+start: 61: 68
+	RR1: roty: -1
+	RL1: roty: 1
+	RR3: roty: -1
+	RL3: roty: 1
+	LArm: rotz: -1.9
+	LArm: rotx: 3.14
+	LFArm: rotz: -0.2
+	RArm: rotx: -1
+	RArm: roty: -0.3
+	RArm: rotz: 0.7
+	RFArm: rotx: -0.75
+	Head: trax: 0.6
+	Head: tray: -0.45
+	Head: traz: 0.5
+end
+start: 69: 79
+	RArm: rotx: -1.7
+	RArm: roty: 0
+	RArm: rotz: 0.7
+	RFArm: rotx: -1.5
+end

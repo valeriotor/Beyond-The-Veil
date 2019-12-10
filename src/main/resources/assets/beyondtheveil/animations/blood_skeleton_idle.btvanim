@@ -8,7 +8,7 @@ keys
 	Head: 7
 end
 start: 0: 15
-	RArm: rotx: -1.7
+	RArm: rotx: -1.6
 	RArm: roty: 0
 	RArm: rotz: 0.7
 	LArm: rotx: 0
@@ -27,7 +27,7 @@ start: 20: 30
 	RArm: rotz: -0.7
 	RFArm: rotx: 0.75
 	Head: trax: -0.6
-	Head: tray: 0.55
+	Head: tray: 0.575
 	Head: traz: -0.5
 end
 start: 27: 41
@@ -72,7 +72,7 @@ start: 96: 107
 	LArm: roty: 0.9
 	LArm: rotz: 1.1
 	Head: trax: 0.5
-	Head: tray: -0.55
+	Head: tray: -0.575
 	Head: traz: 0.4
 	RArm: rotx: -1.1
 	RArm: roty: -0.3
@@ -80,7 +80,7 @@ start: 96: 107
 	RFArm: rotx: -0.75
 end
 start: 108: 115
-	RArm: rotx: 1.7
+	RArm: rotx: 1.6
 	RArm: rotz: -0.7
 	RFArm: rotx: 1.5
 end

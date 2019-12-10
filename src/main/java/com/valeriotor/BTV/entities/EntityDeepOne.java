@@ -5,9 +5,10 @@ import java.util.UUID;
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
-import com.valeriotor.BTV.entities.AI.AIDeepOneRoar;
+import com.valeriotor.BTV.entities.AI.AISpook;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
 import com.valeriotor.BTV.entities.AI.AIRevenge;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
@@ -28,11 +29,12 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
+public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker{
 	private int i = 0;
 	private boolean isTargetInWater = false;
 	private Block facingBlock;
@@ -82,7 +84,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.tasks.addTask(2, new AIDeepOneAttack(this, 1.5D, true));
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-	        this.tasks.addTask(2, new AIDeepOneRoar(this));
+	        this.tasks.addTask(2, new AISpook(this));
 	        this.targetTasks.addTask(1, new AIProtectMaster(this));
 	        this.targetTasks.addTask(2, new AIRevenge(this));
 	        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null && !DGWorshipHelper.areDeepOnesFriendly(p))));
@@ -221,18 +223,32 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian{
 		 return this.currentAnim;
 	 }
 	 
-	 public void setRoaring(boolean roaring) {
-		 this.getDataManager().set(ROARING, roaring);
-		 this.roarCooldown = 300;
-	 }
-	 
-	 public int getRoarCooldown() {
-		 return this.roarCooldown;
-	 }
-
 	@Override
 	public UUID getMasterID() {
 		return this.master;
+	}
+
+	@Override
+	public void setSpooking(boolean spook) {
+		 this.getDataManager().set(ROARING, spook);
+		 this.roarCooldown = 300;
+	}
+
+	@Override
+	public SoundEvent getSound() {
+		return BTVSounds.deepOneRoar;
+	}
+
+	@Override
+	public void spookSelf() {
+		this.motionX = 0;
+		this.motionZ = 0;
+		this.faceEntity(this.getAttackTarget(), 360, 360);
+	}
+
+	@Override
+	public int getSpookCooldown() {
+		return this.roarCooldown;
 	}
 	 
 	 
