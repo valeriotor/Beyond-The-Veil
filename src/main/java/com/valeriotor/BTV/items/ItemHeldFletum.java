@@ -71,6 +71,7 @@ public class ItemHeldFletum extends Item{
 		if(tl != null) player.sendMessage(new TextComponentTranslation("interact.lacrymatory.success", new TextComponentTranslation("entity.fletum.name")));
 		
 		weeper.setPosition(weeperPos.getX(), weeperPos.getY(), weeperPos.getZ());
+		weeper.setMaster(player);
 		w.spawnEntity(weeper);
 		player.getHeldItem(hand).shrink(1);
 		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
@@ -78,7 +79,7 @@ public class ItemHeldFletum extends Item{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§5§o" + I18n.format("tooltip.held_fletum"));
+		tooltip.add("ï¿½5ï¿½o" + I18n.format("tooltip.held_fletum"));
 	}
 	
 }

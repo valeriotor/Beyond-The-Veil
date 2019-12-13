@@ -8,5 +8,7 @@ public class References {
     public static final String VERSION = "0.0.0.0.1";
     public static final String DEPENDENCIES = "required-after:thaumcraft";
     
+    public static final String PURPLE = "§5§o";
+    
     public static CreativeTabs BTV_TAB = new CreativeTabBTV(CreativeTabBTV.getNextID(), MODID);
 }

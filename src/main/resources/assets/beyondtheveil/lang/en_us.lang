@@ -423,6 +423,30 @@ dweller.lhkeeperoldtruth.genocideagreetalk0=That is what we think as well. :Yet 
 dweller.lhkeeperpast.talk0=It matters not. Let the past stay past, we are not the ones who may walk through time. Only speak.
 
 ##################
+#WEEPER DIALOGUE
+##################
+
+weeper.dialogue.0=When I gaze at the horrors before me, all I have left is to weep.
+weeper.dialogue.1=You are lucky, master, in your ignorance of what lies Beyond.
+weeper.dialogue.2=Master, the water you put in my brain.. it's agonizing, yet the pain is not of physical nature.
+weeper.dialogue.3=Everything is so meaningless.. you'll see, once you dip your head in water.
+weeper.dialogue.4=Master.. I beg of you.. rip my spine. Make me whole.
+weeper.dialogue.5=I cannot *see* the world around me, yet I *know* it, even better than you do, Master. And it is most horrid.
+weeper.dialogue.6=You baptized me Master.. you are holy, a god among worms.
+weeper.dialogue.7=I hear whispers.. please.. somebody.. stop them...
+weeper.dialogue.8=I Dreamt of you. You were laughing, but not of joy. Your eyes were hollow.
+
+fletum.dialogue.0=The world is beautiful. Like an Ocean of tears.
+fletum.dialogue.1=Splish splash. Heehee.
+fletum.dialogue.2=I am whole.
+fletum.dialogue.3=I see beautiful shapes.. transparent and fluid, like a watery surface.
+fletum.dialogue.4=I see a pocket of red at the bottom of the Ocean, like a ruby within a diamond.
+fletum.dialogue.5=I Dreamt of a beautiful rainbow. It was red.
+fletum.dialogue.6=My Dreams colour the world! I am sure, because your face is red, heehee.
+fletum.dialogue.7=The Crawling Chaos whispered to me. He said I'm his favourite, heehee!
+
+
+##################
 #DREAMS
 ##################
 
@@ -606,7 +630,7 @@ research.tornheart.text=Tear a heart.
 research.WEEPERS.title=Weepers
 research.WEEPERS.stage.0=The person I once was would've reeled in disgust at the idea of ripping spines and tearing hearts. Now I barely flinch.<BR>But this..? This new idea that springs forth in my mind, through the uncanny doings of The Great Dreamer? Even now my hands tremble.<BR>To fill their brains with water, to make them SEE things as they truly are. Their brains filled, so they may only weep.
 research.WEEPERS.stage.1=A tear is a revelation. All should fear the ones who weep, for they know more than most.<BR>A Weeper is a Villager whose head was enlarged to monstruos size, filled by water.<BR>A Fletum is a Weeper who's lost its spine. It needs no body, it is whole within its head.<BR>They Dream, they learn, they weep. I must harvest their tears, they are knowledge.
-research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Weeper can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Weeper or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
+research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Weeper can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, while sneaking, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Weeper or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
 research.filledtears.text=Fill a brain with water.
 research.craftedlacrymatory.text=Craft a Lacrymatory.
 

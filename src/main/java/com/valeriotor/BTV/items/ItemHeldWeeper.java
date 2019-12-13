@@ -74,6 +74,7 @@ public class ItemHeldWeeper extends Item {
 		
 		weeper.setPosition(weeperPos.getX(), weeperPos.getY(), weeperPos.getZ());
 		weeper.setHeartless(heartless);
+		weeper.setMaster(player);
 		w.spawnEntity(weeper);
 		player.getHeldItem(hand).shrink(1);
 		
@@ -84,7 +85,7 @@ public class ItemHeldWeeper extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
 		boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
-		tooltip.add("§5§o" + I18n.format(String.format("tooltip.held_weeper.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
+		tooltip.add("ï¿½5ï¿½o" + I18n.format(String.format("tooltip.held_weeper.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

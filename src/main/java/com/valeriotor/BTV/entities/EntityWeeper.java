@@ -1,7 +1,9 @@
 package com.valeriotor.BTV.entities;
 
-import com.valeriotor.BTV.fluids.ModFluids;
+import java.util.UUID;
+
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
 
@@ -11,6 +13,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,19 +28,22 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityWeeper extends EntityCreature implements IWeepingEntity{
+public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPlayerMinion{
 	
 	private int animationTicks = 0;
 	private int fletumTicks = 10;
 	private int tearTicks;
+	private int dialogue = -1;
 	private boolean increase = true;
 	private boolean heartless = false;
 	private BlockPos lacrymatory;
+	private UUID master;
 	private static final DataParameter<Boolean> SPINELESS = EntityDataManager.<Boolean>createKey(EntityWeeper.class, DataSerializers.BOOLEAN);
 	
 	public EntityWeeper(World worldIn) {
@@ -81,6 +87,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 				if(this.fletumTicks == 0) {
 					EntityFletum fletum = new EntityFletum(this.world);
 					fletum.setPosition(posX, posY+1.8, posZ);
+					fletum.setMaster(this.getMaster());
 					this.world.spawnEntity(fletum);
 					if(this.lacrymatory != null) {
 						TileEntity te = this.world.getTileEntity(lacrymatory);
@@ -150,6 +157,9 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setBoolean("heartless", this.heartless);
 		compound.setInteger("tearTicks", this.tearTicks);
+		compound.setInteger("dialogue", dialogue);
+		if(this.master != null)
+			compound.setString("master", this.master.toString());
 		if(this.lacrymatory != null)
 			compound.setLong("lacrymatory", this.lacrymatory.toLong());
 		return super.writeToNBT(compound);
@@ -159,6 +169,9 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 	public void readFromNBT(NBTTagCompound compound) {
 		this.heartless = compound.getBoolean("heartless");
 		this.tearTicks = compound.getInteger("tearTicks");
+		this.dialogue = compound.getInteger("dialogue");
+		if(compound.hasKey("master"))
+			this.master = UUID.fromString(compound.getString("master"));
 		if(compound.hasKey("lacrymatory"))
 			this.lacrymatory = BlockPos.fromLong(compound.getLong("lacrymatory"));
 		super.readFromNBT(compound);
@@ -173,6 +186,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 	
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+		if(hand == EnumHand.OFF_HAND) return EnumActionResult.PASS;
 		if(player.getHeldItem(hand).getItem() == ItemRegistry.blackjack) {
 			if(this.lacrymatory != null) {
 				TileEntity te = this.world.getTileEntity(lacrymatory);
@@ -187,6 +201,12 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 				this.world.removeEntity(this);
 			}
 			return EnumActionResult.SUCCESS;
+		} else {
+			if(player.getHeldItem(hand).getItem() == Items.AIR && !this.world.isRemote) {
+				if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
+				player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
+				return EnumActionResult.SUCCESS;
+			}
 		}
 		return EnumActionResult.PASS;
 	}
@@ -199,6 +219,24 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity{
 	@Override
 	public BlockPos getLacrymatory() {
 		return this.lacrymatory;
+	}
+	
+
+	@Override
+	public EntityPlayer getMaster() {
+		if(master == null) return null;
+		return world.getMinecraftServer().getPlayerList().getPlayerByUUID(master);
+	}
+
+	@Override
+	public UUID getMasterID() {
+		return master;
+	}
+
+	@Override
+	public void setMaster(EntityPlayer p) {
+		if(p != null)
+			this.master = p.getPersistentID();
 	}
 
 }
