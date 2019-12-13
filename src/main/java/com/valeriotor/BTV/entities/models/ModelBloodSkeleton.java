@@ -256,33 +256,39 @@ public class ModelBloodSkeleton extends ModelAnimated {
     }
     
     @Override
-    public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
+    public void setLivingAnimations(EntityLivingBase ent, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	this.setAngles(false);
     	this.resetOffsets();
-    	int animTicks = ((EntityBloodSkeleton)e).getAnimCounter();
+    	EntityBloodSkeleton e = (EntityBloodSkeleton)ent;
+    	int animTicks = e.getAnimCounter();
     	this.left_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.right_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
     	float offset = (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366);
     	this.shape29.rotateAngleY = offset/40;
     	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95);
     	this.shape29.rotateAngleX = 0.08203784098300857F + offset / 40;
-    	Animation spook = ((EntityBloodSkeleton)e).getSpookAnimation();
+    	Animation spook = e.getSpookAnimation();
     	if(spook != null)
     		spook.applyTransformations(bodyParts, partialTickTime);
     	else {
-	    	Animation idle = ((EntityBloodSkeleton)e).getIdleAnimation();
-	    	if(idle != null) {
-	    		idle.applyTransformations(bodyParts, partialTickTime);
-	    	} else {
-	    			this.right_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount / 3;
-	    			this.left_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount / 3;
-	    			this.right_arm.rotateAngleZ = 0.1F;
-	    			this.left_arm.rotateAngleZ = -0.1F;
-	    			this.right_forearm.rotateAngleX = - 0.2F;
-	    			this.left_forearm.rotateAngleX = - 0.2F;
-	    		
-	    	}
+    		Animation attack = e.getAttackAnimation();
+    		if(attack != null) {
+    			attack.applyTransformations(bodyParts, partialTickTime);
+	    		} else {
+		    	Animation idle = e.getIdleAnimation();
+		    	if(idle != null) {
+		    		idle.applyTransformations(bodyParts, partialTickTime);
+		    	} else {
+		    			this.right_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount / 3;
+		    			this.left_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount / 3;
+		    			this.right_arm.rotateAngleZ = 0.1F;
+		    			this.left_arm.rotateAngleZ = -0.1F;
+		    			this.right_forearm.rotateAngleX = - 0.2F;
+		    			this.left_forearm.rotateAngleX = - 0.2F;
+		    		
+		    	}
+    		}
     	}
     }
 }

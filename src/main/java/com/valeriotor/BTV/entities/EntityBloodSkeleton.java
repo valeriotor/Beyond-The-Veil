@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
@@ -11,10 +12,8 @@ import com.valeriotor.BTV.entities.AI.AISpook;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,17 +21,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, ISpooker{
+public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, ISpooker, IAnimatedAttacker{
 	
 	private int animCounter = -1;
 	private int spookCooldown = 400;
 	private Animation idleAnimation;
 	private Animation spookAnimation;
+	private Animation attackAnimation;
 	private UUID master;
 	
 	private static final DataParameter<Boolean> SPOOKING = EntityDataManager.<Boolean>createKey(EntityDeepOne.class, DataSerializers.BOOLEAN);
@@ -80,6 +81,10 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 			}
 			
 			if(animCounter > 0) {
+				if(this.attackAnimation != null) {
+					 if(this.attackAnimation.isDone()) this.attackAnimation = null;
+					 else this.attackAnimation.update();
+				 }
 				if(this.spookAnimation != null) {
 					 if(this.spookAnimation.isDone()) this.spookAnimation = null;
 					 else this.spookAnimation.update();
@@ -161,6 +166,36 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 	@Override
 	public int getSpookCooldown() {
 		return this.spookCooldown;
+	}
+
+	@Override
+	public void setAttackAnimation(int id) {
+		this.attackAnimation = Attacks.values()[id].getAnim();
+	}
+
+	@Override
+	public Animation getAttackAnimation() {
+		return this.attackAnimation;
+	}
+	
+	@Override
+	public void swingArm(EnumHand hand) {
+		super.swingArm(hand);
+		this.sendAnimation(Attacks.values()[this.rand.nextInt(Attacks.values().length)].ordinal());
+	}
+	
+	private enum Attacks {
+		LEFT_SWING(() -> new Animation(AnimationRegistry.blood_skeleton_left_swing)),
+		RIGHT_SWING(() -> new Animation(AnimationRegistry.blood_skeleton_right_swing));
+		
+		private Supplier<Animation> func;
+		private Attacks(Supplier<Animation> func) {
+			this.func = func;
+		}
+		
+		private Animation getAnim() {
+			return this.func.get();
+		}
 	}
 
 }

@@ -8,8 +8,12 @@ public class AnimationRegistry {
 	public static AnimationTemplate blood_zombie_idle;
 	public static AnimationTemplate blood_skeleton_idle;
 	public static AnimationTemplate blood_skeleton_spook;
+	public static AnimationTemplate blood_skeleton_left_swing;
+	public static AnimationTemplate blood_skeleton_right_swing;
 	
 	public static void loadAnimations() {
+		blood_skeleton_left_swing = new AnimationTemplate("blood_skeleton_left_swing");
+		blood_skeleton_right_swing = new AnimationTemplate("blood_skeleton_right_swing");
 		blood_skeleton_idle = new AnimationTemplate("blood_skeleton_idle");
 		blood_skeleton_spook = new AnimationTemplate("blood_skeleton_spook");
 		blood_zombie_idle = new AnimationTemplate("blood_zombie_idle");
