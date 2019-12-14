@@ -93,6 +93,7 @@ public class PlayerEvents {
 			BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.parasitePlayers.clear();
 		} else {
+			DGWorshipHelper.removeModifiers(event.player);
 			if(AzacnoParasiteEvents.parasites.containsKey(event.player.getPersistentID())) {
 				event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.PARASITE_PROGRESS, AzacnoParasiteEvents.parasites.get(event.player.getPersistentID()).getProgress(), false);
 				AzacnoParasiteEvents.parasites.remove(event.player.getPersistentID());

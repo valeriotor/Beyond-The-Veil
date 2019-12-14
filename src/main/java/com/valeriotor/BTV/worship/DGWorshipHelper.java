@@ -7,6 +7,7 @@ import static com.valeriotor.BTV.lib.PlayerDataLib.SLUGS;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
@@ -24,9 +25,9 @@ public class DGWorshipHelper {
 	public static final int MAX_LEVEL = 5; // Will of course change
 	
 	public static final HashMap<String, DGResearch> researches = new HashMap<>(); 
-	private static final HashMap<EntityPlayer, Double> defenseMultipliers = new HashMap<>();
-	private static final HashMap<EntityPlayer, Double> attackMultipliers = new HashMap<>();
-	private static final HashMap<EntityPlayer, Integer> dreamPower = new HashMap<>();
+	private static final HashMap<UUID, Double> defenseMultipliers = new HashMap<>();
+	private static final HashMap<UUID, Double> attackMultipliers = new HashMap<>();
+	private static final HashMap<UUID, Integer> dreamPower = new HashMap<>();
 	
 	public static void loadDreamerResearch() {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 30, true, 0));
@@ -82,6 +83,12 @@ public class DGWorshipHelper {
 		return true; // will later use research to track progress
 	}
 	
+	public static void removeModifiers(EntityPlayer p) {
+		attackMultipliers.remove(p.getPersistentID());
+		defenseMultipliers.remove(p.getPersistentID());
+		dreamPower.remove(p.getPersistentID());
+	}
+	
 	public static void calculateModifier(EntityPlayer p, IPlayerKnowledge k) {
 		double attack = 1;
 		double defense = 1;
@@ -93,19 +100,19 @@ public class DGWorshipHelper {
 				if(entry.getValue().improvesDreams) dream++;
 			}
 		}
-		attackMultipliers.put(p, attack);
-		defenseMultipliers.put(p, defense);			
-		dreamPower.put(p, dream);
+		attackMultipliers.put(p.getPersistentID(), attack);
+		defenseMultipliers.put(p.getPersistentID(), defense);			
+		dreamPower.put(p.getPersistentID(), dream);
 	}
 	
 	public static double getAttackModifier(EntityPlayer p) {
-		if(!attackMultipliers.containsKey(p))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
-		return attackMultipliers.get(p);
+		if(!attackMultipliers.containsKey(p.getPersistentID()))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
+		return attackMultipliers.get(p.getPersistentID());
 	}
 	
 	public static double getDefenseModifier(EntityPlayer p) {
-		if(!defenseMultipliers.containsKey(p))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
-		return defenseMultipliers.get(p);
+		if(!defenseMultipliers.containsKey(p.getPersistentID()))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
+		return defenseMultipliers.get(p.getPersistentID());
 	}
 	
 	public static boolean areDeepOnesFriendly(EntityPlayer p) {
