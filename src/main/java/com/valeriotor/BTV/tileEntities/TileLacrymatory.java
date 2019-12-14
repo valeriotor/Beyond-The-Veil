@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.tileEntities;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.fluids.TearTank;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -23,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileLacrymatory extends TileFluidHandler{
 	
-	private IWeepingEntity weeper;
+	private UUID weeper;
 	private int amount = 0;
 	
 	public TileLacrymatory() {
@@ -36,7 +38,7 @@ public class TileLacrymatory extends TileFluidHandler{
 			return true;
 		}
 		if(this.weeper == null) {
-			this.weeper = weeper;
+			this.weeper = ((EntityLiving)weeper).getPersistentID();
 			return true;
 		}	
 		return false;
@@ -44,7 +46,7 @@ public class TileLacrymatory extends TileFluidHandler{
 	}
 	
 	public IWeepingEntity getWeeper() {
-		return this.weeper;
+		return (IWeepingEntity) this.world.getMinecraftServer().getEntityFromUuid(weeper);
 	}
 	
 	public static void fillWithTears(EntityLiving e) {
@@ -77,12 +79,14 @@ public class TileLacrymatory extends TileFluidHandler{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setInteger("amount", tank.getFluidAmount());
+		if(this.weeper != null) tag.setString("weeper", this.weeper.toString());
 		return super.writeToNBT(tag);
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		if(tag.hasKey("amount")) this.amount = tag.getInteger("amount");
+		if(tag.hasKey("weeper")) this.weeper = UUID.fromString(tag.getString("weeper"));
 		super.readFromNBT(tag);
 	}
 	
