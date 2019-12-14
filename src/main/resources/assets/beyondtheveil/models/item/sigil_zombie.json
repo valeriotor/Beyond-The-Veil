@@ -1,6 +1,6 @@
 {
    "parent": "item/generated",
    "textures": {
-       "layer0": "beyondtheveil:items/azacno_charm"
+       "layer0": "beyondtheveil:items/blood_sigil_zombie"
    }
 }
