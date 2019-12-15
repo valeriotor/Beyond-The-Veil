@@ -56,6 +56,9 @@ tooltip.dream_bottle.containing=Containing:
 tooltip.dream_bottle.charges=Stored tears: %1$s mB
 tooltip.dream_bottle.none=NONE
 
+tooltip.statue.owner=This Statue is owned by %1$s.
+tooltip.statue.noowner=This Statue has no owner.
+
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.
@@ -122,6 +125,14 @@ interact.heart.cleared=This heart's link has been cleared.
 interact.heart.linked=The heart at coordinates x: %1$s, y: %2$s, z: %3$s is now linked to this one.
 interact.sacrificial_altar.incomplete=This altar's structure is incomplete.
 interact.blood_well.amount=%1$s Blood Skeletons and %2$s Blood Zombies are stored in this well. Or, rather, the otherworldly place it is linked to.
+interact.statue.ownerelse=This Statue is owned by %1$s.
+interact.statue.ownerme=This Statue is mine.
+interact.statue.noowner=This Statue is mine to claim.
+interact.statue.ownerboh=I do not know who this Statue is linked to.
+interact.statue.alreadyme=This Statue is already mine.
+interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
+interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
+
 
 ##################
 #ENTITIES

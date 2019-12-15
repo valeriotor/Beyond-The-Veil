@@ -1,6 +1,11 @@
 package com.valeriotor.BTV.blocks;
 
+import static com.valeriotor.BTV.blocks.BlockProperties.HORIZONTAL_FACING;
+
+import java.util.List;
+
 import com.valeriotor.BTV.tileEntities.TileStatue;
+import com.valeriotor.BTV.util.ItemHelper;
 import com.valeriotor.BTV.worship.CrawlerWorship.WorshipType;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -9,20 +14,24 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-
-import static com.valeriotor.BTV.blocks.BlockProperties.HORIZONTAL_FACING;;
+import net.minecraft.world.World;;
 
 public class BlockStatue extends ModBlock implements ITileEntityProvider{
 	
@@ -47,7 +56,7 @@ public class BlockStatue extends ModBlock implements ITileEntityProvider{
 		if(placer instanceof EntityPlayer) {
 			TileEntity te = w.getTileEntity(pos);
 			if(te instanceof TileStatue) {
-				((TileStatue)te).setMaster((EntityPlayer)placer);
+				((TileStatue)te).readFromNBTSmol(ItemHelper.checkTagCompound(stack));
 			}
 		}
 		super.onBlockPlacedBy(w, pos, state, placer, stack);
@@ -118,5 +127,54 @@ public class BlockStatue extends ModBlock implements ITileEntityProvider{
     {
         return new BlockStateContainer(this, new IProperty[] {HORIZONTAL_FACING});
     }
+	
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
+			int fortune) {}
+	
+	@Override
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
+		TileEntity te = w.getTileEntity(pos);
+		if(te instanceof TileStatue) {
+			((TileStatue)te).writeToNBTSmol(ItemHelper.checkTagCompound(stack));
+		}
+		spawnAsEntity(w, pos, stack);
+		super.breakBlock(w, pos, state);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		TileEntity te = w.getTileEntity(pos);
+		if(hand == EnumHand.MAIN_HAND && p.getHeldItemMainhand().getItem() == Items.AIR && te instanceof TileStatue) {
+			TileStatue ts = (TileStatue) te;
+			if(!w.isRemote)
+				if(p.getPersistentID().equals(ts.getMaster()))
+					p.sendMessage(new TextComponentTranslation("interact.statue.ownerme"));
+				else if(ts.getMasterName() != null)
+					p.sendMessage(new TextComponentTranslation("interact.statue.ownerelse", ts.getMasterName()));
+				else if(ts.getMaster() == null)
+					p.sendMessage(new TextComponentTranslation("interact.statue.noowner"));
+				else
+					p.sendMessage(new TextComponentTranslation("interact.statue.ownerboh"));					
+			return true;
+		}
+		return super.onBlockActivated(w, pos, state, p, hand, facing, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		if(ItemHelper.checkTagCompound(stack).hasKey("mastername"))
+			tooltip.add(I18n.format("tooltip.statue.owner", stack.getTagCompound().getString("mastername")));
+		else
+			tooltip.add(I18n.format("tooltip.statue.noowner"));
+		super.addInformation(stack, player, tooltip, advanced);
+	}
+	
+	@Override
+	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+		return true;
+	}
 
 }

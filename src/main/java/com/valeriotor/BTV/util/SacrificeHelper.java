@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -56,31 +57,47 @@ public class SacrificeHelper extends TileEntity{
 	
 	public static void doEffect(EntityPlayer p, BlockPos pos) {
 		List<EntityItem> items = p.world.getEntities(EntityItem.class, e -> e.getDistanceSq(pos) < 4);
+		boolean used = false;
 		if(!items.isEmpty()) {
 			for(EntityItem item : items) {
-				if(useItem(p, pos, item.getItem())) {
+				ItemStack stack = useItem(p, pos, item.getItem());
+				if(stack != null) {
+					EntityItem ent = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
+					p.world.spawnEntity(ent);
+					used = true;
 					break;
 				}
 			}
 		} else {
 			p.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST, 60*20, 9, false, false));
+			used = true;
 		}
-		removeHearts(p.world, pos);
+		if(used) removeHearts(p.world, pos);
 	}
 	
-	public static boolean useItem(EntityPlayer p, BlockPos pos, ItemStack item) {
-		if(Block.getBlockFromItem(item.getItem()) == Blocks.PRISMARINE) {
-			EntityItem coral_staff = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ItemRegistry.coral_staff));
-			p.world.spawnEntity(coral_staff);
-			item.shrink(1);
-			return true;
-		} else if(getBricks(Block.getBlockFromItem(item.getItem())) != null) {
-			EntityItem blood_bricks = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(getBricks(Block.getBlockFromItem(item.getItem())), item.getCount()));
-			p.world.spawnEntity(blood_bricks);
-			item.setCount(0);
-			return true;
+	public static void doEffectKnife(EntityPlayer p, ItemStack stack, BlockPos pos) {
+		if(stack.getItem() == Items.AIR) {
+			p.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST, 60*20, 9, false, false));
+			removeHearts(p.world, pos);
+		} else {
+			ItemStack newStack = useItem(p, pos, stack);
+			if(newStack != null) {
+				p.addItemStackToInventory(newStack);
+				removeHearts(p.world, pos);
+			}
 		}
-		return false;
+	}
+	
+	public static ItemStack useItem(EntityPlayer p, BlockPos pos, ItemStack item) {
+		if(Block.getBlockFromItem(item.getItem()) == Blocks.PRISMARINE) {
+			item.shrink(1);
+			return new ItemStack(ItemRegistry.coral_staff);
+		} else if(getBricks(Block.getBlockFromItem(item.getItem())) != null) {
+			ItemStack stack = new ItemStack(getBricks(Block.getBlockFromItem(item.getItem())), item.getCount());;
+			item.setCount(0);
+			return stack;
+		}
+		return null;
 	}
 	
 	public static void removeHearts(World w, BlockPos pos) {

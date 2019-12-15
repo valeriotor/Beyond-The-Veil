@@ -16,7 +16,8 @@ import net.minecraft.util.ITickable;
 public class TileStatue extends TileEntity implements ITickable{
 	
 	private WorshipType type;
-	private UUID master;	
+	private UUID master;
+	private String masterName;
 	private int timer;
 	
 	public TileStatue() {}
@@ -52,24 +53,59 @@ public class TileStatue extends TileEntity implements ITickable{
 	
 	public void setMaster(EntityPlayer p) {
 		this.master = p.getPersistentID();
+		this.masterName = p.getName();
+	}
+	
+	public void setMasterID(UUID id) {
+		this.master = id;
+	}
+	
+	public void setMasterName(String name) {
+		this.masterName = name;
+	}
+	
+	public UUID getMaster() {
+		return this.master;
+	}
+	
+	public String getMasterName() {
+		EntityPlayer p = this.world.getMinecraftServer().getPlayerList().getPlayerByUUID(master);
+		if(p != null) {
+			this.masterName = p.getName();
+			return this.masterName;
+		}
+		return this.masterName;
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		if(this.type != null)
 			compound.setInteger("type", this.type.ordinal());
+		compound = this.writeToNBTSmol(compound);
+		return super.writeToNBT(compound);
+	}
+	
+	public NBTTagCompound writeToNBTSmol(NBTTagCompound compound) {
 		if(this.master != null)
 			compound.setString("master", this.master.toString());
-		return super.writeToNBT(compound);
+		if(this.masterName != null)
+			compound.setString("mastername", this.masterName);
+		return compound;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		if(compound.hasKey("type"))
 			this.type = WorshipType.values()[compound.getInteger("type")];
+		this.readFromNBTSmol(compound);
+		super.readFromNBT(compound);
+	}
+	
+	public void readFromNBTSmol(NBTTagCompound compound) {
 		if(compound.hasKey("master"))
 			this.master = UUID.fromString(compound.getString("master"));
-		super.readFromNBT(compound);
+		if(compound.hasKey("mastername"))
+			this.masterName = compound.getString("mastername");
 	}
 
 }

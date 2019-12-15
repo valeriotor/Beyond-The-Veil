@@ -67,7 +67,7 @@ public class ItemRegistry {
 	public static final ItemCoralStaff coral_staff = new ItemCoralStaff("coral_staff");
 	public static final ItemBloodSigil sigil_zombie = new ItemBloodSigil("sigil_zombie", BloodMobs.BLOOD_ZOMBIE);
 	public static final ItemBloodSigil sigil_skellie = new ItemBloodSigil("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
-	
+	public static final ItemSacrificialKnife sacrificial_knife = new ItemSacrificialKnife("sacrificial_knife");
 	
 	
 	
@@ -117,6 +117,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(coral_staff, 0, "inventory");
         ClientProxy.registerItemRenderer(sigil_zombie, 0, "inventory");
         ClientProxy.registerItemRenderer(sigil_skellie, 0, "inventory");
+        ClientProxy.registerItemRenderer(sacrificial_knife, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -243,6 +244,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.coral_staff);
     	registry.register(ItemRegistry.sigil_zombie);
     	registry.register(ItemRegistry.sigil_skellie);
+    	registry.register(ItemRegistry.sacrificial_knife);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
