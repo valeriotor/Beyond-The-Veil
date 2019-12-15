@@ -57,6 +57,11 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
 	}
 	
 	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
+	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		if(world.isRemote) {

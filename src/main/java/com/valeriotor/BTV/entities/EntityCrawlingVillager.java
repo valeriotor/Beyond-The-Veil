@@ -92,6 +92,11 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	}
 	
 	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
+	@Override
 	public boolean isAIDisabled() {
 		return super.isAIDisabled() || this.unconscious;
 	}
