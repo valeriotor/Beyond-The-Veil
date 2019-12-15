@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
-import com.valeriotor.BTV.events.ServerTickEvents;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.CrawlerWorship.WorshipType;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -35,14 +34,14 @@ public class TileStatue extends TileEntity implements ITickable{
 			this.resetTimer();
 			List<EntityCrawlingVillager> worms = world.getEntities(EntityCrawlingVillager.class, e -> e.getMasterID() == master && e.getDistanceSq(pos) < 625);
 			if(worms.isEmpty()) return;
-			CrawlerWorship cw = ServerTickEvents.getWorship(this.master);
+			CrawlerWorship cw = CrawlerWorshipEvents.getWorship(this.master);
 			int factor = this.type == WorshipType.DEFAULT ? 5 : 6;
 			if(cw != null) {
 				cw.setWorshipType(type);
 				cw.setStrength(worms.size() / factor);
 				cw.resetTimer();
 			} else {
-				ServerTickEvents.putWorship(master, new CrawlerWorship().setWorshipType(type).setStrength(worms.size() / factor));
+				CrawlerWorshipEvents.putWorship(master, new CrawlerWorship().setWorshipType(type).setStrength(worms.size() / factor));
 			}
 		}
 	}

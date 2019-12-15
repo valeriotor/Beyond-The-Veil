@@ -33,7 +33,6 @@ public class ServerTickEvents {
 			decreaseMessageTimers();
 			decreaseCovenantTimers();
 			decreasePlayerTimers();
-			updateWorships();
 			AzacnoParasiteEvents.updateParasites();
 		}
 		DrowningRitualEvents.update();
@@ -181,40 +180,6 @@ public class ServerTickEvents {
 		}
 		timers.addAll(newTimers);
 			
-	}
-
-	// ******************************************* CRAWLER WORSHIP **************************************** \\
-	
-	private static List<CrawlerWorship> worshipped = new ArrayList();
-	
-	public static CrawlerWorship getWorship(EntityPlayer p) {
-		return getWorship(p.getPersistentID());
-	}
-	
-	public static CrawlerWorship getWorship(UUID u) {
-		if(u.equals(null)) return null;
-		for(CrawlerWorship cw : worshipped) {
-			if(u.equals(cw.getPlayerID()))
-				return cw;
-		}
-		return null;
-	}
-	
-	public static void putWorship(EntityPlayer p, CrawlerWorship w) {
-		putWorship(p.getPersistentID(), w);
-	}
-	
-	public static void putWorship(UUID u, CrawlerWorship w) {
-		worshipped.add(w.setPlayer(u));
-	}
-	
-	public static void updateWorships() {
-		if(worshipped.isEmpty()) return;
-		Iterator<CrawlerWorship> iter = worshipped.iterator();
-		while(iter.hasNext()) {
-			if(iter.next().update())
-				iter.remove();
-		}
 	}
 	
 }

@@ -3,6 +3,7 @@ package com.valeriotor.BTV.events;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -108,7 +109,7 @@ public class PlayerDamageEvents {
 			if(BaublesApi.getBaublesHandler(p).getStackInSlot(4).getItem() == ItemRegistry.blood_crown &&
 					p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) {
 				if(ServerTickEvents.getPlayerTimer("bcrown1", p) == null && ServerTickEvents.getPlayerTimer("bcrown2", p) == null) {
-					CrawlerWorship cw = ServerTickEvents.getWorship(p);
+					CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 					boolean cwImp = cw != null && cw.improvesCrownOfThorns();
 					final float a = event.getAmount() / (cwImp ? 3 : 1);
 					PlayerTimer nested = new PlayerTimerBuilder(p).setName("bcrown2")

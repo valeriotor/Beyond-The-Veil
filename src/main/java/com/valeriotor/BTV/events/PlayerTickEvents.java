@@ -3,6 +3,7 @@ package com.valeriotor.BTV.events;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityCanoe;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
@@ -41,9 +42,12 @@ public class PlayerTickEvents {
 			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			canoeFishing(p, data);
 			resetTimesDreamt(p, data);
-			findHamlet(p, data);
 			waterPowers(p, data);
 			decreaseCooldown(p, data);
+			if(!p.world.isRemote) {
+				CrawlerWorshipEvents.updateWorships(p);
+				findHamlet(p, data);
+			}
 		}
 	}
 	
@@ -79,7 +83,7 @@ public class PlayerTickEvents {
 	}
 	
 	private static void findHamlet(EntityPlayer p, IPlayerData data) {
-		if(!p.world.isRemote && p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !data.getString(PlayerDataLib.FOUND_HAMLET)) {
+		if(p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !data.getString(PlayerDataLib.FOUND_HAMLET)) {
 			BlockPos pos = HamletList.get(p.world).getClosestHamlet(p.getPosition()); 
 				if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET")) {
 					data.addString(PlayerDataLib.FOUND_HAMLET, false);

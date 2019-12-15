@@ -5,6 +5,7 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.events.ServerTickEvents;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.items.baubles.IActiveBauble;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -72,7 +73,7 @@ public class MessageActivateBauble implements IMessage{
 						p.sendMessage(new TextComponentTranslation("bauble.cooldown", cooldown/20));
 					else if(((IActiveBauble)stack.getItem()).activate(p)) {
 						int newCooldown = ((IActiveBauble)stack.getItem()).getCooldown();
-						CrawlerWorship cw = ServerTickEvents.getWorship(p);
+						CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 						if(cw != null) newCooldown = cw.getBaubleCooldown(newCooldown);
 						data.setInteger(key, newCooldown, false);
 					}

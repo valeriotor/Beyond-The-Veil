@@ -25,7 +25,6 @@ public class CrawlerWorship {
 	private int timer = 200;
 	private int strength = 0;
 	private WorshipType wType = WorshipType.DEFAULT;
-	private UUID playerID;
 	
 	public boolean update() {
 		this.timer--;
@@ -56,20 +55,6 @@ public class CrawlerWorship {
 	
 	public int getStrength() {
 		return this.strength;
-	}
-	
-	public CrawlerWorship setPlayer(EntityPlayer player) {
-		this.playerID = player.getPersistentID();
-		return this;
-	}
-	
-	public CrawlerWorship setPlayer(UUID playerID) {
-		this.playerID = playerID;
-		return this;
-	}
-	
-	public UUID getPlayerID() {
-		return this.playerID;
 	}
 	
 	public int getBaubleCooldown(int defaultVal) {

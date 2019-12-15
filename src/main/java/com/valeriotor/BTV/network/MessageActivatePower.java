@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.events.ServerTickEvents;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.Worship;
 import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
@@ -36,7 +37,7 @@ public class MessageActivatePower implements IMessage{
 					boolean success = power.activatePower(p);
 					if(success) {
 						int newCooldown = power.getCooldownTicks();
-						CrawlerWorship cw = ServerTickEvents.getWorship(p);
+						CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 						if(cw != null) newCooldown = cw.getPowerCooldown(newCooldown);
 						Worship.setPowerCooldown(p, newCooldown, power.getIndex());
 					}
