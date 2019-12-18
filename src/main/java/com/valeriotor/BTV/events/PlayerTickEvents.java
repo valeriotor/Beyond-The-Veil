@@ -4,21 +4,22 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
-import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -95,20 +96,42 @@ public class PlayerTickEvents {
 	private static void waterPowers(EntityPlayer p, IPlayerData data) {
 		
 		if(data.getString(PlayerDataLib.RITUALQUEST)) {
-			// TODO Not apply this when transformed
+			boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
 				double motY = p.motionY * 1.25;
 				double motZ = p.motionZ * 1.2;
 				boolean flying = p.capabilities.isFlying;
-				if(!flying) {
+				if(transformed) {
+					p.capabilities.isFlying = true;
+					p.capabilities.setFlySpeed(0.06F);
+				} else if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
 					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;
 					if(Math.abs(p.motionZ) < 1.3) p.motionZ = motZ;
 				}
 				p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, false, false));
 				p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, false));
+			} else if(transformed) {
+				if(p.world.isRemote)
+					p.capabilities.isFlying = false;
 			}
+			
+			if(transformed) {
+				ItemStack stack = p.getHeldItemMainhand();
+				if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+					ItemStack clone = stack.copy();
+					p.dropItem(clone, true);
+					stack.setCount(0);
+				}
+				stack = p.getHeldItemOffhand();
+				if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+					ItemStack clone = stack.copy();
+					p.dropItem(clone, true);
+					stack.setCount(0);
+				}
+			}
+				
 		}
 		
 	}

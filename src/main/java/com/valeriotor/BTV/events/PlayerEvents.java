@@ -20,15 +20,18 @@ import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -124,6 +127,9 @@ public class PlayerEvents {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(entry.getKey(), entry.getValue(), false);
 		}
 		SyncUtil.syncCapabilityData(player);
+
+		if(player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED))
+			TransformDeepOne.applyAttributes(player);
 	}
 	
 	@SubscribeEvent
@@ -171,6 +177,16 @@ public class PlayerEvents {
 			ThaumcraftApi.internalMethods.progressResearch(p, "craftedcradle");
 		} else if(Block.getBlockFromItem(stack.getItem()) == BlockRegistry.BlockLacrymatory && !k.isResearchComplete("WEEPERS")) {
 			ThaumcraftApi.internalMethods.progressResearch(p, "craftedlacrymatory");
+		}
+	}
+	
+	@SubscribeEvent
+	public static void jumpEvent(LivingJumpEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+				if(!p.isSneaking()) p.motionY += 0.275;
+			}
 		}
 	}
 }

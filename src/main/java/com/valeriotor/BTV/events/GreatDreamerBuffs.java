@@ -39,7 +39,7 @@ public class GreatDreamerBuffs {
 		if(Worship.getSelectedDeity(p) != Deities.GREATDREAMER) return;
 		if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return;
 		
-		e.setAmount(Math.min(e.getAmount(), 3));
+		e.setAmount(Math.min(e.getAmount(), 5));
 		
 	}
 	
