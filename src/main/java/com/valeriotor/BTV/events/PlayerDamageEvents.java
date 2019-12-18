@@ -44,6 +44,7 @@ public class PlayerDamageEvents {
 			if(event.getEntityLiving().world.isRemote) return;
 			resetFlute(event);
 			GreatDreamerBuffs.applyDamageCap(event);
+			enrageMinions(event);
 			applyBleedingBelt(event);
 			applyBloodCrown(event);
 		}
@@ -127,6 +128,15 @@ public class PlayerDamageEvents {
 				}
 			}
 		}
+	}
+	
+	private static void enrageMinions(LivingDamageEvent event) {
+		EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
+		if(cw != null && event.getAmount() > 0) {
+			cw.empowerMinions(p);
+		}
+		
 	}
 	
 }

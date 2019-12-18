@@ -76,9 +76,10 @@ public class CrawlerWorship {
 	public void empowerMinions(EntityPlayer p) {
 		if(this.wType != WorshipType.SACRIFICE) return;
 		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, e -> (e instanceof IPlayerGuardian) && e.getDistance(p) < 35);
+		boolean crit = criticalHeal(p.getRNG());
 		for(EntityLiving e : minions) {
 			int maxStrength = Math.min(5, this.strength);
-			e.heal(6 + 2 * maxStrength);
+			e.heal((6 + 2 * maxStrength) * (crit ? 2 : 1));
 			if(this.strength > 0) {
 				e.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, maxStrength));
 				e.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 100, maxStrength / 2));
