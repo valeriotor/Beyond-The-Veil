@@ -10,7 +10,7 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageCameraRotatorClient;
-import com.valeriotor.BTV.util.MathHelper;
+import com.valeriotor.BTV.util.MathHelperBTV;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 
@@ -36,7 +36,7 @@ public class PotionTerror extends Potion{
 			if(stack.getItem() == ItemRegistry.bone_tiara && 
 			  ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) return;
 			
-			EntityLivingBase entity = MathHelper.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
+			EntityLivingBase entity = MathHelperBTV.getClosestLookedAtEntity((EntityPlayer)e, 7, ent -> ent != e);
 			if(entity != null && isScaredByEntity(entity, amplifier)) {
 				if(e.world.rand.nextBoolean()) {
 					if(!e.world.isRemote) {

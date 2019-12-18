@@ -3,7 +3,7 @@ package com.valeriotor.BTV.items;
 import java.util.List;
 
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.util.MathHelper;
+import com.valeriotor.BTV.util.MathHelperBTV;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,7 +41,7 @@ public class ItemBronzeSphere extends Item{
 		int playerXp = playerIn.experienceTotal;
 		if(!playerIn.isSneaking()) {
 			stack.getTagCompound().setInteger("xp", itemXp + Math.min(playerXp, 100));
-			MathHelper.removeExperience(playerIn, 100);
+			MathHelperBTV.removeExperience(playerIn, 100);
 		} else {
 			stack.getTagCompound().setInteger("xp", Math.max(0, itemXp - 100));
 			playerIn.addExperience(Math.min(itemXp, 100));

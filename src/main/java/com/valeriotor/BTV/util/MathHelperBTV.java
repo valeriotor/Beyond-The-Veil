@@ -14,7 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class MathHelper {
+public class MathHelperBTV {
 	
 	/** Removes experience from a player (since the vanilla method addExperience won't do that).
 	 * 

@@ -17,7 +17,7 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.BTV.util.CameraRotatorClient;
-import com.valeriotor.BTV.util.MathHelper;
+import com.valeriotor.BTV.util.MathHelperBTV;
 
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
@@ -177,7 +177,7 @@ public class RenderEvents {
         float f = renderManager.playerViewY;
         float f1 = renderManager.playerViewX;
         boolean flag1 = renderManager.options.thirdPersonView == 2;
-        BlockPos nearestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), covenantPlayers, Math.PI / 16);
+        BlockPos nearestPos = MathHelperBTV.minimumLookAngle(p.getPosition(), p.getLookVec(), covenantPlayers, Math.PI / 16);
 		for(HashMap.Entry<String, BlockPos> e : covenantPlayers.entrySet()) {
 			BlockPos pos = e.getValue();
 			if(e.getValue() == null) continue;

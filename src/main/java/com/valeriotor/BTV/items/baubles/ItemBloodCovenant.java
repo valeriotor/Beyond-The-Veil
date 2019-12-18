@@ -8,7 +8,7 @@ import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.items.ModItem;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageCovenantData;
-import com.valeriotor.BTV.util.MathHelper;
+import com.valeriotor.BTV.util.MathHelperBTV;
 import com.valeriotor.BTV.util.PlayerTimer;
 
 import baubles.api.BaubleType;
@@ -37,7 +37,7 @@ public class ItemBloodCovenant extends ModItem implements IBauble, IActiveBauble
 				&& player.isInWater();
 		});
 		if(ServerTickEvents.containsCovenantTimer(p)) {
-			BlockPos nearestPos = MathHelper.minimumLookAngle(p.getPosition(), p.getLookVec(), playerss.stream().map(EntityPlayer::getPosition).collect(Collectors.toList()), Math.PI/16);
+			BlockPos nearestPos = MathHelperBTV.minimumLookAngle(p.getPosition(), p.getLookVec(), playerss.stream().map(EntityPlayer::getPosition).collect(Collectors.toList()), Math.PI/16);
 			if(nearestPos == null) {
 				makeTimer(p, playerss);
 				return false;
