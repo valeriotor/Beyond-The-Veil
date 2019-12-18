@@ -10,12 +10,16 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.network.MessageSyncIntDataToServer;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
+import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SyncUtil {
 	
@@ -50,5 +54,44 @@ public class SyncUtil {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
 		}
 	}
+	
+	public static void addStringDataOnServer(EntityPlayer p, boolean temporary, String string) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), ((EntityPlayerMP)p));
+	}
+	
+	public static void removeStringDataOnServer(EntityPlayer p, String string) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(string);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveStringToClient(string), ((EntityPlayerMP)p));
+	}
+	
+	public static void addIntDataOnServer(EntityPlayer p, boolean temporary, String key, int val) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(key, val, temporary);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, val), (EntityPlayerMP)p);
+	}
+	
+	/*public static void removeIntDataOnServer(EntityPlayer p, String key) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(key);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveIntToClient(key), ((EntityPlayerMP)p));
+	}*/
+	
+	@SideOnly(Side.CLIENT)
+	public static void addStringDataOnClient(EntityPlayer p, boolean temporary, String string) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(true, string));
+	}
+	
+	/*@SideOnly(Side.CLIENT)
+	public static void removeStringDataOnClient(EntityPlayer p, String string) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(string);
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(true, string));
+	}*/
+	
+	@SideOnly(Side.CLIENT)
+	public static void addIntDataOnClient(EntityPlayer p, boolean temporary, String key, int val) {
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(key, val, temporary);
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncIntDataToServer(key, val));
+	}
+	
 	
 }
