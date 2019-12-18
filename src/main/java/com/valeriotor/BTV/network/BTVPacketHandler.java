@@ -23,7 +23,6 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncDialogueData.SyncDialogueDataMessageHandler.class, MessageSyncDialogueData.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSyncStringDataToServer.SyncDataToServerMessageHandler.class, MessageSyncStringDataToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSyncIntDataToServer.SyncIntDataToServerMessageHandler.class, MessageSyncIntDataToServer.class, count++, Side.SERVER);
-		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageActivateBauble.ActivateBaubleMessageHandler.class, MessageActivateBauble.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageActivatePower.ActivatePowerMessageHandler.class, MessageActivatePower.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageWateryCradle.WateryCradleMessageHandler.class, MessageWateryCradle.class, count++, Side.SERVER);
@@ -45,6 +44,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncParasitePlayer.SyncParasitePlayerMessageHandler.class, MessageSyncParasitePlayer.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCameraRotatorClient.CameraRotatorClientMessageHandler.class, MessageCameraRotatorClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageEntityAnimation.EntityAnimationMessageHandler.class, MessageEntityAnimation.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.CLIENT);
 		
 	}
 	
