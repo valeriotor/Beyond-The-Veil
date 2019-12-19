@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.lwjgl.opengl.GL11;
 
+import com.google.common.base.MoreObjects;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.render.RenderParasite;
@@ -27,12 +28,19 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -49,6 +57,13 @@ public class RenderEvents {
 	public HashMap<String, BlockPos> covenantPlayers = new HashMap();
 	private static final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
 	private static final RenderParasite parasite = new RenderParasite(Minecraft.getMinecraft().getRenderManager());
+	private final Minecraft mc;
+	private final RenderManager renderManager;
+	
+	public RenderEvents() {
+		this.mc = Minecraft.getMinecraft();
+		this.renderManager = mc.getRenderManager();
+	}
 	
 	@SubscribeEvent
 	public void onPlayerRenderEvent(RenderPlayerEvent.Pre event) {
@@ -234,5 +249,39 @@ public class RenderEvents {
         GlStateManager.enableDepth();
     }
 
+	@SubscribeEvent
+	public void renderHand(RenderHandEvent event) {
+		if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)
+				&& mc.gameSettings.thirdPersonView == 0) {
+			event.setCanceled(true);
+	        AbstractClientPlayer abstractclientplayer = mc.player;
+	        float partialTicks = event.getPartialTicks();
+	        float f = 1.0F;
+	        float p_187456_2_ = abstractclientplayer.getSwingProgress(partialTicks);
+	        float p_187456_1_ = 0;
+	        float f1 = MathHelper.sqrt(p_187456_2_);
+	        float f2 = -0.3F * MathHelper.sin(f1 * (float)Math.PI);
+	        float f3 = 0.4F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
+	        float f4 = -0.4F * MathHelper.sin(p_187456_2_ * (float)Math.PI);
+	        GlStateManager.translate(f * (f2 + 0.64000005F), f3 + -0.6F + p_187456_1_ * -0.6F, f4 + -0.71999997F);
+	        GlStateManager.rotate(f * 45.0F, 0.0F, 1.0F, 0.0F);
+	        float f5 = MathHelper.sin(p_187456_2_ * p_187456_2_ * (float)Math.PI);
+	        float f6 = MathHelper.sin(f1 * (float)Math.PI);
+	        GlStateManager.rotate(f * f6 * 70.0F, 0.0F, 1.0F, 0.0F);
+	        GlStateManager.rotate(f * f5 * -20.0F, 0.0F, 0.0F, 1.0F);
+	        this.mc.getTextureManager().bindTexture(RenderTransformedPlayer.deepOneTexture);
+	        GlStateManager.translate(f * -1.0F, 3.6F, 3.5F);
+	        GlStateManager.rotate(f * 120.0F, 0.0F, 0.0F, 1.0F);
+	        GlStateManager.rotate(200.0F, 1.0F, 0.0F, 0.0F);
+	        GlStateManager.rotate(f * -135.0F, 0.0F, 1.0F, 0.0F);
+	        GlStateManager.translate(f * 5.6F, 0.0F, 0.0F);
+	        GlStateManager.disableCull();		
+	        
+	        deepOne.renderRightArm(abstractclientplayer);
+	        
+	        GlStateManager.enableCull();
+	        
+		}
+	}
 	
 }

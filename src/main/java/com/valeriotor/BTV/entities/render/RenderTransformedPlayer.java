@@ -5,6 +5,7 @@ import com.valeriotor.BTV.entities.models.ModelRegistry;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
@@ -99,6 +100,21 @@ public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlay
 	public ModelDeepOne getMainModel() {
 		return (ModelDeepOne)super.getMainModel();
 	}
+	
+	public void renderRightArm(AbstractClientPlayer clientPlayer) {
+        float f = 1.0F;
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        float f1 = 0.0625F;
+        ModelDeepOne modelplayer = this.getMainModel();
+        GlStateManager.enableBlend();
+        GlStateManager.scale(1.5, 1.5, 1.5);
+        modelplayer.swingProgress = 0.0F;
+        modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
+        modelplayer.RightLowerArm.rotateAngleX = 0.0F;
+        modelplayer.RightLowerArm.render(0.0625F);
+        GlStateManager.disableBlend();
+    }
+
 	
 
 }
