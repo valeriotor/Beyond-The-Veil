@@ -12,9 +12,10 @@ import com.valeriotor.BTV.worship.Deities;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TransformDeepOne implements IActivePower{
 	
@@ -41,7 +42,7 @@ public class TransformDeepOne implements IActivePower{
 
 	@Override
 	public int getCooldownTicks() {
-		return 50;
+		return 300;
 	}
 
 	@Override
@@ -69,11 +70,13 @@ public class TransformDeepOne implements IActivePower{
 
 	public static final AttributeModifier SPEED_MOD = new AttributeModifier("speedmod", 1.2, 1);
 	public static final AttributeModifier HEALTH_MOD = new AttributeModifier("healthmod", 20, 0);
+	public static final AttributeModifier ATTACK_MOD = new AttributeModifier("attackmod", 9, 0);
 	
 	public static void applyAttributes(EntityPlayer p) {
 		if(!p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MOD)) {
 			p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(SPEED_MOD);
 			p.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(HEALTH_MOD);
+			p.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).applyModifier(ATTACK_MOD);
 		}
 	}
 	
@@ -81,7 +84,11 @@ public class TransformDeepOne implements IActivePower{
 		if(p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MOD)) {
 			p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(SPEED_MOD);
 			p.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(HEALTH_MOD);
+			p.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).removeModifier(ATTACK_MOD);
 		}
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public static boolean stepAssist = false;
 
 }

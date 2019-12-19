@@ -94,9 +94,8 @@ public class PlayerTickEvents {
 	}
 	
 	private static void waterPowers(EntityPlayer p, IPlayerData data) {
-		
+		boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
 		if(data.getString(PlayerDataLib.RITUALQUEST)) {
-			boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
 				double motY = p.motionY * 1.25;
@@ -105,6 +104,7 @@ public class PlayerTickEvents {
 				if(transformed) {
 					p.capabilities.isFlying = true;
 					p.capabilities.setFlySpeed(0.06F);
+					p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 0, false, false));
 				} else if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
 					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;
@@ -115,23 +115,21 @@ public class PlayerTickEvents {
 			} else if(transformed) {
 				if(p.world.isRemote)
 					p.capabilities.isFlying = false;
+			}		
+		}
+		if(transformed) {
+			ItemStack stack = p.getHeldItemMainhand();
+			if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+				ItemStack clone = stack.copy();
+				p.dropItem(clone, true);
+				stack.setCount(0);
 			}
-			
-			if(transformed) {
-				ItemStack stack = p.getHeldItemMainhand();
-				if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
-					ItemStack clone = stack.copy();
-					p.dropItem(clone, true);
-					stack.setCount(0);
-				}
-				stack = p.getHeldItemOffhand();
-				if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
-					ItemStack clone = stack.copy();
-					p.dropItem(clone, true);
-					stack.setCount(0);
-				}
+			stack = p.getHeldItemOffhand();
+			if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+				ItemStack clone = stack.copy();
+				p.dropItem(clone, true);
+				stack.setCount(0);
 			}
-				
 		}
 		
 	}

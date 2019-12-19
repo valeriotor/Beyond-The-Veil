@@ -2,7 +2,9 @@ package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.worship.Deities;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -70,6 +72,13 @@ public class MessageSyncDataToClient implements IMessage{
 			else {
 				if(message.string.equals("level")) Minecraft.getMinecraft().player.getCapability(Deities.map.get(Deities.GREATDREAMER.getKey()), null).setLevel(message.value);
 				else Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
+			}
+			
+			if(message.string.equals(PlayerDataLib.TRANSFORMED)) {
+				if(!TransformDeepOne.stepAssist) {
+					Minecraft.getMinecraft().player.stepHeight += 0.5;
+					TransformDeepOne.stepAssist = true;
+				}
 			}
 		}
 		

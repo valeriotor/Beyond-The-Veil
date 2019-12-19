@@ -2,6 +2,7 @@ package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -56,6 +57,10 @@ public class MessageRemoveStringToClient implements IMessage{
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.key);
 				if(message.key.equals(PlayerDataLib.TRANSFORMED)) {
 					Minecraft.getMinecraft().player.capabilities.isFlying = false;
+					if(TransformDeepOne.stepAssist) {
+						Minecraft.getMinecraft().player.stepHeight -= 0.5;
+						TransformDeepOne.stepAssist = false;
+					}
 				}
 			}
 		}
