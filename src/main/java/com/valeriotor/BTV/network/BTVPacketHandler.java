@@ -4,6 +4,8 @@ import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToClient;
 import com.valeriotor.BTV.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.BTV.network.baubles.MessageWolfMedallionToClient;
+import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
+import com.valeriotor.BTV.network.research.MessageSyncResearchToServer;
 import com.valeriotor.BTV.network.ritual.MessagePerformHurtAnimation;
 import com.valeriotor.BTV.network.ritual.MessageRitualToServer;
 
@@ -31,6 +33,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageRitualToServer.RitualToServerMessageHandler.class, MessageRitualToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageDagonDialogue.DagonDialogueMessageHandler.class, MessageDagonDialogue.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageRevelationRingToServer.RevelationRingToServerMessageHandler.class, MessageRevelationRingToServer.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageSyncResearchToServer.SyncResearchToServerMessageHandler.class, MessageSyncResearchToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);
@@ -45,6 +48,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageCameraRotatorClient.CameraRotatorClientMessageHandler.class, MessageCameraRotatorClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageEntityAnimation.EntityAnimationMessageHandler.class, MessageEntityAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageSyncResearchToClient.SyncResearchToClientMessageHandler.class, MessageSyncResearchToClient.class, count++, Side.CLIENT);
 		
 	}
 	

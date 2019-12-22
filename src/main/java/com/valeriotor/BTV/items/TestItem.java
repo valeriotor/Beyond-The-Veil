@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
+import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 
 public class TestItem extends Item //implements IHasModel
 {
+	private static final boolean NECRODEBUG = true;
 	Formatter zorro;
 	public TestItem() {
 		setRegistryName(References.MODID +":testitem");
@@ -39,6 +41,10 @@ public class TestItem extends Item //implements IHasModel
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if(NECRODEBUG) {
+			player.openGui(BeyondTheVeil.instance, 5, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			return EnumActionResult.SUCCESS;
+		}
 		if(worldIn.isRemote) {
 		
 		ItemStack stack = player.getHeldItem(hand);

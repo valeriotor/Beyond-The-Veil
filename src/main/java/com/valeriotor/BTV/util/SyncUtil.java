@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -14,6 +15,9 @@ import com.valeriotor.BTV.network.MessageSyncIntDataToServer;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
+import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
+import com.valeriotor.BTV.network.research.ResearchSyncer;
+import com.valeriotor.BTV.research.ResearchStatus;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +32,7 @@ public class SyncUtil {
 		syncCapabilityData(p);
 		syncTransformData(p);
 		syncParasiteData(p);
+		syncResearchData(p);
 	}
 	
 	public static void syncCapabilityData(EntityPlayer p) {
@@ -52,6 +57,12 @@ public class SyncUtil {
 		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(p.getPersistentID());
 		if(ap != null && ap.renderParasite()) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
+		}
+	}
+	
+	public static void syncResearchData(EntityPlayer p) {
+		for(Entry<String, ResearchStatus> entry : p.getCapability(ResearchProvider.RESEARCH, null).getResearches().entrySet()) {
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(entry.getKey()).setStatus(entry.getValue())), (EntityPlayerMP)p);
 		}
 	}
 	

@@ -257,4 +257,20 @@ public class MathHelperBTV {
 		return minimumLookAngle(startPos, vec, poss.entrySet().stream().map(HashMap.Entry::getValue).collect(Collectors.toList()), maxAngle);
 	}
 	
+	public static int clamp(int min, int max, int val) {
+		return val < min ? min : (val > max ? max : val); 
+	}
+	
+	public static float clamp(float min, float max, float val) {
+		return val < min ? min : (val > max ? max : val); 
+	}
+	
+	public static double clamp(double min, double max, double val) {
+		return val < min ? min : (val > max ? max : val); 
+	}
+	
+	public static long clamp(long min, long max, long val) {
+		return val < min ? min : (val > max ? max : val); 
+	}
+	
 }

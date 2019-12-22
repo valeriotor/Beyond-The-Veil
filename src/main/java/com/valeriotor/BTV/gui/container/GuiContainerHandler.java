@@ -4,6 +4,7 @@ import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.gui.GuiCityMapper;
 import com.valeriotor.BTV.gui.GuiDagon;
 import com.valeriotor.BTV.gui.GuiDrowned;
+import com.valeriotor.BTV.gui.GuiNecronomicon;
 import com.valeriotor.BTV.gui.GuiWateryCradle;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
@@ -31,6 +32,7 @@ public class GuiContainerHandler implements IGuiHandler{
 	public static final int DROWNED = 2;
 	public static final int DAGON = 3;
 	public static final int CRADLE = 4;
+	public static final int NECRONOMICON = 5;
 	
 	
 	
@@ -51,6 +53,8 @@ public class GuiContainerHandler implements IGuiHandler{
 		} else if(ID == 3) {
 			return new DummyContainer();
 		} else if(ID == 4) {
+			return new DummyContainer();
+		} else if(ID == 5) {
 			return new DummyContainer();
 		}
 		return null;
@@ -85,6 +89,8 @@ public class GuiContainerHandler implements IGuiHandler{
 			boolean[] options = {k.isResearchKnown("SPINES"), k.isResearchKnown("WEEPERS"), false, k.isResearchKnown("HEARTS")};
 			GuiWateryCradle gui = new GuiWateryCradle(new BlockPos(x, y, z), options);
 			if(gui != null) return gui;
+		} else if(ID == 5) {
+			return new GuiNecronomicon();
 		}
 		return null;
 	}

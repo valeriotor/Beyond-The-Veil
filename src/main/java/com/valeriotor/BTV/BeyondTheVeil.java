@@ -2,11 +2,13 @@ package com.valeriotor.BTV;
 
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
 import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.IResearch;
 import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
+import com.valeriotor.BTV.capabilities.ResearchHandler;
 import com.valeriotor.BTV.capabilities.WorshipCapHandler;
-import com.valeriotor.BTV.events.ResearchEvents;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
@@ -15,6 +17,7 @@ import com.valeriotor.BTV.lib.commands.SetPlayerData;
 import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
+import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.research.TCRegistries;
 import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.util.RegistryHelper;
@@ -51,6 +54,7 @@ public class BeyondTheVeil
     
 
     private static Logger logger;
+    public static Gson gson = new Gson();
     static {
     	FluidRegistry.enableUniversalBucket();
     }
@@ -68,6 +72,7 @@ public class BeyondTheVeil
 
     	CapabilityManager.INSTANCE.register(IWorship.class, new WorshipCapHandler.DGStorage(), new WorshipCapHandler.Factory());
     	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
+    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), new ResearchHandler.ResearchCapFactory());
 
     	MinecraftForge.EVENT_BUS.register(WorshipCapHandler.class);
         
@@ -94,11 +99,13 @@ public class BeyondTheVeil
     	BuildingRegistry.registerBuildings();
     	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
 		DGWorshipHelper.loadDreamerResearch();
+		ResearchRegistry.registerResearchesFirst();
     }
     
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        ResearchRegistry.registerResearchesSecond();
     }
     
     @EventHandler

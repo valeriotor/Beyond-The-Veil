@@ -5,7 +5,7 @@
         "name": "research.FIRSTDREAMS.title",
         "icons": [ "minecraft:bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
-		"parents": [ "UNLOCKELDRITCH" ],
+		"parents": [],
         "stages": [
                 {
                     "text": "research.FIRSTDREAMS.stage.0",
@@ -159,7 +159,7 @@
         "icons": [ "beyondtheveil:tablet" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0, 5],
 		"meta": ["HIDDEN"],
-        "parents": [ "~FIRSTDREAMS", "inscriptions" ],
+        "parents": [ "FIRSTDREAMS", "inscriptions" ],
         "stages": [
 				{
 					"text": "research.INSCRIPTIONS.stage.0",
