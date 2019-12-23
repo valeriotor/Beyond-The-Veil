@@ -70,6 +70,7 @@ public class GuiNecronomicon extends GuiScreen{
 		GlStateManager.color(1, 1, 1);
 		mc.renderEngine.bindTexture(RESEARCH_BACKGROUND);
 		for(Research r : clickables) this.drawResearchBackground(r);
+		GlStateManager.color(0.6F, 0.6F, 0.6F);
 		for(Research r : visibles) this.drawResearchBackground(r);
 
 		RenderHelper.enableStandardItemLighting();
