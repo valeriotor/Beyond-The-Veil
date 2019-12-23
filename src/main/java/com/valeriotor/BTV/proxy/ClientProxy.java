@@ -10,6 +10,7 @@ import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
 import com.valeriotor.BTV.lib.KeyHandler;
+import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
@@ -64,6 +65,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit(FMLPostInitializationEvent e) {
     	super.postInit(e);
+    	ResearchRegistry.registerConnections();
     }
     
     

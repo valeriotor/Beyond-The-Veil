@@ -104,8 +104,8 @@ public class BeyondTheVeil
     
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        proxy.postInit(event);
         ResearchRegistry.registerResearchesSecond();
+        proxy.postInit(event);
     }
     
     @EventHandler

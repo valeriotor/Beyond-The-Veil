@@ -9,4 +9,5 @@ public interface IResearch {
 	public void addResearchStatus(ResearchStatus status);	
 	public HashMap<String, ResearchStatus> getResearches();
 	public ResearchStatus getResearch(String key);
+	public void populate();
 }

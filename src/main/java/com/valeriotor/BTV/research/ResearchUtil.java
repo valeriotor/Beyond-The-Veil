@@ -1,5 +1,8 @@
 package com.valeriotor.BTV.research;
 
+import java.util.HashMap;
+
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
@@ -39,7 +42,17 @@ public class ResearchUtil {
 		p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key).learn();
 	}
 	
+	public static ResearchStatus getResearch(EntityPlayer p, String key) {
+		return p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key);
+	}
 	
+	public static boolean isResearchVisible(EntityPlayer p, String key) {
+		return getResearch(p, key).isVisible(p);
+	}
+	
+	public static boolean isResearchVisible(HashMap<String, ResearchStatus> map, IPlayerData data, String key) {
+		return map.get(key).isVisible(map, data);
+	}
 	/*public static boolean knowsResearch(EntityPlayer p, String key) {
 		return false;
 	}*/

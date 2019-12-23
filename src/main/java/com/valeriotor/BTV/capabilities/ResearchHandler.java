@@ -77,6 +77,14 @@ public static final ResourceLocation RESEARCH = new ResourceLocation(References.
 		public ResearchStatus getResearch(String key) {
 			return this.researches.get(key);
 		}
+
+		@Override
+		public void populate() {
+			for(Entry<String, Research> entry : ResearchRegistry.researches.entrySet()) {
+				if(!researches.containsKey(entry.getKey()))
+					researches.put(entry.getKey(), new ResearchStatus(entry.getValue()));
+			}			
+		}
 		
 		
 	}

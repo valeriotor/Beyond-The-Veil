@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -18,6 +19,7 @@ import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
 import com.valeriotor.BTV.network.research.ResearchSyncer;
 import com.valeriotor.BTV.research.ResearchStatus;
+import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +63,9 @@ public class SyncUtil {
 	}
 	
 	public static void syncResearchData(EntityPlayer p) {
-		for(Entry<String, ResearchStatus> entry : p.getCapability(ResearchProvider.RESEARCH, null).getResearches().entrySet()) {
+		HashMap<String, ResearchStatus> map = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
+		if(map.isEmpty()) p.getCapability(ResearchProvider.RESEARCH, null).populate();
+		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(entry.getKey()).setStatus(entry.getValue())), (EntityPlayerMP)p);
 		}
 	}

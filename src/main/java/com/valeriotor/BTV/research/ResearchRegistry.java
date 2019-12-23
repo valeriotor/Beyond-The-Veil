@@ -1,21 +1,26 @@
 package com.valeriotor.BTV.research;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.research.Research.ResearchStage;
 
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ResearchRegistry {
 	
 	private static ResearchContainer container;
 	public static HashMap<String, Research> researches = new HashMap<>();
 	private static final boolean DEBUG_PRINTS = false;
+	
+	public static final List<ResearchConnection> connections = new ArrayList<>();
 	
 	public static void registerResearchesFirst() {
 		try {
@@ -30,6 +35,16 @@ public class ResearchRegistry {
 	
 	public static void registerResearchesSecond() {
 		container.makeResearches(researches);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerConnections() {
+		for(Entry<String, Research> entry : researches.entrySet()) {
+			for(String s : entry.getValue().getParents()) {
+				if(researches.containsKey(s))
+					connections.add(new ResearchConnection(researches.get(s), entry.getValue()));
+			}
+		}
 	}
 	
 	public static class ResearchContainer {

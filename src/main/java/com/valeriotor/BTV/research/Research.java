@@ -52,6 +52,10 @@ public class Research {
 		return this.key;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String[] getHiders() {
 		if(this.hiders == null)
 			this.hiders = new String[0];
