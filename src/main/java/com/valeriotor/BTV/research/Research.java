@@ -134,6 +134,10 @@ public class Research {
 			return this.required_research;
 		}
 		
+		public String getTextKey() {
+			return this.text;
+		}
+		
 		@Override
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
@@ -144,6 +148,7 @@ public class Research {
 				}
 			return sb.toString();
 		}
+		
 		
 	}
 	

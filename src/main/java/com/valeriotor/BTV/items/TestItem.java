@@ -42,8 +42,11 @@ public class TestItem extends Item //implements IHasModel
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(NECRODEBUG) {
-			player.openGui(BeyondTheVeil.instance, 5, worldIn, pos.getX(), pos.getY(), pos.getZ());
-			return EnumActionResult.SUCCESS;
+			if(worldIn.isRemote) {
+				player.openGui(BeyondTheVeil.instance, 5, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				return EnumActionResult.SUCCESS;
+			} else
+				return EnumActionResult.FAIL;
 		}
 		if(worldIn.isRemote) {
 		

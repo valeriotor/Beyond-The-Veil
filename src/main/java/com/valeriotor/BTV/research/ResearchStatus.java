@@ -36,11 +36,14 @@ public class ResearchStatus {
 				this.progressStage_internal();
 				return true;
 			}
+		} else if(this.stage == -1) {
+			this.progressStage_internal();
+			return true;
 		}
 		return false;
 	}
 	
-	public void progressStage_internal() {
+	private void progressStage_internal() {
 		int maxStage = res.getStages().length - 1;
 		if(this.stage < maxStage) {
 			this.stage++;
@@ -113,5 +116,9 @@ public class ResearchStatus {
 		this.learned = nbt.getBoolean("learned");
 		this.complete = nbt.getBoolean("complete");
 		return this;
+	}
+	
+	public int getStage() {
+		return this.stage;
 	}
 }

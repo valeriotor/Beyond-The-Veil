@@ -1,4 +1,4 @@
-package com.valeriotor.BTV.gui;
+package com.valeriotor.BTV.gui.research;
 
 import java.awt.Point;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
@@ -18,15 +18,13 @@ import com.valeriotor.BTV.research.Research;
 import com.valeriotor.BTV.research.ResearchConnection;
 import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.research.ResearchStatus;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.MathHelperBTV;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -39,6 +37,7 @@ public class GuiNecronomicon extends GuiScreen{
 	List<Research> clickables = new ArrayList<>();
 	List<Research> visibles = new ArrayList<>();
 	List<ResearchConnection> connections = new ArrayList<>();
+	List<Point> stars = new ArrayList<>();
 	int counter = 0;
 	
 	private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
@@ -62,11 +61,25 @@ public class GuiNecronomicon extends GuiScreen{
 	}
 	
 	@Override
+	public void initGui() {
+		stars.clear();
+		Random r = mc.player.getRNG();
+		int a = 100 + r.nextInt(50);
+		for(int i = 0; i < a; i++) {
+			stars.add(new Point(r.nextInt(this.width), r.nextInt(this.height)));
+		}
+		
+		super.initGui();
+	}
+	
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawRect(0, 0, this.width, this.height, 0xFF000000); 
 		for(ResearchConnection rc : connections)
 			this.drawConnection(rc, partialTicks);
-		
+		for(Point p : stars) {
+			this.drawRect(p.x, p.y, p.x+1, p.y+1, 0xFFFFFFFF);
+		}
 		GlStateManager.color(1, 1, 1);
 		mc.renderEngine.bindTexture(RESEARCH_BACKGROUND);
 		for(Research r : clickables) this.drawResearchBackground(r);
@@ -102,9 +115,7 @@ public class GuiNecronomicon extends GuiScreen{
 			ItemStack[] icons = res.getIconStacks();
 			this.drawItemStack(icons[counter % 20 % icons.length], resX - topX, resY - topY);
 			if(mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
-				//GlStateManager.pushAttrib();
 				drawHoveringText(I18n.format(res.getName()), mouseX, mouseY);
-				//GlStateManager.popAttrib();
 			}
 		}
 	}
@@ -129,7 +140,6 @@ public class GuiNecronomicon extends GuiScreen{
 				int signum = (int) Math.signum(counter % 80 - 40);
 				double amplifier = 15 * (signum  * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
 				int x = i, y = (int) (amplifier * Math.sin(i * Math.PI / dist));
-				//GL11.glBegin(GL11.GL_LINES);
 				drawRect(x, y, x + 1, y+1, 0xFF001100);
 			}
 			GlStateManager.popMatrix();
@@ -138,16 +148,26 @@ public class GuiNecronomicon extends GuiScreen{
 	}
 	
 	
-	// Shamelessly (CTRL+C-CTRL+V)ed from GuiContainer
-	private void drawItemStack(ItemStack stack, int x, int y)
-    {
-        //GlStateManager.translate(0.0F, 0.0F, 32.0F);
-        //this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
-        //GlStateManager.translate(0.0F, 0.0F, 32.0F);
-        //this.zLevel = 200.0F;
-        //this.itemRender.zLevel = 200.0F;
+	private void drawItemStack(ItemStack stack, int x, int y) {
         this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-        //this.zLevel = 0.0F;
-        //this.itemRender.zLevel = 0.0F;
     }
+	
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		for(Research res : this.clickables) {
+			int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
+			if(mouseX > resX - 4 && mouseX < resX + 20 && mouseY > resY - 4 && mouseY < resY + 20) {
+				ResearchStatus status = ResearchUtil.getResearch(mc.player, res.getKey());
+				if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
+				this.mc.displayGuiScreen(new GuiResearchPage(status));
+				break;
+			}
+		}
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
 }
