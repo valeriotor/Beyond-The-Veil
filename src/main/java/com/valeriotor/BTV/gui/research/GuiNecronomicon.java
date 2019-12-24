@@ -34,6 +34,7 @@ public class GuiNecronomicon extends GuiScreen{
 	int topX = -400;
 	int topY = -200;
 	int factor = 3;
+	List<Research> newClickables = new ArrayList<>();
 	List<Research> clickables = new ArrayList<>();
 	List<Research> visibles = new ArrayList<>();
 	List<ResearchConnection> connections = new ArrayList<>();
@@ -47,7 +48,10 @@ public class GuiNecronomicon extends GuiScreen{
 		IPlayerData data = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			if(entry.getValue().isKnown(map, data)) {
-				clickables.add(entry.getValue().res);
+				if(entry.getValue().getStage() == -1)
+					newClickables.add(entry.getValue().res);
+				else
+					clickables.add(entry.getValue().res);
 			}
 			else if(entry.getValue().isVisible(map, data))
 				visibles.add(entry.getValue().res);
@@ -85,10 +89,14 @@ public class GuiNecronomicon extends GuiScreen{
 		for(Research r : clickables) this.drawResearchBackground(r);
 		GlStateManager.color(0.25F, 0.25F, 0.25F);
 		for(Research r : visibles) this.drawResearchBackground(r);
+		float coloring = 0.52F + (float) (Math.sin((this.counter + partialTicks) / 30 * 2 * Math.PI) / 4);
+		GlStateManager.color(coloring, coloring, coloring);
+		for(Research r : newClickables) this.drawResearchBackground(r);
 
 		RenderHelper.enableStandardItemLighting();
 		for(Research r : clickables) this.drawResearch(r, mouseX, mouseY);
 		for(Research r : visibles) this.drawResearch(r, mouseX, mouseY);
+		for(Research r : newClickables) this.drawResearch(r, mouseX, mouseY);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -155,15 +163,23 @@ public class GuiNecronomicon extends GuiScreen{
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		for(Research res : this.clickables) {
-			int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
-			if(mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
-				ResearchStatus status = ResearchUtil.getResearch(mc.player, res.getKey());
-				if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
-				this.mc.displayGuiScreen(new GuiResearchPage(status));
-				break;
-			}
+			if(openResearch(res, mouseX, mouseY)) return;
+		}
+		for(Research res : this.newClickables) {
+			if(openResearch(res, mouseX, mouseY)) return;
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	private boolean openResearch(Research res, int mouseX, int mouseY) {
+		int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
+		if(mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
+			ResearchStatus status = ResearchUtil.getResearch(mc.player, res.getKey());
+			if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
+			this.mc.displayGuiScreen(new GuiResearchPage(status));
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
