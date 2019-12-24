@@ -9,13 +9,17 @@ import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.DialogueRequirement;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.gui.OpenGuiSelector;
+import com.valeriotor.BTV.items.ItemMemoryPhial;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
 import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
+import com.valeriotor.BTV.tileEntities.TileMemorySieve;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
 import com.valeriotor.BTV.tileEntities.renderers.TESRHeart;
 import com.valeriotor.BTV.tileEntities.renderers.TESRLacrymatory;
+import com.valeriotor.BTV.tileEntities.renderers.TESRMemorySieve;
 import com.valeriotor.BTV.tileEntities.renderers.TESRWateryCradle;
 import com.valeriotor.BTV.util.RegistryHelper;
 
@@ -60,6 +64,7 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(new OpenGuiSelector(Minecraft.getMinecraft()));
         loadCustomResources();
         registerTileEntitySpecialRenderers();
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new ItemMemoryPhial.MemoryPhialColorHandler(), ItemRegistry.memory_phial);
     }
     
     @Override
@@ -97,6 +102,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileWateryCradle.class, new TESRWateryCradle());
         ClientRegistry.bindTileEntitySpecialRenderer(TileLacrymatory.class, new TESRLacrymatory());
         ClientRegistry.bindTileEntitySpecialRenderer(TileHeart.class, new TESRHeart());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMemorySieve.class, new TESRMemorySieve());
     }
     
     @Override

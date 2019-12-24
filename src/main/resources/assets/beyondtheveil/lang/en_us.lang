@@ -59,6 +59,9 @@ tooltip.dream_bottle.none=NONE
 tooltip.statue.owner=This Statue is owned by %1$s.
 tooltip.statue.noowner=This Statue has no owner.
 
+tooltip.memory_phial.stored=This phial stores %1$s.
+tooltip.memory_phial.empty=This phial is empty. 
+
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
 artifact.medallion.creepers=There are creepers.

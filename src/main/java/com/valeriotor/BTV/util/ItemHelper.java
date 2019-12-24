@@ -41,4 +41,14 @@ public class ItemHelper {
 		return stack.getTagCompound().getLong(key);	
 	}
 	
+	public static String checkStringTag(ItemStack stack, String key, String defaultValue) {
+		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+		if(!nbt.hasKey(key)) {
+			nbt.setString(key, defaultValue);
+			return defaultValue;
+		}
+		return nbt.getString(key);
+		
+	}
+	
 }

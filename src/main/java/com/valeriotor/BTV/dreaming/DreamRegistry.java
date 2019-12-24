@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.dreaming;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class DreamRegistry {
 	
 	
 	public static final Map<String, AbstractDream> dreams = new HashMap<>();
+	public static final Map<Memory, AbstractDream> dreamsRegistry = new EnumMap<>(Memory.class);
 	
 	static {
 		dreams.put("Alienis", alienis);

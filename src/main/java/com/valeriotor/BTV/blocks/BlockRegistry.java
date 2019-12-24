@@ -72,6 +72,7 @@ public class BlockRegistry {
 	public static final BlockStatue BlockStatue = new BlockStatue(Material.ROCK, BlockNames.STATUE, WorshipType.DEFAULT);
 	public static final BlockStatue BlockSacrificeStatue = new BlockStatue(Material.ROCK, BlockNames.SACRIFICE_STATUE, WorshipType.SACRIFICE);
 	public static final BlockStatue BlockPenitenceStatue = new BlockStatue(Material.ROCK, BlockNames.PENITENCE_STATUE, WorshipType.PENITENCE);
+	public static final BlockMemorySieve BlockMemorySieve = new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_SIEVE);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -124,6 +125,7 @@ public class BlockRegistry {
 	   	registry.register(BlockStatue);
 	   	registry.register(BlockSacrificeStatue);
 	   	registry.register(BlockPenitenceStatue);
+	   	registry.register(BlockMemorySieve);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);
