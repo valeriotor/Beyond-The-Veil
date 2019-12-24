@@ -122,6 +122,7 @@ public class Research {
 		}
 		
 		public boolean meetsRequirements(IPlayerData data) {
+			if(required_research == null || required_research.length == 0) return true;
 			for(String s : this.getRequirements()) {
 				if(!data.getString(s)) return false;
 			}

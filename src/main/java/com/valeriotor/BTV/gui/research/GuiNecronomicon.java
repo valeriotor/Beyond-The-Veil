@@ -80,10 +80,10 @@ public class GuiNecronomicon extends GuiScreen{
 		for(Point p : stars) {
 			this.drawRect(p.x, p.y, p.x+1, p.y+1, 0xFFFFFFFF);
 		}
-		GlStateManager.color(1, 1, 1);
+		GlStateManager.color(0.8F, 0.8F, 0.8F);
 		mc.renderEngine.bindTexture(RESEARCH_BACKGROUND);
 		for(Research r : clickables) this.drawResearchBackground(r);
-		GlStateManager.color(0.6F, 0.6F, 0.6F);
+		GlStateManager.color(0.25F, 0.25F, 0.25F);
 		for(Research r : visibles) this.drawResearchBackground(r);
 
 		RenderHelper.enableStandardItemLighting();
@@ -156,7 +156,7 @@ public class GuiNecronomicon extends GuiScreen{
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		for(Research res : this.clickables) {
 			int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
-			if(mouseX > resX - 4 && mouseX < resX + 20 && mouseY > resY - 4 && mouseY < resY + 20) {
+			if(mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
 				ResearchStatus status = ResearchUtil.getResearch(mc.player, res.getKey());
 				if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
 				this.mc.displayGuiScreen(new GuiResearchPage(status));
@@ -168,6 +168,6 @@ public class GuiNecronomicon extends GuiScreen{
 	
 	@Override
 	public boolean doesGuiPauseGame() {
-		return false;
+		return true;
 	}
 }

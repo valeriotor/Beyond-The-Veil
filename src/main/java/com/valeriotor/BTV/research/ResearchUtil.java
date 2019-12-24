@@ -11,6 +11,8 @@ import com.valeriotor.BTV.network.research.ResearchSyncer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ResearchUtil {
 	
@@ -19,6 +21,7 @@ public class ResearchUtil {
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(key).setProgress(true)), (EntityPlayerMP)p);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void progressResearchClient(EntityPlayer p, String key) {
 		progressResearch(p, key);
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncResearchToServer(new ResearchSyncer(key).setProgress(true)));
@@ -32,7 +35,8 @@ public class ResearchUtil {
 		learnResearch(p, key);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(key).setLearn(true)), (EntityPlayerMP)p);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void learnResearchClient(EntityPlayer p, String key) {
 		learnResearch(p, key);
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncResearchToServer(new ResearchSyncer(key).setLearn(true)));

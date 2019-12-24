@@ -25,6 +25,14 @@ public class ResearchStatus {
 		this.learned = true;
 	}
 	
+	public boolean canProgressStage(EntityPlayer p) {
+		return this.canProgressStage(p.getCapability(PlayerDataProvider.PLAYERDATA, null));
+	}
+	
+	public boolean canProgressStage(IPlayerData data) {
+		return !complete && this.res.getStages()[stage].meetsRequirements(data);
+	}
+	
 	public boolean progressStage(EntityPlayer p) {
 		return this.progressStage(p.getCapability(PlayerDataProvider.PLAYERDATA, null));
 	}
