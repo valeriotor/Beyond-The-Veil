@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.items.container;
 
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.init.Items;
@@ -61,7 +62,7 @@ public class InventoryDreamBottle extends InventoryBasic{
 	
 	public boolean isItemValidForSlot(int i, ItemStack itemstack)	
 	{
-	    return (!itemstack.isEmpty()) && ((itemstack.getItem() == ItemsTC.crystalEssence));
+	    return (!itemstack.isEmpty()) && ((itemstack.getItem() == ItemRegistry.memory_phial));
 	}
 	
 	@Override
@@ -71,7 +72,7 @@ public class InventoryDreamBottle extends InventoryBasic{
 	
 	@Override
 	public ItemStack addItem(ItemStack stack) {
-		if(stack.getItem() != ItemsTC.crystalEssence) return stack;
+		if(stack.getItem() != ItemRegistry.memory_phial) return stack;
 		return super.addItem(stack);
 	}
 

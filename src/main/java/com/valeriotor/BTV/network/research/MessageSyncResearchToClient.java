@@ -40,7 +40,7 @@ public ResearchSyncer sync;
 			mc.addScheduledTask(() -> {
 				ResearchSyncer sync = message.sync;
 				if(sync.progress) ResearchUtil.progressResearch(mc.player, sync.key);
-				//if(sync.learn)
+				if(sync.learn) ResearchUtil.learnResearch(mc.player, sync.key);
 				if(sync.status != null) mc.player.getCapability(ResearchProvider.RESEARCH, null).addResearchStatus(sync.status);
 			});
 			return null;

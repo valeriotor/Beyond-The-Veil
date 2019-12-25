@@ -80,7 +80,7 @@ public class ContainerDreamBottle extends Container{
 		
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return stack.getItem() == ItemsTC.crystalEssence;
+			return stack.getItem() == ItemRegistry.memory_phial;
 		}
 		
 	}

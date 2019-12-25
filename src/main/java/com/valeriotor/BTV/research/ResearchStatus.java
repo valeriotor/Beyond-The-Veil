@@ -5,7 +5,7 @@ import java.util.HashMap;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
-import com.valeriotor.BTV.research.Research.ResearchStage;
+import com.valeriotor.BTV.research.Research.SubResearch;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,11 +14,12 @@ public class ResearchStatus {
 	
 	public final Research res;
 	private int stage = -1;
-	private boolean learned = true; // TODO: Change to false when rewriting Dream System
+	private boolean learned;
 	private boolean complete = false;
 	
 	public ResearchStatus(Research res) {
 		this.res = res;
+		this.learned = !res.mustLearn();
 	}
 	
 	public void learn() {
@@ -38,7 +39,7 @@ public class ResearchStatus {
 	}
 	
 	public boolean progressStage(IPlayerData data) {
-		ResearchStage[] stages = this.res.getStages();
+		SubResearch[] stages = this.res.getStages();
 		if(this.stage >= 0 && this.stage < stages.length) {
 			if(stages[stage].meetsRequirements(data)) {
 				this.progressStage_internal();

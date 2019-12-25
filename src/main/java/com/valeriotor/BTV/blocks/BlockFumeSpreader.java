@@ -6,9 +6,11 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BlockNames;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
+import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -20,7 +22,6 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -275,16 +276,12 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 			worldIn.setBlockState(pos, state, 2);
 		}else
 		if(worldIn.getTileEntity(pos) instanceof TileFumeSpreader && state.getValue(ISFULL)) {
-			if(playerIn.getHeldItem(hand) != null) {
-				if(playerIn.getHeldItem(hand).getItem() == ItemsTC.crystalEssence && getTE(worldIn,pos).getTileData().getString("containing").isEmpty()) {
-					Aspect o = thaumcraft.api.aspects.AspectHelper.getObjectAspects(playerIn.getHeldItem(hand)).getAspects()[0];
-					if(!worldIn.isRemote) {
-						getTE(worldIn, pos).setAspect(o);
-						getTE(worldIn, pos).getTileData().setString("containing", o.getName());
-					}
-					if(!playerIn.capabilities.isCreativeMode) playerIn.getHeldItem(hand).shrink(1);
-					
+			if(playerIn.getHeldItem(hand).getItem() == ItemRegistry.memory_phial && getTE(worldIn, pos).getMemory() == null) {
+				String memString = ItemHelper.checkStringTag(playerIn.getHeldItem(hand), "memory", "none");
+				if(!worldIn.isRemote && !memString.equals("null")) {
+					getTE(worldIn, pos).setMemory(Memory.getMemoryFromDataName(memString));
 				}
+				if(!playerIn.capabilities.isCreativeMode) playerIn.getHeldItem(hand).shrink(1);
 			}
 			
 		}
@@ -309,20 +306,20 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	}
 	
 	
-	public TileFumeSpreader getTE(World w, BlockPos p) {
+	public static TileFumeSpreader getTE(World w, BlockPos p) {
 		return (TileFumeSpreader) w.getTileEntity(p);
 	}
 	
 	@Override
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		String aspect = getTE(worldIn,pos).getTileData().getString("containing").toLowerCase();
-		if(!aspect.isEmpty() && Aspect.getAspect(aspect)!=null) {
-		int i = thaumcraft.api.aspects.Aspect.getAspect(aspect).getColor();
-		double d0 = (double)(i >> 16 & 255) / 255.0D;
-        double d1 = (double)(i >> 8 & 255) / 255.0D;
-        double d2 = (double)(i >> 0 & 255) / 255.0D;
-		worldIn.spawnParticle(EnumParticleTypes.SPELL_MOB, pos.getX()+0.5D, pos.getY()+0.7D, pos.getZ()+0.5D, d0, d1, d2);
-	}
+		Memory memory = getTE(worldIn,pos).getMemory();
+		if(memory != null) {
+			int i = memory.getColor();
+			double d0 = (double)(i >> 16 & 255) / 255.0D;
+	        double d1 = (double)(i >> 8 & 255) / 255.0D;
+	        double d2 = (double)(i >> 0 & 255) / 255.0D;
+			worldIn.spawnParticle(EnumParticleTypes.SPELL_MOB, pos.getX()+0.5D, pos.getY()+0.7D, pos.getZ()+0.5D, d0, d1, d2);
+		}
 	}
 	
 }

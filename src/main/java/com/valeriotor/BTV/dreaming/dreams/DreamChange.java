@@ -11,16 +11,15 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamPermutatio extends AbstractDream{
+public class DreamChange extends AbstractDream{
 
-	public DreamPermutatio(String name, int priority) {
+	public DreamChange(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontKnowDream(p, "metallum")) return false;
 		int lvl = DreamHandler.getDreamLevel(p);
 		Collection<PotionEffect> effects = p.getActivePotionEffects();

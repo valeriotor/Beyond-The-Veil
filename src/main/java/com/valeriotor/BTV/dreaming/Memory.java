@@ -22,6 +22,7 @@ public enum Memory {
 	POWER(Items.BLAZE_POWDER, 0xFFff9300),
 	REPAIR(Item.getItemFromBlock(Blocks.WOOL), 0xFF99f19d),
 	SENTIENCE(Items.BOOK, 0xFFd87474),
+	STILLNESS(Item.getItemFromBlock(Blocks.SOUL_SAND), 0xFF444444),
 	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff),
 	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF000000);
 	

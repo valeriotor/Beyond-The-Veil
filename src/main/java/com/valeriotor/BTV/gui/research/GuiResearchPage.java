@@ -6,8 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.GuiHelper;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.research.Research.SubResearch;
 import com.valeriotor.BTV.research.ResearchStatus;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.MathHelperBTV;
@@ -38,6 +41,31 @@ public class GuiResearchPage extends GuiScreen{
 	public void initGui() {
 		pages.clear();
 		String[] paragraphs = I18n.format(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<BR>");
+		formatText(paragraphs);
+		IPlayerData data = mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		for(SubResearch sr : this.status.res.getAddenda()) {
+			if(sr.meetsRequirements(data)) {
+				paragraphs = I18n.format(sr.getTextKey()).split("<BR>");
+				formatText(paragraphs);
+			}
+		}
+		this.buttonList.clear();
+		int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || mc.gameSettings.guiScale == 0 ? 90 : 130);
+		GuiButton b = new GuiButton(0, this.width/2 - 100, bHeight, I18n.format("gui.research_page.complete"));
+		this.buttonList.add(b);
+		if(!status.canProgressStage(mc.player)) {
+			this.buttonList.get(0).visible = false;
+			String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
+			if(reqs != null)
+				this.reqText = Arrays.stream(reqs)
+								.map(s -> "research.".concat(s).concat(".text"))
+								.map(I18n::format)
+								.collect(Collectors.toList());
+		}
+		super.initGui();
+	}
+	
+	private void formatText(String[] paragraphs) {
 		List<String> ls = new ArrayList<>();
 		int i = 0;
 		pages.add(new ArrayList<>());
@@ -62,20 +90,6 @@ public class GuiResearchPage extends GuiScreen{
 			i += 15;
 			pages.get(pages.size() - 1).add("");
 		}
-		this.buttonList.clear();
-		int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || mc.gameSettings.guiScale == 0 ? 90 : 130);
-		GuiButton b = new GuiButton(0, this.width/2 - 100, bHeight, I18n.format("gui.research_page.complete"));
-		this.buttonList.add(b);
-		if(!status.canProgressStage(mc.player)) {
-			this.buttonList.get(0).visible = false;
-			String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
-			if(reqs != null)
-				this.reqText = Arrays.stream(reqs)
-								.map(s -> "research.".concat(s).concat(".text"))
-								.map(I18n::format)
-								.collect(Collectors.toList());
-		}
-		super.initGui();
 	}
 	
 	@Override

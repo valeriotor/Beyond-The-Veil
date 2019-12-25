@@ -39,6 +39,7 @@
         "name": "research.CRYSTALDREAMS.title",
         "icons": [ "thaumcraft:crystal_perditio" ],
         "category": "BEYOND_THE_VEIL", "location": [ 3,-2 ],
+		"learn": "true",
         "parents": [ "FUMESPREADER" ],
         "stages": [
 				{

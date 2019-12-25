@@ -10,39 +10,31 @@ import java.util.TreeSet;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.dreaming.DreamRegistry;
+import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
-import com.valeriotor.BTV.util.FluidHelper;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.DispenseFluidContainer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import thaumcraft.api.aspects.AspectHelper;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.ItemsTC;
 
 public class ItemDreamBottle extends Item{
@@ -83,16 +75,17 @@ public class ItemDreamBottle extends Item{
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
 			if(nbt.hasKey(String.format("slot%d", i))) {
 				ItemStack stack2 = new ItemStack(nbt.getCompoundTag(String.format("slot%d", i)));
-				if(stack2.getItem() == ItemsTC.crystalEssence)
-					dreams.put(i, DreamRegistry.dreams.get(AspectHelper.getObjectAspects(stack2).getAspects()[0].getName()));
+				if(stack2.getItem() == ItemRegistry.memory_phial) {
+					Memory m = Memory.getMemoryFromDataName(ItemHelper.checkStringTag(stack2, "memory", "none"));
+					if(m != null)
+						dreams.put(i, DreamRegistry.dreams.get(m));
+				}
 			}
 		}
 		Comparator<Entry<Integer, AbstractDream>> comparator = 
 				(e1, e2) -> (e1.getValue().priority == e2.getValue().priority) ? 1 : Integer.compare(e1.getValue().priority, e2.getValue().priority);
 		SortedSet<Map.Entry<Integer, AbstractDream>> set = new TreeSet<Map.Entry<Integer, AbstractDream>>(comparator);
 		set.addAll(dreams.entrySet());
-		System.out.println("Dream Entry Set: " + dreams.entrySet());
-		System.out.println("Sorted Entry Set: " + set);
 		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
 		if(fh instanceof FluidHandlerItemStack) {
 			FluidHandlerItemStack fluid = (FluidHandlerItemStack) fh;
@@ -101,7 +94,7 @@ public class ItemDreamBottle extends Item{
 			int amountHolder = amount;
 			for(Entry<Integer, AbstractDream> entry : set) {
 				if(amount < 1000) break;
-				if(entry.getValue().activate(playerIn, playerIn.world, ThaumcraftCapabilities.getKnowledge(playerIn))) {
+				if(entry.getValue().activate(playerIn, playerIn.world)) {
 					nbt.removeTag(String.format("slot%d", entry.getKey().intValue()));
 					amount -= 1000;
 				}

@@ -23,7 +23,8 @@ public class Research {
 	private String[] parents;
 	private String[] hiders;
 	private boolean learn;
-	private ResearchStage[] stages;
+	private SubResearch[] stages;
+	private SubResearch[] addenda;
 	
 	
 	public Research(ResearchTemp res) {
@@ -35,6 +36,7 @@ public class Research {
 		this.hiders = res.hiders;
 		this.learn = res.learn;
 		this.stages = res.stages;
+		this.addenda = res.addenda;
 		List<ItemStack> stacks = new ArrayList<>();
 		for(String icon : icons) {
 			String[] split = icon.split(";");
@@ -68,10 +70,20 @@ public class Research {
 		return this.parents;
 	}
 	
-	public ResearchStage[] getStages() {
+	public SubResearch[] getStages() {
 		if(this.stages == null)
-			this.stages = new ResearchStage[0];
+			this.stages = new SubResearch[0];
 		return this.stages;
+	}
+	
+	public SubResearch[] getAddenda() {
+		if(this.addenda == null)
+			this.addenda = new SubResearch[0];
+		return this.addenda;
+	}
+	
+	public boolean mustLearn() {
+		return learn;
 	}
 	
 	public int getX() {
@@ -105,14 +117,14 @@ public class Research {
 			}
 		if(stages != null)
 			sb.append("\nStages: ");
-			for(ResearchStage stage : stages) {
+			for(SubResearch stage : stages) {
 				sb.append(stage.toString());
 			}
 		return sb.toString();
 	}
 	
 	
-	public static class ResearchStage {
+	public static class SubResearch {
 		String text;
 		String[] required_research;
 		String[] recipes;
@@ -137,6 +149,10 @@ public class Research {
 		
 		public String getTextKey() {
 			return this.text;
+		}
+		
+		public String[] getRecipes() {
+			return this.recipes;
 		}
 		
 		@Override

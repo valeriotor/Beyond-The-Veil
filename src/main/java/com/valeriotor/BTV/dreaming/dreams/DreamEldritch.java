@@ -10,16 +10,15 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamAlienis extends AbstractDream{
+public class DreamEldritch extends AbstractDream{
 
-	public DreamAlienis(String name, int priority) {
+	public DreamEldritch(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.knowsDream(p, "vacuos")) {
 			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere1"));
 			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere2"));

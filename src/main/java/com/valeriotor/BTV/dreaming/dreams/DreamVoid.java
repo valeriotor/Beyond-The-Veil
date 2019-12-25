@@ -8,15 +8,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
+import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
-public class DreamVacuos extends AbstractDream{
+public class DreamVoid extends AbstractDream{
 
-	public DreamVacuos(String name, int priority) {
+	public DreamVoid(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
+		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
 			if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos")) {
 				p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);

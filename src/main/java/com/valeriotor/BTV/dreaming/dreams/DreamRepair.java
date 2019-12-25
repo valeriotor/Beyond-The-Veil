@@ -6,16 +6,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamFabrico extends AbstractDream{
+public class DreamRepair extends AbstractDream{
 
-	public DreamFabrico(String name, int priority) {
+	public DreamRepair(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		for(ItemStack item : p.getArmorInventoryList()) {
 			repairSingleItem(item, 0.3);

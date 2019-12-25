@@ -9,16 +9,15 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamHumanus extends AbstractDream{
+public class DreamHuman extends AbstractDream{
 
-	public DreamHumanus(String name, int priority) {
+	public DreamHuman(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		if(!list.isEmpty()) {

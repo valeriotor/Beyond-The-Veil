@@ -11,16 +11,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamMortuus extends AbstractDream{
+public class DreamDeath extends AbstractDream{
 
-	public DreamMortuus(String name, int priority) {
+	public DreamDeath(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		int lvl = DreamHandler.getDreamingGodLevel(p);

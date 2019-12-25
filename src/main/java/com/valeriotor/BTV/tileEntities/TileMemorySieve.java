@@ -2,7 +2,10 @@ package com.valeriotor.BTV.tileEntities;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.BTV.dreaming.Memory;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
+import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -26,7 +29,7 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 	}
 	
 	public void addItem(ItemStack stack) {
-		if(this.heldItem.getItem() == Items.AIR) {
+		if(this.heldItem.getItem() == Items.AIR && stack.getItem() != ItemRegistry.memory_phial) {
 			this.heldItem = stack.copy();
 			stack.shrink(1);
 			this.heldItem.setCount(1);
@@ -38,15 +41,32 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 		}
 	}
 	
-	public ItemStack getItem() {
-		ItemStack stack = this.heldItem;
-		this.heldItem = new ItemStack(Items.AIR);
-		itemEntity = null;
-		if(!this.world.isRemote) {
-			markDirty();
-			this.sendUpdates(world);
+	public ItemStack getItem(ItemStack in) {
+		if(in.getItem() != ItemRegistry.memory_phial) {
+			ItemStack stack = this.heldItem;
+			this.heldItem = new ItemStack(Items.AIR);
+			itemEntity = null;
+			if(!this.world.isRemote) {
+				markDirty();
+				this.sendUpdates(world);
+			}
+			return stack;
 		}
-		return stack;
+		if(this.heldItem.getItem() != Items.AIR) {
+			for(Memory m : Memory.values()) {
+				if(heldItem.getItem() == m.getItem()) {
+					ItemHelper.checkTagCompound(in).setString("memory", m.getDataName());
+					this.heldItem = new ItemStack(Items.AIR);
+					itemEntity = null;
+					if(!this.world.isRemote) {
+						markDirty();
+						this.sendUpdates(world);
+					}
+					return new ItemStack(Items.AIR);
+				}
+			}
+		}			
+		return new ItemStack(Items.AIR);
 	}
 	
 	@Override

@@ -9,16 +9,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamTenebrae extends AbstractDream{
+public class DreamDarkness extends AbstractDream{
 
-	public DreamTenebrae(String name, int priority) {
+	public DreamDarkness(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontKnowDream(p, "alienis")) return false;
 		boolean flag = false;
 		BlockPos pos = WorldHelper.findClosestBiomeOfType(BiomeRegistry.innsmouth, p.getPosition(), w, 6000);

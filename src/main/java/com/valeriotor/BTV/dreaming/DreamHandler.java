@@ -12,11 +12,11 @@ import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
-import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
+import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -42,21 +42,21 @@ public class DreamHandler {
 		boolean increaseTimesDreamt = false;
 		
 		Map<BlockPos, AbstractDream> dreams = SpreaderLocations.stream()
-												.filter(pos -> p.world.getTileEntity(pos).getTileData().hasKey("containing"))
-												.filter(pos -> DreamRegistry.dreams.containsKey(p.world.getTileEntity(pos).getTileData().getString("containing")))
-												.sorted(Comparator.comparingInt(pos -> DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing")).priority)) 
-												.collect(Collectors.toMap(pos -> pos, pos -> DreamRegistry.dreams.get(p.world.getTileEntity(pos).getTileData().getString("containing")), (x,y) -> x, LinkedHashMap::new));
+												.filter(pos -> BlockFumeSpreader.getTE(p.world, pos).getMemory() != null)
+												.filter(pos -> DreamRegistry.dreams.containsKey(BlockFumeSpreader.getTE(p.world, pos).getMemory()))
+												.sorted(Comparator.comparingInt(pos -> DreamRegistry.dreams.get(BlockFumeSpreader.getTE(p.world, pos).getMemory()).priority)) 
+												.collect(Collectors.toMap(pos -> pos, pos -> DreamRegistry.dreams.get(BlockFumeSpreader.getTE(p.world, pos).getMemory()), (x,y) -> x, LinkedHashMap::new));
 		
 		for(Entry<BlockPos, AbstractDream> entry : dreams.entrySet()) {
 			BlockPos pos = entry.getKey();
-			boolean emptySpreader = entry.getValue().activate(p, p.world, k);
+			boolean emptySpreader = entry.getValue().activate(p, p.world);
 			if(emptySpreader) increaseTimesDreamt = true;
 			
 			if(emptySpreader) {
 				IBlockState b = p.world.getBlockState(pos);
-				unlockResearch(p, p.world.getTileEntity(pos).getTileData().getString("containing").toLowerCase()); 
-				p.world.getTileEntity(pos).getTileData().removeTag("containing");
-				p.world.setBlockState(pos, b.getBlock().getStateFromMeta(b.getBlock().getMetaFromState(p.world.getBlockState(pos))-5), 2);				
+				unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name()); 
+				BlockFumeSpreader.getTE(p.world, pos).setMemory(null);
+				p.world.setBlockState(pos, p.world.getBlockState(pos).withProperty(BlockFumeSpreader.ISFULL, false));			
 			}
 		}
 		

@@ -39,7 +39,7 @@ public class MessageSyncResearchToServer implements IMessage{
 			p.getServer().addScheduledTask(() -> {
 				ResearchSyncer sync = message.sync;
 				if(sync.progress) ResearchUtil.progressResearch(p, sync.key);
-				//if(sync.learn)
+				if(sync.learn) ResearchUtil.learnResearch(p, sync.key);
 				if(sync.status != null) p.getCapability(ResearchProvider.RESEARCH, null).addResearchStatus(sync.status);
 			});
 			return null;

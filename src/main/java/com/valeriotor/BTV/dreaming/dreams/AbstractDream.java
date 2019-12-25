@@ -14,14 +14,14 @@ public abstract class AbstractDream{
 		this.name = name;
 	}
 	
-	public abstract boolean activate(EntityPlayer p, World w, IPlayerKnowledge k);
+	public abstract boolean activate(EntityPlayer p, World w);
 	
 	public String getName() {
 		return this.name;
 	}
 	
-	public boolean activateBottle(EntityPlayer p, World w, IPlayerKnowledge k) {
-		return this.activate(p, w, k);
+	public boolean activateBottle(EntityPlayer p, World w) {
+		return this.activate(p, w);
 	}
 	
 }

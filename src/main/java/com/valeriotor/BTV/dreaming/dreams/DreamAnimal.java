@@ -27,16 +27,15 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamBestia extends AbstractDream{
+public class DreamAnimal extends AbstractDream{
 
-	public DreamBestia(String name, int priority) {
+	public DreamAnimal(String name, int priority) {
 		super(name, priority);
 	}
 	
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k){
+	public boolean activate(EntityPlayer p, World w){
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
 		

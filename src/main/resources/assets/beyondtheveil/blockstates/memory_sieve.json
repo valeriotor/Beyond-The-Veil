@@ -1,5 +1,22 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block",
+        "custom": {
+            "base": "beyondtheveil:memory_sieve#base",
+            "Mipped Cutout": "beyondtheveil:memory_sieve#base",
+            "Translucent": "beyondtheveil:memory_sieve#trans"
+        }
+    },
     "variants": {
-        "normal": { "model": "beyondtheveil:memory_sieve" }
+        "normal": [{}],
+        "base": [{
+            "model": "beyondtheveil:memory_sieve_base"
+        }],
+        "trans": [{
+            "model": "beyondtheveil:memory_sieve_water"
+        }],
+        "inventory": [{}]
     }
 }

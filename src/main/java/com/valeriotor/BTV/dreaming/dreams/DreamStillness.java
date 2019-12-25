@@ -7,16 +7,15 @@ import com.valeriotor.BTV.dreaming.DreamHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public class DreamVinculum extends AbstractDream{
+public class DreamStillness extends AbstractDream{
 
-	public DreamVinculum(String name, int priority) {
+	public DreamStillness(String name, int priority) {
 		super(name, priority);
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontKnowDream(p, "metallum")) return false;
 		int lvl = DreamHandler.getDreamLevel(p);
 		Collection<PotionEffect> effects = p.getActivePotionEffects();

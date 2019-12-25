@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.research.Research.ResearchStage;
+import com.valeriotor.BTV.research.Research.SubResearch;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,6 +35,7 @@ public class ResearchRegistry {
 	
 	public static void registerResearchesSecond() {
 		container.makeResearches(researches);
+		container = null;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -66,7 +67,8 @@ public class ResearchRegistry {
 		public String[] parents;
 		public String[] hiders;
 		public boolean learn;
-		public ResearchStage[] stages;
+		public SubResearch[] stages;
+		public SubResearch[] addenda;
 		
 		public Research getResearch() {
 			return new Research(this);

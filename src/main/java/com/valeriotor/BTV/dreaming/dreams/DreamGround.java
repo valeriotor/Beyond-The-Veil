@@ -4,12 +4,9 @@ import com.valeriotor.BTV.dreaming.DreamHandler;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
 public class DreamGround extends AbstractDream{
 	
@@ -27,7 +24,7 @@ public class DreamGround extends AbstractDream{
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w, IPlayerKnowledge k) {
+	public boolean activate(EntityPlayer p, World w) {
 		int startY = Math.min(p.getPosition().getY(), w.getHeight()/2);
 		int[] tracker1 = new int[startY];
 		int[] tracker2 = new int[startY];
