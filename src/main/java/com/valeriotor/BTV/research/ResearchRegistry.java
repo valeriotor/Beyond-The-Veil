@@ -3,6 +3,7 @@ package com.valeriotor.BTV.research;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -11,6 +12,8 @@ import com.google.common.io.Resources;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.research.Research.SubResearch;
 
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,6 +21,7 @@ public class ResearchRegistry {
 	
 	private static ResearchContainer container;
 	public static HashMap<String, Research> researches = new HashMap<>();
+	public static HashMap<String, IRecipe> recipes = new HashMap<>();
 	private static final boolean DEBUG_PRINTS = false;
 	
 	public static final List<ResearchConnection> connections = new ArrayList<>();
@@ -39,11 +43,19 @@ public class ResearchRegistry {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static void registerConnections() {
+	public static void registerConnectionsAndRecipes() {
+		HashSet<String> recipeSet = new HashSet<>();
 		for(Entry<String, Research> entry : researches.entrySet()) {
 			for(String s : entry.getValue().getParents()) {
 				if(researches.containsKey(s))
 					connections.add(new ResearchConnection(researches.get(s), entry.getValue()));
+			}
+			recipeSet.addAll(entry.getValue().getRecipes());
+		}
+		for(IRecipe r : ForgeRegistries.RECIPES) {
+			String s = r.getRecipeOutput().getItem().getRegistryName().toString();
+			if(recipeSet.contains(s)) {
+				recipes.put(s, r);
 			}
 		}
 	}

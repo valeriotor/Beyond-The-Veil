@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.GuiHelper;
+import com.valeriotor.BTV.gui.IItemRenderGui;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.research.Research.SubResearch;
 import com.valeriotor.BTV.research.ResearchStatus;
@@ -18,15 +19,19 @@ import com.valeriotor.BTV.util.MathHelperBTV;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiResearchPage extends GuiScreen{
+public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 	
 	private final ResearchStatus status;
 	private final String title;
 	private List<List<String>> pages = new ArrayList<>();
 	private List<String> reqText;
+	private List<ResearchRecipe> recipes = new ArrayList<>();
+	private ResearchRecipe shownRecipe;
 	private int page = 0;
 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_page.png");
@@ -40,13 +45,17 @@ public class GuiResearchPage extends GuiScreen{
 	@Override
 	public void initGui() {
 		pages.clear();
+		recipes.clear();
+		shownRecipe = null;
 		String[] paragraphs = I18n.format(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<BR>");
-		formatText(paragraphs);
+		this.formatText(paragraphs);
+		this.makeRecipes(this.status.res.getStages()[this.status.getStage()].getRecipes());
 		IPlayerData data = mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		for(SubResearch sr : this.status.res.getAddenda()) {
 			if(sr.meetsRequirements(data)) {
 				paragraphs = I18n.format(sr.getTextKey()).split("<BR>");
-				formatText(paragraphs);
+				this.formatText(paragraphs);
+				this.makeRecipes(sr.getRecipes());
 			}
 		}
 		this.buttonList.clear();
@@ -92,6 +101,15 @@ public class GuiResearchPage extends GuiScreen{
 		}
 	}
 	
+	private void makeRecipes(String[] recipes) {
+		for(String s : recipes) {
+			ResearchRecipe r = ResearchRecipe.getRecipe(s);
+			if(r != null) {
+				this.recipes.add(r);
+			}
+		}
+	}
+	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawRect(0, 0, this.width, this.height, 0xFF000000); 
@@ -106,50 +124,68 @@ public class GuiResearchPage extends GuiScreen{
 			
 		}
 		drawModalRectWithCustomSizedTexture(- 480, - 270, 0, 0, 960, 540, 960, 540);
-		GlStateManager.pushMatrix();	
-		GlStateManager.scale(1.5, 1.5, 1);
-		this.drawCenteredString(mc.fontRenderer, title, 0, - 100, 0xFFAAFFAA);
-		GlStateManager.popMatrix();
-		if(this.pages.size() > this.page * 2) {
-			int i = 0;
-			for(String s : this.pages.get(this.page * 2)) {
-				this.drawString(mc.fontRenderer, s, - 200, - 110 + (i++)*15, 0xFFFFFFFF);
-			}
-		}
-		if(this.pages.size() > this.page * 2 + 1) {
-			int i = 0;
-			for(String s : this.pages.get(this.page * 2 + 1)) {
-				this.drawString(mc.fontRenderer, s, 0, - 110 + (i++)*15, 0xFFFFFFFF);
-			}
-		}
-		if(this.buttonList.isEmpty() || !this.buttonList.get(0).visible) {
-			if(this.reqText != null) {
+		if(this.shownRecipe == null) { 
+			GlStateManager.pushMatrix();	
+			GlStateManager.scale(1.5, 1.5, 1);
+			this.drawCenteredString(mc.fontRenderer, title, 0, - 100, 0xFFAAFFAA);
+			GlStateManager.popMatrix();
+			if(this.pages.size() > this.page * 2) {
 				int i = 0;
-				for(String s : this.reqText) {
-					this.drawCenteredString(mc.fontRenderer, s, 0, 130 + (i++) * 15, 0xFFFE9600);
+				for(String s : this.pages.get(this.page * 2)) {
+					this.drawString(mc.fontRenderer, s, - 200, - 110 + (i++)*15, 0xFFFFFFFF);
 				}
 			}
-		}
-		if(this.pages.size() > 2) {
-			mc.renderEngine.bindTexture(ARROW);
-			if(this.page == (this.pages.size() + 1) / 2 - 1)
-				GlStateManager.color(0.5F, 0.5F, 0.5F);
-			else if(hoveringRightArrow(mouseX, mouseY))
-				GlStateManager.color(0.9F, 0.7F, 1, 0.7F);
-			drawModalRectWithCustomSizedTexture(150, +115, 0, 0, 32, 32, 32, 32);
-			
+			if(this.pages.size() > this.page * 2 + 1) {
+				int i = 0;
+				for(String s : this.pages.get(this.page * 2 + 1)) {
+					this.drawString(mc.fontRenderer, s, 0, - 110 + (i++)*15, 0xFFFFFFFF);
+				}
+			}
+			if(this.buttonList.isEmpty() || !this.buttonList.get(0).visible) {
+				if(this.reqText != null) {
+					int i = 0;
+					for(String s : this.reqText) {
+						this.drawCenteredString(mc.fontRenderer, s, 0, 130 + (i++) * 15, 0xFFFE9600);
+					}
+				}
+			}
+			if(this.pages.size() > 2) {
+				mc.renderEngine.bindTexture(ARROW);
+				if(this.page == (this.pages.size() + 1) / 2 - 1)
+					GlStateManager.color(0.5F, 0.5F, 0.5F);
+				else if(hoveringRightArrow(mouseX, mouseY))
+					GlStateManager.color(0.9F, 0.6F, 1, 0.6F);
+				drawModalRectWithCustomSizedTexture(150, +115, 0, 0, 32, 32, 32, 32);
+				
+				GlStateManager.pushMatrix();
+				GlStateManager.color(1, 1, 1);
+				GlStateManager.translate(-150, 145, 0);
+				GlStateManager.rotate(180, 0, 0, 1);
+				if(this.page == 0)
+					GlStateManager.color(0.5F, 0.5F, 0.5F);
+				else if(hoveringLeftArrow(mouseX, mouseY))
+					GlStateManager.color(0.9F, 0.6F, 1, 0.6F);
+				drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 32, 32, 32, 32);
+				GlStateManager.popMatrix();
+			}
+		} else
+			shownRecipe.render(this, mouseX, mouseY);
+		
+		int hoveredKey = this.hoveringRecipeKey(mouseX, mouseY);
+		for(int i = 0; i < 4 && i < recipes.size(); i++) {
 			GlStateManager.pushMatrix();
-			GlStateManager.color(1, 1, 1);
-			GlStateManager.translate(-150, 145, 0);
-			GlStateManager.rotate(180, 0, 0, 1);
-			if(this.page == 0)
-				GlStateManager.color(0.5F, 0.5F, 0.5F);
-			else if(hoveringLeftArrow(mouseX, mouseY))
-				GlStateManager.color(0.9F, 0.7F, 1, 0.7F);
-			drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 32, 32, 32, 32);
+			GlStateManager.translate(-135 + i * 20, 125, 0);
+			if(hoveredKey == i) {
+				GlStateManager.scale(2, 2, 2);
+			}
+			recipes.get(i).renderKey(this);
 			GlStateManager.popMatrix();
 		}
+		
 		GlStateManager.popMatrix();
+		if(hoveredKey != -1) {
+			this.renderTooltip(recipes.get(hoveredKey).getOutput(), mouseX + 20, mouseY + 10);
+		}
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -163,18 +199,25 @@ public class GuiResearchPage extends GuiScreen{
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		int a = this.hoveringRecipeKey(mouseX, mouseY);
 		if(hoveringLeftArrow(mouseX, mouseY)) {
 			this.page = MathHelperBTV.clamp(0, (this.pages.size() + 1) / 2 - 1, this.page - 1);
 		} else if(hoveringRightArrow(mouseX, mouseY)) {
 			this.page = MathHelperBTV.clamp(0, (this.pages.size() + 1) / 2 - 1, this.page + 1);			
-		}
+		} else if(a != -1){
+			this.shownRecipe = recipes.get(a);
+		} else
+			this.shownRecipe = null;
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode == 18)
-			this.mc.displayGuiScreen(new GuiNecronomicon());
+			if(this.shownRecipe == null)
+				this.mc.displayGuiScreen(new GuiNecronomicon());
+			else
+				this.shownRecipe = null;
 		super.keyTyped(typedChar, keyCode);
 	}
 	
@@ -188,6 +231,31 @@ public class GuiResearchPage extends GuiScreen{
 		if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0)
 			return mouseX > this.width / 2 + 150 * 3/4 && mouseX < this.width / 2 + 182 * 3/4 && mouseY > this.height / 2 + 115 * 3/4 && mouseY < this.height / 2 + (115 + 32) * 3/4;
 		return mouseX > this.width / 2 + 150 && mouseX < this.width / 2 + 182 && mouseY > this.height / 2 + 115 && mouseY < this.height / 2 + 115 + 32;
+	}
+	
+	private int hoveringRecipeKey(int mouseX, int mouseY) {
+		mouseX -= this.width / 2;
+		mouseY -= this.height / 2;
+		if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0) {
+			mouseX = mouseX * 4 / 3;
+			mouseY = mouseY * 4 / 3;
+		}
+		if(mouseY > 125 && mouseY < 141) {
+			int a = (mouseX + 135) / 20;
+			if(a < 4 && a < recipes.size() && a >= 0)
+				return a;
+		}
+		return -1;
+	}
+
+	@Override
+	public RenderItem getItemRender() {
+		return this.itemRender;
+	}
+	
+	@Override
+	public void renderTooltip(ItemStack stack, int x, int y) {
+		this.renderToolTip(stack, x, y);
 	}
 	
 }

@@ -1,7 +1,6 @@
 package com.valeriotor.BTV.research;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.valeriotor.BTV.capabilities.IPlayerData;
@@ -12,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import scala.actors.threadpool.Arrays;
 
 public class Research {
 	
@@ -80,6 +80,17 @@ public class Research {
 		if(this.addenda == null)
 			this.addenda = new SubResearch[0];
 		return this.addenda;
+	}
+	
+	public List<String> getRecipes() {
+		List<String> recipes = new ArrayList<>();
+		for(SubResearch sr : this.getStages()) {
+			recipes.addAll(Arrays.asList(sr.getRecipes()));
+		}
+		for(SubResearch sr : this.getAddenda()) {
+			recipes.addAll(Arrays.asList(sr.getRecipes()));
+		}
+		return recipes;
 	}
 	
 	public boolean mustLearn() {
@@ -152,6 +163,8 @@ public class Research {
 		}
 		
 		public String[] getRecipes() {
+			if(this.recipes == null)
+				this.recipes = new String[0];
 			return this.recipes;
 		}
 		

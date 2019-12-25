@@ -48,17 +48,19 @@
 				},
                 {
                     "text": "research.CRYSTALDREAMS.stage.1",
-                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense", "beyondtheveil:memory_phial;memMETAL"]
                 }
             ],
 			"addenda": [
 				{
 					"text": "research.CRYSTALDREAMS.addenda.vitreus",
-					"required_research": ["metallumDream", "vitreusDream"]
+					"required_research": ["metallumDream", "vitreusDream"],
+					"recipes": ["beyondtheveil:memory_phial;memCRYSTAL"]
 				},
 				{
 					"text": "research.CRYSTALDREAMS.addenda.cognitio",
-					"required_research": ["metallumDream", "cognitioDream"]
+					"required_research": ["metallumDream", "cognitioDream"],
+					"recipes": ["beyondtheveil:memory_phial;memSENTIENCE"]
 				}
 			]
         },

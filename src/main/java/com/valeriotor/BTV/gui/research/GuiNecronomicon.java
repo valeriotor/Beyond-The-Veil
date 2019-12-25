@@ -13,6 +13,8 @@ import org.lwjgl.input.Mouse;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
+import com.valeriotor.BTV.gui.GuiHelper;
+import com.valeriotor.BTV.gui.IItemRenderGui;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.research.Research;
 import com.valeriotor.BTV.research.ResearchConnection;
@@ -25,11 +27,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiNecronomicon extends GuiScreen{
+public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	
 	int topX = -400;
 	int topY = -200;
@@ -121,7 +124,7 @@ public class GuiNecronomicon extends GuiScreen{
 		int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
 		if(resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {		
 			ItemStack[] icons = res.getIconStacks();
-			this.drawItemStack(icons[counter % 20 % icons.length], resX - topX, resY - topY);
+			GuiHelper.drawItemStack(this, icons[counter % 20 % icons.length], resX - topX, resY - topY);
 			if(mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
 				drawHoveringText(I18n.format(res.getName()), mouseX, mouseY);
 			}
@@ -156,9 +159,6 @@ public class GuiNecronomicon extends GuiScreen{
 	}
 	
 	
-	private void drawItemStack(ItemStack stack, int x, int y) {
-        this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-    }
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -185,5 +185,15 @@ public class GuiNecronomicon extends GuiScreen{
 	@Override
 	public boolean doesGuiPauseGame() {
 		return true;
+	}
+
+	@Override
+	public RenderItem getItemRender() {
+		return this.itemRender;
+	}
+
+	@Override
+	public void renderTooltip(ItemStack stack, int x, int y) {
+		this.renderToolTip(stack, x, y);
 	}
 }

@@ -70,7 +70,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit(FMLPostInitializationEvent e) {
     	super.postInit(e);
-    	ResearchRegistry.registerConnections();
+    	ResearchRegistry.registerConnectionsAndRecipes();;
     }
     
     
