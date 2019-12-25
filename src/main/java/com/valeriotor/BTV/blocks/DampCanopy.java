@@ -140,7 +140,7 @@ public class DampCanopy extends ModBlock{
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		if(state.getValue(ISFLAT)) return FLAT;
-		else return new AxisAlignedBB(0.0D,0.0D,0.0D,1.0D,1.0D,1.0D);
+		else return FULL_BLOCK_AABB;
 	}
 	
 	@Override
