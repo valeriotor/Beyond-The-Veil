@@ -50,7 +50,8 @@ public enum Memory {
 	}
 	
 	public void unlock(EntityPlayer p) {
-		SyncUtil.addStringDataOnServer(p, false, this.getDataName());		
+		if(this.isUnlockable(p)) 
+			SyncUtil.addStringDataOnServer(p, false, this.getDataName());		
 	}
 	
 	public int getColor() {
