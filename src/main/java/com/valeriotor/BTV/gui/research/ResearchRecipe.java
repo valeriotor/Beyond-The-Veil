@@ -162,9 +162,11 @@ public abstract class ResearchRecipe {
 				if(hover == 10)
 					gui.renderTooltip(output, 0, 0);
 				else {
-					ItemStack[] stacks = ings.get(hover).getMatchingStacks();
-					if(stacks != null && stacks.length > 0) {
-						gui.renderTooltip(stacks[counter % 20 % stacks.length], 0, 0);
+					if(hover < ings.size()) {
+						ItemStack[] stacks = ings.get(hover).getMatchingStacks();
+						if(stacks != null && stacks.length > 0) {
+							gui.renderTooltip(stacks[counter % 20 % stacks.length], 0, 0);
+						}
 					}
 				}
 				
