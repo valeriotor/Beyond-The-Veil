@@ -12,7 +12,10 @@ import com.google.common.io.Resources;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.research.Research.SubResearch;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,7 +24,7 @@ public class ResearchRegistry {
 	
 	private static ResearchContainer container;
 	public static HashMap<String, Research> researches = new HashMap<>();
-	public static HashMap<String, IRecipe> recipes = new HashMap<>();
+	public static HashMap<String, List<IRecipe>> recipes = new HashMap<>();
 	private static final boolean DEBUG_PRINTS = false;
 	
 	public static final List<ResearchConnection> connections = new ArrayList<>();
@@ -55,7 +58,9 @@ public class ResearchRegistry {
 		for(IRecipe r : ForgeRegistries.RECIPES) {
 			String s = r.getRecipeOutput().getItem().getRegistryName().toString();
 			if(recipeSet.contains(s)) {
-				recipes.put(s, r);
+				if(!recipes.containsKey(s))
+					recipes.put(s, new ArrayList<>());
+				recipes.get(s).add(r);
 			}
 		}
 	}

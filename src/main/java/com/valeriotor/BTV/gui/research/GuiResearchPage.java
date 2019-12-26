@@ -19,6 +19,7 @@ import com.valeriotor.BTV.util.MathHelperBTV;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -35,7 +36,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 	private int page = 0;
 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_page.png");
-	private static final ResourceLocation ARROW = new ResourceLocation(References.MODID, "textures/gui/right_arrow.png");
+	public static final ResourceLocation ARROW = new ResourceLocation(References.MODID, "textures/gui/right_arrow.png");
 	
 	public GuiResearchPage(ResearchStatus status) {
 		this.status = status;
@@ -151,28 +152,31 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			}
 			if(this.pages.size() > 2) {
 				mc.renderEngine.bindTexture(ARROW);
-				if(this.page == (this.pages.size() + 1) / 2 - 1)
-					GlStateManager.color(0.5F, 0.5F, 0.5F);
-				else if(hoveringRightArrow(mouseX, mouseY))
-					GlStateManager.color(0.9F, 0.6F, 1, 0.6F);
-				drawModalRectWithCustomSizedTexture(150, +115, 0, 0, 32, 32, 32, 32);
-				
+				GlStateManager.pushMatrix();
+				GlStateManager.translate(166, 131, 0);
+				if(this.page < (this.pages.size() + 1) / 2 - 1) {
+					if(hoveringRightArrow(mouseX, mouseY))
+						GlStateManager.scale(1.5, 1.5, 1);
+					drawModalRectWithCustomSizedTexture(-16, -16, 0, 0, 32, 32, 32, 32);
+				}
+				GlStateManager.popMatrix();
 				GlStateManager.pushMatrix();
 				GlStateManager.color(1, 1, 1);
-				GlStateManager.translate(-150, 145, 0);
+				GlStateManager.translate(-166, 131, 0);
 				GlStateManager.rotate(180, 0, 0, 1);
-				if(this.page == 0)
-					GlStateManager.color(0.5F, 0.5F, 0.5F);
-				else if(hoveringLeftArrow(mouseX, mouseY))
-					GlStateManager.color(0.9F, 0.6F, 1, 0.6F);
-				drawModalRectWithCustomSizedTexture(0, 0, 0, 0, 32, 32, 32, 32);
+				if(this.page > 0) {
+					if(hoveringLeftArrow(mouseX, mouseY))
+						GlStateManager.scale(1.5, 1.5, 1);
+					drawModalRectWithCustomSizedTexture(-16, -16, 0, 0, 32, 32, 32, 32);
+				}
 				GlStateManager.popMatrix();
 			}
 		} else
 			shownRecipe.render(this, mouseX, mouseY);
 		
 		int hoveredKey = this.hoveringRecipeKey(mouseX, mouseY);
-		for(int i = 0; i < 4 && i < recipes.size(); i++) {
+		for(int i = 0; i < 6 && i < recipes.size(); i++) {
+			RenderHelper.enableGUIStandardItemLighting();
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-135 + i * 20, 125, 0);
 			if(hoveredKey == i) {
@@ -206,7 +210,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			this.page = MathHelperBTV.clamp(0, (this.pages.size() + 1) / 2 - 1, this.page + 1);			
 		} else if(a != -1){
 			this.shownRecipe = recipes.get(a);
-		} else
+		} else if(this.shownRecipe == null || !this.shownRecipe.mouseClicked(this, mouseX, mouseY, mouseButton))
 			this.shownRecipe = null;
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -256,6 +260,12 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 	@Override
 	public void renderTooltip(ItemStack stack, int x, int y) {
 		this.renderToolTip(stack, x, y);
+	}
+	
+	@Override
+	public void updateScreen() {
+		if(this.shownRecipe != null)
+			this.shownRecipe.update();
 	}
 	
 }
