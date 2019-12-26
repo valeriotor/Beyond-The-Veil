@@ -1,15 +1,19 @@
 package com.valeriotor.BTV.items;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,13 +22,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TestItem extends Item //implements IHasModel
 {
 	private static final boolean NECRODEBUG = true;
-	Formatter zorro;
 	public TestItem() {
 		setRegistryName(References.MODID +":testitem");
 		setUnlocalizedName("testitem");
@@ -74,14 +78,9 @@ public class TestItem extends Item //implements IHasModel
 	}
 	
 	public void doProcess(BlockPos pos1, BlockPos pos2, World w) {
-		try {
-			zorro = new Formatter("StructuralCode.txt");
-		}catch(Exception e) {
-			System.out.println("Ahh, sweet child of Kos");
-		}
 		
-		List<ArrayList<int[]>> blocks = new ArrayList();
-		List<String> names = new ArrayList();
+		
+		HashMap<String, List<byte[]>> blockMap = new HashMap<>();
 		BlockPos center = new BlockPos(Math.ceil(((double)pos1.getX()+pos2.getX())/2), Math.min(pos1.getY(), pos2.getY()), Math.ceil(((double)pos1.getZ()+pos2.getZ())/2));
 		for(int x = Math.min(pos1.getX(), pos2.getX()); x<=Math.max(pos1.getX(), pos2.getX());x++) {
 			for(int y = Math.min(pos1.getY(), pos2.getY()); y<=Math.max(pos1.getY(), pos2.getY());y++) {
@@ -89,67 +88,43 @@ public class TestItem extends Item //implements IHasModel
 					IBlockState state = w.getBlockState(new BlockPos(x,y,z));
 					Block block = w.getBlockState(new BlockPos(x,y,z)).getBlock();
 					int meta = block.getMetaFromState(state);
-					if(!names.contains(block.getUnlocalizedName().substring(5))) {
-						names.add(block.getUnlocalizedName().substring(5));
-						blocks.add(new ArrayList<int[]>());
+					
+					if(y - center.getY() > 3 && block.getUnlocalizedName().substring(5).equals("air")) continue;
+					String s = block.getRegistryName().toString();
+					if(!blockMap.containsKey(s)) {
+						blockMap.put(s, new ArrayList<>());
 					}
-					int a = names.indexOf(block.getUnlocalizedName().substring(5));
-					int[] array = {(x-center.getX()), (y-center.getY()), (z-center.getZ()), meta};
-					if(array[1] > 3 && block.getUnlocalizedName().substring(5).equals("air")) continue;
-					blocks.get(a).add(array);
+					blockMap.get(s).add(new byte[]{(byte) (x-center.getX()), (byte) (y-center.getY()), (byte) (z-center.getZ()), (byte) meta});
 				}
 			}
 		}
-		for(int i = 0; i<blocks.size(); i++) {
-			zorro.format("byte[][] %s = { %n%n", names.get(i));
-			int counter = 0;
-			for(int[] miniArray : blocks.get(i)) {
-				zorro.format("{%d, %d, %d, %d}, ", miniArray[0], miniArray[1], miniArray[2], miniArray[3]);
-				if(++counter%10 == 0) {
-					zorro.format("%n");
+		JSonStructureBuilder b = new JSonStructureBuilder(blockMap);
+		try (Writer writer = new FileWriter("StructuralCode.json")) {
+		    BeyondTheVeil.gson.toJson(b, writer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public static class JSonStructureBuilder {
+		
+		HashMap<String, List<byte[]>> blockMap;
+		public JSonStructureBuilder(HashMap<String, List<byte[]>> blockMap) {
+			this.blockMap = blockMap;
+		}
+		
+		public HashMap<Block, byte[][]> getMap(){
+			HashMap<Block, byte[][]> map = new HashMap<>();
+			for(Entry<String, List<byte[]>> entry : this.blockMap.entrySet()) {
+				byte[][] bytes = new byte[entry.getValue().size()][4];
+				for(int i = 0; i < entry.getValue().size(); i++) {
+					bytes[i] = entry.getValue().get(i);
 				}
+				map.put(Block.REGISTRY.getObject(new ResourceLocation(entry.getKey())), bytes);
 			}
-			zorro.format("%n%n}; %n %n");
+			return map;
 		}
-		zorro.format("if(facing==EnumFacing.NORTH){%n");
-		for(String name : names) {
-			zorro.format("for(int[] n : this.%s) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), %s.getStateFromMeta(n[3]));%n", name, getBlockString(name));
-		}
-		zorro.format("}else if(facing==EnumFacing.EAST){%n");
-		for(String name : names) {
-			zorro.format("for(int[] n : this.%s) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), %s.getStateFromMeta(n[3]));%n", name, getBlockString(name));
-		}
-		zorro.format("}else if(facing==EnumFacing.SOUTH){%n");
-		for(String name : names) {
-			zorro.format("for(int[] n : this.%s) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), %s.getStateFromMeta(n[3]));%n", name, getBlockString(name));
-		}
-		zorro.format("}else if(facing==EnumFacing.WEST){%n");
-		for(String name : names) {
-			zorro.format("for(int[] n : this.%s) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), %s.getStateFromMeta(n[3]));%n", name, getBlockString(name));
-		}
-		zorro.format("}");
-		
-		
-		zorro.close();
 	}
-	
-	private String getBlockString(String name) {
-		if(name.equals("air")) return "Blocks.AIR";
-		if(name.equals("damp_wood")) return "BlockRegistry.DampWood";
-		if(name.equals("damp_canopy")) return "BlockRegistry.DampCanopy"; 
-		if(name.equals("worn_bricks")) return "BlockRegistry.WornBricks";
-		if(name.equals("dark_sand")) return "state";
-		if(name.equals("damp_wood_stairs")) return "BlockRegistry.DampWoodStairs";
-		if(name.equals("barrel")) return "BlockRegistry.BlockBarrel";
-		if(name.equals("lamp")) return "BlockRegistry.BlockLamp";
-		if(name.equals("bricks_blue")) return "BlockRegistry.BricksBlue";
-		if(name.equals("damp_canopy_wood")) return "BlockRegistry.DampCanopyWood";
-		if(name.equals("damp_log")) return "BlockRegistry.DampLog";
-		if(name.equals("worn_brick_stairs")) return "BlockRegistry.WornBrickStairs";
-		
-		return "Blocks. ";
-	}
-	
-	
 	
 }
