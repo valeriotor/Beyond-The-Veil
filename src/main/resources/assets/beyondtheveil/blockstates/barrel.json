@@ -1,13 +1,5 @@
 {
     "variants": {
-        "fullness=empty": { "model": "beyondtheveil:barrel/fish_barrel" },
-        "fullness=fish1": { "model": "beyondtheveil:barrel/fish_barrel_fish1" },
-        "fullness=fish2": { "model": "beyondtheveil:barrel/fish_barrel_fish2" },
-        "fullness=fish3": { "model": "beyondtheveil:barrel/fish_barrel_fish3" },
-		"fullness=fish4": { "model": "beyondtheveil:barrel/fish_barrel_fish4" },
-		"fullness=slug1": { "model": "beyondtheveil:barrel/fish_barrel_slug1" },
-        "fullness=slug2": { "model": "beyondtheveil:barrel/fish_barrel_slug2" },
-        "fullness=slug3": { "model": "beyondtheveil:barrel/fish_barrel_slug3" },
-		"fullness=slug4": { "model": "beyondtheveil:barrel/fish_barrel_slug4" }
+        "normal": { "model": "beyondtheveil:fish_barrel" }
     }
 }

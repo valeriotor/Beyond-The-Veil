@@ -5,10 +5,12 @@ import java.util.Random;
 import com.valeriotor.BTV.blocks.BlockBarrel;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.tileEntities.TileBarrel;
+import com.valeriotor.BTV.tileEntities.TileBarrel.FishType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -353,24 +355,16 @@ public abstract class HamletStructure{
 	}
 	
 	protected void getRandomBarrel(Random r, BlockPos pos) {
-		IBlockState state = BlockRegistry.BlockBarrel.getDefaultState();
-		int s = r.nextInt(40);
-		if(s < 8) {
-			state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.EMPTY);
-			this.world.setBlockState(pos, state);
-		} else if(s < 36){
-			if(s < 16) state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.FISH1);
-			else if(s < 24) state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.FISH2);
-			else if(s < 32) state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.FISH3);
-			else if(s < 36) state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.FISH4);
-			this.world.setBlockState(pos, state);
-			((TileBarrel)this.world.getTileEntity(pos)).setFishType(1);
-			((TileBarrel)this.world.getTileEntity(pos)).setFishCount((s/8 -1)*16+r.nextInt(16));
-		}else {
-			state = state.withProperty(BlockRegistry.BlockBarrel.FULLNESS, BlockBarrel.EnumFullness.SLUG1);
-			this.world.setBlockState(pos, state);
-			((TileBarrel)this.world.getTileEntity(pos)).setFishType(2);
-			((TileBarrel)this.world.getTileEntity(pos)).setFishCount(r.nextInt(16));
+		this.world.setBlockState(pos, BlockRegistry.BlockBarrel.getDefaultState());
+		TileEntity te = this.world.getTileEntity(pos);
+		if(te instanceof TileBarrel) {
+			TileBarrel b = (TileBarrel)te;
+			int s = r.nextInt(40);
+			if(s > 32)
+				b.setFishType(FishType.SLUGS);
+			else 
+				b.setFishType(FishType.COD);
+			b.setFishCount(s % 33);
 		}
 		
 	}

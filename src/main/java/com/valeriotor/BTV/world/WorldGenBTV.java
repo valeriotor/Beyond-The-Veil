@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class WorldGenBTV implements IWorldGenerator{
 	
 	private ChunkPrimer cp = new ChunkPrimer();
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	public WorldGenBTV() {
 		
 	}

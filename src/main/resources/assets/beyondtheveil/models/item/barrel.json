@@ -1,5 +1,5 @@
 {
-   "parent": "beyondtheveil:block/barrel/fish_barrel",
+   "parent": "beyondtheveil:block/fish_barrel",
    "display": {
 	   "thirdperson_righthand": {
 		   "translation": [0, 1, -2.1],

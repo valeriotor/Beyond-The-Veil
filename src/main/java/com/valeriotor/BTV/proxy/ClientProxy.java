@@ -13,10 +13,12 @@ import com.valeriotor.BTV.items.ItemMemoryPhial;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.KeyHandler;
 import com.valeriotor.BTV.research.ResearchRegistry;
+import com.valeriotor.BTV.tileEntities.TileBarrel;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileMemorySieve;
 import com.valeriotor.BTV.tileEntities.TileWateryCradle;
+import com.valeriotor.BTV.tileEntities.renderers.TESRBarrel;
 import com.valeriotor.BTV.tileEntities.renderers.TESRHeart;
 import com.valeriotor.BTV.tileEntities.renderers.TESRLacrymatory;
 import com.valeriotor.BTV.tileEntities.renderers.TESRMemorySieve;
@@ -103,6 +105,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileLacrymatory.class, new TESRLacrymatory());
         ClientRegistry.bindTileEntitySpecialRenderer(TileHeart.class, new TESRHeart());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMemorySieve.class, new TESRMemorySieve());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileBarrel.class, new TESRBarrel());
     }
     
     @Override

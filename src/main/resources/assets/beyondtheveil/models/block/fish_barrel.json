@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "beyondtheveil:blocks/barrel_side",
 		"1": "beyondtheveil:blocks/barrel_bottom",
-		"2": "beyondtheveil:blocks/barrel_slug_top",
+		"2": "beyondtheveil:blocks/barrel_top",
 		"particle": "beyondtheveil:blocks/barrel_side"
 	},
 	"elements": [
@@ -161,42 +161,6 @@
 				"west": {"uv": [0, 0, 1, 13], "texture": "#0"},
 				"up": {"uv": [11, 12, 12, 13], "texture": "#1"},
 				"down": {"uv": [0, 0, 1, 1], "texture": "#missing"}
-			}
-		},
-		{
-			"from": [3, 3, 4],
-			"to": [13, 4, 12],
-			"faces": {
-				"north": {"uv": [0, 0, 10, 1], "texture": "#missing"},
-				"east": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"south": {"uv": [0, 0, 10, 1], "texture": "#missing"},
-				"west": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"up": {"uv": [3, 4, 13, 12], "texture": "#2"},
-				"down": {"uv": [0, 0, 10, 8], "texture": "#missing"}
-			}
-		},
-		{
-			"from": [4, 3, 12],
-			"to": [12, 4, 13],
-			"faces": {
-				"north": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"east": {"uv": [0, 0, 1, 1], "texture": "#missing"},
-				"south": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"west": {"uv": [0, 0, 1, 1], "texture": "#missing"},
-				"up": {"uv": [4, 12, 12, 13], "texture": "#2"},
-				"down": {"uv": [0, 0, 8, 1], "texture": "#missing"}
-			}
-		},
-		{
-			"from": [4, 3, 3],
-			"to": [12, 4, 4],
-			"faces": {
-				"north": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"east": {"uv": [0, 0, 1, 1], "texture": "#missing"},
-				"south": {"uv": [0, 0, 8, 1], "texture": "#missing"},
-				"west": {"uv": [0, 0, 1, 1], "texture": "#missing"},
-				"up": {"uv": [4, 3, 12, 4], "texture": "#2"},
-				"down": {"uv": [0, 0, 8, 1], "texture": "#missing"}
 			}
 		}
 	]
