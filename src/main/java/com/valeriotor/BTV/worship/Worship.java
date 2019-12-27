@@ -72,7 +72,7 @@ public class Worship {
 	}
 	
 	public static void setPowerCooldown(EntityPlayer p, int ticks, int powerIndex) {
-		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(String.format(PlayerDataLib.POWER_COOLDOWN, powerIndex), ticks, false);
+		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(String.format(PlayerDataLib.POWER_COOLDOWN, powerIndex), Math.max(-1, ticks), false);
 	}
 	
 	public static int getPowerCooldown(EntityPlayer p, int powerIndex) {
