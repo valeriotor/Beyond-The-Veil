@@ -130,4 +130,38 @@ public class ResearchStatus {
 	public int getStage() {
 		return this.stage;
 	}
+	
+	public void unlearn() {
+		this.stage = -1;
+		this.complete = false;
+		this.learned = !res.mustLearn();
+	}
+	
+	public void complete(EntityPlayer p) {
+		this.complete(p.getCapability(ResearchProvider.RESEARCH, null).getResearches(), p.getCapability(PlayerDataProvider.PLAYERDATA, null));
+	}
+	
+	public boolean complete(HashMap<String, ResearchStatus> map, IPlayerData data) {
+		for(String key : this.res.getHiders()) {
+			if(!map.containsKey(key))
+				return false;
+			if(!map.get(key).complete)
+				if(!map.get(key).complete(map, data))
+					return false;
+			if(!data.getString(key)) {
+				data.addString(key, false);
+			}
+		}
+		for(String key : this.res.getParents()) {
+			if(!map.containsKey(key))
+				return false;
+			if(!map.get(key).complete)
+				if(!map.get(key).complete(map, data))
+					return false;
+		}
+		this.stage = res.getStages().length - 1;
+		this.complete = true;
+		this.learned = true;
+		return true;
+	}
 }

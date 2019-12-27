@@ -10,6 +10,8 @@ public class ResearchSyncer {
 	public String key;
 	public boolean learn = false;
 	public boolean progress = false;
+	public boolean complete = false;
+	public boolean unlearn = false;
 	public ResearchStatus status;
 	
 	public ResearchSyncer() {}
@@ -28,6 +30,16 @@ public class ResearchSyncer {
 		return this;
 	}
 	
+	public ResearchSyncer setUnlearn(boolean set) {
+		this.unlearn = set;
+		return this;
+	}
+	
+	public ResearchSyncer setComplete(boolean set) {
+		this.complete = set;
+		return this;
+	}
+	
 	public ResearchSyncer setStatus(ResearchStatus status) {
 		this.status = status;
 		return this;
@@ -37,6 +49,8 @@ public class ResearchSyncer {
 		nbt.setString("key", key);
 		nbt.setBoolean("learn", learn);
 		nbt.setBoolean("progress", progress);
+		nbt.setBoolean("unlearn", unlearn);
+		nbt.setBoolean("complete", complete);
 		if(status != null) {
 			nbt.setTag("res", this.status.writeToNBT(new NBTTagCompound()));
 		}
@@ -47,6 +61,8 @@ public class ResearchSyncer {
 		this.key = nbt.getString("key");
 		this.learn = nbt.getBoolean("learn");
 		this.progress = nbt.getBoolean("progress");
+		this.unlearn = nbt.getBoolean("unlearn");
+		this.complete = nbt.getBoolean("complete");
 		if(nbt.hasKey("res")) {
 			this.status = new ResearchStatus(ResearchRegistry.researches.get(this.key)).readFromNBT((NBTTagCompound) nbt.getTag("res"));
 		}

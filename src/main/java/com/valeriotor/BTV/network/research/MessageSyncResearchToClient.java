@@ -42,6 +42,8 @@ public ResearchSyncer sync;
 				if(sync.progress) ResearchUtil.progressResearch(mc.player, sync.key);
 				if(sync.learn) ResearchUtil.learnResearch(mc.player, sync.key);
 				if(sync.status != null) mc.player.getCapability(ResearchProvider.RESEARCH, null).addResearchStatus(sync.status);
+				if(sync.complete) ResearchUtil.getResearch(mc.player, sync.key).complete(mc.player);
+				if(sync.unlearn) ResearchUtil.getResearch(mc.player, sync.key).unlearn();
 			});
 			return null;
 		}
