@@ -12,7 +12,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class DreamChange extends AbstractDream{
+public class DreamChange extends Dream{
 
 	public DreamChange(String name, int priority) {
 		super(name, priority);

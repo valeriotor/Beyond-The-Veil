@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamGround extends AbstractDream{
+public class DreamGround extends Dream{
 	
 	private final IBlockState state1;
 	private final IBlockState state2;

@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamEldritch extends AbstractDream{
+public class DreamEldritch extends Dream{
 
 	public DreamEldritch(String name, int priority) {
 		super(name, priority);

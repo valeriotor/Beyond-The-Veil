@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class DreamStillness extends AbstractDream{
+public class DreamStillness extends Dream{
 
 	public DreamStillness(String name, int priority) {
 		super(name, priority);

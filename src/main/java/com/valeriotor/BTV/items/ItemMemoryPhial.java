@@ -24,7 +24,7 @@ public class ItemMemoryPhial extends ModItem{
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		Memory m = Memory.getMemoryFromDataName(ItemHelper.checkStringTag(stack, "memory", "none"));
 		if(m != null) {
-			tooltip.add(I18n.format("tooltip.memory_phial.stored", m.name()));
+			tooltip.add(I18n.format("tooltip.memory_phial.stored", I18n.format(m.getLocalizedKey())));
 		} else {
 			tooltip.add(I18n.format("tooltip.memory_phial.empty"));			
 		}

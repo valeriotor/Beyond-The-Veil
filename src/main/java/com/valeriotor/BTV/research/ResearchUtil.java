@@ -10,6 +10,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
 import com.valeriotor.BTV.network.research.MessageSyncResearchToServer;
 import com.valeriotor.BTV.network.research.ResearchSyncer;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -78,6 +79,7 @@ public class ResearchUtil {
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			entry.getValue().unlearn();
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(entry.getKey()).setUnlearn(true)), (EntityPlayerMP)p);
+			SyncUtil.removeStringDataOnServer(p, entry.getKey());
 		}
 	}
 	

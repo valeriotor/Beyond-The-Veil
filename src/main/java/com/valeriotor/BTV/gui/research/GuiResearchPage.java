@@ -45,6 +45,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 	
 	@Override
 	public void initGui() {
+		this.page = 0;
 		pages.clear();
 		recipes.clear();
 		shownRecipe = null;
@@ -133,13 +134,13 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			if(this.pages.size() > this.page * 2) {
 				int i = 0;
 				for(String s : this.pages.get(this.page * 2)) {
-					this.drawString(mc.fontRenderer, s, - 200, - 110 + (i++)*15, 0xFFFFFFFF);
+					this.drawString(mc.fontRenderer, s, - 205, - 110 + (i++)*15, 0xFFFFFFFF);
 				}
 			}
 			if(this.pages.size() > this.page * 2 + 1) {
 				int i = 0;
 				for(String s : this.pages.get(this.page * 2 + 1)) {
-					this.drawString(mc.fontRenderer, s, 0, - 110 + (i++)*15, 0xFFFFFFFF);
+					this.drawString(mc.fontRenderer, s, 5, - 110 + (i++)*15, 0xFFFFFFFF);
 				}
 			}
 			if(this.buttonList.isEmpty() || !this.buttonList.get(0).visible) {
@@ -153,7 +154,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			if(this.pages.size() > 2) {
 				mc.renderEngine.bindTexture(ARROW);
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(166, 131, 0);
+				GlStateManager.translate(178, 131, 0);
 				if(this.page < (this.pages.size() + 1) / 2 - 1) {
 					if(hoveringRightArrow(mouseX, mouseY))
 						GlStateManager.scale(1.5, 1.5, 1);
@@ -162,7 +163,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 				GlStateManager.popMatrix();
 				GlStateManager.pushMatrix();
 				GlStateManager.color(1, 1, 1);
-				GlStateManager.translate(-166, 131, 0);
+				GlStateManager.translate(-178, 131, 0);
 				GlStateManager.rotate(180, 0, 0, 1);
 				if(this.page > 0) {
 					if(hoveringLeftArrow(mouseX, mouseY))
@@ -178,7 +179,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		for(int i = 0; i < 6 && i < recipes.size(); i++) {
 			RenderHelper.enableGUIStandardItemLighting();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(-135 + i * 20, 125, 0);
+			GlStateManager.translate(-160 + i * 20, 125, 0);
 			if(hoveredKey == i) {
 				GlStateManager.scale(2, 2, 2);
 			}
@@ -228,13 +229,13 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 	private boolean hoveringLeftArrow(int mouseX, int mouseY) {
 		if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0)
 			return mouseX > this.width / 2 - 182 * 3/4 && mouseX < this.width / 2 - 150 * 3/4 && mouseY > this.height / 2 + 115 * 3/4 && mouseY < this.height / 2 + (115 + 32) * 3/4;
-		return mouseX > this.width / 2 - 182 && mouseX < this.width / 2 - 150 && mouseY > this.height / 2 + 115 && mouseY < this.height / 2 + 115 + 32;
+		return mouseX > this.width / 2 - 194 && mouseX < this.width / 2 - 162 && mouseY > this.height / 2 + 115 && mouseY < this.height / 2 + 115 + 32;
 	}
 
 	private boolean hoveringRightArrow(int mouseX, int mouseY) {
 		if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0)
 			return mouseX > this.width / 2 + 150 * 3/4 && mouseX < this.width / 2 + 182 * 3/4 && mouseY > this.height / 2 + 115 * 3/4 && mouseY < this.height / 2 + (115 + 32) * 3/4;
-		return mouseX > this.width / 2 + 150 && mouseX < this.width / 2 + 182 && mouseY > this.height / 2 + 115 && mouseY < this.height / 2 + 115 + 32;
+		return mouseX > this.width / 2 + 162 && mouseX < this.width / 2 + 194 && mouseY > this.height / 2 + 115 && mouseY < this.height / 2 + 115 + 32;
 	}
 	
 	private int hoveringRecipeKey(int mouseX, int mouseY) {
@@ -245,8 +246,8 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			mouseY = mouseY * 4 / 3;
 		}
 		if(mouseY > 125 && mouseY < 141) {
-			int a = (mouseX + 135) / 20;
-			if(a < 4 && a < recipes.size() && a >= 0)
+			int a = (mouseX + 160) / 20;
+			if(a < 6 && a < recipes.size() && a >= 0)
 				return a;
 		}
 		return -1;

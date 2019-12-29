@@ -151,7 +151,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 				int signum = (int) Math.signum(counter % 80 - 40);
 				double amplifier = 15 * (signum  * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
 				int x = i, y = (int) (amplifier * Math.sin(i * Math.PI / dist));
-				drawRect(x, y, x + 1, y+1, 0xFF001100);
+				drawRect(x, y, x + 1, y+1, 0xFF001A00);
 			}
 			GlStateManager.popMatrix();
 			

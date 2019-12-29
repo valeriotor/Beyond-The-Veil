@@ -9,7 +9,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class DreamPower extends AbstractDream{
+public class DreamPower extends Dream{
 
 	public DreamPower(String name, int priority) {
 		super(name, priority);

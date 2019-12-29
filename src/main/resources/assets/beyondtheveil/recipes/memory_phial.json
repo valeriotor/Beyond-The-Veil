@@ -1,0 +1,29 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        " b ",
+        "gwg",
+        " g " 
+    ],
+    "key":
+    {
+        "w":
+        {
+            "item": "minecraft:water_bucket"
+        },
+        "b":
+        {
+            "item": "minecraft:wooden_button"
+        },
+        "g":
+        {
+            "item": "minecraft:glass"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:memory_phial",
+        "count": 3
+    }                  
+}

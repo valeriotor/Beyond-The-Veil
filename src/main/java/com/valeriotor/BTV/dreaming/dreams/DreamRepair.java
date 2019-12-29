@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class DreamRepair extends AbstractDream{
+public class DreamRepair extends Dream{
 
 	public DreamRepair(String name, int priority) {
 		super(name, priority);

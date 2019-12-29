@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamTool extends AbstractDream{
+public class DreamTool extends Dream{
 
 	public DreamTool(String name, int priority) {
 		super(name, priority);

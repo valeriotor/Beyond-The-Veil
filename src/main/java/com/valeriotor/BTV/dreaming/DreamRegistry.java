@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
+import com.valeriotor.BTV.dreaming.dreams.Dream;
 import com.valeriotor.BTV.dreaming.dreams.DreamEldritch;
 import com.valeriotor.BTV.dreaming.dreams.DreamAnimal;
 import com.valeriotor.BTV.dreaming.dreams.DreamSentience;
@@ -43,7 +43,7 @@ public class DreamRegistry {
 	public static final DreamGround vitreus = new DreamGround("groundscancrystal", 3, Blocks.DIAMOND_ORE.getDefaultState(), Blocks.EMERALD_ORE.getDefaultState());
 	
 	
-	public static final Map<Memory, AbstractDream> dreams= new EnumMap<>(Memory.class);
+	public static final Map<Memory, Dream> dreams= new EnumMap<>(Memory.class);
 	
 	static {
 		dreams.put(Memory.ELDRITCH, alienis);

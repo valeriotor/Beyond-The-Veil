@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
-public class DreamHuman extends AbstractDream{
+public class DreamHuman extends Dream{
 
 	public DreamHuman(String name, int priority) {
 		super(name, priority);

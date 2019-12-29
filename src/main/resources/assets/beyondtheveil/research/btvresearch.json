@@ -19,47 +19,49 @@
         {
         "key": "FUMESPREADER",
         "name": "research.FUMESPREADER.title",
-        "icons": [ "beyondtheveil:fume_spreader" ],
+        "icons": [ "beyondtheveil:memory_sieve" ],
         "category": "BEYOND_THE_VEIL", "location": [ 2,0 ],
-		"meta": ["ROUND", "HIDDEN"],
+        "hiders": ["FIRSTDREAMS"],
         "parents": [ "FIRSTDREAMS" ],
         "stages": [
 				{
 					"text": "research.FUMESPREADER.stage.0",
-					"required_knowledge": ["THEORY;BEYOND_THE_VEIL;1"]
+					"required_research": ["firstMemory"],
+                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING"]
 				},
                 {
                     "text": "research.FUMESPREADER.stage.1",
-                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
                 }
             ]
         },
 		{
         "key": "CRYSTALDREAMS",
         "name": "research.CRYSTALDREAMS.title",
-        "icons": [ "thaumcraft:crystal_perditio" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,-2 ],
+        "icons": [ "minecraft:iron_ingot" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4, 0 ],
 		"learn": "true",
         "parents": [ "FUMESPREADER" ],
         "stages": [
 				{
 					"text": "research.CRYSTALDREAMS.stage.0",
-					"required_research": ["metallumDream"]
+					"required_research": ["metalDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memMETAL"]
 				},
                 {
                     "text": "research.CRYSTALDREAMS.stage.1",
-                    "recipes": ["beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense", "beyondtheveil:memory_phial;memMETAL"]
+                    "recipes": ["beyondtheveil:memory_phial;memMETAL"]
                 }
             ],
 			"addenda": [
 				{
-					"text": "research.CRYSTALDREAMS.addenda.vitreus",
-					"required_research": ["metallumDream", "vitreusDream"],
+					"text": "research.CRYSTALDREAMS.addenda.crystal",
+					"required_research": ["memCRYSTAL"],
 					"recipes": ["beyondtheveil:memory_phial;memCRYSTAL"]
 				},
 				{
-					"text": "research.CRYSTALDREAMS.addenda.cognitio",
-					"required_research": ["metallumDream", "cognitioDream"],
+					"text": "research.CRYSTALDREAMS.addenda.sentience",
+					"required_research": ["memSENTIENCE"],
 					"recipes": ["beyondtheveil:memory_phial;memSENTIENCE"]
 				}
 			]
@@ -68,13 +70,13 @@
         "key": "EFFECTDREAMS",
         "name": "research.EFFECTDREAMS.title",
         "icons": [ "minecraft:potion" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 1,-4 ],
-		"meta": ["HIDDEN"],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,-3 ],
+        "hiders":["CRYSTALDREAMS"],
         "parents": [ "CRYSTALDREAMS" ],
         "stages": [
 				{
 					"text": "research.EFFECTDREAMS.stage.0",
-					"required_research": ["f_EffectDream"]
+					"required_research": ["effectDream"]
 				},
                 {
                     "text": "research.EFFECTDREAMS.stage.1"
@@ -82,16 +84,16 @@
             ],
 			"addenda": [
 				{
-					"text": "research.EFFECTDREAMS.addenda.potentia",
-					"required_research": ["potentiaDream"]
+					"text": "research.EFFECTDREAMS.addenda.power",
+					"required_research": ["memPOWER"]
 				},
 				{
-					"text": "research.EFFECTDREAMS.addenda.vinculum",
-					"required_research": ["vinculumDream"]
+					"text": "research.EFFECTDREAMS.addenda.stillness",
+					"required_research": ["memSTILLNESS"]
 				},
 				{
-					"text": "research.EFFECTDREAMS.addenda.permutatio",
-					"required_research": ["permutatioDream"]
+					"text": "research.EFFECTDREAMS.addenda.change",
+					"required_research": ["memCHANGE"]
 				}
 			]
         },
@@ -99,26 +101,24 @@
         "key": "HUMANDREAMS",
         "name": "research.HUMANDREAMS.title",
         "icons": [ "minecraft:skull;1;3" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 5,-4 ],
-		"meta": ["HIDDEN"],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,-3 ],
+        "learn": "true",
         "parents": [ "CRYSTALDREAMS" ],
         "stages": [
 				{
 					"text": "research.HUMANDREAMS.stage.0",
-					"required_research": ["f_HumanDream"]
+					"required_research": ["memHUMAN"]
 				},
                 {
-                    "text": "research.HUMANDREAMS.stage.1"
+                    "text": "research.HUMANDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memHUMAN"]
                 }
             ],
 			"addenda": [
 				{
-					"text": "research.HUMANDREAMS.addenda.humanus",
-					"required_research": ["humanusDream"]
-				},
-				{
-					"text": "research.HUMANDREAMS.addenda.instrumentum",
-					"required_research": ["instrumentumDream"]
+					"text": "research.HUMANDREAMS.addenda.tool",
+					"required_research": ["memTOOL"],
+                    "recipes": ["beyondtheveil:memory_phial;memTOOL"]
 				}
 			]
         },
@@ -126,12 +126,14 @@
         "key": "SLEEPCHAMBER",
         "name": "research.SLEEPCHAMBER.title",
         "icons": [ "beyondtheveil:sleep_chamber" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,2 ],
-        "parents": [ "FUMESPREADER" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4, 3 ],
+        "learn": "true",
+        "parents": [ "CRYSTALDREAMS" ],
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBER.stage.0",
-					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1"]
+					"required_research": ["craftedChamber"],
+                    "recipes": ["beyondtheveil:sleep_chamber"]
 				},
                 {
                     "text": "research.SLEEPCHAMBER.stage.1",
@@ -143,12 +145,15 @@
         "key": "SLEEPCHAMBERADVANCED",
         "name": "research.SLEEPCHAMBERADVANCED.title",
         "icons": [ "beyondtheveil:sleep_chamber_advanced" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,4 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4, 5 ],
+        "learn": "true",
+        "hiders":  ["HUMANDREAMS"],
         "parents": [ "SLEEPCHAMBER" ],
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBERADVANCED.stage.0",
-					"required_knowledge": ["OBSERVATION;BEYOND_THE_VEIL;1", "THEORY;BEYOND_THE_VEIL;1"]
+					"required_research": ["craftedAdvancedChamber"],
+                    "recipes": ["beyondtheveil:sleep_chamber_advanced"]
 				},
                 {
                     "text": "research.SLEEPCHAMBERADVANCED.stage.1",
@@ -161,8 +166,7 @@
         "name": "research.INSCRIPTIONS.title",
         "icons": [ "beyondtheveil:tablet" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0, 5],
-		"meta": ["HIDDEN"],
-        "parents": [ "FIRSTDREAMS", "inscriptions" ],
+		"hiders": ["solvedTablet"],
         "stages": [
 				{
 					"text": "research.INSCRIPTIONS.stage.0",
@@ -210,50 +214,70 @@
 		{
         "key": "VOIDDREAMS",
         "name": "research.VOIDDREAMS.title",
-        "icons": [ "thaumcraft:textures/aspects/vacuos.png" ],
+        "icons": [ "minecraft:obsidian" ],
         "category": "BEYOND_THE_VEIL", "location": [ 7,2 ],
         "parents": [ "SLEEPCHAMBER", "HUMANDREAMS" ],
+        "learn" : "true",
         "stages": [
 				{
 					"text": "research.VOIDDREAMS.stage.0",
-					"required_research": ["f_VacuosDream"]
+					"required_research": ["voidDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memVOID"]
 				},
                 {
-                    "text": "research.VOIDDREAMS.stage.1"
+                    "text": "research.VOIDDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memVOID"]
                 }
             ]
         },
 		{
         "key": "FIRSTCONTACT",
         "name": "research.FIRSTCONTACT.title",
-        "icons": [ "thaumcraft:textures/aspects/alienis.png" ],
+        "icons": [ "minecraft:ender_eye" ],
         "category": "BEYOND_THE_VEIL", "location": [ 9,2 ],
-		"meta": ["HIDDEN"],
+        "hiders": ["VOIDDREAMS"],
         "parents": [ "VOIDDREAMS" ],
         "stages": [
 				{
 					"text": "research.FIRSTCONTACT.stage.0",
-					"required_research": ["f_AlienisDream"]
+					"required_research": ["eldritchDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memELDRITCH"]
 				},
                 {
-                    "text": "research.FIRSTCONTACT.stage.1"
+                    "text": "research.FIRSTCONTACT.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memELDRITCH"]
+                }
+            ]
+        },
+        {
+        "key": "STRONGHOLD",
+        "name": "research.STRONGHOLD.title",
+        "icons": [ "minecraft:stonebrick" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,0 ],
+        "learn":"true",
+        "parents": [ "VOIDDREAMS" ],
+        "stages": [
+                {
+                    "text": "research.STRONGHOLD.stage.0"
                 }
             ]
         },
 		{
         "key": "DARKDREAMS",
         "name": "research.DARKDREAMS.title",
-        "icons": [ "thaumcraft:textures/aspects/tenebrae.png" ],
+        "icons": [ "beyondtheveil:dark_sand" ],
         "category": "BEYOND_THE_VEIL", "location": [ 11,2 ],
-		"meta": ["HIDDEN"],
+        "hiders": ["FIRSTCONTACT"],
         "parents": [ "FIRSTCONTACT" ],
         "stages": [
 				{
 					"text": "research.DARKDREAMS.stage.0",
-					"required_research": ["f_TenebraeDream"]
+					"required_research": ["darknessDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memDARKNESS"]
 				},
                 {
-                    "text": "research.DARKDREAMS.stage.1"
+                    "text": "research.DARKDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memDARKNESS"]
                 }
             ]
         },
@@ -262,20 +286,20 @@
         "name": "research.FISHINGHAMLET.title",
         "icons": [ "beyondtheveil:damp_canopy" ],
         "category": "BEYOND_THE_VEIL", "location": [ 11,4 ],
-		"meta": ["HIDDEN"],
+		"hiders": ["DARKDREAMS"],
         "parents": [ "DARKDREAMS" ],
         "stages": [
 				{
 					"text": "research.FISHINGHAMLET.stage.0",
-					"required_research": ["m_FindHamlet"]
+					"required_research": ["FindHamlet"]
 				},
                 {
                     "text": "research.FISHINGHAMLET.stage.1",
-										"required_research": ["LHKeeper"]
+					"required_research": ["LHKeeper"]
                 },
-				                {
-				                    "text": "research.FISHINGHAMLET.stage.2"
-				                }
+                {
+                    "text": "research.FISHINGHAMLET.stage.2"
+                }
             ]
         },
 		{
@@ -283,7 +307,7 @@
         "name": "research.IDOL.title",
         "icons": [ "beyondtheveil:idol" ],
         "category": "BEYOND_THE_VEIL", "location": [ 11,6 ],
-		"meta": ["HIDDEN"],
+		"hiders": ["FISHINGHAMLET"],
         "parents": [ "FISHINGHAMLET" ],
         "stages": [
 				{
@@ -300,7 +324,7 @@
         "name": "research.SLUGS.title",
         "icons": [ "beyondtheveil:slug" ],
         "category": "BEYOND_THE_VEIL", "location": [ 13,6 ],
-		"meta": ["HIDDEN"],
+		"hiders": ["IDOL"],
         "parents": [ "IDOL" ],
         "stages": [
 				{
@@ -317,6 +341,7 @@
         "name": "research.CANOE.title",
         "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
+		"hiders": ["IDOL"],
         "parents": [ "SLUGS" ],
         "stages": [
 				{
@@ -337,6 +362,7 @@
         "name": "research.BAPTISM.title",
         "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
+		"hiders": ["IDOL"],
         "parents": [ "CANOE" ],
         "stages": [
 				{
@@ -357,6 +383,7 @@
         "name": "research.ALLIANCE.title",
         "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 16,10 ],
+		"hiders": ["IDOL"],
         "parents": [ "BAPTISM" ],
         "stages": [
 				{
@@ -381,6 +408,7 @@
         "name": "research.WATERYCRADLE.title",
         "icons": [ "beyondtheveil:watery_cradle" ],
         "category": "BEYOND_THE_VEIL", "location": [ 9,11],
+		"hiders": ["IDOL"],
 		"meta": ["HIDDEN"],
         "parents": [ "IDOL" ],
         "stages": [
@@ -398,6 +426,7 @@
         "name": "research.SPINES.title",
         "icons": [ "beyondtheveil:spine" ],
         "category": "BEYOND_THE_VEIL", "location": [ 7,13 ],
+		"hiders": ["IDOL"],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
 				{
@@ -414,6 +443,7 @@
         "name": "research.HEARTS.title",
         "icons": [ "beyondtheveil:heart" ],
         "category": "BEYOND_THE_VEIL", "location": [ 7,9 ],
+		"hiders": ["IDOL"],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
 				{
@@ -430,6 +460,7 @@
         "name": "research.WEEPERS.title",
         "icons": [ "beyondtheveil:held_fletum" ],
         "category": "BEYOND_THE_VEIL", "location": [ 5,11 ],
+		"hiders": ["IDOL"],
         "parents": [ "SPINES", "HEARTS" ],
         "stages": [
 				{
@@ -450,6 +481,7 @@
         "name": "research.REVELATIONRING.title",
         "icons": [ "beyondtheveil:revelation_ring" ],
         "category": "BEYOND_THE_VEIL", "location": [ 3,11 ],
+		"hiders": ["IDOL"],
         "parents": [ "WEEPERS" ],
         "stages": [
 				{
@@ -466,6 +498,7 @@
         "name": "research.BONETIARA.title",
         "icons": [ "beyondtheveil:bone_tiara" ],
         "category": "BEYOND_THE_VEIL", "location": [ 3,13 ],
+		"hiders": ["IDOL"],
         "parents": [ "SPINES" ],
         "stages": [
 				{
@@ -482,6 +515,7 @@
         "name": "research.BLEEDINGBELT.title",
         "icons": [ "beyondtheveil:bleeding_belt" ],
         "category": "BEYOND_THE_VEIL", "location": [ 3,9 ],
+		"hiders": ["IDOL"],
         "parents": [ "HEARTS" ],
         "stages": [
 				{
@@ -498,6 +532,7 @@
         "name": "research.BLOODCOVENANT.title",
         "icons": [ "beyondtheveil:blood_covenant" ],
         "category": "BEYOND_THE_VEIL", "location": [ 1,10 ],
+		"hiders": ["IDOL"],
         "parents": [ "BLEEDINGBELT", "REVELATIONRING" ],
         "stages": [
 				{
@@ -514,6 +549,7 @@
         "name": "research.BLOODCROWN.title",
         "icons": [ "beyondtheveil:blood_crown" ],
         "category": "BEYOND_THE_VEIL", "location": [ -1,12],
+		"hiders": ["IDOL"],
         "parents": [ "BLEEDINGBELT", "BONETIARA" ],
         "stages": [
 				{
@@ -530,6 +566,8 @@
         "name": "research.AZACNOCHARM.title",
         "icons": [ "beyondtheveil:azacno_charm" ],
         "category": "BEYOND_THE_VEIL", "location": [ -3,11],
+        "hiders": ["IDOL"],
+        "learn":"true",
         "parents": [ "BLOODCOVENANT", "BLOODCROWN" ],
         "stages": [
 				{

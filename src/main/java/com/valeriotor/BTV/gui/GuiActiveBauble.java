@@ -49,11 +49,17 @@ public class GuiActiveBauble extends GuiScreen{
 			} else {
 				bTextures[i] = null;
 			}
-			status[i] = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, i), 0, false) == 0 ? BaubleStatus.NONE : BaubleStatus.PASSIVE;
+			status[i] = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, i), 1, false) == 0 ? BaubleStatus.NONE : BaubleStatus.PASSIVE;
 		}
 		int active = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
 		if(active != -1) status[active] = status[active] == BaubleStatus.NONE ? BaubleStatus.ACTIVE : BaubleStatus.ACTIVEPASSIVE;
 		status[7] = BaubleStatus.NONE;
+	}
+	
+	@Override
+	public void initGui() {
+		super.initGui();
+		this.updateBaubles();
 	}
 	
 	@Override

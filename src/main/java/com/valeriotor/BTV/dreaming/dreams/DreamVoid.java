@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
-public class DreamVoid extends AbstractDream{
+public class DreamVoid extends Dream{
 
 	public DreamVoid(String name, int priority) {
 		super(name, priority);

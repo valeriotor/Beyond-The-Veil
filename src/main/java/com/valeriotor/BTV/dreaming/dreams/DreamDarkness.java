@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamDarkness extends AbstractDream{
+public class DreamDarkness extends Dream{
 
 	public DreamDarkness(String name, int priority) {
 		super(name, priority);

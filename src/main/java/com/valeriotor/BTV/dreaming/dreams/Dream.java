@@ -4,12 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 
-public abstract class AbstractDream{
+public abstract class Dream{
 	
 	public final int priority;
 	public final String name;
 	
-	public AbstractDream(String name, int priority) {
+	public Dream(String name, int priority) {
 		this.priority = priority;
 		this.name = name;
 	}

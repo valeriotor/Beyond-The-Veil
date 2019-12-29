@@ -39,7 +39,7 @@ public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
 			TileEntity te = w.getTileEntity(pos);
 			if(te instanceof TileMemorySieve) {
 				TileMemorySieve tm = (TileMemorySieve)te;
-				ItemStack returnedStack = tm.getItem(p.getHeldItemMainhand());
+				ItemStack returnedStack = tm.getItem(p, p.getHeldItemMainhand());
 				if(returnedStack.getItem() != Items.AIR) {
 					p.addItemStackToInventory(returnedStack);
 					return true;

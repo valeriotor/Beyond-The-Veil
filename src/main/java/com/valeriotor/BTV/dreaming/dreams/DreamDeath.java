@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamDeath extends AbstractDream{
+public class DreamDeath extends Dream{
 
 	public DreamDeath(String name, int priority) {
 		super(name, priority);

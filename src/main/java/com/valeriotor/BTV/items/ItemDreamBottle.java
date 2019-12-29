@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.dreaming.DreamRegistry;
 import com.valeriotor.BTV.dreaming.Memory;
-import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
+import com.valeriotor.BTV.dreaming.dreams.Dream;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
@@ -70,7 +70,7 @@ public class ItemDreamBottle extends Item{
 	
 	public void dream(EntityPlayer playerIn) {
 		ItemStack stack = playerIn.getHeldItemMainhand();
-		Map<Integer, AbstractDream> dreams = new HashMap<>();
+		Map<Integer, Dream> dreams = new HashMap<>();
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
 			if(nbt.hasKey(String.format("slot%d", i))) {
@@ -82,9 +82,9 @@ public class ItemDreamBottle extends Item{
 				}
 			}
 		}
-		Comparator<Entry<Integer, AbstractDream>> comparator = 
+		Comparator<Entry<Integer, Dream>> comparator = 
 				(e1, e2) -> (e1.getValue().priority == e2.getValue().priority) ? 1 : Integer.compare(e1.getValue().priority, e2.getValue().priority);
-		SortedSet<Map.Entry<Integer, AbstractDream>> set = new TreeSet<Map.Entry<Integer, AbstractDream>>(comparator);
+		SortedSet<Map.Entry<Integer, Dream>> set = new TreeSet<Map.Entry<Integer, Dream>>(comparator);
 		set.addAll(dreams.entrySet());
 		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
 		if(fh instanceof FluidHandlerItemStack) {
@@ -92,7 +92,7 @@ public class ItemDreamBottle extends Item{
 			if(fluid.getFluid() == null) return;
 			int amount = fluid.getFluid().amount;
 			int amountHolder = amount;
-			for(Entry<Integer, AbstractDream> entry : set) {
+			for(Entry<Integer, Dream> entry : set) {
 				if(amount < 1000) break;
 				if(entry.getValue().activate(playerIn, playerIn.world)) {
 					nbt.removeTag(String.format("slot%d", entry.getKey().intValue()));

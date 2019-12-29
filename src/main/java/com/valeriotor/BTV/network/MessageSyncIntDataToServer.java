@@ -3,6 +3,7 @@ package com.valeriotor.BTV.network;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -37,7 +38,10 @@ public class MessageSyncIntDataToServer implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSyncIntDataToServer message, MessageContext ctx) {
-			ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.key, message.value, false);
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServerWorld().addScheduledTask(() -> {
+				p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.key, message.value, false);
+			});
 			return null;
 		}
 		

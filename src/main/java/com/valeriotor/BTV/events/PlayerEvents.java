@@ -9,6 +9,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
+import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -28,12 +29,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
@@ -65,12 +68,23 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
 		EntityPlayer p = event.getEntityPlayer();
-		if(p instanceof EntityPlayer && p != null) {
+		if(p instanceof EntityPlayer) {
 			if(Deities.GREATDREAMER.cap(p).getLevel() >= 3) {
 				if(p.isInsideOfMaterial(Material.WATER)) {
 					if(!EnchantmentHelper.getAquaAffinityModifier(p))
 						event.setNewSpeed(event.getOriginalSpeed() * 5);					
 				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void breakBlockEvent(BlockEvent.BreakEvent event) {
+		EntityPlayer p = event.getPlayer();
+		if(p instanceof EntityPlayer) {
+			Block b = p.world.getBlockState(event.getPos()).getBlock();
+			if(b == Blocks.DIAMOND_ORE || b == Blocks.EMERALD_ORE) {
+				Memory.CRYSTAL.unlock(p);
 			}
 		}
 	}

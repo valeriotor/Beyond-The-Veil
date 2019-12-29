@@ -24,7 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ResearchRecipe {
 	
 	public static ResearchRecipe getRecipe(String recipeKey) {
-		if(Item.REGISTRY.getObject(new ResourceLocation(recipeKey.split(";")[0])) == ItemRegistry.memory_phial) {
+		String[] ss = recipeKey.split(";");
+		if(ss.length > 1 && Item.REGISTRY.getObject(new ResourceLocation(ss[0])) == ItemRegistry.memory_phial) {
 			return new MemoryRecipe(recipeKey);
 		} else if(ResearchRegistry.recipes.containsKey(recipeKey)) {
 			return new CraftingRecipe(recipeKey, ResearchRegistry.recipes.get(recipeKey));
@@ -38,7 +39,7 @@ public abstract class ResearchRecipe {
 		String[] ss = recipeKey.split(";");
 		Item a = Item.REGISTRY.getObject(new ResourceLocation(ss[0]));
 		output = new ItemStack(a);
-		if(a == ItemRegistry.memory_phial) {
+		if(ss.length > 1 && a == ItemRegistry.memory_phial) {
 			ItemHelper.checkTagCompound(output).setString("memory", ss[1]);
 		}
 	}

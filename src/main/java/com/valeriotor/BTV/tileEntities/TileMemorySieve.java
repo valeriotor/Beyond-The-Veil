@@ -4,11 +4,11 @@ import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.items.ItemRegistry;
-import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +41,7 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 		}
 	}
 	
-	public ItemStack getItem(ItemStack in) {
+	public ItemStack getItem(EntityPlayer p, ItemStack in) {
 		if(in.getItem() != ItemRegistry.memory_phial) {
 			ItemStack stack = this.heldItem;
 			this.heldItem = new ItemStack(Items.AIR);
@@ -54,7 +54,7 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 		}
 		if(this.heldItem.getItem() != Items.AIR) {
 			for(Memory m : Memory.values()) {
-				if(heldItem.getItem() == m.getItem()) {
+				if(heldItem.getItem() == m.getItem() && m.isUnlocked(p)) {			// RICORDA: Aggiungi m.isUnlocked
 					ItemHelper.checkTagCompound(in).setString("memory", m.getDataName());
 					this.heldItem = new ItemStack(Items.AIR);
 					itemEntity = null;

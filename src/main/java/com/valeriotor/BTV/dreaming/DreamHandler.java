@@ -5,18 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.blocks.BlockFumeSpreader;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.dreaming.dreams.AbstractDream;
+import com.valeriotor.BTV.dreaming.dreams.Dream;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
-import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -40,21 +40,23 @@ public class DreamHandler {
 		if(SpreaderLocations.isEmpty()) return;
 		
 		boolean increaseTimesDreamt = false;
+		Map<Memory, BlockPos> memories = new TreeMap<>(Comparator.comparingInt(m -> DreamRegistry.dreams.get(m).priority));
+		for(BlockPos pos : SpreaderLocations) {
+			Memory m = BlockFumeSpreader.getTE(p.world, pos).getMemory();
+			if(m.isUnlocked(p) && DreamRegistry.dreams.containsKey(m)) {
+				memories.put(m, pos);
+			}
+		}
 		
-		Map<BlockPos, AbstractDream> dreams = SpreaderLocations.stream()
-												.filter(pos -> BlockFumeSpreader.getTE(p.world, pos).getMemory() != null)
-												.filter(pos -> DreamRegistry.dreams.containsKey(BlockFumeSpreader.getTE(p.world, pos).getMemory()))
-												.sorted(Comparator.comparingInt(pos -> DreamRegistry.dreams.get(BlockFumeSpreader.getTE(p.world, pos).getMemory()).priority)) 
-												.collect(Collectors.toMap(pos -> pos, pos -> DreamRegistry.dreams.get(BlockFumeSpreader.getTE(p.world, pos).getMemory()), (x,y) -> x, LinkedHashMap::new));
-		
-		for(Entry<BlockPos, AbstractDream> entry : dreams.entrySet()) {
-			BlockPos pos = entry.getKey();
-			boolean emptySpreader = entry.getValue().activate(p, p.world);
+		for(Entry<Memory, BlockPos> entry : memories.entrySet()) {
+			BlockPos pos = entry.getValue();
+			Dream d = DreamRegistry.dreams.get(entry.getKey());
+			boolean emptySpreader = d.activate(p, p.world);
 			if(emptySpreader) increaseTimesDreamt = true;
 			
 			if(emptySpreader) {
 				IBlockState b = p.world.getBlockState(pos);
-				unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name()); 
+				unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name().toLowerCase()); 
 				BlockFumeSpreader.getTE(p.world, pos).setMemory(null);
 				p.world.setBlockState(pos, p.world.getBlockState(pos).withProperty(BlockFumeSpreader.ISFULL, false));			
 			}
@@ -114,28 +116,8 @@ public class DreamHandler {
 	 * @param p The player who just woke up
 	 * @param aspect The aspect that influenced the dream
 	 */
-	private static void unlockResearch(EntityPlayer p, String aspect) {
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		if(!k.isResearchKnown(aspect+"Dream")) {
-			if(!isLongDream(aspect))
-				ThaumcraftApi.internalMethods.progressResearch(p, String.format("%sDream", aspect));
-			if(aspect.equals("tenebrae") || aspect.equals("vacuos"))
-				ThaumcraftApi.internalMethods.progressResearch(p, String.format("f_%sDream", aspect.substring(0, 1).toUpperCase().concat(aspect.substring(1))));
-			if(!aspect.equals("alienis"))
-				p.sendStatusMessage(new TextComponentTranslation(String.format("research.%s.unlock", aspect)), true);
-			if(!k.isResearchKnown("f_EffectDream")) {
-				if(aspect.equals("potentia") || aspect.equals("vinculum") || aspect.equals("permutatio")) {
-					ThaumcraftApi.internalMethods.progressResearch(p, "f_EffectDream");
-				}
-				
-			}
-			if(!k.isResearchKnown("f_HumanDream")) {
-				if(aspect.equals("humanus") || aspect.equals("instrumentum")) {
-					ThaumcraftApi.internalMethods.progressResearch(p, "f_HumanDream");
-				}
-			}
-			
-		}
+	private static void unlockResearch(EntityPlayer p, String name) {
+		SyncUtil.addStringDataOnServer(p, false, name.concat("Dream"));
 	}
 	
 	/** Checks whether the chosen aspect causes a long Dream. If so, "aspectDream" should not be unlocked

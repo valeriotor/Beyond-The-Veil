@@ -5,7 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamSentience extends AbstractDream{
+public class DreamSentience extends Dream{
 
 	public DreamSentience(String name, int priority) {
 		super(name, priority);

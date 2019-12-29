@@ -28,7 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class DreamAnimal extends AbstractDream{
+public class DreamAnimal extends Dream{
 
 	public DreamAnimal(String name, int priority) {
 		super(name, priority);
