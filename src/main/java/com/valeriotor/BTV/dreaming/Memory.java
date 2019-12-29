@@ -49,8 +49,12 @@ public enum Memory {
 		return true;
 	}
 	
+	public boolean isUnlocked(EntityPlayer p) {
+		return !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(this.getDataName());
+	}
+	
 	public void unlock(EntityPlayer p) {
-		if(this.isUnlockable(p)) 
+		if(!this.isUnlocked(p) && this.isUnlockable(p)) 
 			SyncUtil.addStringDataOnServer(p, false, this.getDataName());		
 	}
 	
