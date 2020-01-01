@@ -1,9 +1,7 @@
 package com.valeriotor.BTV.dreaming;
 
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -14,8 +12,10 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.dreams.Dream;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
+import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
@@ -29,7 +29,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
@@ -39,14 +38,16 @@ public class DreamHandler {
 		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), times);
 		if(SpreaderLocations.isEmpty()) return;
 		
-		boolean increaseTimesDreamt = false;
-		Map<Memory, BlockPos> memories = new TreeMap<>(Comparator.comparingInt(m -> DreamRegistry.dreams.get(m).priority));
+		boolean increaseTimesDreamt = false, eldritchDream = false;
+		TreeMap<Memory, BlockPos> memories = new TreeMap<>(Comparator.comparingInt(m -> DreamRegistry.dreams.get(m).priority));
 		for(BlockPos pos : SpreaderLocations) {
 			Memory m = BlockFumeSpreader.getTE(p.world, pos).getMemory();
 			if(m.isUnlocked(p) && DreamRegistry.dreams.containsKey(m)) {
 				memories.put(m, pos);
+				if(m == Memory.ELDRITCH) eldritchDream = true;
 			}
 		}
+		
 		
 		for(Entry<Memory, BlockPos> entry : memories.entrySet()) {
 			BlockPos pos = entry.getValue();
@@ -59,7 +60,12 @@ public class DreamHandler {
 				unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name().toLowerCase()); 
 				BlockFumeSpreader.getTE(p.world, pos).setMemory(null);
 				p.world.setBlockState(pos, p.world.getBlockState(pos).withProperty(BlockFumeSpreader.ISFULL, false));			
-			}
+			} else if(entry.getKey() == Memory.ELDRITCH)
+				eldritchDream = false;
+		}
+
+		if(!eldritchDream) {
+			BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
 		}
 		
 		if(increaseTimesDreamt) {

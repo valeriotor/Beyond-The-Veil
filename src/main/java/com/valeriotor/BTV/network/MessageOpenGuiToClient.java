@@ -1,9 +1,6 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.gui.GuiAlienisDream;
-import com.valeriotor.BTV.gui.Guis;
-import com.valeriotor.BTV.lib.BTVSounds;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -36,7 +33,7 @@ public class MessageOpenGuiToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageOpenGuiToClient message, MessageContext ctx) {
-			BeyondTheVeil.proxy.openGui(message.id);
+			Minecraft.getMinecraft().addScheduledTask(() -> BeyondTheVeil.proxy.openGui(message.id));
 			return null;
 		}
 		

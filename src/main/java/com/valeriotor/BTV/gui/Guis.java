@@ -1,17 +1,6 @@
 package com.valeriotor.BTV.gui;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-
-import com.valeriotor.BTV.entities.EntityHamletDweller;
-import com.valeriotor.BTV.items.ItemRegistry;
-
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /*
  * Just a class that contains and returns Gui ids

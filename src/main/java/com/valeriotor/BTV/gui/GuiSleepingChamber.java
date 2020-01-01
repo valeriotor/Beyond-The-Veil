@@ -46,20 +46,7 @@ public class GuiSleepingChamber extends GuiChat{
 	public void updateScreen() {
 		if(this.timePassed < 100) this.timePassed++;
 		if(this.timePassed >= 100) {
-			Block b = this.searchChamber();
-			List<BlockPos> list = DreamHandler.checkBlocks(this.mc.player.world, this.mc.player.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), DreamHandler.getMaxDreamsPerTime(this.mc.player, b));
-			boolean flag = true;
-			List<String> aspects = Lists.newArrayList();
-			for(BlockPos pos : list) {
-				String aspect = this.mc.player.world.getTileEntity(pos).getTileData().getString("containing");
-				if(aspect != null) aspects.add(aspect);
-			}
-			int timesDreamt = this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
-			if(aspects.contains("Alienis") && timesDreamt < DreamHandler.getMaxDreamsPerDay(this.mc.player, b)) {
-				if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos") || aspects.contains("Vacuos")) flag = false;
-			}
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
-			if(flag) this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}
 		super.updateScreen();

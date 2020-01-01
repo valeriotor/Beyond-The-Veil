@@ -19,11 +19,6 @@ public class DreamEldritch extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		if(!DreamHandler.knowsDream(p, "vacuos")) {
-			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere1"));
-			p.sendMessage(new TextComponentTranslation("dreams.alienis.almostthere2"));
-			return false;
-		}
 		boolean knowsAlienis = DreamHandler.knowsDream(p, "alienis");
 		if(!DreamHandler.hasDreamtOfVoid(p)) {
 			if(!knowsAlienis) {

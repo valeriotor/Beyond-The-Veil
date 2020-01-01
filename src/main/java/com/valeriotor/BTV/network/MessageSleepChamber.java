@@ -2,7 +2,6 @@ package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockSleepChamber;
-import com.valeriotor.BTV.capabilities.DGProvider;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -10,7 +9,6 @@ import com.valeriotor.BTV.worship.Deities;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
