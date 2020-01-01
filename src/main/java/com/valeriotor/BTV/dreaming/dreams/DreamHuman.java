@@ -18,7 +18,6 @@ public class DreamHuman extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		if(!DreamHandler.youDontKnowDream(p, "metallum")) return false;
 		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
 		if(!list.isEmpty()) {
 			EntityPlayerMP target =	list.get(w.rand.nextInt(list.size()));

@@ -17,7 +17,6 @@ public class DreamPower extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		if(!DreamHandler.youDontKnowDream(p, "metallum")) return false;
 		int lvl = DreamHandler.getDreamLevel(p);
 		int increase = 1 + (lvl+2)/3;
 		Collection<PotionEffect> effects = p.getActivePotionEffects();

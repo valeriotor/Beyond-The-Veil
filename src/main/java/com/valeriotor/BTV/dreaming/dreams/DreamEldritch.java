@@ -19,14 +19,8 @@ public class DreamEldritch extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		boolean knowsAlienis = DreamHandler.knowsDream(p, "alienis");
 		if(!DreamHandler.hasDreamtOfVoid(p)) {
-			if(!knowsAlienis) {
-				p.sendMessage(new TextComponentTranslation("dreams.alienis.needvacuos"));
-				return false;
-			} else {
 				return searchStronghold(p, w);
-			}
 		}
 		BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiAlienisDream), (EntityPlayerMP)p);
 		return true;

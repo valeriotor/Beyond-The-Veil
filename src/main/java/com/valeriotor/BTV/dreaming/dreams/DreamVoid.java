@@ -1,8 +1,10 @@
 package com.valeriotor.BTV.dreaming.dreams;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,16 +20,11 @@ public class DreamVoid extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		if(k.isResearchKnown("SLEEPCHAMBER") && k.isResearchKnown("HUMANDREAMS")) {
-			if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos")) {
-				p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("vacuos", true);
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("vacuos"), (EntityPlayerMP)p);
-				return true;
-			} else
-				return false;
-		}
-		return false;
+		if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID)) {
+			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.VOID);
+			return true;
+		} else
+			return false;
 	}
 
 }

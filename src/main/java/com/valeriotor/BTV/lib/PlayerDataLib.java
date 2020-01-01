@@ -31,6 +31,7 @@ public class PlayerDataLib {
 	public static final String FOUND_HAMLET = "found_hamlet";
 	public static final String TRANSFORMED = "transformed";
 	public static final String OLDTRUTH = "old_truth";
+	public static final String VOID = "void";
 	
 	// Strings (Temporary)
 	

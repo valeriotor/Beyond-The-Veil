@@ -58,14 +58,13 @@ public class MessageSleepChamber implements IMessage {
 					multiplier = 2;
 					advanced = true;
 				}
-				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(player);
 				
 				int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 				int level = Deities.GREATDREAMER.cap(player).getLevel()/2 + 1; // For when I start working on worship
 				
 				if(message.doesDream && times < multiplier) {
-					if(advanced) DreamHandler.chooseDream(player, k, 2);
-					else DreamHandler.chooseDream(player, k, 1);
+					if(advanced) DreamHandler.chooseDream(player, 2);
+					else DreamHandler.chooseDream(player, 1);
 				}
 				
 				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE. Heh. "Release". haha

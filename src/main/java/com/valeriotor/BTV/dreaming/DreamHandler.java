@@ -34,7 +34,7 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DreamHandler {
 	
-	public static void chooseDream(EntityPlayer p, IPlayerKnowledge k,  int times) {
+	public static void chooseDream(EntityPlayer p, int times) {
 		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), times);
 		if(SpreaderLocations.isEmpty()) return;
 		
@@ -54,10 +54,10 @@ public class DreamHandler {
 			Dream d = DreamRegistry.dreams.get(entry.getKey());
 			boolean emptySpreader = d.activate(p, p.world);
 			if(emptySpreader) increaseTimesDreamt = true;
-			
+			boolean longDream = isLongDream(entry.getKey());
 			if(emptySpreader) {
 				IBlockState b = p.world.getBlockState(pos);
-				unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name().toLowerCase()); 
+				if(!longDream) unlockResearch(p, BlockFumeSpreader.getTE(p.world, pos).getMemory().name().toLowerCase()); 
 				BlockFumeSpreader.getTE(p.world, pos).setMemory(null);
 				p.world.setBlockState(pos, p.world.getBlockState(pos).withProperty(BlockFumeSpreader.ISFULL, false));			
 			} else if(entry.getKey() == Memory.ELDRITCH)
@@ -130,34 +130,11 @@ public class DreamHandler {
 	 *  immediately, but only when the Dream ends.
 	 * 
 	 */
-	private static boolean isLongDream(String aspect) {
-		if(aspect.equals("alienis")) return true;
-		return false;
-	}
-	
-	/** Checks if the player already has the "research" (not a true entry) corresponding to that aspect.
-	 *
-	 * @param p The player who just woke up
-	 * @param aspect The aspect that influenced the dream
-	 * 
-	 * @return True if the dream's known.
-	 */
-	public static boolean knowsDream(EntityPlayer p, String aspect) {
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		if(k.isResearchKnown(aspect+"Dream")) return true;
-		return false;
-	}
-	
-	/** Checks whether the Dreamer has successfully dreamt with a certain aspect. If not, sends a message to the
-	 *  player telling them they should try again in the future.
-	 * 
-	 */
-	public static boolean youDontKnowDream(EntityPlayer p, String aspect) {
-		if(!knowsDream(p, aspect)) {
-			p.sendMessage(new TextComponentTranslation("dreams.maybeinthefuture"));
-			return false;
+	private static boolean isLongDream(Memory m) {
+		switch(m) {
+		case ELDRITCH: 	return true;
+		default:		return false;
 		}
-		else return true;
 	}
 	
 	/** Checks whether the player's DGLevel is greater than or equal to the lvl parameter. If not, sends a message
@@ -204,10 +181,9 @@ public class DreamHandler {
 	 * @param p The Dreamer
 	 */
 	public static boolean hasDreamtOfVoid(EntityPlayer p) {
-		boolean flag = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("vacuos");
+		boolean flag = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID);
 		if(flag) {
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("vacuos");
-			BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveStringToClient("vacuos"), (EntityPlayerMP)p);
+			SyncUtil.removeStringDataOnServer(p, PlayerDataLib.VOID);
 		}
 		return flag;
 	}

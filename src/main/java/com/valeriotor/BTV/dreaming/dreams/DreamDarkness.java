@@ -18,7 +18,6 @@ public class DreamDarkness extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		if(!DreamHandler.youDontKnowDream(p, "alienis")) return false;
 		boolean flag = false;
 		BlockPos pos = WorldHelper.findClosestBiomeOfType(BiomeRegistry.innsmouth, p.getPosition(), w, 6000);
 		if(pos != null) {
