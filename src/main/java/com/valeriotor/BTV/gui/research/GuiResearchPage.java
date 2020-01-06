@@ -53,11 +53,13 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		this.formatText(paragraphs);
 		this.makeRecipes(this.status.res.getStages()[this.status.getStage()].getRecipes());
 		IPlayerData data = mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null);
-		for(SubResearch sr : this.status.res.getAddenda()) {
-			if(sr.meetsRequirements(data)) {
-				paragraphs = I18n.format(sr.getTextKey()).split("<BR>");
-				this.formatText(paragraphs);
-				this.makeRecipes(sr.getRecipes());
+		if(this.status.isComplete()) {
+			for(SubResearch sr : this.status.res.getAddenda()) {
+				if(sr.meetsRequirements(data)) {
+					paragraphs = I18n.format(sr.getTextKey()).split("<BR>");
+					this.formatText(paragraphs);
+					this.makeRecipes(sr.getRecipes());
+				}
 			}
 		}
 		this.buttonList.clear();
