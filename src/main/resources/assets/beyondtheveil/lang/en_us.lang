@@ -544,9 +544,6 @@ research.CRYSTALDREAMS.stage.1=The Dream reacted to my Memory of Metal by granti
 research.CRYSTALDREAMS.addenda.crystal=Very similarly to Metal, a Memory of Crystal grants me knowledge of the earth beneath me, this time teaching me of the presence of crystals, namely diamonds and emeralds.
 research.CRYSTALDREAMS.addenda.sentience=Dreams may go straight down, yet their knowledge of the world is vast.<BR>And through the reading of a simple book, I'm reminded of those who inhabit this world.<BR>A Memory of Sentience, with which I can instruct my Dream to seek a society like that of a Village, and point me to it.
 research.metallumDream.text=Influence my dreams with the Metallum aspect.
-research.metallum.unlock=My use of Metallum granted me knowledge of the metals below.
-research.vitreus.unlock=My use of Vitreus granted me knowledge of the crystals below.
-research.cognitio.unlock=My use of Cognitio granted me knowledge of the closest Village.
 
 research.SLEEPCHAMBER.title=Sleep Chamber
 research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity.<BR>Oh, how ironic that now it is sleep I need, and can't get enough of it.<BR> I must Dream, keep Dreaming, again and again. Once a day, only at night, is not enough, it just isn't. I shall put my mind to the creation of some device capable of ridding me of that limit, at least partially.
@@ -554,14 +551,11 @@ research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most
 
 research.EFFECTDREAMS.title=Affecting myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
-research.EFFECTDREAMS.stage.1=A successful attempt was made. I have learned to handle, to a degree, the effects that are already conditioning my body, to my advantage. <BR>Or, to phrase it better, I have learned there are ways to handle such effects. I should experiment more on this branch of research.
-research.f_EffectDream.text=Find an aspect capable of affecting myself.
-research.EFFECTDREAMS.addenda.power=Potentia seems capable of amplifying the potency of Status Effects already conditioning me. <BR>I'd better make sure to only use it when free of negative effects.
-research.EFFECTDREAMS.addenda.stillness=Vinculum has proven to be an excellent way of extending the duration of Status Effects on me, though that applies to both positive and negative ones.
-research.EFFECTDREAMS.addenda.change=Permutatio has shown to be extremely useful. Not only is it capable of ridding me of any negative effects, it will also attempt to convert them into their positive counterparts, such as slowness turning into speed. <BR>This is quite a complex task, which only reinforces my belief that Dreams are more sentient than one could imagine.
-research.potentia.unlock=My use of Potentia amplified the potency of any Status Effects present on me.
-research.vinculum.unlock=My use of Vinculum extended the duration of any Status Effects present on me.
-research.permutatio.unlock=My use of Permutatio removed negative effects from me, and attempted to convert them into positive ones.
+research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how I could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning on my body.
+research.effectDream.text=Trigger a Memory capable of affecting myself.
+research.EFFECTDREAMS.addenda.power=A Memory of Power, as I slay a beast of no small stature. A cherished moment, one of satisfaction.<BR>It is through it that my Dream will increase the potency of the effects on my body.<BR>Both positive and negative ones, that is.
+research.EFFECTDREAMS.addenda.stillness=A Memory of Stillness, as the Sleep Chamber imprisons me time and time again.<BR>The effects on my body, I won't let them leave me. Through this Memory, my Dream will increase their durations. All of them.<BR>They cannot escape. No one can.
+research.EFFECTDREAMS.addenda.change=A Memory of Change, as I witness a sapling grow into adulthood. Such a small thing, even in its now great size.<BR>Even in Stillness, all things Change. Through this Memory, my Dream will remove the negative effects plaguing my body, and even attempt to convert them into their good counterpart.<BR>A powerful Memory, triggered by such a mundane even. As Truth draws closer, I witness the world in a new light.
 
 research.HUMANDREAMS.title=Dreams of Others
 research.HUMANDREAMS.stage.0=Sometimes, when Dreaming, I get a bizarre feeling.<BR>People like me, even ones I have never known, start appearing in my thoughts. And yet, I feel like it's not a mere construct of my mind, of my subconscious.<BR>No. I think that our Dreams converge within the same point, that they touch each other, and that those presences within my thoughts are REAL.<BR>I believe that, through my "Dreaming expertise", I could know more about those others, that I could probe their Dreams while they remain unaware. I should look for the right aspects, while keeping this knowledge for myself.

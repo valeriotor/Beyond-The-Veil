@@ -85,15 +85,18 @@
 			"addenda": [
 				{
 					"text": "research.EFFECTDREAMS.addenda.power",
-					"required_research": ["memPOWER"]
+					"required_research": ["memPOWER"],
+                    "recipes": ["beyondtheveil:memory_phial;memPOWER"]
 				},
 				{
 					"text": "research.EFFECTDREAMS.addenda.stillness",
-					"required_research": ["memSTILLNESS"]
+					"required_research": ["memSTILLNESS"],
+                    "recipes": ["beyondtheveil:memory_phial;memSTILLNESS"]
 				},
 				{
 					"text": "research.EFFECTDREAMS.addenda.change",
-					"required_research": ["memCHANGE"]
+					"required_research": ["memCHANGE"],
+                    "recipes": ["beyondtheveil:memory_phial;memCHANGE"]
 				}
 			]
         },
