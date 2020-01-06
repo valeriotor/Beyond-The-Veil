@@ -9,6 +9,7 @@ import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.ResearchHandler;
 import com.valeriotor.BTV.capabilities.WorshipCapHandler;
+import com.valeriotor.BTV.events.MemoryUnlocks;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
@@ -75,6 +76,8 @@ public class BeyondTheVeil
     	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), new ResearchHandler.ResearchCapFactory());
 
     	MinecraftForge.EVENT_BUS.register(WorshipCapHandler.class);
+    	MinecraftForge.EVENT_BUS.register(MemoryUnlocks.class);
+    	MinecraftForge.TERRAIN_GEN_BUS.register(MemoryUnlocks.class);
         
     }
 

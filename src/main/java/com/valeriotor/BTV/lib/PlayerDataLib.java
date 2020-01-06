@@ -18,6 +18,7 @@ public class PlayerDataLib {
 	public static final String DAGON_DIALOGUE = "dagonDialogue";
 	public static final String DAGON_GOLD = "dagonGold";
 	public static final String PARASITE_PROGRESS = "parasite_progress";
+	public static final String SAPLINGS_SEEN = "saplings";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
