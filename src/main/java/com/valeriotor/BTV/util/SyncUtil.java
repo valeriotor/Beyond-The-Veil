@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
-import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -19,7 +19,6 @@ import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
 import com.valeriotor.BTV.network.research.ResearchSyncer;
 import com.valeriotor.BTV.research.ResearchStatus;
-import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -89,6 +88,12 @@ public class SyncUtil {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(key);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveIntToClient(key), ((EntityPlayerMP)p));
 	}*/
+	
+	public static void incrementIntDataOnServer(EntityPlayer p, boolean temporary, String key, int amount, int defaultVal) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		data.incrementOrSetInteger(key, amount, defaultVal, temporary);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, data.getInteger(key) + amount), (EntityPlayerMP) p);
+	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void addStringDataOnClient(EntityPlayer p, boolean temporary, String string) {
