@@ -33,6 +33,7 @@ public class PlayerDataLib {
 	public static final String TRANSFORMED = "transformed";
 	public static final String OLDTRUTH = "old_truth";
 	public static final String VOID = "void";
+	public static final String WAIT = "wait";
 	
 	// Strings (Temporary)
 	

@@ -15,8 +15,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.items.ItemHandlerHelper;
-import thaumcraft.api.ThaumcraftApi;
 
 public class MessageDagonDialogue implements IMessage{
 
@@ -32,17 +30,16 @@ public class MessageDagonDialogue implements IMessage{
 		public IMessage onMessage(MessageDagonDialogue message, MessageContext ctx) {
 			EntityPlayer p = ctx.getServerHandler().player;
 			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-			int value = data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false);
+			int value = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 0);
 			switch(value) {
 			case 0:
 				p.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3));
 				p.inventoryContainer.detectAndSendChanges();
 				data.setInteger(PlayerDataLib.DAGON_DIALOGUE, 1, false);
-				ThaumcraftApi.internalMethods.progressResearch(p, "hearing");
+				SyncUtil.addStringDataOnServer(p, false, "hearing");
 				sendMessage("dagon.bringgold", p);
 				break;
 			}
-			SyncUtil.syncCapabilityData(p);
 			return null;
 		}
 		

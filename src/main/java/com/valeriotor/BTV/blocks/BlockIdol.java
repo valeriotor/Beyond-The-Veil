@@ -8,6 +8,7 @@ import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.lib.BlockNames;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.DelayedMessage;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -31,9 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class BlockIdol extends ModBlock{
 
@@ -140,12 +138,12 @@ public class BlockIdol extends ModBlock{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(playerIn);
-		if(!k.isResearchKnown("IDOL")) {
+		
+		if(!ResearchUtil.isResearchVisible(playerIn, "IDOL")) {
 			if(!worldIn.isRemote) playerIn.sendMessage(new TextComponentTranslation("interact.idol.notyet"));
 			return true;
 		}
-		if(!k.isResearchComplete("IDOL")) ThaumcraftApi.internalMethods.progressResearch(playerIn, "IdolInteract");
+		if(ResearchUtil.getResearchStage(playerIn, "IDOL") == 0) SyncUtil.addStringDataOnServer(playerIn, false, "IdolInteract");
 		if(!worldIn.isRemote) {
 			if(Worship.getSelectedDeity(playerIn) != Deities.GREATDREAMER) Worship.setSelectedDeity(playerIn, Deities.GREATDREAMER);
 			DGWorshipHelper.levelUp(playerIn);

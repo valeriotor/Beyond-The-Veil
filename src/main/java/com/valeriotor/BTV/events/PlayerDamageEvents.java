@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.events;
 
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
@@ -7,8 +8,10 @@ import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import baubles.api.BaublesApi;
@@ -20,9 +23,6 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 @Mod.EventBusSubscriber
 public class PlayerDamageEvents {
@@ -83,15 +83,14 @@ public class PlayerDamageEvents {
 	private static void dagonProtect(LivingHurtEvent event) {
 		if(!(event.getSource().getTrueSource() instanceof EntityLiving)) return;
 		EntityPlayer p = (EntityPlayer) event.getEntityLiving();
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		
-		if(k.isResearchKnown("ALLIANCE@0") && !k.isResearchComplete("wait")) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 0 && !data.getString(PlayerDataLib.WAIT)) {
 			EntityDeepOne guardian = new EntityDeepOne(p.world, 500);
 			guardian.setPosition(p.posX, p.posY, p.posZ);
 			guardian.setAttackTarget((EntityLivingBase)event.getSource().getTrueSource());
 			guardian.setMaster(p);
 			p.world.spawnEntity(guardian);
-			ThaumcraftApi.internalMethods.progressResearch(p, "wait");
+			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.WAIT);
 		}
 	}
 	

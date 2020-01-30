@@ -9,6 +9,7 @@ import com.valeriotor.BTV.gui.research.GuiNecronomicon;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
 import com.valeriotor.BTV.items.container.InventoryDreamBottle;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
 import com.valeriotor.BTV.worship.DagonDialogues;
 import com.valeriotor.BTV.worship.DrowningRitual;
@@ -22,8 +23,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class GuiContainerHandler implements IGuiHandler{
 	
@@ -85,8 +84,10 @@ public class GuiContainerHandler implements IGuiHandler{
 			GuiDagon gui = DagonDialogues.getGui(p);
 			if(gui != null) return gui;
 		} else if(ID == 4) {
-			IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-			boolean[] options = {k.isResearchKnown("SPINES"), k.isResearchKnown("WEEPERS"), false, k.isResearchKnown("HEARTS")};
+			boolean[] options = {	ResearchUtil.isResearchOpened(p, "SPINES"), 
+									ResearchUtil.isResearchOpened(p, "WEEPERS"), 
+									false, 
+									ResearchUtil.isResearchOpened(p, "HEARTS")};
 			GuiWateryCradle gui = new GuiWateryCradle(new BlockPos(x, y, z), options);
 			if(gui != null) return gui;
 		} else if(ID == 5) {

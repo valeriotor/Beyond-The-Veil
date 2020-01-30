@@ -19,7 +19,6 @@ import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.ResearchRegistry;
-import com.valeriotor.BTV.research.TCRegistries;
 import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.util.RegistryHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
@@ -27,7 +26,6 @@ import com.valeriotor.BTV.world.WorldGenBTV;
 import com.valeriotor.BTV.world.Structures.HamletStructuresRegistry;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -40,9 +38,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.research.ResearchCategories;
 
 @Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES)
 public class BeyondTheVeil
@@ -94,9 +89,6 @@ public class BeyondTheVeil
     	
     	RegistryHelper.registerTileEntities();
     	
-    	ResearchCategories.registerCategory("BEYOND_THE_VEIL", (String)null, new AspectList(), new ResourceLocation("beyondtheveil","textures/research/tab_icon.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_1.jpg"),new ResourceLocation("thaumcraft", "textures/gui/gui_research_back_over.png") );
-    	TCRegistries.register();
-    	ThaumcraftApi.registerResearchLocation(new ResourceLocation(References.MODID, "research/btvresearch"));
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
     	BuildingRegistry.registerBuildings();

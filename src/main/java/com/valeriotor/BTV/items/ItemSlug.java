@@ -60,7 +60,7 @@ public class ItemSlug extends ItemFood{
             data.setInteger(PlayerDataLib.SLUGS, currentSlugs+1, false);
             stack.shrink(1);
             if(!worldIn.isRemote ) 
-            	if(!data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p))) {
+            	if(!data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(p)) {
             		DrowningRitualEvents.checkRitual(p);
             	}else if(p.isInWater() && p.posY < 40 && p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN) {
             		p.openGui(BeyondTheVeil.instance, GuiContainerHandler.DAGON, worldIn, (int) p.posX, (int) p.posY, (int) p.posZ);
@@ -72,11 +72,11 @@ public class ItemSlug extends ItemFood{
 	
 	private static int getFoodByLevel(EntityPlayer p) {
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(k)) {
+		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(p)) {
 			return 1;
-		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(k)){
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(p)){
 			return 2;
-		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(k)){
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(p)){
 			return 3;
 		}
 		return 4;
@@ -85,12 +85,12 @@ public class ItemSlug extends ItemFood{
 	private static List<PotionEffect> getEffectsByLevel(EntityPlayer p){
 		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		List<PotionEffect> effects = Lists.newArrayList();
-		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(k)) {
+		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(p)) {
 			effects.add(new PotionEffect(MobEffects.POISON, 200, 2));
 			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
-		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(k)){
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(p)){
 			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
-		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(k)){
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(p)){
 			
 		}
 		return effects;

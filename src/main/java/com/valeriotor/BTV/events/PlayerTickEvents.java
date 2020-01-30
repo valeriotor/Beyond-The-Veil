@@ -8,6 +8,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -64,7 +65,7 @@ public class PlayerTickEvents {
 							fish.motionX = -x + p.motionX;
 							fish.motionZ = -z + p.motionZ;
 							p.world.spawnEntity(fish);
-							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(ThaumcraftCapabilities.getKnowledge(p)) && !data.getString(PlayerDataLib.FISHQUEST)) {
+							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(p) && !data.getString(PlayerDataLib.FISHQUEST)) {
 								int currentFish = data.getOrSetInteger(PlayerDataLib.FISH_CANOE, 0, false);
 								if(currentFish <= 15) {
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
@@ -95,7 +96,7 @@ public class PlayerTickEvents {
 	
 	private static void waterPowers(EntityPlayer p, IPlayerData data) {
 		boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
-		if(data.getString(PlayerDataLib.RITUALQUEST)) {
+		if(ResearchUtil.getResearchStage(p, "BAPTISM") > 1) {
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
 				double motY = p.motionY * 1.25;
@@ -104,7 +105,8 @@ public class PlayerTickEvents {
 				if(transformed) {
 					p.capabilities.isFlying = true;
 					p.capabilities.setFlySpeed(0.06F);
-					p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 0, false, false));
+					if(!p.isPotionActive(MobEffects.REGENERATION))
+						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 0, false, false));
 				} else if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
 					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;

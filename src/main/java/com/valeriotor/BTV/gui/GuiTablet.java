@@ -2,6 +2,8 @@ package com.valeriotor.BTV.gui;
 
 import java.io.IOException;
 
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.ItemTablet;
 import com.valeriotor.BTV.lib.BTVSounds;
@@ -16,9 +18,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class GuiTablet extends GuiScreen{
 	
@@ -235,17 +234,17 @@ public class GuiTablet extends GuiScreen{
 	
 	private int getUndiscoveredInscription() {
 		EntityPlayerSP p = Minecraft.getMinecraft().player;
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int discovered = 0;
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		for(int i = 0; i < inscriptions; i++) {
-			if(k.isResearchKnown(String.format("inscription%d", i))) discovered++;
+			if(data.getString(String.format("inscription%d", i))) discovered++;
 		}
 		int undiscovered = inscriptions - discovered;
 		int count = 0;
 		if(undiscovered == 0) return -1; 
 		int theOne = p.world.rand.nextInt(undiscovered);
 		for(int i = 0; i < inscriptions; i++) {
-			if(!k.isResearchKnown(String.format("inscription%d", i))) {
+			if(!data.getString(String.format("inscription%d", i))) {
 				if(theOne == count) {
 					return i;
 				}else count++;

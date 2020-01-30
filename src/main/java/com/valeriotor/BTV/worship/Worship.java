@@ -2,6 +2,7 @@ package com.valeriotor.BTV.worship;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.ActivePowers.IActivePower;
 import com.valeriotor.BTV.worship.ActivePowers.SummonDeepOnes;
 import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
@@ -13,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 public class Worship {
 	
 	public static void setSelectedDeity(EntityPlayer p, Deities deity) {
-		p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.SELECTED_DEITY, deity.ordinal(), false);
+		SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.SELECTED_DEITY, deity.ordinal());
 	}
 	
 	public static Deities getSelectedDeity(EntityPlayer p) {

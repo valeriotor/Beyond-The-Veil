@@ -12,13 +12,11 @@ import java.util.UUID;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DGWorshipHelper {
 	
@@ -33,17 +31,17 @@ public class DGWorshipHelper {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 30, true, 0));
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 30, false, 1));
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
-		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 3));
+		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 2));
 	}
 	
 	public static void levelUp(EntityPlayer p) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int slugs = data.getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+		System.out.println(slugs);
 		boolean atLeastOne = false, notEnoughSlugs = false;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {
 			DGResearch res = entry.getValue();
-			if((data.getString(entry.getKey()) || entry.getKey().equals(SLUGS)) && res.canBeUnlocked(k) && !res.isRequirementUnlocked(k)) {
+			if((data.getString(entry.getKey()) || entry.getKey().equals(SLUGS)) && res.canBeUnlocked(p) && !res.isRequirementUnlocked(p)) {
 				if(slugs >= res.getRequiredSlugs()) {
 					res.unlock(p);
 					slugs -= res.getRequiredSlugs();
@@ -56,9 +54,8 @@ public class DGWorshipHelper {
 			}
 		}
 		if(notEnoughSlugs && !atLeastOne) p.sendMessage(new TextComponentTranslation("interact.idol.moreslugs"));
-		data.setInteger(PlayerDataLib.SLUGS, slugs, false);
-		calculateModifier(p, k);
-		SyncUtil.syncCapabilityData(p);
+		SyncUtil.addIntDataOnServer(p, false, SLUGS, slugs);
+		calculateModifier(p);
 		
 	}
 	
@@ -89,12 +86,12 @@ public class DGWorshipHelper {
 		dreamPower.remove(p.getPersistentID());
 	}
 	
-	public static void calculateModifier(EntityPlayer p, IPlayerKnowledge k) {
+	public static void calculateModifier(EntityPlayer p) {
 		double attack = 1;
 		double defense = 1;
 		int dream = 1;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {
-			if(entry.getValue().isRequirementUnlocked(k)) {
+			if(entry.getValue().isRequirementUnlocked(p)) {
 				attack += entry.getValue().attackIncrement;
 				defense += entry.getValue().defenseIncrement;
 				if(entry.getValue().improvesDreams) dream++;
@@ -106,17 +103,17 @@ public class DGWorshipHelper {
 	}
 	
 	public static double getAttackModifier(EntityPlayer p) {
-		if(!attackMultipliers.containsKey(p.getPersistentID()))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
+		if(!attackMultipliers.containsKey(p.getPersistentID()))calculateModifier(p);
 		return attackMultipliers.get(p.getPersistentID());
 	}
 	
 	public static double getDefenseModifier(EntityPlayer p) {
-		if(!defenseMultipliers.containsKey(p.getPersistentID()))calculateModifier(p, ThaumcraftCapabilities.getKnowledge(p));
+		if(!defenseMultipliers.containsKey(p.getPersistentID()))calculateModifier(p);
 		return defenseMultipliers.get(p.getPersistentID());
 	}
 	
 	public static boolean areDeepOnesFriendly(EntityPlayer p) {
-		return researches.get(DAGONQUEST).isUnlocked(ThaumcraftCapabilities.getKnowledge(p));
+		return researches.get(DAGONQUEST).isUnlocked(p);
 	}
 	
 	public static class DGResearch {
@@ -136,16 +133,16 @@ public class DGWorshipHelper {
 			this.stage = stage;
 		}
 		
-		public boolean canBeUnlocked(IPlayerKnowledge k) {
-			return k.isResearchKnown(key.concat(stage == 0 ? "" : "@".concat(String.valueOf(stage)))) && !k.isResearchComplete("!".concat(key));
+		public boolean canBeUnlocked(EntityPlayer p) {
+			return ResearchUtil.getResearchStage(p, key) == stage;
 		}
 		
-		public boolean isUnlocked(IPlayerKnowledge k) {
-			return k.isResearchComplete(key);
+		public boolean isUnlocked(EntityPlayer p) {
+			return ResearchUtil.getResearchStage(p, key) > stage;
 		}
 		
-		public boolean isRequirementUnlocked(IPlayerKnowledge k) {
-			return k.isResearchComplete("!".concat(key));
+		public boolean isRequirementUnlocked(EntityPlayer p) {
+			return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("!".concat(key));
 		}
 		
 		public int getRequiredSlugs() {
@@ -153,7 +150,7 @@ public class DGWorshipHelper {
 		}
 		
 		public void unlock(EntityPlayer p) {
-			ThaumcraftApi.internalMethods.progressResearch(p, "!".concat(key));
+			SyncUtil.addStringDataOnServer(p, false, "!".concat(key));
 		}
 		
 	}

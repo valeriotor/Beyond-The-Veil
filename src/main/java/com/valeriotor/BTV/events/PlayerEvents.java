@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
@@ -26,11 +25,9 @@ import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -39,11 +36,8 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 @Mod.EventBusSubscriber
@@ -97,7 +91,7 @@ public class PlayerEvents {
 			event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(PlayerDataLib.PARASITE_PROGRESS);
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
-			DGWorshipHelper.calculateModifier(event.player, ThaumcraftCapabilities.getKnowledge(event.player));
+			DGWorshipHelper.calculateModifier(event.player);
 			BeyondTheVeil.proxy.researchEvents.checkResearches(event.player);
 		}
 	}
@@ -177,19 +171,6 @@ public class PlayerEvents {
 			EntityPlayer target = (EntityPlayer) event.getTarget();
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(target.getPersistentID(), false), (EntityPlayerMP)event.getEntityPlayer());
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(target.getPersistentID(), false), (EntityPlayerMP)event.getEntityPlayer());
-		}
-	}
-	
-	@SubscribeEvent
-	public static void itemPickupEvent(ItemPickupEvent event) {
-		// THIS IS JUST FOR DEBUG PURPOSES, WILL BE DIFFERENT ON RELEASE
-		EntityPlayer p = event.player;
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
-		ItemStack stack = event.getStack();
-		if(Block.getBlockFromItem(stack.getItem()) == BlockRegistry.BlockWateryCradle && !k.isResearchComplete("WATERYCRADLE")) {
-			ThaumcraftApi.internalMethods.progressResearch(p, "craftedcradle");
-		} else if(Block.getBlockFromItem(stack.getItem()) == BlockRegistry.BlockLacrymatory && !k.isResearchComplete("WEEPERS")) {
-			ThaumcraftApi.internalMethods.progressResearch(p, "craftedlacrymatory");
 		}
 	}
 	

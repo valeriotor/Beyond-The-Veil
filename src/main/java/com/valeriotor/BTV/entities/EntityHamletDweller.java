@@ -15,6 +15,7 @@ import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
@@ -264,7 +265,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 					player.sendMessage(new TextComponentString("�5�o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
 					data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
 					if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
-						data.addString(PlayerDataLib.DAGONQUEST, false);
+						SyncUtil.addStringDataOnServer(player, false, PlayerDataLib.DAGONQUEST);
 						data.removeInteger(PlayerDataLib.DAGON_GOLD);
 					}
 					return EnumActionResult.SUCCESS;
