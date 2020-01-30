@@ -1,6 +1,6 @@
 package com.valeriotor.BTV.entities.AI;
 
-import com.valeriotor.BTV.entities.IPlayerGuardian;
+import com.valeriotor.BTV.entities.IPlayerMinion;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -25,7 +25,7 @@ public class AIRevenge extends EntityAITarget{
 		if(this.ent != null) {
 			if(ent.getRevengeTarget() != null) {
 				EntityLivingBase attack = ent.getRevengeTarget();
-				if(!(ent instanceof IPlayerGuardian && attack instanceof EntityPlayer && ((IPlayerGuardian)ent).getMasterID() == ((EntityPlayer)attack).getPersistentID() )) {
+				if(!(ent instanceof IPlayerMinion && attack instanceof EntityPlayer && ((IPlayerMinion)ent).getMasterID() == ((EntityPlayer)attack).getPersistentID() )) {
 					this.attacker = attack;
 					return true;
 				}
