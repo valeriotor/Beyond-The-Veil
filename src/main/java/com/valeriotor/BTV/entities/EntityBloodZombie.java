@@ -50,7 +50,6 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
 		this.tasks.addTask(0, new EntityAIAttackMelee(this, 1.4, true));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.targetTasks.addTask(1, new AIProtectMaster(this));
         this.targetTasks.addTask(2, new AIRevenge(this));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false,  p -> (this.master == null)));
