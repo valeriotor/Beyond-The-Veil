@@ -54,12 +54,28 @@ public class ResearchUtil {
 		return p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key);
 	}
 	
+	public static int getResearchStage(EntityPlayer p, String key) {
+		return getResearch(p, key).getStage();
+	}
+	
 	public static boolean isResearchVisible(EntityPlayer p, String key) {
 		return getResearch(p, key).isVisible(p);
 	}
 	
 	public static boolean isResearchVisible(HashMap<String, ResearchStatus> map, IPlayerData data, String key) {
 		return map.get(key).isVisible(map, data);
+	}
+	
+	public static boolean isResearchComplete(EntityPlayer p, String key) {
+		return getResearch(p, key).isComplete();
+	}
+	
+	public static boolean isResearchKnown(EntityPlayer p, String key) {
+		return getResearch(p, key).isKnown(p);
+	}
+	
+	public static boolean isResearchOpened(EntityPlayer p, String key) {
+		return getResearchStage(p, key) >= 0;
 	}
 	/*public static boolean knowsResearch(EntityPlayer p, String key) {
 		return false;
