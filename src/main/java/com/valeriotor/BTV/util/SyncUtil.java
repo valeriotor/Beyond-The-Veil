@@ -84,6 +84,16 @@ public class SyncUtil {
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, val), (EntityPlayerMP)p);
 	}
 	
+	public static int getOrSetIntDataOnServer(EntityPlayer p, boolean temporary, String key, int val) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		if(data.getInts(temporary).containsKey(key)) {
+			return data.getInteger(key);
+		} else {
+			addIntDataOnServer(p, temporary, key, val);
+			return val;
+		}
+	}
+	
 	/*public static void removeIntDataOnServer(EntityPlayer p, String key) {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(key);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveIntToClient(key), ((EntityPlayerMP)p));
