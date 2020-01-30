@@ -25,6 +25,12 @@ public class AIShoggothBuild extends EntityAIBase{
 
 	@Override
 	public boolean shouldContinueExecuting() {
+		if(shoggoth.building == null || shoggoth.map == null) return false;
+		return shoggoth.progress < shoggoth.map.getInteger("num") && !(shoggoth.building.isDone() && shoggoth.map.hasKey(String.format("b%d", shoggoth.progress)));
+	}
+	
+	@Override
+	public void updateTask() {
 		int progress = shoggoth.progress;
 		if(progress < shoggoth.map.getInteger("num")) {
 			if(shoggoth.building == null) {
@@ -32,7 +38,6 @@ public class AIShoggothBuild extends EntityAIBase{
 				progress = 0;
 				shoggoth.building = ShoggothBuilding.getBuilding(shoggoth.world, shoggoth.map.getCompoundTag(String.format("b%d", progress)));
 			}
-			//System.out.println(shoggoth.building.progress);
 			int rotation = shoggoth.building.rotation + (shoggoth.building instanceof ShoggothLongBuilding ? 3 : 2);
 			BlockPos pos = new BlockPos(shoggoth.building.centerX, shoggoth.building.centerY, shoggoth.building.centerZ).offset(EnumFacing.getHorizontal(rotation), 5 + shoggoth.building.building.height/2);
 			int y = shoggoth.world.getHeight(pos.getX(), pos.getZ());
@@ -52,11 +57,9 @@ public class AIShoggothBuild extends EntityAIBase{
 				} else {
 					shoggoth.map = null;
 					shoggoth.progress = -1;
-					return false;
 				}
 			}
 		}
-		return shoggoth.progress < shoggoth.map.getInteger("num");
 	}
 
 }
