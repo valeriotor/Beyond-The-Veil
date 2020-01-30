@@ -266,6 +266,11 @@ public class ModelShoggoth extends ModelAnimated {
         this.setRotateAngle(bRightTentacle1, 0.0F, 0.7285004297824331F, 0.0F, addToDefault);
         this.setRotateAngle(bBackTentacle1, 0.0F, 2.86844862565268F, 0.0F, addToDefault);
         this.setRotateAngle(rightTentacleUpper, -0.5462880558742251F, 0.0F, 0.27314402793711257F, addToDefault);
+        this.setRotateAngle(upperTooth1, 0, 0.0F, 0, addToDefault);
+        this.setRotateAngle(upperTooth2, 0, 0.0F, 0, addToDefault);
+        this.setRotateAngle(upperTooth3, 0, 0.0F, 0, addToDefault);
+        this.setRotateAngle(lowerTooth1, 0, 0.0F, 0, addToDefault);
+        this.setRotateAngle(lowerTooth2, 0, 0.0F, 0, addToDefault);
     }
 
     @Override

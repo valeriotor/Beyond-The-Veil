@@ -79,7 +79,7 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	   getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);
 	   getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 	   getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
-	   getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
+	   getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 	   
 	
 	   //getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
@@ -112,6 +112,8 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	        super.onUpdate();
 	        if(!this.world.isRemote) {
 	        	this.counter--;
+	        	if((this.counter & 31) == 0 && !this.dead)
+	        		this.heal(1);
 	        	if(this.counter < 0) {
 	        		this.counter = 500;
 	        		if(this.aggressivity > 0 && this.getAttackTarget() == null)
@@ -129,6 +131,10 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	            }
 	        } else {
 	        	if(this.getDataManager().get(SPOOKING)) {
+	        		this.world.getPlayers(EntityPlayer.class, p -> p.getDistanceSq(this) < 625).forEach(p -> {
+						if(!p.capabilities.isCreativeMode && (p.getPersistentID() != this.master || this.aggressivity > 50))
+							p.capabilities.isFlying = false;
+					});
 	        		if(this.openMouthAnim == null) {
 	        			this.openMouthAnim = new Animation(AnimationRegistry.shoggoth_open_mouth);
 	        		}
