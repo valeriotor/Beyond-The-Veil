@@ -135,6 +135,9 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	}
 	
 	@Override
+	public void fall(float distance, float damageMultiplier) {}
+	
+	@Override
 	public void setLacrymatory(BlockPos pos) {
 		this.lacrymatory = pos;
 	}

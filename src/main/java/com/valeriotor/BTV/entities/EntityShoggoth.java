@@ -69,6 +69,9 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 		return true;
 	}
 	
+	@Override
+	public void fall(float distance, float damageMultiplier) {}
+	
 	protected void applyEntityAttributes() {
 	    super.applyEntityAttributes(); 
 

@@ -39,11 +39,8 @@ public class LivingEvents {
 	public static boolean cancelDamage(LivingHurtEvent e) {
 		EntityLivingBase ent = e.getEntityLiving();
 		DamageSource d = e.getSource();
-		if(ent instanceof EntityFletum) {
-			if(d == DamageSource.FALL) return true;
-		} else if(ent instanceof EntityShoggoth) {
-			if( d == DamageSource.FALL ||
-				d == DamageSource.IN_WALL || 
+		if(ent instanceof EntityShoggoth) {
+			if( d == DamageSource.IN_WALL || 
 				d == DamageSource.CRAMMING) return true;
 			if(e.getAmount() > 8 && !DEBUG) e.setAmount(8);
 		}
