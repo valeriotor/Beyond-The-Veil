@@ -11,6 +11,7 @@ import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.shoggoth.ShoggothBuilding;
 import com.valeriotor.BTV.util.ItemHelper;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -144,7 +145,18 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 				if(animTicks%400 == 0 && eyeTentacleAnim == null) this.eyeTentacleAnim = new Animation(AnimationRegistry.shoggoth_eye_tentacle);
 			}
 	 }
-	
+	 
+	 @Override
+	public boolean attackEntityAsMob(Entity e) {
+		 boolean bool = super.attackEntityAsMob(e);
+		 if(e instanceof EntityPlayer) {
+			 EntityPlayer p = (EntityPlayer)e;
+			 if(!p.isDead)
+				 p.setHealth(p.getHealth()-1);
+		 }
+		 return bool;
+	}
+	 
 	@SideOnly(Side.CLIENT)
 	public int getAnimTicks() {
 		return animTicks;
