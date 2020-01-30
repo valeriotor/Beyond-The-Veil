@@ -114,7 +114,7 @@ public class ModelShoggoth extends ModelAnimated {
         this.bBackTentacle4 = new ModelRenderer(this, 0, 0);
         this.bBackTentacle4.setRotationPoint(0.0F, 2.0F, -8.0F);
         this.bBackTentacle4.addBox(-3.0F, 0.0F, -8.0F, 6, 6, 8, 0.0F);
-        this.upperTooth1 = new ModelRenderer(this, -4, 0);
+        this.upperTooth1 = new ModelRenderer(this, 19, 0);
         this.upperTooth1.setRotationPoint(9.0F, 1.0F, 0.0F);
         this.upperTooth1.addBox(-2.0F, 0.0F, 0.0F, 4, 24, 4, 0.0F);
         this.eyeTentacleUpper = new ModelRenderer(this, 0, 0);
@@ -162,7 +162,7 @@ public class ModelShoggoth extends ModelAnimated {
         this.bBackTentacle1 = new ModelRenderer(this, 0, 0);
         this.bBackTentacle1.setRotationPoint(-6.0F, -0.1F, 51.0F);
         this.bBackTentacle1.addBox(-8.0F, 0.0F, -6.0F, 16, 8, 7, 0.0F);
-        this.upperTooth2 = new ModelRenderer(this, -5, 0);
+        this.upperTooth2 = new ModelRenderer(this, 19, 0);
         this.upperTooth2.setRotationPoint(0.0F, 1.0F, 0.0F);
         this.upperTooth2.addBox(-2.0F, 0.0F, 0.0F, 4, 24, 4, 0.0F);
         this.rightTentacleUpper = new ModelRenderer(this, 0, 0);
