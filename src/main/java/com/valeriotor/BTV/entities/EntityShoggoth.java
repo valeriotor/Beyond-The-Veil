@@ -4,7 +4,10 @@ import java.util.UUID;
 
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
+import com.valeriotor.BTV.entities.AI.AIRevenge;
 import com.valeriotor.BTV.entities.AI.AIShoggothBuild;
+import com.valeriotor.BTV.entities.AI.AISpook;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.shoggoth.ShoggothBuilding;
 import com.valeriotor.BTV.util.ItemHelper;
 
@@ -15,6 +18,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,18 +30,21 @@ import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityShoggoth extends EntityMob{
+public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion{
 	
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityShoggoth.class, DataSerializers.BYTE);
+	private static final DataParameter<Boolean> SPOOKING = EntityDataManager.<Boolean>createKey(EntityShoggoth.class, DataSerializers.BOOLEAN);
 	
 	private int animTicks = 0;
 	private int aggroTicks = 100;
+	private int counter = 500;
 	private Animation openMouthAnim = null;
 	private Animation eyeTentacleAnim = null;
 	public NBTTagCompound map = null;
@@ -46,6 +53,7 @@ public class EntityShoggoth extends EntityMob{
 	private int talkCount = 0;
 	private UUID master;
 	private int aggressivity = 0;
+	private int spookCooldown = 300;
 	
 	public EntityShoggoth(World worldIn) {
 		this(worldIn, null);
@@ -53,7 +61,7 @@ public class EntityShoggoth extends EntityMob{
 	
 	public EntityShoggoth(World worldIn, EntityPlayer master) {
 		super(worldIn);
-		this.setSize(3, 3);
+		this.setSize(2.5F, 2.5F);
 		if(master != null) this.master = master.getPersistentID();
 	}
 	
@@ -78,16 +86,20 @@ public class EntityShoggoth extends EntityMob{
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(CLIMBING, Byte.valueOf((byte)0));
+		this.dataManager.register(SPOOKING, false);
 	}
 	
 	 protected void initEntityAI() {
 		//this.tasks.addTask(0, new EntityAISwimming(this));
 		//this.tasks.addTask(1, new AISwim(this));
-		this.tasks.addTask(0, new EntityAIAttackMelee(this, 2, true));
-		this.tasks.addTask(2, new AIShoggothBuild(this));
+	    this.tasks.addTask(1, new AISpook(this));
+		this.tasks.addTask(2, new EntityAIAttackMelee(this, 2, true));
+		this.tasks.addTask(3, new AIShoggothBuild(this));
 		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false, p -> (this.master != null && (this.world.getPlayerEntityByUUID(this.master) != p || this.aggressivity > 50))));
+		this.targetTasks.addTask(0, new AIRevenge(this));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false, p -> (this.master == null || this.world.getPlayerEntityByUUID(this.master) != p || this.aggressivity > 50)));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, true));
 		 
 	 }
 	
@@ -95,27 +107,38 @@ public class EntityShoggoth extends EntityMob{
 	 public void onUpdate() {
 	        super.onUpdate();
 	        if(!this.world.isRemote) {
+	        	this.counter--;
+	        	if(this.counter < 0) {
+	        		this.counter = 500;
+	        		if(this.aggressivity > 0 && this.getAttackTarget() == null)
+	        			this.aggressivity--;
+	        	}
 	            this.setBesideClimbableBlock(this.collidedHorizontally);
+	            if(this.spookCooldown > 0)
+	            	this.spookCooldown--;
 	            if(this.getAttackTarget() instanceof EntityPlayer) {
 	            	this.aggroTicks--;
 	            	if(this.aggroTicks <= 0) {
 	            		this.aggroTicks = 100;
-	            		this.aggressivity += 10;
+	            		this.aggressivity += 3;
 	            	}
 	            }
 	        } else {
+	        	if(this.getDataManager().get(SPOOKING)) {
+	        		if(this.openMouthAnim == null) {
+	        			this.openMouthAnim = new Animation(AnimationRegistry.shoggoth_open_mouth);
+	        		}
+	        	}
 				if(openMouthAnim != null) {
 					openMouthAnim.update();
 					if(openMouthAnim.isDone()) openMouthAnim = null;
-				}
-				if(eyeTentacleAnim != null) {
+				} else if(eyeTentacleAnim != null) {
 					eyeTentacleAnim.update();
 					if(eyeTentacleAnim.isDone()) eyeTentacleAnim = null;
 				}
 				animTicks++;
-				animTicks%=1000;
-				if(animTicks == 999 && openMouthAnim == null) this.openMouthAnim = new Animation(AnimationRegistry.shoggoth_open_mouth);
-				if(animTicks%400 == 0 && animTicks != 0 && eyeTentacleAnim == null) this.eyeTentacleAnim = new Animation(AnimationRegistry.shoggoth_eye_tentacle);
+				animTicks%=1200;
+				if(animTicks%400 == 0 && eyeTentacleAnim == null) this.eyeTentacleAnim = new Animation(AnimationRegistry.shoggoth_eye_tentacle);
 			}
 	 }
 	
@@ -210,6 +233,7 @@ public class EntityShoggoth extends EntityMob{
 	@Override
 	public void onKillEntity(EntityLivingBase e) {
 		if(e.isNonBoss()) {
+			System.out.println(aggressivity);
 			if(!(e instanceof EntityPlayer)) {
 				this.aggressivity++;
 			} else {
@@ -221,6 +245,44 @@ public class EntityShoggoth extends EntityMob{
 	@Override
 	protected boolean canDespawn() {
 		return false;
+	}
+
+	@Override
+	public void setSpooking(boolean spook) {
+		this.dataManager.set(SPOOKING, spook);
+		this.spookCooldown = 300;
+	}
+
+	@Override
+	public SoundEvent getSound() {
+		return BTVSounds.shoggoth_screech;
+	}
+
+	@Override
+	public void spookSelf() {
+		this.motionX = 0;
+		this.motionZ = 0;
+		if(this.getAttackTarget() != null)
+			this.faceEntity(this.getAttackTarget(), 360, 360);
+	}
+
+	@Override
+	public int getSpookCooldown() {
+		return this.spookCooldown;
+	}
+
+	@Override
+	public EntityPlayer getMaster() {
+		return this.world.getMinecraftServer().getPlayerList().getPlayerByUUID(this.master);
+	}
+
+	@Override
+	public UUID getMasterID() {
+		return this.master;
+	}
+
+	@Override
+	public void setMaster(EntityPlayer p) {		
 	}
 	
 }

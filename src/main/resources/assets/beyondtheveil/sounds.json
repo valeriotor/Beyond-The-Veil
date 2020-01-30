@@ -116,5 +116,11 @@
 		"sounds": [
 			"beyondtheveil:heartbeat"
 		]
+	},
+	"shoggoth_screech": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:shoggoth_screech"
+		]
 	}
 }
