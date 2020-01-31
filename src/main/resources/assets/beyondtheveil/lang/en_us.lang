@@ -31,6 +31,19 @@ item.dream_bottle.name=Dream Bottle
 item.redstone_weed.name=Redstone Grass Seeds
 item.ghost_weed.name=Ghost Grass Seeds
 item.vanilla_weed.name=Vanilla Grass Seeds
+item.shoggoth_map.name=Shoggoth Map
+item.held_shoggoth.name=Shoggoth
+item.blood_covenant.name=Blood Covenant
+item.revelation_ring.name=Ring of Revelation
+item.azacno_charm.name=Charm of Azacno
+item.blood_crown.name=Crown of Thorns
+item.coral_staff.name=Coral Staff
+item.sigil_zombie.name=Blood Sigil: Zombie
+item.sigil_skellie.name=Blood Sigil: Skeleton
+item.sacrificial_knife.name=Sacrificial Knife
+item.memory_phial.name=Memory Phial
+item.necronomicon.name=Al Azif
+
 
 lore.flute=The sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
 lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
@@ -107,6 +120,22 @@ tile.plant_ordo.name=Ordo Plant
 tile.mutator.name=Plant Mutator
 tile.watery_cradle.name=Watery Cradle
 tile.lacrymatory.name=Lacrymatory
+tile.elder_stone_bricks.name=Elder Stone Bricks
+tile.elder_bricks.name=Elder Bricks
+tile.elder_bricks_chiseled.name=Chiseled Elder Stone Bricks
+tile.elder_stone_brick_stairs.name=Elder Stone Brick Stairs
+tile.elder_slab.name=Elder Stone Slab
+tile.heart.name=Heart
+tile.sacrifice_altar.name=Sacrificial Altar
+tile.blood_bricks.name=Blood Stone Bricks
+tile.blood_bricks_stairs.name=Blood Stone Brick Stairs
+tile.blood_bricks_slab.name=Blood Stone Brick Slab
+tile.blood_well.name=Blood Well
+tile.statue.name=Statue
+tile.sacrifice_statue.name=Statue of Sacrifice
+tile.penitence_statue.name=Statue of Penitence
+tile.memory_sieve.name=Memory Sieve
+tile.city_mapper.name=City Mapper
 
 fluid.tears=Tears
 
@@ -421,7 +450,7 @@ dweller.lhkeeperritualintro.talk0=But now, it's time you take the next step.
 dweller.lhkeeperritual.talk0=We Dwellers can't breathe water from the moment we're born. No, it comes later.
 dweller.lhkeeperritual.talk1=It is only through endless devotion to The Great Dreamer that an outsider such as you may be granted this Gift. :To us it's different. Genetic. I won't mention the details.
 dweller.lhkeeperritual.talk2=But ultimately, for both of our kinds it is only through an act of faith that we may be granted the Gift. |:You must drown.
-dweller.lhkeeperritual.talk3=There is a ritual that must be made. I could explain it to you, yet I am certain that that voice in your head will take care of that.
+dweller.lhkeeperritual.talk3=There is a ritual that must be made. I could explain it to you, yet I am certain that that voice in your head will take care of it.
 dweller.lhkeeperritual.talk4=I still remember when I underwent the ritual. You will too.
 dweller.lhkeeperritual.talk5=I was under the water, I couldn't breathe, I was going to die, I knew I was and I regretted it, I regretted everything and I couldn't breathe and they had lied to me and they had left me to drown and I had to believe but I couldn't and I was dying and I BREATHE. :In. And out. In. And out. Again. And again.
 dweller.lhkeeperritual.talk6=That was my Baptism. Soon, you shall have yours.
@@ -471,6 +500,22 @@ fletum.dialogue.7=The Crawling Chaos whispered to me. He said I'm his favourite,
 
 memory.unlock.message=A Memory of %1$s sticks to my mind. I will not forget it.
 memory.unlock.addenda=This Memory will be found in the "%1$s" research in the Necronomicon.
+
+memory.animal.name=Animal
+memory.change.name=Change
+memory.crystal.name=Crystal
+memory.darkness.name=Darkness
+memory.death.name=Death
+memory.eldritch.name=Eldritch
+memory.human.name=Human
+memory.learning.name=Learning
+memory.metal.name=Metal
+memory.power.name=Power
+memory.repair.name=Mending
+memory.sentience.name=Sentience
+memory.stillness.name=Stillness
+memory.tool.name=Tools
+memory.void.name=Void
 
 
 ##################
