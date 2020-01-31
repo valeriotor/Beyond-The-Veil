@@ -143,8 +143,8 @@ public class BlockIdol extends ModBlock{
 			if(!worldIn.isRemote) playerIn.sendMessage(new TextComponentTranslation("interact.idol.notyet"));
 			return true;
 		}
-		if(ResearchUtil.getResearchStage(playerIn, "IDOL") == 0) SyncUtil.addStringDataOnServer(playerIn, false, "IdolInteract");
 		if(!worldIn.isRemote) {
+			if(ResearchUtil.getResearchStage(playerIn, "IDOL") == 0) SyncUtil.addStringDataOnServer(playerIn, false, "IdolInteract");
 			if(Worship.getSelectedDeity(playerIn) != Deities.GREATDREAMER) Worship.setSelectedDeity(playerIn, Deities.GREATDREAMER);
 			DGWorshipHelper.levelUp(playerIn);
 		} else {

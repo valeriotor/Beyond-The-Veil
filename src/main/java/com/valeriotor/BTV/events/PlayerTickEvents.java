@@ -92,7 +92,7 @@ public class PlayerTickEvents {
 	
 	private static void waterPowers(EntityPlayer p, IPlayerData data) {
 		boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
-		if(ResearchUtil.getResearchStage(p, "BAPTISM") > 1) {
+		if(data.getString(PlayerDataLib.RITUALQUEST)) {
 			if(p.isInsideOfMaterial(Material.WATER)) {
 				double motX = p.motionX * 1.2;
 				double motY = p.motionY * 1.25;
