@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import thaumcraft.api.blocks.BlocksTC;
 
 public class TileArborealGeneratorBottom extends TileEntity implements ITickable{
 	
@@ -67,10 +66,8 @@ public class TileArborealGeneratorBottom extends TileEntity implements ITickable
 	}
 	
 	public IBlockState getRandomSapling() {
-		int i = this.world.rand.nextInt(52);
-		if(i < 48) return Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.values()[i/8]);
-		else if(i < 51) return BlocksTC.saplingGreatwood.getDefaultState();
-		else return BlocksTC.saplingGreatwood.getDefaultState();
+		int i = this.world.rand.nextInt(48);
+		return Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.values()[i/8]);
 	}
 	
 	public void progress(BlockPos pos) {

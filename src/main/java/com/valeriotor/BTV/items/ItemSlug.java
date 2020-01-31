@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.items;
 
+import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
+
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -11,7 +13,6 @@ import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
-import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,10 +27,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-
-import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
 
 public class ItemSlug extends ItemFood{
 	
@@ -71,7 +68,6 @@ public class ItemSlug extends ItemFood{
 	}
 	
 	private static int getFoodByLevel(EntityPlayer p) {
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(p)) {
 			return 1;
 		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(p)){
@@ -83,7 +79,6 @@ public class ItemSlug extends ItemFood{
 	}
 	
 	private static List<PotionEffect> getEffectsByLevel(EntityPlayer p){
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
 		List<PotionEffect> effects = Lists.newArrayList();
 		if(!DGWorshipHelper.researches.get(PlayerDataLib.SLUGS).isUnlocked(p)) {
 			effects.add(new PotionEffect(MobEffects.POISON, 200, 2));

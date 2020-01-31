@@ -29,7 +29,7 @@ public class PlayerDataLib {
 	public static final String RITUALQUEST = "drowned";
 	public static final String DAGONQUEST = "dagon_gold";
 	public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
-	public static final String FOUND_HAMLET = "found_hamlet";
+	public static final String FOUND_HAMLET = "FindHamlet";
 	public static final String TRANSFORMED = "transformed";
 	public static final String OLDTRUTH = "old_truth";
 	public static final String VOID = "void";

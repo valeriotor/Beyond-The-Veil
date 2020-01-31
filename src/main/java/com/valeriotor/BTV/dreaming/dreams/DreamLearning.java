@@ -22,17 +22,7 @@ public class DreamLearning extends Dream{
 
 	@Override
 	public boolean activate(EntityPlayer p, World w) {
-		HashMap<String, ResearchStatus> stati = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
-		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-		for(Entry<String, ResearchStatus> entry : stati.entrySet()) {
-			if(entry.getValue().isLearnable(stati, data)) {
-				ResearchUtil.learnResearchServer(p, entry.getKey());
-				if(entry.getKey().equals("CRYSTALDREAMS"))
-					Memory.METAL.unlock(p, false);
-				return true;
-			}
-		}
-		return false;
+		return ResearchUtil.learn(p);
 	}
 
 }

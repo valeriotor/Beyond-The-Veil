@@ -13,7 +13,6 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import thaumcraft.api.ThaumcraftMaterials;
 
 public class HamletTownHall extends HamletStructure{
 	
@@ -42,9 +41,7 @@ public class HamletTownHall extends HamletStructure{
 			for(int[] n : this.worn_bricks) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), BlockRegistry.WornBricks.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), BlockRegistry.DampWood.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_arcane) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), thaumcraft.api.blocks.BlocksTC.pedestalArcane.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.flesh_block) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), thaumcraft.api.blocks.BlocksTC.fleshBlock.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood_stairs) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]));
 			for(int[] n : this.worn_brick_stairs) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]));
 			for(int[] n : this.bookshelf) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.BOOKSHELF.getStateFromMeta(n[3]));
@@ -58,9 +55,7 @@ public class HamletTownHall extends HamletStructure{
 			for(int[] n : this.worn_bricks) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), BlockRegistry.WornBricks.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), BlockRegistry.DampWood.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_arcane) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), thaumcraft.api.blocks.BlocksTC.pedestalArcane.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.flesh_block) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), thaumcraft.api.blocks.BlocksTC.fleshBlock.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood_stairs) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.DampWoodStairs.FACING, BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.DampWoodStairs.FACING).rotateYCCW().rotateYCCW().rotateYCCW()));
 			for(int[] n : this.worn_brick_stairs) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.WornBrickStairs.FACING, BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.WornBrickStairs.FACING).rotateYCCW().rotateYCCW().rotateYCCW()));
 			for(int[] n : this.bookshelf) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.BOOKSHELF.getStateFromMeta(n[3]));
@@ -74,9 +69,7 @@ public class HamletTownHall extends HamletStructure{
 			for(int[] n : this.worn_bricks) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), BlockRegistry.WornBricks.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), BlockRegistry.DampWood.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_arcane) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), thaumcraft.api.blocks.BlocksTC.pedestalArcane.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.flesh_block) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), thaumcraft.api.blocks.BlocksTC.fleshBlock.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood_stairs) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.DampWoodStairs.FACING, BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.DampWoodStairs.FACING).rotateYCCW().rotateYCCW()));
 			for(int[] n : this.worn_brick_stairs) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.WornBrickStairs.FACING, BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.WornBrickStairs.FACING).rotateYCCW().rotateYCCW()));
 			for(int[] n : this.bookshelf) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.BOOKSHELF.getStateFromMeta(n[3]));
@@ -90,9 +83,7 @@ public class HamletTownHall extends HamletStructure{
 			for(int[] n : this.worn_bricks) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), BlockRegistry.WornBricks.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), BlockRegistry.DampWood.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_arcane) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), thaumcraft.api.blocks.BlocksTC.pedestalArcane.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.flesh_block) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), thaumcraft.api.blocks.BlocksTC.fleshBlock.getStateFromMeta(n[3]));
 			for(int[] n : this.damp_wood_stairs) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.DampWoodStairs.FACING, BlockRegistry.DampWoodStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.DampWoodStairs.FACING).rotateYCCW()));
 			for(int[] n : this.worn_brick_stairs) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).withProperty(BlockRegistry.WornBrickStairs.FACING, BlockRegistry.WornBrickStairs.getStateFromMeta(n[3]).getValue(BlockRegistry.WornBrickStairs.FACING).rotateYCCW()));
 			for(int[] n : this.bookshelf) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.BOOKSHELF.getStateFromMeta(n[3]));

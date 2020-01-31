@@ -4,12 +4,10 @@ import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
-import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.world.Structures.loot.LootTables;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
@@ -54,8 +52,6 @@ public class HamletLightHouse extends HamletStructure{
 			for(int[] n : this.damp_wood_fence) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), BlockRegistry.DampWoodFence.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_ancient) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), thaumcraft.api.blocks.BlocksTC.pedestalAncient.getStateFromMeta(n[3]));
-			for(int[] n : this.research_table) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), thaumcraft.api.blocks.BlocksTC.researchTable.getStateFromMeta(n[3]));
 			for(int[] n : this.prismarine) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.PRISMARINE.getStateFromMeta(n[3]));
 			for(int[] n : this.hellrock) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.NETHERRACK.getStateFromMeta(n[3]));
 			for(int[] n : this.fire) world.setBlockState(new BlockPos(x+n[0], y+n[1], z+n[2]), Blocks.FIRE.getStateFromMeta(n[3]));
@@ -74,8 +70,6 @@ public class HamletLightHouse extends HamletStructure{
 			for(int[] n : this.damp_wood_fence) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), BlockRegistry.DampWoodFence.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_ancient) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), thaumcraft.api.blocks.BlocksTC.pedestalAncient.getStateFromMeta(n[3]));
-			for(int[] n : this.research_table) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), thaumcraft.api.blocks.BlocksTC.researchTable.getStateFromMeta(n[3]));
 			for(int[] n : this.prismarine) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.PRISMARINE.getStateFromMeta(n[3]));
 			for(int[] n : this.hellrock) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.NETHERRACK.getStateFromMeta(n[3]));
 			for(int[] n : this.fire) world.setBlockState(new BlockPos(x-n[2], y+n[1], z+n[0]), Blocks.FIRE.getStateFromMeta(n[3]));
@@ -94,8 +88,6 @@ public class HamletLightHouse extends HamletStructure{
 			for(int[] n : this.damp_wood_fence) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), BlockRegistry.DampWoodFence.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_ancient) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), thaumcraft.api.blocks.BlocksTC.pedestalAncient.getStateFromMeta(n[3]));
-			for(int[] n : this.research_table) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), thaumcraft.api.blocks.BlocksTC.researchTable.getStateFromMeta(n[3]));
 			for(int[] n : this.prismarine) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.PRISMARINE.getStateFromMeta(n[3]));
 			for(int[] n : this.hellrock) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.NETHERRACK.getStateFromMeta(n[3]));
 			for(int[] n : this.fire) world.setBlockState(new BlockPos(x-n[0], y+n[1], z-n[2]), Blocks.FIRE.getStateFromMeta(n[3]));
@@ -114,14 +106,11 @@ public class HamletLightHouse extends HamletStructure{
 			for(int[] n : this.damp_wood_fence) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), BlockRegistry.DampWoodFence.getStateFromMeta(n[3]));
 			for(int[] n : this.seaLantern) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.SEA_LANTERN.getStateFromMeta(n[3]));
 			for(int[] n : this.chest) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.CHEST.getStateFromMeta(n[3]));
-			for(int[] n : this.pedestal_ancient) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), thaumcraft.api.blocks.BlocksTC.pedestalAncient.getStateFromMeta(n[3]));
-			for(int[] n : this.research_table) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), thaumcraft.api.blocks.BlocksTC.researchTable.getStateFromMeta(n[3]));
 			for(int[] n : this.prismarine) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.PRISMARINE.getStateFromMeta(n[3]));
 			for(int[] n : this.hellrock) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.NETHERRACK.getStateFromMeta(n[3]));
 			for(int[] n : this.fire) world.setBlockState(new BlockPos(x+n[2], y+n[1], z-n[0]), Blocks.FIRE.getStateFromMeta(n[3]));
 			}
 		
-		thaumcraft.api.ThaumcraftInvHelper.insertStackAt(this.world, this.getPosFromArray(this.pedestal_ancient[0], this.facing), EnumFacing.UP, new ItemStack(thaumcraft.api.items.ItemsTC.curio, 1, 3), false);
 		for(int[] n : this.chest) {
 			TileEntity t = world.getTileEntity(this.getPosFromArray(n, facing));
 			if(t instanceof TileEntityChest) {
@@ -525,18 +514,6 @@ public class HamletLightHouse extends HamletStructure{
 	static int[][] chest = { 
 
 			{-1, 12, -2, 5}, {-1, 12, -1, 5}, {-1, 12, 2, 5}, {-1, 12, 3, 5}, {-1, 13, -2, 5}, {-1, 13, -1, 5}, {-1, 13, 2, 5}, {-1, 13, 3, 5}, 
-
-			}; 
-			 
-	static int[][] pedestal_ancient = { 
-
-			{-1, 18, -1, 0}, 
-
-			}; 
-			 
-	static int[][] research_table = { 
-
-			{-1, 18, 2, 4}, 
 
 			}; 
 			 

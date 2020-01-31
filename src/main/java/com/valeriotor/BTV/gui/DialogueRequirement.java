@@ -5,11 +5,10 @@ import java.util.function.Predicate;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.gui.DialogueHandler.Branches;
-import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.research.ResearchUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DialogueRequirement {
 	
@@ -64,13 +63,13 @@ public class DialogueRequirement {
 		map.put("lecture22", new DialogueRequirement("lecture", Branches.TELLME.getName(), -1, 2, null));
 		map.put("gratitude0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, null));
 		map.put("gratitude1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, null));
-		map.put("dreamer0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET@2")));
-		map.put("dreamer1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET@2")));
+		map.put("dreamer0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHNGHAMLET") == 1));
+		map.put("dreamer1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHNGHAMLET") == 1));
 		map.put("greatdreamer0", new DialogueRequirement("dreamer", "", 0, 0, null));
 		map.put("greatdreamer1", new DialogueRequirement("dreamer", Branches.LIES.getName(), -1, 1, null));
 		map.put("ocean0", new DialogueRequirement("greatdreamer", "", -1, 2, null));
 		map.put("canoe0", new DialogueRequirement("impressed", "", -1, 3, null));
-		map.put("ritualintro0", new DialogueRequirement("impressed", "", -1, 3, p -> ThaumcraftCapabilities.getKnowledge(p).isResearchComplete("CANOE")));
+		map.put("ritualintro0", new DialogueRequirement("impressed", "", -1, 3, p -> ResearchUtil.isResearchComplete(p, "CANOE")));
 		map.put("ritual0", new DialogueRequirement("ritualintro", "", -1, 1, null));
 		map.put("friend0", new DialogueRequirement("ritual", "", -1, 7, null));
 		map.put("oldtruth0", new DialogueRequirement("iknow", Branches.DRUNK.getName(), -1, 1, null));

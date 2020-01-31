@@ -34,8 +34,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
-import thaumcraft.api.aspects.AspectHelper;
-import thaumcraft.api.items.ItemsTC;
 
 public class ItemDreamBottle extends Item{
 	
@@ -108,20 +106,22 @@ public class ItemDreamBottle extends Item{
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		
-		String aspects = I18n.format("tooltip.dream_bottle.containing");
+		String memories = I18n.format("tooltip.dream_bottle.containing");
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		boolean none = true;
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
 			if(nbt.hasKey(String.format("slot%d", i))) {
 				ItemStack stack2 = new ItemStack(nbt.getCompoundTag(String.format("slot%d", i)));
-				if(stack2.getItem() == ItemsTC.crystalEssence) {
-					aspects = aspects.concat(AspectHelper.getObjectAspects(stack2).getAspects()[0].getName().toUpperCase() + " ");
+				if(stack2.getItem() == ItemRegistry.memory_phial) {
+					String s = ItemHelper.checkStringTag(stack2, "memory", "none");
+					if(!s.equals("none"))
+						memories = memories.concat(Memory.getMemoryFromDataName(s).getLocalizedName() + " ");
 					none = false;
 				}
 			}
 		}
-		if(none) aspects = aspects.concat(I18n.format("tooltip.dream_bottle.none"));
-		tooltip.add(aspects);
+		if(none) memories = memories.concat(I18n.format("tooltip.dream_bottle.none"));
+		tooltip.add(memories);
 		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
 		if(fh instanceof FluidHandlerItemStack) {
 			FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();

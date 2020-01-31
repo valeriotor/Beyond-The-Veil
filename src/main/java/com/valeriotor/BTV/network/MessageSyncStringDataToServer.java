@@ -14,21 +14,18 @@ import thaumcraft.api.ThaumcraftApi;
 
 public class MessageSyncStringDataToServer implements IMessage{
 
-	private boolean isBTV;
 	private String[] keys;
 	
 	public MessageSyncStringDataToServer() {}
 	
 
-	public MessageSyncStringDataToServer(boolean isBTV, String... keys) {
-		this.isBTV = isBTV;
+	public MessageSyncStringDataToServer(String... keys) {
 		this.keys = keys;
 	}
 
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		this.isBTV = buf.readBoolean();
 		List<String> list = Lists.newArrayList();
 		while(buf.isReadable())
 			list.add(ByteBufUtils.readUTF8String(buf));
@@ -41,7 +38,6 @@ public class MessageSyncStringDataToServer implements IMessage{
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(this.isBTV);
 		for(String key : keys)
 			ByteBufUtils.writeUTF8String(buf, key);
 	}
@@ -51,10 +47,7 @@ public class MessageSyncStringDataToServer implements IMessage{
 		@Override
 		public IMessage onMessage(MessageSyncStringDataToServer message, MessageContext ctx) {
 			for(String s : message.keys) {
-				if(!message.isBTV)
-					ThaumcraftApi.internalMethods.progressResearch(ctx.getServerHandler().player, s);
-				else
-					ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(s, false);
+				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(s, false);
 			}
 			return null;
 		}

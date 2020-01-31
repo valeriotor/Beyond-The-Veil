@@ -1,7 +1,10 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.ItemTablet;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,11 +15,6 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.IPlayerKnowledge.EnumKnowledgeType;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
-import thaumcraft.api.research.ResearchCategories;
 
 public class MessageSyncAntiqueNBT implements IMessage{
 	
@@ -82,17 +80,16 @@ public class MessageSyncAntiqueNBT implements IMessage{
 				
 				
 				p.setHeldItem(hand, newStack);
+				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 				
-				IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge(p);
+				if(!data.getString("inscription_complete"))
+					SyncUtil.addStringDataOnServer(p, false, "inscription_complete");
 				
-				if(!k.isResearchKnown("inscription_complete"))
-					ThaumcraftApi.internalMethods.progressResearch(p, "inscription_complete");
-				
-				
-				if(!k.isResearchComplete(String.format("inscription%d", stack.getTagCompound().getInteger("inscription")))) {
-					ThaumcraftApi.internalMethods.addKnowledge(p, EnumKnowledgeType.OBSERVATION, ResearchCategories.getResearchCategory("BEYOND_THE_VEIL"), 16);
-					ThaumcraftApi.internalMethods.progressResearch(p, String.format("inscription%d", stack.getTagCompound().getInteger("inscription")));
-				
+				String dataKey = String.format("inscription%d", stack.getTagCompound().getInteger("inscription"));
+				if(!data.getString(dataKey)) {
+					// TODO: Add reward (or maybe it's now usable for learning?)
+					System.out.println(dataKey);
+					SyncUtil.addStringDataOnServer(p, false, dataKey);
 				}
 			}
 			return null;

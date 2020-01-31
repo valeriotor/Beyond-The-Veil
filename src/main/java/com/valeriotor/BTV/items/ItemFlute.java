@@ -5,10 +5,10 @@ import java.util.List;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.potions.PotionRegistry;
+import com.valeriotor.BTV.research.ResearchUtil;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,19 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.IPlayerWarp;
-import thaumcraft.api.capabilities.IPlayerWarp.EnumWarpType;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class ItemFlute extends Item{
 	public ItemFlute() {
@@ -84,15 +78,12 @@ public class ItemFlute extends Item{
 				((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300));
 			}
 		});
-		IPlayerWarp w = ThaumcraftCapabilities.getWarp((EntityPlayer) player);
-		IPlayerKnowledge k = ThaumcraftCapabilities.getKnowledge((EntityPlayer) player);
-		if(!k.isResearchKnown("FIRSTDREAMS")) {
+		if(player instanceof EntityPlayer && !ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTDREAMS")) {
 			// TODO: Change research known requirement
 			player.addPotionEffect(new PotionEffect(PotionRegistry.folly, 300));
-			if(w.get(EnumWarpType.PERMANENT) < 3 ) {
+			if(!ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTCONTACT") ) {
 				// TODO: Learn how much warp is 'enough'
 				player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 120));
-				w.add(EnumWarpType.PERMANENT, 1);
 				
 			}
 		}
@@ -102,7 +93,7 @@ public class ItemFlute extends Item{
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§5§o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add("ï¿½5ï¿½o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

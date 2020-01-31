@@ -11,6 +11,7 @@ import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageGiveItem;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
 import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
+import com.valeriotor.BTV.research.ResearchUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -18,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DialogueHandler {
 	
@@ -179,18 +179,9 @@ public class DialogueHandler {
 	 * @return A prefix that indicates how friendly Dwellers are to the Player.
 	 */
 	public static String getFriendlyhood(EntityPlayer p) {
-		if(ThaumcraftCapabilities.knowsResearchStrict(p, "TRANSFORM")) return "friend";
-		if(ThaumcraftCapabilities.knowsResearchStrict(p, "IDOL")) return "trusted";
-		return "";/*
-		int level = Deities.GREATDREAMER.cap(p).getLevel();
-		if(level > 5)
-			return "friend";
-		if(level > 3)
-			return "trusted";
-		if(level > 1)
-			return "tolerated";
-		
-		return "";*/
+		if(ResearchUtil.isResearchComplete(p, "TRANSFORM")) return "friend";
+		if(ResearchUtil.isResearchComplete(p, "IDOL")) return "trusted";
+		return "";
 		
 	}
 	
@@ -241,12 +232,13 @@ public class DialogueHandler {
 	}
 	
 	private static void updateAdditionalData(String profession, int option, int talkCount) {
-		if(getDialogueName(profession) == Dialogues.OCEAN && !ThaumcraftCapabilities.getKnowledge(Minecraft.getMinecraft().player).isResearchComplete("FISHINGHAMLET")) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "LHKeeper"));
-		} else if(getDialogueName(profession) == Dialogues.EASYJOB && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "CANOE@2")){
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "carpenter"));
-		} else if(getDialogueName(profession) == Dialogues.RITUAL && !ThaumcraftCapabilities.knowsResearchStrict(Minecraft.getMinecraft().player, "BAPTISM@2") && talkCount == 6){
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(false, "lhbaptism"));
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		if(getDialogueName(profession) == Dialogues.OCEAN && !ResearchUtil.isResearchComplete(p, "FISHINGHAMLET")) {
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("LHKeeper"));
+		} else if(getDialogueName(profession) == Dialogues.EASYJOB && ResearchUtil.getResearchStage(p, "CANOE") == 0){
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("carpenter"));
+		} else if(getDialogueName(profession) == Dialogues.RITUAL && ResearchUtil.getResearchStage(p, "BAPTISM") == 0 && talkCount == 6){
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("lhbaptism"));
 		} else if(getDialogueName(profession) == Dialogues.PAST){
 			removeDialogue(Dialogues.IKNOW);
 			removeDialogue(Dialogues.OLDTRUTH);

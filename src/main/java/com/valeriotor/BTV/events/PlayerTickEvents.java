@@ -9,14 +9,13 @@ import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.research.ResearchUtil;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.world.BiomeRegistry;
 import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -30,8 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 @Mod.EventBusSubscriber
 public class PlayerTickEvents {
@@ -87,9 +84,8 @@ public class PlayerTickEvents {
 	private static void findHamlet(EntityPlayer p, IPlayerData data) {
 		if(p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth && !data.getString(PlayerDataLib.FOUND_HAMLET)) {
 			BlockPos pos = HamletList.get(p.world).getClosestHamlet(p.getPosition()); 
-				if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ThaumcraftCapabilities.getKnowledge(p).isResearchKnown("FISHINGHAMLET")) {
-					data.addString(PlayerDataLib.FOUND_HAMLET, false);
-					ThaumcraftApi.internalMethods.progressResearch(p, "m_FindHamlet");
+				if(pos != null && pos.distanceSq(p.getPosition()) < 3600 && ResearchUtil.getResearchStage(p, "FISHINGHAMLET") == 0) {
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.FOUND_HAMLET);
 				}
 		}
 	}

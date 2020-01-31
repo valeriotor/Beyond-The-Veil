@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 
 public class TileFumeSpreader extends TileEntity{
-	private Aspect chosenAspect;
 	private Memory memory;
 	
 	public TileFumeSpreader() {
@@ -22,23 +21,14 @@ public class TileFumeSpreader extends TileEntity{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		if(chosenAspect != null) compound.setString("containing", this.chosenAspect.getName());
 		if(memory != null) compound.setString("memory", memory.getDataName());
 		return compound;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		this.chosenAspect = thaumcraft.api.aspects.Aspect.getAspect(compound.getString("containing").toLowerCase());
 		if(compound.hasKey("memory")) this.memory = Memory.getMemoryFromDataName(compound.getString("memory"));
 		super.readFromNBT(compound); 
-	}
-	
-	public Aspect setAspect(Aspect aspect) {
-		this.chosenAspect = aspect;
-		markDirty();
-		sendUpdates(world);
-		return this.chosenAspect;
 	}
 	
 	public Memory setMemory(Memory memory) {

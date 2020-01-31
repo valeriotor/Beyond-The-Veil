@@ -211,6 +211,14 @@
 				{
 					"text": "gui.tablet.inscription7",
 					"required_research": ["inscription7"]
+				},
+				{
+					"text": "gui.tablet.inscription8",
+					"required_research": ["inscription8"]
+				},
+				{
+					"text": "gui.tablet.inscription9",
+					"required_research": ["inscription9"]
 				}
 			]
         },

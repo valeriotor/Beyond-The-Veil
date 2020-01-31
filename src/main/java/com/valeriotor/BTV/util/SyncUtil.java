@@ -108,7 +108,7 @@ public class SyncUtil {
 	@SideOnly(Side.CLIENT)
 	public static void addStringDataOnClient(EntityPlayer p, boolean temporary, String string) {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
-		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(true, string));
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer(string));
 	}
 	
 	/*@SideOnly(Side.CLIENT)
