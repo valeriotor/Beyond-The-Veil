@@ -50,7 +50,6 @@ public class ItemRegistry {
 	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
 	public static final ItemBlackjack blackjack = new ItemBlackjack();
 	public static final ModItem spine = new ModItem("spine");
-	public static final ModItem tears = new ModItem("tears");
 	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
 	public static final ItemHeldWeeper held_weeper = new ItemHeldWeeper("held_weeper");
 	public static final ItemHeldFletum held_fletum = new ItemHeldFletum("held_fletum");
@@ -102,7 +101,6 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(vanilla_weed_seeds, 0, "inventory");
         ClientProxy.registerItemRenderer(blackjack, 0, "inventory");
         ClientProxy.registerItemRenderer(spine, 0, "inventory");
-        ClientProxy.registerItemRenderer(tears, 0, "inventory");
         ClientProxy.registerItemRenderer(held_villager, 0, "inventory");
         ClientProxy.registerItemRenderer(held_weeper, 0, "inventory");
         ClientProxy.registerItemRenderer(held_fletum, 0, "inventory");
@@ -233,7 +231,6 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.bronze_sphere);
     	registry.register(ItemRegistry.blackjack);
     	registry.register(ItemRegistry.spine);
-    	registry.register(ItemRegistry.tears);
     	registry.register(ItemRegistry.held_villager);
     	registry.register(ItemRegistry.held_weeper);
     	registry.register(ItemRegistry.held_fletum);
