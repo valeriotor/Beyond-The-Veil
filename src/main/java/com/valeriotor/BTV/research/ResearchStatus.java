@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
+import com.valeriotor.BTV.events.ResearchEvents;
 import com.valeriotor.BTV.research.Research.SubResearch;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,29 +34,27 @@ public class ResearchStatus {
 	public boolean canProgressStage(IPlayerData data) {
 		return !complete && this.res.getStages()[stage].meetsRequirements(data);
 	}
-	
+
 	public boolean progressStage(EntityPlayer p) {
-		return this.progressStage(p.getCapability(PlayerDataProvider.PLAYERDATA, null));
-	}
-	
-	public boolean progressStage(IPlayerData data) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		SubResearch[] stages = this.res.getStages();
 		if(this.stage >= 0 && this.stage < stages.length) {
 			if(stages[stage].meetsRequirements(data)) {
-				this.progressStage_internal();
+				this.progressStage_internal(p);
 				return true;
 			}
 		} else if(this.stage == -1) {
-			this.progressStage_internal();
+			this.progressStage_internal(p);
 			return true;
 		}
 		return false;
 	}
 	
-	private void progressStage_internal() {
+	private void progressStage_internal(EntityPlayer p) {
 		int maxStage = res.getStages().length - 1;
 		if(this.stage < maxStage) {
 			this.stage++;
+			ResearchEvents.progressResearchEvent(p, res.getKey(), this.stage);
 			if(this.stage == maxStage)
 				this.complete = true;
 		}

@@ -12,6 +12,7 @@ import com.valeriotor.BTV.network.MessageGiveItem;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
 import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 import com.valeriotor.BTV.research.ResearchUtil;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -179,7 +180,7 @@ public class DialogueHandler {
 	 * @return A prefix that indicates how friendly Dwellers are to the Player.
 	 */
 	public static String getFriendlyhood(EntityPlayer p) {
-		if(ResearchUtil.isResearchComplete(p, "TRANSFORM")) return "friend";
+		//if(ResearchUtil.isResearchComplete(p, "TRANSFORM")) return "friend";
 		if(ResearchUtil.isResearchComplete(p, "IDOL")) return "trusted";
 		return "";
 		
@@ -234,11 +235,11 @@ public class DialogueHandler {
 	private static void updateAdditionalData(String profession, int option, int talkCount) {
 		EntityPlayer p = Minecraft.getMinecraft().player;
 		if(getDialogueName(profession) == Dialogues.OCEAN && !ResearchUtil.isResearchComplete(p, "FISHINGHAMLET")) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("LHKeeper"));
+			SyncUtil.addStringDataOnClient(p, false, "LHKeeper");
 		} else if(getDialogueName(profession) == Dialogues.EASYJOB && ResearchUtil.getResearchStage(p, "CANOE") == 0){
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("carpenter"));
+			SyncUtil.addStringDataOnClient(p, false, "carpenter");
 		} else if(getDialogueName(profession) == Dialogues.RITUAL && ResearchUtil.getResearchStage(p, "BAPTISM") == 0 && talkCount == 6){
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncStringDataToServer("lhbaptism"));
+			SyncUtil.addStringDataOnClient(p, false, "lhbaptism");
 		} else if(getDialogueName(profession) == Dialogues.PAST){
 			removeDialogue(Dialogues.IKNOW);
 			removeDialogue(Dialogues.OLDTRUTH);

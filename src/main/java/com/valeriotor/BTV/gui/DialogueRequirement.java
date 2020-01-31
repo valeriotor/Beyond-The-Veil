@@ -63,8 +63,8 @@ public class DialogueRequirement {
 		map.put("lecture22", new DialogueRequirement("lecture", Branches.TELLME.getName(), -1, 2, null));
 		map.put("gratitude0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, null));
 		map.put("gratitude1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, null));
-		map.put("dreamer0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHNGHAMLET") == 1));
-		map.put("dreamer1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHNGHAMLET") == 1));
+		map.put("dreamer0", new DialogueRequirement("lecture2", Branches.FRIENDSLECTURE.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHINGHAMLET") == 1));
+		map.put("dreamer1", new DialogueRequirement("lecture2", Branches.THANKS.getName(), -1, 1, p -> ResearchUtil.getResearchStage(p, "FISHINGHAMLET") == 1));
 		map.put("greatdreamer0", new DialogueRequirement("dreamer", "", 0, 0, null));
 		map.put("greatdreamer1", new DialogueRequirement("dreamer", Branches.LIES.getName(), -1, 1, null));
 		map.put("ocean0", new DialogueRequirement("greatdreamer", "", -1, 2, null));

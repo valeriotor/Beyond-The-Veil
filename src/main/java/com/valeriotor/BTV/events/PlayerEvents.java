@@ -92,7 +92,6 @@ public class PlayerEvents {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
 			DGWorshipHelper.calculateModifier(event.player);
-			BeyondTheVeil.proxy.researchEvents.checkResearches(event.player);
 		}
 	}
 	
