@@ -168,8 +168,8 @@ public class GuiDialogueDweller extends GuiScreen {
 			}else {
 				proceedDialogue(false);
 			}
-		}else if(keyCode == 203 && this.selectedOption == 1) this.selectedOption = 0;
-		else if(keyCode == 205 && this.selectedOption == 0) this.selectedOption = 1; 
+		}else if((keyCode == 203 || keyCode == 30) && this.selectedOption == 1) this.selectedOption = 0;
+		else if((keyCode == 205 || keyCode == 32) && this.selectedOption == 0) this.selectedOption = 1; 
 		super.keyTyped(typedChar, keyCode);
 	}
 	
