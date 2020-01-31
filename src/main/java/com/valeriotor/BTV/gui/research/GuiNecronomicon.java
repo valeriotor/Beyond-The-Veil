@@ -15,6 +15,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.gui.GuiHelper;
 import com.valeriotor.BTV.gui.IItemRenderGui;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.research.Research;
 import com.valeriotor.BTV.research.ResearchConnection;
@@ -22,6 +23,7 @@ import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.research.ResearchStatus;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.MathHelperBTV;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -49,6 +51,8 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	public GuiNecronomicon() {
 		HashMap<String, ResearchStatus> map = Minecraft.getMinecraft().player.getCapability(ResearchProvider.RESEARCH, null).getResearches();
 		IPlayerData data = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
+		this.topY = data.getOrSetInteger(PlayerDataLib.NECRO_Y, -200, false);
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			if(entry.getValue().isKnown(map, data)) {
 				if(entry.getValue().getStage() == -1)
@@ -109,17 +113,6 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 		super.updateScreen();
 	}
 	
-	@Override
-	public void handleMouseInput() throws IOException {
-		if(Mouse.isButtonDown(0)) {
-			topX = MathHelperBTV.clamp(-700, 3840 - this.width/2, topX - Mouse.getDX());
-			topY = MathHelperBTV.clamp(-700, 2160 - this.height/2, topY + Mouse.getDY());
-		}
-		this.factor = MathHelperBTV.clamp(2, 5, this.factor + (int)Math.signum(Mouse.getDWheel()));
-		super.handleMouseInput();
-	}
-	
-	
 	private void drawResearch(Research res, int mouseX, int mouseY) {
 		int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
 		if(resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {		
@@ -158,7 +151,15 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 		}
 	}
 	
-	
+	@Override
+	public void handleMouseInput() throws IOException {
+		if(Mouse.isButtonDown(0)) {
+			topX = MathHelperBTV.clamp(-700, 3840 - this.width/2, topX - Mouse.getDX());
+			topY = MathHelperBTV.clamp(-700, 2160 - this.height/2, topY + Mouse.getDY());
+		}
+		this.factor = MathHelperBTV.clamp(2, 5, this.factor + (int)Math.signum(Mouse.getDWheel()));
+		super.handleMouseInput();
+	}
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -171,11 +172,27 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if (keyCode == 1)
+        {
+            this.mc.displayGuiScreen((GuiScreen)null);
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_Y, this.topY);
+            if (this.mc.currentScreen == null)
+            {
+                this.mc.setIngameFocus();
+            }
+        }
+	}
+	
 	private boolean openResearch(Research res, int mouseX, int mouseY) {
 		int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
 		if(mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
 			ResearchStatus status = ResearchUtil.getResearch(mc.player, res.getKey());
 			if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_Y, this.topY);
 			this.mc.displayGuiScreen(new GuiResearchPage(status));
 			return true;
 		}
