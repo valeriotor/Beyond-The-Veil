@@ -69,6 +69,7 @@ public class ItemRegistry {
 	public static final ItemBloodSigil sigil_skellie = new ItemBloodSigil("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
 	public static final ItemSacrificialKnife sacrificial_knife = new ItemSacrificialKnife("sacrificial_knife");
 	public static final ItemMemoryPhial memory_phial = new ItemMemoryPhial("memory_phial");
+	public static final ItemNecronomicon necronomicon = new ItemNecronomicon("necronomicon");
 	
 	
 	
@@ -120,6 +121,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(sigil_skellie, 0, "inventory");
         ClientProxy.registerItemRenderer(sacrificial_knife, 0, "inventory");
         ClientProxy.registerItemRenderer(memory_phial, 0, "inventory");
+        ClientProxy.registerItemRenderer(necronomicon, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -250,6 +252,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.sigil_skellie);
     	registry.register(ItemRegistry.sacrificial_knife);
     	registry.register(ItemRegistry.memory_phial);
+    	registry.register(ItemRegistry.necronomicon);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);

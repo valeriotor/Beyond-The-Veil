@@ -28,7 +28,6 @@ import net.minecraft.world.World;
 
 public class TestItem extends Item //implements IHasModel
 {
-	private static final boolean NECRODEBUG = true;
 	public TestItem() {
 		setRegistryName(References.MODID +":testitem");
 		setUnlocalizedName("testitem");
@@ -45,13 +44,6 @@ public class TestItem extends Item //implements IHasModel
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(NECRODEBUG) {
-			if(worldIn.isRemote) {
-				player.openGui(BeyondTheVeil.instance, 5, worldIn, pos.getX(), pos.getY(), pos.getZ());
-				return EnumActionResult.SUCCESS;
-			} else
-				return EnumActionResult.FAIL;
-		}
 		if(worldIn.isRemote) {
 		
 		ItemStack stack = player.getHeldItem(hand);
