@@ -20,42 +20,6 @@
 				},
 				{
 					"type": "item",
-					"name": "thaumcraft:baubles",
-					"functions": [
-						{
-							"function": "set_count",
-							"count": 1
-						},
-						{
-							"function": "set_data",
-							"data": {
-								"min": 0,
-								"max": 6
-							}
-						}
-					],
-					"weight": 7
-				},
-				{
-					"type": "item",
-					"name": "thaumcraft:curio",
-					"functions": [
-						{
-							"function": "set_count",
-							"count": 1
-						},
-						{
-							"function": "set_data",
-							"data": {
-								"min": 2,
-								"max": 4
-							}
-						}
-					],
-					"weight": 1
-				},
-				{
-					"type": "item",
 					"name": "minecraft:paper",
 					"functions": [
 						{
@@ -84,7 +48,7 @@
 				},
 				{
 					"type": "item",
-					"name": "thaumcraft:scribing_tools",
+					"name": "beyondtheveil:drink_mead",
 					"functions": [
 						{
 							"function": "set_count",
@@ -92,6 +56,17 @@
 						}
 					],
 					"weight": 3
+				},
+				{
+					"type": "item",
+					"name": "beyondtheveil:memory_phial",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": 1
+						}
+					],
+					"weight": 6
 				}
 			]
 		},
@@ -99,6 +74,11 @@
 			"name": "tablet",
 			"rolls": 1,
 			"entries": [
+				{
+					"type": "item",
+					"name": "beyondtheveil:surgery_tools",
+					"weight": 1
+				},
 				{
 					"type": "item",
 					"name": "beyondtheveil:tablet",

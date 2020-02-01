@@ -12,7 +12,6 @@ import com.valeriotor.BTV.tileEntities.TileWateryCradle.PatientTypes;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -22,9 +21,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class MessageWateryCradle implements IMessage{
 	

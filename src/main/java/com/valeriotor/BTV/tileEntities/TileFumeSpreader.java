@@ -10,7 +10,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
 
 public class TileFumeSpreader extends TileEntity{
 	private Memory memory;

@@ -20,9 +20,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PlantOrdo extends BlockTallPlant implements IMutationCatalyst{
+public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 
-	public PlantOrdo(String name) {
+	public PlantVijhiss(String name) {
 		super(Material.PLANTS, name);
 		
 	}

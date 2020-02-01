@@ -2,7 +2,6 @@ package com.valeriotor.BTV.dreaming.dreams;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
 
 public abstract class Dream{
 	

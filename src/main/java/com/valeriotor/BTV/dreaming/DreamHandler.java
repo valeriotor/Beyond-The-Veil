@@ -16,7 +16,6 @@ import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageOpenGuiToClient;
-import com.valeriotor.BTV.network.MessageRemoveStringToClient;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -29,8 +28,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DreamHandler {
 	
@@ -116,17 +113,17 @@ public class DreamHandler {
 		return true;
 	}
 	
-	/** Checks if the player already has the "research" (not a true entry) corresponding to that aspect.
+	/** Checks if the player already has the "research" (not a true entry) corresponding to that Memory.
 	 *  If not, it gives him the research as well as a status message.
 	 *  
 	 * @param p The player who just woke up
-	 * @param aspect The aspect that influenced the dream
+	 * @param name The memory that influenced the dream
 	 */
 	private static void unlockResearch(EntityPlayer p, String name) {
 		SyncUtil.addStringDataOnServer(p, false, name.concat("Dream"));
 	}
 	
-	/** Checks whether the chosen aspect causes a long Dream. If so, "aspectDream" should not be unlocked
+	/** Checks whether the chosen Memory causes a long Dream. If so, "memoryDream" should not be unlocked
 	 *  immediately, but only when the Dream ends.
 	 * 
 	 */

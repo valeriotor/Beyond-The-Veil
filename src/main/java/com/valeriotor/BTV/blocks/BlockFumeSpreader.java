@@ -38,8 +38,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.items.ItemsTC;
 
 public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	

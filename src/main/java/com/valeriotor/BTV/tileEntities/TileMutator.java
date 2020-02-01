@@ -11,8 +11,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.blocks.BlocksTC;
 
 public class TileMutator extends TileEntity implements ITickable{
 	
@@ -22,7 +20,6 @@ public class TileMutator extends TileEntity implements ITickable{
 	private float mutationMultiplier = 1;
 	// Increased by PlantOrdo. Maybe other factors.
 	private float spreadMultiplier = 1;
-	private Aspect aspect;
 	private boolean isCovered = false;
 	
 	
@@ -34,7 +31,6 @@ public class TileMutator extends TileEntity implements ITickable{
 		compound.setInteger("counter", this.counter);
 		compound.setFloat("mMultiplier", this.mutationMultiplier);
 		compound.setFloat("sMultiplier", this.spreadMultiplier);
-		if(this.aspect != null) compound.setString("aspect", this.aspect.getName());
 		return compound;
 	}
 	
@@ -44,15 +40,13 @@ public class TileMutator extends TileEntity implements ITickable{
 		this.counter = compound.getInteger("counter");
 		this.mutationMultiplier = compound.getFloat("mMultiplier");
 		this.spreadMultiplier = compound.getFloat("sMultiplier");
-		if(compound.hasKey("aspect"))
-			this.aspect = thaumcraft.api.aspects.Aspect.getAspect(compound.getString("aspect").toLowerCase());
 		super.readFromNBT(compound);
 	}
 	
 	@Override
 	public void update() {
 		if(this.world.isRemote) return;
-		if(this.aspect != null && this.isCovered){
+		if(this.isCovered){
 			this.counter++;
 			if(this.counter%20 == 19) {
 				for(int x = -12; x < 12; x++) {
@@ -61,9 +55,9 @@ public class TileMutator extends TileEntity implements ITickable{
 							Block b2 = this.world.getBlockState(pos.add(x, y, z)).getBlock(); 
 							if(b2 instanceof IMutationCatalyst) {
 								this.mutation += ((IMutationCatalyst) b2).mutationIncrease() * this.mutationMultiplier;
-							}
+							}	// TODO: Make vanilla plants work too (and be spread as well)
 							if(b2 instanceof BlockPlant) {
-								((BlockPlant)b2).spread(this.world, this.pos.add(x, y, z), this.mutation, this.aspect.getName(), this.spreadMultiplier);
+								((BlockPlant)b2).spread(this.world, this.pos.add(x, y, z), this.mutation, this.spreadMultiplier);
 							}
 						}
 					}
@@ -81,7 +75,6 @@ public class TileMutator extends TileEntity implements ITickable{
 	}
 	
 	public void blockNeighbourUpdate() {
-		this.aspect = this.getAspectFromCrystal(this.world.getBlockState(this.pos.down()).getBlock());
 		if(this.world.getBlockState(this.pos.up()).getBlock() == Blocks.GRASS || this.world.getBlockState(this.pos.up()).getBlock() == Blocks.DIRT) {
 			this.isCovered = true;
 		}else {
@@ -95,7 +88,7 @@ public class TileMutator extends TileEntity implements ITickable{
 			for(int y = -3; y < 4; y++) {
 				for(int z = -3; z < 4; z++) {
 					IBlockState b = this.world.getBlockState(this.pos.add(x, y, z));
-					if(b.getBlock() == BlockRegistry.PlantOrdo && b.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) {
+					if(b.getBlock() == BlockRegistry.PlantVijhiss && b.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) {
 						count++;
 						if(count >=  4) break;
 					}
@@ -110,38 +103,17 @@ public class TileMutator extends TileEntity implements ITickable{
 		return this.mutation;
 	}
 	
-	private Aspect getAspectFromCrystal(Block b) {
-		if(b == BlocksTC.crystalAir) {
-			return Aspect.AIR;
-		}else if(b == BlocksTC.crystalEarth) {
-			return Aspect.EARTH;
-		}else if(b == BlocksTC.crystalEntropy) {
-			return Aspect.ENTROPY;
-		}else if(b == BlocksTC.crystalFire) {
-			return Aspect.FIRE;
-		}else if(b == BlocksTC.crystalOrder) {
-			return Aspect.ORDER;
-		}else if(b == BlocksTC.crystalWater) {
-			return Aspect.WATER;
-		}else return null;
-	}
-	
 	private int getReqMutation() {
-		if(this.aspect == Aspect.ORDER) {
-			return 3000;
-		}else if(this.aspect == Aspect.EARTH) {
-			return 6000;
-		}
-		return 10000;
+		return 6000;
 	}
 	
 	private Block getNewPlant() {
-		if(this.aspect == Aspect.ORDER) {
-			return BlockRegistry.PlantOrdo;
-		}else if(this.aspect == Aspect.EARTH) {
-			return BlockRegistry.PlantTerra;
+		int a = this.world.rand.nextInt(2);
+		switch(a) {
+		case 0: return BlockRegistry.PlantVijhiss;
+		case 1: return BlockRegistry.PlantBreaker;
+		default: return null;
 		}
-		return BlockRegistry.PlantOrdo;
 	}
 	
 	private void completeMutation() {

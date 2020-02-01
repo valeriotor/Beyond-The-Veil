@@ -51,8 +51,8 @@ public class BlockNames {
 	public static final String VANILLAWEED = "vanilla_weed";
 	public static final String ARBOREALGENERATOR = "arboreal_generator";
 	public static final String SAPLINGSHRUB = "sapling_shrub";
-	public static final String PLANTTERRA = "plant_terra";
-	public static final String PLANTORDO = "plant_ordo";
+	public static final String PLANTBREAKER = "plant_terra";
+	public static final String PLANTVIJHISS = "plant_ordo";
 	
 	
 	

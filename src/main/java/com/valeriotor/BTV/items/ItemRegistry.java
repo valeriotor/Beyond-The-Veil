@@ -143,8 +143,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockRedstoneGrass), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantArborealGenerator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantSaplingShrub), 0, "inventory");
-        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantTerra), 0, "inventory");
-        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantOrdo), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBreaker), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantVijhiss), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMutator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockWateryCradle), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockLacrymatory), 0, "inventory");
@@ -192,8 +192,8 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
-    	registry.register(new ItemBlock(BlockRegistry.PlantTerra).setRegistryName(BlockRegistry.PlantTerra.getRegistryName()));
-    	registry.register(new ItemBlock(BlockRegistry.PlantOrdo).setRegistryName(BlockRegistry.PlantOrdo.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantBreaker).setRegistryName(BlockRegistry.PlantBreaker.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.PlantVijhiss).setRegistryName(BlockRegistry.PlantVijhiss.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockWateryCradle).setRegistryName(BlockRegistry.BlockWateryCradle.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockLacrymatory).setRegistryName(BlockRegistry.BlockLacrymatory.getRegistryName()));

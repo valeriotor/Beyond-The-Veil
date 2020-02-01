@@ -3,7 +3,6 @@ package com.valeriotor.BTV.items.container;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.InventoryBasic;
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import thaumcraft.api.items.ItemsTC;
 
 public class InventoryDreamBottle extends InventoryBasic{
 	

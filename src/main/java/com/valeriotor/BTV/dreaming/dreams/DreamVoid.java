@@ -2,15 +2,10 @@ package com.valeriotor.BTV.dreaming.dreams;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import thaumcraft.api.capabilities.IPlayerKnowledge;
-import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class DreamVoid extends Dream{
 

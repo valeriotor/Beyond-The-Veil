@@ -69,8 +69,8 @@ public class PlantBeanStalk extends BlockPlant implements IMutationCatalyst{
 	}
 	
 	@Override
-	public boolean spread(World w, BlockPos pos, int mutation, String aspect, float multiplier) {
-		if(super.spread(w, pos, mutation, aspect, multiplier)) {
+	public boolean spread(World w, BlockPos pos, int mutation, float multiplier) {
+		if(super.spread(w, pos, mutation, multiplier)) {
 			return true;
 		}
 		int random = w.rand.nextInt(1000);

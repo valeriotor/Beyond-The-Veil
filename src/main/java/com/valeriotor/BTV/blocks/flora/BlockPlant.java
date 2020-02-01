@@ -18,7 +18,7 @@ public class BlockPlant extends ModBlock{
 		super(materialIn, name);
 	}
 	
-	public boolean spread(World w, BlockPos pos, int mutation, String aspect, float multiplier) {
+	public boolean spread(World w, BlockPos pos, int mutation, float multiplier) {
 		if(mutation >= this.spreadMinMutation) {
 			int random = w.rand.nextInt(1000);
 			if(this.spreadChance*multiplier >= random) {
@@ -29,7 +29,7 @@ public class BlockPlant extends ModBlock{
 						IBlockState state = w.getBlockState(newPos);
 						if(state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.MYCELIUM) {
 							if(w.getBlockState(newPos.up()).getBlock() ==  Blocks.AIR) {
-								w.setBlockState(newPos.up(), getSpreadState(aspect, random));
+								w.setBlockState(newPos.up(), getSpreadState(random));
 								return true;
 							}
 						}
@@ -40,7 +40,7 @@ public class BlockPlant extends ModBlock{
 		return false;
 	}
 	
-	public IBlockState getSpreadState(String aspect, int random) {
+	public IBlockState getSpreadState(int random) {
 		return this.getDefaultState();
 	}
 	
