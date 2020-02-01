@@ -5,16 +5,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
-import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.AzacnoParasite;
@@ -22,20 +23,19 @@ import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
@@ -71,13 +71,15 @@ public class PlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void breakBlockEvent(BlockEvent.BreakEvent event) {
-		EntityPlayer p = event.getPlayer();
-		if(p instanceof EntityPlayer) {
-			Block b = p.world.getBlockState(event.getPos()).getBlock();
-			if(b == Blocks.DIAMOND_ORE || b == Blocks.EMERALD_ORE) {
-				Memory.CRYSTAL.unlock(p);
-			}
+	public static void itemCraftedEvent(ItemCraftedEvent event) {
+		if(event.player.world.isRemote) 
+			return;
+		Item i = event.crafting.getItem();
+		EntityPlayer p = event.player;
+		if(i == Item.getItemFromBlock(BlockRegistry.BlockWateryCradle) && ResearchUtil.getResearchStage(p, "WATERYCRADLE") == 0) {
+			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.CRAFTED_CRADLE);
+		} else if(i == Item.getItemFromBlock(BlockRegistry.BlockLacrymatory) && ResearchUtil.getResearchStage(p, "WEEPERS") == 1) {
+			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.CRAFTED_LACRYMATORY);
 		}
 	}
 	

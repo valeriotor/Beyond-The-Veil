@@ -21,6 +21,8 @@ public class PlayerDataLib {
 	public static final String SAPLINGS_SEEN = "saplings";
 	public static final String NECRO_X = "NecroX";
 	public static final String NECRO_Y = "NecroY";
+	public static final String CRAFTED_CRADLE = "craftedcradle";
+	public static final String CRAFTED_LACRYMATORY = "craftedlacrymatory";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler

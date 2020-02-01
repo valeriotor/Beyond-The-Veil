@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.dreaming.dreams;
 
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -27,6 +28,8 @@ public class DreamEldritch extends Dream{
 	}
 	
 	private boolean searchStronghold(EntityPlayer p, World w) {
+		if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("eldritchDream"))
+			return false;
 		BlockPos pos = w.findNearestStructure("Stronghold", p.getPosition(), false);
 		if(pos != null) p.sendMessage(new TextComponentTranslation("dreams.alienissearch.success", new Object[] {pos.getX(), pos.getZ()}));
 		else p.sendMessage(new TextComponentTranslation("dreams.alienissearch.fail"));

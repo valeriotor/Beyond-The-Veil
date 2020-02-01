@@ -22,14 +22,14 @@ public enum Memory {
 	DARKNESS(Items.COAL, 0xFF000000),
 	DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c),
 	ELDRITCH(Items.ENDER_EYE, 0xFF400021),
-	HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF),
+	HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF, "metalDream"),
 	LEARNING(Items.GHAST_TEAR, 0xFF998b69),	
 	METAL(Items.IRON_INGOT, 0xFF8c8c8c),
 	POWER(Items.BLAZE_POWDER, 0xFFff9300, "metalDream"),
 	REPAIR(Item.getItemFromBlock(Blocks.WOOL), 0xFF99f19d),
 	SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
 	STILLNESS(Item.getItemFromBlock(Blocks.SOUL_SAND), 0xFF444444, "metalDream"),
-	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff),
+	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff, "memHUMAN"),
 	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF000000);
 	
 	private Item item;
