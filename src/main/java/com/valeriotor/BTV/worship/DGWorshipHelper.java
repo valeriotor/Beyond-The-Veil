@@ -76,6 +76,10 @@ public class DGWorshipHelper {
 		}
 	}
 	
+	public static boolean hasWaterPowers(EntityPlayer p) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.RITUALQUEST);
+	}
+	
 	public static boolean canTransform(EntityPlayer p) {
 		return true; // will later use research to track progress
 	}

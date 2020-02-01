@@ -61,7 +61,7 @@ public class PlayerEvents {
 	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
 		EntityPlayer p = event.getEntityPlayer();
 		if(p instanceof EntityPlayer) {
-			if(Deities.GREATDREAMER.cap(p).getLevel() >= 3) {
+			if(DGWorshipHelper.hasWaterPowers(p)) {
 				if(p.isInsideOfMaterial(Material.WATER)) {
 					if(!EnchantmentHelper.getAquaAffinityModifier(p))
 						event.setNewSpeed(event.getOriginalSpeed() * 5);					
