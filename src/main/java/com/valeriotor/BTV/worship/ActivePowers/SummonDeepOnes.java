@@ -30,7 +30,7 @@ public class SummonDeepOnes implements IActivePower{
 		boolean spawnedAtLeastOne = false;
 		double angle = 0;
 		for(int i = 0; i < amount; i++) {
-			for(int j = 8; j < 20; j+=4) {
+			for(int j = 2; j < 14; j+=4) {
 				BlockPos pos = p.getPosition().add(j*Math.sin(angle), 0, j*Math.cos(angle));
 				pos = checkSpace(p.world, pos);
 				if(pos != null) {
