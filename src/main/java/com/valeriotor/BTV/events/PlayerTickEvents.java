@@ -102,7 +102,7 @@ public class PlayerTickEvents {
 					p.capabilities.isFlying = true;
 					p.capabilities.setFlySpeed(0.06F);
 					if(!p.isPotionActive(MobEffects.REGENERATION))
-						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 0, false, false));
+						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 1, false, false));
 				} else if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
 					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;

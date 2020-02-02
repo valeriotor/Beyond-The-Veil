@@ -17,7 +17,10 @@ public class GreatDreamerBuffs {
 		if(Worship.getSelectedDeity(p) != Deities.GREATDREAMER) return;
 		
 		double modifier = DGWorshipHelper.getAttackModifier(p);
-		if(p.isInWater()) e.setAmount((float) (e.getAmount()*modifier*modifier));
+		if(p.isInWater()) {
+			e.setAmount((float) (e.getAmount()*modifier*modifier));
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) e.setAmount((float)(e.getAmount()*modifier));
+		}
 		else e.setAmount((float) (e.getAmount()*modifier));
 	}
 	
@@ -39,7 +42,7 @@ public class GreatDreamerBuffs {
 		if(Worship.getSelectedDeity(p) != Deities.GREATDREAMER) return;
 		if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return;
 		
-		e.setAmount(Math.min(e.getAmount(), 5));
+		e.setAmount(Math.min(e.getAmount(), p.isInWater() ? 3 : 5));
 		
 	}
 	

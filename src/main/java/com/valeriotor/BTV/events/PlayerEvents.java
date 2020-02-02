@@ -9,6 +9,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
+import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -25,6 +26,8 @@ import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -149,6 +152,22 @@ public class PlayerEvents {
 				cap.setInteger(PlayerDataLib.DEATH_X, pos.getX(), false);
 				cap.setInteger(PlayerDataLib.DEATH_Y, pos.getY(), false);
 				cap.setInteger(PlayerDataLib.DEATH_Z, pos.getZ(), false);
+			}
+		} else if(event.getEntity() instanceof EntityElderGuardian) {
+			Entity e = event.getSource().getTrueSource();
+			EntityPlayer p = null;
+			if(e instanceof EntityPlayer) {
+				p = (EntityPlayer)e;
+			} else if(e instanceof IPlayerGuardian) {
+				p = ((IPlayerGuardian)e).getMaster();
+			}
+			if(p != null) {
+				if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 1) {
+					int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ELDER_GUARDIANS, 1, 1);
+					if(val == 3) {
+						SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGONQUEST2);
+					}
+				}
 			}
 		}
 	}

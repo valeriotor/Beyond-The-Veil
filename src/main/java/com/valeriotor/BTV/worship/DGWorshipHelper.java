@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.worship;
 
 import static com.valeriotor.BTV.lib.PlayerDataLib.DAGONQUEST;
+import static com.valeriotor.BTV.lib.PlayerDataLib.DAGONQUEST2;
 import static com.valeriotor.BTV.lib.PlayerDataLib.FISHQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.SLUGS;
@@ -32,12 +33,12 @@ public class DGWorshipHelper {
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 30, false, 1));
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
 		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 2));
+		researches.put(DAGONQUEST2, new DGResearch("METAMORPHOSIS", 0.25, -0.05, 35, false, 1));
 	}
 	
 	public static void levelUp(EntityPlayer p) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int slugs = data.getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
-		System.out.println(slugs);
 		boolean atLeastOne = false, notEnoughSlugs = false;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {
 			DGResearch res = entry.getValue();
@@ -48,6 +49,10 @@ public class DGWorshipHelper {
 					//data.removeString(entry.getKey()); Do I need this?
 					atLeastOne = true;
 					if(entry.getKey().equals(DAGONQUEST)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
+					if(entry.getKey().equals(DAGONQUEST2)) {
+						p.sendMessage(new TextComponentTranslation("interact.idol.power"));
+						Worship.getSpecificPower(p, 1).activatePower(p);
+					}
 				} else {
 					notEnoughSlugs = true;
 				}
@@ -81,7 +86,7 @@ public class DGWorshipHelper {
 	}
 	
 	public static boolean canTransform(EntityPlayer p) {
-		return true; // will later use research to track progress
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("!METAMORPHOSIS");
 	}
 	
 	public static void removeModifiers(EntityPlayer p) {

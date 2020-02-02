@@ -9,7 +9,8 @@ import com.valeriotor.BTV.research.ResearchUtil;
 import net.minecraft.entity.player.EntityPlayer;
 
 public enum DagonDialogues {
-	GREETING(9);
+	GREETING(9),
+	JUDGEMENT(4);
 	
 	public final int talkCount;
 	private DagonDialogues(int talkCount) {
@@ -21,6 +22,8 @@ public enum DagonDialogues {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		switch(data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false)) {
 			case 0: if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) return new GuiDagon(GREETING);
+			break;
+			case 1: if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 0) return new GuiDagon(JUDGEMENT);
 			break;
 		}
 		return null;

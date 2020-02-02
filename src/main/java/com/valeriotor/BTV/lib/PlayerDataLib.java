@@ -1,5 +1,9 @@
 package com.valeriotor.BTV.lib;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class PlayerDataLib {
 	
 	// Ints (Non-temporary)
@@ -21,8 +25,7 @@ public class PlayerDataLib {
 	public static final String SAPLINGS_SEEN = "saplings";
 	public static final String NECRO_X = "NecroX";
 	public static final String NECRO_Y = "NecroY";
-	public static final String CRAFTED_CRADLE = "craftedcradle";
-	public static final String CRAFTED_LACRYMATORY = "craftedlacrymatory";
+	public static final String ELDER_GUARDIANS = "elderguards";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
@@ -32,12 +35,15 @@ public class PlayerDataLib {
 	public static final String FISHQUEST = "fish_quest";
 	public static final String RITUALQUEST = "drowned";
 	public static final String DAGONQUEST = "dagon_gold";
+	public static final String DAGONQUEST2 = "dagon_elder";
 	public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
 	public static final String FOUND_HAMLET = "FindHamlet";
 	public static final String TRANSFORMED = "transformed";
 	public static final String OLDTRUTH = "old_truth";
 	public static final String VOID = "void";
 	public static final String WAIT = "wait";
+	public static final String CRAFTED_CRADLE = "craftedcradle";
+	public static final String CRAFTED_LACRYMATORY = "craftedlacrymatory";
 	
 	// Strings (Temporary)
 	

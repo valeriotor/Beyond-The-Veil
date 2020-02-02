@@ -7,6 +7,7 @@ import com.valeriotor.BTV.blocks.BlockStatue;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.tileEntities.TileStatue;
 import com.valeriotor.BTV.util.SacrificeHelper;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import net.minecraft.block.Block;
@@ -66,6 +67,7 @@ public class ItemSacrificialKnife extends ModItem{
 					if(u == null) {
 						ts.setMaster(p);
 						p.sendMessage(new TextComponentTranslation("interact.statue.bound"));
+						SyncUtil.addStringDataOnServer(p, false, "linkedstatue");
 					} else if(u.equals(p.getPersistentID())) {
 						p.sendMessage(new TextComponentTranslation("interact.statue.alreadyme"));
 					} else {

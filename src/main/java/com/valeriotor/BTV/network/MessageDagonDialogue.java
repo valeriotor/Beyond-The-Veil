@@ -9,6 +9,7 @@ import com.valeriotor.BTV.util.SyncUtil;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -28,18 +29,24 @@ public class MessageDagonDialogue implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageDagonDialogue message, MessageContext ctx) {
-			EntityPlayer p = ctx.getServerHandler().player;
-			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-			int value = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 0);
-			switch(value) {
-			case 0:
-				p.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3));
-				p.inventoryContainer.detectAndSendChanges();
-				data.setInteger(PlayerDataLib.DAGON_DIALOGUE, 1, false);
-				SyncUtil.addStringDataOnServer(p, false, "hearing");
-				sendMessage("dagon.bringgold", p);
-				break;
-			}
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServerWorld().addScheduledTask(() -> {
+				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+				int value = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 0);
+				switch(value) {
+				case 0:
+					p.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3));
+					p.inventoryContainer.detectAndSendChanges();
+					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 1);
+					SyncUtil.addStringDataOnServer(p, false, "hearing");
+					sendMessage("dagon.bringgold", p);
+					break;
+				case 1:
+					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 2);
+					SyncUtil.addStringDataOnServer(p, false, "hearing2");
+					sendMessage("dagon.slayguardians", p);
+				}
+			});
 			return null;
 		}
 		

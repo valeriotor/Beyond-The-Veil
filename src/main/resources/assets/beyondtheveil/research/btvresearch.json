@@ -265,8 +265,8 @@
         "name": "research.STRONGHOLD.title",
         "icons": [ "minecraft:stonebrick" ],
         "category": "BEYOND_THE_VEIL", "location": [ 9,0 ],
-        "learn":"true",
-        "parents": [ "VOIDDREAMS" ],
+        "hiders":["FIRSTCONTACT"],
+        "parents": [ "FIRSTCONTACT" ],
         "stages": [
                 {
                     "text": "research.STRONGHOLD.stage.0"
@@ -371,7 +371,7 @@
 		{
         "key": "BAPTISM",
         "name": "research.BAPTISM.title",
-        "icons": [ "beyondtheveil:canoe" ],
+        "icons": [ "minecraft:water_bucket"],
         "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
 		"hiders": ["IDOL"],
         "parents": [ "CANOE" ],
@@ -392,7 +392,7 @@
 		{
         "key": "ALLIANCE",
         "name": "research.ALLIANCE.title",
-        "icons": [ "beyondtheveil:canoe" ],
+        "icons": [ "minecraft:diamond_sword" ],
         "category": "BEYOND_THE_VEIL", "location": [ 16,10 ],
 		"hiders": ["IDOL"],
         "parents": [ "BAPTISM" ],
@@ -411,6 +411,27 @@
                 },
                 {
                     "text": "research.ALLIANCE.stage.3"
+                }
+            ]
+        },
+		{
+        "key": "METAMORPHOSIS",
+        "name": "research.METAMORPHOSIS.title",
+        "icons": [ "minecraft:prismarine_shard" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "ALLIANCE" ],
+        "stages": [
+				{
+					"text": "research.METAMORPHOSIS.stage.0",
+					"required_research": ["hearing2"]
+				},
+                {
+                    "text": "research.METAMORPHOSIS.stage.1",
+					"required_research": ["!METAMORPHOSIS"]
+                },
+                {
+                    "text": "research.METAMORPHOSIS.stage.2"
                 }
             ]
         },
@@ -542,7 +563,7 @@
         "key": "BLOODCOVENANT",
         "name": "research.BLOODCOVENANT.title",
         "icons": [ "beyondtheveil:blood_covenant" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 1,10 ],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,10 ],
 		"hiders": ["IDOL"],
         "parents": [ "BLEEDINGBELT", "REVELATIONRING" ],
         "stages": [
@@ -577,7 +598,6 @@
         "name": "research.AZACNOCHARM.title",
         "icons": [ "beyondtheveil:azacno_charm" ],
         "category": "BEYOND_THE_VEIL", "location": [ -3,11],
-        "hiders": ["IDOL"],
         "learn":"true",
         "parents": [ "BLOODCOVENANT", "BLOODCROWN" ],
         "stages": [
@@ -588,6 +608,74 @@
                 {
 					"text": "research.AZACNOCHARM.stage.1"
 				}
+            ]
+        },
+		{
+        "key": "STATUE",
+        "name": "research.STATUE.title",
+        "icons": [ "beyondtheveil:statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,16],
+        "hiders": ["ALLIANCE"],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+					"text": "research.STATUE.stage.0",
+					"required_research": ["craftedstatue"]
+                },
+                {
+					"text": "research.STATUE.stage.1",
+					"required_research": ["linkedstatue"]
+				},
+                {
+					"text": "research.STATUE.stage.2"
+				}
+            ]
+        },
+		{
+        "key": "SACRIFICESTATUE",
+        "name": "research.SACRIFICESTATUE.title",
+        "icons": [ "beyondtheveil:sacrifice_statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,18],
+        "hiders": ["STATUE"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.SACRIFICESTATUE.stage.0",
+					"required_research": ["craftedpstatue"]
+                },
+                {
+					"text": "research.SACRIFICESTATUE.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "PENITENCESTATUE",
+        "name": "research.PENITENCESTATUE.title",
+        "icons": [ "beyondtheveil:penitence_statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 8,18],
+        "hiders": ["STATUE"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.PENITENCESTATUE.stage.0",
+					"required_research": ["craftedsstatue"]
+                },
+                {
+					"text": "research.PENITENCESTATUE.stage.1"
+				}
+            ]
+        },
+		{
+        "key": "VALOURSTATUE",
+        "name": "research.VALOURSTATUE.title",
+        "icons": [ "beyondtheveil:statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,20],
+        "hiders": ["STATUE"],
+        "parents": [ "PENITENCESTATUE", "SACRIFICESTATUE" ],
+        "stages": [
+				{
+					"text": "research.VALOURSTATUE.stage.0"
+                }
             ]
         }
 	]
