@@ -49,15 +49,15 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		pages.clear();
 		recipes.clear();
 		shownRecipe = null;
-		String[] paragraphs = I18n.format(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<BR>");
-		this.formatText(paragraphs);
+		String[] pages = I18n.format(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<PAGE>");
+		this.formatText(pages);
 		this.makeRecipes(this.status.res.getStages()[this.status.getStage()].getRecipes());
 		IPlayerData data = mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		if(this.status.isComplete()) {
 			for(SubResearch sr : this.status.res.getAddenda()) {
 				if(sr.meetsRequirements(data)) {
-					paragraphs = I18n.format(sr.getTextKey()).split("<BR>");
-					this.formatText(paragraphs);
+					pages = I18n.format(sr.getTextKey()).split("<PAGE>");
+					this.formatText(pages);
 					this.makeRecipes(sr.getRecipes());
 				}
 			}
@@ -78,30 +78,29 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		super.initGui();
 	}
 	
-	private void formatText(String[] paragraphs) {
+	private void formatText(String[] pages) {
 		List<String> ls = new ArrayList<>();
 		int i = 0;
-		pages.add(new ArrayList<>());
-		for(String s : paragraphs) {
-			ls = GuiHelper.splitStringsByWidth(s, 190, mc.fontRenderer);
-			for(String ss : ls) {
-				if(i > 210) {
-					i = 0;
-					pages.add(new ArrayList<>());
-				}
-				if(s.contains("<PAGE>")) {
-					i = 0;
-					String[] split = ss.split("<PAGE>");
-					for(int j = 0; j < split.length; j++) {
-						pages.get(pages.size() - 1).add(split[j]);
-						if(j != split.length - 1)
-							pages.add(new ArrayList<>());
+		this.pages.add(new ArrayList<>());
+		for(int k = 0; k < pages.length; k++) {
+			String s0 = pages[k];
+			i = 0;
+			String[] paragraphs = s0.split("<BR>");
+			for(String s : paragraphs) {
+				ls = GuiHelper.splitStringsByWidth(s, 190, mc.fontRenderer);
+				for(String ss : ls) {
+					if(i > 210) {
+						i = 0;
+						this.pages.add(new ArrayList<>());
 					}
-				} else pages.get(pages.size() - 1).add(ss);
+					this.pages.get(this.pages.size() - 1).add(ss);
+					i += 15;
+				}
 				i += 15;
+				this.pages.get(this.pages.size() - 1).add("");
 			}
-			i += 15;
-			pages.get(pages.size() - 1).add("");
+			if(k < pages.length - 1)
+				this.pages.add(new ArrayList<>());
 		}
 	}
 	
