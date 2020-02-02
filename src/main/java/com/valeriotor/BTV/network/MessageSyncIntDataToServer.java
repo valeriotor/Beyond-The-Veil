@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.network;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -40,7 +41,8 @@ public class MessageSyncIntDataToServer implements IMessage{
 		public IMessage onMessage(MessageSyncIntDataToServer message, MessageContext ctx) {
 			EntityPlayerMP p = ctx.getServerHandler().player;
 			p.getServerWorld().addScheduledTask(() -> {
-				p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.key, message.value, false);
+				if(PlayerDataLib.allowedInts.contains(message.key))
+					p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.key, message.value, false);
 			});
 			return null;
 		}

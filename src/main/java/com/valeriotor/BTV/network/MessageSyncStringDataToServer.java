@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -45,9 +46,12 @@ public class MessageSyncStringDataToServer implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSyncStringDataToServer message, MessageContext ctx) {
-			for(String s : message.keys) {
-				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(s, false);
-			}
+			ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
+				for(String s : message.keys) {
+					if(PlayerDataLib.allowedStrings.contains(s) || s.contains("dialogue"))
+						ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(s, false);
+				}
+			});
 			return null;
 		}
 		

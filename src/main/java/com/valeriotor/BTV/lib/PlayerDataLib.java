@@ -44,4 +44,20 @@ public class PlayerDataLib {
 	// Used to clear client-side data in one fell swoop.
 	public static final String ALL = "all";
 	
+	
+	public static final Set<String> allowedInts;
+	public static final Set<String> allowedStrings;
+	
+	static {
+		Set<String> tempInts = new HashSet<>();
+		tempInts.add(SELECTED_BAUBLE);
+		tempInts.add(SELECTED_POWER);
+		tempInts.add(NECRO_X);
+		tempInts.add(NECRO_Y);
+		allowedInts = Collections.unmodifiableSet(tempInts);
+		Set<String> tempStrings = new HashSet<String>();
+		tempStrings.add("eldritchDream");
+		allowedStrings = Collections.unmodifiableSet(tempStrings);
+	}
+	
 }
