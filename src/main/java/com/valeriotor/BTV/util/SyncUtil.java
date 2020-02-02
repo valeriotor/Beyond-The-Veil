@@ -99,10 +99,11 @@ public class SyncUtil {
 		BTVPacketHandler.INSTANCE.sendTo(new MessageRemoveIntToClient(key), ((EntityPlayerMP)p));
 	}*/
 	
-	public static void incrementIntDataOnServer(EntityPlayer p, boolean temporary, String key, int amount, int defaultVal) {
+	public static int incrementIntDataOnServer(EntityPlayer p, boolean temporary, String key, int amount, int defaultVal) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-		data.incrementOrSetInteger(key, amount, defaultVal, temporary);
+		int val = data.incrementOrSetInteger(key, amount, defaultVal, temporary);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, data.getInteger(key) + amount), (EntityPlayerMP) p);
+		return val;
 	}
 	
 	@SideOnly(Side.CLIENT)

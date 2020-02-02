@@ -126,12 +126,15 @@ public class PlayerDataHandler {
 		}
 		
 		@Override
-		public void incrementOrSetInteger(String key, int amount, int value, boolean temporary) {
+		public Integer incrementOrSetInteger(String key, int amount, int value, boolean temporary) {
 			Integer currentValue = getInteger(key);
 			if(currentValue == null) {
 				setInteger(key, value, temporary);
+				return value;
 			}else {
-				setInteger(key, currentValue + amount, temporary);
+				currentValue += amount;
+				setInteger(key, currentValue, temporary);
+				return currentValue;
 			}
 		}
 

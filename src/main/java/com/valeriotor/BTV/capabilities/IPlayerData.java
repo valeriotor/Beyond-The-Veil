@@ -14,7 +14,7 @@ public interface IPlayerData {
 	 */
 	public void removeAllStrings();
 	public void setInteger(String key, int value, boolean temporary);
-	public void incrementOrSetInteger(String key, int amount, int value, boolean temporary);
+	public Integer incrementOrSetInteger(String key, int amount, int value, boolean temporary);
 	public void removeInteger(String key);
 
 	public boolean getString(String string);
