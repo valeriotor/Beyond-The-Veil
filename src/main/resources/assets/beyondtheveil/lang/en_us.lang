@@ -126,7 +126,7 @@ tile.elder_bricks_chiseled.name=Chiseled Elder Stone Bricks
 tile.elder_stone_brick_stairs.name=Elder Stone Brick Stairs
 tile.elder_slab.name=Elder Stone Slab
 tile.heart.name=Heart
-tile.sacrifice_altar.name=Sacrificial Altar
+tile.sacrifice_altar.name=Sacrificial Altar Core
 tile.blood_bricks.name=Blood Stone Bricks
 tile.blood_bricks_stairs.name=Blood Stone Brick Stairs
 tile.blood_bricks_slab.name=Blood Stone Brick Slab
@@ -168,6 +168,14 @@ interact.statue.alreadyme=This Statue is already mine.
 interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
 interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
 
+
+##################
+#MULTIBLOCKS
+##################
+
+multiblock.layer=Layer
+multiblock.blood_well=Blood Well
+multiblock.sacrifice_altar=Sacrificial Altar
 
 ##################
 #ENTITIES

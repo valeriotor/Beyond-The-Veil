@@ -25,7 +25,9 @@ public class ResearchRegistry {
 	private static ResearchContainer container;
 	public static HashMap<String, Research> researches = new HashMap<>();
 	public static HashMap<String, List<IRecipe>> recipes = new HashMap<>();
+	public static HashMap<String, MultiblockSchematic> multiblocks = new HashMap<>();
 	private static final boolean DEBUG_PRINTS = false;
+	private static final boolean DEBUG_PRINTS2 = false;
 	
 	public static final List<ResearchConnection> connections = new ArrayList<>();
 	
@@ -43,6 +45,11 @@ public class ResearchRegistry {
 	public static void registerResearchesSecond() {
 		container.makeResearches(researches);
 		container = null;
+	}
+	
+	private static void registerMultiblocks() {
+		registerMultiblock("blood_well");
+		registerMultiblock("sacrifice_altar");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -63,6 +70,7 @@ public class ResearchRegistry {
 				recipes.get(s).add(r);
 			}
 		}
+		registerMultiblocks();
 	}
 	
 	public static class ResearchContainer {
@@ -73,6 +81,20 @@ public class ResearchRegistry {
 				map.put(temp.key, temp.getResearch());
 				if(DEBUG_PRINTS) System.out.println(map.get(temp.key) + "\n\n");
 			}
+		}
+	}
+	
+	private static void registerMultiblock(String name) {
+		try {
+			String file = Resources.toString(BeyondTheVeil.class.getResource("/assets/beyondtheveil/research/multiblock/" + name + ".json"), Charsets.UTF_8);
+			MultiblockSchematic schem = BeyondTheVeil.gson.fromJson(file, MultiblockSchematic.class);
+			if(schem.process()) {
+				if(DEBUG_PRINTS2)
+					System.out.println(schem.toString());
+				multiblocks.put(name, schem);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 	

@@ -1,0 +1,38 @@
+{
+	"strings" : [
+		[
+			"BBBBB",
+			"BBBBB",
+			"BBBBB",
+			"BBBBB",
+			"BBBBB"
+		],
+		[
+			"BBBBB",
+			"B   B",
+			"B H B",
+			"B   B",
+			"BBBBB"
+		],
+		[
+			"B   B",
+			"     ",
+			"     ",
+			"     ",
+			"B   B"
+		],
+		[
+			"B   B",
+			"     ",
+			"     ",
+			"     ",
+			"B   B"
+		]
+	],
+	"map" : {
+		"B" : "beyondtheveil:blood_bricks",
+		"H" : "beyondtheveil:heart"
+	},
+	"unlockName" : "multiblock.blood_well",
+	"key" : "beyondtheveil:blood_well"
+}

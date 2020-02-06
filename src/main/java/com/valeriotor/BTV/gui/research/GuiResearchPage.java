@@ -190,7 +190,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		
 		GlStateManager.popMatrix();
 		if(hoveredKey != -1) {
-			this.renderTooltip(recipes.get(hoveredKey).getOutput(), mouseX + 20, mouseY + 10);
+			recipes.get(hoveredKey).renderTooltip(this, mouseX + 20, mouseY + 10);
 		}
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
