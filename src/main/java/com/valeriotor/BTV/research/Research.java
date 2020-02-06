@@ -118,9 +118,10 @@ public class Research {
 		}
 		sb.append("\n");		
 		sb.append("Location: " + location[0] + " " + location[1] + "\nParents: ");
-		for(String s : parents) {
-			sb.append(s + "; ");
-		}
+		if(parents != null)
+			for(String s : parents) {
+				sb.append(s + "; ");
+			}
 		sb.append("\nHiders: ");
 		if(hiders != null)
 			for(String s : hiders) {
