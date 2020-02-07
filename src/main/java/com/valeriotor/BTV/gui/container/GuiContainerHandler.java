@@ -4,6 +4,7 @@ import com.valeriotor.BTV.events.special.DrowningRitualEvents;
 import com.valeriotor.BTV.gui.GuiCityMapper;
 import com.valeriotor.BTV.gui.GuiDagon;
 import com.valeriotor.BTV.gui.GuiDrowned;
+import com.valeriotor.BTV.gui.GuiSleepingChamber;
 import com.valeriotor.BTV.gui.GuiWateryCradle;
 import com.valeriotor.BTV.gui.research.GuiNecronomicon;
 import com.valeriotor.BTV.items.ItemRegistry;
@@ -32,6 +33,7 @@ public class GuiContainerHandler implements IGuiHandler{
 	public static final int DAGON = 3;
 	public static final int CRADLE = 4;
 	public static final int NECRONOMICON = 5;
+	public static final int SLEEP_CHAMBER = 6;
 	
 	
 	
@@ -54,6 +56,8 @@ public class GuiContainerHandler implements IGuiHandler{
 		} else if(ID == 4) {
 			return new DummyContainer();
 		} else if(ID == 5) {
+			return new DummyContainer();
+		} else if(ID == 6) {
 			return new DummyContainer();
 		}
 		return null;
@@ -92,6 +96,8 @@ public class GuiContainerHandler implements IGuiHandler{
 			if(gui != null) return gui;
 		} else if(ID == 5) {
 			return new GuiNecronomicon();
+		} else if(ID == 6) {
+			return new GuiSleepingChamber();
 		}
 		return null;
 	}

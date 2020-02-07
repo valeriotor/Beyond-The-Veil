@@ -4,6 +4,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockSleepChamber;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
+import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.worship.Deities;
 
@@ -45,59 +46,31 @@ public class MessageSleepChamber implements IMessage {
 		public IMessage onMessage(MessageSleepChamber message, MessageContext ctx) {
 			
 			EntityPlayerMP player = ctx.getServerHandler().player;
-			BlockPos pos = new BlockPos((int)player.getPosition().getX(), (int)player.getPosition().getY(), (int)player.getPosition().getZ());
-			IBlockState state = player.getServerWorld().getBlockState(pos);
-			
-			if(state.getBlock() instanceof BlockSleepChamber) {
-				int multiplier = 0;
-				boolean advanced = false;
-				if(state.getBlock() == BlockRegistry.SleepChamber) multiplier = 1;
-				else if(state.getBlock() == BlockRegistry.SleepChamberAdvanced) {
-					multiplier = 2;
-					advanced = true;
-				}
+			player.getServerWorld().addScheduledTask(() -> {
+				BlockPos pos = new BlockPos((int)player.getPosition().getX(), (int)player.getPosition().getY(), (int)player.getPosition().getZ());
+				IBlockState state = player.getServerWorld().getBlockState(pos);
 				
-				int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
-				int level = Deities.GREATDREAMER.cap(player).getLevel()/2 + 1; // For when I start working on worship
-				
-				if(message.doesDream && times < multiplier) {
-					if(advanced) DreamHandler.chooseDream(player, 2);
-					else DreamHandler.chooseDream(player, 1);
-				}
-				
-				player.sendMessage(new TextComponentString("You have dreamt " + times + " times today")); // DEBUG. REMOVE ON RELEASE. Heh. "Release". haha
-				ejectPlayer(player.getEntityWorld(), pos, state, player);
-			}
-			return null;
-		}
-		
-		public void ejectPlayer(World w, BlockPos pos, IBlockState state, EntityPlayerMP p) {
-			BlockPos ejectPos;
-			
-			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-				if(w.getBlockState(pos.offset(facing)).getBlock() == Blocks.AIR &&
-				   w.getBlockState(pos.offset(facing).up()).getBlock() == Blocks.AIR) {
-					ejectPos = pos.offset(facing);
+				if(state.getBlock() instanceof BlockSleepChamber) {
+					int multiplier = 0;
+					boolean advanced = false;
+					if(state.getBlock() == BlockRegistry.SleepChamber) multiplier = 1;
+					else if(state.getBlock() == BlockRegistry.SleepChamberAdvanced) {
+						multiplier = 2;
+						advanced = true;
+					}
 					
-					// The position needs to be slightly offset for 3 out of 4 EnumFacing values, lest minor visual bugs be shown
-					double offsetX = facing == EnumFacing.EAST ? 0.6 : (facing == EnumFacing.WEST ? 0.4 : 0.5);
-					p.setPositionAndUpdate(ejectPos.getX() + offsetX, ejectPos.getY(), ejectPos.getZ() + (facing == EnumFacing.SOUTH ? 0.6 : 0.5));
-					return;
+					int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
+					int level = Deities.GREATDREAMER.cap(player).getLevel()/2 + 1; // For when I start working on worship
+					if(message.doesDream && times < multiplier) {
+						if(advanced) DreamHandler.chooseDream(player, 2);
+						else DreamHandler.chooseDream(player, 1);
+					} else {
+						BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), player);
+					}
 				}
-			}
-			
-			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-				if(w.getBlockState(pos.offset(facing).offset(facing.rotateYCCW())).getBlock() == Blocks.AIR &&
-				   w.getBlockState(pos.offset(facing).offset(facing.rotateYCCW()).up()).getBlock() == Blocks.AIR) {
-					ejectPos = pos.offset(facing).offset(facing.rotateYCCW());
-					p.setPositionAndUpdate(ejectPos.getX()+0.5, ejectPos.getY(), ejectPos.getZ()+0.5);
-					return;
-				}
-			}
-			
-			
-		}
-		
+			});
+			return null;
+		}		
 		
 	}
 	

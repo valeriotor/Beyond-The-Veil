@@ -45,8 +45,9 @@ public class GuiSleepingChamber extends GuiChat{
 	@Override
 	public void updateScreen() {
 		if(this.timePassed < 100) this.timePassed++;
-		if(this.timePassed >= 100) {
+		if(this.timePassed == 100) {
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSleepChamber(true));
+			this.timePassed++;
 			return;
 		}
 		super.updateScreen();
