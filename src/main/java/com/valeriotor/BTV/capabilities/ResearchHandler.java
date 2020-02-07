@@ -86,6 +86,10 @@ public static final ResourceLocation RESEARCH = new ResourceLocation(References.
 			}			
 		}
 		
+		@Override
+		public void putResearches(HashMap<String, ResearchStatus> researches) {
+			this.researches = researches;
+		}
 		
 	}
 	

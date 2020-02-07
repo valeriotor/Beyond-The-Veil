@@ -8,6 +8,7 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
@@ -136,6 +137,7 @@ public class PlayerEvents {
 		for(Entry<String, Integer> entry : ints.entrySet()) {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(entry.getKey(), entry.getValue(), false);
 		}
+		player.getCapability(ResearchProvider.RESEARCH, null).putResearches(original.getCapability(ResearchProvider.RESEARCH, null).getResearches());
 		SyncUtil.syncCapabilityData(player);
 
 		if(player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED))
