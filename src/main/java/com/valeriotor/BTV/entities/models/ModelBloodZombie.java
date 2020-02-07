@@ -168,4 +168,14 @@ public class ModelBloodZombie extends ModelAnimated {
     	}
     	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }
+    
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    		float headPitch, float scaleFactor, Entity entityIn) {
+    	if(((EntityBloodZombie)entityIn).getIdleAnimation() == null) {
+    		this.head.rotateAngleY = netHeadYaw * 0.007F;
+        	this.head.rotateAngleX = -0.7285004297824331F + headPitch * 0.007F;
+    	}
+    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    }
 }

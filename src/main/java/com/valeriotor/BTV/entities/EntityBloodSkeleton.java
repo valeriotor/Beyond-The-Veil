@@ -61,6 +61,7 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 	}
 	
 	protected void initEntityAI() {	 	
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new AISpook(this));
 		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.2, true));
@@ -101,7 +102,7 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 				}
 			} else {
 				if(this.animCounter == 0 && Math.abs(this.motionX) < 0.005 && Math.abs(this.motionZ) < 0.005 ) this.idleAnimation = new Animation(AnimationRegistry.blood_skeleton_idle);
-				animCounter = world.rand.nextInt(15)*2 + 120;
+				animCounter = world.rand.nextInt(15)*200 + 800;
 			}
 		} else {
 			if(this.spookCooldown >= 0)

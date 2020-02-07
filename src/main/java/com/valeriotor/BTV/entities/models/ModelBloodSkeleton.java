@@ -291,4 +291,15 @@ public class ModelBloodSkeleton extends ModelAnimated {
     		}
     	}
     }
+    
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    		float headPitch, float scaleFactor, Entity entityIn) {
+    	EntityBloodSkeleton e = (EntityBloodSkeleton)entityIn;
+    	if(e.getIdleAnimation() == null && e.getSpookAnimation() == null) {
+    		this.head.rotateAngleY = netHeadYaw * 0.005F;
+        	this.head.rotateAngleX = headPitch * 0.005F;
+    	}
+    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    }
 }
