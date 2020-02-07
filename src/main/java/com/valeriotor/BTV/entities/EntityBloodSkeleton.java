@@ -177,7 +177,7 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 
 	@Override
 	public void setAttackAnimation(int id) {
-		this.attackAnimation = Attacks.values()[id].getAnim();
+		this.attackAnimation = BloodSkeletonAttacks.values()[id].getAnim();
 	}
 
 	@Override
@@ -188,15 +188,16 @@ public class EntityBloodSkeleton extends EntityMob implements IPlayerGuardian, I
 	@Override
 	public void swingArm(EnumHand hand) {
 		super.swingArm(hand);
-		this.sendAnimation(Attacks.values()[this.rand.nextInt(Attacks.values().length)].ordinal());
+		if(!this.world.isRemote)
+			this.sendAnimation(BloodSkeletonAttacks.values()[this.rand.nextInt(BloodSkeletonAttacks.values().length)].ordinal());
 	}
 	
-	private enum Attacks {
+	private enum BloodSkeletonAttacks {
 		LEFT_SWING(() -> new Animation(AnimationRegistry.blood_skeleton_left_swing)),
 		RIGHT_SWING(() -> new Animation(AnimationRegistry.blood_skeleton_right_swing));
 		
 		private Supplier<Animation> func;
-		private Attacks(Supplier<Animation> func) {
+		private BloodSkeletonAttacks(Supplier<Animation> func) {
 			this.func = func;
 		}
 		
