@@ -10,6 +10,8 @@ public class AnimationRegistry {
 	public static AnimationTemplate blood_skeleton_spook;
 	public static AnimationTemplate blood_skeleton_left_swing;
 	public static AnimationTemplate blood_skeleton_right_swing;
+	public static AnimationTemplate deep_one_right_swing;
+	public static AnimationTemplate deep_one_left_swing;
 	
 	public static void loadAnimations() {
 		blood_skeleton_left_swing = new AnimationTemplate("blood_skeleton_left_swing");
@@ -20,6 +22,8 @@ public class AnimationRegistry {
 		deep_one_roar = new AnimationTemplate("deep_one_roar");
 		shoggoth_open_mouth = new AnimationTemplate("shoggoth_open_mouth");
 		shoggoth_eye_tentacle = new AnimationTemplate("shoggoth_eye_tentacle");
+		deep_one_left_swing = new AnimationTemplate("deep_one_left_swing");
+		deep_one_right_swing = new AnimationTemplate("deep_one_right_swing");
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {
@@ -29,6 +33,8 @@ public class AnimationRegistry {
 		if(anim == blood_zombie_idle) return 3;
 		if(anim == blood_skeleton_idle) return 4;
 		if(anim == blood_skeleton_spook) return 5;
+		if(anim == deep_one_left_swing) return 6;
+		if(anim == deep_one_right_swing) return 7;
 		return -1;
 	}
 	
@@ -40,6 +46,8 @@ public class AnimationRegistry {
 			case 3: return blood_zombie_idle;
 			case 4: return blood_skeleton_idle;
 			case 5: return blood_skeleton_spook;
+			case 6: return deep_one_left_swing;
+			case 7: return deep_one_right_swing;
 		}
 		return null;
 	}

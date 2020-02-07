@@ -186,7 +186,7 @@ public class ModelDeepOne extends ModelAnimated {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
     	
     	if((entityIn instanceof EntityPlayer && BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)entityIn) == null)
-    		|| (entityIn instanceof EntityDeepOne)	&& ((EntityDeepOne)entityIn).getCurrentAnim() == null) {
+    		|| (entityIn instanceof EntityDeepOne)	&& ((EntityDeepOne)entityIn).getRoarAnim() == null) {
     		this.Head.rotateAngleY = netHeadYaw * 0.01745F;
         	this.Head.rotateAngleX = headPitch * 0.01745F;
     	}
@@ -219,28 +219,18 @@ public class ModelDeepOne extends ModelAnimated {
 	    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)e).swingProgress * 2.5F);  
     		}
     	}else if(e instanceof EntityDeepOne){
-    		Animation anim = ((EntityDeepOne)e).getCurrentAnim();
+    		EntityDeepOne d = (EntityDeepOne)e;
+    		Animation anim = d.getRoarAnim();
     		if(anim != null) {
     			if(!anim.isDone()) anim.applyTransformations(bodyParts, partialTickTime);
     		}else {
+    			anim = d.getAttackAnimation();
+    			if(anim != null)
+    				anim.applyTransformations(bodyParts, partialTickTime);
     			this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	    	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
     		}
-    		switch(((EntityDeepOne)e).getRaisedArm()) {
-    			case 0:
-    				this.RightUpperArm.rotateAngleX = 0F;
-    				this.LeftUpperArm.rotateAngleX = 0F; 
-    				break;
-    			case 1:	
-    				this.RightUpperArm.rotateAngleX = -1.3F;
-    				break;
-    			case 2:
-    				this.LeftUpperArm.rotateAngleX = -1.3F;
-    				break;
-    			case 3:
-    				this.LeftUpperArm.rotateAngleX = -1.3F;
-    				this.RightUpperArm.rotateAngleX = -1.3F;
-    		}
+    		
     		
     	}
     }

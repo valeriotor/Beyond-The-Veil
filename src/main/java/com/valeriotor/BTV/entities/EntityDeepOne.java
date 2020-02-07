@@ -1,23 +1,22 @@
 package com.valeriotor.BTV.entities;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
-import com.valeriotor.BTV.entities.AI.AIDeepOneAttack;
-import com.valeriotor.BTV.entities.AI.AISpook;
 import com.valeriotor.BTV.entities.AI.AIProtectMaster;
 import com.valeriotor.BTV.entities.AI.AIRevenge;
+import com.valeriotor.BTV.entities.AI.AISpook;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
-import com.valeriotor.BTV.worship.Deities;
-import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -29,19 +28,21 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker{
+public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker, IAnimatedAttacker{
 	private int i = 0;
 	private boolean isTargetInWater = false;
 	private Block facingBlock;
 	private Block facingBlockUp;
 	private UUID master;
 	private int counter = -1;
-	private Animation currentAnim = null;
+	private Animation roarAnim = null;
+	private Animation attackAnim = null;
 	private int roarCooldown = 300;
 	
 	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
@@ -82,7 +83,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	        //this.tasks.addTask(1, new AISwim(this));
 	        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
-	        this.tasks.addTask(2, new AIDeepOneAttack(this, 1.5D, true));
+	        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.5D, true));
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
 	        this.tasks.addTask(2, new AISpook(this));
 	        this.targetTasks.addTask(1, new AIProtectMaster(this));
@@ -93,19 +94,9 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	 @Override
 	 protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(ARM_RAISED, -1);
 		this.dataManager.register(ROARING, false);
 	 }
-	 
-	 @SideOnly(Side.CLIENT)
-	 public int getRaisedArm() {
-		 return this.dataManager.get(ARM_RAISED);
-	 }
-	 
-	 public void setRaisedArm(int arm) {
-		 this.dataManager.set(ARM_RAISED, arm);
-	 }
-	 
+	  
 	 @Override
 	 public void setAttackTarget(EntityLivingBase entitylivingbaseIn) {
 		 super.setAttackTarget(entitylivingbaseIn);
@@ -131,13 +122,17 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 		 
 		 if(this.world.isRemote) {
 			 if(this.getDataManager().get(ROARING)) {
-				 if(this.currentAnim == null)
-					 this.currentAnim = new Animation(AnimationRegistry.deep_one_roar);
-				 else this.currentAnim.update();
+				 if(this.roarAnim == null)
+					 this.roarAnim = new Animation(AnimationRegistry.deep_one_roar);
+				 else this.roarAnim.update();
 			 }else {
-				 if(this.currentAnim != null) {
-					 if(this.currentAnim.isDone()) this.currentAnim = null;
-					 else this.currentAnim.update();
+				 if(this.roarAnim != null) {
+					 if(this.roarAnim.isDone()) this.roarAnim = null;
+					 else this.roarAnim.update();
+				 } else if(this.attackAnim != null) {
+					 this.attackAnim.update();
+					 if(this.attackAnim.isDone()) 
+						 this.attackAnim = null;
 				 }
 			 }
 		 }
@@ -219,8 +214,8 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	 }
 	 
 	 @SideOnly(Side.CLIENT)
-	 public Animation getCurrentAnim() {
-		 return this.currentAnim;
+	 public Animation getRoarAnim() {
+		 return this.roarAnim;
 	 }
 	 
 	@Override
@@ -243,15 +238,45 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	public void spookSelf() {
 		this.motionX = 0;
 		this.motionZ = 0;
-		this.faceEntity(this.getAttackTarget(), 360, 360);
+		if(this.getAttackTarget() != null)
+			this.faceEntity(this.getAttackTarget(), 360, 360);
 	}
 
 	@Override
 	public int getSpookCooldown() {
 		return this.roarCooldown;
 	}
+	
+	@Override
+	public void swingArm(EnumHand hand) {
+		super.swingArm(hand);
+		if(!this.world.isRemote)
+			this.sendAnimation(rand.nextInt(DeepOneAttacks.values().length));
+	}
+
+	@Override
+	public void setAttackAnimation(int id) {
+		this.attackAnim = DeepOneAttacks.values()[id].getAnim();
+	}
+
+	@Override
+	public Animation getAttackAnimation() {
+		return this.attackAnim;
+	}
 	 
-	 
+	 private enum DeepOneAttacks {
+		LEFT_SWING(() -> new Animation(AnimationRegistry.deep_one_left_swing)),
+		RIGHT_SWING(() -> new Animation(AnimationRegistry.deep_one_right_swing));
+		
+		private Supplier<Animation> func;
+		private DeepOneAttacks(Supplier<Animation> func) {
+			this.func = func;
+		}
+		
+		private Animation getAnim() {
+			return this.func.get();
+		}
+	 }
 	 
 	 
 	 
