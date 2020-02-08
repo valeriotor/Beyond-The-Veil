@@ -23,7 +23,7 @@ public class AnimationTemplate {
 	public int length;
 	public Class<? extends EntityLivingBase> entityType;
 	public ModelAnimated modelType;
-	public HashMap<Integer, List<Transformator>> transforms = new HashMap<>();
+	public List<PartMover> transforms = new ArrayList<>();
 	
 	public AnimationTemplate(String name) {
 		this.name = name;
@@ -61,7 +61,7 @@ public class AnimationTemplate {
 			}
 			for(Entry<Integer, EnumMap<Transformation, List<IntervalDoubleBiOperator>>> entry : map.entrySet()) {
 				List<Transformator> list = new ArrayList<>();
-				transforms.put(entry.getKey(), list);
+				transforms.add(new PartMover(entry.getKey(), list));
 				for(Entry<Transformation, List<IntervalDoubleBiOperator>> tinyEntry : entry.getValue().entrySet()) {
 					list.add(Transformator.getTransformator(tinyEntry.getKey(), tinyEntry.getValue(), this.modelType, entry.getKey(), this.length));
 				}
@@ -78,15 +78,22 @@ public class AnimationTemplate {
 	}
 	
 	public void debug() {
-		for(Entry<Integer, List<Transformator>> entry : this.transforms.entrySet()) {
-			System.out.println(entry.getKey() + ":");
-			for(Transformator t : entry.getValue()) {
+		for(PartMover entry : this.transforms) {
+			System.out.println(entry.part + ":");
+			for(Transformator t : entry.movers) {
 				System.out.println(t);
 			}
 		}
 	}
 	
-	
+	public static class PartMover {
+		public final int part;
+		public final List<Transformator> movers;
+		public PartMover(int part, List<Transformator> movers) {
+			this.part = part;
+			this.movers = movers;
+		}
+	}
 	
 	public enum Transformation{
 		ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ, VISI;	
