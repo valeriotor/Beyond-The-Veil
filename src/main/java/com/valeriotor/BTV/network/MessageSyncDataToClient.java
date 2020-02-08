@@ -70,8 +70,7 @@ public class MessageSyncDataToClient implements IMessage{
 			if(message.value == -999)
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(message.string, false);
 			else {
-				if(message.string.equals("level")) Minecraft.getMinecraft().player.getCapability(Deities.map.get(Deities.GREATDREAMER.getKey()), null).setLevel(message.value);
-				else Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
 			}
 			
 			if(message.string.equals(PlayerDataLib.TRANSFORMED)) {

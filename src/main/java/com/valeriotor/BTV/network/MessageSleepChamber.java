@@ -6,6 +6,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import io.netty.buffer.ByteBuf;
@@ -60,8 +61,8 @@ public class MessageSleepChamber implements IMessage {
 					}
 					
 					int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
-					int level = Deities.GREATDREAMER.cap(player).getLevel()/2 + 1; // For when I start working on worship
-					if(message.doesDream && times < multiplier) {
+					int level = DGWorshipHelper.getDreamPower(player)/2 + 1;
+					if(message.doesDream && times < multiplier*level) {
 						if(advanced) DreamHandler.chooseDream(player, 2);
 						else DreamHandler.chooseDream(player, 1);
 					} else {

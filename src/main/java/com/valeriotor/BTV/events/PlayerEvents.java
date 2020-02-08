@@ -94,7 +94,6 @@ public class PlayerEvents {
 			if(parasiteProgress > 0)
 				AzacnoParasiteEvents.parasites.put(event.player.getPersistentID(), new AzacnoParasite(event.player, parasiteProgress));
 			event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(PlayerDataLib.PARASITE_PROGRESS);
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient("level", Deities.GREATDREAMER.cap(event.player).getLevel()), (EntityPlayerMP)event.player);
 			SyncUtil.syncPlayerData(event.player);
 			DGWorshipHelper.calculateModifier(event.player);
 		}
@@ -129,7 +128,6 @@ public class PlayerEvents {
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		
-		Deities.GREATDREAMER.cap(player).setLevel(Deities.GREATDREAMER.cap(original).getLevel());	
 		for(String string : strings) {
 			player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, false);
 		}

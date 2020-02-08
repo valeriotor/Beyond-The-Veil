@@ -38,11 +38,11 @@ public class DreamGround extends Dream{
 					IBlockState state = w.getBlockState(new BlockPos(x, y, z));
 						// TODO: Get OreDictionary compatibility
 						if(state == this.state1) {
-							if(coord1 == null && DreamHandler.getDreamingGodLevel(p) >= 1) coord1 = new BlockPos(x, y, z);
+							if(coord1 == null && DreamHandler.getDreamPowerLevel(p) >= 1) coord1 = new BlockPos(x, y, z);
 							tracker1[y]++;
 							sum1++;
 						}else if(state == this.state2) {
-							if(coord2 == null && DreamHandler.getDreamingGodLevel(p) >= 1) coord2 = new BlockPos(x, y, z);
+							if(coord2 == null && DreamHandler.getDreamPowerLevel(p) >= 1) coord2 = new BlockPos(x, y, z);
 							tracker2[y]++;
 							sum2++;
 						}

@@ -49,7 +49,7 @@ public class DreamAnimal extends Dream{
 			}
 		}
 		if(animal == null) return false;
-		if(DreamHandler.getDreamingGodLevel(p) == 2) {
+		if(DreamHandler.getDreamPowerLevel(p) == 2) {
 			List<Entity> ans = w.getEntities(animal, e -> e.getDistance(p) < 250);
 			if(!ans.isEmpty()) {
 				BlockPos pos = getEmptyArea(p, w);

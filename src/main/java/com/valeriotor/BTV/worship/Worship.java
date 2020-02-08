@@ -21,18 +21,6 @@ public class Worship {
 		return Deities.values()[p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_DEITY, 0, false)];
 	}
 	
-	public static int getSelectedDeityLevel(EntityPlayer p) {
-		return getDeityLevel(p, getSelectedDeity(p));
-	}
-	
-	public static int getDeityLevel(EntityPlayer p, Deities deity) {
-		switch(deity) {
-		case NONE: return 0;
-		case GREATDREAMER: return Deities.GREATDREAMER.cap(p).getLevel(); // IS SUBJECT TO CHANGE WITH UPCOMING CHANGES TO WORSHIP
-		default: return 0;
-		}
-	}
-	
 	private static final IActivePower NULL_POWER = new IActivePower() {
 		@Override public boolean hasRequirement(EntityPlayer p) {return false;}
 		@Override public int getIndex() {return 0;}

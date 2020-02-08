@@ -5,17 +5,14 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.IResearch;
-import com.valeriotor.BTV.capabilities.IWorship;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.ResearchHandler;
-import com.valeriotor.BTV.capabilities.WorshipCapHandler;
 import com.valeriotor.BTV.events.MemoryUnlocks;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.lib.commands.ReloadResources;
 import com.valeriotor.BTV.lib.commands.SetPlayerData;
-import com.valeriotor.BTV.lib.commands.SetWorshipLevel;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.ResearchRegistry;
@@ -66,11 +63,9 @@ public class BeyondTheVeil
         //ClientProxy.registerEntity();
         
 
-    	CapabilityManager.INSTANCE.register(IWorship.class, new WorshipCapHandler.DGStorage(), new WorshipCapHandler.Factory());
     	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
     	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), new ResearchHandler.ResearchCapFactory());
 
-    	MinecraftForge.EVENT_BUS.register(WorshipCapHandler.class);
     	MinecraftForge.EVENT_BUS.register(MemoryUnlocks.class);
     	MinecraftForge.TERRAIN_GEN_BUS.register(MemoryUnlocks.class);
         
@@ -105,7 +100,6 @@ public class BeyondTheVeil
     
     @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
-        event.registerServerCommand(new SetWorshipLevel());
         event.registerServerCommand(new ReloadResources());
         event.registerServerCommand(new SetPlayerData());
     }

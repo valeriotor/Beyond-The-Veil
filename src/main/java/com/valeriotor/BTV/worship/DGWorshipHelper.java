@@ -21,8 +21,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class DGWorshipHelper {
 	
-	public static final int MAX_LEVEL = 5; // Will of course change
-	
 	public static final HashMap<String, DGResearch> researches = new HashMap<>(); 
 	private static final HashMap<UUID, Double> defenseMultipliers = new HashMap<>();
 	private static final HashMap<UUID, Double> attackMultipliers = new HashMap<>();
@@ -69,7 +67,6 @@ public class DGWorshipHelper {
 	}
 	
 	public static boolean hasRequiredQuest(EntityPlayer p, int lvl) {
-		if(lvl >= MAX_LEVEL) return false;
 		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(getRequiredQuest(lvl));
 	}
 	
@@ -98,14 +95,15 @@ public class DGWorshipHelper {
 	public static void calculateModifier(EntityPlayer p) {
 		double attack = 1;
 		double defense = 1;
-		int dream = 1;
+		int dream = 0;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {
-			if(entry.getValue().isRequirementUnlocked(p)) {
+			if(entry.getValue().isUnlocked(p)) {
 				attack += entry.getValue().attackIncrement;
 				defense += entry.getValue().defenseIncrement;
 				if(entry.getValue().improvesDreams) dream++;
 			}
 		}
+		System.out.println(dream);
 		attackMultipliers.put(p.getPersistentID(), attack);
 		defenseMultipliers.put(p.getPersistentID(), defense);			
 		dreamPower.put(p.getPersistentID(), dream);
@@ -119,6 +117,11 @@ public class DGWorshipHelper {
 	public static double getDefenseModifier(EntityPlayer p) {
 		if(!defenseMultipliers.containsKey(p.getPersistentID()))calculateModifier(p);
 		return defenseMultipliers.get(p.getPersistentID());
+	}
+	
+	public static int getDreamPower(EntityPlayer p) {
+		if(!dreamPower.containsKey(p.getPersistentID())) calculateModifier(p);
+		return dreamPower.get(p.getPersistentID());
 	}
 	
 	public static boolean areDeepOnesFriendly(EntityPlayer p) {

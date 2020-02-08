@@ -22,7 +22,7 @@ public class DreamDeath extends Dream{
 	public boolean activate(EntityPlayer p, World w) {
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		List<EntityPlayerMP> list = DreamHandler.copyPlayerList(w.getMinecraftServer().getPlayerList().getPlayers(), (EntityPlayerMP)p);
-		int lvl = DreamHandler.getDreamingGodLevel(p);
+		int lvl = DreamHandler.getDreamPowerLevel(p);
 		if(list.isEmpty()) p.sendMessage(new TextComponentTranslation("dreams.playersearch.fail"));
 		for(int i = 0; i < lvl-1 && !list.isEmpty(); i++) {
 			int index = w.rand.nextInt(list.size());

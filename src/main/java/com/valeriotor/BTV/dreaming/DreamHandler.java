@@ -140,7 +140,7 @@ public class DreamHandler {
 	 * @return true if the player's DG Level (without Vacuos) >= lvl
 	 */
 	public static boolean youDontHaveLevel(EntityPlayer p, int lvl) {
-		if(getDreamingGodLevel(p) < lvl) {
+		if(getDreamPowerLevel(p) < lvl) {
 			p.sendMessage(new TextComponentTranslation("dreams.lowlevel"));
 			return false;
 		}
@@ -150,7 +150,7 @@ public class DreamHandler {
 	/** Returns the player's Dreaming God level *with* Vacuos bonus (and automatically removes it if so).
 	 */
 	public static int getDreamLevel(EntityPlayer p) {
-		int lvl = getDreamingGodLevel(p);
+		int lvl = getDreamPowerLevel(p);
 		if(hasDreamtOfVoid(p)) lvl++;
 		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 		if(cw != null) lvl += cw.getDreamBonusStrength();
@@ -159,8 +159,8 @@ public class DreamHandler {
 	
 	/** Returns the player's Dreaming God level *without* Vacuos bonus.
 	 */
-	public static int getDreamingGodLevel(EntityPlayer p) {
-		return Math.min(Deities.GREATDREAMER.cap(p).getLevel(), DGWorshipHelper.MAX_LEVEL);
+	public static int getDreamPowerLevel(EntityPlayer p) {
+		return DGWorshipHelper.getDreamPower(p);
 	}
 	
 	/** Gets the difference in DreamingGod level between two players, one of whom is making an offensive Dream and the other
@@ -169,7 +169,7 @@ public class DreamHandler {
 	 * @return The difference in DreamingGod level
 	 */
 	public static int getDreamAttack(EntityPlayer attacker, EntityPlayer target) {
-		return getDreamingGodLevel(attacker) - getDreamingGodLevel(target);
+		return getDreamPowerLevel(attacker) - getDreamPowerLevel(target);
 	}
 	
 	/** Check whether the Dreamer has recently dreamt with Vacuos (possibly even in this Dreaming session) by checking
