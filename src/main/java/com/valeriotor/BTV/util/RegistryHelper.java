@@ -10,6 +10,7 @@ import com.valeriotor.BTV.tileEntities.TileBarrel;
 import com.valeriotor.BTV.tileEntities.TileBloodWell;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
 import com.valeriotor.BTV.tileEntities.TileFumeSpreader;
+import com.valeriotor.BTV.tileEntities.TileGearBench;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.tileEntities.TileMemorySieve;
@@ -71,6 +72,7 @@ public class RegistryHelper {
 		GameRegistry.registerTileEntity(TileBloodWell.class, References.MODID + ":tilebloodwell");
 		GameRegistry.registerTileEntity(TileStatue.class, References.MODID + ":tilestatue");
 		GameRegistry.registerTileEntity(TileMemorySieve.class, References.MODID + ":tilememorysieve");
+		GameRegistry.registerTileEntity(TileGearBench.class, References.MODID + ":tilegearbench");
 		
 	}
 	

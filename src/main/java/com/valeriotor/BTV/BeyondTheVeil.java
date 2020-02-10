@@ -7,6 +7,7 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.IResearch;
 import com.valeriotor.BTV.capabilities.PlayerDataHandler;
 import com.valeriotor.BTV.capabilities.ResearchHandler;
+import com.valeriotor.BTV.crafting.GearBenchRecipeRegistry;
 import com.valeriotor.BTV.events.MemoryUnlocks;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
@@ -95,6 +96,7 @@ public class BeyondTheVeil
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         ResearchRegistry.registerResearchesSecond();
+        GearBenchRecipeRegistry.registerGearBenchRecipes();
         proxy.postInit(event);
     }
     

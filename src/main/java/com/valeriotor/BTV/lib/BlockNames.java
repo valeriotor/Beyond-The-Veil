@@ -18,6 +18,7 @@ public class BlockNames {
 	public static final String ELDER_SLAB = "elder_slab";
 	public static final String ELDER_SLAB_DOUBLE = "elder_slab_double";
 	public static final String FUMESPREADER = "fume_spreader";
+	public static final String GEAR_BENCH = "gear_bench";
 	public static final String HEART = "heart";
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";

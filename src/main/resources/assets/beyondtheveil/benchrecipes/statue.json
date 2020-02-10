@@ -1,0 +1,16 @@
+{
+	"rows" : [
+		"SSSS",
+		"SHHS",
+		"SPGS",
+		"SSSS"
+	],
+	"output" : "beyondtheveil:statue",
+	"map": {
+		"S" : "minecraft:stone",
+		"P" : "beyondtheveil:spine",
+		"H" : "beyondtheveil:heart",
+		"G" : "minecraft:gold_block"
+	},
+	"req" : "STATUE;0"
+}

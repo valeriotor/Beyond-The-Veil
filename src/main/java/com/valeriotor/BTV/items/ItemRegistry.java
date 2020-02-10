@@ -164,6 +164,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockSacrificeStatue), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockPenitenceStatue), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMemorySieve), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockGearBench), 0, "inventory");
         
         
     }
@@ -213,6 +214,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockSacrificeStatue).setRegistryName(BlockRegistry.BlockSacrificeStatue.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockPenitenceStatue).setRegistryName(BlockRegistry.BlockPenitenceStatue.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockMemorySieve).setRegistryName(BlockRegistry.BlockMemorySieve.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockGearBench).setRegistryName(BlockRegistry.BlockGearBench.getRegistryName()));
     	registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);

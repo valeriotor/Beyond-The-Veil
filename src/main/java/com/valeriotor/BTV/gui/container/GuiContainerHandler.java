@@ -7,16 +7,19 @@ import com.valeriotor.BTV.gui.GuiDrowned;
 import com.valeriotor.BTV.gui.GuiSleepingChamber;
 import com.valeriotor.BTV.gui.GuiWateryCradle;
 import com.valeriotor.BTV.gui.research.GuiNecronomicon;
+import com.valeriotor.BTV.inventory.ContainerGearBench;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.items.container.ContainerDreamBottle;
 import com.valeriotor.BTV.items.container.InventoryDreamBottle;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.tileEntities.TileCityMapper;
+import com.valeriotor.BTV.tileEntities.TileGearBench;
 import com.valeriotor.BTV.worship.DagonDialogues;
 import com.valeriotor.BTV.worship.DrowningRitual;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -34,6 +37,7 @@ public class GuiContainerHandler implements IGuiHandler{
 	public static final int CRADLE = 4;
 	public static final int NECRONOMICON = 5;
 	public static final int SLEEP_CHAMBER = 6;
+	public static final int GEAR_BENCH = 7;
 	
 	
 	
@@ -59,6 +63,10 @@ public class GuiContainerHandler implements IGuiHandler{
 			return new DummyContainer();
 		} else if(ID == 6) {
 			return new DummyContainer();
+		} else if(ID == 7) {
+			TileEntity te = world.getTileEntity(new BlockPos(x,y,z));
+			if(te instanceof TileGearBench)
+			return new ContainerGearBench(p.inventory, (TileGearBench)te);
 		}
 		return null;
 	}
@@ -98,6 +106,10 @@ public class GuiContainerHandler implements IGuiHandler{
 			return new GuiNecronomicon();
 		} else if(ID == 6) {
 			return new GuiSleepingChamber();
+		} else if(ID == 7) {
+			TileEntity te = world.getTileEntity(new BlockPos(x,y,z));
+			if(te instanceof TileGearBench)
+			return new GuiGearBench(new ContainerGearBench(p.inventory, (TileGearBench)te));
 		}
 		return null;
 	}

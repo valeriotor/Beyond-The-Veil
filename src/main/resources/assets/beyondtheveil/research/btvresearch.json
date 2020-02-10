@@ -620,14 +620,17 @@
         "stages": [
 				{
 					"text": "research.STATUE.stage.0",
-					"required_research": ["craftedstatue"]
+					"required_research": ["craftedstatue"],
+                    "recipes": ["beyondtheveil:statue"]
                 },
                 {
 					"text": "research.STATUE.stage.1",
-					"required_research": ["linkedstatue"]
+					"required_research": ["linkedstatue"],
+                    "recipes": ["beyondtheveil:statue"]
 				},
                 {
-					"text": "research.STATUE.stage.2"
+					"text": "research.STATUE.stage.2",
+                    "recipes": ["beyondtheveil:statue"]
 				}
             ]
         },

@@ -1,5 +1,6 @@
 package com.valeriotor.BTV.events;
 
+import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -7,6 +8,8 @@ import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,6 +22,11 @@ public class ResearchEvents {
 		if(ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0) {
 			SyncUtil.addStringDataOnServer(p, false, "didDream");
 		}
+	}
+	
+	public static void gearBenchCraftEvent(EntityPlayer p, ItemStack stack) {
+		if(stack.getItem() == Item.getItemFromBlock(BlockRegistry.BlockStatue))
+			SyncUtil.addStringDataOnServer(p, false, "craftedstatue");
 	}
 	
 	public static void progressResearchEvent(EntityPlayer p, String key, int newStage) {
