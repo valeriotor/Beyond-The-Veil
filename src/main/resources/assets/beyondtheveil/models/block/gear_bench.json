@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "beyondtheveil:blocks/gear_bench_top",
 		"1": "beyondtheveil:blocks/gear_bench_side",
-		"particle": "beyondtheveil:blocks/gear_bench_top"
+		"particle": "beyondtheveil:blocks/gear_bench_side"
 	},
 	"elements": [
 		{

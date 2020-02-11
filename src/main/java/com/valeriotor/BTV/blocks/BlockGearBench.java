@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BlockGearBench extends ModBlock implements ITileEntityProvider{
 
@@ -40,6 +41,7 @@ public class BlockGearBench extends ModBlock implements ITileEntityProvider{
 				playerIn.openGui(BeyondTheVeil.instance, GuiContainerHandler.GEAR_BENCH, worldIn, pos.getX(), pos.getY(), pos.getZ());
 				return true;
 			} else {
+				if(!worldIn.isRemote)
 				playerIn.sendMessage(new TextComponentTranslation("interact.gearbench.dunno"));
 			}
 		return false;
@@ -56,7 +58,7 @@ public class BlockGearBench extends ModBlock implements ITileEntityProvider{
 		if(te instanceof TileGearBench) {
 			TileGearBench tgb = (TileGearBench)te;
 			for(int i = 0; i < 16; i++) {
-				InventoryHelper.dropInventoryItems(w, pos, tgb);
+				spawnAsEntity(w, pos, tgb.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).extractItem(i, 64, false));
 			}
 		}
 		

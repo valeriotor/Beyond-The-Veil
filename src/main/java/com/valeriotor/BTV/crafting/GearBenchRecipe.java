@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.research.ResearchUtil;
-import com.valeriotor.BTV.tileEntities.TileGearBench;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandler;
 
 public class GearBenchRecipe {
 	
@@ -54,11 +54,11 @@ public class GearBenchRecipe {
 	private int requiredResearchStage = 0;
 	
 	public ItemStack getStackInRowColumn(int row, int column) {
-		return getStackInSlot(row*4+column).copy();
+		return getStackInSlot(row*4+column);
 	}
 	
 	public ItemStack getStackInSlot(int index) {
-		return grid[index].copy();
+		return grid[index];
 	}
 	
 	public ItemStack getOutput() {
@@ -69,10 +69,10 @@ public class GearBenchRecipe {
 		return this.outputName;
 	}
 	
-	public boolean checksOut(TileGearBench gb) {
+	public boolean checksOut(IItemHandler handler) {
 		for(int i = 0; i < 16; i++) {
 			ItemStack stack = grid[i];
-			ItemStack gbstack = gb.getStackInSlot(i);
+			ItemStack gbstack = handler.getStackInSlot(i);
 			if(gbstack == null || stack.getItem() != gbstack.getItem() || stack.getMetadata() != gbstack.getMetadata()) {
 				return false;
 			}

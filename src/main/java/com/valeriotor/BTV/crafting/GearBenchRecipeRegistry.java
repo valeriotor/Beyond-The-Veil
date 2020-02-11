@@ -11,7 +11,8 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.tileEntities.TileGearBench;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class GearBenchRecipeRegistry {
 	
@@ -20,6 +21,7 @@ public class GearBenchRecipeRegistry {
 	
 	public static void registerGearBenchRecipes() {
 		registerGBRecipe("statue");
+		registerGBRecipe("lacrymatory");
 	}
 	
 	private static void registerGBRecipe(String fileName) {
@@ -43,13 +45,13 @@ public class GearBenchRecipeRegistry {
 		}
 	}
 	
-	public static GearBenchRecipe getRecipe(TileGearBench gb) {
-		if(recipes.containsKey(gb.getStackInSlot(0).getItem())) {
-			HashMap<Item, List<GearBenchRecipe>> map = recipes.get(gb.getStackInSlot(0).getItem());
-			if(map.containsKey(gb.getStackInSlot(5).getItem())) {
-				List<GearBenchRecipe> list = map.get(gb.getStackInSlot(5).getItem());
+	public static GearBenchRecipe getRecipe(IItemHandler handler) {
+		if(recipes.containsKey(handler.getStackInSlot(0).getItem())) {
+			HashMap<Item, List<GearBenchRecipe>> map = recipes.get(handler.getStackInSlot(0).getItem());
+			if(map.containsKey(handler.getStackInSlot(5).getItem())) {
+				List<GearBenchRecipe> list = map.get(handler.getStackInSlot(5).getItem());
 				for(GearBenchRecipe gbr : list) {
-					if(gbr.checksOut(gb))
+					if(gbr.checksOut(handler))
 						return gbr;
 				}
 			}
