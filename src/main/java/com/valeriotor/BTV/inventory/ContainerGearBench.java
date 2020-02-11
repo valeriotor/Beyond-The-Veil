@@ -25,6 +25,7 @@ public class ContainerGearBench extends Container{
 	private final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 	private final int TE_INVENTORY_SLOT_COUNT = 4;
 	
+	private final TileGearBench bench;
 	private final InventoryGearBenchOutput output = new InventoryGearBenchOutput();
 	
 	public ContainerGearBench(InventoryPlayer invPlayer, TileGearBench gb) {
@@ -32,6 +33,7 @@ public class ContainerGearBench extends Container{
 	    final int SLOT_Y_SPACING = 18;
 		final int HOTBAR_XPOS = 8;
 		final int HOTBAR_YPOS = 147;
+		this.bench = gb;
 		this.addSlotToContainer(new SlotGearBenchOutput(output, gb, 0, 138, 24));
 		
 		for(int i = 0; i < 16; i++) {
@@ -62,7 +64,7 @@ public class ContainerGearBench extends Container{
 				changeOutput(invPlayer.player, (TileGearBench)invBasic);
 			}
 		};
-		gb.setListener(checkCraft);
+		gb.addListener(invPlayer.player, checkCraft);
 	}
 	
 	public void changeOutput(EntityPlayer p, TileGearBench invBasic) {
@@ -83,4 +85,10 @@ public class ContainerGearBench extends Container{
 		return ItemStack.EMPTY;
 	}
 	
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn) {
+		super.onContainerClosed(playerIn);
+		if(playerIn.openContainer != this)
+			bench.removeListener(playerIn);
+	}
 }

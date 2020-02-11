@@ -1,7 +1,8 @@
 package com.valeriotor.BTV.tileEntities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 import com.valeriotor.BTV.research.ResearchUtil;
 
@@ -17,7 +18,7 @@ import net.minecraft.util.NonNullList;
 public class TileGearBench extends TileEntity implements IInventory{
 	
 	private NonNullList<ItemStack> benchContents = NonNullList.<ItemStack>withSize(16, ItemStack.EMPTY);
-	private IInventoryChangedListener listener;
+	private HashMap<UUID, IInventoryChangedListener> listeners = new HashMap<>();
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -120,12 +121,17 @@ public class TileGearBench extends TileEntity implements IInventory{
 	}
 	
 	public void markDirty() {
-        if(listener != null)
-        	listener.onInventoryChanged(this);
+		for(Entry<UUID, IInventoryChangedListener> entry : listeners.entrySet()) {
+			entry.getValue().onInventoryChanged(this);
+		}
     }
 	
-	public void setListener(IInventoryChangedListener listener) {
-		this.listener = listener;
+	public void addListener(EntityPlayer p, IInventoryChangedListener listener) {
+		listeners.put(p.getPersistentID(), listener);
+	}
+	
+	public void removeListener(EntityPlayer p) {
+		listeners.remove(p.getPersistentID());
 	}
 	
 }
