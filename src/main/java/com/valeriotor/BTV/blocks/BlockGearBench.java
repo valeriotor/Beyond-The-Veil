@@ -9,11 +9,16 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockGearBench extends ModBlock implements ITileEntityProvider{
@@ -30,11 +35,33 @@ public class BlockGearBench extends ModBlock implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(ResearchUtil.isResearchKnown(playerIn, "SLEEPCHAMBER"))
-			playerIn.openGui(BeyondTheVeil.instance, GuiContainerHandler.GEAR_BENCH, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		else
-			playerIn.sendMessage(new TextComponentTranslation("interact.gearbench.dunno"));
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		if(hand == EnumHand.MAIN_HAND)
+			if(ResearchUtil.isResearchKnown(playerIn, "SLEEPCHAMBER")) {
+				playerIn.openGui(BeyondTheVeil.instance, GuiContainerHandler.GEAR_BENCH, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				return true;
+			} else {
+				playerIn.sendMessage(new TextComponentTranslation("interact.gearbench.dunno"));
+			}
+		return false;
 	}
-
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		TileEntity te = w.getTileEntity(pos);
+		if(te instanceof TileGearBench) {
+			TileGearBench tgb = (TileGearBench)te;
+			for(int i = 0; i < 16; i++) {
+				InventoryHelper.dropInventoryItems(w, pos, tgb);
+			}
+		}
+		
+		super.breakBlock(w, pos, state);
+	}
+	
+	
 }
