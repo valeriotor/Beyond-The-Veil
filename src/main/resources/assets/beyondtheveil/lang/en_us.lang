@@ -766,11 +766,20 @@ research.craftedsstatue.text=Craft a Statue of Sacrifice.
 research.PENITENCESTATUE.title=Statue of Penitence
 research.PENITENCESTATUE.stage.0=I have sinned. I have sinned.<BR>In my arrogance I forgot my insignificance.<BR>I must right these wrongs. With blood.<BR>My own.<BR>I will build a new Statue, one that shows my regret.
 research.PENITENCESTATUE.stage.1=This feels more.. right.<BR>I wanted to play God, despite being so, so tiny. It's only right that I suffer some punishment.<BR>The Statue of Penitence does everything the normal Statue does, though it takes slighty more crawlers to achieve the same power.<BR>However, when I'm under its effects, I am reminded of my own flaws, my failures, my weaknesses.<BR>With a Sacrificial Knife, I will cut myself while wielding a sword in the main hand, for I've always been weak.<BR>I will cut when I wield a shovel, an axe, a pickaxe, for I've always been slow.<BR>Even the hoe.. for the green thumb I never had.<BR>When the worshippers are enough, even the Crown of Thorns may become easier to use.<BR>The way of pain is an arduous one, yet not impossible.<BR>All it takes is a little Sacrifice.
-research.craftedpstatue.text=Craft a Statue of Penitence
+research.craftedpstatue.text=Craft a Statue of Penitence.
 
 research.VALOURSTATUE.title=Statue of Valour
 research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if there were, I'd be no paragon.<BR>This research is a dead end.
 
+research.SACRIFICEALTAR.title=Altar of Sacrifice
+research.SACRIFICEALTAR.stage.0=I revel in limitless gratitude towards my Patron, yet in agony.<BR>For there is no way I can duly offer Him my thanks.<BR>Or is there?<BR>Blood makes for powerful bonds. It is water and life, all at once.<BR>It is the link that binds all things living to the deepest oceans.<BR>Through blood shall I thank Him, through life and water.<BR>An Altar of Sacrifice, of Hearts and Prismarine.<BR>First, a core.
+research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice.<BR>A heartless villager is to be placed upon the core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
+research.craftedscore.text=Craft a Sacrificial Altar Core.
+
+research.CORALSTAFF.title=Coral Staff
+research.CORALSTAFF.stage.0=In their unholy penitence, undead seek life.<BR>However, they're imbeciles.<BR>It shouldn't be a difficult task to redirect them from one beating heart to the next, their "minds" fooled by what seems better flesh.<BR>I *know* the exact tool I need.
+research.CORALSTAFF.stage.1=How bizarre it is that the corals of the deep look so similar to our own arteries.<BR>No coincidence, I am certain. The link between the two is strong.<BR>And it is through this very staff that I may bind hearts together. Interacting with a placed heart while sneaking will store its position in the staff. Once done, interacting while sneaking with another heart (within no more than 32 blocks of distance) will bind the old one's position to this new one's. Any undead that are attracted to the first will then be redirected to the second, which may be also linked to yet another heart, resulting in a true procession of the damned.<BR>If the staff stores a position, it may be cleared by using it while sneaking on the very same heart it was taken from, or while aiming in the air. Using the staff without sneaking will give info on itself or on a clicked heart.<BR>There is, in truth, another use to the staff: attacking an enemy with it will result in nearby undead targeting it, in their endless pursuit of blood and life.
+research.craftedstaff.text=Craft a Coral Staff
 
 
 ##################

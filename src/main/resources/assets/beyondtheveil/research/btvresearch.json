@@ -439,7 +439,7 @@
         "key": "WATERYCRADLE",
         "name": "research.WATERYCRADLE.title",
         "icons": [ "beyondtheveil:watery_cradle" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 9,11],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,12],
 		"hiders": ["IDOL"],
 		"meta": ["HIDDEN"],
         "parents": [ "IDOL" ],
@@ -457,7 +457,7 @@
         "key": "SPINES",
         "name": "research.SPINES.title",
         "icons": [ "beyondtheveil:spine" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 7,13 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,14 ],
 		"hiders": ["IDOL"],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
@@ -474,7 +474,7 @@
         "key": "HEARTS",
         "name": "research.HEARTS.title",
         "icons": [ "beyondtheveil:heart" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 7,9 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,10 ],
 		"hiders": ["IDOL"],
         "parents": [ "WATERYCRADLE" ],
         "stages": [
@@ -491,7 +491,7 @@
         "key": "WEEPERS",
         "name": "research.WEEPERS.title",
         "icons": [ "beyondtheveil:held_fletum" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 5,11 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,12 ],
 		"hiders": ["IDOL"],
         "parents": [ "SPINES", "HEARTS" ],
         "stages": [
@@ -512,7 +512,7 @@
         "key": "REVELATIONRING",
         "name": "research.REVELATIONRING.title",
         "icons": [ "beyondtheveil:revelation_ring" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,11 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,12 ],
 		"hiders": ["IDOL"],
         "parents": [ "WEEPERS" ],
         "stages": [
@@ -529,7 +529,7 @@
         "key": "BONETIARA",
         "name": "research.BONETIARA.title",
         "icons": [ "beyondtheveil:bone_tiara" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,13 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,14 ],
 		"hiders": ["IDOL"],
         "parents": [ "SPINES" ],
         "stages": [
@@ -546,7 +546,7 @@
         "key": "BLEEDINGBELT",
         "name": "research.BLEEDINGBELT.title",
         "icons": [ "beyondtheveil:bleeding_belt" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 3,9 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,10 ],
 		"hiders": ["IDOL"],
         "parents": [ "HEARTS" ],
         "stages": [
@@ -563,7 +563,7 @@
         "key": "BLOODCOVENANT",
         "name": "research.BLOODCOVENANT.title",
         "icons": [ "beyondtheveil:blood_covenant" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -1,10 ],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,11 ],
 		"hiders": ["IDOL"],
         "parents": [ "BLEEDINGBELT", "REVELATIONRING" ],
         "stages": [
@@ -580,7 +580,7 @@
         "key": "BLOODCROWN",
         "name": "research.BLOODCROWN.title",
         "icons": [ "beyondtheveil:blood_crown" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -1,12],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,13],
 		"hiders": ["IDOL"],
         "parents": [ "BLEEDINGBELT", "BONETIARA" ],
         "stages": [
@@ -597,7 +597,7 @@
         "key": "AZACNOCHARM",
         "name": "research.AZACNOCHARM.title",
         "icons": [ "beyondtheveil:azacno_charm" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -3,11],
+        "category": "BEYOND_THE_VEIL", "location": [ -3,12],
         "learn":"true",
         "parents": [ "BLOODCOVENANT", "BLOODCROWN" ],
         "stages": [
@@ -614,7 +614,7 @@
         "key": "STATUE",
         "name": "research.STATUE.title",
         "icons": [ "beyondtheveil:statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 6,16],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,17],
         "hiders": ["ALLIANCE"],
         "parents": [ "WEEPERS" ],
         "stages": [
@@ -638,7 +638,7 @@
         "key": "SACRIFICESTATUE",
         "name": "research.SACRIFICESTATUE.title",
         "icons": [ "beyondtheveil:sacrifice_statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 4,18],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,19],
         "hiders": ["STATUE"],
         "parents": [ "STATUE" ],
         "stages": [
@@ -655,7 +655,7 @@
         "key": "PENITENCESTATUE",
         "name": "research.PENITENCESTATUE.title",
         "icons": [ "beyondtheveil:penitence_statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 8,18],
+        "category": "BEYOND_THE_VEIL", "location": [ 8,19],
         "hiders": ["STATUE"],
         "parents": [ "STATUE" ],
         "stages": [
@@ -672,12 +672,69 @@
         "key": "VALOURSTATUE",
         "name": "research.VALOURSTATUE.title",
         "icons": [ "beyondtheveil:statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 6,20],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,21],
         "hiders": ["STATUE"],
         "parents": [ "PENITENCESTATUE", "SACRIFICESTATUE" ],
         "stages": [
 				{
 					"text": "research.VALOURSTATUE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "SACRIFICEALTAR",
+        "name": "research.SACRIFICEALTAR.title",
+        "icons": [ "beyondtheveil:sacrifice_altar" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,7],
+		"hiders": ["IDOL"],
+        "parents": [ "HEARTS" ],
+        "stages": [
+				{
+                    "text": "research.SACRIFICEALTAR.stage.0",
+                    "recipes" : ["beyondtheveil:sacrifice_altar"],
+					"required_research": ["craftedscore"]
+                },
+                {
+                    "text": "research.SACRIFICEALTAR.stage.1",
+                    "recipes" : ["beyondtheveil:sacrifice_altar", "sacrifice_altar"]
+                }
+            ]
+        },
+		{
+        "key": "BLOODWELL",
+        "name": "research.BLOODWELL.title",
+        "icons": [ "beyondtheveil:blood_well" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,5],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.BLOODWELL.stage.0",
+                    "recipes" : ["blood_well"],
+					"required_research": ["builtwell"]
+                },
+                {
+                    "text": "research.SACRIFICEALTAR.stage.1",
+                    "recipes" : ["blood_well", "beyondtheveil:sigil_zombie", "beyondtheveil:sigil_skellie"]
+                }
+            ]
+        },
+		{
+        "key": "CORALSTAFF",
+        "name": "research.CORALSTAFF.title",
+        "icons": [ "beyondtheveil:coral_staff" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,9],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.CORALSTAFF.stage.0",
+                    "recipes" : ["beyondtheveil:coral_staff"],
+					"required_research": ["craftedstaff"]
+                },
+                {
+                    "text": "research.CORALSTAFF.stage.1",
+                    "recipes" : ["beyondtheveil:coral_staff"]
                 }
             ]
         }
