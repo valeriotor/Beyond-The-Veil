@@ -1,9 +1,14 @@
 package com.valeriotor.BTV.inventory;
 
+import com.valeriotor.BTV.crafting.GearBenchRecipe;
+import com.valeriotor.BTV.crafting.GearBenchRecipeRegistry;
 import com.valeriotor.BTV.events.ResearchEvents;
 import com.valeriotor.BTV.tileEntities.TileGearBench;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,13 +26,27 @@ public class SlotGearBenchOutput extends SlotItemHandler{
 	
 	@Override
 	public ItemStack onTake(EntityPlayer p, ItemStack stack) {
+		IItemHandler cap = this.matrix.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for(int i = 0; i < 16; i++) {
-			this.matrix.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP).extractItem(i, 1, false);
+			Item a = cap.extractItem(i, 1, false).getItem();
+			if(a instanceof ItemBucket && a != Items.BUCKET) {
+				cap.insertItem(i, new ItemStack(Items.BUCKET), false);
+			}
 		}
 		if(!p.world.isRemote) {
 			ResearchEvents.gearBenchCraftEvent(p, stack);
 		}
 		matrix.markDirty();
 		return super.onTake(p, stack);
+	}
+	
+	@Override
+	public boolean canTakeStack(EntityPlayer playerIn) {
+		if(this.getStack() != null && !this.getStack().isEmpty()) {
+			GearBenchRecipe gbr = GearBenchRecipeRegistry.recipesFromKeys.get(this.getStack().getItem().getRegistryName().toString());
+			if(gbr != null)
+				return gbr.isKnown(playerIn) && super.canTakeStack(playerIn);
+		}
+		return super.canTakeStack(playerIn);
 	}
 }
