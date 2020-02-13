@@ -1,4 +1,4 @@
-package com.valeriotor.BTV.util;
+package com.valeriotor.BTV.sacrifice;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class SacrificeHelper extends TileEntity{
 		boolean used = false;
 		if(!items.isEmpty()) {
 			for(EntityItem item : items) {
-				ItemStack stack = useItem(p, pos, item.getItem());
+				ItemStack stack = SacrificeRecipeRegistry.getItemStack(item.getItem());
 				if(stack != null) {
 					EntityItem ent = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
 					p.world.spawnEntity(ent);
@@ -80,24 +80,12 @@ public class SacrificeHelper extends TileEntity{
 			p.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST, 60*20, 9, false, false));
 			removeHearts(p.world, pos);
 		} else {
-			ItemStack newStack = useItem(p, pos, stack);
+			ItemStack newStack = SacrificeRecipeRegistry.getItemStack(stack);
 			if(newStack != null) {
 				p.addItemStackToInventory(newStack);
 				removeHearts(p.world, pos);
 			}
 		}
-	}
-	
-	public static ItemStack useItem(EntityPlayer p, BlockPos pos, ItemStack item) {
-		if(Block.getBlockFromItem(item.getItem()) == Blocks.PRISMARINE) {
-			item.shrink(1);
-			return new ItemStack(ItemRegistry.coral_staff);
-		} else if(getBricks(Block.getBlockFromItem(item.getItem())) != null) {
-			ItemStack stack = new ItemStack(getBricks(Block.getBlockFromItem(item.getItem())), item.getCount());;
-			item.setCount(0);
-			return stack;
-		}
-		return null;
 	}
 	
 	public static void removeHearts(World w, BlockPos pos) {
@@ -107,13 +95,6 @@ public class SacrificeHelper extends TileEntity{
 				w.setBlockState(pos1, Blocks.AIR.getDefaultState());
 			}
 		}
-	}
-	
-	public static Block getBricks(Block b) {
-		if(b == Blocks.STONEBRICK) return BlockRegistry.BlockBloodBrick;
-		if(b == Blocks.STONE_BRICK_STAIRS) return BlockRegistry.BlockBloodBrickStairs;
-		if(b == Blocks.STONE_SLAB) return BlockRegistry.SlabBloodHalf;
-		return null;
 	}
 	
 }

@@ -696,7 +696,7 @@
                 },
                 {
                     "text": "research.SACRIFICEALTAR.stage.1",
-                    "recipes" : ["beyondtheveil:sacrifice_altar", "sacrifice_altar"]
+                    "recipes" : ["beyondtheveil:sacrifice_altar", "sacrifice_altar", "sacrifice;bricks"]
                 }
             ]
         },

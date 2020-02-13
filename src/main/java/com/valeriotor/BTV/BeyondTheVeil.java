@@ -17,6 +17,7 @@ import com.valeriotor.BTV.lib.commands.SetPlayerData;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.ResearchRegistry;
+import com.valeriotor.BTV.sacrifice.SacrificeRecipeRegistry;
 import com.valeriotor.BTV.shoggoth.BuildingRegistry;
 import com.valeriotor.BTV.util.RegistryHelper;
 import com.valeriotor.BTV.world.BiomeRegistry;
@@ -97,6 +98,7 @@ public class BeyondTheVeil
     public void postInit(FMLPostInitializationEvent event) {
         ResearchRegistry.registerResearchesSecond();
         GearBenchRecipeRegistry.registerGearBenchRecipes();
+        SacrificeRecipeRegistry.registerSacrificeRecipes();
         proxy.postInit(event);
     }
     

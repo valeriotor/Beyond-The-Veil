@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.sacrifice.SacrificeHelper;
 import com.valeriotor.BTV.util.ItemHelper;
-import com.valeriotor.BTV.util.SacrificeHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;

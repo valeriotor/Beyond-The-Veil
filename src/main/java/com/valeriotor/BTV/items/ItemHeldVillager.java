@@ -5,8 +5,8 @@ import java.util.List;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.sacrifice.SacrificeHelper;
 import com.valeriotor.BTV.util.ItemHelper;
-import com.valeriotor.BTV.util.SacrificeHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

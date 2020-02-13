@@ -5,8 +5,8 @@ import java.util.UUID;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockStatue;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
+import com.valeriotor.BTV.sacrifice.SacrificeHelper;
 import com.valeriotor.BTV.tileEntities.TileStatue;
-import com.valeriotor.BTV.util.SacrificeHelper;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 
