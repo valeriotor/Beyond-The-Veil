@@ -7,6 +7,8 @@ import com.valeriotor.BTV.worship.Deities;
 import com.valeriotor.BTV.worship.Worship;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -44,6 +46,15 @@ public class GreatDreamerBuffs {
 		
 		e.setAmount(Math.min(e.getAmount(), p.isInWater() ? 3 : 5));
 		
+	}
+	
+	public static boolean denyFall(LivingAttackEvent event) {
+		EntityPlayer p = (EntityPlayer) event.getEntityLiving();
+		if(event.getSource() == DamageSource.FALL && p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+			event.setCanceled(true);
+			return true;
+		}
+		return false;
 	}
 	
 }

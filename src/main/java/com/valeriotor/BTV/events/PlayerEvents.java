@@ -40,8 +40,10 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {
@@ -105,6 +107,7 @@ public class PlayerEvents {
 			BeyondTheVeil.proxy.renderEvents.transformedPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.parasitePlayers.clear();
+			BeyondTheVeil.proxy.cEvents.stepAssist = false;
 		} else {
 			DGWorshipHelper.removeModifiers(event.player);
 			if(AzacnoParasiteEvents.parasites.containsKey(event.player.getPersistentID())) {
@@ -127,19 +130,26 @@ public class PlayerEvents {
 		
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
-		
+		IPlayerData newData = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		for(String string : strings) {
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, false);
+			newData.addString(string, false);
 		}
 			
 		for(Entry<String, Integer> entry : ints.entrySet()) {
-			player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(entry.getKey(), entry.getValue(), false);
+			newData.setInteger(entry.getKey(), entry.getValue(), false);
 		}
 		player.getCapability(ResearchProvider.RESEARCH, null).putResearches(original.getCapability(ResearchProvider.RESEARCH, null).getResearches());
-		SyncUtil.syncCapabilityData(player);
-
-		if(player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED))
-			TransformDeepOne.applyAttributes(player);
+		
+	}
+	
+	@SubscribeEvent
+	public static void respawnEvent(PlayerRespawnEvent event) {
+		SyncUtil.syncPlayerData(event.player);
+	}
+	
+	@SubscribeEvent
+	public static void changeDimensionEvent(PlayerChangedDimensionEvent event) {
+		SyncUtil.syncPlayerData(event.player);
 	}
 	
 	@SubscribeEvent

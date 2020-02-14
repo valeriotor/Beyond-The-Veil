@@ -72,13 +72,6 @@ public class MessageSyncDataToClient implements IMessage{
 			else {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(message.string, message.value, false);
 			}
-			
-			if(message.string.equals(PlayerDataLib.TRANSFORMED)) {
-				if(!TransformDeepOne.stepAssist) {
-					Minecraft.getMinecraft().player.stepHeight += 0.5;
-					TransformDeepOne.stepAssist = true;
-				}
-			}
 		}
 		
 	}

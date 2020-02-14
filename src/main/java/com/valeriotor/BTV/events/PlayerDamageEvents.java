@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,6 +48,13 @@ public class PlayerDamageEvents {
 			enrageMinions(event);
 			applyBleedingBelt(event);
 			applyBloodCrown(event);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void livingAttack(LivingAttackEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			GreatDreamerBuffs.denyFall(event);
 		}
 	}
 	

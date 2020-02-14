@@ -38,6 +38,8 @@ public class PlayerDataHandler {
 			final NBTTagCompound tag = new NBTTagCompound();
 			
 			HashMap<String, Integer> ints = instance.getInts(false);
+			HashMap<String, Long> longs = instance.getLongs();
+			HashMap<String, String> keys = instance.getKeyedStrings();
 			Set<String> strings = instance.getStrings(false);
 			
 			NBTTagCompound intTag = new NBTTagCompound();
@@ -52,6 +54,17 @@ public class PlayerDataHandler {
 			}
 			tag.setTag("strings", stringTag);
 			
+			NBTTagCompound longTag = new NBTTagCompound();
+			for(Entry<String, Long> entry : longs.entrySet()) {
+				longTag.setLong(entry.getKey(), entry.getValue());
+			}
+			tag.setTag("longs", longTag);
+			
+			NBTTagCompound keyTag = new NBTTagCompound();
+			for(Entry<String, String> entry : keys.entrySet()) {
+				keyTag.setString(entry.getKey(), entry.getValue());
+			}
+			tag.setTag("keys", keyTag);
 			return tag;
 			
 		}
@@ -72,6 +85,22 @@ public class PlayerDataHandler {
 					Integer a = intTag.getInteger(string);
 					if(a != null)
 						instance.setInteger(string, a, false);
+				}
+			}
+			if(tag.hasKey("longs")) {
+				NBTTagCompound longTag = (NBTTagCompound) tag.getTag("longs");
+				for(String string: longTag.getKeySet()) {
+					Long a = longTag.getLong(string);
+					if(a != null)
+						instance.setLong(string, a);
+				}
+			}
+			if(tag.hasKey("keys")) {
+				NBTTagCompound keyTag = (NBTTagCompound) tag.getTag("keys");
+				for(String key : keyTag.getKeySet()) {
+					String value = keyTag.getString(key);
+					if(value != null)
+						instance.addKeyedString(key, value);
 				}
 			}
 			
@@ -97,6 +126,8 @@ public class PlayerDataHandler {
 		public HashMap<String, Integer> ints = new HashMap<>();
 		public Set<String> tempStrings = new HashSet<>();
 		public HashMap<String, Integer> tempInts = new HashMap<>();
+		public HashMap<String, Long> longs = new HashMap<>();
+		public HashMap<String, String> keyedStrings = new HashMap<>();
 		
 
 		@Override
@@ -179,6 +210,65 @@ public class PlayerDataHandler {
 		public Set<String> getStrings(boolean temporary) {
 			if(temporary) return tempStrings;
 			else return strings;
+		}
+
+		@Override
+		public void setLong(String key, long value) {
+			longs.put(key, value);
+		}
+
+		@Override
+		public boolean removeLong(String key) {
+			if(!longs.containsKey(key))
+			return false;
+			longs.remove(key);
+			return true;
+		}
+
+		@Override
+		public Long getLong(String key) {
+			return longs.get(key);
+		}
+
+		@Override
+		public Long getOrSetLong(String key, long value) {
+			if(longs.containsKey(key))
+				return longs.get(key);
+			longs.put(key, value);
+			return value;
+		}
+
+		@Override
+		public HashMap<String, Long> getLongs() {
+			return longs;
+		}
+
+		@Override
+		public void addKeyedString(String key, String value) {
+			keyedStrings.put(key, value);
+		}
+
+		@Override
+		public String getKeyedString(String key) {
+			return keyedStrings.get(key);
+		}
+
+		@Override
+		public String getOrSetKeyedString(String key, String value) {
+			if(keyedStrings.containsKey(key))
+				return keyedStrings.get(key);
+			keyedStrings.put(key, value);
+			return value;
+		}
+
+		@Override
+		public HashMap<String, String> getKeyedStrings() {
+			return keyedStrings;
+		}
+
+		@Override
+		public boolean hasKeyedString(String key) {
+			return keyedStrings.containsKey(key);
 		}
 		
 		

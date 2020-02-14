@@ -7,6 +7,7 @@ import java.util.Set;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -20,6 +21,7 @@ import com.valeriotor.BTV.network.research.MessageSyncResearchToClient;
 import com.valeriotor.BTV.network.research.ResearchSyncer;
 import com.valeriotor.BTV.research.ResearchStatus;
 import com.valeriotor.BTV.worship.AzacnoParasite;
+import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -34,6 +36,9 @@ public class SyncUtil {
 		syncTransformData(p);
 		syncParasiteData(p);
 		syncResearchData(p);
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+			TransformDeepOne.applyAttributes(p);
+		}
 	}
 	
 	public static void syncCapabilityData(EntityPlayer p) {

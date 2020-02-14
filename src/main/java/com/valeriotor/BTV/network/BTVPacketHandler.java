@@ -50,6 +50,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageEntityAnimation.EntityAnimationMessageHandler.class, MessageEntityAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncResearchToClient.SyncResearchToClientMessageHandler.class, MessageSyncResearchToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageStepAssist.StepAssistMessageHandler.class, MessageStepAssist.class, count++, Side.CLIENT);
 		
 	}
 	

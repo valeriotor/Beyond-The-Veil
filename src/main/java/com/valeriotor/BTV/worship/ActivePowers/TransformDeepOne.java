@@ -1,11 +1,17 @@
 package com.valeriotor.BTV.worship.ActivePowers;
 
+import java.util.UUID;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.network.MessagePlaySound;
+import com.valeriotor.BTV.network.MessageStepAssist;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -14,10 +20,10 @@ import com.valeriotor.BTV.worship.Deities;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TransformDeepOne implements IActivePower{
 	
@@ -70,28 +76,29 @@ public class TransformDeepOne implements IActivePower{
 		return TEXTURE;
 	}
 	
-
-	public static final AttributeModifier SPEED_MOD = new AttributeModifier("speedmod", 1.2, 1);
-	public static final AttributeModifier HEALTH_MOD = new AttributeModifier("healthmod", 20, 0);
-	public static final AttributeModifier ATTACK_MOD = new AttributeModifier("attackmod", 9, 0);
-	
 	public static void applyAttributes(EntityPlayer p) {
-		if(!p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MOD)) {
-			p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(SPEED_MOD);
-			p.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(HEALTH_MOD);
-			p.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).applyModifier(ATTACK_MOD);
-		}
+		Multimap<String, AttributeModifier> map = getModifiers(p);
+		p.getAttributeMap().applyAttributeModifiers(map);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageStepAssist(true), (EntityPlayerMP)p);
 	}
 	
 	public static void removeAttributes(EntityPlayer p) {
-		if(p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).hasModifier(SPEED_MOD)) {
-			p.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).removeModifier(SPEED_MOD);
-			p.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(HEALTH_MOD);
-			p.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).removeModifier(ATTACK_MOD);
-		}
+		Multimap<String, AttributeModifier> map = getModifiers(p);
+		p.getAttributeMap().removeAttributeModifiers(map);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageStepAssist(false), (EntityPlayerMP)p);
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public static boolean stepAssist = false;
+	private static Multimap<String, AttributeModifier> getModifiers(EntityPlayer p) {
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		if(!data.hasKeyedString("transformuuid")) {
+			data.addKeyedString("transformuuid", MathHelper.getRandomUUID().toString());
+		}
+		UUID u = UUID.fromString(data.getKeyedString("transformuuid"));
+		Multimap<String, AttributeModifier> map = HashMultimap.create();
+		map.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(u, "transformspeed", 1.2, 1));
+		map.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(u, "transformhealth", 20, 0));
+		map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(u, "transformattack", 6, 0));
+		return map;
+	}
 
 }
