@@ -103,7 +103,6 @@ public class DGWorshipHelper {
 				if(entry.getValue().improvesDreams) dream++;
 			}
 		}
-		System.out.println(dream);
 		attackMultipliers.put(p.getPersistentID(), attack);
 		defenseMultipliers.put(p.getPersistentID(), defense);			
 		dreamPower.put(p.getPersistentID(), dream);
