@@ -37,7 +37,6 @@ public class DialogueRequirement {
 				if(this.reqData.length == 0)
 					return true;
 				for(String s : this.reqData) {
-					System.out.println(s);
 					if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(s)) return true;
 				}
 			}	

@@ -39,7 +39,6 @@ public class ItemTablet extends Item{
 			if(!worldIn.isRemote) {
 				if(ResearchUtil.learn(playerIn)) {
 					stack.shrink(1);
-					System.out.println("ehhh??");
 				}
 			}
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));

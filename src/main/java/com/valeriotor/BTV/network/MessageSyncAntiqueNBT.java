@@ -87,8 +87,6 @@ public class MessageSyncAntiqueNBT implements IMessage{
 				
 				String dataKey = String.format("inscription%d", stack.getTagCompound().getInteger("inscription"));
 				if(!data.getString(dataKey)) {
-					// TODO: Add reward (or maybe it's now usable for learning?)
-					System.out.println(dataKey);
 					SyncUtil.addStringDataOnServer(p, false, dataKey);
 				}
 			}

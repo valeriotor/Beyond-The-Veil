@@ -254,7 +254,6 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	@Override
 	public void onKillEntity(EntityLivingBase e) {
 		if(e.isNonBoss()) {
-			System.out.println(aggressivity);
 			if(!(e instanceof EntityPlayer)) {
 				this.aggressivity++;
 			} else {
