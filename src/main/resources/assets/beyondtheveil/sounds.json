@@ -122,5 +122,11 @@
 		"sounds": [
 			"beyondtheveil:shoggoth_screech"
 		]
+	},
+	"deep_one_transform": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:deep_one_transform"
+		]
 	}
 }

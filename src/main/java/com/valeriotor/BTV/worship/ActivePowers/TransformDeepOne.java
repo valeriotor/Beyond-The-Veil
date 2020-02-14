@@ -1,9 +1,11 @@
 package com.valeriotor.BTV.worship.ActivePowers;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessagePlaySound;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -35,6 +37,7 @@ public class TransformDeepOne implements IActivePower{
 		else {
 			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.TRANSFORMED);
 			applyAttributes(p);
+			((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deep_one_transform), p.getPosition().toLong())));
 		}
 		((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncTransformedPlayer(p.getPersistentID(), !transformed)));
 		return true;

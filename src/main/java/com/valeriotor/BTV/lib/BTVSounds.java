@@ -65,6 +65,9 @@ public final class BTVSounds {
 	@ObjectHolder("shoggoth_screech")
 	public static final SoundEvent shoggoth_screech = new SoundEvent(new ResourceLocation(References.MODID, "shoggoth_screech")).setRegistryName("shoggoth_screech");
 	
+	@ObjectHolder("deep_one_transform")
+	public static final SoundEvent deep_one_transform = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_transform")).setRegistryName("deep_one_transform");
+	
 	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
@@ -87,6 +90,7 @@ public final class BTVSounds {
 			case 16: return parasiteDeath;
 			case 17: return heartbeat;
 			case 18: return shoggoth_screech;
+			case 19: return deep_one_transform;
 			default: return null;
 			
 		}
@@ -112,10 +116,11 @@ public final class BTVSounds {
 		if(sound.equals(parasiteDeath)) return 16;
 		if(sound.equals(heartbeat)) return 17;
 		if(sound.equals(shoggoth_screech)) return 18;
+		if(sound.equals(deep_one_transform)) return 19;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 19;
+		return 20;
 	}
 }
