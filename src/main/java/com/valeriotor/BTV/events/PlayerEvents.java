@@ -107,7 +107,6 @@ public class PlayerEvents {
 			BeyondTheVeil.proxy.renderEvents.transformedPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
 			BeyondTheVeil.proxy.renderEvents.parasitePlayers.clear();
-			BeyondTheVeil.proxy.cEvents.stepAssist = false;
 		} else {
 			DGWorshipHelper.removeModifiers(event.player);
 			if(AzacnoParasiteEvents.parasites.containsKey(event.player.getPersistentID())) {
