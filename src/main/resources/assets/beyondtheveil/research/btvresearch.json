@@ -639,7 +639,7 @@
         "name": "research.SACRIFICESTATUE.title",
         "icons": [ "beyondtheveil:sacrifice_statue" ],
         "category": "BEYOND_THE_VEIL", "location": [ 4,19],
-        "hiders": ["STATUE"],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "STATUE" ],
         "stages": [
 				{
@@ -656,7 +656,7 @@
         "name": "research.PENITENCESTATUE.title",
         "icons": [ "beyondtheveil:penitence_statue" ],
         "category": "BEYOND_THE_VEIL", "location": [ 8,19],
-        "hiders": ["STATUE"],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "STATUE" ],
         "stages": [
 				{
@@ -673,7 +673,7 @@
         "name": "research.VALOURSTATUE.title",
         "icons": [ "beyondtheveil:statue" ],
         "category": "BEYOND_THE_VEIL", "location": [ 6,21],
-        "hiders": ["STATUE"],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "PENITENCESTATUE", "SACRIFICESTATUE" ],
         "stages": [
 				{
@@ -714,7 +714,7 @@
 					"required_research": ["builtwell"]
                 },
                 {
-                    "text": "research.SACRIFICEALTAR.stage.1",
+                    "text": "research.BLOODWELL.stage.1",
                     "recipes" : ["blood_well", "beyondtheveil:sigil_zombie", "beyondtheveil:sigil_skellie"]
                 }
             ]

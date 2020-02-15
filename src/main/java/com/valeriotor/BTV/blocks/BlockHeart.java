@@ -1,8 +1,10 @@
 package com.valeriotor.BTV.blocks;
 
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.tileEntities.TileHeart;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -80,6 +82,11 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 			if(te instanceof TileHeart) {
 				TileHeart th = (TileHeart) te;
 				th.startWell();
+				if(placer instanceof EntityPlayer && !w.isRemote) {
+					EntityPlayer p = (EntityPlayer)placer;
+					if(ResearchUtil.getResearchStage(p, "BLOODWELL") == 0)
+						SyncUtil.addStringDataOnServer(p, false, "builtwell");
+				}
 			}
 		}
 		super.onBlockPlacedBy(w, pos, state, placer, stack);
