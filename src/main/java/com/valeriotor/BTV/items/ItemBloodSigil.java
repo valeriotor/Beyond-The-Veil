@@ -3,14 +3,18 @@ package com.valeriotor.BTV.items;
 import java.util.List;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.entities.EntityBloodSkeleton;
 import com.valeriotor.BTV.entities.EntityBloodZombie;
+import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.tileEntities.TileBloodWell;
 import com.valeriotor.BTV.tileEntities.TileBloodWell.BloodMobs;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +24,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+@Mod.EventBusSubscriber
 public class ItemBloodSigil extends ModItem{
 	
 	private final BloodMobs type;
@@ -78,6 +85,35 @@ public class ItemBloodSigil extends ModItem{
 		String key = String.format("tooltip.blood_sigil_%s.amount", this.type.name().toLowerCase());
 		tooltip.add(I18n.format(key, ItemHelper.checkIntTag(stack, "num", 0))); 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+	
+
+	@SubscribeEvent
+	public static void retakeBloodDude(PlayerInteractEvent.EntityInteractSpecific event) {
+		EntityPlayer p = event.getEntityPlayer();
+		if(p.world.isRemote) return;
+		if(event.getHand() != EnumHand.MAIN_HAND) return;
+		ItemStack stack = p.getHeldItemMainhand();
+		if(!(stack.getItem() instanceof ItemBloodSigil))
+			return;
+		Entity e = event.getTarget();
+		if(	(e instanceof EntityBloodSkeleton && stack.getItem() == ItemRegistry.sigil_skellie) ||
+			(e instanceof EntityBloodZombie && stack.getItem() == ItemRegistry.sigil_zombie)) {
+			EntityMob m = (EntityMob) e;
+			if(m.getHealth() == m.getMaxHealth()) {
+				IPlayerGuardian g = (IPlayerGuardian)e;
+				if(p.equals(g.getMaster())) {
+					p.world.removeEntity(e);
+					int amount = ItemHelper.checkIntTag(stack, "num", 0);
+					ItemHelper.checkTagCompound(stack).setInteger("num", ++amount);
+					p.sendMessage(new TextComponentTranslation("use.blood_sigil.amount", amount));
+				} else {
+					p.sendMessage(new TextComponentTranslation("use.blood_sigil.notmine"));					
+				}
+			} else {
+				p.sendMessage(new TextComponentTranslation("use.blood_sigil.nothealthy"));
+			}
+		}
 	}
 
 }

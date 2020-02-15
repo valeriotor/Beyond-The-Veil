@@ -87,6 +87,8 @@ use.coral_staff.clear=Cleared the last stored position.
 use.blood_sigil.amount=This Sigil is now linked to %1$s undead.
 use.blood_sigil.emptysigil=This Sigil is empty.
 use.blood_sigil.emptywell=This Well has no more of these undead.
+use.blood_sigil.nothealthy=This mob is not at full health.
+use.blood_sigil.notmine=This mob does not serve me.
 
 
 ##################
