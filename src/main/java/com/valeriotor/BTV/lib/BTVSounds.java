@@ -68,6 +68,12 @@ public final class BTVSounds {
 	@ObjectHolder("deep_one_transform")
 	public static final SoundEvent deep_one_transform = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_transform")).setRegistryName("deep_one_transform");
 	
+	@ObjectHolder("weeper_idle")
+	public static final SoundEvent weeper_idle = new SoundEvent(new ResourceLocation(References.MODID, "weeper_idle")).setRegistryName("weeper_idle");
+	
+	@ObjectHolder("shoggoth_hurt")
+	public static final SoundEvent shoggoth_hurt = new SoundEvent(new ResourceLocation(References.MODID, "shoggoth_hurt")).setRegistryName("shoggoth_hurt");
+	
 	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
@@ -91,6 +97,8 @@ public final class BTVSounds {
 			case 17: return heartbeat;
 			case 18: return shoggoth_screech;
 			case 19: return deep_one_transform;
+			case 20: return weeper_idle;
+			case 21: return shoggoth_hurt;
 			default: return null;
 			
 		}
@@ -117,10 +125,12 @@ public final class BTVSounds {
 		if(sound.equals(heartbeat)) return 17;
 		if(sound.equals(shoggoth_screech)) return 18;
 		if(sound.equals(deep_one_transform)) return 19;
+		if(sound.equals(weeper_idle)) return 20;
+		if(sound.equals(shoggoth_hurt)) return 21;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 20;
+		return 22;
 	}
 }

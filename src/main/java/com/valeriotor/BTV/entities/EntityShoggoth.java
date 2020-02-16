@@ -29,6 +29,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -68,6 +69,11 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	
 	public boolean canBreatheUnderwater() {
 		return true;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return BTVSounds.shoggoth_hurt;
 	}
 	
 	@Override

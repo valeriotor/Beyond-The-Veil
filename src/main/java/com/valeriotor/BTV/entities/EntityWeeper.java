@@ -3,6 +3,7 @@ package com.valeriotor.BTV.entities;
 import java.util.UUID;
 
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -26,6 +27,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -126,7 +128,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2D);
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
 	
@@ -237,6 +239,11 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	public void setMaster(EntityPlayer p) {
 		if(p != null)
 			this.master = p.getPersistentID();
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BTVSounds.weeper_idle;
 	}
 
 }

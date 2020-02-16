@@ -128,5 +128,20 @@
 		"sounds": [
 			"beyondtheveil:deep_one_transform"
 		]
+	},
+	"weeper_idle": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:weeping0",
+			"beyondtheveil:weeping1",
+			"beyondtheveil:weeping2"
+		]
+	},
+	"shoggoth_hurt": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:shoggoth_hurt0",
+			"beyondtheveil:shoggoth_hurt1"
+		]
 	}
 }
