@@ -6,9 +6,9 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * ModelVillager - Either Mojang or a mod author
  * Created using Tabula 7.0.0
  */
 public class ModelWeeper extends ModelBase {
@@ -102,6 +102,8 @@ public class ModelWeeper extends ModelBase {
     	this.shape10_2.offsetY = offset;
     	this.shape10.offsetZ = -offset/2;
     	this.shape10_2.offsetZ = offset/2;
+		this.field_78187_d.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/2;
+    	this.field_78188_e.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount/2;
     	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }
 }
