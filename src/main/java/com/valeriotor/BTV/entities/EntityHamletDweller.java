@@ -1,6 +1,8 @@
 package com.valeriotor.BTV.entities;
 
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -8,6 +10,9 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.entities.AI.AIDwellerFish;
+import com.valeriotor.BTV.entities.AI.AIDwellerFollowPlayer;
+import com.valeriotor.BTV.entities.AI.AIDwellerWanderHamlet;
 import com.valeriotor.BTV.gui.DialogueHandler;
 import com.valeriotor.BTV.gui.DialogueHandler.Dialogues;
 import com.valeriotor.BTV.gui.Guis;
@@ -15,6 +20,7 @@ import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.block.Block;
@@ -25,6 +31,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -53,19 +60,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	private EntityHamletDweller.ProfessionsEnum profession;
-	private BlockPos villageCenter = this.getPosition().add(10, 0, 10);
-	private BlockPos home = this.getPosition();
-	private BlockPos destination;
+	public BlockPos villageCenter;
+	public BlockPos home;
+	public BlockPos destination;
 	private EntityPlayer customer;
 	private EntityPlayer talkingPlayer;
 	private MerchantRecipeList buyingList;
-	private int goWorshipTime;
-	private int goHomeTime;
+	public int goWorshipTime;
+	public int goHomeTime;
 	private int drunkStatus = 0;
 	private boolean thirsty = false;
 	private boolean talking = false;
 	private boolean receivedGold = false;
 	private int talkTime = 0;
+	private int followTime = 0;
+	private int fishTime = 0;
+	private UUID followPlayer = null;
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityHamletDweller.class, DataSerializers.VARINT);
 	
 	public EntityHamletDweller(World worldIn) {
@@ -76,9 +86,11 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		super(worldIn);
 		this.setProfession(prof);
 		if(villageCenter != null) this.setVillageCenter(villageCenter);
+		else this.setVillageCenter(this.getPosition().add(10,0,10));
 		if(home != null) this.setHome(home);
 		this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
 		this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
+		this.home = this.getPosition();
 		if(home!= null) this.setPosition(home.getX(), home.getY(), home.getZ());
 		//this.populateBuyingList();
 	}
@@ -102,8 +114,11 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	 	
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.tasks.addTask(2, new EntityAIWander(this, 0.6D));
+        this.tasks.addTask(5, new EntityAIWander(this, 0.6D));
         this.tasks.addTask(2, new EntityAISwimming(this));
+        this.tasks.addTask(1, new AIDwellerFollowPlayer(this));
+        this.tasks.addTask(0, new AIDwellerFish(this));
+        this.tasks.addTask(3, new AIDwellerWanderHamlet(this));
     }
 	
 	public EntityHamletDweller.ProfessionsEnum getProfession(){
@@ -143,8 +158,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		
 		if(this.talking) {
 			this.talkTime++;
-			this.getNavigator().clearPath();
-			if(this.talkTime>400) {
+			if(this.getProfession() != ProfessionsEnum.FISHERMAN)
+				this.getNavigator().clearPath();
+			if(this.talkTime>20) {
 				this.talking = false;
 				this.talkTime = 0;
 			}
@@ -152,24 +168,20 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		}
 		
 		if(this.world.isRemote) return;
-		if(this.home == null) return;
 		if(this.profession == EntityHamletDweller.ProfessionsEnum.FISHERMAN) {
-			if(this.world.getWorldTime() == 100) {
-				this.goWorshipTime = this.world.rand.nextInt(12000)+9000;
-				this.goHomeTime = Math.min(this.goWorshipTime+5000, 23000);
-				int r = this.world.rand.nextInt(11)-5;
-				int s = r < 0 ? -5-r : 5-r;
-				this.destination = this.villageCenter.add(r, 0, s);
-				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
+			if(this.followPlayer == null) this.followTime--;
+			else if(this.world.getPlayerEntityByUUID(followPlayer).getDistance(this) > 32) this.followPlayer = null;
+			if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockSlugBait && this.fishTime == 0) {
+				List<EntityItem> items = world.getEntities(EntityItem.class, e -> e.getDistance(this) < 3);
+				for(EntityItem item : items) {
+					if(item.getItem().getItem() == Items.GOLD_INGOT) {
+						item.getItem().shrink(1);
+						this.fishTime = 60*20;
+						break;
+					}
+				}
 			}
-			if(Math.abs(this.world.getWorldTime()-this.goWorshipTime) < 500) {
-				if(destination == null) destination = this.villageCenter.offset(EnumFacing.getHorizontal(this.world.rand.nextInt(3)),3);
-				this.getNavigator().tryMoveToXYZ(this.destination.getX(), this.villageCenter.getY(), this.destination.getZ(), 1.0);
 			
-			}
-			else if(Math.abs(this.world.getWorldTime() - this.goHomeTime) < 1000 || Math.abs(this.world.getWorldTime() - 23500) < 1000) {
-				this.getNavigator().tryMoveToXYZ(this.home.getX(), this.home.getY(), this.home.getZ(), 1.0);
-			}
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.LHKEEPER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.DRUNK ||
 				this.getProfession() == EntityHamletDweller.ProfessionsEnum.STOCKPILER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER ||
 						this.getProfession() == EntityHamletDweller.ProfessionsEnum.SCHOLAR || this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
@@ -194,13 +206,15 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("profession", this.dataManager.get(PROFESSION));
-		if(this.getVillageCenter() != null && this.getHome() != null) {
+		if(this.getVillageCenter() != null && this.getDwellerHome() != null) {
 			compound.setLong("villageCenter", this.getVillageCenter().toLong());
-			compound.setLong("home", this.getHome().toLong());
+			compound.setLong("home", this.getDwellerHome().toLong());
 			
 		}
 		if(this.destination != null) compound.setLong("destination", this.destination.toLong());
 		compound.setInteger("drunkStatus", this.drunkStatus);
+		compound.setInteger("followTime", this.followTime);
+		compound.setInteger("fishTime", this.fishTime);
 		return super.writeToNBT(compound);
 	}
 	
@@ -216,8 +230,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		}
 		if(compound.hasKey("destination")) 
 			this.destination = BlockPos.fromLong(compound.getLong("destination"));
-		
 		this.drunkStatus = compound.getInteger("drunkStatus");
+		this.followTime = compound.getInteger("followTime");
+		this.fishTime = compound.getInteger("fishTime");
 	}
 	
 	public void setVillageCenter(BlockPos pos) {
@@ -237,7 +252,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.home = pos;
 	}
 	
-	public BlockPos getHome() {
+	public BlockPos getDwellerHome() {
 		return this.home;
 	}
 	
@@ -256,19 +271,26 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		this.faceEntity(player, 180F, 180F);
 		this.motionX = 0.01;
 		this.talking = true;
+		ItemStack stack = player.getHeldItem(hand);
 		if(!world.isRemote) {
 			IPlayerData data = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
-			if(this.profession == ProfessionsEnum.FISHERMAN && data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false) == 1 && !data.getString(PlayerDataLib.DAGONQUEST)) {
-				if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
-					player.getHeldItem(hand).shrink(1);
-					this.receivedGold = true;
-					player.sendMessage(new TextComponentString("�5�o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
-					data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
-					if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
-						SyncUtil.addStringDataOnServer(player, false, PlayerDataLib.DAGONQUEST);
-						data.removeInteger(PlayerDataLib.DAGON_GOLD);
+			if(this.profession == ProfessionsEnum.FISHERMAN) {
+				if(data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false) == 1 && !data.getString(PlayerDataLib.DAGONQUEST)) {
+					if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
+						player.getHeldItem(hand).shrink(1);
+						this.receivedGold = true;
+						player.sendMessage(new TextComponentString("�5�o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
+						data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
+						if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
+							SyncUtil.addStringDataOnServer(player, false, PlayerDataLib.DAGONQUEST);
+							data.removeInteger(PlayerDataLib.DAGON_GOLD);
+						}
+						return EnumActionResult.SUCCESS;
 					}
-					return EnumActionResult.SUCCESS;
+				}
+				if(stack.getItem() == Items.GOLD_INGOT && ResearchUtil.isResearchComplete(player, "SLUGS")) {
+					this.followTime = 60*20;
+					this.followPlayer = player.getPersistentID();
 				}
 			}
 			String key = String.format(PlayerDataLib.TALK_COUNT, this.profession.name());
@@ -464,6 +486,29 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			BeyondTheVeil.proxy.closeGui(p);
 		}
 		super.onDeath(cause);
+	}
+	
+	public int getFollowTime() {
+		return this.followTime;
+	}
+	
+	public EntityPlayer getFollowPlayer() {
+		if(followPlayer != null)
+			return world.getPlayerEntityByUUID(followPlayer);
+		return null;
+	}
+	
+	public void setFollowPlayer(EntityPlayer p) {
+		if(p == null) this.followPlayer = null;
+		else this.followPlayer = p.getPersistentID();
+	}
+	
+	public int getFishTime() {
+		return this.fishTime;
+	}
+	
+	public void decreaseFishTime() {
+		this.fishTime--;
 	}
 
 }

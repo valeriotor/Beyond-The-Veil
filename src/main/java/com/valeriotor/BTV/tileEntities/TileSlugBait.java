@@ -36,52 +36,49 @@ public class TileSlugBait extends TileEntity implements ITickable{
 		   this.world.getBlockState(pos.add(0, 0, 1)) != Blocks.WATER.getDefaultState() ||
 		   this.world.getBlockState(pos.add(-1, 0, 0)) != Blocks.WATER.getDefaultState() ||
 		   this.world.getBlockState(pos.add(0, 0, -1)) != Blocks.WATER.getDefaultState() ||
-		   this.world.getBlockState(pos.add(0, 1, 0)) == Blocks.WATER.getDefaultState() ||
-		   this.world.getBiome(pos) != BiomeRegistry.innsmouth) {
+		   this.world.getBlockState(pos.add(0, 1, 0)) == Blocks.WATER.getDefaultState()) {
+			this.slugPresent = false;
 			return;
 		}
 		if(!this.world.isRemote) {
-		if(!slugPresent) {
-			counter++;
-			if(counter > 64) {
-				slugPresent = true;
-				counter = 0;
-				coords[0] = this.world.rand.nextBoolean() == true ? -this.world.rand.nextDouble()*4-1 : this.world.rand.nextDouble()*4+1;
-				coords[1] = this.world.rand.nextBoolean() == true ? -this.world.rand.nextDouble()*4-1 : this.world.rand.nextDouble()*4+1;
-				xNegative = coords[0] < 0 ? true : false;
-				zNegative = coords[1] < 0 ? true : false;
-				if(this.world.getBlockState(new BlockPos(this.pos.getX()+coords[0]+0.5, this.pos.getY(), this.pos.getZ()+coords[1]+0.5)) != Blocks.WATER.getDefaultState()) {
-					slugPresent = false;
-					counter = 65;
+			if(!slugPresent) {
+				counter++;
+				if(counter > 64) {
+					slugPresent = true;
+					counter = 0;
+					coords[0] = this.world.rand.nextBoolean() == true ? -this.world.rand.nextDouble()*4-1 : this.world.rand.nextDouble()*4+1;
+					coords[1] = this.world.rand.nextBoolean() == true ? -this.world.rand.nextDouble()*4-1 : this.world.rand.nextDouble()*4+1;
+					xNegative = coords[0] < 0 ? true : false;
+					zNegative = coords[1] < 0 ? true : false;
+					if(this.world.getBlockState(new BlockPos(this.pos.getX()+coords[0]+0.5, this.pos.getY(), this.pos.getZ()+coords[1]+0.5)) != Blocks.WATER.getDefaultState()) {
+						slugPresent = false;
+						counter = 65;
+					}
 				}
+				this.sendUpdates(this.world);
+				return;
+			}
+		
+			if(Math.abs(coords[0]) < 1 && Math.abs(coords[1]) < 1) {
+				slugPresent = false;
+				counter = 65;
+			}
+			counter++;
+			if(counter > 64) slugPresent = false;
+			
+			if((this.world.rand.nextBoolean() && Math.abs(coords[0]) > 1) || (Math.abs(coords[1]) < 1 && slugPresent)) {
+				if(xNegative) coords[0]+=0.06;
+				else coords[0]-=0.06;
+			}else {
+				if(zNegative) coords[1]+=0.06;
+				else coords[1]-=0.06;
+			}
+			if(this.world.getBlockState(new BlockPos(this.pos.getX()+coords[0]+0.5, this.pos.getY(), this.pos.getZ()+coords[1]+0.5)) != Blocks.WATER.getDefaultState()) {
+				slugPresent = false;
+				counter = 65;
 			}
 			this.sendUpdates(this.world);
-			return;
-		}
-		
-		if(Math.abs(coords[0]) < 1 && Math.abs(coords[1]) < 1) {
-			slugPresent = false;
-			counter = 65;
-		}
-		counter++;
-		if(counter > 64) slugPresent = false;
-		
-		if((this.world.rand.nextBoolean() && Math.abs(coords[0]) > 1) || (Math.abs(coords[1]) < 1 && slugPresent)) {
-			if(xNegative) coords[0]+=0.06;
-			else coords[0]-=0.06;
 		}else {
-			if(zNegative) coords[1]+=0.06;
-			else coords[1]-=0.06;
-		}
-		if(this.world.getBlockState(new BlockPos(this.pos.getX()+coords[0]+0.5, this.pos.getY(), this.pos.getZ()+coords[1]+0.5)) != Blocks.WATER.getDefaultState()) {
-			slugPresent = false;
-			counter = 65;
-		}
-		this.sendUpdates(this.world);
-		}
-		
-		if(this.world.isRemote) {
-			
 			if(coords[0] != 0 || coords[1] != 0) this.world.spawnParticle(EnumParticleTypes.DRIP_WATER, this.pos.getX()+coords[0]+0.5, this.pos.getY()+1, this.pos.getZ()+coords[1]+0.5, 1, 1, 1);
 		}
 		
@@ -143,6 +140,13 @@ public class TileSlugBait extends TileEntity implements ITickable{
 	
 	public boolean catchSlug(double posX, double posZ) {
 		if(Math.abs(this.pos.getX()+coords[0]+0.05-posX) < 0.65 && Math.abs(this.pos.getZ()+coords[1]+0.05-posZ) < 0.65) {
+			return this.catchSlugForce();
+		}
+		return false;
+	}
+	
+	public boolean catchSlugForce() {
+		if(this.slugPresent) {
 			this.slugPresent = false;
 			this.counter = 65;
 			this.sendUpdates(this.world);
