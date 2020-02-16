@@ -4,6 +4,7 @@ import com.valeriotor.BTV.entities.EntityBloodSkeleton;
 import com.valeriotor.BTV.entities.EntityBloodZombie;
 import com.valeriotor.BTV.entities.EntityCanoe;
 import com.valeriotor.BTV.entities.EntityCrawlingVillager;
+import com.valeriotor.BTV.entities.EntityCrazedWeeper;
 import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
@@ -88,6 +89,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityBloodSkeleton> createRenderFor(RenderManager manager) 
 			{return new RenderBloodSkeleton(manager);}
+			});
+		
+		//Crazed Weeper
+		RenderingRegistry.registerEntityRenderingHandler(EntityCrazedWeeper.class, new IRenderFactory<EntityCrazedWeeper>(){
+			@Override
+			public Render<EntityCrazedWeeper> createRenderFor(RenderManager manager) 
+			{return new RenderCrazedWeeper(manager);}
 			});
 	}
 }

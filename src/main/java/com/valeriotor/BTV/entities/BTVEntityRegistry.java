@@ -25,6 +25,7 @@ public class BTVEntityRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":shoggoth"), EntityShoggoth.class, "shoggoth", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_zombie"), EntityBloodZombie.class, "blood_zombie", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_skeleton"), EntityBloodSkeleton.class, "blood_skeleton", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crazed_weeper"), EntityCrazedWeeper.class, "crazed_weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		
 	}
 	
@@ -36,7 +37,7 @@ public class BTVEntityRegistry {
 	 */
 	public static boolean isScaryEntity(EntityLivingBase e) {
 		if(e instanceof EntityPlayer && ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return true;
-		return e instanceof EntityDeepOne || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityBloodSkeleton;
+		return e instanceof EntityDeepOne || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityBloodSkeleton || e instanceof EntityCrazedWeeper;
 	}
 	
 	/** Used for terror and possibly other effects.
@@ -45,7 +46,7 @@ public class BTVEntityRegistry {
 	 * @return
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
-		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie;
+		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityCrazedWeeper;
 	}
 	
 	
