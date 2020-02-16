@@ -56,12 +56,11 @@ public class ItemSlug extends ItemFood{
             int currentSlugs = data.getOrSetInteger(PlayerDataLib.SLUGS, 0, false);
             data.setInteger(PlayerDataLib.SLUGS, currentSlugs+1, false);
             stack.shrink(1);
-            if(!worldIn.isRemote ) 
-            	if(!data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(p)) {
-            		DrowningRitualEvents.checkRitual(p);
-            	}else if(p.isInWater() && p.posY < 40 && p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN) {
-            		p.openGui(BeyondTheVeil.instance, GuiContainerHandler.DAGON, worldIn, (int) p.posX, (int) p.posY, (int) p.posZ);
-            	}
+        	if(!data.getString(RITUALQUEST) && DGWorshipHelper.researches.get(RITUALQUEST).canBeUnlocked(p) && !worldIn.isRemote) {
+        		DrowningRitualEvents.checkRitual(p);
+        	}else if(p.isInWater() && p.posY < 40 && p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN && worldIn.isRemote) {
+        		p.openGui(BeyondTheVeil.instance, GuiContainerHandler.DAGON, worldIn, (int) p.posX, (int) p.posY, (int) p.posZ);
+        	}
         }
 
         return stack;

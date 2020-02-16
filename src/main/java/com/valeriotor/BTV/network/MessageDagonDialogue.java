@@ -4,7 +4,9 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.DelayedMessage;
+import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import io.netty.buffer.ByteBuf;
@@ -32,17 +34,14 @@ public class MessageDagonDialogue implements IMessage{
 			EntityPlayerMP p = ctx.getServerHandler().player;
 			p.getServerWorld().addScheduledTask(() -> {
 				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-				int value = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 0);
-				switch(value) {
-				case 0:
-					p.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3));
-					p.inventoryContainer.detectAndSendChanges();
-					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 1);
+				if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) {
+					PlayerTimer pt = new PlayerTimer(p, player -> player.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3)), 100);
+					ServerTickEvents.addPlayerTimer(pt);
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(0));
 					SyncUtil.addStringDataOnServer(p, false, "hearing");
 					sendMessage("dagon.bringgold", p);
-					break;
-				case 1:
-					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE, 2);
+				} else if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 1) {
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(1));
 					SyncUtil.addStringDataOnServer(p, false, "hearing2");
 					sendMessage("dagon.slayguardians", p);
 				}

@@ -3,6 +3,7 @@ package com.valeriotor.BTV.lib;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 public class PlayerDataLib {
 	
@@ -19,7 +20,6 @@ public class PlayerDataLib {
 	public static final String PASSIVE_BAUBLE = "passiveBauble%d"; // This isn't used as a key by itself, but only with 0-6 added to the end e.g. passiveBauble3
 	public static final String POWER_COOLDOWN = "powCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. powCooldown1
 	public static final String BAUBLE_COOLDOWN = "bauCooldown%d"; // This isn't used as a key by itself, but only with 0-3 added to the end e.g. bauCooldown1
-	public static final String DAGON_DIALOGUE = "dagonDialogue";
 	public static final String DAGON_GOLD = "dagonGold";
 	public static final String PARASITE_PROGRESS = "parasite_progress";
 	public static final String SAPLINGS_SEEN = "saplings";
@@ -44,6 +44,7 @@ public class PlayerDataLib {
 	public static final String WAIT = "wait";
 	public static final String CRAFTED_CRADLE = "craftedcradle";
 	public static final String CRAFTED_LACRYMATORY = "craftedlacrymatory";
+	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
 	
 	// Strings (Temporary)
 	

@@ -275,7 +275,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		if(!world.isRemote) {
 			IPlayerData data = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			if(this.profession == ProfessionsEnum.FISHERMAN) {
-				if(data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false) == 1 && !data.getString(PlayerDataLib.DAGONQUEST)) {
+				if(data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(0)) && !data.getString(PlayerDataLib.DAGONQUEST)) {
 					if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
 						player.getHeldItem(hand).shrink(1);
 						this.receivedGold = true;

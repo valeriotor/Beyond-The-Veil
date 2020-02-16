@@ -20,11 +20,10 @@ public enum DagonDialogues {
 	
 	public static GuiDagon getGui(EntityPlayer p) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-		switch(data.getOrSetInteger(PlayerDataLib.DAGON_DIALOGUE, 0, false)) {
-			case 0: if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) return new GuiDagon(GREETING);
-			break;
-			case 1: if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 0) return new GuiDagon(JUDGEMENT);
-			break;
+		if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) {
+			if(!data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(0))) return new GuiDagon(GREETING);
+		} else if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 0) {
+			if(!data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(1))) return new GuiDagon(JUDGEMENT);
 		}
 		return null;
 	}
