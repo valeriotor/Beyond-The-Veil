@@ -6,6 +6,7 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.SyncUtil;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -89,6 +90,7 @@ public class SetPlayerData extends CommandBase{
 			String key = args[2];
 			ResearchUtil.completeResearch(p, key);
 		}
+		DGWorshipHelper.calculateModifier(p);
 	}
 	
 	private void printData(EntityPlayer p, IPlayerData data) {
