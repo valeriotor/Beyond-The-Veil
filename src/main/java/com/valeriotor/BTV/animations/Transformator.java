@@ -48,6 +48,7 @@ public abstract class Transformator {
 		for(int i = 0; i < list.size(); i++) {
 			op  = list.get(i);
 			if(i > 0 && op.start > lastOp.end+1) newList.add(new OperatorWithStart(new IntervalDoubleBiOperator((a,b) -> b, lastOp.end+1, op.start-1, 0), trans != Transformation.VISI ? amount : lastOp.amount));
+			else if(i == 0 && op.start > 0) newList.add(new OperatorWithStart(new IntervalDoubleBiOperator((a,b) -> b, 0, op.start-1, 0), 0));
 			newList.add(new OperatorWithStart(op, amount));
 			amount += op.amount;
 			lastOp = op;
