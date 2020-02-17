@@ -1,8 +1,11 @@
 package com.valeriotor.BTV.entities.models;
 
+import java.util.EnumMap;
+
+import com.valeriotor.BTV.animations.Animation;
+import com.valeriotor.BTV.animations.AnimationTemplate.Transformation;
 import com.valeriotor.BTV.entities.EntityCrazedWeeper;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,28 +14,28 @@ import net.minecraft.util.math.MathHelper;
 /**
  * Created using Tabula 7.0.0
  */
-public class ModelCrazedWeeper extends ModelBase {
-    public ModelRenderer RightArm;
-    public ModelRenderer LeftArm;
-    public ModelRenderer LeftLeg;
-    public ModelRenderer CentralBody;
-    public ModelRenderer Body;
-    public ModelRenderer RightLeg;
-    public ModelRenderer HeadLeft;
-    public ModelRenderer HeadRight;
-    public ModelRenderer HeadFront;
-    public ModelRenderer HeadSpine;
-    public ModelRenderer RightTentacle11;
-    public ModelRenderer RightTentacle21;
-    public ModelRenderer RightTentacle12;
-    public ModelRenderer RightTentacle22;
-    public ModelRenderer LeftTentacle11;
-    public ModelRenderer LeftTentacle21;
-    public ModelRenderer LeftTentacle12;
-    public ModelRenderer LeftTentacle22;
-    public ModelRenderer HeadTentacle1;
-    public ModelRenderer HeadTentacle2;
-    public ModelRenderer HeadTentacle3;
+public class ModelCrazedWeeper extends ModelAnimated {
+    public ModelRenderer RightArm;				// 0
+    public ModelRenderer LeftArm;				// 1
+    public ModelRenderer LeftLeg;				// 2
+    public ModelRenderer CentralBody;			// 3
+    public ModelRenderer Body; 					// 4
+    public ModelRenderer RightLeg;				// 5
+    public ModelRenderer HeadLeft;				// 6
+    public ModelRenderer HeadRight;				// 7
+    public ModelRenderer HeadFront;				// 8
+    public ModelRenderer HeadSpine;				// 9
+    public ModelRenderer RightTentacle11;		//10
+    public ModelRenderer RightTentacle21;		//11
+    public ModelRenderer RightTentacle12;		//12
+    public ModelRenderer RightTentacle22;		//13
+    public ModelRenderer LeftTentacle11;		//14
+    public ModelRenderer LeftTentacle21;		//15
+    public ModelRenderer LeftTentacle12;		//16
+    public ModelRenderer LeftTentacle22;		//17
+    public ModelRenderer HeadTentacle1;			//18
+    public ModelRenderer HeadTentacle2;			//19
+    public ModelRenderer HeadTentacle3;			//20
 
     public ModelCrazedWeeper() {
         this.textureWidth = 64;
@@ -112,7 +115,37 @@ public class ModelCrazedWeeper extends ModelBase {
         this.RightTentacle11.addChild(this.RightTentacle12);
         this.RightArm.addChild(this.RightTentacle11);
         this.RightTentacle21.addChild(this.RightTentacle22);
-        this.setAngles();
+        bodyParts.add(RightArm);
+        bodyParts.add(LeftArm);
+        bodyParts.add(LeftLeg);
+        bodyParts.add(CentralBody);
+        bodyParts.add(Body);
+        bodyParts.add(RightLeg);
+        bodyParts.add(HeadLeft);
+        bodyParts.add(HeadRight);
+        bodyParts.add(HeadFront);
+        bodyParts.add(HeadSpine);
+        bodyParts.add(RightTentacle11);
+        bodyParts.add(RightTentacle21);
+        bodyParts.add(RightTentacle12);
+        bodyParts.add(RightTentacle22);
+        bodyParts.add(LeftTentacle11);
+        bodyParts.add(LeftTentacle21);
+        bodyParts.add(LeftTentacle12);
+        bodyParts.add(LeftTentacle22);
+        bodyParts.add(HeadTentacle1);
+        bodyParts.add(HeadTentacle2);
+        bodyParts.add(HeadTentacle3);
+        this.setAngles(true);
+        for(ModelRenderer mr : bodyParts) {
+    		if(!defaultAngles.containsKey(mr)) {
+    			EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
+    	        map.put(Transformation.ROTX, 0F);
+    	        map.put(Transformation.ROTY, 0F);
+    	        map.put(Transformation.ROTZ, 0F);
+    	        defaultAngles.put(mr, map);
+    		}
+    	}
     }
 
     @Override
@@ -132,32 +165,62 @@ public class ModelCrazedWeeper extends ModelBase {
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z, boolean addToDefault) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+        if(addToDefault) {
+	        EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
+	        map.put(Transformation.ROTX, x);
+	        map.put(Transformation.ROTY, y);
+	        map.put(Transformation.ROTZ, z);
+	        defaultAngles.put(modelRenderer, map);
+        }
     }
     
-    public void setAngles() {
-        this.setRotateAngle(LeftTentacle11, -0.27314402793711257F, 0.0F, 0.0F);
-        this.setRotateAngle(LeftTentacle22, 0.8196066167365371F, 0.0F, 0.6829473363053812F);
-        this.setRotateAngle(HeadTentacle1, -0.22759093446006054F, 0.0F, 0.18203784098300857F);
-        this.setRotateAngle(HeadTentacle3, 0.40980330836826856F, 0.0F, 0.091106186954104F);
-        this.setRotateAngle(HeadTentacle2, 0.18203784098300857F, 0.0F, -0.40980330836826856F);
-        this.setRotateAngle(RightArm, -0.7464773210779748F, 0.6806784082777886F, 0.0F);
-        this.setRotateAngle(LeftTentacle12, 0.7740535232594852F, 0.0F, 0.0F);
-        this.setRotateAngle(RightTentacle21, -0.27314402793711257F, 0.0F, 0.0F);
-        this.setRotateAngle(LeftTentacle21, 0.0F, 0.22759093446006054F, 0.22759093446006054F);
-        this.setRotateAngle(RightTentacle12, 0.7740535232594852F, 0.0F, 0.0F);
-        this.setRotateAngle(RightTentacle11, 0.0F, -0.22689280275926282F, -0.22689280275926282F);
-        this.setRotateAngle(LeftArm, -0.7499679795819634F, -0.6829473363053812F, 0.0F);
-        this.setRotateAngle(RightTentacle22, 0.8196066167365371F, 0.0F, 0.6829473363053812F);
+    public void setAngles(boolean addToDefault) {
+        this.setRotateAngle(LeftTentacle11, -0.27314402793711257F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(LeftTentacle22, 0.8196066167365371F, 0.0F, 0.6829473363053812F, addToDefault);
+        this.setRotateAngle(HeadTentacle1, -0.22759093446006054F, 0.0F, 0.18203784098300857F, addToDefault);
+        this.setRotateAngle(HeadTentacle3, 0.40980330836826856F, 0.0F, 0.091106186954104F, addToDefault);
+        this.setRotateAngle(HeadTentacle2, 0.18203784098300857F, 0.0F, -0.40980330836826856F, addToDefault);
+        this.setRotateAngle(RightArm, -0.7464773210779748F, 0.6806784082777886F, 0.0F, addToDefault);
+        this.setRotateAngle(LeftTentacle12, 0.7740535232594852F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(RightTentacle21, -0.27314402793711257F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(LeftTentacle21, 0.0F, 0.22759093446006054F, 0.22759093446006054F, addToDefault);
+        this.setRotateAngle(RightTentacle12, 0.7740535232594852F, 0.0F, 0.0F, addToDefault);
+        this.setRotateAngle(RightTentacle11, 0.0F, -0.22689280275926282F, -0.22689280275926282F, addToDefault);
+        this.setRotateAngle(LeftArm, -0.7499679795819634F, -0.6829473363053812F, 0.0F, addToDefault);
+        this.setRotateAngle(RightTentacle22, 0.8196066167365371F, 0.0F, 0.6829473363053812F, addToDefault);
+    }
+    
+    private void resetStuff() {
+    	this.HeadFront.offsetZ = 0;
+    	this.HeadFront.offsetY = 0;
+    	this.HeadLeft.offsetX = 0;
+    	this.HeadLeft.offsetY = 0;
+    	this.HeadRight.offsetX = 0;
+    	this.HeadRight.offsetY = 0;
+    	this.LeftTentacle11.isHidden = false;
+    	this.LeftTentacle12.isHidden = false;
+    	this.LeftTentacle21.isHidden = false;
+    	this.LeftTentacle22.isHidden = false;
+    	this.RightTentacle11.isHidden = false;
+    	this.RightTentacle21.isHidden = false;
+    	this.RightTentacle12.isHidden = false;
+    	this.RightTentacle22.isHidden = false;
+    	this.HeadTentacle1.isHidden = false;
+    	this.HeadTentacle2.isHidden = false;
+    	this.HeadTentacle3.isHidden = false;
+    	this.HeadSpine.isHidden = false;
     }
     
     @Override
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	if(!(e instanceof EntityCrazedWeeper)) return;
+    	this.setAngles(false);
+    	this.resetStuff();
     	EntityCrazedWeeper weeper = (EntityCrazedWeeper)e;
     	float animTicks = weeper.getAnimationTicks();
     	float offset = (float) Math.sin(animTicks%40 / 6.366)/20;
@@ -177,6 +240,8 @@ public class ModelCrazedWeeper extends ModelBase {
     	this.RightTentacle12.rotateAngleZ = -offset;
     	this.RightTentacle21.rotateAngleZ = 0.22759093446006054F + offset;
     	this.RightTentacle22.rotateAngleX = 0.8196066167365371F - offset;
+    	this.RightArm.rotateAngleX = -0.7464773210779748F + offset + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/6;
+    	this.LeftArm.rotateAngleZ = -offset + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/4;
     	offset = (float) Math.sin(animTicks%50 / 7.95)/16;
     	this.HeadFront.offsetY = offset/2;
     	this.HeadLeft.offsetX = offset/2;
@@ -194,8 +259,13 @@ public class ModelCrazedWeeper extends ModelBase {
     	this.RightTentacle12.rotateAngleX = 0.7740535232594852F + offset;
     	this.RightTentacle21.rotateAngleX = -offset;
     	this.RightTentacle22.rotateAngleZ = 0.6829473363053812F + offset;
+    	this.LeftArm.rotateAngleX = -0.7499679795819634F + offset + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount/4;
+    	this.RightArm.rotateAngleZ = -offset + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount/8;
 		this.LeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/2;
     	this.RightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount/2;
-    	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
+    	Animation a = weeper.getTransformAnimation();
+    	if(a != null) {
+    		a.applyTransformations(bodyParts, partialTickTime);
+    	}
     }
 }

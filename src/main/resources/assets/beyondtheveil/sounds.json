@@ -143,5 +143,11 @@
 			"beyondtheveil:shoggoth_hurt0",
 			"beyondtheveil:shoggoth_hurt1"
 		]
+	},
+	"weeper_transform": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:weeper_transform"
+		]
 	}
 }

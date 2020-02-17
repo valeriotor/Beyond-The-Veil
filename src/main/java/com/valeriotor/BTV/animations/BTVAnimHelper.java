@@ -81,6 +81,7 @@ public class BTVAnimHelper {
 		case "shoggoth": return ModelRegistry.shoggoth;
 		case "blood_zombie": return ModelRegistry.blood_zombie;
 		case "blood_skeleton": return ModelRegistry.blood_skeleton;
+		case "crazed_weeper" : return ModelRegistry.crazed_weeper;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;
