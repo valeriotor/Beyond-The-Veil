@@ -20,11 +20,14 @@ import com.valeriotor.BTV.util.ItemHelper;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -52,22 +55,42 @@ public class ItemDreamBottle extends Item{
 		return new FluidHandlerDreamBottle(stack, CAPACITY);
 	}
 	
+	public int getMaxItemUseDuration(ItemStack stack) {
+        return 32;
+    }
+	
+	public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.DRINK;
+    }
+	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if(worldIn.isRemote) return super.onItemRightClick(worldIn, playerIn, handIn);
 		if(handIn == EnumHand.MAIN_HAND) {
 			if(!playerIn.isSneaking()) {
 				BlockPos pos = playerIn.getPosition();
 				playerIn.openGui(BeyondTheVeil.instance, GuiContainerHandler.DREAM_BOTTLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
-			} else {
-				dream(playerIn);
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 			}
+			playerIn.setActiveHand(handIn);
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 		}
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 	}
 	
-	public void dream(EntityPlayer playerIn) {
-		ItemStack stack = playerIn.getHeldItemMainhand();
+	@Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase e) {
+		if(e instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer)e;
+			if(p.isSneaking() && !worldIn.isRemote) {
+				dream(p, stack);
+				return stack;
+			}
+		}
+			
+		return stack;
+	}
+	
+	public void dream(EntityPlayer playerIn, ItemStack stack) {
 		Map<Integer, Dream> dreams = new HashMap<>();
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
