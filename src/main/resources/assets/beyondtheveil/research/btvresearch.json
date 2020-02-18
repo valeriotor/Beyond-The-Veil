@@ -436,6 +436,29 @@
             ]
         },
 		{
+        "key": "DREAMBOTTLE",
+        "name": "research.DREAMBOTTLE.title",
+        "icons": [ "beyondtheveil:dream_bottle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "ALLIANCE" ],
+        "stages": [
+				{
+					"text": "research.DREAMBOTTLE.stage.0",
+					"required_research": ["gotweepers"]
+				},
+                {
+                    "text": "research.DREAMBOTTLE.stage.1",
+					"required_research": ["craftedbottle"],
+					"recipes" : ["beyondtheveil:dream_bottle"]
+                },
+                {
+                    "text": "research.DREAMBOTTLE.stage.2",
+					"recipes" : ["beyondtheveil:dream_bottle"]
+                }
+            ]
+        },
+		{
         "key": "WATERYCRADLE",
         "name": "research.WATERYCRADLE.title",
         "icons": [ "beyondtheveil:watery_cradle" ],
