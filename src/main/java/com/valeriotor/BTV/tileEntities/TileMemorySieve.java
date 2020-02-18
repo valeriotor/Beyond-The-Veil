@@ -54,19 +54,22 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 		}
 		if(this.heldItem.getItem() != Items.AIR) {
 			for(Memory m : Memory.values()) {
-				if(heldItem.getItem() == m.getItem() && m.isUnlocked(p)) {			// RICORDA: Aggiungi m.isUnlocked
-					ItemHelper.checkTagCompound(in).setString("memory", m.getDataName());
-					this.heldItem = new ItemStack(Items.AIR);
+				if(heldItem.getItem() == m.getItem() && m.isUnlocked(p)) {
+					ItemStack newStack = new ItemStack(ItemRegistry.memory_phial);
+					ItemHelper.checkTagCompound(newStack).setString("memory", m.getDataName());
+					in.shrink(1);
+					p.addItemStackToInventory(newStack);
+					this.heldItem = ItemStack.EMPTY;
 					itemEntity = null;
 					if(!this.world.isRemote) {
 						markDirty();
 						this.sendUpdates(world);
 					}
-					return new ItemStack(Items.AIR);
+					return ItemStack.EMPTY;
 				}
 			}
 		}			
-		return new ItemStack(Items.AIR);
+		return ItemStack.EMPTY;
 	}
 	
 	@Override
