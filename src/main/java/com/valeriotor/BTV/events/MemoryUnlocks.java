@@ -6,14 +6,15 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.lib.PlayerDataLib;
-import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageMemoryUnlockFromClient;
+import com.valeriotor.BTV.research.ResearchUtil;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiMerchant;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,7 +22,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -30,8 +30,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class MemoryUnlocks {
 	
@@ -106,15 +105,22 @@ public class MemoryUnlocks {
 	@SubscribeEvent
 	public static void entityInteractEvent(PlayerInteractEvent.EntityInteractSpecific event) {
 		if(event.getWorld().isRemote) return;
-		if(event.getEntityLiving() instanceof EntityVillager) {
-			Memory.HUMAN.unlock(event.getEntityPlayer());
+		Entity e = event.getTarget();
+		EntityPlayer p = event.getEntityPlayer();
+		if(e instanceof EntityVillager) {
+			Memory.HUMAN.unlock(p);
+		} else if(e instanceof EntityAnimal) {
+			if(((EntityAnimal)e).isBreedingItem(p.getHeldItem(event.getHand())) && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
+				Memory.ANIMAL.unlock(p);
+			}
 		}
 	}
 	
 	@SubscribeEvent
 	public static void anvilRepairEvent(AnvilRepairEvent event) {
-		if(!event.getEntityPlayer().world.isRemote) {
-			//Memory.REPAIR.unlock(event.getEntityPlayer());	// Needs requirements
+		EntityPlayer p = event.getEntityPlayer();
+		if(!p.world.isRemote && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
+			Memory.REPAIR.unlock(event.getEntityPlayer());
 		}
 	}
 	
@@ -132,11 +138,19 @@ public class MemoryUnlocks {
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public static void openGuiEvent(GuiOpenEvent event) {
-		if(event.getGui() instanceof GuiMerchant) {
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageMemoryUnlockFromClient(Memory.HUMAN));
+	public static void respawnEvent(PlayerRespawnEvent event) {
+		EntityPlayer p = event.player;
+		if(!p.world.isRemote && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
+			Memory.DEATH.unlock(p);
+		}
+	}
+	
+	public static void sleepChamberEvent(EntityPlayer p) {
+		if(!Memory.STILLNESS.isUnlocked(p)) {
+			int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.TIMESCHAMBER, 1, 1);
+			if(val >= 10)
+				Memory.STILLNESS.unlock(p, true);
 		}
 	}
 	

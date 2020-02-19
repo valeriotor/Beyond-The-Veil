@@ -4,6 +4,7 @@ import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.blocks.BlockSleepChamber;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
+import com.valeriotor.BTV.events.MemoryUnlocks;
 import com.valeriotor.BTV.gui.Guis;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
@@ -52,6 +53,8 @@ public class MessageSleepChamber implements IMessage {
 				IBlockState state = player.getServerWorld().getBlockState(pos);
 				
 				if(state.getBlock() instanceof BlockSleepChamber) {
+					if(message.doesDream)
+						MemoryUnlocks.sleepChamberEvent(player);
 					int multiplier = 0;
 					boolean advanced = false;
 					if(state.getBlock() == BlockRegistry.SleepChamber) multiplier = 1;
