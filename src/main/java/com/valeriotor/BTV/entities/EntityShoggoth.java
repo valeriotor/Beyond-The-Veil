@@ -17,6 +17,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -102,6 +103,7 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	 protected void initEntityAI() {
 		//this.tasks.addTask(0, new EntityAISwimming(this));
 		//this.tasks.addTask(1, new AISwim(this));
+	    this.tasks.addTask(0, new EntityAISwimming(this));
 	    this.tasks.addTask(1, new AISpook(this));
 		this.tasks.addTask(2, new EntityAIAttackMelee(this, 2, true));
 		this.tasks.addTask(3, new AIShoggothBuild(this));
