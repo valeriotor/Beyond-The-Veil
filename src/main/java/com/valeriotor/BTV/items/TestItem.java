@@ -90,7 +90,7 @@ public class TestItem extends Item //implements IHasModel
 				}
 			}
 		}
-		JSonStructureBuilder b = new JSonStructureBuilder(blockMap);
+		JSonStructureBuilder b = new JSonStructureBuilder(blockMap, Math.abs(pos1.getX()-pos2.getX())+1, Math.abs(pos1.getY()-pos2.getY())+1, Math.abs(pos1.getZ()-pos2.getZ())+1);
 		try (Writer writer = new FileWriter("StructuralCode.json")) {
 		    BeyondTheVeil.gson.toJson(b, writer);
 		} catch (IOException e) {
@@ -102,8 +102,12 @@ public class TestItem extends Item //implements IHasModel
 	public static class JSonStructureBuilder {
 		
 		HashMap<String, List<byte[]>> blockMap;
-		public JSonStructureBuilder(HashMap<String, List<byte[]>> blockMap) {
+		private int xSize, ySize, zSize;
+		public JSonStructureBuilder(HashMap<String, List<byte[]>> blockMap, int xSize, int ySize, int zSize) {
 			this.blockMap = blockMap;
+			this.xSize = xSize;
+			this.ySize = ySize;
+			this.zSize = zSize;
 		}
 		
 		public HashMap<Block, byte[][]> getMap(){
@@ -116,6 +120,18 @@ public class TestItem extends Item //implements IHasModel
 				map.put(Block.REGISTRY.getObject(new ResourceLocation(entry.getKey())), bytes);
 			}
 			return map;
+		}
+		
+		public int getXSize() {
+			return this.xSize;
+		}
+		
+		public int getYSize() {
+			return this.ySize;
+		}
+		
+		public int getZSize() {
+			return this.zSize;
 		}
 	}
 	
