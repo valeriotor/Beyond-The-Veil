@@ -10,6 +10,7 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.entities.AI.AIDwellerFish;
 import com.valeriotor.BTV.entities.AI.AIDwellerFollowPlayer;
 import com.valeriotor.BTV.entities.AI.AIDwellerWanderHamlet;
@@ -44,7 +45,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -407,16 +407,10 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	}
 
 	@Override
-	public void useRecipe(MerchantRecipe recipe) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void useRecipe(MerchantRecipe recipe) {}
 
 	@Override
-	public void verifySellingItem(ItemStack stack) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void verifySellingItem(ItemStack stack) {}
 
 	@Override
 	public World getWorld() {
@@ -484,6 +478,12 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		EntityPlayer p = DialogueHandler.getPlayer(this);
 		if(p != null) {
 			BeyondTheVeil.proxy.closeGui(p);
+		}
+		if(cause.getTrueSource() instanceof EntityPlayer && !this.world.isRemote) {
+			EntityPlayer killer = (EntityPlayer) cause.getTrueSource();
+			if(!ResearchUtil.isResearchComplete(killer, "IDOL")) {
+				int newVal = SyncUtil.incrementIntDataOnServer(killer, false, PlayerDataLib.CURSE, 1, 1);
+			}
 		}
 		super.onDeath(cause);
 	}

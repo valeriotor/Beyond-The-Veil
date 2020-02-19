@@ -27,6 +27,7 @@ public class PlayerDataLib {
 	public static final String NECRO_Y = "NecroY";
 	public static final String ELDER_GUARDIANS = "elderguards";
 	public static final String TIMESCHAMBER = "timeschamber";
+	public static final String CURSE = "curse";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler

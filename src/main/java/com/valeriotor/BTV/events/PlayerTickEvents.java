@@ -3,6 +3,7 @@ package com.valeriotor.BTV.events;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityCanoe;
+import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
@@ -15,16 +16,20 @@ import com.valeriotor.BTV.world.HamletList;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Worship;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -46,6 +51,7 @@ public class PlayerTickEvents {
 			if(!p.world.isRemote) {
 				CrawlerWorshipEvents.updateWorships(p);
 				findHamlet(p, data);
+				spawnDeepOnes(p, data);
 			}
 		}
 	}
@@ -142,6 +148,52 @@ public class PlayerTickEvents {
 			data.incrementOrSetInteger(
 					String.format(PlayerDataLib.BAUBLE_COOLDOWN, selectedBauble), -1, 0, false);
 		}
+	}
+	
+	private static void spawnDeepOnes(EntityPlayer p, IPlayerData data) {
+		if(ResearchUtil.isResearchComplete(p, "IDOL")) return;
+		BlockPos pos = p.getPosition();
+		Biome b = p.world.getBiome(pos);
+		if(b == Biomes.OCEAN || b == Biomes.DEEP_OCEAN || b == Biomes.BEACH) {
+			int val = data.getOrSetInteger(PlayerDataLib.CURSE, 0, false);
+			if(val > 0) {
+				if(p.world.rand.nextInt(8000) == 0) {
+					boolean flag = false;
+					for(int i = 0; i < (val+5) / 5; i++) {
+						flag = false;
+						for(int x = -20; x <= 20 && !flag; x += 4) {
+							for(int z = -20; z <= 20 && !flag; z += 4) {
+								BlockPos newPos = pos.add(x, 0, z);
+								while(newPos.getY() > 20 && p.world.getBlockState(newPos.down()).getBlock() == Blocks.AIR)
+									newPos = newPos.down();
+								if(canSpawnDeepOne(p.world, newPos)) {
+									EntityDeepOne deepOne = new EntityDeepOne(p.world);
+									deepOne.setPosition(newPos.getX(), newPos.getY(), newPos.getZ());
+									p.world.spawnEntity(deepOne);
+									data.incrementOrSetInteger(PlayerDataLib.CURSE, -1, 0, false);
+									flag = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private static boolean canSpawnDeepOne(World w, BlockPos pos) {
+		for(int x = -1; x < 1; x++) {
+			for(int z = -1; z < 1; z++) {
+				for(int y = 0; y < 3; y++) {
+					Block b = w.getBlockState(pos.add(x, y, z)).getBlock();
+					if(b != Blocks.AIR && b != Blocks.WATER) {
+						return false;
+					}
+				}
+			}
+		}
+		if(w.getBlockState(pos.down()).getBlock() == Blocks.AIR) return false;
+		return true;
 	}
 	
 }
