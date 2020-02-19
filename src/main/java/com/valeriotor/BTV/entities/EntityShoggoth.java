@@ -264,6 +264,11 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 				this.aggressivity++;
 			} else {
 				this.aggressivity += 10;
+				EntityPlayer master = this.getMaster();
+				if(e != master && master != null && master.getDistance(this) < 30) {
+					if(!master.world.isRemote)
+						master.sendMessage(new TextComponentTranslation("angry.shoggoth.bad"));
+				}
 			}
 		}
 	}
@@ -299,7 +304,9 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 
 	@Override
 	public EntityPlayer getMaster() {
-		return this.world.getMinecraftServer().getPlayerList().getPlayerByUUID(this.master);
+		if(this.master != null)
+			return this.world.getMinecraftServer().getPlayerList().getPlayerByUUID(this.master);
+		return null;
 	}
 
 	@Override
