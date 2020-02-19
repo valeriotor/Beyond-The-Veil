@@ -1,6 +1,27 @@
 {
-   "parent": "item/generated",
-   "textures": {
-       "layer0": "beyondtheveil:items/sleep_chamber_advanced"
+   "parent": "beyondtheveil:block/sleep_chamber_advanced",
+   "display": {
+	   "thirdperson_righthand": {
+		   "scale": [ 0.25, 0.25, 0.25 ],
+           "translation": [ 1, 0, 0 ]
+	   },
+	   "firstperson_righthand": {
+		   "scale": [ 0.25, 0.25, 0.25 ]
+	   },
+	   "thirdperson_lefthand": {
+		   "scale": [ 0.25, 0.25, 0.25 ],
+           "translation": [ 1, 0, 0 ]
+	   },
+	   "firstperson_lefthand": {
+		   "scale": [ 0.25, 0.25, 0.25 ]
+	   },
+	   "gui": {
+		   "rotation": [ 36.5, 45, 0 ],
+		   "scale": [ 0.375, 0.375, 0.375 ],
+           "translation": [ 0, -2.5, 0 ]
+	   },
+	   "ground": {
+		   "scale": [ 0.25, 0.25, 0.25]
+	   }
    }
 }
