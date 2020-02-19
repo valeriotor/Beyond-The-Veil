@@ -148,7 +148,7 @@
         "key": "SLEEPCHAMBERADVANCED",
         "name": "research.SLEEPCHAMBERADVANCED.title",
         "icons": [ "beyondtheveil:sleep_chamber_advanced" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 4, 5 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2, 3 ],
         "learn": "true",
         "hiders":  ["HUMANDREAMS"],
         "parents": [ "SLEEPCHAMBER" ],
