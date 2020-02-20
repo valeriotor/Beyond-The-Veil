@@ -511,6 +511,18 @@ fletum.dialogue.5=I Dreamt of a beautiful rainbow. It was red.
 fletum.dialogue.6=My Dreams colour the world! I am sure, because your face is red, heehee.
 fletum.dialogue.7=The Crawling Chaos whispered to me. He said I'm his favourite, heehee!
 
+weeper.shoggoth.call=Master! Master! I have a secret that I wish to share!
+weeper.shoggoth.0=Master.. I can share a terrible, terrible secret with you.
+weeper.shoggoth.1=All I ask in return is for you to promise to grant me a wish, a single wish. Speak to me again if you accept.
+weeper.shoggoth.2=Oh.. Master.. my dear Master. Thank you. The secret has been kept for too long.
+weeper.shoggoth.3=Master, my Master. Do you know what a SHOGGOTH is?
+weeper.shoggoth.4=Most died long ago, yet still a few roam the deepest seas. But you can make one, too.
+weeper.shoggoth.5=That little voice in your head, the one that drives your writing hand.. it'll teach you how to make one.
+weeper.shoggoth.6=My wish, Master. It is time for my wish. I beg you, my dear, dear Master.. please..
+weeper.shoggoth.kill=..kill me.
+weeper.shoggoth.please=Please, I beg of you, kill me.
+weeper.shoggoth.please2=PLEASE MASTER, KILL ME.
+weeper.shoggoth.promised=MASTER, YOU PROMISED.
 
 ##################
 #MEMORIES

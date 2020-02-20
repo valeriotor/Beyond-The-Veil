@@ -2,17 +2,22 @@ package com.valeriotor.BTV.entities;
 
 import java.util.UUID;
 
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.PlayerTimer;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -41,8 +46,11 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	
 	private int animationTicks = 0;
 	private int fletumTicks = 10;
+	private int transformTicks = 300;
 	private int tearTicks;
 	private int dialogue = -1;
+	private int specialDialogue = -1;
+	private int specialDialogueCounter = 0;
 	private boolean increase = true;
 	private boolean heartless = false;
 	private BlockPos lacrymatory;
@@ -110,6 +118,39 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 				TileLacrymatory.fillWithTears(this);
 				this.tearTicks = 300;
 			}
+			this.specialDialogueCounter++;
+			if(this.specialDialogueCounter > 300) {
+				this.specialDialogueCounter = 0;
+				EntityPlayer p = this.getMaster();
+				if(this.specialDialogue < 0) {
+					if(p != null && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE") && !ResearchUtil.isResearchKnown(p, "SHOGGOTH")) {
+						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.call").getFormattedText()));
+						this.specialDialogue = 0;
+					}
+				} else if(p != null && ResearchUtil.isResearchKnown(p, "SHOGGOTH") && this.specialDialogue < 7)
+					this.specialDialogue = -1;
+			}
+			if(this.specialDialogue >= 7) {
+				this.transformTicks--;
+				System.out.println(this.transformTicks);
+				EntityPlayer p = this.getMaster();
+				if(p != null) {
+					if(this.transformTicks == 225)
+						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.please").getFormattedText()));
+					if(this.transformTicks == 150)
+						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.please2").getFormattedText()));
+					if(this.transformTicks == 75)
+						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.promised").getFormattedText()));
+				}
+				if(this.transformTicks <= 0) {
+					EntityCrazedWeeper craze = new EntityCrazedWeeper(world);
+					craze.setPosition(posX, posY, posZ);
+					craze.setRotationYawHead(this.getRotationYawHead());
+					world.spawnEntity(craze);
+					world.removeEntity(this);
+				}
+			}
+			
 		}
 		
 	}
@@ -137,6 +178,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
     {	
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(2, new EntityAIWander(this, 0.6D));
+        this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(2, new EntityAISwimming(this));
     }
 	
@@ -160,7 +202,8 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setBoolean("heartless", this.heartless);
 		compound.setInteger("tearTicks", this.tearTicks);
-		compound.setInteger("dialogue", dialogue);
+		compound.setInteger("dialogue", this.dialogue);
+		compound.setInteger("sdialogue", this.specialDialogue);
 		if(this.master != null)
 			compound.setString("master", this.master.toString());
 		if(this.lacrymatory != null)
@@ -173,6 +216,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 		this.heartless = compound.getBoolean("heartless");
 		this.tearTicks = compound.getInteger("tearTicks");
 		this.dialogue = compound.getInteger("dialogue");
+		this.specialDialogue = compound.getInteger("sdialogue");
 		if(compound.hasKey("master"))
 			this.master = UUID.fromString(compound.getString("master"));
 		if(compound.hasKey("lacrymatory"))
@@ -206,9 +250,26 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 			return EnumActionResult.SUCCESS;
 		} else {
 			if(player.getHeldItem(hand).getItem() == Items.AIR && !this.world.isRemote) {
-				if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
-				player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
-				return EnumActionResult.SUCCESS;
+				this.faceEntity(player, 3, 3);
+				this.motionX = 0.01;
+				if(this.specialDialogue >= 0) {
+					if(this.specialDialogue < 7) {
+						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth." + specialDialogue).getFormattedText()));
+						this.specialDialogue++;
+						if(this.specialDialogue == 7) {
+							SyncUtil.addStringDataOnServer(player, false, "shoggothsecret");
+							PlayerTimer pt = new PlayerTimer(player, p -> 
+							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 10);
+							ServerTickEvents.addPlayerTimer(pt);
+						}
+					} else {
+						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText()));
+					}
+				} else {
+					if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
+					player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
+					return EnumActionResult.SUCCESS;
+				}
 			}
 		}
 		return EnumActionResult.PASS;
