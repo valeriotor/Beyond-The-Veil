@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.items;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,18 +10,23 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.blocks.fluid.BlockFluidTears;
 import com.valeriotor.BTV.dreaming.DreamRegistry;
 import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.dreaming.dreams.Dream;
+import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.ItemHelper;
 
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -28,11 +34,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.DispenseFluidContainer;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -82,7 +91,8 @@ public class ItemDreamBottle extends Item{
 		if(e instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer)e;
 			if(p.isSneaking() && !worldIn.isRemote) {
-				dream(p, stack);
+				if(!checkShoggothVat(p, worldIn, stack))
+					dream(p, stack);
 				return stack;
 			}
 		}
@@ -186,6 +196,76 @@ public class ItemDreamBottle extends Item{
 		}
 		
 		
+	}
+	
+	public boolean checkShoggothVat(EntityPlayer p, World w, ItemStack stack) {
+		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
+		if(!(fh instanceof FluidHandlerItemStack)) return false;
+		FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
+		int amount = 0;
+		if(fluid != null) amount = fluid.amount;
+		if(amount < 4000) return false;
+		EnumSet<Memory> mems = EnumSet.noneOf(Memory.class);
+		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
+			if(nbt.hasKey(String.format("slot%d", i))) {
+				ItemStack stack2 = new ItemStack(nbt.getCompoundTag(String.format("slot%d", i)));
+				if(stack2.getItem() == ItemRegistry.memory_phial) {
+					String s = ItemHelper.checkStringTag(stack2, "memory", "none");
+					if(!s.equals("none"))
+						mems.add(Memory.getMemoryFromDataName(s));
+				}
+			}
+		}
+		if(mems.contains(Memory.DARKNESS) && mems.contains(Memory.ELDRITCH) && mems.contains(Memory.LEARNING) && mems.contains(Memory.VOID)) {
+			
+			int i = 0;
+			BlockPos pos = p.getPosition();
+			if(w.getBlockState(pos).getBlock() != BlockRegistry.BlockFluidTears)  return false;
+			while(w.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+				pos = pos.offset(EnumFacing.NORTH);
+			i = 0;
+			while(w.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+				pos = pos.offset(EnumFacing.WEST);
+			i = 0;
+			while(w.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+				pos = pos.offset(EnumFacing.DOWN);
+			
+			for(int x = 0; x < 3; x++) {
+				for(int y = 0; y < 3; y++) {
+					for(int z = 0; z < 3; z++) {
+						IBlockState state = w.getBlockState(pos.add(x, y, z));
+						
+						if(state.getBlock() != BlockRegistry.BlockFluidTears)
+							return false;
+						if(state.getBlock().getMetaFromState(state) != 0)
+							return false;
+					}
+				}
+			}
+			AxisAlignedBB bbox = new AxisAlignedBB(pos, pos.add(3, 3, 3));
+			List<EntityFletum> fleti = w.getEntitiesWithinAABB(EntityFletum.class, bbox);
+			if(fleti.size() >= 3) {
+				for(int x = 0; x < 3; x++) {
+					for(int y = 0; y < 3; y++) {
+						for(int z = 0; z < 3; z++) {
+							w.setBlockToAir(pos.add(x, y, z));
+						}
+					}
+				}
+				for(int j = 0; j < 3; j++) {
+					w.removeEntity(fleti.get(j));
+				}
+				for(int j = 0; j < 4; j++) {
+					nbt.removeTag(String.format("slot%d", j));
+				}
+				fh.drain(4000, true);
+				EntityItem item = new EntityItem(w, pos.getX()+1, pos.getY()+1, pos.getZ()+1, new ItemStack(ItemRegistry.held_shoggoth));
+				w.spawnEntity(item);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
