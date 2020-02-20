@@ -77,6 +77,9 @@ public final class BTVSounds {
 	@ObjectHolder("weeper_transform")
 	public static final SoundEvent weeper_transform = new SoundEvent(new ResourceLocation(References.MODID, "weeper_transform")).setRegistryName("weeper_transform");
 	
+	@ObjectHolder("fletum_weeping")
+	public static final SoundEvent fletum_weeping = new SoundEvent(new ResourceLocation(References.MODID, "fletum_weeping")).setRegistryName("fletum_weeping");
+	
 	public static SoundEvent getSoundById(int id) {
 		switch(id) {
 			case 0: return dwellerIdle;
@@ -102,6 +105,7 @@ public final class BTVSounds {
 			case 20: return weeper_idle;
 			case 21: return shoggoth_hurt;
 			case 22: return weeper_transform;
+			case 23: return fletum_weeping;
 			default: return null;
 			
 		}
@@ -131,10 +135,11 @@ public final class BTVSounds {
 		if(sound.equals(weeper_idle)) return 20;
 		if(sound.equals(shoggoth_hurt)) return 21;
 		if(sound.equals(weeper_transform)) return 22;
+		if(sound.equals(fletum_weeping)) return 23;
 		return 0;
 	}
 	
 	public static int getNumberOfSounds() {
-		return 23;
+		return 24;
 	}
 }

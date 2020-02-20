@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.tileEntities.TileLacrymatory;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -18,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -164,6 +166,16 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	public void setMaster(EntityPlayer p) {
 		if(p != null)
 			this.master = p.getPersistentID();
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BTVSounds.fletum_weeping;
+	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 240;
 	}
 	
 }

@@ -149,5 +149,13 @@
 		"sounds": [
 			"beyondtheveil:weeper_transform"
 		]
+	},
+	"fletum_weeping": {
+		"category": "ambience",
+		"sounds": [
+			"beyondtheveil:fletum_weeping0",
+			"beyondtheveil:fletum_weeping1",
+			"beyondtheveil:fletum_weeping2"
+		]
 	}
 }
