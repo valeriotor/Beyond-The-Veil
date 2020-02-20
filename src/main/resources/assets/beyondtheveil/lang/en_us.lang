@@ -796,6 +796,8 @@ research.BLOODWELL.stage.0=If the undead's desire for blood is so great, then I 
 research.BLOODWELL.stage.1=The Well still beats. The dead are drawn towards it, even more so than to normal hearts.<BR>Once they enter the Well, the dead are gone, stored in it. Or, rather, through it.<BR>Blood Sigils can be made for both Zombies and Skeletons. When these undead enter the Well they can later be reacquired through the use of Sigils by using these on the central block of the Well. The Sigils can then be used on the ground to summon my own Blood Undead.<BR>Sigils can be emptied in the Well by sneaking. Summoned Blood Undead can be put back in the Sigil by using it upon them.<BR>I do not know how the Well stores the dead. I imagine it could be a link to some other location, in or out of this world. I truly wish I could enter it myself.<BR>Alas, I am not dead as of yet.
 research.builtwell.text=Build a Blood Well
 
+research.SHOGGOTH.title=Shoggoth
+research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away aeons ago on the Sea's shores.<BR>Slaves to the Elder Things, builders of cities.<BR>They're born from tears.<BR>I must create a Shoggoth Vat. That is, a 3x3x3 cube of tears, making sure each block is filled. Then three Fleti must be placed in it.<BR>Once all is done, I must enter it, and through a Dream Bottle I must Dream simultaneously of Darkness, Eldritchness, Learning and Void.<BR>A Shoggoth is no gentle creature. It will attack all animals and all Players other than its owner on sight. If it becomes too delighted in killing, then not even its owner is safe.<BR>A Shoggoth is to be picked up through a blackjack, provided that it is sufficiently calm.
 
 ##################
 #MISC

@@ -637,7 +637,7 @@
         "key": "STATUE",
         "name": "research.STATUE.title",
         "icons": [ "beyondtheveil:statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 6,17],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,17],
         "hiders": ["ALLIANCE"],
         "parents": [ "WEEPERS" ],
         "stages": [
@@ -661,7 +661,7 @@
         "key": "SACRIFICESTATUE",
         "name": "research.SACRIFICESTATUE.title",
         "icons": [ "beyondtheveil:sacrifice_statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 4,19],
+        "category": "BEYOND_THE_VEIL", "location": [ 1,19],
         "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "STATUE" ],
         "stages": [
@@ -678,7 +678,7 @@
         "key": "PENITENCESTATUE",
         "name": "research.PENITENCESTATUE.title",
         "icons": [ "beyondtheveil:penitence_statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 8,19],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,19],
         "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "STATUE" ],
         "stages": [
@@ -695,7 +695,7 @@
         "key": "VALOURSTATUE",
         "name": "research.VALOURSTATUE.title",
         "icons": [ "beyondtheveil:statue" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 6,21],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,21],
         "hiders": ["STATUE", "SACRIFICEALTAR"],
         "parents": [ "PENITENCESTATUE", "SACRIFICESTATUE" ],
         "stages": [
@@ -758,6 +758,19 @@
                 {
                     "text": "research.CORALSTAFF.stage.1",
                     "recipes" : ["beyondtheveil:coral_staff"]
+                }
+            ]
+        },
+		{
+        "key": "SHOGGOTH",
+        "name": "research.SHOGGOTH.title",
+        "icons": [ "beyondtheveil:held_shoggoth" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,19],
+		"hiders": ["shoggothsecret"],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+                    "text": "research.SHOGGOTH.stage.0"
                 }
             ]
         }
