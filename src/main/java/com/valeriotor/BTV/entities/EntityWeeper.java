@@ -132,7 +132,6 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 			}
 			if(this.specialDialogue >= 7) {
 				this.transformTicks--;
-				System.out.println(this.transformTicks);
 				EntityPlayer p = this.getMaster();
 				if(p != null) {
 					if(this.transformTicks == 225)
