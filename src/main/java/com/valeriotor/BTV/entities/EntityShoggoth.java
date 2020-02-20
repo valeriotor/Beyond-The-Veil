@@ -7,6 +7,7 @@ import com.valeriotor.BTV.animations.AnimationRegistry;
 import com.valeriotor.BTV.entities.AI.AIRevenge;
 import com.valeriotor.BTV.entities.AI.AIShoggothBuild;
 import com.valeriotor.BTV.entities.AI.AISpook;
+import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.shoggoth.ShoggothBuilding;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -19,6 +20,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +41,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion{
 	
@@ -189,16 +193,27 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-		if(!player.world.isRemote && ItemHelper.checkTagCompound(stack).hasKey("schematic")) {
-			if(this.map != null) {
-				player.sendMessage(new TextComponentTranslation(String.format("shoggoth.hasmapalready%d", this.talkCount++)));
-				if(this.talkCount > 3) this.talkCount = 3;
-				return EnumActionResult.FAIL;
+		if(!player.world.isRemote) {
+			if(ItemHelper.checkTagCompound(stack).hasKey("schematic")) {
+				if(this.map != null) {
+					player.sendMessage(new TextComponentTranslation(String.format("shoggoth.hasmapalready%d", this.talkCount++)));
+					if(this.talkCount > 3) this.talkCount = 3;
+					return EnumActionResult.FAIL;
+				}
+				this.map = ItemHelper.checkTagCompound(stack).getCompoundTag("schematic").copy();
+				this.progress = 0;
+				this.building = null;
+				return EnumActionResult.SUCCESS;
+			} else if(stack.getItem() == ItemRegistry.blackjack && player.getPersistentID() == this.getMasterID() && 
+					  this.aggressivity < 10 && this.getAttackTarget() == null) {
+				ItemStack toDrop = ItemHandlerHelper.insertItemStacked(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), new ItemStack(ItemRegistry.held_shoggoth), false);
+				if(!toDrop.isEmpty()) {
+					EntityItem item = new EntityItem(world, posX, posY, posZ, toDrop);
+					world.spawnEntity(item);
+				}
+				this.world.removeEntity(this);
+				stack.damageItem(1, player);
 			}
-			this.map = ItemHelper.checkTagCompound(stack).getCompoundTag("schematic").copy();
-			this.progress = 0;
-			this.building = null;
-			return EnumActionResult.SUCCESS;
 		}
 		return super.applyPlayerInteraction(player, vec, hand);
 	}
