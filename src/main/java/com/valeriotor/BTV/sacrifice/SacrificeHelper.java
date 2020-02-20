@@ -20,6 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class SacrificeHelper extends TileEntity{
 	
@@ -82,7 +83,7 @@ public class SacrificeHelper extends TileEntity{
 		} else {
 			ItemStack newStack = SacrificeRecipeRegistry.getItemStack(stack);
 			if(newStack != null) {
-				p.addItemStackToInventory(newStack);
+				ItemHandlerHelper.giveItemToPlayer(p, newStack);
 				removeHearts(p.world, pos);
 			}
 		}

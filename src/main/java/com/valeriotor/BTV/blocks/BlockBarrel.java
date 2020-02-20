@@ -34,6 +34,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockBarrel extends ModBlock implements ITileEntityProvider{
 	
@@ -89,7 +90,7 @@ public class BlockBarrel extends ModBlock implements ITileEntityProvider{
 		if(hand != EnumHand.MAIN_HAND) return false;
 		TileBarrel b = getTE(w, pos);
 		if(p.isSneaking()) {
-			if(!w.isRemote) p.addItemStackToInventory(b.getContents());
+			if(!w.isRemote) ItemHandlerHelper.giveItemToPlayer(p, b.getContents());
 			else if(b.getFishCount() > 0) w.playSound(p, pos, SoundEvents.BLOCK_SLIME_FALL, SoundCategory.BLOCKS, 0.1F, 1F);
 			return true;
 		} else {

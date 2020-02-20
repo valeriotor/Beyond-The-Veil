@@ -16,6 +16,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -82,7 +83,7 @@ public class ContainerGearBench extends Container{
 				h.extractItem(i, min, false);
 			}
 			stack.setCount(min);
-			if(!playerIn.addItemStackToInventory(stack)) playerIn.dropItem(stack, false);
+			ItemHandlerHelper.giveItemToPlayer(playerIn, stack);
 		} /*else if(index >= 1 && index <= 16) {
 			ItemStack stack = h.getStackInSlot(index-1);
 			for(int i = 17; i < 53; i++) {

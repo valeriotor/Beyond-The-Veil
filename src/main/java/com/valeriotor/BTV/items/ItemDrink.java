@@ -18,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class ItemDrink extends Item{
 	public ItemDrink(String name) {
@@ -37,7 +38,7 @@ public class ItemDrink extends Item{
 			if (player == null || !player.capabilities.isCreativeMode)
 	        {
 	            stack.shrink(1);
-	            player.addItemStackToInventory(new ItemStack(ItemRegistry.cup, 1));
+	            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ItemRegistry.cup, 1));
 	        }
 			
 			if (player instanceof EntityPlayerMP)

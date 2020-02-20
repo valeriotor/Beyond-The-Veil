@@ -38,6 +38,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
@@ -285,7 +286,7 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 		}
 		if(playerIn.getHeldItem(hand).getItem() == Items.AIR && playerIn.isSneaking() && state.getValue(ISFULL)) {
 			worldIn.setBlockState(pos, state.withProperty(ISFULL, false));
-			if(!playerIn.capabilities.isCreativeMode) playerIn.addItemStackToInventory(new ItemStack(ItemRegistry.oniricIncense));
+			if(!playerIn.capabilities.isCreativeMode) ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(ItemRegistry.oniricIncense));
 		}
 		
 		return true;

@@ -19,6 +19,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class TileMemorySieve extends TileEntity implements ITickable{
 	
@@ -58,7 +59,7 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 					ItemStack newStack = new ItemStack(ItemRegistry.memory_phial);
 					ItemHelper.checkTagCompound(newStack).setString("memory", m.getDataName());
 					in.shrink(1);
-					p.addItemStackToInventory(newStack);
+					ItemHandlerHelper.giveItemToPlayer(p, newStack);
 					this.heldItem = ItemStack.EMPTY;
 					itemEntity = null;
 					if(!this.world.isRemote) {

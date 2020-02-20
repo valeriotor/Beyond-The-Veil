@@ -19,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 
@@ -40,7 +41,7 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 				if(seeds == ItemStack.EMPTY) seeds = new ItemStack(getRandomSeed(RANDOM));
 				if(seeds != ItemStack.EMPTY) {
 					playerIn.getHeldItem(hand).shrink(1);
-					playerIn.addItemStackToInventory(seeds);
+					ItemHandlerHelper.giveItemToPlayer(playerIn, seeds);
 				}
 			}
 		}

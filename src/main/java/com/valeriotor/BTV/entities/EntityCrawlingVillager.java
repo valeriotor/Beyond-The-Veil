@@ -28,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntityCrawlingVillager extends EntityCreature implements IPlayerMinion{
 	
@@ -141,7 +142,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 				ItemHelper.checkTagCompound(item).setBoolean("spineless", !this.unconscious);
 				item.getTagCompound().setBoolean("heartless", this.heartless);
 				item.getTagCompound().setInteger("profession", this.getProfessionID());
-				player.addItemStackToInventory(item);
+				ItemHandlerHelper.giveItemToPlayer(player, item);
 				this.world.removeEntity(this);
 			}
 			return EnumActionResult.SUCCESS;

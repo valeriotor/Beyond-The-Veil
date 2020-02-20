@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MessageDagonDialogue implements IMessage{
 
@@ -35,7 +36,7 @@ public class MessageDagonDialogue implements IMessage{
 			p.getServerWorld().addScheduledTask(() -> {
 				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 				if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) {
-					PlayerTimer pt = new PlayerTimer(p, player -> player.addItemStackToInventory(new ItemStack(Blocks.GOLD_BLOCK, 3)), 100);
+					PlayerTimer pt = new PlayerTimer(p, player -> ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(Blocks.GOLD_BLOCK, 3)), 100);
 					ServerTickEvents.addPlayerTimer(pt);
 					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(0));
 					SyncUtil.addStringDataOnServer(p, false, "hearing");

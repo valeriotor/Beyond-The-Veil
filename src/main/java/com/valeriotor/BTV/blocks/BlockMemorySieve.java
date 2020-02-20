@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
 
@@ -41,7 +42,7 @@ public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
 				TileMemorySieve tm = (TileMemorySieve)te;
 				ItemStack returnedStack = tm.getItem(p, p.getHeldItemMainhand());
 				if(returnedStack.getItem() != Items.AIR) {
-					p.addItemStackToInventory(returnedStack);
+					ItemHandlerHelper.giveItemToPlayer(p, returnedStack);
 					return true;
 				} else {
 					tm.addItem(p.getHeldItemMainhand());

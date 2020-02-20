@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MessageWateryCradle implements IMessage{
 	
@@ -70,7 +71,7 @@ public class MessageWateryCradle implements IMessage{
 					SoundEvent sound = null;
 					switch(message.option) {
 					case 0: status = status.withSpineless(true);
-							p.addItemStackToInventory(new ItemStack(ItemRegistry.spine));
+							ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.spine));
 							sound = BTVSounds.spineRip;
 							if(ResearchUtil.getResearchStage(p, "SPINES") < 1)
 								SyncUtil.addStringDataOnServer(p, false, "extractedspine");
@@ -80,7 +81,7 @@ public class MessageWateryCradle implements IMessage{
 								SyncUtil.addStringDataOnServer(p, false, "filledtears");
 							break;
 					case 3: status = status.withHeartless(true);
-							p.addItemStackToInventory(new ItemStack(BlockRegistry.BlockHeart));
+							ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(BlockRegistry.BlockHeart));
 							sound = BTVSounds.heartRip;
 							if(ResearchUtil.getResearchStage(p, "HEARTS") < 1)
 								SyncUtil.addStringDataOnServer(p, false, "tornheart");

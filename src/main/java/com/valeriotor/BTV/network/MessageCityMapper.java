@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MessageCityMapper implements IMessage{
 	
@@ -67,7 +68,7 @@ public class MessageCityMapper implements IMessage{
 			}else if(message.mode == 3) {
 				if(tc.buildings.size() > 0) {
 					ItemStack stack = tc.create();
-					ctx.getServerHandler().player.addItemStackToInventory(stack);
+					ItemHandlerHelper.giveItemToPlayer(ctx.getServerHandler().player, stack);
 				}
 			}
 			tc.sendSmallUpdates();

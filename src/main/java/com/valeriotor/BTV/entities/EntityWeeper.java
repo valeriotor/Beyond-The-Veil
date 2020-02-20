@@ -35,6 +35,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPlayerMinion{
 	
@@ -199,7 +200,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 			}
 			if(!this.world.isRemote) {
 				ItemStack item = this.getItemForm();
-				player.addItemStackToInventory(item);
+				ItemHandlerHelper.giveItemToPlayer(player, item);
 				this.world.removeEntity(this);
 			}
 			return EnumActionResult.SUCCESS;

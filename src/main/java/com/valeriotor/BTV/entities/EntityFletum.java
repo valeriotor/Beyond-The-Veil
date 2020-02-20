@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntityFletum extends EntityCreature implements IWeepingEntity, IPlayerMinion{
 
@@ -69,7 +70,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 				}
 				if(!this.world.isRemote) {
 					ItemStack item = new ItemStack(ItemRegistry.held_fletum);
-					player.addItemStackToInventory(item);
+					ItemHandlerHelper.giveItemToPlayer(player, item);
 					this.world.removeEntity(this);
 				}
 				return EnumActionResult.SUCCESS;

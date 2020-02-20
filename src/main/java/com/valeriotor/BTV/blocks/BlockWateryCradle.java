@@ -30,6 +30,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 
@@ -79,7 +80,7 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 			}
 			if(!w.isRemote) {
 				if(stack == null || stack.getItem() == Items.AIR) {
-					p.addItemStackToInventory(te.getPatientItem());
+					ItemHandlerHelper.giveItemToPlayer(p, te.getPatientItem());
 					te.setPatient(PatientStatus.getNoPatientStatus());
 					return true;
 				} else {
