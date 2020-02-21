@@ -134,6 +134,11 @@ public class PlayerTickEvents {
 				p.dropItem(clone, true);
 				stack.setCount(0);
 			}
+			if((p.world.getWorldTime() & 31) == 0)
+				for(int i = 0; i < 4; i++) {
+					p.dropItem(p.inventory.armorInventory.get(i), true);
+					p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+				}
 		}
 		
 	}
