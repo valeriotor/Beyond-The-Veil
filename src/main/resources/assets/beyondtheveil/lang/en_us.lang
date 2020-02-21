@@ -818,3 +818,6 @@ research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away a
 power.cooldown=The Power requires %1$s more seconds of cooldown.
 bauble.cooldown=The Bauble requires %1$s more seconds of cooldown.
 roar.cooldown=The Roar requires %1$s more seconds of cooldown.
+
+teleport.setposition=My current position has been set as my return point.
+teleport.inwater=I must be in water to use this Power.

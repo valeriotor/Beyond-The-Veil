@@ -7,6 +7,9 @@ import java.util.function.Function;
 
 public class PlayerDataLib {
 	
+	// Longs
+	public static final String WATERTPDEST = "watertpdest";
+	
 	// Ints (Non-temporary)
 	public static final String TIMESDREAMT = "timesDreamt";
 	public static final String SLUGS = "slugs";
@@ -28,6 +31,7 @@ public class PlayerDataLib {
 	public static final String ELDER_GUARDIANS = "elderguards";
 	public static final String TIMESCHAMBER = "timeschamber";
 	public static final String CURSE = "curse";
+	public static final String WATERTPDIM = "watertpdimension";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
@@ -60,6 +64,8 @@ public class PlayerDataLib {
 	static {
 		Set<String> tempInts = new HashSet<>();
 		tempInts.add(SELECTED_BAUBLE);
+		for(int i = 0; i < 8; i++)
+			tempInts.add(String.format(PASSIVE_BAUBLE, i));
 		tempInts.add(SELECTED_POWER);
 		tempInts.add(NECRO_X);
 		tempInts.add(NECRO_Y);

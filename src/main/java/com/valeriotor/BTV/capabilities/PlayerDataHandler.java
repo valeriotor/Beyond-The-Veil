@@ -218,11 +218,10 @@ public class PlayerDataHandler {
 		}
 
 		@Override
-		public boolean removeLong(String key) {
+		public Long removeLong(String key) {
 			if(!longs.containsKey(key))
-			return false;
-			longs.remove(key);
-			return true;
+			return null;
+			return longs.remove(key);
 		}
 
 		@Override

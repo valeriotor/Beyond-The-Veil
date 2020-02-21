@@ -16,7 +16,7 @@ public interface IPlayerData {
 	public void removeInteger(String key);
 	
 	public void setLong(String key, long value);
-	public boolean removeLong(String key);
+	public Long removeLong(String key);
 	
 	public boolean getString(String string);
 	public Integer getInteger(String key);
