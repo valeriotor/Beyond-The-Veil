@@ -130,7 +130,7 @@ public class RenderEvents {
 		int slot = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
 		if(slot == -1) return;
 		EntityLivingBase e = event.getEntity();
-		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, slot), 0, false) == 1) {
+		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, slot), 1, false) == 1) {
 			if(e.isInvisible()) {
 				invisibleEnts.add(e.getEntityId());
 				e.setInvisible(false);
