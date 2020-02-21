@@ -19,7 +19,7 @@ public enum Memory {
 	ANIMAL(Items.LEATHER, 0xFF401b00),
 	CHANGE(Items.WHEAT_SEEDS, 0xFF4dff00, "metalDream"),
 	CRYSTAL(Item.getItemFromBlock(Blocks.GLASS), 0xFFe6d8d8),
-	DARKNESS(Items.COAL, 0xFF000000),
+	DARKNESS(Items.COAL, 0xFF002233),
 	DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c),
 	ELDRITCH(Items.ENDER_EYE, 0xFF400021),
 	HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF, "metalDream"),
@@ -30,7 +30,7 @@ public enum Memory {
 	SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
 	STILLNESS(Item.getItemFromBlock(Blocks.SOUL_SAND), 0xFF444444, "metalDream"),
 	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff, "memHUMAN"),
-	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF000000);
+	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF36111F);
 	
 	private Item item;
 	private int color;
