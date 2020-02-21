@@ -11,15 +11,16 @@ import java.util.TreeSet;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
-import com.valeriotor.BTV.blocks.fluid.BlockFluidTears;
 import com.valeriotor.BTV.dreaming.DreamRegistry;
 import com.valeriotor.BTV.dreaming.Memory;
 import com.valeriotor.BTV.dreaming.dreams.Dream;
 import com.valeriotor.BTV.entities.EntityFletum;
+import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
@@ -41,7 +42,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.DispenseFluidContainer;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -123,11 +123,15 @@ public class ItemDreamBottle extends Item{
 			if(fluid.getFluid() == null) return;
 			int amount = fluid.getFluid().amount;
 			int amountHolder = amount;
+			int required = 1000;
+			CrawlerWorship cw = CrawlerWorshipEvents.getWorship(playerIn);
+			if(cw != null && cw.improvesDreamBottle()) 
+				required = 800;
 			for(Entry<Integer, Dream> entry : set) {
-				if(amount < 1000) break;
+				if(amount < required) break;
 				if(entry.getValue().activate(playerIn, playerIn.world)) {
 					nbt.removeTag(String.format("slot%d", entry.getKey().intValue()));
-					amount -= 1000;
+					amount -= required;
 				}
 			}
 			fluid.drain(amountHolder - amount,  true);
@@ -203,8 +207,12 @@ public class ItemDreamBottle extends Item{
 		if(!(fh instanceof FluidHandlerItemStack)) return false;
 		FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
 		int amount = 0;
+		int required = 1000;
+		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
+		if(cw != null && cw.improvesDreamBottle()) 
+			required = 800;
 		if(fluid != null) amount = fluid.amount;
-		if(amount < 4000) return false;
+		if(amount < 4*required) return false;
 		EnumSet<Memory> mems = EnumSet.noneOf(Memory.class);
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
@@ -259,7 +267,7 @@ public class ItemDreamBottle extends Item{
 				for(int j = 0; j < 4; j++) {
 					nbt.removeTag(String.format("slot%d", j));
 				}
-				fh.drain(4000, true);
+				fh.drain(4*required, true);
 				EntityItem item = new EntityItem(w, pos.getX()+1, pos.getY()+1, pos.getZ()+1, new ItemStack(ItemRegistry.held_shoggoth));
 				w.spawnEntity(item);
 				return true;

@@ -235,7 +235,7 @@ gui.optionwheel.waterycradle.0=Rip Spine
 gui.optionwheel.waterycradle.1=Fill with Water
 gui.optionwheel.waterycradle.3=Rend Heart
 
-gui.dream_bottle.charges=Charges: %1$s
+gui.dream_bottle.charges=Millibuckets: %1$s
 
 gui.city_mapper.buildingx=Center X: %1$s
 gui.city_mapper.buildingy=Center Y: %1$s

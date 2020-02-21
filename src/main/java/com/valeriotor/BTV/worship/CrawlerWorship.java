@@ -125,7 +125,9 @@ public class CrawlerWorship {
 		return this.wType == WorshipType.PENITENCE && this.strength > 0;
 	}
 	
-	
+	public boolean improvesDreamBottle() {
+		return this.strength > 1;
+	}
 	
 	public static enum WorshipType {
 		DEFAULT,
