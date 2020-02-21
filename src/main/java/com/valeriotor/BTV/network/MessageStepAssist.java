@@ -31,8 +31,7 @@ public class MessageStepAssist implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageStepAssist message, MessageContext ctx) {
-			EntityPlayer p = Minecraft.getMinecraft().player;
-			Minecraft.getMinecraft().addScheduledTask(() -> p.stepHeight += (message.increase ? 0.5 : -0.5));
+			Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().player.stepHeight += (message.increase ? 0.5 : -0.5));
 			return null;
 		}
 		
