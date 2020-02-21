@@ -340,10 +340,12 @@
         "stages": [
 				{
 					"text": "research.SLUGS.stage.0",
-					"required_research": ["!SLUGS"]
+					"required_research": ["!SLUGS"],
+					"recipes" : ["beyondtheveil:slug_bait"]
 				},
                 {
-                    "text": "research.SLUGS.stage.1"
+                    "text": "research.SLUGS.stage.1",
+					"recipes" : ["beyondtheveil:slug_bait"]
                 }
             ]
         },
@@ -469,10 +471,12 @@
         "stages": [
 				{
 					"text": "research.WATERYCRADLE.stage.0",
-					"required_research": ["craftedcradle"]
+					"required_research": ["craftedcradle"],
+					"recipes" : ["beyondtheveil:watery_cradle"]
 				},
                 {
-                    "text": "research.WATERYCRADLE.stage.1"
+                    "text": "research.WATERYCRADLE.stage.1",
+					"recipes" : ["beyondtheveil:watery_cradle", "beyondtheveil:blackjack"]
                 }
             ]
         },
@@ -541,7 +545,8 @@
         "stages": [
 				{
 					"text": "research.REVELATIONRING.stage.0",
-					"required_research": ["craftedrevelationring"]
+					"required_research": ["craftedrevelationring"],
+					"recipes" : ["beyondtheveil:revelation_ring"]
                 },
                 {
 					"text": "research.REVELATIONRING.stage.1"

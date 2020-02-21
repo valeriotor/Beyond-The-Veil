@@ -1,0 +1,15 @@
+{
+	"rows" : [
+		"GGGG",
+		"DIID",
+		"DIID",
+		"DDDD"
+	],
+	"output" : "beyondtheveil:slug_bait",
+	"map": {
+		"G" : "minecraft:glass",
+		"D" : "beyondtheveil:damp_wood",
+		"I" : "minecraft:stone;1;3"
+	},
+	"req" : "SLUGS;0"
+}

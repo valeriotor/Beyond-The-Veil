@@ -22,6 +22,12 @@ public class GearBenchRecipeRegistry {
 	public static void registerGearBenchRecipes() {
 		registerGBRecipe("statue");
 		registerGBRecipe("lacrymatory");
+		registerGBRecipe("revelation_ring");
+		registerGBRecipe("sleep_chamber");
+		registerGBRecipe("slug_bait");
+		registerGBRecipe("watery_cradle");
+		registerGBRecipe("blackjack");
+		registerGBRecipe("sleep_chamber_advanced");
 	}
 	
 	private static void registerGBRecipe(String fileName) {

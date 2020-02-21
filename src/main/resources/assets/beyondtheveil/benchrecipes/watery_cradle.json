@@ -1,0 +1,17 @@
+{
+	"rows" : [
+		"GGGG",
+		"IEEI",
+		"IWWI",
+		"BBBB"
+	],
+	"output" : "beyondtheveil:watery_cradle",
+	"map": {
+		"G" : "minecraft:glass",
+		"I" : "minecraft:iron_ingot",
+		"B" : "minecraft:iron_block",
+		"W" : "minecraft:water_bucket",
+		"E" : "beyondtheveil:gear"
+	},
+	"req" : "WATERYCRADLE;0"
+}

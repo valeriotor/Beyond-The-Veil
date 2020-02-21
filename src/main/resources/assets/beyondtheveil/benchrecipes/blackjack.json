@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		"  SS",
+		"  SS",
+		" I  ",
+		"I   "
+	],
+	"output" : "beyondtheveil:blackjack",
+	"map": {
+		"S" : "minecraft:stone",
+		"I" : "minecraft:iron_ingot"
+	},
+	"req" : "WATERYCRADLE;0"
+}

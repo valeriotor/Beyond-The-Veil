@@ -9,6 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.IItemHandler;
 
 public class GearBenchRecipe {
@@ -37,12 +40,16 @@ public class GearBenchRecipe {
 	private static ItemStack getStackFromString(String stackName) {
 		if(stackName.equals("nullstack")) return ItemStack.EMPTY;
 		String[] ss = stackName.split(";");
+		if(ss[0].contains("fluid:")) {
+			String[] sss = ss[0].split(":");
+			return FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.getFluid(sss[1]), 1000));
+		}
 		Item item = Item.REGISTRY.getObject(new ResourceLocation(ss[0]));
 		int amount = 1, meta = 0;
 		if(ss.length > 1) {
 			amount = Integer.parseInt(ss[1]);
 			if(ss.length > 2)
-				amount = Integer.parseInt(ss[2]);
+				meta = Integer.parseInt(ss[2]);
 		}
 		return new ItemStack(item, amount, meta);
 	}

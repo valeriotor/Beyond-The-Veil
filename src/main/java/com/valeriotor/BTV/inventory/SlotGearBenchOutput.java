@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -29,7 +30,7 @@ public class SlotGearBenchOutput extends SlotItemHandler{
 		IItemHandler cap = this.matrix.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for(int i = 0; i < 16; i++) {
 			Item a = cap.extractItem(i, 1, false).getItem();
-			if(a instanceof ItemBucket && a != Items.BUCKET) {
+			if((a instanceof ItemBucket || a instanceof UniversalBucket) && a != Items.BUCKET) {
 				cap.insertItem(i, new ItemStack(Items.BUCKET), false);
 			}
 		}

@@ -1,0 +1,16 @@
+{
+	"rows" : [
+		"GLLG",
+		"LEWL",
+		"LWWL",
+		"GLLG"
+	],
+	"output" : "beyondtheveil:sleep_chamber_advanced",
+	"map": {
+		"G" : "minecraft:diamond",
+		"L" : "minecraft:log;1;0",
+		"E" : "beyondtheveil:sleep_chamber",
+		"W" : "minecraft:water_bucket"
+	},
+	"req" : "SLEEPCHAMBERADVANCED;0"
+}

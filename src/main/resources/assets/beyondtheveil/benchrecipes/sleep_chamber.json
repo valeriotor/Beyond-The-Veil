@@ -1,0 +1,15 @@
+{
+	"rows" : [
+		"GLLG",
+		"LEEL",
+		"LEEL",
+		"GLLG"
+	],
+	"output" : "beyondtheveil:sleep_chamber",
+	"map": {
+		"G" : "minecraft:gold_ingot",
+		"L" : "minecraft:log;1;0",
+		"E" : "beyondtheveil:gear"
+	},
+	"req" : "SLEEPCHAMBER;0"
+}
