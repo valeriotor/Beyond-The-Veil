@@ -2,11 +2,13 @@ package com.valeriotor.BTV.events;
 
 import java.util.List;
 
+import com.valeriotor.BTV.entities.BTVEntityRegistry;
 import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.entities.EntityShoggoth;
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.potions.PotionRegistry;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -53,6 +56,15 @@ public class LivingEvents {
 		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, ent -> ent instanceof IPlayerGuardian && ((IPlayerGuardian)ent).getMasterID() == p.getPersistentID());
 		for(EntityLiving ent : minions) {
 			((IPlayerGuardian)ent).setTarget(e.getEntityLiving());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void setAttackTargetEvent(LivingSetAttackTargetEvent event) {
+		EntityLivingBase eb = event.getEntityLiving();
+		if(eb instanceof EntityLiving && eb.getActivePotionEffect(PotionRegistry.folly) != null && !BTVEntityRegistry.isFearlessEntity(eb)
+				&& event.getTarget() != null) {
+			((EntityLiving)eb).setAttackTarget(null);
 		}
 	}
 	
