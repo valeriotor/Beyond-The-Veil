@@ -142,11 +142,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.promised").getFormattedText()));
 				}
 				if(this.transformTicks <= 0) {
-					EntityCrazedWeeper craze = new EntityCrazedWeeper(world);
-					craze.setPosition(posX, posY, posZ);
-					craze.setRotationYawHead(this.getRotationYawHead());
-					world.spawnEntity(craze);
-					world.removeEntity(this);
+					this.goCrazed();
 				}
 			}
 			
@@ -305,6 +301,21 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BTVSounds.weeper_idle;
+	}
+	
+	public void goCrazed() {
+		if(this.lacrymatory != null) {
+			TileEntity te = this.world.getTileEntity(lacrymatory);
+			if(te instanceof TileLacrymatory) {
+				TileLacrymatory tl = (TileLacrymatory) te;
+				tl.setWeeper(null);
+			}
+		}
+		EntityCrazedWeeper craze = new EntityCrazedWeeper(world);
+		craze.setPosition(posX, posY, posZ);
+		craze.setRotationYawHead(this.getRotationYawHead());
+		world.spawnEntity(craze);
+		world.removeEntity(this);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.valeriotor.BTV.items;
 
 import java.util.List;
 
+import com.valeriotor.BTV.entities.EntityWeeper;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.potions.PotionRegistry;
@@ -70,19 +71,20 @@ public class ItemFlute extends Item{
 		stack.damageItem(240, player);
 		BlockPos pos = player.getPosition();
 		worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), BTVSounds.flute, SoundCategory.PLAYERS, 1, 1, false);
+		if(player.world.isRemote) return super.onItemUseFinish(stack, worldIn, player);
 		AxisAlignedBB bb = new AxisAlignedBB(player.getPosition().add(-10, -6, -10), player.getPosition().add(10, 6, 10));
 		List<Entity> entities = player.world.getEntitiesWithinAABBExcludingEntity(player, bb);
 		entities.forEach(e -> {
-			if(e instanceof EntityLivingBase && e.isNonBoss()) {
+			if(e instanceof EntityWeeper) {
+				((EntityWeeper)e).goCrazed();
+			} else if(e instanceof EntityLivingBase && e.isNonBoss()) {
 				((EntityLivingBase) e).addPotionEffect(new PotionEffect(PotionRegistry.folly, 250));
 				((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300));
 			}
 		});
-		if(player instanceof EntityPlayer && !ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTDREAMS")) {
-			// TODO: Change research known requirement
+		if(player instanceof EntityPlayer && !ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTCONTACT")) {
 			player.addPotionEffect(new PotionEffect(PotionRegistry.folly, 300));
-			if(!ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTCONTACT") ) {
-				// TODO: Learn how much warp is 'enough'
+			if(!ResearchUtil.isResearchComplete(((EntityPlayer)player), "FIRSTDREAMS") ) {
 				player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 120));
 				
 			}
