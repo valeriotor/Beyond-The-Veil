@@ -135,7 +135,7 @@
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBER.stage.0",
-					"required_research": ["craftedChamber"],
+					"required_research": ["craftedchamber"],
                     "recipes": ["beyondtheveil:sleep_chamber"]
 				},
                 {
@@ -155,7 +155,7 @@
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBERADVANCED.stage.0",
-					"required_research": ["craftedAdvancedChamber"],
+					"required_research": ["craftedadvancedchamber"],
                     "recipes": ["beyondtheveil:sleep_chamber_advanced"]
 				},
                 {
@@ -347,6 +347,19 @@
                     "text": "research.SLUGS.stage.1",
 					"recipes" : ["beyondtheveil:slug_bait"]
                 }
+            ]
+        },
+		{
+        "key": "FISHERMEN",
+        "name": "research.FISHERMEN.title",
+        "icons": [ "beyondtheveil:slugcatcher" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,4 ],
+		"hiders": ["SLUGS"],
+        "parents": [ "SLUGS" ],
+        "stages": [
+				{
+					"text": "research.FISHERMEN.stage.0"
+				}
             ]
         },
 		{
