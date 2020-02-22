@@ -482,6 +482,48 @@
             ]
         },
 		{
+        "key": "DEATHDREAM",
+        "name": "research.DEATHDREAM.title",
+        "icons": [ "minecraft:rotten_flesh" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,9],
+		"hiders": ["memDEATH"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.DEATHDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memDEATH"]
+                }
+            ]
+        },
+		{
+        "key": "REPAIRDREAM",
+        "name": "research.REPAIRDREAM.title",
+        "icons": [ "minecraft:wool" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,12],
+		"hiders": ["memREPAIR"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.REPAIRDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memREPAIR"]
+                }
+            ]
+        },
+		{
+        "key": "ANIMALDREAM",
+        "name": "research.ANIMALDREAM.title",
+        "icons": [ "minecraft:leather" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,15],
+		"hiders": ["memANIMAL"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.ANIMALDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memANIMAL"]
+                }
+            ]
+        },
+		{
         "key": "WATERYCRADLE",
         "name": "research.WATERYCRADLE.title",
         "icons": [ "beyondtheveil:watery_cradle" ],

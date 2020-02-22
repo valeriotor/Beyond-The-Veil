@@ -826,6 +826,15 @@ research.builtwell.text=Build a Blood Well
 research.SHOGGOTH.title=Shoggoth
 research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away aeons ago on the Sea's shores.<BR>Slaves to the Elder Things, builders of cities.<BR>They're born from tears.<BR>I must create a Shoggoth Vat. That is, a 3x3x3 cube of tears, making sure each block is filled. Then three Fleti must be placed in it.<BR>Once all is done, I must enter it, and through a Dream Bottle I must Dream simultaneously of Darkness, Eldritchness, Learning and Void.<BR>A Shoggoth is no gentle creature. It will attack all animals and all Players other than its owner on sight. If it becomes too delighted in killing, then not even its owner is safe.<BR>A Shoggoth is to be picked up through a blackjack, provided that it is sufficiently calm.
 
+research.DEATHDREAM.title=Dream of Death
+research.DEATHDREAM.stage.0=A Dream of Death, as I respawn once again.<BR>Yet I am not the only one that cannot truly die.<BR>With this Memory, I can invade the privacy of another random Player, and discover the last place where they died, hopefully profiting off their spoils.<BR>No grave is too sacred.
+
+research.REPAIRDREAM.title=Dream of Mending
+research.REPAIRDREAM.stage.0=A Dream of Mending, as I smite the hammer on the anvil.<BR>I cannot truly die, yet many of my tools are fraught with mortality. This Memory influences the very matter I am surrounded with, and repairs the items I am wearing and wielding.
+
+research.ANIMALDREAM.title=Dream of Animals
+research.ANIMALDREAM.stage.0=A Dream of Animal, as I feed one with my own hands.<BR>Dropping a specific item near to me before I Dream of this Memory will spawn nearby an animal related to that item.<BR>Where my Dream plucks that creature from, I can only speculate.<PAGE>Examples of usable items would be porkchop for pigs, bones for wolves, leather for cows, horses and even llamas. Of course there are more to discover.
+
 ##################
 #MISC
 ##################
