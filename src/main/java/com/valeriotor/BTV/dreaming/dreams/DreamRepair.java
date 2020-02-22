@@ -20,6 +20,7 @@ public class DreamRepair extends Dream{
 			repairSingleItem(item, 0.3);
 		}
 		repairSingleItem(p.getHeldItem(EnumHand.MAIN_HAND), 0.3);
+		repairSingleItem(p.getHeldItem(EnumHand.OFF_HAND), 0.3);
 		if(DreamHandler.getDreamPowerLevel(p) > 3) {
 			for(ItemStack item : p.inventory.mainInventory) {
 				repairSingleItem(item, 0.1);

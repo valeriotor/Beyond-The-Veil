@@ -2,6 +2,7 @@ package com.valeriotor.BTV.dreaming.dreams;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.function.Function;
 
 import com.valeriotor.BTV.dreaming.DreamHandler;
 
@@ -40,58 +41,40 @@ public class DreamAnimal extends Dream{
 		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
 		
 		List<Entity> ents = w.getEntitiesInAABBexcluding(p, bb, e -> e instanceof EntityItem);
-		Class<? extends EntityAnimal> animal = null;
+		Function<World, EntityAnimal> func = null;
 		for(Entity e : ents) {
-			animal = getAnimalFromItem(((EntityItem)e).getItem().getItem(), w);
-			if(animal != null) {
+			func = getAnimalFromItem(((EntityItem)e).getItem().getItem(), w);
+			if(func != null) {
 				((EntityItem)e).getItem().shrink(1);
 				break;
 			}
 		}
-		if(animal == null) return false;
-		if(DreamHandler.getDreamPowerLevel(p) == 2) {
-			List<Entity> ans = w.getEntities(animal, e -> e.getDistance(p) < 250);
-			if(!ans.isEmpty()) {
-				BlockPos pos = getEmptyArea(p, w);
-				if(pos == null) return false;								// If there's no free area
-				ans.get(0).setPosition(pos.getX(), pos.getY(), pos.getZ());
-			} else {
-				p.sendMessage(new TextComponentTranslation("dreams.animalsearch.nonefound"));
-				return false;
-			}
-		} else {
-			BlockPos pos = getEmptyArea(p, w);
-			if(pos == null) return false;	
-			EntityAnimal an = null;;
-			try {
-				an = animal.getConstructor(World.class).newInstance(w);
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e1) {
-				e1.printStackTrace();
-			}
-			if(an == null) return false;
-			an.setPosition(pos.getX(), pos.getY(), pos.getZ());
-			w.spawnEntity(an);
-		}
+		if(func == null) return false;
+		BlockPos pos = getEmptyArea(p, w);
+		if(pos == null) return false;	
+		EntityAnimal animal = func.apply(w);
+		animal.setPosition(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
+		w.spawnEntity(animal);
+		
 		return true;
 	}
 	
-	private Class<? extends EntityAnimal> getAnimalFromItem(Item item, World w) {
-		if(item == Items.BONE) return EntityWolf.class;
-		else if(item == Items.PORKCHOP) return EntityPig.class;
-		else if(item == Items.RABBIT) return EntityRabbit.class;
-		else if(item == Items.BEEF) return EntityCow.class;
-		else if(item == Items.MUTTON || item == Item.getItemFromBlock(Blocks.WOOL)) return EntitySheep.class;
-		else if(item == Items.CHICKEN || item == Items.EGG) return EntityChicken.class;
-		else if(item == Items.FISH) return EntityOcelot.class;
-		else if(item == Item.getItemFromBlock(Blocks.RED_MUSHROOM) || item == Item.getItemFromBlock(Blocks.BROWN_MUSHROOM)) return EntityMooshroom.class;
-		else if(item == Items.FEATHER) return w.rand.nextBoolean() ? EntityChicken.class : EntityParrot.class;
+	private Function<World, EntityAnimal> getAnimalFromItem(Item item, World w) {
+		if(item == Items.BONE) return EntityWolf::new;
+		else if(item == Items.PORKCHOP) return EntityPig::new;
+		else if(item == Items.RABBIT) return EntityRabbit::new;
+		else if(item == Items.BEEF) return EntityCow::new;
+		else if(item == Items.MUTTON || item == Item.getItemFromBlock(Blocks.WOOL)) return EntitySheep::new;
+		else if(item == Items.CHICKEN || item == Items.EGG) return EntityChicken::new;
+		else if(item == Items.FISH) return EntityOcelot::new;
+		else if(item == Item.getItemFromBlock(Blocks.RED_MUSHROOM) || item == Item.getItemFromBlock(Blocks.BROWN_MUSHROOM)) return EntityMooshroom::new;
+		else if(item == Items.FEATHER) return w.rand.nextBoolean() ? EntityChicken::new : EntityParrot::new;
 		else if(item == Items.LEATHER) {
 			int a = w.rand.nextInt(3);
 			switch(a) {
-			case 0: return EntityCow.class;
-			case 1: return EntityHorse.class;
-			case 2: return EntityLlama.class;
+			case 0: return EntityCow::new;
+			case 1: return EntityHorse::new;
+			case 2: return EntityLlama::new;
 			}
 		}
 		return null;
