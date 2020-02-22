@@ -334,7 +334,7 @@
         "key": "SLUGS",
         "name": "research.SLUGS.title",
         "icons": [ "beyondtheveil:slug" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 13,6 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
 		"hiders": ["IDOL"],
         "parents": [ "IDOL" ],
         "stages": [
@@ -353,7 +353,7 @@
         "key": "CANOE",
         "name": "research.CANOE.title",
         "icons": [ "beyondtheveil:canoe" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17,6 ],
 		"hiders": ["IDOL"],
         "parents": [ "SLUGS" ],
         "stages": [
@@ -374,7 +374,7 @@
         "key": "BAPTISM",
         "name": "research.BAPTISM.title",
         "icons": [ "minecraft:water_bucket"],
-        "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,8 ],
 		"hiders": ["IDOL"],
         "parents": [ "CANOE" ],
         "stages": [
@@ -395,7 +395,7 @@
         "key": "ALLIANCE",
         "name": "research.ALLIANCE.title",
         "icons": [ "minecraft:diamond_sword" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 16,10 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,10 ],
 		"hiders": ["IDOL"],
         "parents": [ "BAPTISM" ],
         "stages": [
@@ -420,7 +420,7 @@
         "key": "METAMORPHOSIS",
         "name": "research.METAMORPHOSIS.title",
         "icons": [ "minecraft:prismarine_shard" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 14,12 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,12 ],
 		"hiders": ["IDOL"],
         "parents": [ "ALLIANCE" ],
         "stages": [
@@ -441,7 +441,7 @@
         "key": "DREAMBOTTLE",
         "name": "research.DREAMBOTTLE.title",
         "icons": [ "beyondtheveil:dream_bottle" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 18,12 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20,12 ],
 		"hiders": ["IDOL"],
         "parents": [ "ALLIANCE" ],
         "stages": [
@@ -457,6 +457,27 @@
                 {
                     "text": "research.DREAMBOTTLE.stage.2",
 					"recipes" : ["beyondtheveil:dream_bottle"]
+                }
+            ]
+        },
+		{
+        "key": "WATERWALKING",
+        "name": "research.WATERWALKING.title",
+        "icons": [ "minecraft:diamond_boots" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "METAMORPHOSIS" ],
+        "stages": [
+				{
+					"text": "research.WATERWALKING.stage.0",
+					"required_research": ["hearing3"]
+				},
+                {
+                    "text": "research.WATERWALKING.stage.1",
+					"required_research": ["!WATERWALKING"]
+                },
+                {
+                    "text": "research.WATERWALKING.stage.2"
                 }
             ]
         },

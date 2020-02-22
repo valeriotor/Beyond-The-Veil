@@ -10,7 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public enum DagonDialogues {
 	GREETING(9),
-	JUDGEMENT(4);
+	JUDGEMENT(4),
+	SEABORN(7);
 	
 	public final int talkCount;
 	private DagonDialogues(int talkCount) {
@@ -24,6 +25,8 @@ public enum DagonDialogues {
 			if(!data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(0))) return new GuiDagon(GREETING);
 		} else if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 0) {
 			if(!data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(1))) return new GuiDagon(JUDGEMENT);
+		} else if(ResearchUtil.getResearchStage(p, "WATERWALKING") == 0) {
+			if(!data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(2))) return new GuiDagon(SEABORN);
 		}
 		return null;
 	}

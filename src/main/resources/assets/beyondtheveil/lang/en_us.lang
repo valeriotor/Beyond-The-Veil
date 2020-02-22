@@ -229,7 +229,7 @@ gui.activebauble.passiveoff=Passive off.
 
 gui.optionwheel.power.greatdreamer.0=Summon Deep Ones
 gui.optionwheel.power.greatdreamer.1=Transform
-gui.optionwheel.power.greatdreamer.3=Water Teleport
+gui.optionwheel.power.greatdreamer.3=Water Walking
 
 gui.optionwheel.waterycradle.0=Rip Spine
 gui.optionwheel.waterycradle.1=Fill with Water
@@ -306,6 +306,14 @@ dagon.judgement.2=SLAY THREE OF MY ELDER GUARDIANS
 dagon.judgement.3=THEN COMMUNE WITH GOD'S IDOL
 dagon.slayguardians=Three Elder Guardians, in their ancient ocean monuments. A trifle, right?
 
+dagon.seaborn.0=ALL LIFE IS BORN FROM WATER
+dagon.seaborn.1=THROUGH BLOOD THEY ARE LINKED TO THE DEEP
+dagon.seaborn.2=YOUR LINK GROWS EVER STRONGER
+dagon.seaborn.3=YOU MUST BATHE IN THE LAND OF ENDERMEN
+dagon.seaborn.4=ENGULFED IN THE VOID AND CLOSEST TO GOD
+dagon.seaborn.5=THERE YOU WILL DREAM WHILE IN WATER
+dagon.seaborn.6=AND THE OCEANS WILL BE YOURS
+dagon.endbath=We must bathe in the End, and there we must Dream.
 
 ##################
 #DWELLER DIALOGUE
@@ -720,6 +728,13 @@ research.DREAMBOTTLE.stage.1=Through Weepers and Fleti I am granted knowledge, a
 research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
 research.gotweepers.text=Find a way to gather tears.
 research.craftedbottle.text=Craft a Dream Bottle.
+
+research.WATERWALKING.title=Water Walking
+research.WATERWALKING.stage.0=Great Father Dagon, I am coming.
+research.WATERWALKING.stage.1=The End is engulfed in Void, the outer bulwark of the Veil, of The Great Dreamer Himself.<BR>It is there that I must Dream, while in water. I must Dream of Darkness, of Eldritch, of Learning and of Void. I know this, somehow.<BR>I cannot use a bed or a Sleep Chamber while in water, so I must take a third route to Dream.
+research.WATERWALKING.stage.2=Water Walking is the art of becoming one with the Ocean.<BR>When I use the power, while in water, I will be transported to any location or entity I am looking at, provided they are also in water.<BR>Additionally, using it while sneaking will set a waypoint. Doing that again will transport me back to that waypoint, then deleting it.<BR>Truly, I am now ever closer to the Ocean, a part of its very essence.<BR>A tiny, insignificant part in its unknowable immensity.
+research.hearing3.text=Eat a slug in the deepest oceans.
+research.!WATERWALKING.text=Bathe in the End and Dream. Then Commune.
 
 research.WATERYCRADLE.title=Watery Cradle
 research.WATERYCRADLE.stage.0=Useless worms plague this world, living in their placid isles of ignorance.<BR>The Great Dreamer teaches me how best to employ them.<BR>I will make their bodies, maybe their corpses, mine to experiment upon.<BR>They are insignificant, after all.

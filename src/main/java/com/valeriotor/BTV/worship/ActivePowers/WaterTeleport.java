@@ -5,6 +5,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.util.MathHelperBTV;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -108,7 +109,7 @@ public class WaterTeleport implements IActivePower{
 
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
-		return true; // TODO: Change this to check for research
+		return DGWorshipHelper.canTeleport(p);
 	}
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/water_teleport.png");

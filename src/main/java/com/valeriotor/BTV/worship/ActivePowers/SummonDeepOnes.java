@@ -6,6 +6,7 @@ import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.worship.CrawlerWorship;
+import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
 
 import net.minecraft.block.state.IBlockState;
@@ -96,7 +97,7 @@ public class SummonDeepOnes implements IActivePower{
 
 	@Override
 	public boolean hasRequirement(EntityPlayer p) {
-		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.DAGONQUEST); // TODO: Change this to check for research
+		return DGWorshipHelper.canSummon(p);
 	}
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID + ":textures/gui/powers/summon_deep_ones.png");

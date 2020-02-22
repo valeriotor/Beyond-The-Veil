@@ -41,10 +41,14 @@ public class MessageDagonDialogue implements IMessage{
 					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(0));
 					SyncUtil.addStringDataOnServer(p, false, "hearing");
 					sendMessage("dagon.bringgold", p);
-				} else if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 1) {
+				} else if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 0) {
 					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(1));
 					SyncUtil.addStringDataOnServer(p, false, "hearing2");
 					sendMessage("dagon.slayguardians", p);
+				} else if(ResearchUtil.getResearchStage(p, "WATERWALKING") == 0) {
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(2));
+					SyncUtil.addStringDataOnServer(p, false, "hearing3");
+					sendMessage("dagon.endbath", p);
 				}
 			});
 			return null;

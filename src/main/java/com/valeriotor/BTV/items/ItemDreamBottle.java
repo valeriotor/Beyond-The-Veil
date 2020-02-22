@@ -18,8 +18,11 @@ import com.valeriotor.BTV.entities.EntityFletum;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
+import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.CrawlerWorship;
 
 import net.minecraft.block.BlockDispenser;
@@ -39,6 +42,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.DispenseFluidContainer;
@@ -91,8 +95,23 @@ public class ItemDreamBottle extends Item{
 		if(e instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer)e;
 			if(p.isSneaking() && !worldIn.isRemote) {
-				if(!checkShoggothVat(p, worldIn, stack))
-					dream(p, stack);
+				IFluidHandler fh = FluidUtil.getFluidHandler(stack);
+				if(!(fh instanceof FluidHandlerItemStack)) return stack;
+				FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
+				int amount = 0;
+				int required = 1000;
+				NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+				CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
+				if(fluid != null) amount = fluid.amount;
+				else return stack;
+				if(cw != null && cw.improvesDreamBottle()) 
+					required = 800;
+				
+				if(checkCombo(p, worldIn, stack, amount, required)) {
+					if(!checkShoggothVat(p, worldIn, stack, amount, required) && !checkEndBath(p, worldIn, stack, amount, required))
+						dream(p, stack, amount, required);
+				} else
+					dream(p, stack, amount, required);
 				return stack;
 			}
 		}
@@ -100,7 +119,7 @@ public class ItemDreamBottle extends Item{
 		return stack;
 	}
 	
-	public void dream(EntityPlayer playerIn, ItemStack stack) {
+	public void dream(EntityPlayer playerIn, ItemStack stack, int amount, int required) {
 		Map<Integer, Dream> dreams = new HashMap<>();
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
@@ -121,12 +140,7 @@ public class ItemDreamBottle extends Item{
 		if(fh instanceof FluidHandlerItemStack) {
 			FluidHandlerItemStack fluid = (FluidHandlerItemStack) fh;
 			if(fluid.getFluid() == null) return;
-			int amount = fluid.getFluid().amount;
 			int amountHolder = amount;
-			int required = 1000;
-			CrawlerWorship cw = CrawlerWorshipEvents.getWorship(playerIn);
-			if(cw != null && cw.improvesDreamBottle()) 
-				required = 800;
 			for(Entry<Integer, Dream> entry : set) {
 				if(amount < required) break;
 				if(entry.getValue().activate(playerIn, playerIn.world)) {
@@ -202,16 +216,7 @@ public class ItemDreamBottle extends Item{
 		
 	}
 	
-	public boolean checkShoggothVat(EntityPlayer p, World w, ItemStack stack) {
-		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
-		if(!(fh instanceof FluidHandlerItemStack)) return false;
-		FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
-		int amount = 0;
-		int required = 1000;
-		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
-		if(cw != null && cw.improvesDreamBottle()) 
-			required = 800;
-		if(fluid != null) amount = fluid.amount;
+	public boolean checkCombo(EntityPlayer p, World w, ItemStack stack, int amount, int required) {
 		if(amount < 4*required) return false;
 		EnumSet<Memory> mems = EnumSet.noneOf(Memory.class);
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
@@ -225,54 +230,77 @@ public class ItemDreamBottle extends Item{
 				}
 			}
 		}
-		if(mems.contains(Memory.DARKNESS) && mems.contains(Memory.ELDRITCH) && mems.contains(Memory.LEARNING) && mems.contains(Memory.VOID)) {
-			
-			int i = 0;
-			BlockPos pos = p.getPosition();
-			if(w.getBlockState(pos).getBlock() != BlockRegistry.BlockFluidTears)  return false;
-			while(w.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
-				pos = pos.offset(EnumFacing.NORTH);
-			i = 0;
-			while(w.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
-				pos = pos.offset(EnumFacing.WEST);
-			i = 0;
-			while(w.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
-				pos = pos.offset(EnumFacing.DOWN);
-			
+		if(mems.contains(Memory.DARKNESS) && mems.contains(Memory.ELDRITCH) && mems.contains(Memory.LEARNING) && mems.contains(Memory.VOID))
+			return true;
+		return false;
+	}
+	
+	public boolean checkShoggothVat(EntityPlayer p, World w, ItemStack stack, int amount, int required) {
+		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
+		if(!(fh instanceof FluidHandlerItemStack)) return false;
+		FluidStack fluid = ((FluidHandlerItemStack)fh).getFluid();
+		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+		
+		int i = 0;
+		BlockPos pos = p.getPosition();
+		if(w.getBlockState(pos).getBlock() != BlockRegistry.BlockFluidTears)  return false;
+		while(w.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+			pos = pos.offset(EnumFacing.NORTH);
+		i = 0;
+		while(w.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+			pos = pos.offset(EnumFacing.WEST);
+		i = 0;
+		while(w.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == BlockRegistry.BlockFluidTears && (i++) < 3) 
+			pos = pos.offset(EnumFacing.DOWN);
+		
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 3; y++) {
+				for(int z = 0; z < 3; z++) {
+					IBlockState state = w.getBlockState(pos.add(x, y, z));
+					
+					if(state.getBlock() != BlockRegistry.BlockFluidTears)
+						return false;
+					if(state.getBlock().getMetaFromState(state) != 0)
+						return false;
+				}
+			}
+		}
+		AxisAlignedBB bbox = new AxisAlignedBB(pos, pos.add(3, 3, 3));
+		List<EntityFletum> fleti = w.getEntitiesWithinAABB(EntityFletum.class, bbox);
+		if(fleti.size() >= 3) {
 			for(int x = 0; x < 3; x++) {
 				for(int y = 0; y < 3; y++) {
 					for(int z = 0; z < 3; z++) {
-						IBlockState state = w.getBlockState(pos.add(x, y, z));
-						
-						if(state.getBlock() != BlockRegistry.BlockFluidTears)
-							return false;
-						if(state.getBlock().getMetaFromState(state) != 0)
-							return false;
+						w.setBlockToAir(pos.add(x, y, z));
 					}
 				}
 			}
-			AxisAlignedBB bbox = new AxisAlignedBB(pos, pos.add(3, 3, 3));
-			List<EntityFletum> fleti = w.getEntitiesWithinAABB(EntityFletum.class, bbox);
-			if(fleti.size() >= 3) {
-				for(int x = 0; x < 3; x++) {
-					for(int y = 0; y < 3; y++) {
-						for(int z = 0; z < 3; z++) {
-							w.setBlockToAir(pos.add(x, y, z));
-						}
-					}
-				}
-				for(int j = 0; j < 3; j++) {
-					w.removeEntity(fleti.get(j));
-				}
-				for(int j = 0; j < 4; j++) {
-					nbt.removeTag(String.format("slot%d", j));
-				}
-				fh.drain(4*required, true);
-				EntityItem item = new EntityItem(w, pos.getX()+1, pos.getY()+1, pos.getZ()+1, new ItemStack(ItemRegistry.held_shoggoth));
-				w.spawnEntity(item);
-				return true;
+			for(int j = 0; j < 3; j++) {
+				w.removeEntity(fleti.get(j));
 			}
+			for(int j = 0; j < 4; j++) {
+				nbt.removeTag(String.format("slot%d", j));
+			}
+			fh.drain(4*required, true);
+			EntityItem item = new EntityItem(w, pos.getX()+1, pos.getY()+1, pos.getZ()+1, new ItemStack(ItemRegistry.held_shoggoth));
+			w.spawnEntity(item);
+			return true;
 		}
+		
+		return false;
+	}
+	
+	public boolean checkEndBath(EntityPlayer p, World w, ItemStack stack, int amount, int required) {
+		if(!p.isInWater()) return false;
+		if(p.dimension != DimensionType.THE_END.getId()) return false;
+		if(ResearchUtil.getResearchStage(p, "WATERWALKING") != 1) return false;
+		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+		for(int j = 0; j < 4; j++) {
+			nbt.removeTag(String.format("slot%d", j));
+		}
+		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
+		fh.drain(4*required, true);
+		SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.ENDBATH);
 		return false;
 	}
 	

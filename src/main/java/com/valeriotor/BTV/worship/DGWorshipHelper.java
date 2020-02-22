@@ -2,6 +2,7 @@ package com.valeriotor.BTV.worship;
 
 import static com.valeriotor.BTV.lib.PlayerDataLib.DAGONQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.DAGONQUEST2;
+import static com.valeriotor.BTV.lib.PlayerDataLib.ENDBATH;
 import static com.valeriotor.BTV.lib.PlayerDataLib.FISHQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.RITUALQUEST;
 import static com.valeriotor.BTV.lib.PlayerDataLib.SLUGS;
@@ -32,6 +33,7 @@ public class DGWorshipHelper {
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
 		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 30, false, 2));
 		researches.put(DAGONQUEST2, new DGResearch("METAMORPHOSIS", 0.25, -0.05, 35, false, 1));
+		researches.put(ENDBATH, new DGResearch("WATERWALKING", 0.1, -0.05, 25, false, 1));
 	}
 	
 	public static void levelUp(EntityPlayer p) {
@@ -51,6 +53,7 @@ public class DGWorshipHelper {
 						p.sendMessage(new TextComponentTranslation("interact.idol.power"));
 						Worship.getSpecificPower(p, 1).activatePower(p);
 					}
+					if(entry.getKey().equals(ENDBATH)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
 				} else {
 					notEnoughSlugs = true;
 				}
@@ -82,8 +85,16 @@ public class DGWorshipHelper {
 		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.RITUALQUEST);
 	}
 	
+	public static boolean canSummon(EntityPlayer p) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("!ALLIANCE");
+	}
+	
 	public static boolean canTransform(EntityPlayer p) {
 		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("!METAMORPHOSIS");
+	}
+	
+	public static boolean canTeleport(EntityPlayer p) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("!WATERWALKING");
 	}
 	
 	public static void removeModifiers(EntityPlayer p) {
