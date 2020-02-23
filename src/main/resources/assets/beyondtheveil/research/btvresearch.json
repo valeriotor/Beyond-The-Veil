@@ -819,7 +819,7 @@
                 },
                 {
                     "text": "research.BLOODWELL.stage.1",
-                    "recipes" : ["blood_well", "beyondtheveil:sigil_zombie", "beyondtheveil:sigil_skellie"]
+                    "recipes" : ["blood_well", "sacrifice;undeadsigils"]
                 }
             ]
         },
@@ -833,12 +833,12 @@
         "stages": [
 				{
                     "text": "research.CORALSTAFF.stage.0",
-                    "recipes" : ["beyondtheveil:coral_staff"],
+                    "recipes" : ["sacrifice;staff"],
 					"required_research": ["craftedstaff"]
                 },
                 {
                     "text": "research.CORALSTAFF.stage.1",
-                    "recipes" : ["beyondtheveil:coral_staff"]
+                    "recipes" : ["sacrifice;staff"]
                 }
             ]
         },

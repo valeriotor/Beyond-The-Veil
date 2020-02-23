@@ -61,7 +61,7 @@ public class SacrificeHelper extends TileEntity{
 		boolean used = false;
 		if(!items.isEmpty()) {
 			for(EntityItem item : items) {
-				ItemStack stack = SacrificeRecipeRegistry.getItemStack(item.getItem());
+				ItemStack stack = SacrificeRecipeRegistry.getItemStackAndUnlockData(item.getItem(), p);
 				if(stack != null) {
 					EntityItem ent = new EntityItem(p.world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
 					p.world.spawnEntity(ent);
@@ -81,7 +81,7 @@ public class SacrificeHelper extends TileEntity{
 			p.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST, 60*20, 9, false, false));
 			removeHearts(p.world, pos);
 		} else {
-			ItemStack newStack = SacrificeRecipeRegistry.getItemStack(stack);
+			ItemStack newStack = SacrificeRecipeRegistry.getItemStackAndUnlockData(stack, p);
 			if(newStack != null) {
 				ItemHandlerHelper.giveItemToPlayer(p, newStack);
 				removeHearts(p.world, pos);

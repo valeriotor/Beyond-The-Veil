@@ -21,6 +21,7 @@ public class SacrificeResearchRecipe extends ResearchRecipe{
 	private static final ResourceLocation CRAFTING_TEX = new ResourceLocation(References.MODID, "textures/gui/sacrifice_crafting.png");
 	private SacrificeRecipe recipe;
 	private List<ItemStack> inputs = new ArrayList<>();
+	private List<ItemStack> outputs = new ArrayList<>();
 	private int page = 0;
 	
 	public SacrificeResearchRecipe(String recipeKey, SacrificeRecipe recipe) {
@@ -28,7 +29,15 @@ public class SacrificeResearchRecipe extends ResearchRecipe{
 		this.recipe = recipe;
 		this.output = recipe.getKeyStack();
 		for(int i = 0; i < recipe.getSize(); i++) {
-			inputs.add(new ItemStack(recipe.getInputInSlot(i)));
+			boolean multiple = recipe.isMultipleInSlot(i);
+			ItemStack input = new ItemStack(recipe.getInputInSlot(i));
+			ItemStack output = recipe.getOutputInSlot(i);
+			if(multiple) {
+				input.setCount(64);
+				output.setCount(64);
+			}
+			inputs.add(input);
+			outputs.add(output);
 		}
 	}
 	
@@ -62,7 +71,9 @@ public class SacrificeResearchRecipe extends ResearchRecipe{
 
 		int iX = -64, iY = -34;
 		GuiHelper.drawItemStack(gui, this.inputs.get(page), iX, iY);
-		GuiHelper.drawItemStack(gui, this.recipe.getOutputInSlot(page), 50, iY);
+		GuiHelper.drawItemStack(gui, this.outputs.get(page), 50, iY);
+		gui.getItemRender().renderItemOverlayIntoGUI(gui.mc.fontRenderer, this.inputs.get(page), iX, iY, null);
+		gui.getItemRender().renderItemOverlayIntoGUI(gui.mc.fontRenderer, this.outputs.get(page), 50, iY, null);
 		
 		int hover = hoveringItem(gui, mouseX, mouseY);
 		if(hover != -1) {

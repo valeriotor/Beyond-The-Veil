@@ -5,10 +5,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.sacrifice.SacrificeRecipe.ItemFunction;
+import com.valeriotor.BTV.util.SyncUtil;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class SacrificeRecipeRegistry {
@@ -17,13 +21,17 @@ public class SacrificeRecipeRegistry {
 	public static void registerSacrificeRecipes() {
 		recipes.put("sacrifice;bricks", bricks);
 		recipes.put("sacrifice;staff", staff);
+		recipes.put("sacrifice;undeadsigil", undeadsigils);
 	}
 	
-	public static ItemStack getItemStack(ItemStack input) {
+	public static ItemStack getItemStackAndUnlockData(ItemStack input, EntityPlayer p) {
 		for(Entry<String, SacrificeRecipe> entry : recipes.entrySet()) {
 			ItemStack s = entry.getValue().getItemStack(input);
-			if(s != null)
+			if(s != null) {
+				if(p != null && entry.getValue().getData() != null)
+					SyncUtil.addStringDataOnServer(p, false, entry.getValue().getData());
 				return s;
+			}
 		}
 		return null;
 	}
@@ -39,7 +47,13 @@ public class SacrificeRecipeRegistry {
 			);
 	
 	public static final SacrificeRecipe staff = new SacrificeRecipe(
+			"craftedstaff",
 			new ItemFunction(Blocks.PRISMARINE, new ItemStack(ItemRegistry.coral_staff), false)
+			);
+	
+	public static final SacrificeRecipe undeadsigils = new SacrificeRecipe(
+			new ItemFunction(Items.ROTTEN_FLESH, new ItemStack(ItemRegistry.sigil_zombie), false),
+			new ItemFunction(Items.BONE, new ItemStack(ItemRegistry.sigil_skellie), false)
 			);
 	
 }

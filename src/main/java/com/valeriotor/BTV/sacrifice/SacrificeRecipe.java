@@ -9,10 +9,16 @@ import net.minecraft.item.ItemStack;
 
 public class SacrificeRecipe {
 	private final List<ItemFunction> recipes = new ArrayList<>();
+	private final String data;
 	
 	public SacrificeRecipe(ItemFunction... funcs) {
+		this(null, funcs);
+	}
+	
+	public SacrificeRecipe(String data, ItemFunction... funcs) {
 		for(ItemFunction f : funcs)
 			recipes.add(f);
+		this.data = data;
 	}
 	
 	public ItemStack getItemStack(ItemStack input) {
@@ -43,8 +49,16 @@ public class SacrificeRecipe {
 		return this.recipes.get(slot).getOutput();
 	}
 	
+	public boolean isMultipleInSlot(int slot) {
+		return this.recipes.get(slot).isMultiple();
+	}
+	
 	public int getSize() {
 		return this.recipes.size();
+	}
+	
+	public String getData() {
+		return this.data;
 	}
 	
 	@Override
