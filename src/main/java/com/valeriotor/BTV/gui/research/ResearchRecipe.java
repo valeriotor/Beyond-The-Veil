@@ -8,6 +8,7 @@ import com.valeriotor.BTV.gui.research.recipes.MemoryResearchRecipe;
 import com.valeriotor.BTV.gui.research.recipes.MultiBlockResearchRecipe;
 import com.valeriotor.BTV.gui.research.recipes.SacrificeResearchRecipe;
 import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.multiblock.MultiblockRegistry;
 import com.valeriotor.BTV.research.ResearchRegistry;
 import com.valeriotor.BTV.sacrifice.SacrificeRecipeRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -26,8 +27,8 @@ public abstract class ResearchRecipe {
 		String[] ss = recipeKey.split(";");
 		if(SacrificeRecipeRegistry.getRecipe(recipeKey) != null) {
 			return new SacrificeResearchRecipe(recipeKey, SacrificeRecipeRegistry.getRecipe(recipeKey));
-		} else if(ResearchRegistry.multiblocks.containsKey(ss[0])) {
-			return new MultiBlockResearchRecipe(recipeKey, ResearchRegistry.multiblocks.get(ss[0]));
+		} else if(MultiblockRegistry.multiblocks.containsKey(ss[0])) {
+			return new MultiBlockResearchRecipe(recipeKey, MultiblockRegistry.multiblocks.get(ss[0]));
 		} else if(ss.length > 1 && Item.REGISTRY.getObject(new ResourceLocation(ss[0])) == ItemRegistry.memory_phial) {
 			return new MemoryResearchRecipe(recipeKey);
 		} else if(GearBenchRecipeRegistry.recipesFromKeys.containsKey(recipeKey)) {

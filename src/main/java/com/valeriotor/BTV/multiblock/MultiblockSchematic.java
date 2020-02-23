@@ -1,12 +1,16 @@
-package com.valeriotor.BTV.research;
+package com.valeriotor.BTV.multiblock;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class MultiblockSchematic {
 
@@ -41,6 +45,8 @@ public class MultiblockSchematic {
 					char c = s.charAt(k);
 					if(c != ' ') {
 						stacks[i][j][k] = newMap.get(c);
+					} else {
+						stacks[i][j][k] = ItemStack.EMPTY;
 					}
 				}
 			}
@@ -66,6 +72,27 @@ public class MultiblockSchematic {
 	
 	public ItemStack getKeyStack() {
 		return this.keyStack;
+	}
+	
+	public boolean checksOutBottomNorthWest(World w, BlockPos pos) {
+		for(int x = 0; x < sideSize; x++) {
+			for(int y = 0; y < stacks.length; y++) {
+				for(int z = 0; z < sideSize; z++) {
+					ItemStack stack = stacks[y][x][z];
+					if(!stack.isEmpty() && stack.getItem() != Items.AIR) {
+						IBlockState s = w.getBlockState(pos.add(x, y, z));
+						if(stack.getItem() != Item.getItemFromBlock(s.getBlock()) || stack.getMetadata() != s.getBlock().damageDropped(s)) {
+							return false;
+						}
+					}
+				}
+			}	
+		}
+		return true;
+	}
+	
+	public boolean checksOutBottomCenter(World w, BlockPos pos) {
+		return this.checksOutBottomNorthWest(w, pos.add(-sideSize/2, 0, -sideSize/2));
 	}
 	
 	@Override

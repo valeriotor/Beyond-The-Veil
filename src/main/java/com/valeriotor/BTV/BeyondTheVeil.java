@@ -14,6 +14,7 @@ import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.lib.commands.ReloadResources;
 import com.valeriotor.BTV.lib.commands.SetPlayerData;
+import com.valeriotor.BTV.multiblock.MultiblockRegistry;
 import com.valeriotor.BTV.network.BTVPacketHandler;
 import com.valeriotor.BTV.proxy.CommonProxy;
 import com.valeriotor.BTV.research.ResearchRegistry;
@@ -99,6 +100,7 @@ public class BeyondTheVeil
         ResearchRegistry.registerResearchesSecond();
         GearBenchRecipeRegistry.registerGearBenchRecipes();
         SacrificeRecipeRegistry.registerSacrificeRecipes();
+        MultiblockRegistry.registerMultiblocks();
         proxy.postInit(event);
     }
     

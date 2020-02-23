@@ -5,7 +5,7 @@ import java.awt.Point;
 import com.valeriotor.BTV.gui.GuiHelper;
 import com.valeriotor.BTV.gui.research.GuiResearchPage;
 import com.valeriotor.BTV.gui.research.ResearchRecipe;
-import com.valeriotor.BTV.research.MultiblockSchematic;
+import com.valeriotor.BTV.multiblock.MultiblockSchematic;
 import com.valeriotor.BTV.util.MathHelperBTV;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -68,7 +68,7 @@ public class MultiBlockResearchRecipe extends ResearchRecipe {
 			ItemStack[] line = layer[i];
 			for(int j = 0; j < line.length; j++) {
 				ItemStack stack = line[j];
-				if(stack != null) {
+				if(stack != null && !stack.isEmpty()) {
 					GuiHelper.drawItemStack(gui, stack, topLeft.x + i * 16, topLeft.y + j * 16);
 				}
 			}
@@ -84,7 +84,7 @@ public class MultiBlockResearchRecipe extends ResearchRecipe {
 			int b = (mouseY - topLeft.y) / 16;
 			if(b >= 0 && b < layer.length) {
 				ItemStack stack = stacks[currentLayer][a][b];
-				if(stack != null) {
+				if(stack != null && !stack.isEmpty()) {
 					GlStateManager.pushMatrix();
 					GlStateManager.translate(mouseX, mouseY, 0);
 					gui.renderTooltip(stack, 0, 0);
