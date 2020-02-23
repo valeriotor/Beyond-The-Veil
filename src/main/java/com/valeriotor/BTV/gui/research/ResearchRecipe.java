@@ -31,8 +31,8 @@ public abstract class ResearchRecipe {
 			return new MultiBlockResearchRecipe(recipeKey, MultiblockRegistry.multiblocks.get(ss[0]));
 		} else if(ss.length > 1 && Item.REGISTRY.getObject(new ResourceLocation(ss[0])) == ItemRegistry.memory_phial) {
 			return new MemoryResearchRecipe(recipeKey);
-		} else if(GearBenchRecipeRegistry.recipesFromKeys.containsKey(recipeKey)) {
-			return new GearBenchResearchRecipe(GearBenchRecipeRegistry.recipesFromKeys.get(recipeKey));
+		} else if(GearBenchRecipeRegistry.recipesFromKeys.containsKey(ss[0])) {
+			return new GearBenchResearchRecipe(GearBenchRecipeRegistry.recipesFromKeys.get(ss[0]));
 		} else if(ResearchRegistry.recipes.containsKey(recipeKey)) {
 			return new CraftingResearchRecipe(recipeKey, ResearchRegistry.recipes.get(recipeKey));
 		}

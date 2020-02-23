@@ -64,7 +64,7 @@ public class CraftingResearchRecipe extends ResearchRecipe {
 		}
 		
 		GuiHelper.drawItemStack(gui, output, 186 - 114, 96 - 114);
-		
+		gui.getItemRender().renderItemOverlayIntoGUI(gui.mc.fontRenderer, output, 186 - 114, 96 - 114, null);
 		int hover = hoveringItem(gui, mouseX, mouseY);
 		if(hover != -1) {
 			GlStateManager.pushMatrix();

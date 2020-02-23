@@ -45,7 +45,7 @@ public class GearBenchRecipeRegistry {
 			}
 			List<GearBenchRecipe> list = map.get(oneone);
 			list.add(recipe);
-			recipesFromKeys.put(recipe.getOutputName(), recipe);
+			recipesFromKeys.put(recipe.getOutputName().split(";")[0], recipe);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

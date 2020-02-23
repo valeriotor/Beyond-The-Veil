@@ -5,7 +5,7 @@
 		"IWWI",
 		"BBBB"
 	],
-	"output" : "beyondtheveil:watery_cradle",
+	"output" : "beyondtheveil:watery_cradle;3",
 	"map": {
 		"G" : "minecraft:glass",
 		"I" : "minecraft:iron_ingot",

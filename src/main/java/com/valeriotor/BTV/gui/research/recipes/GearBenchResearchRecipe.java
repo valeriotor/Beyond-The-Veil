@@ -36,7 +36,8 @@ public class GearBenchResearchRecipe extends ResearchRecipe {
 				}
 			}
 		}
-		GuiHelper.drawItemStack(gui, recipe.getOutput(), 92, -20);
+		GuiHelper.drawItemStack(gui, recipe.getOutput(), 92, -21);
+		gui.getItemRender().renderItemOverlayIntoGUI(gui.mc.fontRenderer, recipe.getOutput(), 92, -21, null);
 		int hover = hoveringItem(gui, mouseX, mouseY);
 		if(hover != -1) {
 			GlStateManager.pushMatrix();
