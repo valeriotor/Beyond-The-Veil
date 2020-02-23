@@ -23,6 +23,7 @@ public class ItemBloodSigilPathway extends ModItem{
 
 	public ItemBloodSigilPathway(String name) {
 		super(name);
+		this.setMaxStackSize(1);
 	}
 	
 	@Override

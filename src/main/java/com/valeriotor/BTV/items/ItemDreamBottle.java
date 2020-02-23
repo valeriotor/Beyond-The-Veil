@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
@@ -20,6 +21,7 @@ import com.valeriotor.BTV.fluids.ModFluids;
 import com.valeriotor.BTV.gui.container.GuiContainerHandler;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.multiblock.MultiblockRegistry;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.ItemHelper;
 import com.valeriotor.BTV.util.SyncUtil;
@@ -42,6 +44,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -141,15 +144,43 @@ public class ItemDreamBottle extends Item{
 			FluidHandlerItemStack fluid = (FluidHandlerItemStack) fh;
 			if(fluid.getFluid() == null) return;
 			int amountHolder = amount;
+			boolean dreamShrine = MultiblockRegistry.multiblocks.get("dream_shrine").checksOutBottomCenter(playerIn.world, playerIn.getPosition().offset(EnumFacing.DOWN,2));
+			EntityPlayer target = null;
+			BlockPos posTarget = null;
+			EnumHand otherHand = null;
+			if(dreamShrine) {
+				for(EnumHand hand : EnumHand.values()) {
+					ItemStack sigil = playerIn.getHeldItem(hand); 
+					if(sigil.getItem() == ItemRegistry.sigil_pathway) {
+						NBTTagCompound tag = ItemHelper.checkTagCompound(sigil);
+						if(tag.hasKey("path")) {
+							posTarget = BlockPos.fromLong(tag.getLong("path"));
+							otherHand = hand;
+							break;
+						}
+					} else if(sigil.getItem() == ItemRegistry.sigil_player) {
+						NBTTagCompound tag = ItemHelper.checkTagCompound(sigil);
+						if(tag.hasKey("player")) {
+							target = playerIn.world.getPlayerEntityByUUID(UUID.fromString(tag.getString("player")));
+							otherHand = hand;
+							break;
+						}
+					}
+				}
+			}
 			for(Entry<Integer, Dream> entry : set) {
 				if(amount < required) break;
-				if(entry.getValue().activate(playerIn, playerIn.world)) {
+				boolean activated = false;
+				if(posTarget != null) activated = entry.getValue().activatePos(playerIn, playerIn.world, posTarget);
+				else if(target != null) activated = entry.getValue().activatePlayer(playerIn, target, target.world);
+				else activated = entry.getValue().activate(playerIn, playerIn.world);
+				if(activated) {
 					nbt.removeTag(String.format("slot%d", entry.getKey().intValue()));
 					amount -= required;
 				}
 			}
 			fluid.drain(amountHolder - amount,  true);
-			
+			if(otherHand != null && amount < amountHolder) playerIn.getHeldItem(otherHand).shrink(1); 
 		}
 		
 	}

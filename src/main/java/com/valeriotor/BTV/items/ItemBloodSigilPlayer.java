@@ -19,6 +19,7 @@ public class ItemBloodSigilPlayer extends ModItem{
 
 	public ItemBloodSigilPlayer(String name) {
 		super(name);
+		this.setMaxStackSize(1);
 	}
 	
 	@Override
