@@ -30,11 +30,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber
-public class ItemBloodSigil extends ModItem{
+public class ItemBloodSigilUndead extends ModItem{
 	
 	private final BloodMobs type;
 	
-	public ItemBloodSigil(String name, BloodMobs type) {
+	public ItemBloodSigilUndead(String name, BloodMobs type) {
 		super(name);
 		this.type = type;
 		this.setMaxStackSize(1);
@@ -97,7 +97,7 @@ public class ItemBloodSigil extends ModItem{
 		if(p.world.isRemote) return;
 		if(event.getHand() != EnumHand.MAIN_HAND) return;
 		ItemStack stack = p.getHeldItemMainhand();
-		if(!(stack.getItem() instanceof ItemBloodSigil))
+		if(!(stack.getItem() instanceof ItemBloodSigilUndead))
 			return;
 		Entity e = event.getTarget();
 		if(	(e instanceof EntityBloodSkeleton && stack.getItem() == ItemRegistry.sigil_skellie) ||

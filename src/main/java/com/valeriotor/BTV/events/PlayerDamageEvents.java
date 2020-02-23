@@ -6,9 +6,11 @@ import com.valeriotor.BTV.entities.EntityDeepOne;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
 import com.valeriotor.BTV.events.special.CrawlerWorshipEvents;
 import com.valeriotor.BTV.events.special.DrowningRitualEvents;
+import com.valeriotor.BTV.items.ItemBloodSigilPlayer;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.research.ResearchUtil;
+import com.valeriotor.BTV.util.ItemHelper;
 import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.PlayerTimer.PlayerTimerBuilder;
 import com.valeriotor.BTV.util.SyncUtil;
@@ -18,7 +20,11 @@ import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -48,6 +54,7 @@ public class PlayerDamageEvents {
 			enrageMinions(event);
 			applyBleedingBelt(event);
 			applyBloodCrown(event);
+			bindBloodSigil(event);
 		}
 	}
 	
@@ -144,6 +151,27 @@ public class PlayerDamageEvents {
 			cw.empowerMinions(p);
 		}
 		
+	}
+	
+	private static void bindBloodSigil(LivingDamageEvent event) {
+		if(event.getSource().getTrueSource() instanceof EntityPlayer) {
+			EntityPlayer target = (EntityPlayer) event.getEntityLiving();
+			float hp = target.getHealth();
+			if(hp > 10 && hp - event.getAmount() < 10) {
+				EntityPlayer attacker = (EntityPlayer) event.getSource().getTrueSource();
+				for(EnumHand hand : EnumHand.values()) {
+					ItemStack stack = attacker.getHeldItem(hand);
+					if(stack.getItem() instanceof ItemBloodSigilPlayer) {
+						NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
+						if(!nbt.hasKey("player")) {
+							nbt.setString("player", target.getPersistentID().toString());
+							nbt.setString("playername", target.getName());
+							target.world.playSound(null, attacker.getPosition(), SoundEvents.ENTITY_ARROW_HIT_PLAYER, SoundCategory.PLAYERS, 1, 1);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 }

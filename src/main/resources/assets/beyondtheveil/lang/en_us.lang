@@ -77,6 +77,10 @@ tooltip.memory_phial.empty=This phial is empty.
 
 tooltip.blood_sigil_blood_skellie.amount=This Sigil contains %1$s Blood Skeletons.
 tooltip.blood_sigil_blood_zombie.amount=This Sigil contains %1$s Blood Zombies.
+tooltip.blood_sigil_pathway.nopath=This Sigil is bound to no location.
+tooltip.blood_sigil_pathway.path=This Sigil is bound to x: %1$s, y: %2$s, z: %3$s.
+tooltip.blood_sigil_player.noplayer=This Sigil is bound to no Player.
+tooltip.blood_sigil_player.player=This Sigil is bound to %1$s.
 
 artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
 artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
@@ -89,6 +93,7 @@ use.blood_sigil.emptysigil=This Sigil is empty.
 use.blood_sigil.emptywell=This Well has no more of these undead.
 use.blood_sigil.nothealthy=This mob is not at full health.
 use.blood_sigil.notmine=This mob does not serve me.
+use.blood_sigil.path=This location is now bound in the Sigil.
 
 
 ##################
@@ -563,10 +568,10 @@ memory.void.name=Void
 dreams.maybeinthefuture=No effect came from this dream, and yet I still felt a tingling. Maybe it'll work in the future, under different circumstances.
 dreams.lowlevel=I need more strength.
 
-dreams.groundscan.oreIron=%1$s blocks of iron ore were found in the ground below me%2$s%3$s
-dreams.groundscan.oreGold=%1$s blocks of gold ore were found in the ground below me%2$s%3$s
-dreams.groundscan.oreDiamond=%1$s blocks of diamond ore were found in the ground below me%2$s%3$s
-dreams.groundscan.oreEmerald=%1$s blocks of emerald ore were found in the ground below me%2$s%3$s
+dreams.groundscan.oreIron=%1$s blocks of iron ore were found in the ground below%2$s%3$s
+dreams.groundscan.oreGold=%1$s blocks of gold ore were found in the ground below%2$s%3$s
+dreams.groundscan.oreDiamond=%1$s blocks of diamond ore were found in the ground below%2$s%3$s
+dreams.groundscan.oreEmerald=%1$s blocks of emerald ore were found in the ground below%2$s%3$s
 dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: %1$s
 dreams.groundscan.block=. At least one block is located at x: %1$s, y: %2$s, z: %3$s;
 
@@ -579,6 +584,7 @@ dreams.villagesearch.fail=No Villages found
 
 dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s. I am unaware of what dimension they're in.
 dreams.playersearch.success2=Another player is located at x: %1$s, z: %2$s. I am unaware of what dimension they're in.
+dreams.playersearch.success2=Another player is located at x: %1$s, y: %2$s, z: %3$s. I am unaware of what dimension they're in.
 dreams.playersearch.name=Their name is %1$s.
 dreams.playeritem.success=Another player is currently wielding: %1$s.
 dreams.playeritem.mildsuccess=Another player was found, but they were wielding nothing.

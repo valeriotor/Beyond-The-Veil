@@ -36,7 +36,7 @@ public class DreamAnimal extends Dream{
 	}
 	
 	@Override
-	public boolean activate(EntityPlayer p, World w){
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos){
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
 		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
 		
@@ -50,7 +50,7 @@ public class DreamAnimal extends Dream{
 			}
 		}
 		if(func == null) return false;
-		BlockPos pos = getEmptyArea(p, w);
+		pos = getEmptyArea(p, w, pos);
 		if(pos == null) return false;	
 		EntityAnimal animal = func.apply(w);
 		animal.setPosition(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
@@ -80,15 +80,15 @@ public class DreamAnimal extends Dream{
 		return null;
 	}
 	// Behold the horror of five nested 'for's
-	private BlockPos getEmptyArea(EntityPlayer p, World w) {
+	private BlockPos getEmptyArea(EntityPlayer p, World w, BlockPos pos) {
 		for(int x = -9; x <= 9; x+=3) {
 			for(int z = -9; z <= 9; z+=3) {
 				boolean flag = true;
 				for(int x2 = -1; x2 <=1 && flag; x2++) {
 					for(int y = 0; y <= 2 && flag; y++) {
 						for(int z2 = -1; z2 <= 1 && flag; z2++)
-							if(w.getBlockState(p.getPosition().add(x, 0, z).add(x2, y, z2)).getBlock() != Blocks.AIR) flag = false;
-							else return p.getPosition().add(x, 0, z).add(x2, y, z2);
+							if(w.getBlockState(pos.add(x, 0, z).add(x2, y, z2)).getBlock() != Blocks.AIR) flag = false;
+							else return pos.add(x, 0, z).add(x2, y, z2);
 					}
 				}
 			}

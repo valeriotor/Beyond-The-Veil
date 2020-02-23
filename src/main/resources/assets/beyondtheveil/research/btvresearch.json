@@ -469,7 +469,7 @@
                 },
                 {
                     "text": "research.DREAMBOTTLE.stage.2",
-					"recipes" : ["beyondtheveil:dream_bottle"]
+					"recipes" : ["beyondtheveil:dream_bottle", "dream_shrine"]
                 }
             ]
         },

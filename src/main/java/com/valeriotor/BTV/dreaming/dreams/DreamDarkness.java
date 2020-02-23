@@ -17,18 +17,18 @@ public class DreamDarkness extends Dream{
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w) {
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
 		boolean flag = false;
-		BlockPos pos = WorldHelper.findClosestBiomeOfType(BiomeRegistry.innsmouth, p.getPosition(), w, 6000);
-		if(pos != null) {
-			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.innsmouth", new Object[] {pos.getX(), pos.getZ()}));			
+		BlockPos newPos = WorldHelper.findClosestBiomeOfType(BiomeRegistry.innsmouth, pos, w, 6000);
+		if(newPos != null) {
+			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.innsmouth", new Object[] {newPos.getX(), newPos.getZ()}));			
 			flag = true;
 		} else {
 			p.sendMessage(new TextComponentTranslation("dreams.biomesearch.fail"));
 		}
 		
 		if(DreamHandler.hasDreamtOfVoid(p)) {
-			BlockPos hamletPos = HamletList.get(w).getClosestHamlet(p.getPosition());
+			BlockPos hamletPos = HamletList.get(w).getClosestHamlet(pos);
 			if(hamletPos != null) {
 				p.sendMessage(new TextComponentTranslation("dreams.biomesearch.hamlet", new Object[] {Integer.valueOf(hamletPos.getX()), Integer.valueOf(hamletPos.getZ())}));
 				flag = true;

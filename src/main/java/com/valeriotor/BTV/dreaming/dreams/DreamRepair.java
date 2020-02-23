@@ -5,6 +5,7 @@ import com.valeriotor.BTV.dreaming.DreamHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DreamRepair extends Dream{
@@ -14,15 +15,20 @@ public class DreamRepair extends Dream{
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w) {
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
+		return this.activatePlayer(p, p, w);
+	}
+	
+	@Override
+	public boolean activatePlayer(EntityPlayer p, EntityPlayer target, World w) {
 		if(!DreamHandler.youDontHaveLevel(p, 2)) return false;
-		for(ItemStack item : p.getArmorInventoryList()) {
+		for(ItemStack item : target.getArmorInventoryList()) {
 			repairSingleItem(item, 0.3);
 		}
-		repairSingleItem(p.getHeldItem(EnumHand.MAIN_HAND), 0.3);
-		repairSingleItem(p.getHeldItem(EnumHand.OFF_HAND), 0.3);
+		repairSingleItem(target.getHeldItem(EnumHand.MAIN_HAND), 0.3);
+		repairSingleItem(target.getHeldItem(EnumHand.OFF_HAND), 0.3);
 		if(DreamHandler.getDreamPowerLevel(p) > 3) {
-			for(ItemStack item : p.inventory.mainInventory) {
+			for(ItemStack item : target.inventory.mainInventory) {
 				repairSingleItem(item, 0.1);
 			}
 		}

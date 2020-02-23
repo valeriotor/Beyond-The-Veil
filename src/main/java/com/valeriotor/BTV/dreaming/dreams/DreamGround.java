@@ -24,8 +24,8 @@ public class DreamGround extends Dream{
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w) {
-		int startY = Math.min(p.getPosition().getY(), w.getHeight()/2);
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
+		int startY = Math.min(pos.getY(), w.getHeight()/2);
 		int[] tracker1 = new int[startY];
 		int[] tracker2 = new int[startY];
 		int sum1 = 0;
@@ -33,8 +33,8 @@ public class DreamGround extends Dream{
 		BlockPos coord1 = null;
 		BlockPos coord2 = null;
 		for(int y = startY-1; y>=0; y--) {
-			for(int x = p.getPosition().getX()-16; x<p.getPosition().getX()+16; x++) {
-				for(int z = p.getPosition().getX()-16; z<p.getPosition().getX()+16; z++) {
+			for(int x = pos.getX()-16; x<pos.getX()+16; x++) {
+				for(int z = pos.getX()-16; z<pos.getX()+16; z++) {
 					IBlockState state = w.getBlockState(new BlockPos(x, y, z));
 						// TODO: Get OreDictionary compatibility
 						if(state == this.state1) {

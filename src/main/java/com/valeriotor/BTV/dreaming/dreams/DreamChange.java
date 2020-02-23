@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DreamChange extends Dream{
@@ -17,19 +18,24 @@ public class DreamChange extends Dream{
 	public DreamChange(String name, int priority) {
 		super(name, priority);
 	}
-
+	
 	@Override
-	public boolean activate(EntityPlayer p, World w) {
-		int lvl = DreamHandler.getDreamLevel(p);
-		Collection<PotionEffect> effects = p.getActivePotionEffects();
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
+		return this.activatePlayer(p, p, w);
+	}
+	
+	@Override
+	public boolean activatePlayer(EntityPlayer caster, EntityPlayer target, World w) {
+		int lvl = DreamHandler.getDreamLevel(caster);
+		Collection<PotionEffect> effects = target.getActivePotionEffects();
 		List<PotionEffect> negativeEffects = Lists.newArrayList();
 		effects.forEach(effect -> {
 			if(effect.getPotion().isBadEffect()) negativeEffects.add(effect);
 		});
 		negativeEffects.forEach(effect ->{
 			Potion newPot = getPositiveCounterpart(effect.getPotion());
-			if(newPot != null) p.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*lvl, effect.getAmplifier()+lvl/4));
-			p.removePotionEffect(effect.getPotion());
+			if(newPot != null) target.addPotionEffect(new PotionEffect(getPositiveCounterpart(effect.getPotion()), effect.getDuration()+300*lvl, effect.getAmplifier()+lvl/4));
+			target.removePotionEffect(effect.getPotion());
 		});
 		
 		return true;

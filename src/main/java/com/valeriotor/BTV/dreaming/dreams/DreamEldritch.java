@@ -19,18 +19,18 @@ public class DreamEldritch extends Dream{
 	}
 
 	@Override
-	public boolean activate(EntityPlayer p, World w) {
+	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
 		if(!DreamHandler.hasDreamtOfVoid(p)) {
-				return searchStronghold(p, w);
+				return searchStronghold(p, w, pos);
 		}
 		BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiAlienisDream), (EntityPlayerMP)p);
 		return true;
 	}
 	
-	private boolean searchStronghold(EntityPlayer p, World w) {
+	private boolean searchStronghold(EntityPlayer p, World w, BlockPos pos) {
 		if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("eldritchDream"))
 			return false;
-		BlockPos pos = w.findNearestStructure("Stronghold", p.getPosition(), false);
+		pos = w.findNearestStructure("Stronghold", pos, false);
 		if(pos != null) p.sendMessage(new TextComponentTranslation("dreams.alienissearch.success", new Object[] {pos.getX(), pos.getZ()}));
 		else p.sendMessage(new TextComponentTranslation("dreams.alienissearch.fail"));
 		

@@ -50,6 +50,7 @@ public class ResearchRegistry {
 	private static void registerMultiblocks() {
 		registerMultiblock("blood_well");
 		registerMultiblock("sacrifice_altar");
+		registerMultiblock("dream_shrine");
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -1,6 +1,6 @@
 package com.valeriotor.BTV.blocks;
 
-import com.valeriotor.BTV.items.ItemBloodSigil;
+import com.valeriotor.BTV.items.ItemBloodSigilUndead;
 import com.valeriotor.BTV.tileEntities.TileBloodWell;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -79,7 +79,7 @@ public class BlockBloodWell extends ModBlock implements ITileEntityProvider{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(worldIn.isRemote) return true;
 		if(hand == EnumHand.OFF_HAND) return false;
-		if(playerIn.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemBloodSigil) return false; 
+		if(playerIn.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemBloodSigilUndead) return false; 
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof TileBloodWell) {
 			((TileBloodWell)te).sendInfo(playerIn);
