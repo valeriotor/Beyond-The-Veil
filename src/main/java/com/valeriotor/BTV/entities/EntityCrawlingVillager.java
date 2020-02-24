@@ -3,6 +3,7 @@ package com.valeriotor.BTV.entities;
 import java.util.UUID;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
+import com.valeriotor.BTV.events.MemoryUnlocks;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.sacrifice.SacrificeHelper;
 import com.valeriotor.BTV.util.ItemHelper;
@@ -38,6 +39,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	private int ticksToDie = 0;
 	private int ticksToFall = 0;
 	private int ticksToRecovery = 200;
+	private int introspectionCounter = 0;
 	private BlockPos altar;
 	private UUID master;
 	public static final int DEFAULTTICKSTOFALL = 12;
@@ -125,6 +127,13 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 					this.world.spawnEntity(vil);
 					this.world.removeEntity(this);
 				}
+			}
+			this.introspectionCounter++;
+			if(this.introspectionCounter > 100) {
+				this.introspectionCounter = 0;
+				EntityPlayer master = this.getMaster();
+				if(master != null && master.getDistance(this) < 10)
+					MemoryUnlocks.increaseIntrospection(master);
 			}
 		}
 		

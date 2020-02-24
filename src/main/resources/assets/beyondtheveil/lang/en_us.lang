@@ -551,6 +551,7 @@ memory.darkness.name=Darkness
 memory.death.name=Death
 memory.eldritch.name=Eldritch
 memory.human.name=Human
+memory.introspection.name=Introspection
 memory.learning.name=Learning
 memory.metal.name=Metal
 memory.power.name=Power
@@ -603,6 +604,15 @@ dreams.alienissearch.fail=No Strongholds found
 
 dreams.animalsearch.nonefound=No animals of the preferred type were found nearby.
 dreams.animalsearch.toomanyblocks=To properly summon an animal, I should clear some space nearby, at my height level.
+
+dreams.introspection.otherplayer=The Introspection Dream tells me of %1$s.
+dreams.introspection.caster=The Introspection Dream tells me of myself.
+dreams.introspection.deity=Chosen Deity: %1$s.
+dreams.introspection.strength=Attack Multiplier: %1$s. Defense Multiplier: %2$s. Dream Bonus: %3$s.
+dreams.introspection.void=Has Dreamt of Void.
+dreams.introspection.novoid=Has not Dreamt of Void.
+dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
+dreams.introspection.noworship=No Worshippers.
 
 ##################
 #THEORYCRAFT
@@ -849,6 +859,13 @@ research.ANIMALDREAM.stage.0=A Dream of Animal, as I feed one with my own hands.
 ##################
 #MISC
 ##################
+
+deity.none=None
+deity.greatdreamer=The Great Dreamer
+
+worship.default=Default
+worship.penitence=Penitence
+worship.sacrifice=Sacrifice
 
 power.cooldown=The Power requires %1$s more seconds of cooldown.
 bauble.cooldown=The Bauble requires %1$s more seconds of cooldown.

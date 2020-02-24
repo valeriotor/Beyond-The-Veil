@@ -2,7 +2,6 @@ package com.valeriotor.BTV.worship;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 
@@ -18,6 +17,8 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextComponentBase;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class CrawlerWorship {
@@ -133,5 +134,10 @@ public class CrawlerWorship {
 		DEFAULT,
 		SACRIFICE,
 		PENITENCE;
+		
+		public String getLocalizedName() {
+			return new TextComponentTranslation("worship." + this.name().toLowerCase()).getFormattedText();
+		}
+		
 	}
 }

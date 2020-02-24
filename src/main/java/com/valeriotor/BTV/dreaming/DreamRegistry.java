@@ -11,6 +11,7 @@ import com.valeriotor.BTV.dreaming.dreams.DreamSentience;
 import com.valeriotor.BTV.dreaming.dreams.DreamRepair;
 import com.valeriotor.BTV.dreaming.dreams.DreamGround;
 import com.valeriotor.BTV.dreaming.dreams.DreamHuman;
+import com.valeriotor.BTV.dreaming.dreams.DreamIntrospection;
 import com.valeriotor.BTV.dreaming.dreams.DreamTool;
 import com.valeriotor.BTV.dreaming.dreams.DreamDeath;
 import com.valeriotor.BTV.dreaming.dreams.DreamChange;
@@ -36,6 +37,7 @@ public class DreamRegistry {
 	public static final DreamDarkness darkness= new DreamDarkness("innsmouthsearch", 3);
 	public static final DreamVoid voidd = new DreamVoid("voiddream", 0);
 	public static final DreamStillness stillness = new DreamStillness("keepeffects", 6);
+	public static final DreamIntrospection introspection = new DreamIntrospection("introspection", 8);
 	
 	public static final DreamLearning learning = new DreamLearning("learning", 6);
 	
@@ -61,6 +63,7 @@ public class DreamRegistry {
 		dreams.put(Memory.METAL, metal);
 		dreams.put(Memory.CRYSTAL, crystal);
 		dreams.put(Memory.LEARNING, learning);
+		dreams.put(Memory.INTROSPECTION, introspection);
 	}
 	
 	

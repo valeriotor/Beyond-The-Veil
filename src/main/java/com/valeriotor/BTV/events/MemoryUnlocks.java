@@ -154,4 +154,17 @@ public class MemoryUnlocks {
 		}
 	}
 	
+	public static void increaseIntrospection(EntityPlayer p) {
+		if(!ResearchUtil.isResearchComplete(p, "STATUE")) return;
+		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		int a = data.getOrSetInteger(PlayerDataLib.INTROSPECTION, 0, false);
+		if(a < 75) {
+			a++;
+			data.setInteger(PlayerDataLib.INTROSPECTION, a, false);
+			if(a >= 10) {
+				Memory.INTROSPECTION.unlock(p);
+			}
+		}
+	}
+	
 }

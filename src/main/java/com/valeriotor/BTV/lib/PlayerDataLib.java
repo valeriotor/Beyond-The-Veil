@@ -32,6 +32,7 @@ public class PlayerDataLib {
 	public static final String TIMESCHAMBER = "timeschamber";
 	public static final String CURSE = "curse";
 	public static final String WATERTPDIM = "watertpdimension";
+	public static final String INTROSPECTION = "introspection";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
