@@ -95,7 +95,6 @@ public class PlayerEvents {
 			int parasiteProgress = event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.PARASITE_PROGRESS, 0, false);
 			if(parasiteProgress > 0)
 				AzacnoParasiteEvents.parasites.put(event.player.getPersistentID(), new AzacnoParasite(event.player, parasiteProgress));
-			event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeInteger(PlayerDataLib.PARASITE_PROGRESS);
 			SyncUtil.syncPlayerData(event.player);
 			DGWorshipHelper.calculateModifier(event.player);
 		}
