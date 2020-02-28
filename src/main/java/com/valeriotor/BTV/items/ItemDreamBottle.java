@@ -44,7 +44,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -148,6 +148,7 @@ public class ItemDreamBottle extends Item{
 			EntityPlayer target = null;
 			BlockPos posTarget = null;
 			EnumHand otherHand = null;
+			boolean playerTag = false;
 			if(dreamShrine) {
 				for(EnumHand hand : EnumHand.values()) {
 					ItemStack sigil = playerIn.getHeldItem(hand); 
@@ -161,12 +162,17 @@ public class ItemDreamBottle extends Item{
 					} else if(sigil.getItem() == ItemRegistry.sigil_player) {
 						NBTTagCompound tag = ItemHelper.checkTagCompound(sigil);
 						if(tag.hasKey("player")) {
+							playerTag = true;
 							target = playerIn.world.getPlayerEntityByUUID(UUID.fromString(tag.getString("player")));
 							otherHand = hand;
 							break;
 						}
 					}
 				}
+			}
+			if(playerTag && target == null) {
+				playerIn.sendMessage(new TextComponentTranslation("use.dream_bottle.noplayer"));
+				return;
 			}
 			for(Entry<Integer, Dream> entry : set) {
 				if(amount < required) break;
