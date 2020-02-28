@@ -1,6 +1,6 @@
 {
     "variants": {
-		"half=bottom": { "model": "beyondtheveil:sleep_chamber" },
-		"half=top": { "model": "beyondtheveil:sleep_chamber" }
+		"half=bottom": { "model": "beyondtheveil:vijhiss" },
+		"half=top": { "model": "beyondtheveil:empty" }
     }
 }
