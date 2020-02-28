@@ -22,6 +22,8 @@ public class SacrificeRecipeRegistry {
 		recipes.put("sacrifice;bricks", bricks);
 		recipes.put("sacrifice;staff", staff);
 		recipes.put("sacrifice;undeadsigil", undeadsigils);
+		recipes.put("sacrifice;sigil_pathway", pathwaysigil);
+		recipes.put("sacrifice;sigil_player", playersigil);
 	}
 	
 	public static ItemStack getItemStackAndUnlockData(ItemStack input, EntityPlayer p) {
@@ -54,6 +56,14 @@ public class SacrificeRecipeRegistry {
 	public static final SacrificeRecipe undeadsigils = new SacrificeRecipe(
 			new ItemFunction(Items.ROTTEN_FLESH, new ItemStack(ItemRegistry.sigil_zombie), false),
 			new ItemFunction(Items.BONE, new ItemStack(ItemRegistry.sigil_skellie), false)
+			);
+	
+	public static final SacrificeRecipe pathwaysigil = new SacrificeRecipe(
+			new ItemFunction(Items.COMPASS, new ItemStack(ItemRegistry.sigil_pathway), false)
+			);
+	
+	public static final SacrificeRecipe playersigil = new SacrificeRecipe(
+			new ItemFunction(ItemRegistry.spine, new ItemStack(ItemRegistry.sigil_player), false)
 			);
 	
 }

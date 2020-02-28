@@ -2,19 +2,23 @@ package com.valeriotor.BTV.items;
 
 import java.util.List;
 
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.util.ItemHelper;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -50,8 +54,16 @@ public class ItemBloodSigilPathway extends ModItem{
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		if(!nbt.hasKey("path")) {
 			nbt.setLong("path", entityLiving.getPosition().toLong());
-			if(entityLiving instanceof EntityPlayer && !worldIn.isRemote) {
-				((EntityPlayer)entityLiving).sendMessage(new TextComponentTranslation("use.blood_sigil.path"));
+			if(entityLiving instanceof EntityPlayer) {
+				EntityPlayer p = (EntityPlayer)entityLiving;
+				if(!worldIn.isRemote) {
+					p.sendMessage(new TextComponentTranslation("use.blood_sigil.path"));
+					if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("boundpathway")) {
+						SyncUtil.addStringDataOnServer(p, false, "boundpathway");
+						SyncUtil.addStringDataOnServer(p, false, "boundpathway2");
+					}
+				} else
+					p.world.playSound(p, p.getPosition(), SoundEvents.ENTITY_ARROW_HIT_PLAYER, SoundCategory.PLAYERS, 1, 1);
 			}
 		}
 		return stack;

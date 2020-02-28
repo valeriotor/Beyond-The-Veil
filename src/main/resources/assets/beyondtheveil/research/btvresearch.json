@@ -469,7 +469,7 @@
                 },
                 {
                     "text": "research.DREAMBOTTLE.stage.2",
-					"recipes" : ["beyondtheveil:dream_bottle", "dream_shrine"]
+					"recipes" : ["beyondtheveil:dream_bottle"]
                 }
             ]
         },
@@ -491,6 +491,25 @@
                 },
                 {
                     "text": "research.WATERWALKING.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "DREAMSHRINE",
+        "name": "research.DREAMSHRINE.title",
+        "icons": [ "minecraft:quartz_block" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+					"text": "research.DREAMSHRINE.stage.0",
+					"required_research": ["boundpathway2"],
+					"recipes" : ["dream_shrine"]
+				},
+                {
+                    "text": "research.DREAMSHRINE.stage.1",
+					"recipes" : ["dream_shrine"]
                 }
             ]
         },
@@ -839,6 +858,25 @@
                 {
                     "text": "research.CORALSTAFF.stage.1",
                     "recipes" : ["sacrifice;staff"]
+                }
+            ]
+        },
+		{
+        "key": "BLOODSIGILS",
+        "name": "research.BLOODSIGILS.title",
+        "icons": [ "beyondtheveil:sigil_pathway" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,5],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.BLOODSIGILS.stage.0",
+                    "recipes" : ["sacrifice;sigil_pathway"],
+					"required_research": ["boundpathway"]
+                },
+                {
+                    "text": "research.BLOODSIGILS.stage.1",
+                    "recipes" : ["sacrifice;sigil_pathway", "sacrifice;sigil_player"]
                 }
             ]
         },

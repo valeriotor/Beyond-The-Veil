@@ -43,6 +43,9 @@ item.sigil_skellie.name=Blood Sigil: Skeleton
 item.sacrificial_knife.name=Sacrificial Knife
 item.memory_phial.name=Memory Phial
 item.necronomicon.name=Al Azif
+item.sigil_player.name=Blood Sigil: Player
+item.sigil_pathway.name=Blood Sigil: Pathway
+item.gear.name=Gear
 
 
 lore.flute=The sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
@@ -94,6 +97,7 @@ use.blood_sigil.emptywell=This Well has no more of these undead.
 use.blood_sigil.nothealthy=This mob is not at full health.
 use.blood_sigil.notmine=This mob does not serve me.
 use.blood_sigil.path=This location is now bound in the Sigil.
+use.dream_bottle.noplayer=The bound Player is not currently in this world.
 
 
 ##################
@@ -143,6 +147,7 @@ tile.sacrifice_statue.name=Statue of Sacrifice
 tile.penitence_statue.name=Statue of Penitence
 tile.memory_sieve.name=Memory Sieve
 tile.city_mapper.name=City Mapper
+tile.gear_bench.name=Gear Bench
 
 fluid.tears=Tears
 
@@ -183,6 +188,7 @@ interact.gearbench.dunno=I do not know how to use this.
 multiblock.layer=Layer
 multiblock.blood_well=Blood Well
 multiblock.sacrifice_altar=Sacrificial Altar
+multiblock.dream_shrine=Dream Shrine
 
 ##################
 #ENTITIES
@@ -837,12 +843,12 @@ research.craftedscore.text=Craft a Sacrificial Altar Core.
 research.CORALSTAFF.title=Coral Staff
 research.CORALSTAFF.stage.0=In their unholy penitence, undead seek life.<BR>However, they're imbeciles.<BR>It shouldn't be a difficult task to redirect them from one beating heart to the next, their "minds" fooled by what seems better flesh.<BR>I *know* the exact tool I need.
 research.CORALSTAFF.stage.1=How bizarre it is that the corals of the deep look so similar to our own arteries.<BR>No coincidence, I am certain. The link between the two is strong.<BR>And it is through this very staff that I may bind hearts together. Interacting with a placed heart while sneaking will store its position in the staff. Once done, interacting while sneaking with another heart (within no more than 32 blocks of distance) will bind the old one's position to this new one's. Any undead that are attracted to the first will then be redirected to the second, which may be also linked to yet another heart, resulting in a true procession of the damned.<BR>If the staff stores a position, it may be cleared by using it while sneaking on the very same heart it was taken from, or while aiming in the air. Using the staff without sneaking will give info on itself or on a clicked heart.<BR>There is, in truth, another use to the staff: attacking an enemy with it will result in nearby undead targeting it, in their endless pursuit of blood and life.
-research.craftedstaff.text=Craft a Coral Staff
+research.craftedstaff.text=Craft a Coral Staff.
 
 research.BLOODWELL.title=Blood Well
 research.BLOODWELL.stage.0=If the undead's desire for blood is so great, then I shall answer to that desire as best as I may.<BR>I shall cover them with the sweet, red substance.<BR>I will build a well that will hoard such undead, bind them to me, so that I may rule them.<BR>A simple structure of blood bricks. The heart must be placed last.
 research.BLOODWELL.stage.1=The Well still beats. The dead are drawn towards it, even more so than to normal hearts.<BR>Once they enter the Well, the dead are gone, stored in it. Or, rather, through it.<BR>Blood Sigils can be made for both Zombies and Skeletons. When these undead enter the Well they can later be reacquired through the use of Sigils by using these on the central block of the Well. The Sigils can then be used on the ground to summon my own Blood Undead.<BR>Sigils can be emptied in the Well by sneaking. Summoned Blood Undead can be put back in the Sigil by using it upon them.<BR>I do not know how the Well stores the dead. I imagine it could be a link to some other location, in or out of this world. I truly wish I could enter it myself.<BR>Alas, I am not dead as of yet.
-research.builtwell.text=Build a Blood Well
+research.builtwell.text=Build a Blood Well.
 
 research.SHOGGOTH.title=Shoggoth
 research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away aeons ago on the Sea's shores.<BR>Slaves to the Elder Things, builders of cities.<BR>They're born from tears.<BR>I must create a Shoggoth Vat. That is, a 3x3x3 cube of tears, making sure each block is filled. Then three Fleti must be placed in it.<BR>Once all is done, I must enter it, and through a Dream Bottle I must Dream simultaneously of Darkness, Eldritchness, Learning and Void.<BR>A Shoggoth is no gentle creature. It will attack all animals and all Players other than its owner on sight. If it becomes too delighted in killing, then not even its owner is safe.<BR>A Shoggoth is to be picked up through a blackjack, provided that it is sufficiently calm.
@@ -855,6 +861,16 @@ research.REPAIRDREAM.stage.0=A Dream of Mending, as I smite the hammer on the an
 
 research.ANIMALDREAM.title=Dream of Animals
 research.ANIMALDREAM.stage.0=A Dream of Animal, as I feed one with my own hands.<BR>Dropping a specific item near to me before I Dream of this Memory will spawn nearby an animal related to that item.<BR>Where my Dream plucks that creature from, I can only speculate.<PAGE>Examples of usable items would be porkchop for pigs, bones for wolves, leather for cows, horses and even llamas. Of course there are more to discover.
+
+research.DREAMSHRINE.title=Dream Shrine
+research.DREAMSHRINE.stage.0=The Nether lies halfway between the Overworld and the Deepest Oceans. Surrounded by Void on both sides, it is closer to the true Void, the true Veil that lies beneath All.<BR>Even that accursed land of fire was born from water.<BR>Like all things that be.<BR>And even though it's small in surface compared to the Overworld, some Dreams go through it still.<BR>Quartz makes for a powerful conductor, not only of redstone but even of Dreams.<BR>A Shrine of Dreams, made of Quartz, to cast them wherever I desire. That is my new goal.<BR>All I require is a way to bind specific locations.. even specific people.. to focus my Dreams towards them.
+research.DREAMSHRINE.stage.1=The Dream Shrine is to be used in tandem with the Dream Bottle, as well as a Pathway or Player Blood Sigil.<BR>While standing exactly on top of the central chiseled quartz block, by holding the Dream Bottle in my main hand and the bound sigil in the offhand I am capable of casting Dreams towards specific locations or people.<BR>As an example, Dreams that inspect the ground will work as if they were used atop the location or Player bound in the sigil.<BR>Dreams that targeted random Players can now target specific ones, and even certain Dreams that would only affect myself can now be utilized upon others.<BR>From my base I am now able to see and command all kinds of things. A precious knowledge, one that must be kept tight and silent.
+research.boundpathway2.text=Find a way to bind locations.
+
+research.BLOODSIGILS.title=Blood Sigils
+research.BLOODSIGILS.stage.0=Through blood we're bound not just to the Deepest Oceans, but to All.<BR>A Pathway Sigil can be used to bind to itself a location in the world, simply by using it.<BR>I should try it before bringing my research forwards.
+research.BLOODSIGILS.stage.1=Indeed, the Blood Sigil has forged an unbreakable bond.<BR>Through these Pathway Sigils I will be able to target specific locations.<BR>There is, however, another type of Sigil: the Player Sigil, that can bind a specific person to itself.<BR>More difficult to use, this one requires to be held in my hands, either main or offhand, as I injure another Player enough for them to bleed.<BR>Once their blood is in my hands, so too shall their fate be mine to dictate.
+research.boundpathway.text=Bind a Pathway Sigil.
 
 ##################
 #MISC
