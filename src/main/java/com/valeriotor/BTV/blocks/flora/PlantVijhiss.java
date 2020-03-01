@@ -8,6 +8,7 @@ import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.tileEntities.TileMutator;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -34,7 +35,7 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 	
 	public PlantVijhiss(String name) {
 		super(Material.WOOD, name);
-		
+		this.setSoundType(SoundType.WOOD);
 	}
 	
 	@Override
@@ -100,20 +101,21 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
-			List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
-		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM)
-			super.addCollisionBoxToList(pos, entityBox, collidingBoxes, LOWER_BBOX);
-		else
-			super.addCollisionBoxToList(pos, entityBox, collidingBoxes, UPPER_BBOX);
-	}
-	
-	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM)
 			return LOWER_BBOX;
 		else
 			return UPPER_BBOX;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
 	}
 	
 }

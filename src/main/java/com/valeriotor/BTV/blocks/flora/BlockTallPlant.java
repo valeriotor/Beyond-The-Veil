@@ -46,7 +46,6 @@ public abstract class BlockTallPlant extends BlockPlant{
 		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) {
 			if(worldIn.getBlockState(pos.up()).getBlock() != this) {
 				worldIn.setBlockToAir(pos);
-				this.dropBlockAsItem(worldIn, pos, state, 0);
 			}
 		}else {
 			if(worldIn.getBlockState(pos.down()).getBlock() != this) {
@@ -60,12 +59,6 @@ public abstract class BlockTallPlant extends BlockPlant{
 			ItemStack stack) {
 		worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(EnumHalf.HALF, EnumHalf.TOP));
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
-
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		if(state.getValue(EnumHalf.HALF) == EnumHalf.BOTTOM) return super.getItemDropped(state, rand, fortune);
-		else return Items.AIR;
 	}
 	
 	@Override
