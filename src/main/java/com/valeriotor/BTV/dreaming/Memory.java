@@ -13,10 +13,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public enum Memory {
 	ANIMAL(Items.LEATHER, 0xFF401b00),
+	BEHEADING(Items.SKULL, 0xFF333333, 1),
 	CHANGE(Items.WHEAT_SEEDS, 0xFF4dff00, "metalDream"),
 	CRYSTAL(Item.getItemFromBlock(Blocks.GLASS), 0xFFe6d8d8),
 	DARKNESS(Items.COAL, 0xFF002233),
@@ -26,6 +28,7 @@ public enum Memory {
 	INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
 	LEARNING(Items.GHAST_TEAR, 0xFF998b69),	
 	METAL(Items.IRON_INGOT, 0xFF8c8c8c),
+	PLANT(Item.getItemFromBlock(Blocks.SAPLING), 0xFF00FF00, 3),
 	POWER(Items.BLAZE_POWDER, 0xFFff9300, "metalDream"),
 	REPAIR(Item.getItemFromBlock(Blocks.WOOL), 0xFF99f19d),
 	SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
@@ -33,14 +36,20 @@ public enum Memory {
 	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff, "memHUMAN"),
 	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF36111F);
 	
-	private Item item;
+	private ItemStack item;
 	private int color;
 	private String[] reqs;
 	
 	private Memory(Item item, int color, String... reqs) {
-		this.item = item;
+		this.item = new ItemStack(item, 1, 0);
 		this.color = color;
 		this.reqs = reqs;
+	}
+	
+	private Memory(Item item, int color, int meta) {
+		this.item = new ItemStack(item, 1, meta);
+		this.color = color;
+		this.reqs = null;
 	}
 	
 	public String getDataName() {
@@ -90,7 +99,9 @@ public enum Memory {
 		return this.color;
 	}
 	
-	public Item getItem() {
+	/** DO NOT MODIFY THIS STACK.
+	 */
+	public ItemStack getItem() {
 		return this.item;
 	}
 	

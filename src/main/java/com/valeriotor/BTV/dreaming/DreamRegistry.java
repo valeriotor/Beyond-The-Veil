@@ -1,25 +1,26 @@
 package com.valeriotor.BTV.dreaming;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.valeriotor.BTV.dreaming.dreams.Dream;
-import com.valeriotor.BTV.dreaming.dreams.DreamEldritch;
 import com.valeriotor.BTV.dreaming.dreams.DreamAnimal;
-import com.valeriotor.BTV.dreaming.dreams.DreamSentience;
-import com.valeriotor.BTV.dreaming.dreams.DreamRepair;
+import com.valeriotor.BTV.dreaming.dreams.DreamBeheading;
+import com.valeriotor.BTV.dreaming.dreams.DreamChange;
+import com.valeriotor.BTV.dreaming.dreams.DreamDarkness;
+import com.valeriotor.BTV.dreaming.dreams.DreamDeath;
+import com.valeriotor.BTV.dreaming.dreams.DreamEldritch;
 import com.valeriotor.BTV.dreaming.dreams.DreamGround;
 import com.valeriotor.BTV.dreaming.dreams.DreamHuman;
 import com.valeriotor.BTV.dreaming.dreams.DreamIntrospection;
-import com.valeriotor.BTV.dreaming.dreams.DreamTool;
-import com.valeriotor.BTV.dreaming.dreams.DreamDeath;
-import com.valeriotor.BTV.dreaming.dreams.DreamChange;
-import com.valeriotor.BTV.dreaming.dreams.DreamPower;
 import com.valeriotor.BTV.dreaming.dreams.DreamLearning;
-import com.valeriotor.BTV.dreaming.dreams.DreamDarkness;
-import com.valeriotor.BTV.dreaming.dreams.DreamVoid;
+import com.valeriotor.BTV.dreaming.dreams.DreamPlant;
+import com.valeriotor.BTV.dreaming.dreams.DreamPower;
+import com.valeriotor.BTV.dreaming.dreams.DreamRepair;
+import com.valeriotor.BTV.dreaming.dreams.DreamSentience;
 import com.valeriotor.BTV.dreaming.dreams.DreamStillness;
+import com.valeriotor.BTV.dreaming.dreams.DreamTool;
+import com.valeriotor.BTV.dreaming.dreams.DreamVoid;
 
 import net.minecraft.init.Blocks;
 
@@ -38,6 +39,8 @@ public class DreamRegistry {
 	public static final DreamVoid voidd = new DreamVoid("voiddream", 0);
 	public static final DreamStillness stillness = new DreamStillness("keepeffects", 6);
 	public static final DreamIntrospection introspection = new DreamIntrospection("introspection", 8);
+	public static final DreamBeheading beheading = new DreamBeheading("beheading", 8);
+	public static final DreamPlant plant = new DreamPlant("plant", 8);
 	
 	public static final DreamLearning learning = new DreamLearning("learning", 6);
 	
@@ -64,6 +67,8 @@ public class DreamRegistry {
 		dreams.put(Memory.CRYSTAL, crystal);
 		dreams.put(Memory.LEARNING, learning);
 		dreams.put(Memory.INTROSPECTION, introspection);
+		dreams.put(Memory.BEHEADING, beheading);
+		dreams.put(Memory.PLANT, plant);
 	}
 	
 	

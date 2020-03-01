@@ -18,7 +18,7 @@ public class MemoryResearchRecipe extends ResearchRecipe {
 	public MemoryResearchRecipe(String recipeKey) {
 		super(recipeKey);
 		String dataName = ItemHelper.checkStringTag(output, "memory", Memory.LEARNING.getDataName());
-		input = new ItemStack(Memory.getMemoryFromDataName(dataName).getItem());
+		input = Memory.getMemoryFromDataName(dataName).getItem();
 	}
 
 	private static final ResourceLocation MEMORY_TEX = new ResourceLocation(References.MODID, "textures/gui/recipe_memory.png");

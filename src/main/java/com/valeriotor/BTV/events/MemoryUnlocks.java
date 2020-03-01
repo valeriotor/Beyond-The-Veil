@@ -14,6 +14,8 @@ import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +25,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -143,6 +147,42 @@ public class MemoryUnlocks {
 		EntityPlayer p = event.player;
 		if(!p.world.isRemote && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
 			Memory.DEATH.unlock(p);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void boneMealEvent(BonemealEvent event) {
+		if(event.getResult() != Result.DENY) {
+			EntityPlayer p = event.getEntityPlayer();
+			if(p.world.isRemote) return;
+			int a = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.BONEMEALUSED, 0);
+			if(a < 50) {
+				if(ResearchUtil.isResearchComplete(p, "EFFECTDREAMS") && ResearchUtil.isResearchComplete(p, "HUMANDREAMS")) {
+					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.BONEMEALUSED, ++a);
+					if(a >= 50) {
+						Memory.PLANT.unlock(p);
+					}
+				}
+			}
+		}
+	
+	}
+	
+	@SubscribeEvent
+	public static void lootMobEvent(LivingDropsEvent event) {
+		EntityLivingBase e = event.getEntityLiving();
+		Entity attacker = event.getSource().getTrueSource();
+		if(e.world.isRemote) 									return;
+		if(!(e instanceof EntityWitherSkeleton)) 				return;
+		if(!(attacker instanceof EntityPlayer)) 				return;
+		EntityPlayer p = (EntityPlayer) attacker;
+		if(!ResearchUtil.isResearchComplete(p, "DREAMSHRINE")) 	return;
+		if(Memory.BEHEADING.isUnlocked(p))						return;
+		boolean gotSkull = false;
+		for(EntityItem item : event.getDrops()) {
+			ItemStack stack = item.getItem();
+			if(stack.getItem() == Items.SKULL && stack.getMetadata() == 1)
+				Memory.BEHEADING.unlock(p);
 		}
 	}
 	

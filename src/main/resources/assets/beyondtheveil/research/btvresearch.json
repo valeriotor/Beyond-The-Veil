@@ -517,7 +517,7 @@
         "key": "DEATHDREAM",
         "name": "research.DEATHDREAM.title",
         "icons": [ "minecraft:rotten_flesh" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23,9],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,7],
 		"hiders": ["memDEATH"],
         "parents": [ "DREAMBOTTLE" ],
         "stages": [
@@ -531,7 +531,7 @@
         "key": "REPAIRDREAM",
         "name": "research.REPAIRDREAM.title",
         "icons": [ "minecraft:wool" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23,12],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,9],
 		"hiders": ["memREPAIR"],
         "parents": [ "DREAMBOTTLE" ],
         "stages": [
@@ -545,13 +545,27 @@
         "key": "ANIMALDREAM",
         "name": "research.ANIMALDREAM.title",
         "icons": [ "minecraft:leather" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23,15],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,11],
 		"hiders": ["memANIMAL"],
         "parents": [ "DREAMBOTTLE" ],
         "stages": [
 				{
                     "text": "research.ANIMALDREAM.stage.0",
 					"recipes" : ["beyondtheveil:memory_phial;memANIMAL"]
+                }
+            ]
+        },
+		{
+        "key": "BEHEADINGDREAM",
+        "name": "research.BEHEADINGDREAM.title",
+        "icons": [ "minecraft:skull;1;1" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,16],
+		"hiders": ["memBEHEADING"],
+        "parents": [ "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.BEHEADINGDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memBEHEADING"]
                 }
             ]
         },
@@ -890,6 +904,98 @@
         "stages": [
 				{
                     "text": "research.SHOGGOTH.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "PLANTDREAMS",
+        "name": "research.PLANTDREAMS.title",
+        "icons": [ "minecraft:sapling" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0, -5],
+		"hiders": ["memPLANT"],
+        "parents": ["EFFECTDREAMS", "HUMANDREAMS" ],
+        "stages": [
+				{
+                    "text": "research.PLANTDREAMS.stage.0",
+                    "required_research" : ["plantDream"],
+					"recipes" : ["beyondtheveil:memory_phial;memPLANT"]
+                },
+                {
+                    "text": "research.PLANTDREAMS.stage.1",
+					"recipes" : ["beyondtheveil:memory_phial;memPLANT"]
+                }
+            ]
+        },
+		{
+        "key": "VANILLASEEDS",
+        "name": "research.VANILLASEEDS.title",
+        "icons": [ "beyondtheveil:vanilla_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, -4],
+		"hiders": ["vanillaseeds"],
+        "parents": ["PLANTDREAMS"],
+        "stages": [
+				{
+                    "text": "research.VANILLASEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "REDSTONESEEDS",
+        "name": "research.REDSTONESEEDS.title",
+        "icons": [ "beyondtheveil:redstone_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -4, -2],
+		"hiders": ["redstoneseeds"],
+        "parents": [ "VANILLASEEDS" ],
+        "stages": [
+				{
+                    "text": "research.REDSTONESEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "GHOSTSEEDS",
+        "name": "research.GHOSTSEEDS.title",
+        "icons": [ "beyondtheveil:ghost_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 0],
+		"hiders": ["ghostseeds"],
+        "parents": [ "REDSTONESEEDS" ],
+        "stages": [
+				{
+                    "text": "research.GHOSTSEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "VIJHISS",
+        "name": "research.VIJHISS.title",
+        "icons": [ "beyondtheveil:plant_ordo" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, -2],
+		"learn" : "true",
+        "parents": [ "GHOSTSEEDS" ],
+        "stages": [
+				{
+                    "text": "research.VIJHISS.stage.0",
+                    "required_research" : ["plantvijhiss"]
+                },
+				{
+                    "text": "research.VIJHISS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "ARBOREALGENERATOR",
+        "name": "research.GHOSTSEEDS.title",
+        "icons": [ "beyondtheveil:arboreal_generator" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, 2],
+		"learn" : "true",
+        "parents": [ "GHOSTSEEDS" ],
+        "stages": [
+				{
+                    "text": "research.ARBOREALGENERATOR.stage.0",
+                    "required_research" : ["plantgenerator"]
+                },
+				{
+                    "text": "research.ARBOREALGENERATOR.stage.1"
                 }
             ]
         }
