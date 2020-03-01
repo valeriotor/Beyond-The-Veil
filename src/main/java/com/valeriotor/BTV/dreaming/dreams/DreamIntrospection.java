@@ -30,7 +30,7 @@ public class DreamIntrospection extends Dream{
 	@Override
 	public boolean activatePlayer(EntityPlayer caster, EntityPlayer target, World w) {
 		if(caster != target) {
-			caster.sendMessage(new TextComponentTranslation("dreams.introspection.otherplayer"));
+			caster.sendMessage(new TextComponentTranslation("dreams.introspection.otherplayer", target.getName()));
 		} else {
 			caster.sendMessage(new TextComponentTranslation("dreams.introspection.caster"));
 		}
