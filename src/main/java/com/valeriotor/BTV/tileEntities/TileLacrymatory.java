@@ -114,11 +114,6 @@ public class TileLacrymatory extends TileFluidHandler{
 		//this.amount = pkt.getNbtCompound().getInteger("amount");
 	}
 	
-	/** Used for rendering
-	 * 
-	 * @return
-	 */
-	@SideOnly(Side.CLIENT)
 	public int getAmount() {
 		return this.amount;
 	}

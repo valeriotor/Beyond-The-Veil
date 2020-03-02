@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
@@ -53,8 +54,15 @@ public class BlockLacrymatory extends ModBlock implements ITileEntityProvider{
 		IFluidHandler fh = getFluidHandler(w, pos);
 		ItemStack stack = p.getHeldItemMainhand();
 		if(fh != null) {
-			boolean success = FluidUtil.interactWithFluidHandler(p, hand, fh);
-			return FluidUtil.getFluidHandler(stack) != null;
+			if(stack.isEmpty()) {
+				if(w.isRemote) {
+					TileLacrymatory tl = (TileLacrymatory) w.getTileEntity(pos);
+					p.sendMessage(new TextComponentTranslation("interact.lacrymatory.amount", tl.getAmount()));
+				}
+			} else {
+				boolean success = FluidUtil.interactWithFluidHandler(p, hand, fh);
+				return FluidUtil.getFluidHandler(stack) != null;
+			}
 		}
 		return false;
 	}
