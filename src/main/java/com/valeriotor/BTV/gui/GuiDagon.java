@@ -20,6 +20,7 @@ public class GuiDagon extends GuiScreen{
 	private final String translateKey;
 	private String displayString = "";
 	private int SINGLE_THUMP_TIME = 50;
+	private float scale = 3;
 	private static final int TENSION_TIME = 20 * 30;
 	
 	public GuiDagon(DagonDialogues dd) {
@@ -28,14 +29,24 @@ public class GuiDagon extends GuiScreen{
 	}
 	
 	@Override
+	public void initGui() {
+		switch(mc.gameSettings.guiScale) {
+		case 0: this.scale = 1.5F; break;
+		case 1:
+		case 2: this.scale = 3; break;
+		case 3: this.scale = 2;
+		}
+	}
+	
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		int alpha = count == -1 ? (int)(((float)this.thumpTimer)/(SINGLE_THUMP_TIME*3) * 255) << 24 : 255 << 24;
 		drawRect(0, 0, this.width, this.height, alpha);
 		GlStateManager.pushMatrix();
-		GlStateManager.scale(3, 3, 3);
+		GlStateManager.scale(this.scale, this.scale, this.scale);
 		int i = 0;
 		for(String s : GuiHelper.splitStringsByWidth(displayString, this.width / 3 - 20, mc.fontRenderer))
-			drawCenteredString(mc.fontRenderer, s, this.width/6, this.height/6 + (i++) * 15, 0xFFFFFFFF);
+			drawCenteredString(mc.fontRenderer, s, (int)(this.width/2/scale), (int)(this.height/2/scale) + (i++) * 15, 0xFFFFFFFF);
 		GlStateManager.popMatrix();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
