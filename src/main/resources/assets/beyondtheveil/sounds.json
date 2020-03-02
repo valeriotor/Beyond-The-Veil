@@ -1,19 +1,16 @@
 {
 	"dweller_hurt": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dweller_hurt"
 		]
 	},
 	"dweller_idle": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dweller_idle_0",
 			"beyondtheveil:dweller_idle_1"
 		]
 	},
 	"canoe_creak": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:canoe_creak_0",
 			"beyondtheveil:canoe_creak_1",
@@ -26,79 +23,66 @@
 		]
 	},
 	"flute":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:flute"
 		]
 	},
 	"sawcleavertransform":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:sawcleavertransform"
 		]
 	},
 	"sawcleavertransformattack":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:sawcleavertransformattack"
 		]
 	},
 	"dream_alienis":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dream_alienis"
 		]
 	},
 	"spine_rip":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:spine_rip"
 		]
 	},
 	"heart_rip":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:heart_rip"
 		]
 	},
 	"deep_one_roar":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:deep_one_roar"
 		]
 	},
 	"worthless":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:worthless"
 		]
 	},
 	"tension":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:tension"
 		]
 	},
 	"breathe":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:breathe"
 		]
 	},
 	"dagon_tension":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dagon_tension"
 		]
 	},
 	"dagon_thump":{
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:dagon_thump"
 		]
 	},
 	"parasite_hurt": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:parasite_hurt_0",
 			"beyondtheveil:parasite_hurt_1",
@@ -106,31 +90,26 @@
 		]
 	},
 	"parasite_death": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:parasite_death"
 		]
 	},
 	"heartbeat": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:heartbeat"
 		]
 	},
 	"shoggoth_screech": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:shoggoth_screech"
 		]
 	},
 	"deep_one_transform": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:deep_one_transform"
 		]
 	},
 	"weeper_idle": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:weeping0",
 			"beyondtheveil:weeping1",
@@ -145,13 +124,11 @@
 		]
 	},
 	"weeper_transform": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:weeper_transform"
 		]
 	},
 	"fletum_weeping": {
-		"category": "ambience",
 		"sounds": [
 			"beyondtheveil:fletum_weeping0",
 			"beyondtheveil:fletum_weeping1",
