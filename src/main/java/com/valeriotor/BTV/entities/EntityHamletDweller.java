@@ -427,13 +427,13 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER) {
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.ale, 3)));
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_PICKAXE, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.mead, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 64), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 32), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Blocks.STONE, 32), new ItemStack(Blocks.STONE, 32), new ItemStack(ItemRegistry.rum, 1)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.CLAY_BALL, 8), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.vodka, 1)));
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.wine, 1)));
 		}else if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 			this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.AIR), new ItemStack(ItemRegistry.canoe, 1)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 8), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 48)));
-			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 8), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampCanopy, 64)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampWood, 6)));
+			this.buyingList.add(new MerchantRecipe(new ItemStack(this.getRandomSweetie(), 1), new ItemStack(Items.AIR), new ItemStack(BlockRegistry.DampCanopy, 8)));
 		}
 		
 	}
