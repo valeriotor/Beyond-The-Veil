@@ -57,7 +57,7 @@ lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher 
 lore.spine=Willpower resides in the spine.
 lore.surgery_tools=A set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
 
-tooltip.held_villager.spineless=A villager lacking his dorsal spine.
+tooltip.held_villager.spineless=A villager lacking his dorsal spine. He'll never get up.
 tooltip.held_villager.spineful=An unconscious villager, ready for experimentation.
 tooltip.held_villager.spinefulheartless=A villager without a heart. Soon, he will expire.
 tooltip.held_villager.spinelessheartless=Both the spine and the heart were ripped out of this villager. Truly, a worthless wretch.

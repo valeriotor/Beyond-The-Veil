@@ -1,14 +1,22 @@
 package com.valeriotor.BTV.items;
 
+import java.util.List;
+
 import com.valeriotor.BTV.entities.EntityShoggoth;
+import com.valeriotor.BTV.lib.References;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHeldShoggoth extends ModItem{
 
@@ -36,6 +44,12 @@ public class ItemHeldShoggoth extends ModItem{
 		w.spawnEntity(shoggoth);
 		
 		return EnumActionResult.SUCCESS;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(References.PURPLE + I18n.format("tooltip.held_shoggoth"));
 	}
 
 }
