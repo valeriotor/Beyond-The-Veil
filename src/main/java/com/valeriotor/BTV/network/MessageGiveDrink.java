@@ -1,5 +1,7 @@
 package com.valeriotor.BTV.network;
 
+import com.valeriotor.BTV.items.ItemRegistry;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -9,30 +11,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class MessageGiveItem implements IMessage{
-	ItemStack stack;
+public class MessageGiveDrink implements IMessage{
 	
-	public MessageGiveItem() {}
-	public MessageGiveItem(ItemStack stack) {
-		this.stack = stack;
-	}
+	public MessageGiveDrink() {}
 	
 	@Override
-	public void fromBytes(ByteBuf buf) {
-		this.stack = ByteBufUtils.readItemStack(buf);
-	}
+	public void fromBytes(ByteBuf buf) {}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeItemStack(buf, stack);
-	}
+	public void toBytes(ByteBuf buf) {}
 	
-	public static class GiveItemMessageHandler implements IMessageHandler<MessageGiveItem, IMessage>{
+	public static class GiveItemMessageHandler implements IMessageHandler<MessageGiveDrink, IMessage>{
 
 		@Override
-		public IMessage onMessage(MessageGiveItem message, MessageContext ctx) {
+		public IMessage onMessage(MessageGiveDrink message, MessageContext ctx) {
 			EntityPlayerMP p = ctx.getServerHandler().player;
-			p.getServerWorld().addScheduledTask(() -> ItemHandlerHelper.giveItemToPlayer(p, message.stack));
+			p.getServerWorld().addScheduledTask(() -> ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.rum)));
 			return null;
 		}
 		

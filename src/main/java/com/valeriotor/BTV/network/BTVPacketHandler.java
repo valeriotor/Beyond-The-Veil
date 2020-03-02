@@ -28,7 +28,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageActivateBauble.ActivateBaubleMessageHandler.class, MessageActivateBauble.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageActivatePower.ActivatePowerMessageHandler.class, MessageActivatePower.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageWateryCradle.WateryCradleMessageHandler.class, MessageWateryCradle.class, count++, Side.SERVER);
-		INSTANCE.registerMessage(MessageGiveItem.GiveItemMessageHandler.class, MessageGiveItem.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageGiveDrink.GiveItemMessageHandler.class, MessageGiveDrink.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageCityMapper.CityMapperMessageHandler.class, MessageCityMapper.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageRitualToServer.RitualToServerMessageHandler.class, MessageRitualToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageDagonDialogue.DagonDialogueMessageHandler.class, MessageDagonDialogue.class, count++, Side.SERVER);

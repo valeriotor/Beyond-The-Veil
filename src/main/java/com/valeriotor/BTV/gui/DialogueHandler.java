@@ -8,7 +8,7 @@ import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageGiveItem;
+import com.valeriotor.BTV.network.MessageGiveDrink;
 import com.valeriotor.BTV.network.MessageSyncDialogueData;
 import com.valeriotor.BTV.network.MessageSyncStringDataToServer;
 import com.valeriotor.BTV.research.ResearchUtil;
@@ -248,7 +248,7 @@ public class DialogueHandler {
 	}
 	
 	private static void performAdditionalEffects(String profession, int option, int talkCount) {
-		if(getDialogueName(profession) == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveItem(new ItemStack(ItemRegistry.rum)));
+		if(getDialogueName(profession) == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveDrink());
 	}
 	
 	private static void removeDialogue(Dialogues d) {
