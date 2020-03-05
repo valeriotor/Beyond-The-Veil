@@ -545,6 +545,13 @@ weeper.shoggoth.please2=PLEASE MASTER, KILL ME.
 weeper.shoggoth.promised=MASTER, YOU PROMISED.
 
 ##################
+#POTION EFFECTS
+##################
+
+effect.folly=Folly
+effect.terror=Terror
+
+##################
 #MEMORIES
 ##################
 
