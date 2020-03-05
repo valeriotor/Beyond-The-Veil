@@ -6,10 +6,19 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.BTV.BeyondTheVeil;
+import com.valeriotor.BTV.capabilities.IPlayerData;
+import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.events.ServerTickEvents;
+import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.BlockNames;
+import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.lib.References;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessagePlaySound;
+import com.valeriotor.BTV.potions.PotionRegistry;
 import com.valeriotor.BTV.research.ResearchUtil;
 import com.valeriotor.BTV.util.DelayedMessage;
+import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
 import com.valeriotor.BTV.worship.Deities;
@@ -23,12 +32,16 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketTitle;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -154,10 +167,35 @@ public class BlockIdol extends ModBlock{
 	}
 	
 	@Override
-	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
-		// WIP
-		if(!worldIn.isRemote) ServerTickEvents.addMessage(new DelayedMessage(60, new TextComponentTranslation("innervoice.idol"), playerIn));
-		super.onBlockClicked(worldIn, pos, playerIn);
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer p) {
+		if(!worldIn.isRemote) {
+			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			if(data.getString(PlayerDataLib.IDOLFOLLY)) {
+				p.addPotionEffect(new PotionEffect(PotionRegistry.folly, 4*20, 3));
+			} else {
+				int a = data.getOrSetInteger(PlayerDataLib.IDOLBREAK, 0, true);
+				if(a < 9) {
+					p.sendMessage(new TextComponentTranslation(String.format("hit.idol.schiz%d", a)));
+					data.setInteger(PlayerDataLib.IDOLBREAK, a+1, true);
+				} else if(a == 9){
+					for(int i = 0; i < 4; i++) 
+						p.sendMessage(new TextComponentTranslation("hit.idol.schiz8"));
+					data.setInteger(PlayerDataLib.IDOLBREAK, a+1, true);
+				} else {
+					p.addPotionEffect(new PotionEffect(PotionRegistry.folly, 4*20));
+					SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentString(References.PURPLE + new TextComponentTranslation("hit.idol.schiz8").getFormattedText()));
+                    ((EntityPlayerMP)p).connection.sendPacket(spackettitle1);
+                    BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.shoggoth_screech), p.getPosition().toLong()), (EntityPlayerMP)p);
+                    for(int i = 0; i < 12; i++)  {
+                    	PlayerTimer pt = new PlayerTimer(p, player -> BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.dagonThump), p.getPosition().toLong()), (EntityPlayerMP)player), i*5);
+                    	ServerTickEvents.addPlayerTimer(pt);
+                    }
+                    data.addString(PlayerDataLib.IDOLFOLLY, false);
+                    ServerTickEvents.addMessage(new DelayedMessage(85, new TextComponentTranslation("hit.idol.schiz9"), p));
+                    ServerTickEvents.addMessage(new DelayedMessage(115, new TextComponentTranslation("hit.idol.schiz10"), p));
+				}
+			}
+		}
 	}
 	
 	

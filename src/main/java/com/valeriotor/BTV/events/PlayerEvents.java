@@ -77,19 +77,6 @@ public class PlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void itemCraftedEvent(ItemCraftedEvent event) {
-		if(event.player.world.isRemote) 
-			return;
-		Item i = event.crafting.getItem();
-		EntityPlayer p = event.player;
-		if(i == Item.getItemFromBlock(BlockRegistry.BlockWateryCradle) && ResearchUtil.getResearchStage(p, "WATERYCRADLE") == 0) {
-			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.CRAFTED_CRADLE);
-		} else if(i == Item.getItemFromBlock(BlockRegistry.BlockLacrymatory) && ResearchUtil.getResearchStage(p, "WEEPERS") == 1) {
-			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.CRAFTED_LACRYMATORY);
-		}
-	}
-	
-	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
 		if(!event.player.world.isRemote) {
 			int parasiteProgress = event.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.PARASITE_PROGRESS, 0, false);

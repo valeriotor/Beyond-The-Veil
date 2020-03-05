@@ -182,6 +182,18 @@ interact.statue.bound=My blood bathes this Statue. It is now bound, our link unb
 interact.gearbench.dunno=I do not know how to use this.
 interact.lacrymatory.amount=This Lacrymatory holds %1$s millibuckets of Tears.
 
+hit.idol.schiz0=I should not try to break it.
+hit.idol.schiz1=I shouldn't be doing this.
+hit.idol.schiz2=I should stop.
+hit.idol.schiz3=I should really stop.
+hit.idol.schiz4=Stop.
+hit.idol.schiz5=Stop it.
+hit.idol.schiz6=Stop it now.
+hit.idol.schiz7=You should really stop.
+hit.idol.schiz8=STOP
+hit.idol.schiz9=You fool.
+hit.idol.schiz10=You don't know what you're dealing with.
+
 ##################
 #MULTIBLOCKS
 ##################

@@ -39,6 +39,7 @@ public class PlayerDataLib {
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
 	public static final String MAPPER_PLAYER_INTERACT = "mpi"; // This isn't used as a key by itself, but only with an int added to the end e.g. mpi1
+	public static final String IDOLBREAK = "idol_break";
 	
 	// Strings (Non-temporary)
 	public static final String FISHQUEST = "fish_quest";
@@ -52,8 +53,7 @@ public class PlayerDataLib {
 	public static final String OLDTRUTH = "old_truth";
 	public static final String VOID = "void";
 	public static final String WAIT = "wait";
-	public static final String CRAFTED_CRADLE = "craftedcradle";
-	public static final String CRAFTED_LACRYMATORY = "craftedlacrymatory";
+	public static final String IDOLFOLLY = "idolfolly";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
 	
 	// Strings (Temporary)
