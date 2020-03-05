@@ -135,7 +135,7 @@
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBER.stage.0",
-					"required_research": ["craftedchamber"],
+					"required_research": ["craftedsleep_chamber"],
                     "recipes": ["beyondtheveil:sleep_chamber"]
 				},
                 {
@@ -155,7 +155,7 @@
         "stages": [
 				{
 					"text": "research.SLEEPCHAMBERADVANCED.stage.0",
-					"required_research": ["craftedadvancedchamber"],
+					"required_research": ["craftedsleep_chamber_advanced"],
                     "recipes": ["beyondtheveil:sleep_chamber_advanced"]
 				},
                 {
@@ -464,7 +464,7 @@
 				},
                 {
                     "text": "research.DREAMBOTTLE.stage.1",
-					"required_research": ["craftedbottle"],
+					"required_research": ["crafteddream_bottle"],
 					"recipes" : ["beyondtheveil:dream_bottle"]
                 },
                 {
@@ -580,7 +580,7 @@
         "stages": [
 				{
 					"text": "research.WATERYCRADLE.stage.0",
-					"required_research": ["craftedcradle"],
+					"required_research": ["craftedwatery_cradle"],
 					"recipes" : ["beyondtheveil:watery_cradle"]
 				},
                 {
@@ -637,10 +637,12 @@
                 },
                 {
 					"text": "research.WEEPERS.stage.1",
-					"required_research": ["craftedlacrymatory"]
+					"required_research": ["craftedlacrymatory"],
+					"recipes" : ["beyondtheveil:lacrymatory"]
 				},
                 {
-                    "text": "research.WEEPERS.stage.2"
+                    "text": "research.WEEPERS.stage.2",
+					"recipes" : ["beyondtheveil:lacrymatory"]
                 }
             ]
         },
@@ -654,11 +656,12 @@
         "stages": [
 				{
 					"text": "research.REVELATIONRING.stage.0",
-					"required_research": ["craftedrevelationring"],
+					"required_research": ["craftedrevelation_ring"],
 					"recipes" : ["beyondtheveil:revelation_ring"]
                 },
                 {
-					"text": "research.REVELATIONRING.stage.1"
+					"text": "research.REVELATIONRING.stage.1",
+					"recipes" : ["beyondtheveil:revelation_ring"]
 				}
             ]
         },
@@ -672,10 +675,12 @@
         "stages": [
 				{
 					"text": "research.BONETIARA.stage.0",
-					"required_research": ["craftedbonetiara"]
+					"required_research": ["craftedbone_tiara"],
+					"recipes" : ["beyondtheveil:bone_tiara"]
                 },
                 {
-					"text": "research.BONETIARA.stage.1"
+					"text": "research.BONETIARA.stage.1",
+					"recipes" : ["beyondtheveil:bone_tiara"]
 				}
             ]
         },
@@ -689,10 +694,12 @@
         "stages": [
 				{
 					"text": "research.BLEEDINGBELT.stage.0",
-					"required_research": ["craftedbleedingbelt"]
+					"required_research": ["craftedbleeding_belt"],
+					"recipes" : ["beyondtheveil:bleeding_belt"]
                 },
                 {
-					"text": "research.BLEEDINGBELT.stage.1"
+					"text": "research.BLEEDINGBELT.stage.1",
+					"recipes" : ["beyondtheveil:bleeding_belt"]
 				}
             ]
         },
@@ -706,10 +713,12 @@
         "stages": [
 				{
 					"text": "research.BLOODCOVENANT.stage.0",
-					"required_research": ["craftedbloodcovenant"]
+					"required_research": ["craftedblood_covenant"],
+					"recipes" : ["beyondtheveil:blood_covenant"]
                 },
                 {
-					"text": "research.BLOODCOVENANT.stage.1"
+					"text": "research.BLOODCOVENANT.stage.1",
+					"recipes" : ["beyondtheveil:blood_covenant"]
 				}
             ]
         },
@@ -723,10 +732,12 @@
         "stages": [
 				{
 					"text": "research.BLOODCROWN.stage.0",
-					"required_research": ["craftedbloodcrown"]
+					"required_research": ["craftedblood_crown"],
+					"recipes" : ["beyondtheveil:blood_crown"]
                 },
                 {
-					"text": "research.BLOODCROWN.stage.1"
+					"text": "research.BLOODCROWN.stage.1",
+					"recipes" : ["beyondtheveil:blood_crown"]
 				}
             ]
         },
@@ -740,10 +751,12 @@
         "stages": [
 				{
 					"text": "research.AZACNOCHARM.stage.0",
-					"required_research": ["craftedazacnocharm"]
+					"required_research": ["craftedazacno_charm"],
+					"recipes" : ["beyondtheveil:azacno_charm"]
                 },
                 {
-					"text": "research.AZACNOCHARM.stage.1"
+					"text": "research.AZACNOCHARM.stage.1",
+					"recipes" : ["beyondtheveil:azacno_charm"]
 				}
             ]
         },
@@ -781,7 +794,7 @@
         "stages": [
 				{
 					"text": "research.SACRIFICESTATUE.stage.0",
-					"required_research": ["craftedpstatue"]
+					"required_research": ["craftedsacrifice_statue"]
                 },
                 {
 					"text": "research.SACRIFICESTATUE.stage.1"
@@ -798,7 +811,7 @@
         "stages": [
 				{
 					"text": "research.PENITENCESTATUE.stage.0",
-					"required_research": ["craftedsstatue"]
+					"required_research": ["craftedpenitence_statue"]
                 },
                 {
 					"text": "research.PENITENCESTATUE.stage.1"
@@ -829,7 +842,7 @@
 				{
                     "text": "research.SACRIFICEALTAR.stage.0",
                     "recipes" : ["beyondtheveil:sacrifice_altar"],
-					"required_research": ["craftedscore"]
+					"required_research": ["craftedsacrifice_altar"]
                 },
                 {
                     "text": "research.SACRIFICEALTAR.stage.1",

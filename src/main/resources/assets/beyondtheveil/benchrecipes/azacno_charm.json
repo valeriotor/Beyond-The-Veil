@@ -1,0 +1,17 @@
+{
+	"rows" : [
+		"CSSC",
+		"SRBS",
+		"STTS",
+		"CSSC"
+	],
+	"output" : "beyondtheveil:azacno_charm",
+	"map": {
+		"B" : "beyondtheveil:blood_covenant",
+		"C" : "minecraft:chorus_fruit",
+		"R" : "beyondtheveil:blood_crown",
+		"S" : "minecraft:shulker_shell",
+		"T" : "fluid:tears"
+	},
+	"req" : "AZACNOCHARM;0"
+}

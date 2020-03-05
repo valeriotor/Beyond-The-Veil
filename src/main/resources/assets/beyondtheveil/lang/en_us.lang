@@ -657,7 +657,7 @@ research.metallumDream.text=Influence my dreams with the Metallum aspect.
 research.SLEEPCHAMBER.title=Sleep Chamber
 research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity.<BR>Oh, how ironic that now it is sleep I need, and can't get enough of it.<BR> I must Dream, keep Dreaming, again and again. Once a day, only at night, is not enough, it just isn't. I shall focus my mind on the creation of some device capable of ridding me of that limit, at least partially.
 research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time.<BR>The Chamber must be opened, and once I'm inside I must close it to start Dreaming. It is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by a nearby Fume Spreader.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.<BR>It is merely a stepping stone, to shatter all the fake truths I thought I knew.
-research.craftedchamber.text=Craft a Sleep Chamber.
+research.craftedsleep_chamber.text=Craft a Sleep Chamber.
 
 research.EFFECTDREAMS.title=Affecting myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
@@ -680,7 +680,7 @@ research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm su
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>New revelations spring to mind on how to make it reach its full potential.
 research.SLEEPCHAMBERADVANCED.stage.1=The key was WATER. What this substance has to do with Dreaming I can't yet guess, but its addition in the Sleep Chamber's gears and wirings vastly improved its Dream-aiding capabilities.<BR>This Advanced Sleep Chamber lets me Dream twice as many times per day as the regular one. Not only that, it lets my Dream be influenced by two Fume Spreaders at the same time!<BR>Just think of the combinations!
-research.craftedadvancedchamber.text=Craft an Advanced Sleep Chamber.
+research.craftedsleep_chamber_advanced.text=Craft an Advanced Sleep Chamber.
 
 research.VOIDDREAMS.title=Dreams of Void
 research.VOIDDREAMS.stage.0=A new Memory springs forth in my mind.<BR>The Void. Black, inscrutable, unknowable. Its essence is burned in my mind, like no Memory before.<BR>Dreams go through THE VOID.<BR>THAT is where they truly depart from the known world to go where nothing can follow them... yet.<BR>I am certain of this.<BR>I need to Dream of the VOID.<BR>Of its black emptiness.<BR>So I may reach it myself.
@@ -755,7 +755,7 @@ research.DREAMBOTTLE.stage.0=I shed a tear when I was baptised.<BR>A sliver of T
 research.DREAMBOTTLE.stage.1=Through Weepers and Fleti I am granted knowledge, and through Dreams I shall utilize and magnify such knowledge.<BR>A Dream Bottle is what I must craft. An invaluable tool that will let me Dream limitless times per day, with multiple Memories at a time.<BR>The only price will be tears. But not my own.
 research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
 research.gotweepers.text=Find a way to gather tears.
-research.craftedbottle.text=Craft a Dream Bottle.
+research.crafteddream_bottle.text=Craft a Dream Bottle.
 
 research.WATERWALKING.title=Water Walking
 research.WATERWALKING.stage.0=Great Father Dagon, I am coming.
@@ -767,7 +767,7 @@ research.!WATERWALKING.text=Bathe in the End and Dream. Then Commune.
 research.WATERYCRADLE.title=Watery Cradle
 research.WATERYCRADLE.stage.0=Useless worms plague this world, living in their placid isles of ignorance.<BR>The Great Dreamer teaches me how best to employ them.<BR>I will make their bodies, maybe their corpses, mine to experiment upon.<BR>They are insignificant, after all.
 research.WATERYCRADLE.stage.1=Villagers don't serve much use to the world, do they?<BR>Now they will. Through me.<BR>The Watery Cradle, where patients drift off in Dreams, giving me right and duty to do with their bodies what I wish, through the use of Surgery Tools.<BR>Three units of a Watery Cradle must be put in a line, then I shall interact with one of its ends.<BR>Patients will come through the use of a very simple blackjack, made to stun them into unconsciousness. Using it upon a Villager will put him on the ground, ready to be picked up by interacting with him while sneaking.<BR>I can then place the Held Villager into the Watery Cradle's head, and find ways to experiment.<BR>It is none other than The Great Dreamer Himself who grants this knowledge upon me. Oh, the honor!
-research.craftedcradle.text=Craft three Watery Cradles.
+research.craftedwatery_cradle.text=Craft three Watery Cradles.
 
 research.SPINES.title=Ripping spines
 research.SPINES.stage.0=A god among men is no different from a man among worms.<BR>Rip their spines and make them CRAWL.
@@ -789,32 +789,32 @@ research.craftedlacrymatory.text=Craft a Lacrymatory.
 research.REVELATIONRING.title=Ring of Revelation
 research.REVELATIONRING.stage.0=Weepers and Fleti lack eyes, yet they see more than most.<BR>Their tears are precious, and I shall dampen a ring with them.
 research.REVELATIONRING.stage.1=The Ring of Revelation lets me see the unseen.<BR>When its passive effect is turned on, all invisible entities shall be revealed to me.<BR>When its active power is used, all such entities will outright lose their invisibility, leaving them for the whole world to see.<BR>Nothing shall lie unseen to me again.
-research.craftedrevelationring.text=Craft a Ring of Revelation.
+research.craftedrevelation_ring.text=Craft a Ring of Revelation.
 
 research.BLEEDINGBELT.title=Bleeding Belt
 research.BLEEDINGBELT.stage.0=As my knowledge grows, so does my life become more precious.<BR>It must be preserved.<BR>I will gladly make sacrifices, of all kinds.<BR>Blood is the key.
 research.BLEEDINGBELT.stage.1=When worn, the Bleeding Belt oozes the dark red fluid, of unknown origin for it isn't mine.<BR>What I do know is that, when its passive effect is enabled, it bathes me with life in exchange for hunger.<BR>Any time I am struck, my health shall be unharmed for as long as my stomach isn't empty.
-research.craftedbleedingbelt.text=Craft a Bleeding Belt.
+research.craftedbleeding_belt.text=Craft a Bleeding Belt.
 
 research.BONETIARA.title=Bone Tiara
 research.BONETIARA.stage.0=If it is true that one must fight fire with fire, then I shall be the first to fight fear with fear.<BR>No terrors shall break my will.
-research.BONETIARA.stage.1=The things I see as my knowledge grows send shivers down my spine.<BR>Hopefully, they'll know send them through someone else's.<BR>A tiara of bones will now adorn my head. As long as its passive effect is on, I shall be immune to Terror and Folly. My will will not break.<BR>Not yet.
-research.craftedbonetiara.text=Craft a Bone Tiara.
+research.BONETIARA.stage.1=The things I see as my knowledge grows send shivers down my spine.<BR>Hopefully, they'll now send them through someone else's.<BR>A tiara of bones will now adorn my head. As long as its passive effect is on, I shall be immune to Terror and Folly. My will will not break.<BR>Not yet.
+research.craftedbone_tiara.text=Craft a Bone Tiara.
 
 research.BLOODCOVENANT.title=Covenant of Blood
 research.BLOODCOVENANT.stage.0=Through blood, different lives are linked.<BR>The dark red fluid is not of this world, and the links are of eldritch nature. I may find use for such bonds, yet this time I cannot do it alone.
 research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all others who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally. 
-research.craftedbloodcovenant.text=Craft a Covenant of Blood.
+research.craftedblood_covenant.text=Craft a Covenant of Blood.
 
 research.BLOODCROWN.title=Crown of Thorns
 research.BLOODCROWN.stage.0=If I am ever to be struck down, I want it to be by my own hand.<BR>Until then, I must defy death. Again and again.<BR>I need the WILL to LIVE.
-research.BLOODCROWN.stage.1=Sprinkled with blood and dust of dorsal spines, the Crown of Thorns is a thing of horror.<BR>When its passive effect is active, it grants me the will and strength to keep standing after a blow that would've been final, piercing my forehead and bathing me in my own blood.<BR>Yet no boon comes without a price. After the effect takes hold I will be mortal again for a short periodo, at the end of which the damage that was negated will finally be dealt.<BR>I must use the Crown wisely, and be ready to heal.
-research.craftedbloodcrown.text=Craft a Crown of Thorns.
+research.BLOODCROWN.stage.1=Sprinkled with blood and dust of dorsal spines, the Crown of Thorns is a thing of horror.<BR>When its passive effect is active, it grants me the will and strength to keep standing after a blow that would've been final, piercing my forehead and bathing me in my own blood.<BR>Yet no boon comes without a price. After the effect takes hold I will be mortal again for a short period, at the end of which the damage that was negated will finally be dealt.<BR>I must use the Crown wisely, and be ready to heal.
+research.craftedblood_crown.text=Craft a Crown of Thorns.
 
 research.AZACNOCHARM.title=Charm of Azacno
 research.AZACNOCHARM.stage.0=Aeons ago, a great parasite fell from the Cosmos.<BR>Unknown in shape and intent, it laid its nest in the deepest Oceans.<BR>Sucking blood, bringing fear and granting knowledge. To know him is to reach a culmination of my experiments.
-research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
-research.craftedazacnocharm.text=Craft a Charm of Azacno.
+research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected Player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
+research.craftedazacno_charm.text=Craft a Charm of Azacno.
 
 research.STATUE.title=Worship
 research.STATUE.stage.0=Those worthless wretches, the spineless Villagers, need not be turned into Fleti to be of use.<BR>Bound to the ground as they are, they may think themselves helpless and useless. Fool's worries, I say! All they need is a guide.<BR>Or, rather, a God.<BR>I will gladly lend myself to the cause.<BR>A symbol is needed. Say, a Statue.<BR>Then, a link. My blood will do.<BR>Blood makes for powerful binding, after all.
@@ -826,12 +826,12 @@ research.linkedstatue.text=Link a Statue to myself.
 research.SACRIFICESTATUE.title=Statue of Sacrifice
 research.SACRIFICESTATUE.stage.0=Could I seek meaning in selflessness?<BR>To pay myself for someone else's wellbeing? Quite a change from my previous attitudes, and yet, I have followers to take care of now!<BR>I shall build a Statue that portrays me in a very different position, then.
 research.SACRIFICESTATUE.stage.1=I feel a bit better with myself now, and that's quite something in this journey of hopelessness.<BR>The Statue of Sacrifice does everything the normal Statue does, though it takes slighty more crawlers to achieve the same power.<BR>However, when I'm under its effects, I am capable of using the Sacrificial Altar by using a Sacrificial Knife upon it, instead of sacrificing a Villager.<BR>Additionally, every time I take damage all my nearby combat minions (such as summoned Deep Ones, and the like) are strengthened and healed.<BR>An example, that's what I must be! Even if it means pain!<BR>After all, I do deserve some Penitence.
-research.craftedsstatue.text=Craft a Statue of Sacrifice.
+research.craftedsacrifice_statue.text=Craft a Statue of Sacrifice.
 
 research.PENITENCESTATUE.title=Statue of Penitence
 research.PENITENCESTATUE.stage.0=I have sinned. I have sinned.<BR>In my arrogance I forgot my insignificance.<BR>I must right these wrongs. With blood.<BR>My own.<BR>I will build a new Statue, one that shows my regret.
 research.PENITENCESTATUE.stage.1=This feels more.. right.<BR>I wanted to play God, despite being so, so tiny. It's only right that I suffer some punishment.<BR>The Statue of Penitence does everything the normal Statue does, though it takes slighty more crawlers to achieve the same power.<BR>However, when I'm under its effects, I am reminded of my own flaws, my failures, my weaknesses.<BR>With a Sacrificial Knife, I will cut myself while wielding a sword in the main hand, for I've always been weak.<BR>I will cut when I wield a shovel, an axe, a pickaxe, for I've always been slow.<BR>Even the hoe.. for the green thumb I never had.<BR>When the worshippers are enough, even the Crown of Thorns may become easier to use.<BR>The way of pain is an arduous one, yet not impossible.<BR>All it takes is a little Sacrifice.
-research.craftedpstatue.text=Craft a Statue of Penitence.
+research.craftedpenitence_statue.text=Craft a Statue of Penitence.
 
 research.VALOURSTATUE.title=Statue of Valour
 research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if there were, I'd be no paragon.<BR>This research is a dead end.
@@ -839,7 +839,7 @@ research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if t
 research.SACRIFICEALTAR.title=Altar of Sacrifice
 research.SACRIFICEALTAR.stage.0=I revel in limitless gratitude towards my Patron, yet in agony.<BR>For there is no way I can duly offer Him my thanks.<BR>Or is there?<BR>Blood makes for powerful bonds. It is water and life, all at once.<BR>It is the link that binds all things living to the deepest oceans.<BR>Through blood shall I thank Him, through life and water.<BR>An Altar of Sacrifice, of Hearts and Prismarine.<BR>First, a core.
 research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice.<BR>A heartless villager is to be placed upon the core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
-research.craftedscore.text=Craft a Sacrificial Altar Core.
+research.craftedsacrifice_altar.text=Craft a Sacrificial Altar Core.
 
 research.CORALSTAFF.title=Coral Staff
 research.CORALSTAFF.stage.0=In their unholy penitence, undead seek life.<BR>However, they're imbeciles.<BR>It shouldn't be a difficult task to redirect them from one beating heart to the next, their "minds" fooled by what seems better flesh.<BR>I *know* the exact tool I need.

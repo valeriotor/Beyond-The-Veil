@@ -25,8 +25,9 @@ public class ResearchEvents {
 	}
 	
 	public static void gearBenchCraftEvent(EntityPlayer p, ItemStack stack) {
-		if(stack.getItem() == Item.getItemFromBlock(BlockRegistry.BlockStatue))
-			SyncUtil.addStringDataOnServer(p, false, "craftedstatue");
+		String s = stack.getItem().getRegistryName().getResourcePath();
+		s = s.replace("beyondtheveil:", "");
+		SyncUtil.addStringDataOnServer(p, false, "crafted" + s);
 	}
 	
 	public static void progressResearchEvent(EntityPlayer p, String key, int newStage) {

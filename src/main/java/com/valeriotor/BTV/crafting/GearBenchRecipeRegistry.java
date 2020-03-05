@@ -28,6 +28,11 @@ public class GearBenchRecipeRegistry {
 		registerGBRecipe("watery_cradle");
 		registerGBRecipe("blackjack");
 		registerGBRecipe("sleep_chamber_advanced");
+		registerGBRecipe("bleeding_belt");
+		registerGBRecipe("blood_covenant");
+		registerGBRecipe("blood_crown");
+		registerGBRecipe("bone_tiara");
+		registerGBRecipe("azacno_charm");
 	}
 	
 	private static void registerGBRecipe(String fileName) {
