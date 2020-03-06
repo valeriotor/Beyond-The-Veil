@@ -33,6 +33,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -143,7 +144,7 @@ public class PlayerEvents {
 			EntityPlayer p = (EntityPlayer) event.getEntity();
 			IPlayerData cap = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			BlockPos pos = p.getPosition();
-			if(!event.isCanceled()) {
+			if(!event.isCanceled() && p.dimension == DimensionType.OVERWORLD.getId()) {
 				cap.setInteger(PlayerDataLib.DEATH_X, pos.getX(), false);
 				cap.setInteger(PlayerDataLib.DEATH_Y, pos.getY(), false);
 				cap.setInteger(PlayerDataLib.DEATH_Z, pos.getZ(), false);

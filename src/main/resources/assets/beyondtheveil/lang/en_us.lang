@@ -618,7 +618,8 @@ dreams.playeritem.mildsuccess=Another player was found, but they were wielding n
 dreams.playeritem.firstletter=Their name starts with '%1$s'.
 dreams.playersearch.fail=The Dream was unable to locate another player.
 
-dreams.deathsearch.found=%1$s's last death was at x: %2$s, y: %3$s, z: %4$s. You are unaware of what dimension he was in.
+dreams.deathsearch.teleport=It seems that casting the Death Dream on myself allows me to teleport to my last death's location.
+dreams.deathsearch.found=%1$s's last death in the Overworld was at x: %2$s, y: %3$s, z: %4$s.
 dreams.deathsearch.notrecently=%1$s doesn't seem to have died recently.
 dreams.deathsearch.toostrong=%1$s's mind is too well shielded to be breached.
 
@@ -875,6 +876,7 @@ research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away a
 
 research.DEATHDREAM.title=Dream of Death
 research.DEATHDREAM.stage.0=A Dream of Death, as I respawn once again.<BR>Yet I am not the only one that cannot truly die.<BR>With this Memory, I can invade the privacy of another random Player, and discover the last place where they died, hopefully profiting off their spoils.<BR>No grave is too sacred.
+research.DEATHDREAM.addenda.teleport=It seems that targeting myself with a Death Dream, through a Player Sigil bound to myself used on the Dream Shrine, allows me to outright teleport to my last Overworld death's location.<BR>But how? How can a simple Dream shift my whole body?<BR>Could this be a key to breaching the Veil?
 
 research.REPAIRDREAM.title=Dream of Mending
 research.REPAIRDREAM.stage.0=A Dream of Mending, as I smite the hammer on the anvil.<BR>I cannot truly die, yet many of my tools are fraught with mortality. This Memory influences the very matter I am surrounded with, and repairs the items I am wearing and wielding.

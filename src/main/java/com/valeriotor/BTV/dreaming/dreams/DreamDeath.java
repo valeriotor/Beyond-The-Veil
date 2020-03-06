@@ -6,6 +6,7 @@ import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -35,14 +36,25 @@ public class DreamDeath extends Dream{
 			}
 			target = list.get(w.rand.nextInt(list.size()));
 		}
+		boolean selfDeath = target.equals(p);
 		int lvl = DreamHandler.getDreamPowerLevel(p);
-		if(DreamHandler.getDreamAttack(p, target) >= 0) {
+		if(selfDeath || DreamHandler.getDreamAttack(p, target) >= 0) {
 			IPlayerData cap = target.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			Integer x = cap.getInteger(PlayerDataLib.DEATH_X);
 			Integer y = cap.getInteger(PlayerDataLib.DEATH_Y);
 			Integer z = cap.getInteger(PlayerDataLib.DEATH_Z);
 			if(x != null && y != null && z != null) {
-				p.sendMessage(new TextComponentTranslation("dreams.deathsearch.found", new Object[] {target.getName(), x, y, z}));
+				if(!selfDeath)
+					p.sendMessage(new TextComponentTranslation("dreams.deathsearch.found", new Object[] {target.getName(), x, y, z}));
+				else {
+					p.setPosition(x, y, z);
+					if(p instanceof EntityPlayerMP)
+						((EntityPlayerMP) p).connection.setPlayerLocation(x + 0.5, y, z + 0.5, p.rotationYaw, p.rotationPitch);
+					if(!cap.getString(PlayerDataLib.DEATHTELEPORT)) {
+						p.sendMessage(new TextComponentTranslation("dreams.deathsearch.teleport"));
+						SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DEATHTELEPORT);
+					}
+				}
 			} else {
 				p.sendMessage(new TextComponentTranslation("dreams.deathsearch.notrecently", new Object[] {target.getName()}));
 			}

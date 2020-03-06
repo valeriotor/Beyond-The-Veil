@@ -54,6 +54,7 @@ public class PlayerDataLib {
 	public static final String VOID = "void";
 	public static final String WAIT = "wait";
 	public static final String IDOLFOLLY = "idolfolly";
+	public static final String DEATHTELEPORT = "deathtp";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
 	
 	// Strings (Temporary)

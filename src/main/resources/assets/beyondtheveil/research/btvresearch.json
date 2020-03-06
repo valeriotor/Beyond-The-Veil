@@ -525,7 +525,13 @@
                     "text": "research.DEATHDREAM.stage.0",
 					"recipes" : ["beyondtheveil:memory_phial;memDEATH"]
                 }
-            ]
+            ],
+		"addenda" : [
+				{
+					"text": "research.DEATHDREAM.addenda.teleport",
+					"required_research": ["deathtp"]
+				}
+			]
         },
 		{
         "key": "REPAIRDREAM",
