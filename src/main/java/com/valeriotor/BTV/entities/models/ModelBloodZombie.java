@@ -152,8 +152,9 @@ public class ModelBloodZombie extends ModelAnimated {
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	this.setAngles(false);
+    	EntityBloodZombie z = (EntityBloodZombie)e;
     	this.resetOffsets(bodyParts);
-    	int animTicks = ((EntityBloodZombie)e).getAnimCounter();
+    	int animTicks = z.getAnimCounter();
     	this.left_leg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.right_leg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
     	this.jaw.rotateAngleX = 0.22759093446006054F + (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366)/20;
@@ -162,9 +163,14 @@ public class ModelBloodZombie extends ModelAnimated {
     	this.left_arm.offsetY = offset;
     	this.upper_body.offsetY = offset / 2;
     	this.upper_body.rotateAngleX = 0.9105382707654417F + offset;
-    	Animation idle = ((EntityBloodZombie)e).getIdleAnimation();
-    	if(idle != null) {
-    		idle.applyTransformations(bodyParts, partialTickTime);
+    	Animation attack = z.getAttackAnimation();
+    	if(attack != null) {
+    		attack.applyTransformations(bodyParts, partialTickTime);
+    	} else {
+	    	Animation idle = z.getIdleAnimation();
+	    	if(idle != null) {
+	    		idle.applyTransformations(bodyParts, partialTickTime);
+	    	}
     	}
     	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }

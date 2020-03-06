@@ -10,6 +10,8 @@ public class AnimationRegistry {
 	public static AnimationTemplate blood_skeleton_spook;
 	public static AnimationTemplate blood_skeleton_left_swing;
 	public static AnimationTemplate blood_skeleton_right_swing;
+	public static AnimationTemplate blood_zombie_left_swing;
+	public static AnimationTemplate blood_zombie_right_swing;
 	public static AnimationTemplate deep_one_right_swing;
 	public static AnimationTemplate deep_one_left_swing;
 	public static AnimationTemplate crazed_weeper_transform;
@@ -26,6 +28,8 @@ public class AnimationRegistry {
 		deep_one_left_swing = new AnimationTemplate("deep_one_left_swing");
 		deep_one_right_swing = new AnimationTemplate("deep_one_right_swing");
 		crazed_weeper_transform = new AnimationTemplate("crazed_weeper_transform");
+		blood_zombie_left_swing = new AnimationTemplate("blood_zombie_left_swing");
+		blood_zombie_right_swing = new AnimationTemplate("blood_zombie_right_swing");
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {
@@ -40,6 +44,8 @@ public class AnimationRegistry {
 		if(anim == blood_skeleton_left_swing) return 8;
 		if(anim == blood_skeleton_right_swing) return 9;
 		if(anim == crazed_weeper_transform) return 10;
+		if(anim == blood_zombie_left_swing) return 11;
+		if(anim == blood_zombie_right_swing) return 12;
 		return -1;
 	}
 	
@@ -56,6 +62,8 @@ public class AnimationRegistry {
 			case 8: return blood_skeleton_left_swing;
 			case 9: return blood_skeleton_right_swing;
 			case 10: return crazed_weeper_transform;
+			case 11: return blood_zombie_left_swing;
+			case 12: return blood_zombie_right_swing;
 		}
 		return null;
 	}

@@ -1,6 +1,7 @@
 package com.valeriotor.BTV.entities;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import com.valeriotor.BTV.animations.Animation;
 import com.valeriotor.BTV.animations.AnimationRegistry;
@@ -13,19 +14,20 @@ import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
+public class EntityBloodZombie extends EntityMob implements IPlayerGuardian, IAnimatedAttacker{
 	
 	
 	private Animation idle_animation;
+	private Animation attackAnimation;
 	private int animCounter = -1;
 	private UUID master;
 	
@@ -65,6 +67,11 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		if(world.isRemote) {
+			if(this.attackAnimation != null) {
+				this.attackAnimation.update();
+				if(this.attackAnimation.isDone())
+					this.attackAnimation = null;
+			}
 			if(animCounter > 0) {
 				animCounter--;
 				if(this.idle_animation != null) {
@@ -118,6 +125,37 @@ public class EntityBloodZombie extends EntityMob implements IPlayerGuardian{
 	@Override
 	public UUID getMasterID() {
 		return this.master;
+	}
+
+	@Override
+	public void setAttackAnimation(int id) {
+		this.attackAnimation = BloodZombieAttacks.values()[id].getAnim();
+	}
+
+	@Override
+	public Animation getAttackAnimation() {
+		return this.attackAnimation;
+	}
+	
+	@Override
+	public void swingArm(EnumHand hand) {
+		super.swingArm(hand);
+		if(!this.world.isRemote)
+			this.sendAnimation(BloodZombieAttacks.values()[this.rand.nextInt(BloodZombieAttacks.values().length)].ordinal());
+	}
+	
+	private enum BloodZombieAttacks {
+		LEFT_SWING(() -> new Animation(AnimationRegistry.blood_zombie_left_swing)),
+		RIGHT_SWING(() -> new Animation(AnimationRegistry.blood_zombie_right_swing));
+		
+		private Supplier<Animation> func;
+		private BloodZombieAttacks(Supplier<Animation> func) {
+			this.func = func;
+		}
+		
+		private Animation getAnim() {
+			return this.func.get();
+		}
 	}
 
 }
