@@ -1003,7 +1003,7 @@
         },
 		{
         "key": "ARBOREALGENERATOR",
-        "name": "research.GHOSTSEEDS.title",
+        "name": "research.ARBOREALGENERATOR.title",
         "icons": [ "beyondtheveil:arboreal_generator" ],
         "category": "BEYOND_THE_VEIL", "location": [ -7, 2],
 		"learn" : "true",

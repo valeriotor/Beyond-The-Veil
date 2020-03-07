@@ -574,6 +574,7 @@ memory.unlock.message=A Memory of %1$s sticks to my mind. I will not forget it.
 memory.unlock.addenda=This Memory will be found in the "%1$s" research in the Necronomicon.
 
 memory.animal.name=Animal
+memory.beheading.name=Beheading
 memory.change.name=Change
 memory.crystal.name=Crystal
 memory.darkness.name=Darkness
@@ -583,6 +584,7 @@ memory.human.name=Human
 memory.introspection.name=Introspection
 memory.learning.name=Learning
 memory.metal.name=Metal
+memory.plant.name=Flora
 memory.power.name=Power
 memory.repair.name=Mending
 memory.sentience.name=Sentience
@@ -896,6 +898,33 @@ research.BLOODSIGILS.title=Blood Sigils
 research.BLOODSIGILS.stage.0=Through blood we're bound not just to the Deepest Oceans, but to All.<BR>A Pathway Sigil can be used to bind to itself a location in the world, simply by using it.<BR>I should try it before bringing my research forwards.
 research.BLOODSIGILS.stage.1=Indeed, the Blood Sigil has forged an unbreakable bond.<BR>Through these Pathway Sigils I will be able to target specific locations.<BR>There is, however, another type of Sigil: the Player Sigil, that can bind a specific person to itself.<BR>More difficult to use, this one requires to be held in my hands, either main or offhand, as I injure another Player enough for them to bleed.<BR>Once their blood is in my hands, so too shall their fate be mine to dictate.
 research.boundpathway.text=Bind a Pathway Sigil.
+
+research.PLANTDREAMS.title=Dreams of Flora
+research.PLANTDREAMS.stage.0=A Memory of Flora, as I grow more and more tplants hrough bone meal.<BR>What could such a Dream entail?
+research.PLANTDREAMS.stage.1=I got an apple.<BR>Started Dreaming, woke up, an apple was in my hands.<BR>It came from nowhere. A mere Dream, capable of creating, or at least transporting matter?<BR>The implications are colossal, but also terrible.<BR>What could I truly achieve through Dreams? And what could other Dreamers do to me, were I to catch their attention?<BR>It's frightening.<BR>But hey, I got an apple!<BR>This Dream deserves further enquiry.
+research.plantDream.text=Dream of Flora.
+
+research.VANILLASEEDS.title=Grass Seeds
+research.VANILLASEEDS.stage.0=The Flora Dream granted me a new kind of crop.<BR>These grass seeds are meant to be cultivated like normal wheat by placing them on tilled soil.<BR>The difference stands in the seeds themselves being the actual crop.<BR>Indeed, when used upon normal dirt these seeds are capable of covering it with lush grass. They are expended in the act, however.<BR>This first bunch of seeds should be used immediately on tilled soil to gain more of their kind, as I do not know whether further Flora Dreams will grant me the same type of seed.
+
+research.REDSTONESEEDS.title=Redstone Seeds
+research.REDSTONESEEDS.stage.0=These seeds are more special than their grass counterpart.<BR>They are cultivated in the same way, yet these have different effects when utilized.<BR>They can be used upon both dirt and grass. When that happens, the grass is converted into Redstone Grass, a mimic type of block that looks exactly like normal grass, but produces a redstone signal when an entity stands upon it.<BR>An invisible trap, to catch unwanted intruders.
+
+research.GHOSTSEEDS.title=Ghost Seeds
+research.GHOSTSEEDS.stage.0=These seeds are extremely light. They feel almost like air in my very own hands.<BR>They can be cultivated on tilled soil like the other two types of seeds.<BR>However, when used upon dirt or grass these seeds will transform that block into ghost grass, an ethereal block that is insubstantial on touch, but looks exactly like grass to the eye. Perfect for pitfalls and the like.<BR>Only now, however, do I reflect on the weirdness of these finds. These seeds are too bizarre to belong to this world.<BR>So where does the Dream go to pluck such treasures?
+
+research.ARBOREALGENERATOR.title=Arboreal Generator
+research.ARBOREALGENERATOR.stage.0=Next time I Dream of Flora, I shall hold a diamond in my hand. Then something will happen.<BR>How do I know this? Well, it's that that I do not know.
+research.ARBOREALGENERATOR.stage.1=This small, pretty tree is known as an Arboreal Generator.<BR>It is a useful plant, that slowly generates saplings on each of its four sides.<BR>It first creates small shrubs. These emit an extremely faint redstone signal, which might come in useful.<BR>These shrubs are then turned into saplings of various kinds.<BR>This plant does not belong to this world, I am certain.
+research.plantgenerator.text=Dream of Flora with a diamond in hand.
+
+research.VIJHISS.title=Vijhiss
+research.VIJHISS.stage.0=My next Flora Dream should be made with a block of obsidian in my hand.<BR>I *know* something is going to happen.
+research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
+research.plantvijhiss.text=Dream of Flora with obsidian in hand.
+
+research.BEHEADINGDREAM.title=Dream of Beheading
+research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
 
 ##################
 #MISC
