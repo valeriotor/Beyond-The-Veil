@@ -3,20 +3,25 @@ package com.valeriotor.BTV.items;
 import java.util.List;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.multiblock.MultiblockRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 import com.valeriotor.BTV.util.SyncUtil;
 
+import net.minecraft.block.BlockQuartz;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -38,6 +43,23 @@ public class ItemBloodSigilPathway extends ModItem{
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {
 		return EnumAction.BOW;
+	}
+	
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer p, World w, BlockPos pos, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		IBlockState state = w.getBlockState(pos);
+		if(state.getBlock() == Blocks.QUARTZ_BLOCK && state.getValue(BlockQuartz.VARIANT) == BlockQuartz.EnumType.CHISELED) {
+			if(!w.isRemote) {
+				boolean shrine = MultiblockRegistry.multiblocks.get("dream_shrine").checksOutBottomCenter(w, pos.down());
+				if(shrine)
+					p.sendMessage(new TextComponentTranslation("multiblock.dream_shrine.checksout"));
+				else 
+					p.sendMessage(new TextComponentTranslation("multiblock.dream_shrine.noshrine"));
+			}
+			return EnumActionResult.SUCCESS;
+		}
+		return super.onItemUse(p, w, pos, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override
