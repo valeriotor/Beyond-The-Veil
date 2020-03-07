@@ -28,6 +28,7 @@ public class PlayerDataLib {
 	public static final String SAPLINGS_SEEN = "saplings";
 	public static final String NECRO_X = "NecroX";
 	public static final String NECRO_Y = "NecroY";
+	public static final String NECRO_FACTOR = "NecroFac";
 	public static final String ELDER_GUARDIANS = "elderguards";
 	public static final String TIMESCHAMBER = "timeschamber";
 	public static final String CURSE = "curse";
@@ -74,6 +75,7 @@ public class PlayerDataLib {
 		tempInts.add(SELECTED_POWER);
 		tempInts.add(NECRO_X);
 		tempInts.add(NECRO_Y);
+		tempInts.add(NECRO_FACTOR);
 		allowedInts = Collections.unmodifiableSet(tempInts);
 		Set<String> tempStrings = new HashSet<String>();
 		tempStrings.add("eldritchDream");

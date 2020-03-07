@@ -36,8 +36,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	
-	int topX = -400;
-	int topY = -200;
+	int topX;
+	int topY;
 	int factor = 3;
 	List<Research> newClickables = new ArrayList<>();
 	List<Research> clickables = new ArrayList<>();
@@ -53,6 +53,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 		IPlayerData data = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
 		this.topY = data.getOrSetInteger(PlayerDataLib.NECRO_Y, -200, false);
+		this.factor = data.getOrSetInteger(PlayerDataLib.NECRO_FACTOR, 3, false);
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			if(entry.getValue().isKnown(map, data)) {
 				if(entry.getValue().getStage() == -1)
@@ -179,6 +180,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
             this.mc.displayGuiScreen((GuiScreen)null);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_Y, this.topY);
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_FACTOR, this.factor);
             if (this.mc.currentScreen == null)
             {
                 this.mc.setIngameFocus();
@@ -193,6 +195,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 			if(status.getStage() == - 1) ResearchUtil.progressResearchClient(mc.player, res.getKey());
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_Y, this.topY);
+			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_FACTOR, this.factor);
 			this.mc.displayGuiScreen(new GuiResearchPage(status));
 			return true;
 		}

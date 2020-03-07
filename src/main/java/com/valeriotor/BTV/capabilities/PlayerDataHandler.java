@@ -197,7 +197,7 @@ public class PlayerDataHandler {
 			Integer a = getInteger(key);
 			if(a != null) return a;
 			setInteger(key, value, temporary);
-			return 0;
+			return value;
 		}
 
 		@Override
