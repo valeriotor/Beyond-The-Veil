@@ -31,6 +31,7 @@ public class DreamPlant extends Dream{
 			for(EnumHand hand : EnumHand.values()) {
 				ItemStack stack = getStackFromStackAndGrantResearch(p, p.getHeldItem(hand));
 				if(stack != null) {
+					p.getHeldItem(hand).shrink(1);
 					ItemHandlerHelper.giveItemToPlayer(p, stack);
 					return true;
 				}
