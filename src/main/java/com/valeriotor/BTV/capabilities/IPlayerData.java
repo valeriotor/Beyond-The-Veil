@@ -38,5 +38,9 @@ public interface IPlayerData {
 	 * 
 	 */
 	public void removeAllStrings();
+	/** To be used only client-side
+	 * 
+	 */
+	public void removeAllInts();
 	
 }

@@ -53,6 +53,7 @@ public class MessageRemoveStringToClient implements IMessage{
 			}
 			if(message.key.equals(PlayerDataLib.ALL)) {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeAllStrings();
+				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeAllInts();
 			}
 			else {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.key);

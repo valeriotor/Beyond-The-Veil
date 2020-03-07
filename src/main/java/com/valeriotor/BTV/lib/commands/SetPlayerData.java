@@ -68,7 +68,12 @@ public class SetPlayerData extends CommandBase{
 				if(data.getString(args[2])) sender.sendMessage(new TextComponentString("The player already has that string"));
 				else data.addString(args[2], false);
 			} else {
-				if(!data.getString(args[2])) sender.sendMessage(new TextComponentString("The player doesn't have that string"));
+				if(!data.getString(args[2])) {
+					if(data.getInteger(args[2]) == null)
+						sender.sendMessage(new TextComponentString("The player doesn't have that string"));
+					else
+						data.removeInteger(args[2]);
+				}
 				else data.removeString(args[2]);
 			}
 		}else if(args.length > 3) {

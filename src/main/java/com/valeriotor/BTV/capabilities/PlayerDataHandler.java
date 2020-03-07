@@ -269,6 +269,12 @@ public class PlayerDataHandler {
 		public boolean hasKeyedString(String key) {
 			return keyedStrings.containsKey(key);
 		}
+
+		@Override
+		public void removeAllInts() {
+			tempInts.clear();
+			ints.clear();
+		}
 		
 		
 	}
