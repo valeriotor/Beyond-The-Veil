@@ -47,7 +47,7 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 				ItemStack seeds = ItemStack.EMPTY;
 				seeds = ItemRegistry.getRandomSeed(RANDOM, 10);
 				for(int i = 0; i < 100 && seeds == ItemStack.EMPTY; i++)
-				 seeds = ForgeHooks.getGrassSeed(RANDOM, 0); // Wasn't working as intended. 
+				 seeds = ForgeHooks.getGrassSeed(RANDOM, 0);
 				if(seeds == ItemStack.EMPTY || seeds.getItem() == Items.WHEAT_SEEDS) seeds = new ItemStack(getRandomSeed(RANDOM));
 				if(seeds != ItemStack.EMPTY) {
 					playerIn.getHeldItem(hand).shrink(1);

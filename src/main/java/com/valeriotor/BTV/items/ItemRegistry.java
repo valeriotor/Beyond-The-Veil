@@ -284,11 +284,18 @@ public class ItemRegistry {
     }
     
     public static ItemStack getRandomSeed(Random r, int chance) {
-    	int a = r.nextInt(3*chance);
+    	int a = r.nextInt(9*chance);
     	switch(a) {
-    	case 0: return new ItemStack(redstone_weed_seeds);
-    	case 1: return new ItemStack(ghost_weed_seeds);
-    	case 2: return new ItemStack(vanilla_weed_seeds);
+    	case 0:
+    	case 1: 
+    	case 2: return new ItemStack(redstone_weed_seeds);
+    	case 3:
+    	case 4: 
+    	case 5: return new ItemStack(ghost_weed_seeds);
+    	case 6:
+    	case 7:
+    	case 8: return new ItemStack(vanilla_weed_seeds);
+    	case 9: return new ItemStack(BlockRegistry.PlantBeanStalk);
     	default: return ItemStack.EMPTY;
     	}
     }
