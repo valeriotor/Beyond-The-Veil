@@ -138,7 +138,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch(button.id) {
 			case 1:
-				if(this.letterCount != this.dialogueLength) completeDialogue();
+				if(this.letterCount < this.dialogueLength) completeDialogue();
 				else {
 					if(this.selectedOption != -1) proceedDialogue(true);
 					else proceedDialogue(false); 
@@ -162,7 +162,7 @@ public class GuiDialogueDweller extends GuiScreen {
 		}else if(keyCode == 42 || keyCode == 54) {
 			completeDialogue();
 		}else if(keyCode == 28) {
-			if(this.letterCount != this.dialogueLength) return;
+			if(this.letterCount < this.dialogueLength) return;
 			if(this.selectedOption != -1) {
 				proceedDialogue(true);
 			}else {
@@ -240,9 +240,14 @@ public class GuiDialogueDweller extends GuiScreen {
 	private void splitDialogue() {
 		String[] strings = GuiHelper.splitStrings(dialogue);
 		this.strings.clear();
+		int length = 0;
 		for(String s : strings) {
-			this.strings.addAll(GuiHelper.splitStringsByWidth(s, (int) (this.xSize * 0.9), mc.fontRenderer));
+			List<String> widthSplit = GuiHelper.splitStringsByWidth(s, (int) (this.xSize * 0.9), mc.fontRenderer);
+			this.strings.addAll(widthSplit);
+			for(String ws : widthSplit)
+				length += ws.length();
 		}
+		this.dialogueLength = length;
 	}
 	
 	private void proceedDialogue(boolean option) {

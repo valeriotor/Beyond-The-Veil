@@ -27,7 +27,11 @@ public class GuiHelper {
 	}
 	
 	public static List<String> splitStringsByWidth(String string, int width, FontRenderer f) {
-		return f.listFormattedStringToWidth(string, width);
+		List<String> strings = f.listFormattedStringToWidth(string, width);
+		for(int i = 0; i < strings.size() - 1; i++) {
+			strings.set(i, strings.get(i).concat(" "));
+		}
+		return strings;
 	}
 	
 	public static int getPreviousStringsLengthByWidth(int index, String string, int width, FontRenderer f) {
