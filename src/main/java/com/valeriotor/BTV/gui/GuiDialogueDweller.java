@@ -290,6 +290,7 @@ public class GuiDialogueDweller extends GuiScreen {
 	public boolean doesCloseDialogue() {
 		if(DialogueHandler.getDialogueName(this.profession) == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) return true;
 		if(DialogueHandler.getDialogueName(profession) == Dialogues.TRUSTEDBAR && this.selectedOption == 1) return true;
+		if(DialogueHandler.getDialogueName(profession) == Dialogues.END2) return true;
 		return false;
 	}
 }

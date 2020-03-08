@@ -264,6 +264,8 @@ public class DialogueHandler {
 		ENJOY("bartender", 1, 1),
 		RUM("bartender", 1, 1),
 		TRUSTEDBAR("bartender", 2, 0),
+		END2("lhkeeper", 1, 1),
+		END("lhkeeper", 6, 0),
 		PAST("lhkeeper", 1, 2),
 		OLDTRUTH("lhkeeper", 4, 2),
 		IKNOW("lhkeeper", 1, 0),

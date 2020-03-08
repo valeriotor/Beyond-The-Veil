@@ -323,7 +323,7 @@ dagon.greeting.3=UNSPEAKABLE CONSEQUENCES WILL FOLLOW YOUR FAILURES
 dagon.greeting.4=YOU ARE MY HERALD
 dagon.greeting.5=BRING THIS GOLD TO THE DWELLERS
 dagon.greeting.6=SO THAT THEY MAY KNOW YOU AS MY AMBASSADOR
-dagon.greeting.7=THEN COMMUNE WITH THE HOLY ONE'S IDOL
+dagon.greeting.7=THEN COMMUNE WITH GOD'S IDOL
 dagon.greeting.8=I WILL HEAR YOU
 dagon.bringgold=These three golden blocks must be brought to the Fisherman Dwellers. We should make haste.
 
@@ -341,6 +341,18 @@ dagon.seaborn.4=ENGULFED IN THE VOID AND CLOSEST TO GOD
 dagon.seaborn.5=THERE YOU WILL DREAM WHILE IN WATER
 dagon.seaborn.6=AND THE OCEANS WILL BE YOURS
 dagon.endbath=We must bathe in the End, and there we must Dream.
+
+dagon.killkeeper.0=SLAY THE LIGHTHOUSE KEEPER
+dagon.killkeeper.1=HIS DEATH WON'T MATTER
+dagon.killkeeper.2=PROVE HIS WORTHLESSNESS
+dagon.killkeeper.3=AND I WILL GRANT YOU SOME TRUTH
+dagon.lastwords=A necessary murder. Should I listen to his last words?
+
+dagon.final.0=HE WAS IRRELEVANT
+dagon.final.1=AND SO ARE YOU
+dagon.final.2=YOUR DEATH WILL COME IN ITS OWN TIME
+dagon.final.3=SEEK WORTH IN PRAYER
+dagon.final.4=GOD WILL NOT LISTEN
 
 ##################
 #DWELLER DIALOGUE
@@ -522,6 +534,13 @@ dweller.lhkeeperoldtruth.talk3.option1=Your actions did:not deserve such:punishm
 dweller.lhkeeperoldtruth.genocidedisagreetalk0=There is no right answer. :But know that I{ despise} those who think the way you do.
 dweller.lhkeeperoldtruth.genocideagreetalk0=That is what we think as well. :Yet your forefathers knew better, it seems.
 dweller.lhkeeperpast.talk0=It matters not. Let the past stay past, we are not the ones who may walk through time. Only speak.
+dweller.lhkeeperend.talk0=Granting me a few last words? |Thank you, traveller. :I'll make it quick.
+dweller.lhkeeperend.talk1=Let's start from an objective Truth. A mathematical one. :The greatest number you could ever think of is nothing to infinity.
+dweller.lhkeeperend.talk2=Another Truth. I am insignificant. :There are countless others exactly like me in this very world. Exact copies. :I am just a bunch of ifs and fors, so irrelevant that you would mete out my death with barely any hesitation.
+dweller.lhkeeperend.talk3=My question, outsider, is this. :Do you really claim a mind of infinite complexity? I am sorry to say but, that's not the way it is. Billions upon billions of synapses, yet, sooner or later, even your mind could be copied. Just like mine.
+dweller.lhkeeperend.talk4=That is a snippet of Truth, outsider, just for you. Your life is worth naught.
+dweller.lhkeeperend.talk5=It does not matter what world you come from, the Truth spans all realms. | :Because it lies Beyond The Veil, in the region between all universes.
+dweller.lhkeeperend2.talk0=Go ahead, strike me down. My death won't matter. || :And neither will yours.
 
 ##################
 #WEEPER DIALOGUE
@@ -925,6 +944,13 @@ research.plantvijhiss.text=Dream of Flora with obsidian in hand.
 
 research.BEHEADINGDREAM.title=Dream of Beheading
 research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
+
+research.FINALQUEST.title=A Snippet Of Truth
+research.FINALQUEST.stage.0=I am close to a breach.<BR>Dagon calls.
+research.FINALQUEST.stage.1=The good keeper helped me so much.<BR>But there are countless more just like him. His death won't matter.<BR>Should I hear his last words?
+research.FINALQUEST.stage.2=No godly boon this time. Only a snippet of Truth, a knowledge that stings.<BR>Should I keep going? Will it matter?
+research.hearing4.text=Eat a slug in the deepest oceans.
+research.killedkeeper.text=Murder the Lighthouse Keeper.
 
 ##################
 #MISC

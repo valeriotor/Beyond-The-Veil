@@ -1017,6 +1017,27 @@
                     "text": "research.ARBOREALGENERATOR.stage.1"
                 }
             ]
+        },
+		{
+        "key": "FINALQUEST",
+        "name": "research.FINALQUEST.title",
+        "icons": [ "beyondtheveil:necronomicon" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18, 16],
+		"hiders": ["IDOL"],
+        "parents": [ "WATERWALKING", "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.FINALQUEST.stage.0",
+                    "required_research" : ["hearing4"]
+                },
+				{
+                    "text": "research.FINALQUEST.stage.1",
+                    "required_research" : ["killedkeeper"]
+                },
+				{
+                    "text": "research.FINALQUEST.stage.2"
+                }
+            ]
         }
 	]
 }

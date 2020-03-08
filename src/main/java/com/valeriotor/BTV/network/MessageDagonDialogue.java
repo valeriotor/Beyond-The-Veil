@@ -49,6 +49,11 @@ public class MessageDagonDialogue implements IMessage{
 					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(2));
 					SyncUtil.addStringDataOnServer(p, false, "hearing3");
 					sendMessage("dagon.endbath", p);
+				} else if(ResearchUtil.getResearchStage(p, "FINALQUEST") == 0) {
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(3));
+					SyncUtil.addStringDataOnServer(p, false, "hearing4");
+					SyncUtil.addStringDataOnServer(p, false, "dialogueend");
+					sendMessage("dagon.lastwords", p);
 				}
 			});
 			return null;

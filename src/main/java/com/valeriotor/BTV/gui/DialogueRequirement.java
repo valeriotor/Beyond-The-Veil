@@ -79,7 +79,7 @@ public class DialogueRequirement {
 		map.put("enjoy0", new DialogueRequirement("rum", "", -1, 1, null));
 		map.put("easyjob0", new DialogueRequirement("canoecar", Branches.DONTFISH.getName(), -1, 1, null));
 		map.put("easyjob1", new DialogueRequirement("canoecar", Branches.CANOESFOR.getName(), -1, 1, null));
-		
+		map.put("end20", new DialogueRequirement("end", "", -1, 6, null));
 	}
 	
 	public static HashMap<String, DialogueRequirement> getMap(){

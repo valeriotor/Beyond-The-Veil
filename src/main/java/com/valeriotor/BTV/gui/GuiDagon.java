@@ -26,6 +26,15 @@ public class GuiDagon extends GuiScreen{
 	public GuiDagon(DagonDialogues dd) {
 		this.maxCount = dd.talkCount;
 		this.translateKey = dd.toString().toLowerCase();
+		if(dd == DagonDialogues.FINAL) {
+			this.SINGLE_THUMP_TIME -= 10;
+			this.count = 0;
+			this.displayString = I18n.format("dagon." + translateKey + "." +  String.valueOf(count));
+		}
+	}
+	
+	public GuiDagon() {
+		this(DagonDialogues.FINAL);
 	}
 	
 	@Override
@@ -45,7 +54,7 @@ public class GuiDagon extends GuiScreen{
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(this.scale, this.scale, this.scale);
 		int i = 0;
-		for(String s : GuiHelper.splitStringsByWidth(displayString, this.width / 3 - 20, mc.fontRenderer))
+		for(String s : GuiHelper.splitStringsByWidth(displayString, (int)( this.width / scale - 20), mc.fontRenderer))
 			drawCenteredString(mc.fontRenderer, s, (int)(this.width/2/scale), (int)(this.height/2/scale) + (i++) * 15, 0xFFFFFFFF);
 		GlStateManager.popMatrix();
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -65,7 +74,8 @@ public class GuiDagon extends GuiScreen{
 				if(this.count < this.maxCount) {
 					this.displayString = I18n.format("dagon." + translateKey + "." +  String.valueOf(count));
 					if(this.count % (this.maxCount / 3) == 0) {
-						this.SINGLE_THUMP_TIME -= 10;
+						if(this.SINGLE_THUMP_TIME > 10)
+							this.SINGLE_THUMP_TIME -= 10;
 					}
 				}
 				else if(this.count == this.maxCount) {

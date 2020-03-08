@@ -10,10 +10,10 @@ import com.valeriotor.BTV.BeyondTheVeil;
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
-import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.entities.AI.AIDwellerFish;
 import com.valeriotor.BTV.entities.AI.AIDwellerFollowPlayer;
 import com.valeriotor.BTV.entities.AI.AIDwellerWanderHamlet;
+import com.valeriotor.BTV.events.ServerTickEvents;
 import com.valeriotor.BTV.gui.DialogueHandler;
 import com.valeriotor.BTV.gui.DialogueHandler.Dialogues;
 import com.valeriotor.BTV.gui.Guis;
@@ -21,7 +21,10 @@ import com.valeriotor.BTV.items.ItemDrink;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.lib.BTVSounds;
 import com.valeriotor.BTV.lib.PlayerDataLib;
+import com.valeriotor.BTV.network.BTVPacketHandler;
+import com.valeriotor.BTV.network.MessageOpenGuiToClient;
 import com.valeriotor.BTV.research.ResearchUtil;
+import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 
 import net.minecraft.block.Block;
@@ -479,10 +482,23 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		if(p != null) {
 			BeyondTheVeil.proxy.closeGui(p);
 		}
-		if(cause.getTrueSource() instanceof EntityPlayer && !this.world.isRemote) {
+		if(cause.getTrueSource() instanceof EntityPlayer) {
 			EntityPlayer killer = (EntityPlayer) cause.getTrueSource();
-			if(!ResearchUtil.isResearchComplete(killer, "IDOL")) {
-				int newVal = SyncUtil.incrementIntDataOnServer(killer, false, PlayerDataLib.CURSE, 1, 1);
+			IPlayerData data = killer.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			if(!this.world.isRemote) {
+				if(!ResearchUtil.isResearchComplete(killer, "IDOL")) {
+					int newVal = SyncUtil.incrementIntDataOnServer(killer, false, PlayerDataLib.CURSE, 1, 1);
+				}
+				
+			}
+			if(this.profession == ProfessionsEnum.LHKEEPER && data.getString("hearing4") && !data.getString("killedkeeper")) {
+				if(!this.world.isRemote) {
+					SyncUtil.addStringDataOnServer(killer, false, "killedkeeper");
+					SyncUtil.removeStringDataOnServer(killer, "dialogueend");
+					SyncUtil.removeStringDataOnServer(killer, "dialogueend2");
+					PlayerTimer pt = new PlayerTimer(killer, pl -> BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiDagon), (EntityPlayerMP)pl), 50);
+					ServerTickEvents.addPlayerTimer(pt);
+				}
 			}
 		}
 		super.onDeath(cause);

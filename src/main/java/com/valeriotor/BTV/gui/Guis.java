@@ -13,6 +13,7 @@ public class Guis {
 	public static final String GuiTablet = "GT";
 	public static final String GuiAlienisDream = "GAD";
 	public static final String GuiWateryCradle = "GWC";
+	public static final String GuiDagon = "GD";
 	
 	public static GuiScreen getGui(String id, Object... args) {
 		switch(id) {
@@ -21,6 +22,7 @@ public class Guis {
 		case GuiDialogueDweller: return new GuiDialogueDweller();
 		case GuiTablet: return new GuiTablet();
 		case GuiAlienisDream: return new GuiAlienisDream();	
+		case GuiDagon: return new GuiDagon();
 		}
 		
 		return null;
