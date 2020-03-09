@@ -37,6 +37,7 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_page.png");
 	public static final ResourceLocation ARROW = new ResourceLocation(References.MODID, "textures/gui/right_arrow.png");
+	public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
 	
 	public GuiResearchPage(ResearchStatus status) {
 		this.status = status;
@@ -180,12 +181,14 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 		for(int i = 0; i < 6 && i < recipes.size(); i++) {
 			RenderHelper.enableGUIStandardItemLighting();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(-160 + i * 20, 125, 0);
+			GlStateManager.translate(-160 + i * 25, 125, 0);
 			if(hoveredKey == i) {
 				GlStateManager.scale(2, 2, 2);
 			}
 			recipes.get(i).renderKey(this);
 			GlStateManager.popMatrix();
+			mc.renderEngine.bindTexture(CIRCLE);
+			drawModalRectWithCustomSizedTexture(-164 + i *25, 121, 0, 0, 25, 25, 25, 25);
 		}
 		
 		GlStateManager.popMatrix();
@@ -246,8 +249,8 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			mouseX = mouseX * 4 / 3;
 			mouseY = mouseY * 4 / 3;
 		}
-		if(mouseY > 125 && mouseY < 141) {
-			int a = (mouseX + 160) / 20;
+		if(mouseY > 125 && mouseY < 141 && mouseX >= -160) {
+			int a = (mouseX + 160) / 25;
 			if(a < 6 && a < recipes.size() && a >= 0)
 				return a;
 		}
