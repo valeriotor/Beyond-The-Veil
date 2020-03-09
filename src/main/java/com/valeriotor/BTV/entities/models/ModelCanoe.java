@@ -47,7 +47,7 @@ public class ModelCanoe extends ModelBase {
         this.shape4.setRotationPoint(-10.0F, -5.899999999999995F, 22.5F);
         this.shape4.addBox(0.0F, 0.0F, 0.0F, 20, 11, 1, 0.0F);
         this.Bottom = new ModelRenderer(this, 126, 0);
-        this.Bottom.setRotationPoint(0.0F, 5.100000000000014F, 0.0F);
+        this.Bottom.setRotationPoint(0.0F, 4.9F, 0.0F);
         this.Bottom.addBox(-10.0F, 0.0F, -22.5F, 20, 1, 45, 0.0F);
         this.shape6 = new ModelRenderer(this, 70, 0);
         this.shape6.setRotationPoint(0.0F, 3.100000000000008F, -22.4F);

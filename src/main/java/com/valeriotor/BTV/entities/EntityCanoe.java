@@ -39,6 +39,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -840,25 +841,6 @@ public class EntityCanoe extends EntityBoat{
         this.applyYawToEntity(entityToUpdate);
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
-    protected void writeEntityToNBT(NBTTagCompound compound)
-    {
-        compound.setString("Type", this.getCanoeType().getName());
-    }
-
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
-    protected void readEntityFromNBT(NBTTagCompound compound)
-    {
-        if (compound.hasKey("Type", 8))
-        {
-            this.setCanoeType(EntityCanoe.Type.getTypeFromString(compound.getString("Type")));
-        }
-    }
-
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
         if (player.isSneaking())
@@ -902,7 +884,7 @@ public class EntityCanoe extends EntityBoat{
                         {
                             for (int i = 0; i < 3; ++i)
                             {
-                                this.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.PLANKS), 1, this.getCanoeType().getMetadata()), 0.0F);
+                                this.entityDropItem(new ItemStack(ItemRegistry.canoe, 1), 0.0F);
                             }
 
                             for (int j = 0; j < 2; ++j)
@@ -980,9 +962,9 @@ public class EntityCanoe extends EntityBoat{
         this.dataManager.set(BOAT_TYPE, Integer.valueOf(boatType.ordinal()));
     }
 
-    public EntityCanoe.Type getCanoeType()
-    {
-        return EntityCanoe.Type.byId(((Integer)this.dataManager.get(BOAT_TYPE)).intValue());
+    @Override
+    public ItemStack getPickedResult(RayTraceResult target) {
+    	return new ItemStack(ItemRegistry.canoe);
     }
 
     protected boolean canFitPassenger(Entity passenger)
@@ -1009,6 +991,14 @@ public class EntityCanoe extends EntityBoat{
         this.forwardInputDown = p_184442_3_;
         this.backInputDown = p_184442_4_;
     }
+    
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+    }
+    
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+    }
 
     public static enum Status
     {
@@ -1019,65 +1009,7 @@ public class EntityCanoe extends EntityBoat{
         IN_AIR;
     }
 
-    public static enum Type
-    {
-        OAK(BlockPlanks.EnumType.OAK.getMetadata(), "oak"),
-        SPRUCE(BlockPlanks.EnumType.SPRUCE.getMetadata(), "spruce"),
-        BIRCH(BlockPlanks.EnumType.BIRCH.getMetadata(), "birch"),
-        JUNGLE(BlockPlanks.EnumType.JUNGLE.getMetadata(), "jungle"),
-        ACACIA(BlockPlanks.EnumType.ACACIA.getMetadata(), "acacia"),
-        DARK_OAK(BlockPlanks.EnumType.DARK_OAK.getMetadata(), "dark_oak");
-
-        private final String name;
-        private final int metadata;
-
-        private Type(int metadataIn, String nameIn)
-        {
-            this.name = nameIn;
-            this.metadata = metadataIn;
-        }
-
-        public String getName()
-        {
-            return this.name;
-        }
-
-        public int getMetadata()
-        {
-            return this.metadata;
-        }
-
-        public String toString()
-        {
-            return this.name;
-        }
-
-        /**
-         * Get a boat type by it's enum ordinal
-         */
-        public static EntityCanoe.Type byId(int id)
-        {
-            if (id < 0 || id >= values().length)
-            {
-                id = 0;
-            }
-
-            return values()[id];
-        }
-
-        public static EntityCanoe.Type getTypeFromString(String nameIn)
-        {
-            for (int i = 0; i < values().length; ++i)
-            {
-                if (values()[i].getName().equals(nameIn))
-                {
-                    return values()[i];
-                }
-            }
-
-            return values()[0];
-        }
-    }
+    
 
     // Forge: Fix MC-119811 by instantly completing lerp on board
     @Override

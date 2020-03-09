@@ -214,12 +214,13 @@ public class FishingHamlet {
 						BlockPos canoePos = pathPos1.offset(facing, 4).offset(facing.rotateYCCW(), path == length - 1 ? 2 : 4);
 						if(w.getBlockState(canoePos) == Blocks.WATER.getDefaultState() || w.getBlockState(canoePos.add(0, 1, 0)) == Blocks.WATER.getDefaultState()) {
 							EntityCanoe canoe = new EntityCanoe(w);
-							canoe.setPositionAndRotation(canoePos.getX(), canoePos.getY()+1, canoePos.getZ(), r.nextFloat()*360-90, 0);
+							canoe.setPositionAndRotation(canoePos.getX(), canoePos.getY()+1.5, canoePos.getZ(), r.nextFloat()*360-90, 0);
 							for(EnumFacing facing1 : EnumFacing.HORIZONTALS) {
 								w.setBlockState(canoePos.offset(facing1), Blocks.WATER.getDefaultState());
 								w.setBlockState(canoePos.offset(facing1.rotateYCCW()), Blocks.WATER.getDefaultState());
 							}
 							w.spawnEntity(canoe);
+							canoe.motionX = 0.2;
 						}
 					}
 				}
