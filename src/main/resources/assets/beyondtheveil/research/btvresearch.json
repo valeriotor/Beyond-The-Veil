@@ -50,7 +50,7 @@
 				},
                 {
                     "text": "research.CRYSTALDREAMS.stage.1",
-                    "recipes": ["beyondtheveil:memory_phial;memMETAL", "blood_well", "sacrifice_altar"]
+                    "recipes": ["beyondtheveil:memory_phial;memMETAL"]
                 }
             ],
 			"addenda": [
