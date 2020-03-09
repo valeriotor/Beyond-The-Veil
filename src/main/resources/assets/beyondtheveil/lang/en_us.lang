@@ -952,6 +952,21 @@ research.FINALQUEST.stage.2=No godly boon this time. Only a snippet of Truth, a 
 research.hearing4.text=Eat a slug in the deepest oceans.
 research.killedkeeper.text=Murder the Lighthouse Keeper.
 
+research.FLUTE.title=Flute Of The Outer Gods
+research.FLUTE.stage.0=This Flute does not belong to this world. It weighs nothing, and it leaves a faint echo of unearthly melody.<BR>Although I am hesitant to touch it with my mouth, its effects are powerful.<BR>When playing it all creatures around me, even other Players, are taken by Folly, and writhe in madness.<BR>Even I could be affected, if my will didn't prove strong enough.<BR>Some creatures may be affected in more horrid ways. I should be careful.
+
+research.SAWCLEAVER.title=Saw Cleaver
+research.SAWCLEAVER.stage.0=The Saw Cleaver was used by monster hunters in ages long past.<BR>My own ancestors.<BR>When used it switches between a contracted and elongated form. The former works like any sword, the latter allows me to hit all enemies around me at the cost of damage and knockback. Switching to the extended form while in combat might also result in an attack.<BR>Additionally, when wielding this weapon I am able to dodge like its ancient owners. By tapping the Dodge Key ('Alt' by default) I can quick step in the chosen direction.<BR>Yet, I am taken by doubt. Should I really follow in my ancestors' footsteps?
+
+research.WOLFMEDALLION.title=Wolf Medallion
+research.WOLFMEDALLION.stage.0=A Medallion used by hunters in ages long past.<BR>Monster hunters.<BR>When its passive effect is on, I am periodically warned of the number of hostile monsters around me.<BR>When its active effect is used, I am able to temporarily see all nearby entities.<BR>And prepare for the worst.
+
+research.BRONZESPHERE.title=Bronze Sphere
+research.BRONZESPHERE.stage.0=I've already held this sphere.<BR>I know I have.<BR>My mind BURNS with recollection as I hold the object.<BR>I hope that reaching the Truth will unVeil this mistery.<BR>For now, it's again in my hands, and I can use it to my advantage.<BR>When activated it enables me to store experience inside it. If I am sneaking the experience is pulled out instead.<BR>A battery of Memories, so to say.
+
+research.BAUBLERESEARCH.title=Baubles
+research.BAUBLERESEARCH.stage.0=Some items are to be worn outside of my armor slots.<BR>The Baubles I encounter in this journey (and only this journey) may have both active and passive effects.<BR>By holding the Bauble key ('Z' by default) I can choose which Baubles must have their passive effect enabled and which single Bauble is to be the active one.<BR>There can be only one active Bauble, and its effect can be activated by tapping the Bauble Key.
+
 ##################
 #MISC
 ##################

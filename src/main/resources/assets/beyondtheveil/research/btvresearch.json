@@ -1038,6 +1038,66 @@
                     "text": "research.FINALQUEST.stage.2"
                 }
             ]
+        },
+		{
+        "key": "FLUTE",
+        "name": "research.FLUTE.title",
+        "icons": [ "beyondtheveil:flute" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15, -2],
+		"hiders": ["artifactflute"],
+        "stages": [
+				{
+                    "text": "research.FLUTE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "WOLFMEDALLION",
+        "name": "research.WOLFMEDALLION.title",
+        "icons": [ "beyondtheveil:wolf_medallion" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17, -2],
+		"hiders": ["artifactwolf_medallion"],
+        "stages": [
+				{
+                    "text": "research.WOLFMEDALLION.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "SAWCLEAVER",
+        "name": "research.SAWCLEAVER.title",
+        "icons": [ "beyondtheveil:saw_cleaver" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15, 0],
+		"hiders": ["artifactsaw_cleaver"],
+        "stages": [
+				{
+                    "text": "research.SAWCLEAVER.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "BRONZESPHERE",
+        "name": "research.BRONZESPHERE.title",
+        "icons": [ "beyondtheveil:bronze_sphere" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17, 0],
+		"hiders": ["artifactbronze_sphere"],
+        "stages": [
+				{
+                    "text": "research.BRONZESPHERE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "BAUBLERESEARCH",
+        "name": "research.BAUBLERESEARCH.title",
+        "icons": [ "baubles:ring" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2, 5],
+		"hiders": ["baubleresearch"],
+        "stages": [
+				{
+                    "text": "research.BAUBLERESEARCH.stage.0"
+                }
+            ]
         }
 	]
 }

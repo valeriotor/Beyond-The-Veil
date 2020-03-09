@@ -12,7 +12,7 @@ public interface IArtifactItem {
 			String s = "artifact".concat(((Item)this).getRegistryName().getResourcePath());
 			if(!p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(s)) {
 				SyncUtil.addStringDataOnServer(p, false, s);
-				System.out.println(s);
+				SyncUtil.addStringDataOnServer(p, false, "baubleresearch");
 			}
 		}
 	}

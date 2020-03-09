@@ -32,6 +32,9 @@ public class ResearchEvents {
 	
 	public static void progressResearchEvent(EntityPlayer p, String key, int newStage) {
 		updateDialogues(p, key, newStage);
+		if(key.equals("IDOL") && newStage == 1) {
+			SyncUtil.addStringDataOnServer(p, false, "baubleresearch");
+		}
 	}
 	
 	public static void updateDialogues(EntityPlayer p, String resKey, int stage) {
