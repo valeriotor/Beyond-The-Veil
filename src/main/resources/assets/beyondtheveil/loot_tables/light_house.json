@@ -117,8 +117,13 @@
 					"weight": 1
 				},
 				{
+					"type": "item",
+					"name": "beyondtheveil:heart",
+					"weight": 3
+				},
+				{
 					"type": "empty",
-					"weight": 14
+					"weight": 6
 				}
 			]
 		}
