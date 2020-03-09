@@ -16,6 +16,7 @@ import baubles.api.cap.IBaublesItemHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
@@ -26,10 +27,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiActiveBauble extends GuiScreen{
+public class GuiActiveBauble extends GuiScreen implements IItemRenderGui{
 	
 	private final int bootTime = 5;
-	private TextureAtlasSprite[] bTextures = new TextureAtlasSprite[7];
+	private ItemStack[] stacks = new ItemStack[7];
 	private BaubleStatus[] status = new BaubleStatus[8];
 	protected int counter = 1;
 	private static final List<String> helpText = Lists.newArrayList(I18n.format("gui.activebauble.help").split("/"));; 
@@ -44,11 +45,7 @@ public class GuiActiveBauble extends GuiScreen{
 		IBaublesItemHandler handler = BaublesApi.getBaublesHandler(Minecraft.getMinecraft().player);
 		for(int i = 0; i < 7; i++) {
 			ItemStack stack = handler.getStackInSlot(i);
-			if(stack != null && stack.getItem() != Items.AIR) {
-				bTextures[i] = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, Minecraft.getMinecraft().world, Minecraft.getMinecraft().player).getParticleTexture();
-			} else {
-				bTextures[i] = null;
-			}
+			stacks[i] = stack;
 			status[i] = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, i), 1, false) == 0 ? BaubleStatus.NONE : BaubleStatus.PASSIVE;
 		}
 		int active = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.SELECTED_BAUBLE, -1, false);
@@ -81,12 +78,14 @@ public class GuiActiveBauble extends GuiScreen{
 		GlStateManager.color(1, 1, 1, 1);
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		if(this.counter == this.bootTime) {
+			GlStateManager.pushMatrix();
+			GlStateManager.scale(3, 3, 1);
 			for(int i = 0; i < 7; i++) {
-				if(this.bTextures[i] == null) continue;
 				int xCoord = (int) (Math.cos(i*Math.PI/4 + 5*Math.PI/8)*100 - 24);
 				int yCoord = (int) (Math.sin(i*Math.PI/4 + 5*Math.PI/8)*100 + 24);
-				drawTexturedModalRect(xCoord, -yCoord, this.bTextures[i], 48, 48);
+				GuiHelper.drawItemStack(this, stacks[i], xCoord/3, -yCoord/3);
 			}
+			GlStateManager.popMatrix();
 		}
 		Minecraft.getMinecraft().renderEngine.bindTexture(questionMark);
 		int xCoord = (int) (Math.cos(7*Math.PI/4 + 5*Math.PI/8)*100 - 24);
@@ -223,6 +222,16 @@ public class GuiActiveBauble extends GuiScreen{
 	
 	public String getGuiLangName() {
 		return "guiBauble";
+	}
+
+	@Override
+	public RenderItem getItemRender() {
+		return this.itemRender;
+	}
+
+	@Override
+	public void renderTooltip(ItemStack stack, int x, int y) {
+		
 	}
 		
 	
