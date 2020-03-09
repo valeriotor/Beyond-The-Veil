@@ -44,13 +44,7 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
 	
 	
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
-    {
-        public boolean apply(@Nullable EnumFacing p_apply_1_)
-        {
-            return p_apply_1_ != EnumFacing.DOWN;
-        }
-    });
+	
 	public static final PropertyBool ISFULL = PropertyBool.create("is_full");
 	
 	private static final AxisAlignedBB BBox = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 11, 0.0625 * 12);
@@ -61,7 +55,7 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 		this.setHardness(2.0F);
 		this.setSoundType(SoundType.GLASS);
 		
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP).withProperty(ISFULL, false));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(ISFULL, false));
 		
 	}
 	
@@ -93,66 +87,9 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 		super.addCollisionBoxToList(pos, entityBox, collidingBoxes, BBox);
 	}
 	
-	
-	
-	private boolean canPlaceOn(World worldIn, BlockPos pos)
-    {
-        IBlockState state = worldIn.getBlockState(pos);
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        IBlockState state = worldIn.getBlockState(pos.down());
         return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
-    }
-	
-	private boolean canPlaceAt(World worldIn, BlockPos pos, EnumFacing facing)
-    {
-        BlockPos blockpos = pos.offset(facing.getOpposite());
-        IBlockState iblockstate = worldIn.getBlockState(blockpos);
-        Block block = iblockstate.getBlock();
-        BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, blockpos, facing);
-
-        if (facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos))
-        {
-            return true;
-        }
-        else if (facing != EnumFacing.UP && facing != EnumFacing.DOWN)
-        {
-            return blockfaceshape == BlockFaceShape.SOLID;
-        }
-        else
-        {
-            return false;
-        }
-    }
-	
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-    {
-        for (EnumFacing enumfacing : FACING.getAllowedValues())
-        {
-            if (this.canPlaceAt(worldIn, pos, enumfacing))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-	
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        if (this.canPlaceAt(worldIn, pos, facing))
-        {
-            return this.getDefaultState().withProperty(FACING, facing);
-        }
-        else
-        {
-            for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
-            {
-                if (this.canPlaceAt(worldIn, pos, enumfacing))
-                {
-                    return this.getDefaultState().withProperty(FACING, enumfacing);
-                }
-            }
-
-            return this.getDefaultState();
-        }
     }
 	
 	public IBlockState getStateFromMeta(int meta)
@@ -162,97 +99,16 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
         switch (meta)
         {
             case 1:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.EAST).withProperty(ISFULL, false);
-                break;
-            case 2:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.WEST).withProperty(ISFULL, false);
-                break;
-            case 3:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.SOUTH).withProperty(ISFULL, false);
-                break;
-            case 4:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.NORTH).withProperty(ISFULL, false);
-                break;
-            case 5:
+                return iblockstate.withProperty(ISFULL, true);
+            case 0:
             default:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.UP).withProperty(ISFULL, false);
-                break;
-            case 6:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.EAST).withProperty(ISFULL, true);
-                break;
-            case 7:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.WEST).withProperty(ISFULL, true);
-                break;
-            case 8:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.SOUTH).withProperty(ISFULL, true);
-                break;
-            case 9:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.NORTH).withProperty(ISFULL, true);
-                break;
-            case 10:
-                iblockstate = iblockstate.withProperty(FACING, EnumFacing.UP).withProperty(ISFULL, true);
+                return iblockstate.withProperty(ISFULL, false);
         }
-
-        return iblockstate;
     }
 	
 	public int getMetaFromState(IBlockState state)
     {
-        int i = 0;
-        
-        if(!state.getValue(ISFULL)) {
-        switch ((EnumFacing)state.getValue(FACING))
-        {
-            case EAST:
-                i = i | 1;
-                break;
-            case WEST:
-                i = i | 2;
-                break;
-            case SOUTH:
-                i = i | 3;
-                break;
-            case NORTH:
-                i = i | 4;
-                break;
-            case DOWN:
-            case UP:
-            default:
-                i = i | 5;
-        }
-        }else if(state.getValue(ISFULL)) {
-        	switch ((EnumFacing)state.getValue(FACING))
-            {
-                case EAST:
-                    i = i | 6;
-                    break;
-                case WEST:
-                    i = i | 7;
-                    break;
-                case SOUTH:
-                    i = i | 8;
-                    break;
-                case NORTH:
-                    i = i | 9;
-                    break;
-                case DOWN:
-                case UP:
-                default:
-                    i = i | 10;
-            }	
-        }
-
-        return i;
-    }
-	
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-    {
-        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
-    }
-	
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-    {
-        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+		return state.getValue(ISFULL) ? 1 : 0;
     }
 	
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
@@ -262,7 +118,7 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
 	protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING,ISFULL});
+        return new BlockStateContainer(this, new IProperty[] {ISFULL});
     }
 	
 	@Override
