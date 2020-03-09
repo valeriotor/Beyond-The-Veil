@@ -59,7 +59,7 @@ public class HamletStructuresRegistry {
 		registerStructure(HamletSmallHut::new, 9, 10);
 		registerStructure(HamletSaloon::new, 7, 1);
 		registerStructure(HamletStoreHouse2::new, 2, 1);
-		registerStructure(HamletTownHall::new, 1, 1);
+		registerStructure(HamletTownHall::new, 5, 1);
 		registerStructure(HamletLightHouse::new, 10, 1);
 		
 	}

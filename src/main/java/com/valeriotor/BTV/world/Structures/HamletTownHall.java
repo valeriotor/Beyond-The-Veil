@@ -4,10 +4,13 @@ import java.util.Random;
 
 import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.entities.EntityHamletDweller;
+import com.valeriotor.BTV.items.ItemRegistry;
+import com.valeriotor.BTV.tileEntities.TileMemorySieve;
 import com.valeriotor.BTV.world.Structures.loot.LootTables;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
@@ -94,6 +97,14 @@ public class HamletTownHall extends HamletStructure{
 			TileEntity t = world.getTileEntity(this.getPosFromArray(n, facing));
 			if(t instanceof TileEntityChest) {
 				((TileEntityChest)t).setLootTable(LootTables.hamletTownHall, r.nextLong());
+			}
+		}
+		for(int[] n : this.pedestal_arcane) {
+			BlockPos pos = getPosFromArray(n, facing);
+			world.setBlockState(pos, BlockRegistry.BlockMemorySieve.getDefaultState());
+			TileEntity te = world.getTileEntity(pos);
+			if(te instanceof TileMemorySieve) {
+				((TileMemorySieve)te).addItem(new ItemStack(ItemRegistry.getRandomArtifact(r)));
 			}
 		}
 		
@@ -361,7 +372,7 @@ public class HamletTownHall extends HamletStructure{
 			 
 	static int[][] pedestal_arcane = { 
 
-			{-7, 4, -1, 0}, {7, 4, -1, 0}, 
+			{-7, 4, -1, 0} 
 
 			}; 
 			 
