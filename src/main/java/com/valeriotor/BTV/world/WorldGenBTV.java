@@ -72,8 +72,8 @@ public class WorldGenBTV implements IWorldGenerator{
 		BlockPos pos5 = new BlockPos(pos.getX()-3*16, pos.getY(), pos.getZ()-3*16);
 		if(!w.isAreaLoaded(pos4, pos5)) return false;
 		
-		for(int chunkX = -3; chunkX < 4; chunkX++) {
-			for(int chunkZ = -3; chunkZ < 4; chunkZ++) {
+		for(int chunkX = -2; chunkX < 3; chunkX++) {
+			for(int chunkZ = -2; chunkZ < 3; chunkZ++) {
 				BlockPos pos1 = new BlockPos(pos.getX()+chunkX*16, 0, pos.getZ()+chunkZ*16);
 				if (w.getBiome(pos1) != BiomeRegistry.innsmouth && w.getBiome(pos1) != Biomes.PLAINS) return false;
 				
