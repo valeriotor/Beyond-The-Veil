@@ -5,16 +5,15 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.BTV.BeyondTheVeil;
-import com.valeriotor.BTV.blocks.BlockRegistry;
 import com.valeriotor.BTV.capabilities.IPlayerData;
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
 import com.valeriotor.BTV.capabilities.ResearchProvider;
 import com.valeriotor.BTV.dreaming.DreamHandler;
 import com.valeriotor.BTV.entities.IPlayerGuardian;
 import com.valeriotor.BTV.events.special.AzacnoParasiteEvents;
+import com.valeriotor.BTV.items.IArtifactItem;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.network.BTVPacketHandler;
-import com.valeriotor.BTV.network.MessageSyncDataToClient;
 import com.valeriotor.BTV.network.MessageSyncParasitePlayer;
 import com.valeriotor.BTV.network.MessageSyncTransformedPlayer;
 import com.valeriotor.BTV.research.ResearchUtil;
@@ -22,8 +21,6 @@ import com.valeriotor.BTV.util.PlayerTimer;
 import com.valeriotor.BTV.util.SyncUtil;
 import com.valeriotor.BTV.worship.AzacnoParasite;
 import com.valeriotor.BTV.worship.DGWorshipHelper;
-import com.valeriotor.BTV.worship.Deities;
-import com.valeriotor.BTV.worship.ActivePowers.TransformDeepOne;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +28,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -40,7 +37,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
@@ -197,5 +194,16 @@ public class PlayerEvents {
 				if(!p.isSneaking()) p.motionY += 0.275;
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void pickupItemEvent(ItemPickupEvent event) {
+		ItemStack stack = event.getStack();
+		if(stack.getItem() instanceof IArtifactItem) {
+			EntityPlayer p = event.player;
+			if(!p.world.isRemote)
+				((IArtifactItem)stack.getItem()).unlockData(p);
+		}
+		
 	}
 }

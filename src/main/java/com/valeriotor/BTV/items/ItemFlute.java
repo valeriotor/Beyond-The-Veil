@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFlute extends Item{
+public class ItemFlute extends Item implements IArtifactItem{
 	public ItemFlute() {
 		this.setMaxStackSize(1);
 		this.setCreativeTab(References.BTV_TAB);

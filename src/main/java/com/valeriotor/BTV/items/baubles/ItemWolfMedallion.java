@@ -3,6 +3,7 @@ package com.valeriotor.BTV.items.baubles;
 import java.util.List;
 
 import com.valeriotor.BTV.capabilities.PlayerDataProvider;
+import com.valeriotor.BTV.items.IArtifactItem;
 import com.valeriotor.BTV.lib.PlayerDataLib;
 import com.valeriotor.BTV.lib.References;
 import com.valeriotor.BTV.network.BTVPacketHandler;
@@ -27,7 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble{
+public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble, IArtifactItem{
 	
 	public ItemWolfMedallion() {
 		this.setMaxStackSize(1);

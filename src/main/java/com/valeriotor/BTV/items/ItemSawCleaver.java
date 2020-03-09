@@ -34,7 +34,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSawCleaver extends ItemSword{
+public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 
 	public ItemSawCleaver(ToolMaterial material) {
 		super(material);

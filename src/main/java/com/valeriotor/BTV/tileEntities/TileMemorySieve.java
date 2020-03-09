@@ -3,6 +3,7 @@ package com.valeriotor.BTV.tileEntities;
 import javax.annotation.Nullable;
 
 import com.valeriotor.BTV.dreaming.Memory;
+import com.valeriotor.BTV.items.IArtifactItem;
 import com.valeriotor.BTV.items.ItemRegistry;
 import com.valeriotor.BTV.util.ItemHelper;
 
@@ -48,6 +49,9 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 			this.heldItem = new ItemStack(Items.AIR);
 			itemEntity = null;
 			if(!this.world.isRemote) {
+				if(stack.getItem() instanceof IArtifactItem) {
+					((IArtifactItem)stack.getItem()).unlockData(p);
+				}
 				markDirty();
 				this.sendUpdates(world);
 			}

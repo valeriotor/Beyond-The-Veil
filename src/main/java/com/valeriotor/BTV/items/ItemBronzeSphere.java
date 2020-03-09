@@ -17,7 +17,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemBronzeSphere extends Item{
+public class ItemBronzeSphere extends Item implements IArtifactItem{
 	
 	public ItemBronzeSphere() {
 		this.setRegistryName(References.MODID + ":bronze_sphere");
