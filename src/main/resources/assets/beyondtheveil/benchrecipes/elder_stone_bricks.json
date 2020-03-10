@@ -5,7 +5,7 @@
 		"QCCQ",
 		"QQQQ"
 	],
-	"output" : "beyondtheveil:elder_stone_bricks",
+	"output" : "beyondtheveil:elder_stone_bricks;8",
 	"map": {
 		"Q" : "minecraft:quartz_block",
 		"C" : "minecraft:clay_ball"
