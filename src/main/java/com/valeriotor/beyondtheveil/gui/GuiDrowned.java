@@ -69,8 +69,7 @@ public class GuiDrowned extends GuiScreen{
 	}
 	
 	private void drawMeanStrings(float partialTicks) {
-		if((yourselfTimer & 1) == 0) 
-	        this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
+		this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
         this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, I18n.format("gui.drowned.youare"), this.width / 2 / 2, this.height / 2 / 2 - 10, 16777215);
