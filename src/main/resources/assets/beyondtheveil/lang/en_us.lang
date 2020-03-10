@@ -484,7 +484,7 @@ dweller.lhkeeperlecture.prejudicetalk0=...truth is, outsider..  we are afraid. |
 dweller.lhkeeperlecture.prejudicetalk1=If you truly want to fight prejudice, then why don't you listen to me, and let me tell how things truly went?
 dweller.lhkeeperlecture2.talk0=So, traveller, what'll it be? Will you listen now to our story?
 dweller.lhkeeperlecture2.talk0.option0=Fine.:Go ahead.
-dweller.lhkeeperlecture2.talk0.option1=No.:Not now, at least.
+dweller.lhkeeperlecture2.talk0.option1=Not now.
 dweller.lhkeeperlecture2.lecturetalk0=There are many Hamlets like ours in this world, although not as many as there once were. But they've all got something in common.
 dweller.lhkeeperlecture2.lecturetalk1=You may have been turned off initially by the blackness and dampness of the surrounding territory, but everytime you see it, it means that at one point in time a Hamlet like ours stood there.
 dweller.lhkeeperlecture2.lecturetalk2=The ground wasn't always like this, though. :Contrary to what some may think, we didn't settle here because of any appeal the soil had upon us. :In fact, we are the very reason the ground became so.
@@ -669,15 +669,6 @@ dreams.introspection.novoid=Has not Dreamt of Void.
 dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
 dreams.introspection.noworship=No Worshippers.
 
-##################
-#THEORYCRAFT
-##################
-
-card.stars.name=Lore of the Cosmos
-card.stars.text=Your Dreams lead downwards, and yet those unreachable stars, up, up in the sky, prove to be a fascinating field of research in your pursuit of the Unknownable Truth. You gain 35 to 70 inspiration towards %1$s.
-
-card.tablet.name=Ancient Tablets
-card.tablet.text=The unspeakable speech inscribed on these tablets must still be human, as it can be deciphered. Once that is done, the writings make for an ancient repository of knowledge, important to your research.  You gain 45 to 90 inspiration towards %1$s.
 
 ##################
 #RESEARCH
