@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.entities;
 
 import java.util.UUID;
 
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -245,25 +247,27 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 			return EnumActionResult.SUCCESS;
 		} else {
 			if(player.getHeldItem(hand).getItem() == Items.AIR && !this.world.isRemote) {
-				this.faceEntity(player, 3, 3);
-				this.motionX = 0.01;
-				if(this.specialDialogue >= 0) {
-					if(this.specialDialogue < 7) {
-						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth." + specialDialogue).getFormattedText()));
-						this.specialDialogue++;
-						if(this.specialDialogue == 7) {
-							SyncUtil.addStringDataOnServer(player, false, "shoggothsecret");
-							PlayerTimer pt = new PlayerTimer(player, p -> 
-							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 10);
-							ServerTickEvents.addPlayerTimer(pt);
+				if(player.equals(this.getMaster())) {
+					this.faceEntity(player, 3, 3);
+					this.motionX = 0.01;
+					if(this.specialDialogue >= 0) {
+						if(this.specialDialogue < 7) {
+							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth." + specialDialogue).getFormattedText()));
+							this.specialDialogue++;
+							if(this.specialDialogue == 7) {
+								SyncUtil.addStringDataOnServer(player, false, "shoggothsecret");
+								PlayerTimer pt = new PlayerTimer(player, p -> 
+								player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 10);
+								ServerTickEvents.addPlayerTimer(pt);
+							}
+						} else {
+							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText()));
 						}
 					} else {
-						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText()));
+						if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
+						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
+						return EnumActionResult.SUCCESS;
 					}
-				} else {
-					if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
-					player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
-					return EnumActionResult.SUCCESS;
 				}
 			}
 		}
