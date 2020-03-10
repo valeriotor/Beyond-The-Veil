@@ -216,6 +216,10 @@ entity.canoe.name=Canoe
 entity.crawling_villager.name=Crawling Villager
 entity.weeper.name=Weeper
 entity.fletum.name=Fletum
+entity.shoggoth.name=Shoggoth
+entity.crazed_weeper.name=Crazed Weeper
+entity.blood_zombie.name=Blood Zombie
+entity.blood_skeleton.name=Blood Skeleton
 
 shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
 shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
