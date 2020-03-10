@@ -48,7 +48,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	
 	private int animationTicks = 0;
 	private int fletumTicks = 10;
-	private int transformTicks = 300;
+	private int transformTicks = 330;
 	private int tearTicks;
 	private int dialogue = -1;
 	private int specialDialogue = -1;
@@ -257,7 +257,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 							if(this.specialDialogue == 7) {
 								SyncUtil.addStringDataOnServer(player, false, "shoggothsecret");
 								PlayerTimer pt = new PlayerTimer(player, p -> 
-								player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 10);
+								player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 30);
 								ServerTickEvents.addPlayerTimer(pt);
 							}
 						} else {
