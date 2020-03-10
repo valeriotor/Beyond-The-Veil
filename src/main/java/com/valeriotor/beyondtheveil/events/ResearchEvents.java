@@ -34,6 +34,8 @@ public class ResearchEvents {
 		updateDialogues(p, key, newStage);
 		if(key.equals("IDOL") && newStage == 1) {
 			SyncUtil.addStringDataOnServer(p, false, "baubleresearch");
+		} else if(key.equals("STATUE") && newStage == 2) {
+			SyncUtil.addStringDataOnServer(p, false, "dreambottlestatue");
 		}
 	}
 	

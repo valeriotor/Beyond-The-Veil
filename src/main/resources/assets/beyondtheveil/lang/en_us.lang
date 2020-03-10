@@ -748,8 +748,8 @@ research.FISHINGHAMLET.title=The Fishing Hamlet
 research.FISHINGHAMLET.stage.0=I need the Truth. I am sick of lies.<BR>There is a Veil of illusions clouding everyone's mind, there has to be. Everything I see, is a Lie.<BR>NOTHING BUT A LIE.<BR>I must breach it. I must see Beyond that barrier.<BR>Whether the Fishing Hamlet is the key to the Arcanum, or merely a piece of a grand puzzle, we shall see.
 research.FISHINGHAMLET.stage.1=This can't be..<BR>All this work, all this research.. led me here?!<BR>To a bunch of degenerates?! Of xenophobic nitwits?!?<BR>Nonono, I can't stop now. I can breach the Veil. I know I can. I know it. I really do.<BR>I need to talk with the Lighthouse Keeper. I hope he proves wiser than his fellow Dwellers.
 research.FISHINGHAMLET.stage.2=Look at the Ocean.. look at the Ocean..
-research.m_FindHamlet.text=Locate a Fishing Hamlet
-research.LHKeeper.text=Talk with the Lighthouse Keeper
+research.m_FindHamlet.text=Locate a Fishing Hamlet.
+research.LHKeeper.text=Talk with the Lighthouse Keeper.
 
 research.IDOL.title=Communion
 research.IDOL.stage.0=At times, we think of ourselves as gods. Allmighty, invincible gods to whom the whole world must bow. Gods whose creations could reshape the world entire.<BR>And we're no more than deluded fools.<BR>The Ocean.<BR>Immense, timeless, inscrutable. Could it really care of what we do? Could it really, when it dwarfs our greatest, grandest structures, when it outlives our strongest, toughest contraptions?<BR>A symbol of immensity, ever close, to remind us of our INSIGNIFICANCE.<BR>The Ocean, whose immensity the Hamlet Dwellers seem so fascinated by, is UNKNOWABLE. We could spend whole eternities in the hope of researching its every nook and cranny, and yet vainly, for in its boundlessness, as well as its ever changing, chaotic nature, the things that lie within it.. or beneath it.. will always elude us. Unless they come to us.<BR>Yes, the Ocean must be the key. In its boundless, unkowable immensity, it is SURE to conceal what we're looking for. Some kind of gateway, some sort of door that will let us see Beyond the Veil. In its bottomless depths, we must look for rifts.<BR>Water itself REEKS of Alienis, and especially in that Hamlet of bizarre degenerates worshipping some kind of.. of..<BR>Yes. Of.. of course. They're far from degenerates, for they found the solution far before US.<BR>If their Deity truly is a manifestation of what's Beyond the Veil, hiding the Truth from us all, and if their fascination with Dreams and the Ocean is of the same nature as ours.. then we must seek Communion.<BR>Communion with the Great Dreamer.
@@ -800,6 +800,7 @@ research.DREAMBOTTLE.stage.1=Through Weepers and Fleti I am granted knowledge, a
 research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
 research.gotweepers.text=Find a way to gather tears.
 research.crafteddream_bottle.text=Craft a Dream Bottle.
+research.DREAMBOTTLE.addenda.statue=Addendum:<BR>It seems that being worshipped through the use of a statue slightly improves the Dream-to-Tears efficiency of the Bottle.
 
 research.WATERWALKING.title=Water Walking
 research.WATERWALKING.stage.0=Great Father Dagon, I am coming.
@@ -898,6 +899,11 @@ research.builtwell.text=Build a Blood Well.
 research.SHOGGOTH.title=Shoggoth
 research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away aeons ago on the Sea's shores.<BR>Slaves to the Elder Things, builders of cities.<BR>They're born from tears.<BR>I must create a Shoggoth Vat. That is, a 3x3x3 cube of tears, making sure each block is filled. Then three Fleti must be placed in it.<BR>Once all is done, I must enter it, and through a Dream Bottle I must Dream simultaneously of Darkness, Eldritchness, Learning and Void.<BR>A Shoggoth is no gentle creature. It will attack all animals and all Players other than its owner on sight. If it becomes too delighted in killing, then not even its owner is safe.<BR>A Shoggoth is to be picked up through a blackjack, provided that it is sufficiently calm.
 
+research.CITYMAPPER.title=City Mapping
+research.CITYMAPPER.stage.0=Shoggoths once built cities.<BR>They shall do so again.
+research.CITYMAPPER.stage.1=A City Mapper can create a map schematic that is then to be given to a Shoggoth.<BR>I can place buildings from the menu on the right onto the map. Buildings must not intersect each other and must be fully contained within the map's borders.<BR>Buildings can be rotated before or after placement with the mouse wheel.<BR>Buildings on the map can be moved by clicking on them and deleted by moving them outside the map.<BR>I must save changes before exiting the Mapper and before creating the schematic.<BR>Once the schematic is made, I can then give it to a Shoggoth.<BR>Of course, I must also make sure the Shoggoth isn't distracted by any animals, Players or other Shoggoths.<BR>As of now, there's only a handful of block types the Shoggoth can create. Maybe in the future I'll find more.<BR>The Shoggoth creates such blocks by itself, but I can synthesize them myself as well, if needs be.
+research.craftedcity_mapper.text=Craft a City Mapper.
+
 research.DEATHDREAM.title=Dream of Death
 research.DEATHDREAM.stage.0=A Dream of Death, as I respawn once again.<BR>Yet I am not the only one that cannot truly die.<BR>With this Memory, I can invade the privacy of another random Player, and discover the last place where they died, hopefully profiting off their spoils.<BR>No grave is too sacred.
 research.DEATHDREAM.addenda.teleport=It seems that targeting myself with a Death Dream, through a Player Sigil bound to myself used on the Dream Shrine, allows me to outright teleport to my last Overworld death's location.<BR>But how? How can a simple Dream shift my whole body?<BR>Could this be a key to breaching the Veil?
@@ -966,6 +972,15 @@ research.BRONZESPHERE.stage.0=I've already held this sphere.<BR>I know I have.<B
 
 research.BAUBLERESEARCH.title=Baubles
 research.BAUBLERESEARCH.stage.0=Some items are to be worn outside of my armor slots.<BR>The Baubles I encounter in this journey (and only this journey) may have both active and passive effects.<BR>By holding the Bauble key ('Z' by default) I can choose which Baubles must have their passive effect enabled and which single Bauble is to be the active one.<BR>There can be only one active Bauble, and its effect can be activated by tapping the Bauble Key.
+
+research.INTROSPECTIONDREAM.title=Dream of Introspection
+research.INTROSPECTIONDREAM.stage.0=A Memory of Introspection, as I reflect upon my own self while I walk among my worshippers.<BR>Through this Memory I can know more of the power I've obtained in my journey.<BR>Of course, were I to target someone else with the Dream I may also scry into their secrets.
+
+research.DEEPROAR.title=Roaring
+research.DEEPROAR.stage.0=While transformed I am unable to use the active effects of my Baubles, as well as to open the Bauble Powers menu.<BR>In that form, however, I am instead able to release a blood curdling roar that will affect all entities around me with Terror, by tapping the same key I'd have used for the Active Bauble.<BR>To strike fear in my opponents' hearts is to be closer than ever to God.
+
+research.TONEWDEPTHS.title=To New Depths
+research.TONEWDEPTHS.stage.0=We must keep going.<BR>Never yield, the Truth draws close, the Veil weakens, my knowledge grows, my will..<BR>What will is left? As if someone ripped my own spine.<BR>No, we'll keep going. We must.<BR>To the bottom of the deepest Oceans.<BR>To Arche, and then to Apeiron.<BR>Our journey won't end until we breach.. until we..<BR>..wait..<BR>..who's 'we'?
 
 ##################
 #MISC

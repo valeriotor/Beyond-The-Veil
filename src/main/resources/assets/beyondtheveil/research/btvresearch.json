@@ -451,6 +451,19 @@
             ]
         },
 		{
+        "key": "DEEPROAR",
+        "name": "research.DEEPROAR.title",
+        "icons": [ "minecraft:record_stal" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,12 ],
+		"hiders": ["METAMORPHOSIS"],
+        "parents": [ "METAMORPHOSIS" ],
+        "stages": [
+				{
+					"text": "research.DEEPROAR.stage.0"
+				}
+            ]
+        },
+		{
         "key": "DREAMBOTTLE",
         "name": "research.DREAMBOTTLE.title",
         "icons": [ "beyondtheveil:dream_bottle" ],
@@ -471,7 +484,13 @@
                     "text": "research.DREAMBOTTLE.stage.2",
 					"recipes" : ["beyondtheveil:dream_bottle"]
                 }
-            ]
+            ],
+		"addenda" : [
+				{
+					"text": "research.DREAMBOTTLE.addenda.statue",
+					"required_research": ["dreambottlestatue"]
+				}
+			]
         },
 		{
         "key": "WATERWALKING",
@@ -842,6 +861,20 @@
             ]
         },
 		{
+        "key": "INTROSPECTIONDREAM",
+        "name": "research.INTROSPECTIONDREAM.title",
+        "icons": [ "minecraft:writable_book" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0,17 ],
+		"hiders": ["memINTROSPECTION"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.INTROSPECTIONDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memINTROSPECTION"]
+				}
+            ]
+        },
+		{
         "key": "SACRIFICEALTAR",
         "name": "research.SACRIFICEALTAR.title",
         "icons": [ "beyondtheveil:sacrifice_altar" ],
@@ -927,6 +960,25 @@
         "stages": [
 				{
                     "text": "research.SHOGGOTH.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "CITYMAPPER",
+        "name": "research.CITYMAPPER.title",
+        "icons": [ "beyondtheveil:city_mapper" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6, 22],
+		"hiders": ["SHOGGOTH"],
+        "parents": ["SHOGGOTH" ],
+        "stages": [
+				{
+                    "text": "research.CITYMAPPER.stage.0",
+                    "required_research" : ["craftedcity_mapper"],
+					"recipes" : ["beyondtheveil:city_mapper"]
+                },
+                {
+                    "text": "research.CITYMAPPER.stage.1",
+					"recipes" : ["beyondtheveil:city_mapper", "beyondtheveil:elder_stone_bricks"]
                 }
             ]
         },
@@ -1100,6 +1152,19 @@
         "stages": [
 				{
                     "text": "research.BAUBLERESEARCH.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "TONEWDEPTHS",
+        "name": "research.TONEWDEPTHS.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18, 21],
+		"hiders": ["FINALQUEST"],
+		"parents" : ["SHOGGOTH", "FINALQUEST"],
+        "stages": [
+				{
+                    "text": "research.TONEWDEPTHS.stage.0"
                 }
             ]
         }
