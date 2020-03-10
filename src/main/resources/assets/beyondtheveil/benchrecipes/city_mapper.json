@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		"PPPP",
+		"WWWW",
+		" WW ",
+		"WWWW"
+	],
+	"output" : "beyondtheveil:city_mapper",
+	"map": {
+		"P" : "minecraft:paper",
+		"W" : "minecraft:log"
+	},
+	"req" : "WEEPERS;1"
+}

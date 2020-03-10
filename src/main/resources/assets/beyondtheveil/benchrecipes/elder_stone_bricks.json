@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		"QQQQ",
+		"QCCQ",
+		"QCCQ",
+		"QQQQ"
+	],
+	"output" : "beyondtheveil:elder_stone_bricks",
+	"map": {
+		"Q" : "minecraft:quartz_block",
+		"C" : "minecraft:clay_ball"
+	},
+	"req" : "DREAMBOTTLE;1"
+}

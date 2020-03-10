@@ -1,0 +1,15 @@
+{
+	"rows" : [
+		"  II",
+		" IIH",
+		"IIHH",
+		"WWHH"
+	],
+	"output" : "beyondtheveil:sacrificial_knife",
+	"map": {
+		"H" : "beyondtheveil:heart",
+		"W" : "minecraft:log",
+		"I" : "minecraft:iron_ingot"
+	},
+	"req" : "STATUE;1"
+}

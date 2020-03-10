@@ -1,0 +1,20 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "xx",
+        "xx" 
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "beyondtheveil:elder_stone_bricks"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:elder_bricks",
+        "count": 4
+    }                  
+}

@@ -1,0 +1,15 @@
+{
+	"rows" : [
+		"  IS",
+		" IOI",
+		"IOI ",
+		"II  "
+	],
+	"output" : "beyondtheveil:slugcatcher",
+	"map": {
+		"S" : "minecraft:iron_sword",
+		"O" : "minecraft:obsidian",
+		"I" : "minecraft:iron_ingot"
+	},
+	"req" : "SLUGS;1"
+}

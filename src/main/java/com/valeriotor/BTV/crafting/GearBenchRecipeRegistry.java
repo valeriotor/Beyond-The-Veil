@@ -33,6 +33,14 @@ public class GearBenchRecipeRegistry {
 		registerGBRecipe("blood_crown");
 		registerGBRecipe("bone_tiara");
 		registerGBRecipe("azacno_charm");
+		registerGBRecipe("penitence_statue");
+		registerGBRecipe("sacrifice_statue");
+		registerGBRecipe("sacrifice_altar");
+		registerGBRecipe("dream_bottle");
+		registerGBRecipe("sacrificial_knife");
+		registerGBRecipe("city_mapper");
+		registerGBRecipe("elder_stone_bricks");
+		registerGBRecipe("slug_catcher");
 	}
 	
 	private static void registerGBRecipe(String fileName) {

@@ -33,7 +33,7 @@ public class ModSlab extends BlockSlab{
 	
 	public ModSlab(String name, Material material, boolean isDouble) {
 		super(material);
-		this.setRegistryName(name);
+		this.setRegistryName(References.MODID, name);
 		this.setUnlocalizedName(name);
 		this.isDouble = isDouble;
 		IBlockState iblockstate = this.blockState.getBaseState().withProperty(VARIANT, Variant.DEFAULT);

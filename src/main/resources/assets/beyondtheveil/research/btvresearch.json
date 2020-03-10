@@ -341,11 +341,11 @@
 				{
 					"text": "research.SLUGS.stage.0",
 					"required_research": ["!SLUGS"],
-					"recipes" : ["beyondtheveil:slug_bait"]
+					"recipes" : ["beyondtheveil:slug_bait", "beyondtheveil:slugcatcher"]
 				},
                 {
                     "text": "research.SLUGS.stage.1",
-					"recipes" : ["beyondtheveil:slug_bait"]
+					"recipes" : ["beyondtheveil:slug_bait", "beyondtheveil:slugcatcher"]
                 }
             ]
         },
@@ -782,11 +782,11 @@
                 {
 					"text": "research.STATUE.stage.1",
 					"required_research": ["linkedstatue"],
-                    "recipes": ["beyondtheveil:statue"]
+                    "recipes": ["beyondtheveil:statue", "beyondtheveil:sacrificial_knife"]
 				},
                 {
 					"text": "research.STATUE.stage.2",
-                    "recipes": ["beyondtheveil:statue"]
+                    "recipes": ["beyondtheveil:statue", "beyondtheveil:sacrificial_knife"]
 				}
             ]
         },
@@ -800,10 +800,12 @@
         "stages": [
 				{
 					"text": "research.SACRIFICESTATUE.stage.0",
-					"required_research": ["craftedsacrifice_statue"]
+					"required_research": ["craftedsacrifice_statue"],
+                    "recipes": ["beyondtheveil:sacrifice_statue"]
                 },
                 {
-					"text": "research.SACRIFICESTATUE.stage.1"
+					"text": "research.SACRIFICESTATUE.stage.1",
+                    "recipes": ["beyondtheveil:sacrifice_statue"]
 				}
             ]
         },
@@ -817,10 +819,12 @@
         "stages": [
 				{
 					"text": "research.PENITENCESTATUE.stage.0",
-					"required_research": ["craftedpenitence_statue"]
+					"required_research": ["craftedpenitence_statue"],
+                    "recipes": ["beyondtheveil:penitence_statue"]
                 },
                 {
-					"text": "research.PENITENCESTATUE.stage.1"
+					"text": "research.PENITENCESTATUE.stage.1",
+                    "recipes": ["beyondtheveil:penitence_statue"]
 				}
             ]
         },

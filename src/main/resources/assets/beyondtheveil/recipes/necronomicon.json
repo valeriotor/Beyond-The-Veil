@@ -1,0 +1,25 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "PPP",
+        "PEP",
+        "PPP" 
+    ],
+    "key":
+    {
+        "P":
+        {
+            "item": "minecraft:paper"
+        },
+		"E":
+		{
+			"item" : "minecraft:ender_eye"
+		}
+    },
+    "result":
+    {
+        "item": "beyondtheveil:necronomicon",
+        "count": 1
+    }                  
+}

@@ -1,0 +1,20 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern": 
+    [
+        "xxx" 
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "beyondtheveil:blood_bricks"
+        }
+    },
+    "result":
+    {
+        "item": "beyondtheveil:blood_bricks_slab",
+		"data" : 0,
+        "count": 6
+    }                  
+}

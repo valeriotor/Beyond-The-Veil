@@ -1,0 +1,17 @@
+{
+	"rows" : [
+		"GIIG",
+		"DHHD",
+		"DPPD",
+		"PPPP"
+	],
+	"output" : "beyondtheveil:sacrifice_altar",
+	"map": {
+		"P" : "minecraft:prismarine;1;1",
+		"H" : "beyondtheveil:heart",
+		"D" : "minecraft:prismarine;1;2",
+		"G" : "minecraft:gold_ingot",
+		"I" : "minecraft:diamond"
+	},
+	"req" : "SACRIFICEALTAR;0"
+}

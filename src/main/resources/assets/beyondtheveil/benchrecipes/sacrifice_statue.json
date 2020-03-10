@@ -1,0 +1,19 @@
+{
+	"rows" : [
+		"PPPP",
+		"BSEB",
+		"OTTO",
+		"HHHH"
+	],
+	"output" : "beyondtheveil:sacrifice_statue",
+	"map": {
+		"S" : "beyondtheveil:statue",
+		"P" : "beyondtheveil:spine",
+		"H" : "beyondtheveil:heart",
+		"B" : "minecraft:blaze_rod",
+		"O" : "minecraft:stone",
+		"E" : "minecraft:emerald_block",
+		"T" : "fluid:tears"
+	},
+	"req" : "SACRIFICESTATUE;0"
+}
