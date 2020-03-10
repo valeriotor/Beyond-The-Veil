@@ -64,8 +64,8 @@ public class GuiResearchPage extends GuiScreen implements IItemRenderGui{
 			}
 		}
 		this.buttonList.clear();
-		int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || mc.gameSettings.guiScale == 0 ? 90 : 130);
-		GuiButton b = new GuiButton(0, this.width/2 - 100, bHeight, I18n.format("gui.research_page.complete"));
+		int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || mc.gameSettings.guiScale == 0 ? 90 : 130) - 5;
+		GuiButton b = new GuiButton(0, this.width/2 - 50, bHeight, 100, 20, I18n.format("gui.research_page.complete"));
 		this.buttonList.add(b);
 		if(!status.canProgressStage(mc.player)) {
 			this.buttonList.get(0).visible = false;
