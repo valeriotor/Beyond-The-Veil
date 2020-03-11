@@ -111,6 +111,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void loadCustomResources() {
     	AnimationRegistry.loadAnimations();
+    	DialogueRequirement.registerRequirements();
     }
     
     @Override

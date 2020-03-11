@@ -252,6 +252,9 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	private void proceedDialogue(boolean option) {
 		if(this.doesCloseDialogue()) {
+			if(DialogueHandler.getDialogueName(profession) == Dialogues.WEEPER)
+				this.talkCount++;
+			DialogueHandler.updateDialogueData(this.profession, this.branch, this.selectedOption, this.talkCount);
 			DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
@@ -288,9 +291,12 @@ public class GuiDialogueDweller extends GuiScreen {
 	 * @return
 	 */
 	public boolean doesCloseDialogue() {
-		if(DialogueHandler.getDialogueName(this.profession) == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) return true;
-		if(DialogueHandler.getDialogueName(profession) == Dialogues.TRUSTEDBAR && this.selectedOption == 1) return true;
-		if(DialogueHandler.getDialogueName(profession) == Dialogues.END2) return true;
+		Dialogues d = DialogueHandler.getDialogueName(profession);
+		if(d == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) return true;
+		if(d == Dialogues.TRUSTEDBAR && this.selectedOption == 1) return true;
+		if(d == Dialogues.END2) return true;
+		if(d == Dialogues.SEEYA || d == Dialogues.SEEYA2 || d == Dialogues.SEEYA3) return true;
+		if(d == Dialogues.WEEPER && this.talkCount == 3) return true;
 		return false;
 	}
 }

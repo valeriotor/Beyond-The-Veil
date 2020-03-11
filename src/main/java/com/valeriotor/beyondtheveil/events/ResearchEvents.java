@@ -66,6 +66,14 @@ public class ResearchEvents {
 				if(data.getString("dialoguecanoe"))
 					unlockDialogue(p, "ritual");	
 			break;
+		case "WEEPERS":
+			if(stage == 1 && data.getString("dialogueseeya")) 
+				unlockDialogue(p, "weeper");
+			break;
+		case "SHOGGOTH":
+			if(data.getString("dialogueseeya2"))
+				unlockDialogue(p, "shoggoth");	
+			break;
 		}
 	}
 	

@@ -546,6 +546,30 @@ dweller.lhkeeperend.talk4=That is a snippet of Truth, outsider, just for you. Yo
 dweller.lhkeeperend.talk5=It does not matter what world you come from, the Truth spans all realms. | :Because it lies Beyond The Veil, in the region between all universes.
 dweller.lhkeeperend2.talk0=Go ahead, strike me down. My death won't matter. || :And neither will yours.
 
+dweller.scholar.talk0=Oh my! A traveller! |:Hello! Hi! Greetings! Welcome! Salutations!
+dweller.scholar.talk1=I am this Hamlet's Scholar! A rare profession nowadays. :Haha. Most of us are dead.
+dweller.scholar.talk2=No worries though. Thou art a friend, ain't ya? |:Feel free to browse the Town Hall.
+dweller.scholarseeya.talk0=See thee later, dude.
+dweller.scholarweeper.talk0=Oi, art thou dabblin' in the art of Weeper making? |:Nice.
+dweller.scholarweeper.talk1=Ya know, back in the day we used to make Weepers too. :Then we stopped, since some people didn't like that practice of ours, and in the end we had enough to weep of our own!
+dweller.scholarweeper.talk2=Yeah, things were tough back then. :My friends named me Weeper Ad Honorem after me pa and me ma were.. ya know..
+dweller.scholarweeper.talk3=We still weep at times, absorbed in recollection. :So please, friend, hearken our chants. :And weep with us.
+dweller.scholarseeya2.talk0=See thee later, dude.
+dweller.scholarshoggoth.talk0=Oi, dost thou knoweth what a SHOGGOTH is?
+dweller.scholarshoggoth.talk0.option0=Yes, I do. 
+dweller.scholarshoggoth.talk0.option1=Enlighten me. 
+dweller.scholarshoggoth.sorrytalk0=Oh. |I'm sorry, really. |:That is not a knowledge borne lightly.
+dweller.scholarshoggoth.sorrytalk1=I beg of thee, friend. :Don't trust the Shoggoth. Thou will regret it.
+dweller.scholarshoggoth.sorrytalk2=It was that voice in thy head that told ya how to make one, eh?
+dweller.scholarshoggoth.sorrytalk2.option0=What voice? 
+dweller.scholarshoggoth.sorrytalk2.option1=Yes. 
+dweller.scholarshoggoth.enlightentalk0=Oh no I'm not doin' that. :Thou art lucky enough as it is, my dude.
+dweller.scholarshoggoth.enlightentalk1=Yet I fear that that voice in thy head will, sooner or later, tell thee how to make one.
+dweller.scholarshoggoth.enlightentalk1.option0=What voice? 
+dweller.scholarshoggoth.enlightentalk1.option1=Tell me more. 
+dweller.scholarbreath.talk0=Remember when ya were baptised and then breathed HARD in a voice that wasn't thine? :Heh.
+dweller.scholarseeya3.talk0=See thee later, dude.
+
 ##################
 #WEEPER DIALOGUE
 ##################

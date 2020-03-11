@@ -31,13 +31,14 @@ public class DialogueRequirement {
 	
 	public boolean canUnlock(String dialogue, String branch, int opt, int TC) {
 		if(dialogue.equals(this.reqDialogue) && branch.equals(this.reqBranch)) {
-			if((opt == this.reqOpt && opt != -1) || (opt == -1 && TC == this.reqTC)) {
+			if((opt == this.reqOpt && opt != -1) || (TC == this.reqTC)) {
 				if(this.pred != null)
 					if(!this.pred.test(Minecraft.getMinecraft().player)) return false;
 				if(this.reqData.length == 0)
 					return true;
 				for(String s : this.reqData) {
-					if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(s)) return true;
+					if(!Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(s)) return false;
+				return true;
 				}
 			}	
 		}
@@ -80,6 +81,15 @@ public class DialogueRequirement {
 		map.put("easyjob0", new DialogueRequirement("canoecar", Branches.DONTFISH.getName(), -1, 1, null));
 		map.put("easyjob1", new DialogueRequirement("canoecar", Branches.CANOESFOR.getName(), -1, 1, null));
 		map.put("end20", new DialogueRequirement("end", "", -1, 6, null));
+		map.put("seeya0", new DialogueRequirement("first", "", -1, 3, null));
+		map.put("weeper0", new DialogueRequirement("seeya", "", -1, 0, null, "filledtears"));
+		map.put("seeya20", new DialogueRequirement("weeper", "", -1, 4, null));
+		map.put("shoggoth0", new DialogueRequirement("seeya2", "", -1, 0, null, "shoggothsecret"));
+		map.put("breath0", new DialogueRequirement("shoggoth", "sorry", 0, 0, null));
+		map.put("breath1", new DialogueRequirement("shoggoth", "sorry", 1, 0, null));
+		map.put("breath2", new DialogueRequirement("shoggoth", "enlighten", 0, 0, null));
+		map.put("breath3", new DialogueRequirement("shoggoth", "enlighten", 1, 0, null));
+		map.put("seeya30", new DialogueRequirement("breath", "", -1, 1, null));
 	}
 	
 	public static HashMap<String, DialogueRequirement> getMap(){

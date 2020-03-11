@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageGiveDrink;
 import com.valeriotor.beyondtheveil.network.MessageSyncDialogueData;
@@ -249,7 +250,9 @@ public class DialogueHandler {
 	}
 	
 	private static void performAdditionalEffects(String profession, int option, int talkCount) {
-		if(getDialogueName(profession) == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveDrink());
+		Dialogues d = getDialogueName(profession);
+		if(d == Dialogues.TRUSTEDBAR && option == 0) BTVPacketHandler.INSTANCE.sendToServer(new MessageGiveDrink());
+		else if(d == Dialogues.WEEPER && talkCount == 4) Minecraft.getMinecraft().player.playSound(BTVSounds.weeper_idle, 1, 1);
 	}
 	
 	private static void removeDialogue(Dialogues d) {
@@ -259,6 +262,12 @@ public class DialogueHandler {
 	
 	
 	public enum Dialogues{
+		SEEYA3("scholar", 1, 1),
+		BREATH("scholar", 1, 4),
+		SHOGGOTH("scholar", 1, 1),
+		SEEYA2("scholar", 1, 1),
+		WEEPER("scholar", 4, 1),
+		SEEYA("scholar", 1, 1),
 		EASYJOB("carpenter", 2, 2),
 		CANOECAR("carpenter", 1, 0),
 		TRUSTEDCAR("carpenter", 1, 0),
@@ -322,6 +331,8 @@ public class DialogueHandler {
 	}
 	
 	public enum Branches{
+		ENLIGHTEN("scholar", 2, "shoggoth", "", 1),
+		SORRY("scholar", 3, "shoggoth", "", 0),
 		CANOESFOR("carpenter", 1, "canoecar", "", 1),
 		DONTFISH("carpenter", 1, "canoecar", "", 0),
 		GENOCIDEDISAGREE("lhkeeper", 1, "oldtruth", "", 0),

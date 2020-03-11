@@ -359,7 +359,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		STOCKPILER(4, 3),
 		DRUNK(5, 4),
 		CARPENTER(6, 2),
-		SCHOLAR(7, 2);
+		SCHOLAR(7, 3);
 		
 		private final int id;
 		private final int talkCount;
