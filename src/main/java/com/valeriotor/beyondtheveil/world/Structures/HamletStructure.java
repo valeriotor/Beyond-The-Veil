@@ -78,6 +78,30 @@ public abstract class HamletStructure{
 		else makeDoorRoads(8);
 	}
 	
+	protected void roadHelper(byte[] doorCoords) {
+		int doorX = doorCoords[0];
+		int doorZ = doorCoords[2];
+		switch(facing.getHorizontalIndex()) {
+		case 0:
+			doorX = -doorX;
+			doorZ = -doorZ;
+			break;
+		case 1:
+			doorX = doorCoords[2];
+			doorZ = -doorCoords[0];
+			break;
+		case 2:
+			break;
+		case 3:
+			doorX = -doorCoords[2];
+			doorZ = doorCoords[0];
+			break;
+		}
+		doorPos = center.add(doorX, doorCoords[1], doorZ);
+		if(this.isLarge()) makeDoorRoads(12);
+		else makeDoorRoads(8);
+	}
+	
 	public int getRadius() {
 		return this.radius;
 	}
@@ -249,9 +273,61 @@ public abstract class HamletStructure{
 		return false;
 	}
 	
+	public boolean isOnWater(byte[][] dark_sand) {
+		int counter = 0;
+		for(int i = 0; i < dark_sand.length; i++) {
+			if((i & 7) == 0) {
+				Block block = this.world.getBlockState(this.center.add(dark_sand[i][0], -1, dark_sand[i][2])).getBlock();
+				if(block == Blocks.WATER) {
+					counter++;
+				}
+			}
+		}
+		if(counter > dark_sand.length/10) return true;
+		
+		return false;
+	}
+	
 	protected void fillFloor(int[][] floor) {
 		
 		for(int[] n : floor) {
+			int counter = 2;
+			int xChange = 0;
+			int zChange = 0;
+			if(facing == EnumFacing.NORTH) {
+				xChange = n[0];
+				zChange = n[2];
+			}else if(facing == EnumFacing.EAST) {
+				xChange = -n[2];
+				zChange = n[0];
+			}else if(facing == EnumFacing.SOUTH) {
+				xChange = -n[0];
+				zChange = -n[2];
+			}else if(facing == EnumFacing.WEST) {
+				xChange = n[2];
+				zChange = -n[0];
+			}	
+			int test = 0;	
+			for(int i = 2; i < 10; i++) {
+				BlockPos pos = new BlockPos(this.center.getX()+xChange, this.center.getY()-i, this.center.getZ()+zChange);
+				Block block = this.world.getBlockState(pos).getBlock();
+				if(block != Blocks.AIR && block != Blocks.WATER) {
+					test++;
+					if(test==2) break;
+				}
+				counter++;
+				
+			}
+			for(int j = 0; j<= counter; j++) {
+				BlockPos pos = new BlockPos(this.center.getX()+xChange, this.center.getY()-counter+j, this.center.getZ()+zChange);
+				this.world.setBlockState(pos, BlockRegistry.DarkSand.getDefaultState());
+			}
+		}
+	}
+	
+	protected void fillFloor(byte[][] floor) {
+		
+		for(byte[] n : floor) {
 			int counter = 2;
 			int xChange = 0;
 			int zChange = 0;
@@ -335,6 +411,26 @@ public abstract class HamletStructure{
 	}
 	
 	protected BlockPos getPosFromArray(int[] n, EnumFacing facing) {
+		int[] newArray = {n[0], n[1], n[2]};
+		switch(facing.getHorizontalIndex()) {
+		case 0: 
+			newArray[0] = -n[0];
+			newArray[2] = -n[2];
+			break;
+		case 1:
+			newArray[0] = n[2];
+			newArray[2] = -n[0];
+			break;
+		case 3:
+			newArray[0] = -n[2];
+			newArray[2] = n[0];
+			break;
+		}
+		BlockPos pos = new BlockPos(x+newArray[0], y+newArray[1], z+newArray[2]);
+		return pos;
+	}
+	
+	protected BlockPos getPosFromArray(byte[] n, EnumFacing facing) {
 		int[] newArray = {n[0], n[1], n[2]};
 		switch(facing.getHorizontalIndex()) {
 		case 0: 

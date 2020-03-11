@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class WorldGenBTV implements IWorldGenerator{
 	
 	private ChunkPrimer cp = new ChunkPrimer();
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	public WorldGenBTV() {
 		
 	}
@@ -60,7 +60,8 @@ public class WorldGenBTV implements IWorldGenerator{
 		}
 		
 		if(pos!=null) {
-			new FishingHamlet(w,r,pos);
+			FishingHamlet f = new FishingHamlet();
+			f.StartStructure(w, r, pos);
 		}
 		
 	}

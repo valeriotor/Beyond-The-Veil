@@ -72,17 +72,17 @@
 		},
 		{
 			"name": "tablet",
-			"rolls": 2,
+			"rolls": 1,
 			"entries": [
 				{
 					"type": "item",
 					"name": "beyondtheveil:surgery_tools",
-					"weight": 2
+					"weight": 1
 				},
 				{
 					"type": "item",
 					"name": "beyondtheveil:tablet",
-					"weight": 2
+					"weight": 1
 				},
 				{
 					"type": "item",

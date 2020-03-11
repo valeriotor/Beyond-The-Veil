@@ -68,12 +68,12 @@ public class TestItem extends Item //implements IHasModel
 		
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
-	
+	private static final boolean SHOGGOTH = false;
 	public void doProcess(BlockPos pos1, BlockPos pos2, World w) {
 		
 		
 		HashMap<String, List<byte[]>> blockMap = new HashMap<>();
-		BlockPos center = new BlockPos(Math.ceil(((double)pos1.getX()+pos2.getX())/2), Math.min(pos1.getY(), pos2.getY()), Math.ceil(((double)pos1.getZ()+pos2.getZ())/2));
+		BlockPos center = new BlockPos(Math.ceil(((double)pos1.getX()+pos2.getX())/2), Math.min(pos1.getY(), pos2.getY()) + (SHOGGOTH ? 0 : 1), Math.ceil(((double)pos1.getZ()+pos2.getZ())/2));
 		for(int x = Math.min(pos1.getX(), pos2.getX()); x<=Math.max(pos1.getX(), pos2.getX());x++) {
 			for(int y = Math.min(pos1.getY(), pos2.getY()); y<=Math.max(pos1.getY(), pos2.getY());y++) {
 				for(int z = Math.min(pos1.getZ(), pos2.getZ()); z<=Math.max(pos1.getZ(), pos2.getZ());z++) {

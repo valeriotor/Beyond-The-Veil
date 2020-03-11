@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.research;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
@@ -11,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import scala.actors.threadpool.Arrays;
 
 public class Research {
 	

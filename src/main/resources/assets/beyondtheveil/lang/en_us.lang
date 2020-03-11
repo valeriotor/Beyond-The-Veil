@@ -920,7 +920,7 @@ research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away a
 
 research.CITYMAPPER.title=City Mapping
 research.CITYMAPPER.stage.0=Shoggoths once built cities.<BR>They shall do so again.
-research.CITYMAPPER.stage.1=A City Mapper can create a map schematic that is then to be given to a Shoggoth.<BR>I can place buildings from the menu on the right onto the map. Buildings must not intersect each other and must be fully contained within the map's borders.<BR>Buildings can be rotated before or after placement with the mouse wheel.<BR>Buildings on the map can be moved by clicking on them and deleted by moving them outside the map.<BR>I must save changes before exiting the Mapper and before creating the schematic.<BR>Once the schematic is made, I can then give it to a Shoggoth.<BR>Of course, I must also make sure the Shoggoth isn't distracted by any animals, Players or other Shoggoths.<BR>As of now, there's only a handful of block types the Shoggoth can create. Maybe in the future I'll find more.<BR>The Shoggoth creates such blocks by itself, but I can synthesize them myself as well, if needs be.
+research.CITYMAPPER.stage.1=A City Mapper can create a map schematic that is then to be given to a Shoggoth.<BR>I can place buildings from the menu on the right onto the map. Buildings must not intersect each other and must be fully contained within the map's borders.<BR>Buildings can be rotated before or after placement with the mouse wheel.<BR>Buildings on the map can be moved by clicking on them and deleted by moving them outside the map.<BR>I must save changes before exiting the Mapper and before creating the schematic.<BR>Once the schematic is made, I can then give it to a Shoggoth.<BR>Of course, I must also make sure the Shoggoth isn't distracted by any animals, Players or other Shoggoths.<BR>As of now, there's only a handful of block types the Shoggoth can create. Maybe in the future I'll find more.<BR>The Shoggoth creates such blocks by itself, but I can synthesize them myself as well, if needs be.<BR>Lastly, I should remember to light up buildings soon after they're built, as they have no source of lighting themselves.
 research.craftedcity_mapper.text=Craft a City Mapper.
 
 research.DEATHDREAM.title=Dream of Death
@@ -1020,3 +1020,5 @@ teleport.setposition=My current position has been set as my return point.
 teleport.inwater=I must be in water to use this Power.
 
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
+
+itemGroup.beyondtheveil=Beyond The Veil

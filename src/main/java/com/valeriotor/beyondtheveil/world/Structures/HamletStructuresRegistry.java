@@ -61,7 +61,8 @@ public class HamletStructuresRegistry {
 		registerStructure(HamletStoreHouse2::new, 2, 1);
 		registerStructure(HamletTownHall::new, 5, 1);
 		registerStructure(HamletLightHouse::new, 10, 1);
-		
+		HamletLightHouse.registerBlocks();
+		HamletStorehouse.registerBlocks();
 	}
 	
 	/**
