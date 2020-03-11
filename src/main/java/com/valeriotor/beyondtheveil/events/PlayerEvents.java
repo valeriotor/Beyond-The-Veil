@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.events;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
@@ -22,8 +23,6 @@ import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
-import java.util.Set;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -32,6 +31,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -140,6 +140,7 @@ public class PlayerEvents {
 		if(event.fromDim == DimensionType.NETHER.getId() && event.toDim == DimensionType.OVERWORLD.getId() && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("thebeginning")) {
 			SyncUtil.addStringDataOnServer(event.player, false, "thebeginning");
 			ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.necronomicon));
+			p.sendMessage(new TextComponentTranslation("beginning.netherreturn"));
 		}
 	}
 	

@@ -1018,3 +1018,5 @@ roar.cooldown=The Roar requires %1$s more seconds of cooldown.
 
 teleport.setposition=My current position has been set as my return point.
 teleport.inwater=I must be in water to use this Power.
+
+beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
