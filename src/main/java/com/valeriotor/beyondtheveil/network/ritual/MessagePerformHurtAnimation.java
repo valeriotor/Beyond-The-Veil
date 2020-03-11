@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.network.ritual;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundEvent;
@@ -36,16 +37,18 @@ public class MessagePerformHurtAnimation implements IMessage{
 		@Override
 		public IMessage onMessage(MessagePerformHurtAnimation message, MessageContext ctx) {
 			EntityPlayer p = BeyondTheVeil.proxy.getPlayer();
-			p.performHurtAnimation();
-			SoundEvent s = null;
-			if(message.sound == DEFAULT) {
-				s = SoundEvents.ENTITY_PLAYER_HURT;
-			} else if(message.sound == DROWN) {
-				s = SoundEvents.ENTITY_PLAYER_HURT_DROWN;
-			} else if(message.sound == FIRE) {
-				s = SoundEvents.ENTITY_PLAYER_HURT_ON_FIRE;
-			}
-			if(s != null) p.playSound(s, 1, 1);
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				p.performHurtAnimation();
+				SoundEvent s = null;
+				if(message.sound == DEFAULT) {
+					s = SoundEvents.ENTITY_PLAYER_HURT;
+				} else if(message.sound == DROWN) {
+					s = SoundEvents.ENTITY_PLAYER_HURT_DROWN;
+				} else if(message.sound == FIRE) {
+					s = SoundEvents.ENTITY_PLAYER_HURT_ON_FIRE;
+				}
+				if(s != null) p.playSound(s, 1, 1);
+			});
 			return null;
 		}
 		

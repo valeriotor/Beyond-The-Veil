@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.network;
 import com.valeriotor.beyondtheveil.tileEntities.TileCityMapper;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -55,23 +56,27 @@ public class MessageCityMapper implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageCityMapper message, MessageContext ctx) {
-			TileEntity te = ctx.getServerHandler().player.world.getTileEntity(message.pos);
-			if(!(te instanceof TileCityMapper)) return null;
-			TileCityMapper tc = (TileCityMapper) te;
-			if(message.mode == 0) {
-				tc.viewingPlayer = null;
-				tc.timer = -100;
-			}else if(message.mode == 1) {
-				tc.viewingPlayer = null;
-			}else if(message.mode == 2) {
-				tc.readBuildingsFromNBT(message.nbt);
-			}else if(message.mode == 3) {
-				if(tc.buildings.size() > 0) {
-					ItemStack stack = tc.create();
-					ItemHandlerHelper.giveItemToPlayer(ctx.getServerHandler().player, stack);
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServerWorld().addScheduledTask(() -> {
+				TileEntity te = p.world.getTileEntity(message.pos);
+				if(te instanceof TileCityMapper) {
+					TileCityMapper tc = (TileCityMapper) te;
+					if(message.mode == 0) {
+						tc.viewingPlayer = null;
+						tc.timer = -100;
+					}else if(message.mode == 1) {
+						tc.viewingPlayer = null;
+					}else if(message.mode == 2) {
+						tc.readBuildingsFromNBT(message.nbt);
+					}else if(message.mode == 3) {
+						if(tc.buildings.size() > 0) {
+							ItemStack stack = tc.create();
+							ItemHandlerHelper.giveItemToPlayer(ctx.getServerHandler().player, stack);
+						}
+					}
+					tc.sendSmallUpdates();
 				}
-			}
-			tc.sendSmallUpdates();
+			});
 			return null;
 		}
 		

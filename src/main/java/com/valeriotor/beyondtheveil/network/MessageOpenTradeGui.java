@@ -1,15 +1,10 @@
 package com.valeriotor.beyondtheveil.network;
 
-import java.util.List;
-import java.util.function.Predicate;
-
-import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
 import com.valeriotor.beyondtheveil.gui.DialogueHandler;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -36,21 +31,15 @@ public class MessageOpenTradeGui implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageOpenTradeGui message, MessageContext ctx) {
-			EntityHamletDweller e = DialogueHandler.getDweller(ctx.getServerHandler().player);
-			DialogueHandler.removeDialogue(ctx.getServerHandler().player);
-			if(e != null && message.openGui) {
-				e.setCustomer(ctx.getServerHandler().player);
-				ctx.getServerHandler().player.displayVillagerTradeGui(e);
-			}
-			/*List<EntityHamletDweller> dwellers = ctx.getServerHandler().player.world.getEntities(EntityHamletDweller.class, (entity) -> entity.getTalkingPlayer() == ctx.getServerHandler().player);
-			for(EntityHamletDweller e : dwellers) {
-				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
-				if(message.openGui) {
-					e.setCustomer(ctx.getServerHandler().player);
-					ctx.getServerHandler().player.displayVillagerTradeGui(e);
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServerWorld().addScheduledTask(() -> {
+				EntityHamletDweller e = DialogueHandler.getDweller(p);
+				DialogueHandler.removeDialogue(p);
+				if(e != null && message.openGui) {
+					e.setCustomer(p);
+					p.displayVillagerTradeGui(e);
 				}
-				e.resetTalkingPlayer();
-			}*/
+			});
 			return null;
 		}
 		

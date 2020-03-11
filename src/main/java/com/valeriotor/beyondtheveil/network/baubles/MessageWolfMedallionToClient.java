@@ -6,6 +6,7 @@ import java.util.List;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -36,10 +37,12 @@ public class MessageWolfMedallionToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageWolfMedallionToClient message, MessageContext ctx) {
-			for(Integer i : message.list) {
-				BeyondTheVeil.proxy.renderEvents.glowificator(i);
-			}
-			BeyondTheVeil.proxy.cEvents.startWolfMedallionCounter();;
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				for(Integer i : message.list) {
+					BeyondTheVeil.proxy.renderEvents.glowificator(i);
+				}
+				BeyondTheVeil.proxy.cEvents.startWolfMedallionCounter();;
+			});
 			return null;
 		}
 		

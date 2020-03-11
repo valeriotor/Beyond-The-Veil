@@ -41,7 +41,8 @@ public class MessagePlayerAnimation implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessagePlayerAnimation message, MessageContext ctx) {
-			BeyondTheVeil.proxy.cEvents.playerAnimations.put(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid), new Animation(AnimationRegistry.getAnimationFromId(message.animID)));
+			Minecraft.getMinecraft().addScheduledTask(() ->
+				BeyondTheVeil.proxy.cEvents.playerAnimations.put(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid), new Animation(AnimationRegistry.getAnimationFromId(message.animID))));
 			return null;
 		}
 		

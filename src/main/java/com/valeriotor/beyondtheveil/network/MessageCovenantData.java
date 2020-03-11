@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -49,11 +50,13 @@ public class MessageCovenantData implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageCovenantData message, MessageContext ctx) {
-			BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
-			if(!message.clear) {
-				if(message.players != null)
-					BeyondTheVeil.proxy.renderEvents.covenantPlayers.putAll(message.players);
-			}
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				BeyondTheVeil.proxy.renderEvents.covenantPlayers.clear();
+				if(!message.clear) {
+					if(message.players != null)
+						BeyondTheVeil.proxy.renderEvents.covenantPlayers.putAll(message.players);
+				}
+			});
 			return null;
 		}
 		

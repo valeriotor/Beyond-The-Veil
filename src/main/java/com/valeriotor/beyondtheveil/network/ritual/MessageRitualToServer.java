@@ -48,29 +48,31 @@ public class MessageRitualToServer implements IMessage{
 		@Override
 		public IMessage onMessage(MessageRitualToServer message, MessageContext ctx) {
 			EntityPlayerMP p = ctx.getServerHandler().player;
-			DrowningRitual dr = DrowningRitualEvents.rituals.get(p.getPersistentID());
-			if(message.mode == 0) {
-				dr.greatDreamer = true;
-				if(dr.ancientGods) dr.setNewPhase(Phase.DEITYYOURSELFCHOOSE);
-				else dr.resetPhase();
-			} else if(message.mode == 1) {	
-				dr.ancientGods = true;
-				if(dr.greatDreamer) dr.setNewPhase(Phase.DEITYYOURSELFCHOOSE);
-				else dr.resetPhase();
-			} else if(message.mode == 2) {
-				dr.setNewPhase(Phase.YOURSELF);
-			} else if(message.mode == 3) {
-				dr.setNewPhase(Phase.BELIEVE);
-			} else if(message.mode == 4) {
-				DrowningRitualEvents.rituals.remove(p.getPersistentID());
-				p.removePotionEffect(MobEffects.MINING_FATIGUE);
-				p.setHealth(p.getMaxHealth());
-				p.setAir(200);
-				if(p.world.getBlockState(p.getPosition().up(4)).getBlock() == Blocks.PACKED_ICE)
-					p.world.setBlockState(p.getPosition().up(4), Blocks.WATER.getDefaultState());
-				p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.RITUALQUEST, false);
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.RITUALQUEST), (EntityPlayerMP) p);
-			}
+			p.getServerWorld().addScheduledTask(() -> {
+				DrowningRitual dr = DrowningRitualEvents.rituals.get(p.getPersistentID());
+				if(message.mode == 0) {
+					dr.greatDreamer = true;
+					if(dr.ancientGods) dr.setNewPhase(Phase.DEITYYOURSELFCHOOSE);
+					else dr.resetPhase();
+				} else if(message.mode == 1) {	
+					dr.ancientGods = true;
+					if(dr.greatDreamer) dr.setNewPhase(Phase.DEITYYOURSELFCHOOSE);
+					else dr.resetPhase();
+				} else if(message.mode == 2) {
+					dr.setNewPhase(Phase.YOURSELF);
+				} else if(message.mode == 3) {
+					dr.setNewPhase(Phase.BELIEVE);
+				} else if(message.mode == 4) {
+					DrowningRitualEvents.rituals.remove(p.getPersistentID());
+					p.removePotionEffect(MobEffects.MINING_FATIGUE);
+					p.setHealth(p.getMaxHealth());
+					p.setAir(200);
+					if(p.world.getBlockState(p.getPosition().up(4)).getBlock() == Blocks.PACKED_ICE)
+						p.world.setBlockState(p.getPosition().up(4), Blocks.WATER.getDefaultState());
+					p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.RITUALQUEST, false);
+					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.RITUALQUEST), (EntityPlayerMP) p);
+				}
+			});
 			return null;
 		}
 		

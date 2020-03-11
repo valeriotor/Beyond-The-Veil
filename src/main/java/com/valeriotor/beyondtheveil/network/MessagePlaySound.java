@@ -42,7 +42,8 @@ public class MessagePlaySound implements IMessage{
 		@Override
 		public IMessage onMessage(MessagePlaySound message, MessageContext ctx) {
 			BlockPos p = BlockPos.fromLong(message.pos);
-			Minecraft.getMinecraft().player.world.playSound(p.getX(), p.getY(), p.getZ(), BTVSounds.getSoundById(message.id), SoundCategory.PLAYERS, (float) 0.7, 1, false);
+			Minecraft.getMinecraft().addScheduledTask(() ->
+				Minecraft.getMinecraft().player.world.playSound(p.getX(), p.getY(), p.getZ(), BTVSounds.getSoundById(message.id), SoundCategory.PLAYERS, (float) 0.7, 1, false));
 			return null;
 		}
 		

@@ -48,48 +48,51 @@ public class MessageSyncAntiqueNBT implements IMessage{
 		@Override
 		public IMessage onMessage(MessageSyncAntiqueNBT message, MessageContext ctx) {
 			EntityPlayerMP p = ctx.getServerHandler().player;
-			EnumHand hand = null;
-			for(EnumHand h : EnumHand.values()) {
-				if(p.getHeldItem(h).getItem() instanceof ItemTablet) {
-					hand = h;
-					break;
+			p.getServerWorld().addScheduledTask(() -> {
+				EnumHand hand = null;
+				for(EnumHand h : EnumHand.values()) {
+					if(p.getHeldItem(h).getItem() instanceof ItemTablet) {
+						hand = h;
+						break;
+					}
 				}
-			}
-			ItemStack stack = p.getHeldItem(hand);
-			
-			if(!stack.hasTagCompound()) {
-				stack.setTagCompound(new NBTTagCompound());
+				ItemStack stack = p.getHeldItem(hand);
 				
-			}
-			
-			if(hand == null) return null;
-			String key = message.key;
-			if(this.isIntKey(key))
-				stack.getTagCompound().setInteger(key, message.value);
-			else if(this.isBooleanKey(key))
-				stack.getTagCompound().setBoolean(key, message.value == 1);	
-			
-			if(key.equals("finished") && message.value == 1) {
-				
-				ItemStack newStack = new ItemStack(ItemRegistry.tablet, 1, 1);
-				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setInteger("inscription", stack.getTagCompound().getInteger("inscription"));
-				nbt.setInteger("oddDiff", 0);
-				nbt.setInteger("evenDiff", 0);
-				newStack.setTagCompound(nbt);
-				
-				
-				p.setHeldItem(hand, newStack);
-				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-				
-				if(!data.getString("inscription_complete"))
-					SyncUtil.addStringDataOnServer(p, false, "inscription_complete");
-				
-				String dataKey = String.format("inscription%d", stack.getTagCompound().getInteger("inscription"));
-				if(!data.getString(dataKey)) {
-					SyncUtil.addStringDataOnServer(p, false, dataKey);
+				if(!stack.hasTagCompound()) {
+					stack.setTagCompound(new NBTTagCompound());
+					
 				}
-			}
+				
+				if(hand != null) {
+					String key = message.key;
+					if(this.isIntKey(key))
+						stack.getTagCompound().setInteger(key, message.value);
+					else if(this.isBooleanKey(key))
+						stack.getTagCompound().setBoolean(key, message.value == 1);	
+					
+					if(key.equals("finished") && message.value == 1) {
+						
+						ItemStack newStack = new ItemStack(ItemRegistry.tablet, 1, 1);
+						NBTTagCompound nbt = new NBTTagCompound();
+						nbt.setInteger("inscription", stack.getTagCompound().getInteger("inscription"));
+						nbt.setInteger("oddDiff", 0);
+						nbt.setInteger("evenDiff", 0);
+						newStack.setTagCompound(nbt);
+						
+						
+						p.setHeldItem(hand, newStack);
+						IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+						
+						if(!data.getString("inscription_complete"))
+							SyncUtil.addStringDataOnServer(p, false, "inscription_complete");
+						
+						String dataKey = String.format("inscription%d", stack.getTagCompound().getInteger("inscription"));
+						if(!data.getString(dataKey)) {
+							SyncUtil.addStringDataOnServer(p, false, dataKey);
+						}
+					}
+				}
+			});
 			return null;
 		}
 		

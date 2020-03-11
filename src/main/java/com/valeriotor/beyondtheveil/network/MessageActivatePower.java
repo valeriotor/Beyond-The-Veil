@@ -1,13 +1,12 @@
 package com.valeriotor.beyondtheveil.network;
 
-import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
 import com.valeriotor.beyondtheveil.worship.Worship;
 import com.valeriotor.beyondtheveil.worship.ActivePowers.IActivePower;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -27,22 +26,24 @@ public class MessageActivatePower implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageActivatePower message, MessageContext ctx) {
-			EntityPlayer p = ctx.getServerHandler().player;
-			IActivePower power = Worship.getPower(p);
-			if(power != null && power.hasRequirement(p)) {
-				int cooldown = Worship.getPowerCooldown(p, power.getIndex());
-				if(cooldown > 0) {
-					p.sendMessage(new TextComponentTranslation("power.cooldown", cooldown/20));
-				} else {
-					boolean success = power.activatePower(p);
-					if(success) {
-						int newCooldown = power.getCooldownTicks();
-						CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
-						if(cw != null) newCooldown = cw.getPowerCooldown(newCooldown);
-						Worship.setPowerCooldown(p, newCooldown, power.getIndex());
+			EntityPlayerMP p = ctx.getServerHandler().player;
+			p.getServerWorld().addScheduledTask(() -> {
+				IActivePower power = Worship.getPower(p);
+				if(power != null && power.hasRequirement(p)) {
+					int cooldown = Worship.getPowerCooldown(p, power.getIndex());
+					if(cooldown > 0) {
+						p.sendMessage(new TextComponentTranslation("power.cooldown", cooldown/20));
+					} else {
+						boolean success = power.activatePower(p);
+						if(success) {
+							int newCooldown = power.getCooldownTicks();
+							CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
+							if(cw != null) newCooldown = cw.getPowerCooldown(newCooldown);
+							Worship.setPowerCooldown(p, newCooldown, power.getIndex());
+						}
 					}
 				}
-			}
+			});
 			return null;
 		}
 		
