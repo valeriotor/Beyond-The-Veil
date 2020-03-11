@@ -53,6 +53,10 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 		IPlayerData data = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
 		this.topY = data.getOrSetInteger(PlayerDataLib.NECRO_Y, -200, false);
+		if(map.get("FIRSTDREAMS").getStage() == -1) {
+			this.topX = -400;
+			this.topY = -200;
+		}
 		this.factor = data.getOrSetInteger(PlayerDataLib.NECRO_FACTOR, 3, false);
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
 			if(entry.getValue().isKnown(map, data)) {
