@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.items.IArtifactItem;
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSyncParasitePlayer;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensio
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {
@@ -133,7 +135,12 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void changeDimensionEvent(PlayerChangedDimensionEvent event) {
-		SyncUtil.syncPlayerData(event.player);
+		EntityPlayer p = event.player;
+		SyncUtil.syncPlayerData(p);
+		if(event.fromDim == DimensionType.NETHER.getId() && event.toDim == DimensionType.OVERWORLD.getId() && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("thebeginning")) {
+			SyncUtil.addStringDataOnServer(event.player, false, "thebeginning");
+			ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.necronomicon));
+		}
 	}
 	
 	@SubscribeEvent

@@ -6,6 +6,7 @@
         "icons": [ "minecraft:bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
 		"parents": [],
+		"hiders" : ["thebeginning"],
         "stages": [
                 {
                     "text": "research.FIRSTDREAMS.stage.0",
