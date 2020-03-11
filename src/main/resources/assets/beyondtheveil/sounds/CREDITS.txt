@@ -1,0 +1,25 @@
+All sounds were taken from FreeSound.org. Some were modified, some were combined with each other.
+
+Heartbeat : .name
+Shoggoth screech: nick121087
+Deep One transform: quadraslayer
+Weeper Idle: Idalize
+Shoggoth Hurt: Darsycho
+Weeper Transform: Grez1
+Fletum weep: Melody_Plays, craigsmith
+Canoe creaks: dheming
+Tension: benjaminharveydesign
+Breathe: u3190
+Dagon tension: yewbic
+Dagon thump: bareform
+Deep One Roar: jacobalcook
+Dweller Hurt: wjtaylor
+Dweller Idle: Ashtalon, giddster
+Rip Spine: dereklieu
+Rip Heart: Slave2thelight
+Alienis Dream: Wescwave, NewEonOrchestra, Yosarrian, luciolepri, Daleonfire, florianreichelt
+Flute: hello_flowers
+Parasite Death&Hurt: dobroide
+Saw Cleaver Transform: CTCollab
+Saw Cleaver Transform Attack: Kneeling
+Worthless: Auesomeman38
