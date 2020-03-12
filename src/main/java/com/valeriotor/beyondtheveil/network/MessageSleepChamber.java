@@ -2,22 +2,18 @@ package com.valeriotor.beyondtheveil.network;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.blocks.BlockSleepChamber;
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.gui.Guis;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
-import com.valeriotor.beyondtheveil.worship.Deities;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -62,8 +58,16 @@ public class MessageSleepChamber implements IMessage {
 						multiplier = 2;
 						advanced = true;
 					}
-					
-					int times = player.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
+					IPlayerData data = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+					long currentTime = player.world.getWorldTime(), currentWorldTime = player.world.getTotalWorldTime();
+					long lastDream = data.getOrSetLong(PlayerDataLib.LASTDREAMTINDAY, currentTime);
+					long lastDreamWorld = data.getOrSetLong(PlayerDataLib.LASTDREAMTINWORLD, currentWorldTime);
+					if(currentTime < lastDream || lastDreamWorld - currentWorldTime >= 24000L) {
+						data.setLong(PlayerDataLib.LASTDREAMTINDAY, currentTime);
+						data.setLong(PlayerDataLib.LASTDREAMTINWORLD, currentWorldTime);
+						data.setInteger(PlayerDataLib.TIMESDREAMT, 0, false);
+					}
+					int times = data.getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 					int level = DGWorshipHelper.getDreamPower(player)/2 + 1;
 					if(message.doesDream && times < multiplier*level) {
 						if(advanced) DreamHandler.chooseDream(player, 2);

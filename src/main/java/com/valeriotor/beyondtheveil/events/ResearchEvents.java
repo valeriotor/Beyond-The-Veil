@@ -58,13 +58,13 @@ public class ResearchEvents {
 				unlockDialogue(p, "newyou", "trustedbar", "trustedcar");
 			break;
 		case "SLUGS":
-			if(stage == 0)
+			if(stage == 1)
 				unlockDialogue(p, "impressed");	
 			break;
 		case "CANOE":
 			if(stage == 0)
 				unlockDialogue(p, "canoecar");	
-			else if(stage == 1)
+			else if(stage == 2)
 				if(data.getString("dialoguecanoe"))
 					unlockDialogue(p, "ritual");	
 			break;

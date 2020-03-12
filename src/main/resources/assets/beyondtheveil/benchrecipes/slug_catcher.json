@@ -11,5 +11,5 @@
 		"O" : "minecraft:obsidian",
 		"I" : "minecraft:iron_ingot"
 	},
-	"req" : "SLUGS;1"
+	"req" : "SLUGS;0"
 }

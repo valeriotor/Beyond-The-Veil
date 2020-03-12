@@ -283,7 +283,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 					if(Block.getBlockFromItem(player.getHeldItem(hand).getItem()) == Blocks.GOLD_BLOCK && !this.receivedGold) {
 						player.getHeldItem(hand).shrink(1);
 						this.receivedGold = true;
-						player.sendMessage(new TextComponentString("ï¿½5ï¿½o" + new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
+						player.sendMessage(new TextComponentString(new TextComponentTranslation("dweller.fisherman.dagon").getFormattedText()));
 						data.incrementOrSetInteger(PlayerDataLib.DAGON_GOLD, 1, 1, false);
 						if(data.getInteger(PlayerDataLib.DAGON_GOLD) == 3) {
 							SyncUtil.addStringDataOnServer(player, false, PlayerDataLib.DAGONQUEST);
@@ -307,9 +307,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			}else if(!this.doesOpenGui()) {
 				int tc = data.getOrSetInteger(key, 0, true);
 				int x = this.drunkStatus < 7 ? tc%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(tc, 7) + 28;
-				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : References.PURPLE;
-				if(this.drunkStatus > 2) y = y.concat("§o");
-				if(this.drunkStatus > 5) y = References.PURPLE;
+				String y = "";
+				//if(this.drunkStatus > 2) y = y.concat("§o");
+				//if(this.drunkStatus > 5) y = References.PURPLE;
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) {

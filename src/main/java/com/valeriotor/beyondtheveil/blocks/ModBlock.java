@@ -13,6 +13,7 @@ public class ModBlock extends Block{
 		this.setRegistryName(References.MODID, name);
 		this.setUnlocalizedName(name);
 		this.setCreativeTab(References.BTV_TAB);
+		this.setHardness(4.0F);
 	}
 
 }

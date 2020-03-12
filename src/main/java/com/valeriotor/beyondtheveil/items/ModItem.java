@@ -24,7 +24,7 @@ public class ModItem extends Item{
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		String info = I18n.format(String.format("lore.%s",  this.getUnlocalizedName().substring(5)));
-		if(!info.substring(0,4).equals("lore")) tooltip.add("§5§o" + info);
+		if(!info.substring(0,4).equals("lore")) tooltip.add(info);
 	}
 	
 }

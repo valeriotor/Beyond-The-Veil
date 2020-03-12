@@ -33,8 +33,9 @@ public enum Memory {
 	REPAIR(Item.getItemFromBlock(Blocks.WOOL), 0xFF99f19d),
 	SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
 	STILLNESS(Item.getItemFromBlock(Blocks.SOUL_SAND), 0xFF444444, "metalDream"),
-	TOOL(Items.WOODEN_PICKAXE, 0xFF324eff, "memHUMAN"),
-	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF36111F);
+	TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA, "memHUMAN"),
+	VOID(Item.getItemFromBlock(Blocks.OBSIDIAN), 0xFF36111F),
+	WATER(Items.WATER_BUCKET, 0xFF1111FF);
 	
 	private ItemStack item;
 	private int color;

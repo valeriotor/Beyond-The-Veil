@@ -229,7 +229,7 @@
         "icons": [ "minecraft:obsidian" ],
         "category": "BEYOND_THE_VEIL", "location": [ 7,2 ],
         "parents": [ "SLEEPCHAMBER", "HUMANDREAMS" ],
-        "learn" : "true",
+        "hiders" : ["HUMANDREAMS"],
         "stages": [
 				{
 					"text": "research.VOIDDREAMS.stage.0",
@@ -329,6 +329,20 @@
                 {
                     "text": "research.IDOL.stage.1"
                 }
+            ]
+        },
+		{
+        "key": "WATERDREAM",
+        "name": "research.WATERDREAM.title",
+        "icons": [ "minecraft:prismarine" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 13,8 ],
+		"hiders": ["IDOL"],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.WATERDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memWATER"]
+				}
             ]
         },
 		{
@@ -611,7 +625,7 @@
 				},
                 {
                     "text": "research.WATERYCRADLE.stage.1",
-					"recipes" : ["beyondtheveil:watery_cradle", "beyondtheveil:blackjack"]
+					"recipes" : ["beyondtheveil:watery_cradle", "beyondtheveil:blackjack", "beyondtheveil:surgery_tools"]
                 }
             ]
         },

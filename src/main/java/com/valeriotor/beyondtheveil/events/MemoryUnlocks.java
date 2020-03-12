@@ -56,6 +56,10 @@ public class MemoryUnlocks {
 			if(stage == 0)
 				Memory.DARKNESS.unlock(p, false);
 			break;
+		case "IDOL":
+			if(stage == 1)
+				Memory.WATER.unlock(p, false);
+			break;
 		}
 	}
 	
@@ -87,15 +91,6 @@ public class MemoryUnlocks {
 		EntityLivingBase e = event.getEntityLiving();
 		if(!(e instanceof EntityPlayer) && (e.getMaxHealth() >= 100 || !e.isNonBoss()) && event.getSource().getTrueSource() instanceof EntityPlayer) {
 			Memory.POWER.unlock((EntityPlayer)event.getSource().getTrueSource());
-		}
-	}
-	
-	@SubscribeEvent
-	public static void sentience(PlayerInteractEvent.RightClickItem event) {
-		EntityPlayer p = event.getEntityPlayer();
-		ItemStack stack = p.getHeldItem(event.getHand());
-		if(!p.world.isRemote && stack.getItem() == Items.WRITTEN_BOOK) {
-			Memory.SENTIENCE.unlock(p);
 		}
 	}
 	
@@ -143,6 +138,9 @@ public class MemoryUnlocks {
 			i == Items.DIAMOND_SHOVEL	||
 			i == Items.DIAMOND_HOE) {
 			Memory.TOOL.unlock(event.player);
+		} else if(i == Items.BOOK) {
+			if(ResearchUtil.getResearchStage(event.player, "CRYSTALDREAMS") == 1)
+				Memory.SENTIENCE.unlock(event.player); 
 		}
 	}
 	

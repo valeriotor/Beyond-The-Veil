@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
+import com.valeriotor.beyondtheveil.gui.DialogueHandler.Dialogues;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
+
 public class PlayerDataLib {
 	
 	// Longs
@@ -60,6 +64,10 @@ public class PlayerDataLib {
 	
 	// Strings (Temporary)
 	
+	// Longs (Non-temporary)
+	public static final String LASTDREAMTINDAY = "lastdreamday";
+	public static final String LASTDREAMTINWORLD = "lastdreamworld";
+	
 	// Used to clear client-side data in one fell swoop.
 	public static final String ALL = "all";
 	
@@ -79,6 +87,9 @@ public class PlayerDataLib {
 		allowedInts = Collections.unmodifiableSet(tempInts);
 		Set<String> tempStrings = new HashSet<String>();
 		tempStrings.add("eldritchDream");
+		tempStrings.add("LHKeeper");
+		tempStrings.add("carpenter");
+		tempStrings.add("lhbaptism");
 		allowedStrings = Collections.unmodifiableSet(tempStrings);
 	}
 	

@@ -41,6 +41,7 @@ public class GearBenchRecipeRegistry {
 		registerGBRecipe("city_mapper");
 		registerGBRecipe("elder_stone_bricks");
 		registerGBRecipe("slug_catcher");
+		registerGBRecipe("surgery_tools");
 	}
 	
 	private static void registerGBRecipe(String fileName) {

@@ -68,7 +68,7 @@ public class ItemHeldVillager extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		boolean spineless = ItemHelper.checkBooleanTag(stack, "spineless", false);
 		boolean heartless = ItemHelper.checkBooleanTag(stack, "heartless", false);
-		tooltip.add("�5�o" + I18n.format(String.format("tooltip.held_villager.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
+		tooltip.add(I18n.format(String.format("tooltip.held_villager.%s%s", spineless ? "spineless" : "spineful", heartless ? "heartless" : "")));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

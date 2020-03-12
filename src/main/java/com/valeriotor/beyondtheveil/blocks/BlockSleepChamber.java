@@ -61,7 +61,7 @@ public class BlockSleepChamber extends ModBlock{
 	}
 	
 	public BlockSleepChamber(String name) {
-		super(Material.IRON, name);
+		super(Material.WOOD, name);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(EnumHalf.HALF, EnumHalf.BOTTOM)
 				.withProperty(OPEN, false)

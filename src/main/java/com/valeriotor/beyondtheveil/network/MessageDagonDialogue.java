@@ -36,7 +36,7 @@ public class MessageDagonDialogue implements IMessage{
 			p.getServerWorld().addScheduledTask(() -> {
 				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 				if(ResearchUtil.getResearchStage(p, "ALLIANCE") == 1) {
-					PlayerTimer pt = new PlayerTimer(p, player -> ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(Blocks.GOLD_BLOCK, 3)), 100);
+					PlayerTimer pt = new PlayerTimer(p, player -> ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Blocks.GOLD_BLOCK, 3)), 150);
 					ServerTickEvents.addPlayerTimer(pt);
 					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGON_DIALOGUE.apply(0));
 					SyncUtil.addStringDataOnServer(p, false, "hearing");

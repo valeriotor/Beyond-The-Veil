@@ -79,7 +79,7 @@ public class ItemHeldFletum extends Item{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("�5�o" + I18n.format("tooltip.held_fletum"));
+		tooltip.add(I18n.format("tooltip.held_fletum"));
 	}
 	
 }

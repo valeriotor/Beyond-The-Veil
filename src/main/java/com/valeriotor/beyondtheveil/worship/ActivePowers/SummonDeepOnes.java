@@ -31,13 +31,13 @@ public class SummonDeepOnes implements IActivePower{
 		boolean spawnedAtLeastOne = false;
 		double angle = 0;
 		for(int i = 0; i < amount; i++) {
-			for(int j = 2; j < 14; j+=4) {
+			for(int j = 1; j < 14; j+=4) {
 				BlockPos pos = p.getPosition().add(j*Math.sin(angle), 0, j*Math.cos(angle));
 				pos = checkSpace(p.world, pos);
 				if(pos != null) {
 					EntityDeepOne deepOne = new EntityDeepOne(p.world, 2000);
 					deepOne.setMaster(p);
-					deepOne.setPosition(pos.getX(), pos.getY()+2, pos.getZ());
+					deepOne.setPosition(pos.getX(), pos.getY()+1.5, pos.getZ());
 					p.world.spawnEntity(deepOne);
 					spawnedAtLeastOne = true;
 					break;

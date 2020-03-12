@@ -1,0 +1,16 @@
+{
+	"rows" : [
+		" WI ",
+		" IS ",
+		" TI ",
+		" II "
+	],
+	"output" : "beyondtheveil:surgery_tools",
+	"map": {
+		"W" : "minecraft:iron_sword",
+		"I" : "minecraft:iron_ingot",
+		"S" : "minecraft:shears",
+		"T" : "minecraft:flint_and_steel"
+	},
+	"req" : "WATERYCRADLE;1"
+}

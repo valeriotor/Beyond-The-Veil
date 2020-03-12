@@ -164,7 +164,8 @@ public class PlayerEvents {
 				p = ((IPlayerGuardian)e).getMaster();
 			}
 			if(p != null) {
-				if(ResearchUtil.getResearchStage(p, "METAMORPHOSIS") == 1) {
+				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+				if(data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(1)) && !data.getString(PlayerDataLib.DAGONQUEST2)) {
 					int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ELDER_GUARDIANS, 1, 1);
 					if(val == 3) {
 						SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGONQUEST2);

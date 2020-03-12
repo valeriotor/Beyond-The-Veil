@@ -48,25 +48,25 @@ item.sigil_pathway.name=Blood Sigil: Pathway
 item.gear.name=Gear
 
 
-lore.flute=The sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
-lore.saw_cleaver=This weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
-lore.wolf_medallion=This metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
-lore.bronze_sphere=No no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
+lore.flute=§5§oThe sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
+lore.saw_cleaver=§5§oThis weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
+lore.wolf_medallion=§5§oThis metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
+lore.bronze_sphere=§5§oNo no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
 tooltip.bronze_sphere=%1$s experience currently stashed.
-lore.tablet=An ancient stony slab with weird inscriptions on it. Can I decipher it?
-lore.spine=Willpower resides in the spine.
-lore.surgery_tools=A set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
+lore.tablet=§5§oAn ancient stony slab with weird inscriptions on it. Can I decipher it?
+lore.spine=§5§oWillpower resides in the spine.
+lore.surgery_tools=§5§oA set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
 
-tooltip.held_villager.spineless=A villager lacking his dorsal spine. He'll never get up.
-tooltip.held_villager.spineful=An unconscious villager, ready for experimentation.
-tooltip.held_villager.spinefulheartless=A villager without a heart. Soon, he will expire.
-tooltip.held_villager.spinelessheartless=Both the spine and the heart were ripped out of this villager. Truly, a worthless wretch.
-tooltip.held_weeper.spineless=A Weeper without its spine is nothing but its head.
-tooltip.held_weeper.spineful=An abomination.
-tooltip.held_weeper.spinefulheartless=One does not need a heart to weep. It will survive just fine.
-tooltip.held_weeper.spinelessheartless=A Weeper without its spine is nothing but its head.
-tooltip.held_fletum=A disembodied head, content in its sorrow.
-tooltip.held_shoggoth=It sleeps. Don't awaken it. Please.
+tooltip.held_villager.spineless=§5§oA villager lacking his dorsal spine. He'll never get up.
+tooltip.held_villager.spineful=§5§oAn unconscious villager, ready for experimentation.
+tooltip.held_villager.spinefulheartless=§5§oA villager without a heart. Soon, he will expire.
+tooltip.held_villager.spinelessheartless=§5§oBoth the spine and the heart were ripped out of this villager. Truly, a worthless wretch.
+tooltip.held_weeper.spineless=§5§oA Weeper without its spine is nothing but its head.
+tooltip.held_weeper.spineful=§5§oAn abomination.
+tooltip.held_weeper.spinefulheartless=§5§oOne does not need a heart to weep. It will survive just fine.
+tooltip.held_weeper.spinelessheartless=§5§oA Weeper without its spine is nothing but its head.
+tooltip.held_fletum=§5§oA disembodied head, content in its sorrow.
+tooltip.held_shoggoth=§5§oIt sleeps. Don't awaken it. Please.
 
 tooltip.dream_bottle.containing=Containing: 
 tooltip.dream_bottle.charges=Stored tears: %1$s mB
@@ -190,7 +190,7 @@ hit.idol.schiz4=Stop.
 hit.idol.schiz5=Stop it.
 hit.idol.schiz6=Stop it now.
 hit.idol.schiz7=You should really stop.
-hit.idol.schiz8=STOP
+hit.idol.schiz8=§5STOP
 hit.idol.schiz9=You fool.
 hit.idol.schiz10=You don't know what you're dealing with.
 
@@ -362,25 +362,25 @@ dagon.final.4=GOD WILL NOT LISTEN
 #DWELLER DIALOGUE
 ##################
 
-dweller.fisherman.dagon=Through Dagon, The Great Dreamer blesses us once more.
+dweller.fisherman.dagon=§5§oThrough Dagon, The Great Dreamer blesses us once more.
 
-dweller.fisherman.greeting0=Leave us alone, outsider.
-dweller.fisherman.greeting1=Begone. We don't want you here.
-dweller.fisherman.greeting2=Outsiders are not welcome here.
-dweller.fisherman.greeting3=Please, please stop coming after us.
+dweller.fisherman.greeting0=§5§oLeave us alone, outsider.
+dweller.fisherman.greeting1=§5§oBegone. We don't want you here.
+dweller.fisherman.greeting2=§5§oOutsiders are not welcome here.
+dweller.fisherman.greeting3=§5§oPlease, please stop coming after us.
 
-dweller.trustedfisherman.greeting0=Hmph. 
-dweller.trustedfisherman.greeting1=You did well to join us.
-dweller.trustedfisherman.greeting2=Being a fisherman isn't hard here, the fish just come to us.
-dweller.trustedfisherman.greeting3=Don't like the slugs? You'll soon appreciate them.
+dweller.trustedfisherman.greeting0=§5§oHmph. 
+dweller.trustedfisherman.greeting1=§5§oYou did well to join us.
+dweller.trustedfisherman.greeting2=§5§oBeing a fisherman isn't hard here, the fish just come to us.
+dweller.trustedfisherman.greeting3=§5§oDon't like the slugs? You'll soon appreciate them.
 
-dweller.stockpiler.greeting0=You are no friend of ours, outsider. No one is.
-dweller.stockpiler.greeting1=We can't trust you outsiders. No more.
-dweller.stockpiler.greeting2=Please, please leave us BE.
+dweller.stockpiler.greeting0=§5§oYou are no friend of ours, outsider. No one is.
+dweller.stockpiler.greeting1=§5§oWe can't trust you outsiders. No more.
+dweller.stockpiler.greeting2=§5§oPlease, please leave us BE.
 
-dweller.trustedstockpiler.greeting0=I was mistaken to think ill of you, outsider.
-dweller.trustedstockpiler.greeting1=Truly, we deem you a friend now.
-dweller.trustedstockpiler.greeting2=Feel free to take anything from the storehouse.
+dweller.trustedstockpiler.greeting0=§5§oI was mistaken to think ill of you, outsider.
+dweller.trustedstockpiler.greeting1=§5§oTruly, we deem you a friend now.
+dweller.trustedstockpiler.greeting2=§5§oFeel free to take anything from the storehouse.
 
 dweller.drunk.greeting0=A newcomer, aye? We dun't see many aoutsiders no'adays.
 dweller.drunk.greeting1=I ain't frum around here, fella. Me pa' an' me ma' was frum this Hamlet, aye, but me, I was bo'n an' rais'd elsewhar.
@@ -394,28 +394,28 @@ dweller.drunk.greeting8=Hmm, thar's the gud stuff -hic- excuse me.
 dweller.drunk.greeting9=We may be isolat'd, but we got gold aplenty! We ain't poor! Well, per'haps I am.
 dweller.drunk.greeting10=Huh, the gold? It comes.. it comes frum below, aye, frum below.
 dweller.drunk.greeting11=Hey, off'r me 'nother round, bud!
-dweller.drunk.greeting12=Ahhh, ain't that tasty -hic- forgive me.
-dweller.drunk.greeting13=When me was a y'ung lad, me pa' told me tales o' the sea an' its dwellars. Ye know, thar's things down thar..
-dweller.drunk.greeting14=Things.. horrid, indescribable things..
-dweller.drunk.greeting15=I'm thi'sty. Got some more coin on ye?
-dweller.drunk.greeting16=Hmm mhh, hadn't had this good'a drink in years -hic- my bad.
-dweller.drunk.greeting17=Aye, horrid things.. and me mates here.. they adore 'em. Trade with 'em. Some e'en mate with 'em.
-dweller.drunk.greeting18=And then they dream...
-dweller.drunk.greeting19=Hey, I 'now I shudn't be askin', but.. y'know the drill. Fetch me a drink.
-dweller.drunk.greeting20=Ah, mebbe I'm havin' too much -hic- apologies.
-dweller.drunk.greeting21=The.. things, they gav' us fish.. an' gold! But not fur nuthin', nuh huh.
-dweller.drunk.greeting22=I ain't never killed nobody, no, but my mates.. eh.
-dweller.drunk.greeting23=Mood's low, dunno why. I say we drown it wit'another drink!
-dweller.drunk.greeting24=-hic- I shudn't be sayin' all this -hic-
-dweller.drunk.greeting25=But had we chos'n moar tradit'onal gods, then me ma' and me pa' wudn't have been kill'd, I say.
-dweller.drunk.greeting26=Killed by outsiders, sech as ye. Massacred, more like.
-dweller.drunk.greeting27='nother!
-dweller.drunk.greeting28=Wel, gud luck ye brought upon ye! Our gods, they's real!
-dweller.drunk.greeting29=The things frum the deeps, they protect us!
-dweller.drunk.greeting30=They give us food! An' gold!
-dweller.drunk.greeting31=They AVENGE us!
-dweller.drunk.greeting32=An' if ye dun't like it, then ye either leave, or.. or do as I did..
-dweller.drunk.greeting33=You.. you join us..
+dweller.drunk.greeting12=§oAhhh, ain't that tasty -hic- forgive me.
+dweller.drunk.greeting13=§oWhen me was a y'ung lad, me pa' told me tales o' the sea an' its dwellars. Ye know, thar's things down thar..
+dweller.drunk.greeting14=§oThings.. horrid, indescribable things..
+dweller.drunk.greeting15=§oI'm thi'sty. Got some more coin on ye?
+dweller.drunk.greeting16=§oHmm mhh, hadn't had this good'a drink in years -hic- my bad.
+dweller.drunk.greeting17=§oAye, horrid things.. and me mates here.. they adore 'em. Trade with 'em. Some e'en mate with 'em.
+dweller.drunk.greeting18=§oAnd then they dream...
+dweller.drunk.greeting19=§oHey, I 'now I shudn't be askin', but.. y'know the drill. Fetch me a drink.
+dweller.drunk.greeting20=§oAh, mebbe I'm havin' too much -hic- apologies.
+dweller.drunk.greeting21=§oThe.. things, they gav' us fish.. an' gold! But not fur nuthin', nuh huh.
+dweller.drunk.greeting22=§oI ain't never killed nobody, no, but my mates.. eh.
+dweller.drunk.greeting23=§oMood's low, dunno why. I say we drown it wit'another drink!
+dweller.drunk.greeting24=§5§o-hic- I shudn't be sayin' all this -hic-
+dweller.drunk.greeting25=§5§oBut had we chos'n moar tradit'onal gods, then me ma' and me pa' wudn't have been kill'd, I say.
+dweller.drunk.greeting26=§5§oKilled by outsiders, sech as ye. Massacred, more like.
+dweller.drunk.greeting27=§5§o'nother!
+dweller.drunk.greeting28=§5§oWel, gud luck ye brought upon ye! Our gods, they's real!
+dweller.drunk.greeting29=§5§oThe things frum the deeps, they protect us!
+dweller.drunk.greeting30=§5§oThey give us food! An' gold!
+dweller.drunk.greeting31=§5§oThey AVENGE us!
+dweller.drunk.greeting32=§5§oAn' if ye dun't like it, then ye either leave, or.. or do as I did..
+dweller.drunk.greeting33=§5§oYou.. you join us..
 dweller.drunk.greeting34=I.. enuff with the alc'hol, had enuff.
 dweller.drunk.greeting35=...
 
@@ -638,6 +638,7 @@ memory.sentience.name=Sentience
 memory.stillness.name=Stillness
 memory.tool.name=Tools
 memory.void.name=Void
+memory.water.name=Water
 
 
 ##################
@@ -660,6 +661,9 @@ dreams.biomesearch.hamlet=An already existing Hamlet was found at x: %1$s, z: %2
 
 dreams.villagesearch.success=Found Village at x: %1$s, z: %2$s
 dreams.villagesearch.fail=No Villages found
+
+dreams.monumentsearch.success=Found Ocean Monument at x: %1$s, z: %2$s
+dreams.monumentsearch.fail=No Ocean Monuments found
 
 dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s. I am unaware of what dimension they're in.
 dreams.playersearch.success2=Another player is located at x: %1$s, z: %2$s. I am unaware of what dimension they're in.
@@ -714,7 +718,7 @@ research.CRYSTALDREAMS.title=Plunging Down
 research.CRYSTALDREAMS.stage.0=Dreams exist. They are entities, they leave my body, and disappear from my three-dimensional, solid world in a few brief moments, to go where nothing can follow them.<BR>Yet in these few, brief moments.. they go down. Straight down, plunging through stone and bedrock faster than one's eye could follow them. <BR>I feel it. I know it.<BR>I Learned it. <PAGE>I should take at least some advantage of this. For those brief moments I should be able to know more of the soil beneath me. Though a Memory of Learning just won't do this time, I need a different one.<BR>When I mined my first iron ore. Now that's a Memory! Ecstatic I was, as I felt true wealth trickle in my hands!<BR>Heh.. yes, that might cut it.
 research.CRYSTALDREAMS.stage.1=The Dream reacted to my Memory of Metal by granting me knowledge of the presence of metals in the ground below.<BR>It responded to me. It's as if it was... sentient?<BR>It is bizarre, even somewhat unsettling.. and yet, I can't keep myself from wishing to know more, to shatter this facade of illusions clouding my mind from.. from this unknowable Truth.<BR>I'm sure new experiences will trigger new Memories that will grant new knowledge, and other effects.<BR>I must keep going. 
 research.CRYSTALDREAMS.addenda.crystal=Very similarly to Metal, a Memory of Crystal grants me knowledge of the earth beneath me, this time teaching me of the presence of crystals, namely diamonds and emeralds.
-research.CRYSTALDREAMS.addenda.sentience=Dreams may go straight down, yet their knowledge of the world is vast.<BR>And through the reading of a simple book, I'm reminded of those who inhabit this world.<BR>A Memory of Sentience, with which I can instruct my Dream to seek a society like that of a Village, and point me to it.
+research.CRYSTALDREAMS.addenda.sentience=Dreams may go straight down, yet their knowledge of the world is vast.<BR>And through the making of a simple book, I'm reminded of those who inhabit this world.<BR>A Memory of Sentience, with which I can instruct my Dream to seek a society like that of a Village, and point me to it.
 research.metalDream.text=Dream of Metal.
 
 research.SLEEPCHAMBER.title=Sleep Chamber
@@ -724,7 +728,7 @@ research.craftedsleep_chamber.text=Craft a Sleep Chamber.
 
 research.EFFECTDREAMS.title=Affecting myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
-research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how I could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning on my body.
+research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how I could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning my body.
 research.effectDream.text=Trigger a Memory capable of affecting myself.
 research.EFFECTDREAMS.addenda.power=A Memory of Power, as I slay a beast of no small stature. A cherished moment, one of satisfaction.<BR>It is through it that my Dream will increase the potency of the effects on my body.<BR>Both positive and negative ones, that is.
 research.EFFECTDREAMS.addenda.stillness=A Memory of Stillness, as the Sleep Chamber imprisons me time and time again.<BR>The effects on my body, I won't let them leave me. Through this Memory, my Dream will increase their durations. All of them.<BR>They cannot escape. No one can.
@@ -733,7 +737,7 @@ research.EFFECTDREAMS.addenda.change=A Memory of Change, as I witness a sapling 
 research.HUMANDREAMS.title=Dreams of Others
 research.HUMANDREAMS.stage.0=Sometimes, when Dreaming, I get a bizarre feeling.<BR>People like me, even ones I have never known, start appearing in my thoughts. And yet, I feel like it's not a mere construct of my mind, of my subconscious.<BR>No. I think that our Dreams converge within the same point, that they touch each other, and that those presences within my thoughts are REAL.<BR>I believe that, through my "Dreaming expertise", I could know more about those others, that I could probe their Dreams while they remain unaware.<BR>I should take advantage of this. I could try to give birth to a new Memory, one that has a social interaction at its core, so as to point my Dream in the direction of others.<BR>Maybe initiating a simple trade with a villager could work?
 research.HUMANDREAMS.stage.1=I have reason to believe that, within their own weird, a-dimensional plane of existence, Dreams are all adjacent to each other. To all others. At the same time, at all times.<BR>While their position may shift in relation to our world (such as when they go straight down through bedrock), my Dreams are tangent to all others.<BR>This is a breakthrough discovery. As a Dreamer more expert than most, I can probe the Dreams of others with my Own, learning things about them while ignoring any privacy they think they have. I should keep working on this ability, so that it may reach its full potential.<BR>Still, this new knowledge brings with itself a new fear.<BR>Fear that there could be other Dreamers, greater than myself, and that my excessive forays into Dreaming only made me more vulnerable.<BR>Other Dreamers, that could possibly not even be human.<PAGE>A Memory of Human was triggered by initiating a trade with one of those dim-witted Villagers. Sooner or later, I'll make them pay for their inane prices.<BR>This Memory makes for Dreams of no great consequence, for now. It enables me to know of the position of others like me, but just one of either their x or z coordinates, for a single unnamed human other than myself, provided there is at least one at the time of Dreaming.
-research.memHUMAN.text=Initiate a trade with  a Villager, see where it leads me.
+research.memHUMAN.text=Initiate a trade with a Villager, see where it leads.
 research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<BR>Yet, I burn with envy at the idea of others wielding items mightier than mine.<BR>Through this Memory, I can learn of what item is held in the main hand of a single unnamed human other than myself, provided there is at least one at the time of Dreaming. 
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
@@ -767,16 +771,16 @@ research.FISHINGHAMLET.title=The Fishing Hamlet
 research.FISHINGHAMLET.stage.0=I need the Truth. I am sick of lies.<BR>There is a Veil of illusions clouding everyone's mind, there has to be. Everything I see, is a Lie.<BR>NOTHING BUT A LIE.<BR>I must breach it. I must see Beyond that barrier.<BR>Whether the Fishing Hamlet is the key to the Arcanum, or merely a piece of a grand puzzle, we shall see.
 research.FISHINGHAMLET.stage.1=This can't be..<BR>All this work, all this research.. led me here?!<BR>To a bunch of degenerates?! Of xenophobic nitwits?!?<BR>Nonono, I can't stop now. I can breach the Veil. I know I can. I know it. I really do.<BR>I need to talk with the Lighthouse Keeper. I hope he proves wiser than his fellow Dwellers.
 research.FISHINGHAMLET.stage.2=Look at the Ocean.. look at the Ocean..
-research.m_FindHamlet.text=Locate a Fishing Hamlet.
+research.FindHamlet.text=Locate a Fishing Hamlet.
 research.LHKeeper.text=Talk with the Lighthouse Keeper.
 
 research.IDOL.title=Communion
-research.IDOL.stage.0=At times, we think of ourselves as gods. Allmighty, invincible gods to whom the whole world must bow. Gods whose creations could reshape the world entire.<BR>And we're no more than deluded fools.<BR>The Ocean.<BR>Immense, timeless, inscrutable. Could it really care of what we do? Could it really, when it dwarfs our greatest, grandest structures, when it outlives our strongest, toughest contraptions?<BR>A symbol of immensity, ever close, to remind us of our INSIGNIFICANCE.<BR>The Ocean, whose immensity the Hamlet Dwellers seem so fascinated by, is UNKNOWABLE. We could spend whole eternities in the hope of researching its every nook and cranny, and yet vainly, for in its boundlessness, as well as its ever changing, chaotic nature, the things that lie within it.. or beneath it.. will always elude us. Unless they come to us.<BR>Yes, the Ocean must be the key. In its boundless, unkowable immensity, it is SURE to conceal what we're looking for. Some kind of gateway, some sort of door that will let us see Beyond the Veil. In its bottomless depths, we must look for rifts.<BR>Water itself REEKS of Alienis, and especially in that Hamlet of bizarre degenerates worshipping some kind of.. of..<BR>Yes. Of.. of course. They're far from degenerates, for they found the solution far before US.<BR>If their Deity truly is a manifestation of what's Beyond the Veil, hiding the Truth from us all, and if their fascination with Dreams and the Ocean is of the same nature as ours.. then we must seek Communion.<BR>Communion with the Great Dreamer.
+research.IDOL.stage.0=At times, we think of ourselves as gods. Allmighty, invincible gods to whom the whole world must bow. Gods whose creations could reshape the world entire.<BR>And we're no more than deluded fools.<BR>The Ocean.<BR>Immense, timeless, inscrutable. Could it really care of what we do? Could it really, when it dwarfs our greatest, grandest structures, when it outlives our strongest, toughest contraptions?<BR>A symbol of immensity, ever close, to remind us of our INSIGNIFICANCE.<BR>The Ocean, whose immensity the Hamlet Dwellers seem so fascinated by, is UNKNOWABLE. We could spend whole eternities in the hope of researching its every nook and cranny, and yet vainly, for in its boundlessness, as well as its ever changing, chaotic nature, the things that lie within it.. or beneath it.. will always elude us. Unless they come to us.<BR>Yes, the Ocean must be the key. In its boundless, unkowable immensity, it is SURE to conceal what we're looking for. Some kind of gateway, some sort of door that will let us see Beyond the Veil. In its bottomless depths, we must look for rifts.<BR>Water itself REEKS of Eldritchness, and especially in that Hamlet of bizarre degenerates worshipping some kind of.. of..<BR>Yes. Of.. of course. They're far from degenerates, for they found the solution far before US.<BR>If their Deity truly is a manifestation of what's Beyond the Veil, hiding the Truth from us all, and if their fascination with Dreams and the Ocean is of the same nature as ours.. then we must seek Communion.<BR>Communion with the Great Dreamer.
 research.IDOL.stage.1=I humbly pledge my life to You, Great Dreamer.<BR>I disavow all my previous beliefs, any gods I may have previously believed in.<BR>I am insignificant to you. The Ocean, Your presence on the Overworld, is symbol of that.<BR>You are unknowable to me. The Void, full of emptiness, is Your inscrutable substance.<BR>Beyond You lie all things. The Truth, hidden by a Veil.<BR>Grant us knowledge, so we may undo all lies.<BR>Grant us strength, so we may survive the Truth.<BR>Grant us courage.. so we may hear Your Holy Voice.
 research.IdolInteract.text=Pray at the Idol in the Hamlet.
 
 research.SLUGS.title=Slugs
-research.SLUGS.stage.0=To commune with The Great Dreamer is an honor of the highest order. Truly, to have made an impression on Him so as to have sparked His interest is, undoubtedly, the greatest achievement I have ever accomplished.<BR>Yet the strength of the communion is ever faint, for I am weak, and my presence hopelessly bound to the Overworld.<BR>He knows that. He wishes to aid me. Really, He does!<BR>Slimy, shapeless, uncatchable like the water from which they are born. Such are the white slugs on which some Dwellers of the Hamlet feed. They are the key.<BR>I need a bait, and The Great Dreamer provides me with knowledge of how to create one. How ironic, though meaningful, that those shapeless chaotic slugs are so attracted by the perfect, orderly shape of common salt!<BR>The slug bait must be placed in water. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<BR>Then.. I must eat them. It's the only way. I won't like, but I must.<BR>Once I've eaten a few, say, 30 or so, I must interact with the Idol again.
+research.SLUGS.stage.0=To commune with The Great Dreamer is an honor of the highest order. Truly, to have made an impression on Him so as to have sparked His interest is, undoubtedly, the greatest achievement I have ever accomplished.<BR>Yet the strength of the communion is ever faint, for I am weak, and my presence hopelessly bound to the Overworld.<BR>He knows that. He wishes to aid me. Really, He does!<BR>Slimy, shapeless, uncatchable like the water from which they are born. Such are the white slugs on which some Dwellers of the Hamlet feed. They are the key.<BR>I need a bait, and The Great Dreamer provides me with knowledge of how to create one. How ironic, though meaningful, that those shapeless chaotic slugs are so attracted by the perfect, orderly shape of common salt!<BR>The slug bait must be placed in water. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<BR>Then.. I must eat them. It's the only way. I won't like, but I must.<BR>Once I've eaten a few, say, twenty or so, I must interact with the Idol again.
 research.SLUGS.stage.1=My Dreams have become stronger, I know it, I know it I know it I KNOW IT.<BR>He heard me, The Great Dreamer HEARD MY CALLS.<BR>I realize now that to worship The Great Dreamer is not just an occasional prayer. It is, instead, a way of life.<BR>From now on, our course of action should be to eat slugs, slugs, and even more slugs. They'll start to taste less and less awful, I am certain.<BR>I must also get closer and closer to the Dwellers, and learn from them. Do deeds which make me more like them. They have known best for generations, after all. And my ancestors couldn't see it.<BR>Once all is done, I must interact with the Idol.
 research.!SLUGS.text=Eat 30 slugs, interact with Idol.
 
@@ -840,7 +844,7 @@ research.extractedspine.text=Rip a spine.
 
 research.HEARTS.title=Tearing hearts
 research.HEARTS.stage.0=Blood is life.<BR>Blood is water. Water is life.<BR>The relation is clear. And so is the irony.<BR>To gain life, I must grant death.
-research.HEARTS.stage.1=A heartless Villager has no life left to live. He'll expire in moments.<BR>Their hearts, however, will keep living, beating.<BR>When placed on the ground, it'll attract undead, for they seek life.<BR>And yet, as a symbol of life, I am sure there's more that can be done with them.
+research.HEARTS.stage.1=A heartless Villager has no life left to live. He'll expire in moments.<BR>Their hearts, however, will keep living, beating.<BR>When placed on the ground, the heart will attract undead, for they seek life.<BR>And yet, as a symbol of life, I am sure there's more that can be done with them.
 research.tornheart.text=Tear a heart.
 
 research.WEEPERS.title=Weepers
@@ -1001,6 +1005,9 @@ research.DEEPROAR.stage.0=While transformed I am unable to use the active effect
 research.TONEWDEPTHS.title=To New Depths
 research.TONEWDEPTHS.stage.0=We must keep going.<BR>Never yield, the Truth draws close, the Veil weakens, my knowledge grows, my will..<BR>What will is left? As if someone ripped my own spine.<BR>No, we'll keep going. We must.<BR>To the bottom of the deepest Oceans.<BR>To Arche, and then to Apeiron.<BR>Our journey won't end until we breach.. until we..<BR>..wait..<BR>..who's 'we'?
 
+research.WATERDREAM.title=Dream of Water
+research.WATERDREAM.stage.0=A Dream of Water, as the thought of the Ocean refuses to leave my mind.<BR>Through this Memory I am able to locate the nearest Ocean Monument.<BR>The Guardians are born from water itself, and as such are closest to God.
+
 ##################
 #MISC
 ##################
@@ -1020,5 +1027,7 @@ teleport.setposition=My current position has been set as my return point.
 teleport.inwater=I must be in water to use this Power.
 
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
+canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
+canoe.fishing.end=I think I've gained enough fish.
 
 itemGroup.beyondtheveil=Beyond The Veil

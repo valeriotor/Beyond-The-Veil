@@ -84,8 +84,11 @@ public class ItemSlug extends ItemFood{
 			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
 		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).isUnlocked(p)){
 			effects.add(new PotionEffect(MobEffects.NAUSEA, 160));
-		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.RITUALQUEST).isUnlocked(p)){
-			
+		} else if(!DGWorshipHelper.researches.get(PlayerDataLib.DAGONQUEST).isUnlocked(p)){
+			effects.add(new PotionEffect(MobEffects.REGENERATION, 160, 0, false, true));
+		} else {
+			effects.add(new PotionEffect(MobEffects.REGENERATION, 160, 1, false, true));
+			effects.add(new PotionEffect(MobEffects.STRENGTH, 160, 0, false, true));
 		}
 		return effects;
 	}

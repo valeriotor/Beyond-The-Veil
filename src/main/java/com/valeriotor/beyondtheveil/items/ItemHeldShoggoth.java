@@ -49,7 +49,7 @@ public class ItemHeldShoggoth extends ModItem{
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(References.PURPLE + I18n.format("tooltip.held_shoggoth"));
+		tooltip.add(I18n.format("tooltip.held_shoggoth"));
 	}
 
 }

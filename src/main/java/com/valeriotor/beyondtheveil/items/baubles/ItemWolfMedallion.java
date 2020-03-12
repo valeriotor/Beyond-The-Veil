@@ -45,7 +45,7 @@ public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble, I
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("�5�o"+I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(5)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

@@ -28,6 +28,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
@@ -71,8 +72,10 @@ public class PlayerTickEvents {
 							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(p) && !data.getString(PlayerDataLib.FISHQUEST)) {
 								int currentFish = data.getOrSetInteger(PlayerDataLib.FISH_CANOE, 0, false);
 								if(currentFish <= 15) {
+									if(currentFish == 0) p.sendMessage(new TextComponentTranslation("canoe.fishing.start"));
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
 								}else{
+									p.sendMessage(new TextComponentTranslation("canoe.fishing.end"));
 									data.addString(PlayerDataLib.FISHQUEST, false);
 									BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.FISHQUEST), (EntityPlayerMP) p);
 								}

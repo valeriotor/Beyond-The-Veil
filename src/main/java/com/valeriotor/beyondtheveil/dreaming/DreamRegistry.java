@@ -21,6 +21,7 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.DreamSentience;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamStillness;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamTool;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamVoid;
+import com.valeriotor.beyondtheveil.dreaming.dreams.DreamWater;
 
 import net.minecraft.init.Blocks;
 
@@ -41,6 +42,7 @@ public class DreamRegistry {
 	public static final DreamIntrospection introspection = new DreamIntrospection("introspection", 8);
 	public static final DreamBeheading beheading = new DreamBeheading("beheading", 8);
 	public static final DreamPlant plant = new DreamPlant("plant", 8);
+	public static final DreamWater water = new DreamWater("water", 8);
 	
 	public static final DreamLearning learning = new DreamLearning("learning", 6);
 	
@@ -69,6 +71,7 @@ public class DreamRegistry {
 		dreams.put(Memory.INTROSPECTION, introspection);
 		dreams.put(Memory.BEHEADING, beheading);
 		dreams.put(Memory.PLANT, plant);
+		dreams.put(Memory.WATER, water);
 	}
 	
 	
