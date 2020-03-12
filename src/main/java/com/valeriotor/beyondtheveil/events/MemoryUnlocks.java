@@ -42,7 +42,7 @@ public class MemoryUnlocks {
 		switch(key) {
 		case "FUMESPREADER":
 			if(stage == 0)
-				Memory.LEARNING.unlock(p);
+				Memory.LEARNING.unlock(p, false);
 			break;
 		case "VOIDDREAMS":
 			if(stage == 0)
@@ -102,7 +102,7 @@ public class MemoryUnlocks {
 	@SubscribeEvent
 	public static void breakBlockEvent(BlockEvent.BreakEvent event) {
 		EntityPlayer p = event.getPlayer();
-		if(p instanceof EntityPlayer) {
+		if(ResearchUtil.getResearchStage(p, "CRYSTALDREAMS") == 1) {
 			Block b = p.world.getBlockState(event.getPos()).getBlock();
 			if(b == Blocks.DIAMOND_ORE || b == Blocks.EMERALD_ORE) {
 				Memory.CRYSTAL.unlock(p);

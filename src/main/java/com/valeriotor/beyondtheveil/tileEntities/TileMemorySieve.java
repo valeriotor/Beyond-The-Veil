@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.items.IArtifactItem;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.util.ItemHelper;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -71,6 +72,8 @@ public class TileMemorySieve extends TileEntity implements ITickable{
 						if(!this.world.isRemote) {
 							markDirty();
 							this.sendUpdates(world);
+							if(m == Memory.LEARNING)
+								SyncUtil.addStringDataOnServer(p, false, "firstMemory");
 						}
 						return ItemStack.EMPTY;
 					}

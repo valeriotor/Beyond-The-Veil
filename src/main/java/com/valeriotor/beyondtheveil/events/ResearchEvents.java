@@ -31,7 +31,9 @@ public class ResearchEvents {
 	}
 	
 	public static void progressResearchEvent(EntityPlayer p, String key, int newStage) {
+		if(p.world.isRemote) return;
 		updateDialogues(p, key, newStage);
+		MemoryUnlocks.researchUnlock(p, key, newStage);
 		if(key.equals("IDOL") && newStage == 1) {
 			SyncUtil.addStringDataOnServer(p, false, "baubleresearch");
 		} else if(key.equals("STATUE") && newStage == 2) {

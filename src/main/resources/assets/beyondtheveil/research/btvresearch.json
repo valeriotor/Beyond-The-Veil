@@ -137,11 +137,11 @@
 				{
 					"text": "research.SLEEPCHAMBER.stage.0",
 					"required_research": ["craftedsleep_chamber"],
-                    "recipes": ["beyondtheveil:sleep_chamber"]
+                    "recipes": ["beyondtheveil:gear", "beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
 				},
                 {
                     "text": "research.SLEEPCHAMBER.stage.1",
-                    "recipes": ["beyondtheveil:sleep_chamber"]
+                    "recipes": ["beyondtheveil:gear","beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
                 }
             ]
         },
