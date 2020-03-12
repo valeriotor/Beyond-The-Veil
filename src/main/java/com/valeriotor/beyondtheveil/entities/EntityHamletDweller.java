@@ -21,6 +21,7 @@ import com.valeriotor.beyondtheveil.items.ItemDrink;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageOpenGuiToClient;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
@@ -306,9 +307,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			}else if(!this.doesOpenGui()) {
 				int tc = data.getOrSetInteger(key, 0, true);
 				int x = this.drunkStatus < 7 ? tc%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(tc, 7) + 28;
-				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : "§5§o";
-				if(this.drunkStatus > 2) y = y.concat("§o");
-				if(this.drunkStatus > 5) y = "§5§o";
+				String y = this.profession == EntityHamletDweller.ProfessionsEnum.DRUNK ? "" : References.PURPLE;
+				if(this.drunkStatus > 2) y = y.concat("�o");
+				if(this.drunkStatus > 5) y = References.PURPLE;
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) {
