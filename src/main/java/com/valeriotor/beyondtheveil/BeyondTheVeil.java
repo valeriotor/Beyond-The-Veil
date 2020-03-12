@@ -22,10 +22,12 @@ import com.valeriotor.beyondtheveil.sacrifice.SacrificeRecipeRegistry;
 import com.valeriotor.beyondtheveil.shoggoth.BuildingRegistry;
 import com.valeriotor.beyondtheveil.util.RegistryHelper;
 import com.valeriotor.beyondtheveil.world.BiomeRegistry;
+import com.valeriotor.beyondtheveil.world.StatueChunkLoader;
 import com.valeriotor.beyondtheveil.world.WorldGenBTV;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -101,6 +103,7 @@ public class BeyondTheVeil
         GearBenchRecipeRegistry.registerGearBenchRecipes();
         SacrificeRecipeRegistry.registerSacrificeRecipes();
         MultiblockRegistry.registerMultiblocks();
+        ForgeChunkManager.setForcedChunkLoadingCallback(instance, new StatueChunkLoader());
         proxy.postInit(event);
     }
     

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tileEntities;
 import java.util.List;
 import java.util.UUID;
 
+import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
@@ -12,6 +13,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
 
 public class TileStatue extends TileEntity implements ITickable{
 	
@@ -19,30 +23,60 @@ public class TileStatue extends TileEntity implements ITickable{
 	private UUID master;
 	private String masterName;
 	private int timer;
+	private Ticket ticket;
+	private boolean triedTicket;
 	
 	public TileStatue() {}
 	
 	public TileStatue(WorshipType type) {
 		this.type = type;
 		this.resetTimer();
+		triedTicket = false;
+	}
+	
+	@Override
+	public void invalidate() {
+		ForgeChunkManager.releaseTicket(ticket);
+		super.invalidate();
+	}
+	
+	public void forceChunkLoading(Ticket ticket) {
+		if (this.ticket == null)
+			this.ticket = ticket;
 	}
 	
 	@Override
 	public void update() {
 		if(world.isRemote) return;
+		if(!triedTicket){
+			triedTicket = true;
+			if(ticket==null)
+				ticket = ForgeChunkManager.requestTicket(BeyondTheVeil.instance,world,ForgeChunkManager.Type.NORMAL);
+			if(ticket == null)
+				System.out.println("A Statue was not able to request a ticket at pos: " + pos);
+			else {
+				ticket.getModData().setInteger("statueX",pos.getX());
+				ticket.getModData().setInteger("statueY",pos.getY());
+				ticket.getModData().setInteger("statueZ",pos.getZ());
+				ForgeChunkManager.forceChunk(ticket,new ChunkPos(pos.getX()>>4,pos.getZ()>>4));
+			}
+			
+		}
 		this.timer--;
 		if(this.timer <= 0) {
 			this.resetTimer();
-			List<EntityCrawlingVillager> worms = world.getEntities(EntityCrawlingVillager.class, e -> e.getMasterID() == master && e.getDistanceSq(pos) < 625);
-			if(worms.isEmpty()) return;
-			CrawlerWorship cw = CrawlerWorshipEvents.getWorship(this.master);
-			int factor = this.type == WorshipType.DEFAULT ? 5 : 6;
-			if(cw != null) {
-				cw.setWorshipType(type);
-				cw.setStrength(worms.size() / factor);
-				cw.resetTimer();
-			} else {
-				CrawlerWorshipEvents.putWorship(master, new CrawlerWorship().setWorshipType(type).setStrength(worms.size() / factor));
+			if(this.master != null) {
+				List<EntityCrawlingVillager> worms = world.getEntities(EntityCrawlingVillager.class, e -> this.master.equals(e.getMasterID()) && e.getDistanceSq(pos) < 625);
+				if(worms.isEmpty()) return;
+				CrawlerWorship cw = CrawlerWorshipEvents.getWorship(this.master);
+				int factor = this.type == WorshipType.DEFAULT ? 5 : 6;
+				if(cw != null) {
+					cw.setWorshipType(type);
+					cw.setStrength(worms.size() / factor);
+					cw.resetTimer();
+				} else {
+					CrawlerWorshipEvents.putWorship(master, new CrawlerWorship().setWorshipType(type).setStrength(worms.size() / factor));
+				}
 			}
 		}
 	}
