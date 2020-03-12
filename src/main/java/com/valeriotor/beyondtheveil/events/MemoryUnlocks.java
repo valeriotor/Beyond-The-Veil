@@ -40,6 +40,10 @@ public class MemoryUnlocks {
 	
 	public static void researchUnlock(EntityPlayer p, String key, int stage) {
 		switch(key) {
+		case "FUMESPREADER":
+			if(stage == 0)
+				Memory.LEARNING.unlock(p);
+			break;
 		case "VOIDDREAMS":
 			if(stage == 0)
 				Memory.VOID.unlock(p, false);
