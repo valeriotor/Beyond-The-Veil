@@ -47,25 +47,22 @@ public class ItemHeldFletum extends Item{
 		
 		EntityFletum weeper = new EntityFletum(w);
 		
+		
+		BlockPos weeperPos = pos;
+		if(tl == null) weeperPos = weeperPos.offset(EnumFacing.UP);
+		else weeperPos = weeperPos.offset(facing);
+		
+		for(int y = 0; y <= 1; y++) {
+			IBlockState b = w.getBlockState(weeperPos.add(0, y, 0));
+			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
+				return EnumActionResult.FAIL;
+			}
+		}
 		if(tl != null && tl.setWeeper(weeper)) {
 			weeper.setLacrymatory(pos);
 		}else if(tl != null) {
 			player.sendMessage(new TextComponentTranslation("interact.lacrymatory.full"));
 			return EnumActionResult.FAIL;
-		}
-		BlockPos weeperPos = pos;
-		if(tl == null) weeperPos = weeperPos.offset(EnumFacing.UP);
-		else weeperPos = weeperPos.offset(facing);
-		
-		for(int x = -1; x <= 1; x++) {
-			for(int z = -1; z <= 1; z++) {
-				for(int y = 0; y <= 1; y++) {
-					IBlockState b = w.getBlockState(weeperPos.add(x, y, z));
-					if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
-						return EnumActionResult.FAIL;
-					}
-				}
-			}
 		}
 		
 		if(tl != null) player.sendMessage(new TextComponentTranslation("interact.lacrymatory.success", new TextComponentTranslation("entity.fletum.name")));

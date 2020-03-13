@@ -6,5 +6,5 @@ public interface IWeepingEntity {
 	
 	public BlockPos getLacrymatory();
 	public void setLacrymatory(BlockPos pos);
-	
+	public int getTearTicks();
 }

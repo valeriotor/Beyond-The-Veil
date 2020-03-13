@@ -38,6 +38,8 @@ public class ResearchEvents {
 			SyncUtil.addStringDataOnServer(p, false, "baubleresearch");
 		} else if(key.equals("STATUE") && newStage == 2) {
 			SyncUtil.addStringDataOnServer(p, false, "dreambottlestatue");
+		} else if(key.equals("WEEPERS") && newStage == 2) {
+			SyncUtil.addStringDataOnServer(p, false, "gotweepers");
 		}
 	}
 	

@@ -14,10 +14,13 @@ public class DreamSentience extends Dream{
 	@Override
 	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
 		pos = w.findNearestStructure("Village", pos, false);
-		if(pos != null) p.sendMessage(new TextComponentTranslation("dreams.villagesearch.success", new Object[] {pos.getX(), pos.getZ()}));
+		if(pos != null) {
+			p.sendMessage(new TextComponentTranslation("dreams.villagesearch.success", new Object[] {pos.getX(), pos.getZ()}));
+			return true;
+		}
 		else p.sendMessage(new TextComponentTranslation("dreams.villagesearch.fail"));
 		
-		return true;
+		return false;
 	}
 
 }

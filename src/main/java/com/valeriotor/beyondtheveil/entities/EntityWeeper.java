@@ -65,7 +65,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 	
 	public EntityWeeper(World worldIn, boolean spineless) {
 		super(worldIn);
-		this.tearTicks = 300;
+		this.tearTicks = this.getTearTicks();
 		this.getDataManager().set(SPINELESS, spineless);
 	}
 	
@@ -118,15 +118,15 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 			this.tearTicks--;
 			if(this.tearTicks <= 0) {
 				TileLacrymatory.fillWithTears(this);
-				this.tearTicks = 300;
+				this.tearTicks = this.getTearTicks();
 			}
 			this.specialDialogueCounter++;
 			if(this.specialDialogueCounter > 300) {
 				this.specialDialogueCounter = 0;
 				EntityPlayer p = this.getMaster();
 				if(this.specialDialogue < 0) {
-					if(p != null && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE") && !ResearchUtil.isResearchKnown(p, "SHOGGOTH")) {
-						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.call").getFormattedText()));
+					if(p != null && p.getDistance(this) < 3 && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE") && !ResearchUtil.isResearchKnown(p, "SHOGGOTH")) {
+						p.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.call").getFormattedText()));
 						this.specialDialogue = 0;
 					}
 				} else if(p != null && ResearchUtil.isResearchKnown(p, "SHOGGOTH") && this.specialDialogue < 7)
@@ -137,11 +137,11 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 				EntityPlayer p = this.getMaster();
 				if(p != null) {
 					if(this.transformTicks == 225)
-						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.please").getFormattedText()));
+						p.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.please").getFormattedText()));
 					if(this.transformTicks == 150)
-						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.please2").getFormattedText()));
+						p.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.please2").getFormattedText()));
 					if(this.transformTicks == 75)
-						p.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.promised").getFormattedText()));
+						p.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.promised").getFormattedText()));
 				}
 				if(this.transformTicks <= 0) {
 					this.goCrazed();
@@ -252,20 +252,20 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 					this.motionX = 0.01;
 					if(this.specialDialogue >= 0) {
 						if(this.specialDialogue < 7) {
-							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth." + specialDialogue).getFormattedText()));
+							player.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth." + specialDialogue).getFormattedText()));
 							this.specialDialogue++;
 							if(this.specialDialogue == 7) {
 								SyncUtil.addStringDataOnServer(player, false, "shoggothsecret");
 								PlayerTimer pt = new PlayerTimer(player, p -> 
-								player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 30);
+								player.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText())), 30);
 								ServerTickEvents.addPlayerTimer(pt);
 							}
 						} else {
-							player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText()));
+							player.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.kill").getFormattedText()));
 						}
 					} else {
 						if(this.dialogue == -1) this.dialogue = rand.nextInt(9);
-						player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
+						player.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.dialogue." + dialogue).getFormattedText()));
 						return EnumActionResult.SUCCESS;
 					}
 				}
@@ -320,6 +320,11 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 		craze.setRotationYawHead(this.getRotationYawHead());
 		world.spawnEntity(craze);
 		world.removeEntity(this);
+	}
+
+	@Override
+	public int getTearTicks() {
+		return 450;
 	}
 
 }

@@ -30,6 +30,7 @@ public class BlockLacrymatory extends ModBlock implements ITileEntityProvider{
 	public BlockLacrymatory(String name) {
 		super(Material.CLAY, name);
 		this.setSoundType(SoundType.GLASS);
+		this.setHardness(2);
 	}
 	
 	@Override

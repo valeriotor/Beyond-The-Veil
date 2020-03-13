@@ -80,6 +80,7 @@ public class TransformDeepOne implements IActivePower{
 		Multimap<String, AttributeModifier> map = getModifiers(p);
 		p.getAttributeMap().applyAttributeModifiers(map);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageStepAssist(true), (EntityPlayerMP)p);
+		p.heal(1);
 	}
 	
 	public static void removeAttributes(EntityPlayer p) {

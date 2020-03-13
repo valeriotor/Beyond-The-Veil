@@ -25,6 +25,8 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 @Mod.EventBusSubscriber
 public class PlayerTickEvents {
@@ -102,7 +105,7 @@ public class PlayerTickEvents {
 	private static void waterPowers(EntityPlayer p, IPlayerData data) {
 		boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
 		if(data.getString(PlayerDataLib.RITUALQUEST)) {
-			if(p.isInsideOfMaterial(Material.WATER)) {
+			if(p.isInWater()) {
 				double motX = p.motionX * 1.2;
 				double motY = p.motionY * 1.25;
 				double motZ = p.motionZ * 1.2;
@@ -124,26 +127,33 @@ public class PlayerTickEvents {
 					p.capabilities.isFlying = false;
 			}		
 		}
-		if(transformed) {
+		if(transformed && (p.ticksExisted & 15) == 0) {
 			ItemStack stack = p.getHeldItemMainhand();
-			if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+			if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem())) {
 				ItemStack clone = stack.copy();
 				p.dropItem(clone, true);
 				stack.setCount(0);
 			}
 			stack = p.getHeldItemOffhand();
-			if(stack.getItem() != Items.AIR && stack.getItem() != ItemRegistry.slug) {
+			if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem())) {
 				ItemStack clone = stack.copy();
 				p.dropItem(clone, true);
 				stack.setCount(0);
 			}
-			if((p.world.getWorldTime() & 31) == 0)
-				for(int i = 0; i < 4; i++) {
-					p.dropItem(p.inventory.armorInventory.get(i), true);
-					p.inventory.armorInventory.set(i, ItemStack.EMPTY);
-				}
+			for(int i = 0; i < 4; i++) {
+				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorItemInSlot(i));
+				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+			}
 		}
 		
+	}
+	
+	private static boolean canDeepOneHold(Item i) {
+		if(i == ItemRegistry.slug || i instanceof ItemFishFood || i == Item.getItemFromBlock(Blocks.PRISMARINE) || i == Items.PRISMARINE_CRYSTALS
+		|| i == Items.PRISMARINE_CRYSTALS || i == Item.getItemFromBlock(Blocks.SPONGE)) {
+			return true;
+		}
+		return false;
 	}
 	
 	private static void decreaseCooldown(EntityPlayer p, IPlayerData data) {

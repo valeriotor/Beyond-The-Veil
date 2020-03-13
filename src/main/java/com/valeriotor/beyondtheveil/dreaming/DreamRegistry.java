@@ -27,7 +27,7 @@ import net.minecraft.init.Blocks;
 
 public class DreamRegistry {
 	
-	public static final DreamEldritch eldritch = new DreamEldritch("alienis", 3);
+	public static final DreamEldritch eldritch = new DreamEldritch("alienis", 1);
 	public static final DreamAnimal animal = new DreamAnimal("animalsearch", 3);
 	public static final DreamSentience sentience = new DreamSentience("villagesearch", 3);
 	public static final DreamRepair repair = new DreamRepair("repair", 3);

@@ -1,14 +1,15 @@
 {
 	"rows" : [
-		" EE ",
+		" ER ",
+		"RTTR",
 		"ETTE",
-		"ETTE",
-		" EE "
+		" RE "
 	],
 	"output" : "beyondtheveil:revelation_ring",
 	"map": {
 		"E" : "minecraft:emerald",
-		"T" : "fluid:tears"
+		"T" : "fluid:tears",
+		"R" : "minecraft:redstone"
 	},
 	"req" : "REVELATIONRING;0"
 }

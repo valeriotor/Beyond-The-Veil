@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.util.ItemHelper;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,6 +31,8 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	
 	public BlockHeart(Material materialIn, String name) {
 		super(materialIn, name);
+		this.setHardness(1);
+		this.setSoundType(SoundType.SLIME);
 	}
 	
 	@Override

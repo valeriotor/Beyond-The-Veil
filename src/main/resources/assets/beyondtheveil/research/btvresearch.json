@@ -106,7 +106,7 @@
         "name": "research.HUMANDREAMS.title",
         "icons": [ "minecraft:skull;1;3" ],
         "category": "BEYOND_THE_VEIL", "location": [ 6,-3 ],
-        "learn": "true",
+        "hiders":["CRYSTALDREAMS"],
         "parents": [ "CRYSTALDREAMS" ],
         "stages": [
 				{
@@ -538,8 +538,7 @@
         "stages": [
 				{
 					"text": "research.DREAMSHRINE.stage.0",
-					"required_research": ["boundpathway2"],
-					"recipes" : ["dream_shrine"]
+					"required_research": ["boundpathway2"]
 				},
                 {
                     "text": "research.DREAMSHRINE.stage.1",
@@ -923,7 +922,7 @@
                 },
                 {
                     "text": "research.BLOODWELL.stage.1",
-                    "recipes" : ["blood_well", "sacrifice;undeadsigils"]
+                    "recipes" : ["blood_well", "sacrifice;undeadsigil"]
                 }
             ]
         },

@@ -41,7 +41,8 @@ public class DreamHandler {
 			Memory m = BlockFumeSpreader.getTE(p.world, pos).getMemory();
 			if(m.isUnlocked(p) && DreamRegistry.dreams.containsKey(m)) {
 				memories.put(m, pos);
-				if(m == Memory.ELDRITCH) eldritchDream = true;
+				boolean voidDream = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID) || memories.containsKey(Memory.VOID);
+				if(m == Memory.ELDRITCH && voidDream) eldritchDream = true;
 			}
 		}
 		

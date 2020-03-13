@@ -574,37 +574,37 @@ dweller.scholarseeya3.talk0=See thee later, dude.
 #WEEPER DIALOGUE
 ##################
 
-weeper.dialogue.0=When I gaze at the horrors before me, all I have left is to weep.
-weeper.dialogue.1=You are lucky, master, in your ignorance of what lies Beyond.
-weeper.dialogue.2=Master, the water you put in my brain.. it's agonizing, yet the pain is not of physical nature.
-weeper.dialogue.3=Everything is so meaningless.. you'll see, once you dip your head in water.
-weeper.dialogue.4=Master.. I beg of you.. rip my spine. Make me whole.
-weeper.dialogue.5=I cannot *see* the world around me, yet I *know* it, even better than you do, Master. And it is most horrid.
-weeper.dialogue.6=You baptized me Master.. you are holy, a god among worms.
-weeper.dialogue.7=I hear whispers.. please.. somebody.. stop them...
-weeper.dialogue.8=I Dreamt of you. You were laughing, but not of joy. Your eyes were hollow.
+weeper.dialogue.0=§5§oWhen I gaze at the horrors before me, all I have left is to weep.
+weeper.dialogue.1=§5§oYou are lucky, master, in your ignorance of what lies Beyond.
+weeper.dialogue.2=§5§oMaster, the water you put in my brain.. it's agonizing, yet the pain is not of physical nature.
+weeper.dialogue.3=§5§oEverything is so meaningless.. you'll see, once you dip your head in water.
+weeper.dialogue.4=§5§oMaster.. I beg of you.. rip my spine. Make me whole.
+weeper.dialogue.5=§5§oI cannot *see* the world around me, yet I *know* it, even better than you do, Master. And it is most horrid.
+weeper.dialogue.6=§5§oYou baptized me Master.. you are holy, a god among worms.
+weeper.dialogue.7=§5§oI hear whispers.. please.. somebody.. stop them...
+weeper.dialogue.8=§5§oI Dreamt of you. You were laughing, but not of joy. Your eyes were hollow.
 
-fletum.dialogue.0=The world is beautiful. Like an Ocean of tears.
-fletum.dialogue.1=Splish splash. Heehee.
-fletum.dialogue.2=I am whole.
-fletum.dialogue.3=I see beautiful shapes.. transparent and fluid, like a watery surface.
-fletum.dialogue.4=I see a pocket of red at the bottom of the Ocean, like a ruby within a diamond.
-fletum.dialogue.5=I Dreamt of a beautiful rainbow. It was red.
-fletum.dialogue.6=My Dreams colour the world! I am sure, because your face is red, heehee.
-fletum.dialogue.7=The Crawling Chaos whispered to me. He said I'm his favourite, heehee!
+fletum.dialogue.0=§5§oThe world is beautiful. Like an Ocean of tears.
+fletum.dialogue.1=§5§oSplish splash. Heehee.
+fletum.dialogue.2=§5§oI am whole.
+fletum.dialogue.3=§5§oI see beautiful shapes.. transparent and fluid, like a watery surface.
+fletum.dialogue.4=§5§oI see a pocket of red at the bottom of the Ocean, like a ruby within a diamond.
+fletum.dialogue.5=§5§oI Dreamt of a beautiful rainbow. It was red.
+fletum.dialogue.6=§5§oMy Dreams colour the world! I am sure, because your face is red, heehee.
+fletum.dialogue.7=§5§oThe Crawling Chaos whispered to me. He said I'm his favourite, heehee!
 
-weeper.shoggoth.call=Master! Master! I have a secret that I wish to share!
-weeper.shoggoth.0=Master.. I can share a terrible, terrible secret with you.
-weeper.shoggoth.1=All I ask in return is for you to promise to grant me a wish, a single wish. Speak to me again if you accept.
-weeper.shoggoth.2=Oh.. Master.. my dear Master. Thank you. The secret has been kept for too long.
-weeper.shoggoth.3=Master, my Master. Do you know what a SHOGGOTH is?
-weeper.shoggoth.4=Most died long ago, yet still a few roam the deepest seas. But you can make one, too.
-weeper.shoggoth.5=That little voice in your head, the one that drives your writing hand.. it'll teach you how to make one.
-weeper.shoggoth.6=My wish, Master. It is time for my wish. I beg you, my dear, dear Master.. please..
-weeper.shoggoth.kill=..kill me.
-weeper.shoggoth.please=Please, I beg of you, kill me.
-weeper.shoggoth.please2=PLEASE MASTER, KILL ME.
-weeper.shoggoth.promised=MASTER, YOU PROMISED.
+weeper.shoggoth.call=§5§oMaster! Master! I have a secret that I wish to share!
+weeper.shoggoth.0=§5§oMaster.. I can share a terrible, terrible secret with you.
+weeper.shoggoth.1=§5§oAll I ask in return is for you to promise to grant me a wish, a single wish. Speak to me again if you accept.
+weeper.shoggoth.2=§5§oOh.. Master.. my dear Master. Thank you. The secret has been kept for too long.
+weeper.shoggoth.3=§5§oMaster, my Master. Do you know what a SHOGGOTH is?
+weeper.shoggoth.4=§5§oMost died long ago, yet still a few roam the deepest seas. But you can make one, too.
+weeper.shoggoth.5=§5§oThat little voice in your head, the one that drives your writing hand.. it'll teach you how to make one.
+weeper.shoggoth.6=§5§oMy wish, Master. It is time for my wish. I beg you, my dear, dear Master.. please..
+weeper.shoggoth.kill=§5§o..kill me.
+weeper.shoggoth.please=§5§oPlease, I beg of you, kill me.
+weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
+weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
 ##################
 #POTION EFFECTS
@@ -813,7 +813,7 @@ research.!ALLIANCE.text=Bring the gold to the Dwellers. Commune.
 research.METAMORPHOSIS.title=Metamorphosis
 research.METAMORPHOSIS.stage.0=Dagon calls me.<BR>I must speak with Him again.<BR>I cannot escape.
 research.METAMORPHOSIS.stage.1=The Guardians in the Ocean Monuments.. belong to Dagon?<BR>Yet He asks me to slay them, merely as a test. He must pass Judgement upon me.<BR>What does He mean with "join His ranks"? Do I not serve Him already?
-research.METAMORPHOSIS.stage.2=To whoever is unfortunate enough to come into possession of these writings..<BR>Stop reading for a moment. Look at your skin. Take a second to admire it. Your own, beautiful, candid skin.<BR>Now imagine. Imagine it turning blue. Slowly losing its color. Imagine then seeing it crack and break like dried stone.<BR>Imagine seeing it replaced, replaced by hard blue scales, surrounded by greenish mucus. Slimy, sticky, smelly, this horror is none other than yourself.<BR>Your head thrown forwards, your jaw opening three-ways, your spine bursting into a dorsal fin.<PAGE>I've always held my own self somewhat in contempt, for my insecurities, my failures, my flaws.<BR>This new shape is a blessing.<BR>I am remade in the shape of God. Or, at least, of His Archpriest Dagon.<BR>I am perfect, a wonderful horror.<BR>In my love and hatred for this form, I'll say it's one of power. I acquire great strength and resistance to harm, especially underwater.<BR>I, however, also lose the ability to wield any items other than slugs and to wear armor.<BR>There's more to this power than I currently know, I'm sure. I'll need to look for other abilities this shape has.<BR>I thank You, Dagon, for now I am Deep.
+research.METAMORPHOSIS.stage.2=To whoever is unfortunate enough to come into possession of these writings..<BR>Stop reading for a moment. Look at your skin. Take a second to admire it. Your own, beautiful, candid skin.<BR>Now imagine. Imagine it turning blue. Slowly losing its color. Imagine then seeing it crack and break like dried stone.<BR>Imagine seeing it replaced, replaced by hard blue scales, surrounded by greenish mucus. Slimy, sticky, smelly, this horror is none other than yourself.<BR>Your head thrown forwards, your jaw opening three-ways, your spine bursting into a dorsal fin.<PAGE>I've always held my own self somewhat in contempt, for my insecurities, my failures, my flaws.<BR>This new shape is a blessing.<BR>I am remade in the shape of God. Or, at least, of His Archpriest Dagon.<BR>I am perfect, a wonderful horror.<BR>In my love and hatred for this form, I'll say it's one of power. I acquire great strength and resistance to harm, especially underwater.<BR>I, however, also lose the ability to wear armor and to wield any items other than a handful of marine ones, such as slugs and fish.<BR>There's more to this power than I currently know, I'm sure. I'll need to look for other abilities this shape has.<BR>I thank You, Dagon, for now I am Deep.
 research.hearing2.text=Eat a slug in the deepest oceans.
 research.!METAMORPHOSIS.text=Slay three Elder Guardians. Commune.
 
@@ -827,7 +827,7 @@ research.DREAMBOTTLE.addenda.statue=Addendum:<BR>It seems that being worshipped 
 
 research.WATERWALKING.title=Water Walking
 research.WATERWALKING.stage.0=Great Father Dagon, I am coming.
-research.WATERWALKING.stage.1=The End is engulfed in Void, the outer bulwark of the Veil, of The Great Dreamer Himself.<BR>It is there that I must Dream, while in water. I must Dream of Darkness, of Eldritch, of Learning and of Void. I know this, somehow.<BR>I cannot use a bed or a Sleep Chamber while in water, so I must take a third route to Dream.
+research.WATERWALKING.stage.1=The End is engulfed in Void, the outer bulwark of the Veil, of The Great Dreamer Himself.<BR>It is there that I must Dream, while in water. I must Dream of Darkness, of Eldritch, of Learning and of Void, all at the same time. I know this, somehow.<BR>I cannot use a bed or a Sleep Chamber while in water, so I must take a third route to Dream.
 research.WATERWALKING.stage.2=Water Walking is the art of becoming one with the Ocean.<BR>When I use the power, while in water, I will be transported to any location or entity I am looking at, provided they are also in water.<BR>Additionally, using it while sneaking will set a waypoint. Doing that again will transport me back to that waypoint, then deleting it.<BR>Truly, I am now ever closer to the Ocean, a part of its very essence.<BR>A tiny, insignificant part in its unknowable immensity.
 research.hearing3.text=Eat a slug in the deepest oceans.
 research.!WATERWALKING.text=Bathe in the End and Dream. Then Commune.

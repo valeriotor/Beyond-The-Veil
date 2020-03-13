@@ -49,30 +49,28 @@ public class ItemHeldWeeper extends Item {
 		
 		EntityWeeper weeper = new EntityWeeper(w, spineless);
 		
+		
+		BlockPos weeperPos = pos;
+		if(tl == null) weeperPos = weeperPos.offset(EnumFacing.UP);
+		else weeperPos = weeperPos.offset(facing);
+		
+		for(int y = 0; y <= 2; y++) {
+			IBlockState b = w.getBlockState(weeperPos.add(0, y, 0));
+			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
+				return EnumActionResult.FAIL;
+			}
+		}
+		
 		if(tl != null && tl.setWeeper(weeper)) {
 			weeper.setLacrymatory(pos);
 		}else if(tl != null) {
 			player.sendMessage(new TextComponentTranslation("interact.lacrymatory.full"));
 			return EnumActionResult.FAIL;
 		}
-		BlockPos weeperPos = pos;
-		if(tl == null) weeperPos = weeperPos.offset(EnumFacing.UP);
-		else weeperPos = weeperPos.offset(facing);
 		
-		for(int x = -1; x <= 1; x++) {
-			for(int z = -1; z <= 1; z++) {
-				for(int y = 0; y <= 2; y++) {
-					IBlockState b = w.getBlockState(weeperPos.add(x, y, z));
-					if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
-						return EnumActionResult.FAIL;
-					}
-				}
-			}
-		}
-
 		if(tl != null) player.sendMessage(new TextComponentTranslation("interact.lacrymatory.success", new TextComponentTranslation("entity.weeper.name")));
 		
-		weeper.setPosition(weeperPos.getX(), weeperPos.getY(), weeperPos.getZ());
+		weeper.setPosition(weeperPos.getX() + 0.5, weeperPos.getY(), weeperPos.getZ() + 0.5);
 		weeper.setHeartless(heartless);
 		weeper.setMaster(player);
 		w.spawnEntity(weeper);

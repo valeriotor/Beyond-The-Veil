@@ -40,7 +40,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	
 	public EntityFletum(World worldIn) {
 		super(worldIn);
-		this.tearTicks = 500;
+		this.tearTicks = this.getTearTicks();
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 			this.tearTicks--;
 			if(this.tearTicks <= 0) {
 				TileLacrymatory.fillWithTears(this);
-				this.tearTicks = 500;
+				this.tearTicks = this.getTearTicks();
 			}
 		}
 	}
@@ -176,6 +176,11 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	@Override
 	public int getTalkInterval() {
 		return 240;
+	}
+
+	@Override
+	public int getTearTicks() {
+		return 750;
 	}
 	
 }

@@ -75,7 +75,7 @@ public class MemoryUnlocks {
 					if(!Memory.CHANGE.isUnlocked(p) && Memory.CHANGE.isUnlockable(p)) {
 						IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 						int amount = data.getOrSetInteger(PlayerDataLib.SAPLINGS_SEEN, 0, false);
-						if(amount > 15) {
+						if(amount > 4) {
 							Memory.CHANGE.unlock(p);
 						} else {
 							data.incrementOrSetInteger(PlayerDataLib.SAPLINGS_SEEN, 1, 1, false);
@@ -89,7 +89,7 @@ public class MemoryUnlocks {
 	@SubscribeEvent 
 	public static void power(LivingDeathEvent event) {
 		EntityLivingBase e = event.getEntityLiving();
-		if(!(e instanceof EntityPlayer) && (e.getMaxHealth() >= 100 || !e.isNonBoss()) && event.getSource().getTrueSource() instanceof EntityPlayer) {
+		if(!(e instanceof EntityPlayer) && (e.getMaxHealth() >= 40 || !e.isNonBoss()) && event.getSource().getTrueSource() instanceof EntityPlayer) {
 			Memory.POWER.unlock((EntityPlayer)event.getSource().getTrueSource());
 		}
 	}
