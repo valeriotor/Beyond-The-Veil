@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 public class BlockCityMapper extends ModBlockFacing implements ITileEntityProvider{
 	
 	public BlockCityMapper(String name) {
-		super(Material.IRON, name);
+		super(Material.WOOD, name);
 	}
 
 	@Override

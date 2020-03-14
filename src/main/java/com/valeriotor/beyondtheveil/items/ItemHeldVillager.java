@@ -53,7 +53,7 @@ public class ItemHeldVillager extends Item {
 			worm.setAltar(pos);
 		}
 		if(sacrifice ||  block != BlockRegistry.BlockSacrificeAltar || !heartless) {
-			worm.setPosition(pos.getX(), 1+pos.getY(), pos.getZ());
+			worm.setPosition(pos.getX()+0.5, 1+pos.getY(), pos.getZ()+0.5);
 			worm.setProfession(ItemHelper.checkIntTag(player.getHeldItem(hand), "profession", 0));
 			worm.setMaster(player);
 			w.spawnEntity(worm);

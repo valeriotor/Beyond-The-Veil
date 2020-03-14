@@ -150,7 +150,7 @@ public class PlayerTickEvents {
 	
 	private static boolean canDeepOneHold(Item i) {
 		if(i == ItemRegistry.slug || i instanceof ItemFishFood || i == Item.getItemFromBlock(Blocks.PRISMARINE) || i == Items.PRISMARINE_CRYSTALS
-		|| i == Items.PRISMARINE_CRYSTALS || i == Item.getItemFromBlock(Blocks.SPONGE)) {
+		|| i == Items.PRISMARINE_CRYSTALS || i == Item.getItemFromBlock(Blocks.SPONGE) || i == ItemRegistry.coral_staff) {
 			return true;
 		}
 		return false;

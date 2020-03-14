@@ -538,7 +538,7 @@
         "stages": [
 				{
 					"text": "research.DREAMSHRINE.stage.0",
-					"required_research": ["boundpathway2"]
+					"required_research": ["boundpathway"]
 				},
                 {
                     "text": "research.DREAMSHRINE.stage.1",

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.network;
 import java.util.List;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
@@ -10,6 +11,8 @@ import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientStatus;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientTypes;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
+import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
+import com.valeriotor.beyondtheveil.worship.CrawlerWorship.WorshipType;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -81,7 +84,13 @@ public class MessageWateryCradle implements IMessage{
 								SyncUtil.addStringDataOnServer(p, false, "filledtears");
 							break;
 					case 3: status = status.withHeartless(true);
-							ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(BlockRegistry.BlockHeart));
+							int amount = 1;
+							CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
+							if(cw != null && cw.getWorshipType() == WorshipType.SACRIFICE) {
+								if(p.world.rand.nextInt(Math.max(1, 5-cw.getStrength())) == 0)
+									amount = 2;
+							}
+							ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(BlockRegistry.BlockHeart, amount));
 							sound = BTVSounds.heartRip;
 							if(ResearchUtil.getResearchStage(p, "HEARTS") < 1)
 								SyncUtil.addStringDataOnServer(p, false, "tornheart");

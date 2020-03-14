@@ -9,6 +9,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -17,7 +18,7 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextComponentBase;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
@@ -104,16 +105,17 @@ public class CrawlerWorship {
 		if(this.wType != WorshipType.PENITENCE) return;
 		Item i = p.getHeldItemMainhand().getItem();
 		if(i instanceof ItemSword) {
-			p.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 300, 3));
+			p.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 300, Math.min(this.strength+1, 3)));
 		} else if(i instanceof ItemAxe || i instanceof ItemSpade || i instanceof ItemPickaxe) {
-			p.addPotionEffect(new PotionEffect(MobEffects.HASTE, 300, 3));
+			p.addPotionEffect(new PotionEffect(MobEffects.HASTE, 300, Math.min(this.strength+1, 3)));
 		} else if(i instanceof ItemHoe) {
 			World w = p.world;
 			for(int x = -4; x <= 4; x++) {
 				for(int z = -4; z <= 4; z++) {
 					for(int y = -1; y <= 1; y++) {
-						IBlockState state = w.getBlockState(p.getPosition().add(x, y, z));
-						if(state.getBlock() instanceof IGrowable) {
+						BlockPos pos = p.getPosition().add(x, y, z);
+						IBlockState state = w.getBlockState(pos);
+						if(state.getBlock() instanceof IGrowable && state.getBlock() != Blocks.GRASS) {
 							((IGrowable)state.getBlock()).grow(w, w.rand, p.getPosition().add(x, y, z), state);
 						}
 					}

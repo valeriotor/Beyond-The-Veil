@@ -45,7 +45,7 @@ public class ItemBlackjack extends Item{
 			BlockPos pos = vil.getPos();
 			if(!event.getWorld().isRemote) {
 				EntityCrawlingVillager worm = new EntityCrawlingVillager(event.getWorld(), true);
-				worm.setPositionAndRotation(pos.getX(), pos.getY(), pos.getZ(), p.rotationYaw, 0);
+				worm.setPositionAndRotation(pos.getX()+0.5, pos.getY()+0.2, pos.getZ()+0.5, p.rotationYaw, 0);
 				worm.setProfession(vil.getProfession());
 				event.getWorld().removeEntity(vil);
 				event.getWorld().spawnEntity(worm);

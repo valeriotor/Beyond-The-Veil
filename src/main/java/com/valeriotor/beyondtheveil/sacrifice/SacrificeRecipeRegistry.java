@@ -59,6 +59,7 @@ public class SacrificeRecipeRegistry {
 			);
 	
 	public static final SacrificeRecipe pathwaysigil = new SacrificeRecipe(
+			"boundpathway",
 			new ItemFunction(Items.COMPASS, new ItemStack(ItemRegistry.sigil_pathway), false)
 			);
 	

@@ -70,7 +70,7 @@ public class ContainerGearBench extends Container{
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-		IItemHandler h = this.bench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		/*IItemHandler h = this.bench.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		if(index == 0) {
 			ItemStack stack = this.bench.output.getStackInSlot(0);
 			int min = 64;
@@ -84,7 +84,7 @@ public class ContainerGearBench extends Container{
 			}
 			stack.setCount(min);
 			ItemHandlerHelper.giveItemToPlayer(playerIn, stack);
-		} /*else if(index >= 1 && index <= 16) {
+		} else if(index >= 1 && index <= 16) {
 			ItemStack stack = h.getStackInSlot(index-1);
 			for(int i = 17; i < 53; i++) {
 				ItemStack iStack = this.inventorySlots.get(i).getStack();

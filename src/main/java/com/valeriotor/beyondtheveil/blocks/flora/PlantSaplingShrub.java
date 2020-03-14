@@ -28,6 +28,7 @@ public class PlantSaplingShrub extends BlockPlant{
 	public PlantSaplingShrub(String name) {
 		super(Material.PLANTS, name);
 		this.setSoundType(SoundType.PLANT);
+		this.setHardness(0);
 	}
 	
 	@Override

@@ -42,7 +42,7 @@ public class ItemHeldShoggoth extends ModItem{
 		EntityShoggoth shoggoth = new EntityShoggoth(w, player);
 		shoggoth.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
 		w.spawnEntity(shoggoth);
-		
+		player.getHeldItem(hand).shrink(1);
 		return EnumActionResult.SUCCESS;
 	}
 	

@@ -30,7 +30,7 @@ public enum Memory {
 	METAL(Items.IRON_INGOT, 0xFF8c8c8c),
 	PLANT(Item.getItemFromBlock(Blocks.SAPLING), 0xFF00FF00, 3),
 	POWER(Items.BLAZE_POWDER, 0xFFff9300, "metalDream"),
-	REPAIR(Item.getItemFromBlock(Blocks.WOOL), 0xFF99f19d),
+	REPAIR(Item.getItemFromBlock(Blocks.ANVIL), 0xFF99f19d),
 	SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
 	STILLNESS(Item.getItemFromBlock(Blocks.SOUL_SAND), 0xFF444444, "metalDream"),
 	TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA, "memHUMAN"),

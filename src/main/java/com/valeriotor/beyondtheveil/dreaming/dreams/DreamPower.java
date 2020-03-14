@@ -26,7 +26,7 @@ public class DreamPower extends Dream{
 		int lvl = DreamHandler.getDreamLevel(p);
 		int increase = 1 + (lvl+2)/3;
 		Collection<PotionEffect> effects = target.getActivePotionEffects();
-		effects.forEach(effect -> target.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getPotion() == MobEffects.RESISTANCE ? Math.max(3, effect.getAmplifier() + increase) : effect.getAmplifier()+increase)));
+		effects.forEach(effect -> target.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getPotion() == MobEffects.RESISTANCE ? Math.min(3, effect.getAmplifier() + increase) : effect.getAmplifier()+increase)));
 		
 		return true;
 	}

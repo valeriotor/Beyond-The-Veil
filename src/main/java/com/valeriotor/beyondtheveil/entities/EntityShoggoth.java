@@ -90,7 +90,7 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	   getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);
 	   getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 	   getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
-	   getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
+	   getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
 	   
 	
 	   //getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
@@ -115,7 +115,7 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 		this.targetTasks.addTask(0, new AIRevenge(this));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 10, true, false, p -> (this.master == null || this.world.getPlayerEntityByUUID(this.master) != p || this.aggressivity > 50)));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, true));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 3, true, true, a -> a.getDistance(this) < 50));
 		 
 	 }
 	
@@ -237,6 +237,8 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	public void readFromNBT(NBTTagCompound compound) {
 		if(compound.hasKey("map")) map = (NBTTagCompound) compound.getTag("map");
 		this.progress = compound.getInteger("progress");
+		if(map != null && map.hasKey(String.format("b%d", progress)))
+			this.building = ShoggothBuilding.getBuilding(this.world, this.map.getCompoundTag(String.format("b%d", progress)));
 		if(compound.hasKey("masterID"))
 			this.master = UUID.fromString(compound.getString("masterID"));
 		this.aggressivity = compound.getInteger("aggressivity");

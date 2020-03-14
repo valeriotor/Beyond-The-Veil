@@ -32,7 +32,7 @@ public class ItemSacrificialKnife extends ModItem{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World w, EntityPlayer p, EnumHand handIn) {
-		p.attackEntityFrom(DamageSource.OUT_OF_WORLD, 14);
+		if(!w.isRemote) p.attackEntityFrom(DamageSource.OUT_OF_WORLD, 14);
 		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);		
 		if(cw != null) {
 			cw.getSelfHarmBonuses(p);
@@ -44,7 +44,7 @@ public class ItemSacrificialKnife extends ModItem{
 	public EnumActionResult onItemUse(EntityPlayer p, World w, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		Block b = w.getBlockState(pos).getBlock();
-		p.attackEntityFrom(DamageSource.OUT_OF_WORLD, 14);
+		if(!w.isRemote) p.attackEntityFrom(DamageSource.OUT_OF_WORLD, 14);
 		if(b == BlockRegistry.BlockSacrificeAltar) {
 			if(!w.isRemote) {
 				CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);

@@ -324,7 +324,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 
 	@Override
 	public int getTearTicks() {
-		return 450;
+		return 650;
 	}
 
 }

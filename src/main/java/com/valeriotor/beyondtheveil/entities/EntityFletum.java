@@ -180,7 +180,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 
 	@Override
 	public int getTearTicks() {
-		return 750;
+		return 950;
 	}
 	
 }

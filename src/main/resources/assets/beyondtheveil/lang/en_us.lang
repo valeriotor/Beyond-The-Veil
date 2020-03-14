@@ -314,6 +314,7 @@ building.largetower=Large Tower
 building.pyramid=Pyramid
 building.wall=Wall
 building.road=Road
+building.clinic=Clinic
 
 angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
 
@@ -744,7 +745,7 @@ research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
-research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>
+research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning.
 
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>New revelations spring to mind on how to make it reach its full potential.
@@ -873,7 +874,7 @@ research.craftedbone_tiara.text=Craft a Bone Tiara.
 
 research.BLOODCOVENANT.title=Covenant of Blood
 research.BLOODCOVENANT.stage.0=Through blood, different lives are linked.<BR>The dark red fluid is not of this world, and the links are of eldritch nature. I may find use for such bonds, yet this time I cannot do it alone.
-research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all others who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally. 
+research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all other Players who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally. 
 research.craftedblood_covenant.text=Craft a Covenant of Blood.
 
 research.BLOODCROWN.title=Crown of Thorns
@@ -895,7 +896,7 @@ research.linkedstatue.text=Link a Statue to myself.
 
 research.SACRIFICESTATUE.title=Statue of Sacrifice
 research.SACRIFICESTATUE.stage.0=Could I seek meaning in selflessness?<BR>To pay myself for someone else's wellbeing? Quite a change from my previous attitudes, and yet, I have followers to take care of now!<BR>I shall build a Statue that portrays me in a very different position, then.
-research.SACRIFICESTATUE.stage.1=I feel a bit better with myself now, and that's quite something in this journey of hopelessness.<BR>The Statue of Sacrifice does everything the normal Statue does, though it takes slighty more crawlers to achieve the same power.<BR>However, when I'm under its effects, I am capable of using the Sacrificial Altar by using a Sacrificial Knife upon it, instead of sacrificing a Villager.<BR>Additionally, every time I take damage all my nearby combat minions (such as summoned Deep Ones, and the like) are strengthened and healed.<BR>An example, that's what I must be! Even if it means pain!<BR>After all, I do deserve some Penitence.
+research.SACRIFICESTATUE.stage.1=I feel a bit better with myself now, and that's quite something in this journey of hopelessness.<BR>The Statue of Sacrifice does everything the normal Statue does, though it takes slighty more crawlers to achieve the same power.<BR>However, when I'm under its effects, I can use the Sacrificial Altar by using a Sacrificial Knife upon it, instead of sacrificing a Villager, and holding the stack in my other hand instead of dropping it on the ground.<BR>Additionally, every time I take damage all my nearby combat minions (such as summoned Deep Ones, and the like) are strengthened and healed.<BR>Lastly, my patients in the Watery Cradle seem truly inspired by my acts. So much so, that they follow in my footsteps of sacrifice and at times choose to relinquish two hearts, instead of one! However that may be possible.<BR>An example, that's what I must be! Even if it means pain!<BR>After all, I do deserve some Penitence.
 research.craftedsacrifice_statue.text=Craft a Statue of Sacrifice.
 
 research.PENITENCESTATUE.title=Statue of Penitence
@@ -926,17 +927,17 @@ research.SHOGGOTH.stage.0=Shoggoths.<BR>Shapeless masses of flesh, washed away a
 
 research.CITYMAPPER.title=City Mapping
 research.CITYMAPPER.stage.0=Shoggoths once built cities.<BR>They shall do so again.
-research.CITYMAPPER.stage.1=A City Mapper can create a map schematic that is then to be given to a Shoggoth.<BR>I can place buildings from the menu on the right onto the map. Buildings must not intersect each other and must be fully contained within the map's borders.<BR>Buildings can be rotated before or after placement with the mouse wheel.<BR>Buildings on the map can be moved by clicking on them and deleted by moving them outside the map.<BR>I must save changes before exiting the Mapper and before creating the schematic.<BR>Once the schematic is made, I can then give it to a Shoggoth.<BR>Of course, I must also make sure the Shoggoth isn't distracted by any animals, Players or other Shoggoths.<BR>As of now, there's only a handful of block types the Shoggoth can create. Maybe in the future I'll find more.<BR>The Shoggoth creates such blocks by itself, but I can synthesize them myself as well, if needs be.<BR>Lastly, I should remember to light up buildings soon after they're built, as they have no source of lighting themselves.
+research.CITYMAPPER.stage.1=A City Mapper can create a map schematic that is then to be given to a Shoggoth.<BR>I can place buildings from the menu on the right onto the map. Buildings must not intersect each other and must be fully contained within the map's borders.<BR>Buildings can be rotated before or after placement with the mouse wheel.<BR>Buildings on the map can be moved by clicking on them and deleted by moving them outside the map.<BR>I must save changes before exiting the Mapper and before creating the schematic.<BR>Once the schematic is made, I can then give it to a Shoggoth.<BR>Of course, I must also make sure the Shoggoth isn't distracted by any animals, other Players or other Shoggoths.<BR>As of now, there's only a handful of block types the Shoggoth can create. Maybe in the future I'll find more.<BR>The Shoggoth creates such blocks by itself, but I can synthesize them myself as well, if needs be.<BR>Lastly, I should remember to light up buildings soon after they're built, as they have no source of lighting themselves.
 research.craftedcity_mapper.text=Craft a City Mapper.
 
-research.DEATHDREAM.title=Dream of Death
+research.DEATHDREAM.title=Dreams of Death
 research.DEATHDREAM.stage.0=A Dream of Death, as I respawn once again.<BR>Yet I am not the only one that cannot truly die.<BR>With this Memory, I can invade the privacy of another random Player, and discover the last place where they died, hopefully profiting off their spoils.<BR>No grave is too sacred.
 research.DEATHDREAM.addenda.teleport=It seems that targeting myself with a Death Dream, through a Player Sigil bound to myself used on the Dream Shrine, allows me to outright teleport to my last Overworld death's location.<BR>But how? How can a simple Dream shift my whole body?<BR>Could this be a key to breaching the Veil?
 
-research.REPAIRDREAM.title=Dream of Mending
+research.REPAIRDREAM.title=Dreams of Mending
 research.REPAIRDREAM.stage.0=A Dream of Mending, as I smite the hammer on the anvil.<BR>I cannot truly die, yet many of my tools are fraught with mortality. This Memory influences the very matter I am surrounded with, and repairs the items I am wearing and wielding.
 
-research.ANIMALDREAM.title=Dream of Animals
+research.ANIMALDREAM.title=Dreams of Animals
 research.ANIMALDREAM.stage.0=A Dream of Animal, as I feed one with my own hands.<BR>Dropping a specific item near to me before I Dream of this Memory will spawn nearby an animal related to that item.<BR>Where my Dream plucks that creature from, I can only speculate.<PAGE>Examples of usable items would be porkchop for pigs, bones for wolves, leather for cows, horses and even llamas. Of course there are more to discover.
 
 research.DREAMSHRINE.title=Dream Shrine
@@ -973,7 +974,7 @@ research.VIJHISS.stage.0=My next Flora Dream should be made with a block of obsi
 research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
 research.plantvijhiss.text=Dream of Flora with obsidian in hand.
 
-research.BEHEADINGDREAM.title=Dream of Beheading
+research.BEHEADINGDREAM.title=Dreams of Beheading
 research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
 
 research.FINALQUEST.title=A Snippet Of Truth
@@ -998,7 +999,7 @@ research.BRONZESPHERE.stage.0=I've already held this sphere.<BR>I know I have.<B
 research.BAUBLERESEARCH.title=Baubles
 research.BAUBLERESEARCH.stage.0=Some items are to be worn outside of my armor slots.<BR>The Baubles I encounter in this journey (and only this journey) may have both active and passive effects.<BR>By holding the Bauble key ('Z' by default) I can choose which Baubles must have their passive effect enabled and which single Bauble is to be the active one.<BR>There can be only one active Bauble, and its effect can be activated by tapping the Bauble Key.
 
-research.INTROSPECTIONDREAM.title=Dream of Introspection
+research.INTROSPECTIONDREAM.title=Dreams of Introspection
 research.INTROSPECTIONDREAM.stage.0=A Memory of Introspection, as I reflect upon my own self while I walk among my worshippers.<BR>Through this Memory I can know more of the power I've obtained in my journey.<BR>Of course, were I to target someone else with the Dream I may also scry into their secrets.
 
 research.DEEPROAR.title=Roaring
