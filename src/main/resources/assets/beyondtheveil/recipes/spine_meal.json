@@ -1,0 +1,13 @@
+{
+    "type": "forge:ore_shapeless",
+    "ingredients": [
+        {
+            "item": "beyondtheveil:spine"
+        }
+    ],
+    "result": {
+        "item": "minecraft:dye",
+		"count": 10,
+		"data": 15
+    }
+}

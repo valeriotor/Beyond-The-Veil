@@ -339,6 +339,7 @@ public class ItemDreamBottle extends Item{
 		IFluidHandler fh = FluidUtil.getFluidHandler(stack);
 		fh.drain(4*required, true);
 		SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.ENDBATH);
+		p.sendMessage(new TextComponentTranslation("dreams.endbath"));
 		return false;
 	}
 	

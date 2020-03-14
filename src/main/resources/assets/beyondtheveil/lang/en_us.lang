@@ -99,6 +99,7 @@ use.blood_sigil.notmine=This mob does not serve me.
 use.blood_sigil.path=This location is now bound in the Sigil.
 use.dream_bottle.noplayer=The bound Player is not currently in this world.
 
+bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepare for the worst, in a matter of seconds.
 
 ##################
 #BLOCKS
@@ -180,7 +181,7 @@ interact.statue.alreadyme=This Statue is already mine.
 interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
 interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
 interact.gearbench.dunno=I do not know how to use this.
-interact.lacrymatory.amount=This Lacrymatory holds %1$s millibuckets of Tears.
+interact.lacrymatory.amount=This Lacrymatory holds %1$s/4,000 millibuckets of Tears.
 
 hit.idol.schiz0=I should not try to break it.
 hit.idol.schiz1=I shouldn't be doing this.
@@ -236,7 +237,7 @@ gui.sleep_chamber.wake=Wake Up
 
 gui.tablet.inscription0=There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.
 gui.tablet.inscription1=Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?
-gui.tablet.inscription2=Infinite You's throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
+gui.tablet.inscription2=Infinite Yous throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
 gui.tablet.inscription3=The deepest Oceans touch the Void.<BR>Water is unsafe, it is Chaos.<BR>Yet from it comes Life.
 gui.tablet.inscription4=Deaths upon Deaths upon Deaths.<BR>But you are not truly immortal.<BR>You are nothing to Eternity.
 gui.tablet.inscription5=The Great Dreamer<BR>filters the Veil<BR>into reality.<BR>Dreams go through Him.
@@ -697,6 +698,7 @@ dreams.introspection.novoid=Has not Dreamt of Void.
 dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
 dreams.introspection.noworship=No Worshippers.
 
+dreams.endbath=I think this worked. I should try and commune.
 
 ##################
 #RESEARCH

@@ -79,7 +79,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 			} else {
 				if(!this.world.isRemote) {
 					if(this.dialogue == -1) this.dialogue = rand.nextInt(36) / 5;
-					player.sendMessage(new TextComponentString(References.PURPLE + new TextComponentTranslation("fletum.dialogue." + dialogue).getFormattedText()));
+					player.sendMessage(new TextComponentString(new TextComponentTranslation("fletum.dialogue." + dialogue).getFormattedText()));
 					return EnumActionResult.SUCCESS;
 				}	
 			}

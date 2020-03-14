@@ -141,7 +141,7 @@ public class PlayerTickEvents {
 				stack.setCount(0);
 			}
 			for(int i = 0; i < 4; i++) {
-				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorItemInSlot(i));
+				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorItemInSlot(i), 9+i);
 				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
 			}
 		}

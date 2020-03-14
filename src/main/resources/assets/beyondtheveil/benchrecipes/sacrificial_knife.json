@@ -2,13 +2,13 @@
 	"rows" : [
 		"  II",
 		" IIH",
-		"IIHH",
-		"WWHH"
+		"IIH ",
+		"SS  "
 	],
 	"output" : "beyondtheveil:sacrificial_knife",
 	"map": {
 		"H" : "beyondtheveil:heart",
-		"W" : "minecraft:log",
+		"S" : "beyondtheveil:spine",
 		"I" : "minecraft:iron_ingot"
 	},
 	"req" : "STATUE;1"

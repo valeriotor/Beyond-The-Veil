@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -124,6 +125,7 @@ public class PlayerDamageEvents {
 			if(BaublesApi.getBaublesHandler(p).getStackInSlot(4).getItem() == ItemRegistry.blood_crown &&
 					p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) {
 				if(ServerTickEvents.getPlayerTimer("bcrown1", p) == null && ServerTickEvents.getPlayerTimer("bcrown2", p) == null) {
+					p.sendMessage(new TextComponentTranslation("bauble.blood_crown.activated"));
 					CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 					boolean cwImp = cw != null && cw.improvesCrownOfThorns();
 					final float a = event.getAmount() / (cwImp ? 3 : 1);
