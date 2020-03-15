@@ -2,9 +2,12 @@ package com.valeriotor.beyondtheveil.worship.ActivePowers;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.util.PlayerTimer.PlayerTimerBuilder;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import com.valeriotor.beyondtheveil.worship.Deities;
 
@@ -68,13 +71,27 @@ public class WaterTeleport implements IActivePower{
 				p.sendMessage(new TextComponentTranslation("teleport.setposition"));
 				return true;
 			} else {
-				if(p.dimension != data.getInteger(PlayerDataLib.WATERTPDIM))
+				if(p.dimension != data.getInteger(PlayerDataLib.WATERTPDIM)) {
+					PlayerTimer pt = ServerTickEvents.getPlayerTimer("resettp", p);
+					if(pt == null) {
+						p.sendMessage(new TextComponentTranslation("teleport.wrongdimension"));
+						PlayerTimerBuilder newTimer = new PlayerTimerBuilder(p).setTimer(400).setName("resettp");
+						ServerTickEvents.addPlayerTimer(newTimer.toPlayerTimer());
+					} else {
+						p.sendMessage(new TextComponentTranslation("teleport.removedpoint"));
+						data.removeLong(PlayerDataLib.WATERTPDEST);
+						data.removeInteger(PlayerDataLib.WATERTPDIM);
+					}
 					return false;
+				}
 				data.removeLong(PlayerDataLib.WATERTPDEST);
+				data.removeInteger(PlayerDataLib.WATERTPDIM);
+				p.sendMessage(new TextComponentTranslation("teleport.removedpoint"));
 				BlockPos newPos = BlockPos.fromLong(l);
 				p.setPosition(newPos.getX(), newPos.getY(), newPos.getZ());
 				if(p instanceof EntityPlayerMP)
 					((EntityPlayerMP) p).connection.setPlayerLocation(newPos.getX() + 0.5, newPos.getY(), newPos.getZ() + 0.5, p.rotationYaw, p.rotationPitch);
+				
 				return true;
 			}
 		}

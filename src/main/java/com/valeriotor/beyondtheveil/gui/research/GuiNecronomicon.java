@@ -22,6 +22,7 @@ import com.valeriotor.beyondtheveil.research.ResearchConnection;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.ConfigLib;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
@@ -45,6 +46,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	List<ResearchConnection> connections = new ArrayList<>();
 	List<Point> stars = new ArrayList<>();
 	int counter = 0;
+	int connectionColor = 0xFF002000;
 	
 	private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
 	
@@ -74,6 +76,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 				connections.add(rc);
 			}
 		}
+		this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (ConfigLib.connectionGreen << 8) | ConfigLib.connectionBlue;
 	}
 	
 	@Override
@@ -149,7 +152,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 				int signum = (int) Math.signum(counter % 80 - 40);
 				double amplifier = 15 * (signum  * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
 				int x = i, y = (int) (amplifier * Math.sin(i * Math.PI / dist));
-				drawRect(x, y, x + 1, y+1, 0xFF001A00);
+				drawRect(x, y, x + 1, y+1, this.connectionColor);
 			}
 			GlStateManager.popMatrix();
 			

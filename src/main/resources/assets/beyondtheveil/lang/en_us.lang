@@ -1028,6 +1028,8 @@ roar.cooldown=The Roar requires %1$s more seconds of cooldown.
 
 teleport.setposition=My current position has been set as my return point.
 teleport.inwater=I must be in water to use this Power.
+teleport.wrongdimension=My last return point was in a different dimension. Using this Power again in the next 20 seconds will remove the return point.
+teleport.removedpoint=My return point has been reset.
 
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
 canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.

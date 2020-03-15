@@ -18,7 +18,7 @@ public class BiomeRegistry {
 	
 	public static void initBiomes() {
 		ForgeRegistries.BIOMES.register(innsmouth);
-		BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(innsmouth, 3));
+		BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(innsmouth, 4));
 		BiomeManager.addSpawnBiome(innsmouth);
 		
 		BiomeDictionary.addTypes(innsmouth, Type.SWAMP);

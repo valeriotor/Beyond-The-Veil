@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "0.0.0.0.1",
+  "modid": "beyondtheveil",
+  "name": "Beyond The Veil",
+  "description": "A story driven Minecraft mod inspired by the writings of H.P. Lovecraft, and other works based on the author.",
+  "version": "0.0.1",
   "mcversion": "1.12.2",
   "url": "",
   "updateUrl": "",
   "authorList": ["valeriotor"],
-  "credits": "The Forge and FML guys, for making this example",
+  "credits": "Azanor, for Baubles. The creators on FreeSound.org (listed in the sounds folder under CREDITS). The people on the forge forums for asking and answering questions. My alpha testers, for helping make the mod a tad less broken.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["baubles"]
 }
 ]

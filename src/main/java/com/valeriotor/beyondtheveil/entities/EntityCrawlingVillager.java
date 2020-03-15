@@ -109,6 +109,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 		if(!this.world.isRemote) {
 			if(this.ticksToDie > 0) this.ticksToDie--;
 			else if(this.ticksToDie == 0) {
+				this.ticksToDie--;
 				if(this.altar != null) {
 					Block block = world.getBlockState(altar).getBlock();
 					if(block == BlockRegistry.BlockSacrificeAltar && master != null) {
