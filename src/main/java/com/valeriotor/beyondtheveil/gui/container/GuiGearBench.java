@@ -14,16 +14,11 @@ public class GuiGearBench extends GuiContainer{
 	public GuiGearBench(Container inventorySlotsIn) {
 		super(inventorySlotsIn);
 		this.xSize = 176;
-		this.ySize = 191;
+		this.ySize = 192;
 	}
 	
-	private int offset = 0;
 	@Override
 	public void initGui() {
-		if(Minecraft.getMinecraft().gameSettings.guiScale == 3)
-			offset = -1;
-		else
-			offset = 0;
 		super.initGui();
 	}
 	
@@ -31,7 +26,7 @@ public class GuiGearBench extends GuiContainer{
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		mc.renderEngine.bindTexture(texture);
 		int x = (this.width - this.xSize)/2;
-		int y = (this.height)/2 - 115 + offset;
+		int y = (this.height)/2 - 116;
 		drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
 	}
 	

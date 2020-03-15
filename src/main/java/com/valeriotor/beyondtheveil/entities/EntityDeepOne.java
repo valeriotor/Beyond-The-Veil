@@ -166,17 +166,17 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 			 double horizontalDist = Math.sqrt(Math.pow(this.getAttackTarget().posX-this.posX,2)+Math.pow(this.getAttackTarget().posZ-this.posZ,2));
 			 if(horizontalDist > 0.7) {
 				 if(this.getAttackTarget().posX>this.posX) {
-				 	 this.motionX = Math.sin(angle)/4.5;
+				 	 this.motionX = Math.sin(angle)/2.4;
 				 	 
 				 }else {
-				 	 this.motionX = -Math.sin(angle)/4.5;
+				 	 this.motionX = -Math.sin(angle)/2.4;
 				 	 
 				 }
 				 if(this.getAttackTarget().posZ>this.posZ) {
-				 	 this.motionZ = Math.cos(angle)/4.5;
+				 	 this.motionZ = Math.cos(angle)/2.4;
 				 	 
 				 }else {
-				 	 this.motionZ = -Math.cos(angle)/4.5;
+				 	 this.motionZ = -Math.cos(angle)/2.4;
 				 	 
 				 }
 			 }else if(this.getAttackTarget().posY < this.posY) {

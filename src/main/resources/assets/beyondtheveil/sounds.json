@@ -134,5 +134,11 @@
 			"beyondtheveil:fletum_weeping1",
 			"beyondtheveil:fletum_weeping2"
 		]
+	},
+	"shoggoth_idle": {
+		"sounds": [
+			"beyondtheveil:shoggoth_idle0",
+			"beyondtheveil:shoggoth_idle1"
+		]
 	}
 }

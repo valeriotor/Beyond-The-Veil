@@ -112,7 +112,8 @@ public class PlayerTickEvents {
 				boolean flying = p.capabilities.isFlying;
 				if(transformed) {
 					p.capabilities.isFlying = true;
-					p.capabilities.setFlySpeed(0.06F);
+					if(p.world.isRemote)
+						p.capabilities.setFlySpeed(0.06F);
 					if(!p.isPotionActive(MobEffects.REGENERATION))
 						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 1, false, false));
 				} else if(!flying) {
@@ -141,7 +142,7 @@ public class PlayerTickEvents {
 				stack.setCount(0);
 			}
 			for(int i = 0; i < 4; i++) {
-				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorItemInSlot(i), 9+i);
+				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorInventory.get(i), 9+i);
 				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
 			}
 		}

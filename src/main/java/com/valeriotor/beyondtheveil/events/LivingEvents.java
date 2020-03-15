@@ -3,7 +3,7 @@ package com.valeriotor.beyondtheveil.events;
 import java.util.List;
 
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
-import com.valeriotor.beyondtheveil.entities.EntityFletum;
+import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class LivingEvents {
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	@SubscribeEvent
 	public static void livingHurt(LivingHurtEvent e) {
@@ -38,14 +38,18 @@ public class LivingEvents {
 		e.setCanceled(cancelDamage(e));
 	}
 	
-	@SuppressWarnings("unused")
 	public static boolean cancelDamage(LivingHurtEvent e) {
 		EntityLivingBase ent = e.getEntityLiving();
 		DamageSource d = e.getSource();
 		if(ent instanceof EntityShoggoth) {
 			if( d == DamageSource.IN_WALL || 
 				d == DamageSource.CRAMMING) return true;
-			if(e.getAmount() > 8 && !DEBUG) e.setAmount(8);
+			if(e.getAmount() > 10 && !DEBUG) e.setAmount(10);
+		} else if(ent instanceof EntityDeepOne && !DEBUG) {
+			if(ent.isInWater() && e.getAmount() > 8)
+				e.setAmount(8);
+			else if(e.getAmount() > 15)
+				e.setAmount(15);
 		}
 		
 		return false;

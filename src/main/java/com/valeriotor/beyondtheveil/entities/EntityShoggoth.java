@@ -337,4 +337,14 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	public void setMaster(EntityPlayer p) {		
 	}
 	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BTVSounds.shoggoth_idle;
+	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 600;
+	}
+	
 }
