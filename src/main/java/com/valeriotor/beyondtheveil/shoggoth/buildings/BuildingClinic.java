@@ -8,10 +8,12 @@ import com.google.common.io.Resources;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.gui.GuiCityMapper;
 import com.valeriotor.beyondtheveil.items.TestItem.JSonStructureBuilder;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.shoggoth.BlockBuffer;
 import com.valeriotor.beyondtheveil.shoggoth.BuildingTemplate;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 
 public class BuildingClinic extends BuildingTemplate{
 
@@ -36,7 +38,12 @@ public class BuildingClinic extends BuildingTemplate{
 
 	@Override
 	public boolean isDefault() {
-		return true;
+		return false;
+	}
+	
+	@Override
+	public boolean playerKnowsBuilding(EntityPlayer p) {
+		return ResearchUtil.isResearchKnown(p, "CLINIC");
 	}
 	
 	

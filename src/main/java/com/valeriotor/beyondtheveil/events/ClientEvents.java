@@ -131,8 +131,8 @@ public class ClientEvents {
 			mX = -mZ;
 			mZ = tmp;
 		}
-		p.motionX += mX * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
-		p.motionZ += mZ * 2 * multiplier;// *(p.isAirBorne ? 1 : 3);
+		p.motionX += mX * 1.5 * multiplier;// *(p.isAirBorne ? 1 : 3);
+		p.motionZ += mZ * 1.5 * multiplier;// *(p.isAirBorne ? 1 : 3);
 	}	
 	
 	private void updateRevelationRing() {

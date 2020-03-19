@@ -182,7 +182,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		if (keyCode == 1)
+		if (keyCode == 1 || keyCode == 18)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);

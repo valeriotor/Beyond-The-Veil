@@ -54,8 +54,10 @@ public class PlayerEvents {
 		if(event.getEntityPlayer().world.getWorldTime()>23900) {
 		
 		if(event.getEntityPlayer() != null) {
-			if(!event.getEntityPlayer().world.isRemote)	DreamHandler.chooseDream(event.getEntityPlayer(), 1);
-			event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);
+			if(!event.getEntityPlayer().world.isRemote) {
+				DreamHandler.chooseDream(event.getEntityPlayer(), 1, true);
+				event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger("timesDreamt", 0, false);
+			}
 		}
 		}
 		

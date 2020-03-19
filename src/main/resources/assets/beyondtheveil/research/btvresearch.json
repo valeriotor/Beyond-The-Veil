@@ -997,6 +997,19 @@
             ]
         },
 		{
+        "key": "CLINIC",
+        "name": "research.CLINIC.title",
+        "icons": [ "beyondtheveil:elder_stone_bricks" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,24],
+		"learn" : "true",
+        "parents": [ "CITYMAPPER" ],
+        "stages": [
+				{
+                    "text": "research.CLINIC.stage.0"
+                }
+            ]
+        },
+		{
         "key": "PLANTDREAMS",
         "name": "research.PLANTDREAMS.title",
         "icons": [ "minecraft:sapling" ],

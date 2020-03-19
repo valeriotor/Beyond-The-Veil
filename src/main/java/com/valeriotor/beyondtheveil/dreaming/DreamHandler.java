@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 
 public class DreamHandler {
 	
-	public static void chooseDream(EntityPlayer p, int times) {
+	public static void chooseDream(EntityPlayer p, int times, boolean bed) {
 		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), times);
 		if(SpreaderLocations.isEmpty()) return;
 		
@@ -39,13 +39,13 @@ public class DreamHandler {
 		TreeMap<Memory, BlockPos> memories = new TreeMap<>(Comparator.comparingInt(m -> DreamRegistry.dreams.get(m).priority));
 		for(BlockPos pos : SpreaderLocations) {
 			Memory m = BlockFumeSpreader.getTE(p.world, pos).getMemory();
-			if(m.isUnlocked(p) && DreamRegistry.dreams.containsKey(m)) {
+			if(m != null && m.isUnlocked(p) && DreamRegistry.dreams.containsKey(m)) {
 				memories.put(m, pos);
-				boolean voidDream = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID) || memories.containsKey(Memory.VOID);
-				if(m == Memory.ELDRITCH && voidDream) eldritchDream = true;
+				
 			}
 		}
-		
+		boolean voidDream = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID) || memories.containsKey(Memory.VOID);
+		if(memories.containsKey(Memory.VOID) && voidDream) eldritchDream = true;
 		
 		for(Entry<Memory, BlockPos> entry : memories.entrySet()) {
 			BlockPos pos = entry.getValue();
@@ -62,7 +62,7 @@ public class DreamHandler {
 				eldritchDream = false;
 		}
 
-		if(!eldritchDream) {
+		if(!eldritchDream && !bed) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
 		}
 		

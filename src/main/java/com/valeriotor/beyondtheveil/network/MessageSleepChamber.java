@@ -70,8 +70,8 @@ public class MessageSleepChamber implements IMessage {
 					int times = data.getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 					int level = DGWorshipHelper.getDreamPower(player)/2 + 1;
 					if(message.doesDream && times < multiplier*level) {
-						if(advanced) DreamHandler.chooseDream(player, 2);
-						else DreamHandler.chooseDream(player, 1);
+						if(advanced) DreamHandler.chooseDream(player, 2, false);
+						else DreamHandler.chooseDream(player, 1, false);
 					} else {
 						BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), player);
 					}
