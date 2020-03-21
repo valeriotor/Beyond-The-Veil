@@ -183,7 +183,7 @@ public class BlockIdol extends ModBlock{
 					data.setInteger(PlayerDataLib.IDOLBREAK, a+1, true);
 				} else {
 					p.addPotionEffect(new PotionEffect(PotionRegistry.folly, 4*20));
-					SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentString(References.PURPLE + new TextComponentTranslation("hit.idol.schiz8").getFormattedText()));
+					SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentTranslation("hit.idol.schiz8"));
                     ((EntityPlayerMP)p).connection.sendPacket(spackettitle1);
                     BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.shoggoth_screech), p.getPosition().toLong()), (EntityPlayerMP)p);
                     for(int i = 0; i < 12; i++)  {

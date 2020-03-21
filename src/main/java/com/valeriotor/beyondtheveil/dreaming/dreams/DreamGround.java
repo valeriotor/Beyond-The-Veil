@@ -25,6 +25,7 @@ public class DreamGround extends Dream{
 
 	@Override
 	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
+		int radius = DreamHandler.hasDreamtOfVoid(p) ? 16 : 5;
 		int startY = Math.min(pos.getY(), w.getHeight()/2);
 		int[] tracker1 = new int[startY];
 		int[] tracker2 = new int[startY];
@@ -33,8 +34,8 @@ public class DreamGround extends Dream{
 		BlockPos coord1 = null;
 		BlockPos coord2 = null;
 		for(int y = startY-1; y>=0; y--) {
-			for(int x = pos.getX()-16; x<pos.getX()+16; x++) {
-				for(int z = pos.getX()-16; z<pos.getX()+16; z++) {
+			for(int x = pos.getX()-radius; x<pos.getX()+radius; x++) {
+				for(int z = pos.getX()-radius; z<pos.getX()+radius; z++) {
 					IBlockState state = w.getBlockState(new BlockPos(x, y, z));
 						// TODO: Get OreDictionary compatibility
 						if(state == this.state1) {
@@ -68,8 +69,8 @@ public class DreamGround extends Dream{
 			}
 		}
 		
-		p.sendMessage(getGroundScanMessage(this.name1, sum1, highest1, coord1));
-		p.sendMessage(getGroundScanMessage(this.name2, sum2, highest2, coord2));
+		p.sendMessage(getGroundScanMessage(this.name1, sum1, highest1, coord1, radius));
+		p.sendMessage(getGroundScanMessage(this.name2, sum2, highest2, coord2, radius));
 
 		return true;
 	}
@@ -86,8 +87,8 @@ public class DreamGround extends Dream{
 		return highest;
 	}
 	
-	private TextComponentTranslation getGroundScanMessage(String ore, int sum, int highest, BlockPos coord) {
-		return new TextComponentTranslation(String.format("dreams.groundscan.%s", ore), new Object[] {Integer.valueOf(sum), getGroundScanConcentration(highest), getGroundScanBlockMessage(coord)});
+	private TextComponentTranslation getGroundScanMessage(String ore, int sum, int highest, BlockPos coord, int radius) {
+		return new TextComponentTranslation(String.format("dreams.groundscan.%s", ore), new Object[] {Integer.valueOf(sum), radius, radius, getGroundScanConcentration(highest), getGroundScanBlockMessage(coord)});
 	}
 	
 	private String getGroundScanConcentration(int highest) {

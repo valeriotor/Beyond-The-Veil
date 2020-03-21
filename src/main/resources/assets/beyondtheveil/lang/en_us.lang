@@ -647,13 +647,14 @@ memory.water.name=Water
 #DREAMS
 ##################
 
+dreams.timesdreamt=I have Dreamt %1$s/%2$s times today.
 dreams.maybeinthefuture=No effect came from this dream, and yet I still felt a tingling. Maybe it'll work in the future, under different circumstances.
 dreams.lowlevel=I need more strength.
 
-dreams.groundscan.oreIron=%1$s blocks of iron ore were found in the ground below%2$s%3$s
-dreams.groundscan.oreGold=%1$s blocks of gold ore were found in the ground below%2$s%3$s
-dreams.groundscan.oreDiamond=%1$s blocks of diamond ore were found in the ground below%2$s%3$s
-dreams.groundscan.oreEmerald=%1$s blocks of emerald ore were found in the ground below%2$s%3$s
+dreams.groundscan.oreIron=%1$s blocks of iron ore were found in a %2$sx%3$s area in the ground below%4$s%5$s
+dreams.groundscan.oreGold=%1$s blocks of gold ore were found in a %2$sx%3$s area in the ground below%4$s%5$s
+dreams.groundscan.oreDiamond=%1$s blocks of diamond ore were found in a %2$sx%3$s area in the ground below%4$s%5$s
+dreams.groundscan.oreEmerald=%1$s blocks of emerald ore were found in a %2$sx%3$s area in the ground below%4$s%5$s
 dreams.groundscan.greatestconcentration=, with the greatest concentration at y-level: %1$s
 dreams.groundscan.block=. At least one block is located at x: %1$s, y: %2$s, z: %3$s;
 
@@ -726,7 +727,7 @@ research.metalDream.text=Dream of Metal.
 
 research.SLEEPCHAMBER.title=Sleep Chamber
 research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity.<BR>Oh, how ironic that now it is sleep I need, and can't get enough of it.<BR>I must Dream, keep Dreaming, again and again. Once a day, only at night, is not enough, it just isn't. I shall focus my mind on the creation of some device capable of ridding me of that limit, at least partially.<BR>First, a proper crafting station. The Gear Bench will aid me in the creation of more complex objects.
-research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time.<BR>The Chamber must be opened, and once I'm inside I must close it to start Dreaming. It is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by a nearby Fume Spreader.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.<BR>It is merely a stepping stone, to shatter all the fake truths I thought I knew.
+research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time.<BR>The Chamber must be opened, and once I'm inside I must close it to start Dreaming. It is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by a nearby Fume Spreader, just like a normal bed.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.<BR>It is merely a stepping stone, to shatter all the fake truths I thought I knew.
 research.craftedsleep_chamber.text=Craft a Sleep Chamber.
 
 research.EFFECTDREAMS.title=Affecting myself

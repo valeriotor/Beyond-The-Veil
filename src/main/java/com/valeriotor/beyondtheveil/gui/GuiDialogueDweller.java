@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.valeriotor.beyondtheveil.gui.DialogueHandler.Dialogues;
+import com.valeriotor.beyondtheveil.dweller.Dialogues;
+import com.valeriotor.beyondtheveil.dweller.DwellerDialogue;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageOpenTradeGui;
@@ -36,7 +37,11 @@ public class GuiDialogueDweller extends GuiScreen {
 	private double scaleMultiplier = 1;
 	private int xSize = 512;
 	private int ySize = 164;
+	private DwellerDialogue instance;
 	
+	public GuiDialogueDweller() {
+		this.instance = DwellerDialogue.instance;
+	}
 	
 	
 	@Override
@@ -47,17 +52,18 @@ public class GuiDialogueDweller extends GuiScreen {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 200, this.height - this.ySize - 20, I18n.format("gui.dialogue.talk")));
         this.buttonList.add(new GuiButton(2, this.width / 2, this.height - this.ySize - 20, I18n.format("gui.dialogue.trade")));
         
-        this.profession = DialogueHandler.getProfession(Minecraft.getMinecraft().player);
+        this.profession = instance.getProfession().getName().toLowerCase();
         
         if(!this.profession.equals("bartender") && !this.profession.equals("carpenter")) this.buttonList.get(1).enabled = false;
         
         if(this.dialogue.equals("")) {
-        	this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
+        	this.dialogue = instance.getLocalizedDialogue(talkCount);
         //this.dialogue = I18n.format(String.format("dweller.%s.talk%d", this.getTalkingEntityName(), this.talkCount));
         	this.dialogueLength = this.dialogue.length();
         }
-        this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
-		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
+        this.setDialogueSpeed();
+        this.option0 = instance.getLocalizedDialogueOption(talkCount, 0);
+        this.option1 = instance.getLocalizedDialogueOption(talkCount, 1);
 		if(this.option0 != null) this.selectedOption = 0;
 		this.splitDialogue();
 		super.initGui();
@@ -147,7 +153,8 @@ public class GuiDialogueDweller extends GuiScreen {
 			case 2:
 				//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
 				//DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
-				BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(true));
+				BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(true, instance.getDwellerID()));
+				DwellerDialogue.removeInstance();
 				break;
 		}
 		super.actionPerformed(button);
@@ -156,7 +163,6 @@ public class GuiDialogueDweller extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode == 1 || keyCode == 18) {
-			DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
 			this.mc.displayGuiScreen((GuiScreen)null);
 			return;
 		}else if(keyCode == 42 || keyCode == 54) {
@@ -196,10 +202,10 @@ public class GuiDialogueDweller extends GuiScreen {
 	
 	@Override
 	public void onGuiClosed() {
-		DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
 		//if(this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).getDialogueType() != 0) {
 			//this.mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null).setDialogueType(0);
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(false));
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageOpenTradeGui(false,instance.getDwellerID()));
+			DwellerDialogue.removeInstance();
 		//}
 		super.onGuiClosed();
 	}
@@ -251,52 +257,32 @@ public class GuiDialogueDweller extends GuiScreen {
 	}
 	
 	private void proceedDialogue(boolean option) {
-		if(this.doesCloseDialogue()) {
-			if(DialogueHandler.getDialogueName(profession) == Dialogues.WEEPER)
-				this.talkCount++;
-			DialogueHandler.updateDialogueData(this.profession, this.branch, this.selectedOption, this.talkCount);
-			DialogueHandler.removeDialogue(Minecraft.getMinecraft().player);
+		if(instance.doesCloseDialogue(talkCount, this.selectedOption)) {
+			if(instance.getDialogue() == Dialogues.WEEPER)
+				talkCount++;
+			instance.updateDialogueData(talkCount, selectedOption);
 			this.mc.displayGuiScreen((GuiScreen)null);
+			DwellerDialogue.removeInstance();
 			return;
 		}
 		int tmp = this.talkCount;
 		this.talkCount = option ? 0 : this.talkCount+1;
-		if(DialogueHandler.updateDialogueData(this.profession, this.branch, this.selectedOption, this.talkCount)) {
+		if(instance.updateDialogueData(talkCount, selectedOption)) {
 			this.talkCount = 0;
-			this.branch = "";
 			this.selectedOption = -1;
-			option = false;
 		}
-		if(option) this.branch = DialogueHandler.getBranch(this.profession, this.branch, selectedOption);
-		if(!this.branch.equals("") && this.talkCount >= DialogueHandler.getBranchTalkCount(profession, branch)) {
-			this.talkCount = 0;
-			this.branch = "";
-		}
-		this.talkCount %= DialogueHandler.getTalkCount(this.branch);
+		this.talkCount %= instance.getTalkCount();
 		this.letterCount = 1;
 		this.interval = 1;
-		this.dialogue = DialogueHandler.getLocalizedDialogue(this.profession, this.talkCount, this.branch);
+		this.dialogue = instance.getLocalizedDialogue(talkCount);
+        this.option0 = instance.getLocalizedDialogueOption(talkCount, 0);
+        this.option1 = instance.getLocalizedDialogueOption(talkCount, 1);
 		this.dialogueLength = this.dialogue.length();
 		this.splitDialogue();
 		this.setDialogueSpeed();
-		if(DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch) != null) this.selectedOption = 0;
+		if(this.option0 != null) this.selectedOption = 0;
 		else this.selectedOption = -1;
-		this.option0 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 0, this.branch);
-		this.option1 = DialogueHandler.getLocalizedDialogueOption(this.profession, this.talkCount, 1, this.branch);
 		
 	}
 	
-	/** Whether the current conditions will close the GUI. Arbitrary logic, based on the dialogue itself.
-	 * 
-	 * @return
-	 */
-	public boolean doesCloseDialogue() {
-		Dialogues d = DialogueHandler.getDialogueName(profession);
-		if(d == DialogueHandler.Dialogues.LECTURE2 && this.branch.equals("") && this.selectedOption == 1) return true;
-		if(d == Dialogues.TRUSTEDBAR && this.selectedOption == 1) return true;
-		if(d == Dialogues.END2) return true;
-		if(d == Dialogues.SEEYA || d == Dialogues.SEEYA2 || d == Dialogues.SEEYA3) return true;
-		if(d == Dialogues.WEEPER && this.talkCount == 3) return true;
-		return false;
-	}
 }

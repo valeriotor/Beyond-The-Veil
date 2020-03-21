@@ -1,14 +1,13 @@
 package com.valeriotor.beyondtheveil.events;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.animations.Animation;
+import com.valeriotor.beyondtheveil.dweller.DwellerDialogue;
+import com.valeriotor.beyondtheveil.gui.GuiDialogueDweller;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
-import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 
@@ -44,6 +43,7 @@ public class ClientEvents {
 	private int wolfMedallionCounter = -1;
 	/**A counter for generic ticking animations */
 	private int animationCounter = 0;
+	private int genericCounter = 0;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -65,6 +65,13 @@ public class ClientEvents {
 				if(cameraRotator.update())
 					cameraRotator = null;
 			
+			this.genericCounter++;
+			this.genericCounter &= 32767;
+			if((this.genericCounter & 255) == 0) {
+				if(!(Minecraft.getMinecraft().currentScreen instanceof GuiDialogueDweller)) {
+					DwellerDialogue.removeInstance();
+				}
+			}
 		}
 	}
 	

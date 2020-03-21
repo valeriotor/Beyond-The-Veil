@@ -49,6 +49,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncResearchToClient.SyncResearchToClientMessageHandler.class, MessageSyncResearchToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageStepAssist.StepAssistMessageHandler.class, MessageStepAssist.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageOpenDialogue.OpenDialogueMessageHandler.class, MessageOpenDialogue.class, count++, Side.CLIENT);
 		
 	}
 	

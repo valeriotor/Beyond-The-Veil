@@ -10,19 +10,18 @@ import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.dweller.Dialogues;
 import com.valeriotor.beyondtheveil.entities.AI.AIDwellerFish;
 import com.valeriotor.beyondtheveil.entities.AI.AIDwellerFollowPlayer;
 import com.valeriotor.beyondtheveil.entities.AI.AIDwellerWanderHamlet;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
-import com.valeriotor.beyondtheveil.gui.DialogueHandler;
 import com.valeriotor.beyondtheveil.gui.Guis;
-import com.valeriotor.beyondtheveil.gui.DialogueHandler.Dialogues;
 import com.valeriotor.beyondtheveil.items.ItemDrink;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
-import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageOpenDialogue;
 import com.valeriotor.beyondtheveil.network.MessageOpenGuiToClient;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -68,7 +67,7 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	public BlockPos home;
 	public BlockPos destination;
 	private EntityPlayer customer;
-	private EntityPlayer talkingPlayer;
+	private UUID talkingPlayer;
 	private MerchantRecipeList buyingList;
 	public int goWorshipTime;
 	public int goHomeTime;
@@ -145,11 +144,14 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 		super.onEntityUpdate();
 		
 		if(this.talkingPlayer != null) {
-			this.faceEntity(this.talkingPlayer, 180, 180);
-			int n = (int) (this.world.getWorldTime() % 20);
-			if(n == 0) this.motionX = 0.002;
-			else if(n == 10) this.motionX = -0.002;
-			this.getNavigator().clearPath();
+			EntityPlayer p = this.world.getPlayerEntityByUUID(talkingPlayer);
+			if(p != null) {
+				this.faceEntity(this.world.getPlayerEntityByUUID(talkingPlayer), 180, 180);
+				int n = (int) (this.world.getWorldTime() % 20);
+				if(n == 0) this.motionX = 0.002;
+				else if(n == 10) this.motionX = -0.002;
+				this.getNavigator().clearPath();
+			}
 		}
 		
 		if(this.customer != null) {
@@ -307,19 +309,17 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			}else if(!this.doesOpenGui()) {
 				int tc = data.getOrSetInteger(key, 0, true);
 				int x = this.drunkStatus < 7 ? tc%this.profession.getTalkCount() + 4*this.drunkStatus : Math.min(tc, 7) + 28;
-				String y = "";
 				//if(this.drunkStatus > 2) y = y.concat("§o");
 				//if(this.drunkStatus > 5) y = References.PURPLE;
 				if(this.drunkStatus == 7 && x == 35) this.drunkStatus++;
 				if(this.drunkStatus == 8) x = 35;
 				if(x > 33) {
-					y = "";
-					if(!data.getString(PlayerDataLib.OLDTRUTH) && data.getString("dialogue" + Dialogues.IMPRESSED.getName())) {
+					if(!data.getString(PlayerDataLib.OLDTRUTH) && data.getString("dialogue" + Dialogues.IMPRESSED.getLowerCaseName())) {
 						data.addString(PlayerDataLib.OLDTRUTH, false);
-						data.addString("dialogue" + Dialogues.IKNOW.getName(), false);
+						data.addString("dialogue" + Dialogues.IKNOW.getLowerCaseName(), false);
 					}
 				}
-				player.sendMessage(new TextComponentString(y+ new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", this.profession == ProfessionsEnum.DRUNK ? "" : DialogueHandler.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
+				player.sendMessage(new TextComponentString(new TextComponentTranslation(String.format("dweller.%s%s.greeting%d", this.profession == ProfessionsEnum.DRUNK ? "" : this.getFriendlyhood(player), this.profession.getName().toLowerCase(), x)).getFormattedText()));
 				if(tc % 4 == 3 && this.drunkStatus < 7) this.thirsty = true;
 				else this.thirsty = false;
 				
@@ -330,11 +330,12 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 			if(this.getProfession() == EntityHamletDweller.ProfessionsEnum.BARTENDER || this.getProfession() == EntityHamletDweller.ProfessionsEnum.CARPENTER) {
 				if(this.buyingList == null) this.populateBuyingList();
 			}
-		}
-		if(this.doesOpenGui()) {
-			this.talkingPlayer = player;
-			DialogueHandler.newDialogue(player, this);
-			if(world.isRemote) BeyondTheVeil.proxy.openGui(Guis.GuiDialogueDweller);
+			if(this.doesOpenGui()) {
+				if(talkingPlayer == null || player.equals(this.world.getPlayerEntityByUUID(talkingPlayer))) {
+					this.talkingPlayer = player.getPersistentID();
+					BTVPacketHandler.INSTANCE.sendTo(new MessageOpenDialogue(this.getEntityId()), (EntityPlayerMP)player);
+				}
+			}
 		}
 		
 		return EnumActionResult.SUCCESS;
@@ -462,7 +463,9 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	}
 	
 	public EntityPlayerMP getTalkingPlayer() {
-		return (EntityPlayerMP)this.talkingPlayer;
+		if(this.talkingPlayer != null)
+			return (EntityPlayerMP)this.world.getPlayerEntityByUUID(talkingPlayer);
+		return null;
 	}
 	
 	public void resetTalkingPlayer() {
@@ -479,9 +482,10 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	@Override
 	public void onDeath(DamageSource cause) {
-		EntityPlayer p = DialogueHandler.getPlayer(this);
-		if(p != null) {
-			BeyondTheVeil.proxy.closeGui(p);
+		if(this.talkingPlayer != null) {
+			EntityPlayer p = this.world.getPlayerEntityByUUID(talkingPlayer);
+			if(p != null && !this.world.isRemote)
+				BeyondTheVeil.proxy.closeGui(p);
 		}
 		if(cause.getTrueSource() instanceof EntityPlayer) {
 			EntityPlayer killer = (EntityPlayer) cause.getTrueSource();
@@ -526,6 +530,12 @@ public class EntityHamletDweller extends EntityCreature implements IMerchant{
 	
 	public void decreaseFishTime() {
 		this.fishTime--;
+	}
+	
+	public String getFriendlyhood(EntityPlayer p) {
+		if(ResearchUtil.isResearchComplete(p, "IDOL")) return "trusted";
+		return "";
+		
 	}
 
 }

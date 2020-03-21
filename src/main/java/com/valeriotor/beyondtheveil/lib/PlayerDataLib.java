@@ -5,10 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
-import com.valeriotor.beyondtheveil.gui.DialogueHandler.Dialogues;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
-import com.valeriotor.beyondtheveil.util.SyncUtil;
-
 public class PlayerDataLib {
 	
 	// Longs

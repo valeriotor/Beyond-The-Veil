@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.blocks.BlockFumeSpreader;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
 import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
@@ -19,7 +20,6 @@ import com.valeriotor.beyondtheveil.network.MessageOpenGuiToClient;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
-import com.valeriotor.beyondtheveil.worship.Deities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -31,9 +31,9 @@ import net.minecraft.world.World;
 
 public class DreamHandler {
 	
-	public static void chooseDream(EntityPlayer p, int times, boolean bed) {
+	public static boolean chooseDream(EntityPlayer p, int times, boolean bed) {
 		List<BlockPos> SpreaderLocations = checkBlocks(p.world,p.getPosition(), BlockRegistry.FumeSpreader.getDefaultState().withProperty(BlockFumeSpreader.ISFULL, true), times);
-		if(SpreaderLocations.isEmpty()) return;
+		if(SpreaderLocations.isEmpty()) return false;
 		
 		boolean increaseTimesDreamt = false, eldritchDream = false;
 		TreeMap<Memory, BlockPos> memories = new TreeMap<>(Comparator.comparingInt(m -> DreamRegistry.dreams.get(m).priority));
@@ -45,7 +45,7 @@ public class DreamHandler {
 			}
 		}
 		boolean voidDream = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID) || memories.containsKey(Memory.VOID);
-		if(memories.containsKey(Memory.VOID) && voidDream) eldritchDream = true;
+		if(memories.containsKey(Memory.ELDRITCH) && voidDream) eldritchDream = true;
 		
 		for(Entry<Memory, BlockPos> entry : memories.entrySet()) {
 			BlockPos pos = entry.getValue();
@@ -65,13 +65,7 @@ public class DreamHandler {
 		if(!eldritchDream && !bed) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), (EntityPlayerMP)p);
 		}
-		
-		if(increaseTimesDreamt) {
-			p.getCapability(PlayerDataProvider.PLAYERDATA, null).setInteger(PlayerDataLib.TIMESDREAMT, p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false)+1, false);		
-			SyncUtil.syncCapabilityData(p);
-		}
-		
-		
+		return increaseTimesDreamt;
 	}
 	
 	public static List<BlockPos> checkBlocks(World world, BlockPos playerPos, IBlockState state, int n) {

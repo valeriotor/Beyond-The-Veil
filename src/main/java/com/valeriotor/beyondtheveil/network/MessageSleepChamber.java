@@ -8,12 +8,16 @@ import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.gui.Guis;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketTitle;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -70,8 +74,14 @@ public class MessageSleepChamber implements IMessage {
 					int times = data.getOrSetInteger(PlayerDataLib.TIMESDREAMT, 0, false);
 					int level = DGWorshipHelper.getDreamPower(player)/2 + 1;
 					if(message.doesDream && times < multiplier*level) {
-						if(advanced) DreamHandler.chooseDream(player, 2, false);
-						else DreamHandler.chooseDream(player, 1, false);
+						boolean increaseTimesDreamt = false;
+						if(advanced) increaseTimesDreamt = DreamHandler.chooseDream(player, 2, false);
+						else increaseTimesDreamt = DreamHandler.chooseDream(player, 1, false);
+						if(increaseTimesDreamt) {
+							times = SyncUtil.incrementIntDataOnServer(player, false, PlayerDataLib.TIMESDREAMT, 1, 1);
+							SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.ACTIONBAR, new TextComponentTranslation("dreams.timesdreamt", times, multiplier*level));
+		                    player.connection.sendPacket(spackettitle1);
+						}
 					} else {
 						BTVPacketHandler.INSTANCE.sendTo(new MessageOpenGuiToClient(Guis.GuiEmpty), player);
 					}
