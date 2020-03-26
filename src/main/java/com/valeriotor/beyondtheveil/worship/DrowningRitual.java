@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.ritual.MessagePerformHurtAnimation;
+import com.valeriotor.beyondtheveil.network.ritual.MessageRitualToClient;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -54,7 +55,7 @@ public class DrowningRitual {
 				this.p.setHealth(1);
 				this.progressing = false;	
 				BlockPos pos = p.getPosition();
-				p.openGui(BeyondTheVeil.instance, 2, p.world, pos.getX(), pos.getY(), pos.getZ());
+				BTVPacketHandler.INSTANCE.sendTo(new MessageRitualToClient((byte)this.phase.ordinal(), this.greatDreamer, this.ancientGods), (EntityPlayerMP)p);
 			}
 		}
 		if(!p.isInWater() || p.isDead) DrowningRitualEvents.rituals.remove(p.getPersistentID());

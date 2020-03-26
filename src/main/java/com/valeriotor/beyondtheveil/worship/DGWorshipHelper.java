@@ -49,12 +49,11 @@ public class DGWorshipHelper {
 					slugs -= res.getRequiredSlugs();
 					//data.removeString(entry.getKey()); Do I need this?
 					atLeastOne = true;
-					if(entry.getKey().equals(DAGONQUEST)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
-					if(entry.getKey().equals(DAGONQUEST2)) {
+					if(entry.getKey().equals(DAGONQUEST) || entry.getKey().equals(ENDBATH)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
+					else if(entry.getKey().equals(DAGONQUEST2)) {
 						p.sendMessage(new TextComponentTranslation("interact.idol.power"));
 						Worship.getSpecificPower(p, 1).activatePower(p);
-					}
-					if(entry.getKey().equals(ENDBATH)) p.sendMessage(new TextComponentTranslation("interact.idol.power"));
+					} else p.sendMessage(new TextComponentTranslation("interact.idol." + entry.getKey()));
 				} else {
 					notEnoughSlugs = true;
 				}

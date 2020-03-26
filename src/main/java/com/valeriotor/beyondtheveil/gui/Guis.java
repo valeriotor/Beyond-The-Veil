@@ -14,6 +14,7 @@ public class Guis {
 	public static final String GuiAlienisDream = "GAD";
 	public static final String GuiWateryCradle = "GWC";
 	public static final String GuiDagon = "GD";
+	public static final String GuiBaptism = "GBT";
 	
 	public static GuiScreen getGui(String id, Object... args) {
 		switch(id) {
@@ -23,6 +24,7 @@ public class Guis {
 		case GuiTablet: return new GuiTablet();
 		case GuiAlienisDream: return new GuiAlienisDream();	
 		case GuiDagon: return new GuiDagon();
+		case GuiBaptism: return new GuiDrowned((byte)args[0], (boolean)args[1], (boolean)args[2]);
 		}
 		
 		return null;

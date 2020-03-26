@@ -74,7 +74,7 @@ public class PlayerTickEvents {
 							p.world.spawnEntity(fish);
 							if(DGWorshipHelper.researches.get(PlayerDataLib.FISHQUEST).canBeUnlocked(p) && !data.getString(PlayerDataLib.FISHQUEST)) {
 								int currentFish = data.getOrSetInteger(PlayerDataLib.FISH_CANOE, 0, false);
-								if(currentFish <= 15) {
+								if(currentFish <= 8) {
 									if(currentFish == 0) p.sendMessage(new TextComponentTranslation("canoe.fishing.start"));
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
 								}else{

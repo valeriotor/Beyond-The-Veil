@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.network.baubles.MessageWolfMedallionToClient
 import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToClient;
 import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToServer;
 import com.valeriotor.beyondtheveil.network.ritual.MessagePerformHurtAnimation;
+import com.valeriotor.beyondtheveil.network.ritual.MessageRitualToClient;
 import com.valeriotor.beyondtheveil.network.ritual.MessageRitualToServer;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -50,6 +51,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncResearchToClient.SyncResearchToClientMessageHandler.class, MessageSyncResearchToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageStepAssist.StepAssistMessageHandler.class, MessageStepAssist.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenDialogue.OpenDialogueMessageHandler.class, MessageOpenDialogue.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageRitualToClient.RitualToClientMessageHandler.class, MessageRitualToClient.class, count++, Side.CLIENT);
 		
 	}
 	

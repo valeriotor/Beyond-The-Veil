@@ -72,7 +72,9 @@ public class ResearchUtil {
 	}
 	
 	public static int getResearchStage(EntityPlayer p, String key) {
-		return getResearch(p, key).getStage();
+		ResearchStatus r = getResearch(p, key);
+		if(r != null) return r.getStage();
+		return -2;
 	}
 	
 	public static boolean isResearchVisible(EntityPlayer p, String key) {

@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,7 @@ public class ResearchEvents {
 	public void wakeUpEvent(PlayerWakeUpEvent event) {
 		EntityPlayer p = event.getEntityPlayer();
 		if(p.world.getWorldTime() < 23900) return;
+		if(p.world.isRemote) return;
 		if(ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0) {
 			SyncUtil.addStringDataOnServer(p, false, "didDream");
 		}

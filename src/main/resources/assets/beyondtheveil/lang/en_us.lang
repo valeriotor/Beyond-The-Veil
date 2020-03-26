@@ -155,6 +155,10 @@ fluid.tears=Tears
 interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
 interact.idol.moreslugs=More slugs must be consumed to commune.
 interact.idol.power=NEW POWER: Hold Power key ('R' by default) to choose Power, tap it to cast.
+interact.idol.communion=My skin crawls. The Communion is sealed.
+interact.idol.slugs=My spine rattles. The voice is inhuman, my will falters.
+interact.idol.fish_quest=My heart trembles. Terrible things were spoken, the link strengthened.
+interact.idol.drowned=I shed a tear. New knowledge was granted, an agonizing Truth.
 interact.lacrymatory.full=This Lacrymatory is already bound.
 interact.lacrymatory.success=The %1$s is now bound to the Lacrymatory.
 interact.citymapper.loading=The City Mapper is slowly loading the surrounding environment.
@@ -786,7 +790,7 @@ research.IdolInteract.text=Pray at the Idol in the Hamlet.
 research.SLUGS.title=Slugs
 research.SLUGS.stage.0=To commune with The Great Dreamer is an honor of the highest order. Truly, to have made an impression on Him so as to have sparked His interest is, undoubtedly, the greatest achievement I have ever accomplished.<BR>Yet the strength of the communion is ever faint, for I am weak, and my presence hopelessly bound to the Overworld.<BR>He knows that. He wishes to aid me. Really, He does!<BR>Slimy, shapeless, uncatchable like the water from which they are born. Such are the white slugs on which some Dwellers of the Hamlet feed. They are the key.<BR>I need a bait, and The Great Dreamer provides me with knowledge of how to create one. How ironic, though meaningful, that those shapeless chaotic slugs are so attracted by the perfect, orderly shape of common salt!<BR>The slug bait must be placed in water. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<BR>Then.. I must eat them. It's the only way. I won't like, but I must.<BR>Once I've eaten a few, say, twenty or so, I must interact with the Idol again.
 research.SLUGS.stage.1=My Dreams have become stronger, I know it, I know it I know it I KNOW IT.<BR>He heard me, The Great Dreamer HEARD MY CALLS.<BR>I realize now that to worship The Great Dreamer is not just an occasional prayer. It is, instead, a way of life.<BR>From now on, our course of action should be to eat slugs, slugs, and even more slugs. They'll start to taste less and less awful, I am certain.<BR>I must also get closer and closer to the Dwellers, and learn from them. Do deeds which make me more like them. They have known best for generations, after all. And my ancestors couldn't see it.<BR>Once all is done, I must interact with the Idol.
-research.!SLUGS.text=Eat 30 slugs, interact with Idol.
+research.!SLUGS.text=Eat 20 slugs, interact with Idol.
 
 research.FISHERMEN.title=Fishermen
 research.FISHERMEN.stage.0=First, I'll record here the correct steps for a successful manual use of the bait.<BR>The slug bait must be placed in water. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<PAGE>Secondly, I am loathe to realize that this manual task will, in the long run, become a bore. The grey robed fishermen in the Hamlet however seem well versed in the art of slug catching.<BR>I can thus employ them to my needs. Interacting with them with a gold ingot in hand will make them follow me, and I'll be able to bring them near to a slug bait, then maybe give them a small nudge to get them on top of it.<BR>Once on the bait, I must ensure they get a steady supply of gold ingots. For each one they get, they'll fish for a minute. The slugs will be dropped on the ground, or get put in a chest adjacent to the Dweller.<BR>I might want to build around them so they do not leave their position.
@@ -796,7 +800,7 @@ research.CANOE.stage.0=The Hamlet Dwellers' diet, other than slugs, consist most
 research.CANOE.stage.1=According to the carpenter, the Dweller Fishermen ride their canoes into the Ocean and.. the fish just come to them?<BR>I should attempt that as well, not just in any water but in those of the Ocean itself.<BR>If anything does in fact happen, I shall keep at it for a while, then top it off with a fair deal of slugs. After that, I shall commune.
 research.CANOE.stage.2=The Ocean itself.. it answers to me, its crashing waves a soothing voice, its blue immensity a vigilant eye, its shapeless water a loving hand.<BR>I have a link with the Ocean now, I am stronger because of it, especially in the water that binds us.<BR>And yet, our link is not strong enough.. I am still a creature of the surface, am I not?
 research.carpenter.text=Talk with the Hamlet's carpenter.
-research.!CANOE.text=Sail the Ocean with a Canoe.
+research.!CANOE.text=Sail the Ocean with a Canoe, then commune.
 
 research.BAPTISM.title=Baptism
 research.BAPTISM.stage.0=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>So why can't I breathe it? Why does it still hinder my movement?<BR>It makes me strong, and at the same time weakens me.<BR>It grants me life, and yet it can kill me.<BR><BR>The Dwellers though.. they bask in its touch, even its depths. So why can't I?<BR>We must ask the Lighthouse Keeper, one last time.
@@ -1037,6 +1041,6 @@ teleport.removedpoint=My return point has been reset.
 
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
 canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
-canoe.fishing.end=I think I've gained enough fish.
+canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
 
 itemGroup.beyondtheveil=Beyond The Veil
