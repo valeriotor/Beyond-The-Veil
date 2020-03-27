@@ -5,10 +5,13 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
+import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlaySound;
+import com.valeriotor.beyondtheveil.util.ItemHelper;
+import com.valeriotor.beyondtheveil.util.PlayerTimer.PlayerTimerBuilder;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,7 +29,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -73,13 +75,15 @@ public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 			int timeSinceLastAttack = player.ticksExisted - player.getLastAttackedEntityTime();
 			BlockPos p = player.getPosition();
 			TargetPoint t = new TargetPoint(player.dimension, p.getX(), p.getY(), p.getZ(), 15);
-			if(player.getCooledAttackStrength(0) == 1 && timeSinceLastAttack < 100 && timeSinceLastAttack > 10) {
+			if(worldIn.isRemote) return super.onItemRightClick(worldIn, player, hand);
+			boolean timer = ServerTickEvents.removePlayerTimer("CleaverAttack", player);
+			if(player.getCooledAttackStrength(0) == 1 && timer) {
 				if(toExtend) {
 					this.extendedAttack(player, player, true);
-					if(!worldIn.isRemote) BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransformattack), p.toLong()), t);
+					BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransformattack), p.toLong()), t);
 				}
-				else if(!worldIn.isRemote) BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransform), p.toLong()), t);
-			}else if(!worldIn.isRemote) BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransform), p.toLong()), t);
+				else BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransform), p.toLong()), t);
+			}else BTVPacketHandler.INSTANCE.sendToAllAround(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.sawcleavertransform), p.toLong()), t);
 			
 			player.getHeldItem(hand).getTagCompound().setBoolean("Extended", !player.getHeldItem(hand).getTagCompound().getBoolean("Extended"));
 		}
@@ -91,24 +95,17 @@ public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 	
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-		//if(player.getCooledAttackStrength(0) != 1) return true;
-		if(!stack.hasTagCompound()) return false;
-		if(!stack.getTagCompound().hasKey("Extended")) return false;
-		if(!stack.getTagCompound().getBoolean("Extended")) return false;
+		if(player.world.isRemote) return false;
+		if(!ItemHelper.checkBooleanTag(stack, "Extended", false)) {
+			PlayerTimerBuilder ptb = new PlayerTimerBuilder(player).setName("CleaverAttack").setTimer(20);
+			ServerTickEvents.removePlayerTimer("CleaverAttack", player);
+			ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
+			return false;
+		}
 		this.extendedAttack(player, entity, false);
 		stack.damageItem(2, player);
 		return true;
-	}
-	
-	/*@Override
-	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
-		if(entityLiving instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer) entityLiving;
-			if(p.getCooledAttackStrength(0) < 0.9) return true;
-		}
-		return super.onEntitySwing(entityLiving, stack);
-	}*/
-	
+	}	
 	
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {

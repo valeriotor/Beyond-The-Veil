@@ -154,12 +154,15 @@ public class ServerTickEvents {
 		return false;
 	}
 	
-	public static void removePlayerTimer(String name, EntityPlayer p) {
-		if(timers.isEmpty()) return;		
+	public static boolean removePlayerTimer(String name, EntityPlayer p) {
+		if(timers.isEmpty()) return false;		
 		Iterator<PlayerTimer> iterator = timers.iterator();
 		while(iterator.hasNext())
-			if(iterator.next().corresponds(name, p))
+			if(iterator.next().corresponds(name, p)) {
 				iterator.remove();
+				return true;
+			}
+		return false;
 	}
 	
 	public static PlayerTimer getPlayerTimer(String name, EntityPlayer player) {

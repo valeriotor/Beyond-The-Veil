@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.dweller.DwellerDialogue;
 import com.valeriotor.beyondtheveil.gui.GuiDialogueDweller;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageSawCleaverToServer;
 import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 
@@ -80,25 +82,8 @@ public class ClientEvents {
 	}
 	
 	public void sawCleaverDodge(EntityPlayer p) {
-		if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver && !p.isInsideOfMaterial(Material.WATER) && !p.isInWater() && !p.isInLava() && !p.capabilities.isFlying) {
-			Block block = p.world.getBlockState(p.getPosition().down()).getBlock();
-			if(ClientProxy.handler.dodge.isPressed() && sawcleaverCount < 1 && block != Blocks.WATER && block != Blocks.AIR) {
-				int conto = 0;
-				int direction[] = {-1,-1};
-				for(int i = 0; i < 4; i++) {
-					if(binds[i].isKeyDown()) {
-						conto++;
-						if(conto > 0) direction[0] = i;
-						if(conto == 2) direction[1] = i;
-					}
-				}
-					for(int i = 0; i < conto && i < 3; i++) {
-						this.movePlayer(direction[i], 1 / ((float) conto));
-					}
-					sawcleaverCount = 0;	
-				}  
-			}
-			if(sawcleaverCount > 0) sawcleaverCount--;
+		if(ClientProxy.handler.dodge.isPressed()) 
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageSawCleaverToServer());
 	}
 	
 	public void playerAnimationUpdate() {
@@ -119,7 +104,23 @@ public class ClientEvents {
 		this.soundCounter = ticks;
 	}
 	
-	public void movePlayer(int direction, float multiplier) {
+	public void movePlayer() {
+		int conto = 0;
+		int direction[] = {-1,-1};
+		boolean[] binds = this.getArrowKeys();
+		for(int i = 0; i < 4; i++) {
+			if(binds[i]) {
+				conto++;
+				if(conto > 0) direction[0] = i;
+				if(conto == 2) direction[1] = i;
+			}
+		}
+		for(int i = 0; i < conto && i < 3; i++) {
+			movePlayer_internal(direction[i], 1 / ((float) conto));
+		}
+	}
+	
+	private void movePlayer_internal(int direction, float multiplier) {
 		EntityPlayer p = Minecraft.getMinecraft().player;
 		float mX = (float) -Math.sin(p.rotationYawHead*2*Math.PI/360);
 		float mZ = (float) Math.cos(p.rotationYawHead*2*Math.PI/360);
@@ -168,6 +169,10 @@ public class ClientEvents {
 	
 	public int getAnimationCounter() {
 		return this.animationCounter;
+	}
+	
+	public boolean[] getArrowKeys() {
+		return new boolean[] {binds[0].isKeyDown(), binds[1].isKeyDown(), binds[2].isKeyDown(), binds[3].isKeyDown()};
 	}
 	
 }

@@ -31,6 +31,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageGiveDrink.GiveItemMessageHandler.class, MessageGiveDrink.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageCityMapper.CityMapperMessageHandler.class, MessageCityMapper.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageRitualToServer.RitualToServerMessageHandler.class, MessageRitualToServer.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageSawCleaverToServer.SawCleaverToServerMessageHandler.class, MessageSawCleaverToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageDagonDialogue.DagonDialogueMessageHandler.class, MessageDagonDialogue.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageRevelationRingToServer.RevelationRingToServerMessageHandler.class, MessageRevelationRingToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSyncResearchToServer.SyncResearchToServerMessageHandler.class, MessageSyncResearchToServer.class, count++, Side.SERVER);
@@ -52,6 +53,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageStepAssist.StepAssistMessageHandler.class, MessageStepAssist.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenDialogue.OpenDialogueMessageHandler.class, MessageOpenDialogue.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRitualToClient.RitualToClientMessageHandler.class, MessageRitualToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageSawCleaverToClient.SawCleaverToClientMessageHandler.class, MessageSawCleaverToClient.class, count++, Side.CLIENT);
 		
 	}
 	
