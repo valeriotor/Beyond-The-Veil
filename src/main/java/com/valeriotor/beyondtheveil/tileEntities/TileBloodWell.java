@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityBloodSkeleton;
 import com.valeriotor.beyondtheveil.entities.EntityBloodZombie;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
+import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 
 import net.minecraft.entity.EntityLiving;
@@ -47,6 +48,7 @@ public class TileBloodWell extends TileEntity implements ITickable{
 					counter = 29;
 					List<EntityLiving> undead = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 1024 && !(e instanceof IPlayerGuardian));
 					for(EntityLiving e : undead) {
+						ServerTickEvents.insertDamned(e.getEntityId());
 						e.getNavigator().setPath(e.getNavigator().getPathToPos(this.pos), 0.9);
 					}
 				} else {

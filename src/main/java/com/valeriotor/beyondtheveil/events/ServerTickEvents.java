@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
@@ -13,9 +14,6 @@ import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageCovenantData;
 import com.valeriotor.beyondtheveil.util.DelayedMessage;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
-import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
-
-import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -34,6 +32,7 @@ public class ServerTickEvents {
 			decreaseMessageTimers();
 			decreaseCovenantTimers();
 			decreasePlayerTimers();
+			updateDamned();
 			AzacnoParasiteEvents.updateParasites();
 		}
 		DrowningRitualEvents.update();
@@ -184,6 +183,31 @@ public class ServerTickEvents {
 		}
 		timers.addAll(newTimers);
 			
+	}
+	
+
+	// ****************************************** HEARTS AND WELL ***************************************** \\
+	
+	private static Map<Integer, Integer> damned = new HashMap<>();
+	
+	public static void insertDamned(int id) {
+		damned.put(id, Integer.valueOf(200));
+	}
+	
+	public static boolean isHearted(int id) {
+		return damned.containsKey(Integer.valueOf(id));
+	}
+	
+	private static void updateDamned() {
+		Set<Entry<Integer,Integer>> set = damned.entrySet();
+		Iterator<Entry<Integer,Integer>> i = set.iterator();
+		while(i.hasNext()) {
+			Entry<Integer,Integer> entry = i.next();
+			if(entry.getValue() <= 1)
+				i.remove();
+			else
+				entry.setValue(entry.getValue() - 1);
+		}
 	}
 	
 }

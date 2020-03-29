@@ -41,6 +41,7 @@ public class ItemBlackjack extends Item{
 		}
 		EntityVillager vil = (EntityVillager) event.getTarget();
 		if(vil.getProfession() == 5) return;
+		if(vil.isChild()) return;
 		if(/*Math.abs(vil.rotationYawHead - p.rotationYawHead) < 300 && */vil.getDistance(p) > 0.1) {
 			BlockPos pos = vil.getPos();
 			if(!event.getWorld().isRemote) {
@@ -54,9 +55,6 @@ public class ItemBlackjack extends Item{
 			}
 			event.getWorld().playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 1, 0.01F, false);
 			event.setCancellationResult(EnumActionResult.SUCCESS); 
-			// TODO: FIX DOUBLE SPAWN BUG
-			// TODO: FIX ROTATION NOT BEING SET BUG
-			// TODO: GET SOME REST
 		}
 		
 	}

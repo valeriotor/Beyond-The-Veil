@@ -54,6 +54,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageOpenDialogue.OpenDialogueMessageHandler.class, MessageOpenDialogue.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRitualToClient.RitualToClientMessageHandler.class, MessageRitualToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSawCleaverToClient.SawCleaverToClientMessageHandler.class, MessageSawCleaverToClient.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageMovePlayer.MovePlayerMessageHandler.class, MessageMovePlayer.class, count++, Side.CLIENT);
 		
 	}
 	

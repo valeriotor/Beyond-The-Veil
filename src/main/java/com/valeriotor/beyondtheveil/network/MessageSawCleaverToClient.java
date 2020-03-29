@@ -24,7 +24,7 @@ public class MessageSawCleaverToClient implements IMessage{
 
 		@Override
 		public IMessage onMessage(MessageSawCleaverToClient message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(() ->	BeyondTheVeil.proxy.cEvents.movePlayer());
+			Minecraft.getMinecraft().addScheduledTask(() ->	BeyondTheVeil.proxy.cEvents.movePlayerWithKeys());
 			return null;
 		}
 		

@@ -3,14 +3,17 @@ package com.valeriotor.beyondtheveil.entities.AI;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.entities.ISpooker;
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlaySound;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 
+import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
@@ -37,10 +40,11 @@ public class AISpook extends EntityAIBase{
 		this.entity.setSpooking(true);
 		this.roarTime = 30;
 		SoundEvent sound = this.entity.getSound();
-		entity.getWorld().getEntities(EntityLivingBase.class, e -> !BTVEntityRegistry.isFearlessEntity(e) && this.entity.getDistance(e) < 25)
+		entity.getWorld().getEntities(EntityLivingBase.class, e -> e != entity && !BTVEntityRegistry.isFearlessEntity(e) && this.entity.getDistance(e) < 25)
 						 .forEach(e -> {
 						 if(!(entity instanceof IPlayerGuardian) || !e.equals(((IPlayerGuardian)entity).getMaster())) {
-							 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
+							 if(!(e instanceof EntityPlayer) || BaublesApi.isBaubleEquipped((EntityPlayer)e, ItemRegistry.bone_tiara) == -1)
+								 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
 							 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 20 * 6, 0));
 						 }
 						 if(e instanceof EntityPlayerMP && sound != null) {

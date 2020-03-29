@@ -104,7 +104,14 @@ public class ClientEvents {
 		this.soundCounter = ticks;
 	}
 	
-	public void movePlayer() {
+	public void movePlayer(double mx, double my, double mz) {
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		p.motionX += mx;
+		p.motionY += my;
+		p.motionZ += mz;
+	}
+	
+	public void movePlayerWithKeys() {
 		int conto = 0;
 		int direction[] = {-1,-1};
 		boolean[] binds = this.getArrowKeys();

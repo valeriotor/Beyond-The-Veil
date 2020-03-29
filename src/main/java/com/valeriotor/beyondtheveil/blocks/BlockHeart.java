@@ -79,16 +79,19 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	@Override
 	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		boolean well = BlockRegistry.BlockBloodWell.checkStructure(pos, w);
-		if(well) {
-			TileEntity te = w.getTileEntity(pos);
-			if(te instanceof TileHeart) {
-				TileHeart th = (TileHeart) te;
-				th.startWell();
-				if(placer instanceof EntityPlayer && !w.isRemote) {
-					EntityPlayer p = (EntityPlayer)placer;
-					if(ResearchUtil.getResearchStage(p, "BLOODWELL") == 0)
-						SyncUtil.addStringDataOnServer(p, false, "builtwell");
+		if(!w.isRemote) {
+			boolean well = BlockRegistry.BlockBloodWell.checkStructure(pos, w);
+			if(well) {
+				TileEntity te = w.getTileEntity(pos);
+				if(te instanceof TileHeart) {
+					TileHeart th = (TileHeart) te;
+					th.startWell();
+					if(placer instanceof EntityPlayer) {
+						EntityPlayer p = (EntityPlayer)placer;
+						if(ResearchUtil.getResearchStage(p, "BLOODWELL") == 0)
+							SyncUtil.addStringDataOnServer(p, false, "builtwell");
+					}
+					
 				}
 			}
 		}

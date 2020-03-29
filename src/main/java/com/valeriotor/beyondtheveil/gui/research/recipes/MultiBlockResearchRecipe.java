@@ -98,9 +98,9 @@ public class MultiBlockResearchRecipe extends ResearchRecipe {
 	public boolean mouseClicked(GuiResearchPage gui, int mouseX, int mouseY, int mouseButton) {
 		int sel = hoveringArrow(gui, mouseX, mouseY);
 		if(sel == 0)
-			this.currentLayer = MathHelperBTV.clamp(0, stacks.length, currentLayer - 1);
+			this.currentLayer = MathHelperBTV.clamp(0, stacks.length-1, currentLayer - 1);
 		else if(sel == 1)
-			this.currentLayer = MathHelperBTV.clamp(0, stacks.length, currentLayer + 1);
+			this.currentLayer = MathHelperBTV.clamp(0, stacks.length-1, currentLayer + 1);
 		if(sel == -1)
 			return false;
 		return true;		

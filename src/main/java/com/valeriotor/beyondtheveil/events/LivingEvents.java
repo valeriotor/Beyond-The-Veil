@@ -66,9 +66,14 @@ public class LivingEvents {
 	@SubscribeEvent
 	public static void setAttackTargetEvent(LivingSetAttackTargetEvent event) {
 		EntityLivingBase eb = event.getEntityLiving();
-		if(eb instanceof EntityLiving && eb.getActivePotionEffect(PotionRegistry.folly) != null && !BTVEntityRegistry.isFearlessEntity(eb)
-				&& event.getTarget() != null) {
-			((EntityLiving)eb).setAttackTarget(null);
+		if(eb.world.isRemote) return;
+		if(event.getTarget() == null) return;
+		if(!(eb instanceof EntityLiving)) return;
+		EntityLiving e = (EntityLiving)eb;
+		if(e.getActivePotionEffect(PotionRegistry.folly) != null && !BTVEntityRegistry.isFearlessEntity(e)) {
+			e.setAttackTarget(null);
+		} else if(ServerTickEvents.isHearted(e.getEntityId())) {
+			e.setAttackTarget(null);
 		}
 	}
 	

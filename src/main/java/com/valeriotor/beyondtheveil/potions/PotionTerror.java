@@ -4,15 +4,13 @@ import java.util.List;
 
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
-import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageCameraRotatorClient;
+import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
-import com.valeriotor.beyondtheveil.util.PlayerTimer;
-import com.valeriotor.beyondtheveil.util.PlayerTimer.PlayerTimerBuilder;
 
 import baubles.api.BaublesApi;
 import net.minecraft.entity.EntityLivingBase;
@@ -68,8 +66,12 @@ public class PotionTerror extends Potion{
 		double zDist = entity.posZ - e.posZ;
 		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
 		if(dist != 0) {
-			e.motionZ = - zDist / dist;
-			e.motionX = - xDist / dist;		
+			if(entity instanceof EntityPlayerMP) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageMovePlayer(- xDist / dist, 0, - zDist / dist), (EntityPlayerMP)e);
+			} else {
+				e.motionZ = - zDist / dist;
+				e.motionX = - xDist / dist;	
+			}
 		}
 	}
 	
