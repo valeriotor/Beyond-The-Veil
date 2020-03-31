@@ -72,7 +72,7 @@ public class CrawlerWorship {
 	}
 	
 	public int getDeepOneBonus() {
-		return (this.strength +  1) / 2;
+		return (this.strength +  1) / 2 + (this.wType == WorshipType.SACRIFICE ? 1 : 0);
 	}
 	
 	public void empowerMinions(EntityPlayer p) {

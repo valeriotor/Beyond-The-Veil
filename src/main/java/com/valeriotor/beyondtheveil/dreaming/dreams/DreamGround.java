@@ -25,7 +25,7 @@ public class DreamGround extends Dream{
 
 	@Override
 	public boolean activatePos(EntityPlayer p, World w, BlockPos pos) {
-		int radius = DreamHandler.hasDreamtOfVoid(p) ? 16 : 5;
+		int radius = DreamHandler.hasDreamtOfVoid(p) ? 10 : 3;
 		int startY = Math.min(pos.getY(), w.getHeight()/2);
 		int[] tracker1 = new int[startY];
 		int[] tracker2 = new int[startY];
@@ -35,14 +35,14 @@ public class DreamGround extends Dream{
 		BlockPos coord2 = null;
 		for(int y = startY-1; y>=0; y--) {
 			for(int x = pos.getX()-radius; x<pos.getX()+radius; x++) {
-				for(int z = pos.getX()-radius; z<pos.getX()+radius; z++) {
+				for(int z = pos.getZ()-radius; z<pos.getZ()+radius; z++) {
 					IBlockState state = w.getBlockState(new BlockPos(x, y, z));
 						// TODO: Get OreDictionary compatibility
-						if(state == this.state1) {
+						if(state.getBlock() == this.state1.getBlock()) {
 							if(coord1 == null && DreamHandler.getDreamPowerLevel(p) >= 1) coord1 = new BlockPos(x, y, z);
 							tracker1[y]++;
 							sum1++;
-						}else if(state == this.state2) {
+						}else if(state.getBlock() == this.state2.getBlock()) {
 							if(coord2 == null && DreamHandler.getDreamPowerLevel(p) >= 1) coord2 = new BlockPos(x, y, z);
 							tracker2[y]++;
 							sum2++;
@@ -69,8 +69,8 @@ public class DreamGround extends Dream{
 			}
 		}
 		
-		p.sendMessage(getGroundScanMessage(this.name1, sum1, highest1, coord1, radius));
-		p.sendMessage(getGroundScanMessage(this.name2, sum2, highest2, coord2, radius));
+		p.sendMessage(getGroundScanMessage(this.name1, sum1, highest1, coord1, radius*2+1));
+		p.sendMessage(getGroundScanMessage(this.name2, sum2, highest2, coord2, radius*2+1));
 
 		return true;
 	}

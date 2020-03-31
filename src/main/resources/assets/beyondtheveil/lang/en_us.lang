@@ -828,7 +828,7 @@ research.!METAMORPHOSIS.text=Slay three Elder Guardians. Commune.
 research.DREAMBOTTLE.title=Dream Bottle
 research.DREAMBOTTLE.stage.0=I shed a tear when I was baptised.<BR>A sliver of Truth, it was, reminding me of my worthlessness.<BR>And yet, it was that very tear that led me to *know*.<BR>I cannot amass my own tears, I am no professional Weeper, am I?<BR>Am I?<BR>I'll seek help in bodies other than mine.
 research.DREAMBOTTLE.stage.1=Through Weepers and Fleti I am granted knowledge, and through Dreams I shall utilize and magnify such knowledge.<BR>A Dream Bottle is what I must craft. An invaluable tool that will let me Dream limitless times per day, with multiple Memories at a time.<BR>The only price will be tears. But not my own.
-research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
+research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled up to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
 research.gotweepers.text=Find a way to gather tears.
 research.crafteddream_bottle.text=Craft a Dream Bottle.
 research.DREAMBOTTLE.addenda.statue=Addendum:<BR>It seems that being worshipped through the use of a statue slightly improves the Dream-to-Tears efficiency of the Bottle.
@@ -956,7 +956,7 @@ research.boundpathway2.text=Find a way to bind locations.
 research.BLOODSIGILS.title=Blood Sigils
 research.BLOODSIGILS.stage.0=Through blood we're bound not just to the Deepest Oceans, but to All.<BR>A Pathway Sigil can be used to bind to itself a location in the world, simply by using it.<BR>I should try it before bringing my research forwards.
 research.BLOODSIGILS.stage.1=Indeed, the Blood Sigil has forged an unbreakable bond.<BR>Through these Pathway Sigils I will be able to target specific locations.<BR>There is, however, another type of Sigil: the Player Sigil, that can bind a specific person to itself.<BR>More difficult to use, this one requires to be held in my hands, either main or offhand, as I injure another Player enough for them to bleed.<BR>Once their blood is in my hands, so too shall their fate be mine to dictate.
-research.boundpathway.text=Bind a Pathway Sigil.
+research.boundpathway.text=Make a Pathway Sigil.
 
 research.PLANTDREAMS.title=Dreams of Flora
 research.PLANTDREAMS.stage.0=A Memory of Flora, as I grow more and more plants through bone meal.<BR>What could such a Dream entail?

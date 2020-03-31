@@ -66,7 +66,7 @@ public class PotionTerror extends Potion{
 		double zDist = entity.posZ - e.posZ;
 		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(zDist, 2));
 		if(dist != 0) {
-			if(entity instanceof EntityPlayerMP) {
+			if(e instanceof EntityPlayerMP) {
 				BTVPacketHandler.INSTANCE.sendTo(new MessageMovePlayer(- xDist / dist, 0, - zDist / dist), (EntityPlayerMP)e);
 			} else {
 				e.motionZ = - zDist / dist;

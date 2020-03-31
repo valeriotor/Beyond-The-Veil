@@ -28,6 +28,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +37,7 @@ import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -64,6 +66,13 @@ public class PlayerEvents {
 		
 		//IInternalMethodHandler.progressResearch(event.getEntityPlayer(), "FIRSTDREAMS");
 		
+	}
+	
+	@SubscribeEvent
+	public static void sleepEvent(PlayerSleepInBedEvent event) {
+		if(event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+			event.setResult(SleepResult.OTHER_PROBLEM);
+		}
 	}
 	
 	@SubscribeEvent

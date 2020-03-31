@@ -86,7 +86,7 @@ public class EntityCanoe extends EntityBoat{
 		super(worldIn);
 		this.paddlePositions = new float[2];
         this.preventEntitySpawning = true;
-        this.setSize(1.375F, 0.4625F);
+        this.setSize(2F, 0.5F);
 	}
 	
 	public EntityCanoe(World worldIn, double x, double y, double z) {

@@ -35,10 +35,8 @@ public class DreamIntrospection extends Dream{
 			caster.sendMessage(new TextComponentTranslation("dreams.introspection.caster"));
 		}
 		caster.sendMessage(new TextComponentTranslation("dreams.introspection.deity", Worship.getSelectedDeity(target).getName()));
-		DecimalFormat df = new DecimalFormat("#.###");
-		df.setRoundingMode(RoundingMode.CEILING);
-		String attackMod = df.format(DGWorshipHelper.getAttackModifier(target));
-		String defenseMod = df.format(DGWorshipHelper.getDefenseModifier(target));
+		String attackMod = "+".concat(String.valueOf(DGWorshipHelper.getAttackModifier(target)*100-100)).concat("%");
+		String defenseMod = "-".concat(String.valueOf(100-Math.round(DGWorshipHelper.getDefenseModifier(target)*100))).concat("%");
 		int dreamBoost = DGWorshipHelper.getDreamPower(target);
 		caster.sendMessage(new TextComponentTranslation("dreams.introspection.strength", attackMod, defenseMod, dreamBoost));
 		if(target.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.VOID)) {
@@ -50,7 +48,7 @@ public class DreamIntrospection extends Dream{
 		if(cw != null) {
 			WorshipType type = cw.getWorshipType();
 			int strength = cw.getStrength();
-			caster.sendMessage(new TextComponentTranslation("dreams.introspection.worship", type.getLocalizedName(), strength));
+			caster.sendMessage(new TextComponentTranslation("dreams.introspection.worship", type.getLocalizedName(), strength+1));
 		} else {
 			caster.sendMessage(new TextComponentTranslation("dreams.introspection.noworship"));
 		}

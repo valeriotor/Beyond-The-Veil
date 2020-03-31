@@ -57,6 +57,7 @@ public class SummonDeepOnes implements IActivePower{
 		int amount = 0;
 		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 		if(cw != null) amount += cw.getDeepOneBonus();
+		amount += (DGWorshipHelper.getDreamPower(p)/2);
 		return amount + 1; 
 		// maybe + cap.getString("transformed") ? 1 : 0;
 	}
