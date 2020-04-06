@@ -62,9 +62,9 @@ public class RegistryHelper {
 		GameRegistry.registerTileEntity(TileFumeSpreader.class, References.MODID + ":tilefumespreader");
 		GameRegistry.registerTileEntity(TileBarrel.class, References.MODID + ":tilebarrel");
 		GameRegistry.registerTileEntity(TileSlugBait.class, References.MODID + ":tileslug_bait");
-		GameRegistry.registerTileEntity(TileMutator.class, References.MODID + ":tilemutator");
+		//GameRegistry.registerTileEntity(TileMutator.class, References.MODID + ":tilemutator");
 		GameRegistry.registerTileEntity(TileArborealGeneratorBottom.class, References.MODID + ":tilearboreal_generator");
-		GameRegistry.registerTileEntity(TilePlantTerra.class, References.MODID + ":tileplantterra");
+		//GameRegistry.registerTileEntity(TilePlantTerra.class, References.MODID + ":tileplantterra");
 		GameRegistry.registerTileEntity(TileWateryCradle.class, References.MODID + ":tilewaterycradle");
 		GameRegistry.registerTileEntity(TileLacrymatory.class, References.MODID + ":tilelacrymatory");
 		GameRegistry.registerTileEntity(TileCityMapper.class, References.MODID + ":tilecitymapper");

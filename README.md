@@ -1,8 +1,8 @@
 # Welcome to Beyond the Veil!
 
-A Minecraft Mod inspired by the writings of H.P. Lovecraft, as well as other works based on the author.
+A story driven Minecraft Mod inspired by the writings of H.P. Lovecraft, as well as other works based on the author.
 
-It has just reached alpha testing phase, and should soon be released.
+As of the 6th of April 2020, the mod is released in its beta stage, and is available [on Curseforge](https://www.curseforge.com/minecraft/mc-mods/beyond-the-veil).
 
 I occasionally post sneak peeks on [this channel](https://www.youtube.com/channel/UCzjExgDSkPIOTaRLOK97x1Q).
 

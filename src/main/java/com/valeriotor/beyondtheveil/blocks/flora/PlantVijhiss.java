@@ -69,13 +69,13 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		this.updateMutators(worldIn, pos);
+		//this.updateMutators(worldIn, pos);
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		this.updateMutators(worldIn, pos);
+		//this.updateMutators(worldIn, pos);
 		super.breakBlock(worldIn, pos, state);
 	}
 	

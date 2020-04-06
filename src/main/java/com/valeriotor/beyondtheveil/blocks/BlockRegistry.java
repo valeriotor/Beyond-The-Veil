@@ -108,9 +108,9 @@ public class BlockRegistry {
 	   	registry.register(PlantVanillaWeed);
 	   	registry.register(PlantArborealGenerator);
 	   	registry.register(PlantSaplingShrub);
-	   	registry.register(PlantBreaker);
+	   	//registry.register(PlantBreaker);
 	   	registry.register(PlantVijhiss);
-	   	registry.register(BlockMutator);
+	   	//registry.register(BlockMutator);
 	   	registry.register(BlockWateryCradle);
 	   	registry.register(BlockLacrymatory);
 	   	registry.register(BlockCityMapper);

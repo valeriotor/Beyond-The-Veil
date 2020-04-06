@@ -279,7 +279,7 @@ public class EntityCanoe extends EntityBoat{
     		if(Math.abs(this.motionX) < 0.05 && Math.abs(this.motionZ) < 0.05) {	
     			if(this.soundCounter > 0) soundCounter--;
     			else {
-    				this.world.playSound(this.posX, this.posY, this.posZ, BTVSounds.canoeCreak, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+    				this.world.playSound(this.posX, this.posY, this.posZ, BTVSounds.canoeCreak, SoundCategory.AMBIENT, 2.0F, 1.0F, false);
     				this.soundCounter = 160;
     			}
     		}	

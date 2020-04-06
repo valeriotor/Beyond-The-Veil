@@ -70,8 +70,13 @@ public class PlayerEvents {
 	
 	@SubscribeEvent
 	public static void sleepEvent(PlayerSleepInBedEvent event) {
+		EntityPlayer p = event.getEntityPlayer();
 		if(event.getEntityPlayer().getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 			event.setResult(SleepResult.OTHER_PROBLEM);
+			if(!p.world.isRemote) p.sendMessage(new TextComponentTranslation("sleep.transformed"));
+		} else if(AzacnoParasiteEvents.parasites.containsKey(event.getEntityPlayer().getPersistentID())) {
+			event.setResult(SleepResult.OTHER_PROBLEM);
+			if(!p.world.isRemote) p.sendMessage(new TextComponentTranslation("sleep.parasite"));
 		}
 	}
 	

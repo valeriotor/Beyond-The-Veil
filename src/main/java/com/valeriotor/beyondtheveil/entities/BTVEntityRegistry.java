@@ -21,7 +21,7 @@ public class BTVEntityRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crawling_villager"), EntityCrawlingVillager.class, "crawling_villager", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":weeper"), EntityWeeper.class, "weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":fletum"), EntityFletum.class, "fletum", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":starspawn"), EntityStarspawn.class, "starspawn", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
+		//EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":starspawn"), EntityStarspawn.class, "starspawn", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":shoggoth"), EntityShoggoth.class, "shoggoth", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_zombie"), EntityBloodZombie.class, "blood_zombie", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_skeleton"), EntityBloodSkeleton.class, "blood_skeleton", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);

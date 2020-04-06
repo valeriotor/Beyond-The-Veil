@@ -64,12 +64,12 @@ public class RegisterRenders {
 			});
 		
 		//Starspawn
-		RenderingRegistry.registerEntityRenderingHandler(EntityStarspawn.class, new IRenderFactory<EntityStarspawn>(){
+		/*RenderingRegistry.registerEntityRenderingHandler(EntityStarspawn.class, new IRenderFactory<EntityStarspawn>(){
 			@Override
 			public Render<EntityStarspawn> createRenderFor(RenderManager manager) 
 			{return new RenderStarspawn(manager);}
 			});
-		
+		*/
 		//Shoggoth
 		RenderingRegistry.registerEntityRenderingHandler(EntityShoggoth.class, new IRenderFactory<EntityShoggoth>(){
 			@Override

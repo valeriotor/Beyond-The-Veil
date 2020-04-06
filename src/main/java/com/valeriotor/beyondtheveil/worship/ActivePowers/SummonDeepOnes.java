@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import com.valeriotor.beyondtheveil.worship.Deities;
@@ -57,7 +58,7 @@ public class SummonDeepOnes implements IActivePower{
 		int amount = 0;
 		CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 		if(cw != null) amount += cw.getDeepOneBonus();
-		amount += (DGWorshipHelper.getDreamPower(p)/2);
+		if(ResearchUtil.isResearchComplete(p, "WATERWALKING")) amount++;
 		return amount + 1; 
 		// maybe + cap.getString("transformed") ? 1 : 0;
 	}

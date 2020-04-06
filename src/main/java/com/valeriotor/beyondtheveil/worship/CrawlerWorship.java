@@ -60,11 +60,11 @@ public class CrawlerWorship {
 	}
 	
 	public int getBaubleCooldown(int defaultVal) {
-		return Math.max(defaultVal / 2, defaultVal * (10 - 1 - this.strength) / 10);
+		return Math.max(defaultVal / 4, defaultVal * (10 - 1 - this.strength*2) / 10);
 	}
 	
 	public int getPowerCooldown(int defaultVal) {
-		return Math.max(defaultVal / 2, defaultVal * (10 - 1 - this.strength) / 10);
+		return Math.max(defaultVal / 4, defaultVal * (10 - 1 - this.strength*2) / 10);
 	}
 	
 	public int getDreamBonusStrength() {
@@ -80,11 +80,10 @@ public class CrawlerWorship {
 		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, e -> (e instanceof IPlayerGuardian) && e.getDistance(p) < 35);
 		boolean crit = criticalHeal(p.getRNG());
 		for(EntityLiving e : minions) {
-			int maxStrength = Math.min(5, this.strength);
-			e.heal((6 + 2 * maxStrength) * (crit ? 2 : 1));
+			e.heal((6 + 2 * this.strength) * (crit ? 2 : 1));
 			if(this.strength > 0) {
-				e.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, maxStrength));
-				e.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 100, maxStrength / 2));
+				e.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 100, this.strength));
+				e.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 100, this.strength / 2));
 			}
 		}
 	}

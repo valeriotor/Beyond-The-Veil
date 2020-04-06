@@ -191,7 +191,7 @@ public class MemoryUnlocks {
 	public static void sleepChamberEvent(EntityPlayer p) {
 		if(!Memory.STILLNESS.isUnlocked(p)) {
 			int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.TIMESCHAMBER, 1, 1);
-			if(val >= 10)
+			if(val >= 3)
 				Memory.STILLNESS.unlock(p, true);
 		}
 	}

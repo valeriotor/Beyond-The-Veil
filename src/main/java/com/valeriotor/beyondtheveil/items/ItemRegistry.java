@@ -81,7 +81,7 @@ public class ItemRegistry {
 	
 	
     public static void initModels() {
-        ClientProxy.registerItemRenderer(testItem, 0, "inventory");
+        //ClientProxy.registerItemRenderer(testItem, 0, "inventory");
         ClientProxy.registerItemRenderer(oniricIncense, 0, "inventory");
         ClientProxy.registerItemRenderer(slugCatcher, 0, "inventory");
         ClientProxy.registerItemRenderer(slug, 0, "inventory");
@@ -148,9 +148,9 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockRedstoneGrass), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantArborealGenerator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantSaplingShrub), 0, "inventory");
-        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBreaker), 0, "inventory");
+        //ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBreaker), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantVijhiss), 0, "inventory");
-        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMutator), 0, "inventory");
+        //ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMutator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockWateryCradle), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockLacrymatory), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockCityMapper), 0, "inventory");
@@ -198,9 +198,9 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
-    	registry.register(new ItemBlock(BlockRegistry.PlantBreaker).setRegistryName(BlockRegistry.PlantBreaker.getRegistryName()));
+    	//registry.register(new ItemBlock(BlockRegistry.PlantBreaker).setRegistryName(BlockRegistry.PlantBreaker.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantVijhiss).setRegistryName(BlockRegistry.PlantVijhiss.getRegistryName()));
-    	registry.register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
+    	//registry.register(new ItemBlock(BlockRegistry.BlockMutator).setRegistryName(BlockRegistry.BlockMutator.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockWateryCradle).setRegistryName(BlockRegistry.BlockWateryCradle.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockLacrymatory).setRegistryName(BlockRegistry.BlockLacrymatory.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockCityMapper).setRegistryName(BlockRegistry.BlockCityMapper.getRegistryName()));
@@ -220,7 +220,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockPenitenceStatue).setRegistryName(BlockRegistry.BlockPenitenceStatue.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockMemorySieve).setRegistryName(BlockRegistry.BlockMemorySieve.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockGearBench).setRegistryName(BlockRegistry.BlockGearBench.getRegistryName()));
-    	registry.register(ItemRegistry.testItem);
+    	//registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);
     	registry.register(ItemRegistry.slug);

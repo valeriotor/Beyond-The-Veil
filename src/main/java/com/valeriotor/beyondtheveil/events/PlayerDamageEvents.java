@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
 import com.valeriotor.beyondtheveil.items.ItemBloodSigilPlayer;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.ItemHelper;
@@ -126,6 +127,8 @@ public class PlayerDamageEvents {
 					p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, 4), 1, false) == 1	) {
 				if(ServerTickEvents.getPlayerTimer("bcrown1", p) == null && ServerTickEvents.getPlayerTimer("bcrown2", p) == null) {
 					p.sendMessage(new TextComponentTranslation("bauble.blood_crown.activated"));
+					p.world.playSound(null, p.posX, p.posY, p.posZ, BTVSounds.heartRip, SoundCategory.PLAYERS, 1, 1);
+					p.heal(5.0F);
 					CrawlerWorship cw = CrawlerWorshipEvents.getWorship(p);
 					boolean cwImp = cw != null && cw.improvesCrownOfThorns();
 					final float a = event.getAmount() / (cwImp ? 3 : 1);

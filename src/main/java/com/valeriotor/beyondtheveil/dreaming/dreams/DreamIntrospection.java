@@ -35,7 +35,7 @@ public class DreamIntrospection extends Dream{
 			caster.sendMessage(new TextComponentTranslation("dreams.introspection.caster"));
 		}
 		caster.sendMessage(new TextComponentTranslation("dreams.introspection.deity", Worship.getSelectedDeity(target).getName()));
-		String attackMod = "+".concat(String.valueOf(DGWorshipHelper.getAttackModifier(target)*100-100)).concat("%");
+		String attackMod = "+".concat(String.valueOf(Math.round(DGWorshipHelper.getAttackModifier(target)*100-100))).concat("%");
 		String defenseMod = "-".concat(String.valueOf(100-Math.round(DGWorshipHelper.getDefenseModifier(target)*100))).concat("%");
 		int dreamBoost = DGWorshipHelper.getDreamPower(target);
 		caster.sendMessage(new TextComponentTranslation("dreams.introspection.strength", attackMod, defenseMod, dreamBoost));

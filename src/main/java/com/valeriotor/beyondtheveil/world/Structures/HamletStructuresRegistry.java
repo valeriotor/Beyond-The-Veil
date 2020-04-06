@@ -55,7 +55,7 @@ public class HamletStructuresRegistry {
 		registerStructure(HamletHouse1::new, 9, 12);
 		registerStructure(HamletHouse2::new, 9, 12);
 		registerStructure(HamletStorehouse::new, 4, 2);
-		registerStructure(HamletHouseTwoFloors::new, 7, 9);
+		registerStructure(HamletHouseTwoFloors::new, 8, 9);
 		registerStructure(HamletSmallHut::new, 9, 10);
 		registerStructure(HamletSaloon::new, 7, 1);
 		registerStructure(HamletStoreHouse2::new, 2, 1);

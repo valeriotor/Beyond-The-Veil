@@ -698,7 +698,7 @@ dreams.animalsearch.toomanyblocks=To properly summon an animal, I should clear s
 dreams.introspection.otherplayer=The Introspection Dream tells me of %1$s.
 dreams.introspection.caster=The Introspection Dream tells me of myself.
 dreams.introspection.deity=Chosen Deity: %1$s.
-dreams.introspection.strength=Attack Multiplier: %1$s. Defense Multiplier: %2$s. Dream Bonus: %3$s.
+dreams.introspection.strength=Attack Multiplier: %1$s Defense Multiplier: %2$s Dream Bonus: %3$s.
 dreams.introspection.void=Has Dreamt of Void.
 dreams.introspection.novoid=Has not Dreamt of Void.
 dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
@@ -842,7 +842,7 @@ research.!WATERWALKING.text=Bathe in the End and Dream. Then Commune.
 
 research.WATERYCRADLE.title=Watery Cradle
 research.WATERYCRADLE.stage.0=Useless worms plague this world, living in their placid isles of ignorance.<BR>The Great Dreamer teaches me how best to employ them.<BR>I will make their bodies, maybe their corpses, mine to experiment upon.<BR>They are insignificant, after all.
-research.WATERYCRADLE.stage.1=Villagers don't serve much use to the world, do they?<BR>Now they will. Through me.<BR>The Watery Cradle, where patients drift off in Dreams, giving me right and duty to do with their bodies what I wish, through the use of Surgery Tools.<BR>Three units of a Watery Cradle must be put in a line, then I shall interact with one of its ends.<BR>Patients will come through the use of a very simple blackjack, made to stun them into unconsciousness. Using it upon a Villager will put him on the ground, ready to be picked up by interacting with him while sneaking.<BR>I can then place the Held Villager into the Watery Cradle's head, and find ways to experiment.<BR>It is none other than The Great Dreamer Himself who grants this knowledge upon me. Oh, the honor!
+research.WATERYCRADLE.stage.1=Villagers don't serve much use to the world, do they?<BR>Now they will. Through me.<BR>The Watery Cradle, where patients drift off in Dreams, giving me right and duty to do with their bodies what I wish, through the use of Surgery Tools.<BR>Three units of a Watery Cradle must be put in a line, then I shall interact with one of its ends.<BR>Patients will come through the use of a very simple blackjack, made to stun them into unconsciousness. Using it upon a Villager will put him on the ground, ready to be picked up by interacting with him while sneaking.<BR>I can then place the Held Villager into the Watery Cradle, and find ways to experiment.<BR>It is none other than The Great Dreamer Himself who grants this knowledge upon me. Oh, the honor!
 research.craftedwatery_cradle.text=Craft three Watery Cradles.
 
 research.SPINES.title=Ripping spines
@@ -1042,5 +1042,8 @@ teleport.removedpoint=My return point has been reset.
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
 canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
 canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
+
+sleep.transformed=I cannot sleep while transformed.
+sleep.parasite=I don't feel all too well.. I can't sleep.
 
 itemGroup.beyondtheveil=Beyond The Veil

@@ -65,7 +65,9 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 					} else break;
 				}
 			}
-		} else if(part == EnumPart.HEAD){
+		} else {
+			if(part == EnumPart.TAIL) pos = pos.offset(state.getValue(FACING).getOpposite(), 2);
+			else if(part == EnumPart.BODY) pos = pos.offset(state.getValue(FACING).getOpposite());
 			TileWateryCradle te = getTE(w, pos);
 			if(te == null) return true;
 			ItemStack stack = p.getHeldItem(hand);

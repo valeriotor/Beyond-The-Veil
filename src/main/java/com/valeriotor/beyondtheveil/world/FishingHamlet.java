@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityCanoe;
 import com.valeriotor.beyondtheveil.world.Structures.HamletHouse1;
+import com.valeriotor.beyondtheveil.world.Structures.HamletLightHouse;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructure;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.HamletTownHall;
@@ -63,15 +64,16 @@ public class FishingHamlet {
 			BlockPos todd = randomised.add(x, 0, z);
 			this.size = r.nextInt(15)+14;
 			HamletStructuresRegistry hsr = new HamletStructuresRegistry();
-			
+			boolean lighthouse = false;
 			
 			for(int i = 0; i<this.size; i++) {
 				structureList.add(hsr.getRandom(r,w));
 				if(structureList.get(i) instanceof HamletTownHall && i > 3) {
 					structureList.add(0, structureList.remove(i));
-				}
+				} else if(structureList.get(i) instanceof HamletLightHouse)
+					lighthouse = true;
 			}
-			
+			if(!lighthouse) structureList.add(0, new HamletLightHouse(w));
 			
 			for(int i = 0; i<4; i++) {
 				HamletStructure o = structureList.get(i);

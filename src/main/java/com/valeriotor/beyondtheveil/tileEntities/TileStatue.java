@@ -72,7 +72,7 @@ public class TileStatue extends TileEntity implements ITickable{
 				int factor = this.type == WorshipType.DEFAULT ? 5 : 6;
 				if(cw != null) {
 					cw.setWorshipType(type);
-					cw.setStrength(worms.size() / factor);
+					cw.setStrength(Math.min(4, worms.size() / factor));
 					cw.resetTimer();
 				} else {
 					CrawlerWorshipEvents.putWorship(master, new CrawlerWorship().setWorshipType(type).setStrength(worms.size() / factor));
