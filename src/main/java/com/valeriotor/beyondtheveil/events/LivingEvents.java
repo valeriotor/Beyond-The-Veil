@@ -12,9 +12,11 @@ import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -77,4 +79,10 @@ public class LivingEvents {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void deathEvent(LivingDeathEvent event) {
+		if(event.getSource().getTrueSource() instanceof EntitySkeleton) {
+			((EntitySkeleton)event.getSource().getTrueSource()).setAttackTarget(null);
+		}
+	}
 }

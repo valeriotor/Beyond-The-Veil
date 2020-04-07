@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entities;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
@@ -26,6 +27,7 @@ public class BTVEntityRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_zombie"), EntityBloodZombie.class, "blood_zombie", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_skeleton"), EntityBloodSkeleton.class, "blood_skeleton", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crazed_weeper"), EntityCrazedWeeper.class, "crazed_weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":dream_item"), EntityDreamItem.class, "dream_item", count++ , BeyondTheVeil.instance, 64, 1, true);
 		
 	}
 	

@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.tileEntities.TileArborealGeneratorBottom;
 import com.valeriotor.beyondtheveil.tileEntities.TileBarrel;
 import com.valeriotor.beyondtheveil.tileEntities.TileBloodWell;
 import com.valeriotor.beyondtheveil.tileEntities.TileCityMapper;
+import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
 import com.valeriotor.beyondtheveil.tileEntities.TileFumeSpreader;
 import com.valeriotor.beyondtheveil.tileEntities.TileGearBench;
 import com.valeriotor.beyondtheveil.tileEntities.TileHeart;
@@ -73,6 +74,7 @@ public class RegistryHelper {
 		GameRegistry.registerTileEntity(TileStatue.class, References.MODID + ":tilestatue");
 		GameRegistry.registerTileEntity(TileMemorySieve.class, References.MODID + ":tilememorysieve");
 		GameRegistry.registerTileEntity(TileGearBench.class, References.MODID + ":tilegearbench");
+		GameRegistry.registerTileEntity(TileDreamFocus.class, References.MODID + ":tiledreamfocus");
 		
 	}
 	

@@ -34,11 +34,7 @@ public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlay
         
 		GlStateManager.pushMatrix();
 		
-		//GlStateManager.scale(1, -1, 1);
         GlStateManager.rotate(180, 0, 0, 1);
-        //GlStateManager.rotate(new Quaternion(-1, 0, 0, 0.0F));
-        //GlStateManager.
-        //GlStateManager.rotate(entity.renderYawOffset, 0, 1, 0);
 		GlStateManager.translate(0, -1.5, 0);
 		GlStateManager.translate(x, y, z);
 		float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
@@ -69,7 +65,9 @@ public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlay
         }
         this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
         this.mainModel.setRotationAngles(f6, f5, f8, f2, f7, 0.06F, entity);
-
+        /*if(entity.hurtTime > 0) {
+        	GlStateManager.color(1F, 0.5F, 0.5F);
+        }*/ //maybe?
 		this.mainModel.render(entity, f6, f5, 1, f2, f7, 0.06F);
 		GlStateManager.depthMask(true);
         GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);

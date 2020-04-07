@@ -59,6 +59,7 @@ public class PlayerDataLib {
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
 	
 	// Strings (Temporary)
+	public static final String DREAMFOCUS = "dreamfocus";
 	
 	// Longs (Non-temporary)
 	public static final String LASTDREAMTINDAY = "lastdreamday";

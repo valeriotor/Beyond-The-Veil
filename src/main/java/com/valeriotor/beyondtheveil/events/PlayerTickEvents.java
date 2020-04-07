@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.events.special.CrawlerWorshipEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
@@ -29,7 +30,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -52,6 +55,7 @@ public class PlayerTickEvents {
 			resetTimesDreamt(p, data);
 			waterPowers(p, data);
 			decreaseCooldown(p, data);
+			setSize(p, data);
 			if(!p.world.isRemote) {
 				CrawlerWorshipEvents.updateWorships(p);
 				findHamlet(p, data);
@@ -213,6 +217,24 @@ public class PlayerTickEvents {
 		}
 		if(w.getBlockState(pos.down()).getBlock() == Blocks.AIR) return false;
 		return true;
+	}
+	
+	private static void setSize(EntityPlayer p, IPlayerData data) {
+		if(data.getString(PlayerDataLib.DREAMFOCUS)) {
+			p.width = 0.4F;
+			p.height = 0.4F;
+			AxisAlignedBB bbox = p.getEntityBoundingBox();
+			p.setEntityBoundingBox(new AxisAlignedBB(bbox.minX, bbox.minY, bbox.minZ, bbox.minX+0.4, bbox.minY + 0.4, bbox.minZ+0.4));
+			Vec3d vec = p.getLookVec();
+			int factor = p.isSneaking() ? 20 : 7;
+			p.motionX = (vec.x/factor);
+			p.motionY = (vec.y/factor);
+			p.motionZ = (vec.z/factor);
+		} else if(data.getString(PlayerDataLib.TRANSFORMED)) {
+			p.height = 2.1F;
+			AxisAlignedBB bbox = p.getEntityBoundingBox();
+			p.setEntityBoundingBox(new AxisAlignedBB(bbox.minX, bbox.minY, bbox.minZ, bbox.maxX, bbox.minY + 2.1F, bbox.maxZ));
+		}
 	}
 	
 }

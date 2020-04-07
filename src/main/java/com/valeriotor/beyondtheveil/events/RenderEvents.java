@@ -113,6 +113,8 @@ public class RenderEvents {
 		}
 		if(transformedPlayers.contains(Minecraft.getMinecraft().player))
 			Minecraft.getMinecraft().player.eyeHeight = 2;
+		else if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.DREAMFOCUS))
+			Minecraft.getMinecraft().player.eyeHeight = 0.4F;
 		else
 			Minecraft.getMinecraft().player.eyeHeight = 1.62F;
 	}
