@@ -67,7 +67,7 @@ public class ItemHeldFletum extends Item{
 		
 		if(tl != null) player.sendMessage(new TextComponentTranslation("interact.lacrymatory.success", new TextComponentTranslation("entity.fletum.name")));
 		
-		weeper.setPosition(weeperPos.getX(), weeperPos.getY(), weeperPos.getZ());
+		weeper.setPosition(weeperPos.getX() + 0.5, weeperPos.getY(), weeperPos.getZ() + 0.5);
 		weeper.setMaster(player);
 		w.spawnEntity(weeper);
 		player.getHeldItem(hand).shrink(1);

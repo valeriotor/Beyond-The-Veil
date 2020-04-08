@@ -38,14 +38,12 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);
-		INSTANCE.registerMessage(MessageSyncTransformedPlayer.SyncTransformedPlayerMessageHandler.class, MessageSyncTransformedPlayer.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageReloadResources.ReloadResourcesMessageHandler.class, MessageReloadResources.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePlayerAnimation.PlayerAnimationMessageHandler.class, MessagePlayerAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePerformHurtAnimation.PerformHurtAnimationMessageHandler.class, MessagePerformHurtAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCovenantData.CovenantDataMessageHandler.class, MessageCovenantData.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRevelationRingToClient.RevelationRingToClientMessageHandler.class, MessageRevelationRingToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageWolfMedallionToClient.WolfMedallionToClientMessageHandler.class, MessageWolfMedallionToClient.class, count++, Side.CLIENT);
-		INSTANCE.registerMessage(MessageSyncParasitePlayer.SyncParasitePlayerMessageHandler.class, MessageSyncParasitePlayer.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCameraRotatorClient.CameraRotatorClientMessageHandler.class, MessageCameraRotatorClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageEntityAnimation.EntityAnimationMessageHandler.class, MessageEntityAnimation.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageRemoveStringToClient.RemoveStringToClientMessageHandler.class, MessageRemoveStringToClient.class, count++, Side.CLIENT);
@@ -55,6 +53,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageRitualToClient.RitualToClientMessageHandler.class, MessageRitualToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSawCleaverToClient.SawCleaverToClientMessageHandler.class, MessageSawCleaverToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageMovePlayer.MovePlayerMessageHandler.class, MessageMovePlayer.class, count++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageSyncPlayerRender.SyncPlayerRenderMessageHandler.class, MessageSyncPlayerRender.class, count++, Side.CLIENT);
 		
 	}
 	

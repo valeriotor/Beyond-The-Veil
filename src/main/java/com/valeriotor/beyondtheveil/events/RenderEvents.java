@@ -6,10 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.vecmath.Point3d;
+
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.base.MoreObjects;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.render.RenderParasite;
 import com.valeriotor.beyondtheveil.entities.render.RenderTransformedPlayer;
@@ -28,18 +30,14 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -54,6 +52,7 @@ public class RenderEvents {
 	
 	public final Set<EntityPlayer> transformedPlayers = new HashSet();
 	public final Set<EntityPlayer> parasitePlayers = new HashSet();
+	public final Set<EntityPlayer> dreamFocusPlayers = new HashSet<>();
 	public HashMap<String, BlockPos> covenantPlayers = new HashMap();
 	private static final RenderTransformedPlayer deepOne = new RenderTransformedPlayer(Minecraft.getMinecraft().getRenderManager());
 	private static final RenderParasite parasite = new RenderParasite(Minecraft.getMinecraft().getRenderManager());
@@ -68,7 +67,9 @@ public class RenderEvents {
 	@SubscribeEvent
 	public void onPlayerRenderEvent(RenderPlayerEvent.Pre event) {
 		EntityPlayer p = event.getEntityPlayer();
-		if(transformedPlayers.contains(p)) {
+		if(dreamFocusPlayers.contains(p)) {
+			event.setCanceled(true);
+		} else if(transformedPlayers.contains(p)) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
@@ -253,7 +254,10 @@ public class RenderEvents {
 
 	@SubscribeEvent
 	public void renderHand(RenderHandEvent event) {
-		if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)
+		IPlayerData data = mc.player.getCapability(PlayerDataProvider.PLAYERDATA, null);
+		if(data.getString(PlayerDataLib.DREAMFOCUS)) {
+			event.setCanceled(true);
+		}else if(data.getString(PlayerDataLib.TRANSFORMED)
 				&& mc.gameSettings.thirdPersonView == 0) {
 			event.setCanceled(true);
 	        AbstractClientPlayer abstractclientplayer = mc.player;
@@ -283,6 +287,14 @@ public class RenderEvents {
 	        
 	        GlStateManager.enableCull();
 	        
+		}
+	}
+	
+	public void renderDreamFocusPath(List<Point3d> ps, World w) {
+		if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == ItemRegistry.slug) {
+			for(Point3d p : ps) {
+				w.spawnParticle(EnumParticleTypes.REDSTONE, p.x, p.y, p.z, 255, 0, 0);
+			}
 		}
 	}
 	

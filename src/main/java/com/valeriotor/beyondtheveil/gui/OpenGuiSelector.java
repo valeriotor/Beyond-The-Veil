@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.gui;
 
 import java.util.function.Supplier;
 
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageActivateBauble;
 import com.valeriotor.beyondtheveil.network.MessageActivatePower;
@@ -28,7 +30,7 @@ public class OpenGuiSelector {
 	public void inputRead(ClientTickEvent event) {
 		if(event.phase.equals(Phase.END)) {
 			EntityPlayerSP p = Minecraft.getMinecraft().player;
-			if(!this.mc.isGamePaused() && p != null && this.mc.currentScreen == null) {
+			if(!this.mc.isGamePaused() && p != null && this.mc.currentScreen == null && !p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.DREAMFOCUS)) {
 				for(GuiType type : GuiType.values()) {
 					this.doCheck(type);
 				}

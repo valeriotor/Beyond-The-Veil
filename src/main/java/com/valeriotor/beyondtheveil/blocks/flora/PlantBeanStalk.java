@@ -153,11 +153,6 @@ public class PlantBeanStalk extends BlockPlant implements IMutationCatalyst{
 	}
 	
 	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-	
-	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}

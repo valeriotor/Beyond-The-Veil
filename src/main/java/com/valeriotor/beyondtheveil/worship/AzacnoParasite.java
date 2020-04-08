@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlaySound;
-import com.valeriotor.beyondtheveil.network.MessageSyncParasitePlayer;
+import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -103,7 +103,7 @@ public class AzacnoParasite {
 	}
 	
 	private void updatePlayers(boolean add) {
-		((WorldServer)this.getPlayer().world).getEntityTracker().sendToTrackingAndSelf(this.getPlayer(), BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncParasitePlayer(player, add)));
+		((WorldServer)this.getPlayer().world).getEntityTracker().sendToTrackingAndSelf(this.getPlayer(), BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(player, add, MessageSyncPlayerRender.Type.PARASITE)));
 	}
 	
 	public EntityPlayer getPlayer() {

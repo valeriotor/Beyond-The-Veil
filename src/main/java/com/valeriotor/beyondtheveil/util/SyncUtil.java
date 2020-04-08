@@ -2,27 +2,24 @@ package com.valeriotor.beyondtheveil.util;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capabilities.ResearchProvider;
-import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageRemoveStringToClient;
 import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
 import com.valeriotor.beyondtheveil.network.MessageSyncIntDataToServer;
-import com.valeriotor.beyondtheveil.network.MessageSyncParasitePlayer;
+import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.network.MessageSyncStringDataToServer;
-import com.valeriotor.beyondtheveil.network.MessageSyncTransformedPlayer;
 import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToClient;
 import com.valeriotor.beyondtheveil.network.research.ResearchSyncer;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.ActivePowers.TransformDeepOne;
-
-import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -57,13 +54,13 @@ public class SyncUtil {
 	
 	public static void syncTransformData(EntityPlayer p) {
 		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED))
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(p.getPersistentID(), true, MessageSyncPlayerRender.Type.DEEPONE), (EntityPlayerMP)p);
 	}
 	
 	public static void syncParasiteData(EntityPlayer p) {
 		AzacnoParasite ap = AzacnoParasiteEvents.parasites.get(p.getPersistentID());
 		if(ap != null && ap.renderParasite()) {
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(p.getPersistentID(), true), (EntityPlayerMP)p);
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(p.getPersistentID(), true, MessageSyncPlayerRender.Type.PARASITE), (EntityPlayerMP)p);
 		}
 	}
 	

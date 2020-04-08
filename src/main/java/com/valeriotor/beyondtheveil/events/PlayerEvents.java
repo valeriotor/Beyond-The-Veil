@@ -15,9 +15,7 @@ import com.valeriotor.beyondtheveil.items.IArtifactItem;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
-import com.valeriotor.beyondtheveil.network.MessageSyncParasitePlayer;
-import com.valeriotor.beyondtheveil.network.MessageSyncTransformedPlayer;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
@@ -195,11 +193,17 @@ public class PlayerEvents {
 	public static void playerStartTracking(PlayerEvent.StartTracking event) {
 		if(event.getTarget() instanceof EntityPlayer) {
 			EntityPlayer target = (EntityPlayer) event.getTarget();
-			if(target.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(target.getPersistentID(), true), (EntityPlayerMP)event.getEntityPlayer());
+			IPlayerData data = target.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			if(data.getString(PlayerDataLib.TRANSFORMED)) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), true, MessageSyncPlayerRender.Type.DEEPONE), (EntityPlayerMP)event.getEntityPlayer());
 			}
-			if(AzacnoParasiteEvents.parasites.containsKey(target.getPersistentID()) && AzacnoParasiteEvents.parasites.get(target.getPersistentID()).renderParasite())
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(target.getPersistentID(), true), (EntityPlayerMP)event.getEntityPlayer());
+			if(AzacnoParasiteEvents.parasites.containsKey(target.getPersistentID()) && AzacnoParasiteEvents.parasites.get(target.getPersistentID()).renderParasite()) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), true, MessageSyncPlayerRender.Type.PARASITE), (EntityPlayerMP)event.getEntityPlayer());
+			}
+			if(data.getString(PlayerDataLib.DREAMFOCUS)) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), true, MessageSyncPlayerRender.Type.DREAMFOCUS), (EntityPlayerMP)event.getEntityPlayer());
+			}
+				
 		}
 	}
 	
@@ -207,8 +211,9 @@ public class PlayerEvents {
 	public static void playerStopTracking(PlayerEvent.StopTracking event) {
 		if(event.getTarget() instanceof EntityPlayer) {
 			EntityPlayer target = (EntityPlayer) event.getTarget();
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncTransformedPlayer(target.getPersistentID(), false), (EntityPlayerMP)event.getEntityPlayer());
-			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncParasitePlayer(target.getPersistentID(), false), (EntityPlayerMP)event.getEntityPlayer());
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), false, MessageSyncPlayerRender.Type.DEEPONE), (EntityPlayerMP)event.getEntityPlayer());
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), false, MessageSyncPlayerRender.Type.PARASITE), (EntityPlayerMP)event.getEntityPlayer());
+			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), false, MessageSyncPlayerRender.Type.DREAMFOCUS), (EntityPlayerMP)event.getEntityPlayer());
 		}
 	}
 	

@@ -1,0 +1,11 @@
+{
+	"forge_marker": 1,
+    "variants": {
+        "base": [{
+			"model": "beyondtheveil:dream_focus_base"
+		}],
+        "trans": [{
+            "model": "beyondtheveil:dream_focus_water"
+        }]
+    }
+}

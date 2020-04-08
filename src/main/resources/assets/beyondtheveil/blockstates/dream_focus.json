@@ -1,5 +1,21 @@
 {
+	"forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block",
+        "custom": {
+            "base": "beyondtheveil:dream_focus_aux#base",
+            "Mipped Cutout": "beyondtheveil:dream_focus_aux#base",
+            "Translucent": "beyondtheveil:dream_focus_aux#trans"
+        }
+    },
     "variants": {
-        "normal": { "model": "beyondtheveil:damp_stone" }
+        "inventory": [{}],
+		"facing" : {
+			"east": { "transform": { "rotation": { "y": 270 }} },
+			"south": {  },
+			"west": { "transform": { "rotation": { "y": 90 }} },
+			"north": { "transform": { "rotation": { "y": 180 }} }
+		}
     }
 }

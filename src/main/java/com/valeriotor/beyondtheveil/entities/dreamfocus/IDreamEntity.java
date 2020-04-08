@@ -14,10 +14,10 @@ public interface IDreamEntity {
 			Point3d p = this.getNextPoint(ps);
 			if(p != null) {
 				Entity e = (Entity)this;
-				Vec3d vec = new Vec3d(p.x-e.posX, p.y-e.posY, p.z-e.posZ).normalize();
-				e.motionX += vec.x/40;
-				e.motionY = vec.y/7;
-				e.motionZ += vec.z/40;
+				Vec3d vec = new Vec3d(p.x-e.posX, p.y-e.posY, p.z-e.posZ);
+				e.motionX += vec.x/20;
+				e.motionY = vec.y/3;
+				e.motionZ += vec.z/20;
 				return true;
 			}
 			return false;

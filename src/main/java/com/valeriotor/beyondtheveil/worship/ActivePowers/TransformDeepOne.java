@@ -12,7 +12,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlaySound;
 import com.valeriotor.beyondtheveil.network.MessageStepAssist;
-import com.valeriotor.beyondtheveil.network.MessageSyncTransformedPlayer;
+import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import com.valeriotor.beyondtheveil.worship.Deities;
@@ -45,7 +45,7 @@ public class TransformDeepOne implements IActivePower{
 			applyAttributes(p);
 			((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deep_one_transform), p.getPosition().toLong())));
 		}
-		((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncTransformedPlayer(p.getPersistentID(), !transformed)));
+		((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(p.getPersistentID(), !transformed, MessageSyncPlayerRender.Type.DEEPONE)));
 		return true;
 	}
 
