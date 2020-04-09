@@ -10,6 +10,7 @@ public class BlockNames {
 	public static final String BLOOD_WELL = "blood_well";
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
+	public static final String CURTAIN = "curtain";
 	public static final String DARKSAND = "dark_sand";
 	public static final String DREAMFOCUS = "dream_focus";
 	public static final String ELDER_BRICK = "elder_bricks";

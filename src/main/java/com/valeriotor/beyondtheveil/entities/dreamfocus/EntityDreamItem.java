@@ -43,6 +43,8 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 		if(removeEntity) {
 			EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
 			this.world.spawnEntity(e);
+			e.motionX = 0;
+			e.motionZ = 0;
 			this.world.removeEntity(this);	
 		}
 	}
@@ -60,6 +62,10 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 		}
 		this.removeEntity = true;
 		return null;
+	}
+	
+	public void removeEntity() {
+		this.removeEntity = true;
 	}
 	
 	@Override
