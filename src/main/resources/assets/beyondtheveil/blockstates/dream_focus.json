@@ -12,9 +12,9 @@
     "variants": {
         "inventory": [{}],
 		"facing" : {
-			"east": { "transform": { "rotation": { "y": 270 }} },
+			"east": { "transform": { "rotation": { "y": 90 }} },
 			"south": {  },
-			"west": { "transform": { "rotation": { "y": 90 }} },
+			"west": { "transform": { "rotation": { "y": 270 }} },
 			"north": { "transform": { "rotation": { "y": 180 }} }
 		}
     }

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class KeyHandler {
 	
 	public KeyBinding dodge = new KeyBinding(I18n.format("keys.dodge"), 56, "Beyond the Veil");
-	public KeyBinding activeBauble = new KeyBinding(I18n.format("keys.activeBauble"), 44, "Beyond the Veil");
+	public KeyBinding activeBauble = new KeyBinding(I18n.format("keys.activebauble"), 44, "Beyond the Veil");
 	public KeyBinding power = new KeyBinding(I18n.format("keys.power"), 19, "Beyond the Veil");
 	
 	
