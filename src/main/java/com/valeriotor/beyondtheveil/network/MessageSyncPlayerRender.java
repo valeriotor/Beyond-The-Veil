@@ -59,8 +59,10 @@ public class MessageSyncPlayerRender implements IMessage{
 				case DREAMFOCUS:
 					  if(message.add)
 							BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.add(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
-					  else
-							BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.remove(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));	
+					  else {
+						  Minecraft.getMinecraft().player.eyeHeight = 1.62F;
+						  BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.remove(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));	
+					  }
 					break;
 				case PARASITE:
 					  if(message.add)
@@ -71,8 +73,10 @@ public class MessageSyncPlayerRender implements IMessage{
 				case DEEPONE:
 					if(message.add)
 						BeyondTheVeil.proxy.renderEvents.transformedPlayers.add(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
-					else
+					else {
+						BeyondTheVeil.proxy.renderEvents.resetEyeHeight(message.uuid);
 						BeyondTheVeil.proxy.renderEvents.transformedPlayers.remove(Minecraft.getMinecraft().player.world.getPlayerEntityByUUID(message.uuid));
+					}
 					break;
 				default:
 					break;
