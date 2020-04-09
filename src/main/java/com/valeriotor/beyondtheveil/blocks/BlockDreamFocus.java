@@ -52,14 +52,15 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 					SyncUtil.addStringDataOnServer(player, true, PlayerDataLib.DREAMFOCUS);
 					((WorldServer)player.world).getEntityTracker().sendToTrackingAndSelf(player, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(player.getPersistentID(), true, MessageSyncPlayerRender.Type.DREAMFOCUS)));
 					BlockPos startPos = pos.offset(state.getValue(FACING));
-					player.setPositionAndUpdate(startPos.getX()+0.5, startPos.getY(), startPos.getZ()+0.5);
+					player.setPositionAndUpdate(startPos.getX()+0.5, startPos.getY()+0.5, startPos.getZ()+0.5);
 					player.setRotationYawHead((((state.getValue(FACING).getOpposite().getHorizontalIndex()+1)&3)-1)*90);
 					player.prevRotationYaw = (((state.getValue(FACING).getOpposite().getHorizontalIndex()+1)&3)-1)*90;
 					player.rotationPitch = 0;
-					BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient((((state.getValue(FACING).getHorizontalIndex()+1)&3)-1)*90 - player.rotationYaw, -player.prevRotationPitch, 2), (EntityPlayerMP)player);
+					if(!player.isSneaking())
+						BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient((((state.getValue(FACING).getHorizontalIndex()+1)&3)-1)*90 - player.rotationYaw, -player.prevRotationPitch, 2), (EntityPlayerMP)player);
 					//player.setPositionAndRotation(startPos.getX()+0.5, startPos.getY(), startPos.getZ()+0.5, (((state.getValue(FACING).getHorizontalIndex()+1)&3)-1)*90, 0);
 					PlayerTimerBuilder ptb = new PlayerTimerBuilder(player)
-												//.addInterrupt(EntityPlayer::isSneaking)
+												.addFinisher(EntityPlayer::isSneaking)
 												.addContinuosAction(p -> BlockDreamFocus.continuosAction(p, td))
 												.addFinalAction(p -> SyncUtil.removeStringDataOnServer(p, PlayerDataLib.DREAMFOCUS))
 												.addFinalAction(p -> td.finish())

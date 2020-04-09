@@ -20,6 +20,7 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	private int pointCounter = 0;
 	private BlockPos focus = null;
 	private boolean loadEntity = false;
+	private boolean removeEntity = false;
 	public EntityDreamItem(World w) {
 		super(w);
 	}
@@ -31,12 +32,18 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
+		if(world.isRemote) return;
 		if(loadEntity) {
 			TileEntity te = this.world.getTileEntity(focus);
 			if(te instanceof TileDreamFocus) {
 				TileDreamFocus tdf = (TileDreamFocus)te;
 				tdf.addDreamEntity(this);
 			}
+		}
+		if(removeEntity) {
+			EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
+			this.world.spawnEntity(e);
+			this.world.removeEntity(this);	
 		}
 	}
 	
@@ -51,9 +58,7 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 			}
 			return p;
 		}
-		EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
-		this.world.spawnEntity(e);
-		this.world.removeEntity(this);		// move to onupdate!!
+		this.removeEntity = true;
 		return null;
 	}
 	
