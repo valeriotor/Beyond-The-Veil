@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -68,7 +69,9 @@ public class ResearchUtil {
 	}
 	
 	public static ResearchStatus getResearch(EntityPlayer p, String key) {
-		return p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key);
+		if(!(p instanceof FakePlayer))
+			return p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key);
+		return dummyStatus;
 	}
 	
 	public static int getResearchStage(EntityPlayer p, String key) {
@@ -127,5 +130,25 @@ public class ResearchUtil {
 			}
 		}
 	}
+	
+	private static ResearchStatus dummyStatus = new ResearchStatus(ResearchRegistry.researches.get("CRYSTALDREAMS")) {
+		@Override
+		public boolean isComplete() {
+			return false;
+		}
+		@Override
+		public int getStage() {
+			return -2;
+		};
+		@Override
+		public boolean isKnown(EntityPlayer p) {
+			return false;
+		};
+		@Override
+		public boolean isVisible(EntityPlayer p) {
+			return false;
+		}	
+		
+	};
 	
 }

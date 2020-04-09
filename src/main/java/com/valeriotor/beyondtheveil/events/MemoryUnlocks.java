@@ -19,11 +19,13 @@ import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
@@ -70,7 +72,7 @@ public class MemoryUnlocks {
 			if(w.isRemote) return;
 			IBlockState state = w.getBlockState(event.getPos());
 			if(state.getBlock() instanceof BlockSapling) {
-				List<EntityPlayer> players = w.getPlayers(EntityPlayer.class, p -> p.getDistanceSq(event.getPos()) < 25);
+				List<EntityPlayer> players = w.getPlayers(EntityPlayer.class, p -> p.getDistanceSq(event.getPos()) < 25 && !(p instanceof FakePlayer));
 				for(EntityPlayer p : players) {
 					if(!Memory.CHANGE.isUnlocked(p) && Memory.CHANGE.isUnlockable(p)) {
 						IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
@@ -90,14 +92,15 @@ public class MemoryUnlocks {
 	public static void power(LivingDeathEvent event) {
 		EntityLivingBase e = event.getEntityLiving();
 		if(!(e instanceof EntityPlayer) && (e.getMaxHealth() >= 40 || !e.isNonBoss()) && event.getSource().getTrueSource() instanceof EntityPlayer) {
-			Memory.POWER.unlock((EntityPlayer)event.getSource().getTrueSource());
+			if(!(event.getSource().getTrueSource() instanceof FakePlayer))
+				Memory.POWER.unlock((EntityPlayer)event.getSource().getTrueSource());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void breakBlockEvent(BlockEvent.BreakEvent event) {
 		EntityPlayer p = event.getPlayer();
-		if(ResearchUtil.getResearchStage(p, "CRYSTALDREAMS") == 1) {
+		if(!(p instanceof FakePlayer) && ResearchUtil.getResearchStage(p, "CRYSTALDREAMS") == 1) {
 			Block b = p.world.getBlockState(event.getPos()).getBlock();
 			if(b == Blocks.DIAMOND_ORE || b == Blocks.EMERALD_ORE) {
 				Memory.CRYSTAL.unlock(p);
@@ -113,7 +116,7 @@ public class MemoryUnlocks {
 		if(e instanceof EntityVillager) {
 			Memory.HUMAN.unlock(p);
 		} else if(e instanceof EntityAnimal) {
-			if(((EntityAnimal)e).isBreedingItem(p.getHeldItem(event.getHand())) && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
+			if(!(p instanceof FakePlayer) && ((EntityAnimal)e).isBreedingItem(p.getHeldItem(event.getHand())) && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE")) {
 				Memory.ANIMAL.unlock(p);
 			}
 		}
@@ -156,7 +159,9 @@ public class MemoryUnlocks {
 	public static void boneMealEvent(BonemealEvent event) {
 		if(event.getResult() != Result.DENY) {
 			EntityPlayer p = event.getEntityPlayer();
+			if(p == null) return;
 			if(p.world.isRemote) return;
+			if(p instanceof FakePlayer) return;
 			int a = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.BONEMEALUSED, 0);
 			if(a < 50) {
 				if(ResearchUtil.isResearchComplete(p, "EFFECTDREAMS") && ResearchUtil.isResearchComplete(p, "HUMANDREAMS")) {
@@ -177,6 +182,7 @@ public class MemoryUnlocks {
 		if(e.world.isRemote) 									return;
 		if(!(e instanceof EntityWitherSkeleton)) 				return;
 		if(!(attacker instanceof EntityPlayer)) 				return;
+		if(attacker instanceof FakePlayer)						return;
 		EntityPlayer p = (EntityPlayer) attacker;
 		if(!ResearchUtil.isResearchComplete(p, "DREAMSHRINE")) 	return;
 		if(Memory.BEHEADING.isUnlocked(p))						return;
