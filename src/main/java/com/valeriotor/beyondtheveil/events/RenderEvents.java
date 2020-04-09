@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.vecmath.Point3d;
 
@@ -116,8 +117,13 @@ public class RenderEvents {
 			Minecraft.getMinecraft().player.eyeHeight = 2;
 		else if(Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.DREAMFOCUS))
 			Minecraft.getMinecraft().player.eyeHeight = 0.4F;
-		else
+	}
+	
+	public void resetEyeHeight(UUID uuid) {
+		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused()) return;
+		if(Minecraft.getMinecraft().player.getPersistentID().equals(uuid)) {
 			Minecraft.getMinecraft().player.eyeHeight = 1.62F;
+		}
 	}
 	
 	@SubscribeEvent
