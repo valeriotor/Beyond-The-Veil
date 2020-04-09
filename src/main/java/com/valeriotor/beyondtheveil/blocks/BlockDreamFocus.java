@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageCameraRotatorClient;
 import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
@@ -50,8 +51,15 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 					td.clearList();
 					SyncUtil.addStringDataOnServer(player, true, PlayerDataLib.DREAMFOCUS);
 					((WorldServer)player.world).getEntityTracker().sendToTrackingAndSelf(player, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(player.getPersistentID(), true, MessageSyncPlayerRender.Type.DREAMFOCUS)));
-					player.setPositionAndUpdate(pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5);
+					BlockPos startPos = pos.offset(state.getValue(FACING));
+					player.setPositionAndUpdate(startPos.getX()+0.5, startPos.getY(), startPos.getZ()+0.5);
+					player.setRotationYawHead((((state.getValue(FACING).getOpposite().getHorizontalIndex()+1)&3)-1)*90);
+					player.prevRotationYaw = (((state.getValue(FACING).getOpposite().getHorizontalIndex()+1)&3)-1)*90;
+					player.rotationPitch = 0;
+					BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient((((state.getValue(FACING).getHorizontalIndex()+1)&3)-1)*90 - player.rotationYaw, -player.prevRotationPitch, 2), (EntityPlayerMP)player);
+					//player.setPositionAndRotation(startPos.getX()+0.5, startPos.getY(), startPos.getZ()+0.5, (((state.getValue(FACING).getHorizontalIndex()+1)&3)-1)*90, 0);
 					PlayerTimerBuilder ptb = new PlayerTimerBuilder(player)
+												//.addInterrupt(EntityPlayer::isSneaking)
 												.addContinuosAction(p -> BlockDreamFocus.continuosAction(p, td))
 												.addFinalAction(p -> SyncUtil.removeStringDataOnServer(p, PlayerDataLib.DREAMFOCUS))
 												.addFinalAction(p -> td.finish())

@@ -11,6 +11,7 @@ import javax.vecmath.Point3d;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.blocks.BlockDreamFocus;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.blocks.ModBlockFacing;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.IDreamEntity;
 
@@ -21,9 +22,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileDreamFocus extends TileEntity implements ITickable{
 
@@ -52,9 +57,21 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 			this.counter++;
 			if(this.counter > 150) {
 				if(BlockDreamFocus.hasFletum(world, pos)) {
-					EntityDreamItem edi = new EntityDreamItem(this.world, this.pos.getX()+0.5, this.pos.getY()+1, this.pos.getZ()+0.5, new ItemStack(BlockRegistry.BlockBloodWell), this.pos);
-					this.ents.add(edi);
-					this.world.spawnEntity(edi);
+					EnumFacing facing = this.getState().getValue(ModBlockFacing.FACING).getOpposite();
+					TileEntity te = world.getTileEntity(pos.offset(facing));
+					if(te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())) {
+						IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+						for(int i = 0; i < cap.getSlots(); i++) {
+							ItemStack stack = cap.extractItem(i, 64, false);
+							if(!stack.isEmpty()) {
+								BlockPos front = this.pos.offset(facing.getOpposite());
+								EntityDreamItem edi =new EntityDreamItem(this.world, front.getX()+0.5, front.getY(), front.getZ()+0.5, stack, this.pos);
+								this.ents.add(edi);
+								this.world.spawnEntity(edi);
+								break;
+							}
+						}
+					}
 				}
 				this.counter = 0;
 			}

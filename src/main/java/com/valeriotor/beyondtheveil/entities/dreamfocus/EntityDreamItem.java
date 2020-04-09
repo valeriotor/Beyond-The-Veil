@@ -52,6 +52,7 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 			return p;
 		}
 		EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
+		this.world.spawnEntity(e);
 		this.world.removeEntity(this);		// move to onupdate!!
 		return null;
 	}

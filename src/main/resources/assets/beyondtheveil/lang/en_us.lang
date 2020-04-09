@@ -305,7 +305,8 @@ gui.drowned.noac=The gods of your ancestors do not exist.
 gui.research_page.complete=Progress
 
 keys.dodge=Dodge
-keys.medallion=Wolf Medallion Ability
+keys.activebauble=Use/Manage Baubles
+keys.power=Use/Select Power
 
 
 ##################

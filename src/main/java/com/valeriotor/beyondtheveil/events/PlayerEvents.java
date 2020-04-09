@@ -32,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -81,7 +82,7 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
 		EntityPlayer p = event.getEntityPlayer();
-		if(p instanceof EntityPlayer) {
+		if(p instanceof EntityPlayer && !(p instanceof FakePlayer)) {
 			if(DGWorshipHelper.hasWaterPowers(p)) {
 				if(p.isInsideOfMaterial(Material.WATER)) {
 					if(!EnchantmentHelper.getAquaAffinityModifier(p))
@@ -232,7 +233,7 @@ public class PlayerEvents {
 		ItemStack stack = event.getStack();
 		if(stack.getItem() instanceof IArtifactItem) {
 			EntityPlayer p = event.player;
-			if(!p.world.isRemote)
+			if(!p.world.isRemote && !(p instanceof FakePlayer))
 				((IArtifactItem)stack.getItem()).unlockData(p);
 		}
 		
