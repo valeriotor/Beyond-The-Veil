@@ -75,6 +75,7 @@ public class BlockRegistry {
 	public static final BlockMemorySieve BlockMemorySieve = new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_SIEVE);
 	public static final BlockGearBench BlockGearBench = new BlockGearBench(Material.IRON, BlockNames.GEAR_BENCH);
 	public static final BlockDreamFocus BlockDreamFocus = new BlockDreamFocus(BlockNames.DREAMFOCUS);
+	public static final BlockDreamFocusFluids BlockDreamFocusFluids = new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
 	public static final BlockCurtain BlockCurtain = new BlockCurtain(BlockNames.CURTAIN);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
@@ -131,6 +132,7 @@ public class BlockRegistry {
 	   	registry.register(BlockMemorySieve);
 	   	registry.register(BlockGearBench);
 	   	registry.register(BlockDreamFocus);
+	   	registry.register(BlockDreamFocusFluids);
 	   	registry.register(BlockCurtain);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);

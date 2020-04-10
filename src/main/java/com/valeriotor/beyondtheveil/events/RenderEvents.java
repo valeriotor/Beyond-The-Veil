@@ -24,6 +24,7 @@ import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 
 import baubles.api.BaublesApi;
+import baubles.api.inv.BaublesInventoryWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
@@ -297,9 +298,14 @@ public class RenderEvents {
 	}
 	
 	public void renderDreamFocusPath(List<Point3d> ps, World w) {
-		if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == ItemRegistry.slug) {
-			for(Point3d p : ps) {
-				w.spawnParticle(EnumParticleTypes.REDSTONE, p.x, p.y, p.z, 255, 0, 0);
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		int a = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
+		if(a != -1) {
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, a), 1, false) == 1) {
+				for(int i = 0; i < ps.size(); i+=3) {
+					Point3d point = ps.get(i);
+					w.spawnParticle(EnumParticleTypes.REDSTONE, point.x, point.y, point.z, 255, 0, 0);
+				}
 			}
 		}
 	}

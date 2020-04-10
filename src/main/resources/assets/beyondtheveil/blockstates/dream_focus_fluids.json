@@ -1,0 +1,22 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block",
+        "custom": {
+            "base": "beyondtheveil:dream_focus_fluids#base",
+            "Mipped Cutout": "beyondtheveil:dream_focus_fluids#base",
+            "Translucent": "beyondtheveil:dream_focus_fluids#trans"
+        }
+    },
+    "variants": {
+        "normal": [{}],
+        "base": [{
+            "model": "beyondtheveil:dream_focus_fluids_base"
+        }],
+        "trans": [{
+            "model": "beyondtheveil:dream_focus_fluids_translucent"
+        }],
+        "inventory": [{}]
+    }
+}

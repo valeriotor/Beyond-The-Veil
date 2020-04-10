@@ -123,8 +123,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 				if(this.ticksToRecovery > 0) this.ticksToRecovery--;
 				else {
 					EntityVillager vil = new EntityVillager(this.world, this.getProfessionID());
-					BlockPos p = this.getPosition();
-					vil.setPosition(p.getX(), p.getY(), p.getZ());
+					vil.setPosition(this.posX, this.posY, this.posZ);
 					this.world.spawnEntity(vil);
 					this.world.removeEntity(this);
 				}

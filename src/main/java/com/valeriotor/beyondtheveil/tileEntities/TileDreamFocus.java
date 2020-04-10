@@ -43,16 +43,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	public void update() {
 		if(this.world.isRemote) {
 			BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world);
-			
-			if(this.counter < this.points.size()) {
-				Point3d p = this.points.get(this.counter);
-				this.world.spawnParticle(EnumParticleTypes.REDSTONE, p.x, p.y, p.z, 255, 0, 0);
-				this.counter++;
-			} else {
-				this.counter++;
-				if(this.counter >= this.points.size()+20)
-					this.counter = 0;
-			}
 		} else {
 			this.counter++;
 			if(this.counter > 150) {

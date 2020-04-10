@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entities;
 
 import java.util.UUID;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.tileEntities.TileLacrymatory;
@@ -165,6 +166,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
+		if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockDreamFocus) return null;
 		return BTVSounds.fletum_weeping;
 	}
 	

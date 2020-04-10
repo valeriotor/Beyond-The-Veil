@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import com.valeriotor.beyondtheveil.items.ItemBlackjack;
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
 
 import net.minecraft.entity.EntityLiving;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -32,7 +35,10 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(world.isRemote) return;
+		if(world.isRemote) {
+			this.world.spawnParticle(EnumParticleTypes.REDSTONE, posX, posY, posZ, 255, 0, 0);
+			return;
+		}
 		if(loadEntity) {
 			TileEntity te = this.world.getTileEntity(focus);
 			if(te instanceof TileDreamFocus) {
@@ -54,9 +60,13 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 		if(this.pointCounter < ps.size()) {
 			Point3d p = ps.get(pointCounter);
 			this.pointCounter++;
-			if(this.getItem().getItem() instanceof ItemSword) {
+			ItemStack stack = this.getItem();
+			if(stack.getItem() instanceof ItemSword) {
 				this.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(this) < 0.5)
-				.forEach(e -> e.attackEntityFrom(DamageSource.GENERIC, ((ItemSword)this.getItem().getItem()).getAttackDamage()));
+				.forEach(e -> e.attackEntityFrom(DamageSource.GENERIC, ((ItemSword)stack.getItem()).getAttackDamage()));
+			} else if(stack.getItem() == ItemRegistry.blackjack) {
+				this.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(this) < 0.5)
+				.forEach(e -> ItemBlackjack.processInteract(stack, e, 0.2, false));
 			}
 			return p;
 		}
