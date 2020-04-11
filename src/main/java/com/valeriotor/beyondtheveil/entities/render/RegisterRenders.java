@@ -9,8 +9,8 @@ import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
-import com.valeriotor.beyondtheveil.entities.EntityStarspawn;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -96,6 +96,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityCrazedWeeper> createRenderFor(RenderManager manager) 
 			{return new RenderCrazedWeeper(manager);}
+			});
+		
+		//Dream Fluid
+		RenderingRegistry.registerEntityRenderingHandler(EntityDreamFluid.class, new IRenderFactory<EntityDreamFluid>(){
+			@Override
+			public Render<EntityDreamFluid> createRenderFor(RenderManager manager) 
+			{return new RenderDreamFluid(manager);}
 			});
 	}
 }

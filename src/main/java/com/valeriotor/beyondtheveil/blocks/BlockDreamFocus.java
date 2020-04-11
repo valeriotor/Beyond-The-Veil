@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.network.MessageCameraRotatorClient;
 import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
+import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus.FocusType;
 import com.valeriotor.beyondtheveil.util.PlayerTimer.PlayerTimerBuilder;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
@@ -83,7 +84,7 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileDreamFocus();
+		return new TileDreamFocus(FocusType.ITEM);
 	}
 	
 	public static void continuosAction(EntityPlayer p, TileDreamFocus td) {

@@ -18,6 +18,7 @@ import com.valeriotor.beyondtheveil.entities.render.RenderParasite;
 import com.valeriotor.beyondtheveil.entities.render.RenderTransformedPlayer;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
@@ -37,9 +38,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -185,11 +189,12 @@ public class RenderEvents {
 		}
 		glowingEnts.clear();
 	}
-	
+	private static final ResourceLocation FOCUS_OVERLAY = new ResourceLocation(References.MODID, "textures/gui/focus_overlay.png");
 	@SubscribeEvent
 	public void onOverlayRenderEvent(RenderWorldLastEvent event) {
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused() || Minecraft.getMinecraft().player.world == null) return;
 		renderCovenantPlayers(event);
+		
 	}
 	
 	public void renderCovenantPlayers(RenderWorldLastEvent event) {
@@ -309,5 +314,36 @@ public class RenderEvents {
 			}
 		}
 	}
+	
+	@SubscribeEvent
+	public void actualOverlayEvent(RenderGameOverlayEvent event) {
+		if(event.getType() == ElementType.ALL) {
+			int focusCounter = BeyondTheVeil.proxy.cEvents.getFocusCounter();
+			if(focusCounter > 0) {
+				Minecraft.getMinecraft().renderEngine.bindTexture(FOCUS_OVERLAY);
+				int height = event.getResolution().getScaledHeight();
+				int width = event.getResolution().getScaledWidth();
+				GlStateManager.pushMatrix();
+				GlStateManager.enableAlpha();
+				drawModalRectWithCustomSizedTexture(width/2-64, height-100, 0, 0, MathHelperBTV.clamp(0, 127, (focusCounter)*128/200), 32, 128, 32);
+				GlStateManager.disableAlpha();
+				GlStateManager.popMatrix();
+			}
+		}
+	}
+	
+	public static void drawModalRectWithCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
 	
 }
