@@ -13,7 +13,6 @@ public class ModelRegistry {
 	public static ModelBloodZombie blood_zombie;
 	public static ModelBloodSkeleton blood_skeleton;
 	public static ModelCrazedWeeper crazed_weeper;
-	public static ModelDreamFluid dream_fluid;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -27,7 +26,6 @@ public class ModelRegistry {
 		blood_zombie = new ModelBloodZombie();
 		blood_skeleton = new ModelBloodSkeleton();
 		crazed_weeper = new ModelCrazedWeeper();
-		dream_fluid = new ModelDreamFluid();
 	}
 	
 }
