@@ -1,8 +1,10 @@
 package com.valeriotor.beyondtheveil.tileEntities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -15,9 +17,9 @@ import com.valeriotor.beyondtheveil.blocks.ModBlockFacing;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.IDreamEntity;
-import com.valeriotor.beyondtheveil.fluids.ModFluids;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,7 +31,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -41,7 +42,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 
 	private List<Point3d> points = new ArrayList<>();
 	private int counter = 0;
-	private List<IDreamEntity> ents = new ArrayList<>();
+	private Set<Integer> ents = new HashSet<>();
 	private UUID usingPlayer;
 	private int playerCounter = 0;
 	private boolean fletum = false;
@@ -71,7 +72,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								if(!stack.isEmpty()) {
 									BlockPos front = this.pos.offset(facing.getOpposite());
 									EntityDreamItem edi =new EntityDreamItem(this.world, front.getX()+0.5, front.getY(), front.getZ()+0.5, stack, this.pos);
-									this.ents.add(edi);
+									this.ents.add(edi.getEntityId());
 									this.world.spawnEntity(edi);
 									break;
 								}
@@ -100,7 +101,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								if(toDrain.amount > 0) {
 									EntityDreamFluid edf = new EntityDreamFluid(this.world, toDrain, this.pos);
 									edf.setPosition(this.pos.getX()+0.5, this.pos.getY()-1, this.pos.getZ()+0.5);
-									this.ents.add(edf);
+									this.ents.add(edf.getEntityId());
 									this.world.spawnEntity(edf);
 								}
 							}
@@ -110,10 +111,13 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 				}
 				this.counter = 0;
 			}
-			Iterator<IDreamEntity> iter = ents.iterator();
+			Iterator<Integer> iter = ents.iterator();
 			while(iter.hasNext()) {
-				IDreamEntity ent = iter.next();
-				if(!ent.moveToNextPoint(points)) iter.remove();
+				int id = iter.next();
+				Entity e = world.getEntityByID(id);
+				if(e instanceof IDreamEntity && e.getDistanceSq(this.getPos()) < 1000) {
+					if(!((IDreamEntity)e).moveToNextPoint(points)) iter.remove();
+				} else iter.remove();
 			}
 			
 		}
@@ -146,8 +150,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	}
 	
 	public void addDreamEntity(IDreamEntity e) {
-		if(!this.ents.contains(e))
-			this.ents.add(e);
+		this.ents.add(((Entity)e).getEntityId());
 	}
 	
 	@Override

@@ -65,7 +65,10 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	public Point3d getNextPoint(List<Point3d> ps) {
 		if(this.pointCounter < ps.size()) {
 			Point3d p = ps.get(pointCounter);
-			this.pointCounter++;
+
+			if(this.world.isAreaLoaded(((Entity)this).getPosition(), 1)) {
+				this.pointCounter++;
+			}
 			BlockPos pos = new BlockPos(2*p.x-posX,2*p.y-posY,2*p.z-posZ);
 			this.onInsideBlock(world.getBlockState(pos), pos, p);
 			return p;
@@ -101,6 +104,11 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 		byte amount = this.fluid == null ? 0 : (byte)(this.fluid.amount / 100);
 		this.dataManager.register(FLUIDNAME, s);
 		this.dataManager.register(FLUIDAMOUNT, amount);
+	}
+	
+	@Override
+	protected boolean canDespawn() {
+		return false;
 	}
 
 	@Override
@@ -161,6 +169,24 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	@Override
 	public boolean getIsInvulnerable() {
 		return true;
+	}
+	
+	@Override
+	public void fall(float distance, float damageMultiplier) {
+	}
+	
+	@Override
+	public boolean canBreatheUnderwater() {
+		return true;
+	}
+	
+	@Override
+	public boolean canRenderOnFire() {
+		return false;
+	}
+	
+	@Override
+	public void setFire(int seconds) {
 	}
 	
 	protected void onInsideBlock(IBlockState state, BlockPos destPos, Point3d nextPoint) {
