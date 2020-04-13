@@ -4,18 +4,41 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
+import com.valeriotor.beyondtheveil.util.FluidHelper;
+import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.MoverType;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ReportedException;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.wrappers.BlockLiquidWrapper;
+import net.minecraftforge.fluids.capability.wrappers.BlockWrapper;
+import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
 public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	private int pointCounter = 0;
@@ -28,14 +51,14 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	
 	public EntityDreamFluid(World worldIn) {
 		super(worldIn);
-		this.setSize(0.2F, 0.2F);
+		this.setSize(0.4F, 0.4F);
+		this.setEntityBoundingBox(new AxisAlignedBB(0,0,0,0.4,0.4,0.4));
 	}
 	
 	public EntityDreamFluid(World worldIn, FluidStack fluid, BlockPos focusPos) {
-		super(worldIn);
+		this(worldIn);
 		this.fluid = fluid;
 		this.focus = focusPos;
-		this.setSize(0.2F, 0.2F);
 	}
 
 	@Override
@@ -43,9 +66,31 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 		if(this.pointCounter < ps.size()) {
 			Point3d p = ps.get(pointCounter);
 			this.pointCounter++;
+			BlockPos pos = new BlockPos(2*p.x-posX,2*p.y-posY,2*p.z-posZ);
+			this.onInsideBlock(world.getBlockState(pos), pos, p);
 			return p;
 		}
 		this.removeEntity = true;
+		if(this.fluid != null) {
+			IBlockState startState = world.getBlockState(this.getPosition());
+	        Material destMaterial = startState.getMaterial();
+			boolean isDestNonSolid = !destMaterial.isSolid();
+	        boolean isDestReplaceable = startState.getBlock().isReplaceable(world, this.getPosition());
+	        if(world.isAirBlock(this.getPosition()) || isDestNonSolid || isDestReplaceable) {
+	        	if(world.provider.doesWaterVaporize() && fluid.getFluid().doesVaporize(fluid)) {
+	        		fluid.getFluid().vaporize(null, world, this.getPosition(), fluid);
+	        		this.fluid = null;
+	        		this.removeEntity = true;
+	        	} else {
+	        		if(this.fluid.amount == 1000) {
+	        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState());        			
+	        		} else if(this.fluid.getFluid().getBlock().getDefaultState().getPropertyKeys().contains(BlockFluidBase.LEVEL)) {
+	        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, MathHelperBTV.clamp(0, 15, this.fluid.amount*15/1000)));	
+	        		}
+                	this.fluid = null;
+		        }
+        	} 
+		}
 		return null;
 	}
 
@@ -96,53 +141,7 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		/*this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        double d0 = this.motionX;
-        double d1 = this.motionY;
-        double d2 = this.motionZ;
-
-        if (!this.hasNoGravity())
-        {
-            this.motionY -= 0.03999999910593033D;
-        }
-
-        if (this.world.isRemote)
-        {
-            this.noClip = false;
-        }
-        else
-        {
-            this.noClip = this.pushOutOfBlocks(this.posX, (this.getEntityBoundingBox().minY + this.getEntityBoundingBox().maxY) / 2.0D, this.posZ);
-        }
-
-        this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-        boolean flag = (int)this.prevPosX != (int)this.posX || (int)this.prevPosY != (int)this.posY || (int)this.prevPosZ != (int)this.posZ;
-        float f = 0.98F;
-        this.motionX *= (double)f;
-        this.motionY *= 0.9800000190734863D;
-        this.motionZ *= (double)f;
-
-        if (this.onGround)
-        {
-            this.motionY *= -0.5D;
-        }
-        */
-        /* ***************** */
 		if(world.isRemote) return;
-		/* ***************** */
-		
-		/*double d3 = this.motionX - d0;
-        double d4 = this.motionY - d1;
-        double d5 = this.motionZ - d2;
-        double d6 = d3 * d3 + d4 * d4 + d5 * d5;
-
-        if (d6 > 0.01D)
-        {
-            this.isAirBorne = true;
-        }
-		*/
 		if(this.fluid != null) {
 			this.dataManager.set(FLUIDNAME, fluid.getFluid().getName());
 			this.dataManager.set(FLUIDAMOUNT, (byte)(this.fluid.amount/100));
@@ -163,5 +162,65 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	public boolean getIsInvulnerable() {
 		return true;
 	}
+	
+	protected void onInsideBlock(IBlockState state, BlockPos destPos, Point3d nextPoint) {
+		if(this.fluid == null) return;
+		if(nextPoint != null) {
+			TileEntity te = world.getTileEntity(destPos);
+			EnumFacing f = EnumFacing.getFacingFromVector((float)(posX-nextPoint.x), (float)(posY-nextPoint.y), (float) (posZ-nextPoint.z));
+			if(te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f)) {
+				IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f);
+				int amount = this.fluid.amount;
+				amount -= handler.fill(this.fluid, true);
+				if(amount == 0) {
+					this.fluid = null;
+					this.removeEntity = true;
+				} else this.fluid.amount = amount;
+			} else if(/*state.getBlock() instanceof BlockFluidBase  && ((BlockFluidBase)state.getBlock()).getFilledPercentage(world, destPos) == 1
+				||*/ (state.isSideSolid(world, destPos, f) && state.getBlock() != BlockRegistry.BlockDreamFocusFluids)) {
+				if(fluid.getFluid().canBePlacedInWorld()) {
+					IBlockState startState = world.getBlockState(this.getPosition());
+			        Material destMaterial = startState.getMaterial();
+					boolean isDestNonSolid = !destMaterial.isSolid();
+			        boolean isDestReplaceable = startState.getBlock().isReplaceable(world, this.getPosition());
+			        if(world.isAirBlock(this.getPosition()) || isDestNonSolid || isDestReplaceable) {
+			        	if(world.provider.doesWaterVaporize() && fluid.getFluid().doesVaporize(fluid)) {
+			        		fluid.getFluid().vaporize(null, world, this.getPosition(), fluid);
+			        		this.fluid = null;
+			        		this.removeEntity = true;
+			        	} else {
+			        		if(this.fluid.amount == 1000) {
+			        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState());        			
+			        		} else if(this.fluid.getFluid().getBlock().getDefaultState().getPropertyKeys().contains(BlockFluidBase.LEVEL)) {
+			        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, MathHelperBTV.clamp(0, 15, this.fluid.amount*15/1000)));	
+			        		}
+		                	this.fluid = null;
+		                	this.removeEntity = true;
+			                
+				        }
+		        	} 
+				}
+			}
+		}
+		super.onInsideBlock(state);
+	}
+	
+	private static IFluidHandler getFluidBlockHandler(Fluid fluid, World world, BlockPos pos)
+    {
+        Block block = fluid.getBlock();
+        if (block instanceof IFluidBlock)
+        {
+            return new FluidBlockWrapper((IFluidBlock) block, world, pos);
+        }
+        else if (block instanceof BlockLiquid)
+        {
+            return new BlockLiquidWrapper((BlockLiquid) block, world, pos);
+        }
+        else
+        {
+            return new BlockWrapper(block, world, pos);
+        }
+    }
+	
 
 }

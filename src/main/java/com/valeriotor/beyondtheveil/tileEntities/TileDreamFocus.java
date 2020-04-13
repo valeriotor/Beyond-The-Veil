@@ -28,8 +28,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -75,12 +79,33 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 						}
 					}
 				} else if(this.type == FocusType.FLUID) {
-					if(BlockDreamFocusFluids.hasFleti(world, pos) > 0) {
-						FluidStack test = new FluidStack(ModFluids.tears, 1000);
-						EntityDreamFluid edf = new EntityDreamFluid(this.world, test, this.pos);
-						edf.setPosition(this.pos.getX()+0.5, this.pos.getY()-1, this.pos.getZ()+0.5);
-						this.ents.add(edf);
-						this.world.spawnEntity(edf);
+					int fleti = BlockDreamFocusFluids.hasFleti(world, pos);
+					if(fleti > 0) {
+						TileEntity te = world.getTileEntity(pos.offset(EnumFacing.UP));
+						if(te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
+							IFluidHandler f = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+							//FluidStack stack = f.drain(new FluidStac, doDrain)
+							Fluid fluid = null;
+							for(IFluidTankProperties ftp : f.getTankProperties()) {
+								FluidStack test = ftp.getContents();
+								if(test != null && test.amount > 0) {
+									fluid = test.getFluid();
+									break;
+								}
+							}
+							if(fluid != null) {
+								int a = 0;
+								for(int i = 1; i < fleti+1; i++) a+=i;
+								FluidStack toDrain = f.drain(new FluidStack(fluid, a*100), true);
+								if(toDrain.amount > 0) {
+									EntityDreamFluid edf = new EntityDreamFluid(this.world, toDrain, this.pos);
+									edf.setPosition(this.pos.getX()+0.5, this.pos.getY()-1, this.pos.getZ()+0.5);
+									this.ents.add(edf);
+									this.world.spawnEntity(edf);
+								}
+							}
+						}
+						
 					}
 				}
 				this.counter = 0;

@@ -72,9 +72,6 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 					BlockPos startPos = pos.offset(EnumFacing.DOWN);
 					if(worldIn.getBlockState(startPos).isFullCube()) return false;
 					player.setPositionAndUpdate(startPos.getX()+0.5, startPos.getY()+0.5, startPos.getZ()+0.5);
-					player.rotationPitch = 0;
-					if(!player.isSneaking())
-						BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient(0, -player.prevRotationPitch, 2), (EntityPlayerMP)player);
 					PlayerTimerBuilder ptb = new PlayerTimerBuilder(player)
 												.addFinisher(EntityPlayer::isSneaking)
 												.addContinuosAction(p -> BlockDreamFocus.continuosAction(p, td))
