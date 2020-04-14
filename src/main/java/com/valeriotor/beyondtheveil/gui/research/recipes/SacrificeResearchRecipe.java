@@ -93,9 +93,9 @@ public class SacrificeResearchRecipe extends ResearchRecipe{
 	public boolean mouseClicked(GuiResearchPage gui, int mouseX, int mouseY, int mouseButton) {
 		int sel = hoveringArrow(gui, mouseX, mouseY);
 		if(sel == 0)
-			this.page = MathHelperBTV.clamp(0, recipe.getSize(), page - 1);
+			this.page = MathHelperBTV.clamp(0, recipe.getSize()-1, page - 1);
 		else if(sel == 1)
-			this.page = MathHelperBTV.clamp(0, recipe.getSize(), page + 1);
+			this.page = MathHelperBTV.clamp(0, recipe.getSize()-1, page + 1);
 		if(sel == -1)
 			return false;
 		return true;		
