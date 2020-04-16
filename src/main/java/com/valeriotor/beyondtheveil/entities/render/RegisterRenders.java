@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
+import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 
@@ -103,6 +104,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntityDreamFluid> createRenderFor(RenderManager manager) 
 			{return new RenderDreamFluid(manager);}
+			});
+		
+		//Surgeon
+		RenderingRegistry.registerEntityRenderingHandler(EntitySurgeon.class, new IRenderFactory<EntitySurgeon>(){
+			@Override
+			public Render<EntitySurgeon> createRenderFor(RenderManager manager) 
+			{return new RenderSurgeon(manager);}
 			});
 	}
 }

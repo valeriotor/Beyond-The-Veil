@@ -30,6 +30,7 @@ public class BTVEntityRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crazed_weeper"), EntityCrazedWeeper.class, "crazed_weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":dream_item"), EntityDreamItem.class, "dream_item", count++ , BeyondTheVeil.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":dream_fluid"), EntityDreamFluid.class, "dream_fluid", count++ , BeyondTheVeil.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":surgeon"), EntitySurgeon.class, "surgeon", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
 		
 	}
 	
