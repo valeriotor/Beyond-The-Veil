@@ -625,7 +625,7 @@ effect.terror=Terror
 ##################
 
 memory.unlock.message=A Memory of %1$s sticks to my mind. I will not forget it.
-memory.unlock.addenda=This Memory will be found in the "%1$s" research in the Necronomicon.
+memory.unlock.addenda=This Memory will be found in the "%1$s" research in Al Azif.
 
 memory.animal.name=Animal
 memory.beheading.name=Beheading

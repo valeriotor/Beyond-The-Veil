@@ -5,7 +5,7 @@
         "transform": "forge:default-block",
         "custom": {
             "base": "beyondtheveil:memory_sieve#base",
-            "Mipped Cutout": "beyondtheveil:memory_sieve#base",
+            "Solid": "beyondtheveil:memory_sieve#base",
             "Translucent": "beyondtheveil:memory_sieve#trans"
         }
     },
