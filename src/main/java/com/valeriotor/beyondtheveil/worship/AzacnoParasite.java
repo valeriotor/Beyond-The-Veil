@@ -3,10 +3,12 @@ package com.valeriotor.beyondtheveil.worship;
 import java.util.UUID;
 
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlaySound;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -38,8 +40,10 @@ public class AzacnoParasite {
 	}
 	
 	public boolean update() {
-		if(progress < 0)
+		if(progress < 0) {
+			SyncUtil.addIntDataOnServer(this.getPlayer(), false, PlayerDataLib.PARASITE_PROGRESS, 0);
 			return true;
+		}
 		EntityPlayer p = this.getPlayer();
 		if(p == null || p.isDead) {
 			return false;
