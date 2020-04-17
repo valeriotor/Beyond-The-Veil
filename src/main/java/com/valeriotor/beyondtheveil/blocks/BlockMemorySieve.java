@@ -20,6 +20,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
@@ -27,6 +29,7 @@ public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
 	private static final double a = 0.0625;
 	private static final AxisAlignedBB BBOX = new AxisAlignedBB(a*7, 0, a*7, a*9, a*12, a*9);
 	private static final AxisAlignedBB BBOX2 = new AxisAlignedBB(a*2, a*13, a*2, a*14, a*14, a*14);
+	private static final AxisAlignedBB BBOX3 = new AxisAlignedBB(a*2, 0, a*2, a*14, a*14, a*14);
 	
 	public BlockMemorySieve(Material materialIn, String name) {
 		super(materialIn, name);
@@ -92,7 +95,13 @@ public class BlockMemorySieve extends ModBlock implements ITileEntityProvider{
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return BBOX2;
+		return BBOX3;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
+		return BBOX2.offset(pos);
 	}
 
 }
