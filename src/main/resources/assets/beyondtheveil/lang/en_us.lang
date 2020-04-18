@@ -210,6 +210,8 @@ multiblock.dream_shrine=Dream Shrine
 
 multiblock.dream_shrine.checksout=This Dream Shrine has been built correctly.
 multiblock.dream_shrine.noshrine=This is not a Dream Shrine.
+multiblock.sacrifice_altar.checksout=This Sacrifice Altar has been built correctly.
+multiblock.sacrifice_altar.noaltar=This is not a Sacrifice Altar.
 
 ##################
 #ENTITIES
@@ -915,7 +917,7 @@ research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if t
 
 research.SACRIFICEALTAR.title=Altar of Sacrifice
 research.SACRIFICEALTAR.stage.0=I revel in limitless gratitude towards my Patron, yet in agony.<BR>For there is no way I can duly offer Him my thanks.<BR>Or is there?<BR>Blood makes for powerful bonds. It is water and life, all at once.<BR>It is the link that binds all things living to the deepest oceans.<BR>Through blood shall I thank Him, through life and water.<BR>An Altar of Sacrifice, of Hearts and Prismarine.<BR>First, a core.
-research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice.<BR>A heartless villager is to be placed upon the core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
+research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice. I can interact with bare hands with the Core to make sure it's been built correctly.<BR>A heartless villager is to be placed upon the Core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
 research.craftedsacrifice_altar.text=Craft a Sacrificial Altar Core.
 
 research.CORALSTAFF.title=Coral Staff
