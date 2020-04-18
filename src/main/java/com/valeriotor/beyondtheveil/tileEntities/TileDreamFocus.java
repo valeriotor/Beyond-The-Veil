@@ -13,13 +13,18 @@ import javax.vecmath.Point3d;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.blocks.BlockDreamFocus;
 import com.valeriotor.beyondtheveil.blocks.BlockDreamFocusFluids;
+import com.valeriotor.beyondtheveil.blocks.BlockDreamFocusVillagers;
 import com.valeriotor.beyondtheveil.blocks.ModBlockFacing;
+import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.IDreamEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,6 +33,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -107,6 +113,36 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 							}
 						}
 						
+					}
+				} else if(this.type == FocusType.VILLAGER) {
+					int redstone = 0;
+					for(EnumFacing facing : EnumFacing.VALUES) {
+						int a = world.getRedstonePower(pos, facing);
+						if(a > redstone) redstone = a;
+					}
+					if(redstone < 15 && BlockDreamFocusVillagers.hasFletum(world, pos)) {
+						IDreamEntity toMove = null;
+						AxisAlignedBB bbox = new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(6, 5, 6));
+						List<EntityCrawlingVillager> worms = world.getEntitiesWithinAABB(EntityCrawlingVillager.class, bbox);
+						if(!worms.isEmpty()) toMove = worms.get(0);
+						else {
+							List<EntityVillager> ents = world.getEntitiesWithinAABB(EntityVillager.class, bbox, e -> !e.isChild());
+							if(ents.size() > redstone) {
+								EntityDreamVillager vil = new EntityDreamVillager(world);
+								EntityVillager v = ents.get(0);
+								NBTTagCompound nbt = new NBTTagCompound();
+								v.writeEntityToNBT(nbt);
+								vil.setData(nbt);
+								vil.setPosition(v.posX, v.posY, v.posZ);
+								vil.setProfession(v.getProfession());
+								toMove = vil;
+								world.spawnEntity(vil);
+								world.removeEntity(v);
+							}
+						}
+						if(toMove instanceof Entity) {
+							this.ents.add(((Entity)toMove).getEntityId());
+						}
 					}
 				}
 				this.counter = 0;
@@ -208,7 +244,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	}
 	
 	public enum FocusType {
-		ITEM, FLUID;
+		ITEM, FLUID, VILLAGER;
 	}
 
 }

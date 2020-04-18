@@ -45,6 +45,7 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 				TileDreamFocus tdf = (TileDreamFocus)te;
 				tdf.addDreamEntity(this);
 			}
+			loadEntity = false;
 		}
 		if(removeEntity) {
 			EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());

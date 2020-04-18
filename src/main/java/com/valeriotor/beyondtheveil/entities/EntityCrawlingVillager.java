@@ -1,8 +1,12 @@
 package com.valeriotor.beyondtheveil.entities;
 
+import java.util.List;
 import java.util.UUID;
 
+import javax.vecmath.Point3d;
+
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.IDreamEntity;
 import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.sacrifice.SacrificeHelper;
@@ -31,7 +35,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class EntityCrawlingVillager extends EntityCreature implements IPlayerMinion{
+public class EntityCrawlingVillager extends EntityCreature implements IPlayerMinion, IDreamEntity{
 	
 	private boolean unconscious = false; // "unconscious" is synonym of "blackjack" and opposite of "spineless"
 	private boolean heartless = false;
@@ -228,6 +232,13 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	@Override
 	public UUID getMasterID() {
 		return this.master;
+	}
+
+
+	@Override
+	public Point3d getNextPoint(List<Point3d> ps) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

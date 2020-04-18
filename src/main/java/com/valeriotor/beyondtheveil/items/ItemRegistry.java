@@ -172,6 +172,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockGearBench), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocus), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocusFluids), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocusVillagers), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockCurtain), 0, "inventory");
         
         
@@ -225,6 +226,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockGearBench).setRegistryName(BlockRegistry.BlockGearBench.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocus).setRegistryName(BlockRegistry.BlockDreamFocus.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocusFluids).setRegistryName(BlockRegistry.BlockDreamFocusFluids.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocusVillagers).setRegistryName(BlockRegistry.BlockDreamFocusVillagers.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockCurtain).setRegistryName(BlockRegistry.BlockCurtain.getRegistryName()));
     	//registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);

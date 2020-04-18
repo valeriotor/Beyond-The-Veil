@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -37,6 +38,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	public EntityFletum(World worldIn) {
 		super(worldIn);
 		this.tearTicks = this.getTearTicks();
+		this.setSize(0.8F, 0.7F);
 	}
 	
 	@Override
@@ -167,6 +169,10 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	@Override
 	protected SoundEvent getAmbientSound() {
 		if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockDreamFocus) return null;
+		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+			if(this.world.getBlockState(this.getPosition().offset(facing)).getBlock() == BlockRegistry.BlockDreamFocusFluids) return null;
+		}
+		if(this.world.getBlockState(this.getPosition().up()).getBlock() == BlockRegistry.BlockDreamFocusVillagers) return null;
 		return BTVSounds.fletum_weeping;
 	}
 	

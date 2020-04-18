@@ -160,10 +160,12 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 				TileDreamFocus tdf = (TileDreamFocus)te;
 				tdf.addDreamEntity(this);
 			}
+			loadEntity = false;
 		}
-		if(removeEntity) {
+		if(removeEntity || (this.focus != null && !(this.world.getTileEntity(focus) instanceof TileDreamFocus))) {
 			this.world.removeEntity(this);
 		}
+		
 	}
 	
 	@Override

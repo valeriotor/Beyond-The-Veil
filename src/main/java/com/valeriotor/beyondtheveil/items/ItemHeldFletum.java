@@ -54,7 +54,7 @@ public class ItemHeldFletum extends Item{
 		
 		for(int y = 0; y <= 1; y++) {
 			IBlockState b = w.getBlockState(weeperPos.add(0, y, 0));
-			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
+			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory && b.getBlock() != BlockRegistry.BlockDreamFocusVillagers) {
 				return EnumActionResult.FAIL;
 			}
 		}
