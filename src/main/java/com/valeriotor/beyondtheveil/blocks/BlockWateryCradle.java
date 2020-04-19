@@ -99,9 +99,14 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 		return false;
 	}
 	
-	private TileWateryCradle getTE(World w, BlockPos pos) {
+	public TileWateryCradle getTE(World w, BlockPos pos) {
+		IBlockState state = w.getBlockState(pos);
+		EnumPart part = state.getValue(PART);
+		if(part == EnumPart.STRUCTURE) return null;
+		if(part == EnumPart.TAIL) pos = pos.offset(state.getValue(FACING).getOpposite(), 2);
+		else if(part == EnumPart.BODY) pos = pos.offset(state.getValue(FACING).getOpposite());
 		TileEntity te = w.getTileEntity(pos);
-		if(te != null && te instanceof TileWateryCradle) return (TileWateryCradle) te;
+		if(te instanceof TileWateryCradle) return (TileWateryCradle) te;
 		return null;
 	}
 	

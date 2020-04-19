@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.items;
 
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.lib.References;
 
 import net.minecraft.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -34,6 +36,7 @@ public class ItemBlackjack extends Item{
 	@SubscribeEvent
 	public static void knockoutVillager(PlayerInteractEvent.EntityInteractSpecific event) {
 		EntityPlayer p = (EntityPlayer)event.getEntityPlayer();
+		if(event.getHand() == EnumHand.OFF_HAND) return;
 		if(!(p.getHeldItemMainhand().getItem() instanceof ItemBlackjack)) return;
 		ItemStack stack = p.getHeldItemMainhand();
 		Entity target = event.getTarget();
@@ -46,13 +49,14 @@ public class ItemBlackjack extends Item{
 	public static boolean processInteract(ItemStack stack, Entity target, double distance, boolean damageItem) {
 		if(!(target instanceof EntityVillager)) {
 			if(target instanceof EntityLiving && !target.world.isRemote && !(target instanceof EntityWeeper)) { //I'm letting the EntityWeeper class handle BJ
-				((EntityLiving)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 4));
+				if(target instanceof EntityDreamVillager) {
+					((EntityDreamVillager)target).knockout();
+				} else ((EntityLiving)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 4));
 				if(damageItem) stack.damageItem(3, (EntityLivingBase) target);
 			}
 			return false;
 		}
 		EntityVillager vil = (EntityVillager) target;
-		if(vil.getProfession() == 5) return false;
 		if(vil.isChild()) return false;
 		if(/*Math.abs(vil.rotationYawHead - p.rotationYawHead) < 300 && */distance > 0.1) {
 			BlockPos pos = vil.getPos();
@@ -70,5 +74,6 @@ public class ItemBlackjack extends Item{
 		}
 		return false;
 	}
+	
 	
 }

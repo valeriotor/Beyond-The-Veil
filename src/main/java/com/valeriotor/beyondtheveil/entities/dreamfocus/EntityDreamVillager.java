@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
 
 import net.minecraft.entity.EntityLiving;
@@ -109,6 +111,20 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 			this.world.spawnEntity(vil);
 			this.world.removeEntity(this);
 		}
+	}
+	
+	public void knockout() {
+		EntityCrawlingVillager worm = new EntityCrawlingVillager(this.world, this.focus, this.pointCounter);
+		worm.setPosition(this.posX, this.posY, this.posZ);
+		worm.setProfession(this.dataManager.get(PROFESSION));
+		if(this.focus != null) {
+			TileEntity te = this.world.getTileEntity(focus);
+			if(te instanceof TileDreamFocus && world.getBlockState(focus).getBlock() == BlockRegistry.BlockDreamFocusVillagers) {
+				((TileDreamFocus)te).addDreamEntity(worm);
+			}
+		}
+		this.world.spawnEntity(worm);
+		this.world.removeEntity(this);
 	}
 	
 

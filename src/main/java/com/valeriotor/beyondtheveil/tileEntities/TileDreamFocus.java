@@ -128,7 +128,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 						else {
 							List<EntityVillager> ents = world.getEntitiesWithinAABB(EntityVillager.class, bbox, e -> !e.isChild());
 							if(ents.size() > redstone) {
-								EntityDreamVillager vil = new EntityDreamVillager(world);
+								EntityDreamVillager vil = new EntityDreamVillager(world, this.pos);
 								EntityVillager v = ents.get(0);
 								NBTTagCompound nbt = new NBTTagCompound();
 								v.writeEntityToNBT(nbt);
@@ -148,6 +148,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 				this.counter = 0;
 			}
 			Iterator<Integer> iter = ents.iterator();
+			//System.out.println("Size: " + ents.size());
 			while(iter.hasNext()) {
 				int id = iter.next();
 				Entity e = world.getEntityByID(id);
@@ -189,6 +190,10 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		this.ents.add(((Entity)e).getEntityId());
 	}
 	
+	public void removeDreamEntity(int id) {
+		this.ents.remove(id);
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		for(int i = 0; i < this.points.size(); i++) {
@@ -198,6 +203,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 			compound.setDouble(String.format("pointz%d", i), p.z);
 		}
 		compound.setInteger("type", this.type.ordinal());
+		compound.setInteger("counter", this.counter);
 		return super.writeToNBT(compound);
 	}
 	
@@ -213,6 +219,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 			i++;
 		}
 		this.type = FocusType.values()[compound.getInteger("type")];
+		this.counter = compound.getInteger("counter");
 		super.readFromNBT(compound);
 	}
 	
