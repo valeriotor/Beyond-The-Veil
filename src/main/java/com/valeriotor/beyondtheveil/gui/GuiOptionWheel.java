@@ -203,7 +203,7 @@ public abstract class GuiOptionWheel extends GuiScreen{
 	public ResourceLocation getEastOptionTexture() {return null;}
 	
 	
-	public final void doAction(int option) {
+	public void doAction(int option) {
 		switch(option) {
 		case 0: this.doNorthAction(); 
 		break;

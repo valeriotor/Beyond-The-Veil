@@ -34,7 +34,7 @@ public class ItemHelper {
 	}
 	
 	public static long checkLongTag(ItemStack stack, String key, long defaultValue) {
-		if(ItemHelper.checkTagCompound(stack).hasKey(key)) {
+		if(!ItemHelper.checkTagCompound(stack).hasKey(key)) {
 			stack.getTagCompound().setLong(key, Long.valueOf(defaultValue));
 			return defaultValue;
 		}

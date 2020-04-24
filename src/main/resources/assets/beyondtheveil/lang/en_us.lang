@@ -98,6 +98,9 @@ use.blood_sigil.nothealthy=This mob is not at full health.
 use.blood_sigil.notmine=This mob does not serve me.
 use.blood_sigil.path=This location is now bound in the Sigil.
 use.dream_bottle.noplayer=The bound Player is not currently in this world.
+use.surgeon_summoner.boundcontainer=This container's location has been bound to the Surgeon Summons.
+use.surgeon_summoner.unboundcontainer=The Surgeon Summons are no longer bound to a container.
+use.surgeon_summoner.nospace=There is not enough space to summon the Surgeon.
 
 bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepare for the worst, in a matter of seconds.
 

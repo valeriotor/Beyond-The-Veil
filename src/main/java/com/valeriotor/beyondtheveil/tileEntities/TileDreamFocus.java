@@ -124,8 +124,14 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 						IDreamEntity toMove = null;
 						AxisAlignedBB bbox = new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(6, 5, 6));
 						List<EntityCrawlingVillager> worms = world.getEntitiesWithinAABB(EntityCrawlingVillager.class, bbox);
-						if(!worms.isEmpty()) toMove = worms.get(0);
-						else {
+						for(EntityCrawlingVillager worm : worms) {
+							if(worm.getFocus() == null) {
+								worm.setFocus(this.pos);
+								toMove = worm;
+								break;
+							}
+						}
+						if(toMove == null) {
 							List<EntityVillager> ents = world.getEntitiesWithinAABB(EntityVillager.class, bbox, e -> !e.isChild());
 							if(ents.size() > redstone) {
 								EntityDreamVillager vil = new EntityDreamVillager(world, this.pos);

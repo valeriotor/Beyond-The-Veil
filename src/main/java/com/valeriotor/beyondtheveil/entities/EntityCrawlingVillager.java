@@ -290,5 +290,13 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 		return item;
 	}
 	
+	public BlockPos getFocus() {
+		return this.focus;
+	}
+	
+	public void setFocus(BlockPos focus) {
+		this.focus = focus;
+	}
+	
 
 }
