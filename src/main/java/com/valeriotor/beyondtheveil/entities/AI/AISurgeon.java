@@ -7,11 +7,15 @@ import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientStatus;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientTypes;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class AISurgeon extends EntityAIBase{
 	private EntitySurgeon surgeon;
@@ -59,15 +63,18 @@ public class AISurgeon extends EntityAIBase{
 	@Override
 	public void updateTask() {
 		BlockPos cradle = surgeon.getCradle();
-		BlockPos pos = cradle.offset(surgeon.world.getBlockState(cradle).getValue(BlockWateryCradle.FACING).getOpposite());
+		IBlockState state = surgeon.world.getBlockState(cradle);
+		BlockPos pos = cradle.offset(state.getValue(BlockWateryCradle.FACING).getOpposite());
 		if(surgeon.getDistanceSq(pos) > 1)
 			surgeon.getNavigator().setPath(surgeon.getNavigator().getPathToPos(pos), 1.4);
 		else {
+			surgeon.setRotationYawHead(state.getValue(BlockWateryCradle.FACING).getHorizontalAngle());
 			TileWateryCradle twc = (TileWateryCradle)surgeon.world.getTileEntity(cradle);
 			if(this.counter == 50) {
-				// start animation
-			}
-			if(this.counter == 1) {
+				surgeon.setSurgeryAnimation(true);
+			} else if(this.counter == 20) {
+				surgeon.setSurgeryAnimation(false);
+			} else if(this.counter == 1) {
 				SoundEvent sound = null;
 				switch(surgeon.getOperation()) {
 					case 3: 
@@ -89,8 +96,21 @@ public class AISurgeon extends EntityAIBase{
 							surgeon.spines++;
 						}
 				}
+				boolean spawnVil = true;
 				if(surgeon.getContainer() != null) {
-					surgeon.patient = twc.getPatientItem();
+					TileEntity te = surgeon.world.getTileEntity(surgeon.getContainer());
+					if(te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
+						surgeon.patient = twc.getPatientItem();
+						spawnVil = false;
+					}
+				} 
+				if(spawnVil){
+					EntityLiving e = twc.getPatientStatus().getEntity(surgeon.world);
+					if(e != null) {
+						BlockPos spawnPos = cradle.offset(state.getValue(BlockWateryCradle.FACING));
+						e.setPosition(spawnPos.getX()+0.5, spawnPos.getY()+1, spawnPos.getZ()+0.5);
+						surgeon.world.spawnEntity(e);
+					}
 				}
 				twc.setPatient(PatientStatus.getNoPatientStatus());
 				if(sound != null)

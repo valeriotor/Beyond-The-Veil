@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.entities;
 
 import java.util.UUID;
 
+import com.valeriotor.beyondtheveil.animations.Animation;
+import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AISurgeon;
@@ -9,7 +11,9 @@ import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSurgeonToClient;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
+import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientStatus;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -30,16 +34,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 	
 	private UUID master;
 	private static final DataParameter<Integer> OPCODE = EntityDataManager.<Integer>createKey(EntitySurgeon.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> ANIMATION = EntityDataManager.<Integer>createKey(EntitySurgeon.class, DataSerializers.VARINT);
 	private BlockPos container;
 	private BlockPos cradle;
 	public ItemStack patient;
 	public int hearts = 0;
 	public int spines = 0;
+	public Animation surgeryAnimation;
 	
 	public EntitySurgeon(World worldIn) {
 		super(worldIn);
@@ -69,14 +76,22 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(OPCODE, -1);
+		this.dataManager.register(ANIMATION, 0);
 	}
 	
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		if(hand == EnumHand.MAIN_HAND && !player.world.isRemote) {
-			if(player.getPersistentID().equals(this.getMasterID()) && player.getHeldItemMainhand().getItem() == ItemRegistry.surgery_tools) {
-				BTVPacketHandler.INSTANCE.sendTo(new MessageSurgeonToClient(this.getEntityId()), (EntityPlayerMP)player);
-				return EnumActionResult.SUCCESS;
+			if(player.getPersistentID().equals(this.getMasterID())) {
+				if(player.getHeldItemMainhand().getItem() == ItemRegistry.surgery_tools) {
+					BTVPacketHandler.INSTANCE.sendTo(new MessageSurgeonToClient(this.getEntityId()), (EntityPlayerMP)player);
+					return EnumActionResult.SUCCESS;
+				} else if(player.getHeldItemMainhand().isEmpty()) {
+					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ItemRegistry.spine, this.spines));
+					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(BlockRegistry.BlockHeart, this.hearts));
+					this.spines = 0;
+					this.hearts = 0;
+				}
 			}
 		}
 		return super.applyPlayerInteraction(player, vec, hand);
@@ -144,7 +159,20 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if(this.world.isRemote) return;
+		if(this.world.isRemote) {
+			if(this.surgeryAnimation == null) {
+				if(this.dataManager.get(ANIMATION) == 1) {
+					this.surgeryAnimation = new Animation(AnimationRegistry.surgeon_surgery);
+				}
+			} else {
+				this.surgeryAnimation.update();
+				if(this.surgeryAnimation.isDone()) {
+					this.surgeryAnimation = null;
+				}
+			}
+			
+			return;
+		}
 		if((this.ticksExisted & 63) == 0) {
 			if(this.cradle == null || this.getDistanceSq(cradle) > 256 || !(this.world.getTileEntity(cradle) instanceof TileWateryCradle)) {
 				for(int x = -5; x <= 5; x++) {
@@ -183,12 +211,27 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 					}
 					this.hearts = hearts.getCount();
 					this.spines = spines.getCount();
-					
+					if(!this.patient.isEmpty()) {
+						EntityLiving e = PatientStatus.getEntityFromStack(world, patient);
+						if(e != null) {
+							e.setPosition(posX, posY, posZ);
+							this.world.spawnEntity(e);
+						}
+						this.patient = ItemStack.EMPTY;
+					}
 					
 				}
 			}
 			
 		}
+	}
+	
+	public void setSurgeryAnimation(boolean set) {
+		this.dataManager.set(ANIMATION, set ? 1 : 0);
+	}
+	
+	public Animation getSurgeryAnimation() {
+		return this.surgeryAnimation;
 	}
 	
 }

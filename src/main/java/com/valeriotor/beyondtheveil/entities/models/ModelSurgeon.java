@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entities.models;
 
 import java.util.EnumMap;
 
+import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.animations.AnimationTemplate.Transformation;
 import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 
@@ -15,64 +16,64 @@ import net.minecraft.util.math.MathHelper;
  * Created using Tabula 7.0.0
  */
 public class ModelSurgeon extends ModelAnimated {
-    public ModelRenderer LowerBody1;
-    public ModelRenderer LowerBody2;
-    public ModelRenderer RightFrontUpperLeg;
-    public ModelRenderer RightMidUpperLeg;
-    public ModelRenderer LowerBody;
-    public ModelRenderer RightBackUpperLeg;
-    public ModelRenderer LeftFrontUpperLeg;
-    public ModelRenderer LeftMidUpperLeg;
-    public ModelRenderer LeftBackUpperLeg;
-    public ModelRenderer LowerBody3;
-    public ModelRenderer RightFrontLowerLeg;
-    public ModelRenderer RightMidLowerLeg;
-    public ModelRenderer UpperBody;
-    public ModelRenderer Neck;
-    public ModelRenderer RightUpperArm;
-    public ModelRenderer LeftUpperArm;
-    public ModelRenderer MainHead;
-    public ModelRenderer FrontHead1;
-    public ModelRenderer BackHead1;
-    public ModelRenderer Eye1;
-    public ModelRenderer Eye2;
-    public ModelRenderer Eye3;
-    public ModelRenderer Eye4;
-    public ModelRenderer Eye5;
-    public ModelRenderer Eye6;
-    public ModelRenderer Eye7;
-    public ModelRenderer Eye10;
-    public ModelRenderer Eye11;
-    public ModelRenderer Eye12;
-    public ModelRenderer Eye14;
-    public ModelRenderer Eye15;
-    public ModelRenderer Eye16;
-    public ModelRenderer Eye17;
-    public ModelRenderer FrontHead2;
-    public ModelRenderer Eye8;
-    public ModelRenderer Eye9;
-    public ModelRenderer Eye13;
-    public ModelRenderer Eye18;
-    public ModelRenderer BackHead2;
-    public ModelRenderer BackHead3;
-    public ModelRenderer RightLowerArm;
-    public ModelRenderer RightUpperTentacle1;
-    public ModelRenderer RightUpperTentacle2;
-    public ModelRenderer RightUpperTentacle3;
-    public ModelRenderer RightLowerTentacle1;
-    public ModelRenderer RightLowerTentacle2;
-    public ModelRenderer RightLowerTentacle3;
-    public ModelRenderer LeftLowerArm;
-    public ModelRenderer LeftUpperTentacle1;
-    public ModelRenderer LeftUpperTentacle2;
-    public ModelRenderer LeftUpperTentacle3;
-    public ModelRenderer LeftLowerTentacle1;
-    public ModelRenderer LeftLowerTentacle2;
-    public ModelRenderer LeftLowerTentacle3;
-    public ModelRenderer RightBackLowerLeg;
-    public ModelRenderer LeftFrontLowerLeg;
-    public ModelRenderer LeftMidLowerLeg;
-    public ModelRenderer LeftBackLowerLeg;
+    public ModelRenderer LowerBody1;						// 0
+    public ModelRenderer LowerBody2;						// 1
+    public ModelRenderer RightFrontUpperLeg;				// 2
+    public ModelRenderer RightMidUpperLeg;					// 3
+    public ModelRenderer LowerBody;							// 4
+    public ModelRenderer RightBackUpperLeg;					// 5
+    public ModelRenderer LeftFrontUpperLeg;					// 6
+    public ModelRenderer LeftMidUpperLeg;					// 7
+    public ModelRenderer LeftBackUpperLeg;					// 8
+    public ModelRenderer LowerBody3;						// 9
+    public ModelRenderer RightFrontLowerLeg;				// 10
+    public ModelRenderer RightMidLowerLeg;					// 11
+    public ModelRenderer UpperBody;							// 12
+    public ModelRenderer Neck;								// 13
+    public ModelRenderer RightUpperArm;						// 14
+    public ModelRenderer LeftUpperArm;						// 15
+    public ModelRenderer MainHead;							// 16
+    public ModelRenderer FrontHead1;						// 17
+    public ModelRenderer BackHead1;							// 18
+    public ModelRenderer Eye1;								// 19
+    public ModelRenderer Eye2;								// 20
+    public ModelRenderer Eye3;								// 21
+    public ModelRenderer Eye4;								// 22
+    public ModelRenderer Eye5;								// 23
+    public ModelRenderer Eye6;								// 24
+    public ModelRenderer Eye7;								// 25
+    public ModelRenderer Eye10;								// 26
+    public ModelRenderer Eye11;								// 27
+    public ModelRenderer Eye12;								// 28
+    public ModelRenderer Eye14;								// 29
+    public ModelRenderer Eye15;								// 30
+    public ModelRenderer Eye16;								// 31
+    public ModelRenderer Eye17;								// 32
+    public ModelRenderer FrontHead2;						// 33
+    public ModelRenderer Eye8;								// 34
+    public ModelRenderer Eye9;								// 35
+    public ModelRenderer Eye13;								// 36
+    public ModelRenderer Eye18;								// 37
+    public ModelRenderer BackHead2;							// 38
+    public ModelRenderer BackHead3;							// 39
+    public ModelRenderer RightLowerArm;						// 40
+    public ModelRenderer RightUpperTentacle1;				// 41
+    public ModelRenderer RightUpperTentacle2;				// 42
+    public ModelRenderer RightUpperTentacle3;				// 43
+    public ModelRenderer RightLowerTentacle1;				// 44
+    public ModelRenderer RightLowerTentacle2;				// 45
+    public ModelRenderer RightLowerTentacle3;				// 46
+    public ModelRenderer LeftLowerArm;						// 47
+    public ModelRenderer LeftUpperTentacle1;				// 48
+    public ModelRenderer LeftUpperTentacle2;				// 49
+    public ModelRenderer LeftUpperTentacle3;				// 50
+    public ModelRenderer LeftLowerTentacle1;				// 51
+    public ModelRenderer LeftLowerTentacle2;				// 52
+    public ModelRenderer LeftLowerTentacle3;				// 53
+    public ModelRenderer RightBackLowerLeg;					// 54
+    public ModelRenderer LeftFrontLowerLeg;					// 55
+    public ModelRenderer LeftMidLowerLeg;					// 56
+    public ModelRenderer LeftBackLowerLeg;					// 57
 
     public ModelSurgeon() {
         this.textureWidth = 128;
@@ -481,6 +482,10 @@ public class ModelSurgeon extends ModelAnimated {
     	this.LowerBody2.rotateAngleY = offset;
     	this.LeftUpperTentacle2.rotateAngleX = 1.7756979809790308F + offset*1.5F;
     	this.RightUpperTentacle1.rotateAngleX = 1.4570008595648662F + offset*1.5F;
+    	Animation anim = e.getSurgeryAnimation();
+    	if(anim != null) {
+    		anim.applyTransformations(bodyParts, partialTickTime);
+    	}
     	super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
     }
 }

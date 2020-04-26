@@ -77,6 +77,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	
 	public EntityCrawlingVillager(World worldIn, boolean blackjack, boolean heartless) {
 		super(worldIn);
+		this.heartless = heartless;
 		this.unconscious = blackjack;
 		this.ticksToFall = blackjack && !heartless ? DEFAULTTICKSTOFALL : 0;
 		this.dataManager.set(TICKSTOFALL, this.ticksToFall);
