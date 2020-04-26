@@ -73,6 +73,7 @@ public class ItemRegistry {
 	public static final ItemNecronomicon necronomicon = new ItemNecronomicon("necronomicon");
 	public static final ModItem gear = new ModItem("gear");
 	public static final ModItem surgeon_summons = new ItemSurgeonSummoner("surgeon_summons");
+	public static final ItemCrucible crucible = new ItemCrucible("crucible");
 	
 	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
@@ -127,6 +128,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(necronomicon, 0, "inventory");
         ClientProxy.registerItemRenderer(gear, 0, "inventory");
         ClientProxy.registerItemRenderer(surgeon_summons, 0, "inventory");
+        ClientProxy.registerItemRenderer(crucible, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -271,6 +273,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.necronomicon);
     	registry.register(ItemRegistry.gear);
     	registry.register(ItemRegistry.surgeon_summons);
+    	registry.register(ItemRegistry.crucible);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
@@ -284,12 +287,13 @@ public class ItemRegistry {
     
     
     public static Item getRandomArtifact(Random r) {
-    	int a = r.nextInt(4);
+    	int a = r.nextInt(5);
     	switch(a) {
     	case 0: return saw_cleaver;
     	case 1: return flute;
     	case 2: return wolf_medallion;
     	case 3: return bronze_sphere;
+    	case 4: return crucible;
     	default: return null;
     	}
     }
