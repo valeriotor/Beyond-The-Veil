@@ -81,5 +81,10 @@ public class BlockDreamFocusVillagers extends ModBlock implements ITileEntityPro
 		}
 		return super.onBlockActivated(worldIn, pos, state, player, hand, facing, hitX, hitY, hitZ);
 	}
+	
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		return (layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT);
+	}
 
 }

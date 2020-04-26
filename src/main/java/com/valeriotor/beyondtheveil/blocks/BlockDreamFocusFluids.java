@@ -38,14 +38,14 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return (layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT);
+		return (layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT);
 	}
 	
 	public static int hasFleti(World w, BlockPos pos) {
 		int a = 0;
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 			BlockPos pos2 = pos.offset(facing);
-			AxisAlignedBB bbox = new AxisAlignedBB(pos2.getX()+0.3, pos2.getY()+1, pos2.getZ()+0.3, pos2.getX()+0.7, pos2.getY()+2, pos2.getZ()+0.7);
+			AxisAlignedBB bbox = new AxisAlignedBB(pos2.getX()+0.3, pos2.getY(), pos2.getZ()+0.3, pos2.getX()+0.7, pos2.getY()+1, pos2.getZ()+0.7);
 			if(!w.getEntitiesWithinAABB(EntityFletum.class, bbox).isEmpty()) a++;
 		}
 		return a;

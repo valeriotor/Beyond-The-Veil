@@ -1,5 +1,22 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block",
+        "custom": {
+            "base": "beyondtheveil:dream_focus_villagers#base",
+            "Solid": "beyondtheveil:dream_focus_villagers#base",
+            "Translucent": "beyondtheveil:dream_focus_villagers#trans"
+        }
+    },
     "variants": {
-        "normal": { "model": "beyondtheveil:elder_bricks" }
+        "normal": [{}],
+        "base": [{
+            "model": "beyondtheveil:dream_focus_villagers_base"
+        }],
+        "trans": [{
+            "model": "beyondtheveil:dream_focus_villagers_translucent"
+        }],
+        "inventory": [{}]
     }
 }

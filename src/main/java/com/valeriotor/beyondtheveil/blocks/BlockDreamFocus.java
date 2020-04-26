@@ -98,7 +98,7 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return (layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT);
+		return (layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT);
 	}
 
 }
