@@ -188,7 +188,7 @@ interact.statue.alreadyme=This Statue is already mine.
 interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
 interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
 interact.gearbench.dunno=I do not know how to use this.
-interact.lacrymatory.amount=This Lacrymatory holds %1$s/4,000 millibuckets of Tears.
+interact.lacrymatory.amount=This Lacrymatory holds %1$s/4000 millibuckets of Tears.
 
 hit.idol.schiz0=I should not try to break it.
 hit.idol.schiz1=I shouldn't be doing this.
