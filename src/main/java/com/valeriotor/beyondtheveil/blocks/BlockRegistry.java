@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.blocks;
 
 import com.valeriotor.beyondtheveil.blocks.flora.BlockGhostGrass;
+import com.valeriotor.beyondtheveil.blocks.flora.BlockMegydrea;
 import com.valeriotor.beyondtheveil.blocks.flora.BlockMutator;
 import com.valeriotor.beyondtheveil.blocks.flora.BlockRedstoneGrass;
 import com.valeriotor.beyondtheveil.blocks.flora.PlantArborealGenerator;
@@ -78,6 +79,7 @@ public class BlockRegistry {
 	public static final BlockDreamFocusFluids BlockDreamFocusFluids = new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
 	public static final BlockDreamFocusVillagers BlockDreamFocusVillagers = new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
 	public static final BlockCurtain BlockCurtain = new BlockCurtain(BlockNames.CURTAIN);
+	public static final BlockMegydrea BlockMegydrea = new BlockMegydrea(BlockNames.MEGYDREA);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -136,6 +138,7 @@ public class BlockRegistry {
 	   	registry.register(BlockDreamFocusFluids);
 	   	registry.register(BlockDreamFocusVillagers);
 	   	registry.register(BlockCurtain);
+	   	registry.register(BlockMegydrea);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);

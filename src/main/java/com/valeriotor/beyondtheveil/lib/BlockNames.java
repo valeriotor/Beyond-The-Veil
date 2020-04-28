@@ -27,6 +27,7 @@ public class BlockNames {
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
 	public static final String LACRYMATORY = "lacrymatory";
+	public static final String MEGYDREA = "megydrea";
 	public static final String MEMORY_SIEVE = "memory_sieve";
 	public static final String MUTATOR = "mutator";
 	public static final String SACRIFICE_ALTAR = "sacrifice_altar";
