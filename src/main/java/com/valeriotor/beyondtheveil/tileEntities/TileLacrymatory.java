@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.capability.TileFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileLacrymatory extends TileFluidHandler{
+public class TileLacrymatory extends TileFluidHandler implements IUpdatableTileEntity{
 	
 	private UUID weeper;
 	private int amount = 0;
@@ -90,6 +90,7 @@ public class TileLacrymatory extends TileFluidHandler{
 		super.readFromNBT(tag);
 	}
 	
+	@Override
 	public void sendUpdates() {
 		markDirty();
 		world.markBlockRangeForRenderUpdate(pos, pos);
