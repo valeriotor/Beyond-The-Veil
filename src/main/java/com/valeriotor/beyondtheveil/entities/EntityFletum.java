@@ -48,10 +48,12 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 			this.animationTicks++;
 			this.animationTicks%=200;
 		}else {
-			this.tearTicks--;
-			if(this.tearTicks <= 0) {
-				TileLacrymatory.fillWithTears(this);
-				this.tearTicks = this.getTearTicks();
+			if(!this.isFocusing()) {
+				this.tearTicks--;
+				if(this.tearTicks <= 0) {
+					TileLacrymatory.fillWithTears(this);
+					this.tearTicks = this.getTearTicks();
+				}
 			}
 		}
 	}
@@ -168,11 +170,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockDreamFocus) return null;
-		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-			if(this.world.getBlockState(this.getPosition().offset(facing)).getBlock() == BlockRegistry.BlockDreamFocusFluids) return null;
-		}
-		if(this.world.getBlockState(this.getPosition().up()).getBlock() == BlockRegistry.BlockDreamFocusVillagers) return null;
+		if(this.isFocusing()) return null;
 		return BTVSounds.fletum_weeping;
 	}
 	
@@ -184,6 +182,15 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	@Override
 	public int getTearTicks() {
 		return 950;
+	}
+	
+	public boolean isFocusing() {
+		if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockDreamFocus) return true;
+		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+			if(this.world.getBlockState(this.getPosition().offset(facing)).getBlock() == BlockRegistry.BlockDreamFocusFluids) return true;
+		}
+		if(this.world.getBlockState(this.getPosition().up()).getBlock() == BlockRegistry.BlockDreamFocusVillagers) return true;
+		return false;
 	}
 	
 }
