@@ -234,4 +234,9 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 		return this.surgeryAnimation;
 	}
 	
+	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
 }
