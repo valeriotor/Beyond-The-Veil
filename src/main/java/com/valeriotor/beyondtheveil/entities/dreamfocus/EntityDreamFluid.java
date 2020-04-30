@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
@@ -31,6 +32,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -70,6 +72,35 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 				this.pointCounter++;
 			}
 			BlockPos pos = new BlockPos(2*p.x-posX,2*p.y-posY,2*p.z-posZ);
+			if((this.ticksExisted & 7) == 0) {
+				if(this.fluid != null) {
+					Fluid f = this.fluid.getFluid();
+					if(f == FluidRegistry.WATER) {
+						int times = 0;
+						for(int x = -2; x <= 2 && fluid.amount >= 50 && times < 3; x++) {
+							for(int y = -1; y <= 1 && fluid.amount >= 50 && times < 3; y++) {
+								for(int z = -2; z <= 2 && fluid.amount >= 50 && times < 3; z++) {
+									BlockPos ppos = this.getPosition().add(x, y, z);
+									IBlockState state = world.getBlockState(ppos);
+									if(state.getBlock() instanceof IGrowable) {
+										IGrowable g = (IGrowable) state.getBlock();
+										if(g.canGrow(world, ppos, state, false)) {
+											if(this.rand.nextInt(3) == 0) {
+												g.grow(world, this.rand, ppos, state);
+												this.fluid.amount -= 50;
+												times++;
+											}
+										}
+									}
+								}
+							}
+						}
+					} else if(f == FluidRegistry.LAVA) {
+						world.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB(posX-0.5, posY-0.5, posZ-0.5, posX+0.5, posY+0.5, posZ+0.5))
+						.forEach(e -> e.setFire(40));						
+					}
+				}
+			}
 			this.onInsideBlock(world.getBlockState(pos), pos, p);
 			return p;
 		}
