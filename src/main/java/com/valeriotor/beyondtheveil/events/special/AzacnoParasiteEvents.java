@@ -5,8 +5,12 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
+
+import baubles.api.BaublesApi;
+import baubles.api.inv.BaublesInventoryWrapper;
 
 import java.util.UUID;
 
@@ -34,7 +38,8 @@ public class AzacnoParasiteEvents {
 
 		if(e.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer damaged = (EntityPlayer) e.getEntityLiving();
-			if(!parasites.containsKey(damaged.getPersistentID()))
+			boolean protect = BaublesApi.isBaubleEquipped(damaged, ItemRegistry.azacno_charm) != -1;
+			if(!protect && !parasites.containsKey(damaged.getPersistentID()))
 				parasites.put(damaged.getPersistentID(), new AzacnoParasite(damaged));
 		} else {
 			e.getEntityLiving().addPotionEffect(new PotionEffect(PotionRegistry.terror, 300, 3));
