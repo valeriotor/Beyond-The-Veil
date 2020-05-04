@@ -325,6 +325,7 @@ building.pyramid=Pyramid
 building.wall=Wall
 building.road=Road
 building.clinic=Clinic
+building.great_shrine=Great Shrine
 
 angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
 
