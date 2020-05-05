@@ -36,7 +36,7 @@ public class GreatDreamerBuffs {
 		else e.setAmount((float) (e.getAmount()*modifier));
 
 		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) 
-			e.setAmount((float) (e.getAmount()*modifier));
+			e.setAmount((float) (e.getAmount()*(1+modifier)/2));
 		
 	}
 	
