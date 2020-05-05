@@ -758,7 +758,7 @@ research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
-research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning.
+research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning. Just like the Memory, they'll only be consumed if there's something to learn.
 
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>New revelations spring to mind on how to make it reach its full potential.
