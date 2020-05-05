@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		" WW ",
+		" WW ",
+		" WW ",
+		" NN "
+	],
+	"output" : "beyondtheveil:curtain",
+	"map": {
+		"N" : "minecraft:gold_nugget",
+		"W" : "minecraft:wool;1;14"
+	},
+	"req" : "CURTAINS;1"
+}

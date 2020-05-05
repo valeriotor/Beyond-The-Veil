@@ -1,19 +1,21 @@
 package com.valeriotor.beyondtheveil.blocks.flora;
 
-import java.util.List;
 import java.util.Random;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.blocks.EnumHalf;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tileEntities.TileMutator;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,16 +45,22 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote)
 		if(hand == EnumHand.MAIN_HAND) {
-			if(playerIn.getHeldItem(hand).getItem() == Items.GOLD_INGOT) {
+			ItemStack stack = playerIn.getHeldItem(hand);
+			if(stack.getItem() == Items.GOLD_INGOT) {
 				ItemStack seeds = ItemStack.EMPTY;
 				seeds = ItemRegistry.getRandomSeed(RANDOM, 10);
 				for(int i = 0; i < 100 && seeds == ItemStack.EMPTY; i++)
 				 seeds = ForgeHooks.getGrassSeed(RANDOM, 0);
 				if(seeds == ItemStack.EMPTY || seeds.getItem() == Items.WHEAT_SEEDS) seeds = new ItemStack(getRandomSeed(RANDOM));
 				if(seeds != ItemStack.EMPTY) {
-					playerIn.getHeldItem(hand).shrink(1);
+					stack.shrink(1);
 					ItemHandlerHelper.giveItemToPlayer(playerIn, seeds);
 				}
+			} else if(stack.getItem() == Item.getItemFromBlock(Blocks.GOLD_BLOCK)) {
+				stack.shrink(1);
+				ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(BlockRegistry.BlockMegydrea));
+				if(!ResearchUtil.isResearchVisible(playerIn, "MEGYDREA"))
+					SyncUtil.addStringDataOnServer(playerIn, false, "gotmegydrea");
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);

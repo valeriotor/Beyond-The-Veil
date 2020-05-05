@@ -42,6 +42,10 @@ public class GearBenchRecipeRegistry {
 		registerGBRecipe("elder_stone_bricks");
 		registerGBRecipe("slug_catcher");
 		registerGBRecipe("surgery_tools");
+		registerGBRecipe("dream_focus");
+		registerGBRecipe("dream_focus_fluids");
+		registerGBRecipe("dream_focus_villagers");
+		registerGBRecipe("curtain");
 	}
 	
 	private static void registerGBRecipe(String fileName) {
