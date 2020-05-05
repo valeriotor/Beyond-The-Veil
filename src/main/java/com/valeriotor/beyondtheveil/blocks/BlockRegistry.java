@@ -27,7 +27,7 @@ public class BlockRegistry {
 	
 	public static final DampWood DampWood = new DampWood();	
 	public static final BlockFumeSpreader FumeSpreader = new BlockFumeSpreader();
-	public static final BlockDarkSand DarkSand = new BlockDarkSand();
+	public static final BlockDarkSand DarkSand = new BlockDarkSand(BlockNames.DARKSAND);
 	public static final DampStone DampStone = new DampStone();
 	public static final DampLog DampLog = new DampLog();
 	public static final DampWoodStairs DampWoodStairs = new DampWoodStairs(DampWood.getDefaultState());
