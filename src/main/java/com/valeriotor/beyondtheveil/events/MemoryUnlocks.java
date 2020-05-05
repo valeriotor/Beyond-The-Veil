@@ -163,10 +163,10 @@ public class MemoryUnlocks {
 			if(p.world.isRemote) return;
 			if(p instanceof FakePlayer) return;
 			int a = SyncUtil.getOrSetIntDataOnServer(p, false, PlayerDataLib.BONEMEALUSED, 0);
-			if(a < 50) {
+			if(!Memory.PLANT.isUnlocked(p)) {
 				if(ResearchUtil.isResearchComplete(p, "EFFECTDREAMS") && ResearchUtil.isResearchComplete(p, "HUMANDREAMS")) {
 					SyncUtil.addIntDataOnServer(p, false, PlayerDataLib.BONEMEALUSED, ++a);
-					if(a >= 50) {
+					if(a >= 5) {
 						Memory.PLANT.unlock(p);
 					}
 				}
