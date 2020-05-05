@@ -125,14 +125,17 @@ public class ItemDreamBottle extends Item{
 	
 	public void dream(EntityPlayer playerIn, ItemStack stack, int amount, int required) {
 		Map<Integer, Dream> dreams = new HashMap<>();
+		Map<Integer, String> names = new HashMap<>();
 		NBTTagCompound nbt = ItemHelper.checkTagCompound(stack);
 		for(int i = 0; i < (this == ItemRegistry.dream_bottle ? 4 : 1); i++) {
 			if(nbt.hasKey(String.format("slot%d", i))) {
 				ItemStack stack2 = new ItemStack(nbt.getCompoundTag(String.format("slot%d", i)));
 				if(stack2.getItem() == ItemRegistry.memory_phial) {
 					Memory m = Memory.getMemoryFromDataName(ItemHelper.checkStringTag(stack2, "memory", "none"));
-					if(m != null)
+					if(m != null) {
 						dreams.put(i, DreamRegistry.dreams.get(m));
+						names.put(i, m.name().toLowerCase());
+					}
 				}
 			}
 		}
@@ -184,6 +187,7 @@ public class ItemDreamBottle extends Item{
 				if(activated) {
 					nbt.removeTag(String.format("slot%d", entry.getKey().intValue()));
 					amount -= required;
+					SyncUtil.addStringDataOnServer(playerIn, false, names.get(entry.getKey()).concat("Dream"));
 				}
 			}
 			fluid.drain(amountHolder - amount,  true);
