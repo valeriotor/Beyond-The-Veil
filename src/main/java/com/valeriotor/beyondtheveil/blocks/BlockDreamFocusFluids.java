@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.blocks;
 
+import com.valeriotor.beyondtheveil.blocks.util.IDyableFocus;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -25,7 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvider{
+public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvider, IDyableFocus{
 
 	public BlockDreamFocusFluids(String name) {
 		super(Material.ROCK, name);
@@ -82,10 +83,10 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 												.setTimer(200)
 												.setName("dreamfocus");
 					ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
-				}
+				} else this.setColor(player.getHeldItemMainhand(), worldIn, pos);
 			}
 		}
-		return super.onBlockActivated(worldIn, pos, state, player, hand, facing, hitX, hitY, hitZ);
+		return true;
 	}
 
 }

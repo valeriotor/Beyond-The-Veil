@@ -1,12 +1,12 @@
 package com.valeriotor.beyondtheveil.blocks;
 
+import com.valeriotor.beyondtheveil.blocks.util.IDyableFocus;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageCameraRotatorClient;
-import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus.FocusType;
@@ -24,11 +24,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvider{
+public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvider, IDyableFocus{
 
 	public BlockDreamFocus(String name) {
 		super(Material.ROCK, name);
@@ -40,7 +39,7 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player,
+	public boolean onBlockActivated(World worldIn, final BlockPos pos, IBlockState state, EntityPlayer player,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(hand == EnumHand.MAIN_HAND && !worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
@@ -76,10 +75,10 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 					fletum.setPosition(pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5);
 					fletum.setMaster(player);
 					worldIn.spawnEntity(fletum);
-				}
+				} else this.setColor(player.getHeldItemMainhand(), worldIn, pos);
 			}
 		}
-		return super.onBlockActivated(worldIn, pos, state, player, hand, facing, hitX, hitY, hitZ);
+		return true;
 	}
 
 	@Override

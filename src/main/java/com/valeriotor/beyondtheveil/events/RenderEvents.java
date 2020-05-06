@@ -25,7 +25,6 @@ import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 
 import baubles.api.BaublesApi;
-import baubles.api.inv.BaublesInventoryWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
@@ -37,6 +36,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -302,14 +302,15 @@ public class RenderEvents {
 		}
 	}
 	
-	public void renderDreamFocusPath(List<Point3d> ps, World w) {
+	public void renderDreamFocusPath(List<Point3d> ps, World w, EnumDyeColor dye) {
 		EntityPlayer p = Minecraft.getMinecraft().player;
 		int a = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
 		if(a != -1) {
 			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, a), 1, false) == 1) {
 				for(int i = 0; i < ps.size(); i+=3) {
 					Point3d point = ps.get(i);
-					w.spawnParticle(EnumParticleTypes.REDSTONE, point.x, point.y, point.z, 255, 0, 0);
+					int color = dye.getColorValue();
+					w.spawnParticle(EnumParticleTypes.REDSTONE, point.x, point.y, point.z, (color >> 16)/255D, ((color >> 8) & 255)/255D, (color & 255)/255D);
 				}
 			}
 		}

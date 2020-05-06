@@ -23,9 +23,9 @@ import com.valeriotor.beyondtheveil.entities.dreamfocus.IDreamEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -53,16 +53,23 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	private int playerCounter = 0;
 	private boolean fletum = false;
 	private FocusType type = FocusType.ITEM;
+	private EnumDyeColor dye = EnumDyeColor.RED;
 	
 	public TileDreamFocus() {}
 	public TileDreamFocus(FocusType type) {
 		this.type = type;
 	}
 	
+	public void setDyeColor(EnumDyeColor dye) {
+		this.dye = dye;
+		markDirty();
+		this.sendUpdates(world);
+	}
+	
 	@Override
 	public void update() {
 		if(this.world.isRemote) {
-			BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world);
+			BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world, dye);
 		} else {
 			this.counter++;
 			if(this.counter > 150) {
@@ -210,6 +217,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		}
 		compound.setInteger("type", this.type.ordinal());
 		compound.setInteger("counter", this.counter);
+		compound.setInteger("dye", this.dye.ordinal());
 		return super.writeToNBT(compound);
 	}
 	
@@ -226,6 +234,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		}
 		this.type = FocusType.values()[compound.getInteger("type")];
 		this.counter = compound.getInteger("counter");
+		this.dye = EnumDyeColor.values()[compound.getInteger("dye")];
 		super.readFromNBT(compound);
 	}
 	
