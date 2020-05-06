@@ -5,6 +5,7 @@ import java.util.List;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
+import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
@@ -52,6 +53,9 @@ public class LivingEvents {
 				e.setAmount(8);
 			else if(e.getAmount() > 15)
 				e.setAmount(15);
+		} else if(ent instanceof EntitySurgeon) {
+			if(e.getAmount() > 12)
+				e.setAmount(12);
 		}
 		
 		return false;

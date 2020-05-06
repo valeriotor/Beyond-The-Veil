@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entities;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
@@ -8,6 +9,7 @@ import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AISurgeon;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSurgeonToClient;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
@@ -29,6 +31,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -36,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class EntitySurgeon extends EntityMob implements IPlayerMinion{
+public class EntitySurgeon extends EntityMob implements IPlayerMinion, IAnimatedAttacker{
 	
 	private UUID master;
 	private static final DataParameter<Integer> OPCODE = EntityDataManager.<Integer>createKey(EntitySurgeon.class, DataSerializers.VARINT);
@@ -47,6 +50,7 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 	public int hearts = 0;
 	public int spines = 0;
 	public Animation surgeryAnimation;
+	public Animation attackAnimation;
 	
 	public EntitySurgeon(World worldIn) {
 		super(worldIn);
@@ -91,6 +95,11 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(BlockRegistry.BlockHeart, this.hearts));
 					this.spines = 0;
 					this.hearts = 0;
+				} else if(player.getHeldItemMainhand().getItem() == ItemRegistry.blackjack) {
+					this.world.removeEntity(this);
+					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ItemRegistry.surgeon_summons));
+					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ItemRegistry.spine, this.spines));
+					ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(BlockRegistry.BlockHeart, this.hearts));
 				}
 			}
 		}
@@ -170,6 +179,12 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 					this.surgeryAnimation = null;
 				}
 			}
+			if(this.attackAnimation != null) {
+				this.attackAnimation.update();
+				if(this.attackAnimation.isDone()) {
+					this.attackAnimation = null;
+				}
+			}
 			
 			return;
 		}
@@ -239,4 +254,44 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion{
 		return false;
 	}
 	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BTVSounds.surgeon_idle;
+	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 600;
+	}
+
+	@Override
+	public void setAttackAnimation(int id) {
+		this.attackAnimation = SurgeonAttacks.values()[id].getAnim();
+	}
+
+	@Override
+	public Animation getAttackAnimation() {
+		return this.attackAnimation;
+	}
+	
+	@Override
+	public void swingArm(EnumHand hand) {
+		super.swingArm(hand);
+		if(!this.world.isRemote)
+			this.sendAnimation(SurgeonAttacks.values()[this.rand.nextInt(SurgeonAttacks.values().length)].ordinal());
+	}
+	
+	private enum SurgeonAttacks {
+		MANTIS(() -> new Animation(AnimationRegistry.surgeon_attack));
+		
+		private Supplier<Animation> func;
+		private SurgeonAttacks(Supplier<Animation> func) {
+			this.func = func;
+		}
+		
+		private Animation getAnim() {
+			return this.func.get();
+		}
+		
+	}
 }

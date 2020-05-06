@@ -482,9 +482,14 @@ public class ModelSurgeon extends ModelAnimated {
     	this.LowerBody2.rotateAngleY = offset;
     	this.LeftUpperTentacle2.rotateAngleX = 1.7756979809790308F + offset*1.5F;
     	this.RightUpperTentacle1.rotateAngleX = 1.4570008595648662F + offset*1.5F;
-    	Animation anim = e.getSurgeryAnimation();
+    	Animation anim = e.getAttackAnimation();
     	if(anim != null) {
     		anim.applyTransformations(bodyParts, partialTickTime);
+    	} else {
+    		anim = e.getSurgeryAnimation();
+    		if(anim != null) {
+        		anim.applyTransformations(bodyParts, partialTickTime);
+        	}
     	}
     	super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
     }
