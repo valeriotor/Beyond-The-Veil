@@ -17,9 +17,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -211,6 +211,21 @@ public class MemoryUnlocks {
 			data.setInteger(PlayerDataLib.INTROSPECTION, a, false);
 			if(a >= 10) {
 				Memory.INTROSPECTION.unlock(p);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void livingDeathEvent(LivingDeathEvent event) {
+		if(event.getEntityLiving() instanceof EntityTameable) {
+			EntityTameable e = (EntityTameable)event.getEntityLiving();
+			if(e.getOwner() instanceof EntityPlayer) {
+				EntityPlayer p = (EntityPlayer) e.getOwner();
+				if(!(p instanceof FakePlayer)) {
+					if(ResearchUtil.isResearchComplete(p, "DREAMSHRINE") && !Memory.HEARTBREAK.isUnlocked(p)) {
+						Memory.HEARTBREAK.unlock(p);
+					}
+				}
 			}
 		}
 	}

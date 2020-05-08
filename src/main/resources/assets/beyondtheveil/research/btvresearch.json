@@ -598,13 +598,27 @@
         "key": "BEHEADINGDREAM",
         "name": "research.BEHEADINGDREAM.title",
         "icons": [ "minecraft:skull;1;1" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23,16],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,15],
 		"hiders": ["memBEHEADING"],
         "parents": [ "DREAMSHRINE" ],
         "stages": [
 				{
                     "text": "research.BEHEADINGDREAM.stage.0",
 					"recipes" : ["beyondtheveil:memory_phial;memBEHEADING"]
+                }
+            ]
+        },
+		{
+        "key": "HEARTBREAKDREAM",
+        "name": "research.HEARTBREAKDREAM.title",
+        "icons": [ "minecraft:red_flower" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,17],
+		"hiders": ["memHEARTBREAK"],
+        "parents": [ "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.HEARTBREAKDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memHEARTBREAK"]
                 }
             ]
         },
