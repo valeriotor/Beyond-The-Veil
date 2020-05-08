@@ -32,9 +32,9 @@ public class DGWorshipHelper {
 		researches.put(SLUGS, new DGResearch("SLUGS", 0, 0, 20, true, 0));
 		researches.put(FISHQUEST, new DGResearch("CANOE", 0.5, -0.05, 15, false, 1));
 		researches.put(RITUALQUEST, new DGResearch("BAPTISM", 0.1, -0.05, 0, true, 1));
-		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 15, false, 2));
-		researches.put(DAGONQUEST2, new DGResearch("METAMORPHOSIS", 0.25, -0.05, 15, false, 1));
-		researches.put(ENDBATH, new DGResearch("WATERWALKING", 0.1, -0.05, 15, true, 1));
+		researches.put(DAGONQUEST, new DGResearch("ALLIANCE", 0.25, -0.1, 5, false, 2));
+		researches.put(DAGONQUEST2, new DGResearch("METAMORPHOSIS", 0.25, -0.05, 5, false, 1));
+		researches.put(ENDBATH, new DGResearch("WATERWALKING", 0.1, -0.05, 5, true, 1));
 	}
 	
 	public static void levelUp(EntityPlayer p) {
