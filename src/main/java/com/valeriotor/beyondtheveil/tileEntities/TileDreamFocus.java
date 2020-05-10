@@ -48,7 +48,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 
 	private List<Point3d> points = new ArrayList<>();
 	private int counter = 0;
-	private Set<Integer> ents = new HashSet<>();
 	private UUID usingPlayer;
 	private int playerCounter = 0;
 	private boolean fletum = false;
@@ -69,13 +68,23 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	@Override
 	public void update() {
 		if(this.world.isRemote) {
-			BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world, dye);
+			if((this.counter & 1) == 0)
+				BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world, dye);
+			this.counter++;
+			if(this.counter > 400)
+				this.counter = 0;
 		} else {
 			this.counter++;
 			if(this.counter > 150) {
 				if(this.usingPlayer != null && this.world.getPlayerEntityByUUID(usingPlayer) == null) this.usingPlayer = null;
+
+				int redstone = 0;
+				for(EnumFacing facing : EnumFacing.VALUES) {
+					int a = world.getRedstonePower(pos.offset(facing), facing);
+					if(a > redstone) redstone = a;
+				}
 				if(this.type == FocusType.ITEM) {
-					if(BlockDreamFocus.hasFletum(world, pos)) {
+					if(redstone == 0 && BlockDreamFocus.hasFletum(world, pos)) {
 						EnumFacing facing = this.getState().getValue(ModBlockFacing.FACING).getOpposite();
 						TileEntity te = world.getTileEntity(pos.offset(facing));
 						if(te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())) {
@@ -85,7 +94,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								if(!stack.isEmpty()) {
 									BlockPos front = this.pos.offset(facing.getOpposite());
 									EntityDreamItem edi =new EntityDreamItem(this.world, front.getX()+0.5, front.getY(), front.getZ()+0.5, stack, this.pos);
-									this.ents.add(edi.getEntityId());
 									this.world.spawnEntity(edi);
 									break;
 								}
@@ -94,7 +102,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 					}
 				} else if(this.type == FocusType.FLUID) {
 					int fleti = BlockDreamFocusFluids.hasFleti(world, pos);
-					if(fleti > 0) {
+					if(redstone == 0 && fleti > 0) {
 						TileEntity te = world.getTileEntity(pos.offset(EnumFacing.UP));
 						if(te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
 							IFluidHandler f = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
@@ -114,7 +122,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								if(toDrain.amount > 0) {
 									EntityDreamFluid edf = new EntityDreamFluid(this.world, toDrain, this.pos);
 									edf.setPosition(this.pos.getX()+0.5, this.pos.getY()-1, this.pos.getZ()+0.5);
-									this.ents.add(edf.getEntityId());
 									this.world.spawnEntity(edf);
 								}
 							}
@@ -122,11 +129,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 						
 					}
 				} else if(this.type == FocusType.VILLAGER) {
-					int redstone = 0;
-					for(EnumFacing facing : EnumFacing.VALUES) {
-						int a = world.getRedstonePower(pos, facing);
-						if(a > redstone) redstone = a;
-					}
 					if(redstone < 15 && BlockDreamFocusVillagers.hasFletum(world, pos)) {
 						IDreamEntity toMove = null;
 						AxisAlignedBB bbox = new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(6, 5, 6));
@@ -153,21 +155,9 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								world.removeEntity(v);
 							}
 						}
-						if(toMove instanceof Entity) {
-							this.ents.add(((Entity)toMove).getEntityId());
-						}
 					}
 				}
 				this.counter = 0;
-			}
-			Iterator<Integer> iter = ents.iterator();
-			//System.out.println("Size: " + ents.size());
-			while(iter.hasNext()) {
-				int id = iter.next();
-				Entity e = world.getEntityByID(id);
-				if(e instanceof IDreamEntity && e.getDistanceSq(this.getPos()) < 1000) {
-					if(!((IDreamEntity)e).moveToNextPoint(points)) iter.remove();
-				} else iter.remove();
 			}
 			
 		}
@@ -185,6 +175,10 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		this.points.add(new Point3d(x, y, z));
 	}
 	
+	public List<Point3d> getPoints() {
+		return this.points;
+	}
+	
 	public void finish() {
 		markDirty();
 		this.usingPlayer = null;
@@ -197,14 +191,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 			return true;
 		}
 		return false;
-	}
-	
-	public void addDreamEntity(IDreamEntity e) {
-		this.ents.add(((Entity)e).getEntityId());
-	}
-	
-	public void removeDreamEntity(int id) {
-		this.ents.remove(id);
 	}
 	
 	@Override

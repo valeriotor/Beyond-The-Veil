@@ -66,7 +66,7 @@ public class BlockDreamFocus extends ModBlockFacing implements ITileEntityProvid
 												.addFinalAction(p -> td.finish())
 												.addFinalAction(p -> p.setPositionAndUpdate(ppos.getX(), ppos.getY(), ppos.getZ()))
 												.addFinalAction(p -> ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(p.getPersistentID(), false, MessageSyncPlayerRender.Type.DREAMFOCUS))))
-												.setTimer(200)
+												.setTimer(300)
 												.setName("dreamfocus");
 					ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
 				} else if(player.getHeldItemMainhand().getItem() == ItemRegistry.held_fletum && !hasFletum) {

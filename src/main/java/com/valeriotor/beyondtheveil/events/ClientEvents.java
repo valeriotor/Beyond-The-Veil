@@ -62,7 +62,7 @@ public class ClientEvents {
 					else
 						focusCounter = 0;
 				} else if(BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.contains(p)){
-					focusCounter = 200;
+					focusCounter = 300;
 				}
 			}
 				

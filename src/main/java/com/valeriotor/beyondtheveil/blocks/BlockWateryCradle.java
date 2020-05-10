@@ -101,6 +101,11 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 	
 	public TileWateryCradle getTE(World w, BlockPos pos) {
 		IBlockState state = w.getBlockState(pos);
+		if(state.getBlock() != BlockRegistry.BlockWateryCradle) return null;
+		return getTE(w, pos, state);
+	}
+	
+	public TileWateryCradle getTE(World w, BlockPos pos, IBlockState state) {
 		EnumPart part = state.getValue(PART);
 		if(part == EnumPart.STRUCTURE) return null;
 		if(part == EnumPart.TAIL) pos = pos.offset(state.getValue(FACING).getOpposite(), 2);
@@ -137,7 +142,7 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 	@Override
 	public void breakBlock(World w, BlockPos pos, IBlockState state) {
 		if(state.getValue(PART) == EnumPart.HEAD) {
-			TileWateryCradle te = this.getTE(w, pos);
+			TileWateryCradle te = this.getTE(w, pos, state);
 			if(te != null) {
 				ItemStack stack = te.getPatientItem();
 				EntityItem item = new EntityItem(w, pos.getX(), pos.getY(), pos.getZ(), stack);
@@ -197,12 +202,15 @@ public class BlockWateryCradle extends ModBlock implements ITileEntityProvider{
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		int meta = 0;
-		switch(state.getValue(PART).partName) {
-		case "head": meta = 4;
+		switch(state.getValue(PART)) {
+		case HEAD: meta = 4;
 		break;
-		case "body": meta = 8;
+		case BODY: meta = 8;
 		break;
-		case "tail": meta = 12;
+		case TAIL: meta = 12;
+		break;
+		case STRUCTURE: 
+		default: meta = 0; 
 		break;
 		}
 		meta += state.getValue(FACING).getHorizontalIndex();

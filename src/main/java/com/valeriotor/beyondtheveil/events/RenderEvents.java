@@ -75,6 +75,7 @@ public class RenderEvents {
 		EntityPlayer p = event.getEntityPlayer();
 		if(dreamFocusPlayers.contains(p)) {
 			event.setCanceled(true);
+			p.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, p.posX, p.posY, p.posZ, 0, 0, 0);
 		} else if(transformedPlayers.contains(p)) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
@@ -326,7 +327,7 @@ public class RenderEvents {
 				int width = event.getResolution().getScaledWidth();
 				GlStateManager.pushMatrix();
 				GlStateManager.enableAlpha();
-				drawModalRectWithCustomSizedTexture(width/2-64, height-100, 0, 0, MathHelperBTV.clamp(0, 127, (focusCounter)*128/200), 32, 128, 32);
+				drawModalRectWithCustomSizedTexture(width/2-64, height-100, 0, 0, MathHelperBTV.clamp(0, 127, (focusCounter)*128/300), 32, 128, 32);
 				GlStateManager.disableAlpha();
 				GlStateManager.popMatrix();
 			}

@@ -72,6 +72,9 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 					((WorldServer)player.world).getEntityTracker().sendToTrackingAndSelf(player, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(player.getPersistentID(), true, MessageSyncPlayerRender.Type.DREAMFOCUS)));
 					BlockPos startPos = pos.offset(EnumFacing.DOWN);
 					if(worldIn.getBlockState(startPos).isFullCube()) return false;
+					player.rotationPitch = 90;
+					if(!player.isSneaking())
+						BTVPacketHandler.INSTANCE.sendTo(new MessageCameraRotatorClient(0, 90-player.prevRotationPitch, 2), (EntityPlayerMP)player);
 					player.setPositionAndUpdate(startPos.getX()+0.5, startPos.getY()+0.5, startPos.getZ()+0.5);
 					PlayerTimerBuilder ptb = new PlayerTimerBuilder(player)
 												.addFinisher(EntityPlayer::isSneaking)
@@ -80,7 +83,7 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 												.addFinalAction(p -> td.finish())
 												.addFinalAction(p -> p.setPositionAndUpdate(ppos.getX(), ppos.getY(), ppos.getZ()))
 												.addFinalAction(p -> ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(p.getPersistentID(), false, MessageSyncPlayerRender.Type.DREAMFOCUS))))
-												.setTimer(200)
+												.setTimer(300)
 												.setName("dreamfocus");
 					ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
 				} else this.setColor(player.getHeldItemMainhand(), worldIn, pos);

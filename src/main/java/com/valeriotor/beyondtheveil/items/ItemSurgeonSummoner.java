@@ -1,7 +1,9 @@
 package com.valeriotor.beyondtheveil.items;
 
 import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.ItemHelper;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -59,6 +61,9 @@ public class ItemSurgeonSummoner extends ModItem{
 					}
 					worldIn.spawnEntity(surgeon);
 					stack.shrink(1);
+					if(ResearchUtil.getResearchStage(player, "SURGEON") == 0) {
+						SyncUtil.addStringDataOnServer(player, false, "summoned_surgeon");
+					}
 				}
 			}
 			return EnumActionResult.SUCCESS;

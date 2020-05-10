@@ -96,13 +96,19 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 		if(this.world.isRemote) return;
 		if(loadEntity) {
 			TileEntity te = this.world.getTileEntity(focus);
-			if(te instanceof TileDreamFocus) {
-				TileDreamFocus tdf = (TileDreamFocus)te;
-				tdf.addDreamEntity(this);
-			} else {
+			if(!(te instanceof TileDreamFocus)) {
 				this.turnBack = true;
 			}
 			loadEntity = false;
+		}
+		
+
+		if(this.focus != null) {
+			TileEntity te = this.world.getTileEntity(focus);
+			if(te instanceof TileDreamFocus) {
+				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
+				this.moveToNextPoint(ps);
+			} else this.turnBack = true;
 		}
 		if(turnBack) {
 			EntityVillager vil = new EntityVillager(this.world);
@@ -117,12 +123,6 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 		EntityCrawlingVillager worm = new EntityCrawlingVillager(this.world, this.focus, this.pointCounter);
 		worm.setPosition(this.posX, this.posY, this.posZ);
 		worm.setProfession(this.dataManager.get(PROFESSION));
-		if(this.focus != null) {
-			TileEntity te = this.world.getTileEntity(focus);
-			if(te instanceof TileDreamFocus && world.getBlockState(focus).getBlock() == BlockRegistry.BlockDreamFocusVillagers) {
-				((TileDreamFocus)te).addDreamEntity(worm);
-			}
-		}
 		this.world.spawnEntity(worm);
 		this.world.removeEntity(this);
 	}

@@ -836,7 +836,7 @@
         "key": "DREAMFOCUSFLUIDS",
         "name": "research.DREAMFOCUSFLUIDS.title",
         "icons": [ "beyondtheveil:dream_focus_fluids" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -5, 19],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 16],
 		"hiders": ["DREAMFOCUS"],
         "parents": ["DREAMFOCUS" ],
         "stages": [
@@ -855,7 +855,7 @@
         "key": "DREAMFOCUSVILLAGERS",
         "name": "research.DREAMFOCUSVILLAGERS.title",
         "icons": [ "beyondtheveil:dream_focus_villagers" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -5, 16],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 19],
 		"hiders": ["DREAMFOCUS"],
         "parents": ["DREAMFOCUS" ],
         "stages": [
@@ -874,8 +874,8 @@
         "key": "SURGEON",
         "name": "research.SURGEON.title",
         "icons": [ "beyondtheveil:surgeon_summons" ],
-        "category": "BEYOND_THE_VEIL", "location": [ -7, 16],
-		"hiders": ["DREAMFOCUSVILLAGERS"],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, 21],
+		"hiders": ["DREAMFOCUSVILLAGERS", "FINALQUEST"],
         "parents": ["DREAMFOCUSVILLAGERS" ],
         "stages": [
 				{

@@ -4,9 +4,14 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.blocks.BlockWateryCradle;
 import com.valeriotor.beyondtheveil.items.ItemBlackjack;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
+import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
+import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientStatus;
+import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle.PatientTypes;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
@@ -24,10 +29,10 @@ import net.minecraft.world.World;
 public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	private int pointCounter = 0;
 	private BlockPos focus = null;
-	private boolean loadEntity = false;
 	private boolean removeEntity = false;
 	public EntityDreamItem(World w) {
 		super(w);
+		this.lifespan = Integer.MAX_VALUE;
 	}
 	public EntityDreamItem(World worldIn, double x, double y, double z, ItemStack stack, BlockPos focusPos) {
 		super(worldIn, x, y, z, stack);
@@ -42,13 +47,12 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 			this.world.spawnParticle(EnumParticleTypes.REDSTONE, posX, posY, posZ, 255, 0, 0);
 			return;
 		}
-		if(loadEntity) {
+		if(this.focus != null) {
 			TileEntity te = this.world.getTileEntity(focus);
 			if(te instanceof TileDreamFocus) {
-				TileDreamFocus tdf = (TileDreamFocus)te;
-				tdf.addDreamEntity(this);
-			}
-			loadEntity = false;
+				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
+				this.moveToNextPoint(ps);
+			} else this.removeEntity = true;
 		}
 		if(removeEntity) {
 			EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
@@ -66,16 +70,29 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	
 	@Override
 	public Point3d getNextPoint(List<Point3d> ps) {
+		if(this.pointCounter < 0) this.pointCounter = 0;
 		if(this.pointCounter < ps.size()) {
 			Point3d p = ps.get(pointCounter);
 			this.pointCounter++;
 			ItemStack stack = this.getItem();
-			if(stack.getItem() instanceof ItemSword) {
+			if(stack.getItem() instanceof ItemSword && stack.getItem() != ItemRegistry.crucible) {
 				this.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(this) < 0.5)
 				.forEach(e -> e.attackEntityFrom(DamageSource.GENERIC, ((ItemSword)stack.getItem()).getAttackDamage()));
 			} else if(stack.getItem() == ItemRegistry.blackjack) {
-				this.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(this) < 1.5)
+				this.world.getEntities(EntityLiving.class, e -> e.getDistanceSq(this) < 2.5)
 				.forEach(e -> ItemBlackjack.processInteract(stack, e, 0.2, false));
+			} else if(stack.getItem() == ItemRegistry.held_villager || stack.getItem() == ItemRegistry.held_weeper) {
+				BlockPos pos = new BlockPos(2*p.x-posX,2*p.y-posY,2*p.z-posZ);
+				IBlockState state = world.getBlockState(pos);
+				if(state.getBlock() == BlockRegistry.BlockWateryCradle) {
+					if(state.getValue(BlockWateryCradle.PART) != BlockWateryCradle.EnumPart.STRUCTURE) {
+						TileWateryCradle cradle = BlockRegistry.BlockWateryCradle.getTE(this.world, pos);
+						if(cradle.getPatientType() == PatientTypes.NONE) {
+							cradle.setPatient(PatientStatus.getPatientFromItem(this.getItem()));
+							this.world.removeEntity(this);
+						}
+					}
+				}
 			}
 			return p;
 		}
@@ -99,7 +116,6 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 		this.pointCounter = compound.getInteger("point");
 		if(compound.hasKey("focus")) {
 			this.focus = BlockPos.fromLong(compound.getLong("focus"));
-			this.loadEntity = true;
 			
 		}
 		super.readFromNBT(compound);

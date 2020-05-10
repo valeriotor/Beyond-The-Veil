@@ -48,7 +48,6 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	private static final DataParameter<String> FLUIDNAME = EntityDataManager.<String>createKey(EntityDreamFluid.class, DataSerializers.STRING);
 	private static final DataParameter<Byte> FLUIDAMOUNT = EntityDataManager.<Byte>createKey(EntityDreamFluid.class, DataSerializers.BYTE);
 	private FluidStack fluid = null;
-	private boolean loadEntity = false;
 	private boolean removeEntity = false;
 	
 	public EntityDreamFluid(World worldIn) {
@@ -105,7 +104,7 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 			return p;
 		}
 		this.removeEntity = true;
-		if(this.fluid != null) {
+		/*if(this.fluid != null) {
 			IBlockState startState = world.getBlockState(this.getPosition());
 	        Material destMaterial = startState.getMaterial();
 			boolean isDestNonSolid = !destMaterial.isSolid();
@@ -124,7 +123,7 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
                 	this.fluid = null;
 		        }
         	} 
-		}
+		}*/
 		return null;
 	}
 
@@ -155,8 +154,6 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 		this.pointCounter = compound.getInteger("point");
 		if(compound.hasKey("focus")) {
 			this.focus = BlockPos.fromLong(compound.getLong("focus"));
-			this.loadEntity = true;
-			
 		}
 	}
 
@@ -181,17 +178,17 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		if(world.isRemote) return;
+		if(this.focus != null) {
+			TileEntity te = this.world.getTileEntity(focus);
+			if(te instanceof TileDreamFocus) {
+				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
+				this.moveToNextPoint(ps);
+			} else this.removeEntity = true;
+		}
+		
 		if(this.fluid != null) {
 			this.dataManager.set(FLUIDNAME, fluid.getFluid().getName());
 			this.dataManager.set(FLUIDAMOUNT, (byte)(this.fluid.amount/100));
-		}
-		if(loadEntity) {
-			TileEntity te = this.world.getTileEntity(focus);
-			if(te instanceof TileDreamFocus) {
-				TileDreamFocus tdf = (TileDreamFocus)te;
-				tdf.addDreamEntity(this);
-			}
-			loadEntity = false;
 		}
 		if(removeEntity || (this.focus != null && !(this.world.getTileEntity(focus) instanceof TileDreamFocus))) {
 			this.world.removeEntity(this);
@@ -235,8 +232,8 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 					this.fluid = null;
 					this.removeEntity = true;
 				} else this.fluid.amount = amount;
-			} else if(/*state.getBlock() instanceof BlockFluidBase  && ((BlockFluidBase)state.getBlock()).getFilledPercentage(world, destPos) == 1
-				||*/ (state.isSideSolid(world, destPos, f) && state.getBlock() != BlockRegistry.BlockDreamFocusFluids)) {
+			} /*else if(/*state.getBlock() instanceof BlockFluidBase  && ((BlockFluidBase)state.getBlock()).getFilledPercentage(world, destPos) == 1
+				|| (state.isSideSolid(world, destPos, f) && state.getBlock() != BlockRegistry.BlockDreamFocusFluids)) {
 				if(fluid.getFluid().canBePlacedInWorld()) {
 					IBlockState startState = world.getBlockState(this.getPosition());
 			        Material destMaterial = startState.getMaterial();
@@ -259,7 +256,7 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 				        }
 		        	} 
 				}
-			}
+			}*/
 		}
 		super.onInsideBlock(state);
 	}

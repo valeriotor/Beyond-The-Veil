@@ -74,7 +74,7 @@ public class BlockDreamFocusVillagers extends ModBlock implements ITileEntityPro
 												.addFinalAction(p -> td.finish())
 												.addFinalAction(p -> p.setPositionAndUpdate(ppos.getX(), ppos.getY(), ppos.getZ()))
 												.addFinalAction(p -> ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessageSyncPlayerRender(p.getPersistentID(), false, MessageSyncPlayerRender.Type.DREAMFOCUS))))
-												.setTimer(200)
+												.setTimer(300)
 												.setName("dreamfocus");
 					ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
 				} else this.setColor(player.getHeldItemMainhand(), worldIn, pos);

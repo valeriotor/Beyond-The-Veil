@@ -1,0 +1,16 @@
+{
+	"rows" : [
+		"PPPP",
+		"PIHP",
+		"PHSP",
+		"PPPP"
+	],
+	"output" : "beyondtheveil:surgeon_summons",
+	"map": {
+		"P" : "minecraft:paper",
+		"I" : "minecraft:dye;1;0",
+		"S" : "beyondtheveil:spine",
+		"H" : "beyondtheveil:heart"
+	},
+	"req" : "SURGEON;0"
+}
