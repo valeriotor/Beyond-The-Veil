@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.world;
 
+import com.valeriotor.beyondtheveil.util.ConfigLib;
+
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraftforge.common.BiomeDictionary;
@@ -18,7 +20,7 @@ public class BiomeRegistry {
 	
 	public static void initBiomes() {
 		ForgeRegistries.BIOMES.register(innsmouth);
-		BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(innsmouth, 4));
+		BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(innsmouth, ConfigLib.innsmouthWeight));
 		BiomeManager.addSpawnBiome(innsmouth);
 		
 		BiomeDictionary.addTypes(innsmouth, Type.SWAMP);

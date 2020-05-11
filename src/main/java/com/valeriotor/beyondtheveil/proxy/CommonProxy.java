@@ -83,6 +83,8 @@ public class CommonProxy {
     	ConfigLib.connectionBlue = cfg.get("colors", "Necronomicon Connection Blue", 0, "Blue Color for the connections in Al Azif (default: 0)", 0, 255).getInt();
     	ConfigLib.connectionGreen = cfg.get("colors", "Necronomicon Connection Green", 32, "Green Color for the connections in Al Azif (default: 32)", 0, 255).getInt();
     	ConfigLib.connectionRed = cfg.get("colors", "Necronomicon Connection Red", 0, "Red Color for the connections in Al Azif (default: 0)", 0, 255).getInt();
+    	cfg.setCategoryComment("world", "Some worldgen stuff. Will add more options in the future");
+    	ConfigLib.innsmouthWeight = cfg.get("world", "Voided biome spawn weight", 4, "Min: 1, Max: 99, Default: 4", 1, 99).getInt();
     	cfg.save();
     }
 
