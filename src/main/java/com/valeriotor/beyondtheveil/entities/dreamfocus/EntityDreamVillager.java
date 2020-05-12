@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 	private int pointCounter = 0;
+	private List<Point3d> points;
 	private BlockPos focus;
 	private NBTTagCompound villagerData;
 	private boolean loadEntity = false;
@@ -30,9 +31,10 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 		super(worldIn);
 	}
 	
-	public EntityDreamVillager(World worldIn, BlockPos focus) {
+	public EntityDreamVillager(World worldIn, BlockPos focus, List<Point3d> points) {
 		super(worldIn);
 		this.focus = focus;
+		this.points = points;
 	}
 	
 	@Override
@@ -98,17 +100,18 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 			TileEntity te = this.world.getTileEntity(focus);
 			if(!(te instanceof TileDreamFocus)) {
 				this.turnBack = true;
+			} else {
+				this.points = ((TileDreamFocus)te).getPoints();
 			}
 			loadEntity = false;
 		}
 		
 
-		if(this.focus != null) {
+		if(this.points != null)
+			this.moveToNextPoint(this.points);
+		if((this.ticksExisted & 7) == 0 && this.focus != null) {
 			TileEntity te = this.world.getTileEntity(focus);
-			if(te instanceof TileDreamFocus) {
-				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
-				this.moveToNextPoint(ps);
-			} else this.turnBack = true;
+			if(!(te instanceof TileDreamFocus)) this.turnBack = true;
 		}
 		if(turnBack) {
 			EntityVillager vil = new EntityVillager(this.world);
@@ -120,7 +123,7 @@ public class EntityDreamVillager extends EntityLiving implements IDreamEntity{
 	}
 	
 	public void knockout() {
-		EntityCrawlingVillager worm = new EntityCrawlingVillager(this.world, this.focus, this.pointCounter);
+		EntityCrawlingVillager worm = new EntityCrawlingVillager(this.world, this.focus, this.pointCounter, this.points);
 		worm.setPosition(this.posX, this.posY, this.posZ);
 		worm.setProfession(this.dataManager.get(PROFESSION));
 		this.world.spawnEntity(worm);

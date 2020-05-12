@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tileEntities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -93,7 +94,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								ItemStack stack = cap.extractItem(i, 64, false);
 								if(!stack.isEmpty()) {
 									BlockPos front = this.pos.offset(facing.getOpposite());
-									EntityDreamItem edi =new EntityDreamItem(this.world, front.getX()+0.5, front.getY(), front.getZ()+0.5, stack, this.pos);
+									EntityDreamItem edi =new EntityDreamItem(this.world, front.getX()+0.5, front.getY(), front.getZ()+0.5, stack, this.pos, Collections.unmodifiableList(this.points));
 									this.world.spawnEntity(edi);
 									break;
 								}
@@ -120,7 +121,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 								for(int i = 1; i < fleti+1; i++) a+=i;
 								FluidStack toDrain = f.drain(new FluidStack(fluid, a*100), true);
 								if(toDrain.amount > 0) {
-									EntityDreamFluid edf = new EntityDreamFluid(this.world, toDrain, this.pos);
+									EntityDreamFluid edf = new EntityDreamFluid(this.world, toDrain, this.pos, Collections.unmodifiableList(this.points));
 									edf.setPosition(this.pos.getX()+0.5, this.pos.getY()-1, this.pos.getZ()+0.5);
 									this.world.spawnEntity(edf);
 								}
@@ -143,7 +144,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 						if(toMove == null) {
 							List<EntityVillager> ents = world.getEntitiesWithinAABB(EntityVillager.class, bbox, e -> !e.isChild());
 							if(ents.size() > redstone) {
-								EntityDreamVillager vil = new EntityDreamVillager(world, this.pos);
+								EntityDreamVillager vil = new EntityDreamVillager(world, this.pos, Collections.unmodifiableList(this.points));
 								EntityVillager v = ents.get(0);
 								NBTTagCompound nbt = new NBTTagCompound();
 								v.writeEntityToNBT(nbt);
@@ -164,7 +165,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	}
 	
 	public void clearList() {
-		this.points.clear();
+		this.points = new ArrayList<>();
 		if(this.world != null && !this.world.isRemote) {
 			markDirty();
 			this.sendUpdates(world);

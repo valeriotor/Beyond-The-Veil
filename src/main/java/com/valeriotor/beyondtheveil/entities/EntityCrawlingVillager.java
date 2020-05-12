@@ -47,11 +47,13 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	private boolean unconscious = false; // "unconscious" is synonym of "blackjack" and opposite of "spineless"
 	private boolean heartless = false;
 	private boolean weeper = false;
+	private boolean loadFocus = false;
 	private int ticksToDie = 0;
 	private int ticksToFall = 0;
 	private int ticksToRecovery = 200;
 	private int introspectionCounter = 0;
 	private int pointCounter = 0;
+	private List<Point3d> points;
 	private BlockPos altar;
 	private BlockPos focus;
 	private UUID master;
@@ -68,10 +70,11 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 		this(worldIn, blackjack, false);
 	}
 	
-	public EntityCrawlingVillager(World worldIn, BlockPos focus, int pointCounter) {
+	public EntityCrawlingVillager(World worldIn, BlockPos focus, int pointCounter, List<Point3d> points) {
 		this(worldIn, true, false);
 		this.focus = focus;
 		this.pointCounter = pointCounter;
+		this.points = points;
 	}
 	
 	public EntityCrawlingVillager(World worldIn, boolean blackjack, boolean heartless) {
@@ -138,6 +141,11 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 				this.setHealth(0);
 			}
 			
+			if(this.loadFocus) {
+				this.setFocus(focus);
+				this.loadFocus = false;
+			}
+			
 			if(this.unconscious) {
 				if(this.ticksToRecovery > 0) this.ticksToRecovery--;
 				else {
@@ -148,12 +156,14 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 				}
 			}
 
-			if(this.focus != null) {
+			if(this.points != null)
+				this.moveToNextPoint(this.points);
+			if((this.ticksExisted & 7) == 0 && this.focus != null) {
 				TileEntity te = this.world.getTileEntity(focus);
-				if(te instanceof TileDreamFocus) {
-					List<Point3d> ps = ((TileDreamFocus)te).getPoints();
-					this.moveToNextPoint(ps);
-				} else this.focus = null;
+				if(!(te instanceof TileDreamFocus)) {
+					this.focus = null;
+					this.pointCounter = 0;
+				}
 			}
 			
 			this.introspectionCounter++;
@@ -225,6 +235,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 		if(compound.hasKey("altar")) this.altar = BlockPos.fromLong(compound.getLong("altar"));
 		if(compound.hasKey("focus")) {
 			this.focus = BlockPos.fromLong(compound.getLong("focus"));
+			this.loadFocus = true;
 		}
 		super.readFromNBT(compound);
 	}
@@ -296,6 +307,11 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	
 	public void setFocus(BlockPos focus) {
 		this.focus = focus;
+		TileEntity te = this.world.getTileEntity(focus);
+		if(!(te instanceof TileDreamFocus)) this.focus = null;
+		else {
+			this.points = ((TileDreamFocus)te).getPoints();
+		}
 	}
 	
 

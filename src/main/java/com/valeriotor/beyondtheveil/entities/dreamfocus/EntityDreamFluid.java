@@ -44,11 +44,13 @@ import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
 public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	private int pointCounter = 0;
+	private List<Point3d> points;
 	private BlockPos focus = null;
 	private static final DataParameter<String> FLUIDNAME = EntityDataManager.<String>createKey(EntityDreamFluid.class, DataSerializers.STRING);
 	private static final DataParameter<Byte> FLUIDAMOUNT = EntityDataManager.<Byte>createKey(EntityDreamFluid.class, DataSerializers.BYTE);
 	private FluidStack fluid = null;
 	private boolean removeEntity = false;
+	private boolean loadEntity = false;
 	
 	public EntityDreamFluid(World worldIn) {
 		super(worldIn);
@@ -56,10 +58,11 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 		this.setEntityBoundingBox(new AxisAlignedBB(0,0,0,0.4,0.4,0.4));
 	}
 	
-	public EntityDreamFluid(World worldIn, FluidStack fluid, BlockPos focusPos) {
+	public EntityDreamFluid(World worldIn, FluidStack fluid, BlockPos focusPos, List<Point3d> points) {
 		this(worldIn);
 		this.fluid = fluid;
 		this.focus = focusPos;
+		this.points = points;
 	}
 
 	@Override
@@ -154,6 +157,7 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 		this.pointCounter = compound.getInteger("point");
 		if(compound.hasKey("focus")) {
 			this.focus = BlockPos.fromLong(compound.getLong("focus"));
+			this.loadEntity = true;
 		}
 	}
 
@@ -178,12 +182,20 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		if(world.isRemote) return;
-		if(this.focus != null) {
+		
+		if(this.loadEntity) {
 			TileEntity te = this.world.getTileEntity(focus);
 			if(te instanceof TileDreamFocus) {
-				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
-				this.moveToNextPoint(ps);
+				this.points = ((TileDreamFocus)te).getPoints();
 			} else this.removeEntity = true;
+			this.loadEntity = false;
+		}
+		
+		if(this.points != null)
+			this.moveToNextPoint(this.points);
+		if((this.ticksExisted & 7) == 0 && this.focus != null) {
+			TileEntity te = this.world.getTileEntity(focus);
+			if(!(te instanceof TileDreamFocus)) this.removeEntity = true;
 		}
 		
 		if(this.fluid != null) {

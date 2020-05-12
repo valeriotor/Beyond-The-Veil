@@ -28,15 +28,17 @@ import net.minecraft.world.World;
 
 public class EntityDreamItem extends EntityItem implements IDreamEntity{
 	private int pointCounter = 0;
+	private List<Point3d> points;
 	private BlockPos focus = null;
 	private boolean removeEntity = false;
+	private boolean loadEntity = false;
 	public EntityDreamItem(World w) {
 		super(w);
-		this.lifespan = Integer.MAX_VALUE;
 	}
-	public EntityDreamItem(World worldIn, double x, double y, double z, ItemStack stack, BlockPos focusPos) {
+	public EntityDreamItem(World worldIn, double x, double y, double z, ItemStack stack, BlockPos focusPos, List<Point3d> points) {
 		super(worldIn, x, y, z, stack);
 		this.focus = focusPos;
+		this.points = points;
 	}
 	
 	@Override
@@ -47,12 +49,18 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 			this.world.spawnParticle(EnumParticleTypes.REDSTONE, posX, posY, posZ, 255, 0, 0);
 			return;
 		}
-		if(this.focus != null) {
+		if(this.loadEntity) {
 			TileEntity te = this.world.getTileEntity(focus);
 			if(te instanceof TileDreamFocus) {
-				List<Point3d> ps = ((TileDreamFocus)te).getPoints();
-				this.moveToNextPoint(ps);
+				this.points = ((TileDreamFocus)te).getPoints();
 			} else this.removeEntity = true;
+			this.loadEntity = false;
+		}
+		if(this.points != null)
+			this.moveToNextPoint(this.points);
+		if((this.ticksExisted & 7) == 0 && this.focus != null) {
+			TileEntity te = this.world.getTileEntity(focus);
+			if(!(te instanceof TileDreamFocus)) this.removeEntity = true;
 		}
 		if(removeEntity) {
 			EntityItem e = new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem());
@@ -116,7 +124,7 @@ public class EntityDreamItem extends EntityItem implements IDreamEntity{
 		this.pointCounter = compound.getInteger("point");
 		if(compound.hasKey("focus")) {
 			this.focus = BlockPos.fromLong(compound.getLong("focus"));
-			
+			this.loadEntity = true;
 		}
 		super.readFromNBT(compound);
 	}
