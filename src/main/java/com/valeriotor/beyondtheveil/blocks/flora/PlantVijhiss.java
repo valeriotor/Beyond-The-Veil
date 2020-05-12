@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.blocks.EnumHalf;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tileEntities.TileMutator;
@@ -56,14 +57,18 @@ public class PlantVijhiss extends BlockTallPlant implements IMutationCatalyst{
 					stack.shrink(1);
 					ItemHandlerHelper.giveItemToPlayer(playerIn, seeds);
 				}
+				if(!playerIn.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("usedvijhiss")) {
+					SyncUtil.addStringDataOnServer(playerIn, false, "usedvijhiss");
+				}
 			} else if(stack.getItem() == Item.getItemFromBlock(Blocks.GOLD_BLOCK)) {
 				stack.shrink(1);
 				ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(BlockRegistry.BlockMegydrea));
-				if(!ResearchUtil.isResearchVisible(playerIn, "MEGYDREA"))
+				if(!playerIn.getCapability(PlayerDataProvider.PLAYERDATA, null).getString("gotmegydrea"))
 					SyncUtil.addStringDataOnServer(playerIn, false, "gotmegydrea");
+				return true;
 			}
 		}
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	private static Item getRandomSeed(Random r) {

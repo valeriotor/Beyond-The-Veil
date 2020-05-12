@@ -1198,11 +1198,15 @@
         "name": "research.MEGYDREA.title",
         "icons": [ "beyondtheveil:megydrea" ],
         "category": "BEYOND_THE_VEIL", "location": [ -9, -4],
-		"hiders": ["gotmegydrea"],
+		"hiders": ["usedvijhiss"],
         "parents": [ "VIJHISS" ],
         "stages": [
 				{
-                    "text": "research.MEGYDREA.stage.0"
+                    "text": "research.MEGYDREA.stage.0",
+                    "required_research" : ["gotmegydrea"]
+                },
+				{
+                    "text": "research.MEGYDREA.stage.1"
                 }
             ]
         },

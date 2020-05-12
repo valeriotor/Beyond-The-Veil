@@ -1000,11 +1000,13 @@ research.plantgenerator.text=Dream of Flora with a diamond in hand.
 
 research.VIJHISS.title=Vijhiss
 research.VIJHISS.stage.0=My next Flora Dream should be made with a block of obsidian in my hand.<BR>I *know* something is going to happen.
-research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>A bigger piece of gold might result in a different gift.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
+research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
 research.plantvijhiss.text=Dream of Flora with obsidian in hand.
 
 research.MEGYDREA.title=Megydrea
-research.MEGYDREA.stage.0=A new plant, granted to me by Vijhiss. I can obtain more of its kind by giving more gold blocks to that greedy weed.<BR>The Megydrea acts as a fluid tank. It is placed on the ceiling and hangs from there, two blocks tall.<BR>Up to forty buckets of any fluid can be stored.
+research.MEGYDREA.stage.0=Should I encourage the avid nature of Vijhiss?<BR>I don't trust that plant, yet the boons may be worth it.<BR>I'll try and give it a bigger piece of gold.
+research.MEGYDREA.stage.1=A new plant, granted to me by Vijhiss. I can obtain more of its kind by giving more gold blocks to that greedy weed.<BR>The Megydrea acts as a fluid tank. It is placed on the ceiling and hangs from there, two blocks tall.<BR>Up to forty buckets of any fluid can be stored.
+research.gotmegydrea.text=Give Vijhiss a gold block.
 
 research.BEHEADINGDREAM.title=Dreams of Beheading
 research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
