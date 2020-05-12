@@ -18,6 +18,7 @@ import com.valeriotor.beyondtheveil.entities.render.RenderParasite;
 import com.valeriotor.beyondtheveil.entities.render.RenderTransformedPlayer;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
@@ -35,10 +36,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -70,6 +75,7 @@ public class RenderEvents {
 		EntityPlayer p = event.getEntityPlayer();
 		if(dreamFocusPlayers.contains(p)) {
 			event.setCanceled(true);
+			p.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, p.posX, p.posY, p.posZ, 0, 0, 0);
 		} else if(transformedPlayers.contains(p)) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
@@ -184,11 +190,12 @@ public class RenderEvents {
 		}
 		glowingEnts.clear();
 	}
-	
+	private static final ResourceLocation FOCUS_OVERLAY = new ResourceLocation(References.MODID, "textures/gui/focus_overlay.png");
 	@SubscribeEvent
 	public void onOverlayRenderEvent(RenderWorldLastEvent event) {
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused() || Minecraft.getMinecraft().player.world == null) return;
 		renderCovenantPlayers(event);
+		
 	}
 	
 	public void renderCovenantPlayers(RenderWorldLastEvent event) {
@@ -296,12 +303,49 @@ public class RenderEvents {
 		}
 	}
 	
-	public void renderDreamFocusPath(List<Point3d> ps, World w) {
-		if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == ItemRegistry.slug) {
-			for(Point3d p : ps) {
-				w.spawnParticle(EnumParticleTypes.REDSTONE, p.x, p.y, p.z, 255, 0, 0);
+	public void renderDreamFocusPath(List<Point3d> ps, World w, EnumDyeColor dye) {
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		int a = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
+		if(a != -1) {
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, a), 1, false) == 1) {
+				for(int i = 0; i < ps.size(); i+=3) {
+					Point3d point = ps.get(i);
+					int color = dye.getColorValue();
+					w.spawnParticle(EnumParticleTypes.REDSTONE, point.x, point.y, point.z, (color >> 16)/255D, ((color >> 8) & 255)/255D, (color & 255)/255D);
+				}
 			}
 		}
 	}
+	
+	@SubscribeEvent
+	public void actualOverlayEvent(RenderGameOverlayEvent event) {
+		if(event.getType() == ElementType.ALL) {
+			int focusCounter = BeyondTheVeil.proxy.cEvents.getFocusCounter();
+			if(focusCounter > 0) {
+				Minecraft.getMinecraft().renderEngine.bindTexture(FOCUS_OVERLAY);
+				int height = event.getResolution().getScaledHeight();
+				int width = event.getResolution().getScaledWidth();
+				GlStateManager.pushMatrix();
+				GlStateManager.enableAlpha();
+				drawModalRectWithCustomSizedTexture(width/2-64, height-100, 0, 0, MathHelperBTV.clamp(0, 127, (focusCounter)*128/300), 32, 128, 32);
+				GlStateManager.disableAlpha();
+				GlStateManager.popMatrix();
+			}
+		}
+	}
+	
+	public static void drawModalRectWithCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
 	
 }

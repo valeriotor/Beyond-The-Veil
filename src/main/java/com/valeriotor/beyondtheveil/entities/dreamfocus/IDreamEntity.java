@@ -15,9 +15,9 @@ public interface IDreamEntity {
 			if(p != null) {
 				Entity e = (Entity)this;
 				Vec3d vec = new Vec3d(p.x-e.posX, p.y-e.posY, p.z-e.posZ);
-				e.motionX += vec.x/20;
-				e.motionY = vec.y/3;
-				e.motionZ += vec.z/20;
+				e.motionX += Math.min(vec.x/20, 1);
+				e.motionY = Math.min(vec.y/3, 2);
+				e.motionZ += Math.min(vec.z/20, 1);
 				return true;
 			}
 			return false;

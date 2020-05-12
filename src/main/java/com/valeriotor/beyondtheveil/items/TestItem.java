@@ -68,7 +68,7 @@ public class TestItem extends Item //implements IHasModel
 		
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
-	private static final boolean SHOGGOTH = false;
+	private static final boolean SHOGGOTH = true;
 	public void doProcess(BlockPos pos1, BlockPos pos2, World w) {
 		
 		

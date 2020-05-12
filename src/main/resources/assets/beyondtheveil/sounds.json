@@ -140,5 +140,11 @@
 			"beyondtheveil:shoggoth_idle0",
 			"beyondtheveil:shoggoth_idle1"
 		]
+	},
+	"surgeon_idle": {
+		"sounds": [
+			"beyondtheveil:surgeon_idle0",
+			"beyondtheveil:surgeon_idle1"
+		]
 	}
 }

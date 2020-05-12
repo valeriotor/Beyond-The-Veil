@@ -2,11 +2,12 @@ package com.valeriotor.beyondtheveil.dreaming;
 
 import java.util.Map.Entry;
 
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capabilities.ResearchProvider;
-import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.Research.SubResearch;
+import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +25,7 @@ public enum Memory {
 	DARKNESS(Items.COAL, 0xFF002233),
 	DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c),
 	ELDRITCH(Items.ENDER_EYE, 0xFF400021),
+	HEARTBREAK(Item.getItemFromBlock(BlockRegistry.BlockHeart), 0xFFAA0000, "memPOWER"),
 	HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF, "metalDream"),
 	INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
 	LEARNING(Items.GHAST_TEAR, 0xFF998b69),	

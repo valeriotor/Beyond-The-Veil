@@ -121,7 +121,7 @@ public class ResearchStatus {
 	
 	public ResearchStatus readFromNBT(NBTTagCompound nbt) {
 		this.stage = nbt.getInteger("stage");
-		this.learned = nbt.getBoolean("learned");
+		this.learned = this.learned || nbt.getBoolean("learned");
 		this.complete = nbt.getBoolean("complete");
 		return this;
 	}

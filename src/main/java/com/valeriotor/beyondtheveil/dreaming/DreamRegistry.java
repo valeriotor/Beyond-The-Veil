@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.DreamDarkness;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamDeath;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamEldritch;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamGround;
+import com.valeriotor.beyondtheveil.dreaming.dreams.DreamHeartbreak;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamHuman;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamIntrospection;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamLearning;
@@ -43,6 +44,7 @@ public class DreamRegistry {
 	public static final DreamBeheading beheading = new DreamBeheading("beheading", 8);
 	public static final DreamPlant plant = new DreamPlant("plant", 8);
 	public static final DreamWater water = new DreamWater("water", 8);
+	public static final DreamHeartbreak heartbreak = new DreamHeartbreak("heartbreak", 2);
 	
 	public static final DreamLearning learning = new DreamLearning("learning", 6);
 	
@@ -72,6 +74,7 @@ public class DreamRegistry {
 		dreams.put(Memory.BEHEADING, beheading);
 		dreams.put(Memory.PLANT, plant);
 		dreams.put(Memory.WATER, water);
+		dreams.put(Memory.HEARTBREAK, heartbreak);
 	}
 	
 	

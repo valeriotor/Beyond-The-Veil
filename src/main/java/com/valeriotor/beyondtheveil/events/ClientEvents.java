@@ -46,6 +46,7 @@ public class ClientEvents {
 	/**A counter for generic ticking animations */
 	private int animationCounter = 0;
 	private int genericCounter = 0;
+	private int focusCounter = 0;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -55,6 +56,14 @@ public class ClientEvents {
 				sawCleaverDodge(p);
 				playerAnimationUpdate();
 				updateAnimationCounter();
+				if(focusCounter > 0) {
+					if(BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.contains(p))
+						focusCounter--;
+					else
+						focusCounter = 0;
+				} else if(BeyondTheVeil.proxy.renderEvents.dreamFocusPlayers.contains(p)){
+					focusCounter = 300;
+				}
 			}
 				
 			if(soundCounter > 0) {
@@ -180,6 +189,10 @@ public class ClientEvents {
 	
 	public boolean[] getArrowKeys() {
 		return new boolean[] {binds[0].isKeyDown(), binds[1].isKeyDown(), binds[2].isKeyDown(), binds[3].isKeyDown()};
+	}
+	
+	public int getFocusCounter() {
+		return this.focusCounter;
 	}
 	
 }

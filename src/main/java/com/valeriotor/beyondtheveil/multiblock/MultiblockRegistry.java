@@ -13,9 +13,9 @@ public class MultiblockRegistry {
 	public static HashMap<String, MultiblockSchematic> multiblocks = new HashMap<>();
 	
 	public static void registerMultiblocks() {
-		registerMultiblock("blood_well");
-		registerMultiblock("sacrifice_altar");
-		registerMultiblock("dream_shrine");		
+		registerMultiblock(BLOOD_WELL);
+		registerMultiblock(SACRIFICE_ALTAR);
+		registerMultiblock(DREAM_SHRINE);		
 	}
 	
 	private static void registerMultiblock(String name) {
@@ -31,5 +31,9 @@ public class MultiblockRegistry {
 			e1.printStackTrace();
 		}
 	}
+	
+	public static final String BLOOD_WELL = "blood_well";
+	public static final String SACRIFICE_ALTAR = "sacrifice_altar";
+	public static final String DREAM_SHRINE = "dream_shrine";
 	
 }

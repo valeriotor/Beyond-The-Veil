@@ -16,15 +16,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockDarkSand extends BlockFalling{
+public class BlockDarkSand extends ModBlock{
 
-	public BlockDarkSand() {
-		super(Material.SAND);
+	public BlockDarkSand(String name) {
+		super(Material.SAND, name);
 		this.setResistance(40.0F);
 		this.setHardness(2.0F);
-		setRegistryName(BlockNames.DARKSAND);
-		setUnlocalizedName(BlockNames.DARKSAND);
-		this.setCreativeTab(References.BTV_TAB);
 		this.setSoundType(SoundType.SAND);
 	}
 	

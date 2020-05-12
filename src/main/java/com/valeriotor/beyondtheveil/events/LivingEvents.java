@@ -5,18 +5,22 @@ import java.util.List;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
+import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.potions.PotionHeartbreak;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -52,6 +56,9 @@ public class LivingEvents {
 				e.setAmount(8);
 			else if(e.getAmount() > 15)
 				e.setAmount(15);
+		} else if(ent instanceof EntitySurgeon) {
+			if(e.getAmount() > 12)
+				e.setAmount(12);
 		}
 		
 		return false;
@@ -83,6 +90,18 @@ public class LivingEvents {
 	public static void deathEvent(LivingDeathEvent event) {
 		if(event.getSource().getTrueSource() instanceof EntitySkeleton) {
 			((EntitySkeleton)event.getSource().getTrueSource()).setAttackTarget(null);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void healEvent(LivingHealEvent event) {
+		EntityLivingBase e = event.getEntityLiving();
+		if(e.isPotionActive(PotionRegistry.heartbreak)) {
+			PotionEffect f = e.getActivePotionEffect(PotionRegistry.heartbreak);
+			float maxHp = PotionHeartbreak.getMaxHp(e, f.getAmplifier());
+			if(e.getHealth()+event.getAmount() > maxHp) {
+				event.setAmount(maxHp-e.getHealth());
+			}
 		}
 	}
 }

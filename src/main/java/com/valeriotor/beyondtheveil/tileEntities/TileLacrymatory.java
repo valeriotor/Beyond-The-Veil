@@ -5,12 +5,12 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.IWeepingEntity;
 import com.valeriotor.beyondtheveil.fluids.ModFluids;
 import com.valeriotor.beyondtheveil.fluids.TearTank;
 
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -20,10 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.TileFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileLacrymatory extends TileFluidHandler{
+public class TileLacrymatory extends TileFluidHandler implements IUpdatableTileEntity{
 	
 	private UUID weeper;
 	private int amount = 0;
@@ -61,7 +59,13 @@ public class TileLacrymatory extends TileFluidHandler{
 				double dist = lacrymatory.distanceSq(e.getPosition());
 				if(tl.getWeeper() == null && dist < 16) tl.setWeeper(e1);
 				else if(tl.getWeeper() == e1 && dist < 16) {
-					List<EntityLiving> ents = e.world.getEntities(EntityLiving.class, ent -> ent.getDistanceSq(e.getPosition()) < 9 && ent != e && ent instanceof IWeepingEntity);
+					List<EntityLiving> ents = e.world.getEntities(EntityLiving.class, ent -> {
+						if(ent.getDistanceSq(e.getPosition()) < 9 && ent != e && ent instanceof IWeepingEntity) 
+							if(ent instanceof IWeepingEntity)
+								if(!(ent instanceof EntityFletum) || !((EntityFletum)ent).isFocusing())
+								return true;
+						return false;
+						});
 					if(ents.isEmpty()) tl.tank.fill(new FluidStack(ModFluids.tears, 50), true);
 				}else {
 					e1.setLacrymatory(null);
@@ -90,6 +94,7 @@ public class TileLacrymatory extends TileFluidHandler{
 		super.readFromNBT(tag);
 	}
 	
+	@Override
 	public void sendUpdates() {
 		markDirty();
 		world.markBlockRangeForRenderUpdate(pos, pos);

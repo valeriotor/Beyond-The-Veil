@@ -46,12 +46,15 @@ item.necronomicon.name=Al Azif
 item.sigil_player.name=Blood Sigil: Player
 item.sigil_pathway.name=Blood Sigil: Pathway
 item.gear.name=Gear
+item.crucible.name=Crucible
+item.surgeon_summons.name=Surgeon Summons
 
 
 lore.flute=§5§oThe sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
 lore.saw_cleaver=§5§oThis weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
 lore.wolf_medallion=§5§oThis metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
 lore.bronze_sphere=§5§oNo no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
+lore.crucible=§5§oA weapon wielded by demon slayers of yore. Immensely powerful, but needs a long recharge after every use.
 tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=§5§oAn ancient stony slab with weird inscriptions on it. Can I decipher it?
 lore.spine=§5§oWillpower resides in the spine.
@@ -98,6 +101,9 @@ use.blood_sigil.nothealthy=This mob is not at full health.
 use.blood_sigil.notmine=This mob does not serve me.
 use.blood_sigil.path=This location is now bound in the Sigil.
 use.dream_bottle.noplayer=The bound Player is not currently in this world.
+use.surgeon_summoner.boundcontainer=This container's location has been bound to the Surgeon Summons.
+use.surgeon_summoner.unboundcontainer=The Surgeon Summons are no longer bound to a container.
+use.surgeon_summoner.nospace=There is not enough space to summon the Surgeon.
 
 bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepare for the worst, in a matter of seconds.
 
@@ -125,6 +131,7 @@ tile.sleep_chamber.name=Sleep Chamber
 tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
 tile.beanstalk.name=Beanstalk
 tile.redstone_grass.name=Redstone Grass
+tile.ghost_grass.name=Ghost Grass
 tile.arboreal_generator.name=Arboreal Generator
 tile.sapling_shrub.name=Sapling Shrub
 tile.plant_terra.name=Terra Plant
@@ -149,6 +156,11 @@ tile.penitence_statue.name=Statue of Penitence
 tile.memory_sieve.name=Memory Sieve
 tile.city_mapper.name=City Mapper
 tile.gear_bench.name=Gear Bench
+tile.dream_focus.name=Dream Focus: Items
+tile.dream_focus_fluids.name=Dream Focus: Fluids
+tile.dream_focus_villagers.name=Dream Focus: Villagers
+tile.megydrea.name=Megydrea
+tile.curtain.name=Curtain
 
 fluid.tears=Tears
 
@@ -185,7 +197,7 @@ interact.statue.alreadyme=This Statue is already mine.
 interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
 interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
 interact.gearbench.dunno=I do not know how to use this.
-interact.lacrymatory.amount=This Lacrymatory holds %1$s/4,000 millibuckets of Tears.
+interact.lacrymatory.amount=This Lacrymatory holds %1$s/4000 millibuckets of Tears.
 
 hit.idol.schiz0=I should not try to break it.
 hit.idol.schiz1=I shouldn't be doing this.
@@ -210,6 +222,8 @@ multiblock.dream_shrine=Dream Shrine
 
 multiblock.dream_shrine.checksout=This Dream Shrine has been built correctly.
 multiblock.dream_shrine.noshrine=This is not a Dream Shrine.
+multiblock.sacrifice_altar.checksout=This Sacrifice Altar has been built correctly.
+multiblock.sacrifice_altar.noaltar=This is not a Sacrifice Altar.
 
 ##################
 #ENTITIES
@@ -225,6 +239,7 @@ entity.shoggoth.name=Shoggoth
 entity.crazed_weeper.name=Crazed Weeper
 entity.blood_zombie.name=Blood Zombie
 entity.blood_skeleton.name=Blood Skeleton
+entity.surgeon.name=Surgeon
 
 shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
 shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
@@ -320,6 +335,7 @@ building.pyramid=Pyramid
 building.wall=Wall
 building.road=Road
 building.clinic=Clinic
+building.great_shrine=Great Shrine
 
 angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
 
@@ -619,6 +635,7 @@ weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
 effect.folly=Folly
 effect.terror=Terror
+effect.heartbreak=Broken Heart
 
 ##################
 #MEMORIES
@@ -634,6 +651,7 @@ memory.crystal.name=Crystal
 memory.darkness.name=Darkness
 memory.death.name=Death
 memory.eldritch.name=Eldritch
+memory.heartbreak.name=Heartbreak
 memory.human.name=Human
 memory.introspection.name=Introspection
 memory.learning.name=Learning
@@ -699,7 +717,9 @@ dreams.animalsearch.toomanyblocks=To properly summon an animal, I should clear s
 dreams.introspection.otherplayer=The Introspection Dream tells me of %1$s.
 dreams.introspection.caster=The Introspection Dream tells me of myself.
 dreams.introspection.deity=Chosen Deity: %1$s.
-dreams.introspection.strength=Attack Multiplier: %1$s Defense Multiplier: %2$s Dream Bonus: %3$s.
+dreams.introspection.attack=Attack Multiplier: %1$s       Attack Multiplier in Water: %2$s
+dreams.introspection.defense=Defense Multiplier: %1$s     Defense Multiplier in Water: %2$s
+dreams.introspection.dream=Dream Bonus: %1$s.
 dreams.introspection.void=Has Dreamt of Void.
 dreams.introspection.novoid=Has not Dreamt of Void.
 dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
@@ -735,7 +755,7 @@ research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake 
 research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time.<BR>The Chamber must be opened, and once I'm inside I must close it to start Dreaming. It is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by a nearby Fume Spreader, just like a normal bed.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.<BR>It is merely a stepping stone, to shatter all the fake truths I thought I knew.
 research.craftedsleep_chamber.text=Craft a Sleep Chamber.
 
-research.EFFECTDREAMS.title=Affecting myself
+research.EFFECTDREAMS.title=Affecting Myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
 research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how I could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning my body.
 research.effectDream.text=Trigger a Memory capable of affecting myself.
@@ -751,7 +771,7 @@ research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
-research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning.
+research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning. Just like the Memory, they'll only be consumed if there's something to learn.
 
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>New revelations spring to mind on how to make it reach its full potential.
@@ -890,7 +910,7 @@ research.craftedblood_crown.text=Craft a Crown of Thorns.
 
 research.AZACNOCHARM.title=Charm of Azacno
 research.AZACNOCHARM.stage.0=Aeons ago, a great parasite fell from the Cosmos.<BR>Unknown in shape and intent, it laid its nest in the deepest Oceans.<BR>Sucking blood, bringing fear and granting knowledge. To know him is to reach a culmination of my experiments.
-research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected Player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
+research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others, unless they wear the Charm themselves.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected Player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
 research.craftedazacno_charm.text=Craft a Charm of Azacno.
 
 research.STATUE.title=Worship
@@ -915,7 +935,7 @@ research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if t
 
 research.SACRIFICEALTAR.title=Altar of Sacrifice
 research.SACRIFICEALTAR.stage.0=I revel in limitless gratitude towards my Patron, yet in agony.<BR>For there is no way I can duly offer Him my thanks.<BR>Or is there?<BR>Blood makes for powerful bonds. It is water and life, all at once.<BR>It is the link that binds all things living to the deepest oceans.<BR>Through blood shall I thank Him, through life and water.<BR>An Altar of Sacrifice, of Hearts and Prismarine.<BR>First, a core.
-research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice.<BR>A heartless villager is to be placed upon the core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
+research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice. I can interact with bare hands with the Core to make sure it's been built correctly.<BR>A heartless villager is to be placed upon the Core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
 research.craftedsacrifice_altar.text=Craft a Sacrificial Altar Core.
 
 research.CORALSTAFF.title=Coral Staff
@@ -983,8 +1003,16 @@ research.VIJHISS.stage.0=My next Flora Dream should be made with a block of obsi
 research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
 research.plantvijhiss.text=Dream of Flora with obsidian in hand.
 
+research.MEGYDREA.title=Megydrea
+research.MEGYDREA.stage.0=Should I encourage the avid nature of Vijhiss?<BR>I don't trust that plant, yet the boons may be worth it.<BR>I'll try and give it a bigger piece of gold.
+research.MEGYDREA.stage.1=A new plant, granted to me by Vijhiss. I can obtain more of its kind by giving more gold blocks to that greedy weed.<BR>The Megydrea acts as a fluid tank. It is placed on the ceiling and hangs from there, two blocks tall.<BR>Up to forty buckets of any fluid can be stored.
+research.gotmegydrea.text=Give Vijhiss a gold block.
+
 research.BEHEADINGDREAM.title=Dreams of Beheading
 research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
+
+research.HEARTBREAKDREAM.title=Dreams of Heartbreak
+research.HEARTBREAKDREAM.stage.0=A Memory of Heartbreak, as I lose a loyal friend.<BR>Slowly, sorrow is replaced with anger. Towards those who don't feel my pain, closed in their own cynicism.<BR>A tinge of hypocrisy there?<BR>Shush.<BR>A Memory of Heartbreak makes for a far more offensive Dream than most. When used all non Player creatures within a fairly large distance, as well as I, remain afflicted for a limited time. Our health will be lowered until the effect ends, and a proper combination with Memories of Power and of Stillness makes for an extremely powerful weapon.<BR>Of course, hurting myself in the process is not ideal. With the Dream Shrine, I can properly target specific locations to afflict all the non Player creatures in a 30 block radius centered on the Sigil's location without being penalized for it.<BR>And, of course, I may also target specific Players.<BR>Everyone's had dark periods in their life. I must only make them reminisce.
 
 research.FINALQUEST.title=A Snippet Of Truth
 research.FINALQUEST.stage.0=I am close to a breach.<BR>Dagon calls.
@@ -1005,6 +1033,9 @@ research.WOLFMEDALLION.stage.0=A Medallion used by hunters in ages long past.<BR
 research.BRONZESPHERE.title=Bronze Sphere
 research.BRONZESPHERE.stage.0=I've already held this sphere.<BR>I know I have.<BR>My mind BURNS with recollection as I hold the object.<BR>I hope that reaching the Truth will unVeil this mistery.<BR>For now, it's again in my hands, and I can use it to my advantage.<BR>When activated it enables me to store experience inside it. If I am sneaking the experience is pulled out instead.<BR>A battery of Memories, so to say.
 
+research.CRUCIBLE.title=Crucible
+research.CRUCIBLE.stage.0=A weapon with a red hot blade, used by demon slayers in ages long past.<BR>One man armies they were, more terrible than any of their enemies.<BR>The Crucible is immensely powerful, capable of dishing out colossal damage for every hit.<BR>It is, however, balanced by the fact that for every swing the weapon needs around two minutes of recharging before it can be used again. And of course, many enemies of mine may not suffer too much damage in a single hit, so I must use it wisely.
+
 research.BAUBLERESEARCH.title=Baubles
 research.BAUBLERESEARCH.stage.0=Some items are to be worn outside of my armor slots.<BR>The Baubles I encounter in this journey (and only this journey) may have both active and passive effects.<BR>By holding the Bauble key ('Z' by default) I can choose which Baubles must have their passive effect enabled and which single Bauble is to be the active one.<BR>There can be only one active Bauble, and its effect can be activated by tapping the Bauble Key.
 
@@ -1017,8 +1048,33 @@ research.DEEPROAR.stage.0=While transformed I am unable to use the active effect
 research.TONEWDEPTHS.title=To New Depths
 research.TONEWDEPTHS.stage.0=We must keep going.<BR>Never yield, the Truth draws close, the Veil weakens, my knowledge grows, my will..<BR>What will is left? As if someone ripped my own spine.<BR>No, we'll keep going. We must.<BR>To the bottom of the deepest Oceans.<BR>To Arche, and then to Apeiron.<BR>Our journey won't end until we breach.. until we..<BR>..wait..<BR>..who's 'we'?
 
-research.WATERDREAM.title=Dream of Water
+research.WATERDREAM.title=Dreams of Water
 research.WATERDREAM.stage.0=A Dream of Water, as the thought of the Ocean refuses to leave my mind.<BR>Through this Memory I am able to locate the nearest Ocean Monument.<BR>The Guardians are born from water itself, and as such are closest to God.
+
+research.DREAMFOCUS.title=Dream Focus
+research.DREAMFOCUS.stage.0=Dream Foci are devices that, through their quartz structure and watery surface, can channel Dreams to move objects.<BR>Not my Dreams. Nor those of Weepers, who yet resist the final embrace.<BR>It is those of Fleti that I must harness, so lost in their desperate adoration of what lies Beyond.
+research.DREAMFOCUS.stage.1=A Dream Focus is a wondrous device.<BR>Its small end should be adjacent to the container I wish to pull items from. It can then be activated by placing a Fletum on its top.<BR>However, I must first choose the path the items will take, and I must do it myself.<BR>When no Fletum is on top of the Dream Focus, I can interact with the block with bare hands. I will then be transported to the large end of the Focus, facing away from it, and start to slowly move wherever I am looking, including in the air. This status lasts fifteen seconds, but I can exit it sooner by sneaking.<BR>Once all is done, the path is set. I can check the path at any time by wearing a Ring of Revelation with its passive effect enabled. I may also apply dyes to the Dream Focus to change the path's color.<BR>With the path set, and a Fletum on top, the Focus will pull items from the container every seven and a half seconds. They will start to float in the air following the path I set, and drop on the path's end. All physics will still apply, and sharp turns around block edges may get the items stuck, so I must be careful when creating the path.<BR>The items can be picked up while in the air, by Players and hoppers alike. A careful combination of pathing and hoppers will result in a proper transportation system.<BR>The Focus can be turned off with a redstone signal.<BR>It also seems that floating swords and blackjacks retain their properties while flying through non Player creatures.<BR>Lastly, Villagers and Weepers in their item forms will be inserted in any Watery Cradle in their path.
+research.crafteddream_focus.text=Craft a Dream Focus.
+
+research.CURTAINS.title=Curtains
+research.CURTAINS.stage.0=Curtains are our world's counterpart to the Veil. Separating Truth from lies, behind them act a stageful of actors.<BR>Yes, maybe our reality is really nothing but a theatre.<BR>Still, these curtains I mean to make are a fair deal more mundane. They'll simply act as filters for the items that collide with them.
+research.CURTAINS.stage.1=Curtains act as filters for Dreams, just like the Veil. Some go through, some don't.<BR>In this case it's the Fleti's Dreams and the items they transport that may or may not pass.<BR>A Curtain must be placed under a container, such as a chest. Every time an item goes through, the Curtain checks whether the inventory above contains an instance of that item. If so, the item doesn't go through and stops floating, dropping instead to the ground or, preferably, to an aptly placed hopper.<BR>Having containers both above and below, with appropriate spacing between them to avoid all items being sucked in hoppers, makes for a fairly space-consuming setup, but one that can work well as a sorting system.
+research.craftedcurtain.text=Craft a Curtain.
+
+research.DREAMFOCUSFLUIDS.title=Dream Focus: Fluids
+research.DREAMFOCUSFLUIDS.stage.0=We should not stop at items! Fleti are more than capable of transporting other things.<BR>A Focus for Fluids would be a useful device.
+research.DREAMFOCUSFLUIDS.stage.1=Unlike its item counterpart, a Focus for Fluids plucks fluids from its top and ejects them from its bottom, which is where I'll be when starting to set the path.<BR>Fleti are to be placed on the device's sides, and up to four of them can be placed. Each one increases the amount of fluid transported at a time, in the order 100 -> 300 -> 600 -> 1000 millibuckets per go.<BR>Transported fluids will try to enter any tanks they come in contact with, and will disappear at the end of the path if no containers were found to store them.<BR>It is of note that Fleti that are "fueling" a Dream Focus of any kind will not prevent nearby Weepers or other Fleti from weeping into a Lacrymatory, thus making the Fluid Focus an appropriate method to empty Lacrymatories automatically.<BR>As a last note, floating water also appears to be a powerful fertiliser for nearby crops.
+research.crafteddream_focus_fluids.text=Craft a Dream Focus for fluids.
+
+research.DREAMFOCUSVILLAGERS.title=Dream Focus: Villagers
+research.DREAMFOCUSVILLAGERS.stage.0=My soon-to-be patients, whom I already stripped of all worldly things, seem content in knowing they have nothing more to lose.<BR>Those poor, poor things.<BR>I will take even the floor away from them.
+research.DREAMFOCUSVILLAGERS.stage.1=A Focus for Villagers is capable of moving Villagers in a path of my own choosing.<BR>The path begins from the block's top, by interacting with bare hands while no Fletum is activating the Focus. I will preserve my initial rotation after interacting with the block.<BR>Once the path is set, a Fletum must be placed below the Focus. Once that is done, the device will select every few seconds a Villager to move.<BR>The Villagers are taken from a 11x11 area centered on the Focus, up to 5 blocks above it. Crawling Villagers take precedence and are chosen before any standing ones. Child Villagers won't be taken, they must grow before reaching any usefulness.<BR>A redstone signal may be applied to the Focus to alter its functionality. A fully powered signal will disable the device altogether. A signal of strength between 1 and 14 instead determines how many adult standing Villagers will be left at all times in the area above.<BR>For example, with a signal of strength 3 and 2 standing Villagers above, none will be taken. This way their mating and reproduction is ensured.<BR>Crawling Villagers are exempt from this check, and will always be taken.<BR>If the Focus' path is aimed at a Watery Cradle, a floating Crawling Villager will automatically be placed in it if there are no patients already present. Of course, I must make sure to loop the path back to the Focus in case the Cradle wasn't empty.<BR>This is especially useful considering that a Blackjack floating through a Dream Focus for items will preserve its properties, and may even knockout Villagers while both item and victim are mid air.<BR>Of course, were I to fully automate surgery.. I'd need a Surgeon.
+research.crafteddream_focus_villagers.text=Craft a Dream Focus for Villagers.
+
+research.SURGEON.title=Surgeon
+research.SURGEON.stage.0=A net of Dreams links all those who peeked into the Truth.<BR>Entire societes exist away from me, some of these offering their services to allies and patrons.<BR>My alliance with Dagon brings new contacts, and among these come the Surgeons, offering their skills to those who seek them.<BR>I must craft a letter, a summons of sorts, for a Surgeon to reach me.<BR>I then only need use it on the ground. I'll do it once, then sort the Surgeon's job's details later, once I've taken a look at him.
+research.SURGEON.stage.1=I had wondered why Surgeons would ever form a society of their own.<BR>Little did I know that a Surgeon is not a profession.<BR>No, it is a race.<BR>One that does not belong to my world.<BR>Is this a race made with intent? After all, they all share a singular purpose.<BR>...<BR>What if I, too, were part of a breed that was *made*, not by chance but by will? Without knowing, for how I could I?<BR>A Surgeon is a useful servant, or rather, ally.<BR>I must place him close to a Watery Cradle with which I want him, her, it, whatever, to work.<BR>I must then use Surgery Tools on him to specify which action I want performed.<BR>The Surgeon will then operate every time a patient appears in the Cradle, placing the resulting patient on top of the device and keeping hearts or spines to himself. I can then interact with him with bare hands to be given all materials he gathered.<BR>A much more useful technique however is that of binding the Summons to a nearby chest before using it. To do that I can interact with a chest, wielding the letter, while sneaking.<BR>I can clear the previous binding by right clicking in the air while sneaking.<BR>A Surgeon summoned with a bound Summons will put any output of his operations, both patients and materials, in the bound chest, provided they're sufficiently close to each other.<BR>Since Villagers and Weepers in item form can enter Cradles as well, I can effectively pipeline Surgeons one after the other.<BR>A Surgeon can be picked up by its master with a blackjack.
+research.summoned_surgeon.text=Summon a Surgeon.
 
 ##################
 #MISC

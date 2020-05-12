@@ -10,8 +10,11 @@ public class BlockNames {
 	public static final String BLOOD_WELL = "blood_well";
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
+	public static final String CURTAIN = "curtain";
 	public static final String DARKSAND = "dark_sand";
 	public static final String DREAMFOCUS = "dream_focus";
+	public static final String DREAMFOCUSFLUIDS = "dream_focus_fluids";
+	public static final String DREAMFOCUSVILLAGERS = "dream_focus_villagers";
 	public static final String ELDER_BRICK = "elder_bricks";
 	public static final String ELDER_STONE_BRICK = "elder_stone_bricks";
 	public static final String ELDER_STONE_BRICK_STAIRS = "elder_stone_brick_stairs";
@@ -24,6 +27,7 @@ public class BlockNames {
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
 	public static final String LACRYMATORY = "lacrymatory";
+	public static final String MEGYDREA = "megydrea";
 	public static final String MEMORY_SIEVE = "memory_sieve";
 	public static final String MUTATOR = "mutator";
 	public static final String SACRIFICE_ALTAR = "sacrifice_altar";

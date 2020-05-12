@@ -121,6 +121,10 @@ public class PlayerEvents {
 				ServerTickEvents.removePlayerTimer("bcrown1", event.player);
 				ServerTickEvents.removePlayerTimer("bcrown2", event.player);
 			}
+			pt = ServerTickEvents.getPlayerTimer("dreamfocus", event.player);
+			if(pt != null) {
+				pt.terminateEarly();
+			}
 		}
 	}
 	
@@ -156,6 +160,10 @@ public class PlayerEvents {
 			SyncUtil.addStringDataOnServer(event.player, false, "thebeginning");
 			ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.necronomicon));
 			p.sendMessage(new TextComponentTranslation("beginning.netherreturn"));
+		}
+		PlayerTimer pt = ServerTickEvents.getPlayerTimer("dreamfocus", p);
+		if(pt != null) {
+			pt.terminateEarly();
 		}
 	}
 	

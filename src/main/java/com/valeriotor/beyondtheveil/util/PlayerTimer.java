@@ -18,6 +18,7 @@ public class PlayerTimer {
 	private final List<Consumer<EntityPlayer>> finalActions;
 	private final List<Consumer<EntityPlayer>> continuosActions;
 	private final List<Predicate<EntityPlayer>> interrupts;
+	private final List<Predicate<EntityPlayer>> finishers;
 	private String name = "";
 	
 	public PlayerTimer(EntityPlayer player) {
@@ -34,24 +35,30 @@ public class PlayerTimer {
 		this.timer = timer;
 		this.continuosActions = ImmutableList.of();
 		this.interrupts = ImmutableList.of();
+		this.finishers = ImmutableList.of();
 		if(action != null)
 			this.finalActions = ImmutableList.of(action);
 		else 
 			this.finalActions = ImmutableList.of();
 	}
 	
-	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions, List<Predicate<EntityPlayer>> interrupts) {
+	private PlayerTimer(EntityPlayer player, int timer, List<Consumer<EntityPlayer>> continuosActions, List<Consumer<EntityPlayer>> finalActions, List<Predicate<EntityPlayer>> interrupts, List<Predicate<EntityPlayer>> finishers) {
 		this.player = player.getPersistentID();
 		this.server = player.getServer();
 		this.timer = timer;
 		this.continuosActions = ImmutableList.copyOf(continuosActions);
 		this.finalActions = ImmutableList.copyOf(finalActions);
 		this.interrupts = ImmutableList.copyOf(interrupts);
+		this.finishers = ImmutableList.copyOf(finishers);
 	}
 	
 	public boolean update() {
 		EntityPlayer p = this.getPlayer();
 		if(p == null) return true;
+		for(Predicate<EntityPlayer> finisher : finishers) if(finisher.test(p)) {
+			for(Consumer<EntityPlayer> action : finalActions) action.accept(p);
+			return true;
+		}
 		for(Predicate<EntityPlayer> interrupt : interrupts) if(interrupt.test(p)) return true;
 		if(timer > 0) {
 			if(!p.isDead) {
@@ -111,7 +118,7 @@ public class PlayerTimer {
 	}
 	
 	public PlayerTimer copyForNewPlayer(EntityPlayer player) {
-		return new PlayerTimer(player, timer, continuosActions, finalActions, interrupts).setName(name);
+		return new PlayerTimer(player, timer, continuosActions, finalActions, interrupts, finishers).setName(name);
 	}
 	
 	public static class PlayerTimerBuilder {
@@ -119,6 +126,7 @@ public class PlayerTimer {
 		private List<Consumer<EntityPlayer>> finalActions = new ArrayList<>();
 		private List<Consumer<EntityPlayer>> continuosActions = new ArrayList<>();
 		private List<Predicate<EntityPlayer>> interrupts = new ArrayList<>();
+		private List<Predicate<EntityPlayer>> finishers = new ArrayList<>();
 		private int timer = 100;
 		private final EntityPlayer player;
 		private String name = "";
@@ -147,13 +155,18 @@ public class PlayerTimer {
 			return this;
 		}
 		
+		public PlayerTimerBuilder addFinisher(Predicate<EntityPlayer> action) {
+			finishers.add(action);
+			return this;
+		}
+		
 		public PlayerTimerBuilder setName(String name) {
 			this.name = name;
 			return this;
 		}
 		
 		public PlayerTimer toPlayerTimer() {
-			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions, this.interrupts).setName(this.name);
+			return new PlayerTimer(this.player, this.timer, this.continuosActions, this.finalActions, this.interrupts, this.finishers).setName(this.name);
 		}
 		
 	}

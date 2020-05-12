@@ -2,23 +2,20 @@ package com.valeriotor.beyondtheveil.entities;
 
 import java.util.UUID;
 
-import com.valeriotor.beyondtheveil.fluids.ModFluids;
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
-import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tileEntities.TileLacrymatory;
-import com.valeriotor.beyondtheveil.util.ItemHelper;
 
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +23,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -42,6 +38,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	public EntityFletum(World worldIn) {
 		super(worldIn);
 		this.tearTicks = this.getTearTicks();
+		this.setSize(0.8F, 0.7F);
 	}
 	
 	@Override
@@ -51,10 +48,12 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 			this.animationTicks++;
 			this.animationTicks%=200;
 		}else {
-			this.tearTicks--;
-			if(this.tearTicks <= 0) {
-				TileLacrymatory.fillWithTears(this);
-				this.tearTicks = this.getTearTicks();
+			if(!this.isFocusing()) {
+				this.tearTicks--;
+				if(this.tearTicks <= 0) {
+					TileLacrymatory.fillWithTears(this);
+					this.tearTicks = this.getTearTicks();
+				}
 			}
 		}
 	}
@@ -171,6 +170,7 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
+		if(this.isFocusing()) return null;
 		return BTVSounds.fletum_weeping;
 	}
 	
@@ -182,6 +182,15 @@ public class EntityFletum extends EntityCreature implements IWeepingEntity, IPla
 	@Override
 	public int getTearTicks() {
 		return 950;
+	}
+	
+	public boolean isFocusing() {
+		if(this.world.getBlockState(this.getPosition().down()).getBlock() == BlockRegistry.BlockDreamFocus) return true;
+		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+			if(this.world.getBlockState(this.getPosition().offset(facing)).getBlock() == BlockRegistry.BlockDreamFocusFluids) return true;
+		}
+		if(this.world.getBlockState(this.getPosition().up()).getBlock() == BlockRegistry.BlockDreamFocusVillagers) return true;
+		return false;
 	}
 	
 }

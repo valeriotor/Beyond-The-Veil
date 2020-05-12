@@ -38,13 +38,15 @@ public class SacrificeHelper extends TileEntity{
 			}
 		}
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-			BlockPos pos1 = pos.offset(facing, 2).offset(facing.rotateYCCW(), 2).up();
-			IBlockState state = w.getBlockState(pos1);
-			if(state.getBlock() != Blocks.PRISMARINE || state.getProperties().get(BlockPrismarine.VARIANT) != BlockPrismarine.EnumType.BRICKS) {
-				incompleteStructureMessage(p);
-				return false;
+			BlockPos pos1 = pos.offset(facing, 2).offset(facing.rotateYCCW(), 2);
+			for(int y = 0; y < 2; y++) {
+				IBlockState state = w.getBlockState(pos1.offset(EnumFacing.UP, y));
+				if(state.getBlock() != Blocks.PRISMARINE || state.getProperties().get(BlockPrismarine.VARIANT) != BlockPrismarine.EnumType.BRICKS) {
+					incompleteStructureMessage(p);
+					return false;
+				}
 			}
-			if(w.getBlockState(pos1.up()).getBlock() != BlockRegistry.BlockHeart) {
+			if(w.getBlockState(pos1.up().up()).getBlock() != BlockRegistry.BlockHeart) {
 				incompleteStructureMessage(p);
 				return false;
 			}

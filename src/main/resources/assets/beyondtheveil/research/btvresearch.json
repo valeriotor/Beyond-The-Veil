@@ -598,13 +598,27 @@
         "key": "BEHEADINGDREAM",
         "name": "research.BEHEADINGDREAM.title",
         "icons": [ "minecraft:skull;1;1" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23,16],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,15],
 		"hiders": ["memBEHEADING"],
         "parents": [ "DREAMSHRINE" ],
         "stages": [
 				{
                     "text": "research.BEHEADINGDREAM.stage.0",
 					"recipes" : ["beyondtheveil:memory_phial;memBEHEADING"]
+                }
+            ]
+        },
+		{
+        "key": "HEARTBREAKDREAM",
+        "name": "research.HEARTBREAKDREAM.title",
+        "icons": [ "minecraft:red_flower" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,17],
+		"hiders": ["memHEARTBREAK"],
+        "parents": [ "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.HEARTBREAKDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memHEARTBREAK"]
                 }
             ]
         },
@@ -797,6 +811,101 @@
 					"text": "research.AZACNOCHARM.stage.1",
 					"recipes" : ["beyondtheveil:azacno_charm"]
 				}
+            ]
+        },
+		{
+        "key": "DREAMFOCUS",
+        "name": "research.DREAMFOCUS.title",
+        "icons": [ "beyondtheveil:dream_focus" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, 16],
+		"hiders": ["WEEPERS"],
+        "parents": ["REVELATIONRING" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUS.stage.0",
+                    "required_research" : ["crafteddream_focus"],
+					"recipes" : ["beyondtheveil:dream_focus"]
+                },
+                {
+                    "text": "research.DREAMFOCUS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus"]
+                }
+            ]
+        },
+		{
+        "key": "DREAMFOCUSFLUIDS",
+        "name": "research.DREAMFOCUSFLUIDS.title",
+        "icons": [ "beyondtheveil:dream_focus_fluids" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 16],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUSFLUIDS.stage.0",
+                    "required_research" : ["crafteddream_focus_fluids"],
+					"recipes" : ["beyondtheveil:dream_focus_fluids"]
+                },
+                {
+                    "text": "research.DREAMFOCUSFLUIDS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus_fluids"]
+                }
+            ]
+        },
+		{
+        "key": "DREAMFOCUSVILLAGERS",
+        "name": "research.DREAMFOCUSVILLAGERS.title",
+        "icons": [ "beyondtheveil:dream_focus_villagers" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 19],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUSVILLAGERS.stage.0",
+                    "required_research" : ["crafteddream_focus_villagers"],
+					"recipes" : ["beyondtheveil:dream_focus_villagers"]
+                },
+                {
+                    "text": "research.DREAMFOCUSVILLAGERS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus_villagers"]
+                }
+            ]
+        },
+		{
+        "key": "SURGEON",
+        "name": "research.SURGEON.title",
+        "icons": [ "beyondtheveil:surgeon_summons" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, 21],
+		"hiders": ["DREAMFOCUSVILLAGERS", "FINALQUEST"],
+        "parents": ["DREAMFOCUSVILLAGERS" ],
+        "stages": [
+				{
+                    "text": "research.SURGEON.stage.0",
+                    "required_research" : ["summoned_surgeon"],
+					"recipes" : ["beyondtheveil:surgeon_summons"]
+                },
+                {
+                    "text": "research.SURGEON.stage.1",
+					"recipes" : ["beyondtheveil:surgeon_summons"]
+                }
+            ]
+        },
+		{
+        "key": "CURTAINS",
+        "name": "research.CURTAINS.title",
+        "icons": [ "beyondtheveil:curtain" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, 19],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.CURTAINS.stage.0",
+                    "required_research" : ["craftedcurtain"],
+					"recipes" : ["beyondtheveil:curtain"]
+                },
+                {
+                    "text": "research.CURTAINS.stage.1",
+					"recipes" : ["beyondtheveil:curtain"]
+                }
             ]
         },
 		{
@@ -1072,7 +1181,7 @@
         "name": "research.VIJHISS.title",
         "icons": [ "beyondtheveil:plant_ordo" ],
         "category": "BEYOND_THE_VEIL", "location": [ -7, -2],
-		"learn" : "true",
+		"hiders": ["GHOSTSEEDS"],
         "parents": [ "GHOSTSEEDS" ],
         "stages": [
 				{
@@ -1081,6 +1190,23 @@
                 },
 				{
                     "text": "research.VIJHISS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "MEGYDREA",
+        "name": "research.MEGYDREA.title",
+        "icons": [ "beyondtheveil:megydrea" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -9, -4],
+		"hiders": ["usedvijhiss"],
+        "parents": [ "VIJHISS" ],
+        "stages": [
+				{
+                    "text": "research.MEGYDREA.stage.0",
+                    "required_research" : ["gotmegydrea"]
+                },
+				{
+                    "text": "research.MEGYDREA.stage.1"
                 }
             ]
         },
@@ -1167,6 +1293,18 @@
         "stages": [
 				{
                     "text": "research.BRONZESPHERE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "CRUCIBLE",
+        "name": "research.CRUCIBLE.title",
+        "icons": [ "beyondtheveil:crucible" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 0],
+		"hiders": ["artifactcrucible"],
+        "stages": [
+				{
+                    "text": "research.CRUCIBLE.stage.0"
                 }
             ]
         },
