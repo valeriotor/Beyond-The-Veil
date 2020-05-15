@@ -54,7 +54,7 @@ public class ItemCrucible extends ItemSword implements IArtifactItem{
 	
 	@Override
 	public float getAttackDamage() {
-		return 199;
+		return 129;
 	}
 	
 
