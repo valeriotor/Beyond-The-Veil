@@ -51,7 +51,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	private int counter = 0;
 	private UUID usingPlayer;
 	private int playerCounter = 0;
-	private boolean fletum = false;
+	private boolean showPath = true;
 	private FocusType type = FocusType.ITEM;
 	private EnumDyeColor dye = EnumDyeColor.RED;
 	
@@ -66,10 +66,17 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		this.sendUpdates(world);
 	}
 	
+	public void toggleShowPath() {
+		this.showPath = !this.showPath;
+		System.out.println(this.showPath);
+		markDirty();
+		this.sendUpdates(world);
+	}
+	
 	@Override
 	public void update() {
 		if(this.world.isRemote) {
-			if((this.counter & 1) == 0)
+			if((this.counter & 1) == 0 && this.showPath)
 				BeyondTheVeil.proxy.renderEvents.renderDreamFocusPath(points, world, dye);
 			this.counter++;
 			if(this.counter > 400)
@@ -205,6 +212,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		compound.setInteger("type", this.type.ordinal());
 		compound.setInteger("counter", this.counter);
 		compound.setInteger("dye", this.dye.ordinal());
+		compound.setBoolean("showPath", this.showPath);
 		return super.writeToNBT(compound);
 	}
 	
@@ -222,6 +230,7 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 		this.type = FocusType.values()[compound.getInteger("type")];
 		this.counter = compound.getInteger("counter");
 		this.dye = EnumDyeColor.values()[compound.getInteger("dye")];
+		this.showPath = compound.getBoolean("showPath");
 		super.readFromNBT(compound);
 	}
 	
