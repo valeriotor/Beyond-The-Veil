@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.tileEntities.TileMegydrea;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,8 +36,9 @@ public class BlockMegydrea extends BlockTallPlant implements ITileEntityProvider
 	private static final AxisAlignedBB TOPBOX = new AxisAlignedBB(min, 0, min, max, maxHeight, max);
 	
 	public BlockMegydrea(String name) {
-		super(Material.PLANTS, name);
+		super(Material.WOOD, name);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(EnumHalf.HALF, EnumHalf.TOP));
+		this.setSoundType(SoundType.PLANT);
 	}
 	
 	@Override
