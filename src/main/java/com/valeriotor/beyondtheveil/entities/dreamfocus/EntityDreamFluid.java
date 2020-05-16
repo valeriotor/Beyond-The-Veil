@@ -103,30 +103,11 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 					}
 				}
 			}
-			this.onInsideBlock(world.getBlockState(pos), pos, p);
+			if((this.ticksExisted & 1) == 0)
+				this.onInsideBlock(world.getBlockState(pos), pos, p);
 			return p;
 		}
 		this.removeEntity = true;
-		/*if(this.fluid != null) {
-			IBlockState startState = world.getBlockState(this.getPosition());
-	        Material destMaterial = startState.getMaterial();
-			boolean isDestNonSolid = !destMaterial.isSolid();
-	        boolean isDestReplaceable = startState.getBlock().isReplaceable(world, this.getPosition());
-	        if(world.isAirBlock(this.getPosition()) || isDestNonSolid || isDestReplaceable) {
-	        	if(world.provider.doesWaterVaporize() && fluid.getFluid().doesVaporize(fluid)) {
-	        		fluid.getFluid().vaporize(null, world, this.getPosition(), fluid);
-	        		this.fluid = null;
-	        		this.removeEntity = true;
-	        	} else {
-	        		if(this.fluid.amount == 1000) {
-	        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState());        			
-	        		} else if(this.fluid.getFluid().getBlock().getDefaultState().getPropertyKeys().contains(BlockFluidBase.LEVEL)) {
-	        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, MathHelperBTV.clamp(0, 15, this.fluid.amount*15/1000)));	
-	        		}
-                	this.fluid = null;
-		        }
-        	} 
-		}*/
 		return null;
 	}
 
@@ -238,39 +219,36 @@ public class EntityDreamFluid extends EntityLiving implements IDreamEntity{
 			EnumFacing f = EnumFacing.getFacingFromVector((float)(posX-nextPoint.x), (float)(posY-nextPoint.y), (float) (posZ-nextPoint.z));
 			if(te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f)) {
 				IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f);
-				int amount = this.fluid.amount;
-				amount -= handler.fill(this.fluid, true);
-				if(amount == 0) {
-					this.fluid = null;
-					this.removeEntity = true;
-				} else this.fluid.amount = amount;
-			} /*else if(/*state.getBlock() instanceof BlockFluidBase  && ((BlockFluidBase)state.getBlock()).getFilledPercentage(world, destPos) == 1
-				|| (state.isSideSolid(world, destPos, f) && state.getBlock() != BlockRegistry.BlockDreamFocusFluids)) {
-				if(fluid.getFluid().canBePlacedInWorld()) {
-					IBlockState startState = world.getBlockState(this.getPosition());
-			        Material destMaterial = startState.getMaterial();
-					boolean isDestNonSolid = !destMaterial.isSolid();
-			        boolean isDestReplaceable = startState.getBlock().isReplaceable(world, this.getPosition());
-			        if(world.isAirBlock(this.getPosition()) || isDestNonSolid || isDestReplaceable) {
-			        	if(world.provider.doesWaterVaporize() && fluid.getFluid().doesVaporize(fluid)) {
-			        		fluid.getFluid().vaporize(null, world, this.getPosition(), fluid);
-			        		this.fluid = null;
-			        		this.removeEntity = true;
-			        	} else {
-			        		if(this.fluid.amount == 1000) {
-			        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState());        			
-			        		} else if(this.fluid.getFluid().getBlock().getDefaultState().getPropertyKeys().contains(BlockFluidBase.LEVEL)) {
-			        			world.setBlockState(this.getPosition(), this.fluid.getFluid().getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, MathHelperBTV.clamp(0, 15, this.fluid.amount*15/1000)));	
-			        		}
-		                	this.fluid = null;
-		                	this.removeEntity = true;
-			                
-				        }
-		        	} 
+				this.transferFluids(handler);
+			}  else {
+				double x = posX - Math.floor(posX);
+				double y = posY - Math.floor(posY);
+				double z = posZ - Math.floor(posZ);
+				for(EnumFacing facing : EnumFacing.values()) {
+					if((facing == EnumFacing.UP && y > 0.7) || (facing == EnumFacing.DOWN && y < 0.3) ||
+					   (facing == EnumFacing.WEST && x<0.3) || (facing == EnumFacing.EAST && x > 0.7) ||
+					   (facing == EnumFacing.NORTH &&z<0.3) || (facing == EnumFacing.SOUTH &&z > 0.7)) {
+						TileEntity ten = world.getTileEntity(this.getPosition().offset(facing));
+						if(ten != null && ten.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
+							IFluidHandler handler = ten.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+							this.transferFluids(handler);
+							if(this.fluid == null || this.fluid.amount <= 0) {
+								break;
+							}
+						}
+					}
 				}
-			}*/
+			}
 		}
-		super.onInsideBlock(state);
+	}
+	
+	private void transferFluids(IFluidHandler handler) {
+		int amount = this.fluid.amount;
+		amount -= handler.fill(this.fluid, true);
+		if(amount == 0) {
+			this.fluid = null;
+			this.removeEntity = true;
+		} else this.fluid.amount = amount;
 	}
 	
 	private static IFluidHandler getFluidBlockHandler(Fluid fluid, World world, BlockPos pos)
