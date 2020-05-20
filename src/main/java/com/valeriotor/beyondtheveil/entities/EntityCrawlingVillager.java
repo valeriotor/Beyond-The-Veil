@@ -59,7 +59,7 @@ public class EntityCrawlingVillager extends EntityCreature implements IPlayerMin
 	private UUID master;
 	public static final int DEFAULTTICKSTOFALL = 12;
 	private static final DataParameter<Integer> TICKSTOFALL = EntityDataManager.<Integer>createKey(EntityCrawlingVillager.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityCrawlingVillager.class, DataSerializers.VARINT);
     
 	public EntityCrawlingVillager(World w) {
 		this(w, false);

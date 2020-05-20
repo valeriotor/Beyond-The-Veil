@@ -23,7 +23,7 @@ public class DrowningRitualEvents {
 		World w = p.world;
 		BlockPos pos = p.getPosition();
 		for(int y = 0; y < 5; y++) {
-			if(w.getBlockState(pos.offset(EnumFacing.UP, y)).getBlock() != Blocks.WATER) return;
+			if(!w.getBlockState(pos.offset(EnumFacing.UP, y)).equals(Blocks.WATER.getDefaultState())) return;
 			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 				if(!w.getBlockState(pos.offset(facing).offset(EnumFacing.UP, y)).isFullBlock()) return;
 			}
