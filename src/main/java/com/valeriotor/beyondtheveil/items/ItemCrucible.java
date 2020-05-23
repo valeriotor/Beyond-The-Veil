@@ -1,9 +1,14 @@
 package com.valeriotor.beyondtheveil.items;
 
+import java.util.List;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.util.ConfigLib;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,12 +17,14 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCrucible extends ItemSword implements IArtifactItem{
 
 	public ItemCrucible(String name) {
 		super(ToolMaterial.IRON);
-		this.setMaxDamage(2401);
+		this.setMaxDamage(ConfigLib.crucibleCooldown*20+1);
 		this.setRegistryName(References.MODID, name);
 		this.setUnlocalizedName(name);
 		this.setCreativeTab(References.BTV_TAB);
@@ -48,14 +55,19 @@ public class ItemCrucible extends ItemSword implements IArtifactItem{
 	
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		stack.setItemDamage(2400);
+		stack.setItemDamage(ConfigLib.crucibleCooldown*20);
 		return super.hitEntity(stack, target, attacker);
 	}
 	
 	@Override
 	public float getAttackDamage() {
-		return 129;
+		return ConfigLib.crucibleDamage-1;
 	}
 	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(I18n.format("lore.crucible"));
+	}
 
 }
