@@ -85,6 +85,9 @@ public class CommonProxy {
     	ConfigLib.connectionRed = cfg.get("colors", "Necronomicon Connection Red", 0, "Red Color for the connections in Al Azif (default: 0)", 0, 255).getInt();
     	cfg.setCategoryComment("world", "Some worldgen stuff. Will add more options in the future");
     	ConfigLib.innsmouthWeight = cfg.get("world", "Voided biome spawn weight", 4, "Min: 1, Max: 99, Default: 4", 1, 99).getInt();
+    	cfg.setCategoryComment("gameplay", "Gameplay related stuff");
+    	ConfigLib.crucibleDamage = cfg.get("gameplay", "The damage dealt by the Crucible", 100, "Min: 1, Max: 1000, Default: 100", 1, 1000).getInt();
+    	ConfigLib.crucibleCooldown = cfg.get("gameplay", "The cooldown, in seconds, for the Crucible to be reused", 120, "Min: 5, Max: 10000, Default: 120", 1, 10000).getInt();
     	cfg.save();
     }
 
