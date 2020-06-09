@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.fluids.ModFluids;
 import com.valeriotor.beyondtheveil.gui.container.GuiContainerHandler;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.lib.commands.ChangeDimension;
 import com.valeriotor.beyondtheveil.lib.commands.ReloadResources;
 import com.valeriotor.beyondtheveil.lib.commands.SetPlayerData;
 import com.valeriotor.beyondtheveil.multiblock.MultiblockRegistry;
@@ -21,10 +22,11 @@ import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.sacrifice.SacrificeRecipeRegistry;
 import com.valeriotor.beyondtheveil.shoggoth.BuildingRegistry;
 import com.valeriotor.beyondtheveil.util.RegistryHelper;
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.StatueChunkLoader;
 import com.valeriotor.beyondtheveil.world.WorldGenBTV;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraftforge.common.ForgeChunkManager;
@@ -81,10 +83,10 @@ public class BeyondTheVeil
     {	
     	
     	//CapabilityHandler.registerCapabilities();
-    	new BiomeRegistry();
+    	BiomeRegistry.initBiomes();
     	proxy.init(event);
     	proxy.registerEntities();
-    	
+    	DimensionRegistry.registerDimensions();
     	
     	
     	RegistryHelper.registerTileEntities();
@@ -111,5 +113,6 @@ public class BeyondTheVeil
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new ReloadResources());
         event.registerServerCommand(new SetPlayerData());
+        event.registerServerCommand(new ChangeDimension());
     }
 }
