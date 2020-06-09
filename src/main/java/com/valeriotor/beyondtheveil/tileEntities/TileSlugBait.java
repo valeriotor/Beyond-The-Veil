@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

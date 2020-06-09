@@ -42,6 +42,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -347,5 +348,25 @@ public class RenderEvents {
         bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
     }
+	
+	@SubscribeEvent
+	public void fogDensityEvent(EntityViewRenderEvent.FogDensity event) {
+		if(event.getEntity().dimension == 2) { //TODO: RICORDA DI CAMBIARE IL 2!!!!!!!!!!!!!!!!!!!!!!!!!
+			GlStateManager.setFog(GlStateManager.FogMode.EXP);
+			event.setDensity(0F);
+			event.setCanceled(true);
+			
+		}		
+		
+	}
+	
+	@SubscribeEvent
+	public void fogColorEvent(EntityViewRenderEvent.FogColors event) {
+		if(event.getEntity().dimension == 2) { //TODO: RICORDA DI CAMBIARE IL 2!!!!!!!!!!!!!!!!!!!!!!!!!
+			event.setBlue(0.2F);
+			event.setGreen(0.02F);
+			event.setRed(0.02F);
+		}
+	}
 	
 }

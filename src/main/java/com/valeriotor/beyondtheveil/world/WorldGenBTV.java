@@ -3,6 +3,8 @@ package com.valeriotor.beyondtheveil.world;
 import java.util.Random;
 import java.util.UUID;
 
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
+
 import net.minecraft.client.multiplayer.ChunkProviderClient;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;

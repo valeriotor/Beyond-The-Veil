@@ -12,8 +12,8 @@ import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
 import com.valeriotor.beyondtheveil.world.HamletList;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import com.valeriotor.beyondtheveil.worship.Worship;
 
