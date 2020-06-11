@@ -30,13 +30,14 @@ public class BlockNames {
 	public static final String MEGYDREA = "megydrea";
 	public static final String MEMORY_SIEVE = "memory_sieve";
 	public static final String MUTATOR = "mutator";
+	public static final String PENITENCE_STATUE = "penitence_statue";
 	public static final String SACRIFICE_ALTAR = "sacrifice_altar";
+	public static final String SACRIFICE_STATUE = "sacrifice_statue";
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
 	public static final String SLUGBAIT = "slug_bait";
 	public static final String STATUE = "statue";
-	public static final String SACRIFICE_STATUE = "sacrifice_statue";
-	public static final String PENITENCE_STATUE = "penitence_statue";
+	public static final String THICK_ALGAE = "thick_algae";
 	public static final String WATERYCRADLE = "watery_cradle";
 	public static final String WORNBRICKS = "worn_bricks";
 	public static final String WORNBRICKSTAIRS = "worn_brick_stairs";

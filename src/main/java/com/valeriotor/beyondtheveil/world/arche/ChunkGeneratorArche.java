@@ -36,6 +36,8 @@ import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraft.world.gen.structure.StructureOceanMonument;
 import net.minecraft.world.gen.structure.WoodlandMansion;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ChunkGeneratorArche implements IChunkGenerator
 {
@@ -149,7 +151,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
                             	if(y < seaLevel()+2) {
                                 if ((lvt_45_1_ += d16) > 0.0D)
                                 {
-                                    primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegistry.DarkSand.getDefaultState());
+                                    primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, DARKSAND);
                                 }
                                 else if (i2 * 8 + j2 < seaLevel())
                                 {
@@ -341,7 +343,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
      */
     public void populate(int x, int z)
     {
-        /*BlockFalling.fallInstantly = true;
+        BlockFalling.fallInstantly = true;
         int i = x * 16;
         int j = z * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
@@ -355,42 +357,8 @@ public class ChunkGeneratorArche implements IChunkGenerator
 
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, this.rand, x, z, flag);
 
-
-        if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE))
-        {
-            int i1 = this.rand.nextInt(16) + 8;
-            int j1 = this.rand.nextInt(256);
-            int k1 = this.rand.nextInt(16) + 8;
-            (new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, blockpos.add(i1, j1, k1));
-        }
-
-        if (!flag && this.rand.nextInt(this.settings.lavaLakeChance / 10) == 0 && this.settings.useLavaLakes)
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA))
-        {
-            int i2 = this.rand.nextInt(16) + 8;
-            int l2 = this.rand.nextInt(this.rand.nextInt(248) + 8);
-            int k3 = this.rand.nextInt(16) + 8;
-
-            if (l2 < this.world.getSeaLevel() || this.rand.nextInt(this.settings.lavaLakeChance / 8) == 0)
-            {
-                (new WorldGenLakes(Blocks.LAVA)).generate(this.world, this.rand, blockpos.add(i2, l2, k3));
-            }
-        }
-
-        if (this.settings.useDungeons)
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON))
-        {
-            for (int j2 = 0; j2 < this.settings.dungeonChance; ++j2)
-            {
-                int i3 = this.rand.nextInt(16) + 8;
-                int l3 = this.rand.nextInt(256);
-                int l1 = this.rand.nextInt(16) + 8;
-                (new WorldGenDungeons()).generate(this.world, this.rand, blockpos.add(i3, l3, l1));
-            }
-        }
-
         biome.decorate(this.world, this.rand, new BlockPos(i, 0, j));
+        /*
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
         WorldEntitySpawner.performWorldGenSpawning(this.world, biome, i + 8, j + 8, 16, 16, this.rand);
         blockpos = blockpos.add(8, 0, 8);
@@ -420,6 +388,8 @@ public class ChunkGeneratorArche implements IChunkGenerator
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, flag);
 
         BlockFalling.fallInstantly = false;*/
+        ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, false);
+		GameRegistry.generateWorld(x, z, this.world, this, this.world.getChunkProvider());
     }
 
     /**

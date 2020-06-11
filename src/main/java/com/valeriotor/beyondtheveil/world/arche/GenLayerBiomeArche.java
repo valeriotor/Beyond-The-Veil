@@ -1,18 +1,19 @@
 package com.valeriotor.beyondtheveil.world.arche;
 
 import java.util.List;
+import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.init.Biomes;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerBiomeArche extends GenLayer{
 
-	private static final List<Biome> BIOMES = Lists.newArrayList(BiomeRegistry.arche_caves, BiomeRegistry.arche_plains);
 	public GenLayerBiomeArche(long p_i2125_1_, GenLayer parent) {
 		super(p_i2125_1_);
 		this.parent = parent;
@@ -28,11 +29,17 @@ public class GenLayerBiomeArche extends GenLayer{
             for (int j = 0; j < areaWidth; ++j)
             {
                 this.initChunkSeed((long)(j + areaX), (long)(i + areaY));
-                aint1[j + i * areaWidth] = Biome.getIdForBiome(BIOMES.get(nextInt(BIOMES.size())));
+                aint1[j + i * areaWidth] = getRandomArcheBiome();
             }
         }
 
         return aint1;
+	}
+	
+	public int getRandomArcheBiome() {
+        int totalWeight = WeightedRandom.getTotalWeight(BiomeRegistry.ARCHE_BIOMES);
+        int weight = nextInt(totalWeight);
+        return Biome.getIdForBiome(WeightedRandom.getRandomItem(BiomeRegistry.ARCHE_BIOMES, weight).biome);
 	}
 	
 

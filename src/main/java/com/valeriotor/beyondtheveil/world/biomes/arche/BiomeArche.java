@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.valeriotor.beyondtheveil.world.arche.ChunkGeneratorArche;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
@@ -25,6 +26,8 @@ public class BiomeArche extends Biome{
 		z&=15;
 		int y = ChunkGeneratorArche.seaLevel();
 		primer.setBlockState(x, y+2, z, ChunkGeneratorArche.BEDROCK);
+		primer.setBlockState(x, 0, z, ChunkGeneratorArche.BEDROCK);
+		primer.setBlockState(x, 1, z, ChunkGeneratorArche.DARKSAND);
 		primer.setBlockState(x, y+1, z, ChunkGeneratorArche.DARKSAND);
 		primer.setBlockState(x, y, z, ChunkGeneratorArche.DARKSAND);
 		for(int i = 0; i < 2; i++) {
@@ -33,5 +36,8 @@ public class BiomeArche extends Biome{
 			} else break;
 		}
 	}
+	
+	@Override
+	public void decorate(World worldIn, Random rand, BlockPos pos) {}
 
 }

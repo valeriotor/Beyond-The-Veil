@@ -180,6 +180,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocusVillagers), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockCurtain), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMegydrea), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockThickAlgae), 0, "inventory");
         
         
     }
@@ -236,6 +237,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocusVillagers).setRegistryName(BlockRegistry.BlockDreamFocusVillagers.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockCurtain).setRegistryName(BlockRegistry.BlockCurtain.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockMegydrea).setRegistryName(BlockRegistry.BlockMegydrea.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockThickAlgae).setRegistryName(BlockRegistry.BlockThickAlgae.getRegistryName()));
     	//registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);
