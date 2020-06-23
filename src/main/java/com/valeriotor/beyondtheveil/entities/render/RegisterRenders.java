@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.entities.EntityCanoe;
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.entities.EntityCrazedWeeper;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
+import com.valeriotor.beyondtheveil.entities.EntityDreadfish;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
@@ -119,6 +120,13 @@ public class RegisterRenders {
 			@Override
 			public Render<EntitySurgeon> createRenderFor(RenderManager manager) 
 			{return new RenderSurgeon(manager);}
+			});
+		
+		//Dreadfish
+		RenderingRegistry.registerEntityRenderingHandler(EntityDreadfish.class, new IRenderFactory<EntityDreadfish>(){
+			@Override
+			public Render<EntityDreadfish> createRenderFor(RenderManager manager) 
+			{return new RenderDreadfish(manager);}
 			});
 	}
 }

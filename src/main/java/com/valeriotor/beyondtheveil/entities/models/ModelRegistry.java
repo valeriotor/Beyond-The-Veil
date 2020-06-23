@@ -14,6 +14,7 @@ public class ModelRegistry {
 	public static ModelBloodSkeleton blood_skeleton;
 	public static ModelCrazedWeeper crazed_weeper;
 	public static ModelSurgeon surgeon;
+	public static ModelDreadfish dreadfish;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -28,6 +29,7 @@ public class ModelRegistry {
 		blood_skeleton = new ModelBloodSkeleton();
 		crazed_weeper = new ModelCrazedWeeper();
 		surgeon = new ModelSurgeon();
+		dreadfish = new ModelDreadfish();
 	}
 	
 }
