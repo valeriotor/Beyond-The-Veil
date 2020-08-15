@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.proxy;
 
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 import com.valeriotor.beyondtheveil.entities.render.RegisterRenders;
 import com.valeriotor.beyondtheveil.events.ClientEvents;
@@ -51,6 +52,7 @@ public class ClientProxy extends CommonProxy {
         this.registerEntityRenders();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
+        MirrorDialogueRegistry.registerMirrorDialogues();
         ModFluids.renderFluids();
         }
 

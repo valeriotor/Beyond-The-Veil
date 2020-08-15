@@ -634,6 +634,36 @@ weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
 weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
 ##################
+#MIRROR DIALOGUE
+##################
+
+mirror.continuebutton=(Continue)
+mirror.start.first_node.anyone_there=Is anyone there?
+mirror.start.anyone_there.0=[Y]There is no answer.
+mirror.start.second_node.anyone_there2=IS ANYONE THERE?
+mirror.start.anyone_there2.0=[Y]There is still no answer. You should stop enquiring.
+mirror.start.whosyou.whosyou='You'? WHAT DO YOU MEAN 'YOU'?
+mirror.start.whosyou.0=[Y]...
+mirror.start.whosyou.1=Someone's hiding.. here.. inside of me?
+mirror.start.whoshiding.whoareyou=Who are you? What are you doing.. in my mind?
+mirror.start.whoareyou.0=[Y]You wouldn't understand.
+mirror.start.whoshiding.getout=Get out. Get out get out get out GET OUT OF ME.
+mirror.start.getout.0=[Y]You do not realize what you're asking for.
+mirror.start.getout.1=[Y]I gave you all this.
+mirror.start.gavewhat.gavewhat=Gave me what?
+mirror.start.gavewhat.0=[Y]Everything. I've been your guiding hand.
+mirror.start.gavewhat.name=What is your name?
+mirror.start.understand.name=What is your name?
+mirror.start.name.0=[Y]You can't pronounce it.
+mirror.start.pronounce.parasite=Are you a parasite?
+mirror.start.parasite.0=[Y]Our relationship is mutually beneficial.
+mirror.start.parasite.1=[Y]I granted you knowledge, you granted me a vessel.
+mirror.start.vessel.novessel=Seek another vessel then.
+mirror.start.novessel.0=[Y]Our bond goes deeper than that.
+mirror.start.novessel.1=[Y]It is more ancient than either of us.
+mirror.start.novessel.2=[Y]It is too much to explain right now. Soon, I'll give you answers. Truth.
+
+##################
 #POTION EFFECTS
 ##################
 

@@ -74,6 +74,7 @@ public class ItemRegistry {
 	public static final ModItem gear = new ModItem("gear");
 	public static final ModItem surgeon_summons = new ItemSurgeonSummoner("surgeon_summons");
 	public static final ItemCrucible crucible = new ItemCrucible("crucible");
+	public static final ItemBlackMirror black_mirror = new ItemBlackMirror("black_mirror");
 	
 	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
@@ -129,6 +130,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(gear, 0, "inventory");
         ClientProxy.registerItemRenderer(surgeon_summons, 0, "inventory");
         ClientProxy.registerItemRenderer(crucible, 0, "inventory");
+        ClientProxy.registerItemRenderer(black_mirror, 0, "inventory");
         
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -280,6 +282,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.gear);
     	registry.register(ItemRegistry.surgeon_summons);
     	registry.register(ItemRegistry.crucible);
+    	registry.register(ItemRegistry.black_mirror);
     	
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);

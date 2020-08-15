@@ -1,0 +1,100 @@
+{
+    "id" : "start",
+    "startingBranch" : {
+        "id" : "first_branch",
+        "branchLength": 0,
+        "endingNodeID": "first_node"
+    },
+    "dialogueNodes" : {
+        "first_node": {
+            "id" : "first_node",
+            "dialogueOptions" : [
+                {
+                    "id" : "anyone_there",
+                    "branchLength" : 1,
+                    "endingNodeID" : "second_node"
+                }
+            ]
+        },
+        "second_node": {
+            "id": "second_node",
+            "dialogueOptions" : [
+                {
+                    "id" : "anyone_there2",
+                    "branchLength" : 1,
+                    "endingNodeID" : "whosyou"
+                }
+            ]
+        },
+        "whosyou": {
+            "id": "whosyou",
+            "dialogueOptions": [
+                {
+                    "id": "whosyou",
+                    "branchLength": 2,
+                    "endingNodeID":"whoshiding"
+                }
+            ]
+        },
+        "whoshiding": {
+            "id": "whoshiding",
+            "dialogueOptions": [
+                {
+                    "id":"whoareyou",
+                    "branchLength":1,
+                    "endingNodeID": "understand"
+                },
+                {
+                    "id":"getout",
+                    "branchLength":2,
+                    "endingNodeID":"gavewhat"
+                }
+            ]
+        },
+        "gavewhat": {
+            "id":"gavewhat",
+            "dialogueOptions": [
+                {
+                    "id":"gavewhat",
+                    "branchLength":1,
+                    "endingNodeID":"understand"
+                },
+                {
+                    "id":"name",
+                    "branchLength":1,
+                    "endingNodeID":"pronounce"
+                }
+            ]
+        },
+        "understand":{
+            "id":"understand",
+            "dialogueOptions":[
+                {
+                    "id":"name",
+                    "branchLength":1,
+                    "endingNodeID":"pronounce"
+                }
+            ]
+        },
+        "pronounce":{
+            "id":"pronounce",
+            "dialogueOptions":[
+                {
+                    "id":"parasite",
+                    "branchLength":2,
+                    "endingNodeID":"vessel"
+                }
+            ]
+        },
+        "vessel":{
+            "id":"vessel",
+            "dialogueOptions":[
+                {
+                    "id":"novessel",
+                    "branchLength":3,
+                    "endingNodeID":"end"
+                }
+            ]
+        }
+    }
+}

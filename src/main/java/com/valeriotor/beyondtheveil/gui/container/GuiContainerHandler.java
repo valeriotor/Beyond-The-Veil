@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.gui.container;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogue;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
 import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
+import com.valeriotor.beyondtheveil.gui.GuiBlackMirror;
 import com.valeriotor.beyondtheveil.gui.GuiCityMapper;
 import com.valeriotor.beyondtheveil.gui.GuiDagon;
 import com.valeriotor.beyondtheveil.gui.GuiDrowned;
@@ -38,6 +41,7 @@ public class GuiContainerHandler implements IGuiHandler{
 	public static final int NECRONOMICON = 5;
 	public static final int SLEEP_CHAMBER = 6;
 	public static final int GEAR_BENCH = 7;
+	public static final int BLACK_MIRROR = 8;
 	
 	
 	
@@ -67,6 +71,8 @@ public class GuiContainerHandler implements IGuiHandler{
 			TileEntity te = world.getTileEntity(new BlockPos(x,y,z));
 			if(te instanceof TileGearBench)
 			return new ContainerGearBench(p.inventory, (TileGearBench)te);
+		} else if(ID == 8) {
+			return new DummyContainer();
 		}
 		return null;
 	}
@@ -110,6 +116,8 @@ public class GuiContainerHandler implements IGuiHandler{
 			TileEntity te = world.getTileEntity(new BlockPos(x,y,z));
 			if(te instanceof TileGearBench)
 			return new GuiGearBench(new ContainerGearBench(p.inventory, (TileGearBench)te));
+		} else if(ID == 8) {
+			return new GuiBlackMirror(MirrorDialogue.getDialogue("start"));
 		}
 		return null;
 	}
