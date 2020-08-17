@@ -1,5 +1,5 @@
 ##################
-#物品（名称，描述和特殊效果）
+#物品（名称、描述和特殊效果）
 ##################
 
 item.oniric_incense.name=浸梦香
@@ -51,10 +51,10 @@ item.surgeon_summons.name=外科医生传唤信
 
 
 lore.flute=§5§o触摸、注视甚至思考这支长笛都会给我带来极其诡异的感受。那感觉仿佛是它并不存在于我的世界......然而它却在这里，在我的掌中。
-lore.saw_cleaver=§5§o这件武器...这一怪诞的奇异金属制品是工程学的杰作。它能够轻易地在其普通形态和延展形态间转换，同时也能使其使用者在战斗间灵活闪避，风格如同锯刃的远古主人。
+lore.saw_cleaver=§5§o这件武器...这一怪诞的奇异金属制品是工程学的杰作。它能够轻易地在其普通形态和延展形态间转换，同时也能使其使用者在战斗间灵活闪避，如同锯刃的远古主人。
 lore.wolf_medallion=§5§o这件金属饰品会在怪物靠近时发出低吼，向它的佩戴者发出警告。这无疑是远古之时猎人使用的物品。
-lore.bronze_sphere=§5§o不不不，这不可能，这绝不可能。我§l知道§5§o这个球体。我§l知道§5§o我曾经拿过它。我只是...没有记住它。到如今，它一定在我发现它的渔村中度过了漫长岁月吧？
-lore.crucible=§5§o往昔的斩魔人所挥舞的武器。极其强大，但是每次使用后需要很长的再充能时间。
+lore.bronze_sphere=§5§o不不不，这不可能，这绝不可能。我§l认得§5§o这个球。我§l知道§5§o我曾拿起它。我只是...没能想起它。时光流转至今，在我发现它的渔村里，想必它已历尽沧桑了吧？
+lore.crucible=§5§o往昔的斩魔人所挥舞的武器。极其强大，但是每次使用后都需要再充能很久。
 tooltip.bronze_sphere=球内存有 %1$s 点经验值。
 lore.tablet=§5§o一块古老的石碑，上面刻着怪异的碑文。我能破译它吗？
 lore.spine=§5§o意志力居于脊骨之中。
@@ -96,7 +96,7 @@ use.coral_staff.lastlinked=最后一次点击的心脏位于坐标 x： %1$s， 
 use.coral_staff.clear=清除最后一次保存的位置。
 use.blood_sigil.amount=这个印记现在连接着 %1$s 个亡灵生物。
 use.blood_sigil.emptysigil=这个印记是空的。
-use.blood_sigil.emptywell=这个血井中无更多该种类的亡灵生物。
+use.blood_sigil.emptywell=这个血井中没有更多该种类的亡灵生物。
 use.blood_sigil.nothealthy=这个怪物生命值未满。
 use.blood_sigil.notmine=这个生物不为我效劳。
 use.blood_sigil.path=这个位置已在印记中绑定。
@@ -349,11 +349,11 @@ angry.shoggoth.bad=一只沉浸于杀戮生灵的修格斯最终会将杀意转�
 
 dagon.greeting.0=结盟非吾所求
 dagon.greeting.1=汝将为吾效劳
-dagon.greeting.2=成功当赐汝重赏
-dagon.greeting.3=失败后果无以言说
-dagon.greeting.4=汝为吾先驱
+dagon.greeting.2=成则赐汝重赏
+dagon.greeting.3=败果无以言说
+dagon.greeting.4=汝为吾之先驱
 dagon.greeting.5=致此金于渔民
-dagon.greeting.6=彼当知汝即吾使
+dagon.greeting.6=彼当谓汝吾使
 dagon.greeting.7=继以神像共鸣
 dagon.greeting.8=吾将聆听汝声
 dagon.bringgold=必须把这三个金块带给渔民居民们。我们得快点。
@@ -406,7 +406,7 @@ dweller.stockpiler.greeting1=§5§o我们无法信任你们这些外乡人。早
 dweller.stockpiler.greeting2=§5§o拜托，麻烦离我们§l远§5§o点。
 
 dweller.trustedstockpiler.greeting0=§5§o我以前错怪你了，外乡人。
-dweller.trustedstockpiler.greeting1=§5§o当然，我们现在把你视为朋友。
+dweller.trustedstockpiler.greeting1=§5§o当然，你现在是我们的朋友了。
 dweller.trustedstockpiler.greeting2=§5§o请随意，你可以拿走仓库的任何东西。
 
 dweller.drunk.greeting0=一个新来的，是不？这年头可看八见多少歪乡人。
@@ -447,7 +447,7 @@ dweller.drunk.greeting34=我...我兽够酒精了，兽够了。
 dweller.drunk.greeting35=......
 
 dweller.bartender.talk0={哼呣。}我们并不喜欢外乡人来这，但如果你真有需要，我倒不会拒绝让你留宿一晚。楼上还有一些床。
-dweller.bartender.talk1=不必在意那个身穿红衣的家伙。他是个嗜酒的蠢货，无休无止地从嘴里吐出谎言。
+dweller.bartender.talk1=不必在意那个身穿红衣的家伙。他是个嗜酒的蠢货，只会无休无止地吐出谎言。
 dweller.bartendertrustedbar.talk0=嘿，如果你想休息的话，楼上还有些床。
 dweller.bartendertrustedbar.talk1=想喝杯酒？尽管开口就好。第一杯本店请客。
 dweller.bartendertrustedbar.talk1.option0=谢谢:那我笑纳了。
@@ -468,7 +468,7 @@ dweller.carpentereasyjob.talk1=你到底买不买我的东西？
 
 dweller.lhkeeper.talk0=噢。|{一个旅行者}[...]:欢迎。
 dweller.lhkeeper.talk1=我猜你是在永无止尽的旅途中，偶然发现了我们的渔村。:我只能对你表示羡慕，毕竟我只能被困在这里，{看守这座灯塔。
-dweller.lhkeeper.talk2=虽然如此，但我有个疑惑，像你这样的探险家如何看待我们这卑微的渔村？|这[所有]你肯定欣赏的美景，给你留下的最深的印象是什么？
+dweller.lhkeeper.talk2=虽然如此，但我有个疑惑，像你这样的探险家如何看待我们这简陋的渔村？|这[所有]你肯定欣赏的美景，给你留下的最深的印象是什么？
 dweller.lhkeeper.talk2.option0=它直击我的心灵:给我一种奇异的:敬畏感。
 dweller.lhkeeper.talk2.option1=我不喜欢它。:这里的空气中:弥漫着敌意。
 dweller.lhkeeper.hamletliketalk0={噢，}很高兴听到你这么说。那么告诉我，探险家，:是什么让你感受到了如此{奇异}的{敬畏感}？ 
@@ -495,9 +495,9 @@ dweller.lhkeeperlackknowledge.talk0=你是不是一位{真正的求知者？}:�
 dweller.lhkeeperlackknowledge.talk1=我很怀疑。你的心智尚未开化。
 dweller.lhkeeperhasknowledge.talk0=我...我确实能感受到你的内心存在一种{渴望...}:一种对知识的贪欲。|一种好奇心，一种愚蠢但{美妙的品质。
 dweller.lhkeeperlecture.talk0=你想了解更多我们的历史吗？了解我们经受的所有{折磨}？
-dweller.lhkeeperlecture.talk1=你是否想了解更多你祖先对我们所做的事，而这些事仅仅出于对[未知]的恐惧？
-dweller.lhkeeperlecture.talk1.option0=告诉我更多。:我想了解。
-dweller.lhkeeperlecture.tellmetalk0=看到你能追寻而非逃避知识，实在是令我耳目一新。|:尽管，当然了...|我必须警告你。|{:知识即恐惧。
+dweller.lhkeeperlecture.talk1=你是否想了解更多你祖先对我们所做的事，而这些事仅仅出于他们对[未知]的恐惧？
+dweller.lhkeeperlecture.talk1.option0=请告诉我更多。:我想了解。
+dweller.lhkeeperlecture.tellmetalk0=看到你能追寻而非逃避知识，实在是令我眼前一亮。|:尽管，当然了...|我必须警告你。|{:知识即恐惧。
 dweller.lhkeeperlecture.tellmetalk1=你所知越多，|多见越多，|你就{越盲目，}|一旦你揭开了蒙蔽你思想的幻觉织就的帷幕，便会如此。|:一道{无法揭开的]帷幕。|相信我，{我试过了。}丝毫无用。
 dweller.lhkeeperlecture.talk1.option1=收起你的:谎言吧，:朋友。
 dweller.lhkeeperlecture.fiendtalk0=哎呀，{你果真和你的祖先没什么不同......}难道不是吗？|:你只觉得我们是怪物，对吧？扭曲的、变态的生物，醉心于不洁的习俗？
@@ -517,7 +517,7 @@ dweller.lhkeeperlecture2.lecturetalk1=你或许在心中对这里漆黑潮湿的
 dweller.lhkeeperlecture2.lecturetalk2=然而这里的地面过去并非如此。:与一些人所想的不同，我们并不是因为被这里的土壤所吸引而定居于此。:事实上，我们恰恰是地面变成这番样貌的原因。
 dweller.lhkeeperlecture2.lecturetalk3=我们对神祇的崇拜使之发生，而如果这无法证明我们的神真实存在，那么我不知道还有什么证明。:可惜的是，[你祖先]中的许多人并不喜欢这一想法，不相信有神比他们所信仰的神灵更加真实。
 dweller.lhkeeperlecture2.lecturetalk4=实际上他们万分厌恶这一想法，憎恶能将地面变得漆黑潮湿的神祇，于是他们视我们为“异教徒”，然后开始猎杀我们。[一个接着一个。]
-dweller.lhkeeperlecture2.lecturetalk5={我们的家园被付之一炬，我们的人民血流成河。}我们的父辈，那些侥幸存活者，失去了一切。这是一场{痛绝人寰的惨剧。}{这是一次[大屠杀]。
+dweller.lhkeeperlecture2.lecturetalk5={我们的家园被付之一炬，我们的人民血流成河。}我们的父辈，那些侥幸存活者，失去了一切。这是一场{惨绝人寰的悲剧。}{这是一次[大屠杀]。
 dweller.lhkeeperlecture2.lecturetalk6=而他们竟自视为“圣徒”和“猎人”，那些残忍的谋杀犯。
 dweller.lhkeeperlecture2.lecturetalk7=但我们有朋友。强大的朋友，引领我们远离战争，亲自去应对外来的侵犯。噢，如果不是牠们，我们的全部人民早已被{消灭殆尽。
 dweller.lhkeeperlecture2.lecturetalk8=那段时光里无人是胜者。而这一切悲剧都仅仅是因为{你的祖先}对不同传统的蔑视。只是因为我们脚下的暗蓝的沙，和我们神祇的怪异形体。
@@ -526,7 +526,7 @@ dweller.lhkeeperlecture2.lecturetalk9.option0=你所提及的:‘朋友’:是�
 dweller.lhkeeperlecture2.lecturetalk9.option1=我理解了。:我向你表示同情。
 dweller.lhkeeperlecture2.friendslecturetalk0=那与你无关，因为你依然是个外乡人。:但事态可以有所变化。
 dweller.lhkeeperlecture2.thankstalk0=而我向你表示感激。因为你聆听了我的故事，我们的历史。:因为你使我从过往知识的重担中脱离。
-dweller.lhkeepergratitude.talk0=你还想知道更多的话，尽管吩咐。
+dweller.lhkeepergratitude.talk0=你还想知道更多的话，尽管问我就好。
 dweller.lhkeeperdreamer.talk0=你是一个梦者。这我知道。|:你追寻真相。这我也知道。
 dweller.lhkeeperdreamer.talk1=你希望揭开帷幕。踏入其彼端的秘境。|:是啊，你已经做到了，但如果仅仅是在梦中如此，并不能回想起一丝一毫。
 dweller.lhkeeperdreamer.talk2=你现在不顾一切地想要说服你自己，想相信自己能做到这一切。你想于失败之处重获成功。你想永远摆脱所有的谎言。
@@ -567,8 +567,8 @@ dweller.lhkeeperoldtruth.genocideagreetalk0=我们也是这样想的。:不过�
 dweller.lhkeeperpast.talk0=这无关紧要。过去的就让它留在过去吧，我们并非能穿越时光的人。只论当下。
 dweller.lhkeeperend.talk0=允许我留下几句遗言？|万分感谢，旅行者。:我会尽快说完。
 dweller.lhkeeperend.talk1=让我们从一个客观真相开始说起。一个数理层面的事实。:你所能想到的最大数字，与无穷大相比也接近零。
-dweller.lhkeeperend.talk2=另一个真相。我是微不足道的。:在这个世界上还有不计其数的人和我完全一样。精密的复制品。:我不过是因果的一支，无关紧要，以致你可以毫不犹豫地为我送来死亡。
-dweller.lhkeeperend.talk3=我有一个问题，外乡人。:你真的拥有一个具备无穷复杂性的心智吗？我很抱歉这么说，但是你不可能有。亿万突触何其精妙，然而，你的心智也迟早会被复制。就像我的心智一样。
+dweller.lhkeeperend.talk2=另一个真相。我是微不足道的。:在这个世界上还有不计其数的人和我完全一样。都是精密的复制品。:我不过是一系列因果的集合，无关紧要，以致你可以毫不犹豫地为我送来死亡。
+dweller.lhkeeperend.talk3=我有一个问题，外乡人。:你真的拥有一个具备无穷复杂性的心智吗？我很抱歉这么说，但是你不可能有。亿万突触何其精妙，然而，你的头脑也迟早会被复制。就像我的头脑一样。
 dweller.lhkeeperend.talk4=这便是真相的片断，外乡人，这是专门为你准备的。你的生命一文不值。
 dweller.lhkeeperend.talk5=你来自什么世界是无关紧要的，因为真相遍布一切领域。|:因为真相深藏于帷幕彼端，栖居在一切宇宙之间的区域。
 dweller.lhkeeperend2.talk0=继续做你要做的事吧，杀死我。我的死无足轻重。||:你的死亡亦是如此。
@@ -591,7 +591,7 @@ dweller.scholarshoggoth.sorrytalk2=是不是汝脑袋里的声音告诉尼要制
 dweller.scholarshoggoth.sorrytalk2.option0=什么声音？
 dweller.scholarshoggoth.sorrytalk2.option1=是的。
 dweller.scholarshoggoth.enlightentalk0=哦不，我不打算告诉你。:但汝实为幸运，我的好伙计。
-dweller.scholarshoggoth.enlightentalk1=然而我担心汝脑袋里的声音迟早会告诉汝何以为之一。
+dweller.scholarshoggoth.enlightentalk1=然而我担心汝脑袋里的声音迟早会告诉汝如何制作它。
 dweller.scholarshoggoth.enlightentalk1.option0=什么声音？
 dweller.scholarshoggoth.enlightentalk1.option1=再多告诉我一些。
 dweller.scholarbreath.talk0=尼还记得自己曾经受洗后，听闻非汝之声，因此近乎窒息吗？:呵。
@@ -744,7 +744,7 @@ research.FIRSTDREAMS.stage.1=梦是奇迹之物。<BR>我曾经简单地认为�
 
 research.FUMESPREADER.title=记忆
 research.firstMemory.text=制作唤知之忆。
-research.FUMESPREADER.stage.0=一段模糊的新记忆从我上次的梦境中浮现。<BR>一段关于唤醒知识的记忆，但它如此模糊，很可能并不属于我。<BR>不过我应该尽可能地发掘这段记忆中的内容。话说回来，日常经历的所留下的记忆能对梦境有多大的影响？<BR>啊，但我知道一些鲜为人知的事情。记忆可以被装入瓶中。这需要通过唤忆池来完成。<BR>唤忆池是一种盛水的石制水池，我可以在水池上方放置能够唤起记忆的物品，然后再用记忆安瓿来封装记忆。<BR>就唤知之忆而言，恶魂之泪正是能够唤起记忆的物品，虽然我完全看不出这其中的关联。<BR>作为旁注，如果这份知识并非来自记忆，那么它又是从何处突然到来？哦，多么讽刺！
+research.FUMESPREADER.stage.0=一段模糊的新记忆从我上次的梦境中浮现。<BR>一段关于唤醒知识的记忆，但它如此模糊，很可能并不属于我。<BR>不过我应该尽可能地发掘这段记忆中的内容。话说回来，日常经历的所留下的记忆又能对梦境有多大的影响呢？<BR>啊，虽然我无法确定这一点，但我知道一些鲜为人知的事情。记忆可以被装入瓶中。这需要通过唤忆池来完成。<BR>唤忆池是一种盛水的石制水池，我可以在水池上方放置能够唤起记忆的物品，然后再用记忆安瓿来封装记忆。<BR>就唤知之忆而言，恶魂之泪正是能够唤起记忆的物品，虽然我完全看不出这其中的关联。<BR>作为旁注，如果这份知识并非来自记忆，那么它又是从何处突然到来？哦，多么讽刺！
 research.FUMESPREADER.stage.1=现在我手中拿着一份收藏品——更准确地说，是一份回忆——用于唤醒知识的回忆。<BR>我必须在它的影响下入梦，为此我需要制作一个熏香器。要使用熏香器，我必须将这件小巧的玻璃球体放在床的旁边，再将其装满浸梦香，然后对它使用封装着记忆的记忆安瓿。<BR>随后我将入睡，而浸梦香被耗尽即表明唤梦取得了成功。<BR>在所有记忆之中，唤知之忆应该能为我指明新的道路。<BR>它必须做到这一点，否则我将迷失方向，无处可往。<BR>如果试验失败，那么我必然会如此。
 
 research.CRYSTALDREAMS.title=坠落
@@ -755,8 +755,8 @@ research.CRYSTALDREAMS.addenda.sentience=梦虽然会直线坠落，但其蕴含
 research.metalDream.text=梦见金铁。
 
 research.SLEEPCHAMBER.title=沉眠室
-research.SLEEPCHAMBER.stage.0=我一直为自己的能力感到自豪，它使得我能按己所需而保持清醒，持续工作和随意走动，把睡眠的时间留给更重要的事情。<BR>噢，可极具讽刺意味的是，如今我万分需要睡眠，睡多久都不够。<BR>我必须入梦，持续地入梦，周而复始。一日一次，且只能夜间入梦，这根本不够，完全不够。我必须集中精力去制造某种装置，以使我摆脱那种限制，至少能在某种程度上摆脱它。<BR>首先，我需要一个尺寸合适的合成站。齿轮工作台将能帮助我制造更多的复杂物体。
-research.SLEEPCHAMBER.stage.1=这台被我称为沉眠室的机器非常奇妙。建造它所需的机械学、生物学和化学的知识，远超我在知识界的寻常视野，这使我不得不将其视为......异星的技术？<BR>然而它就这么来到了我的手中，如此突然，而且并非通过试验得来，而仿佛是它自己寻来。<BR>噢，我还是另找时间研究这神秘现象吧。<BR>使用沉眠室时首先要将其打开，我进入其中之后必须关上门以开始入梦。它能使我每天额外入睡一次，并且在梦后立刻醒来，时间在此期间不会流逝。但这瞬间足以让梦游离我身，并依照旁边熏香器的指示发挥作用，使用方法就像普通的床一样。<BR>这件发明令人难以置信，但我感到我仅仅触及了表面，这场旅途能指引我走向更深处。<BR>这不过是一块垫脚石，借此我将粉碎一切我自以为知的虚假真相。
+research.SLEEPCHAMBER.stage.0=只要我想，我就可以一直保持清醒，随意工作、走动，我对此颇为自豪，因为这样一来，我就可以把睡眠的时间腾给更重要的事情。<BR>噢，可极具讽刺意味的是，如今我万分需要睡眠，睡多久都不够。<BR>我必须入梦，持续地入梦，周而复始。如今入梦仅能做到一日一次，且必须在夜间进行，这根本不够，完全不够。我必须集中精力去制造某种装置，以使我摆脱这一限制，至少能在某种程度上摆脱它。<BR>首先，我需要一个尺寸合适的合成站。齿轮工作台将能帮助我制造更多的复杂物体。
+research.SLEEPCHAMBER.stage.1=这台被我称为沉眠室的机器非常奇妙。建造它所需的机械学、生物学和化学的知识，远超我那平庸的知识范围，这使我不得不将其视为......异星的技术？<BR>然而它就这么来到了我的手中，如此突然，而且并非通过试验得来，而仿佛是它自己寻来。<BR>噢，我还是另找时间研究这神秘现象吧。<BR>使用沉眠室时，首先要将其打开，我进入其中之后必须关上门以开始入梦。它能使我每天额外入睡一次，并且在梦后立刻醒来，时间在此期间不会流逝。但这瞬间足以让梦游离我身，并依照旁边熏香器的指示发挥作用，使用方法就像普通的床一样。<BR>这件发明令人难以置信，但我感到我仅仅触及了表面，这场旅途能指引我走向更深处。<BR>这不过是一块垫脚石，借此我将粉碎一切我自以为知的虚假真相。
 research.craftedsleep_chamber.text=合成一个沉眠室。
 
 research.EFFECTDREAMS.title=触动自身
@@ -813,7 +813,7 @@ research.IDOL.stage.1=我谦卑地向你发誓献上我的生命，伟大长梦�
 research.IdolInteract.text=在渔村的神像前祈祷。
 
 research.SLUGS.title=蛞蝓
-research.SLUGS.stage.0=与伟大长梦者共鸣是至高的荣耀。实不相瞒，给祂留下印象并使祂对我产生兴趣，无可置疑地是我有史以来最大的成就。<BR>然而共鸣的强度十分微弱，因为我太过弱小，而我的存在无可救药地与主世界牢牢绑定。<BR>祂深知如此。祂希望帮助我。真的，祂是这么想的！<BR>这些生物就如同它们降生时所在的水一样，黏滑、无定形、难以捕捉。它们就是一些渔村居民赖以维生的白色蛞蝓。它们是共鸣之门的钥匙。<BR>我需要一个诱捕器，而伟大长梦者赐予了我制造它的知识。具有讽刺意味的同时又充满意义的是，那些无定形的、近乎混沌的蛞蝓却会被形态完美而有序的食盐所吸引！<BR>蛞蝓诱捕器必须被放在水中。其上方不能有水，但其四个侧面必须有水。为了发挥最大性能，它应被放置在11×11的方形水域的中央。<BR>如果达到要求，我就能看到微小的颗粒，而不久后我就能看到水面上出现蛞蝓充满水的身体。它们就好像是凭空出现的，并且在片刻后就会突然消失。我必须将捕蛞蝓器小心的对准它们，然后再使用。<BR>再然后...我必须吃下它们。这是唯一的办法。我并不喜欢，但我必须这么做。<BR>一旦我吃下一些蛞蝓，比如说，大约20只，我就应当再次与神像接触。
+research.SLUGS.stage.0=与伟大长梦者共鸣是至高的荣耀。实不相瞒，给祂留下印象并使祂对我产生兴趣，无可置疑地是我有史以来最大的成就。<BR>然而共鸣的强度十分微弱，因为我太过弱小，而我的存在无可救药地与主世界牢牢绑定。<BR>祂深知如此。祂希望帮助我。真的，祂是这么想的！<BR>这些生物就如同它们降生时所在的水一样，黏滑、无定形、难以捕捉。它们就是一些渔村居民赖以维生的白色蛞蝓。它们是共鸣之门的钥匙。<BR>我需要一个诱捕器，而伟大长梦者赐予了我制造它的知识。多么讽刺却又耐人寻味的是，那些无定形的、近乎混沌的蛞蝓竟会被形态完美而有序的食盐所吸引！<BR>蛞蝓诱捕器必须被放在水中。其上方不能有水，但其四个侧面必须有水。为了发挥最大性能，它应被放置在11×11的方形水域的中央。<BR>如果达到要求，我就能看到微小的颗粒，而不久后我就能看到水面上出现蛞蝓充满水的身体。它们就好像是凭空出现的，并且在片刻后就会突然消失。我必须将捕蛞蝓器小心的对准它们，然后再使用。<BR>再然后...我必须吃下它们。这是唯一的办法。我并不喜欢，但我必须这么做。<BR>一旦我吃下一些蛞蝓，比如说，大约20只，我就应当再次与神像接触。
 research.SLUGS.stage.1=我的梦变得更加强效，我就知道会这样，我知晓我明白§l我深知如此§r。<BR>祂在垂听我的心声，伟大长梦者§l垂听了我的呼唤。§r<BR>我现在意识到崇拜伟大长梦者绝不仅是偶尔的祈祷，而是一种生活的方式。<BR>从今往后，我们的行动流程应该是吃下蛞蝓，吃下蛞蝓，吃下更多的蛞蝓。它们尝起来味道会变得越来越没那么糟糕，这我很确定。<BR>我也应该和渔民们拉近关系，以向他们学习。这么做会使我变得更像他们。毕竟他们是世世代代中最为杰出的人。而我的祖先却未能明白这一点。<BR>当这一切都完成后，我必须和神像接触。
 research.!SLUGS.text=吃下20条蛞蝓，与神像交互。
 
@@ -822,7 +822,7 @@ research.FISHERMEN.stage.0=首先，我将在这里记下日常成功使用蛞�
 
 research.CANOE.title=深海之赠
 research.CANOE.stage.0=旧渔村居民的日常饮食中除了蛞蝓，主要是鱼。他们的潮木桶中装满了鳕鱼。<BR>他们好像是使用独木舟去捕鱼。这些独木舟由木匠制造，木匠是身穿深灰色服装的居民，住在内有寻常橡木梯子的双层房屋之中。<BR>并非每一个渔村都有木匠，但他们相当常见。
-research.CANOE.stage.1=据木匠称，渔民们会乘着独木舟入海...然后鱼会自己主动找上他们？<BR>我也应该试试，但不应该在随意的水域进行，而应该到大海中尝试一下。<BR>如果确实发生了什么事情，我应该多保持一段时间，然后以吃下相当数量的蛞蝓作为结束。在那之后，我应该去共鸣。
+research.CANOE.stage.1=据木匠称，渔民们会乘着独木舟入海...然后鱼会自己主动找上他们？<BR>我也应该试试，但不应该在随意的水域进行，而应该到大海中尝试一下。<BR>如果确实发生了什么事情，我应该在那里多待一段时间，然后以吃下相当数量的蛞蝓作为结束。在那之后，我应该去共鸣。
 research.CANOE.stage.2=大海本身...它回答了我，它起伏的浪涛发出舒缓的语调，它无垠的蓝色仿若醒目的眼睛，它无形的水如同充满爱意的手。<BR>我现在与大海有了连接，我因此变得更加强大，尤其是在身处与我们相连的水中之时。<BR>但是，我们的连接还不够强...我仍是海洋表面的生物，对吧？
 research.carpenter.text=与旧渔村的木匠交谈。
 research.!CANOE.text=乘一条独木舟在海中航行，然后与神像共鸣。
@@ -853,7 +853,7 @@ research.!METAMORPHOSIS.text=杀死三只远古守卫者。与神像共鸣。
 research.DREAMBOTTLE.title=饮梦瓶
 research.DREAMBOTTLE.stage.0=我在受洗时流了一滴眼泪。<BR>那是真相的点滴，提醒我牢记自己毫无价值。<BR>但是，正是那滴眼泪引导我*认知*。<BR>我无法大量的收集自己的眼泪，毕竟我不是熟练的泣者，对吧？<BR>我不是吧？<BR>我将向除我自身之外的其他躯体寻求帮助。
 research.DREAMBOTTLE.stage.1=通过泣者和泣囊，我被授以知识，通过梦境，我将放大并利用这些知识。<BR>饮梦瓶正是我需要合成的物品。这是一种无价宝具，能使我每天无限次地进入梦境，并且在一场梦中同时浸入多个记忆。<BR>唯一的代价是需要泪水。但并非我自己的泪水。
-research.DREAMBOTTLE.stage.2=饮梦瓶可储存泪水。对着一个泪瓶使用即可将饮梦瓶填至最大容量，再次使用即可将饮梦瓶内的泪水尽可能多的存入泪瓶之中。<BR>饮梦瓶至多能存储4桶泪。<BR>接下来在未潜行时右击使用饮梦瓶即可在其中放入记忆安瓿，至多能放置四个。<BR>现在，无论何时，只要我在潜行时喝下饮梦瓶的内容物，我就能如己所愿，随时随地入梦。<BR>每个梦都会消耗一桶泪，这即是兑换的比率。<BR>随着我了解这一全新的器具，梦之艺术为我展现出新的可能。
+research.DREAMBOTTLE.stage.2=饮梦瓶可储存泪水。对着一个泪瓶使用即可将饮梦瓶填至最大容量，再次使用即可将饮梦瓶内的泪水尽可能多的存入泪瓶之中。<BR>饮梦瓶至多能存储4桶泪。<BR>接下来，在未潜行时右击使用饮梦瓶，即可在其中放入记忆安瓿，至多能存放四个。<BR>现在，无论何时，只要我在潜行时喝下饮梦瓶的内容物，我就能如己所愿，随时随地入梦。<BR>每个梦都会消耗一桶泪，这即是兑换的比率。<BR>随着我了解这一全新的器具，梦之艺术为我展现出新的可能。
 research.gotweepers.text=寻找收集泪水的方法。
 research.crafteddream_bottle.text=合成一个饮梦瓶。
 research.DREAMBOTTLE.addenda.statue=附记：<BR>使用雕像来获取崇拜加成，似乎能略微提升入梦所消耗泪的利用率。
@@ -1049,7 +1049,7 @@ research.INTROSPECTIONDREAM.stage.0=一段关于静思的记忆，在我行走�
 research.DEEPROAR.title=怒吼
 research.DEEPROAR.stage.0=在深潜化时，我无法使用饰品的主动效果，也无法打开饰品能力菜单。<BR>然而，在这一形态下，我可以发出令人血液凝固的怒吼，让我附近的所有实体陷入莫大的恐怖之中，通过按下饰品使用主动效果的同一按键即可释放该技能。<BR>将恐惧刺入我的敌人的心脏，即是比任何时刻都更接近神。
 
-research.TONEWDEPTHS.title=深渊之渊
+research.TONEWDEPTHS.title=极渊之渊
 research.TONEWDEPTHS.stage.0=我们必须继续下去。<BR>永不屈服，因为真相在即，帷幕将隐，我的知识日益增长，我的意志...<BR>我还剩下什么意志吗？我心惶惶，如同脊骨已经被人剥离。<BR>不，我们仍将继续。我们必须如此。<BR>潜往大海极深的底部。<BR>前往太初，然后抵达无穷。<BR>我们的旅途永不终结，直到我们揭开...直到我们...<BR>...等等...<BR>...“我们”是指谁？
 
 research.WATERDREAM.title=深水之梦
