@@ -5,9 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableList;
+
+import net.minecraft.client.resources.I18n;
+
 
 public class MirrorDialogue {
 	private final MirrorDialogueTemplate template;
+	private final List<String> continueOption;
 	private int branchCounter = 0;
 	private MirrorDialogueBranch currentBranch;
 	private MirrorDialogueNode currentNode;
@@ -22,6 +27,11 @@ public class MirrorDialogue {
 		if(currentBranch.getLength() <= 1) {
 			updateCurrentNode();
 		}
+		continueOption = ImmutableList.of("mirror.continuebutton");
+	}
+	
+	public boolean isAtNode() {
+		return currentNode != null;
 	}
 	
 	public String getUnlocalizedDialogueLine() {
@@ -34,7 +44,7 @@ public class MirrorDialogue {
 
 	public List<String> getUnlocalizedDialogueOptions() {
 		if(currentNode == null)
-			return Collections.EMPTY_LIST;
+			return continueOption;
 		List<String> optionNames = new ArrayList<>();
 		for(MirrorDialogueBranch option : currentNode.getDialogueOptions()) {
 			String optionName = formatDialogueOption(option);
@@ -78,7 +88,7 @@ public class MirrorDialogue {
 		}
 	}
 	
-	public void progressDialogueBranch() {
+	private void progressDialogueBranch() {
 		branchCounter++;
 		if(branchCounter >= currentBranch.getLength() - 1) {
 			updateCurrentNode();
@@ -86,8 +96,6 @@ public class MirrorDialogue {
 	}
 	
 	private void updateCurrentNode() {
-		/*String newNodeId = currentBranch.getEndingNodeID();
-		if("end".equals(newNodeId))*/
 		currentNode = template.getNodeByID(currentBranch.getEndingNodeID());
 	}
 }

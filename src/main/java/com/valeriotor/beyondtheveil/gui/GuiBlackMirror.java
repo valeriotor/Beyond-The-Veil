@@ -20,22 +20,20 @@ public class GuiBlackMirror extends GuiScreen{
 	private final MirrorDialogue dialogue;
 	
 	/** Dialogue options split by width in sublists*/
-	private final List<String> continueButton;
 	private List<List<String>> splitDialogueOptions;
 	private List<DialogueLine> dialogueLines = new ArrayList<>();
-	private int counter = 25;
+	private int counter = 30;
 	private DialogueLine nextLine;
 	
 	public GuiBlackMirror(MirrorDialogue dialogue) {
 		this.dialogue = dialogue;
 		addDialogueLine();
-		continueButton = ImmutableList.of(I18n.format("mirror.continuebutton"));
 	}
 	
 	@Override
 	public void initGui() {
 		buttonList.clear();
-		updateDialogueOptions();
+		updateDialogueOptions(); // resizes current string lists
 	}
 	
 	@Override
@@ -76,7 +74,8 @@ public class GuiBlackMirror extends GuiScreen{
 	private void drawDialogueLines(float partialTicks) {
 		int yOffset = getDialogueOptionsYOffset() - 20;
 		if(counter > 15 && counter < 30) {
-			yOffset -= (int)(getTextHeight() * Math.pow((counter + partialTicks - 15) / 15, 2));
+			int nextLineSize = nextLine == null ? 1 : nextLine.size();
+			yOffset -= (int)(nextLine.size() * getTextHeight() * Math.pow((counter + partialTicks - 15) / 15, 2));
 		}
 		int sideSpace = (width - getLineWidth()) / 2;
 		for(int i = dialogueLines.size()-1; i >= 0; i--) {
@@ -97,8 +96,8 @@ public class GuiBlackMirror extends GuiScreen{
 		int selectedOption = getHoveredDialogueOption(mouseX, mouseY);
 		if(selectedOption >= 0) {
 			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-			List<String> option = splitDialogueOptions.get(selectedOption);
-			if(!option.get(0).equals(I18n.format("mirror.continuebutton"))) {
+			if(dialogue.isAtNode()) {
+				List<String> option = splitDialogueOptions.get(selectedOption);
 				option.set(0, "> " + option.get(0));
 				dialogueLines.add(new DialogueLine(option));
 			}
@@ -107,7 +106,6 @@ public class GuiBlackMirror extends GuiScreen{
 			splitDialogueOptions.clear();
 			nextLine = getNextLine();
 		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	private int getHoveredDialogueOption(int mouseX, int mouseY) {
@@ -141,12 +139,6 @@ public class GuiBlackMirror extends GuiScreen{
 										.map(I18n::format)
 										.map(option -> mc.fontRenderer.listFormattedStringToWidth(option, getLineWidth()))
 										.collect(Collectors.toCollection(ArrayList::new));
-		updateContinueButtonVisibility();
-	}
-	
-	private void updateContinueButtonVisibility() {
-		if(splitDialogueOptions.size() == 0) 
-			splitDialogueOptions.add(continueButton);
 	}
 	
 	private int getLineWidth() {
