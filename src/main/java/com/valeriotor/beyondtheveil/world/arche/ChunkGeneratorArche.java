@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldType;
@@ -341,23 +342,25 @@ public class ChunkGeneratorArche implements IChunkGenerator
     /**
      * Generate initial structures in this chunk, e.g. mineshafts, temples, lakes, and dungeons
      */
-    public void populate(int x, int z)
+    public void populate(int chunkX, int chunkZ)
     {
         BlockFalling.fallInstantly = true;
-        int i = x * 16;
-        int j = z * 16;
+        int i = chunkX * 16;
+        int j = chunkZ * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
         Biome biome = this.world.getBiome(blockpos.add(16, 0, 16));
         this.rand.setSeed(this.world.getSeed());
         long k = this.rand.nextLong() / 2L * 2L + 1L;
         long l = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed((long)x * k + (long)z * l ^ this.world.getSeed());
+        this.rand.setSeed((long)chunkX * k + (long)chunkZ * l ^ this.world.getSeed());
         boolean flag = false;
-        ChunkPos chunkpos = new ChunkPos(x, z);
+        ChunkPos chunkpos = new ChunkPos(chunkX, chunkZ);
 
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, this.rand, x, z, flag);
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, this.rand, chunkX, chunkZ, flag);
 
         biome.decorate(this.world, this.rand, new BlockPos(i, 0, j));
+        
+        generateBloodHome(chunkX, chunkZ);
         /*
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
         WorldEntitySpawner.performWorldGenSpawning(this.world, biome, i + 8, j + 8, 16, 16, this.rand);
@@ -388,8 +391,27 @@ public class ChunkGeneratorArche implements IChunkGenerator
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, flag);
 
         BlockFalling.fallInstantly = false;*/
-        ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, false);
-		GameRegistry.generateWorld(x, z, this.world, this, this.world.getChunkProvider());
+        ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, chunkX, chunkZ, false);
+		GameRegistry.generateWorld(chunkX, chunkZ, this.world, this, this.world.getChunkProvider());
+    }
+    
+    private void generateBloodHome(int chunkX, int chunkZ) {
+        int i = chunkX * 16;
+        int j = chunkZ * 16;
+        
+        int xMod1024 = chunkX & 63;
+        int zMod1024 = chunkZ & 63;
+        MutableBlockPos pos = new MutableBlockPos();
+        if(xMod1024 == 0 && zMod1024 == 0) {
+        	for(int x = 0; x < 16; x++) {
+        		for(int z = 0; z < 16; z++) {
+            		for(int y = 20; y < 100; y++) {
+            			pos.setPos(i+x, y, j+z);
+            			world.setBlockState(pos, BlockRegistry.BlockBloodBrick.getDefaultState(), 2);
+            		}
+            	}
+        	}
+        }
     }
 
     /**

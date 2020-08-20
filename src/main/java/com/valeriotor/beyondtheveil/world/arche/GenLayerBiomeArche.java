@@ -29,7 +29,8 @@ public class GenLayerBiomeArche extends GenLayer{
             for (int j = 0; j < areaWidth; ++j)
             {
                 this.initChunkSeed((long)(j + areaX), (long)(i + areaY));
-                aint1[j + i * areaWidth] = getRandomArcheBiome();
+                //if(areaX % 8 == 0 && areaY % 8 == 0) aint1[j + i * areaWidth] = Biome.getIdForBiome(BiomeRegistry.arche_algae_forest);
+                /*else*/ aint1[j + i * areaWidth] = getRandomArcheBiome();
             }
         }
 
