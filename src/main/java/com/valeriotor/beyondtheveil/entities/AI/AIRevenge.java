@@ -25,7 +25,7 @@ public class AIRevenge extends EntityAITarget{
 		if(this.ent != null) {
 			if(ent.getRevengeTarget() != null) {
 				EntityLivingBase attack = ent.getRevengeTarget();
-				if(!(ent instanceof IPlayerMinion && attack instanceof EntityPlayer && ((IPlayerMinion)ent).getMasterID() == ((EntityPlayer)attack).getPersistentID() )) {
+				if(!(ent instanceof IPlayerMinion && attack instanceof EntityPlayer && ((EntityPlayer)attack).getPersistentID().equals(((IPlayerMinion)ent).getMasterID()))) {
 					this.attacker = attack;
 					return true;
 				}

@@ -66,7 +66,7 @@ public class LivingEvents {
 	
 	public static void commandMinions(LivingHurtEvent e) {
 		EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
-		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, ent -> ent instanceof IPlayerGuardian && ((IPlayerGuardian)ent).getMasterID() == p.getPersistentID());
+		List<EntityLiving> minions = p.world.getEntities(EntityLiving.class, ent -> ent instanceof IPlayerGuardian && p.getPersistentID().equals(((IPlayerGuardian)ent).getMasterID()));
 		for(EntityLiving ent : minions) {
 			((IPlayerGuardian)ent).setTarget(e.getEntityLiving());
 		}
