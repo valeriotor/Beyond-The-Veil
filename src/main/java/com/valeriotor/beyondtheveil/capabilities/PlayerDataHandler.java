@@ -107,19 +107,7 @@ public class PlayerDataHandler {
 		}
 		
 	}
-	
-	public static class Factory implements Callable<IPlayerData>{
 
-		public Factory() {
-			
-		}
-		
-		@Override
-		public IPlayerData call() throws Exception {
-			return new PlayerDataHandler.PlayerData();
-		}
-	}
-	
 	public static class PlayerData implements IPlayerData{
 		
 		public Set<String> strings = new HashSet<>();

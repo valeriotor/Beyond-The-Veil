@@ -14,6 +14,7 @@ public class MirrorDialogueRegistry {
 	
 	public static void registerMirrorDialogues() {
 		registerMirrorDialogue("start");
+		registerMirrorDialogue("testdefaultunlock");
 	}
 	
 	private static void registerMirrorDialogue(String name) {

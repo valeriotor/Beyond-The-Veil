@@ -1,13 +1,11 @@
 package com.valeriotor.beyondtheveil.blackmirror;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 
 
 public class MirrorDialogue {
@@ -18,8 +16,8 @@ public class MirrorDialogue {
 	private MirrorDialogueBranch currentBranch;
 	private MirrorDialogueNode currentNode;
 	
-	public static MirrorDialogue getDialogue(String id) {
-		return new MirrorDialogue(MirrorDialogueRegistry.getDialogueTemplate(id));
+	public static MirrorDialogue getDialogue(EntityPlayer p) {
+		return new MirrorDialogue(MirrorUtil.getCurrentDialogue(p));			
 	}
 	
 	private MirrorDialogue(MirrorDialogueTemplate template) {

@@ -6,6 +6,7 @@ public class MirrorDialogueTemplate {
 	private String id;
 	private MirrorDialogueBranch startingBranch;
 	private Map<String,MirrorDialogueNode> dialogueNodes;
+	private String unlocksAtEnd;
 	
 	public String getID() {
 		return this.id;
@@ -17,6 +18,10 @@ public class MirrorDialogueTemplate {
 	
 	public MirrorDialogueNode getNodeByID(String id) {
 		return dialogueNodes.get(id);
+	}
+	
+	public String getDefaultDialogueUnlockedWhenFinished() {
+		return unlocksAtEnd;
 	}
 	
 }

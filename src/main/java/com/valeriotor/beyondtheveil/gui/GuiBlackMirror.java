@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogue;
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorToServer;
 
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
@@ -107,8 +109,13 @@ public class GuiBlackMirror extends GuiScreen{
 			splitDialogueOptions.clear();
 			nextLine = getNextLine();
 			if(dialogue.shouldEndNow()) 
-				mc.displayGuiScreen(null);
+				finishDialogue();
 		}
+	}
+	
+	private void finishDialogue() {
+		mc.displayGuiScreen(null);
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageMirrorToServer());
 	}
 	
 	private int getHoveredDialogueOption(int mouseX, int mouseY) {

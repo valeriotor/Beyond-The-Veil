@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.items;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
+import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.gui.container.GuiContainerHandler;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,8 @@ public class ItemBlackMirror extends ModItem{
 		if(worldIn.isRemote) {
 			BlockPos pos = p.getPosition();
 			p.openGui(BeyondTheVeil.instance, GuiContainerHandler.BLACK_MIRROR, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		} else {
+			ServerTickEvents.removePlayerTimer("timedmirror", p);
 		}
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, p.getHeldItem(handIn));
 	}

@@ -5,6 +5,7 @@
         "branchLength": 0,
         "endingNodeID": "first_node"
     },
+    "unlocksAtEnd": "testdefaultunlock",
     "dialogueNodes" : {
         "first_node": {
             "id" : "first_node",

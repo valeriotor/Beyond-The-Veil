@@ -117,7 +117,7 @@ public class GuiContainerHandler implements IGuiHandler{
 			if(te instanceof TileGearBench)
 			return new GuiGearBench(new ContainerGearBench(p.inventory, (TileGearBench)te));
 		} else if(ID == 8) {
-			return new GuiBlackMirror(MirrorDialogue.getDialogue("start"));
+			return new GuiBlackMirror(MirrorDialogue.getDialogue(p));
 		}
 		return null;
 	}

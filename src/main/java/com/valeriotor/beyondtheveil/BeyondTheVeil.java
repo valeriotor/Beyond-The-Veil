@@ -5,8 +5,12 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.IResearch;
+import com.valeriotor.beyondtheveil.capabilities.MirrorCapInstance;
+import com.valeriotor.beyondtheveil.capabilities.MirrorHandler;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler.PlayerData;
 import com.valeriotor.beyondtheveil.capabilities.ResearchHandler;
+import com.valeriotor.beyondtheveil.capabilities.ResearchHandler.ResearchData;
 import com.valeriotor.beyondtheveil.crafting.GearBenchRecipeRegistry;
 import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.fluids.ModFluids;
@@ -70,8 +74,9 @@ public class BeyondTheVeil
         //ClientProxy.registerEntity();
         
 
-    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
-    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), new ResearchHandler.ResearchCapFactory());
+    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), PlayerData::new);
+    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), ResearchData::new);
+    	CapabilityManager.INSTANCE.register(MirrorCapInstance.class, new MirrorHandler.MirrorStorage(), MirrorCapInstance::new);
 
     	MinecraftForge.EVENT_BUS.register(MemoryUnlocks.class);
     	MinecraftForge.TERRAIN_GEN_BUS.register(MemoryUnlocks.class);
