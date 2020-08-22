@@ -13,6 +13,7 @@ import net.minecraft.client.resources.I18n;
 public class MirrorDialogue {
 	private final MirrorDialogueTemplate template;
 	private final List<String> continueOption;
+	private final List<String> endOption;
 	private int branchCounter = 0;
 	private MirrorDialogueBranch currentBranch;
 	private MirrorDialogueNode currentNode;
@@ -28,6 +29,7 @@ public class MirrorDialogue {
 			updateCurrentNode();
 		}
 		continueOption = ImmutableList.of("mirror.continuebutton");
+		endOption = ImmutableList.of("mirror.endbutton");
 	}
 	
 	public boolean isAtNode() {
@@ -43,8 +45,12 @@ public class MirrorDialogue {
 	}
 
 	public List<String> getUnlocalizedDialogueOptions() {
-		if(currentNode == null)
-			return continueOption;
+		if(currentNode == null) {
+			if(shouldShowEndButton())
+				return endOption;
+			else
+				return continueOption;
+		}
 		List<String> optionNames = new ArrayList<>();
 		for(MirrorDialogueBranch option : currentNode.getDialogueOptions()) {
 			String optionName = formatDialogueOption(option);
@@ -97,5 +103,13 @@ public class MirrorDialogue {
 	
 	private void updateCurrentNode() {
 		currentNode = template.getNodeByID(currentBranch.getEndingNodeID());
+	}
+	
+	private boolean shouldShowEndButton() {
+		return currentBranch.endsDialogue() && branchCounter >= currentBranch.getLength() - 1;
+	}
+	
+	public boolean shouldEndNow() {
+		return currentBranch.endsDialogue() && branchCounter >= currentBranch.getLength();
 	}
 }

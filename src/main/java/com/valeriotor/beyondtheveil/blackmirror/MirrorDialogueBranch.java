@@ -4,6 +4,7 @@ public class MirrorDialogueBranch {
 	private String id;
 	private int branchLength;
 	private String endingNodeID;
+	private boolean endsDialogue = false;
 	
 	public String getBranchID() {
 		return this.id;
@@ -15,6 +16,10 @@ public class MirrorDialogueBranch {
 	
 	public String getEndingNodeID() {
 		return this.endingNodeID;
+	}
+	
+	public boolean endsDialogue() {
+		return this.endsDialogue;
 	}
 	
 }

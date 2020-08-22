@@ -62,7 +62,8 @@ public class GuiBlackMirror extends GuiScreen{
 			int selectedOption = getHoveredDialogueOption(mouseX, mouseY);
 			for(int i = 0; i < splitDialogueOptions.size(); i++) {
 				List<String> option = splitDialogueOptions.get(i);
-				int xOffset = selectedOption == i ? x+20 : x;
+				int xOffset = selectedOption == i ? x+25 : x + 10;
+				drawString(mc.fontRenderer, "> ", x, yOffset, 0xFFAA2200);
 				for(String optionLine : option) {
 					drawString(mc.fontRenderer, optionLine, xOffset, yOffset, 0xFFAA2200);
 					yOffset += getTextHeight();
@@ -105,6 +106,8 @@ public class GuiBlackMirror extends GuiScreen{
 			dialogue.chooseDialogueOption(selectedOption);
 			splitDialogueOptions.clear();
 			nextLine = getNextLine();
+			if(dialogue.shouldEndNow()) 
+				mc.displayGuiScreen(null);
 		}
 	}
 	

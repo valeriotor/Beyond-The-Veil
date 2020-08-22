@@ -637,6 +637,7 @@ weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 #MIRROR DIALOGUE
 ##################
 
+mirror.endbutton=(End)
 mirror.continuebutton=(Continue)
 mirror.start.first_node.anyone_there=Is anyone there?
 mirror.start.anyone_there.0=[Y]There is no answer.
@@ -659,9 +660,47 @@ mirror.start.pronounce.parasite=Are you a parasite?
 mirror.start.parasite.0=[Y]Our relationship is mutually beneficial.
 mirror.start.parasite.1=[Y]I granted you knowledge, you granted me a vessel.
 mirror.start.vessel.novessel=Seek another vessel then.
-mirror.start.novessel.0=[Y]Our bond goes deeper than that.
-mirror.start.novessel.1=[Y]It is more ancient than either of us.
-mirror.start.novessel.2=[Y]It is too much to explain right now. Soon, I'll give you answers. Truth.
+mirror.start.vessel.more=Then grant me more knowledge.
+mirror.start.vessel.thankful=If it was through you that I reached The Great Dreamer, then I am thankful.
+mirror.start.novessel.0=[Y]Our bond goes too deep for either of us to sunder it.
+mirror.start.novessel.1=[Y]It is far more ancient than either of us.
+mirror.start.novessel.2=[Y]Too much to explain right now. Soon, I'll give you answers. Truth.
+mirror.start.truth.youknow=You know the Truth?
+mirror.start.youknow.0=[Y]A little more than you do.
+mirror.start.youknow.1=[Y]But we can learn more of it, together, if you follow me.
+mirror.start.more.0=[Y]It is no easy task, but I shall.
+mirror.start.more.1=[Y]It is necessary, for us to go forward.
+mirror.start.forward.whereto=Where to?
+mirror.start.whereto.0=[Y]To The Great Dreamer.
+mirror.start.reached1.already=But I reached Him already?!
+mirror.start.already.0=[Y]You have not.
+mirror.start.thankful.0=[Y]Yes, through me it was that you communed.
+mirror.start.thankful.1=[Y]Yet we never truly reached Him.
+mirror.start.reached2.wat=What? I spoke wih Him! I heard Him and He heard me!
+mirror.start.reached2.insignificant=Then.. then I truly am insignificant.. irrelevant..
+mirror.start.wat.0=[Y]Only through Dagon were your thoughts connected. A Veil before the Veil.
+mirror.start.wat.1=Lies beneath lies..
+mirror.start.wat.2=[Y]Indeed.
+mirror.start.insignificant.0=[Y]Several times you have reached this conclusion, but it hasn't yet stuck, has it?
+mirror.start.insignificant.1=[Y]You're taking it harder, or maybe easier, than I did, when I was your age.
+mirror.start.age.old=Wait.. how old are you?
+mirror.start.old.0=[Y]In time, you'll look back at this question and laugh out loud at it.
+mirror.start.nearlythere.howdreamer=How will we reach The Dreamer?
+mirror.start.howdreamer.0=[Y]Through Arche. The deepest Ocean.
+mirror.start.howdreamer.1=[Y]Beneath Arche there is the Void. And then, the Veil.
+mirror.start.howdreamer.2=[Y]The Great Dreamer Himself.
+mirror.start.dreamer.veil=What exactly *is* the Veil?
+mirror.start.veil.0=[Y]The filter through which what you know as 'reality' is born.
+mirror.start.veil.1=[Y]The curtain that hides all that is True.
+mirror.start.veil.2=[Y]The gateway that only Dreams may go through.
+mirror.start.guide.guiding=How will you take me there?
+mirror.start.guiding.0=[Y]I've been your guiding hand, the one that helped you write.
+mirror.start.guiding.1=[Y]Our researches are born out of both of our minds. I'll help you through Al Azif.
+mirror.start.final.whoareyou2=I still wish to know who you are.
+mirror.start.final.letsgetgoing=Let's get going then. (End)
+mirror.start.whoareyou2.0=[Y]A friend. One who had to conceal his own identity for your sake.
+mirror.start.whoareyou2.1=[Y]Cover's blown. We ride together now.
+mirror.start.final2.letsgetgoing2=Let's get going then. (End)
 
 ##################
 #POTION EFFECTS
