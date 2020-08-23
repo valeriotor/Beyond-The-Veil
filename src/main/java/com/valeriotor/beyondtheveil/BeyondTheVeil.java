@@ -70,7 +70,6 @@ public class BeyondTheVeil
     	ModFluids.registerFluids();
         logger = event.getModLog();
         proxy.preInit(event);
-        RegistryHelper.registerEntities();
         BTVPacketHandler.registerPackets();
         MirrorDialogueRegistry.registerMirrorDialogues();
         //ClientProxy.registerEntity();
