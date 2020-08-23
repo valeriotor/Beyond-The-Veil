@@ -16,6 +16,7 @@ public class ItemBlackMirror extends ModItem{
 
 	public ItemBlackMirror(String name) {
 		super(name);
+		setMaxStackSize(1);
 	}
 	
 	@Override

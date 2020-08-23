@@ -11,10 +11,15 @@ import com.valeriotor.beyondtheveil.BeyondTheVeil;
 public class MirrorDialogueRegistry {
 	
 	private static Map<String, MirrorDialogueTemplate> dialogues = new HashMap<>();
+	private static MirrorDialogueTemplate noDialogue;
 	
 	public static void registerMirrorDialogues() {
+		registerMirrorDialogue("nodialogue");
 		registerMirrorDialogue("start");
 		registerMirrorDialogue("testdefaultunlock");
+		
+		noDialogue = dialogues.get("nodialogue");
+		System.out.println((noDialogue == null) + "\n\n\n");
 	}
 	
 	private static void registerMirrorDialogue(String name) {
@@ -29,6 +34,10 @@ public class MirrorDialogueRegistry {
 	
 	public static MirrorDialogueTemplate getDialogueTemplate(String id) {
 		return dialogues.get(id);
+	}
+	
+	public static MirrorDialogueTemplate getNoDialogueTemplate() {
+		return noDialogue;
 	}
 	
 }

@@ -641,6 +641,10 @@ mirror.shivers=My black mirror is shivering.
 mirror.stopshivers=My black mirror stopped shivering.
 mirror.endbutton=(End)
 mirror.continuebutton=(Continue)
+
+mirror.nodialogue.first_node.anyone_there=Is anyone there?
+mirror.nodialogue.anyone_there.0=[Y]There is no answer.
+
 mirror.start.first_node.anyone_there=Is anyone there?
 mirror.start.anyone_there.0=[Y]There is no answer.
 mirror.start.second_node.anyone_there2=IS ANYONE THERE?

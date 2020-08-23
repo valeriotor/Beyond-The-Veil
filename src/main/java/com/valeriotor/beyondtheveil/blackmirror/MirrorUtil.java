@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.blackmirror;
 import com.valeriotor.beyondtheveil.capabilities.MirrorCapInstance;
 import com.valeriotor.beyondtheveil.capabilities.MirrorProvider;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorDefaultToClient;
 import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorScheduledToClient;
@@ -10,6 +11,7 @@ import com.valeriotor.beyondtheveil.util.PlayerTimer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public class MirrorUtil {
@@ -19,8 +21,11 @@ public class MirrorUtil {
 		getCap(p).setScheduledDialogue(id);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageMirrorScheduledToClient(id), (EntityPlayerMP)p);
 	}
+	private static final ItemStack MIRROR = new ItemStack(ItemRegistry.black_mirror);
 	
 	public static void trySetTimedScheduledDialogue(EntityPlayer p, String id, int time) {
+		if(!p.inventory.hasItemStack(MIRROR)) return;
+		
 		if(getCap(p).trySetTimedScheduledDialogue(id)) {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageMirrorScheduledToClient(id), (EntityPlayerMP)p);
 			PlayerTimer pt = new PlayerTimer.PlayerTimerBuilder(p)
@@ -50,10 +55,7 @@ public class MirrorUtil {
 			return scheduledDialogue;
 		else {
 			MirrorDialogueTemplate defaultDialogue = MirrorUtil.getCap(p).getDefaultDialogue();
-			if(defaultDialogue != null)
-				return defaultDialogue;
-			else 
-				return MirrorDialogueRegistry.getDialogueTemplate("start"); //TODO: change to no dialogue
+			return defaultDialogue;
 		}
 	}
 	

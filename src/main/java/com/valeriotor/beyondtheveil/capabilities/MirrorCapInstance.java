@@ -15,7 +15,12 @@ public class MirrorCapInstance {
 	}
 	
 	public MirrorDialogueTemplate getDefaultDialogue() {
-		return defaultDialogue;
+		if(defaultDialogue != null)
+			return defaultDialogue;
+		else {
+			defaultDialogue = MirrorDialogueRegistry.getNoDialogueTemplate();
+			return defaultDialogue;
+		}
 	}
 	
 	public void setScheduledDialogue(String id) {
