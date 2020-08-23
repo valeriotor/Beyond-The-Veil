@@ -52,7 +52,6 @@ public class ClientProxy extends CommonProxy {
         this.registerEntityRenders();
         handler = new KeyHandler();
         DialogueRequirement.registerRequirements();
-        MirrorDialogueRegistry.registerMirrorDialogues();
         ModFluids.renderFluids();
         }
 

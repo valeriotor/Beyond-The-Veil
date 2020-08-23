@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.IResearch;
 import com.valeriotor.beyondtheveil.capabilities.MirrorCapInstance;
@@ -71,6 +72,7 @@ public class BeyondTheVeil
         proxy.preInit(event);
         RegistryHelper.registerEntities();
         BTVPacketHandler.registerPackets();
+        MirrorDialogueRegistry.registerMirrorDialogues();
         //ClientProxy.registerEntity();
         
 
