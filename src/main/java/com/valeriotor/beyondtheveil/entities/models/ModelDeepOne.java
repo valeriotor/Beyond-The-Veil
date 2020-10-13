@@ -147,7 +147,7 @@ public class ModelDeepOne extends ModelAnimated {
         this.Body.render(f5);
     }
     
-    public void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
     	this.setRotateAngle(LeftMouth, 0, 0, 0, addToDefault);
     	this.setRotateAngle(RightMouth, 0, 0, 0, addToDefault);
     	this.setRotateAngle(BottomMouth, 0, 0, 0, addToDefault);

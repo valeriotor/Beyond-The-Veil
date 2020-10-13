@@ -210,7 +210,7 @@ public class ModelBloodSkeleton extends ModelAnimated {
         this.right_thigh.render(f5);
     }
     
-    public void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
         this.setRotateAngle(rib_left_second, 0.0F, 0.5235987755982988F, 0.0F, addToDefault);
         this.setRotateAngle(rib_left_first, 0.0F, 0.5385161049805922F, 0.0F, addToDefault);
         this.setRotateAngle(rib_right_second, 0.0F, -0.5235987755982988F, 0.0F, addToDefault);

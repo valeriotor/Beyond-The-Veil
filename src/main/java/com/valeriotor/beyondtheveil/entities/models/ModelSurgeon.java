@@ -379,7 +379,7 @@ public class ModelSurgeon extends ModelAnimated {
     	}
     }
     
-    private void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
         this.setRotateAngle(UpperBody, 0.18203784098300857F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(LeftUpperTentacle1, 1.4570008595648662F, 0.5462880558742251F, -0.091106186954104F, addToDefault);
         this.setRotateAngle(LeftBackLowerLeg, 0.0F, 0.0F, 0.7285004297824331F, addToDefault);

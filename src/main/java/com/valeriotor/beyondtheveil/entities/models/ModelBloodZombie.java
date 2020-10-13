@@ -109,7 +109,7 @@ public class ModelBloodZombie extends ModelAnimated {
         this.body.render(f5);
     }
     
-    public void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
         this.setRotateAngle(jaw, 0.22759093446006054F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(left_leg, -0.40980330836826856F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(head, -0.7285004297824331F, 0.0F, 0.0F, addToDefault);

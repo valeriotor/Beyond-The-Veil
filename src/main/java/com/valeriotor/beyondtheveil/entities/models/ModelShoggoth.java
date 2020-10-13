@@ -247,7 +247,7 @@ public class ModelShoggoth extends ModelAnimated {
     	}
     }
     
-    private void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
         this.setRotateAngle(sideSmall, 0.091106186954104F, 0.0F, 0.18203784098300857F, addToDefault);
         this.setRotateAngle(lowerTentacleLip, 0.7285004297824331F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(eyeTentacleLower, 0.27314402793711257F, 0.0F, 0.0F, addToDefault);
