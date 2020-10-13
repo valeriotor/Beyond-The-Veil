@@ -216,7 +216,7 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 				this.progress = 0;
 				this.building = null;
 				return EnumActionResult.SUCCESS;
-			} else if(stack.getItem() == ItemRegistry.blackjack && player.getPersistentID() == this.getMasterID() && 
+			} else if(stack.getItem() == ItemRegistry.blackjack && player.getPersistentID().equals(this.getMasterID()) && 
 					  this.aggressivity < 10 && this.getAttackTarget() == null) {
 				ItemStack toDrop = ItemHandlerHelper.insertItemStacked(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), new ItemStack(ItemRegistry.held_shoggoth), false);
 				if(!toDrop.isEmpty()) {
@@ -363,7 +363,9 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	}
 
 	@Override
-	public void setMaster(EntityPlayer p) {		
+	public void setMaster(EntityPlayer player) {		
+		if(player != null)
+			this.master = player.getPersistentID();
 	}
 	
 	@Override
