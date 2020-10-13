@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entities.AI.AIProtectMaster;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AISpook;
+import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
@@ -15,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -22,11 +24,13 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateClimber;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -44,11 +48,15 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	private Animation roarAnim = null;
 	private Animation attackAnim = null;
 	private int roarCooldown = 300;
-	
-	private static final DataParameter<Integer> ARM_RAISED = EntityDataManager.<Integer>createKey(EntityDeepOne.class, DataSerializers.VARINT);
+
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityDeepOne.class, DataSerializers.BYTE);
 	private static final DataParameter<Boolean> ROARING = EntityDataManager.<Boolean>createKey(EntityDeepOne.class, DataSerializers.BOOLEAN);
 	public EntityDeepOne(World worldIn) {
 		super(worldIn);
+		moveHelper = new WaterMoveHelper(this);
+        setPathPriority(PathNodeType.WALKABLE, 8.0F);
+        setPathPriority(PathNodeType.BLOCKED, -8.0F);
+        setPathPriority(PathNodeType.WATER, 16.0F);
 		
 	}
 	
@@ -94,6 +102,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	 @Override
 	 protected void entityInit() {
 		super.entityInit();
+		this.dataManager.register(CLIMBING, Byte.valueOf((byte)0));
 		this.dataManager.register(ROARING, false);
 	 }
 	  
@@ -143,15 +152,20 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 				 if(this.counter == 0) this.world.removeEntity(this);
 			 }
 			 if(this.roarCooldown > 0) this.roarCooldown--;
+			 this.setBesideClimbableBlock(this.collidedHorizontally);
+			 if((this.ticksExisted & 15) == 0) {
+	        		if(this.getAttackTarget() != null)
+	        			navigator.setPath(navigator.getPathToEntityLiving(this.getAttackTarget()), 1);
+	        	}
 		 }
 		 
 		 if(this.isInWater()) {
 			 i++;
-			 if (this.getHealth() < this.getMaxHealth() && i>=20)
-	            {
+			 if(this.getHealth() < this.getMaxHealth() && i>=20) {
 	                this.heal(1.0F);
 	                i=0;
-	            }
+	         }
+			 /*
 			 if(this.getAttackTarget() != null) {
 				 if(this.world.getBlockState(this.getPosition().add(0, 1, 0)).getBlock() != Blocks.WATER) {
 					 if(this.getAttackTarget().posY>this.posY+0.3 && isTargetInWater) {
@@ -191,10 +205,58 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 				 this.motionY = 0.3;
 			 	}
 			 }
-			 
+			 */
 			 
 		 }
 	 }
+	 
+	 @Override
+	 public void travel(float strafe, float vertical, float forward) {
+	   	if (isServerWorld()) {
+            if (isInWater()) {
+                moveRelative(strafe, vertical, forward, 0.2F);
+                move(MoverType.SELF, motionX, motionY, motionZ);
+                motionX *= 0.9D;
+                motionY *= 0.9D;
+                motionZ *= 0.9D;
+
+            } else {
+                super.travel(strafe, vertical, forward);
+            }
+        } else {
+            super.travel(strafe, vertical, forward);
+        }
+	 }
+	 
+	 @Override
+	public PathNavigate createNavigator(World world) {
+		return new PathNavigateClimber(this, world);
+	}
+	 
+	 public boolean isBesideClimbableBlock() {
+	        return (((Byte)this.dataManager.get(CLIMBING)).byteValue() & 1) != 0;
+	    }
+		
+		public void setBesideClimbableBlock(boolean climbing) {
+	        byte b0 = ((Byte)this.dataManager.get(CLIMBING)).byteValue();
+
+	        if (climbing)
+	        {
+	            b0 = (byte)(b0 | 1);
+	        }
+	        else
+	        {
+	            b0 = (byte)(b0 & -2);
+	        }
+
+	        this.dataManager.set(CLIMBING, Byte.valueOf(b0));
+	    }
+		
+
+		@Override
+		public boolean isOnLadder() {
+	        return this.isBesideClimbableBlock();
+	    }
 	 
 	 @Override
 	 public NBTTagCompound writeToNBT(NBTTagCompound compound) {
