@@ -366,7 +366,7 @@ public class ModelDreadfish extends ModelBase {
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	float animTicks = e.ticksExisted;
-    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/20 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 5;
+    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/30 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 7;
     	this.SecondBodyRight.rotateAngleX = offset;
     	this.SecondBodyRight.rotateAngleY = -offset;
     	this.SecondBodyLeft.rotateAngleX = -offset;
