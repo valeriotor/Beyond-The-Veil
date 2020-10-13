@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.EntityDreadfish;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
+import com.valeriotor.beyondtheveil.entities.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
 import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
@@ -41,6 +42,7 @@ public class RegisterRenders {
 		register(EntityDreamVillager.class, new RenderFactory<>(RenderDreamVillager::new));
 		register(EntitySurgeon.class, new RenderFactory<>(RenderSurgeon::new));
 		register(EntityDreadfish.class, new RenderFactory<>(RenderDreadfish::new));
+		register(EntityMuray.class, new RenderFactory<>(RenderMuray::new));
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));

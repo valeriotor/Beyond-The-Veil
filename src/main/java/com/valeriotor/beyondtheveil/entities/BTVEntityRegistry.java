@@ -35,6 +35,7 @@ public class BTVEntityRegistry {
 		registerNoEgg("dream_villager", EntityDreamVillager.class, count++ , 64);
 		register("surgeon", EntitySurgeon.class, count++ , 64);
 		register("dreadfish", EntityDreadfish.class, count++ , 64);
+		register("muray", EntityMuray.class, count++ , 64);
 		
 	}
 	

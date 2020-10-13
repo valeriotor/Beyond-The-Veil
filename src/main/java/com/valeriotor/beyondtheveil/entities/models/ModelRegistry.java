@@ -15,6 +15,7 @@ public class ModelRegistry {
 	public static ModelCrazedWeeper crazed_weeper;
 	public static ModelSurgeon surgeon;
 	public static ModelDreadfish dreadfish;
+	public static ModelMuray muray;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -30,6 +31,7 @@ public class ModelRegistry {
 		crazed_weeper = new ModelCrazedWeeper();
 		surgeon = new ModelSurgeon();
 		dreadfish = new ModelDreadfish();
+		muray = new ModelMuray();
 	}
 	
 }
