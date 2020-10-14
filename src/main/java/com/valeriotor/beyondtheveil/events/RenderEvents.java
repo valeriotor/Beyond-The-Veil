@@ -23,6 +23,7 @@ import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
@@ -36,6 +37,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -351,7 +353,8 @@ public class RenderEvents {
 	
 	@SubscribeEvent
 	public void fogDensityEvent(EntityViewRenderEvent.FogDensity event) {
-		if(event.getEntity().dimension == 2) { //TODO: RICORDA DI CAMBIARE IL 2!!!!!!!!!!!!!!!!!!!!!!!!!
+		if(event.getEntity() instanceof EntityPlayer && ((EntityPlayer)event.getEntity()).getActivePotionEffect(MobEffects.BLINDNESS) != null) return;
+		if(event.getEntity().dimension == DimensionRegistry.ARCHE.getId()) {
 			GlStateManager.setFog(GlStateManager.FogMode.EXP);
 			event.setDensity(0F);
 			event.setCanceled(true);
@@ -362,10 +365,16 @@ public class RenderEvents {
 	
 	@SubscribeEvent
 	public void fogColorEvent(EntityViewRenderEvent.FogColors event) {
-		if(event.getEntity().dimension == 2) { //TODO: RICORDA DI CAMBIARE IL 2!!!!!!!!!!!!!!!!!!!!!!!!!
-			event.setBlue(0.2F);
-			event.setGreen(0.02F);
-			event.setRed(0.02F);
+		if(event.getEntity().dimension == DimensionRegistry.ARCHE.getId()) {
+			if(event.getEntity() instanceof EntityPlayer && ((EntityPlayer)event.getEntity()).getActivePotionEffect(MobEffects.BLINDNESS) != null) {
+				event.setBlue(1F);
+				event.setGreen(0F);
+				event.setRed(0.78F);
+			} else {
+				event.setBlue(0.2F);
+				event.setGreen(0.02F);
+				event.setRed(0.02F);
+			}
 		}
 	}
 	

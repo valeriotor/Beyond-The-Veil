@@ -16,6 +16,7 @@ public class ModelRegistry {
 	public static ModelSurgeon surgeon;
 	public static ModelDreadfish dreadfish;
 	public static ModelMuray muray;
+	public static ModelOctid octid;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -32,6 +33,7 @@ public class ModelRegistry {
 		surgeon = new ModelSurgeon();
 		dreadfish = new ModelDreadfish();
 		muray = new ModelMuray();
+		octid = new ModelOctid();
 	}
 	
 }
