@@ -37,6 +37,9 @@ public class WaterMoveHelper extends EntityMoveHelper {
             	entity.motionY -= 0.03;
             else
             	entity.motionY += 0.03;
+            if(entity instanceof EntityDeepOne && speed == 0.0) {
+            	speed = 1.5;
+            }
             this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
 		} else {
 			if(entity instanceof EntityDeepOne) {
