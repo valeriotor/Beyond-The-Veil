@@ -42,6 +42,7 @@ public class EntityMuray extends EntityMob implements IAnimatedAttacker{
         setPathPriority(PathNodeType.WALKABLE, -8.0F);
         setPathPriority(PathNodeType.BLOCKED, -8.0F);
         setPathPriority(PathNodeType.WATER, 16.0F);
+        setSize(1.5F, 1.5F);
 	} 
 	
 	@Override
@@ -121,7 +122,7 @@ public class EntityMuray extends EntityMob implements IAnimatedAttacker{
 			} else {
 				if(dataManager.get(ATTACKING)) {
 					//TODO mouth close anim
-					dataManager.set(ATTACKING, true);
+					dataManager.set(ATTACKING, false);
 				}
 			}
 		}

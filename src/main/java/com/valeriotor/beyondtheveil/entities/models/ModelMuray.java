@@ -7,6 +7,7 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelMuray extends ModelAnimated {
 	private final ModelRenderer Tail;
@@ -125,16 +126,12 @@ public class ModelMuray extends ModelAnimated {
 		this.setAngles(false);
 		if(((EntityMuray)ent).isAttacking())
 			setOpenMouth();
-		if(Math.abs(limbSwingAmount) >= 1E-10) {
-			for(int i = 0; i < 7; i++) {
-				bodyParts.get(i).rotateAngleY = (float) Math.atan(Math.cos(limbSwing/4 + 2*i*Math.PI/7)) * (limbSwingAmount/5+0.2F);
-			}
-		} else {
-			double time = (0.05 * Math.PI * (ent.ticksExisted + partialTicks));
-			for(int i = 0; i < 7; i++) {
-				bodyParts.get(i).rotateAngleY = (float) Math.atan(Math.cos(time + 2*i*Math.PI/7)) * (limbSwingAmount/5+0.2F);
-			}
+		
+		float time = (float) (0.08 * Math.PI * (((EntityMuray)ent).ticksExisted + partialTicks));
+		for(int i = 0; i < 7; i++) {
+			bodyParts.get(i).rotateAngleY = (float) Math.atan(MathHelper.cos(time + (float)(2*i*Math.PI/7))) * (limbSwingAmount/5+0.2F);
 		}
+		
 		Animation mouthAnim = ((EntityMuray)ent).getAttackAnimation();
 		if(mouthAnim != null)
 			mouthAnim.applyTransformations(bodyParts, partialTicks);

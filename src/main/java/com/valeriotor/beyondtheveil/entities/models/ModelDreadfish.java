@@ -375,5 +375,6 @@ public class ModelDreadfish extends ModelBase {
     	this.MainTail.rotateAngleY = offset;
     	this.MainTail.rotateAngleX = -offset;
     	this.MainTail.rotationPointX = 0.3F;
+    	this.LowerJaw.rotateAngleX = 0.9105382707654417F + offset*2;
     }
 }
