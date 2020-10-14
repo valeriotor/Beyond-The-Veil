@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.HamletList;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
@@ -118,7 +119,7 @@ public class PlayerTickEvents {
 					p.capabilities.isFlying = true;
 					if(p.world.isRemote)
 						p.capabilities.setFlySpeed(0.06F);
-					if(!p.isPotionActive(MobEffects.REGENERATION))
+					if(!p.isPotionActive(MobEffects.REGENERATION) && p.dimension != DimensionRegistry.ARCHE.getId())
 						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 1, false, false));
 				} else if(!flying) {
 					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
