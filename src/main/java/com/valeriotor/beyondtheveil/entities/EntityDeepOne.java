@@ -15,6 +15,7 @@ import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,6 +25,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -34,6 +36,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -165,47 +168,6 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	                this.heal(1.0F);
 	                i=0;
 	         }
-			 /*
-			 if(this.getAttackTarget() != null) {
-				 if(this.world.getBlockState(this.getPosition().add(0, 1, 0)).getBlock() != Blocks.WATER) {
-					 if(this.getAttackTarget().posY>this.posY+0.3 && isTargetInWater) {
-					 		this.motionY=0.1;
-					 }
-				 }else if(this.getAttackTarget().posY>this.posY) {
-				 		this.motionY=0.1;
-				 		
-				 }
-			 
-			 double angle = Math.atan((Math.abs(this.getAttackTarget().posX-this.posX))/(Math.abs(this.getAttackTarget().posZ-this.posZ)));
-			 double horizontalDist = Math.sqrt(Math.pow(this.getAttackTarget().posX-this.posX,2)+Math.pow(this.getAttackTarget().posZ-this.posZ,2));
-			 if(horizontalDist > 0.7) {
-				 if(this.getAttackTarget().posX>this.posX) {
-				 	 this.motionX = Math.sin(angle)/2.4;
-				 	 
-				 }else {
-				 	 this.motionX = -Math.sin(angle)/2.4;
-				 	 
-				 }
-				 if(this.getAttackTarget().posZ>this.posZ) {
-				 	 this.motionZ = Math.cos(angle)/2.4;
-				 	 
-				 }else {
-				 	 this.motionZ = -Math.cos(angle)/2.4;
-				 	 
-				 }
-			 }else if(this.getAttackTarget().posY < this.posY) {
-				 this.motionY = -0.3;
-			 }
-			 this.faceEntity(this.getAttackTarget(), 180, 180);
-			 
-			 isTargetInWater = this.getAttackTarget().isInWater();
-			 facingBlock = this.world.getBlockState(this.getPosition().offset(this.getHorizontalFacing())).getBlock();
-			 facingBlockUp = this.world.getBlockState(this.getPosition().offset(this.getHorizontalFacing()).add(0, 1, 0)).getBlock();
-			 if((facingBlock != Blocks.WATER && facingBlock != Blocks.AIR) || (facingBlockUp != Blocks.WATER && facingBlockUp != Blocks.AIR)) {
-				 this.motionY = 0.3;
-			 	}
-			 }
-			 */
 			 
 		 }
 	 }
@@ -230,7 +192,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	 
 	 @Override
 	public PathNavigate createNavigator(World world) {
-		return new PathNavigateClimber(this, world);
+		return new ClimberAmphibiousNavigate(this, world);
 	}
 	 
 	 public boolean isBesideClimbableBlock() {
@@ -340,7 +302,18 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 		}
 	 }
 	 
-	 
+	 private static class ClimberAmphibiousNavigate extends PathNavigateClimber {
+
+		public ClimberAmphibiousNavigate(EntityLiving entityLivingIn, World worldIn) {
+			super(entityLivingIn, worldIn);
+		}
+		
+		@Override
+		public boolean canEntityStandOnPos(BlockPos pos) {
+			return super.canEntityStandOnPos(pos) || this.world.getBlockState(pos).getBlock() == Blocks.WATER;
+		}
+		 
+	 }
 	 
 	 
 	 
