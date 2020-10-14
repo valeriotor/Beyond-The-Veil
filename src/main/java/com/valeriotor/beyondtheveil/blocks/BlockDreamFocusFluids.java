@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -65,7 +66,7 @@ public class BlockDreamFocusFluids extends ModBlock implements ITileEntityProvid
 			if(te instanceof TileDreamFocus) {
 				int fleti = hasFleti(worldIn, pos);
 				TileDreamFocus td = (TileDreamFocus)te;
-				if(player.getHeldItemMainhand().isEmpty() && fleti == 0 && td.setPlayer(player)) {
+				if(player.getHeldItemMainhand().isEmpty() && fleti == 0 && worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR && td.setPlayer(player)) {
 					BlockPos ppos = player.getPosition();
 					td.clearList();
 					SyncUtil.addStringDataOnServer(player, true, PlayerDataLib.DREAMFOCUS);

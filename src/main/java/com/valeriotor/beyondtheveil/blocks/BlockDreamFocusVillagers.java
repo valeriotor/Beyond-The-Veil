@@ -15,6 +15,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -59,7 +60,7 @@ public class BlockDreamFocusVillagers extends ModBlock implements ITileEntityPro
 			if(te instanceof TileDreamFocus) {
 				boolean fletum = hasFletum(worldIn, pos);
 				TileDreamFocus td = (TileDreamFocus)te;
-				if(player.getHeldItemMainhand().isEmpty() && !fletum && td.setPlayer(player)) {
+				if(player.getHeldItemMainhand().isEmpty() && !fletum && worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR && td.setPlayer(player)) {
 					BlockPos ppos = player.getPosition();
 					td.clearList();
 					SyncUtil.addStringDataOnServer(player, true, PlayerDataLib.DREAMFOCUS);
