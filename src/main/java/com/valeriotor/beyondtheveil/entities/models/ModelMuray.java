@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.models;
 
 import com.valeriotor.beyondtheveil.animations.Animation;
-import com.valeriotor.beyondtheveil.entities.EntityMuray;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
@@ -129,7 +129,7 @@ public class ModelMuray extends ModelAnimated {
 		
 		float time = (float) (0.08 * Math.PI * (((EntityMuray)ent).ticksExisted + partialTicks));
 		for(int i = 0; i < 7; i++) {
-			bodyParts.get(i).rotateAngleY = (float) Math.atan(MathHelper.cos(time + (float)(2*i*Math.PI/7))) * (limbSwingAmount/5+0.2F);
+			bodyParts.get(i).rotateAngleY = (float) Math.atan(MathHelper.cos(time + (float)(2*i*Math.PI/7))) * (limbSwingAmount/3+0.15F);
 		}
 		
 		Animation mouthAnim = ((EntityMuray)ent).getAttackAnimation();

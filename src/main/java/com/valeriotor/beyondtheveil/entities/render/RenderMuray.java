@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.render;
 
-import com.valeriotor.beyondtheveil.entities.EntityDreadfish;
-import com.valeriotor.beyondtheveil.entities.EntityMuray;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 import com.valeriotor.beyondtheveil.lib.References;
 

@@ -1,9 +1,10 @@
-package com.valeriotor.beyondtheveil.entities;
+package com.valeriotor.beyondtheveil.entities.ictya;
 
 import java.util.function.Supplier;
 
 import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
+import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 
@@ -30,20 +31,35 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityMuray extends EntityMob implements IAnimatedAttacker{
+public class EntityMuray extends EntityIctya implements IAnimatedAttacker{
 	
-	private boolean targetingLastTick = false;
 	private Animation mouthAnim;
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.<Boolean>createKey(EntityMuray.class, DataSerializers.BOOLEAN);
 	
 	public EntityMuray(World worldIn) {
 		super(worldIn);
-		this.moveHelper = new WaterMoveHelper(this);
-        setPathPriority(PathNodeType.WALKABLE, -8.0F);
-        setPathPriority(PathNodeType.BLOCKED, -8.0F);
-        setPathPriority(PathNodeType.WATER, 16.0F);
-        setSize(1.5F, 1.5F);
+        setSize(1.2F, 1.2F);
 	} 
+	
+	@Override
+	public IctyaSize getSize() {
+		return IctyaSize.SMALL;
+	}
+	
+	@Override
+	public double getFoodValue() {
+		return 100;
+	}
+
+	@Override
+	public double getMaxFood() {
+		return 200;
+	}
+
+	@Override
+	public double getFoodPer32Ticks() {
+		return 2.0F;
+	}
 	
 	@Override
 	protected void entityInit() {
@@ -51,59 +67,25 @@ public class EntityMuray extends EntityMob implements IAnimatedAttacker{
 		this.dataManager.register(ATTACKING, false);
 	}
 	
-	protected void initEntityAI() {	 	
+	protected void initEntityAI() {	
+		super.initEntityAI();
 		this.tasks.addTask(0, new EntityAIAttackMelee(this, 1.4, true));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 100));
-        this.targetTasks.addTask(2, new AIRevenge(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, false));
 	}
 	
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
+		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30.0D);
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);	
 		getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(3D);
 		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.2D);
-		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
-		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12D);
+		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
+		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7D);
 	}
-	
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
-	}
-	
-	@Override
-	protected PathNavigate createNavigator(World worldIn) {
-		return new PathNavigateSwimmer(this, worldIn);
-	}
-	
-	@Override
-    public float getBlockPathWeight(BlockPos pos) {
-        return world.getBlockState(pos).getMaterial() == Material.WATER ? 10.0F + world.getLightBrightness(pos) - 0.5F : super.getBlockPathWeight(pos);
-    }
-	
-	@Override
-	public void travel(float strafe, float vertical, float forward) {
-		if (isServerWorld()) {
-            if (isInWater()) {
-                moveRelative(strafe, vertical, forward, 0.2F);
-                move(MoverType.SELF, motionX, motionY, motionZ);
-                motionX *= 0.9D;
-                motionY *= 0.9D;
-                motionZ *= 0.9D;
-
-            } else {
-                super.travel(strafe, vertical, forward);
-            }
-        } else {
-            super.travel(strafe, vertical, forward);
-        }
-	}
-	
+		
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
@@ -127,8 +109,6 @@ public class EntityMuray extends EntityMob implements IAnimatedAttacker{
 			}
 		}
 	}
-	
-	
 	
 	@Override
 	public void swingArm(EnumHand hand) {

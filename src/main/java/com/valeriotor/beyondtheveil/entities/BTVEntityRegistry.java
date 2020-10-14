@@ -5,6 +5,10 @@ import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
@@ -34,8 +38,9 @@ public class BTVEntityRegistry {
 		registerNoEgg("dream_fluid", EntityDreamFluid.class, count++ , 64);
 		registerNoEgg("dream_villager", EntityDreamVillager.class, count++ , 64);
 		register("surgeon", EntitySurgeon.class, count++ , 64);
-		register("dreadfish", EntityDreadfish.class, count++ , 64);
-		register("muray", EntityMuray.class, count++ , 64);
+		register("dreadfish", EntityDreadfish.class, count++ , 128);
+		register("muray", EntityMuray.class, count++ , 128);
+		register("octid", EntityOctid.class, count++ , 128);
 		
 	}
 	
@@ -64,7 +69,15 @@ public class BTVEntityRegistry {
 	 * @return
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
-		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityCrazedWeeper;
+		return  !e.isNonBoss() ||
+				e instanceof EntityDeepOne || 
+				e instanceof EntityWeeper || 
+				e instanceof EntityFletum || 
+				e instanceof EntityStarspawn || 
+				e instanceof EntityShoggoth || 
+				e instanceof EntityBloodZombie || 
+				e instanceof EntityCrazedWeeper ||
+				e instanceof EntityIctya;
 	}
 	
 	

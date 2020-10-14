@@ -8,15 +8,15 @@ import com.valeriotor.beyondtheveil.entities.EntityCanoe;
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.entities.EntityCrazedWeeper;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
-import com.valeriotor.beyondtheveil.entities.EntityDreadfish;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
-import com.valeriotor.beyondtheveil.entities.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
 import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
