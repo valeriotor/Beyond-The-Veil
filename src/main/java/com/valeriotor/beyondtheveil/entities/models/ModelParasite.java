@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * ModelPlayer - Either Mojang or a mod author
@@ -60,12 +60,12 @@ public class ModelParasite extends ModelBase {
     public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	float animTicks = BeyondTheVeil.proxy.cEvents.getAnimationCounter() % 200 + partialTickTime;
-    	float offset = (float) Math.sin(animTicks%40 / 6.366)/20;
+    	float offset = MathHelper.sin(animTicks%40 / 6.366F)/20;
     	this.shape17.rotateAngleX = offset * 5;
     	this.shape16.rotateAngleZ = -0.31869712141416456F  + offset * 5;
     	this.shape15.rotateAngleZ = -0.5009094953223726F + offset;
     	this.shape16_1.rotateAngleX = 1.0927506446736497F + offset * 5;
-    	offset = (float) Math.sin(animTicks%50 / 7.95)/16;
+    	offset = MathHelper.sin(animTicks%50 / 7.95F)/16;
     	this.shape17.rotateAngleZ = offset * 5;
     	this.shape16.rotateAngleX = -0.5918411493512771F + offset * 5;
     	this.shape15.rotateAngleX = -0.091106186954104F + offset;

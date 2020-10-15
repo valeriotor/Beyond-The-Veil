@@ -207,7 +207,7 @@ public class ModelCrazedWeeper extends ModelAnimated {
     	this.resetStuff();
     	EntityCrazedWeeper weeper = (EntityCrazedWeeper)e;
     	float animTicks = weeper.getAnimationTicks();
-    	float offset = (float) Math.sin(animTicks%40 / 6.366)/20;
+    	float offset = MathHelper.sin(animTicks%40 / 6.366F)/20;
     	this.HeadFront.offsetX = offset/2;
     	this.HeadLeft.offsetY = offset/2;
     	this.HeadRight.offsetX = -offset/4;

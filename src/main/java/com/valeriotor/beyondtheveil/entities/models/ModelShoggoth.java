@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * ModelShoggoth - valeriotor
@@ -314,7 +315,7 @@ public class ModelShoggoth extends ModelAnimated {
     	// this.resetOffsets(bodyParts); // should be used if I add anims that change offsets
     	EntityShoggoth sh = (EntityShoggoth) entitylivingbaseIn;
     	int animTicks = sh.getAnimTicks();
-    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/20 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 5;
+    	float offset =  MathHelper.sin((animTicks%40 + partialTickTime) / 6.366F)/20 + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount / 5;
     	mouthBack.offsetY = offset;
     	mouthBottom.offsetY = offset;
     	mouthLeft.offsetY = offset;
@@ -332,7 +333,7 @@ public class ModelShoggoth extends ModelAnimated {
     	bLeftTentacle3.rotateAngleY = offset * 2;
     	bRightTentacle4.rotateAngleY = offset * 2;
     	bBackTentacle4.rotateAngleY = offset * 2;
-    	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95)/16 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 5;
+    	offset = MathHelper.sin((animTicks%50 + partialTickTime) / 7.95F)/16 + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount / 5;
     	mouthBack.offsetX = offset/2;
     	mouthBottom.offsetX = offset/2;
     	mouthLeft.offsetX = offset/2;

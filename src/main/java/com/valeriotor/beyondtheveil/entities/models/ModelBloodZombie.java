@@ -157,8 +157,8 @@ public class ModelBloodZombie extends ModelAnimated {
     	int animTicks = z.getAnimCounter();
     	this.left_leg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.right_leg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    	this.jaw.rotateAngleX = 0.22759093446006054F + (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366)/20;
-    	float offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95)/96;
+    	this.jaw.rotateAngleX = 0.22759093446006054F + MathHelper.sin((animTicks%40 + partialTickTime)/ 6.366F)/20;
+    	float offset = (float) MathHelper.sin((animTicks%50 + partialTickTime) / 7.95F)/96;
     	this.right_arm.offsetY = offset;
     	this.left_arm.offsetY = offset;
     	this.upper_body.offsetY = offset / 2;

@@ -98,9 +98,8 @@ public class ModelOctid extends ModelBase {
 	@Override
 	public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
 			float partialTickTime) {
-		float val = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/2;
 		float time = (float) (0.08 * Math.PI * e.ticksExisted + partialTickTime);
-		val = (float) Math.atan(MathHelper.cos(time)) * (limbSwingAmount/3+0.15F);
+		float val = (float) Math.atan(MathHelper.cos(time)) * (limbSwingAmount/3+0.15F);
 		float val2 = val / MathHelper.SQRT_2;
 		TentacleE.rotateAngleZ = val;
 		TentacleW.rotateAngleZ = -val;

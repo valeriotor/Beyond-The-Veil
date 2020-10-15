@@ -450,7 +450,7 @@ public class ModelSurgeon extends ModelAnimated {
     	this.LeftMidUpperLeg.rotateAngleX = 0.22689280275926282F + 0.4F*MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
     	this.LeftBackUpperLeg.rotateAngleX = 0.22759093446006054F + 0.4F*MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.RightBackUpperLeg.rotateAngleX = 0.22759093446006054F + 0.4F*MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    	float offset = (float) Math.sin((e.ticksExisted+partialTickTime)%40 / 6.366)/20;
+    	float offset = MathHelper.sin((e.ticksExisted+partialTickTime)%40 / 6.366F)/20;
     	this.LowerBody.offsetY = offset/7;
     	this.LowerBody2.rotateAngleX = -0.36425021489121656F + offset;
     	this.LowerBody3.rotateAngleY = offset;
@@ -467,7 +467,7 @@ public class ModelSurgeon extends ModelAnimated {
     	this.Eye15.offsetY = 0.0125F-offset/7;
     	this.Eye17.offsetY = 0.0125F+offset/7;
     	this.Eye18.offsetZ = -offset/7;
-    	offset = (float) Math.sin((e.ticksExisted+partialTickTime)%50 / 7.95)/16;
+    	offset = MathHelper.sin((e.ticksExisted+partialTickTime)%50 / 7.95F)/16;
     	this.UpperBody.rotateAngleX =  0.18203784098300857F + offset/3;
     	this.Eye2.offsetX = offset/7;
     	this.Eye1.offsetY = offset/7;

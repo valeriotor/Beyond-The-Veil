@@ -4,6 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * NewProject - Undefined
@@ -366,14 +367,15 @@ public class ModelDreadfish extends ModelBase {
     public void setLivingAnimations(EntityLivingBase e, float limbSwing, float limbSwingAmount,
     		float partialTickTime) {
     	float animTicks = e.ticksExisted;
-    	float offset = (float) Math.sin((animTicks%40 + partialTickTime) / 6.366)/30 + (float) Math.cos(limbSwing * 0.3) * limbSwingAmount / 7;
+    	float offset = MathHelper.sin((animTicks%40 + partialTickTime) / 6.366F)/30 + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount / 7;
     	this.SecondBodyRight.rotateAngleX = offset;
     	this.SecondBodyRight.rotateAngleY = -offset;
     	this.SecondBodyLeft.rotateAngleX = -offset;
     	this.SecondBodyLeft.rotateAngleY = -offset;
     	offset *= 2;
-    	this.MainTail.rotateAngleY = offset;
+    	this.MainTail.rotateAngleY = offset*2;
     	this.MainTail.rotateAngleX = -offset;
+    	this.SecondTail.rotateAngleY = offset*2;
     	this.MainTail.rotationPointX = 0.3F;
     	this.LowerJaw.rotateAngleX = 0.9105382707654417F + offset*2;
     }

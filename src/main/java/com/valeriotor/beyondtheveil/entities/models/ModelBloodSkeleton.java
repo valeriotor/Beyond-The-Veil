@@ -264,9 +264,9 @@ public class ModelBloodSkeleton extends ModelAnimated {
     	int animTicks = e.getAnimCounter();
     	this.left_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
     	this.right_thigh.rotateAngleX = -0.18203784098300857F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
-    	float offset = (float) Math.sin((animTicks%40 + partialTickTime)/ 6.366);
+    	float offset = MathHelper.sin((animTicks%40 + partialTickTime)/ 6.366F);
     	this.shape29.rotateAngleY = offset/40;
-    	offset = (float) Math.sin((animTicks%50 + partialTickTime) / 7.95);
+    	offset = MathHelper.sin((animTicks%50 + partialTickTime) / 7.95F);
     	this.shape29.rotateAngleX = 0.08203784098300857F + offset / 40;
     	Animation spook = e.getSpookAnimation();
     	if(spook != null)

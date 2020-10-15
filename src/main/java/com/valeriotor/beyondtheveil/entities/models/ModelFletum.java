@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * ModelVillager - Either Mojang or a mod author
@@ -52,12 +53,12 @@ public class ModelFletum extends ModelBase {
     	if(!(e instanceof EntityFletum)) return;
     	EntityFletum weeper = (EntityFletum)e;
     	float animTicks = weeper.getAnimationTicks();
-    	float offset = (float) Math.sin(animTicks%40 / 6.366)/20;
+    	float offset = MathHelper.sin(animTicks%40 / 6.366F)/20;
     	this.shape10.offsetX = offset;
     	this.shape10_1.offsetY = offset/6;
     	this.shape10_2.offsetX = -offset/2;
     	this.shape10_1.offsetZ = offset/2;
-    	offset = (float) Math.sin(animTicks%50 / 7.95)/16;
+    	offset = MathHelper.sin(animTicks%50 / 7.95F)/16;
     	this.shape10_1.offsetX = offset;
     	this.shape10_2.offsetY = offset/6;
     	this.shape10.offsetZ = -offset/2;
