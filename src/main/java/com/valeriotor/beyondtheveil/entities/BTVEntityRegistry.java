@@ -5,16 +5,20 @@ import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
+import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -41,6 +45,8 @@ public class BTVEntityRegistry {
 		register("dreadfish", EntityDreadfish.class, count++ , 128);
 		register("muray", EntityMuray.class, count++ , 128);
 		register("octid", EntityOctid.class, count++ , 128);
+		register("deep_angler", EntityDeepAngler.class, count++ , 128);
+		register("sarfin", EntitySarfin.class, count++ , 128);
 		
 	}
 	

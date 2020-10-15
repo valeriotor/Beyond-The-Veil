@@ -17,6 +17,8 @@ public class ModelRegistry {
 	public static ModelDreadfish dreadfish;
 	public static ModelMuray muray;
 	public static ModelOctid octid;
+	public static ModelDeepAngler deep_angler;
+	public static ModelSarfin sarfin;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -34,6 +36,8 @@ public class ModelRegistry {
 		dreadfish = new ModelDreadfish();
 		muray = new ModelMuray();
 		octid = new ModelOctid();
+		deep_angler = new ModelDeepAngler();
+		sarfin = new ModelSarfin();
 	}
 	
 }
