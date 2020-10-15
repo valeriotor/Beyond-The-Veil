@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.IDamageCapper;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
@@ -42,7 +43,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	}
 	
 	public int compareSizeTo(EntityLivingBase entity) {
-		if(entity instanceof EntityPlayer)
+		if(entity instanceof EntityPlayer || entity instanceof EntityDeepOne)
 			return getSizeInt() - 2;
 		else if(entity instanceof EntityIctya)
 			return getSizeInt() - ((EntityIctya)entity).getSizeInt();
@@ -61,9 +62,11 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	protected void initEntityAI() {
 		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityPlayer.class, 10, true, false, this::shouldAttack));
 		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityIctya.class, 10, true, false, this::shouldAttack));
+		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityDeepOne.class, 10, true, false, this::shouldAttack));
         this.targetTasks.addTask(2, new AIRevenge(this, this::shouldDefend));
         this.tasks.addTask(0, getFleeingAI(this, EntityIctya.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
 		this.tasks.addTask(0, getFleeingAI(this, EntityPlayer.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
+		this.tasks.addTask(0, getFleeingAI(this, EntityDeepOne.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
 	}
 	
 	protected <T extends EntityLivingBase> EntityAIAvoidEntity<T> getFleeingAI(EntityCreature entityIn, Class<T> classToAvoidIn, Predicate <? super T > avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {
@@ -122,9 +125,11 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	
 	@Override
 	public void onKillEntity(EntityLivingBase e) {
-		if(e instanceof EntityIctya)
+		if(e instanceof EntityIctya) {
 			currentFood = Math.min(getMaxFood(), currentFood + ((EntityIctya)e).getFoodValue());
-		else if(e instanceof EntityPlayer)
+			heal((float)((EntityIctya)e).getFoodValue()/5);
+		}
+		else if(e instanceof EntityPlayer || e instanceof EntityDeepOne)
 			currentFood = Math.min(getMaxFood(), currentFood + 200);
 		super.onKillEntity(e);
 	}
