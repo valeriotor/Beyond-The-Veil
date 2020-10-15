@@ -17,9 +17,6 @@ public class MirrorDialogueRegistry {
 		registerMirrorDialogue("nodialogue");
 		registerMirrorDialogue("start");
 		registerMirrorDialogue("testdefaultunlock");
-		
-		noDialogue = dialogues.get("nodialogue");
-		System.out.println((noDialogue == null) + "\n\n\n");
 	}
 	
 	private static void registerMirrorDialogue(String name) {
