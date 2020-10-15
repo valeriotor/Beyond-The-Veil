@@ -76,7 +76,7 @@ public class EntityOctid extends EntityIctya{
 	@Override
 	protected <T extends EntityLivingBase> EntityAIAvoidEntity<T> getFleeingAI(EntityCreature entityIn, Class<T> classToAvoidIn,
 			Predicate<? super T> avoidTargetSelectorIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {
-		return new OctidFlee<>(entityIn, classToAvoidIn, avoidTargetSelectorIn, avoidDistanceIn, farSpeedIn, nearSpeedIn);
+		return new OctidFlee<>(entityIn, classToAvoidIn, avoidTargetSelectorIn, avoidDistanceIn/2, farSpeedIn, nearSpeedIn);
 	}
 	
 	@Override

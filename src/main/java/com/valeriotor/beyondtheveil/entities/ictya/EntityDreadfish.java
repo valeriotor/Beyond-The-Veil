@@ -27,6 +27,7 @@ public class EntityDreadfish extends EntityIctya {
 		super(worldIn);
 	} 
 	
+	@Override
 	protected void initEntityAI() {	 	
 		super.initEntityAI();
 		this.tasks.addTask(0, new EntityAIAttackMelee(this, 1.4, true));
@@ -65,10 +66,5 @@ public class EntityDreadfish extends EntityIctya {
 	public double getFoodPer32Ticks() {
 		return 3.2F;
 	}	
-	
-	@Override
-	public void onEntityUpdate() {
-		super.onEntityUpdate();
-	}
 	
 }

@@ -48,6 +48,8 @@ public class BTVEntityRegistry {
 		register("deep_angler", EntityDeepAngler.class, count++ , 128);
 		register("sarfin", EntitySarfin.class, count++ , 128);
 		
+		registerSpawnPlacementTypes();
+		
 	}
 	
 	private static void register(String name, Class<? extends Entity> entClass, int id, int trackingRange) {
@@ -56,6 +58,14 @@ public class BTVEntityRegistry {
 	
 	private static void registerNoEgg(String name, Class<? extends Entity> entClass, int id, int trackingRange) {
 		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":" + name), entClass, name, id, BeyondTheVeil.instance, trackingRange, 1, true);
+	}
+	
+	private static void registerSpawnPlacementTypes() {
+		EntitySpawnPlacementRegistry.setPlacementType(EntityOctid.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDreadfish.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepAngler.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntitySarfin.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityMuray.class, SpawnPlacementType.IN_WATER);
 	}
 	
 	

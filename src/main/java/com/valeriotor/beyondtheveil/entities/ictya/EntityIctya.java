@@ -75,7 +75,7 @@ public abstract class EntityIctya extends EntityMob{
 		if(getSize() == IctyaSize.PREY) return false;
 		int diff = this.compareSizeTo(attacked);
 		if(diff >= 2) {
-			if(getCurrentOverMaxFood() < 0.95) return true;
+			if(getCurrentOverMaxFood() < 0.85) return true;
 		} else if(diff == 1) {
 			if(getCurrentOverMaxFood() < 0.67) return true;
 		} else if(diff == 0) {
@@ -106,7 +106,7 @@ public abstract class EntityIctya extends EntityMob{
 	}
 	
 	protected void on32Ticks() {
-		if(!world.isRemote && getSize() != IctyaSize.TINY) {
+		if(!world.isRemote && getSize() != IctyaSize.PREY) {
 			if(getCurrentOverMaxFood() > 0.67)
 				heal(1);
 			
