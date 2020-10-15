@@ -39,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class EntitySurgeon extends EntityMob implements IPlayerMinion, IAnimatedAttacker{
+public class EntitySurgeon extends EntityMob implements IPlayerMinion, IAnimatedAttacker, IDamageCapper{
 	
 	private UUID master;
 	private static final DataParameter<Integer> OPCODE = EntityDataManager.<Integer>createKey(EntitySurgeon.class, DataSerializers.VARINT);
@@ -293,5 +293,10 @@ public class EntitySurgeon extends EntityMob implements IPlayerMinion, IAnimated
 			return this.func.get();
 		}
 		
+	}
+
+	@Override
+	public float getMaxDamage() {
+		return 12;
 	}
 }

@@ -41,7 +41,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker, IAnimatedAttacker{
+public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker, IAnimatedAttacker, IDamageCapper{
 	private int i = 0;
 	private boolean isTargetInWater = false;
 	private Block facingBlock;
@@ -314,6 +314,11 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 		}
 		 
 	 }
+
+	@Override
+	public float getMaxDamage() {
+		return isInWater() ? 8 : 15;
+	}
 	 
 	 
 	 

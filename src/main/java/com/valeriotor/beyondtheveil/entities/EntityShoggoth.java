@@ -48,7 +48,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion{
+public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion, IDamageCapper{
 	
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityShoggoth.class, DataSerializers.BYTE);
 	private static final DataParameter<Boolean> SPOOKING = EntityDataManager.<Boolean>createKey(EntityShoggoth.class, DataSerializers.BOOLEAN);
@@ -376,6 +376,11 @@ public class EntityShoggoth extends EntityMob implements ISpooker, IPlayerMinion
 	@Override
 	public int getTalkInterval() {
 		return 600;
+	}
+
+	@Override
+	public float getMaxDamage() {
+		return 10;
 	}
 	
 }

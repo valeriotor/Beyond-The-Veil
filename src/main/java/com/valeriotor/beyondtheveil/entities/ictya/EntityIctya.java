@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.beyondtheveil.entities.IDamageCapper;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 
@@ -24,7 +25,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class EntityIctya extends EntityMob{
+public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	protected double currentFood = getMaxFood();
 	public EntityIctya(World worldIn) {
 		super(worldIn);
@@ -188,6 +189,11 @@ public abstract class EntityIctya extends EntityMob{
 		if(compound.hasKey("food"))
 			currentFood = compound.getDouble("food");
 		super.readFromNBT(compound);
+	}
+	
+	@Override
+	public float getMaxDamage() {
+		return 30;
 	}
 	
 	private static class AINearestAttackableTargetArche<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
