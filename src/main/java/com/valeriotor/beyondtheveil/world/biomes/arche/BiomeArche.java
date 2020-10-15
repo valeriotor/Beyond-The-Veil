@@ -2,6 +2,11 @@ package com.valeriotor.beyondtheveil.world.biomes.arche;
 
 import java.util.Random;
 
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
+import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
 import com.valeriotor.beyondtheveil.world.arche.ChunkGeneratorArche;
 
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 
-public class BiomeArche extends Biome{
+public abstract class BiomeArche extends Biome{
 
 	public BiomeArche(String name, BiomeProperties properties) {
 		super(properties);
@@ -18,6 +23,10 @@ public class BiomeArche extends Biome{
 		this.spawnableCreatureList.clear();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableMonsterList.clear();
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityOctid.class, 240, 1, 2));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntitySarfin.class, 500, 5, 10));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityDeepAngler.class, 25, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityDreadfish.class, 10, 1, 1));
 	}
 	
 	@Override

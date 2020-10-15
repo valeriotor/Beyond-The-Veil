@@ -7,12 +7,14 @@ import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
@@ -158,6 +160,22 @@ public abstract class EntityIctya extends EntityMob{
             super.travel(strafe, vertical, forward);
         }
 	}
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		return this.posY > 15.0D && this.posY < (double)this.world.getSeaLevel()-7 && world.getBlockState(getPosition()).getBlock() == Blocks.WATER;
+	}
+	
+	@Override
+	public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount) {
+		return type == EnumCreatureType.MONSTER;
+	}
+	
+	@Override
+	public boolean isNotColliding() {
+        return this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
+    }
+
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
