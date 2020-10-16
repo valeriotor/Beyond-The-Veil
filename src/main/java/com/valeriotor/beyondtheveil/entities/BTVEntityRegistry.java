@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityJelly;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
 import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
@@ -47,6 +49,8 @@ public class BTVEntityRegistry {
 		register("octid", EntityOctid.class, count++ , 128);
 		register("deep_angler", EntityDeepAngler.class, count++ , 128);
 		register("sarfin", EntitySarfin.class, count++ , 128);
+		register("man_o_war", EntityManOWar.class, count++ , 128);
+		register("jelly", EntityJelly.class, count++ , 128);
 		
 		registerSpawnPlacementTypes();
 		

@@ -19,6 +19,8 @@ public class ModelRegistry {
 	public static ModelOctid octid;
 	public static ModelDeepAngler deep_angler;
 	public static ModelSarfin sarfin;
+	public static ModelManOWar man_o_war;
+	public static ModelJelly jelly;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -38,6 +40,8 @@ public class ModelRegistry {
 		octid = new ModelOctid();
 		deep_angler = new ModelDeepAngler();
 		sarfin = new ModelSarfin();
+		man_o_war = new ModelManOWar();
+		jelly = new ModelJelly();
 	}
 	
 }

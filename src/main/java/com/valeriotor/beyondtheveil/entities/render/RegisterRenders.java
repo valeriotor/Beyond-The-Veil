@@ -17,6 +17,8 @@ import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityJelly;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
 import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
@@ -49,6 +51,8 @@ public class RegisterRenders {
 		register(EntityOctid.class, new RenderFactory<>(RenderOctid::new));
 		register(EntityDeepAngler.class, new RenderFactory<>(RenderDeepAngler::new));
 		register(EntitySarfin.class, new RenderFactory<>(RenderSarfin::new));
+		register(EntityManOWar.class, new RenderFactory<>(RenderManOWar::new));
+		register(EntityJelly.class, new RenderFactory<>(RenderJelly::new));
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));
