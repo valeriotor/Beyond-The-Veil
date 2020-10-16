@@ -43,7 +43,7 @@ public class EntityOctid extends EntityIctya{
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15D);
+		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 	}
 	
@@ -55,7 +55,7 @@ public class EntityOctid extends EntityIctya{
 
 	@Override
 	public IctyaSize getSize() {
-		return IctyaSize.PREY;
+		return IctyaSize.TINY;
 	}
 
 	@Override

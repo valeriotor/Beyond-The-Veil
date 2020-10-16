@@ -17,10 +17,12 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -78,7 +80,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	}
 	
 	protected boolean shouldAttack(EntityLivingBase attacked) {
-		if(getSize() == IctyaSize.PREY) return false;
+		if(getSize() == IctyaSize.TINY) return false;
 		int diff = this.compareSizeTo(attacked);
 		if(diff >= 2) {
 			if(getCurrentOverMaxFood() < 0.85) return true;
@@ -93,14 +95,15 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	}
 	
 	protected boolean shouldDefend(EntityLivingBase attacker) {
-		if(getSize() == IctyaSize.PREY) return false;
+		if(getSize() == IctyaSize.TINY) return false;
 		int diff = this.compareSizeTo(attacker);
 		if(diff >= -1) return true;
 		return false;
 	}
 	
 	protected boolean shouldFlee(EntityLivingBase spooker) {
-		return this.compareSizeTo(spooker) <= -2;
+		int sizeCompare = this.compareSizeTo(spooker);
+		return sizeCompare <= -2 || (this.getSize() == IctyaSize.TINY && sizeCompare <= -1);
 	}
 	
 	@Override
@@ -112,9 +115,9 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	}
 	
 	protected void on32Ticks() {
-		if(!world.isRemote && getSize() != IctyaSize.PREY) {
+		if(!world.isRemote && getSize() != IctyaSize.TINY) {
 			if(getCurrentOverMaxFood() > 0.67)
-				heal(1);
+				heal(Math.max(3, getMaxHealth()/20));
 			
 			if(currentFood >= getFoodPer32Ticks())
 				currentFood -= getFoodPer32Ticks();
@@ -199,6 +202,18 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	@Override
 	public float getMaxDamage() {
 		return 30;
+	}
+	
+	@Override
+	public void onDeath(DamageSource cause) {
+		if(cause.getTrueSource() instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer)cause.getTrueSource();
+			p.getFoodStats().addStats((int)getFoodValue()/20, (float)getFoodValue()/20);
+			if(getSizeInt() >= IctyaSize.MEDIUM.getSizeInt()) {
+				p.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 10*(int)Math.pow(getSizeInt(), 3), 0, false, false));
+			}
+		}
+		super.onDeath(cause);
 	}
 	
 	private static class AINearestAttackableTargetArche<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {

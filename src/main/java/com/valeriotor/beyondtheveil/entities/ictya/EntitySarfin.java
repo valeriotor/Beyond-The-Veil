@@ -18,20 +18,20 @@ public class EntitySarfin extends EntityIctya{
 		super.initEntityAI();
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 100));
+        this.tasks.addTask(3, new EntityAIWander(this, 0.4D, 100));
 	}
 	
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15D);
+		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45D);
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 	}
 
 	@Override
 	public IctyaSize getSize() {
-		return IctyaSize.PREY;
+		return IctyaSize.TINY;
 	}
 
 	@Override

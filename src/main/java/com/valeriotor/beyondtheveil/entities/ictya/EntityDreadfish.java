@@ -1,11 +1,15 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityDreadfish extends EntityIctya {
@@ -26,7 +30,7 @@ public class EntityDreadfish extends EntityIctya {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
+		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);	
 		getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(3D);
 		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.2D);
@@ -53,5 +57,16 @@ public class EntityDreadfish extends EntityIctya {
 	public double getFoodPer32Ticks() {
 		return 3.2F;
 	}	
+	
+	@Override
+	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
+		if(damageSrc.getTrueSource() instanceof EntityLivingBase) {
+			List<EntityDreadfish> nearbyDreads = world.getEntities(EntityDreadfish.class, e -> e.getDistance(this) < 35);
+			for(EntityDreadfish e : nearbyDreads) {
+				e.setAttackTarget((EntityLivingBase)damageSrc.getTrueSource());
+			}
+		}
+		super.damageEntity(damageSrc, damageAmount);
+	}
 	
 }

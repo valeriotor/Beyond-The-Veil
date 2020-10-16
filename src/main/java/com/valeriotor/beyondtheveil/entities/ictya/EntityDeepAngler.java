@@ -22,13 +22,13 @@ public class EntityDeepAngler extends EntityIctya{
 		this.tasks.addTask(0, new DeepAnglerAIAttackMelee(this, 1.6, true));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 100));
+        this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 5));
 	}
 	
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(0.0D);
+		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(70.0D);
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);	
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
 		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8D);
@@ -51,7 +51,7 @@ public class EntityDeepAngler extends EntityIctya{
 
 	@Override
 	public double getFoodPer32Ticks() {
-		return 0.8;
+		return 1;
 	}
 	
 	private static class DeepAnglerAIAttackMelee extends EntityAIAttackMelee {
@@ -78,10 +78,11 @@ public class EntityDeepAngler extends EntityIctya{
 		
 		private void lure() {
 			EntityLivingBase ent = attacker.getAttackTarget();
-			if(ent instanceof EntityIctya) {
+			if(ent instanceof EntityIctya && (attacker.ticksExisted & 31) == 0) {
 				EntityIctya e = (EntityIctya)ent;
-				//System.out.println(e.getName());
-				e.getNavigator().tryMoveToEntityLiving(attacker, e.getAIMoveSpeed());
+				//System.out.println(e.getName() + " " + e.getPosition());
+				e.getNavigator().clearPath();
+				e.getNavigator().tryMoveToEntityLiving(attacker, e.getAIMoveSpeed()*2.5);
 			}
 		}
 		

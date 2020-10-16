@@ -134,6 +134,10 @@ public class PlayerTickEvents {
 			}		
 		}
 		if(transformed && (p.ticksExisted & 15) == 0) {
+			if((p.ticksExisted & 1023) == 0 && p.dimension == DimensionRegistry.ARCHE.getId()) {
+				p.getFoodStats().addStats(-1, -1);
+				if(p.isSprinting()) p.addExhaustion(1);
+			}
 			ItemStack stack = p.getHeldItemMainhand();
 			if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem())) {
 				ItemStack clone = stack.copy();

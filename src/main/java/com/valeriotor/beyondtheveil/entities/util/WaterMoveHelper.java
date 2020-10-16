@@ -25,10 +25,12 @@ public class WaterMoveHelper extends EntityMoveHelper {
             //System.out.println(this.posX + " x " + this.entity.posX);
             //System.out.println(this.posZ + " z " + this.entity.posZ);
             double d3 = d0 * d0 + d1 * d1;
-            if (d3 < 2.500000277905201E-1D /*&& d2*d2 < 1.5D*/)
+            if (d3 < 2.500000277905201E-1D && d2*d2 < 6D)
             {
-                this.entity.setMoveForward(0.0F);
-                return;
+            	if(d2*d2 < 6D || entity instanceof EntityDeepOne) {
+	                this.entity.setMoveForward(0.0F);
+	                return;
+            	}
             }
 
             float f9 = (float)(MathHelper.atan2(d1, d0) * (180D / Math.PI)) - 90.0F;

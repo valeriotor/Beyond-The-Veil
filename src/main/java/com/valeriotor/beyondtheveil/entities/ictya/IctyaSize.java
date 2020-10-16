@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
 public enum IctyaSize {
-	PREY,
 	TINY,
 	SMALL,
 	MEDIUM,
@@ -10,6 +9,6 @@ public enum IctyaSize {
 	COLOSSAL;
 	
 	public int getSizeInt() {
-		return ordinal() - 1;
+		return ordinal();
 	}
 }
