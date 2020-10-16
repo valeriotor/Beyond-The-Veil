@@ -91,12 +91,12 @@ public class ModelWeeper extends ModelBase {
     	if(!(e instanceof EntityWeeper)) return;
     	EntityWeeper weeper = (EntityWeeper)e;
     	float animTicks = weeper.getAnimationTicks();
-    	float offset = MathHelper.sin(animTicks%40 / 6.366F)/20;
+    	float offset = MathHelper.sin((animTicks%40 + partialTickTime)/ 6.366F)/20;
     	this.shape10.offsetX = offset;
     	this.shape10_1.offsetY = offset;
     	this.shape10_2.offsetX = -offset/2;
     	this.shape10_1.offsetZ = offset/2;
-    	offset = MathHelper.sin(animTicks%50 / 7.95F)/16;
+    	offset = MathHelper.sin((animTicks%50 + partialTickTime) / 7.95F)/16;
     	this.shape10.offsetY = offset;
     	this.shape10_1.offsetX = offset;
     	this.shape10_2.offsetY = offset;
@@ -104,6 +104,5 @@ public class ModelWeeper extends ModelBase {
     	this.shape10_2.offsetZ = offset/2;
 		this.field_78187_d.rotateAngleX = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount/2;
     	this.field_78188_e.rotateAngleX = MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount/2;
-    	super.setLivingAnimations(e, limbSwing, limbSwingAmount, partialTickTime);
     }
 }
