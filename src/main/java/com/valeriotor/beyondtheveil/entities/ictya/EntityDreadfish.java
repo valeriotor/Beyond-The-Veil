@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entities.ictya;
 
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -60,10 +61,11 @@ public class EntityDreadfish extends EntityIctya {
 	
 	@Override
 	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
-		if(damageSrc.getTrueSource() instanceof EntityLivingBase) {
+		Entity ent = damageSrc.getTrueSource();
+		if(ent instanceof EntityLivingBase && !(ent instanceof EntityDreadfish)) {
 			List<EntityDreadfish> nearbyDreads = world.getEntities(EntityDreadfish.class, e -> e.getDistance(this) < 35);
 			for(EntityDreadfish e : nearbyDreads) {
-				e.setAttackTarget((EntityLivingBase)damageSrc.getTrueSource());
+				e.setAttackTarget((EntityLivingBase)ent);
 			}
 		}
 		super.damageEntity(damageSrc, damageAmount);
