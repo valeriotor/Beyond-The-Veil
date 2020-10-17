@@ -59,8 +59,8 @@ public class RegisterRenders {
 		
 	}
 	
-	private static <T extends Entity> void register(Class<T> entityClass, IRenderFactory<? super T> renderFactory) {
-		RenderingRegistry.registerEntityRenderingHandler(entityClass, renderFactory);
+	private static <T extends Entity> void register(Class<T> entityClass, Function<RenderManager, Render<? super T>> renderFunc) {
+		RenderingRegistry.registerEntityRenderingHandler(entityClass, new RenderFactory<>(renderFunc));
 	}
 	
 	private static class RenderFactory<T extends Entity> implements IRenderFactory<T> {
