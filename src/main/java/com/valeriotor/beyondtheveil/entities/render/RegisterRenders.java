@@ -33,26 +33,26 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class RegisterRenders {
 	public static void register() {
 		
-		register(EntityDeepOne.class, new RenderFactory<>(RenderDeepOne::new));
-		register(EntityHamletDweller.class, new RenderFactory<>(RenderHamletDweller::new));
-		register(EntityCanoe.class, new RenderFactory<>(RenderCanoe::new));
-		register(EntityCrawlingVillager.class, new RenderFactory<>(RenderCrawlingVillager::new));
-		register(EntityWeeper.class, new RenderFactory<>(RenderWeeper::new));
-		register(EntityFletum.class, new RenderFactory<>(RenderFletum::new));
-		register(EntityShoggoth.class, new RenderFactory<>(RenderShoggoth::new));
-		register(EntityBloodZombie.class, new RenderFactory<>(RenderBloodZombie::new));
-		register(EntityBloodSkeleton.class, new RenderFactory<>(RenderBloodSkeleton::new));
-		register(EntityCrazedWeeper.class, new RenderFactory<>(RenderCrazedWeeper::new));
-		register(EntityDreamFluid.class, new RenderFactory<>(RenderDreamFluid::new));
-		register(EntityDreamVillager.class, new RenderFactory<>(RenderDreamVillager::new));
-		register(EntitySurgeon.class, new RenderFactory<>(RenderSurgeon::new));
-		register(EntityDreadfish.class, new RenderFactory<>(RenderDreadfish::new));
-		register(EntityMuray.class, new RenderFactory<>(RenderMuray::new));
-		register(EntityOctid.class, new RenderFactory<>(RenderOctid::new));
-		register(EntityDeepAngler.class, new RenderFactory<>(RenderDeepAngler::new));
-		register(EntitySarfin.class, new RenderFactory<>(RenderSarfin::new));
-		register(EntityManOWar.class, new RenderFactory<>(RenderManOWar::new));
-		register(EntityJelly.class, new RenderFactory<>(RenderJelly::new));
+		register(EntityDeepOne.class, RenderDeepOne::new);
+		register(EntityHamletDweller.class, RenderHamletDweller::new);
+		register(EntityCanoe.class, RenderCanoe::new);
+		register(EntityCrawlingVillager.class, RenderCrawlingVillager::new);
+		register(EntityWeeper.class, RenderWeeper::new);
+		register(EntityFletum.class, RenderFletum::new);
+		register(EntityShoggoth.class, RenderShoggoth::new);
+		register(EntityBloodZombie.class, RenderBloodZombie::new);
+		register(EntityBloodSkeleton.class, RenderBloodSkeleton::new);
+		register(EntityCrazedWeeper.class, RenderCrazedWeeper::new);
+		register(EntityDreamFluid.class, RenderDreamFluid::new);
+		register(EntityDreamVillager.class, RenderDreamVillager::new);
+		register(EntitySurgeon.class, RenderSurgeon::new);
+		register(EntityDreadfish.class, RenderDreadfish::new);
+		register(EntityMuray.class, RenderMuray::new);
+		register(EntityOctid.class, RenderOctid::new);
+		register(EntityDeepAngler.class, RenderDeepAngler::new);
+		register(EntitySarfin.class, RenderSarfin::new);
+		register(EntityManOWar.class, RenderManOWar::new);
+		register(EntityJelly.class, RenderJelly::new);
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));
