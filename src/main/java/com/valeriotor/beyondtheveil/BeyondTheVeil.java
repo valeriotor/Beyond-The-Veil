@@ -30,6 +30,7 @@ import com.valeriotor.beyondtheveil.util.RegistryHelper;
 import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.StatueChunkLoader;
 import com.valeriotor.beyondtheveil.world.WorldGenBTV;
+import com.valeriotor.beyondtheveil.world.Structures.ArcheStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
@@ -99,6 +100,7 @@ public class BeyondTheVeil
     	
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
+    	ArcheStructuresRegistry.registerArcheStructures();
     	BuildingRegistry.registerBuildings();
     	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
 		DGWorshipHelper.loadDreamerResearch();

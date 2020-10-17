@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.world.Structures.ArcheStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
@@ -361,36 +363,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
         biome.decorate(this.world, this.rand, new BlockPos(i, 0, j));
         
         generateBloodHome(chunkX, chunkZ);
-        /*
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
-        WorldEntitySpawner.performWorldGenSpawning(this.world, biome, i + 8, j + 8, 16, 16, this.rand);
-        blockpos = blockpos.add(8, 0, 8);
-
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE))
-        {
-        for (int k2 = 0; k2 < 16; ++k2)
-        {
-            for (int j3 = 0; j3 < 16; ++j3)
-            {
-                BlockPos blockpos1 = this.world.getPrecipitationHeight(blockpos.add(k2, 0, j3));
-                BlockPos blockpos2 = blockpos1.down();
-
-                if (this.world.canBlockFreezeWater(blockpos2))
-                {
-                    this.world.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
-                }
-
-                if (this.world.canSnowAt(blockpos1, true))
-                {
-                    this.world.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
-                }
-            }
-        }
-        }//Forge: End ICE
-
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, flag);
-
-        BlockFalling.fallInstantly = false;*/
+        
         ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, chunkX, chunkZ, false);
 		GameRegistry.generateWorld(chunkX, chunkZ, this.world, this, this.world.getChunkProvider());
     }
@@ -402,15 +375,8 @@ public class ChunkGeneratorArche implements IChunkGenerator
         int xMod1024 = chunkX & 63;
         int zMod1024 = chunkZ & 63;
         MutableBlockPos pos = new MutableBlockPos();
-        if(xMod1024 == 0 && zMod1024 == 0) {
-        	for(int x = 0; x < 16; x++) {
-        		for(int z = 0; z < 16; z++) {
-            		for(int y = 20; y < 100; y++) {
-            			pos.setPos(i+x, y, j+z);
-            			world.setBlockState(pos, BlockRegistry.BlockBloodBrick.getDefaultState(), 2);
-            		}
-            	}
-        	}
+        if(xMod1024 == 0 && zMod1024 == 0 && world.getBiome(new BlockPos(i, 90, j)) == BiomeRegistry.arche_plains) {
+        	ArcheStructuresRegistry.home.generate(world, new BlockPos(i, 90, j));
         }
     }
 
