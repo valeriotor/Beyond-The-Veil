@@ -37,14 +37,14 @@ public class EntityJelly extends EntityMob{
 	@Override
 	protected void initEntityAI() {	 	
 		super.initEntityAI();
-		this.tasks.addTask(0, new EntityAIAttackMelee(this, 0.25, false));
+		this.tasks.addTask(0, new EntityAIAttackMelee(this, 0.35, false));
 	}
 	
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(70.0D);
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);	
+		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);	
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
 		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8D);
 	}
