@@ -6,7 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
-import com.valeriotor.beyondtheveil.world.Structures.ArcheStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.block.BlockFalling;
@@ -375,8 +375,8 @@ public class ChunkGeneratorArche implements IChunkGenerator
         int xMod1024 = chunkX & 63;
         int zMod1024 = chunkZ & 63;
         MutableBlockPos pos = new MutableBlockPos();
-        if(xMod1024 == 0 && zMod1024 == 0 && world.getBiome(new BlockPos(i, 90, j)) == BiomeRegistry.arche_plains) {
-        	ArcheStructuresRegistry.home.generate(world, new BlockPos(i, 90, j));
+        if(xMod1024 == 0 && zMod1024 == 0 /*&& world.getBiome(new BlockPos(i, 112, j)) == BiomeRegistry.arche_plains*/) {
+        	ArcheStructuresRegistry.home.generate(world, new BlockPos(i, 112, j));
         }
     }
 

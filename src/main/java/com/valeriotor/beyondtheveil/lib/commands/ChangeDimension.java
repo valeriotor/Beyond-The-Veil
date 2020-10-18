@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.lib.commands;
 
+import com.valeriotor.beyondtheveil.util.Teleport;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -31,30 +33,4 @@ public class ChangeDimension extends CommandBase{
 		EntityPlayer p = (EntityPlayer)sender;
 		p.changeDimension(i, new Teleport(server.getWorld(i), p.posX, p.posY, p.posZ));
 	}
-	
-	public static class Teleport extends Teleporter {
-		
-		private final WorldServer world;
-		private final double x;
-		private final double y;
-		private final double z;
-		
-		public Teleport(WorldServer worldIn, double posX, double posY, double posZ) {
-			super(worldIn);
-			this.world = worldIn;
-			this.x = posX;
-			this.y = posY;
-			this.z = posZ;
-		}
-		
-		@Override
-		public void placeInPortal(Entity entityIn, float rotationYaw) {
-			entityIn.setPosition(x, y, z);
-			entityIn.motionX = 0;
-			entityIn.motionY = 0;
-			entityIn.motionZ = 0;
-		}
-		
-	}
-
 }

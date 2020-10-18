@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.world.Structures;
+package com.valeriotor.beyondtheveil.world.Structures.arche;
 
 import java.io.IOException;
 import java.util.ArrayList;

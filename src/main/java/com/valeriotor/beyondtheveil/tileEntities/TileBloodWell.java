@@ -9,6 +9,10 @@ import com.valeriotor.beyondtheveil.entities.EntityBloodZombie;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.util.Teleport;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
+import com.valeriotor.beyondtheveil.world.Structures.arche.BloodHomeList;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -17,13 +21,16 @@ import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class TileBloodWell extends TileEntity implements ITickable{
 	
@@ -45,6 +52,7 @@ public class TileBloodWell extends TileEntity implements ITickable{
 						world.setBlockState(pos, Blocks.AIR.getDefaultState());
 						return;
 					}
+					teleportPlayer();
 					counter = 29;
 					List<EntityLiving> undead = this.world.getEntities(EntityLiving.class, e -> e.isEntityUndead() && e.getDistanceSq(pos) < 1024 && !(e instanceof IPlayerGuardian));
 					for(EntityLiving e : undead) {
@@ -69,6 +77,15 @@ public class TileBloodWell extends TileEntity implements ITickable{
 				soundCounter = 20;
 				this.world.playSound(pos.getX(), pos.getY(), pos.getZ(), BTVSounds.heartbeat, SoundCategory.AMBIENT, 1, 1, true);
 			}
+		}
+	}
+	
+	private void teleportPlayer() {
+		EntityPlayer p = world.getClosestPlayer(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 1, false);
+		if(p != null) {
+			WorldServer w = world.getMinecraftServer().getWorld(DimensionRegistry.ARCHE.getId());
+			BlockPos toPos = BloodHomeList.get(w).findPlayerHome(p);
+			p.changeDimension(DimensionRegistry.ARCHE.getId(), new Teleport(w, toPos.getX(), toPos.getY(), toPos.getZ()));
 		}
 	}
 	

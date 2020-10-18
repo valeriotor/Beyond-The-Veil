@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.world.Structures;
+package com.valeriotor.beyondtheveil.world.Structures.arche;
 
 public class ArcheStructuresRegistry {
 	public static final BloodHome home = new BloodHome();
