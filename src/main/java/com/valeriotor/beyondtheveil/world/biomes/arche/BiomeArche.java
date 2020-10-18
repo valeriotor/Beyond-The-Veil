@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
 import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
@@ -27,6 +28,7 @@ public abstract class BiomeArche extends Biome{
 		this.spawnableMonsterList.add(new SpawnListEntry(EntitySarfin.class, 500, 5, 10));
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityDeepAngler.class, 25, 1, 1));
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityDreadfish.class, 10, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityManOWar.class, 7, 1, 1));
 	}
 	
 	@Override

@@ -70,6 +70,7 @@ public class BTVEntityRegistry {
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepAngler.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntitySarfin.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityMuray.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityManOWar.class, SpawnPlacementType.IN_WATER);
 	}
 	
 	
