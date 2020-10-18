@@ -54,7 +54,7 @@ public class PlayerTickEvents {
 			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			canoeFishing(p, data);
 			resetTimesDreamt(p, data);
-			waterPowers(p, data);
+			WaterPowers.waterPowers(p, data);
 			decreaseCooldown(p, data);
 			setSize(p, data);
 			if(!p.world.isRemote) {
@@ -107,64 +107,7 @@ public class PlayerTickEvents {
 		}
 	}
 	
-	private static void waterPowers(EntityPlayer p, IPlayerData data) {
-		boolean transformed = data.getString(PlayerDataLib.TRANSFORMED);
-		if(data.getString(PlayerDataLib.RITUALQUEST)) {
-			if(p.isInWater()) {
-				double motX = p.motionX * 1.2;
-				double motY = p.motionY * 1.25;
-				double motZ = p.motionZ * 1.2;
-				boolean flying = p.capabilities.isFlying;
-				if(transformed) {
-					p.capabilities.isFlying = true;
-					if(p.world.isRemote)
-						p.capabilities.setFlySpeed(0.06F);
-					if(!p.isPotionActive(MobEffects.REGENERATION) && p.dimension != DimensionRegistry.ARCHE.getId())
-						p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 1, false, false));
-				} else if(!flying) {
-					if(Math.abs(p.motionX) < 1.3) p.motionX = motX;
-					if((p.motionY > 0 || p.isSneaking()) && p.motionY < 1.3) p.motionY = motY;
-					if(Math.abs(p.motionZ) < 1.3) p.motionZ = motZ;
-				}
-				p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, false, false));
-				p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, false));
-			} else if(transformed) {
-				if(p.world.isRemote)
-					p.capabilities.isFlying = false;
-			}		
-		}
-		if(transformed && (p.ticksExisted & 15) == 0) {
-			if((p.ticksExisted & 1023) == 0 && p.dimension == DimensionRegistry.ARCHE.getId()) {
-				p.getFoodStats().addStats(-1, -1);
-				if(p.isSprinting()) p.addExhaustion(1);
-			}
-			ItemStack stack = p.getHeldItemMainhand();
-			if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem())) {
-				ItemStack clone = stack.copy();
-				p.dropItem(clone, true);
-				stack.setCount(0);
-			}
-			stack = p.getHeldItemOffhand();
-			if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem())) {
-				ItemStack clone = stack.copy();
-				p.dropItem(clone, true);
-				stack.setCount(0);
-			}
-			for(int i = 0; i < 4; i++) {
-				ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorInventory.get(i), 9+i);
-				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
-			}
-		}
-		
-	}
 	
-	private static boolean canDeepOneHold(Item i) {
-		if(i == ItemRegistry.slug || i instanceof ItemFishFood || i == Item.getItemFromBlock(Blocks.PRISMARINE) || i == Items.PRISMARINE_CRYSTALS
-		|| i == Items.PRISMARINE_CRYSTALS || i == Item.getItemFromBlock(Blocks.SPONGE) || i == ItemRegistry.coral_staff) {
-			return true;
-		}
-		return false;
-	}
 	
 	private static void decreaseCooldown(EntityPlayer p, IPlayerData data) {
 		int currentTicks = Worship.getPowerCooldown(p);
