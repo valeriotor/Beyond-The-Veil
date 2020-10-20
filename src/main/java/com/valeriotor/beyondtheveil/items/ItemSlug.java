@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
 import com.valeriotor.beyondtheveil.gui.container.GuiContainerHandler;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -28,7 +29,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class ItemSlug extends ItemFood{
+public class ItemSlug extends ItemFood implements IDeepOneItem{
 	
 	public ItemSlug() {
 		super(4, false);
@@ -94,7 +95,10 @@ public class ItemSlug extends ItemFood{
 	}
 	
 	
-	
+	@Override
+	public boolean canHold(EntityPlayer p, IPlayerData data) {
+		return p.dimension != DimensionRegistry.ARCHE.getId();
+	}
 	
 	
 

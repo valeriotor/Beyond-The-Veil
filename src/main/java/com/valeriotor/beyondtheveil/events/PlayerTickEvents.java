@@ -54,7 +54,7 @@ public class PlayerTickEvents {
 			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 			canoeFishing(p, data);
 			resetTimesDreamt(p, data);
-			WaterPowers.waterPowers(p, data);
+			WaterEvents.playerTick(p, data);
 			decreaseCooldown(p, data);
 			setSize(p, data);
 			if(!p.world.isRemote) {

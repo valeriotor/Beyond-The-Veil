@@ -18,22 +18,26 @@ import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -244,6 +248,19 @@ public class PlayerEvents {
 			if(!p.world.isRemote && !(p instanceof FakePlayer))
 				((IArtifactItem)stack.getItem()).unlockData(p);
 		}
-		
+	}
+	
+	@SubscribeEvent
+	public static void itemUseFinish(LivingEntityUseItemEvent.Finish event) {
+		EntityLivingBase b = event.getEntityLiving();
+		if(b instanceof EntityPlayer && b.dimension == DimensionRegistry.ARCHE.getId() && event.getItem().getItem() instanceof ItemFishFood) {
+			EntityPlayer p = (EntityPlayer)event.getEntityLiving();
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+				ItemStack stack = event.getItem();
+				ItemFishFood food = (ItemFishFood)stack.getItem();
+				System.out.println(food.getHealAmount(stack));
+				p.getFoodStats().addStats(-food.getHealAmount(stack), -food.getSaturationModifier(stack));
+			}
+		}
 	}
 }
