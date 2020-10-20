@@ -1,7 +1,8 @@
 package com.valeriotor.beyondtheveil.lib;
 
 public class BlockNames {
-	
+
+	public static final String ARCHE_PORTAL = "arche_portal";
 	public static final String BARREL = "barrel";
 	public static final String BLOODBRICKS = "blood_bricks";
 	public static final String BLOOD_BRICKS_SLAB = "blood_bricks_slab";

@@ -80,6 +80,7 @@ public class BlockRegistry {
 	public static final BlockCurtain BlockCurtain = new BlockCurtain(BlockNames.CURTAIN);
 	public static final BlockMegydrea BlockMegydrea = new BlockMegydrea(BlockNames.MEGYDREA);
 	public static final BlockThickAlgae BlockThickAlgae = new BlockThickAlgae(BlockNames.THICK_ALGAE);
+	public static final BlockArchePortal BlockArchePortal = new BlockArchePortal(BlockNames.ARCHE_PORTAL);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -138,6 +139,7 @@ public class BlockRegistry {
 	   	registry.register(BlockCurtain);
 	   	registry.register(BlockMegydrea);
 	   	registry.register(BlockThickAlgae);
+	   	registry.register(BlockArchePortal);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);
