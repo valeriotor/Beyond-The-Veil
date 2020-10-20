@@ -60,7 +60,7 @@ public class EntityOctid extends EntityIctya{
 
 	@Override
 	public double getFoodValue() {
-		return 20;
+		return 40;
 	}
 
 	@Override
