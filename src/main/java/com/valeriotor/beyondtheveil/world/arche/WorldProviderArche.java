@@ -34,7 +34,7 @@ public class WorldProviderArche extends WorldProvider{
 	
 	@Override
 	public boolean canRespawnHere() {
-		return true;
+		return false;
 	}
 	
 	@Override
