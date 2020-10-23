@@ -15,6 +15,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,7 +69,8 @@ public class TestItem extends Item //implements IHasModel
 		
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
-	private static final boolean SHOGGOTH = true;
+	private static final boolean SHOGGOTH = false;
+	private static final boolean GET_WATER = false;
 	public void doProcess(BlockPos pos1, BlockPos pos2, World w) {
 		
 		
@@ -81,7 +83,8 @@ public class TestItem extends Item //implements IHasModel
 					Block block = w.getBlockState(new BlockPos(x,y,z)).getBlock();
 					int meta = block.getMetaFromState(state);
 					
-					if(y - center.getY() > 3 && block.getUnlocalizedName().substring(5).equals("air")) continue;
+					if(block == Blocks.WATER && !GET_WATER) continue;
+					//if(y - center.getY() > 3 && block.getUnlocalizedName().substring(5).equals("air")) continue;
 					String s = block.getRegistryName().toString();
 					if(!blockMap.containsKey(s)) {
 						blockMap.put(s, new ArrayList<>());

@@ -7,38 +7,27 @@ import javax.annotation.Nullable;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCity;
+import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCityList;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
-import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenScatteredFeature;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraft.world.gen.structure.StructureOceanMonument;
-import net.minecraft.world.gen.structure.WoodlandMansion;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -220,7 +209,33 @@ public class ChunkGeneratorArche implements IChunkGenerator
         }
 
         chunk.generateSkylightMap();
+        generateDeepCity(x, z);
         return chunk;
+    }
+    
+    private void generateDeepCity(int chunkX, int chunkZ) {
+    	int xMod128 = chunkX & 7;
+        int zMod128 = chunkZ & 7;
+        int xMod1024 = chunkX & 63;
+        int zMod1024 = chunkZ & 63;
+        if(xMod128 == 0 && zMod128 == 0 && xMod1024 != 0 && zMod1024 != 0) {
+        	int x = chunkX << 4;
+        	int z = chunkZ << 4;
+        	final BlockPos center = new BlockPos(x, 40, z);
+        	for(EnumFacing face : EnumFacing.HORIZONTALS) {
+        		BlockPos newPos = center.offset(face, 256).offset(face.rotateYCCW(), 256);
+        		int newChunkX = newPos.getX() >> 4;
+        		int newChunkZ = newPos.getZ() >> 4;
+	        	DeepCity city = DeepCityList.get(world).getCity(newChunkX, newChunkZ); //TODO change from get to tooNear (farEnough), both to BloodHomes and other cities
+	        	if(city == null) {
+	        		if(world.rand.nextDouble() < 0.3 && world.getBiome(newPos) == BiomeRegistry.arche_plains) {
+	        			city = new DeepCity(world, newPos);
+	        			city.generate();
+	        			DeepCityList.get(world).addCity(newChunkX, newChunkZ, city);
+	        		}
+	        	}
+        	}
+        }
     }
 
     private void generateHeightmap(int p_185978_1_, int p_185978_2_, int p_185978_3_)
@@ -363,6 +378,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
         biome.decorate(this.world, this.rand, new BlockPos(i, 0, j));
         
         generateBloodHome(chunkX, chunkZ);
+        generateDeepCityChunk(chunkX, chunkZ);
         
         ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, chunkX, chunkZ, false);
 		GameRegistry.generateWorld(chunkX, chunkZ, this.world, this, this.world.getChunkProvider());
@@ -376,8 +392,15 @@ public class ChunkGeneratorArche implements IChunkGenerator
         int zMod1024 = chunkZ & 63;
         MutableBlockPos pos = new MutableBlockPos();
         if(xMod1024 == 0 && zMod1024 == 0 /*&& world.getBiome(new BlockPos(i, 112, j)) == BiomeRegistry.arche_plains*/) {
-        	ArcheStructuresRegistry.home.generate(world, new BlockPos(i, 112, j));
+        	ArcheStructuresRegistry.HOME.generate(world, new BlockPos(i, 112, j));
         }
+    }
+    
+    private void generateDeepCityChunk(int chunkX, int chunkZ) {
+    	DeepCity city = DeepCityList.get(world).getCity(chunkX, chunkZ);
+    	if(city != null) {
+    		city.generateChunk(chunkX, chunkZ);
+    	}
     }
 
     /**
