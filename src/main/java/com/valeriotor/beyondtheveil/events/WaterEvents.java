@@ -75,7 +75,7 @@ public class WaterEvents {
 	}
 	
 	private static void damageArchePlayer(EntityPlayer p, boolean arche, boolean transformed) {
-		if(!transformed && arche) {
+		if(!transformed && arche && !p.capabilities.isCreativeMode) {
 			if(!p.world.isRemote) {
 				p.setHealth(p.getHealth()-1);
 			} else {
