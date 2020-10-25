@@ -218,24 +218,50 @@ public class ChunkGeneratorArche implements IChunkGenerator
         int zMod128 = chunkZ & 7;
         int xMod1024 = chunkX & 63;
         int zMod1024 = chunkZ & 63;
-        if(xMod128 == 0 && zMod128 == 0 && xMod1024 != 0 && zMod1024 != 0) {
+        if(xMod128 == 0 && zMod128 == 0 && xMod1024 != 0 && zMod1024 != 0) {  // are the chunk coords multiples of 128 but not 1024? (away from blood homes)
         	int x = chunkX << 4;
         	int z = chunkZ << 4;
-        	final BlockPos center = new BlockPos(x, 40, z);
+        	final BlockPos center = new BlockPos(x, 33, z);
         	for(EnumFacing face : EnumFacing.HORIZONTALS) {
-        		BlockPos newPos = center.offset(face, 256).offset(face.rotateYCCW(), 256);
-        		int newChunkX = newPos.getX() >> 4;
-        		int newChunkZ = newPos.getZ() >> 4;
-	        	DeepCity city = DeepCityList.get(world).getCity(newChunkX, newChunkZ); //TODO change from get to tooNear (farEnough), both to BloodHomes and other cities
-	        	if(city == null) {
-	        		if(world.rand.nextDouble() < 0.3 && world.getBiome(newPos) == BiomeRegistry.arche_plains) {
-	        			city = new DeepCity(world, newPos);
-	        			city.generate();
-	        			DeepCityList.get(world).addCity(newChunkX, newChunkZ, city);
-	        		}
-	        	}
+        		for(EnumFacing face2 : EnumFacing.HORIZONTALS) {
+        			if(face == face2.getOpposite()) continue;
+	        		BlockPos newPos = center.offset(face, 512).offset(face2, 256);
+	        		int newChunkX = newPos.getX() >> 4;
+	        		int newChunkZ = newPos.getZ() >> 4;
+	        		int newChunkXMod1024 = newChunkX & 63;
+	        		int newChunkZMod1024 = newChunkZ & 63;
+		        	if(DeepCityList.get(world).isFarEnough(x, z, 720)) {
+	        			boolean generated = world.isChunkGeneratedAt(newChunkX, newChunkZ);
+		        		if(isSuitablePositionForCity(newPos)) {
+		        			DeepCity city = new DeepCity(world, newPos);
+		        			city.generate();
+		        			DeepCityList.get(world).addCity(newChunkX, newChunkZ, city);
+		        		}
+		        	}
+        		}
         	}
         }
+    }
+    
+    private boolean isSuitablePositionForCity(BlockPos pos) {
+    	for(int x = -4; x <= 4; x++) {
+    		for(int z = -4; z <= 4; z++) {
+    			BlockPos newPos = pos.add(x*24, 0, z*24);
+    			boolean generated = world.isChunkGeneratedAt(newPos.getX() >> 4, newPos.getZ() >> 4);
+    			if(generated) return false;
+    			if(Math.abs(x) < 2 && Math.abs(z) < 2) {
+    				if(world.getBiomeForCoordsBody(newPos) != BiomeRegistry.arche_plains) {
+            			return false;
+            		}
+    			} else {
+    				if(world.getBiomeForCoordsBody(newPos) == BiomeRegistry.arche_algae_forest) { //TODO: Change to NOT APPLICABLE
+            			return false;
+            		}
+    			}
+        		
+        	}
+    	}
+    	return true;    	
     }
 
     private void generateHeightmap(int p_185978_1_, int p_185978_2_, int p_185978_3_)

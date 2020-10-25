@@ -2,7 +2,7 @@ package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
 import java.awt.Point;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class DeepCityLayout {
 	private static final int MAX_BRANCH_LENGTH = 6;
-	private static final int INDIVIDUAL_WIDTH = 31;
+	public static final int INDIVIDUAL_WIDTH = 31;
 	private final Map<Point, DeepCityStructure> map = new HashMap<>();
-	private final Set<Connection> connections = new HashSet<>();
+	private final Set<Connection> connections = new LinkedHashSet<>();
 	private final BlockPos center;
 	private final Random rand;
 	private EnumFacing currentDirection;
@@ -42,7 +42,14 @@ public class DeepCityLayout {
 			generateNode(facing);
 			branchLevel--;
 		}
-			
+		makeCorridors();	
+	}
+	
+	private void makeCorridors() {
+		for(Connection c : connections) {
+			map.get(c.p1).addCorridor(c.getP1Corridor());
+			map.get(c.p2).addCorridor(c.getP2Corridor());
+		}
 	}
 	
 	private void generateNode(EnumFacing facing) {
@@ -55,7 +62,7 @@ public class DeepCityLayout {
 		connections.add(new Connection(currentPoint, newPoint));
 		
 		if(map.containsKey(newPoint)) return;
-		BlockPos newPos = center.add(newPoint.x*(INDIVIDUAL_WIDTH+25), 0, newPoint.y*(INDIVIDUAL_WIDTH+25));
+		BlockPos newPos = center.add(newPoint.x*(INDIVIDUAL_WIDTH), 0, newPoint.y*(INDIVIDUAL_WIDTH));
 		map.put(newPoint, ArcheStructuresRegistry.getRandomDeepCityStructure(rand, newPos));
 		
 		Point oldPoint = currentPoint;
@@ -155,6 +162,21 @@ public class DeepCityLayout {
 		private Connection(Point p1, Point p2) {
 			this.p1 = p1;
 			this.p2 = p2;
+		}
+		
+		private EnumFacing getP1Corridor() {
+			return getCorridor(p1, p2);
+		}
+		
+		private EnumFacing getP2Corridor() {
+			return getCorridor(p2, p1);
+		}
+		
+		private EnumFacing getCorridor(Point p1, Point p2) {
+			if(p1.x < p2.x) return EnumFacing.EAST;
+			if(p1.x > p2.x) return EnumFacing.WEST;
+			if(p1.y < p2.y) return EnumFacing.SOUTH;
+			return EnumFacing.NORTH;
 		}
 		
 		@Override

@@ -6,18 +6,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.valeriotor.beyondtheveil.world.arche.WorldProviderArche;
+
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
-
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+@Mod.EventBusSubscriber
 public class DeepCityList extends WorldSavedData{
 
 	private World world;
 	private static final String DATA_NAME = "DEEPCITYDATA";
 	private Map<Long, DeepCity> cities = new HashMap<>();
 	private List<DeepCity> cityList = new ArrayList<>();
+	private int emptyCachesCounter = 0;
 	
 	public static DeepCityList get(World w) {
 		MapStorage storage = w.getPerWorldStorage();
@@ -31,6 +38,22 @@ public class DeepCityList extends WorldSavedData{
 		return data;
 	}
 	
+	@SubscribeEvent
+	public static void worldTickEvent(WorldTickEvent e) {
+		World w = e.world;
+		if(!w.isRemote && w.provider instanceof WorldProviderArche) {
+			get(w).emptyCaches();
+		}
+	}
+	
+	private void emptyCaches() {
+		emptyCachesCounter++;
+		if(emptyCachesCounter > 12000) {
+			emptyCachesCounter = 0;
+			for(DeepCity city : cityList) city.emptyCache();
+		}
+	}
+
 	public DeepCityList(String name) {
 		super(name);
 	}
@@ -80,6 +103,17 @@ public class DeepCityList extends WorldSavedData{
 			}
 		}
 		return null;
+	}
+	
+	public boolean isFarEnough(int x, int z, int minAxisDistance) {
+		for(DeepCity c : cityList) {
+			BlockPos pos = c.getCenter();
+			long distX = Math.abs(x-pos.getX());
+			long distZ = Math.abs(z-pos.getZ());
+			if(distX < minAxisDistance && distZ < minAxisDistance)
+				return false;
+		}
+		return true;
 	}
 
 }

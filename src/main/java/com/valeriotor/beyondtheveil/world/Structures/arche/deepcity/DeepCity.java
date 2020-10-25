@@ -109,4 +109,8 @@ public class DeepCity {
 		generated = false;
 	}
 	
+	public BlockPos getCenter() {
+		return center;
+	}
+	
 }

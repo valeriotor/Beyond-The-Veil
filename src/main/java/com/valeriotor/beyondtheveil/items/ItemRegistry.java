@@ -84,7 +84,7 @@ public class ItemRegistry {
 	
 	
     public static void initModels() {
-        //ClientProxy.registerItemRenderer(testItem, 0, "inventory");
+        ClientProxy.registerItemRenderer(testItem, 0, "inventory");
         ClientProxy.registerItemRenderer(oniricIncense, 0, "inventory");
         ClientProxy.registerItemRenderer(slugCatcher, 0, "inventory");
         ClientProxy.registerItemRenderer(slug, 0, "inventory");
@@ -242,7 +242,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockMegydrea).setRegistryName(BlockRegistry.BlockMegydrea.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockThickAlgae).setRegistryName(BlockRegistry.BlockThickAlgae.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockArchePortal).setRegistryName(BlockRegistry.BlockArchePortal.getRegistryName()));
-    	//registry.register(ItemRegistry.testItem);
+    	registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);
     	registry.register(ItemRegistry.slug);

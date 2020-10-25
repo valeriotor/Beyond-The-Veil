@@ -11,19 +11,19 @@ import net.minecraft.util.math.BlockPos;
 
 public class ArcheStructuresRegistry {
 	public static final BloodHome HOME = new BloodHome();
-	public static final DeepCityStructureTemplate TEST = new DeepCityStructureTemplate("blood_home", 15);
+	public static final DeepCityStructureTemplate HOME1 = new DeepCityStructureTemplate("deep_home1", 6);
 	
 	public static final Map<String, DeepCityStructureTemplate> DEEP_CITY_BUILDINGS = new HashMap<>();
 	
 	public static void registerArcheStructures() {
 		HOME.registerBlocks();
-		TEST.registerBlocks();
+		HOME1.registerBlocks();
 		
-		DEEP_CITY_BUILDINGS.put(TEST.getName(), TEST);
+		DEEP_CITY_BUILDINGS.put(HOME1.getName(), HOME1);
 	}
 	
 	public static DeepCityStructure getRandomDeepCityStructure(Random r, BlockPos pos) {
-		return new DeepCityStructure(TEST, pos);
+		return new DeepCityStructure(HOME1, pos);
 	}
 	
 	public static DeepCityStructureTemplate getStructure(String name) {
