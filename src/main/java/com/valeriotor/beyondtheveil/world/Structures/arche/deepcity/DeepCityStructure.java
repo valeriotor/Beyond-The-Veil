@@ -57,7 +57,7 @@ public class DeepCityStructure {
 		return chunkX <= maxChunkX && chunkX >= minChunkX  && chunkZ <= maxChunkZ && chunkZ >= minChunkZ ;
 	}
 	
-	public void generate(Map<Long, BTVChunkCache> chunks, Set<Long> usedChunks) {
+	public void generate(Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		template.generate(center, chunks, usedChunks);
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if(corridors.contains(facing)) {

@@ -31,13 +31,15 @@ public class BlockCoords {
 		}
 	}
 	
-	public void generate(BlockPos center, Map<Long, BTVChunkCache> chunks, Set<Long> usedChunks) {
+	public void generate(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		for(byte[] xyzm : this.coords) {
 			BlockPos pos = center.add(xyzm[0], xyzm[1], xyzm[2]);
 			int chunkX = pos.getX() >> 4;
 			int chunkZ = pos.getZ() >> 4;
 			long cPos = ChunkPos.asLong(chunkX, chunkZ);
-			if(!usedChunks.contains(cPos)) {
+			if(!usedChunks.containsKey(cPos)) 
+				usedChunks.put(cPos, false);
+			if(!usedChunks.get(cPos)) {
 				BTVChunkCache cache = chunks.get(cPos);
 				if(cache == null) {
 					cache = new BTVChunkCache();

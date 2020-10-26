@@ -26,7 +26,7 @@ public class BlockRegistry {
 	
 	public static final DampWood DampWood = new DampWood();	
 	public static final BlockFumeSpreader FumeSpreader = new BlockFumeSpreader();
-	public static final BlockDarkSand DarkSand = new BlockDarkSand(BlockNames.DARKSAND);
+	public static final BlockDarkSand DarkSand = new BlockDarkSand(BlockNames.DARK_SAND);
 	public static final DampStone DampStone = new DampStone();
 	public static final DampLog DampLog = new DampLog();
 	public static final DampWoodStairs DampWoodStairs = new DampWoodStairs(DampWood.getDefaultState());
@@ -81,6 +81,7 @@ public class BlockRegistry {
 	public static final BlockMegydrea BlockMegydrea = new BlockMegydrea(BlockNames.MEGYDREA);
 	public static final BlockThickAlgae BlockThickAlgae = new BlockThickAlgae(BlockNames.THICK_ALGAE);
 	public static final BlockArchePortal BlockArchePortal = new BlockArchePortal(BlockNames.ARCHE_PORTAL);
+	public static final BlockDarkGlass BlockDarkGlass = new BlockDarkGlass(BlockNames.DARK_GLASS);
 	
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
@@ -140,6 +141,7 @@ public class BlockRegistry {
 	   	registry.register(BlockMegydrea);
 	   	registry.register(BlockThickAlgae);
 	   	registry.register(BlockArchePortal);
+	   	registry.register(BlockDarkGlass);
 	   	
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);

@@ -1,11 +1,11 @@
 package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import com.valeriotor.beyondtheveil.util.BTVChunkCache;
 
@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 public class DeepCity {
 	private List<DeepCityStructure> components = new LinkedList<>();
 	private Map<Long, BTVChunkCache> chunks = new HashMap<>();
-	private Set<Long> usedChunks = new HashSet<>();
+	private Map<Long, Boolean> usedChunks = new LinkedHashMap<>();
 	private World world;
 	private BlockPos center;
-	private boolean generated = false;
+	private volatile boolean generated = false;
 	
 	public DeepCity(World w, BlockPos pos) {
 		this.world = w;
@@ -36,9 +36,11 @@ public class DeepCity {
 	}
 	
 	public synchronized void generate() {
-		DeepCityLayout layout = new DeepCityLayout(world.rand, center);
-		layout.generate();
-		components = layout.getAsList();
+		if(components.isEmpty()) {
+			DeepCityLayout layout = new DeepCityLayout(world.rand, center);
+			layout.generate();
+			components = layout.getAsList();
+		}
 		for(DeepCityStructure dcs : components) {
 			dcs.generate(chunks, usedChunks);
 		}
@@ -47,7 +49,7 @@ public class DeepCity {
 	
 	public boolean intersects(int chunkX, int chunkZ) {
 		long pos = ChunkPos.asLong(chunkX, chunkZ);
-		return chunks.containsKey(pos) || usedChunks.contains(pos) /*|| distance too small*/;
+		return usedChunks.containsKey(pos) /*|| distance too small*/;
 	}
 	
 	public synchronized void generateChunk(int chunkX, int chunkZ) {
@@ -55,7 +57,7 @@ public class DeepCity {
 		BTVChunkCache cache = chunks.remove(ChunkPos.asLong(chunkX, chunkZ));
 		if(cache != null) {
 			cache.generate(world, chunkX, chunkZ);
-			usedChunks.add(ChunkPos.asLong(chunkX, chunkZ));
+			usedChunks.put(ChunkPos.asLong(chunkX, chunkZ), Boolean.valueOf(true));
 		}
 	}
 	
@@ -79,8 +81,11 @@ public class DeepCity {
 	private void writeUsedChunks(NBTTagCompound nbt) {
 		NBTTagCompound usedChunksNBT = new NBTTagCompound();
 		int index = 0;
-		for(Long l : usedChunks) {
-			usedChunksNBT.setLong(String.format("l%d", index++), l);
+		for(Entry<Long, Boolean> l : usedChunks.entrySet()) {
+			NBTTagCompound chunkNBT = new NBTTagCompound();
+			chunkNBT.setLong("l", l.getKey());
+			chunkNBT.setBoolean("v", l.getValue());
+			usedChunksNBT.setTag(String.format("c%d", index++), chunkNBT);
 		}
 		nbt.setTag("usedChunks", usedChunksNBT);
 	}
@@ -100,7 +105,8 @@ public class DeepCity {
 	
 	private void readUsedChunks(NBTTagCompound usedChunksNBT) {
 		for(String s : usedChunksNBT.getKeySet()) {
-			usedChunks.add(usedChunksNBT.getLong(s));
+			NBTTagCompound nbt = usedChunksNBT.getCompoundTag(s);
+			usedChunks.put(nbt.getLong("l"), nbt.getBoolean("v"));
 		}
 	}
 	

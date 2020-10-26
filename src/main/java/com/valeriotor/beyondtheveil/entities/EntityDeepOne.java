@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AISpook;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraft.block.Block;
@@ -95,7 +96,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 	        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.5D, true));
-	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
+	        this.tasks.addTask(6, new DeepOneWander(this, 1.0D));
 	        this.tasks.addTask(2, new AISpook(this));
 	        this.targetTasks.addTask(1, new AIProtectMaster(this));
 	        this.targetTasks.addTask(2, new AIRevenge(this));
@@ -320,7 +321,24 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
 		return isInWater() ? 8 : 15;
 	}
 	 
-	 
+	 public static class DeepOneWander extends EntityAIWander {
+
+		public DeepOneWander(EntityCreature creatureIn, double speedIn) {
+			super(creatureIn, speedIn);
+		}
+		
+		@Override
+		public boolean shouldExecute() {
+			boolean flag = super.shouldExecute();
+			if( flag &&
+				entity.dimension == DimensionRegistry.ARCHE.getId() &&
+				!entity.isInWater() && 
+				entity.world.getBlockState(new BlockPos(x,y,z)).getBlock() == Blocks.WATER)
+				return false;
+			return flag;
+		}
+		 
+	 }
 	 
 
 }

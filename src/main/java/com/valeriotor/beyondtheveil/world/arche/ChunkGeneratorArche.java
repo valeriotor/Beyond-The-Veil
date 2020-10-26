@@ -222,6 +222,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
         	int x = chunkX << 4;
         	int z = chunkZ << 4;
         	final BlockPos center = new BlockPos(x, 33, z);
+        	DeepCityList list = DeepCityList.get(world);
         	for(EnumFacing face : EnumFacing.HORIZONTALS) {
         		for(EnumFacing face2 : EnumFacing.HORIZONTALS) {
         			if(face == face2.getOpposite()) continue;
@@ -230,7 +231,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
 	        		int newChunkZ = newPos.getZ() >> 4;
 	        		int newChunkXMod1024 = newChunkX & 63;
 	        		int newChunkZMod1024 = newChunkZ & 63;
-		        	if(DeepCityList.get(world).isFarEnough(x, z, 720)) {
+		        	if(list.isFarEnough(x, z, 720) && list.getCity(chunkX, chunkZ) == null) {
 	        			boolean generated = world.isChunkGeneratedAt(newChunkX, newChunkZ);
 		        		if(isSuitablePositionForCity(newPos)) {
 		        			DeepCity city = new DeepCity(world, newPos);

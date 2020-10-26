@@ -12,6 +12,7 @@ import java.util.Set;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.items.TestItem.JSonStructureBuilder;
 import com.valeriotor.beyondtheveil.util.BTVChunkCache;
 import com.valeriotor.beyondtheveil.util.BlockCoords;
@@ -50,6 +51,8 @@ public class DeepCityStructureTemplate {
 					air = new BlockCoords(entry);
 				} else if(entry.getKey() == Blocks.DIRT) {
 					registerDoors(entry.getValue());
+				} else if(entry.getKey() == Blocks.GLASS) {
+					coords.add(new BlockCoords(BlockRegistry.BlockDarkGlass, entry.getValue()));
 				} else {
 					coords.add(new BlockCoords(entry));
 				}
@@ -82,14 +85,14 @@ public class DeepCityStructureTemplate {
 		}
 	}
 	
-	public void generate(BlockPos center, Map<Long, BTVChunkCache> chunks, Set<Long> usedChunks) {
+	public void generate(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		for(BlockCoords bc : coords) {
 			bc.generate(center, chunks, usedChunks);
 		}
 	}
 	
-	public void generateDoor(BlockPos center, Map<Long, BTVChunkCache> chunks, Set<Long> usedChunks, EnumFacing facing, boolean corridor) {
-		IBlockState state = corridor ? Blocks.AIR.getDefaultState() : Blocks.GLASS.getDefaultState();
+	public void generateDoor(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, EnumFacing facing, boolean corridor) {
+		IBlockState state = corridor ? Blocks.AIR.getDefaultState() : BlockRegistry.BlockDarkGlass.getDefaultState();
 		byte[][] coords = doors.get(facing);
 		BlockPos offsetCenter = null;;
 		for(byte[] coord : coords) {
@@ -98,11 +101,16 @@ public class DeepCityStructureTemplate {
 			int chunkZ = offsetCenter.getZ() >> 4;
 			Long cPos = ChunkPos.asLong(chunkX, chunkZ);
 			BTVChunkCache cache = chunks.get(cPos);
+			if(cache == null) {
+				cache = new BTVChunkCache();
+				chunks.put(cPos, cache);
+			}
 			cache.setBlockState(offsetCenter, state);
 		}
 	}
 	
-	public void generateCorridor(BlockPos center, Map<Long, BTVChunkCache> chunks, Set<Long> usedChunks, EnumFacing facing) {
+	public void generateCorridor(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, EnumFacing facing) {
+		IBlockState glass = BlockRegistry.BlockDarkGlass.getDefaultState();
 		int distance = DeepCityLayout.INDIVIDUAL_WIDTH/2 + 1  - distanceDoorFromCenter;
 		BlockPos pos = center.offset(EnumFacing.UP, DOOR_HEIGHT).offset(facing, distanceDoorFromCenter);
 		BlockPos fromAir = pos.offset(facing.rotateYCCW(), 1).up();
@@ -116,13 +124,13 @@ public class DeepCityStructureTemplate {
 		BlockPos fromPrismarineFloor = pos.offset(facing.rotateYCCW(), 2);
 		BlockPos toPrismarineFloor   = pos.offset(facing.rotateYCCW().getOpposite(), 2).offset(facing, distance);
 		fillWithBlocks(fromPrismarineFloor, toPrismarineFloor, Blocks.PRISMARINE.getStateFromMeta(BlockPrismarine.DARK_META), chunks, usedChunks);
-		fillWithBlocks(fromGlassCeiling, toGlassCeiling, Blocks.GLASS.getDefaultState(), chunks, usedChunks);
-		fillWithBlocks(fromRightGlass, toRightGlass, Blocks.GLASS.getDefaultState(), chunks, usedChunks);
-		fillWithBlocks(fromLeftGlass, toLeftGlass, Blocks.GLASS.getDefaultState(), chunks, usedChunks);
+		fillWithBlocks(fromGlassCeiling, toGlassCeiling, glass, chunks, usedChunks);
+		fillWithBlocks(fromRightGlass, toRightGlass, glass, chunks, usedChunks);
+		fillWithBlocks(fromLeftGlass, toLeftGlass, glass, chunks, usedChunks);
 		fillWithBlocks(fromAir, toAir, Blocks.AIR.getDefaultState(), chunks, usedChunks);
 	}
 	
-	private void fillWithBlocks(BlockPos from, BlockPos to, IBlockState state, Map<Long,BTVChunkCache> chunks, Set<Long> usedChunks) {
+	private void fillWithBlocks(BlockPos from, BlockPos to, IBlockState state, Map<Long,BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		MutableBlockPos pos = new MutableBlockPos();
 		for(int x = Math.min(from.getX(), to.getX()); x <= Math.max(from.getX(), to.getX()); x++) {
 			for(int y = Math.min(from.getY(), to.getY()); y <= Math.max(from.getY(), to.getY()); y++) {
@@ -130,7 +138,9 @@ public class DeepCityStructureTemplate {
 					int chunkX = x >> 4;
 					int chunkZ = z >> 4;
 					long cPos = ChunkPos.asLong(chunkX, chunkZ);
-					if(!usedChunks.contains(cPos)) {
+					if(!usedChunks.containsKey(cPos)) 
+						usedChunks.put(cPos, false);
+					if(!usedChunks.get(cPos)) {
 						pos.setPos(x, y, z);
 						BTVChunkCache cache = chunks.get(cPos);
 						if(cache == null) {
