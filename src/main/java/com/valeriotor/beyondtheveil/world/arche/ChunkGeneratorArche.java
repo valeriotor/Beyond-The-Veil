@@ -221,7 +221,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
         if(xMod128 == 0 && zMod128 == 0 && xMod1024 != 0 && zMod1024 != 0) {  // are the chunk coords multiples of 128 but not 1024? (away from blood homes)
         	int x = chunkX << 4;
         	int z = chunkZ << 4;
-        	final BlockPos center = new BlockPos(x, 33, z);
+        	final BlockPos center = new BlockPos(x, 27, z);
         	DeepCityList list = DeepCityList.get(world);
         	for(EnumFacing face : EnumFacing.HORIZONTALS) {
         		for(EnumFacing face2 : EnumFacing.HORIZONTALS) {

@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class DeepCityLayout {
 	private static final int MAX_BRANCH_LENGTH = 6;
-	public static final int INDIVIDUAL_WIDTH = 31;
+	public static final int INDIVIDUAL_WIDTH = 41;
 	private final Map<Point, DeepCityStructure> map = new HashMap<>();
 	private final Set<Connection> connections = new LinkedHashSet<>();
 	private final BlockPos center;

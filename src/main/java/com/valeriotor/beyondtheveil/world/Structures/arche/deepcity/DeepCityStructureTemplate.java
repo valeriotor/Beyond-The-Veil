@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 public class DeepCityStructureTemplate {
-	private static final int DOOR_HEIGHT = 7;
+	private static final int DOOR_HEIGHT = 18;
 	private List<BlockCoords> coords = new ArrayList<>();
 	private EnumMap<EnumFacing, byte[][]> doors = new EnumMap(EnumFacing.class);
 	private final String name;
@@ -51,8 +51,8 @@ public class DeepCityStructureTemplate {
 					air = new BlockCoords(entry);
 				} else if(entry.getKey() == Blocks.DIRT) {
 					registerDoors(entry.getValue());
-				} else if(entry.getKey() == Blocks.GLASS) {
-					coords.add(new BlockCoords(BlockRegistry.BlockDarkGlass, entry.getValue()));
+				} else if(entry.getKey() == Blocks.STONE) {
+					coords.add(new BlockCoords(Blocks.WATER, entry.getValue()));
 				} else {
 					coords.add(new BlockCoords(entry));
 				}
