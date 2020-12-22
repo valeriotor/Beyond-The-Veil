@@ -104,7 +104,7 @@ public class DGWorshipHelper {
 	}
 	
 	public static void calculateModifier(EntityPlayer p) {
-		double attack = 1;
+		double attack = 0;
 		double defense = 1;
 		int dream = 0;
 		for(Entry<String, DGResearch> entry : researches.entrySet()) {

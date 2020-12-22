@@ -18,13 +18,14 @@ public class GreatDreamerBuffs {
 	public static void applyAttackModifier(LivingHurtEvent e) {
 		EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
 		if(Worship.getSelectedDeity(p) != Deities.GREATDREAMER) return;
-		
+		double val = e.getAmount();
 		double modifier = DGWorshipHelper.getAttackModifier(p);
 		if(p.isInWater()) {
-			e.setAmount((float) (e.getAmount()*modifier*modifier));
+			double newModifier = (1+modifier);
+			e.setAmount((float) (e.getAmount()*newModifier*newModifier));
 			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) e.setAmount((float)(e.getAmount()*modifier));
 		}
-		else e.setAmount((float) (e.getAmount()*modifier));
+		else e.setAmount((float) (e.getAmount()*(1+modifier/2)));
 	}
 	
 	public static void applyDefenseModifier(LivingHurtEvent e) {
