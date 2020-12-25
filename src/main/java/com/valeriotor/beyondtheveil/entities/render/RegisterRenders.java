@@ -2,17 +2,7 @@ package com.valeriotor.beyondtheveil.entities.render;
 
 import java.util.function.Function;
 
-import com.valeriotor.beyondtheveil.entities.EntityBloodSkeleton;
-import com.valeriotor.beyondtheveil.entities.EntityBloodZombie;
-import com.valeriotor.beyondtheveil.entities.EntityCanoe;
-import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
-import com.valeriotor.beyondtheveil.entities.EntityCrazedWeeper;
-import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
-import com.valeriotor.beyondtheveil.entities.EntityFletum;
-import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
-import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
-import com.valeriotor.beyondtheveil.entities.EntitySurgeon;
-import com.valeriotor.beyondtheveil.entities.EntityWeeper;
+import com.valeriotor.beyondtheveil.entities.*;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
@@ -53,6 +43,7 @@ public class RegisterRenders {
 		register(EntitySarfin.class, RenderSarfin::new);
 		register(EntityManOWar.class, RenderManOWar::new);
 		register(EntityJelly.class, RenderJelly::new);
+		register(EntityDeepOneBrute.class, RenderDeepOneBrute::new);
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));

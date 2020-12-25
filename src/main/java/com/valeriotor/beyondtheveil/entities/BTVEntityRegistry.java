@@ -51,6 +51,7 @@ public class BTVEntityRegistry {
 		register("sarfin", EntitySarfin.class, count++ , 128);
 		register("man_o_war", EntityManOWar.class, count++ , 128);
 		register("jelly", EntityJelly.class, count++ , 128);
+		register("deep_one_brute", EntityDeepOneBrute.class, count++ , 128);
 		
 		registerSpawnPlacementTypes();
 		
