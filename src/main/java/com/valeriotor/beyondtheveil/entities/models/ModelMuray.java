@@ -114,11 +114,6 @@ public class ModelMuray extends ModelAnimated {
 		Tail.render(f5);
 		Head.render(f5);
 	}
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
-	}
 	
 	@Override
 	public void setLivingAnimations(EntityLivingBase ent, float limbSwing, float limbSwingAmount,

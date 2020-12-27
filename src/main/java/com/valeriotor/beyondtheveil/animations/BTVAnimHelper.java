@@ -77,13 +77,14 @@ public class BTVAnimHelper {
 	
 	private ModelAnimated getModel(String s){
 		switch(s) {
-		case "deep_one": return ModelRegistry.deep_one;
-		case "shoggoth": return ModelRegistry.shoggoth;
-		case "blood_zombie": return ModelRegistry.blood_zombie;
-		case "blood_skeleton": return ModelRegistry.blood_skeleton;
-		case "crazed_weeper" : return ModelRegistry.crazed_weeper;
-		case "surgeon" : return ModelRegistry.surgeon;
-		case "muray" : return ModelRegistry.muray;
+			case "deep_one": return ModelRegistry.deep_one;
+			case "shoggoth": return ModelRegistry.shoggoth;
+			case "blood_zombie": return ModelRegistry.blood_zombie;
+			case "blood_skeleton": return ModelRegistry.blood_skeleton;
+			case "crazed_weeper" : return ModelRegistry.crazed_weeper;
+			case "surgeon" : return ModelRegistry.surgeon;
+			case "muray" : return ModelRegistry.muray;
+			case "deep_one_brute" : return ModelRegistry.deepOneBrute;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;

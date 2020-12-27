@@ -21,6 +21,8 @@ public class AnimationRegistry {
 	public static AnimationTemplate surgeon_surgery;
 	public static AnimationTemplate surgeon_attack;
 	public static AnimationTemplate muray_bite;
+	public static AnimationTemplate deep_one_brute_left_swing;
+	public static AnimationTemplate deep_one_brute_right_swing;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations() {
@@ -40,6 +42,8 @@ public class AnimationRegistry {
 		surgeon_surgery = new AnimationTemplate("surgeon_surgery");
 		surgeon_attack = new AnimationTemplate("surgeon_attack");
 		muray_bite = new AnimationTemplate("muray_bite");
+		deep_one_brute_left_swing = new AnimationTemplate("deep_one_brute_left_swing");
+		deep_one_brute_right_swing = new AnimationTemplate("deep_one_brute_right_swing");
 		anims.clear();
 		anims.add(deep_one_roar);
 		anims.add(shoggoth_open_mouth);
@@ -57,6 +61,8 @@ public class AnimationRegistry {
 		anims.add(surgeon_surgery);
 		anims.add(surgeon_attack);
 		anims.add(muray_bite);
+		anims.add(deep_one_brute_left_swing);
+		anims.add(deep_one_brute_right_swing);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {
