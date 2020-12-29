@@ -1,4 +1,4 @@
-length: 68
+length: 25
 model: deep_one_brute
 keys
 	LBody: 0
@@ -12,7 +12,7 @@ keys
 	RULeg: 19
 	RLLeg: 20
 end
-start: 0: 8
+start: 0: 3
 	LBody: rotx: -0.5
 	Body: rotx: -0.2254
 	Body: roty: -0.4
@@ -28,27 +28,27 @@ start: 0: 8
 	LUArm: roty: -0.47
 	RUArm: roty: 0.22
 end
-start: 9: 15
+start: 4: 6
 	LBody: rotx: -0.1
 	Body: rotx: -0.06
 	Body: roty: -0.1
 	LUArm: roty: -0.1
 	RUArm: roty: 0.05
 end
-start: 18: 25
+start: 8: 12
 	LUArm: rotz: 1.2: quadratic
 	Body: rotx: -0.25: quadratic
 	Body: roty: 1.2: quadratic
 	LUArm: roty: 0.9: quadratic
 	RUArm: roty: 0.5: quadratic
 end
-start: 26: 42
+start: 13: 16
 	Body: rotx: -0.1
 	Body: roty: 0.4
 	LUArm: roty: 0.3
 	RUArm: roty: 0.1
 end
-start: 43: 67
+start: 17: 24
 	LBody: rotx: 0.6
 	Body: rotx: 0.6354
 	Body: roty: -1.1

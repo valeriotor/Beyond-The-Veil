@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelDeepOneBrute extends ModelAnimated {
 	private final ModelRenderer start;				// 0
@@ -192,6 +193,10 @@ public class ModelDeepOneBrute extends ModelAnimated {
 	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
 		setAngles(false);
 		EntityDeepOneBrute e = (EntityDeepOneBrute)entitylivingbaseIn;
+		left_leg.rotateAngleY = -0.9599F + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount;
+		right_leg.rotateAngleY = 0.9599F - MathHelper.cos(limbSwing * 0.3F + (float)Math.PI) * limbSwingAmount;
+		right_arm.rotateAngleX = 0.1745F + MathHelper.cos(limbSwing * 0.45F) * limbSwingAmount / 1.5F;
+		left_arm.rotateAngleX = 0.1745F - MathHelper.cos(limbSwing * 0.45F + (float)Math.PI) * limbSwingAmount / 1.5F;
 		Animation a = e.getAttackAnimation();
 		if(a != null) {
 			a.applyTransformations(bodyParts, partialTickTime);
