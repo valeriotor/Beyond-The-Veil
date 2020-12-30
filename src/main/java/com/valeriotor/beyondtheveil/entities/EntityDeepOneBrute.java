@@ -7,7 +7,9 @@ import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AITelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
+import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -113,22 +115,30 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
         AttackArea rightSwingArea = AttackArea.getConeAttack(3.8, 30, 90);
         AttackArea leftSwingFollowupArea = AttackArea.getConeAttack(3.5, 90, 30);
         AttackArea rightSwingFollowupArea = AttackArea.getConeAttack(3.5, 30, 90);
+        AttackArea smashArea = AttackArea.getCircleAttack(5);
         TelegraphedAttackTemplate leftFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_followup_swing, 22, 6, 28, leftSwingFollowupArea, 5.2, 3);
         TelegraphedAttackTemplate rightFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_followup_swing, 22, 6, 28, rightSwingFollowupArea, 5.2, 3);
 
         TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2)
-                .setKnockback(3)
+                .setKnockback(2.5)
                 .addFollowup(rightFollowupSwing, 10)
                 .setFollowupTime(15)
                 .build();
 
         TelegraphedAttackTemplate rightSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_right_swing, 25, 9, 30, rightSwingArea, 4.2)
-                .setKnockback(3)
+                .setKnockback(2.5)
                 .addFollowup(leftFollowupSwing, 10)
                 .setFollowupTime(15)
                 .build();
+
+        TelegraphedAttackTemplate smash = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
+                .setKnockback(4.5)
+                .setAttackSound(BTVSounds.deep_one_brute_smash)
+                .build();
+
         attacks.addAttack(leftSwing, 10);
         attacks.addAttack(rightSwing, 10);
+        attacks.addAttack(smash, 6);
         ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
     }
 

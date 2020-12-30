@@ -146,5 +146,10 @@
 			"beyondtheveil:surgeon_idle0",
 			"beyondtheveil:surgeon_idle1"
 		]
+	},
+	"deep_one_brute_smash": {
+		"sounds": [
+			"beyondtheveil:deep_one_brute_smash"
+		]
 	}
 }

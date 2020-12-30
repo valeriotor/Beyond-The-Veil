@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities.AI.attacks;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.animations.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
+import net.minecraft.util.SoundEvent;
 
 import java.util.Optional;
 
@@ -16,16 +17,18 @@ public class TelegraphedAttackTemplate {
     private final double knockback;
     private final AttackList followups;
     private final int followupTime;
+    private final SoundEvent damageSound;
+    private final SoundEvent attackSound;
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
         this(animation, duration, damageTime, damage, attackArea, triggerDistance, 0);
     }
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
-        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1);
+        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null);
     }
 
-    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime) {
+    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound) {
         this.animation = animation;
         this.duration = duration;
         this.damageTime = damageTime;
@@ -35,6 +38,8 @@ public class TelegraphedAttackTemplate {
         this.knockback = knockback;
         this.followups = AttackList.immutableAttackListOf(followups);
         this.followupTime = followupTime;
+        this.damageSound = damageSound;
+        this.attackSound = attackSound;
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
@@ -73,6 +78,14 @@ public class TelegraphedAttackTemplate {
         return followupTime;
     }
 
+    public SoundEvent getDamageSound() {
+        return damageSound;
+    }
+
+    public SoundEvent getAttackSound() {
+        return attackSound;
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
         private AnimationTemplate animation;
         private int duration;
@@ -83,6 +96,8 @@ public class TelegraphedAttackTemplate {
         private double knockback;
         private AttackList followups = new AttackList();
         private int followupTime = -1;
+        private SoundEvent damageSound;
+        private SoundEvent attackSound;
 
         public TelegraphedAttackTemplateBuilder(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
             this.animation = animation;
@@ -148,8 +163,18 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
+        public TelegraphedAttackTemplateBuilder setDamageSound(SoundEvent damageSound) {
+            this.damageSound = damageSound;
+            return this;
+        }
+
+        public TelegraphedAttackTemplateBuilder setAttackSound(SoundEvent attackSound) {
+            this.attackSound = attackSound;
+            return this;
+        }
+
         public TelegraphedAttackTemplate build() {
-            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime);
+            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound);
         }
 
     }
