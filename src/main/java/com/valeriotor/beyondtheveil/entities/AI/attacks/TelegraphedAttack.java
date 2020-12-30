@@ -7,6 +7,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class TelegraphedAttack {
 
@@ -37,5 +39,14 @@ public class TelegraphedAttack {
 
     public boolean isDone() {
         return template.isDone(counter);
+    }
+
+    public boolean isFollowupTime() {
+        return counter == template.getFollowupTime();
+    }
+
+    public Optional<TelegraphedAttackTemplate> getFollowupAttack(Random rand, double distance) {
+        template.getFollowups();
+        return template.getFollowups().getRandomAttack(rand, distance);
     }
 }

@@ -28,11 +28,11 @@ public class AnimationTemplate {
 	public AnimationTemplate(String name) {
 		this.name = name;
 		ResourceLocation location = new ResourceLocation(References.MODID, String.format("animations/%s.btvanim", name));
-		InputStream stream = null;
+
 		BTVAnimHelper processor = new BTVAnimHelper(name, this);
-		try {
-			stream = Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+		try(InputStream stream = Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream))) {
+
 			HashMap<String, Integer> keys = new HashMap<>();
 			HashMap<Integer, EnumMap<Transformation, List<IntervalDoubleBiOperator>>> map = new HashMap<>();
 			String s;

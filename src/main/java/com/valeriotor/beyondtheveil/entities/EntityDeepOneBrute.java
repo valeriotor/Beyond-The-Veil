@@ -26,6 +26,7 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
 
     public EntityDeepOneBrute(World worldIn) {
         super(worldIn);
+        setSize(1.8F, 2);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
         getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(0.1D);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
+        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(10D);
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8D);
@@ -64,23 +65,11 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
     protected void initEntityAI() {
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.tasks.addTask(2, new AITelegraphedAttack(this, 1.5D, true, makeAttacks()));
+        this.tasks.addTask(2, new AITelegraphedAttack(this, 1.5D, true, ATTACK_LIST));
         this.tasks.addTask(6, new EntityDeepOne.DeepOneWander(this, 1.0D));
         this.targetTasks.addTask(1, new AIProtectMaster(this));
         this.targetTasks.addTask(2, new AIRevenge(this));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true, false));
-    }
-
-    private AttackList makeAttacks() {
-        AttackList attacks = new AttackList();
-        AttackArea leftSwingArea = AttackArea.getConeAttack(3.8, 90, 30);
-        AttackArea rightSwingArea = AttackArea.getConeAttack(3.8, 30, 90);
-        TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2, 3);
-        TelegraphedAttackTemplate rightSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_swing, 25, 9, 30, rightSwingArea, 4.2, 3);
-        attacks.addAttack(leftSwing, 10);
-        attacks.addAttack(rightSwing, 10);
-
-        return attacks;
     }
 
     @Override
@@ -113,6 +102,34 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
     {
         super.removeTrackingPlayer(player);
         this.bossInfo.removePlayer(player);
+    }
+
+
+    private static final AttackList ATTACK_LIST;
+
+    static {
+        AttackList attacks = new AttackList();
+        AttackArea leftSwingArea = AttackArea.getConeAttack(3.8, 90, 30);
+        AttackArea rightSwingArea = AttackArea.getConeAttack(3.8, 30, 90);
+        AttackArea leftSwingFollowupArea = AttackArea.getConeAttack(3.5, 90, 30);
+        AttackArea rightSwingFollowupArea = AttackArea.getConeAttack(3.5, 30, 90);
+        TelegraphedAttackTemplate leftFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_followup_swing, 22, 6, 28, leftSwingFollowupArea, 5.2, 3);
+        TelegraphedAttackTemplate rightFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_followup_swing, 22, 6, 28, rightSwingFollowupArea, 5.2, 3);
+
+        TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2)
+                .setKnockback(3)
+                .addFollowup(rightFollowupSwing, 10)
+                .setFollowupTime(15)
+                .build();
+
+        TelegraphedAttackTemplate rightSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_right_swing, 25, 9, 30, rightSwingArea, 4.2)
+                .setKnockback(3)
+                .addFollowup(leftFollowupSwing, 10)
+                .setFollowupTime(15)
+                .build();
+        attacks.addAttack(leftSwing, 10);
+        attacks.addAttack(rightSwing, 10);
+        ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
     }
 
 }
