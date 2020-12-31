@@ -38,7 +38,7 @@ public class BTVAnimHelper {
 			if(ss.length < 2) return; // line might be blank
 			String func = ss.length == 3 ? "linear" : ss[3];
 			Transformation trans = getTransform(ss[1]);
-			double amount = Double.valueOf(ss[2]);
+			double amount = Double.parseDouble(ss[2]);
 			DoubleBinaryOperator op = getOperator(func, start, end, amount);
 			Integer key = keys.get(ss[0]);
 			if(transforms.containsKey(key)) {
@@ -50,14 +50,14 @@ public class BTVAnimHelper {
 				}
 			}			
 			else {
-				transforms.put(key, new EnumMap(Transformation.class));
+				transforms.put(key, new EnumMap<>(Transformation.class));
 				transforms.get(key).put(getTransform(ss[1]), new ArrayList<>());
 				transforms.get(key).get(trans).add(new IntervalDoubleBiOperator(op, start, end, amount));
 			}
 		}
 		
 		if(s.contains("length: ")) {
-			this.template.length = Integer.valueOf(s.split(":")[1].replaceAll("\\s+", ""));
+			this.template.length = Integer.parseInt(s.split(":")[1].replaceAll("\\s+", ""));
 		}else if(s.contains("entity:")) {
 			this.template.entityType = this.getEntity(s.split(":")[1].replaceAll("\\s+", ""));
 		}else if(s.contains("model:")) {
@@ -92,22 +92,17 @@ public class BTVAnimHelper {
 	}
 	
 	private DoubleBinaryOperator getOperator(String func, final int start, final int end, final double amount) {
-		DoubleBinaryOperator op = null;
 		switch(func) {
-		case "stop": op = (a, b) -> b;
-			break;
-		case "linear": op = (a, b) -> b+(a-start)/(end-start)*amount; 
-			break;
-		case "quadratic": op = (a, b) -> b+Math.pow((a-start)/(end-start), 2)*amount;
-			break;
-		case "sin": op = (a, b) -> b+Math.sin((a-start)/(end-start)*Math.PI/2)*amount;
-			break;
-		case "costant": op = (a, b) -> b+amount;
-			break; 
-		case "newcostant": op = (a, b) -> amount;
-			break; 
+			case "stop": 		return  (a, b) -> b;
+			case "linear": 		return  (a, b) -> b+(a-start)/(end-start)*amount;
+			case "quadratic": 	return  (a, b) -> b+Math.pow((a-start)/(end-start), 2)*amount;
+			case "sin": 		return  (a, b) -> b+Math.sin((a-start)/(end-start)*Math.PI/2)*amount;
+			case "constant":
+			case "costant": 	return  (a, b) -> b+amount;
+			case "newconstant":
+			case "newcostant": 	return  (a, b) -> amount;
 		}
-		return op;
+		throw new IllegalArgumentException();
 	}
 	
 	private Transformation getTransform(String s) {
