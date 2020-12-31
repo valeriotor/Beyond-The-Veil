@@ -151,5 +151,10 @@
 		"sounds": [
 			"beyondtheveil:deep_one_brute_smash"
 		]
+	},
+	"deep_one_brute_roar": {
+		"sounds": [
+			"beyondtheveil:deep_one_brute_roar"
+		]
 	}
 }

@@ -5,7 +5,6 @@ keys
 	Body: 1
 	Head: 2
 	LUArm: 12
-	LFArm: 13
 	RUArm: 14
 	LULeg: 17
 	LLLeg: 18

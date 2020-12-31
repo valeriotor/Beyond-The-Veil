@@ -26,6 +26,7 @@ public class AnimationRegistry {
 	public static AnimationTemplate deep_one_brute_right_followup_swing;
 	public static AnimationTemplate deep_one_brute_left_followup_swing;
 	public static AnimationTemplate deep_one_brute_smash;
+	public static AnimationTemplate deep_one_brute_roar_followup;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations() {
@@ -50,6 +51,7 @@ public class AnimationRegistry {
 		deep_one_brute_right_followup_swing = new AnimationTemplate("deep_one_brute/right_followup_swing");
 		deep_one_brute_left_followup_swing = new AnimationTemplate("deep_one_brute/left_followup_swing");
 		deep_one_brute_smash = new AnimationTemplate("deep_one_brute/smash");
+		deep_one_brute_roar_followup = new AnimationTemplate("deep_one_brute/roar_followup");
 		anims.clear();
 		anims.add(deep_one_roar);
 		anims.add(shoggoth_open_mouth);
@@ -72,6 +74,7 @@ public class AnimationRegistry {
 		anims.add(deep_one_brute_right_followup_swing);
 		anims.add(deep_one_brute_left_followup_swing);
 		anims.add(deep_one_brute_smash);
+		anims.add(deep_one_brute_roar_followup);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {

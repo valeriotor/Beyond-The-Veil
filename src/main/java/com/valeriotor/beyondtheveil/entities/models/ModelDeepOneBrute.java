@@ -197,19 +197,7 @@ public class ModelDeepOneBrute extends ModelAnimated {
 		right_leg.rotateAngleY = 0.9599F - MathHelper.cos(limbSwing * 0.3F + (float)Math.PI) * limbSwingAmount;
 		right_arm.rotateAngleX = 0.1745F + MathHelper.cos(limbSwing * 0.45F) * limbSwingAmount / 1.5F;
 		left_arm.rotateAngleX = 0.1745F - MathHelper.cos(limbSwing * 0.45F + (float)Math.PI) * limbSwingAmount / 1.5F;
-		/*
-		start.rotateAngleX = 0.3491F - 0.5F;
-		head.rotateAngleX = 0.3491F + 0.9F;
-		higher_body.rotateAngleX = 0.7854F - 0.7F;
-		left_leg.rotateAngleZ =  0.9599F + 0.55F;
-		right_leg.rotateAngleZ = -0.9599F -0.55F;
-		left_lower_leg.rotateAngleX = 0;
-		right_lower_leg.rotateAngleX = 0;
-		left_leg.offsetY = -0.3F;
-		right_leg.offsetY = -0.3F;
-		right_lower_leg.offsetY = 0.13F;
-		right_arm.rotateAngleX = 0.1745F - 1.4F;
-		left_arm.rotateAngleX = 0.1745F - 1.4F;*/
+
 		Animation a = e.getAttackAnimation();
 		if(a != null) {
 			a.applyTransformations(bodyParts, partialTickTime);

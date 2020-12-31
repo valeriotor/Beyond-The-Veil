@@ -47,7 +47,10 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
             }
         } else {
             if(this.getHealth() < this.getMaxHealth() && (this.ticksExisted & 7) == 0) {
-                this.heal(1);
+                if(this.getHealth() < this.getMaxHealth() / 2)
+                    this.heal(rand.nextInt(2)+1);
+                else
+                    this.heal(1);
             }
         }
     }
@@ -116,8 +119,13 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
         AttackArea leftSwingFollowupArea = AttackArea.getConeAttack(3.5, 90, 30);
         AttackArea rightSwingFollowupArea = AttackArea.getConeAttack(3.5, 30, 90);
         AttackArea smashArea = AttackArea.getCircleAttack(5);
-        TelegraphedAttackTemplate leftFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_followup_swing, 22, 6, 28, leftSwingFollowupArea, 5.2, 3);
-        TelegraphedAttackTemplate rightFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_followup_swing, 22, 6, 28, rightSwingFollowupArea, 5.2, 3);
+        AttackArea roarArea = AttackArea.getCircleAttack(7);
+        TelegraphedAttackTemplate leftFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_followup_swing, 22, 6, 28, leftSwingFollowupArea, 5.2, 2.5);
+        TelegraphedAttackTemplate rightFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_followup_swing, 22, 6, 28, rightSwingFollowupArea, 5.2, 2.5);
+        TelegraphedAttackTemplate roarFollowupSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_roar_followup, 23, 7, 1, roarArea, 12.2)
+                .setKnockback(4.5)
+                .setAttackSound(BTVSounds.deep_one_brute_roar)
+                .build();
 
         TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2)
                 .setKnockback(2.5)
@@ -134,6 +142,9 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
         TelegraphedAttackTemplate smash = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
                 .setKnockback(4.5)
                 .setAttackSound(BTVSounds.deep_one_brute_smash)
+                .addFollowup(roarFollowupSwing, 7)
+                .setNoFollowupAttackWeight(10)
+                .setFollowupTime(12)
                 .build();
 
         attacks.addAttack(leftSwing, 10);

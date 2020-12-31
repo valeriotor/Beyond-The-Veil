@@ -93,6 +93,9 @@ public final class BTVSounds {
 	@ObjectHolder("deep_one_brute_smash")
 	public static final SoundEvent deep_one_brute_smash = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_brute_smash")).setRegistryName("deep_one_brute_smash");
 
+	@ObjectHolder("deep_one_brute_roar")
+	public static final SoundEvent deep_one_brute_roar = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_brute_roar")).setRegistryName("deep_one_brute_roar");
+
 	private static final List<SoundEvent> SOUNDS;
 
 	static {
@@ -124,6 +127,7 @@ public final class BTVSounds {
 		sounds.add(shoggoth_idle);
 		sounds.add(surgeon_idle);
 		sounds.add(deep_one_brute_smash);
+		sounds.add(deep_one_brute_roar);
 		SOUNDS = ImmutableList.copyOf(sounds);
 	}
 

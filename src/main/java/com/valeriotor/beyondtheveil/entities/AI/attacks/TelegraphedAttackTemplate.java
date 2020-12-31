@@ -6,9 +6,10 @@ import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import net.minecraft.util.SoundEvent;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class TelegraphedAttackTemplate {
-    private final AnimationTemplate animation;
+    private final int animationID;
     private final int duration;
     private final int damageTime;
     private final float damage;
@@ -29,7 +30,7 @@ public class TelegraphedAttackTemplate {
     }
 
     private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound) {
-        this.animation = animation;
+        this.animationID = AnimationRegistry.getIdFromAnimation(animation);
         this.duration = duration;
         this.damageTime = damageTime;
         this.attackArea = attackArea;
@@ -43,7 +44,7 @@ public class TelegraphedAttackTemplate {
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
-        attacker.sendAnimation(AnimationRegistry.getIdFromAnimation(animation));
+        attacker.sendAnimation(AnimationRegistry.getIdFromAnimation(AnimationRegistry.getAnimationFromId(animationID)));
     }
 
     public boolean isDone(int ticks) {
