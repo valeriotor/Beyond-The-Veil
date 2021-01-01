@@ -7,10 +7,8 @@ import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AITelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
-import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -18,9 +16,11 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAnimatedAttacker {
     private Animation attackAnimation;
@@ -139,18 +139,32 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
                 .setFollowupTime(15)
                 .build();
 
-        TelegraphedAttackTemplate smash = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
+        TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder smashBuilder = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
                 .setKnockback(4.5)
                 .setAttackSound(BTVSounds.deep_one_brute_smash)
                 .addFollowup(roarFollowupSwing, 7)
                 .setNoFollowupAttackWeight(10)
-                .setFollowupTime(12)
-                .build();
+                .setFollowupTime(12);
+        addSmashParticles(smashBuilder);
+
+        TelegraphedAttackTemplate smash = smashBuilder.build();
 
         attacks.addAttack(leftSwing, 10);
         attacks.addAttack(rightSwing, 10);
         attacks.addAttack(smash, 6);
         ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
+    }
+
+    private static void addSmashParticles(TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder smash) {
+        final double y = 0;
+        for(int i = 0; i < 5; i++) {
+            final double radius = i * 9.0 / 5;
+            for(int j = 0; j < 4 + i; j++) {
+                double x = Math.sin(2*Math.PI*j/(4+i))*radius;
+                double z = Math.cos(2*Math.PI*j/(4+i))*radius;
+                smash.addParticle(EnumParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0, 1, 1);
+            }
+        }
     }
 
 }

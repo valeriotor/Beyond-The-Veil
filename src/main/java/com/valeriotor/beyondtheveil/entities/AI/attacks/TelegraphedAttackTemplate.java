@@ -1,12 +1,16 @@
 package com.valeriotor.beyondtheveil.entities.AI.attacks;
 
+import com.google.common.collect.ImmutableList;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.animations.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.WorldServer;
 
-import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelegraphedAttackTemplate {
     private final int animationID;
@@ -20,16 +24,17 @@ public class TelegraphedAttackTemplate {
     private final int followupTime;
     private final SoundEvent damageSound;
     private final SoundEvent attackSound;
+    private final List<Particle> particles;
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
         this(animation, duration, damageTime, damage, attackArea, triggerDistance, 0);
     }
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
-        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null);
+        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>());
     }
 
-    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound) {
+    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles) {
         this.animationID = AnimationRegistry.getIdFromAnimation(animation);
         this.duration = duration;
         this.damageTime = damageTime;
@@ -41,6 +46,7 @@ public class TelegraphedAttackTemplate {
         this.followupTime = followupTime;
         this.damageSound = damageSound;
         this.attackSound = attackSound;
+        this.particles = ImmutableList.copyOf(particles);
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
@@ -87,6 +93,12 @@ public class TelegraphedAttackTemplate {
         return attackSound;
     }
 
+    public void spawnParticles(EntityLiving attacker) {
+        for(Particle p : particles) {
+            p.spawnParticle(attacker);
+        }
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
         private AnimationTemplate animation;
         private int duration;
@@ -99,6 +111,7 @@ public class TelegraphedAttackTemplate {
         private int followupTime = -1;
         private SoundEvent damageSound;
         private SoundEvent attackSound;
+        private List<Particle> particleList = new ArrayList<>();
 
         public TelegraphedAttackTemplateBuilder(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
             this.animation = animation;
@@ -174,9 +187,73 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
-        public TelegraphedAttackTemplate build() {
-            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound);
+        public TelegraphedAttackTemplateBuilder addParticle(EnumParticleTypes type, double xCoord, double yCoord, double zCoord, int numberOfParticles, double xOffset, double yOffset, double zOffset, double particleSpeed, int... parameters) {
+            particleList.add(new Particle(type, xCoord, yCoord, zCoord, numberOfParticles, xOffset, yOffset, zOffset, particleSpeed, parameters));
+            return this;
         }
+
+        public TelegraphedAttackTemplate build() {
+            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList);
+        }
+
+    }
+
+    private static class Particle {
+        private final EnumParticleTypes type;
+        private final double xCoord;
+        private final double yCoord;
+        private final double zCoord;
+        private final int numberOfParticles;
+        private final double xOffset;
+        private final double yOffset;
+        private final double zOffset;
+        private final double particleSpeed;
+        private final int[] parameters;
+
+        private Particle(EnumParticleTypes type, double xCoord, double yCoord, double zCoord, int numberOfParticles, double xOffset, double yOffset, double zOffset, double particleSpeed, int... parameters) {
+            this.type = type;
+            this.xCoord = xCoord;
+            this.yCoord = yCoord;
+            this.zCoord = zCoord;
+            this.numberOfParticles = numberOfParticles;
+            this.xOffset = xOffset;
+            this.yOffset = yOffset;
+            this.zOffset = zOffset;
+            this.particleSpeed = particleSpeed;
+            this.parameters = parameters;
+        }
+
+        private double getX(EntityLiving attacker) {
+            return attacker.posX + xCoord;
+        }
+
+        private double getY(EntityLiving attacker) {
+            return attacker.posY + yCoord;
+        }
+
+        private double getZ(EntityLiving attacker) {
+            return attacker.posZ + zCoord;
+        }
+
+        public void spawnParticle(EntityLiving attacker) {
+            ((WorldServer)attacker.world).spawnParticle(type, getX(attacker), getY(attacker), getZ(attacker), numberOfParticles, xOffset, yOffset, zOffset, 0, 1, 0, 255);
+        }
+        
+        @Override
+        public String toString() {
+            return "Particle{" +
+                    "type=" + type +
+                    ", xCoord=" + xCoord +
+                    ", yCoord=" + yCoord +
+                    ", zCoord=" + zCoord +
+                    ", numberOfParticles=" + numberOfParticles +
+                    ", xOffset=" + xOffset +
+                    ", yOffset=" + yOffset +
+                    ", zOffset=" + zOffset +
+                    ", particleSpeed=" + particleSpeed +
+                    '}';
+        }
+
 
     }
 

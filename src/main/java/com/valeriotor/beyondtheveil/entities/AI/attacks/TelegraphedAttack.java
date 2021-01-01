@@ -43,6 +43,7 @@ public class TelegraphedAttack {
             SoundEvent attackSound = template.getAttackSound();
             if(attackSound != null)
                 attacker.world.playSound(null, attacker.getPosition(), attackSound, SoundCategory.HOSTILE, 1, 1);
+            template.spawnParticles(attacker);
         }
     }
 
