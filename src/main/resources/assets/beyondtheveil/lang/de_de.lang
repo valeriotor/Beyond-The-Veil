@@ -47,7 +47,7 @@ item.sigil_player.name=Blutsigel: Spieler
 item.sigil_pathway.name=Blutsigel: Pfad
 item.gear.name=Ausrüstung
 item.crucible.name=Schmelztiegel
-item.surgeon_summons.name=Vorladung für den Chirurgen
+item.surgeon_summons.name=Chirurgenbeschwörung
 
 
 lore.flute=§5§oDas Gefühl, dass ich beim Anfassen, Sehen, oder bloßen Denken an diese Flöte bekomme ist wirklich bizarr. Es ist als würde sie nicht in dieser Welt existieren... und doch ist sie hier, in meinen Händen.
@@ -92,20 +92,20 @@ artifact.medallion.humming1=Das Medallion summt. Es ist ein Gegner in der Nähe.
 artifact.medallion.humming=Das Medallion summt. Es sind %1$s Gegner in der Nähe.
 artifact.medallion.creepers=Es sind Creeper in der Nähe.
 
-# use.coral_staff.lastlinked=The last clicked heart is at coordinates x: %1$s, y: %2$s, z: %3$s.
-# use.coral_staff.clear=Cleared the last stored position.
-# use.blood_sigil.amount=Dieses Sigel is now linked to %1$s undead.
-# use.blood_sigil.emptysigil=Dieses Sigel is empty.
-# use.blood_sigil.emptywell=This Well has no more of these undead.
-# use.blood_sigil.nothealthy=This mob is not at full health.
-# use.blood_sigil.notmine=This mob does not serve me.
-# use.blood_sigil.path=This location is now bound in the Sigil.
-# use.dream_bottle.noplayer=The bound Player is not currently in this world.
-# use.surgeon_summoner.boundcontainer=This container's location has been bound to the Surgeon Summons.
-# use.surgeon_summoner.unboundcontainer=The Surgeon Summons are no longer bound to a container.
-# use.surgeon_summoner.nospace=There is not enough space to summon the Surgeon.
+use.coral_staff.lastlinked=Das zuletzt verknüpfte Herz befindet sich bei x: %1$s, y: %2$s, z: %3$s.
+use.coral_staff.clear=Gespeicherte Position gelöscht.
+use.blood_sigil.amount=Dieses Sigel ist jetzt mit %1$s Untoten verknüpft.
+use.blood_sigil.emptysigil=Dieses Sigel ist leer.
+use.blood_sigil.emptywell=Der Brunnen hat keine weiteren dieser Untoten.
+use.blood_sigil.nothealthy=Dieser Mob ist nicht bei voller Gesundheit.
+use.blood_sigil.notmine=Dieser Mob gehorcht mir nicht.
+use.blood_sigil.path=Dieser Standort ist nun im Sigel gebunden.
+use.dream_bottle.noplayer=Der gebundene Spieler ist nicht in dieser Welt.
+use.surgeon_summoner.boundcontainer=Der Standort dieses Containers wurde an die Chirurgenbeschwörung gebunden.
+use.surgeon_summoner.unboundcontainer=Die Chirurgenbeschwörung ist nicht mehr an einen Container gebunden.
+use.surgeon_summoner.nospace=Nicht genügend Platz, um den Chirurgen zu beschwören.
 
-# bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepare for the worst, in a matter of seconds.
+bauble.blood_crown.activated=Die Blutkrone durchbohrt meine Stirn! Ich sollte mich auf das Schlimmste vorbereiten, in wenigen Sekunden!
 
 # ##################
 # #BLOCKS
