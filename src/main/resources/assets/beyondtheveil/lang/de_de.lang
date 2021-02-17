@@ -52,13 +52,13 @@ item.surgeon_summons.name=Vorladung für den Chirurgen
 
 lore.flute=§5§oDas Gefühl, dass ich beim Anfassen, Sehen, oder bloßen Denken an diese Flöte bekomme ist wirklich bizarr. Es ist als würde sie nicht in dieser Welt existieren... und doch ist sie hier, in meinen Händen.
 lore.saw_cleaver=§5§oDiese Waffe... diese bizarre Apparatur, ist ein Meisterwerk der Ingenieurskunst. In der Lage mühelos zwischen ihrer normalen und erweiterten Form zu Wechseln, versetzt es den Träger zusätzlich in die Lage auszuweichen, wie ihre antiken Besitzer.
-# lore.wolf_medallion=§5§oThis metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
-# lore.bronze_sphere=§5§oNo no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
-# lore.crucible=§5§oA weapon wielded by demon slayers of yore. Immensely powerful, but needs a long recharge after every use.
-# tooltip.bronze_sphere=%1$s experience currently stashed.
-# lore.tablet=§5§oAn ancient stony slab with weird inscriptions on it. Can I decipher it?
-# lore.spine=§5§oWillpower resides in the spine.
-# lore.surgery_tools=§5§oA set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
+lore.wolf_medallion=§5§oDieses Metallartefakt gibt ein leises Summen ab, wenn es sich in der Nähe von Monstern befindet, und macht seinen Träger auf ihre Anwesenheit aufmerksam. Es wurde zweifellos von Jägern längst vergangener Zeit verwendet.
+lore.bronze_sphere=§5§oNein, nein, nein, das ist nicht möglich, das kann einfach nicht sein. Ich kenne diese Sphäre. Ich weiß, ich habe sie gehalten. Ich erinnere mich nur nicht daran. Es muss Äonen in dem Weiler gewesen sein, in dem ich es habe?
+lore.crucible=§5§oEine Waffe, die von den Dämonentötern von Früher benutzt wurde. Sehr mächtig, benötigt aber nach jeder nutzung eine langwierige Aufladung.
+tooltip.bronze_sphere=%1$s Erfahrung aktuell enthalten.
+lore.tablet=§5§oEine uralte Steinplatte mit eigenartigen Inschriften. Kann ich sie entschlüsseln?
+lore.spine=§5§oWillenskraft wohnt der Wirbelsäule inne.
+lore.surgery_tools=§5§oEine Reihe von Werkzeugen für die Chirurgie. Etwas rostig, aber ich bin mir sicher, dass es meinen Patienten nichts ausmacht.
 
 # tooltip.held_villager.spineless=§5§oA villager lacking his dorsal spine. He'll never get up.
 # tooltip.held_villager.spineful=§5§oAn unconscious villager, ready for experimentation.
