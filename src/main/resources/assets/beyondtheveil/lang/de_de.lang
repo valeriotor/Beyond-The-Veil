@@ -22,11 +22,11 @@ item.blackjack.name=Blackjack
 item.spine.name=Brustwirbelsäule
 item.heart.name=Herz
 item.held_villager.name=Dorfbewohner
-#item.held_weeper.name=Weeper
+item.held_weeper.name=Weeper
 item.held_fletum.name=Fletum
 item.surgery_tools.name=Operationsbesteck
 item.bone_tiara.name=Knochen Tiara
-# item.bleeding_belt.name=Blutender Gürtel
+item.bleeding_belt.name=Blutender Gürtel
 item.dream_bottle.name=Traumflasche
 item.redstone_weed.name=Redstonegras-Samen
 item.ghost_weed.name=Geistergras-Samen
@@ -60,42 +60,42 @@ lore.tablet=§5§oEine uralte Steinplatte mit eigenartigen Inschriften. Kann ich
 lore.spine=§5§oWillenskraft wohnt der Wirbelsäule inne.
 lore.surgery_tools=§5§oEine Reihe von Werkzeugen für die Chirurgie. Etwas rostig, aber ich bin mir sicher, dass es meinen Patienten nichts ausmacht.
 
-# tooltip.held_villager.spineless=§5§oA villager lacking his dorsal spine. He'll never get up.
-# tooltip.held_villager.spineful=§5§oAn unconscious villager, ready for experimentation.
-# tooltip.held_villager.spinefulheartless=§5§oA villager without a heart. Soon, he will expire.
-# tooltip.held_villager.spinelessheartless=§5§oBoth the spine and the heart were ripped out of this villager. Truly, a worthless wretch.
-# tooltip.held_weeper.spineless=§5§oA Weeper without its spine is nothing but its head.
-# tooltip.held_weeper.spineful=§5§oAn abomination.
-# tooltip.held_weeper.spinefulheartless=§5§oOne does not need a heart to weep. It will survive just fine.
-# tooltip.held_weeper.spinelessheartless=§5§oA Weeper without its spine is nothing but its head.
-# tooltip.held_fletum=§5§oA disembodied head, content in its sorrow.
-# tooltip.held_shoggoth=§5§oIt sleeps. Don't awaken it. Please.
+tooltip.held_villager.spineless=§5§oEin Dorfbewohner, dem die Brustwirbelsäule fehlt. Er wird niemals aufstehen.
+tooltip.held_villager.spineful=§5§oEin bewusstloser Dorfbewohner, bereit für Experimente.
+tooltip.held_villager.spinefulheartless=§5§oEin Dorfbewohner ohne sein Herz, er wird schon bald verscheiden.
+tooltip.held_villager.spinelessheartless=§5§oSowohl die Wirbelsäule als auch das Herz wurden diesem Dorfbewohner herausgerissen. Wirklich, eine wertlose Kreatur.
+tooltip.held_weeper.spineless=§5§oEin Weeper ohne seine Wirbelsäule ist nichts als sein Kopf.
+tooltip.held_weeper.spineful=§5§oEine Abscheulichkeit.
+tooltip.held_weeper.spinefulheartless=§5§oMan braucht kein Herz um zu weinen. Er wird schon überleben.
+tooltip.held_weeper.spinelessheartless=§5§o§5§oEin Weeper ohne seine Wirbelsäule ist nichts als sein Kopf. Dieser hat nichtmal ein Herz..
+tooltip.held_fletum=§5§oEin körperloser Kopf, erfüllt in seiner Trauer.
+tooltip.held_shoggoth=§5§oEs schläft. Wecke es nicht auf. Bitte.
 
-# tooltip.dream_bottle.containing=Containing: 
-# tooltip.dream_bottle.charges=Stored tears: %1$s mB
-# tooltip.dream_bottle.none=NONE
+tooltip.dream_bottle.containing=Enthält: 
+tooltip.dream_bottle.charges=Konservierte Tränen: %1$s mB
+tooltip.dream_bottle.none=NICHTS
 
-# tooltip.statue.owner=This Statue is owned by %1$s.
-# tooltip.statue.noowner=This Statue has no owner.
+tooltip.statue.owner=Diese Statue gehört %1$s.
+tooltip.statue.noowner=Diese Statue hat keinen Besitzer.
 
-# tooltip.memory_phial.stored=This phial stores %1$s.
-# tooltip.memory_phial.empty=This phial is empty. 
+tooltip.memory_phial.stored=Diese Phiole enthält %1$s.
+tooltip.memory_phial.empty=Diese Phiole ist leer. 
 
-# tooltip.blood_sigil_blood_skellie.amount=This Sigil contains %1$s Blood Skeletons.
-# tooltip.blood_sigil_blood_zombie.amount=This Sigil contains %1$s Blood Zombies.
-# tooltip.blood_sigil_pathway.nopath=This Sigil is bound to no location.
-# tooltip.blood_sigil_pathway.path=This Sigil is bound to x: %1$s, y: %2$s, z: %3$s.
-# tooltip.blood_sigil_player.noplayer=This Sigil is bound to no Player.
-# tooltip.blood_sigil_player.player=This Sigil is bound to %1$s.
+tooltip.blood_sigil_blood_skellie.amount=Dieses Sigel enthält %1$s Blut Skelette.
+tooltip.blood_sigil_blood_zombie.amount=Dieses Sigel enthält %1$s Blut Zombies.
+tooltip.blood_sigil_pathway.nopath=Dieses Sigel ist an keinen Ort gebunden.
+tooltip.blood_sigil_pathway.path=Dieses Sigel ist an x: %1$s, y: %2$s, z: %3$s gebunden.
+tooltip.blood_sigil_player.noplayer=Dieses Sigel ist an keinen Spieler gebunden.
+tooltip.blood_sigil_player.player=Dieses Sigel an %1$s gebunden.
 
-# artifact.medallion.humming1=Medallion's humming. There is 1 enemy nearby.
-# artifact.medallion.humming=Medallion's humming. There are %1$s enemies nearby.
-# artifact.medallion.creepers=There are creepers.
+artifact.medallion.humming1=Das Medallion summt. Es ist ein Gegner in der Nähe.
+artifact.medallion.humming=Das Medallion summt. Es sind %1$s Gegner in der Nähe.
+artifact.medallion.creepers=Es sind Creeper in der Nähe.
 
 # use.coral_staff.lastlinked=The last clicked heart is at coordinates x: %1$s, y: %2$s, z: %3$s.
 # use.coral_staff.clear=Cleared the last stored position.
-# use.blood_sigil.amount=This Sigil is now linked to %1$s undead.
-# use.blood_sigil.emptysigil=This Sigil is empty.
+# use.blood_sigil.amount=Dieses Sigel is now linked to %1$s undead.
+# use.blood_sigil.emptysigil=Dieses Sigel is empty.
 # use.blood_sigil.emptywell=This Well has no more of these undead.
 # use.blood_sigil.nothealthy=This mob is not at full health.
 # use.blood_sigil.notmine=This mob does not serve me.
@@ -961,7 +961,7 @@ lore.surgery_tools=§5§oEine Reihe von Werkzeugen für die Chirurgie. Etwas ros
 # research.craftedcity_mapper.text=Craft a City Mapper.
 
 # research.CLINIC.title=Clinic
-# research.CLINIC.stage.0=The Clinic seems to have been designed specifically for Weepers and Fleti, it seems.<BR>A bizarre discovery, given how ancient its design must be. How long have Weepers existed for?<BR>Its interior is split in multiple chambers. Each one contains a chiseled block in the floor, where a Lacrymatory is meant to be placed.
+# research.CLINIC.stage.0=The Clinic seems to have been designed specifically for Weepers and Fleti, it seems.<BR>A bizarre discovery, given how ancient its design must be. How long have Weepers existed for?<BR>Its interior is split in multiple chambers. Each one enthält a chiseled block in the floor, where a Lacrymatory is meant to be placed.
 
 # research.DEATHDREAM.title=Dreams of Death
 # research.DEATHDREAM.stage.0=A Dream of Death, as I respawn once again.<BR>Yet I am not the only one that cannot truly die.<BR>With this Memory, I can invade the privacy of another random Player, and discover the last place where they died, hopefully profiting off their spoils.<BR>No grave is too sacred.
@@ -1062,7 +1062,7 @@ lore.surgery_tools=§5§oEine Reihe von Werkzeugen für die Chirurgie. Etwas ros
 
 # research.CURTAINS.title=Curtains
 # research.CURTAINS.stage.0=Curtains are our world's counterpart to the Veil. Separating Truth from lies, behind them act a stageful of actors.<BR>Yes, maybe our reality is really nothing but a theatre.<BR>Still, these curtains I mean to make are a fair deal more mundane. They'll simply act as filters for the items that collide with them.
-# research.CURTAINS.stage.1=Curtains act as filters for Dreams, just like the Veil. Some go through, some don't.<BR>In this case it's the Fleti's Dreams and the items they transport that may or may not pass.<BR>A Curtain must be placed under a container, such as a chest. Every time an item goes through, the Curtain checks whether the inventory above contains an instance of that item. If so, the item doesn't go through and stops floating, dropping instead to the ground or, preferably, to an aptly placed hopper.<BR>Having containers both above and below, with appropriate spacing between them to avoid all items being sucked in hoppers, makes for a fairly space-consuming setup, but one that can work well as a sorting system.
+# research.CURTAINS.stage.1=Curtains act as filters for Dreams, just like the Veil. Some go through, some don't.<BR>In this case it's the Fleti's Dreams and the items they transport that may or may not pass.<BR>A Curtain must be placed under a container, such as a chest. Every time an item goes through, the Curtain checks whether the inventory above enthält an instance of that item. If so, the item doesn't go through and stops floating, dropping instead to the ground or, preferably, to an aptly placed hopper.<BR>Having containers both above and below, with appropriate spacing between them to avoid all items being sucked in hoppers, makes for a fairly space-consuming setup, but one that can work well as a sorting system.
 # research.craftedcurtain.text=Craft a Curtain.
 
 # research.DREAMFOCUSFLUIDS.title=Dream Focus: Fluids
