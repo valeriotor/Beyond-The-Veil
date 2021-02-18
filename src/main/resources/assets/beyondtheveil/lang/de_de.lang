@@ -46,7 +46,7 @@ item.necronomicon.name=Al Azif
 item.sigil_player.name=Blutsigel: Spieler
 item.sigil_pathway.name=Blutsigel: Pfad
 item.gear.name=Ausrüstung
-item.crucible.name=Schmelztiegel
+# item.crucible.name=Crucible
 item.surgeon_summons.name=Chirurgenbeschwörung
 
 
