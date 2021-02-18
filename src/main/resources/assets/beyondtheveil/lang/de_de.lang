@@ -107,60 +107,60 @@ use.surgeon_summoner.nospace=Nicht genügend Platz, um den Chirurgen zu beschwö
 
 bauble.blood_crown.activated=Die Blutkrone durchbohrt meine Stirn! Ich sollte mich auf das Schlimmste vorbereiten, in wenigen Sekunden!
 
-# ##################
-# #BLOCKS
-# ##################
+##################
+#BLÖCKE
+##################
 
-# tile.barrel.name=Barrel
-# tile.bricks_blue.name=Blue Bricks
-# tile.damp_canopy.name=Damp Canopy
-# tile.damp_canopy_wood.name=Damp Canopy (Wood)
-# tile.damp_log.name=Damp Log
-# tile.damp_stone.name=Damp Stone
-# tile.damp_wood.name=Damp Wood
-# tile.damp_wood_fence.name=Damp Wood Fence
-# tile.damp_wood_stairs.name=Damp Wood Stairs
-# tile.dark_sand.name=Dark Sand
-# tile.fume_spreader.name=Fume Spreader
-# tile.idol.name=Idol
-# tile.lamp.name=Lamp
-# tile.slug_bait.name=Slug Bait
-# tile.worn_bricks.name=Worn Bricks
-# tile.worn_brick_stairs.name=Worn Brick Stairs
-# tile.sleep_chamber.name=Sleep Chamber
-# tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
-# tile.beanstalk.name=Beanstalk
-# tile.redstone_grass.name=Redstone Grass
-# tile.ghost_grass.name=Ghost Grass
-# tile.arboreal_generator.name=Arboreal Generator
-# tile.sapling_shrub.name=Sapling Shrub
-# tile.plant_terra.name=Terra Plant
-# tile.plant_ordo.name=Vijhiss
-# tile.mutator.name=Plant Mutator
-# tile.watery_cradle.name=Watery Cradle
-# tile.lacrymatory.name=Lacrymatory
-# tile.elder_stone_bricks.name=Elder Stone Bricks
-# tile.elder_bricks.name=Elder Bricks
-# tile.elder_bricks_chiseled.name=Chiseled Elder Stone Bricks
-# tile.elder_stone_brick_stairs.name=Elder Stone Brick Stairs
-# tile.elder_slab.name=Elder Stone Slab
-# tile.heart.name=Heart
-# tile.sacrifice_altar.name=Sacrificial Altar Core
-# tile.blood_bricks.name=Blood Stone Bricks
-# tile.blood_bricks_stairs.name=Blood Stone Brick Stairs
-# tile.blood_bricks_slab.name=Blood Stone Brick Slab
-# tile.blood_well.name=Blood Well
-# tile.statue.name=Statue
-# tile.sacrifice_statue.name=Statue of Sacrifice
-# tile.penitence_statue.name=Statue of Penitence
-# tile.memory_sieve.name=Memory Sieve
-# tile.city_mapper.name=City Mapper
-# tile.gear_bench.name=Gear Bench
-# tile.dream_focus.name=Dream Focus: Items
-# tile.dream_focus_fluids.name=Dream Focus: Fluids
-# tile.dream_focus_villagers.name=Dream Focus: Villagers
-# tile.megydrea.name=Megydrea
-# tile.curtain.name=Curtain
+tile.barrel.name=Fass
+tile.bricks_blue.name=Blauziegelsteine
+tile.damp_canopy.name=Feuchtbaldachin
+tile.damp_canopy_wood.name=Feuchtbaldachin (mit Holz)
+tile.damp_log.name=Feuchtstamm
+tile.damp_stone.name=Feuchtstein
+tile.damp_wood.name=Feuchtholz
+tile.damp_wood_fence.name=Feuchtholzzaun
+tile.damp_wood_stairs.name=Feuchtholztreppe
+tile.dark_sand.name=Dunkelsand
+tile.fume_spreader.name=Dunstverteiler
+tile.idol.name=Götzenbild
+tile.lamp.name=Leuchte
+tile.slug_bait.name=Schneckenköder
+tile.worn_bricks.name=Abgenutzte Ziegelsteine
+tile.worn_brick_stairs.name=Abgenutzte Ziegelsteintreppe
+tile.sleep_chamber.name=Schlafkammer
+tile.sleep_chamber_advanced.name=Verbesserte Schlafkammer
+tile.beanstalk.name=Bohnenstange
+tile.redstone_grass.name=Redstonegras
+tile.ghost_grass.name=Geistergras
+tile.arboreal_generator.name=Arborealgenerator
+tile.sapling_shrub.name=Setzlingsbusch
+# Not in game? #tile.plant_terra.name=Terra Pflanze
+# No translation required #tile.plant_ordo.name=Vijhiss
+tile.mutator.name=Plant Mutator
+tile.watery_cradle.name=Wässrige Wiege
+tile.lacrymatory.name=Lacrimarium
+tile.elder_stone_bricks.name=Alten Steinziegel
+tile.elder_bricks.name=Alten Ziegelsteine
+tile.elder_bricks_chiseled.name=Gemeißelte Alten Steinziegel
+tile.elder_stone_brick_stairs.name=Alten Steinziegeltreppe
+tile.elder_slab.name=Alten Steinstufe
+tile.heart.name=Herz
+tile.sacrifice_altar.name=Opferaltarkern
+tile.blood_bricks.name=Blutsteinziegel
+tile.blood_bricks_stairs.name=Blutsteinziegeltreppe
+tile.blood_bricks_slab.name=Blutsteinziegelstufe
+tile.blood_well.name=Blutbrunnen
+tile.statue.name=Statue
+tile.sacrifice_statue.name=Statue der Opferung
+tile.penitence_statue.name=Statue der Buße
+tile.memory_sieve.name=Erinnerungssieb
+tile.city_mapper.name=Stadtkartograph
+tile.gear_bench.name=Ausrüstungstisch
+tile.dream_focus.name=Traumfokus: Gegensände
+tile.dream_focus_fluids.name=Traumfokus: Flüssigkeiten
+tile.dream_focus_villagers.name=Traumfokus: Dorfbewohner
+tile.megydrea.name=Megydrea
+tile.curtain.name=Vorhang
 
 # fluid.tears=Tears
 
