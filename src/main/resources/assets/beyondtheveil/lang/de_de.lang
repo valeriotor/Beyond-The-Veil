@@ -162,7 +162,7 @@ tile.dream_focus_villagers.name=Traumfokus: Dorfbewohner
 tile.megydrea.name=Megydrea
 tile.curtain.name=Vorhang
 
-# fluid.tears=Tears
+fluid.tears=Tränen
 
 # interact.idol.notyet=Nothing happens. For some reason, I feel relieved.
 # interact.idol.moreslugs=More slugs must be consumed to commune.
