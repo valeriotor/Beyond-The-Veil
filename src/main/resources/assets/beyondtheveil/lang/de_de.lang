@@ -211,19 +211,19 @@ hit.idol.schiz8=§5STOP
 hit.idol.schiz9=Du Narr.
 hit.idol.schiz10=Du weißt nicht, womit du es zu tun hast.
 
-# ##################
-# #MULTIBLOCKS
-# ##################
+##################
+#MULTIBLOCKS
+##################
 
-# multiblock.layer=Layer
-# multiblock.blood_well=Blood Well
-# multiblock.sacrifice_altar=Sacrificial Altar
-# multiblock.dream_shrine=Dream Shrine
+multiblock.layer=Ebene
+multiblock.blood_well=Blutbrunnen
+multiblock.sacrifice_altar=Opferaltar
+multiblock.dream_shrine=Traumschrein
 
-# multiblock.dream_shrine.checksout=This Dream Shrine has been built correctly.
-# multiblock.dream_shrine.noshrine=This is not a Dream Shrine.
-# multiblock.sacrifice_altar.checksout=This Sacrifice Altar has been built correctly.
-# multiblock.sacrifice_altar.noaltar=This is not a Sacrifice Altar.
+multiblock.dream_shrine.checksout=Dieser Traumschrein wurde korrekt aufgebaut.
+multiblock.dream_shrine.noshrine=Das ist kein Traumschrein.
+multiblock.sacrifice_altar.checksout=Dieser Opferaltar wurde korrekt aufgebaut.
+multiblock.sacrifice_altar.noaltar=Das ist kein Opferaltar.
 
 # ##################
 # #ENTITIES
