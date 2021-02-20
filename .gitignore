@@ -33,6 +33,10 @@ local.properties
 .settings/
 .loadpath
 
+# Other editors
+.idea
+.vscode
+
 # External tool builders
 .externalToolBuilders/
 
