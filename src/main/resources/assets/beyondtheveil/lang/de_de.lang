@@ -1,4 +1,10 @@
 ##################
+# Deutsche Übersetzung für valeriotor's "Beyond The Veil"
+#
+# für Lovecraft Referenzen, siehe https://lovecraft.fandom.com/de/wiki/
+##################
+
+##################
 #GEGENSTÄNDE (Namen, Geschichte/Hintergründe, Spezialeffekte)
 ##################
 
@@ -22,8 +28,8 @@ item.blackjack.name=Blackjack
 item.spine.name=Brustwirbelsäule
 item.heart.name=Herz
 item.held_villager.name=Dorfbewohner
-item.held_weeper.name=Weeper
-item.held_fletum.name=Fletum
+# item.held_weeper.name=Weeper
+# item.held_fletum.name=Fletum
 item.surgery_tools.name=Operationsbesteck
 item.bone_tiara.name=Knochen Tiara
 item.bleeding_belt.name=Blutender Gürtel
@@ -225,26 +231,27 @@ multiblock.dream_shrine.noshrine=Das ist kein Traumschrein.
 multiblock.sacrifice_altar.checksout=Dieser Opferaltar wurde korrekt aufgebaut.
 multiblock.sacrifice_altar.noaltar=Das ist kein Opferaltar.
 
-# ##################
-# #ENTITIES
-# ##################
+##################
+#ENTITÄTEN
+##################
 
-# entity.deep_one.name=Deep One
-# entity.hamlet_dweller.name=Hamlet Dweller
-# entity.canoe.name=Canoe
-# entity.crawling_villager.name=Crawling Villager
+# see https://lovecraft.fandom.com/de/wiki/Tiefes_Wesen
+entity.deep_one.name=Tiefes Wesen
+entity.hamlet_dweller.name=Weilerbewohner
+entity.canoe.name=Kanu
+entity.crawling_villager.name=Kriechender Dorfbewohner
 # entity.weeper.name=Weeper
 # entity.fletum.name=Fletum
-# entity.shoggoth.name=Shoggoth
-# entity.crazed_weeper.name=Crazed Weeper
-# entity.blood_zombie.name=Blood Zombie
-# entity.blood_skeleton.name=Blood Skeleton
-# entity.surgeon.name=Surgeon
+entity.shoggoth.name=Shoggoth
+entity.crazed_weeper.name=Wahnsinniger Weeper
+entity.blood_zombie.name=Blutzombie
+entity.blood_skeleton.name=Blutskelett
+entity.surgeon.name=Chirurg
 
-# shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
-# shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
-# shoggoth.hasmapalready2=Only a fool would try to divert a Shoggoth's attention upon themselves.. and I am no fool, am I??
-# shoggoth.hasmapalready3=Stop.
+shoggoth.hasmapalready0=Dieser Shoggoth baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
+shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggoth Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
+shoggoth.hasmapalready2=Nur ein Narr würde die Aufmerksamkeit eines Shoggothen auf ich ziehen.. und ich bin kein Narr, oder?
+shoggoth.hasmapalready3=Stop.
 
 # ##################
 # #GUIS & KEYS
