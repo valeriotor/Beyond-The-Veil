@@ -13,6 +13,7 @@ public class ArcheStructuresRegistry {
 	public static final BloodHome HOME = new BloodHome();
 	public static final DeepCityStructureTemplate HOME1 = new DeepCityStructureTemplate("deep_home1", 6);
 	public static final DeepCityStructureTemplate BEACON = new DeepCityStructureTemplate("deep_beacon", 9);
+	public static final DeepCityStructureTemplate ARENA = new DeepCityStructureTemplate("deep_arena", 5);
 	
 	public static final Map<String, DeepCityStructureTemplate> DEEP_CITY_BUILDINGS = new HashMap<>();
 	
@@ -20,9 +21,11 @@ public class ArcheStructuresRegistry {
 		HOME.registerBlocks();
 		HOME1.registerBlocks();
 		BEACON.registerBlocks();
+		ARENA.registerBlocks();
 		
 		DEEP_CITY_BUILDINGS.put(HOME1.getName(), HOME1);
 		DEEP_CITY_BUILDINGS.put(BEACON.getName(), BEACON);
+		DEEP_CITY_BUILDINGS.put(ARENA.getName(), ARENA);
 	}
 	
 	public static DeepCityStructure getRandomDeepCityStructure(Random r, BlockPos pos) {

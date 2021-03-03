@@ -33,7 +33,7 @@ public class DeepCityLayout {
 	}
 	
 	public void generate() {
-		map.put(new Point(0,0), ArcheStructuresRegistry.getRandomDeepCityStructure(rand, center));
+		map.put(new Point(0,0), new DeepCityStructure(ArcheStructuresRegistry.ARENA, center));
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 			currentDirection = facing;
 			currentPoint = new Point(0,0);
@@ -127,7 +127,7 @@ public class DeepCityLayout {
 				if(x < 4) {
 					Connection c = new Connection(p, new Point(x+1, y));
 					if(connections.contains(c)) {
-						sb.append(" — ");
+						sb.append(" ï¿½ ");
 					} else {
 						sb.append("   ");
 					}
