@@ -1,0 +1,1108 @@
+##################
+#ITEMS (Names, lore, special effects)
+##################
+
+item.oniric_incense.name=Incienso Onirico
+item.slug.name=Babosa
+item.slugcatcher.name=Cazador de babosas
+item.testitem.name=Test Item
+item.canoe.name=Canoa
+item.flute.name=Flauta de los Dioses Exterirores
+item.saw_cleaver.name=Cuchilla de sierra
+item.wolf_medallion.name=Medallión del Lobo
+item.drink_ale.name=Taza de Cerveza
+item.drink_mead.name=Taza de Hidromiel
+item.drink_rum.name=Taza de Ron
+item.drink_vodka.name=Taza de Vodka
+item.drink_wine.name=Taza de Vino
+item.drink_empty.name=Taza Vacia
+item.tablet.name=Tabla
+item.bronze_sphere.name=Esfera de Bronce
+item.blackjack.name=Blackjack
+item.spine.name=Espina Dorsal
+item.heart.name=Corazón
+item.held_villager.name=Aldeano
+item.held_weeper.name=Llorón
+item.held_fletum.name=Fletum
+item.surgery_tools.name=Herramientas de Cirugía
+item.bone_tiara.name=Tiara de Huesos
+item.bleeding_belt.name=Cinturón Sangrante
+item.dream_bottle.name=Botella de Sueños
+item.redstone_weed.name=Semillas de Hierba de Redstone
+item.ghost_weed.name=Semillas de Hierba fantasma
+item.vanilla_weed.name=Semillas de Hierba Vanilla
+item.shoggoth_map.name=Mapa de Shoggoth
+item.held_shoggoth.name=Shoggoth
+item.blood_covenant.name=Pacto de sangre
+item.revelation_ring.name=Anillo de Revelación
+item.azacno_charm.name=Talizmán de Azacno
+item.blood_crown.name=Corona de espinas
+item.coral_staff.name=Bastón de coral
+item.sigil_zombie.name=Sigilo de Sangre: Zombie
+item.sigil_skellie.name=Sigilo de Sangre: Esqueleto
+item.sacrificial_knife.name=Cuchillo de Sacrificio
+item.memory_phial.name=Frasco de Memoria
+item.necronomicon.name=Al Azif
+item.sigil_player.name=Sigilo de Sangre: Jugador
+item.sigil_pathway.name=Sigilo de Sangre: Pathway
+item.gear.name=Engranaje
+item.crucible.name=Asesina de Dioses
+item.surgeon_summons.name=Invocador de Cirujano
+
+
+lore.flute=§5§oLa sensación que tengo al tocar, ver o incluso pensar en esta flauta es realmente extraña. Es como si no existiera en mi mundo ... y sin embargo está ahí, en mis manos.
+lore.saw_cleaver=§5§oEsta arma ... este extraño artilugio de metal, es una obra maestra de ingeniería. Capaz de cambiar sin esfuerzo entre su forma normal y extendida, también permite a su portador esquivar con el mismo estilo de sus antiguos dueños.
+lore.wolf_medallion=§5§oEste artefacto de metal emite un suave zumbido cuando se acerca a los monstruos, alertando a su portador de su presencia. Sin duda fue utilizado por los cazadores en épocas pasadas.
+lore.bronze_sphere=§5§oNo, no, no, esto no es posible, simplemente no puede serlo. Conozco esta esfera. SÉ que la he sostenido. Solo... no lo recuerdo. ¿Debe haber estado en la aldea donde lo encontré por eones?
+lore.crucible=§5§oUn arma empuñada por antiguos asesinos de demonios. Inmensamente poderosa, pero necesita una larga recarga después de cada uso.
+tooltip.bronze_sphere=%1$s experiencia guardada actualmente.
+lore.tablet=§5§oUna antigua losa de piedra con extrañas inscripciones. ¿Puedre descifrarlo?
+lore.surgery_tools=§5§oUn conjunto de herramientas que se utilizan para la cirugía. Un poco oxidado, pero estoy seguro de que a mis pacientes no les importará.
+tooltip.held_villager.spineless=§5§oUn aldeano al que le falta la Espina Dorsal. Nunca se levantará.
+tooltip.held_villager.spineful=§5§oUn aldeano inconsciente, listo para la experimentación.
+tooltip.held_villager.spinefulheartless=§5§oUn aldeano sin corazón. Pronto, expirará.
+tooltip.held_villager.spinelessheartless=§5§oTanto la Espina Dorsal como el corazón fueron arrancados de este aldeano. Verdaderamente, un desgraciado sin valor.
+tooltip.held_weeper.spineless=§5§oUn Llorón sin su Espina Dorsal no es más que su cabeza.
+tooltip.held_weeper.spineful=§5§oUna abominación.
+tooltip.held_weeper.spinefulheartless=§5§oNo se necesita un corazón para llorar. Sobrevivirá muy bien.
+tooltip.held_weeper.spinelessheartless=§5§oUn Llorón sin su Espina Dorsal no es más que su cabeza.
+tooltip.held_fletum=§5§oUna cabeza incorpórea, contenta con su dolor.
+tooltip.held_shoggoth=§5§oEl Duerme. No lo despiertes. Por favor.
+
+tooltip.dream_bottle.containing=Contine: 
+tooltip.dream_bottle.charges=Lágrimas almacenadas: %1$s mB
+tooltip.dream_bottle.none=NADA
+
+tooltip.statue.owner=Esta estatua es propiedad de %1$s.
+tooltip.statue.noowner=Esta estatua no tiene dueño.
+
+tooltip.memory_phial.stored=Este frasco almacena %1$s.
+tooltip.memory_phial.empty=Este frasco está vacío.
+
+tooltip.blood_sigil_blood_skellie.amount=Este Sigilo contiene %1$s Esqueletos sangrientos.
+tooltip.blood_sigil_blood_zombie.amount=Este Sigilo contiene %1$s Zombie sangriento.
+tooltip.blood_sigil_pathway.nopath=Este Sigilo no está vinculado a ninguna ubicación.
+tooltip.blood_sigil_pathway.path=Este Sigilo está vinculado a x: %1$s, y: %2$s, z: %3$s.
+tooltip.blood_sigil_player.noplayer=Este Sigilo no está vinculado a ningún jugador.
+tooltip.blood_sigil_player.player=Este Sigilo está vinculado a %1$s.
+
+artifact.medallion.humming1=El Medallón está zumbando. Hay 1 enemigo cerca.
+artifact.medallion.humming=El Medallón está zumbando. Hay %1$s enemigos cerca.
+artifact.medallion.creepers=Hay Creepers.
+
+use.coral_staff.lastlinked=El último corazón en el que se hizo clic está en las coordenadas x: %1$s, y: %2$s, z: %3$s.
+use.coral_staff.clear=Borrada la última posición almacenada.
+use.blood_sigil.amount=Este Sigilo ahora está vinculado a %1$s no muerto.
+use.blood_sigil.emptysigil=Este Sigilo está vacío
+use.blood_sigil.emptywell=Este pozo no tiene más de esos no muertos.
+use.blood_sigil.nothealthy=Esta criatura no tiene toda su vida.
+use.blood_sigil.notmine=No soy el amo de esta criatura.
+use.blood_sigil.path=Esta ubicación ahora está vinculada en el Sigilo.
+use.dream_bottle.noplayer=El jugador vinculado no se encuentra actualmente en este mundo.
+use.surgeon_summoner.boundcontainer=La ubicación de este contenedor se ha vinculado a las invocaciones de Cirujano.
+use.surgeon_summoner.unboundcontainer=Las invocaciones de cirujano ya no están vinculadas a un contenedor.
+use.surgeon_summoner.nospace=No hay suficiente espacio para convocar la cirujia.
+
+bauble.blood_crown.activated=¡La Corona de Espinas atravesó mi frente! Debería prepararme para lo peor, en cuestión de segundos.
+
+##################
+#BLOCKS
+##################
+
+tile.barrel.name=Barril
+tile.bricks_blue.name=Ladrillos azules
+tile.damp_canopy.name=Dosel húmedo
+tile.damp_canopy_wood.name=Dosel húmedo (Madera)
+tile.damp_log.name=Tronco húmedo
+tile.damp_stone.name=Piedra húmeda
+tile.damp_wood.name=Madera húmeda
+tile.damp_wood_fence.name=Valla de Madera húmeda
+tile.damp_wood_stairs.name=Escaleras de Madera húmeda
+tile.dark_sand.name=Arena Oscura
+tile.fume_spreader.name=Esparcidor de humo
+tile.idol.name=Ídolo
+tile.lamp.name=Lampara
+tile.slug_bait.name=Cebo de babosas
+tile.worn_bricks.name=Ladrillos deteriorados
+tile.worn_brick_stairs.name=Escaleras de Ladrillos deteriorados
+tile.sleep_chamber.name=Cámara de sueño
+tile.sleep_chamber_advanced.name=Cámara de sueño avanzada
+tile.beanstalk.name=Beanstalk
+tile.redstone_grass.name=Hierba de Redstone
+tile.ghost_grass.name=Hierba fantasma
+tile.arboreal_generator.name=Arboreal Generator
+tile.sapling_shrub.name=Arbusto joven
+tile.plant_terra.name=Terra Plant
+tile.plant_ordo.name=Vijhiss
+tile.mutator.name=Plant Mutator
+tile.watery_cradle.name=Cuna acuosa
+tile.lacrymatory.name=Lagrimatorio
+tile.elder_stone_bricks.name=Ladrillos de piedra antiguos
+tile.elder_bricks.name=Ladrillos antiguos
+tile.elder_bricks_chiseled.name=Ladrillos de piedra antiguos cincelados
+tile.elder_stone_brick_stairs.name=Escaleras de ladrillo de piedra antiguos
+tile.elder_slab.name=Losa de piedra antigua
+tile.heart.name=Corazón
+tile.sacrifice_altar.name=Núcleo de Altar de Sacrificio
+tile.blood_bricks.name=Ladrillos de piedra sangrientos
+tile.blood_bricks_stairs.name=Escaleras de ladrillo de piedra sangriento
+tile.blood_bricks_slab.name=Losa de ladrillo de piedra sangriento
+tile.blood_well.name=Pozo de sangre
+tile.statue.name=Estatua
+tile.sacrifice_statue.name=Estatua de sacrificio
+tile.penitence_statue.name=Estatua de Penitencia
+tile.memory_sieve.name=Tamiz de memoria
+tile.city_mapper.name=Diseñador de Ciudades
+tile.gear_bench.name=Banco de engranajes
+tile.dream_focus.name=Foco de Sueños: objetos
+tile.dream_focus_fluids.name=Foco de Sueños: Fluidos
+tile.dream_focus_villagers.name=Foco de Sueños: Aldeanos
+tile.megydrea.name=Megydrea
+tile.curtain.name=Cortina
+
+fluid.tears=Lágrimas
+
+interact.idol.notyet=No pasa nada. Por alguna razón, me siento aliviado.
+interact.idol.moreslugs=Se deben consumir más babosas para comulgar.
+interact.idol.power=NUEVO PODER: mantén presionada la tecla de poder ('R' por defecto) para elegir Poder, tócala para lanzar.
+interact.idol.communion=Me hormiguea la piel. La Comunión está sellada.
+interact.idol.slugs=Me suena la columna. La voz es inhumana, mi voluntad flaquea.
+interact.idol.fish_quest=Mi corazón tiembla. Terribles cosas se hablaron, se fortaleció el vínculo.
+interact.idol.drowned=Derramé una lágrima. Un nuevo conocimiento fue concedido, una Verdad angustiosa.
+interact.lacrymatory.full=Este Lagrimatorio ya está vinculado.
+interact.lacrymatory.success=El %1$s ahora está unido al Lagrimatorio.
+interact.citymapper.loading=El Diseñador de Ciudades está cargando lentamente el entorno circundante.
+interact.citymapper.player0=Alguien está usando el Diseñador de Ciudades.
+interact.citymapper.player1=Alguien todavía está usando el Diseñador de Ciudades.
+interact.citymapper.player2=Sigo sin poder usar el Diseñador de Ciudades... por culpa de otra persona.
+interact.citymapper.player3=Algún maldito idiota todavía está usando el Diseñador de Ciudades, impidiéndome usarlo.
+interact.citymapper.player4=Alguien más sigue usando el Diseñador... debería deshacerme de el.
+interact.citymapper.player5=Alguien está usando el Diseñador de Ciudades.
+interact.heart.toofar=El otro corazón está demasiado lejos.
+interact.heart.notfound=Algo puede haberle pasado al otro corazón. Debería ir a comprobarlo.
+interact.heart.stored=La posición de este corazón ahora está almacenada en mi bastón de coral.
+interact.heart.printlink=Este corazón está vinculado a las coordenadas x: %1$s, y: %2$s, z: %3$s.
+interact.heart.nolink=Este corazón no está vinculado.
+interact.heart.cleared=El vínculo de este corazón se ha borrado.
+interact.heart.linked=El corazón en las coordenadas x: %1$s, y: %2$s, z: %3$s ahora está vinculado a este.
+interact.sacrificial_altar.incomplete=La estructura de este altar está incompleta.
+interact.blood_well.amount=%1$s Esqueletos sangrientos y %2$s Zombies sangrientos se almacenan en este pozo. O, más bien, el lugar de otro mundo al que está vinculado.
+interact.statue.ownerelse=Esta estatua es propiedad de %1$s.
+interact.statue.ownerme=Esta estatua es mía.
+interact.statue.noowner=Esta estatua podría ser reclamada por mi.
+interact.statue.ownerboh=No sé a quién está vinculada esta estatua.
+interact.statue.alreadyme=Esta estatua ya es mía.
+interact.statue.alreadyelse=Esta estatua está ligada a alguien que no soy yo, y el vínculo de sangre no se puede romper.  
+interact.statue.bound=Mi sangre baña esta estatua. Ahora está unida a mi, nuestro vínculo irrompible, inquebrantable.
+interact.gearbench.dunno=No sé cómo usar esto.
+interact.lacrymatory.amount=Este Lagrimatorio contiene %1$s/4000 milicubos de Lágrimas
+
+hit.idol.schiz0=No debería intentar romperlo.
+hit.idol.schiz1=No debería estar haciendo esto.
+hit.idol.schiz2=Debería parar.
+hit.idol.schiz3=Realmente debería parar.
+hit.idol.schiz4=Detente
+hit.idol.schiz5=¡Basta!
+hit.idol.schiz6=Detente ahora.
+hit.idol.schiz7=Realmente debes parar.
+hit.idol.schiz8=§5¡PARA!
+hit.idol.schiz9=Tu idiota.
+hit.idol.schiz10=No sabes con lo que estás lidiando.
+
+##################
+#MULTIBLOCKS
+##################
+
+multiblock.layer=Layer
+multiblock.blood_well=Pozo de sangre
+multiblock.sacrifice_altar=Altar de sacrificio
+multiblock.dream_shrine=Santuario de sueños
+
+multiblock.dream_shrine.checksout=Este Santuario de sueños se ha construido correctamente.
+multiblock.dream_shrine.noshrine=Este no es un Santuario de sueños.
+multiblock.sacrifice_altar.checksout=Este Altar de sacrificio se ha construido correctamente.
+multiblock.sacrifice_altar.noaltar=Este no es un Altar de sacrificio.
+
+##################
+#ENTITIES
+##################
+
+entity.deep_one.name=Deep One
+entity.hamlet_dweller.name=Habitante de Aldea Oscura
+entity.canoe.name=Canoa
+entity.crawling_villager.name=Aldeano arrastrado
+entity.weeper.name=Llorón
+entity.fletum.name=Fletum
+entity.shoggoth.name=Shoggoth
+entity.crazed_weeper.name=Llorón enloquecido
+entity.blood_zombie.name=Zombie sangriento
+entity.blood_skeleton.name=Esqueleto sangriento
+entity.surgeon.name=Cirujano
+
+shoggoth.hasmapalready0=Este Shoggoth ya se está construyendo... no sería tan inprudente interrumpir esto, ¿verdad?
+shoggoth.hasmapalready1=Debería dejar de intentar dominar al Shoggoth mientras hace lo suyo. Es peligroso.
+shoggoth.hasmapalready2=Solo un tonto intentaría desviar la atención de un Shoggoth sobre el mismo... y yo no soy tonto, ¿verdad?
+shoggoth.hasmapalready3=Para.
+
+##################
+#GUIS & KEYS
+##################
+
+gui.dialogue.talk=Hablar
+gui.dialogue.trade=Comerciar
+gui.sleep_chamber.wake=Despertar
+
+gui.tablet.inscription0=There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.
+gui.tablet.inscription1=Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?
+gui.tablet.inscription2=Infinite Yous throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
+gui.tablet.inscription3=The deepest Oceans touch the Void.<BR>Water is unsafe, it is Chaos.<BR>Yet from it comes Life.
+gui.tablet.inscription4=Deaths upon Deaths upon Deaths.<BR>But you are not truly immortal.<BR>You are nothing to Eternity.
+gui.tablet.inscription5=The Great Dreamer<BR>filters the Veil<BR>into reality.<BR>Dreams go through Him.
+gui.tablet.inscription6=He is the gnawing sensation<BR>at the back of your mind,<BR>driving you towards unholy acts.<BR>You can't escape.
+gui.tablet.inscription7=City builders, aeons old.<BR>Even the greatest civilization<BR>is no match to Time.
+gui.tablet.inscription8=Masses of flesh,<BR>born from unfiltered Chaos.<BR>Among their screeches<BR>you can hear weeping.
+gui.tablet.inscription9=Fear the Judgement<BR>of Dagon, ArchPriest<BR>of The Great Dreamer.<BR>Do not seek it.
+
+gui.activebauble.bauble0=Collar
+gui.activebauble.bauble1=Anillo 1
+gui.activebauble.bauble2=Anillo 2
+gui.activebauble.bauble3=Cinturón
+gui.activebauble.bauble4=Cabeza
+gui.activebauble.bauble5=Cuerpo
+gui.activebauble.bauble6=Baratija
+gui.activebauble.help=Haga clic izquierdo para establecer como una joyería como activa (solo se permite una)./Haga clic derecho para alternar el efecto pasivo./Verde: joyería activa, pasivo encendido./Amarillo: joyería activa, pasiva desactivada./Púrpura: joyería no activa, pasiva activada./Roja: joyería no activa, pasiva apagada.
+gui.activebauble.active=Actualmente activo.
+gui.activebauble.inactive=Actualmente no activo.
+gui.activebauble.passiveon=Pasiva encendida.
+gui.activebauble.passiveoff=Pasiva apagada.
+
+gui.optionwheel.power.greatdreamer.0=Invocar Deep Ones
+gui.optionwheel.power.greatdreamer.1=Transformación
+gui.optionwheel.power.greatdreamer.3=Caminar sobre el agua
+
+gui.optionwheel.waterycradle.0=Quitar Columna
+gui.optionwheel.waterycradle.1=Llenar con agua
+gui.optionwheel.waterycradle.3=Arrancar Corazón
+
+gui.optionwheel.surgeon.0=Quitar Columna
+gui.optionwheel.surgeon.1=Llenar con agua
+gui.optionwheel.surgeon.3=Arrancar Corazón
+
+gui.dream_bottle.charges=Milicubos: %1$s
+
+gui.city_mapper.buildingx=Centro X: %1$s
+gui.city_mapper.buildingy=Centro Y: %1$s
+gui.city_mapper.buildingrot=Mirando: %1$s
+gui.city_mapper.buildinglength=Longitud: %1$s 
+gui.city_mapper.buildingwidth=Ancho: %1$s 
+gui.city_mapper.buildingsize=Tamaño: %1$sx%2$s 
+gui.city_mapper.rot0=Norte
+gui.city_mapper.rot1=Este
+gui.city_mapper.rot2=Sur
+gui.city_mapper.rot3=Oeste
+gui.city_mapper.create=Crear
+gui.city_mapper.save=Guardar cambios
+gui.city_mapper.reloadmap=Recargar mapa
+gui.city_mapper.incsize=TIP: Se recomienda aumentar el tamaño de la GUI para esta tarea.
+
+gui.drowned.youdrowned=Tu te ahogaste
+gui.drowned.greatdreamer=Creer en el Gran soñador
+gui.drowned.ancientgods=Creer en los dioses de tus antepasados
+gui.drowned.yourself=Creer en ti mismo
+gui.drowned.believe=Creer
+gui.drowned.know=Conocer
+gui.drowned.youare=NO ERES 
+gui.drowned.nothing=NADA
+gui.drowned.insignificant=INSIGNIFICANTE
+gui.drowned.worthless=SIN VALOR
+gui.drowned.gnawing=Soy la sensación que roe en el fondo de tu mente
+gui.drowned.nogd=El Gran soñador no te escuchará.
+gui.drowned.noac=Los dioses de tus antepasados no existen.
+
+gui.research_page.complete=Progresar
+
+keys.dodge=Esquivar
+keys.activebauble=Usar/administrar joyas
+keys.power=Usar/Seleccionar poder
+
+
+##################
+#SHOGGOTH
+##################
+
+building.talltower=Torre alta
+building.tower=Torre
+building.largetower=Gran torre
+building.pyramid=Pirámide
+building.wall=Muro
+building.road=Carretera
+building.clinic=Clínica
+building.great_shrine=Gran Santuario
+
+angry.shoggoth.bad=Un Shoggoth que sigue matando a otros eventualmente se volverá contra su amo.
+
+##################
+#DAGON DIALOGUE
+##################
+
+dagon.greeting.0=NO ES ALIANZA LO QUE BUSCO
+dagon.greeting.1=ME SERVIRÁS
+dagon.greeting.2=GRANDES RECOMPENSAS ESPERAN TU ÉXITO
+dagon.greeting.3=CONSECUENCIAS INHABLABLES SEGUIRÁN A TUS FALLOS
+dagon.greeting.4=ERES MI HERALDO
+dagon.greeting.5=LLEVA ESTE ORO A LOS HABITANTES
+dagon.greeting.6=PARA QUE PUEDEN CONOCERTE COMO MI EMBAJADOR
+dagon.greeting.7=LUEGO COMUNA CON EL ÍDOLO DE DIOS
+dagon.greeting.8=TE OIRÉ
+dagon.bringgold=Estos tres bloques de oro deben llevarse a los Aldeanos pescadores. Debería darme prisa.
+
+dagon.judgement.0=TE UNIRÁS A MIS RANGOS
+dagon.judgement.1=DEMUESTRA TU VALOR PARA MI
+dagon.judgement.2=MATA A TRES DE MIS GUARDIANES ANTIGUOS
+dagon.judgement.3=LUEGO COMUNA CON EL ÍDOLO DE DIOS
+dagon.slayguardians=Tres ancianos guardianes, en sus antiguos monumentos oceánicos. Un triplete, ¿verdad?
+
+dagon.seaborn.0=TODA LA VIDA NACE DEL AGUA
+dagon.seaborn.1=A TRAVÉS DE LA SANGRE ESTÁN VINCULADOS A LO PROFUNDO
+dagon.seaborn.2=TU VÍNCULO CRECE CADA VEZ MÁS FUERTE
+dagon.seaborn.3=DEBES BAÑARTE EN LA TIERRA DE ENDERMAN
+dagon.seaborn.4=ENGULFADO EN EL VACÍO Y MÁS CERCA DE DIOS
+dagon.seaborn.5=AHI SOÑARÁS EN EL AGUA
+dagon.seaborn.6=Y LOS OCÉANOS SERÁN TUYOS
+dagon.endbath=Debemos bañarnos en el Fin, y allí debemos Soñar.
+
+dagon.killkeeper.0=MATA AL GUARDIÁN DEL FARO
+dagon.killkeeper.1=SU MUERTE NO IMPORTA
+dagon.killkeeper.2=DEMUESTRA SU INUTILIDAD
+dagon.killkeeper.3=Y TE CONCEDERÉ ALGO DE VERDAD
+dagon.lastwords=Un asesinato necesario. ¿Debo escuchar sus últimas palabras?
+
+dagon.final.0=EL ERA IRRELEVANTE
+dagon.final.1=Y TU TAMBIÉN
+dagon.final.2=TU MUERTE LLEGARA EN SU PROPIO TIEMPO
+dagon.final.3=BÚSCA EN LA ORACIÓN
+dagon.final.4=DIOS NO ESCUCHARÁ
+
+##################
+#DWELLER DIALOGUE
+##################
+
+dweller.fisherman.dagon=§5§oA través de Dagon, El Gran Soñador nos bendice una vez más.
+
+dweller.fisherman.greeting0=§5§oDéjanos en paz, forastero.
+dweller.fisherman.greeting1=§5§oVete. No te queremos aquí.
+dweller.fisherman.greeting2=§5§oLos forasteros no son bienvenidos aquí.
+dweller.fisherman.greeting3=§5§oPor favor, por favor deja de venir tras nosotros.
+
+dweller.trustedfisherman.greeting0=§5§oHmph. 
+dweller.trustedfisherman.greeting1=§5§oHiciste bien en unirte a nosotros.
+dweller.trustedfisherman.greeting2=§5§oSer pescador no es difícil aquí, los peces simplemente vienen a nosotros.
+dweller.trustedfisherman.greeting3=§5§o¿No te gustan las babosas? Pronto los apreciarás.
+
+dweller.stockpiler.greeting0=§5§oNo eres amigo nuestro, forastero. Nadie lo es.
+dweller.stockpiler.greeting1=§5§oNo podemos confiar en ustedes, forasteros. No más.
+dweller.stockpiler.greeting2=§5§oPor favor, déjanos SER.
+
+dweller.trustedstockpiler.greeting0=§5§oEstaba equivocado al pensar mal de ti, forastero.
+dweller.trustedstockpiler.greeting1=§5§oEn verdad, te consideramos un amigo ahora
+dweller.trustedstockpiler.greeting2=§5§oSiéntete libre de tomar cualquier cosa del almacén.
+
+dweller.drunk.greeting0=Un recién llegado, ¿no? Hoy en día no vemos muchos forasteros.
+dweller.drunk.greeting1=No soy de por aquí, amigo. Yo pa 'y' mi mamá 'era de esta Aldea oscura, sí, pero yo, nací y' crecí en otro lugar.
+dweller.drunk.greeting2=No me gusta la vida aquí. Ya no me gusta la vida.
+dweller.drunk.greeting3=Oye, cómprame un trago, ¿quieres?
+dweller.drunk.greeting4=Ninguno demasiado cutre, ese ron -hic- perdón.
+dweller.drunk.greeting5=Sí, no es divertido charlar con mis "amigos" de aquí. Tienen... secretos que esconder.
+dweller.drunk.greeting6=¿Eh? No, no sé nada.
+dweller.drunk.greeting7=Oye, ¿me traes otra bebida, amigo?
+dweller.drunk.greeting8=Hmm, eso es lo bueno -hic- disculpe.
+dweller.drunk.greeting9=Puede que estemos aislados, ¡pero tenemos oro en abundancia! ¡No somos pobres! Bueno, tal vez lo sea yo.
+dweller.drunk.greeting10=¿Eh, el oro? Viene ... viene de abajo, ojo, de abajo.
+dweller.drunk.greeting11=¡Oye, ofréceme otra ronda, amigo!
+dweller.drunk.greeting12=§oAhhh, no es tan sabroso -hic- perdóname.
+dweller.drunk.greeting13=§oCuando yo era un muchacho, mi padre me contaba cuentos sobre el mar y sus habitantes. Ya sabes, eso es todo eso...
+dweller.drunk.greeting14=§oCosas... cosas horribles, indescriptibles...
+dweller.drunk.greeting15=§oEstoy sediento. ¿Por más monedas en el ojo?
+dweller.drunk.greeting16=§oHmm mhh, no había tomado esta buena bebida en años -hic- mi culpa.
+dweller.drunk.greeting17=§oSí, cosas horribles... y mis amigos aquí... las adoran. Negocian con ellos. Algunos incluso se aparean con ellos.
+dweller.drunk.greeting18=§oY luego ellos sueñan...
+dweller.drunk.greeting19=§oOye, ahora no debería preguntarte, pero ... ya sabes el ejercicio. Tráeme un trago.
+dweller.drunk.greeting20=§oAh, quizás estoy teniendo demasiadas -hic- disculpas.
+dweller.drunk.greeting21=§oLas... cosas, nos dieron pescado... ¡y oro! Pero no por nada, no, eh.
+dweller.drunk.greeting22=§oNunca he matado a nadie, no, salvo a mis compañeros... eh.
+dweller.drunk.greeting23=§oEl estado de ánimo está bajo, no sé por qué. ¡Yo digo que lo ahoguemos con otro trago!
+dweller.drunk.greeting24=§5§o-hic- no debería estar diciendo todo esto -hic-
+dweller.drunk.greeting25=§5§oPero si hubiéramos elegido más dioses tradicionales, entonces mi ma' y mi pa' no hubiéran sido asesinados, digo.
+dweller.drunk.greeting26=§5§oAsesinado por forasteros, sech como tú. Masacrado, más bien.
+dweller.drunk.greeting27=§5§o'Otra!
+dweller.drunk.greeting28=§5§oBueno, buena suerte trajiste a tus dioses, ¡son reales!
+dweller.drunk.greeting29=§5§o¡Las cosas de las profundidades, nos protegen!
+dweller.drunk.greeting30=§5§o¡Nos dan comida! ¡Y oro!
+dweller.drunk.greeting31=§5§oEllos nos vengan!
+dweller.drunk.greeting32=§5§oY si no te gusta, te vas, o... o haces lo que yo hice...
+dweller.drunk.greeting33=§5§oTu.. te unes a nosotros..
+dweller.drunk.greeting34=Yo.. basta con el alcohol, tengo suficiente.
+dweller.drunk.greeting35=...
+
+dweller.bartender.talk0={Hmph. }No apreciamos que los forasteros vengan aquí, pero si realmente lo necesitas, no te negaré ni una sola noche de descanso. Hay camas arriba.
+dweller.bartender.talk1=No te preocupes por el del traje rojo. Es un tonto borracho y escupe mentiras como si no hubiera mañana.
+dweller.bartendertrustedbar.talk0=Oye, hay camas arriba si necesitas descansar.
+dweller.bartendertrustedbar.talk1=¿Quiero una bebida? Solo pregunta. El primero invita la casa.
+dweller.bartendertrustedbar.talk1.option0=Gracias, me lo llevo.
+dweller.bartendertrustedbar.talk1.option1=Ahora no, gracias.
+dweller.bartenderrum.talk0=Ahí tienes, ron de la mejor calidad que encontrarás.
+dweller.bartenderenjoy.talk0=Disfruta tu estancia.
+
+dweller.carpenter.talk0={Hmm, hmm. }:Saludos.
+dweller.carpenter.talk1=No tengo nada que decirte.
+dweller.carpentertrustedcar.talk0=¿Quieres comprar algo?
+dweller.carpentercanoecar.talk0=Quiero comprar una[... | :... | :...]| preguntar.
+dweller.carpentercanoecar.talk0.option0=¿Cómo pescas?
+dweller.carpentercanoecar.dontfishtalk0=¿Yo? Yo no pesco. |: Mis compañeros, usan canoas.
+dweller.carpentercanoecar.talk0.option1=Para qué son las: canoas?
+dweller.carpentercanoecar.canoesfortalk0=Mis compañeros de pescadores los usan para... pescar. En el océano.
+dweller.carpentereasyjob.talk0=Un trabajo fácil para ellos. Los de las profundidades solo les dan pescado.
+dweller.carpentereasyjob.talk1=¿Compras mis cosas o no?
+
+dweller.lhkeeper.talk0=Oh. |{A traveller}[... ] :Bienvenidos.
+dweller.lhkeeper.talk1=Me imagino que te topaste con nuestra Aldea por casualidad, en tus interminables viajes: solo puedo envidiarte, atrapado como estoy,{ mirando este faro.
+dweller.lhkeeper.talk2=Sin embargo, me pregunto qué piensa un explorador como tú de nuestra humilde Aldea. |De[ todas] las bellezas que debes haber admirado, ¿qué impresión te deja?
+dweller.lhkeeper.talk2.option0=Me sorprende: con un sentido peculiar: de asombro.
+dweller.lhkeeper.talk2.option1=No me gusta.:Hay una atmósfera: de hostilidad aquí.
+dweller.lhkeeper.hamletliketalk0={Ohh,} un placer escucharlo. Dime entonces viajero:Que es eso{ que te asombro} a ti de esa { peculiar} menera?
+dweller.lhkeeper.hamletliketalk0.option0=La arquitectura única,:como encaja todo:sobre el agua sobre la que está construido.
+dweller.lhkeeper.hamletarchitecturetalk0={Ahh, si.}:Estamos muy orgullosos de lo que hemos construido.|| :Y reconstruido. |  :Y reconstruido una y otra vez, solo para que sea[ quemado.
+dweller.lhkeeper.hamletarchitecturetalk1=No tienes idea de a qué me refiero, ¿verdad?:En su búsqueda del conocimiento del mundo, has ignorado esa historia.
+dweller.lhkeeper.hamletliketalk0.option1=Los artículos raros que encuentras aquí.:El botín.
+dweller.lhkeeper.hamletloottalk0=¡Ah, no solo un viajero, sino un saqueador!:¿Qué objetos te interesan más?
+dweller.lhkeeper.hamletloottalk0.option0=Los artefactos antiguos.
+dweller.lhkeeper.hamletartifactstalk0=Esos artefactos no son nuestros. Bueno, al menos no lo eran.:Nos los trajeron unos amigos, que se los quitaron a los enemigos. |:No sabes a qué me refiero, ¿verdad?
+dweller.lhkeeper.hamletloottalk0.option1=Las babosas.
+dweller.lhkeeper.hamletslugstalk0=HA! |¡LAS BABOSAS! |Bueno, ¡no te las comas! |:[Puede que te arrepientas.
+dweller.lhkeeper.hamletslugstalk1=No puedes[ ni incluso comenzar] imaginar lo importantes que son para nosotros esas criaturas viscosas.:Son nuestro medio de comunión, con el Dios en el que elegimos creer.
+dweller.lhkeeper.hamletslugstalk2=¿Encuentra eso extraño? Bueno deberías.:Pero si esa{ "extrañeza"} te llena de miedo y odio por nosotros y nuestras costumbres,| entonces no eres diferente de tus antepasados.
+dweller.lhkeeper.hamletslugstalk3=No sabes a qué me refiero, ¿verdad?
+dweller.lhkeeper.hamletdisliketalk0=Eso no me sorprende,{ forastero}.:¿Qué es lo que no te gusta?
+dweller.lhkeeper.hamletdisliketalk0.option0=Los moradores.:Ellos parecen despreciar a los forasteros.
+dweller.lhkeeper.hamletdwellerstalk0=Créeme,[ forastero.:Ellos tienen todo el derecho a hacerlo.] :Después de lo que hicieron tus antepasados, aquí no nos agradan los forasteros.|  :Pero no sabes de lo que estoy hablando, ¿verdad?
+dweller.lhkeeper.hamletdisliketalk0.option1=Es inquietante.:Especialmente esa extraña escultura:en el centro.
+dweller.lhkeeper.hamletidoltalk0=Ese es el ídolo de nuestro propio[ Dios.]| :La deidad en la que elegimos creer, en la forma que creíamos conveniente para retratarlo.| :No te criticaré por encontrar inquietante su apariencia.
+dweller.lhkeeper.hamletidoltalk1=Pero si ese sentimiento inquietante fuera reemplazado por miedo y odio por nosotros y nuestras costumbres,| entonces no eres diferente de tus antepasados.
+dweller.lhkeeper.hamletidoltalk2=No sabes a qué me refiero, ¿verdad?
+dweller.lhkeeperlackknowledge.talk0=¿Eres un{ verdadero buscador de conocimiento?}:¿Realmente podría estar interesado en aprender más de nuestro pasado?
+dweller.lhkeeperlackknowledge.talk1=Lo dudo. Tu mente aún tiene que abrirse.
+dweller.lhkeeperhasknowledge.talk0=Yo.. Yo siento dentro de ti una{ sed..}:Un cierto deseo de aprender.| Una especie de curiosidad, una tonteria pero{ fascinante.
+dweller.lhkeeperlecture.talk0=¿Quieres conocer más de nuestra historia? ¿De todo el{ sufrimiento} que hemos soportado?
+dweller.lhkeeperlecture.talk1=¿Quieres saber más de lo que nos hicieron tus antepasados, en su miedo a lo[ desconocido?
+dweller.lhkeeperlecture.talk1.option0=Dime más.:Deseo saber.
+dweller.lhkeeperlecture.tellmetalk0=Es reconfortante ver a uno de ustedes buscar este conocimiento en lugar de huir de él. |:Aunque, por supuesto... |Debo advertirte. |{:El conocimiento es miedo.
+dweller.lhkeeperlecture.tellmetalk1=Cuanto más sabes, |cuanto más ves, |lo {ciego que eres,} |una vez que te das cuenta de cuanto el velo de ilusiones nubla tu mente. |:Un velo {irrompible]. | Créame, {lo intenté}. En vano.
+dweller.lhkeeperlecture.talk1.option1=Guarda tus mentiras:para ti,:demonio.
+dweller.lhkeeperlecture.fiendtalk0=¿Por qué, {realmente no eres diferente de tus antepasados...} verdad? |:Solo piensas que somos monstruos, ¿verdad? ¿Seres retorcidos y viles que tiene costumbres impías?
+dweller.lhkeeperlecture.fiendtalk1=¿Y qué es lo que impulsa esos pensamientos, si no le importa que se lo pregunte?:¿Es nuestra piel pálida y espantosa? ¿O es esa extraña escultura en la plaza central?
+dweller.lhkeeperlecture.fiendtalk1.option0=Es exactamente:esas cosas:de las que estas hablando:Sois inhumanos.
+dweller.lhkeeperlecture.inhumantalk0=Eso |es verdad.:Pero, ¿qué es lo que impulsa a los humanos a[ masacrar] todo lo que se les parece pero que no es realmente como ellos? | :¿Y {declararse SANTOS en el proceso?
+dweller.lhkeeperlecture.inhumantalk1=Ignorancia. |Sí, tal vez sea eso. | :Sin conocimiento, haces suposiciones.[ Peligrosas.
+dweller.lhkeeperlecture.inhumantalk2=¿Por qué no te liberas de tus prejuicios, forastero, y déjame decirte cómo fueron realmente las cosas?
+dweller.lhkeeperlecture.fiendtalk1.option1=Todos ustedes solo:me desprecian con el :mismo prejuicio del que tú: me acusas.
+dweller.lhkeeperlecture.prejudicetalk0=...cierto es, forastero... tenemos miedo. |:Terriblemente asustado de personas como tú. El nuestro no es tanto prejuicio como cautela, suspicacia justificada.
+dweller.lhkeeperlecture.prejudicetalk1=Si realmente quieres luchar contra los prejuicios, ¿por qué no me escuchas y me dejas decir cómo fueron las cosas?
+dweller.lhkeeperlecture2.talk0=Entonces, viajero, ¿qué será? ¿Escucharás ahora nuestra historia?
+dweller.lhkeeperlecture2.talk0.option0=Bien.:Adelante.
+dweller.lhkeeperlecture2.talk0.option1=Ahora no.
+dweller.lhkeeperlecture2.lecturetalk0=Hay muchas aldeas como la nuestra en este mundo, aunque no tantas como antes. Pero todos tienen algo en común.
+dweller.lhkeeperlecture2.lecturetalk1=Es posible que al principio te haya desanimado la oscuridad y la humedad del territorio circundante, pero cada vez que lo ves, significa que en un momento dado, una aldea como la nuestra estuvo allí.
+dweller.lhkeeperlecture2.lecturetalk2=Sin embargo, el suelo no siempre fue así. :Al contrario de lo que algunos puedan pensar, no nos instalamos aquí por ningún atractivo que la tierra tuviera sobre nosotros. :De hecho, somos la razón por la que el suelo se volvió así.
+dweller.lhkeeperlecture2.lecturetalk3=Fue nuestra adoración a nuestra Deidad lo que hizo que sucediera, y si eso no prueba su realidad, entonces no sé qué lo hará.:Desafortunadamente, a muchos de [tus antepasados] no les gustó la idea de un dios más verdadero que el suyo.
+dweller.lhkeeperlecture2.lecturetalk4=De hecho, estaban tan disgustados con la idea de que una deidad volviera el suelo negro y húmedo que nos consideraron "herejes" y empezaron a cazarnos [uno por uno.]
+dweller.lhkeeperlecture2.lecturetalk5={Nuestras casas fueron quemadas, nuestra gente asesinada.} Nuestros padres, los sobrevivientes, lo perdieron todo. Fue una {masacre.} {Fue un [GENOCIDIO].
+dweller.lhkeeperlecture2.lecturetalk6=Y se consideraban a sí mismos "santos" y "cazadores", esos {asesinos despiadados.
+dweller.lhkeeperlecture2.lecturetalk7=Pero teníamos amigos. Amigos poderosos, que alejaron la guerra de nosotros y de ellos mismos. Oh, y si no fuera por ellos, toda nuestra gente habría sido {erradicada.
+dweller.lhkeeperlecture2.lecturetalk8=Nadie ganó en esos tiempos. Y todo ello por el desdén de {tus antepasados} por lo que es diferente. Por la arena oscura debajo de nosotros y la extraña forma de nuestra Deidad.
+dweller.lhkeeperlecture2.lecturetalk9=¿Entiendes ahora por qué mis compañeros de residencia, así como yo, tenemos tanto desdén por los forasteros? ¿Por qué somos tan cautelosos con ellos?
+dweller.lhkeeperlecture2.lecturetalk9.option0=¿Quiénes son estos:'amigos' de:los que hablaste?
+dweller.lhkeeperlecture2.lecturetalk9.option1=Entiendo.:Tienes mis simpatías.
+dweller.lhkeeperlecture2.friendslecturetalk0=Eso no es de tu incumbencia, mientras sigas siendo un extraño.:Pero eso no tiene por qué quedarse así.
+dweller.lhkeeperlecture2.thankstalk0=Y tu tienes mi gratitud. Por escuchar mi cuento, nuestra historia.:Por aliviarme de la carga del conocimiento.
+dweller.lhkeepergratitude.talk0=Si necesita saber más, preguntame.
+dweller.lhkeeperdreamer.talk0=Eres un soñador. Yo sé eso. |:Buscas la Verdad. Yo también lo sé.
+dweller.lhkeeperdreamer.talk1=Deseas romper el Velo. Para aventurarse más allá. |:Bueno, ya lo hiciste, aunque solo sea en sueños, incapaz de recordar nada.
+dweller.lhkeeperdreamer.talk2=Ahora tratas desesperadamente de convencerte de que puedes hacerlo. Triunfar donde todos han fallado. Librarse de las mentiras.
+dweller.lhkeeperdreamer.talk2.option0=Ayudame.
+dweller.lhkeeperdreamer.talk2.option1=ESTOY ENFERMO:DE MENTIRAS.
+dweller.lhkeeperdreamer.liestalk0=Todos lo somos, hasta que nos damos cuenta de lo peor que es la Verdad. ||:Te ayudaré.
+dweller.lhkeepergreatdreamer.talk0=Esa estatua, en la plaza central, representa a nuestra Deidad marina. |:El Gran Soñador.
+dweller.lhkeepergreatdreamer.talk1=Buscas la Verdad, El Gran Soñador la esconde. |:Hablar con Él es ir{ Más allá del velo.
+dweller.lhkeeperocean.talk0=Viajero, todos los sueños pasan por el agua. A través del Gran Soñador. |:Mira el océano.
+dweller.lhkeepernewyou.talk0=[Oh mi.] |:Te comunicaste.
+dweller.lhkeepernewyou.talk1=Las babosas. Cometelas. Incluso si duelen.
+dweller.lhkeeperimpressed.talk0=Estoy impresionado viajero. Verdaderamente. |:Estoy impresionado por su resolución, su fuerza de voluntad, su determinación en su búsqueda de conocimiento, por peligrosa que sea.
+dweller.lhkeeperimpressed.talk1=Me impresiona tu mente abierta, al darte cuenta de las fechorías de sus antepasados y repudiarlas. |:Y, sobre todo, me impresiona lo totalmente que te comprometes con su nueva creencia.
+dweller.lhkeeperimpressed.talk2=Tenga cuidado con la decepción. Tarde o temprano, llegará. Picará.
+dweller.lhkeepercanoe.talk0=Por ahora, súbete a una canoa y navega. Habla con el carpintero.
+dweller.lhkeeperritualintro.talk0=Pero ahora es el momento de dar el siguiente paso.
+dweller.lhkeeperritual.talk0=Nosotros no podemos respirar agua desde el momento en que nacemos. No, viene después.
+dweller.lhkeeperritual.talk1=Es sólo a través de la devoción sin fin al Gran Soñador que un forastero como tú puede recibir este Don. :Para nosotros es diferente. Genético. No mencionaré los detalles.
+dweller.lhkeeperritual.talk2=Pero en última instancia, para los dos de nuestra especie, es solo a través de un acto de fe que se nos puede conceder el Don. |:Debes ahogarte.
+dweller.lhkeeperritual.talk3=Hay un ritual que se debe realizar. Podría explicártelo, pero estoy seguro de que esa voz en tu cabeza se encargará de ello.
+dweller.lhkeeperritual.talk4=Todavía recuerdo cuando me sometí al ritual. Tú también lo harás.
+dweller.lhkeeperritual.talk5=Estaba bajo el agua, no podía respirar, me iba a morir, sabía que lo estaba y me arrepentía, me arrepentía de todo y no podía respirar y me habían mentido y me habían dejado para ahogarme y Tenía que creer pero no pude y me estaba muriendo y RESPIRE. :Dentro. Y fuera. Dentro. Y fuera. Otra vez. Y otra vez.
+dweller.lhkeeperritual.talk6=Ese fue mi bautismo. Pronto tendrás el tuyo.
+dweller.lhkeeperfriend.talk0=Buena suerte amigo.
+dweller.lhkeeperiknow.talk0=Ah, soñé contigo esta noche. Quiero decirme algo.
+dweller.lhkeeperiknow.talk0.option0=El borracho:me lo dijo:todo.
+dweller.lhkeeperiknow.talk0.option1=¿Siempre:has sido:una víctima?
+dweller.lhkeeperiknow.drunktalk0=¿Y confiarías en las palabras de un viejo y loco borracho? |:Por supuesto que deberías. Descubrirás que la locura te acerca a la verdad, para bien o para mal.
+dweller.lhkeeperiknow.victimstalk0=El borracho también apareció en mi Sueño. :Fue él quien te dijo algo, ¿no?
+dweller.lhkeeperoldtruth.talk0=De sus palabras surge una vieja Verdad. :Las tradiciones de mis antepasados fueron demasiado lejos en ocasiones. Sacrificios, asesinatos, experimentos.
+dweller.lhkeeperoldtruth.talk1=La sangre yace en la arena negra debajo de nosotros. Lo hicieron por el poder, mediante pactos impíos. El Gran Soñador, o mejor dicho, su Arcipreste, exigió un pago.
+dweller.lhkeeperoldtruth.talk2=No necesitabas esta Verdad. Solo te habría disuadido de tu objetivo. :¿Lo ves? Tuve que esconderlo. Mi propio velo, en cierto modo.
+dweller.lhkeeperoldtruth.talk3=Eso, sin embargo, no excusa en lo más mínimo lo que nos sucedió. :Ningún pecado es lo suficientemente grande como para justificar el GENOCIDIO.
+dweller.lhkeeperoldtruth.talk3.option0=Hiciste mal.:El castigo era:debido.
+dweller.lhkeeperoldtruth.talk3.option1=Tus acciones:no merecieron:tal castigo.
+dweller.lhkeeperoldtruth.genocidedisagreetalk0=No hay respuesta correcta. :Pero debes saber que{ desprecio} a los que piensan como tú.
+dweller.lhkeeperoldtruth.genocideagreetalk0=Eso es lo que pensamos también. :Sin embargo, tus antepasados lo sabían mejor, al parecer.
+dweller.lhkeeperpast.talk0=No importa. Dejemos que el pasado quede pasado, no somos nosotros los que podemos caminar en el tiempo. Solamente hablar.
+dweller.lhkeeperend.talk0=¿Me concedes unas últimas palabras? |Gracias, viajero. :Lo haré rápido.
+dweller.lhkeeperend.talk1=Empecemos por una Verdad objetiva. Una matemática. :El mayor número en el que puedas pensar es nada comparado con el infinito.
+dweller.lhkeeperend.talk2=Otra verdad. Soy insignificante. :Hay muchos otros exactamente como yo en este mismo mundo. Copias exactas. :Soy solo un puñado de favores y favores, tan irrelevante que tú daras mi muerte sin apenas vacilar.
+dweller.lhkeeperend.talk3=Mi pregunta, forastero, es esta. :¿De verdad reclamas una mente de complejidad infinita? Lamento decirlo, pero no es así. Miles de millones y miles de millones de sinapsis, sin embargo, tarde o temprano, incluso su mente podría ser copiada. Justo como la mia.
+dweller.lhkeeperend.talk4=Ese es un fragmento de la Verdad, forastero, solo para ti. Tu vida no vale nada.
+dweller.lhkeeperend.talk5=No importa de qué mundo vengas, la Verdad abarca todos los reinos. | :Porque se encuentra más alla del Velo, en la región entre todos los universos.
+dweller.lhkeeperend2.talk0=Adelante, golpéame. Mi muerte no importará. || :Y tampoco la tuya.
+
+dweller.scholar.talk0=¡Oh mi! ¡Un viajero! |:¡Hola! ¡Hi! ¡Saludos! ¡Bienvenido!
+dweller.scholar.talk1=¡Soy el erudito de Hamlet! Una profesión poco común hoy en día. :Jaja. La mayoría de nosotros estamos muertos.
+dweller.scholar.talk2=Sin embargo, no se preocupe. Eres un amigo, ¿no? |:Siéntase libre de navegar por el Ayuntamiento.
+dweller.scholarseeya.talk0=Hasta luego, amigo.
+dweller.scholarweeper.talk0=Oi, ¿estás incursionando en el arte de hacer llorar? |:Bien.
+dweller.scholarweeper.talk1=Ya sabes, tambien solíamos hacer Llorones. :Luego paramos, ya que a algunas personas no les gustó esa práctica nuestra, ¡y al final tuvimos suficiente para llorar por nosotros mismos!
+dweller.scholarweeper.talk2=Sí, las cosas eran difíciles en ese entonces. :Mis amigos me llamaron Lloron de Honor después de que mi padre y mi madre fueran... ya sabes...
+dweller.scholarweeper.talk3=Todavía lloramos a veces, absortos en el recuerdo. :Así que por favor amigo, escucha nuestros cantos. :Y llora con nosotros.
+dweller.scholarseeya2.talk0=Hasta luego, amigo.
+dweller.scholarshoggoth.talk0=Oi, ¿sabes lo que es un SHOGGOTH?
+dweller.scholarshoggoth.talk0.option0=Sí. 
+dweller.scholarshoggoth.talk0.option1=Iluminame. 
+dweller.scholarshoggoth.sorrytalk0=Oh. |Lo siento realmente. |:Ese no es un conocimiento que se toma a la ligera.
+dweller.scholarshoggoth.sorrytalk1=Te lo ruego amigo :No confíes en el Shoggoth. Te arrepentirás.
+dweller.scholarshoggoth.sorrytalk2=Fue esa voz en tu cabeza la que te dijo cómo hacer uno, ¿eh?
+dweller.scholarshoggoth.sorrytalk2.option0=¿Que voz? 
+dweller.scholarshoggoth.sorrytalk2.option1=Si. 
+dweller.scholarshoggoth.enlightentalk0=Oh no, no voy ha hacer eso. :Eres lo suficientemente afortunado, amigo.
+dweller.scholarshoggoth.enlightentalk1=Sin embargo, me temo que esa voz en tu cabeza, tarde o temprano, te dirá cómo hacer uno.
+dweller.scholarshoggoth.enlightentalk1.option0=¿Que voz? 
+dweller.scholarshoggoth.enlightentalk1.option1=Dime más. 
+dweller.scholarbreath.talk0=¿Recuerdas cuando te bautizaron y luego respiraste FUERTE con una voz que no era la tuya? :Heh.
+dweller.scholarseeya3.talk0=Hasta luego, amigo.
+
+##################
+#WEEPER DIALOGUE
+##################
+
+weeper.dialogue.0=§5§oCuando miro los horrores que tengo ante mí, todo lo que me queda es llorar.
+weeper.dialogue.1=§5§oTienes suerte, maestro, en tu ignorancia de lo que hay más allá.
+weeper.dialogue.2=§5§oMaestro, el agua que pusiste en mi cerebro... es agonizante, pero el dolor no es de naturaleza física.
+weeper.dialogue.3=§5§oTodo es tan insignificante... verás, una vez que sumerjas la cabeza en el agua.
+weeper.dialogue.4=§5§oMaestro.. te lo ruego.. arranca mi columna vertebral. Hazme completo.
+weeper.dialogue.5=§5§oNo puedo *ver* el mundo que me rodea, pero lo *sé*, incluso mejor que usted, Maestro. Y es de lo más horrible.
+weeper.dialogue.6=§5§oMe bautizaste Maestro... eres santo, un dios entre gusanos.
+weeper.dialogue.7=§5§oEscucho susurros... por favor... alguien... deténgalos...
+weeper.dialogue.8=§5§oSoñé contigo. Estabas riendo, pero no de alegría. Tus ojos estaban hundidos.
+
+fletum.dialogue.0=§5§oEl mundo es bello. Como un océano de lágrimas.
+fletum.dialogue.1=§5§oSplish splash. Heehee.
+fletum.dialogue.2=§5§oEstoy completo.
+fletum.dialogue.3=§5§oVeo formas hermosas... transparentes y fluidas, como una superficie acuosa.
+fletum.dialogue.4=§5§oVeo un bolsillo rojo en el fondo del océano, como un rubí dentro de un diamante.
+fletum.dialogue.5=§5§oSoñé con un hermoso arco iris. Que era de color rojo.
+fletum.dialogue.6=§5§o¡Mis sueños colorean el mundo! Estoy seguro, porque tu cara está roja, jejeje.
+fletum.dialogue.7=§5§oEl Caos Reptante me susurró. Dijo que soy su favorito, ¡jejeje!
+
+weeper.shoggoth.call=§5§oMaster! Master! I have a secret that I wish to share!
+weeper.shoggoth.0=§5§oMaster.. I can share a terrible, terrible secret with you.
+weeper.shoggoth.1=§5§oAll I ask in return is for you to promise to grant me a wish, a single wish. Speak to me again if you accept.
+weeper.shoggoth.2=§5§oOh.. Master.. my dear Master. Thank you. The secret has been kept for too long.
+weeper.shoggoth.3=§5§oMaster, my Master. Do you know what a SHOGGOTH is?
+weeper.shoggoth.4=§5§oMost died long ago, yet still a few roam the deepest seas. But you can make one, too.
+weeper.shoggoth.5=§5§oThat little voice in your head, the one that drives your writing hand.. it'll teach you how to make one.
+weeper.shoggoth.6=§5§oMy wish, Master. It is time for my wish. I beg you, my dear, dear Master.. please..
+weeper.shoggoth.kill=§5§o..kill me.
+weeper.shoggoth.please=§5§oPlease, I beg of you, kill me.
+weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
+weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
+
+##################
+#POTION EFFECTS
+##################
+
+effect.folly=Locura
+effect.terror=Terror
+effect.heartbreak=Corazón roto
+
+##################
+#MEMORIES
+##################
+
+memory.unlock.message=Un recuerdo de %1$s se queda en mi mente. No lo olvidare.
+memory.unlock.addenda=Esta memoria se encontrará en el "%1$s" investigación en Al Azif.
+
+memory.animal.name=Animal
+memory.beheading.name=Decapitación
+memory.change.name=Cambio
+memory.crystal.name=Cristal
+memory.darkness.name=Oscuridad
+memory.death.name=Muerte
+memory.eldritch.name=Eldritch
+memory.heartbreak.name=Desamor
+memory.human.name=Humano
+memory.introspection.name=Introspeción
+memory.learning.name=Aprendizaje
+memory.metal.name=Metal
+memory.plant.name=Flora
+memory.power.name=Poder
+memory.repair.name=Reparación
+memory.sentience.name=Sintiencia
+memory.stillness.name=Quietud
+memory.tool.name=Herramientas
+memory.void.name=Vacio
+memory.water.name=Agua
+
+
+##################
+#DREAMS
+##################
+
+dreams.timesdreamt=He soñado %1$s/%2$s veces hoy.
+dreams.maybeinthefuture=Este sueño no produjo ningún efecto y, sin embargo, todavía sentía un hormigueo. Quizás funcione en el futuro, en diferentes circunstancias.
+dreams.lowlevel=Necesito más fuerza.
+
+dreams.groundscan.oreIron=%1$s bloques de mineral de hierro se encontraron en un %2$sx%3$s area en el suelo debajo%4$s%5$s
+dreams.groundscan.oreGold=%1$s bloques de mineral de oro se encontraron en un %2$sx%3$s area en el suelo debajo%4$s%5$s
+dreams.groundscan.oreDiamond=%1$s bloques de mineral de diamante se encontraron en un %2$sx%3$s area en el suelo debajo%4$s%5$s
+dreams.groundscan.oreEmerald=%1$s bloques de mineral de esmeralda se encontraron en un %2$sx%3$s area en el suelo debajo%4$s%5$s
+dreams.groundscan.greatestconcentration=, con la mayor concentración en el nivel y: %1$s
+dreams.groundscan.block=. Al menos un bloque se encuentra en x: %1$s, y: %2$s, z: %3$s;
+
+dreams.biomesearch.innsmouth=Bioma Oscuro encontrado en x: %1$s, z: %2$s
+dreams.biomesearch.fail=No se encontraron biomas Oscuros en un radio de 1200 bloques
+dreams.biomesearch.hamlet=Se encontró una Aldea Oscura ya existente en x: %1$s, z: %2$s
+
+dreams.villagesearch.success=Encontrado una aldea en x: %1$s, z: %2$s
+dreams.villagesearch.fail=No se encontraron Aldeas
+
+dreams.monumentsearch.success=Monumento océanico encontrado en x: %1$s, z: %2$s
+dreams.monumentsearch.fail=No se encontraron monumentos oceánicos
+
+dreams.playersearch.success=La coordenada de otro jugador, sea x o z, es: %1$s. No sé en qué dimensión están.
+dreams.playersearch.success2=Otro jugador se encuentra en x: %1$s, z: %2$s. No sé en qué dimensión están.
+dreams.playersearch.success2=Otro jugador se encuentra en x: %1$s, y: %2$s, z: %3$s. No sé en qué dimensión están.
+dreams.playersearch.name=Su nombre es %1$s.
+dreams.playeritem.success=Otro jugador está empuñando actualmente: %1$s.
+dreams.playeritem.mildsuccess=Se encontró otro jugador, pero no empuñaba nada.
+dreams.playeritem.firstletter=Su nombre comienza con '%1$s'.
+dreams.playersearch.fail=El Sueño no pudo localizar a otro jugador.
+
+dreams.deathsearch.teleport=Parece que lanzarme el Sueño de Muerte me permite teletransportarme a la ubicación de mi última muerte.
+dreams.deathsearch.found=La ultima muerte de %1$s en el Overworld fue en x: %2$s, y: %3$s, z: %4$s.
+dreams.deathsearch.notrecently=%1$s no parece haber muerto recientemente.
+dreams.deathsearch.toostrong=la mente de %1$s está demasiado bien protegida para que la traspasen.
+
+dreams.alienis.almostthere1=Estoy seguro de que este aspecto será de gran ayuda muy pronto.
+dreams.alienis.almostthere2=Pero ahora no es el tiempo. Me falta la fuerza.
+dreams.alienis.needvacuos=A partir de ahora, necesito haber soñado con el Vacío para que esto funcione.
+dreams.alienissearch.success=Stronghold encontrada en x: %1$s, z: %2$s
+dreams.alienissearch.fail=No Strongholds encontradas
+
+dreams.animalsearch.nonefound=No se encontraron animales del tipo preferido cerca.
+dreams.animalsearch.toomanyblocks=Para convocar correctamente a un animal, debería despejar un espacio cercano, a mi nivel de altura.
+
+dreams.introspection.otherplayer=El sueño de la introspección me habla %1$s.
+dreams.introspection.caster=El sueño de la introspección me habla de mí mismo.
+dreams.introspection.deity=Deidad escogida: %1$s.
+dreams.introspection.attack=Multiplicador de Ataque: %1$s       Multiplicador de Ataque en Agua: %2$s
+dreams.introspection.defense=Multiplicador de Defensa: %1$s   Multiplicador de Defensa en Agua: %2$s
+dreams.introspection.dream=Bonus de Sueño: %1$s.
+dreams.introspection.void=Ha soñado con el vacío.
+dreams.introspection.novoid=No ha soñado con el vacío.
+dreams.introspection.worship=Tipo de adoración: %1$s. Fuerza de Adoración: %2$s.
+dreams.introspection.noworship=No adoradores.
+
+dreams.endbath=Creo que esto funcionó. Debería intentar comulgar.
+
+##################
+#RESEARCH
+##################
+
+tc.research_category.BEYOND_THE_VEIL=Beyond the Veil
+
+research.FIRSTDREAMS.title=Sueños
+research.didDream.text=Debo dormir. Debo soñar.
+research.FIRSTDREAMS.stage.0=El último viaje que hice al Nether me dejó con una sensación extraña. El de hundirse, a través de la piedra y el lecho de roca, los dioses saben qué tan lejos en otro reino.<BR>Verdaderamente, una sensación extraña, una que me pareció extrañamente... extraña...<BR>..¿Nostalgica?<BR>Si.. una extraña nostalgia de una experiencia que nunca he vivido. Un recuerdo que vino de repente, la última vez que soñé.<BR>Un sueño. ¡Esa podría ser la clave!<BR>Debo soñar una vez más, debo escudriñar mi propio subconsciente.  
+research.FIRSTDREAMS.stage.1=Los sueños son una maravilla.<BR>Una vez pensé que serían simplemente una ventana a mi propio subconsciente y, sin embargo, parece haber mucho más en ellos de lo que parece.<BR>¿Y si las cosas que vi en Sueños no fueran ficción? ¿Y si fueran verdad?<BR>¿Y si me mostraran parte de una gran Verdad invisible para todos menos para un Soñador?<BR>Debo practicar el arte de soñar. Debo ser yo quien descubra esta Verdad.<BR>Yo, y solo yo, debo ser el indicado.
+
+research.FUMESPREADER.title=Memorias
+research.firstMemory.text=Haz una memoria de aprendizaje.
+research.FUMESPREADER.stage.0=Un nuevo y débil recuerdo surgió de mi último sueño.<BR>Una memoria de aprendizaje, pero tan débil que bien podría no pertenecerme.<BR>No obstante, debo explotarlo. Después de todo, ¿con qué facilidad se puede influir en los sueños a partir de los recuerdos de las experiencias cotidianas?<BR>Ah, pero sé algo que muy pocos hacen. Una Memoria se puede embotellar. A través de un tamiz de memoria.<BR>Una palangana de piedra llena de agua, sobre la cual colocaré primero un elemento que podría activar la Memoria, luego usaré un frasco de memoria.<BR>En este caso, es una lágrima espantosa la que dispara la Memoria, aunque no veo ninguna correlación posible.<BR>Como nota al margen, ¿de dónde vino de repente este conocimiento, si no de un recuerdo? ¡Oh, la ironía!
+research.FUMESPREADER.stage.1=Ahora tengo en mis manos una colección, o mejor dicho, un recuerdo, de Aprendizaje.<BR>Debo soñar bajo su influencia, y para ello debo hacer un esparcidor de humo. Un pequeño orbe de vidrio que debe colocarse cerca de mi cama. Entonces debo llenarlo con Incienso Onírico, y solo entonces aplicar la Memoria.<BR>Entonces dormiré, y el agotamiento del incienso indicará el éxito.<BR>Una Memoria de Aprendizaje, fuera de cualquier Memoria, debería indicarme nuevos caminos a tomar.<BR>Tiene que hacerlo, porque de lo contrario no me quedaría ninguna dirección, ningún lugar adonde ir.<BR>Si este experimento es un fracaso, yo también.
+
+research.CRYSTALDREAMS.title=Hundiéndose
+research.CRYSTALDREAMS.stage.0=Los sueños existen. Son entidades, salen de mi cuerpo y desaparecen de mi mundo sólido tridimensional en unos breves instantes, para ir donde nada puede seguirlas.<BR>Sin embargo, en estos pocos y breves momentos... bajan. Directamente hacia abajo, hundiéndose a través de la piedra y el lecho de roca más rápido de lo que el ojo podría seguirlos. <BR>Lo siento. Lo sé.<BR>Lo aprendí. <PAGE>Debería aprovechar al menos algo de esto. Durante esos breves momentos, debería poder conocer más del suelo debajo de mí. Aunque una memoria de aprendizaje no funcionará esta vez, necesito una diferente.<BR>Cuando extraje mi primer mineral de hierro. ¡Eso es un recuerdo! ¡Estaba extasiado, ya que sentía que la verdadera riqueza fluía en mis manos!<BR>Je ... sí, eso podría ser suficiente.
+research.CRYSTALDREAMS.stage.1=El sueño reaccionó a mi Memoria de Metal otorgándome conocimiento de la presencia de metales en el suelo.<BR>Me respondió. Es como si fuera... ¿sensible?<BR>Es extraño, incluso algo inquietante... y, sin embargo, no puedo evitar desear saber más, romper esta fachada de ilusiones que nublan mi mente de... esta Verdad incognoscible.<BR>Estoy seguro de que las nuevas experiencias desencadenarán nuevos recuerdos que otorgarán nuevos conocimientos y tal vez otros efectos.<BR>Debo seguir adelante. Siempre que me quede estancado, será prudente recurrir a una memoria de aprendizaje.
+research.CRYSTALDREAMS.addenda.crystal=De manera muy similar al metal, un recuerdo de cristal me otorga el conocimiento de la tierra debajo de mí, esta vez enseñándome la presencia de cristales, llamados, diamantes y esmeraldas.
+research.CRYSTALDREAMS.addenda.sentience=Los sueños pueden ir hacia abajo, pero su conocimiento del mundo es vasto.<BR>Y a través de la realización de un libro simple, recuerdo a aquellos que habitan este mundo.<BR>Una Memoria de Sentiencia, con la que puedo instruir a mi Sueño para que busque una sociedad como la de un Pueblo, y señalarme hacia ella.
+research.metalDream.text=Sueño de metal.
+
+research.SLEEPCHAMBER.title=Cámara de sueño
+research.SLEEPCHAMBER.stage.0=Siempre estuve orgulloso de mi capacidad para permanecer despierto y trabajar y caminar todo el tiempo que necesitaba, dejando el sueño en momentos de absoluta necesidad.<BR>Oh, qué irónico que ahora necesito dormir y no puedo tener suficiente.<BR>Debo soñar, seguir soñando, una y otra vez. Una vez al día, solo por la noche, no es suficiente, simplemente no lo es. Centraré mi mente en la creación de algún dispositivo capaz de librarme de ese límite, al menos parcialmente.<BR>Primero, una estación de artesanía adecuada. Un Banco de engranajes me ayudará en la creación de objetos más complejos.
+research.SLEEPCHAMBER.stage.1=Esta máquina, a la que llamé Cámara del Sueño, es muy curiosa. Su construcción requiere un conocimiento de mecánica, biología y química tan lejos de mi alcance habitual de conocimiento que me atrevería a considerarlo ... ¿alienígena?<BR>Y, sin embargo, me llegó, de repente, no a través de la experimentación, sino aparentemente por sí solo.<BR>Oh, preguntaré sobre ese misterio en otro momento.<BR>La Cámara debe abrirse, y una vez dentro debo cerrarla para empezar a Soñar. Es capaz de ponerme a dormir una vez al día, y despertarme inmediatamente, sin que pase el tiempo. Y, sin embargo, esto es suficiente para que el Sueño me abandone y haga su tarea según lo dictado por un Esparcidor de humos cercano, como una cama normal.<BR>Es realmente increíble y, sin embargo, siento que solo raspé la superficie de lo que este viaje podría llevarme.<BR>Es simplemente un trampolín, para romper todas las verdades falsas que pensé que sabía.
+research.craftedsleep_chamber.text=Crea una cámara de sueño.
+
+research.EFFECTDREAMS.title=Afectándome a mí mismo
+research.EFFECTDREAMS.stage.0=Hasta ahora mis Sueños han podido otorgarme conocimiento, ya sea de secretos arcanos y enigmas o de algo tan simple como el suelo debajo de mí. <BR>Y sin embargo, creo... ¡NO! Estoy SEGURO de que pueden hacer más.<BR>Quizás todavía no soy capaz de que mis Sueños afecten al mundo que me rodea, pero no puedo evitar preguntarme si hay alguna forma de que mis Sueños me afecten... ¿a mí? No mi mente, sino mi cuerpo... <BR>Suena imposible, pero ya he superado eso, ¿no es así?
+research.EFFECTDREAMS.stage.1=La forma en que un recuerdo influye en un sueño es bastante impredecible. Son mensajes, después de todo, y ¿cómo pude comprender la interpretación de tal mensaje de algo tan extraño, tan extraño como ... un sueño?<BR>Registraré aquí aquellos Recuerdos que cambian los efectos de estado que ya condicionan mi cuerpo.
+research.effectDream.text=Activar un recuerdo capaz de afectarme.
+research.EFFECTDREAMS.addenda.power=Un recuerdo de poder, mientras mato a una bestia de no pequeña estatura. Un momento preciado, de satisfacción.<BR>Es a través de él que mi Sueño aumentará la potencia de los efectos en mi cuerpo.<BR>Ambos positivos y negativos, eso es.
+research.EFFECTDREAMS.addenda.stillness=Un recuerdo de quietud, mientras la Cámara del Sueño me aprisiona una y otra vez.<BR>Los efectos en mi cuerpo, no dejaré que me abandonen. A través de esta Memoria, mi Sueño aumentará su duración. Todos ellos.<BR>No pueden escapar. Nadie puede.
+research.EFFECTDREAMS.addenda.change=Una memoria de cambio, mientras presencio un retoño crecer hasta la edad adulta. Una cosa tan pequeña, incluso en su ahora gran tamaño.<BR>Incluso en Quietud, todas las cosas cambian. A través de esta Memoria, mi Sueño eliminará los efectos negativos que asolan mi cuerpo e incluso intentará convertirlos en su buena contraparte.<BR>Una Memoria poderosa, provocada por algo tan mundano. A medida que la Verdad se acerca, soy testigo del mundo bajo una nueva luz.
+
+research.HUMANDREAMS.title=Sueños de otros
+research.HUMANDREAMS.stage.0=A veces, al soñar, tengo una sensación extraña.<BR>Personas como yo, incluso las que nunca he conocido, comienzan a aparecer en mis pensamientos. Y, sin embargo, siento que no es una mera construcción de mi mente, de mi subconsciente.<BR>No. Creo que nuestros Sueños convergen en un mismo punto, que se tocan entre sí, y que esas presencias dentro de mis pensamientos son REALES.<BR>Creo que, a través de mi "experiencia en Sueños", podría saber más sobre esos otros, que podría sondear sus Sueños mientras ellos permanecen inconscientes.<BR>Debería aprovechar esto. Podría intentar dar a luz a una nueva Memoria, una que tenga una interacción social en su núcleo, para apuntar mi Sueño en la dirección de los demás.<BR>¿Tal vez iniciar un simple intercambio con un aldeano podría funcionar?
+research.HUMANDREAMS.stage.1=Tengo razones para creer que, dentro de su propio plano de existencia extraño y unidimensional, los Sueños son todos adyacentes entre sí. Para todos los demás. Al mismo tiempo, en todo momento.<BR>Si bien su posición puede cambiar en relación con nuestro mundo (como cuando descienden directamente a través de al bedrock), mis Sueños son tangentes a todos los demás.<BR>Este es un gran descubrimiento. Como un soñador más experto que la mayoría, puedo sondear los sueños de los demás con los míos propios, aprender cosas sobre ellos e ignorar la privacidad que creen que tienen. Debo seguir trabajando en esta habilidad, para que pueda alcanzar su máximo potencial.<BR>Aún así, este nuevo conocimiento trae consigo un nuevo miedo.<BR>El miedo a que pudiera haber otros Soñadores, más grandes que yo, y que mis incursiones excesivas en Sueños solo me hicieran más vulnerable.<BR>Otros Soñadores, que posiblemente ni siquiera podrían ser humanos.<PAGE>Una Memoria de Humano se activó al iniciar un intercambio con uno de esos aldeanos tontos. Tarde o temprano, haré que paguen sus estúpidos precios.<BR>Este recuerdo hace que los sueños no tengan grandes consecuencias, por ahora. Me permite conocer la posición de otros como yo, pero solo una de sus coordenadas x o z, para un solo humano sin nombre que no sea yo, siempre que haya al menos uno en el momento de Soñar.
+research.memHUMAN.text=Inicia un comercio con un aldeano, A ver a dónde conduce.
+research.HUMANDREAMS.addenda.tool=Una memoria de herramientas, mientras creo una poderosa.<BR>Sin embargo, ardo de envidia ante la idea de que otros empuñen objetos más poderosos que los míos.<BR>A través de esta Memoria, puedo aprender qué elemento se sostiene en la mano principal de un solo humano sin nombre que no sea yo, siempre que haya al menos uno en el momento de Soñar. 
+
+research.INSCRIPTIONS.title=Inscripciones de las Tablas
+research.INSCRIPTIONS.stage.0=Estas antiguas tablas de piedra se pueden descifrar.<BR>Su contenido puede ser inquietante, pero esto no detendrá mi búsqueda de conocimiento. Espero.
+research.INSCRIPTIONS.stage.1=He conseguido descifrar estas tabletas, pero estoy seguro de que hay más. Grabaré su contenido aquí.<BR>Cuando se completan, se pueden utilizar para aprender nuevas investigaciones, como una memoria de aprendizaje. Al igual que la memoria, solo se consumirán si hay algo que aprender.
+
+research.SLEEPCHAMBERADVANCED.title=Cámara de sueño avanzada
+research.SLEEPCHAMBERADVANCED.stage.0=La Cámara del Sueño es un dispositivo extremadamente útil, pero el progreso de la investigación nunca debe detenerse, no debe tener límites.<BR>Me vienen a la mente nuevas revelaciones sobre cómo hacer que alcance su máximo potencial.
+research.SLEEPCHAMBERADVANCED.stage.1=La clave fue AGUA. Todavía no puedo adivinar qué tiene que ver esta sustancia con Sueño, pero su adición en los engranajes y cables de la Cámara del Sueño mejoró enormemente sus capacidades de ayuda al Sueño<BR>Esta cámara de sueño avanzada me permite soñar el doble de veces al día que la normal. No solo eso, ¡permite que mi sueño sea influenciado por dos esparcidores de humo al mismo tiempo!<BR>¡Solo piensa en las combinaciones!
+research.craftedsleep_chamber_advanced.text=Crea una cámara de sueño avanzada.
+
+research.VOIDDREAMS.title=Sueños de vacío
+research.VOIDDREAMS.stage.0=Un nuevo Recuerdo surge en mi mente.<BR>El vacío. Negro, inescrutable, incognoscible. Su esencia está grabada en mi mente, como ningún Recuerdo antes.<BR>Los sueños pasan por EL VACÍO.<BR>AQUÍ es donde realmente se apartan del mundo conocido para ir donde nada puede seguirlos... todavía.<BR>Estoy seguro de esto.<BR>Necesito soñar con el VACÍO.<BR>De su negro vacío.<BR>Para que pueda alcanzarlo yo mismo.
+research.VOIDDREAMS.stage.1=El Sueño fue mucho menos flagrante de lo que imaginaba.<BR>Un sueño de vacío no parece afectarme directamente.<BR>Sin embargo, si volviera a soñar, después de un Sueño de Vacío (o durante, si tengo los medios para hacerlo), parece que mis capacidades de Sueño han mejorado un poco. No mucho, y solo se aplica a unos pocos Recuerdos, pero es algo.<BR>Y, sin embargo, no debería subestimar la importancia de esta Memoria.<BR>Creo que su verdadero efecto es ralentizar el descenso de mi próximo Sueño, especialmente su permanencia en el Vacío. Y si eso es cierto, entonces mi búsqueda de conocimiento podría haber alcanzado un gran avance.<BR>NECESITO aprender qué, o quién, está en ese vacío negro. Saber cómo funcionan los Sueños, adónde van, cómo adquieren conocimientos. Saber qué es real y qué no.<BR>Para conocer la Verdad.
+research.voidDream.text=Sueño de Vacuidad
+
+research.FIRSTCONTACT.title=Contactando con lo incognoscible
+research.FIRSTCONTACT.stage.0=Si es cierto que todos los Sueños pasan por el Vacío, entonces es probable que no sea el único Soñador cuya búsqueda de conocimiento se concentre allí.<BR>Es hora de desvelar la verdad. Es hora de que me ponga en contacto con otros Soñadores. No importa el riesgo, no importa cuán grandes o poderosos puedan ser, o qué intenciones puedan tener.<BR>No importa lo que sean, cuán diferentes, cuán extraños puedan resultarme.<BR>No importa de donde vengan. De qué mundo, tiempo, realidad.<BR>Ahora nada importa. Este puede muy bien ser el final de mi investigación. Si debe ser así, que así sea, y espero que estas notas resulten útiles para la posteridad.<BR>Debo soñar con Eldritch, bajo la influencia del Vacío. Debo fijar mis oídos, para escuchar todo lo que se me dice. Escuche tan de cerca como pueda. Y prepárate para un sueño más largo que la mayoría.
+research.FIRSTCONTACT.stage.1=Dioses misericordiosos, no permitan que mi mente se desmorone mientras escribo esto.<BR>Una voz. Vino del océano. No lo escuché, lo sentí. A través de mi Sueño tocó mi cuerpo.<BR>No me hablaba, sino a través de mí, como si no se diera cuenta de que estaba allí, en mi Sueño.<BR>Sin embargo, ahora sé lo que debo hacer. El pensamiento quedó grabado en mi mente.<BR>Debo encontrar el lugar donde la negrura del Vacío toca la superficie, para poder verlo y manejarlo yo mismo.<BR>Pero, para ser sincero, no sé si seguir en mi búsqueda del conocimiento...<BR><BR><BR>Dioses misericordiosos, tened piedad de mí.<BR>No dejes que me ahogue.
+research.eldritchDream.text=Sueña con Eldritch.
+
+research.STRONGHOLD.title=Encontrar Fortalezas
+research.STRONGHOLD.stage.0=No es de extrañar que los Sueños de Eldritch se correlacione con el Fin, en su cercanía al Vacío.<BR>Cuando no está impulsado por un Sueño del Vacío, un Sueño sobrenatural me dirá la ubicación exacta de una única Fortaleza.
+
+research.DARKDREAMS.title=Sueños de oscuridad
+research.DARKDREAMS.stage.0=Antes de entrar en el océano, podía sentir arena debajo de mi ... debajo de mi Sueño. Arena oscura y viscosa, del color del Vacío.<BR>De hecho, hay informes de playas húmedas y ennegrecidas y, además, se rumorea que algunos de estos biomas "Vacíos" están habitados por pequeños grupos de pescadores solitarios.<BR>Me pregunto si pueden proporcionar alguna pista sobre mi búsqueda de conocimiento. En cualquier caso, mi objetivo ahora es Soñar con Oscuridad. Una memoria nueva y bien impresa.
+research.DARKDREAMS.stage.1=Lejos de ser perfectos, lso Sueños de Oscuridad todavía resulta útil para buscar biomas Vacíos dentro de un rango limitado.<BR>Sin embargo, temo la decepción. ¿Podrían realmente algunos granos negros de arena concedernos la iluminación? Yo creo que no.<BR>Quizás debería centrarme en buscar las Aldeas de pescadores que se rumorea que aparecen en estos lugares.<BR>Sé muy bien que no todos los biomas Vacíos albergarán una aldea, por lo que mi investigación puede llevar mucho tiempo. Puedo consolarme sabiendo cuánto del mundo descubriré en mis viajes.<BR>Sin embargo, me quedo preguntándome cuánto de esto es real y cuánto no es más que una miserable mentira.<BR>Después de aprender que hay mucho más allá de nuestro mundo, mucho más de lo que parece... Me quedo en una duda agonizante.
+research.darknessDream.text=Sueña con Oscuridad
+
+research.FISHINGHAMLET.title=La aldea de pescadores
+research.FISHINGHAMLET.stage.0=Necesito la Verdad. Estoy harto de mentiras.<BR>Hay un velo de ilusiones que nubla la mente de todos, tiene que haberlo. Todo lo que veo es mentira.<BR>NADA MÁS QUE UNA MENTIRA.<BR>Debo romperlo. Debo ver más allá de esa barrera.<BR>Ya veremos si la aldea de pescadores es la clave del Arcano o simplemente una pieza de un gran rompecabezas.
+research.FISHINGHAMLET.stage.1=Esto no puede ser...<BR>Todo este trabajo, toda esta investigación... ¡¿me trajo aquí ?!<BR>¡¿A un montón de degenerados ?! ¿¡¿De idiotas xenófobos?!?<BR>Nonono, no puedo parar ahora. Puedo romper el Velo. Sé que puedo. Lo sé. Realmente lo hago.<BR>Necesito hablar con el guardián del faro. Espero que demuestre ser más sabio que sus compañeros moradores.
+research.FISHINGHAMLET.stage.2=Mira el océano... mira el océano...
+research.FindHamlet.text=Localiza una aldea de pescadores.
+research.LHKeeper.text=Hablar con el guardián del faro.
+
+research.IDOL.title=Comunión
+research.IDOL.stage.0=A veces, pensamos en nosotros mismos como dioses. Todos los dioses poderosos e invencibles ante los cuales el mundo entero debe inclinarse. Dioses cuyas creaciones podrían remodelar el mundo por completo.<BR>Y no somos más que tontos engañados.<BR>El océano.<BR>Inmenso, atemporal, inescrutable. ¿Podría realmente importarle lo que hacemos? ¿Podría realmente, cuando eclipsa nuestras más grandes y grandiosas estructuras, cuando sobrevive a nuestros artilugios más fuertes y duros?<BR>Un símbolo de inmensidad, siempre cercano, para recordarnos nuestra INSIGNIFICANCIA.<BR>El Océano, cuya inmensidad parece tan fascinado a los habitantes de las aldeas, es DESCONOCIDO. Podríamos pasar eternidades enteras con la esperanza de investigar todos sus rincones y, sin embargo, en vano, porque en su infinitud, así como en su naturaleza caótica y siempre cambiante, las cosas que se encuentran dentro... o debajo... eludirnos. A menos que vengan a nosotros.<BR>Sí, el océano debe ser la clave. En su inmensidad ilimitada e incontrolable, es SEGURO ocultar lo que estamos buscando. Una especie de puerta de entrada, una especie de puerta que nos permitirá ver Más allá del velo. En sus abismos sin fondo, debemos buscar fisuras.<BR>El agua en sí hecha un hedor de sobrenatural, y especialmente en ese Hamlet de extraños degenerados que adoran algún tipo de... de..<BR>Si. Por ... por supuesto. Están lejos de ser degenerados, porque encontraron la solución mucho antes que NOSOTROS.<BR>Si su Deidad es verdaderamente una manifestación de lo que está Más allá del Velo, que nos oculta la Verdad a todos nosotros, y si su fascinación por los Sueños y el Océano es de la misma naturaleza que la nuestra... entonces debemos buscar la Comunión.<BR>Comunión con el Gran soñador.
+research.IDOL.stage.1=Te prometo humildemente mi vida, Gran Soñador.<BR>Rechazo todas mis creencias anteriores, cualquier dios en el que haya creído anteriormente.<BR>Soy insignificante para ti. El Océano, Tu presencia en el Overworld, es un símbolo de eso.<BR>Eres incognoscible para mí. El Vacío, lleno de vacío, es Tu sustancia inescrutable.<BR>Más allá de ti mienten todas las cosas. La Verdad, escondida por un Velo.<BR>Danos conocimiento, para que podamos deshacer todas las mentiras.<BR>Danos fuerza para que podamos sobrevivir a la Verdad.<BR>Danos coraje... para que podamos escuchar Tu Santa Voz.
+research.IdolInteract.text=Ora ante el ídolo en la aldea.
+
+research.SLUGS.title=Babosas
+research.SLUGS.stage.0=Estar en comunión con el Gran Soñador es un honor del más alto nivel. Verdaderamente, haberle impresionado de tal manera que haya despertado su interés es, sin duda, el mayor logro que he logrado.<BR>Sin embargo, la fuerza de la comunión es siempre débil, porque soy débil y mi presencia está irremediablemente ligada al Overworld.<BR>Él lo sabe. Quiere ayudarme. ¡Realmente lo hace!<BR>Viscosos, amorfos, inalcanzables como el agua de la que nacen. Tales son las babosas blancas de las que se alimentan algunos habitantes de la aldea. Ellas son la clave.<BR>Necesito un cebo y El Gran Soñador me proporciona el conocimiento de cómo crear uno. ¡Qué irónico, aunque significativo, que esas babosas caóticas sin forma se sientan tan atraídas por la forma perfecta y ordenada de la sal común!<BR>El cebo para babosas debe colocarse en agua. No debe haber agua encima, pero debe estar rodeado de agua en sus 4 lados. Para un mejor rendimiento, debe estar en el centro de un cuadrado de agua de 11 x 11.<BR>Si se cumplen los requisitos y puedo ver la más leve de las partículas, pronto veré la esencia acuosa de las babosas en la superficie del agua. Aparentemente aparecen de la nada y vuelven a desaparecer en unos momentos. Debo apuntar con cuidado mi cazador de babosas hacia ellos y usarlo.<BR>Entonces ... debo comerlos. Es la única forma. No me gustará, pero debo hacerlo.<BR>Una vez que haya comido unos pocos, digamos, unos veinte, debo interactuar con el ídolo nuevamente.
+research.SLUGS.stage.1=Mis Sueños se han vuelto más fuertes, lo sé, lo sé, lo sé, lo sé.<BR>Me escuchó, El Gran Soñador ESCUCHÓ MIS LLAMADAS.<BR>Ahora me doy cuenta de que adorar al Gran Soñador no es solo una oración ocasional. En cambio, es una forma de vida.<BR>A partir de ahora, debería comer babosas, babosas e incluso más babosas. Empezarán a tener un sabor cada vez menos desagradable, estoy seguro.<BR>También debo acercarme más y más a los Moradores y aprender de ellos. Haz obras que me hagan más como ellos. Después de todo, han sabido lo mejor durante generaciones. Y mis antepasados no pudieron verlo.<BR>Una vez que todo esté hecho, debo interactuar con el ídolo.
+research.!SLUGS.text=Come 20 babosas, interactúa con Idol.
+
+research.FISHERMEN.title=Pescadores
+research.FISHERMEN.stage.0=Primero, registraré aquí los pasos correctos para un uso manual exitoso del cebo.<BR>El cebo para babosas debe colocarse en agua. No debe haber agua encima, pero debe estar rodeado de agua en sus 4 lados. Para un mejor rendimiento, debe estar en el centro de un cuadrado de agua de 11 x 11.<BR>Si se cumplen los requisitos y puedo ver la más leve de las partículas, pronto veré la esencia acuosa de las babosas en la superficie del agua. Aparentemente aparecen de la nada y vuelven a desaparecer en unos momentos. Debo apuntar con cuidado mi cazador de babosas hacia ellos y usarlo.<PAGE>En segundo lugar, detesto darme cuenta de que esta tarea manual, a la larga, se volverá aburrida. Sin embargo, los pescadores vestidos de gris de Hamlet parecen muy versados en el arte de atrapar babosas.<BR>Así puedo emplearlos según mis necesidades. Interactuar con ellos con un lingote de oro en la mano hará que me sigan, y podré acercarlos a un cebo para babosas, luego tal vez darles un pequeño empujón para ponerlos encima.<BR>Una vez en el anzuelo, debo asegurarme de que obtengan un suministro constante de lingotes de oro. Por cada uno que consigan, pescarán durante un minuto. Las babosas se dejarán caer al suelo o se colocarán en un cofre adyacente al Morador.<BR>Podría querer construir alrededor de ellos para que no abandonen su puesto.
+
+research.CANOE.title=Regalos de las profundidades
+research.CANOE.stage.0=La dieta de los Pescadores, además de las babosas, consiste principalmente en pescado. Sus barriles están llenas de bacalao.<BR>Parece que usan sus canoas para pescar. Estos son construidos por los carpinteros, los habitantes con trajes de color marrón oscuro que viven en casas de dos pisos con escaleras de roble normales.<BR>No todas las aldeas tienen carpinteros, pero son bastante comunes.  
+research.CANOE.stage.1=Según el carpintero, los pescadores moradores se adentran en sus canoas en el océano y... ¿los peces solo van hacia ellos?<BR>Debería intentar eso también, no solo en cualquier agua sino en las del océano mismo.<BR>Si algo sucede de hecho, lo seguiré haciendo durante un tiempo, luego lo completaré con una buena cantidad de babosas. Después de eso, estaré en comunión.
+research.CANOE.stage.2=El océano mismo... me responde, sus olas rompen una voz suave, su inmensidad azul un ojo vigilante, su agua informe una mano amorosa.<BR>Tengo un vínculo con el océano ahora, soy más fuerte por eso, especialmente en el agua que nos une.<BR>Y, sin embargo, nuestro vínculo no es lo suficientemente fuerte. Sigo siendo una criatura de la superficie, ¿no?
+research.carpenter.text=Habla con el carpintero de la Aldea.
+research.!CANOE.text=Navega por el océano con una canoa, luego comulga.
+
+research.BAPTISM.title=Bautismo
+research.BAPTISM.stage.0=Nací del agua, como todas las cosas que existen. Vivo del agua, mi medio de la Sagrada Comunión.<BR>Entonces, ¿por qué no puedo respirar? ¿Por qué todavía obstaculiza mi movimiento?<BR>Me hace fuerte y al mismo tiempo me debilita.<BR>Me concede la vida y, sin embargo, puede matarme.<BR><BR>Aunque los Moradores... disfrutan de su toque, incluso de sus profundidades. Entonces, ¿por qué no puedo?<BR>Debemos preguntar al guardián del faro, una última vez.
+research.BAPTISM.stage.1=Soy inmortal. ¿Correcto? Lo soy, no lo soy?<BR>Tal vez no sea la muerte lo que temo, sino el fracaso. Un destino aún peor, creo. Una y otra vez, me volverá loco. ¿Y de qué sirve entonces la inmortalidad?<BR>La piscina debe estar hermética. Uno a uno de ancho y exactamente cinco cuadras de profundidad, todo lleno de agua estancada.<BR>Debo dejarme hundir en él, y una vez que llegue al fondo, debo comulgar, comiéndome una babosa.<BR>Entonces esperaré. Y creeré, como nunca antes.<BR>Dios misericordioso, no dejes que me ahogue.
+research.BAPTISM.stage.2=Nací del agua, como todas las cosas que existen. Vivo del agua, mi medio de la Sagrada Comunión.<BR>Ahora soy agua.<BR>Ahora soy algo. Espero.<BR>Saber más de la Verdad significa conocer menos de mí mismo. ¿Soy realmente un desgraciado sin valor?<BR>Mis certezas se debilitan.
+research.lhbaptism.text=Habla con el guardián del faro.
+research.!BAPTISM.text=Ahogarse. Entonces el ídolo. 
+
+research.ALLIANCE.title=Alianza
+research.ALLIANCE.stage.0=Con el tiempo, me haré aún más fuerte.<BR>Pero, ¿a dónde voy ahora?<BR>Debo esperar señales. No hay nada que pueda hacer yo solo... nada.
+research.ALLIANCE.stage.1=DAGON.<BR>Los pergaminos antiguos hablan de Él en voz baja, proclamándolo el Gobernante del Abismo, el Rey de los Profundos.<BR>El primer y más importante adorador de El Gran Soñador.<BR>Me notó. Envió a un Deep One en mi ayuda, aunque temporalmente.<BR>¿Le he impresionado? ¿Podría estar buscando una especie de alianza?<BR>Ahora que mi investigación abandona el ámbito del conocimiento de los moradores, es hora de buscar más ayuda.<BR>Dagon, Acepto tu oferta y volveré a hablar contigo en el fondo del océano.
+research.ALLIANCE.stage.2=Suena dentro de mí.<BR>Su voz, como un retumbante tambor de guerra, no pregunta sino MANDANDO.<BR>Tres bloques de oro me han dado. Se los daré a los pescadores de túnica gris Habitantes de la aldea, luego comulgaré.<BR>No tengo ninguna intención de saber qué pasaría si desobedeciera.<BR>Oh, en qué me he metido.
+research.ALLIANCE.stage.3=Por el gran soñador.. Estaba equivocado.<BR>Dagon me ha ofrecido una bendición como ninguna otra.<BR>Manteniéndome en una postura de poder, soy capaz de convocar a un Profundo en mi ayuda. Mantén presionado para elegir, toca para transmitir.<BR>¿Vale la pena este poder? ¿Y el conocimiento que conlleva?<BR>Voy a viajar. Después de todo ... ¿tengo alguna opción?
+research.wait.text=Espera. Esperanza.
+research.hearing.text=Come una babosa en los océanos más profundos.
+research.!ALLIANCE.text=Lleva el oro a los moradores. Comuna.
+
+research.METAMORPHOSIS.title=Metamorfosis
+research.METAMORPHOSIS.stage.0=Dagon me llama.<BR>Debo hablar con El de nuevo.<BR>No puedo escapar.
+research.METAMORPHOSIS.stage.1=¿Los guardianes en los monumentos del océano .. pertenecen a Dagon?<BR>Sin embargo, me pide que los mate, simplemente como prueba. Debe dictarme el Juicio.<BR>¿Qué quiere decir con "únete a sus filas"? ¿No le sirvo ya?
+research.METAMORPHOSIS.stage.2=A quien tenga la desgracia de poseer estos escritos...<BR>Deja de leer por un momento. Mira tu piel. Tómate un segundo para admirarlo. Tu propia, hermosa y sincera piel.<BR>Ahora imagina. Imagínese que se pone azul. Perdiendo lentamente su color. Imagínese entonces verlo agrietarse y romperse como piedra seca.<BR>Imagínese verlo reemplazado, reemplazado por escamas azules duras, rodeado de moco verdoso. Viscoso, pegajoso, maloliente, este horror no es otro que tú.<BR>Tu cabeza echada hacia adelante, tu mandíbula abriéndose en tres direcciones, tu columna estallando en una aleta dorsal.<PAGE>Siempre he tenido un poco de desprecio por mí mismo, por mis inseguridades, mis fracasos, mis defectos.<BR>Esta nueva forma es una bendición.<BR>Soy rehecho en la forma de Dios. O, al menos, de su arcipreste Dagón.<BR>Soy perfecto, un horror maravilloso.<BR>En mi amor y odio por esta forma, diré que es de poder. Adquiero una gran fuerza y resistencia al daño, especialmente bajo el agua.<BR>Sin embargo, también pierdo la capacidad de llevar armadura y de empuñar cualquier objeto que no sea un puñado de marinos, como babosas y peces.<BR>Hay más en este poder de lo que actualmente sé, estoy seguro. Necesitaré buscar otras habilidades que tenga esta forma.<BR>Te doy las gracias, Dagon, porque ahora soy Profundo.
+research.hearing2.text=Come una babosa en los océanos más profundos.
+research.!METAMORPHOSIS.text=Mata a tres ancianos guardianes. Comuna.
+
+research.DREAMBOTTLE.title=Botella de Sueño
+research.DREAMBOTTLE.stage.0=Derramé una lágrima cuando fui bautizado.<BR>Era una astilla de Verdad, recordándome mi inutilidad.<BR>Y, sin embargo, fue esa misma lágrima la que me llevó a *saber*.<BR>No puedo amasar mis propias lágrimas, no soy un Llorón profesional, ¿verdad?<BR>O si?<BR>Buscaré ayuda en cuerpos distintos al mío.
+research.DREAMBOTTLE.stage.1=A través de LLorones y Fletums se me concede conocimiento, y a través de Sueños utilizaré y magnificaré ese conocimiento.<BR>Una botella de Sueños es lo que debo elaborar. Una herramienta invaluable que me permitirá soñar ilimitadas veces al día, con múltiples recuerdos a la vez.<BR>El único precio serán las lágrimas. Pero no el mío.
+research.DREAMBOTTLE.stage.2=La botella de Sueños almacena lágrimas. Se puede utilizar sobre un lacrimatorio para llenarlo hasta su máxima capacidad y volver a vaciarlo en la medida de lo posible.<BR>Puede almacenar hasta 4 cubos de lágrimas.<BR>Luego se puede usar sin escabullirse para llenarse de Recuerdos, hasta cuatro.<BR>Ahora, cada vez que bebo el contenido de la Botella mientras me escabullo, podré Soñar en cualquier lugar, en cualquier momento, tantas veces como quiera.<BR>Un balde de lágrimas por cada sueño, ese es el tipo de cambio.<BR>A medida que aprendo esta nueva herramienta, se me abren nuevas posibilidades en el arte de soñar.
+research.gotweepers.text=Encuentra una manera de juntar lágrimas.
+research.crafteddream_bottle.text=Crea una botella de Sueño
+research.DREAMBOTTLE.addenda.statue=Apéndice:<BR>Parece que ser adorado mediante el uso de una estatua mejora ligeramente la eficiencia de Sueños-por-lagrima de la botella.
+
+research.WATERWALKING.title=Caminar sobre el agua
+research.WATERWALKING.stage.0=Gran Padre Dagon, ya voy.
+research.WATERWALKING.stage.1=El Fin está envuelto en el Vacío, el baluarte exterior del Velo, del Gran Soñador mismo.<BR>Es allí donde debo soñar, mientras estoy en el agua. Debo soñar con la oscuridad, Eldritch, el aprendizaje y el vacío, todo al mismo tiempo. Yo sé esto, de alguna manera.<BR>No puedo usar una cama o una cámara del sueño mientras estoy en el agua, así que debo tomar una tercera ruta hacia los Sueños.
+research.WATERWALKING.stage.2=Caminar sobre el agua es el arte de convertirse en uno con el océano.<BR>Cuando use el poder, mientras esté en el agua, seré transportado a cualquier lugar o entidad que esté mirando, siempre que también estén en el agua.<BR>Además, usarlo mientras este agachado establecerá un punto de referencia. Hacer eso de nuevo me transportará de regreso a ese punto y luego lo eliminará.<BR>En verdad, ahora estoy cada vez más cerca del océano, una parte de su esencia misma.<BR>Una parte diminuta e insignificante de su inmensidad incognoscible.
+research.hearing3.text=Come una babosa en los océanos más profundos.
+research.!WATERWALKING.text=Báñate en el final y sueña. Entonces Comuna.
+
+research.WATERYCRADLE.title=Cuna acuosa
+research.WATERYCRADLE.stage.0=Gusanos inútiles plagan este mundo, viviendo en sus plácidas islas de ignorancia.<BR>El Gran Soñador me enseña la mejor forma de emplearlos.<BR>Haré que sus cuerpos, tal vez sus cadáveres, sean míos para experimentar.<BR>Ellos son insignificantes, después de todo.
+research.WATERYCRADLE.stage.1=Los aldeanos no sirven de mucho al mundo, ¿verdad?<BR>Ahora lo harán. A través de mí.<BR>La Cuna acuosa, donde los pacientes se quedan dormidos en sueños, dándome el derecho y el deber de hacer con sus cuerpos lo que deseo, mediante el uso de herramientas quirúrgicas.<BR>Se deben poner en línea tres unidades de una cuna acuosa, luego interactuaré con uno de sus extremos.<BR>Los pacientes vendrán mediante el uso de un simple blackjack, hecho para dejarlos inconscientes. Usarlo en un aldeano lo pondrá en el suelo, listo para ser recogido interactuando con él mientras me agacho<BR>Luego puedo colocar al Aldeano en la cuna acuosa y encontrar formas de experimentar.<BR>No es otro que El Gran Soñador mismo quien me concede este conocimiento. ¡Oh, el honor!
+research.craftedwatery_cradle.text=Fabrica tres cunas acuosas.
+
+research.SPINES.title=Arrancando Espinas
+research.SPINES.stage.0=Un dios entre hombres no es diferente de un hombre entre gusanos.<BR>Arranca sus espinas y haz que se arrastren.
+research.SPINES.stage.1=La fuerza de voluntad reside en la columna vertebral. Sin él, el aldeano nunca se levantará, nunca se rebelará.<BR>El aldeano está indefenso, en cuerpo y mente. Ninguna orden mía quedará sin respuesta.<BR>El problema es que no tienen nada que hacer en este nuevo estado de inutilidad aún mayor. Debo encontrar una manera de emplear su servidumbre.<BR>Mientras tanto, las propias espinas son una bendición interesante. Además de la obvia harina de huesos que proporcionan, son fuentes de fuerza de voluntad, la voluntad de mantenerse en pie.<BR>Y de miedo. Una columna vertebral desgarrada no es nada agradable, hasta que uno se acostumbra.<BR>Seguramente encontraré usos para ellos, pronto.
+research.extractedspine.text=Arranca una columna vertebral.
+
+research.HEARTS.title=Corazones desgarrados
+research.HEARTS.stage.0=La sangre es vida.<BR>La sangre es agua. El agua es vida.<BR>La relación es clara. Y también lo es la ironía.<BR>Para ganar la vida, debo conceder la muerte.
+research.HEARTS.stage.1=Un aldeano sin corazón no tiene vida para vivir. Morirá en unos momentos.<BR>Sus corazones, sin embargo, seguirán viviendo, latiendo.<BR>Cuando se coloca en el suelo, el corazón atraerá a los muertos vivientes, porque buscan la vida.<BR>Y, sin embargo, como símbolo de vida, estoy seguro de que se puede hacer más con ellos.
+research.tornheart.text=Arranca un corazón.
+
+research.WEEPERS.title=LLorones
+research.WEEPERS.stage.0=La persona que una vez fui se habría sentido disgustada ante la idea de desgarrar espinas y desgarrar corazones. Ahora apenas me estremezco.<BR>Pero esto..? ¿Esta nueva idea que surge en mi mente, a través de los extraños hechos de El Gran soñador? Incluso ahora mis manos tiemblan.<BR>Para llenar sus cerebros de agua, para hacerles VER las cosas como realmente son. Sus cerebros se llenaron, por lo que solo pueden llorar.
+research.WEEPERS.stage.1=Una lágrima es una revelación. Todos deben temer a los que lloran, porque saben más que la mayoría.<BR>Un llorón es un aldeano cuya cabeza fue agrandada al tamaño de monstruos, llena de agua.<BR>Un Fletum es un Llorón que ha perdido la columna vertebral. No necesita cuerpo, está completo dentro de su cabeza.<BR>Sueñan, aprenden, lloran. Debo cosechar sus lágrimas, son conocimiento.
+research.WEEPERS.stage.2=Es más natural llorar cuando uno aprende algo. La comprensión repentina de la propia insignificancia no es poca cosa, después de todo.<BR>No debe reprimirse ni desaprobarse, porque las lágrimas son preciosas. Un signo de humildad ante la Verdad y todo lo que conlleva.<BR>Un lacrimatorio es donde se debe llorar, en caso de que se desee conservar sus lágrimas, para luego ser recogido en cubos. Por alguna razón, cuando caen en el Lacrimatorio, su poder no expira.<BR>Y así es, que LLorones y Fletums llegan a ser útiles. Un LLorón se puede recoger directamente mediante el uso de un blackjack, mientras que un Fletum solo requiere mis manos desnudas, mientras me agacho, por repugnante que sea.<BR>Ambos se pueden usar en el lacrimatorio, y llorarán en él. No deben alejarse mucho, por lo que es importante construir alrededor de ellos para que no se escapen.<BR>Además, solo uno de ellos puede usarse por lacrymatorio, y no dos de ellos, ya sean Llorones o Fletum, deben estar demasiado cerca el uno del otro. No menos de tres bloques.<BR>Después de todo, ¿cuántas veces he llorado en mi soledad?
+research.filledtears.text=Llena un cerebro de agua.
+research.craftedlacrymatory.text=Crea un lacrimatorio.
+
+research.REVELATIONRING.title=Anillo de Revelación
+research.REVELATIONRING.stage.0=Los llorones y Fletum carecen de ojos, pero ven más que la mayoría.<BR>Sus lágrimas son preciosas, y humedeceré un anillo con ellos.
+research.REVELATIONRING.stage.1=El Anillo de la Revelación me permite ver lo invisible.<BR>Cuando su efecto pasivo se enciende, todas las entidades invisibles me serán reveladas.<BR>Cuando se usa su poder activo, todas esas entidades perderán por completo su invisibilidad, dejándolas a la vista de todo el mundo.<BR>Nada se me volverá a esconder sin ser visto.
+research.craftedrevelation_ring.text=Crea un anillo de revelación.
+
+research.BLEEDINGBELT.title=Cinturón sangrante
+research.BLEEDINGBELT.stage.0=A medida que mi conocimiento crece, mi vida se vuelve más preciosa.<BR>Debe conservarse.<BR>Con gusto haré sacrificios de todo tipo.<BR>La sangre es la clave.
+research.BLEEDINGBELT.stage.1=Cuando se usa, el cinturón sangrante rezuma el fluido rojo oscuro, de origen desconocido porque no es mío.<BR>Lo que sí sé es que, cuando se habilita su efecto pasivo, me baña de vida a cambio de hambre.<BR>Cada vez que me golpean, mi salud no se verá afectada mientras mi estómago no esté vacío.
+research.craftedbleeding_belt.text=Fabrica un cinturón sangrante.
+
+research.BONETIARA.title=Tiara de hueso
+research.BONETIARA.stage.0=Si es cierto que hay que combatir el fuego con fuego, entonces yo seré el primero en combatir el miedo con miedo.<BR>Ningún terror quebrantará mi voluntad.
+research.BONETIARA.stage.1=Las cosas que veo a medida que mi conocimiento crece me hacen temblar la espalda.<BR>Con suerte, ahora los enviarán a través de alguien más.<BR>Una tiara de huesos ahora adornará mi cabeza. Mientras su efecto pasivo esté activado, seré inmune al terror y la locura. Mi voluntad no se romperá.<BR>Aún no.
+research.craftedbone_tiara.text=Fabrica una tiara de hueso.
+
+research.BLOODCOVENANT.title=Pacto de sangre
+research.BLOODCOVENANT.stage.0=A través de la sangre se vinculan diferentes vidas.<BR>El fluido rojo oscuro no es de este mundo, y los enlaces son de naturaleza sobrenatural. Puede que encuentre uso para tales lazos, pero esta vez no puedo hacerlo solo. Necesito otros jugadores.
+research.BLOODCOVENANT.stage.1=La relación entre sangre y agua se hace cada vez más estrecha.<BR>Toda la vida vino del agua, después de que se convirtió en sangre. Toda la vida está vinculada por este único origen.<BR>El Pacto de Sangre se basa en estos enlaces. Cuando lo activo mientras estoy sumergido en el agua, veré por unos breves momentos a todos los demás jugadores que, como yo, usan el anillo y están en el agua.<BR>Al mirar a uno de ellos, volver a activar el anillo me permitirá viajar instantáneamente hacia mi aliado. 
+research.craftedblood_covenant.text=Crea un pacto de sangre.
+
+research.BLOODCROWN.title=Corona de espinas
+research.BLOODCROWN.stage.0=Si alguna vez voy a ser derribado, quiero que sea por mi propia mano.<BR>Hasta entonces, debo desafiar a la muerte. Una y otra vez.<BR>Necesito la VOLUNTAD DE VIVIR.
+research.BLOODCROWN.stage.1=Salpicada de sangre y polvo de espinas dorsales, la Corona de Espinas es una cosa de horror.<BR>Cuando su efecto pasivo está activo, me otorga la voluntad y la fuerza para seguir de pie después de un golpe que hubiera sido definitivo, perforando mi frente y bañándome en mi propia sangre.<BR>Sin embargo, ninguna bendición viene sin precio. Una vez que el efecto se estabilice, volveré a ser mortal durante un breve período, al final del cual finalmente se hará el daño que fue negado.<BR>Debo usar la Corona con prudencia y estar listo para curar.
+research.craftedblood_crown.text=Fabrica una corona de espinas.
+
+research.AZACNOCHARM.title=Talizmán de Azacno
+research.AZACNOCHARM.stage.0=Hace eones, un gran parásito cayó del Cosmos.<BR>Desconocido en forma e intención, puso su nido en los océanos más profundos.<BR>Chupando sangre, trayendo miedo y otorgando conocimiento. Conocerlo es llegar a la culminación de mis experimentos.
+research.AZACNOCHARM.stage.1=Azacno nació de una grieta en el Velo, pero no de debajo de nuestros océanos.<BR>En cambio, vino de las estrellas, chocando contra nuestras aguas y en comunión con El Gran Soñador.<BR>Es de naturaleza parasitaria, al igual que sus seguidores. El Talizmán de Azacno es un temido talismán que infecta a los enemigos de su portador.<BR>Usar su poder activo me otorga durante unos segundos la capacidad de infectar a otros, a menos que ellos mismos usen el Talizmán.<BR>Los monstruos, animales y otras bestias sin sentido simplemente serán alejados por el terror infundido por la infección.<BR>Sin embargo, es en otros jugadores donde el efecto es más terrible.<BR>Un jugador infectado sucumbe cada vez más a la infección, a medida que empeora cada vez más. Al final, los efectos pueden incluso hacerse visibles a simple vista.<BR>Un destino del que ni siquiera la muerte lo salvará. Todavía no conozco ninguna cura.<BR>Es de destacar que este encanto no es de naturaleza mágica. Es simplemente un símbolo por el cual Azacno me reconoce como uno de su secta y me otorga este poder.<BR>Es importante que busque alianzas con aquellos que adoran al Gran Soñador.
+research.craftedazacno_charm.text=Fabrica un Talizmán de Azacno.
+
+research.STATUE.title=Adoración
+research.STATUE.stage.0=Esos desgraciados inútiles, los aldeanos sin valor, no necesitan ser convertidos en Fletum para ser útiles.<BR>Atados al suelo como están, pueden sentirse indefensos e inútiles. ¡Preocupaciones de tontos, digo! Todo lo que necesitan es una guía.<BR>O, mejor dicho, un Dios.<BR>Con mucho gusto me prestaré a la causa.<BR>Se necesita un símbolo. Digamos, una estatua.<BR>Luego, un enlace. Mi sangre servirá.<BR>Después de todo, la sangre es una unión poderosa.
+research.STATUE.stage.1=Que bonito. Me representa mientras rezo y apaciguo a mi propio Dios.<BR>Debo dar el ejemplo a mis seguidores, ¿no?<BR>La estatua debe colocarse y luego rodearse de aldeanos que se arrastran, con las espinas rotas y la voluntad rota.<BR>Por supuesto, también debo asegurarme de que no huyan del deber. Deben ser encarcelados.<BR>Por último, necesito cortarme en la estatua para vincularla a mí. Es un acto de autosacrificio.<BR>Debo dar un ejemplo, después de todo.
+research.STATUE.stage.2=Los siento. Sus oraciones.<BR>Esto debe ser lo que es ser DIOS.<BR>Ellos me dejan fortalecido, mis poderes vigorizados.<BR>Por ejemplo, se pueden convocar más Deep One a través de mi pacto con Dagon.<BR>Me lleva menos tiempo recuperarme de la activación de poderes o joyas. Incluso los sueños parecen hacerse más fuertes.<BR>Solo se puede usar una estatua a la vez, pero eso es suficiente.<BR>Yo, ahora, soy verdaderamente piadoso. Soy grandioso, poderoso, soy.. soy..<BR>..me merezco todo esto? ¿O he pecado de arrogancia?
+research.craftedstatue.text=Crea una estatua.
+research.linkedstatue.text=Vincular una estatua a mí mismo. 
+
+research.SACRIFICESTATUE.title=Estatua de sacrificio
+research.SACRIFICESTATUE.stage.0=¿Podría buscar significado en el altruismo?<BR>¿Pagarme por el bienestar de otra persona? Todo un cambio con respecto a mis actitudes anteriores y, sin embargo, ¡tengo seguidores de los que cuidar ahora!<BR>Entonces construiré una estatua que me represente en una posición muy diferente.
+research.SACRIFICESTATUE.stage.1=Ahora me siento un poco mejor conmigo mismo, y eso es algo importante en este viaje de desesperanza.<BR>La Estatua del Sacrificio hace todo lo que hace la Estatua normal, aunque se necesitan un poco más de adoradores para lograr el mismo poder.<BR>Sin embargo, cuando estoy bajo sus efectos, puedo usar el Altar de sacrificio usando un cuchillo de sacrificio sobre él, en lugar de sacrificar a un aldeano, y sosteniendo el stack en mi otra mano en lugar de dejarla caer al suelo.<BR>Además, cada vez que recibo daño, todos mis secuaces de combate cercanos (como los Deep Ones invocados y similares) se fortalecen y curan.<BR>Por último, mis pacientes en la cuna acuosa parecen realmente inspirados por mis actos. ¡Tanto es así, que siguen mis pasos de sacrificio y en ocasiones optan por renunciar a dos corazones, en lugar de uno! Sin embargo, eso puede ser posible.<BR>¡Un ejemplo, eso es lo que debo ser! ¡Incluso si eso significa dolor!<BR>Después de todo, merezco algo de penitencia.
+research.craftedsacrifice_statue.text=Fabrica una estatua de sacrificio.
+
+research.PENITENCESTATUE.title=Estatua de Penitencia
+research.PENITENCESTATUE.stage.0=He pecado. He pecado.<BR>En mi arrogancia olvidé mi insignificancia.<BR>Debo corregir estos errores. Con sangre.<BR>La mia.<BR>Construiré una nueva estatua, una que muestre mi pesar.
+research.PENITENCESTATUE.stage.1=Esto se siente más... correcto.<BR>Quería jugar a ser Dios, a pesar de ser tan, tan pequeño. Es justo que sufra algún castigo.<BR>La Estatua de la Penitencia hace todo lo que hace la Estatua normal, aunque se necesitan un poco más de adoradores para lograr el mismo poder.<BR>Sin embargo, cuando estoy bajo sus efectos, recuerdo mis propios defectos, mis fracasos, mis debilidades.<BR>Con un cuchillo de sacrificio, me cortaré mientras empuño una espada en la mano principal, porque siempre he sido débil.<BR>Cortaré cuando empuño una pala, un hacha, un pico, porque siempre he sido lento.<BR>Incluso la azada... por el pulgar verde que nunca tuve.<BR>Cuando los adoradores son suficientes, incluso la Corona de Espinas puede volverse más fácil de usar.<BR>El camino del dolor es arduo, pero no imposible.<BR>Todo lo que se necesita es un pequeño sacrificio.
+research.craftedpenitence_statue.text=Fabrica una estatua de penitencia.
+
+research.VALOURSTATUE.title=Estatua del valor
+research.VALOURSTATUE.stage.0=No existe el valor.<BR>E incluso si lo hubiera, no sería un modelo.<BR>Esta investigación es un callejón sin salida.
+
+research.SACRIFICEALTAR.title=Altar del sacrificio
+research.SACRIFICEALTAR.stage.0=Me deleito en una gratitud ilimitada hacia mi Patrón, pero en agonía.<BR>Porque no hay forma de que pueda darle las gracias debidamente.<BR>¿O hay?<BR>La sangre crea vínculos poderosos. Es agua y vida, todo a la vez.<BR>Es el vínculo que une a todos los seres vivos con los océanos más profundos.<BR>Por sangre le agradeceré, por vida y agua.<BR>Un Altar del Sacrificio, de Corazones y Prismarine.<BR>Primero, un núcleo.
+research.SACRIFICEALTAR.stage.1=Debo construir una estructura, como se describe a continuación. Los corazones se gastarán por cada sacrificio. Puedo interactuar con las manos desnudas con el Core para asegurarme de que se haya construido correctamente.<BR>Un aldeano sin corazón será colocado en el Núcleo. Morirá en segundos. Entonces, una bendición.<BR>Mis ofrendas serán recompensadas. Dejar caer objetos en el altar antes del sacrificio podría convertirlos en otra cosa.<BR>Por ejemplo, los ladrillos de piedra se vuelven sangre en color y esencia. Un nuevo recurso, de propiedades desconocidas.<BR>Un sacrificio sin ofrendas válidas resultará en un aumento de salud.<BR>Te agradezco, Gran Soñador, con todos mis corazones.
+research.craftedsacrifice_altar.text=Fabrica un núcleo de altar de sacrificio.
+
+research.CORALSTAFF.title=Bastón de coral
+research.CORALSTAFF.stage.0=En su impía penitencia, los no muertos buscan la vida.<BR>Sin embargo, son imbéciles.<BR>No debería ser una tarea difícil redirigirlos de un corazón palpitante a otro, sus "mentes" engañadas por lo que parece mejor carne.<BR>*Sé* la herramienta exacta que necesito.
+research.CORALSTAFF.stage.1=Qué extraño es que los corales de las profundidades se parezcan tanto a nuestras propias arterias.<BR>No es coincidencia, estoy seguro. El vínculo entre los dos es fuerte.<BR>Y es a través de este mismo bastón que puedo unir corazones. Interactuar con un corazón colocado mientras se escabulle almacenará su posición en el personal. Una vez hecho esto, interactuar mientras se escabulle con otro corazón (dentro de no más de 32 cuadras de distancia) unirá la posición del viejo a la del nuevo. Cualquier no muerto que se sienta atraído por el primero será redirigido al segundo, que también puede estar vinculado a otro corazón, lo que resulta en una verdadera procesión de los condenados.<BR>Si el bastón almacena una posición, se puede borrar usándola mientras se escabulle en el mismo corazón del que se tomó, o mientras apunta en el aire. Usar el bastón sin escabullirse dará información sobre sí mismo o sobre un corazón al que se hace clic.<BR>En verdad, el bastón tiene otro uso: atacar a un enemigo con él dará como resultado que los no muertos cercanos lo apunten, en su búsqueda interminable de sangre y vida.
+research.craftedstaff.text=Fabrica un bastón de coral.
+
+research.BLOODWELL.title=Pozo de sangre
+research.BLOODWELL.stage.0=Si el deseo de sangre de los no-muertos es tan grande, responderé a ese deseo lo mejor que pueda.<BR>Los cubriré con la sustancia dulce y roja.<BR>Construiré un pozo que atesorará a esos muertos vivientes, los ataré a mí para que pueda gobernarlos.<BR>Una estructura simple de ladrillos de sangre. El corazón debe colocarse al final.
+research.BLOODWELL.stage.1=El pozo todavía late. Los muertos se sienten atraídos hacia ella, incluso más que los corazones normales.<BR>Una vez que entran al Pozo, los muertos se van, almacenados en él. O, mejor dicho, a través de él.<BR>Los siguilos de sangre se pueden hacer tanto para zombis como para esqueletos. Cuando estos no-muertos ingresan al Pozo, más tarde pueden ser readquiridos mediante el uso de Sigils, usándolos en el bloque central del Pozo. Los Sigilos se pueden usar en el suelo para convocar a mis propios Muertos Sangrientos.<BR>Los siguilos se pueden vaciar en el pozo a escondidas. Los No Muertos de Sangre Invocados se pueden volver a poner en el Siguilo usándolo sobre ellos.<BR>No sé cómo el Pozo almacena a los muertos. Imagino que podría ser un enlace a algún otro lugar, dentro o fuera de este mundo. Realmente desearía poder ingresar yo mismo.<BR>Ay, todavía no estoy muerto.
+research.builtwell.text=Construye un pozo de sangre.
+
+research.SHOGGOTH.title=Shoggoth
+research.SHOGGOTH.stage.0=Shoggoths.<BR>Masa informe de carne, arrastrada hace eones en las orillas del mar.<BR>Esclavos de las Cosas Mayores, constructores de ciudades.<BR>Ellos nacen de las lágrimas.<BR>Debo crear una cubeta Shoggoth. Es decir, un cubo de lágrimas de 3x3x3, asegurándose de que cada bloque esté lleno. Luego se deben colocar tres Fletum en él.<BR>Una vez hecho todo, debo entrar en él y, a través de una botella de sueño, debo soñar simultáneamente con la oscuridad, Eldritch, el aprendizaje y el vacío.<BR>Un Shoggoth no es una criatura amable. Atacará a todos los animales y a todos los jugadores excepto a su dueño a la vista. Si se deleita demasiado matando, ni siquiera su dueño está a salvo.<BR>Un Shoggoth debe recogerse a través de un blackjack, siempre que esté lo suficientemente tranquilo.
+
+research.CITYMAPPER.title=Mapeador de ciudades
+research.CITYMAPPER.stage.0=Los shoggoths una vez construyeron ciudades.<BR>Ellos lo harán de nuevo.
+research.CITYMAPPER.stage.1=Un Diseñador de Ciudades puede crear un esquema de mapa que luego se le dará a un Shoggoth.<BR>Puedo colocar edificios del menú de la derecha en el mapa. Los edificios no deben cruzarse entre sí y deben estar completamente contenidos dentro de los límites del mapa.<BR>Los edificios se pueden rotar antes o después de la colocación con la rueda del mouse.<BR>Los edificios en el mapa se pueden mover haciendo clic en ellos y eliminarlos moviéndolos fuera del mapa.<BR>Debo guardar los cambios antes de salir del Mapper y antes de crear el esquema.<BR>Una vez hecho el esquema, puedo dárselo a un Shoggoth.<BR>Por supuesto, también debo asegurarme de que el Shoggoth no se distraiga con ningún animal, otros jugadores u otros Shoggoth.<BR>A partir de ahora, solo hay un puñado de tipos de bloques que Shoggoth puede crear. Quizás en el futuro encuentre más.<BR>El Shoggoth crea estos bloques por sí mismo, pero yo también puedo sintetizarlos, si es necesario.<BR>Por último, debo recordar iluminar los edificios poco después de su construcción, ya que no tienen fuente de iluminación por sí mismos.
+research.craftedcity_mapper.text=Crea un Diseñador de ciudades.
+
+research.CLINIC.title=Clínica
+research.CLINIC.stage.0=Parece que la Clínica fue diseñada específicamente para Llorones y Fletums.<BR>Un descubrimiento extraño, dado lo antiguo que debe ser su diseño. ¿Cuánto tiempo han existido los Llorones?<BR>Su interior está dividido en múltiples cámaras. Cada uno contiene un bloque cincelado en el piso, donde se debe colocar un lacrimatorio.
+
+research.DEATHDREAM.title=Sueños de muerte
+research.DEATHDREAM.stage.0=Un sueño de muerte, mientras reaparezco una vez más.<BR>Sin embargo, no soy el único que realmente no puede morir.<BR>Con este recuerdo, puedo invadir la privacidad de otro jugador aleatorio y descubrir el último lugar donde murieron, con suerte aprovechándome de su botín.<BR>Ninguna tumba es demasiado sagrada.
+research.DEATHDREAM.addenda.teleport=Parece que apuntarme a mí mismo con un Sueño de muerte, a través de un Sigilo de jugador unido a mí mismo utilizado en el Santuario de los sueños, me permite teletransportarme directamente a la ubicación de mi última muerte en Overworld.<BR>¿Pero cómo? ¿Cómo puede un simple sueño cambiar todo mi cuerpo?<BR>¿Podría ser esta la clave para romper el velo?
+
+research.REPAIRDREAM.title=Sueños de Reparación
+research.REPAIRDREAM.stage.0=Un sueño de reparación, mientras golpeo el yunque con el martillo.<BR>No puedo morir de verdad, pero muchas de mis herramientas están cargadas de mortalidad. Esta Memoria influye en la misma materia que me rodea y repara los elementos que llevo y uso.
+
+research.ANIMALDREAM.title=Sueños de Animales
+research.ANIMALDREAM.stage.0=Un Sueño de Animales, mientras alimento a uno con mis propias manos.<BR>Dejar caer un objeto específico cerca de mí antes de Sueño con este recuerdo generará cerca un animal relacionado con ese objeto.<BR>De dónde arranca mi Sueño a esa criatura, solo puedo especular.<PAGE>Ejemplos de artículos utilizables serían chuleta de cerdo para cerdos, huesos para lobos, cuero para vacas, caballos e incluso llamas. Por supuesto que hay más por descubrir.
+
+research.DREAMSHRINE.title=Santuario de Sueños
+research.DREAMSHRINE.stage.0=El Nether se encuentra a medio camino entre el Overworld y los océanos más profundos. Rodeado de Vacío en ambos lados, está más cerca del verdadero Vacío, el verdadero Velo que se encuentra debajo de Todo.<BR>Incluso esa maldita tierra de fuego nació del agua.<BR>Como todas las cosas.<BR>Y aunque su superficie es pequeña en comparación con el Overworld, algunos Sueños aún lo atraviesan.<BR>El cuarzo es un potente conductor, no solo de piedra roja, sino incluso de Sueños.<BR>Un Santuario de Sueños, hecho de Cuarzo, para arrojarlos donde quiera. Ese es mi nuevo objetivo.<BR>Todo lo que necesito es una forma de vincular lugares específicos... incluso personas específicas... para enfocar mis sueños hacia ellos.
+research.DREAMSHRINE.stage.1=El Santuario del Sueño debe usarse junto con la Botella del Sueño, así como con un Sigilo de Sangre de Camino o Jugador.<BR>La correcta creación de la estructura se puede verificar usando en el bloque central de cuarzo cincelado cualquiera de esos sigilos.<BR>Mientras estoy de pie exactamente encima del bloque central de cuarzo cincelado, sosteniendo la Botella de Sueños en mi mano principal y el sigilo encuadernado en la mano, soy capaz de lanzar Sueños hacia lugares o personas específicas.<BR>A modo de ejemplo, los Sueños que inspeccionan el suelo funcionarán como si se hubieran usado encima de la ubicación o el Jugador atado en el sello.<BR>Los sueños que apuntaban a jugadores aleatorios ahora pueden apuntar a otros específicos, e incluso ciertos sueños que solo me afectarían a mí ahora se pueden utilizar en otros.<BR>Desde mi base, ahora puedo ver y controlar todo tipo de cosas. Un conocimiento precioso, que debe mantenerse firme y en silencio.
+research.boundpathway2.text=Encuentra una forma de vincular ubicaciones.
+
+research.BLOODSIGILS.title=Sigilos de sangre
+research.BLOODSIGILS.stage.0=A través de la sangre estamos unidos no solo a los océanos más profundos, sino a todos.<BR>Un Sigilo: Pathway puede usarse para vincularse a sí mismo a una ubicación en el mundo, simplemente usándolo.<BR>Debería intentarlo antes de llevar adelante mi investigación.
+research.BLOODSIGILS.stage.1=De hecho, un Sigilo Sangre  ha forjado un vínculo inquebrantable.<BR>A través de estos Sigilos: Pathway, podré apuntar a ubicaciones específicas.<BR>Sin embargo, existe otro tipo de Sigilo: el Sigilo de Jugador, que puede unir a una persona específica a sí mismo.<BR>Más difícil de usar, este requiere que lo sostenga en mis manos, ya sea principal o torpe, ya que lesiono a otro jugador lo suficiente como para que sangre.<BR>Una vez que su sangre esté en mis manos, su destino también será mío.
+research.boundpathway.text=Haz un Sigilo: Pathway
+
+research.PLANTDREAMS.title=Sueños de Flora
+research.PLANTDREAMS.stage.0=Un recuerdo de Flora, a medida que crezco más y más plantas a través de la harina de huesos.<BR>¿Qué podría implicar un sueño así?
+research.PLANTDREAMS.stage.1=Tengo una manzana.<BR>Empecé a soñar, me desperté, una manzana estaba en mis manos.<BR>Vino de la nada. ¿Un mero sueño, capaz de crear, o al menos transportar materia?<BR>Las implicaciones son colosales, pero también terribles.<BR>¿Qué podría lograr realmente a través de los Sueños? ¿Y qué podrían hacerme otros Soñadores si yo llamara su atención?<BR>Es espantoso.<BR>Pero bueno, ¡tengo una manzana!<BR>Este Sueño merece más investigación.
+research.plantDream.text=Sueña con Flora.
+
+research.VANILLASEEDS.title=Semillas de cesped
+research.VANILLASEEDS.stage.0=El Sueño de Flora me concedió un nuevo tipo de cultivo.<BR>Estas semillas de pasto están diseñadas para ser cultivadas como trigo normal colocándolas en suelo labrado.<BR>La diferencia radica en que las semillas mismas son el cultivo real.<BR>De hecho, cuando se usan sobre tierra normal, estas semillas son capaces de cubrirla con hierba exuberante. Sin embargo, se gastan en el acto.<BR>Este primer manojo de semillas debe usarse inmediatamente en tierra labrada para obtener más de su tipo, ya que no sé si más Sueños de Flora me otorgará el mismo tipo de semilla.
+
+research.REDSTONESEEDS.title=Semillas de Redstone
+research.REDSTONESEEDS.stage.0=Estas semillas son más especiales que su contraparte de césped.<BR>Se cultivan de la misma manera, pero tienen efectos diferentes cuando se utilizan.<BR>Se pueden utilizar tanto sobre tierra como sobre césped. Cuando eso sucede, la hierba se convierte en Redstone Grass, un tipo de bloque mímico que se ve exactamente como la hierba normal, pero produce una señal de redstone cuando una entidad se para sobre ella.<BR>Una trampa invisible, para atrapar intrusos no deseados.
+
+research.GHOSTSEEDS.title=Semillas fantasma
+research.GHOSTSEEDS.stage.0=Estas semillas son extremadamente ligeras. Se sienten casi como aire en mis propias manos.<BR>Se pueden cultivar en suelo labrado como los otros dos tipos de semillas.<BR>Sin embargo, cuando se usan sobre tierra o pasto, estas semillas transformarán ese bloque en pasto fantasma, un bloque etéreo que no es sustancial al tacto, pero que se ve exactamente como pasto a la vista. Perfecto para trampas y cosas por el estilo.<BR>Sin embargo, solo ahora reflexiono sobre la rareza de estos hallazgos. Estas semillas son demasiado extrañas para pertenecer a este mundo.<BR>Entonces, ¿a dónde va el Sueño para recoger tales tesoros?
+
+research.ARBOREALGENERATOR.title=Arboreal Generator
+research.ARBOREALGENERATOR.stage.0=La próxima vez que sueño con Flora, sostendré un diamante en mi mano. Entonces sucederá algo.<BR>Como se esto Bueno, es eso que no sé.
+research.ARBOREALGENERATOR.stage.1=Este pequeño y bonito árbol se conoce como Arboreal Generator.<BR>Es una planta útil, que lentamente genera plantones en cada uno de sus cuatro lados.<BR>Primero crea pequeños arbustos. Éstos emiten una señal de redstone extremadamente débil, que puede resultar útil.<BR>Estos arbustos luego se convierten en árboles jóvenes de varios tipos.<BR>Esta planta no pertenece a este mundo, estoy seguro.
+research.plantgenerator.text=Sueña con Flora con un diamante en la mano.
+
+research.VIJHISS.title=Vijhiss
+research.VIJHISS.stage.0=Mi próximo Sueño de Flora debería estar hecho con un bloque de obsidiana en mi mano.<BR>Yo *sé* que va a pasar algo.
+research.VIJHISS.stage.1=Esta planta es algo inquietante.<BR>No solo por su apariencia, no traicionando ningún sentido de pertenencia a este mundo.<BR>No, esta planta es codiciosa.<BR>¡En el sentido más literal, de hecho!<BR>Vijhiss quiere y acepta oro. Los lingotes fabricados con el noble metal amarillo solicitarán una recompensa de la planta.<BR>Vijhiss es capaz de otorgarme numerosos tipos de semillas, algunas de este mundo y otras no, algunas que ya he visto y otras completamente nuevas.<BR>Mi única preocupación radica en la leve sensación de júbilo que emana la planta en cada comercio.
+research.plantvijhiss.text=Sueño de Flora con obsidiana en mano.
+
+research.MEGYDREA.title=Megydrea
+research.MEGYDREA.stage.0=¿Debo alentar la naturaleza ávida de Vijhiss?<BR>No confío en esa planta, pero las bendiciones pueden valer la pena.<BR>Intentaré darle una pieza de oro más grande.
+research.MEGYDREA.stage.1=Una nueva planta, que me concedió Vijhiss. Puedo obtener más de este tipo dándole más bloques de oro a esa hierba codiciosa.<BR>La Megydrea actúa como un tanque de fluido. Se coloca en el techo y de allí cuelga, dos bloques de altura.<BR>Se pueden almacenar hasta cuarenta cubos de cualquier fluido.
+research.gotmegydrea.text=Dale a Vijhiss un bloque de oro.
+
+research.BEHEADINGDREAM.title=Sueños de decapitación
+research.BEHEADINGDREAM.stage.0=Un recuerdo de decapitación, mientras cortaba un cráneo de Wither<BR>El pensamiento es macabro, pero la muerte es rápida e indolora.<BR>Ese recuerdo se puede utilizar para ganarme la cabeza. No es una copia, puedo jurar que respiró hasta hace unos momentos.<BR>Si se usa en el Santuario de los sueños mientras está dirigido a un jugador determinado, se puede usar en su lugar para ganar la cabeza de ese jugador.<BR>¿No pertenecen estas cabezas a este mundo? ¿O incluso este tiempo?
+
+research.HEARTBREAKDREAM.title=Sueños de angustia
+research.HEARTBREAKDREAM.stage.0=Un recuerdo de desamor, ya que pierdo a un amigo leal.<BR>Poco a poco, la tristeza se sustituye por la ira. Hacia los que no sienten mi dolor, encerrados en su propio cinismo.<BR>¿Un matiz de hipocresía allí?<BR>Shush.<BR>Un Sueño de angustia lo convierte en un Sueño mucho más ofensivo que la mayoría. Cuando se usan todas las criaturas que no son jugadores dentro de una distancia bastante grande, así como yo, permanecen afectadas por un tiempo limitado. Nuestra salud se reducirá hasta que finalice el efecto, y una combinación adecuada con Recuerdos de poder y de quietud lo convierte en un arma extremadamente poderosa.<BR>Por supuesto, lastimarme en el proceso no es lo ideal. Con Dream Shrine, puedo apuntar correctamente a ubicaciones específicas para afligir a todas las criaturas que no sean jugadores en un radio de 30 bloques centrado en la ubicación del Sigilo sin ser penalizado por ello.<BR>Y, por supuesto, también puedo apuntar a jugadores específicos.<BR>Todo el mundo ha tenido períodos oscuros en su vida. Solo debo hacer que recuerden.
+
+research.FINALQUEST.title=Un fragmento de la verdad
+research.FINALQUEST.stage.0=Estoy cerca de una brecha.<BR>Dagon llama.
+research.FINALQUEST.stage.1=El buen guardian me ayudó mucho.<BR>Pero hay muchos más como él. Su muerte no importará.<BR>¿Debería escuchar sus últimas palabras?
+research.FINALQUEST.stage.2=Sin bendición divina esta vez. Solo un fragmento de la Verdad, un conocimiento que duele.<BR>¿Debo seguir? ¿Importará?
+research.hearing4.text=Come una babosa en los océanos más profundos.
+research.killedkeeper.text=Asesina al guardián del faro.
+
+research.FLUTE.title=Flauta de los Dioses Exterirores
+research.FLUTE.stage.0=Esta flauta no pertenece a este mundo. No pesa nada y deja un débil eco de melodía sobrenatural.<BR>Aunque dudo en tocarlo con la boca, sus efectos son poderosos.<BR>Al jugarlo, todas las criaturas que me rodean, incluso otros jugadores, son atrapados por la locura y se retuercen enloquecidos.<BR>Incluso yo podría verme afectado, si mi voluntad no fuera lo suficientemente fuerte.<BR>Algunas criaturas pueden verse afectadas de formas más horribles. Debería tener cuidado.
+
+research.SAWCLEAVER.title=Cuchilla de sierra
+research.SAWCLEAVER.stage.0=La Cuchilla de sierra fue utilizado por cazadores de monstruos en épocas pasadas.<BR>Mis propios antepasados.<BR>Cuando se usa, cambia entre una forma contraída y alargada. El primero funciona como cualquier espada, el segundo me permite golpear a todos los enemigos a mi alrededor a costa de menos daño y sin retroceso. Cambiar a la forma extendida mientras estoy en combate también resultará en un ataque, si lo sincronizo correctamente.<BR>Además, al empuñar esta arma, puedo esquivarla como sus antiguos dueños. Al tocar la tecla Esquivar ('Alt' por defecto) puedo dar un paso rápido en la dirección elegida.<BR>Sin embargo, la duda me toma. ¿Debería realmente seguir los pasos de mis antepasados?
+
+research.WOLFMEDALLION.title=Medallión del Lobo
+research.WOLFMEDALLION.stage.0=Un medallón utilizado por los cazadores en épocas pasadas.<BR>Cazadores de monstruos.<BR>Cuando su efecto pasivo está activado, se me advierte periódicamente de la cantidad de monstruos hostiles que me rodean.<BR>Cuando se usa su efecto activo, puedo ver temporalmente todas las entidades cercanas.<BR>Y prepárame para lo peor.
+
+research.BRONZESPHERE.title=Esfera de Bronce
+research.BRONZESPHERE.stage.0=Ya he tenido esta esfera.<BR>Yo lo se.<BR>Mi mente ARDE con el recuerdo mientras sostengo el objeto.<BR>Espero que llegar a la Verdad desvele el misterio.<BR>Por ahora, está nuevamente en mis manos y puedo usarlo en mi beneficio.<BR>Cuando se activa, me permite almacenar experiencia en su interior. Si estoy agchandome, la experiencia desaparece.<BR>Una batería de recuerdos, por así decirlo.
+
+research.CRUCIBLE.title=Asesina de Dioses
+research.CRUCIBLE.stage.0=Un arma con una hoja al rojo vivo, utilizada por los cazadores de demonios en épocas pasadas.<BR>Eran ejércitos de un solo hombre, más terribles que cualquiera de sus enemigos.<BR>La asesina de Dioses es inmensamente poderoso, capaz de infligir un daño colosal por cada golpe.<BR>Sin embargo, se equilibra con el hecho de que por cada golpe, el arma necesita alrededor de dos minutos de recarga antes de poder volver a usarse. Y, por supuesto, es posible que muchos enemigos míos no sufran demasiado daño de un solo golpe, así que debo usarlo con prudencia.
+
+research.BAUBLERESEARCH.title=Joyas
+research.BAUBLERESEARCH.stage.0=Algunos artículos deben usarse fuera de las ranuras de mi armadura.<BR>Las joyas que encuentro en este viaje (y solo este viaje) pueden tener efectos tanto activos como pasivos.<BR>Manteniendo presionada la tecla Bauble ('Z' por defecto) puedo elegir qué Joya deben tener su efecto pasivo habilitado y qué Bauble debe ser el activo.<BR>Solo puede haber una chuchería activa, y su efecto se puede activar tocando la tecla Bauble.
+
+research.INTROSPECTIONDREAM.title=Sueños de introspección
+research.INTROSPECTIONDREAM.stage.0=Un recuerdo de la introspección, mientras reflexiono sobre mí mismo mientras camino entre mis adoradores.<BR>A través de esta Memoria puedo conocer más del poder que he obtenido en mi viaje.<BR>Por supuesto, si tuviera que apuntar a otra persona con el Sueño, también podría escudriñar sus secretos.
+
+research.DEEPROAR.title=Rugido
+research.DEEPROAR.stage.0=Mientras estoy transformado, no puedo usar los efectos activos de mis Joyas, así como abrir el menú de poderes de Joyas.<BR>De esa forma, sin embargo, puedo soltar un rugido espeluznante que afectará a todas las entidades a mi alrededor con Terror, tocando la misma tecla que habría usado para la chuchería activa.<BR>Infundir miedo en los corazones de mis oponentes es estar más cerca que nunca de Dios.
+
+research.TONEWDEPTHS.title=A nuevas profundidades
+research.TONEWDEPTHS.stage.0=Debemos seguir adelante.<BR>Nunca cedas, la Verdad se acerca, el Velo se debilita, mi conocimiento crece, mi voluntad...<BR>¿Qué voluntad queda? Como si alguien me hubiera desgarrado la columna.<BR>No, seguiremos adelante. Debemos.<BR>Al fondo de los océanos más profundos.<BR>A Arche, y luego a Apeiron.<BR>Nuestro viaje no terminará hasta que rompamos... hasta que...<BR>..Espera..<BR>¿Quién es 'nosotros'?
+
+research.WATERDREAM.title=Sueños de agua
+research.WATERDREAM.stage.0=Un sueño de agua, ya que el pensamiento del océano se niega a abandonar mi mente.<BR>A través de esta Memoria puedo localizar el Monumento Oceánico más cercano.<BR>Los Guardianes nacen del agua misma y, como tales, son los más cercanos a Dios.
+
+research.DREAMFOCUS.title=Foco de Sueños
+research.DREAMFOCUS.stage.0=Los focos son dispositivos que, a través de su estructura de cuarzo y su superficie acuosa, pueden canalizar Sueños para mover objetos.<BR>No mis sueños. Ni los de los Llorones, que aún se resisten al abrazo final.<BR>Son las de los Fletum las que debo aprovechar, tan perdidas en su desesperada adoración por lo que hay más allá.
+research.DREAMFOCUS.stage.1=Un Foco de Sueños es un dispositivo maravilloso.<BR>Su extremo pequeño debe estar adyacente al contenedor del que deseo sacar los artículos. Luego se puede activar colocando un Fletum en su parte superior.<BR>Sin embargo, primero debo elegir el camino que tomarán los elementos, y debo hacerlo yo mismo.<BR>Cuando no hay Fletum encima del Dream Focus, puedo interactuar con el bloque con las manos desnudas. Luego seré transportado al extremo grande del Focus, de espaldas a él, y comenzaré a moverme lentamente hacia donde mire, incluso en el aire. Este estado dura quince segundos, pero puedo salir de él antes agachandome.<BR>Una vez que todo está hecho, se establece el camino. Puedo verificar el camino en cualquier momento usando un Anillo de Revelación con su efecto pasivo habilitado. Puedo activar y desactivar un camino individual usando una bola de arcilla en su enfoque respectivo. También puedo aplicar tintes al Dream Focus para cambiar el color del camino.<BR>Con la ruta establecida y un Fletum en la parte superior, el Focus extraerá elementos del contenedor cada siete segundos y medio. Comenzarán a flotar en el aire siguiendo el camino que establecí y caerán al final del camino. Toda la física se seguirá aplicando, y los giros bruscos alrededor de los bordes de los bloques pueden hacer que los elementos se atasquen, por lo que debo tener cuidado al crear la ruta.<BR>Los elementos pueden ser recogidos mientras están en el aire, tanto por jugadores como por tolvas. Una combinación cuidadosa de rutas y tolvas dará como resultado un sistema de transporte adecuado.<BR>El Focus se puede apagar con una señal de redstone.<BR>También parece que las espadas flotantes y los blackjacks conservan sus propiedades mientras vuelan a través de criaturas que no son jugadores.<BR>Por último, los aldeanos y los que Llorones en sus formas de artículo se insertarán en cualquier cuna acuática en su camino.
+research.crafteddream_focus.text=Crea un Foco de Sueños.
+
+research.CURTAINS.title=Cortinas
+research.CURTAINS.stage.0=Las cortinas son la contraparte del Velo en nuestro mundo. Separando la verdad de las mentiras, detrás de ellas actúa un escenario lleno de actores.<BR>Sí, tal vez nuestra realidad no sea más que un teatro.<BR>Aún así, estas cortinas que pretendo hacer son bastante más mundanas. Simplemente actuarán como filtros para los elementos que chocan con ellos.
+research.CURTAINS.stage.1=Las cortinas actúan como filtros para Dreams, al igual que el Velo. Algunos pasan, otros no.<BR>En este caso, son los Sueños de Fletum y los artículos que transportan los que pueden pasar o no.<BR>Una cortina debe colocarse debajo de un contenedor, como un cofre. Cada vez que pasa un artículo, la cortina verifica si el inventario anterior contiene una instancia de ese artículo. Si es así, el artículo no pasa y deja de flotar, cayendo al suelo o, preferiblemente, a una tolva colocada de manera adecuada.<BR>Tener contenedores tanto arriba como abajo, con un espacio adecuado entre ellos para evitar que todos los artículos sean succionados en las tolvas, hace que la configuración requiera bastante espacio, pero que puede funcionar bien como sistema de clasificación.
+research.craftedcurtain.text=Crea una cortina.
+
+research.DREAMFOCUSFLUIDS.title=Foco de Sueños: Fluidos
+research.DREAMFOCUSFLUIDS.stage.0=¡No debemos detenernos en los artículos! Los Fletum son más que capaces de transportar otras cosas.<BR>Un Foco para Fluidos sería un dispositivo útil.
+research.DREAMFOCUSFLUIDS.stage.1=A diferencia de su contraparte de objeto, un Foco para Fluidos extrae los fluidos de la parte superior y los expulsa por la parte inferior, que es donde estaré cuando empiece a establecer el camino.<BR>Los Fletum se deben colocar en los lados del dispositivo y se pueden colocar hasta cuatro de ellos. Cada uno aumenta la cantidad de fluido transportado a la vez, en el orden 100 -> 300 -> 600 -> 1000 Milicubos por ida.<BR>Los fluidos transportados intentarán ingresar a los tanques con los que entren en contacto y desaparecerán al final del camino si no se encuentran contenedores para almacenarlos.<BR>Es de notar que los Fletum que están "alimentando" un Foco de Sueños de cualquier tipo no evitarán que los Weepers cercanos u otros Fletum lloren en un Lacrimatorio, por lo que el Foco para Fluidos es un método apropiado para vaciar los Lacrimatorios automáticamente.<BR>Como última nota, el agua flotante también parece ser un poderoso fertilizante para los cultivos cercanos.
+research.crafteddream_focus_fluids.text=Haz un Foco de Sueños apra Fluidos.
+
+research.DREAMFOCUSVILLAGERS.title=Foco de Sueños: Aldeanos
+research.DREAMFOCUSVILLAGERS.stage.0=Mis futuros pacientes, a quienes ya despojé de todas las cosas mundanas, parecen contentos de saber que no tienen nada más que perder.<BR>Esas pobres, pobres cosas.<BR>Les quitaré incluso el suelo.
+research.DREAMFOCUSVILLAGERS.stage.1=Un Foco para Aldeanos es capaz de llevar a los aldeanos por el camino que yo elija.<BR>El camino comienza desde la parte superior del bloque, interactuando con las manos desnudas mientras ningún Fletum está activando el Focus. Conservaré mi rotación inicial después de interactuar con el bloque.<BR>Una vez que se establece la ruta, se debe colocar un Fletum debajo del foco. Una vez hecho esto, el dispositivo seleccionará cada pocos segundos un aldeano para mover.<BR>Los aldeanos se toman de un área de 11x11 centrada en el foco, hasta 5 bloques por encima de él. Los aldeanos que se arrastran tienen prioridad y son elegidos antes que los permanentes. Los niños aldeanos no serán llevados, deben crecer antes de alcanzar alguna utilidad.<BR>Se puede aplicar una señal de redstone al Foco para modificar su funcionalidad. Una señal completamente alimentada desactivará el dispositivo por completo. Una señal de fuerza entre 1 y 14 determina en cambio cuántos aldeanos adultos de pie quedarán en todo momento en el área de arriba.<BR>Por ejemplo, con una señal de fuerza 3 y 2 aldeanos de pie arriba, no se tomará ninguno. De esta forma se asegura su apareamiento y reproducción.<BR>Los aldeanos que se arrastran están exentos de esta verificación y siempre se tomarán.<BR>Si el camino del Foco está dirigido a un Cuna acuosa, se colocará automáticamente un Aldeano arrastrado flotante en él si no hay pacientes presentes. Por supuesto, debo asegurarme de recorrer el camino de regreso al Focus en caso de que la cuna no esté vacía.<BR>Esto es especialmente útil considerando que un Blackjack flotando a través de un Foco de Sueños para objetos conservará sus propiedades e incluso puede noquear a los aldeanos mientras tanto el objeto como la víctima están en el aire.<BR>Por supuesto, si automatizara completamente la cirugía... necesitaría un cirujano.
+research.crafteddream_focus_villagers.text=Haz un Foco de Sueños para Aldeanos
+
+research.SURGEON.title=Cirujano
+research.SURGEON.stage.0=Una red de sueños une a todos aquellos que se asomaron a la Verdad.<BR>Existen sociedades enteras lejos de mí, algunas de las cuales ofrecen sus servicios a aliados y patrocinadores.<BR>Mi alianza con Dagon trae nuevos contactos, y entre estos vienen los Cirujanos, ofreciendo sus habilidades a quienes los buscan.<BR>Debo redactar una carta, una especie de citación, para que me llegue un cirujano.<BR>Entonces solo necesito usarlo en el suelo. Lo haré una vez, luego ordenaré los detalles del trabajo del cirujano más tarde, una vez que le haya echado un vistazo.
+research.SURGEON.stage.1=Me había preguntado por qué los cirujanos formarían alguna vez una sociedad propia.<BR>Poco sabía que un cirujano no es una profesión.<BR>No, es una Raza.<BR>Una que no pertenece a mi mundo.<BR>¿Es esta una raza hecha con intención? Después de todo, todos comparten un propósito singular.<BR>...<BR>¿Y si yo también fuera parte de una raza que fue * creada *, no por casualidad sino por voluntad? Sin saberlo, ¿cómo pude?<BR>Un cirujano es un sirviente útil, o mejor dicho, aliado.<BR>Debo colocarlo cerca de una Cuna Acuática con la que quiero que él, ella, eso, lo que sea, trabaje.<BR>Luego debo usar las herramientas de cirugía para especificar qué acción quiero que se realice.<BR>Luego, el Cirujano operará cada vez que un paciente aparezca en la Cuna, colocando al paciente resultante encima del dispositivo y manteniendo corazones o espinas para él. Luego puedo interactuar con él con las manos desnudas para recibir todos los materiales que reunió.<BR>Sin embargo, una técnica mucho más útil es la de vincular las invocaciones a un cofre cercano antes de usarlo. Para hacer eso, puedo interactuar con un cofre, empuñando la carta, mientras me agacho.<BR>Puedo borrar el enlace anterior haciendo clic derecho en el aire mientras me escabullo.<BR>Un Cirujano convocado con una Invocación vinculada pondrá cualquier resultado de sus operaciones, tanto pacientes como materiales, en el cofre encuadernado, siempre que estén lo suficientemente cerca entre sí.<BR>Dado que los aldeanos y los que lloran en forma de elemento también pueden ingresar a las cunas, puedo canalizar a los cirujanos uno tras otro.<BR>Un cirujano puede ser recogido por su maestro con un blackjack.
+research.summoned_surgeon.text=Invoca a un cirujano.
+
+##################
+#MISC
+##################
+
+deity.none=None
+deity.greatdreamer=El Gran Soñador
+
+worship.default=Por Defecto
+worship.penitence=Penitencia
+worship.sacrifice=Sacrificio
+
+power.cooldown=El poder requiere %1$s más segundos de enfriamiento.
+bauble.cooldown=La joya requiere %1$s más segundos de enfriamiento.
+roar.cooldown=El rugido requiere %1$s más segundos de enfriamiento.
+
+teleport.setposition=Mi posición actual se ha establecido como mi punto de regreso.
+teleport.inwater=Debo estar en el agua para usar este Poder.
+teleport.wrongdimension=Mi último punto de retorno fue en una dimensión diferente. Usar este Poder nuevamente en los próximos 20 segundos eliminará el punto de retorno.
+teleport.removedpoint=Mi punto de regreso se ha restablecido.
+
+beginning.netherreturn=Un nuevo libro está en mis manos, listo para ser escrito. Al Azif lo llamaré.
+canoe.fishing.start=¿Un pez? ¿De ningun lado? ¿Saltó o...          ...Debería seguir en esto por un tiempo.
+canoe.fishing.end=Creo que he ganado suficientes peces. Debería comer suficientes babosas y luego estar en comunión con el ídolo.
+
+sleep.transformed=No puedo dormir mientras estoy transformado.
+sleep.parasite=No me siento muy bien... no puedo dormir.
+
+itemGroup.beyondtheveil=Beyond The Veil
