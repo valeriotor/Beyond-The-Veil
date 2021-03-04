@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.models;//Made with Blockbench
 
 import com.valeriotor.beyondtheveil.animations.Animation;
-import com.valeriotor.beyondtheveil.entities.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;

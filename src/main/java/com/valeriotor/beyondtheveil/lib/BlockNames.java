@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.lib;
 public class BlockNames {
 
 	public static final String ARCHE_PORTAL = "arche_portal";
+	public static final String ARENA = "arena";
 	public static final String BARREL = "barrel";
 	public static final String BLOODBRICKS = "blood_bricks";
 	public static final String BLOOD_BRICKS_SLAB = "blood_bricks_slab";
@@ -62,7 +63,4 @@ public class BlockNames {
 	public static final String SAPLINGSHRUB = "sapling_shrub";
 	public static final String PLANTBREAKER = "plant_terra";
 	public static final String PLANTVIJHISS = "plant_ordo";
-	
-	
-	
 }

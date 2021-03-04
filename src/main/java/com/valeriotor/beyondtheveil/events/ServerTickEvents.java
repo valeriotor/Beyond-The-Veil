@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.valeriotor.beyondtheveil.bossfights.ArenaFightHandler;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
 import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
@@ -34,6 +35,7 @@ public class ServerTickEvents {
 			decreasePlayerTimers();
 			updateDamned();
 			AzacnoParasiteEvents.updateParasites();
+			ArenaFightHandler.serverTick();
 		}
 		DrowningRitualEvents.update();
 	}

@@ -11,6 +11,7 @@ import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntToDoubleFunction;
 
 public class TelegraphedAttackTemplate {
     private final int animationID;
@@ -189,6 +190,11 @@ public class TelegraphedAttackTemplate {
 
         public TelegraphedAttackTemplateBuilder addParticle(EnumParticleTypes type, double xCoord, double yCoord, double zCoord, int numberOfParticles, double xOffset, double yOffset, double zOffset, double particleSpeed, int... parameters) {
             particleList.add(new Particle(type, xCoord, yCoord, zCoord, numberOfParticles, xOffset, yOffset, zOffset, particleSpeed, parameters));
+            return this;
+        }
+
+        public TelegraphedAttackTemplateBuilder moveForward(IntToDoubleFunction ticksToMotion) {
+            //TODO
             return this;
         }
 

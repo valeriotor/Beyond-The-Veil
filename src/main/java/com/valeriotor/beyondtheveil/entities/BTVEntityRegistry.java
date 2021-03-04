@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entities;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;

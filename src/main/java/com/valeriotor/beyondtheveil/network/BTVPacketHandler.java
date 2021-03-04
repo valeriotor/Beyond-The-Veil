@@ -40,6 +40,7 @@ public class BTVPacketHandler {
 		INSTANCE.registerMessage(MessageSyncResearchToServer.SyncResearchToServerMessageHandler.class, MessageSyncResearchToServer.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageSurgeon.SurgeonMessageHandler.class, MessageSurgeon.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessageMirrorToServer.MirrorToServerMessageHandler.class, MessageMirrorToServer.class, count++, Side.SERVER);
+		INSTANCE.registerMessage(MessageArenaFight.ArenaFightMessageHandler.class, MessageArenaFight.class, count++, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlaySound.PlaySoundMessageHandler.class, MessagePlaySound.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageSyncDataToClient.SyncDataToClientMessageHandler.class, MessageSyncDataToClient.class, count++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageOpenGuiToClient.OpenGuiToClientMessageHandler.class, MessageOpenGuiToClient.class, count++, Side.CLIENT);

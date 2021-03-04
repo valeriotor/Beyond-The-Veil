@@ -1,9 +1,8 @@
 package com.valeriotor.beyondtheveil.entities.render;
 
-import com.valeriotor.beyondtheveil.entities.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

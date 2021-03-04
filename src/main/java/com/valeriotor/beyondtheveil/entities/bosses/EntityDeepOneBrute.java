@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.entities;
+package com.valeriotor.beyondtheveil.entities.bosses;
 
 import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
@@ -8,26 +8,27 @@ import com.valeriotor.beyondtheveil.entities.AI.AITelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
+import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
+import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
+import com.valeriotor.beyondtheveil.entities.IDamageCapper;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 
-public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAnimatedAttacker {
+public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper, IAnimatedAttacker {
     private Animation attackAnimation;
-    private final BossInfoServer bossInfo = (BossInfoServer)(new BossInfoServer(this.getDisplayName(), BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
 
-    public EntityDeepOneBrute(World worldIn) {
-        super(worldIn);
+    public EntityDeepOneBrute(World world) {
+        this(world, null);
+    }
+
+    public EntityDeepOneBrute(World worldIn, EntityPlayer adversary) {
+        super(worldIn, adversary);
         setSize(1.8F, 2);
     }
 
@@ -77,10 +78,6 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true, false));
     }
 
-    @Override
-    public boolean isNonBoss() {
-        return false;
-    }
 
     @Override
     public void setAttackAnimation(int id) {
@@ -90,25 +87,6 @@ public class EntityDeepOneBrute extends EntityMob implements IDamageCapper, IAni
     public Animation getAttackAnimation() {
         return attackAnimation;
     }
-
-    @Override
-    protected void updateAITasks() {
-        super.updateAITasks();
-        this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
-    }
-
-    public void addTrackingPlayer(EntityPlayerMP player)
-    {
-        super.addTrackingPlayer(player);
-        this.bossInfo.addPlayer(player);
-    }
-
-    public void removeTrackingPlayer(EntityPlayerMP player)
-    {
-        super.removeTrackingPlayer(player);
-        this.bossInfo.removePlayer(player);
-    }
-
 
     private static final AttackList ATTACK_LIST;
 

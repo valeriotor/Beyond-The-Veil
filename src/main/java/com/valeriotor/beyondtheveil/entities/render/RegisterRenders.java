@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities.render;
 import java.util.function.Function;
 
 import com.valeriotor.beyondtheveil.entities.*;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;

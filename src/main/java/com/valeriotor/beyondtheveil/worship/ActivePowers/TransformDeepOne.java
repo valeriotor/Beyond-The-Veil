@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.valeriotor.beyondtheveil.bossfights.ArenaFightHandler;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -36,9 +37,13 @@ public class TransformDeepOne implements IActivePower{
 		if(!DGWorshipHelper.canTransform(p)) return false;
 		boolean transformed = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED);
 		if(transformed) {
-			SyncUtil.removeStringDataOnServer(p, PlayerDataLib.TRANSFORMED);
-			removeAttributes(p);
-			p.capabilities.isFlying = false;
+			if(!ArenaFightHandler.isPlayerInFight(p.getPersistentID())) {
+				SyncUtil.removeStringDataOnServer(p, PlayerDataLib.TRANSFORMED);
+				removeAttributes(p);
+				p.capabilities.isFlying = false;
+			} else {
+				return false;
+			}
 		}
 		else {
 			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.TRANSFORMED);
