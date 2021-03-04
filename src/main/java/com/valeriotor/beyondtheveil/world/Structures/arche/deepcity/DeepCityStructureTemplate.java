@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -53,7 +52,9 @@ public class DeepCityStructureTemplate {
 					registerDoors(entry.getValue());
 				} else if(entry.getKey() == Blocks.STONE) {
 					coords.add(new BlockCoords(Blocks.WATER, entry.getValue()));
-				} else {
+				} else if(entry.getKey() == Blocks.PRISMARINE) {
+					coords.add(new BlockCoords(BlockRegistry.BlockDeepPrismarine, entry.getValue()));
+				}else {
 					coords.add(new BlockCoords(entry));
 				}
 			}
@@ -123,7 +124,7 @@ public class DeepCityStructureTemplate {
 		BlockPos toGlassCeiling   = pos.offset(facing.rotateYCCW().getOpposite()).offset(facing, distance).offset(EnumFacing.UP, 4);
 		BlockPos fromPrismarineFloor = pos.offset(facing.rotateYCCW(), 2);
 		BlockPos toPrismarineFloor   = pos.offset(facing.rotateYCCW().getOpposite(), 2).offset(facing, distance);
-		fillWithBlocks(fromPrismarineFloor, toPrismarineFloor, Blocks.PRISMARINE.getStateFromMeta(BlockPrismarine.DARK_META), chunks, usedChunks);
+		fillWithBlocks(fromPrismarineFloor, toPrismarineFloor, BlockRegistry.BlockDeepPrismarine.getStateFromMeta(BlockPrismarine.DARK_META), chunks, usedChunks);
 		fillWithBlocks(fromGlassCeiling, toGlassCeiling, glass, chunks, usedChunks);
 		fillWithBlocks(fromRightGlass, toRightGlass, glass, chunks, usedChunks);
 		fillWithBlocks(fromLeftGlass, toLeftGlass, glass, chunks, usedChunks);

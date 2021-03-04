@@ -15,6 +15,7 @@ public class BlockNames {
 	public static final String CURTAIN = "curtain";
 	public static final String DARK_GLASS = "dark_glass";
 	public static final String DARK_SAND = "dark_sand";
+	public static final String DEEP_PRISMARINE = "deep_prismarine";
 	public static final String DREAMFOCUS = "dream_focus";
 	public static final String DREAMFOCUSFLUIDS = "dream_focus_fluids";
 	public static final String DREAMFOCUSVILLAGERS = "dream_focus_villagers";
