@@ -22,6 +22,7 @@ public class ModelRegistry {
 	public static ModelManOWar man_o_war;
 	public static ModelJelly jelly;
 	public static ModelDeepOneBrute deepOneBrute;
+	public static ModelDeepOneMyrmidon deepOneMyrmidon;
 	
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -44,6 +45,7 @@ public class ModelRegistry {
 		man_o_war = new ModelManOWar();
 		jelly = new ModelJelly();
 		deepOneBrute = new ModelDeepOneBrute();
+		deepOneMyrmidon = new ModelDeepOneMyrmidon();
 	}
 	
 }

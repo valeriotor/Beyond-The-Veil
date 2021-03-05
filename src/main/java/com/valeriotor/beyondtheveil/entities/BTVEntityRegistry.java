@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
@@ -53,6 +54,7 @@ public class BTVEntityRegistry {
 		register("man_o_war", EntityManOWar.class, count++ , 128);
 		register("jelly", EntityJelly.class, count++ , 128);
 		register("deep_one_brute", EntityDeepOneBrute.class, count++ , 128);
+		register("deep_one_myrmidon", EntityDeepOneMyrmidon.class, count++ , 128);
 		
 		registerSpawnPlacementTypes();
 		

@@ -4,6 +4,7 @@ import java.util.function.Function;
 
 import com.valeriotor.beyondtheveil.entities.*;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
@@ -45,6 +46,7 @@ public class RegisterRenders {
 		register(EntityManOWar.class, RenderManOWar::new);
 		register(EntityJelly.class, RenderJelly::new);
 		register(EntityDeepOneBrute.class, RenderDeepOneBrute::new);
+		register(EntityDeepOneMyrmidon.class, RenderDeepOneMyrmidon::new);
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));
