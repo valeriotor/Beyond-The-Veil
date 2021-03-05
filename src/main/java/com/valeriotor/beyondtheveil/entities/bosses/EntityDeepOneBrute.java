@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.entities.AI.AITelegraphedAttack;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
+import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import com.valeriotor.beyondtheveil.entities.IDamageCapper;
@@ -68,6 +69,7 @@ public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8D);
     }
 
+    @Override
     protected void initEntityAI() {
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
@@ -75,7 +77,7 @@ public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper
         this.tasks.addTask(6, new EntityDeepOne.DeepOneWander(this, 1.0D));
         this.targetTasks.addTask(1, new AIProtectMaster(this));
         this.targetTasks.addTask(2, new AIRevenge(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true, false));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, false));
     }
 
 
@@ -84,6 +86,7 @@ public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper
         attackAnimation = new Animation(AnimationRegistry.getAnimationFromId(id));
     }
 
+    @Override
     public Animation getAttackAnimation() {
         return attackAnimation;
     }
@@ -100,24 +103,24 @@ public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper
         AttackArea roarArea = AttackArea.getCircleAttack(7);
         TelegraphedAttackTemplate leftFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_left_followup_swing, 22, 6, 28, leftSwingFollowupArea, 5.2, 2.5);
         TelegraphedAttackTemplate rightFollowupSwing = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_brute_right_followup_swing, 22, 6, 28, rightSwingFollowupArea, 5.2, 2.5);
-        TelegraphedAttackTemplate roarFollowupSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_roar_followup, 23, 7, 1, roarArea, 12.2)
+        TelegraphedAttackTemplate roarFollowupSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_roar_followup, 23, 7, 1, roarArea, 12.2)
                 .setKnockback(4.5)
                 .setAttackSound(BTVSounds.deep_one_brute_roar)
                 .build();
 
-        TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2)
+        TelegraphedAttackTemplate leftSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_left_swing, 25, 9, 30, leftSwingArea, 4.2)
                 .setKnockback(2.5)
                 .addFollowup(rightFollowupSwing, 10)
                 .setFollowupTime(15)
                 .build();
 
-        TelegraphedAttackTemplate rightSwing = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_right_swing, 25, 9, 30, rightSwingArea, 4.2)
+        TelegraphedAttackTemplate rightSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_right_swing, 25, 9, 30, rightSwingArea, 4.2)
                 .setKnockback(2.5)
                 .addFollowup(leftFollowupSwing, 10)
                 .setFollowupTime(15)
                 .build();
 
-        TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder smashBuilder = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
+        TelegraphedAttackTemplateBuilder smashBuilder = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_brute_smash, 22, 10, 20, smashArea, 4.5)
                 .setKnockback(4.5)
                 .setAttackSound(BTVSounds.deep_one_brute_smash)
                 .addFollowup(roarFollowupSwing, 7)
@@ -133,7 +136,7 @@ public class EntityDeepOneBrute extends EntityArenaBoss implements IDamageCapper
         ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
     }
 
-    private static void addSmashParticles(TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder smash) {
+    private static void addSmashParticles(TelegraphedAttackTemplateBuilder smash) {
         final double y = 0;
         for(int i = 0; i < 5; i++) {
             final double radius = i * 9.0 / 5;

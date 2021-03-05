@@ -31,9 +31,7 @@ public class AITelegraphedAttack extends EntityAIAttackMelee {
                 EntityLivingBase target = attacker.getAttackTarget();
                 double distance = attacker.getDistance(target);
                 Optional<TelegraphedAttackTemplate> attack = attacks.getRandomAttack(e.world.rand, distance);
-                if(attack.isPresent()) {
-                    this.attack = new TelegraphedAttack(attack.get(), attacker, MathHelperBTV.angleBetween(attacker, target));
-                }
+                attack.ifPresent(template -> this.attack = new TelegraphedAttack(template, attacker, MathHelperBTV.angleBetween(attacker, target)));
             }
         } else {
             attacker.getNavigator().clearPath();
@@ -51,8 +49,6 @@ public class AITelegraphedAttack extends EntityAIAttackMelee {
         EntityLivingBase target = attacker.getAttackTarget();
         double distance = attacker.getDistance(target);
         Optional<TelegraphedAttackTemplate> followupAttack = attack.getFollowupAttack(e.world.rand, distance);
-        if(followupAttack.isPresent()) {
-            this.attack = new TelegraphedAttack(followupAttack.get(), attacker, MathHelperBTV.angleBetween(attacker, target));
-        }
+        followupAttack.ifPresent(template -> this.attack = new TelegraphedAttack(template, attacker, MathHelperBTV.angleBetween(attacker, target)));
     }
 }
