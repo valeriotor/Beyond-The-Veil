@@ -12,6 +12,7 @@ import net.minecraft.world.WorldServer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntToDoubleFunction;
+import java.util.function.Supplier;
 
 public class TelegraphedAttackTemplate {
     private final int animationID;
@@ -26,16 +27,17 @@ public class TelegraphedAttackTemplate {
     private final SoundEvent damageSound;
     private final SoundEvent attackSound;
     private final List<Particle> particles;
+    private final int initialRotationWeight;
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
         this(animation, duration, damageTime, damage, attackArea, triggerDistance, 0);
     }
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
-        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>());
+        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>(), 0);
     }
 
-    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles) {
+    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles, int initialRotationWeight) {
         this.animationID = AnimationRegistry.getIdFromAnimation(animation);
         this.duration = duration;
         this.damageTime = damageTime;
@@ -48,6 +50,7 @@ public class TelegraphedAttackTemplate {
         this.damageSound = damageSound;
         this.attackSound = attackSound;
         this.particles = ImmutableList.copyOf(particles);
+        this.initialRotationWeight = initialRotationWeight;
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
@@ -100,6 +103,10 @@ public class TelegraphedAttackTemplate {
         }
     }
 
+    public int getInitialRotationWeight() {
+        return initialRotationWeight;
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
         private AnimationTemplate animation;
         private int duration;
@@ -113,6 +120,7 @@ public class TelegraphedAttackTemplate {
         private SoundEvent damageSound;
         private SoundEvent attackSound;
         private List<Particle> particleList = new ArrayList<>();
+        private int initialRotationWeight = 0;
 
         public TelegraphedAttackTemplateBuilder(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
             this.animation = animation;
@@ -163,6 +171,11 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
+        public TelegraphedAttackTemplateBuilder addFollowup(Supplier<TelegraphedAttackTemplate> attackTemplateSupplier, int weight) {
+            followups.addAttack(attackTemplateSupplier, weight);
+            return this;
+        }
+
         public TelegraphedAttackTemplateBuilder setNoFollowupAttackWeight(int weight) {
             followups.setNoAttackWeight(weight);
             return this;
@@ -198,10 +211,27 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
-        public TelegraphedAttackTemplate build() {
-            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList);
+        public TelegraphedAttackTemplateBuilder setInitialRotationWeight(int initialRotationWeight) {
+            this.initialRotationWeight = initialRotationWeight;
+            return this;
         }
 
+        public TelegraphedAttackTemplate build() {
+            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList, initialRotationWeight);
+        }
+
+    }
+
+    public static class AttackSupplier {
+        private TelegraphedAttackTemplate attack;
+
+        public void setAttack(TelegraphedAttackTemplate attack) {
+            this.attack = attack;
+        }
+
+        public TelegraphedAttackTemplate getAttack() {
+            return attack;
+        }
     }
 
     private static class Particle {

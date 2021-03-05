@@ -295,18 +295,18 @@ public class ModelDeepOneMyrmidon extends ModelAnimated {
 		right_superior_arm.rotateAngleY = -0.5F;
 		spear.rotateAngleY = 1.2F;
 		spear.rotateAngleX = -0.3F;*/
-
-		/*torso2.rotateAngleY = 0.4F;
+/*
+		torso2.rotateAngleY = 0.4F;
 		right_superior_arm.rotateAngleY = 0.5F;
 		torso1.rotateAngleY = -0.6F;
-		right_inferior_arm.rotateAngleY = -1.5F;
+		right_inferior_arm.rotateAngleY = -1.3F;
 		left_upper_arm.rotateAngleY = -0.9F;
-		right_inferior_forearm.rotateAngleY = -0.7F;
-		sword.rotateAngleY = 1.8F;*/
+		right_inferior_forearm.rotateAngleY = -0.3F;
+		sword.rotateAngleY = 1.5F;*/
 
 
-		left_leg.rotateAngleX = -0.8727F + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount/3;
-		right_leg.rotateAngleX = -0.8727F - MathHelper.cos(limbSwing * 0.3F + (float)Math.PI) * limbSwingAmount/3;
+		left_leg.rotateAngleX = -0.8727F + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount/2;
+		right_leg.rotateAngleX = -0.8727F + MathHelper.cos(limbSwing * 0.3F + (float)Math.PI) * limbSwingAmount/2;
 
 		EntityDeepOneMyrmidon e = (EntityDeepOneMyrmidon) entitylivingbaseIn;
 		Animation a = e.getAttackAnimation();

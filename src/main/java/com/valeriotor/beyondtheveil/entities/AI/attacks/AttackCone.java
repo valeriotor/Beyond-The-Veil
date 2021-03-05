@@ -20,13 +20,13 @@ public class AttackCone extends AttackArea{
 
     @Override
     public List<EntityLivingBase> getVictims(EntityLiving source, double initialRotation) {
-        return source.world.getEntities(EntityLivingBase.class, target -> this.isInCone(source, target, initialRotation) && target != source);
+        return source.world.getEntities(EntityLivingBase.class, target -> target != source && this.isInCone(source, target, initialRotation));
     }
 
     private boolean isInCone(EntityLivingBase source, EntityLivingBase target, double initialRotation) {
         double distance = source.getDistance(target);
         if(distance > radius) return false;
-        if(distance < radius/5) return true;
+        if(distance < radius/8) return true;
         double rotation = MathHelperBTV.angleBetween(source, target);
         double lowerBound = initialRotation - degreesToTheLeft;
         double upperBound = initialRotation + degreesToTheRight;
@@ -35,7 +35,7 @@ public class AttackCone extends AttackArea{
         } else if(upperBound > 180) {
             return rotation < upperBound - 360 || rotation > lowerBound;
         } else {
-            return rotation < upperBound || rotation > lowerBound;
+            return rotation < upperBound && rotation > lowerBound;
         }
     }
 }

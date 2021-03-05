@@ -29,6 +29,7 @@ public class TelegraphedAttack {
 
     public void update() {
         counter++;
+        attacker.setRotationYawHead((float) initialRotation);
         if(template.isDamageTime(counter)) {
             List<EntityLivingBase> victims = template.getAttackArea().getVictims(attacker, initialRotation);
             DamageSource source = DamageSource.causeMobDamage(attacker);
@@ -59,4 +60,13 @@ public class TelegraphedAttack {
         template.getFollowups();
         return template.getFollowups().getRandomAttack(rand, distance);
     }
+
+    public double getInitialRotation() {
+        return initialRotation;
+    }
+
+    public int getInitialRotationWeight() {
+        return template.getInitialRotationWeight();
+    }
+
 }

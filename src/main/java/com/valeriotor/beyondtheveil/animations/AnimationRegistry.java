@@ -27,8 +27,10 @@ public class AnimationRegistry {
 	public static AnimationTemplate deep_one_brute_left_followup_swing;
 	public static AnimationTemplate deep_one_brute_smash;
 	public static AnimationTemplate deep_one_brute_roar_followup;
-	public static AnimationTemplate deep_one_myrmidon_spear_swing;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale;
 	public static AnimationTemplate deep_one_myrmidon_sword_swing;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale_followup_spear_impale;
+	public static AnimationTemplate deep_one_myrmidon_sword_swing_followup_sword_impale;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations() {
@@ -54,8 +56,10 @@ public class AnimationRegistry {
 		deep_one_brute_left_followup_swing = new AnimationTemplate("deep_one_brute/left_followup_swing");
 		deep_one_brute_smash = new AnimationTemplate("deep_one_brute/smash");
 		deep_one_brute_roar_followup = new AnimationTemplate("deep_one_brute/roar_followup");
-		deep_one_myrmidon_spear_swing = new AnimationTemplate("deep_one_myrmidon/spear_swing");
+		deep_one_myrmidon_spear_impale = new AnimationTemplate("deep_one_myrmidon/spear_impale");
 		deep_one_myrmidon_sword_swing = new AnimationTemplate("deep_one_myrmidon/sword_swing");
+		deep_one_myrmidon_spear_impale_followup_spear_impale = new AnimationTemplate("deep_one_myrmidon/spear_impale_followup_spear_impale");
+		deep_one_myrmidon_sword_swing_followup_sword_impale = new AnimationTemplate("deep_one_myrmidon/sword_swing_followup_sword_impale");
 		anims.clear();
 		anims.add(deep_one_roar);
 		anims.add(shoggoth_open_mouth);
@@ -79,8 +83,10 @@ public class AnimationRegistry {
 		anims.add(deep_one_brute_left_followup_swing);
 		anims.add(deep_one_brute_smash);
 		anims.add(deep_one_brute_roar_followup);
-		anims.add(deep_one_myrmidon_spear_swing);
+		anims.add(deep_one_myrmidon_spear_impale);
 		anims.add(deep_one_myrmidon_sword_swing);
+		anims.add(deep_one_myrmidon_spear_impale_followup_spear_impale);
+		anims.add(deep_one_myrmidon_sword_swing_followup_sword_impale);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {

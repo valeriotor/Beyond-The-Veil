@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class AttackList {
     protected final List<WeightedAttack> attacks = new ArrayList<>();
     protected int totalWeight = 0;
 
     public void addAttack(TelegraphedAttackTemplate attack, int weight) {
-        attacks.add(new WeightedAttack(attack, weight));
+        attacks.add(new EagerWeightedAttack(attack, weight));
+        totalWeight += weight;
+    }
+
+    public void addAttack(Supplier<TelegraphedAttackTemplate> attackTemplateSupplier, int weight) {
+        attacks.add(new LazyWeightedAttack(attackTemplateSupplier, weight));
         totalWeight += weight;
     }
 
@@ -22,16 +28,16 @@ public class AttackList {
     public void removeNoAttackWeight() {
         totalWeight = 0;
         for(WeightedAttack attack : attacks)
-            totalWeight += attack.weight;
+            totalWeight += attack.getWeight();
     }
 
     public Optional<TelegraphedAttackTemplate> getRandomAttack(Random rand, double distance) {
         int n = rand.nextInt(totalWeight);
         for(WeightedAttack attack : attacks) {
-            n -= attack.weight;
+            n -= attack.getWeight();
             if(n < 0) {
-                if(attack.attack.getTriggerDistance() >= distance) {
-                    return Optional.of(attack.attack);
+                if(attack.getAttack().getTriggerDistance() >= distance) {
+                    return Optional.of(attack.getAttack());
                 } else {
                     return Optional.empty();
                 }
@@ -40,13 +46,42 @@ public class AttackList {
         return Optional.empty();
     }
 
-    private class WeightedAttack {
-        private final TelegraphedAttackTemplate attack;
+    private abstract class WeightedAttack {
         private final int weight;
-
-        private WeightedAttack(TelegraphedAttackTemplate attack, int weight) {
-            this.attack = attack;
+        public WeightedAttack(int weight) {
             this.weight = weight;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        abstract public TelegraphedAttackTemplate getAttack();
+    }
+
+    private class EagerWeightedAttack extends WeightedAttack{
+        private final TelegraphedAttackTemplate attack;
+
+        public EagerWeightedAttack(TelegraphedAttackTemplate attack, int weight) {
+            super(weight);
+            this.attack = attack;
+        }
+
+        public TelegraphedAttackTemplate getAttack() {
+            return attack;
+        }
+    }
+
+    private class LazyWeightedAttack extends WeightedAttack {
+        private final Supplier<TelegraphedAttackTemplate> supplier;
+        public LazyWeightedAttack(Supplier<TelegraphedAttackTemplate> supplier, int weight) {
+            super(weight);
+            this.supplier = supplier;
+        }
+
+        @Override
+        public TelegraphedAttackTemplate getAttack() {
+            return supplier.get();
         }
     }
 
@@ -68,6 +103,11 @@ public class AttackList {
 
         @Override
         public void addAttack(TelegraphedAttackTemplate attack, int weight) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void addAttack(Supplier<TelegraphedAttackTemplate> attackTemplateSupplier, int weight) {
             throw new UnsupportedOperationException();
         }
 
