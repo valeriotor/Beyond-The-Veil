@@ -41,10 +41,10 @@ public class TelegraphedAttack {
             });
             SoundEvent damageSound = template.getDamageSound();
             if(damageSound != null && victims.size() > 0)
-                attacker.world.playSound(null, attacker.getPosition(), damageSound, SoundCategory.HOSTILE, 1, 1);
+                attacker.world.playSound(null, attacker.getPosition(), damageSound, SoundCategory.HOSTILE, 8, 1);
             SoundEvent attackSound = template.getAttackSound();
             if(attackSound != null)
-                attacker.world.playSound(null, attacker.getPosition(), attackSound, SoundCategory.HOSTILE, 1, 1);
+                attacker.world.playSound(null, attacker.getPosition(), attackSound, SoundCategory.HOSTILE, 8, 1);
             template.spawnParticles(attacker);
         }
     }

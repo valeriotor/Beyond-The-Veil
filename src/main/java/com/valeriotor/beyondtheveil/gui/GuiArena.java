@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.gui;
 
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageArenaFight;
 import net.minecraft.client.gui.GuiButton;
@@ -18,7 +19,7 @@ public class GuiArena extends GuiScreen {
     public GuiArena(BlockPos arenaStarterPos) {
         this.arenaStarterPos = arenaStarterPos;
         bruteUnlocked = true;
-        myrmidonUnlocked = false;
+        myrmidonUnlocked = true;
         scionUnlocked = false;
     }
 

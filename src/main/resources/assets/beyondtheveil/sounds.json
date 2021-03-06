@@ -156,5 +156,10 @@
 		"sounds": [
 			"beyondtheveil:deep_one_brute_roar"
 		]
+	},
+	"arena_music": {
+		"sounds": [
+			"beyondtheveil:arena_music"
+		]
 	}
 }

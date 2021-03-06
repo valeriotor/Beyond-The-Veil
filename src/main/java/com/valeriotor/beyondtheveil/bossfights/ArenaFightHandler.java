@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.bossfights;
 
 import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 
@@ -51,7 +52,7 @@ public class ArenaFightHandler {
         EntityArenaBoss boss = null;
         switch (bossID) {
             case DEEP_ONE_BRUTE: boss = new EntityDeepOneBrute(player.world, player); break;
-            case DEEP_ONE_MYRMIDON:
+            case DEEP_ONE_MYRMIDON: boss = new EntityDeepOneMyrmidon(player.world, player); break;
             case SCION_OF_DAGON:
         }
         if(boss != null) {
@@ -64,10 +65,10 @@ public class ArenaFightHandler {
         fights.remove(playerID);
     }
 
-    public static void endFight(UUID playerID) {
+    public static void endFight(UUID playerID, boolean endAbruptly) {
         ArenaFight fight = fights.remove(playerID);
         if(fight != null)
-            fight.endFight();
+            fight.endFight(endAbruptly);
     }
 
 }

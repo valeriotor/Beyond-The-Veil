@@ -172,37 +172,6 @@ public class PlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onDeath(LivingDeathEvent event) {
-		if(event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer) event.getEntity();
-			IPlayerData cap = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-			BlockPos pos = p.getPosition();
-			if(!event.isCanceled() && p.dimension == DimensionType.OVERWORLD.getId()) {
-				cap.setInteger(PlayerDataLib.DEATH_X, pos.getX(), false);
-				cap.setInteger(PlayerDataLib.DEATH_Y, pos.getY(), false);
-				cap.setInteger(PlayerDataLib.DEATH_Z, pos.getZ(), false);
-			}
-		} else if(event.getEntity() instanceof EntityElderGuardian) {
-			Entity e = event.getSource().getTrueSource();
-			EntityPlayer p = null;
-			if(e instanceof EntityPlayer) {
-				p = (EntityPlayer)e;
-			} else if(e instanceof IPlayerGuardian) {
-				p = ((IPlayerGuardian)e).getMaster();
-			}
-			if(p != null) {
-				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-				if(data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(1)) && !data.getString(PlayerDataLib.DAGONQUEST2)) {
-					int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ELDER_GUARDIANS, 1, 1);
-					if(val == 3) {
-						SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGONQUEST2);
-					}
-				}
-			}
-		}
-	}
-	
-	@SubscribeEvent
 	public static void playerStartTracking(PlayerEvent.StartTracking event) {
 		if(event.getTarget() instanceof EntityPlayer) {
 			EntityPlayer target = (EntityPlayer) event.getTarget();
