@@ -20,10 +20,10 @@ start: 2: 6
 	Spear: roty: -1.6
 end
 start: 7: 11
-	Torso2: roty: -0.8
-	Head: roty: 0.46
-	RSArm: roty: -0.72
-	Spear: roty: 1.6
+	Torso2: roty: -0.8: quadratic
+	Head: roty: 0.46: quadratic
+	RSArm: roty: -0.72: quadratic
+	Spear: roty: 1.6: quadratic
 end
 start: 18: 23
 	Torso2: roty: 0.65

@@ -5,12 +5,14 @@ import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.animations.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.Supplier;
 
@@ -28,16 +30,17 @@ public class TelegraphedAttackTemplate {
     private final SoundEvent attackSound;
     private final List<Particle> particles;
     private final int initialRotationWeight;
+    private final BiPredicate<EntityLiving, EntityLivingBase> predicate;
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
         this(animation, duration, damageTime, damage, attackArea, triggerDistance, 0);
     }
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
-        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>(), 0);
+        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>(), 0, (e1, e2) -> true);
     }
 
-    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles, int initialRotationWeight) {
+    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles, int initialRotationWeight, BiPredicate<EntityLiving, EntityLivingBase> predicate) {
         this.animationID = AnimationRegistry.getIdFromAnimation(animation);
         this.duration = duration;
         this.damageTime = damageTime;
@@ -51,6 +54,7 @@ public class TelegraphedAttackTemplate {
         this.attackSound = attackSound;
         this.particles = ImmutableList.copyOf(particles);
         this.initialRotationWeight = initialRotationWeight;
+        this.predicate = predicate;
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
@@ -107,6 +111,10 @@ public class TelegraphedAttackTemplate {
         return initialRotationWeight;
     }
 
+    public boolean canUseAttack(EntityLiving attacker, EntityLivingBase target) {
+        return predicate.test(attacker, target);
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
         private AnimationTemplate animation;
         private int duration;
@@ -115,12 +123,13 @@ public class TelegraphedAttackTemplate {
         private AttackArea attackArea;
         private double triggerDistance;
         private double knockback;
-        private AttackList followups = new AttackList();
+        private final AttackList followups = new AttackList();
         private int followupTime = -1;
         private SoundEvent damageSound;
         private SoundEvent attackSound;
-        private List<Particle> particleList = new ArrayList<>();
+        private final List<Particle> particleList = new ArrayList<>();
         private int initialRotationWeight = 0;
+        private BiPredicate<EntityLiving, EntityLivingBase> predicate = (e1, e2) -> true;
 
         public TelegraphedAttackTemplateBuilder(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
             this.animation = animation;
@@ -216,8 +225,13 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
+        public TelegraphedAttackTemplateBuilder setPredicate(BiPredicate<EntityLiving, EntityLivingBase> predicate) {
+            this.predicate = predicate;
+            return this;
+        }
+
         public TelegraphedAttackTemplate build() {
-            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList, initialRotationWeight);
+            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList, initialRotationWeight, predicate);
         }
 
     }

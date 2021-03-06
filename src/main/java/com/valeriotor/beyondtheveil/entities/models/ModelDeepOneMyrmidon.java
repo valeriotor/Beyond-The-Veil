@@ -290,11 +290,12 @@ public class ModelDeepOneMyrmidon extends ModelAnimated {
 	@Override
 	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
 		setAngles(false);
-		/*torso2.rotateAngleY = -0.6F;
-		head.rotateAngleY = 0.35F;
-		right_superior_arm.rotateAngleY = -0.5F;
-		spear.rotateAngleY = 1.2F;
-		spear.rotateAngleX = -0.3F;*/
+		/*torso2.rotateAngleY = -0.75F;
+		head.rotateAngleY = 0.46F;
+		right_superior_arm.rotateAngleY = -0.9F;
+		right_superior_forearm.rotateAngleY = -0.75F;
+		spear.rotateAngleY = 0.9F;
+		spear.rotateAngleX = 0.3F;*/
 /*
 		torso2.rotateAngleY = 0.4F;
 		right_superior_arm.rotateAngleY = 0.5F;
@@ -303,7 +304,10 @@ public class ModelDeepOneMyrmidon extends ModelAnimated {
 		left_upper_arm.rotateAngleY = -0.9F;
 		right_inferior_forearm.rotateAngleY = -0.3F;
 		sword.rotateAngleY = 1.5F;*/
-
+/*
+		torso2.rotateAngleY = 0.9F;
+		right_superior_arm.rotateAngleY = 0.9F;
+		//spear.rotateAngleY = 1.45F;*/
 
 		left_leg.rotateAngleX = -0.8727F + MathHelper.cos(limbSwing * 0.3F) * limbSwingAmount/2;
 		right_leg.rotateAngleX = -0.8727F + MathHelper.cos(limbSwing * 0.3F + (float)Math.PI) * limbSwingAmount/2;

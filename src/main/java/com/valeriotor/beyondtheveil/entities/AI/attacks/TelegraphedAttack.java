@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities.AI.attacks;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -56,9 +57,9 @@ public class TelegraphedAttack {
         return counter == template.getFollowupTime();
     }
 
-    public Optional<TelegraphedAttackTemplate> getFollowupAttack(Random rand, double distance) {
+    public Optional<TelegraphedAttackTemplate> getFollowupAttack(Random rand, double distance, EntityLiving attacker, EntityLivingBase target) {
         template.getFollowups();
-        return template.getFollowups().getRandomAttack(rand, distance);
+        return template.getFollowups().getRandomAttack(rand, distance, attacker, target);
     }
 
     public double getInitialRotation() {

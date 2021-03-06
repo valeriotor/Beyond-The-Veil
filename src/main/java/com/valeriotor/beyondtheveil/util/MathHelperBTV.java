@@ -276,10 +276,24 @@ public class MathHelperBTV {
 	public static double angleBetween(Entity source, Entity target) {
 		return angleBetween(source.posX, source.posZ, target.posX, target.posZ);
 	}
+
 	public static double angleBetween(double sourceX, double sourceZ, double targetX, double targetZ) {
 		double xDiff = targetX - sourceX;
 		double zDiff = targetZ - sourceZ;
 		return Math.atan2(-xDiff, zDiff)*180/Math.PI;
+	}
+
+	public static boolean isEntityWithinAngleOfEntity(EntityLivingBase source, Entity target, double initialRotation, double degreesToTheLeft, double degreesToTheRight) {
+		double rotation = angleBetween(source, target);
+		double lowerBound = initialRotation - degreesToTheLeft;
+		double upperBound = initialRotation + degreesToTheRight;
+		if(lowerBound < -180) {
+			return rotation < upperBound || rotation > lowerBound + 360;
+		} else if(upperBound > 180) {
+			return rotation < upperBound - 360 || rotation > lowerBound;
+		} else {
+			return rotation < upperBound && rotation > lowerBound;
+		}
 	}
 	
 }

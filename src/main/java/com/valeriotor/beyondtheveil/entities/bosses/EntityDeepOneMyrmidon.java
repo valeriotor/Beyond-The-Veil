@@ -14,7 +14,7 @@ import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import com.valeriotor.beyondtheveil.entities.IDamageCapper;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -23,7 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityDeepOneMyrmidon extends EntityArenaBoss implements IDamageCapper, IAnimatedAttacker {
@@ -72,12 +72,12 @@ public class EntityDeepOneMyrmidon extends EntityArenaBoss implements IDamageCap
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if(world.isRemote || attackAI == null) return super.attackEntityFrom(source, amount);
+        if(world.isRemote || attackAI == null || source.getTrueSource() == null) return super.attackEntityFrom(source, amount);
         double attackRotation = (MathHelperBTV.angleBetween(this, source.getTrueSource()) + 180) % 360;
         double thisRotation = (renderYawOffset + 180 ) % 360;
         double relativeRotation = attackRotation - thisRotation;
         if(relativeRotation > 180) relativeRotation -= 180;
-        double upperBound = attackAI != null && attackAI.isAttacking() ? -40 : 30;
+        double upperBound = attackAI != null && attackAI.isAttacking() ? -10 : 30;
         if(relativeRotation < upperBound && relativeRotation > -80) {
             world.playSound(null, posX, posY, posZ, SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.HOSTILE, 1, 1);
             return true;
@@ -118,32 +118,78 @@ public class EntityDeepOneMyrmidon extends EntityArenaBoss implements IDamageCap
     private static final AttackList ATTACK_LIST;
 
     static {
+        //vecTest();
         AttackList attacks = new AttackList();
-        AttackArea spearImpaleArea = AttackArea.getConeAttack(5.5, 20, 20);
+        AttackArea spearImpaleArea = AttackArea.getShiftedConeAttack(5.5, 3.5, 2);
         AttackArea swordSwingArea = AttackArea.getConeAttack(3.8, 35, 70);
-        AttackArea swordImpaleArea = AttackArea.getConeAttack(4.2, 27.5, 27.5);
+        AttackArea swordImpaleArea = AttackArea.getShiftedConeAttack(4.2, 4, 2.3);
+        AttackArea spearRightSwingArea = AttackArea.getConeAttack(5, 30, 180);
+        AttackArea swordBackSwingArea = AttackArea.getConeAttack(4.2, 30, 180);
+
+        TelegraphedAttackTemplate spearImpaleFollowupSpearRightSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_spear_impale_followup_spear_right_swing,
+                28, 15, 30, spearRightSwingArea, 6)
+                .setPredicate((source, target) -> MathHelperBTV.isEntityWithinAngleOfEntity(source, target, source.renderYawOffset, 20, 180))
+                .setKnockback(3.5)
+                .build();
+
+        TelegraphedAttackTemplate swordImpaleFollowupSwordBackSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_sword_impale_followup_sword_back_swing,
+                26, 14, 30, swordBackSwingArea, 5.5)
+                .setPredicate((source, target) -> MathHelperBTV.isEntityWithinAngleOfEntity(source, target, source.renderYawOffset, 20, 180))
+                .setKnockback(3.5)
+                .build();
 
         AttackSupplier spearImpaleFollowupSpearImpaleSupplier = new AttackSupplier();
-        TelegraphedAttackTemplate spearImpaleFollowupSpearImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_spear_impale_followup_spear_impale,
-                                                                                                        24, 8, 20, spearImpaleArea, 10)
-                .addFollowup(spearImpaleFollowupSpearImpaleSupplier::getAttack, 10)
-                .setNoFollowupAttackWeight(4)
-                .setFollowupTime(10)
+        AttackSupplier swordImpaleFollowupSpearImpaleSupplier = new AttackSupplier();
+
+        TelegraphedAttackTemplate spearImpaleFollowupSwordImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_spear_impale_followup_sword_impale,
+                24, 10, 20, swordImpaleArea, 6)
+                .addFollowup(swordImpaleFollowupSpearImpaleSupplier::getAttack, 9)
+                .addFollowup(swordImpaleFollowupSwordBackSwing, 25)
+                .setNoFollowupAttackWeight(3)
+                .setFollowupTime(12)
                 .setKnockback(1.2)
+                .build();
+
+        TelegraphedAttackTemplate spearImpaleFollowupSpearImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_spear_impale_followup_spear_impale,
+                24, 8, 20, spearImpaleArea, 10)
+                .addFollowup(spearImpaleFollowupSpearImpaleSupplier::getAttack, 8)
+                .addFollowup(spearImpaleFollowupSpearRightSwing, 25)
+                .addFollowup(spearImpaleFollowupSwordImpale, 12)
+                .setNoFollowupAttackWeight(5)
+                .setFollowupTime(10)
+                .setKnockback(0.4)
+                .setInitialRotationWeight(2)
+                .build();
+
+        TelegraphedAttackTemplate swordImpaleFollowupSpearImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_sword_impale_followup_spear_impale,
+                26, 10, 20, spearImpaleArea, 10)
+                .addFollowup(spearImpaleFollowupSpearImpaleSupplier::getAttack, 8)
+                .addFollowup(spearImpaleFollowupSpearRightSwing, 25)
+                .addFollowup(spearImpaleFollowupSwordImpale, 12)
+                .setNoFollowupAttackWeight(5)
+                .setFollowupTime(12)
+                .setKnockback(0.4)
                 .setInitialRotationWeight(2)
                 .build();
 
         spearImpaleFollowupSpearImpaleSupplier.setAttack(spearImpaleFollowupSpearImpale);
+        swordImpaleFollowupSpearImpaleSupplier.setAttack(swordImpaleFollowupSpearImpale);
 
         TelegraphedAttackTemplate spearImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_spear_impale, 24, 8, 20, spearImpaleArea, 5)
                 .addFollowup(spearImpaleFollowupSpearImpale, 10)
+                .addFollowup(spearImpaleFollowupSwordImpale, 16)
                 .setNoFollowupAttackWeight(3)
                 .setFollowupTime(14)
-                .setKnockback(1.2)
+                .setKnockback(0.4)
                 .build();
 
-        TelegraphedAttackTemplate swordSwingFollowupSwordImpale = new TelegraphedAttackTemplate(AnimationRegistry.deep_one_myrmidon_sword_swing_followup_sword_impale,
-                                                                                                            24, 10, 20, swordImpaleArea, 8);
+        TelegraphedAttackTemplate swordSwingFollowupSwordImpale = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_sword_swing_followup_sword_impale,
+                24, 10, 20, swordImpaleArea, 8)
+                .addFollowup(swordImpaleFollowupSpearImpale, 12)
+                .addFollowup(swordImpaleFollowupSwordBackSwing, 25)
+                .setNoFollowupAttackWeight(5)
+                .setFollowupTime(12)
+                .build();
 
         TelegraphedAttackTemplate swordSwing = new TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_myrmidon_sword_swing, 24, 8, 20, swordSwingArea, 3)
                 .addFollowup(swordSwingFollowupSwordImpale, 10)

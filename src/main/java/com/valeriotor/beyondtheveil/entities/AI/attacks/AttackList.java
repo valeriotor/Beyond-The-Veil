@@ -1,5 +1,8 @@
 package com.valeriotor.beyondtheveil.entities.AI.attacks;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,16 +34,23 @@ public class AttackList {
             totalWeight += attack.getWeight();
     }
 
-    public Optional<TelegraphedAttackTemplate> getRandomAttack(Random rand, double distance) {
+    public Optional<TelegraphedAttackTemplate> getRandomAttack(Random rand, double distance, EntityLiving attacker, EntityLivingBase target) {
+        int totalWeight = this.totalWeight;
+        List<WeightedAttack> attacksWithinDistance = new ArrayList<>();
+        for(WeightedAttack attack: attacks) {
+            if(attack.getAttack().getTriggerDistance() >= distance && attack.getAttack().canUseAttack(attacker, target)) {
+                attacksWithinDistance.add(attack);
+            } else {
+                totalWeight -= attack.getWeight();
+            }
+        }
+        if(totalWeight <= 0)
+            return Optional.empty();
         int n = rand.nextInt(totalWeight);
-        for(WeightedAttack attack : attacks) {
+        for(WeightedAttack attack : attacksWithinDistance) {
             n -= attack.getWeight();
             if(n < 0) {
-                if(attack.getAttack().getTriggerDistance() >= distance) {
-                    return Optional.of(attack.getAttack());
-                } else {
-                    return Optional.empty();
-                }
+                return Optional.of(attack.getAttack());
             }
         }
         return Optional.empty();
