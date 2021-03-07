@@ -231,12 +231,19 @@ public class ChunkGeneratorArche implements IChunkGenerator
 	        		int newChunkZ = newPos.getZ() >> 4;
 	        		int newChunkXMod1024 = newChunkX & 63;
 	        		int newChunkZMod1024 = newChunkZ & 63;
-		        	if(list.isFarEnough(x, z, 720) && list.getCity(chunkX, chunkZ) == null) {
+		        	if(list.isFarEnough(x, z, 720) && !list.isChunkUsed(chunkX, chunkZ)) {
 	        			boolean generated = world.isChunkGeneratedAt(newChunkX, newChunkZ);
 		        		if(isSuitablePositionForCity(newPos)) {
 		        			DeepCity city = new DeepCity(world, newPos);
 		        			city.generate();
-		        			DeepCityList.get(world).addCity(newChunkX, newChunkZ, city);
+		        			boolean canAdd = true;
+		        			for(Long l : city.getChunkCoords()) {
+		        			    if(list.isChunkUsed(l)) {
+		        			        canAdd = false;
+                                }
+                            }
+		        			if(canAdd)
+		        			    DeepCityList.get(world).addCity(newChunkX, newChunkZ, city);
 		        		}
 		        	}
         		}

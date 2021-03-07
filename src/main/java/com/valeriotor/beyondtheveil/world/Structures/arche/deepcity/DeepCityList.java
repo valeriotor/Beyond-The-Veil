@@ -1,9 +1,6 @@
 package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.valeriotor.beyondtheveil.world.arche.WorldProviderArche;
@@ -17,6 +14,8 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+import org.lwjgl.Sys;
+
 @Mod.EventBusSubscriber
 public class DeepCityList extends WorldSavedData{
 
@@ -24,6 +23,7 @@ public class DeepCityList extends WorldSavedData{
 	private static final String DATA_NAME = "DEEPCITYDATA";
 	private Map<Long, DeepCity> cities = new HashMap<>();
 	private List<DeepCity> cityList = new ArrayList<>();
+	private Set<Long> cityChunks = new HashSet<>();
 	private int emptyCachesCounter = 0;
 	
 	public static DeepCityList get(World w) {
@@ -70,6 +70,7 @@ public class DeepCityList extends WorldSavedData{
 			DeepCity city = new DeepCity();
 			city.readFromNBT(entry.getCompoundTag("city"));
 			Long l = entry.getLong("long");
+			cityChunks.addAll(city.getChunkCoords());
 			cities.put(l, city);
 			cityList.add(city);
 		}
@@ -90,6 +91,7 @@ public class DeepCityList extends WorldSavedData{
 	}
 	
 	public void addCity(int chunkX, int chunkZ, DeepCity city) {
+		cityChunks.addAll(city.getChunkCoords());
 		cities.put(ChunkPos.asLong(chunkX, chunkZ), city);
 		cityList.add(city);
 		markDirty();
@@ -104,6 +106,14 @@ public class DeepCityList extends WorldSavedData{
 		}
 		return null;
 	}
+
+	public boolean isChunkUsed(int chunkX, int chunkZ) {
+		return isChunkUsed(ChunkPos.asLong(chunkX, chunkZ));
+	}
+
+	public boolean isChunkUsed(Long l) {
+		return cityChunks.contains(l);
+	}
 	
 	public boolean isFarEnough(int x, int z, int minAxisDistance) {
 		for(DeepCity c : cityList) {
@@ -114,6 +124,22 @@ public class DeepCityList extends WorldSavedData{
 				return false;
 		}
 		return true;
+	}
+
+	public boolean isInRange(int x, int z, int minAxisDistance, int maxAxisDistance) {
+		for(DeepCity city : cityList) {
+			BlockPos pos = city.getCenter();
+			if(pos.getX() == 1758080) {
+				//System.out.println(pos);
+			}
+			long distX = Math.abs(x-pos.getX());
+			long distZ = Math.abs(z-pos.getZ());
+			if(distX > maxAxisDistance || distZ > maxAxisDistance /*|| (distZ < minAxisDistance && distX < minAxisDistance)*/) {}
+			else {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

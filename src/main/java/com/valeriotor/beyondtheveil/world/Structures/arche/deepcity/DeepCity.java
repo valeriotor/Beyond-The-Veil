@@ -1,10 +1,6 @@
 package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.valeriotor.beyondtheveil.util.BTVChunkCache;
@@ -117,6 +113,10 @@ public class DeepCity {
 	
 	public BlockPos getCenter() {
 		return center;
+	}
+
+	public Set<Long> getChunkCoords() {
+		return usedChunks.keySet();
 	}
 	
 }
