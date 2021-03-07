@@ -30,7 +30,7 @@ public class ArenaFight {
         arenaBox = new AxisAlignedBB(arenaStarterPos.getX(), arenaStarterPos.getY()+4, arenaStarterPos.getZ(),
                                      arenaStarterPos.getX()+30, arenaStarterPos.getY()+12, arenaStarterPos.getZ()-30);
         player.setHealth(player.getMaxHealth());
-        player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30*20, 1, false, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30*20, 0, false, false));
         //player.world.playSound(null, player.posX, player.posY, player.posZ);
     }
 
@@ -41,7 +41,7 @@ public class ArenaFight {
     }
 
     private void applyEffects(EntityPlayer p) {
-        p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30*20, 1, false, false));
+        p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30*20, 0, false, false));
     }
 
     private void setSaturation(EntityPlayer p) {
