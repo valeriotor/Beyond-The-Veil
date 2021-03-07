@@ -87,7 +87,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 		} else if(diff == 1) {
 			if(getCurrentOverMaxFood() < 0.67) return true;
 		} else if(diff == 0) {
-			if(getCurrentOverMaxFood() < 0.25) return true;
+			if(getCurrentOverMaxFood() < 0.5) return true;
 		} else if(diff == -1) {
 			if(getCurrentOverMaxFood() < 0.1 && attacked.getHealth() / attacked.getMaxHealth() < 0.3F) return true;
 		}
