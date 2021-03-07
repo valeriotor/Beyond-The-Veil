@@ -1185,6 +1185,9 @@ beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif
 canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
 canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
 
+arena.triumph=§6TRIUMPH
+arena.defeat=§4DEFEAT
+
 sleep.transformed=I cannot sleep while transformed.
 sleep.parasite=I don't feel all too well.. I can't sleep.
 

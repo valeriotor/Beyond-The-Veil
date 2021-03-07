@@ -70,7 +70,7 @@ public class ArenaFight {
             else {
                 for(int i = 0; i < 5; i++)
                     player.world.playSound(null, player.getPosition(), BTVSounds.dagonThump, SoundCategory.HOSTILE, 1, 1);
-                SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentTranslation("§6TRIUMPH"));
+                SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentTranslation("arena.triumph"));
                 ((EntityPlayerMP)player).connection.sendPacket(spackettitle1);
                 PlayerTimer pt = new PlayerTimer.PlayerTimerBuilder(player)
                         .addFinalAction(p -> p.setPositionAndUpdate(arenaStarterPos.getX() + 2, arenaStarterPos.getY() - 1, arenaStarterPos.getZ() - 1))

@@ -44,7 +44,7 @@ public class DeathEvents {
             if(!p.world.isRemote) {
                 for(int i = 0; i < 5; i++)
                     p.world.playSound(null, p.getPosition(), BTVSounds.dagonThump, SoundCategory.HOSTILE, 1, 1);
-                SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentTranslation("§4DEFEAT"));
+                SPacketTitle spackettitle1 = new SPacketTitle(SPacketTitle.Type.TITLE, new TextComponentTranslation("arena.defeat"));
                 ((EntityPlayerMP)p).connection.sendPacket(spackettitle1);
             }
         }
