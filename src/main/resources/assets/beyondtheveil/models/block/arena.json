@@ -1,6 +1,22 @@
 {
-   "parent": "block/cube_all",
-   "textures": {
-       "all": "beyondtheveil:blocks/damp_stone"
-   }
+	"parent": "minecraft:block/block",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "beyondtheveil:blocks/blood",
+		"particle": "beyondtheveil:blocks/blood"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 5.33333, 5.33333], "texture": "#0"},
+				"east": {"uv": [0, 5.333, 5.333, 10.666], "texture": "#0"},
+				"south": {"uv": [10.667, 0, 16, 5.333], "texture": "#0"},
+				"west": {"uv": [5.333, 0, 10.666, 5.333], "texture": "#0"},
+				"up": {"uv": [5.333, 5.333, 10.666, 10.666], "texture": "#0"},
+				"down": {"uv": [10.667, 5.333, 16, 10.666], "texture": "#0"}
+			}
+		}
+	]
 }
