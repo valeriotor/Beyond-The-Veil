@@ -125,21 +125,4 @@ public class DeepCityList extends WorldSavedData{
 		}
 		return true;
 	}
-
-	public boolean isInRange(int x, int z, int minAxisDistance, int maxAxisDistance) {
-		for(DeepCity city : cityList) {
-			BlockPos pos = city.getCenter();
-			if(pos.getX() == 1758080) {
-				//System.out.println(pos);
-			}
-			long distX = Math.abs(x-pos.getX());
-			long distZ = Math.abs(z-pos.getZ());
-			if(distX > maxAxisDistance || distZ > maxAxisDistance /*|| (distZ < minAxisDistance && distX < minAxisDistance)*/) {}
-			else {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
