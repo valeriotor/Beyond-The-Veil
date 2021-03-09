@@ -198,6 +198,11 @@ interact.statue.alreadyelse=这个雕像已经与其他人绑定，其血契无�
 interact.statue.bound=这个雕像浴我之血。它已经与我绑定，我们的联系牢不可破，坚不可摧。
 interact.gearbench.dunno=我不知道如何使用这个装置。
 interact.lacrymatory.amount=这个泪瓶存有 %1$s/4000 毫桶的泪。
+interact.arena.mustbedeep=I must be Deep to begin the duel.我必须深潜化以开始决斗。
+interact.arena.occupied=Someone is already dueling in the Arena.角斗场上已经有人在进行决斗。
+
+enter.arche_portal.initiate=Teleporting to the Overworld in 5 seconds.5 秒后传送至主世界。
+enter.arche_portal.interrupt=Teleportation interrupted.传送中止。
 
 hit.idol.schiz0=我不该试图破坏它。
 hit.idol.schiz1=我不该这么做。
@@ -632,6 +637,81 @@ weeper.shoggoth.kill=§5§o...杀死我。
 weeper.shoggoth.please=§5§o求求您，我乞求您，杀死我。
 weeper.shoggoth.please2=§5§o§l求求您了主人，杀死我。
 weeper.shoggoth.promised=§5§o§l主人，您答应过我了。
+
+##################
+#MIRROR DIALOGUE心镜会话
+##################
+
+mirror.shivers=My black mirror is shivering.我的黑镜正在颤动。
+mirror.stopshivers=My black mirror stopped shivering.我的黑镜停止了颤动。
+mirror.endbutton=(End)
+mirror.continuebutton=(Continue)
+
+mirror.nodialogue.first_node.anyone_there=Is anyone there?有人在那吗？
+mirror.nodialogue.anyone_there.0=[Y]There is no answer.并无答复。
+
+mirror.start.first_node.anyone_there=Is anyone there?有人在那吗？
+mirror.start.anyone_there.0=[Y]There is no answer.并无答复。
+mirror.start.second_node.anyone_there2=IS ANYONE THERE?到底谁在那？
+mirror.start.anyone_there2.0=[Y]There is still no answer. You should stop enquiring.依旧没有答复。你应该停止询问了。
+mirror.start.whosyou.whosyou='You'? WHAT DO YOU MEAN 'YOU'?“你”？你所说的“你”是什么意思？
+mirror.start.whosyou.0=[Y]...
+mirror.start.whosyou.1=Someone's hiding.. here.. inside of me?有人躲在...这里...在我的意识之中？
+mirror.start.whoshiding.whoareyou=Who are you? What are you doing.. in my mind?你是谁？你在我的脑海里...在做什么？
+mirror.start.whoareyou.0=[Y]You wouldn't understand.你理解不了的。
+mirror.start.whoshiding.getout=Get out. Get out get out get out GET OUT OF ME.走开。出去走开离开滚出我的脑袋。
+mirror.start.getout.0=[Y]You do not realize what you're asking for.你不理解你所做出的是怎样的请求。
+mirror.start.getout.1=[Y]I gave you all this.我给了你这一切。
+mirror.start.gavewhat.gavewhat=Gave me what?给了我什么？
+mirror.start.gavewhat.0=[Y]Everything. I've been your guiding hand.一切。我始终在引导你。
+mirror.start.gavewhat.name=What is your name?你的名字是什么？
+mirror.start.understand.name=What is your name?你的名字是什么？
+mirror.start.name.0=[Y]You can't pronounce it.你无法读出它。
+mirror.start.pronounce.parasite=Are you a parasite?你是寄生虫吗？
+mirror.start.parasite.0=[Y]Our relationship is mutually beneficial.我们的关系是共生。
+mirror.start.parasite.1=[Y]I granted you knowledge, you granted me a vessel.我赋予你知识，你给予我容器。
+mirror.start.vessel.novessel=Seek another vessel then.那就去找别的容器。
+mirror.start.vessel.more=Then grant me more knowledge.那么给我更多知识吧。
+mirror.start.vessel.thankful=If it was through you that I reached The Great Dreamer, then I am thankful.如果是在你的帮助下我才接触了伟大长梦者，那么我很感激。
+mirror.start.novessel.0=[Y]Our bond goes too deep for either of us to sunder it.我们的联系对彼此而言已密不可分。
+mirror.start.novessel.1=[Y]It is far more ancient than either of us.它比你我都远为古老。
+mirror.start.novessel.2=[Y]Too much to explain right now. Soon, I'll give you answers. Truth.现在无需过多解释。不久后，我就会给你答案。也即真相。
+mirror.start.truth.youknow=You know the Truth?你知道真相？
+mirror.start.youknow.0=[Y]A little more than you do.比你知道的略多些。
+mirror.start.youknow.1=[Y]But we can learn more of it, together, if you follow me.但如果你追随我，那么我们都能学到更多。
+mirror.start.more.0=[Y]It is no easy task, but I shall.这虽然并非易事，但我理应如此。
+mirror.start.more.1=[Y]It is necessary, for us to go forward.我们必须求索下去。
+mirror.start.forward.whereto=Where to?前往何方？
+mirror.start.whereto.0=[Y]To The Great Dreamer.去觐见伟大长梦者。
+mirror.start.reached1.already=But I reached Him already?!但我已经接触到祂了啊？！
+mirror.start.already.0=[Y]You have not.你还没有。
+mirror.start.thankful.0=[Y]Yes, through me it was that you communed.没错，在我的帮助下，你完成了共鸣。
+mirror.start.thankful.1=[Y]Yet we never truly reached Him.但我们并未真正接触祂。
+mirror.start.reached2.wat=What? I spoke wih Him! I heard Him and He heard me!你在说什么？我曾与祂交谈！我曾聆听祂的圣音，而祂也曾垂听我的话语！
+mirror.start.reached2.insignificant=Then.. then I truly am insignificant.. irrelevant..那么...那么我真的是个微不足道...无关紧要的...
+mirror.start.wat.0=[Y]Only through Dagon were your thoughts connected. A Veil before the Veil.只有通过大衮，你的思想才能连接他处。接通那帷幕前的帷幕。
+mirror.start.wat.1=Lies beneath lies..谎言之下的谎言...
+mirror.start.wat.2=[Y]Indeed.的确。
+mirror.start.insignificant.0=[Y]Several times you have reached this conclusion, but it hasn't yet stuck, has it?有那么几次你已经得出了这个结论，但还没完全铭记在心，对吧？
+mirror.start.insignificant.1=[Y]You're taking it harder, or maybe easier, than I did, when I was your age.你在接受这一事实时，比起当年与你同龄的我，要更为困难，又或者更为轻易。
+mirror.start.age.old=Wait.. how old are you?等下...你年寿几何？
+mirror.start.old.0=[Y]In time, you'll look back at this question and laugh out loud at it.过不了多久，你再回头看这个问题，肯定会大声嘲笑自己。
+mirror.start.nearlythere.howdreamer=How will we reach The Dreamer?我们要如何接触长梦者？
+mirror.start.howdreamer.0=[Y]Through Arche. The deepest Ocean.穿过太初。极渊之海。
+mirror.start.howdreamer.1=[Y]Beneath Arche there is the Void. And then, the Veil.太初之下是虚空。虚空之底，即是帷幕。
+mirror.start.howdreamer.2=[Y]The Great Dreamer Himself.伟大长梦者的本体。
+mirror.start.dreamer.veil=What exactly *is* the Veil?帷幕到底*是*什么？
+mirror.start.veil.0=[Y]The filter through which what you know as 'reality' is born.是滤布，穿过它后，你所知晓的“现实”得以诞生。
+mirror.start.veil.1=[Y]The curtain that hides all that is True.是帘幕，隐藏了万千真实。
+mirror.start.veil.2=[Y]The gateway that only Dreams may go through.是门户，唯有梦能穿过彼处。
+mirror.start.guide.guiding=How will you take me there?你要怎么带我前往那里？
+mirror.start.guiding.0=[Y]I've been your guiding hand, the one that helped you write.我自始至终在引导你，帮你写下那诸多文段。
+mirror.start.guiding.1=[Y]Our researches are born out of both of our minds. I'll help you through Al Azif.我们的研究滋生于你我的意识。我会用死灵之书指引你前行。
+mirror.start.final.whoareyou2=I still wish to know who you are.我还是想知道你到底是谁。
+mirror.start.final.letsgetgoing=Let's get going then. (End)n那就让我们继续吧。
+mirror.start.whoareyou2.0=[Y]A friend. One who had to conceal his own identity for your sake.是你的朋友。为了你不得不隐瞒自己的身份。
+mirror.start.whoareyou2.1=[Y]Cover's blown. We ride together now.端倪渐显。我们如今并驾齐驱。
+mirror.start.final2.letsgetgoing2=Let's get going then. (End)那就让我们继续吧。
 
 ##################
 #药水效果
@@ -1104,6 +1184,9 @@ teleport.removedpoint=我的返回点已重置。
 beginning.netherreturn=一本崭新的书躺在我的手中，准备着写入新的篇章。我将称之为死灵之书。
 canoe.fishing.start=一条鱼？凭空而来？它是自己跳进船里的还是...          ...我应该在这保持一段时间。
 canoe.fishing.end=我觉得已经弄到的鱼够多了。我应该吃下足够多的蛞蝓，然后与神像共鸣。
+
+arena.triumph=§6TRIUMPH胜利
+arena.defeat=§4DEFEAT败北
 
 sleep.transformed=我在深潜化时无法入睡。
 sleep.parasite=我感觉不太舒服...我睡不着。
