@@ -1185,8 +1185,8 @@ beginning.netherreturn=一本崭新的书躺在我的手中，准备着写入新
 canoe.fishing.start=一条鱼？凭空而来？它是自己跳进船里的还是...          ...我应该在这保持一段时间。
 canoe.fishing.end=我觉得已经弄到的鱼够多了。我应该吃下足够多的蛞蝓，然后与神像共鸣。
 
-arena.triumph=§6TRIUMPH胜利
-arena.defeat=§4DEFEAT败北
+arena.triumph=§6胜利
+arena.defeat=§4落败
 
 sleep.transformed=我在深潜化时无法入睡。
 sleep.parasite=我感觉不太舒服...我睡不着。
