@@ -2,8 +2,9 @@ package com.valeriotor.beyondtheveil.util;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
+import com.valeriotor.beyondtheveil.world.BTVChunkCache;
+import com.valeriotor.beyondtheveil.world.BTVChunkCacheStore;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -31,15 +32,15 @@ public class BlockCoords {
 		}
 	}
 	
-	public void generate(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
+	public void fillCache(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		for(byte[] xyzm : this.coords) {
 			BlockPos pos = center.add(xyzm[0], xyzm[1], xyzm[2]);
 			int chunkX = pos.getX() >> 4;
 			int chunkZ = pos.getZ() >> 4;
 			long cPos = ChunkPos.asLong(chunkX, chunkZ);
-			if(!usedChunks.containsKey(cPos)) 
+			if(usedChunks != null && !usedChunks.containsKey(cPos))
 				usedChunks.put(cPos, false);
-			if(!usedChunks.get(cPos)) {
+			if(usedChunks == null || !usedChunks.get(cPos)) {
 				BTVChunkCache cache = chunks.get(cPos);
 				if(cache == null) {
 					cache = new BTVChunkCache();
@@ -48,6 +49,10 @@ public class BlockCoords {
 				cache.setBlockState(pos, block.getStateFromMeta(xyzm[3]));
 			}
 		}
+	}
+
+	public void fillCache(BlockPos center, BTVChunkCacheStore chunks, Map<Long, Boolean> usedChunks) {
+		fillCache(center, chunks.getChunkPosCacheMap(), usedChunks);
 	}
 	
 	public Block getBlock() {

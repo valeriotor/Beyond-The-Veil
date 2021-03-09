@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.items.TestItem.JSonStructureBuilder;
 import com.valeriotor.beyondtheveil.util.BlockCoords;
 
+import com.valeriotor.beyondtheveil.world.BTVChunkCacheStore;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,6 +45,12 @@ public class BloodHome {
 	public void generate(World world, BlockPos center) {
 		for(BlockCoords bc : coords) {
 			bc.generate(world, center);
+		}
+	}
+
+	public void fillCache(BlockPos center, BTVChunkCacheStore chunkCache) {
+		for(BlockCoords bc : coords) {
+			bc.fillCache(center, chunkCache, null);
 		}
 	}
 	

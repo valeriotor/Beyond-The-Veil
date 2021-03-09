@@ -3,7 +3,7 @@ package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.valeriotor.beyondtheveil.util.BTVChunkCache;
+import com.valeriotor.beyondtheveil.world.BTVChunkCache;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -12,11 +12,11 @@ import net.minecraft.world.World;
 
 public class DeepCity {
 	private List<DeepCityStructure> components = new LinkedList<>();
-	private Map<Long, BTVChunkCache> chunks = new HashMap<>();
-	private Map<Long, Boolean> usedChunks = new LinkedHashMap<>();
+	private final Map<Long, BTVChunkCache> chunks = new HashMap<>();
+	private final Map<Long, Boolean> usedChunks = new LinkedHashMap<>();
 	private World world;
 	private BlockPos center;
-	private volatile boolean generated = false;
+	private volatile boolean loaded = false;
 	
 	public DeepCity(World w, BlockPos pos) {
 		this.world = w;
@@ -31,16 +31,16 @@ public class DeepCity {
 		world = w;
 	}
 	
-	public synchronized void generate() {
+	public synchronized void loadCity() {
 		if(components.isEmpty()) {
 			DeepCityLayout layout = new DeepCityLayout(world.rand, center);
 			layout.generate();
 			components = layout.getAsList();
 		}
 		for(DeepCityStructure dcs : components) {
-			dcs.generate(chunks, usedChunks);
+			dcs.fillCache(chunks, usedChunks);
 		}
-		generated = true;
+		loaded = true;
 	}
 	
 	public boolean intersects(int chunkX, int chunkZ) {
@@ -49,11 +49,11 @@ public class DeepCity {
 	}
 	
 	public synchronized void generateChunk(int chunkX, int chunkZ) {
-		if(!generated) generate();
+		if(!loaded) loadCity();
 		BTVChunkCache cache = chunks.remove(ChunkPos.asLong(chunkX, chunkZ));
 		if(cache != null) {
 			cache.generate(world, chunkX, chunkZ);
-			usedChunks.put(ChunkPos.asLong(chunkX, chunkZ), Boolean.valueOf(true));
+			usedChunks.put(ChunkPos.asLong(chunkX, chunkZ), Boolean.TRUE);
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class DeepCity {
 		center = BlockPos.fromLong(nbt.getLong("center"));
 		readBuildings(nbt.getCompoundTag("buildings"));
 		readUsedChunks(nbt.getCompoundTag("usedChunks"));
-		generated = false;
+		loaded = false;
 	}
 	
 	private void readBuildings(NBTTagCompound buildings) {
@@ -108,7 +108,7 @@ public class DeepCity {
 	
 	public synchronized void emptyCache() {
 		chunks.clear();
-		generated = false;
+		loaded = false;
 	}
 	
 	public BlockPos getCenter() {

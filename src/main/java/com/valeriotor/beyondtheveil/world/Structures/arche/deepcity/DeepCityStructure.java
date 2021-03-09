@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.valeriotor.beyondtheveil.util.BTVChunkCache;
+import com.valeriotor.beyondtheveil.world.BTVChunkCache;
 import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,14 +57,14 @@ public class DeepCityStructure {
 		return chunkX <= maxChunkX && chunkX >= minChunkX  && chunkZ <= maxChunkZ && chunkZ >= minChunkZ ;
 	}
 	
-	public void generate(Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
-		template.generate(center, chunks, usedChunks);
+	public void fillCache(Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
+		template.fillCache(center, chunks, usedChunks);
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if(corridors.contains(facing)) {
-				template.generateCorridor(center, chunks, usedChunks, facing);
-				template.generateDoor(center, chunks, usedChunks, facing, true);
+				template.fillCacheForCorridor(center, chunks, usedChunks, facing);
+				template.fillCacheForDoor(center, chunks, usedChunks, facing, true);
 			} else {
-				template.generateDoor(center, chunks, usedChunks, facing, false);
+				template.fillCacheForDoor(center, chunks, usedChunks, facing, false);
 			}
 		}
 	}

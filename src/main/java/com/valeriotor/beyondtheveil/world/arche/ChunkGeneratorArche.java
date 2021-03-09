@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
+import com.valeriotor.beyondtheveil.world.BTVChunkCacheStore;
 import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCity;
 import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCityList;
@@ -55,6 +56,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
     double[] minLimitRegion;
     double[] maxLimitRegion;
     double[] depthRegion;
+    private final BTVChunkCacheStore chunkCaches;
 
     public ChunkGeneratorArche(World worldIn, long seed, boolean mapFeaturesEnabledIn)
     {
@@ -93,6 +95,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
         this.scaleNoise = ctx.getScale();
         this.depthNoise = ctx.getDepth();
         this.forestNoise = ctx.getForest();
+        chunkCaches = BTVChunkCacheStore.get(worldIn);
     }
 
     public void setBlocksInChunk(int x, int z, ChunkPrimer primer)
@@ -209,11 +212,11 @@ public class ChunkGeneratorArche implements IChunkGenerator
         }
 
         chunk.generateSkylightMap();
-        generateDeepCity(x, z);
+        generateAndCacheDeepCity(x, z);
         return chunk;
     }
     
-    private void generateDeepCity(int chunkX, int chunkZ) {
+    private void generateAndCacheDeepCity(int chunkX, int chunkZ) {
     	int xMod128 = chunkX & 7;
         int zMod128 = chunkZ & 7;
         int xMod1024 = chunkX & 63;
@@ -235,7 +238,7 @@ public class ChunkGeneratorArche implements IChunkGenerator
 	        			boolean generated = world.isChunkGeneratedAt(newChunkX, newChunkZ);
 		        		if(isSuitablePositionForCity(newPos)) {
 		        			DeepCity city = new DeepCity(world, newPos);
-		        			city.generate();
+		        			city.loadCity();
 		        			boolean canAdd = true;
 		        			for(Long l : city.getChunkCoords()) {
 		        			    if(list.isChunkUsed(l)) {

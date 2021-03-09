@@ -1,10 +1,6 @@
 package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
-import java.util.*;
-import java.util.Map.Entry;
-
 import com.valeriotor.beyondtheveil.world.arche.WorldProviderArche;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -14,16 +10,19 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
-import org.lwjgl.Sys;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class DeepCityList extends WorldSavedData{
 
 	private World world;
 	private static final String DATA_NAME = "DEEPCITYDATA";
-	private Map<Long, DeepCity> cities = new HashMap<>();
-	private List<DeepCity> cityList = new ArrayList<>();
-	private Set<Long> cityChunks = new HashSet<>();
+	private final List<DeepCity> cityList = new ArrayList<>();
+	private final Map<Long, DeepCity> cityChunks = new HashMap<>();
 	private int emptyCachesCounter = 0;
 	
 	public static DeepCityList get(World w) {
@@ -64,14 +63,14 @@ public class DeepCityList extends WorldSavedData{
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(NBTTagCompound nbt) { // TODO FIXA
 		for(String s : nbt.getKeySet()) {
-			NBTTagCompound entry = nbt.getCompoundTag(s);
+			NBTTagCompound cityNBT = nbt.getCompoundTag(s);
 			DeepCity city = new DeepCity();
-			city.readFromNBT(entry.getCompoundTag("city"));
-			Long l = entry.getLong("long");
-			cityChunks.addAll(city.getChunkCoords());
-			cities.put(l, city);
+			city.readFromNBT(cityNBT);
+			for(Long chunkLong : city.getChunkCoords()) {
+				cityChunks.put(chunkLong, city);
+			}
 			cityList.add(city);
 		}
 	}
@@ -79,32 +78,24 @@ public class DeepCityList extends WorldSavedData{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		int index = 0;
-		for(Entry<Long, DeepCity> entry : cities.entrySet()) {
-			NBTTagCompound entryNBT = new NBTTagCompound();
-			entryNBT.setLong("long", entry.getKey());
-			NBTTagCompound city = new NBTTagCompound();
-			entry.getValue().writeToNBT(city);
-			entryNBT.setTag("city", city);
-			compound.setTag("city" + (index++), entryNBT);
+		for(DeepCity city : cityList) {
+			NBTTagCompound cityNBT = new NBTTagCompound();
+			city.writeToNBT(cityNBT);
+			compound.setTag("city" + (index++), cityNBT);
 		}
 		return compound;
 	}
 	
 	public void addCity(int chunkX, int chunkZ, DeepCity city) {
-		cityChunks.addAll(city.getChunkCoords());
-		cities.put(ChunkPos.asLong(chunkX, chunkZ), city);
+		for(Long chunkLong : city.getChunkCoords()) {
+			cityChunks.put(chunkLong, city);
+		}
 		cityList.add(city);
 		markDirty();
 	}
 	
 	public DeepCity getCity(int chunkX, int chunkZ) {
-		for(DeepCity c : cityList) {
-			if(c.intersects(chunkX, chunkZ)) {
-				markDirty();
-				return c;
-			}
-		}
-		return null;
+		return cityChunks.get(ChunkPos.asLong(chunkX, chunkZ));
 	}
 
 	public boolean isChunkUsed(int chunkX, int chunkZ) {
@@ -112,7 +103,7 @@ public class DeepCityList extends WorldSavedData{
 	}
 
 	public boolean isChunkUsed(Long l) {
-		return cityChunks.contains(l);
+		return cityChunks.containsKey(l);
 	}
 	
 	public boolean isFarEnough(int x, int z, int minAxisDistance) {
