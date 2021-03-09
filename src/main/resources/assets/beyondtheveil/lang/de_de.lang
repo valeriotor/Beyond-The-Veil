@@ -272,30 +272,30 @@ shoggoth.hasmapalready3=Stop.
 # gui.tablet.inscription8=Masses of flesh,<BR>born from unfiltered Chaos.<BR>Among their screeches<BR>you can hear weeping.
 # gui.tablet.inscription9=Fear the Judgement<BR>of Dagon, ArchPriest<BR>of The Great Dreamer.<BR>Do not seek it.
 
-# gui.activebauble.bauble0=Necklace
-# gui.activebauble.bauble1=Ring 1
-# gui.activebauble.bauble2=Ring 2
-# gui.activebauble.bauble3=Belt
-# gui.activebauble.bauble4=Head
-# gui.activebauble.bauble5=Body
-# gui.activebauble.bauble6=Trinket
-# gui.activebauble.help=Left click to set as current active bauble (only one allowed)./Right click to toggle passive effect./Green: Active Bauble, passive on./Yellow: Active Bauble, passive off./Purple: Non Active Bauble, passive on./Red: Non Active Bauble, passive off.
-# gui.activebauble.active=Currently active.
-# gui.activebauble.inactive=Currently not active.
-# gui.activebauble.passiveon=Passive on.
-# gui.activebauble.passiveoff=Passive off.
+gui.activebauble.bauble0=Halskette
+gui.activebauble.bauble1=Ring 1
+gui.activebauble.bauble2=Ring 2
+gui.activebauble.bauble3=Gürtel
+gui.activebauble.bauble4=Kopf
+gui.activebauble.bauble5=Körper
+gui.activebauble.bauble6=Schmuckstück
+gui.activebauble.help=Linksklick um als aktives Bauble zu setzen (nur eins erlaubt)./Rechtsklick um passiven Effekt umzuschalten./Grün: Aktives Bauble, Passive an./Gelb: Aktives Bauble, Passive aus./Lila: Nicht-aktives Bauble, Passive an./Rot: Nicht-aktives Bauble, Passive aus.
+gui.activebauble.active=Aktuell aktiv.
+gui.activebauble.inactive=Aktuell nicht aktiv.
+gui.activebauble.passiveon=Passive an.
+gui.activebauble.passiveoff=Passive aus.
 
-# gui.optionwheel.power.greatdreamer.0=Summon Deep Ones
-# gui.optionwheel.power.greatdreamer.1=Transform
-# gui.optionwheel.power.greatdreamer.3=Water Walking
+gui.optionwheel.power.greatdreamer.0=Tiefe Wesen beschwören
+gui.optionwheel.power.greatdreamer.1=Transformieren
+gui.optionwheel.power.greatdreamer.3=Wasserlaufen
 
-# gui.optionwheel.waterycradle.0=Rip Spine
-# gui.optionwheel.waterycradle.1=Fill with Water
-# gui.optionwheel.waterycradle.3=Rend Heart
+gui.optionwheel.waterycradle.0=Wirbelsäule ausreißen
+gui.optionwheel.waterycradle.1=Mit Wasser füllen
+gui.optionwheel.waterycradle.3=Herz zerreißen
 
-# gui.optionwheel.surgeon.0=Rip Spine
-# gui.optionwheel.surgeon.1=Fill with Water
-# gui.optionwheel.surgeon.3=Rend Heart
+gui.optionwheel.surgeon.0=Wirbelsäule ausreißen
+gui.optionwheel.surgeon.1=Mit Wasser füllen
+gui.optionwheel.surgeon.3=Herz zerreißen
 
 # gui.dream_bottle.charges=Millibuckets: %1$s
 
