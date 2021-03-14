@@ -253,21 +253,22 @@ shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggoth Befehle zu erteilen, w
 shoggoth.hasmapalready2=Nur ein Narr würde die Aufmerksamkeit eines Shoggothen auf ich ziehen.. und ich bin kein Narr, oder?
 shoggoth.hasmapalready3=Stop.
 
-# ##################
-# #GUIS & KEYS
-# ##################
+##################
+#GUIS & TASTEN
+##################
 
-# gui.dialogue.talk=Talk
-# gui.dialogue.trade=Trade
-# gui.sleep_chamber.wake=Wake Up
+gui.dialogue.talk=Reden
+gui.dialogue.trade=Handeln
+gui.sleep_chamber.wake=Aufwachen
 
-# gui.tablet.inscription0=There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.
-# gui.tablet.inscription1=Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?
-# gui.tablet.inscription2=Infinite Yous throughout infinite moments,<BR>among infinite timelines<BR>within infinite Infinities.<BR>You are nothing. Do not forget that.
-# gui.tablet.inscription3=The deepest Oceans touch the Void.<BR>Water is unsafe, it is Chaos.<BR>Yet from it comes Life.
-# gui.tablet.inscription4=Deaths upon Deaths upon Deaths.<BR>But you are not truly immortal.<BR>You are nothing to Eternity.
-# gui.tablet.inscription5=The Great Dreamer<BR>filters the Veil<BR>into reality.<BR>Dreams go through Him.
-# gui.tablet.inscription6=He is the gnawing sensation<BR>at the back of your mind,<BR>driving you towards unholy acts.<BR>You can't escape.
+gui.tablet.inscription0=Es gibt nichts in der Leere.<BR>Und doch kommt alles von Dort.<BR>Dieses schwarze Portal zur Unendlichkeit.
+gui.tablet.inscription1=Wissen soll gefürchtet werden,<BR>nicht gesucht.<BR>Es mag Macht mit sich bringen,<BR>aber zu welchem Preis?
+gui.tablet.inscription2=Unendliche viele von Dir, in unendlich vielen Augenblicken,<BR>unter unendlich vielen Zeitlinien<BR>in unendlich vielen Unendlichkeiten.<BR>Du bist nichts. Vergiss das nicht.
+gui.tablet.inscription3=Die Tiefsten Ozeane berühren die Leere.<BR>Wasser ist nicht sicher, es ist Chaos.<BR>Und doch entspringt daraus Leben.
+#TODO: refine last sentence of gui.tablet.inscription4
+gui.tablet.inscription4=Tode über Tode über Tode.<BR>Aber du bist nicht wirklich unsterblich.<BR>Du bist nichts für die Ewigkeit.
+gui.tablet.inscription5=Der Große Träumer<BR>filtert den Schleier<BR>in die Realität.<BR>Träume wandern durch Ihn hindurch.
+gui.tablet.inscription6=Er ist das nagende Gefühl<BR>in deinem Hinterkopf,<BR>dass dich zu heillosen Handlungen treibt.<BR>Du kannst nicht entkommen.
 # gui.tablet.inscription7=City builders, aeons old.<BR>Even the greatest civilization<BR>is no match to Time.
 # gui.tablet.inscription8=Masses of flesh,<BR>born from unfiltered Chaos.<BR>Among their screeches<BR>you can hear weeping.
 # gui.tablet.inscription9=Fear the Judgement<BR>of Dagon, ArchPriest<BR>of The Great Dreamer.<BR>Do not seek it.
