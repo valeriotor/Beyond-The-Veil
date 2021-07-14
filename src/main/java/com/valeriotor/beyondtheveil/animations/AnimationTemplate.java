@@ -24,8 +24,23 @@ public class AnimationTemplate {
 	public Class<? extends EntityLivingBase> entityType;
 	public ModelAnimated modelType;
 	public List<PartMover> transforms = new ArrayList<>();
-	
-	public AnimationTemplate(String name) {
+
+	public static AnimationTemplate createTemplate(String name, List<AnimationTemplate> anims) {
+		AnimationTemplate template = new AnimationTemplate(name);
+		anims.add(template);
+		return template;
+	}
+
+	public static AnimationTemplate createDummyTemplate(List<AnimationTemplate> anims) {
+		AnimationTemplate template = new AnimationTemplate();
+		anims.add(template);
+		return template;
+	}
+
+	private AnimationTemplate() {
+	}
+
+	private AnimationTemplate(String name) {
 		this.name = name;
 		ResourceLocation location = new ResourceLocation(References.MODID, String.format("animations/%s.btvanim", name));
 

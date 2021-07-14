@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.proxy;
 
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
+import com.valeriotor.beyondtheveil.entities.bosses.ArenaMusic;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 import com.valeriotor.beyondtheveil.entities.render.RegisterRenders;
 import com.valeriotor.beyondtheveil.events.ClientEvents;
@@ -114,7 +116,7 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void loadCustomResources() {
-    	AnimationRegistry.loadAnimations();
+    	AnimationRegistry.loadAnimations(true);
     	DialogueRequirement.registerRequirements();
     }
     
@@ -122,8 +124,9 @@ public class ClientProxy extends CommonProxy {
     public EntityPlayer getPlayer() {
     	return Minecraft.getMinecraft().player;
     }
-    
-    
-	
-	
+
+    @Override
+    public void playArenaSound(EntityArenaBoss boss) {
+        Minecraft.getMinecraft().getSoundHandler().playSound(new ArenaMusic(boss));
+    }
 }

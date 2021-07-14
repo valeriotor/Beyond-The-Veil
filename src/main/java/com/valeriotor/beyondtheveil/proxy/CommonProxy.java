@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.proxy;
 
+import com.valeriotor.beyondtheveil.animations.Animation;
+import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.events.ClientEvents;
 import com.valeriotor.beyondtheveil.events.RenderEvents;
 import com.valeriotor.beyondtheveil.events.ResearchEvents;
@@ -36,6 +39,7 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent e) {
+	    loadCustomResources();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
@@ -55,13 +59,11 @@ public class CommonProxy {
     	BTVEntityRegistry.register();
     }
     
-    public void openGui(String id, Object... args) {
-    	
-    }
+    public void openGui(String id, Object... args) {}
     
-    public void closeGui(EntityPlayer p) {
-    	
-    }
+    public void closeGui(EntityPlayer p) {}
+
+    public void playArenaSound(EntityArenaBoss boss) {}
     
     public String localizeMessage(String a) {
     	return a;
@@ -74,7 +76,9 @@ public class CommonProxy {
     		event.getRegistry().register(BTVSounds.getSoundById(i));
     }
     
-    public void loadCustomResources() {}
+    public void loadCustomResources() {
+        AnimationRegistry.loadAnimations(false);
+    }
     
     public EntityPlayer getPlayer() {return null;}
     
