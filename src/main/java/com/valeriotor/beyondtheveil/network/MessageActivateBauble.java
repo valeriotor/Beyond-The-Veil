@@ -10,12 +10,15 @@ import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.items.baubles.IActiveBauble;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.network.generic.GenericMessageKey;
+import com.valeriotor.beyondtheveil.network.generic.MessageGenericToClient;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
 
 import baubles.api.BaublesApi;
 import baubles.api.inv.BaublesInventoryWrapper;
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,11 +53,21 @@ public class MessageActivateBauble implements IMessage{
 				if(data.getString(PlayerDataLib.TRANSFORMED)) {
 					PlayerTimer pt = ServerTickEvents.getPlayerTimer("roar", p);
 					if(pt == null) {
+						boolean sink = DOSkill.ROARSINK.isUnlocked(data);
 						p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 						 .forEach(e -> {
 						 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
-							 if(!(e instanceof EntityPlayer) || BaublesApi.isBaubleEquipped((EntityPlayer)e, ItemRegistry.bone_tiara) == -1)
-								 e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
+							 if(!(e instanceof EntityPlayer) || BaublesApi.isBaubleEquipped((EntityPlayer)e, ItemRegistry.bone_tiara) == -1) {
+							 	e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 10));
+								 if(sink && e.isInWater()) {
+								 	if(e instanceof EntityPlayerMP) {
+								 		BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(GenericMessageKey.ROAR_PLAYER_SINK), (EntityPlayerMP) e);
+									} else {
+								 		e.motionY -= 4;
+									}
+								 	e.setAir(0);
+								 }
+							 }
 							 e.addPotionEffect(new PotionEffect(PotionRegistry.terror, 120, 0));
 						 }
 						 if(e instanceof EntityPlayerMP) {

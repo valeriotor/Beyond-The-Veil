@@ -1,5 +1,9 @@
 package com.valeriotor.beyondtheveil.lib;
 
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import net.minecraft.entity.player.EntityPlayer;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +61,7 @@ public class PlayerDataLib {
 	public static final String IDOLFOLLY = "idolfolly";
 	public static final String DEATHTELEPORT = "deathtp";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
+	public static final String DEEP_ONE_STUCK_CLIMBING = "dostuckclimbing";
 	
 	// Strings (Temporary)
 	public static final String DREAMFOCUS = "dreamfocus";
@@ -89,5 +94,9 @@ public class PlayerDataLib {
 		tempStrings.add("lhbaptism");
 		allowedStrings = Collections.unmodifiableSet(tempStrings);
 	}
-	
+
+	public static IPlayerData getCap(EntityPlayer p) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+	}
+
 }

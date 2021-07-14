@@ -5,21 +5,25 @@ import java.util.Map;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.animations.Animation;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dweller.DwellerDialogue;
 import com.valeriotor.beyondtheveil.gui.GuiDialogueDweller;
-import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSawCleaverToServer;
+import com.valeriotor.beyondtheveil.network.generic.GenericMessageKey;
+import com.valeriotor.beyondtheveil.network.generic.MessageGenericToServer;
 import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -47,6 +51,7 @@ public class ClientEvents {
 	private int animationCounter = 0;
 	private int genericCounter = 0;
 	private int focusCounter = 0;
+	private int climbCounter = 0;
 	
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
@@ -54,6 +59,7 @@ public class ClientEvents {
 			EntityPlayerSP p = Minecraft.getMinecraft().player;
 			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
 				sawCleaverDodge(p);
+				deepOneClimb(p);
 				playerAnimationUpdate();
 				updateAnimationCounter();
 				if(focusCounter > 0) {
@@ -68,8 +74,11 @@ public class ClientEvents {
 				
 			if(soundCounter > 0) {
 				soundCounter--;
-			}	
-			
+			}
+			if(climbCounter > 0) {
+				climbCounter--;
+			}
+
 			updateRevelationRing();
 			updateWolfMedallion();
 			if(cameraRotator != null)
@@ -93,6 +102,26 @@ public class ClientEvents {
 	public void sawCleaverDodge(EntityPlayer p) {
 		if(ClientProxy.handler.dodge.isPressed()) 
 			BTVPacketHandler.INSTANCE.sendToServer(new MessageSawCleaverToServer());
+	}
+
+	public void deepOneClimb(EntityPlayer p) {
+
+		//if() return;
+		//if(p.world.getBlockState(ppos.down()).getBlock() != Blocks.AIR) return;
+		if(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()
+		&& climbCounter <= 0
+		&& p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+			BlockPos ppos = new BlockPos(p.posX, p.posY, p.posZ);
+			IBlockState state = p.world.getBlockState(ppos.down());
+			if(!state.isSideSolid(p.world, ppos.down(), EnumFacing.UP)
+			&& state.getBlock() != Blocks.WATER) {
+				BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.DEEP_ONE_CLIMB_JUMP));
+			}
+		}
+	}
+
+	public void deepOneClimbResetTimer() {
+		climbCounter = 9;
 	}
 	
 	public void playerAnimationUpdate() {
