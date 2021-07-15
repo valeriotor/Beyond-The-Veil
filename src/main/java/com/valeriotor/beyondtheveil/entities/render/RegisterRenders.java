@@ -7,13 +7,7 @@ import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityJelly;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
-import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
+import com.valeriotor.beyondtheveil.entities.ictya.*;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -47,6 +41,7 @@ public class RegisterRenders {
 		register(EntityJelly.class, RenderJelly::new);
 		register(EntityDeepOneBrute.class, RenderDeepOneBrute::new);
 		register(EntityDeepOneMyrmidon.class, RenderDeepOneMyrmidon::new);
+		register(EntityCephalopodian.class, RenderCephalopodian::new);
 		
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));

@@ -23,7 +23,8 @@ public class ModelRegistry {
 	public static ModelJelly jelly;
 	public static ModelDeepOneBrute deepOneBrute;
 	public static ModelDeepOneMyrmidon deepOneMyrmidon;
-	
+	public static ModelCephalopodian cephalopodian;
+
 	public static void registerModels() {
 		canoe = new ModelCanoe();
 		crawling_villager = new ModelCrawlingVillager();
@@ -46,6 +47,7 @@ public class ModelRegistry {
 		jelly = new ModelJelly();
 		deepOneBrute = new ModelDeepOneBrute();
 		deepOneMyrmidon = new ModelDeepOneMyrmidon();
+		cephalopodian = new ModelCephalopodian();
 	}
 	
 }

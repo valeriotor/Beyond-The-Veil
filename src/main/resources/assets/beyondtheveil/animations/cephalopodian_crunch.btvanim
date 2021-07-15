@@ -1,0 +1,67 @@
+length: 25
+model: cephalopodian
+keys
+	LPad: 2
+	LUPad: 3
+	LUSpike: 4
+	LLPad: 5
+	LLSpike: 6
+	RPad: 11
+	RLPad: 12
+	RLSpike: 13
+	RUPad: 14
+	RUSpike: 15
+end
+start: 0: 7
+	LUSpike: rotx: 3.14
+	LUSpike: rotz: 3.14
+	LLSpike: rotx: 3.14
+	LLSpike: rotz: 3.14
+	RUSpike: rotx: 3.14
+	RUSpike: rotz: 3.14
+	RLSpike: rotx: 3.14
+	RLSpike: rotz: 3.14
+	LUPad: rotx: 0.45
+	LUPad: roty: 0.45
+	LLPad: rotx: -0.45
+	LLPad: roty: 0.45
+	RUPad: rotx: -0.45
+	RUPad: roty: 0.45
+	RLPad: rotx: 0.45
+	RLPad: roty: 0.45
+end
+start: 8: 11
+	LUPad: rotx: 0.45: quadratic
+	LUPad: roty: 0.45: quadratic
+	LLPad: rotx: -0.45: quadratic
+	LLPad: roty: 0.45: quadratic
+	RUPad: rotx: -0.45: quadratic
+	RUPad: roty: 0.45: quadratic
+	RLPad: rotx: 0.45: quadratic
+	RLPad: roty: 0.45: quadratic
+	LPad: roty: 1.8: quadratic
+	RPad: roty: 1.8: quadratic
+end
+start: 13: 24
+	LUSpike: rotx: -3.14
+	LUSpike: rotz: -3.14
+	LLSpike: rotx: -3.14
+	LLSpike: rotz: -3.14
+	RUSpike: rotx: -3.14
+	RUSpike: rotz: -3.14
+	RLSpike: rotx: -3.14
+	RLSpike: rotz: -3.14
+	LUPad: rotx: -0.9
+	LUPad: roty: -0.9
+	LLPad: rotx: 0.9
+	LLPad: roty: -0.9
+	RUPad: rotx: 0.9
+	RUPad: roty: -0.9
+	RLPad: rotx: -0.9
+	RLPad: roty: -0.9
+	LPad: roty: -1.8
+	RPad: roty: -1.8
+end
+
+
+

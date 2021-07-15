@@ -7,14 +7,7 @@ import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityJelly;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
-import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
+import com.valeriotor.beyondtheveil.entities.ictya.*;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
@@ -55,6 +48,7 @@ public class BTVEntityRegistry {
 		register("jelly", EntityJelly.class, count++ , 128);
 		register("deep_one_brute", EntityDeepOneBrute.class, count++ , 128);
 		register("deep_one_myrmidon", EntityDeepOneMyrmidon.class, count++ , 128);
+		register("cephalopodian", EntityCephalopodian.class, count++, 128);
 		
 		registerSpawnPlacementTypes();
 		
@@ -75,15 +69,14 @@ public class BTVEntityRegistry {
 		EntitySpawnPlacementRegistry.setPlacementType(EntitySarfin.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityMuray.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityManOWar.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityCephalopodian.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.ON_GROUND);
 	}
 	
 	
 	/** Used for terror and possibly other effects.
-	 * 
-	 * @param e
-	 * @return
+	 *
 	 */
 	public static boolean isScaryEntity(EntityLivingBase e) {
 		if(e instanceof EntityPlayer && ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return true;
@@ -91,9 +84,7 @@ public class BTVEntityRegistry {
 	}
 	
 	/** Used for terror and possibly other effects.
-	 * 
-	 * @param e
-	 * @return
+	 *
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
 		return  !e.isNonBoss() ||

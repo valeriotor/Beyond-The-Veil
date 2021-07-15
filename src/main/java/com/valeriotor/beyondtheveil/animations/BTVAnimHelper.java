@@ -86,6 +86,7 @@ public class BTVAnimHelper {
 			case "muray" : return ModelRegistry.muray;
 			case "deep_one_brute" : return ModelRegistry.deepOneBrute;
 			case "deep_one_myrmidon" : return ModelRegistry.deepOneMyrmidon;
+			case "cephalopodian" : return ModelRegistry.cephalopodian;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;
