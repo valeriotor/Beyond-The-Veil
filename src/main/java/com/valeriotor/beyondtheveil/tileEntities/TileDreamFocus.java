@@ -68,7 +68,6 @@ public class TileDreamFocus extends TileEntity implements ITickable{
 	
 	public void toggleShowPath() {
 		this.showPath = !this.showPath;
-		System.out.println(this.showPath);
 		markDirty();
 		this.sendUpdates(world);
 	}

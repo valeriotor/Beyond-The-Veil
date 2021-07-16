@@ -227,7 +227,6 @@ public class PlayerEvents {
 			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 				ItemStack stack = event.getItem();
 				ItemFishFood food = (ItemFishFood)stack.getItem();
-				System.out.println(food.getHealAmount(stack));
 				p.getFoodStats().addStats(-food.getHealAmount(stack), -food.getSaturationModifier(stack));
 			}
 		}

@@ -78,7 +78,6 @@ public class AnimationRegistry {
 	public static int getIdFromAnimation(AnimationTemplate anim) {
 		for(int i = 0; i < anims.size(); i++) {
 			if(anims.get(i) == anim) {
-				System.out.println(i);
 				return i;
 			}
 		}
