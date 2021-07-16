@@ -8,7 +8,6 @@ import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -36,7 +35,7 @@ public class EntityCephalopodian extends EntityIctya implements IAnimatedAttacke
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(320.0D);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15D);
         getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(1D);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
@@ -46,22 +45,22 @@ public class EntityCephalopodian extends EntityIctya implements IAnimatedAttacke
 
     @Override
     public IctyaSize getSize() {
-        return IctyaSize.MEDIUM;
+        return IctyaSize.LARGE;
     }
 
     @Override
     public double getFoodValue() {
-        return 250;
+        return 450;
     }
 
     @Override
     public double getMaxFood() {
-        return 400;
+        return 500;
     }
 
     @Override
     public double getFoodPer32Ticks() {
-        return 3.2;
+        return 5.4;
     }
 
     @Override
@@ -90,11 +89,14 @@ public class EntityCephalopodian extends EntityIctya implements IAnimatedAttacke
 
     static {
         AttackList attacks = new AttackList();
-        AttackArea crunchArea = AttackArea.getShiftedConeAttack(5.5, 3, 2.5);
+        AttackArea crunchArea = AttackArea.getConeAttack(6.5, 40, 40);
+        AttackArea tentacleArea = AttackArea.getCircleAttack(5.5);
 
-        TelegraphedAttackTemplate crunchAttack = new TelegraphedAttackTemplate(AnimationRegistry.cephalopodian_crunch, 25, 10, 20, crunchArea, 9);
+        TelegraphedAttackTemplate crunchAttack = new TelegraphedAttackTemplate(AnimationRegistry.cephalopodian_crunch, 25, 10, 30, crunchArea, 9, 2);
+        TelegraphedAttackTemplate tentacleAttack = new TelegraphedAttackTemplate(AnimationRegistry.cephalopodian_tentacles, 13, 6, 1, tentacleArea, 3.5, 5);
 
         attacks.addAttack(crunchAttack, 5);
+        attacks.addAttack(tentacleAttack, 15);
 
         ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
 

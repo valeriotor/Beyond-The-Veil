@@ -34,38 +34,38 @@ public class ModelCephalopodian extends ModelAnimated {
 	private final ModelRenderer rightlowerlid;			//18
 	private final ModelRenderer rightiris;				//19
 	private final ModelRenderer node;					//20
-	private final ModelRenderer tent1;					//
-	private final ModelRenderer tent11;					//
-	private final ModelRenderer tmouth1;				//
-	private final ModelRenderer tm1upper;				//
-	private final ModelRenderer tm1lower;				//
-	private final ModelRenderer tent3;					//
-	private final ModelRenderer tent31;					//
-	private final ModelRenderer tmouth3;				//
-	private final ModelRenderer tm1upper3;				//
-	private final ModelRenderer tm1lower3;				//
-	private final ModelRenderer tent4;					//
-	private final ModelRenderer tent41;					//
-	private final ModelRenderer tmouth4;				//
-	private final ModelRenderer tm1upper4;				//
-	private final ModelRenderer tm1lower4;				//
-	private final ModelRenderer tent2;					//
-	private final ModelRenderer tent21;					//
-	private final ModelRenderer tmouth2;				//
-	private final ModelRenderer tm1upper2;				//
-	private final ModelRenderer tm1lower2;				//
-	private final ModelRenderer tent5;					//
-	private final ModelRenderer tent51;					//
-	private final ModelRenderer tent52;					//
-	private final ModelRenderer tent6;					//
-	private final ModelRenderer tent61;					//
-	private final ModelRenderer ten62;					//
-	private final ModelRenderer tent7;					//
-	private final ModelRenderer tent71;					//
-	private final ModelRenderer tent72;					//
-	private final ModelRenderer tent8;					//
-	private final ModelRenderer tent81;					//
-	private final ModelRenderer tent82;					//
+	private final ModelRenderer tent1;					//21
+	private final ModelRenderer tent11;					//22
+	private final ModelRenderer tmouth1;				//23
+	private final ModelRenderer tm1upper;				//24
+	private final ModelRenderer tm1lower;				//25
+	private final ModelRenderer tent3;					//26
+	private final ModelRenderer tent31;					//27
+	private final ModelRenderer tmouth3;				//28
+	private final ModelRenderer tm1upper3;				//29
+	private final ModelRenderer tm1lower3;				//30
+	private final ModelRenderer tent4;					//31
+	private final ModelRenderer tent41;					//32
+	private final ModelRenderer tmouth4;				//33
+	private final ModelRenderer tm1upper4;				//34
+	private final ModelRenderer tm1lower4;				//35
+	private final ModelRenderer tent2;					//36
+	private final ModelRenderer tent21;					//37
+	private final ModelRenderer tmouth2;				//38
+	private final ModelRenderer tm1upper2;				//39
+	private final ModelRenderer tm1lower2;				//40
+	private final ModelRenderer tent5;					//41
+	private final ModelRenderer tent51;					//42
+	private final ModelRenderer tent52;					//43
+	private final ModelRenderer tent6;					//44
+	private final ModelRenderer tent61;					//45
+	private final ModelRenderer ten62;					//46
+	private final ModelRenderer tent7;					//47
+	private final ModelRenderer tent71;					//48
+	private final ModelRenderer tent72;					//49
+	private final ModelRenderer tent8;					//50
+	private final ModelRenderer tent81;					//51
+	private final ModelRenderer tent82;					//52
 
 	public ModelCephalopodian() {
 		textureWidth = 128;
@@ -416,11 +416,11 @@ public class ModelCephalopodian extends ModelAnimated {
 		setRotateAngle(tent11, -0.3491F, 0.3491F, 0.0F, addToDefault);
 		setRotateAngle(tm1upper, 0.5236F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(tm1lower, -0.3491F, 0.0F, 0.0F, addToDefault);
-		setRotateAngle(tent3, 0.3491F, -0.3491F, 1.5708F, addToDefault);
+		setRotateAngle(tent3, 0.3491F, -0.3491F, 1.396F, addToDefault);
 		setRotateAngle(tent31, -0.3491F, 0.3491F, 0.0F, addToDefault);
 		setRotateAngle(tm1upper3, 0.5236F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(tm1lower3, -0.3491F, 0.0F, 0.0F, addToDefault);
-		setRotateAngle(tent4, 0.3491F, -0.3491F, -1.5708F, addToDefault);
+		setRotateAngle(tent4, 0.3491F, -0.3491F, -1.745F, addToDefault);
 		setRotateAngle(tent41, -0.3491F, 0.3491F, 0.0F, addToDefault);
 		setRotateAngle(tm1upper4, 0.5236F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(tm1lower4, -0.3491F, 0.0F, 0.0F, addToDefault);
@@ -450,19 +450,29 @@ public class ModelCephalopodian extends ModelAnimated {
 
 		float tentacleSwing = (MathHelper.cos(limbSwing*0.4F) + 0.667F)*limbSwingAmount;
 
-		tent1.rotateAngleX = 0.3491F + tentacleSwing*0.3F;
-		tent1.rotateAngleY = -0.3491F - tentacleSwing*0.3F;
-		tent2.rotateAngleX = 0.3491F + tentacleSwing*0.3F;
-		tent2.rotateAngleY = -0.3491F - tentacleSwing*0.3F;
-		tent3.rotateAngleX = 0.3491F + tentacleSwing*0.3F;
-		tent3.rotateAngleY = -0.3491F - tentacleSwing*0.3F;
-		tent4.rotateAngleX = 0.3491F + tentacleSwing*0.3F;
-		tent4.rotateAngleY = -0.3491F - tentacleSwing*0.3F;
+		tent1.rotateAngleX = 0.3491F + tentacleSwing*0.5F;
+		tent1.rotateAngleY = -0.3491F - tentacleSwing*0.5F;
+		tent2.rotateAngleX = 0.3491F + tentacleSwing*0.5F;
+		tent2.rotateAngleY = -0.3491F - tentacleSwing*0.5F;
+		tent3.rotateAngleX = 0.3491F + tentacleSwing*0.5F;
+		tent3.rotateAngleY = -0.3491F - tentacleSwing*0.5F;
+		tent4.rotateAngleX = 0.3491F + tentacleSwing*0.5F;
+		tent4.rotateAngleY = -0.3491F - tentacleSwing*0.5F;
 
-		tent5.rotateAngleX = 0.2618F + tentacleSwing*0.2F;
-		tent6.rotateAngleX = 0.2618F + tentacleSwing*0.2F;
-		tent7.rotateAngleX = 0.2618F + tentacleSwing*0.2F;
-		tent8.rotateAngleX = 0.2618F + tentacleSwing*0.2F;
+		tent5.rotateAngleX = 0.2618F + tentacleSwing*0.1F;
+		tent6.rotateAngleX = 0.2618F + tentacleSwing*0.1F;
+		tent7.rotateAngleX = 0.2618F + tentacleSwing*0.1F;
+		tent8.rotateAngleX = 0.2618F + tentacleSwing*0.1F;
+
+		tentacleSwing += 0.333*limbSwingAmount;
+		tent11.rotateAngleY = 0.3491F + 2.5F*tentacleSwing*0.3491F/2;
+		tent11.rotateAngleX = -0.3491F - 0.85F*tentacleSwing*0.3491F/2;
+		tent21.rotateAngleY = 0.3491F + 2.5F*tentacleSwing*0.3491F/2;
+		tent21.rotateAngleX = -0.3491F - 0.85F*tentacleSwing*0.3491F/2;
+		tent31.rotateAngleY = 0.3491F + 2.5F*tentacleSwing*0.3491F/2;
+		tent31.rotateAngleX = -0.3491F - 0.85F*tentacleSwing*0.3491F/2;
+		tent41.rotateAngleY = 0.3491F + 2.5F*tentacleSwing*0.3491F/2;
+		tent41.rotateAngleX = -0.3491F - 0.85F*tentacleSwing*0.3491F/2;
 
 
 		float offset = MathHelper.sin((entitylivingbaseIn.ticksExisted%40 + partialTickTime)/ 6.366F)/30;
@@ -472,12 +482,16 @@ public class ModelCephalopodian extends ModelAnimated {
 		tent4.rotateAngleX -= offset;
 		tent5.rotateAngleX += offset;
 		tent7.rotateAngleX -= offset;
-		tent11.rotateAngleY += offset/3;
-		tent21.rotateAngleX -= offset/3;
-		tent31.rotateAngleX += offset/3;
-		tent41.rotateAngleY -= offset/3;
-		tent61.rotateAngleX += offset/3;
-		tent81.rotateAngleX -= offset/3;
+		tent11.rotateAngleY -= offset/2;
+		tent21.rotateAngleX += offset/2;
+		tent31.rotateAngleX -= offset/2;
+		tent41.rotateAngleY += offset/2;
+		tent61.rotateAngleX -= offset/2;
+		tent81.rotateAngleX += offset/2;
+		leftupperpad.rotateAngleY += offset/2;
+		rightupperpad.rotateAngleX -= offset/2;
+		leftlowerpad.rotateAngleX += offset/2;
+		rightlowerpad.rotateAngleY -= offset/2;
 		offset = MathHelper.sin((entitylivingbaseIn.ticksExisted%50 + partialTickTime) / 7.95F)/20;
 		tent1.rotateAngleY += offset;
 		tent2.rotateAngleX -= offset;
@@ -485,46 +499,21 @@ public class ModelCephalopodian extends ModelAnimated {
 		tent4.rotateAngleY -= offset;
 		tent6.rotateAngleX += offset;
 		tent8.rotateAngleX -= offset;
-		tent11.rotateAngleX += offset/3;
-		tent21.rotateAngleY -= offset/3;
-		tent31.rotateAngleY += offset/3;
-		tent41.rotateAngleX -= offset/3;
-		tent51.rotateAngleX += offset/3;
-		tent71.rotateAngleX -= offset/3;
+		tent11.rotateAngleX -= offset/2;
+		tent21.rotateAngleY += offset/2;
+		tent31.rotateAngleY -= offset/2;
+		tent41.rotateAngleX += offset/2;
+		tent51.rotateAngleX -= offset/2;
+		tent71.rotateAngleX += offset/2;
+		leftupperpad.rotateAngleX += offset/2;
+		rightupperpad.rotateAngleY -= offset/2;
+		leftlowerpad.rotateAngleY += offset/2;
+		rightlowerpad.rotateAngleX -= offset/2;
 
 		Animation a = e.getAttackAnimation();
 		if(a != null) {
 			a.applyTransformations(bodyParts, partialTickTime);
 		}
-//		leftlowerlid.rotateAngleX = 0.8F;
-//		leftlowerlid.offsetY = 0.3F;
-//		leftupperlid.rotateAngleX = -0.8F;
-//		leftupperlid.offsetY = -0.3F;
-//		leftiris.offsetZ = -0.2F;
-//		leftlowerlid.rotateAngleX = 0;
-//		leftlowerlid.offsetY = 0;
-//		leftupperlid.rotateAngleX = 0;
-//		leftupperlid.offsetY = 0;
-//		leftiris.offsetZ = 0;
-
-//		leftupperspike.rotateAngleX = 3.14F;
-//		leftupperspike.rotateAngleZ = 3.14F;
-//		leftupperpad.rotateAngleX = -0.2618F + 0.9F;
-//		leftupperpad.rotateAngleY = -0.2618F + 0.9F;
-//		leftlowerspike.rotateAngleX = 3.14F;
-//		leftlowerspike.rotateAngleZ = 3.14F;
-//		leftlowerpad.rotateAngleX = 0.2618F - 0.9F;
-//		leftlowerpad.rotateAngleY = -0.2618F + 0.9F;
-//		leftpad.rotateAngleY += 1.8F;
-//		rightupperspike.rotateAngleX = 3.14F;
-//		rightupperspike.rotateAngleZ = 3.14F;
-//		rightupperpad.rotateAngleX = 0.2618F - 0.9F;
-//		rightupperpad.rotateAngleY = -0.2618F + 0.9F;
-//		rightlowerspike.rotateAngleX = 3.14F;
-//		rightlowerspike.rotateAngleZ = 3.14F;
-//		rightlowerpad.rotateAngleX = -0.2618F + 0.9F;
-//		rightlowerpad.rotateAngleY = -0.2618F + 0.9F;
-//		rightpad.rotateAngleY += 1.8F;
 
 	}
 

@@ -37,6 +37,7 @@ public class AnimationRegistry {
 	public static AnimationTemplate deep_one_myrmidon_sword_impale_followup_sword_back_swing;
 	public static AnimationTemplate deep_one_player_climb;
 	public static AnimationTemplate cephalopodian_crunch;
+	public static AnimationTemplate cephalopodian_tentacles;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations(boolean client) {
@@ -73,6 +74,7 @@ public class AnimationRegistry {
 		deep_one_myrmidon_sword_impale_followup_sword_back_swing = createAnimationTemplate("deep_one_myrmidon/sword_impale_followup_sword_back_swing", client);
 		deep_one_player_climb = createAnimationTemplate("deep_one_player_climb", client);
 		cephalopodian_crunch = createAnimationTemplate("cephalopodian_crunch", client);
+		cephalopodian_tentacles = createAnimationTemplate("cephalopodian_tentacles", client);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {

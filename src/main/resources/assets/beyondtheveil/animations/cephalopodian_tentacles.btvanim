@@ -1,0 +1,65 @@
+length: 12
+model: cephalopodian
+keys
+	T1: 21
+	T11: 22
+	T2: 36
+	T21: 37
+	T3: 26
+	T31: 27
+    T4: 31
+    T41: 32
+end
+start: 0: 3
+    T11: rotx: 3.491
+    T21: rotx: 3.491
+    T31: rotx: 3.491
+    T41: rotx: 3.491
+    T1: rotx: -0.2
+    T2: rotx: -0.2
+    T3: rotx: -0.2
+    T4: rotx: -0.2
+    T1: roty: +0.2
+    T2: roty: +0.2
+    T3: roty: +0.2
+    T4: roty: +0.2
+end
+start: 5: 7
+    T11: roty: -0.8
+    T21: roty: -0.8
+    T31: roty: -0.8
+    T41: roty: -0.8
+    T11: rotx: -3.419
+    T21: rotx: -3.419
+    T31: rotx: -3.419
+    T41: rotx: -3.419
+    T1: rotx: 0.6
+    T2: rotx: 0.6
+    T3: rotx: 0.6
+    T4: rotx: 0.6
+    T1: roty: -0.6
+    T2: roty: -0.6
+    T3: roty: -0.6
+    T4: roty: -0.6
+end
+start: 8: 12
+    T11: roty: 0.8
+    T21: roty: 0.8
+    T31: roty: 0.8
+    T41: roty: 0.8
+    T11: rotx: -0.3491
+    T21: rotx: -0.3491
+    T31: rotx: -0.3491
+    T41: rotx: -0.3491
+    T1: rotx: -0.4
+    T2: rotx: -0.4
+    T3: rotx: -0.4
+    T4: rotx: -0.4
+    T1: roty: 0.4
+    T2: roty: 0.4
+    T3: roty: 0.4
+    T4: roty: 0.4
+end
+
+
+
