@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.events;
 
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
+import com.valeriotor.beyondtheveil.bossfights.ArenaFightHandler;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -40,6 +41,8 @@ public class DOSkillEvents {
     public static void jumpEvent(EntityPlayer p) {
         IPlayerData data = PlayerDataLib.getCap(p);
         if(!data.getString(PlayerDataLib.TRANSFORMED)) return;
+        if(!DOSkill.CLIMBING.isActive(p)) return;
+        if(ArenaFightHandler.isPlayerInFight(p.getPersistentID())) return;
         BlockPos ppos = p.getPosition();
         //if(p.world.getBlockState(ppos.down()).getBlock() != Blocks.AIR) return;
         //if(p.world.getBlockState(ppos.down().down()).getBlock() != Blocks.AIR) return;
