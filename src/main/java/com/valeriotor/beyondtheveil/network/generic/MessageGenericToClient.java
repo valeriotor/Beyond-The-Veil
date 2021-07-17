@@ -46,6 +46,7 @@ public class MessageGenericToClient implements IMessage{
                     case DEEP_ONE_CLIMB_JUMP:
                         Minecraft.getMinecraft().player.motionY = 0.85;
                         BeyondTheVeil.proxy.cEvents.deepOneClimbResetTimer();
+                        break;
                     case ROAR_PLAYER_SINK:
                         Minecraft.getMinecraft().player.motionY = -4;
                         break;

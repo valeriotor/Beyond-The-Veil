@@ -108,8 +108,11 @@ public class RenderTransformedPlayer extends RenderLivingBase<AbstractClientPlay
         GlStateManager.scale(1.5, 1.5, 1.5);
         modelplayer.swingProgress = 0.0F;
         modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
-        modelplayer.RightLowerArm.rotateAngleX = 0.0F;
-        modelplayer.RightLowerArm.render(0.0625F);
+//        modelplayer.RightLowerArm.rotateAngleX = 0.0F;
+        modelplayer.RightUpperArm.rotateAngleX = 0.0F;
+//        modelplayer.RightLowerArm.render(0.0625F);
+//        modelplayer.RightUpperArm.rotateAngleX = 0.4F;
+        modelplayer.RightUpperArm.render(0.0625F);
         GlStateManager.disableBlend();
     }
 

@@ -17,7 +17,6 @@ import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.worship.CrawlerWorship;
 
 import baubles.api.BaublesApi;
-import baubles.api.inv.BaublesInventoryWrapper;
 import com.valeriotor.beyondtheveil.worship.DOSkill;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,6 +26,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -53,7 +53,7 @@ public class MessageActivateBauble implements IMessage{
 				if(data.getString(PlayerDataLib.TRANSFORMED)) {
 					PlayerTimer pt = ServerTickEvents.getPlayerTimer("roar", p);
 					if(pt == null) {
-						boolean sink = DOSkill.ROARSINK.isUnlocked(data);
+						boolean sink = DOSkill.ROARSINK.isActive(data);
 						p.world.getEntities(EntityLivingBase.class, e -> e.getDistance(p) < 25)
 						 .forEach(e -> {
 						 if(e != p && !BTVEntityRegistry.isFearlessEntity(e)) {
@@ -74,7 +74,7 @@ public class MessageActivateBauble implements IMessage{
 							 BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.deepOneRoar), e.getPosition().toLong()), (EntityPlayerMP)e);
 						 }
 						 });
-						BTVPacketHandler.INSTANCE.sendToAll(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_roar)));
+						((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_roar))));
 						ServerTickEvents.addPlayerTimer(new PlayerTimer(p, null, 400).setName("roar"));
 					} else {
 						p.sendMessage(new TextComponentTranslation("roar.cooldown", pt.getTimer()/20));

@@ -1,18 +1,18 @@
 package com.valeriotor.beyondtheveil.worship;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
-import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import net.minecraft.entity.player.EntityPlayer;
 
 import static com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider.PLAYERDATA;
 
 public enum DOSkill {
     QUICKSTEP(1, "doquickstep", false),
+    UPPERCUT(1, "douppercut", true),
     BAUBLES(2, "dobaubles", false),
     ROARSINK(2, "doroarsink", true),
     CLIMBING(2, "doclimbing", false),
-    INVISIBILITY(3, "doinvisibility", true),
-    HEALTH(4, "dohealth", false),
+    HEALTH(3, "dohealth", false),
+    INVISIBILITY(4, "doinvisibility", true),
     POISON(4, "dopoison", true),
     REGENERATION(4, "doregeneration", true);
 
@@ -38,13 +38,21 @@ public enum DOSkill {
         return toggleable;
     }
 
+    public boolean isActive(EntityPlayer p) {
+        return isActive(p.getCapability(PLAYERDATA, null));
+    }
+
+    public boolean isActive(IPlayerData data) {
+        if(toggleable)
+            return data.getString(name) && data.getString(name+"toggled");
+        return data.getString(name);
+    }
+
     public boolean isUnlocked(EntityPlayer p) {
         return isUnlocked(p.getCapability(PLAYERDATA, null));
     }
 
     public boolean isUnlocked(IPlayerData data) {
-        if(toggleable)
-            return data.getString(name) && data.getString(name+"toggled");
         return data.getString(name);
     }
 

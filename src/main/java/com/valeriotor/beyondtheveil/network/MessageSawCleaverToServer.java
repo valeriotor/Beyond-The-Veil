@@ -39,7 +39,7 @@ public class MessageSawCleaverToServer implements IMessage{
 				boolean flagDeepOne = false;
 				if(!flagCleaver) {
 					IPlayerData data = PlayerDataLib.getCap(p);
-					flagDeepOne = (data.getString(PlayerDataLib.TRANSFORMED) && DOSkill.QUICKSTEP.isUnlocked(data));
+					flagDeepOne = (data.getString(PlayerDataLib.TRANSFORMED) && DOSkill.QUICKSTEP.isActive(data));
 				}
 				if(flagCleaver || flagDeepOne) {
 					PlayerTimer pt = ServerTickEvents.getPlayerTimer("CleaverDodge", p);

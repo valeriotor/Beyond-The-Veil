@@ -275,22 +275,47 @@ public class RenderEvents {
 			event.setCanceled(true);
 		}else if(data.getString(PlayerDataLib.TRANSFORMED)
 				&& mc.gameSettings.thirdPersonView == 0) {
+			float counter = BeyondTheVeil.proxy.cEvents.getUppercutCounter();
+
 			event.setCanceled(true);
 	        AbstractClientPlayer abstractclientplayer = mc.player;
 	        float partialTicks = event.getPartialTicks();
 	        float f = 1.0F;
 	        float p_187456_2_ = abstractclientplayer.getSwingProgress(partialTicks);
+	        float x = 0;
+	        if(counter != 0) {
+	        	counter = 12-counter + partialTicks;
+				if(counter <= 3) {
+					x = MathHelper.sin((float) Math.PI/4*(counter-4))*0.6F;
+				} else if(counter <= 7){
+					x = MathHelper.sin((float) Math.PI/8*(counter-4));
+				} else {
+					x = MathHelper.sin((float) Math.PI/10*(counter-4));
+				}
+	        	p_187456_2_ = 0;
+			}
 	        float p_187456_1_ = 0;
 	        float f1 = MathHelper.sqrt(p_187456_2_);
-	        float f2 = -0.3F * MathHelper.sin(f1 * (float)Math.PI);
-	        float f3 = 0.4F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
-	        float f4 = -0.4F * MathHelper.sin(p_187456_2_ * (float)Math.PI);
-	        GlStateManager.translate(f * (f2 + 0.64000005F), f3 + -0.6F + p_187456_1_ * -0.6F, f4 + -0.71999997F);
-	        GlStateManager.rotate(f * 45.0F, 0.0F, 1.0F, 0.0F);
+	        float f2 = -0.45F * MathHelper.sin(f1 * (float)Math.PI);
+	        float f3 = 0.6F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
+	        float f4 = -0.6F * MathHelper.sin(p_187456_2_ * (float)Math.PI);
+
+	        GlStateManager.translate(f * (f2 + 0.64000005F), f3 + -0.6F, f4*0.5 + -0.71999997F);
+	        GlStateManager.translate(0.1, -0.7, -0.2);
+	        if(counter != 0)
+				GlStateManager.translate(0, 0.7*x*3, -0.375);
+//	        GlStateManager.translate(0, 0, -4);
 	        float f5 = MathHelper.sin(p_187456_2_ * p_187456_2_ * (float)Math.PI);
 	        float f6 = MathHelper.sin(f1 * (float)Math.PI);
-	        GlStateManager.rotate(f * f6 * 70.0F, 0.0F, 1.0F, 0.0F);
-	        GlStateManager.rotate(f * f5 * -20.0F, 0.0F, 0.0F, 1.0F);
+			GlStateManager.scale(0.85, 0.85, 0.85);
+			GlStateManager.rotate(-40.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(80.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(-f5*30.0F, 1.0F, 0.0F, 0.0F);
+	        if(counter != 0) {
+//	        	GlStateManager.scale(2, 2, 2);
+//				GlStateManager.translate(-4.5, 0, 0);
+	        	GlStateManager.rotate(x*75, 0, 0, 1);
+			}
 	        this.mc.getTextureManager().bindTexture(RenderTransformedPlayer.deepOneTexture);
 	        GlStateManager.translate(f * -1.0F, 3.6F, 3.5F);
 	        GlStateManager.rotate(f * 120.0F, 0.0F, 0.0F, 1.0F);

@@ -8,14 +8,22 @@ import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessagePlayerAnimation;
 import com.valeriotor.beyondtheveil.network.generic.GenericMessageKey;
 import com.valeriotor.beyondtheveil.network.generic.MessageGenericToClient;
+import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -44,11 +52,6 @@ public class DOSkillEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void stuckClimbingEvent(PlayerTickEvent event) {
-
-    }
-
     private static boolean climbableBlockCheck(EntityPlayer p, EnumFacing facing) {
         BlockPos offset = p.getPosition().offset(facing);
         BlockPos offsetTop = offset.up();
@@ -60,6 +63,23 @@ public class DOSkillEvents {
         Block block4 = p.world.getBlockState(offsetOffsetTop).getBlock();
         return !block.canSpawnInBlock() || !block2.canSpawnInBlock() || !block3.canSpawnInBlock() || !block4.canSpawnInBlock();
     }
+    public static void doUppercutAnimation(EntityPlayer p) {
+        if(DOSkill.UPPERCUT.isActive(p))
+            ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_player_uppercut))));
+    }
 
+    public static void doUppercut(EntityPlayer p) {
+        if(DOSkill.UPPERCUT.isActive(p)) {
+            EntityLivingBase entity = MathHelperBTV.getClosestLookedAtEntity(p, 4, e -> e != p);
+
+            if (entity != null && entity.isNonBoss()) {
+                entity.attackEntityFrom(DamageSource.causePlayerDamage(p), (float) p.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+                p.world.playSound(null, p.getPosition(), SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 1, 1);
+                float maxHealth = entity.getMaxHealth();
+                double motion = entity.getMaxHealth() >= 100 ? 1.3 * Math.exp((-maxHealth + 80) / 30) : 1.3;
+                entity.motionY = motion; //TODO: check if player, then send message
+            }
+        }
+    }
 
 }

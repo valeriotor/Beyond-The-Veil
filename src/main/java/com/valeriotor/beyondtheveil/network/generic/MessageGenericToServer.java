@@ -1,8 +1,13 @@
 package com.valeriotor.beyondtheveil.network.generic;
 
+import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.events.DOSkillEvents;
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessagePlayerAnimation;
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -40,12 +45,17 @@ public class MessageGenericToServer implements IMessage {
 
         @Override
         public IMessage onMessage(MessageGenericToServer message, MessageContext ctx) {
-            EntityPlayerMP player = ctx.getServerHandler().player;
-            player.getServerWorld().addScheduledTask(() -> {
+            EntityPlayerMP p = ctx.getServerHandler().player;
+            p.getServerWorld().addScheduledTask(() -> {
                 switch(message.message) {
                     case DEEP_ONE_CLIMB_JUMP:
-                        DOSkillEvents.jumpEvent(player);
+                        DOSkillEvents.jumpEvent(p);
                         break;
+                    case UPPERCUT_ANIMATION:
+                        DOSkillEvents.doUppercutAnimation(p);
+                        break;
+                    case UPPERCUT:
+                        DOSkillEvents.doUppercut(p);
                 }
             });
             return null;

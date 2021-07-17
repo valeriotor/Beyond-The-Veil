@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.network.generic.MessageGenericToServer;
 import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Mouse;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents {
@@ -52,7 +54,8 @@ public class ClientEvents {
 	private int genericCounter = 0;
 	private int focusCounter = 0;
 	private int climbCounter = 0;
-	
+	private int uppercutCounter = 0;
+
 	@SubscribeEvent
 	public void clientTickEvent(ClientTickEvent event) {
 		if(event.phase.equals(Phase.END)) {
@@ -60,6 +63,7 @@ public class ClientEvents {
 			if(!Minecraft.getMinecraft().isGamePaused() && p != null) {
 				sawCleaverDodge(p);
 				deepOneClimb(p);
+				deepOneUppercut(p);
 				playerAnimationUpdate();
 				updateAnimationCounter();
 				if(focusCounter > 0) {
@@ -105,9 +109,6 @@ public class ClientEvents {
 	}
 
 	public void deepOneClimb(EntityPlayer p) {
-
-		//if() return;
-		//if(p.world.getBlockState(ppos.down()).getBlock() != Blocks.AIR) return;
 		if(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()
 		&& climbCounter <= 0
 		&& p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
@@ -115,6 +116,7 @@ public class ClientEvents {
 			IBlockState state = p.world.getBlockState(ppos.down());
 			if(!state.isSideSolid(p.world, ppos.down(), EnumFacing.UP)
 			&& state.getBlock() != Blocks.WATER) {
+				climbCounter = 9;
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.DEEP_ONE_CLIMB_JUMP));
 			}
 		}
@@ -122,6 +124,31 @@ public class ClientEvents {
 
 	public void deepOneClimbResetTimer() {
 		climbCounter = 9;
+	}
+
+	public void deepOneUppercut(EntityPlayer p) {
+		if(Mouse.isButtonDown(1)
+		&& uppercutCounter == 0
+		&& PlayerDataLib.getCap(p).getString(PlayerDataLib.TRANSFORMED)
+		&& DOSkill.UPPERCUT.isActive(p)) {
+			deepOneUppercutResetTimer();
+			BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.UPPERCUT_ANIMATION));
+		} else {
+			if(uppercutCounter > 0) {
+				if(uppercutCounter == 8) {
+					BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.UPPERCUT));
+				}
+				uppercutCounter--;
+			}
+		}
+	}
+
+	public int getUppercutCounter() {
+		return uppercutCounter;
+	}
+
+	public void deepOneUppercutResetTimer() {
+		uppercutCounter = 12;
 	}
 	
 	public void playerAnimationUpdate() {

@@ -209,7 +209,10 @@ public class ModelDeepOne extends ModelAnimated {
     	if(e instanceof EntityPlayer) {
     		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)e);
     		if(anim != null && anim.type.modelType instanceof ModelDeepOne) {
-    			if(!anim.isDone()) anim.applyTransformations(bodyParts, partialTickTime);
+                System.out.println(anim.type.length);
+                if(!anim.isDone()) {
+    			    anim.applyTransformations(bodyParts, partialTickTime);
+                }
     		}else {
 	        	this.LeftUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
 	        	this.RightUpperLeg.rotateAngleX = -0.6F + MathHelper.cos(limbSwing * 0.662F + (float)Math.PI) * limbSwingAmount;
@@ -218,6 +221,15 @@ public class ModelDeepOne extends ModelAnimated {
 	    		else
 	    			this.LeftUpperArm.rotateAngleX = -0.9F + MathHelper.cos(((EntityPlayer)e).swingProgress * 2.5F);  
     		}
+//    		Body.rotateAngleY = 0.1F;
+//    		DorsalFin.rotateAngleY = 0.1F;
+//    		RightUpperArm.rotateAngleX = 1.2F;
+//    		LeftUpperArm.rotateAngleX = -0.8F;
+//            Body.rotateAngleY = -0.1F;
+//            DorsalFin.rotateAngleY = -0.1F;
+//            RightUpperArm.rotateAngleX = -1.5F;
+//            RightLowerArm.rotateAngleX = -1F;
+//            LeftUpperArm.rotateAngleX = 0.8F;
     	}else if(e instanceof EntityDeepOne){
     		EntityDeepOne d = (EntityDeepOne)e;
     		Animation anim = d.getRoarAnim();
