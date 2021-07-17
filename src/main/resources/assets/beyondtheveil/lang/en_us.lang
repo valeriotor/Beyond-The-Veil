@@ -245,6 +245,7 @@ entity.crazed_weeper.name=Crazed Weeper
 entity.blood_zombie.name=Blood Zombie
 entity.blood_skeleton.name=Blood Skeleton
 entity.surgeon.name=Surgeon
+entity.dreadfish.name=Dreadfish
 
 shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
 shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
@@ -1160,6 +1161,10 @@ research.SURGEON.title=Surgeon
 research.SURGEON.stage.0=A net of Dreams links all those who peeked into the Truth.<BR>Entire societes exist away from me, some of these offering their services to allies and patrons.<BR>My alliance with Dagon brings new contacts, and among these come the Surgeons, offering their skills to those who seek them.<BR>I must craft a letter, a summons of sorts, for a Surgeon to reach me.<BR>I then only need use it on the ground. I'll do it once, then sort the Surgeon's job's details later, once I've taken a look at him.
 research.SURGEON.stage.1=I had wondered why Surgeons would ever form a society of their own.<BR>Little did I know that a Surgeon is not a profession.<BR>No, it is a race.<BR>One that does not belong to my world.<BR>Is this a race made with intent? After all, they all share a singular purpose.<BR>...<BR>What if I, too, were part of a breed that was *made*, not by chance but by will? Without knowing, for how I could I?<BR>A Surgeon is a useful servant, or rather, ally.<BR>I must place him close to a Watery Cradle with which I want him, her, it, whatever, to work.<BR>I must then use Surgery Tools on him to specify which action I want performed.<BR>The Surgeon will then operate every time a patient appears in the Cradle, placing the resulting patient on top of the device and keeping hearts or spines to himself. I can then interact with him with bare hands to be given all materials he gathered.<BR>A much more useful technique however is that of binding the Summons to a nearby chest before using it. To do that I can interact with a chest, wielding the letter, while sneaking.<BR>I can clear the previous binding by right clicking in the air while sneaking.<BR>A Surgeon summoned with a bound Summons will put any output of his operations, both patients and materials, in the bound chest, provided they're sufficiently close to each other.<BR>Since Villagers and Weepers in item form can enter Cradles as well, I can effectively pipeline Surgeons one after the other.<BR>A Surgeon can be picked up by its master with a blackjack.
 research.summoned_surgeon.text=Summon a Surgeon.
+
+
+# PLACEHOLDER - SUBJECT TO CHANGE
+ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
 
 ##################
 #MISC

@@ -1332,6 +1332,18 @@
                     "text": "research.TONEWDEPTHS.stage.0"
                 }
             ]
+        },
+		{
+        "key": "ICTYARY",
+        "name": "research.ICTYARY.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 21, 21],
+		"hiders": ["METAMORPHOSIS"],
+        "stages": [
+				{
+                    "text": "research.ICTYARY.stage.0"
+                }
+            ]
         }
 	]
 }

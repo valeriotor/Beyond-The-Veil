@@ -1,11 +1,14 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
 import com.google.common.base.Predicate;
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.IDamageCapper;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,6 +30,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	protected double currentFood = getMaxFood();
@@ -212,6 +217,8 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 			if(getSizeInt() >= IctyaSize.MEDIUM.getSizeInt()) {
 				p.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 10*(int)Math.pow(getSizeInt(), 3), 0, false, false));
 			}
+			String name = ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(getClass())).getResourcePath();
+			SyncUtil.addStringDataOnServer(p, false, "ictya-" + name);
 		}
 		super.onDeath(cause);
 	}

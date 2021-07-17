@@ -203,10 +203,17 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_X, this.topX);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_Y, this.topY);
 			SyncUtil.addIntDataOnClient(mc.player, false, PlayerDataLib.NECRO_FACTOR, this.factor);
-			this.mc.displayGuiScreen(new GuiResearchPage(status));
+			this.mc.displayGuiScreen(getResearchGui(status));
 			return true;
 		}
 		return false;
+	}
+
+	private GuiScreen getResearchGui(ResearchStatus status) {
+		switch(status.res.getKey()) {
+			case "ICTYARY": return new GuiIctyary();
+			default: return new GuiResearchPage(status);
+		}
 	}
 	
 	@Override
