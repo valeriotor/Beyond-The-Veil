@@ -209,7 +209,6 @@ public class ModelDeepOne extends ModelAnimated {
     	if(e instanceof EntityPlayer) {
     		Animation anim = BeyondTheVeil.proxy.cEvents.playerAnimations.get((EntityPlayer)e);
     		if(anim != null && anim.type.modelType instanceof ModelDeepOne) {
-                System.out.println(anim.type.length);
                 if(!anim.isDone()) {
     			    anim.applyTransformations(bodyParts, partialTickTime);
                 }
