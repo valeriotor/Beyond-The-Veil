@@ -49,7 +49,8 @@ public class BTVEntityRegistry {
 		register("deep_one_brute", EntityDeepOneBrute.class, count++ , 128);
 		register("deep_one_myrmidon", EntityDeepOneMyrmidon.class, count++ , 128);
 		register("cephalopodian", EntityCephalopodian.class, count++, 128);
-		
+		register("sandflatter", EntitySandflatter.class, count++, 128);
+
 		registerSpawnPlacementTypes();
 		
 	}
@@ -70,6 +71,7 @@ public class BTVEntityRegistry {
 		EntitySpawnPlacementRegistry.setPlacementType(EntityMuray.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityManOWar.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityCephalopodian.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntitySandflatter.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.ON_GROUND);
 	}

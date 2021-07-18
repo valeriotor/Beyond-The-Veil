@@ -39,6 +39,7 @@ public class AnimationRegistry {
 	public static AnimationTemplate deep_one_player_uppercut;
 	public static AnimationTemplate cephalopodian_crunch;
 	public static AnimationTemplate cephalopodian_tentacles;
+	public static AnimationTemplate sandflatter_ambush;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations(boolean client) {
@@ -77,6 +78,7 @@ public class AnimationRegistry {
 		cephalopodian_crunch = createAnimationTemplate("cephalopodian_crunch", client);
 		cephalopodian_tentacles = createAnimationTemplate("cephalopodian_tentacles", client);
 		deep_one_player_uppercut = createAnimationTemplate("deep_one_player_uppercut", client);
+		sandflatter_ambush = createAnimationTemplate("sandflatter_ambush", client);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {

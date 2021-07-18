@@ -42,7 +42,8 @@ public class RegisterRenders {
 		register(EntityDeepOneBrute.class, RenderDeepOneBrute::new);
 		register(EntityDeepOneMyrmidon.class, RenderDeepOneMyrmidon::new);
 		register(EntityCephalopodian.class, RenderCephalopodian::new);
-		
+		register(EntitySandflatter.class, RenderSandflatter::new);
+
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));
 		

@@ -2,12 +2,7 @@ package com.valeriotor.beyondtheveil.world.biomes.arche;
 
 import java.util.Random;
 
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDeepAngler;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityDreadfish;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityManOWar;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityMuray;
-import com.valeriotor.beyondtheveil.entities.ictya.EntityOctid;
-import com.valeriotor.beyondtheveil.entities.ictya.EntitySarfin;
+import com.valeriotor.beyondtheveil.entities.ictya.*;
 import com.valeriotor.beyondtheveil.world.arche.ChunkGeneratorArche;
 
 import net.minecraft.util.math.BlockPos;
