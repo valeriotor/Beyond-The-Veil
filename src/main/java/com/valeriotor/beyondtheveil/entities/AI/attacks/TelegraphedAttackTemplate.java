@@ -12,9 +12,7 @@ import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class TelegraphedAttackTemplate {
     private final int animationID;
@@ -31,16 +29,33 @@ public class TelegraphedAttackTemplate {
     private final List<Particle> particles;
     private final int initialRotationWeight;
     private final BiPredicate<EntityLiving, EntityLivingBase> predicate;
+    private final List<BiConsumer<EntityLiving, EntityLivingBase>> postHitEffects;
+    private final List<Consumer<EntityLiving>> postAttackEffects;
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
         this(animation, duration, damageTime, damage, attackArea, triggerDistance, 0);
     }
 
     public TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
-        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>(), 0, (e1, e2) -> true);
+        this(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, AttackList.EMPTY, -1, null, null, new ArrayList<>(), 0, (e1, e2) -> true, new ArrayList<>(), new ArrayList<>());
     }
 
-    private TelegraphedAttackTemplate(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback, AttackList followups, int followupTime, SoundEvent damageSound, SoundEvent attackSound, List<Particle> particles, int initialRotationWeight, BiPredicate<EntityLiving, EntityLivingBase> predicate) {
+    private TelegraphedAttackTemplate(AnimationTemplate animation,
+                                      int duration,
+                                      int damageTime,
+                                      float damage,
+                                      AttackArea attackArea,
+                                      double triggerDistance,
+                                      double knockback,
+                                      AttackList followups,
+                                      int followupTime,
+                                      SoundEvent damageSound,
+                                      SoundEvent attackSound,
+                                      List<Particle> particles,
+                                      int initialRotationWeight,
+                                      BiPredicate<EntityLiving, EntityLivingBase> predicate,
+                                      List<BiConsumer<EntityLiving, EntityLivingBase>> postHitEffects,
+                                      List<Consumer<EntityLiving>> postAttackEffects) {
         this.animationID = AnimationRegistry.getIdFromAnimation(animation);
         this.duration = duration;
         this.damageTime = damageTime;
@@ -55,6 +70,8 @@ public class TelegraphedAttackTemplate {
         this.particles = ImmutableList.copyOf(particles);
         this.initialRotationWeight = initialRotationWeight;
         this.predicate = predicate;
+        this.postHitEffects = ImmutableList.copyOf(postHitEffects);
+        this.postAttackEffects = ImmutableList.copyOf(postAttackEffects);
     }
 
     public void startAnimation(IAnimatedAttacker attacker) {
@@ -115,6 +132,14 @@ public class TelegraphedAttackTemplate {
         return predicate.test(attacker, target);
     }
 
+    public void applyPostHitEffects(EntityLiving attacker, EntityLivingBase target) {
+        postHitEffects.forEach(e -> e.accept(attacker, target));
+    }
+
+    public void applyPostAttackEffects(EntityLiving attacker) {
+        postAttackEffects.forEach(e -> e.accept(attacker));
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
         private AnimationTemplate animation;
         private int duration;
@@ -130,6 +155,8 @@ public class TelegraphedAttackTemplate {
         private final List<Particle> particleList = new ArrayList<>();
         private int initialRotationWeight = 0;
         private BiPredicate<EntityLiving, EntityLivingBase> predicate = (e1, e2) -> true;
+        private List<BiConsumer<EntityLiving, EntityLivingBase>> postHitEffects = new ArrayList<>();
+        private List<Consumer<EntityLiving>> postAttackEffects = new ArrayList<>();
 
         public TelegraphedAttackTemplateBuilder(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance) {
             this.animation = animation;
@@ -230,8 +257,33 @@ public class TelegraphedAttackTemplate {
             return this;
         }
 
+        public TelegraphedAttackTemplateBuilder addPostHitEffect(BiConsumer<EntityLiving, EntityLivingBase> postHitEffect) {
+            postHitEffects.add(postHitEffect);
+            return this;
+        }
+
+        public TelegraphedAttackTemplateBuilder addPostAttackEffect(Consumer<EntityLiving> postAttackEffect) {
+            postAttackEffects.add(postAttackEffect);
+            return this;
+        }
+
         public TelegraphedAttackTemplate build() {
-            return new TelegraphedAttackTemplate(animation, duration, damageTime, damage, attackArea, triggerDistance, knockback, followups, followupTime, damageSound, attackSound, particleList, initialRotationWeight, predicate);
+            return new TelegraphedAttackTemplate(animation,
+                    duration,
+                    damageTime,
+                    damage,
+                    attackArea,
+                    triggerDistance,
+                    knockback,
+                    followups,
+                    followupTime,
+                    damageSound,
+                    attackSound,
+                    particleList,
+                    initialRotationWeight,
+                    predicate,
+                    postHitEffects,
+                    postAttackEffects);
         }
 
     }

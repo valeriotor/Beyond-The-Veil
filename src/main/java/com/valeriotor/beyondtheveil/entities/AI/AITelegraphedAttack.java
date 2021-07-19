@@ -38,6 +38,7 @@ public class AITelegraphedAttack extends EntityAIAttackMelee {
             attacker.getNavigator().clearPath();
             attack.update();
             if(attack.isDone()) {
+                attack.applyPostAttackEffects();
                 attack = null;
                 this.attacker.getNavigator().tryMoveToEntityLiving(attacker.getAttackTarget(), this.speedIn);
             } else if(attack.isFollowupTime()) {

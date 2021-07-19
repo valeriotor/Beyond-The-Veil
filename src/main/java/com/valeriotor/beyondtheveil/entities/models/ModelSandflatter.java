@@ -3,14 +3,11 @@ package com.valeriotor.beyondtheveil.entities.models;//Made with Blockbench
 
 import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.entities.ictya.EntitySandflatter;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
-import org.lwjgl.opengl.GL11;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelSandflatter extends ModelAnimated {
 	private final ModelRenderer dorso;						//0
@@ -89,7 +86,7 @@ public class ModelSandflatter extends ModelAnimated {
 	private final ModelRenderer rightPincerForeArm;			//73
 	private final ModelRenderer rightPincer;				//74
 	private final ModelRenderer rightPincerUp;				//75
-	private final ModelRenderer RightPincerLeft;			//76
+	private final ModelRenderer rightPincerLeft;			//76
 	private final ModelRenderer rightPincerRight;			//77
 	private final ModelRenderer bait;						//78
 	private final ModelRenderer bait2;						//79
@@ -488,10 +485,10 @@ public class ModelSandflatter extends ModelAnimated {
 		rightPincer.addChild(rightPincerUp);
 		rightPincerUp.cubeList.add(new ModelBox(rightPincerUp, 232, 226, -1.0F, -3.0F, -1.0F, 10, 3, 2, 0.0F, false));
 
-		RightPincerLeft = new ModelRenderer(this);
-		RightPincerLeft.setRotationPoint(0.0F, 0.0F, 0.0F);
-		rightPincer.addChild(RightPincerLeft);
-		RightPincerLeft.cubeList.add(new ModelBox(RightPincerLeft, 232, 226, -1.5F, -4.0F, 0.0F, 10, 3, 2, 0.0F, false));
+		rightPincerLeft = new ModelRenderer(this);
+		rightPincerLeft.setRotationPoint(0.0F, 0.0F, 0.0F);
+		rightPincer.addChild(rightPincerLeft);
+		rightPincerLeft.cubeList.add(new ModelBox(rightPincerLeft, 232, 226, -1.5F, -4.0F, 0.0F, 10, 3, 2, 0.0F, false));
 
 		rightPincerRight = new ModelRenderer(this);
 		rightPincerRight.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -589,7 +586,7 @@ public class ModelSandflatter extends ModelAnimated {
 		bodyParts.add(rightPincerForeArm);
 		bodyParts.add(rightPincer);
 		bodyParts.add(rightPincerUp);
-		bodyParts.add(RightPincerLeft);
+		bodyParts.add(rightPincerLeft);
 		bodyParts.add(rightPincerRight);
 		bodyParts.add(bait);
 		bodyParts.add(bait2);
@@ -601,6 +598,7 @@ public class ModelSandflatter extends ModelAnimated {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		if(entity.ticksExisted > 1)
 		dorso.render(f5);
 	}
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
@@ -667,7 +665,7 @@ public class ModelSandflatter extends ModelAnimated {
 		setRotateAngle(rightPincerForeArm, 0.0F, 1.0472F, 0.0F, addToDefault);
 		setRotateAngle(rightPincer, 3.0543F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(rightPincerUp, 0.0F, 0.0F, -0.5236F, addToDefault);
-		setRotateAngle(RightPincerLeft, -2.0944F, -0.3491F, 0.0F, addToDefault);
+		setRotateAngle(rightPincerLeft, -2.0944F, -0.3491F, 0.0F, addToDefault);
 		setRotateAngle(rightPincerRight, -0.5236F, 0.6109F, 0.6109F, addToDefault);
 		setRotateAngle(leftConn11, 0.0F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(leftConn21, 0.0F, 0.0F, 0.0F, addToDefault);
@@ -677,41 +675,70 @@ public class ModelSandflatter extends ModelAnimated {
 		setRotateAngle(rightConn21, 0.0F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(rightConn31, 0.0F, 0.0F, 0.0F, addToDefault);
 		setRotateAngle(rightConn41, 0.0F, 0.0F, 0.0F, addToDefault);
+		setRotateAngle(bait, 0.0F, 0.0F, 0.0F, addToDefault);
+		setRotateAngle(bait2, 0.0F, 0.0F, 0.0F, addToDefault);
 	}
 
 	@Override
 	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
 		setAngles(false);
-		dorso.offsetY = 1.125F;
 
 		EntitySandflatter e = (EntitySandflatter) entitylivingbaseIn;
 
-		// waiting stance
-//		leftConn1.rotateAngleZ = 0.3491F;
-//		leftConn2.rotateAngleZ = 0.3491F;
-//		leftConn3.rotateAngleZ = 0.3491F;
-//		leftConn4.rotateAngleZ = 0.3491F;
-//		rightConn1.rotateAngleZ = 0.3491F;
-//		rightConn2.rotateAngleZ = 0.3491F;
-//		rightConn3.rotateAngleZ = 0.3491F;
-//		rightConn4.rotateAngleZ = 0.3491F;
-//		leftConn11.rotateAngleZ = 0.3491F;
-//		leftConn21.rotateAngleZ = 0.3491F;
-//		leftConn31.rotateAngleZ = 0.3491F;
-//		leftConn41.rotateAngleZ = 0.3491F;
-//		rightConn11.rotateAngleZ = 0.3491F;
-//		rightConn21.rotateAngleZ = 0.3491F;
-//		rightConn31.rotateAngleZ = 0.3491F;
-//		rightConn41.rotateAngleZ = 0.3491F;
-//		leftArm1.rotateAngleZ = 0.1F;
-//		leftArm2.rotateAngleZ = 0.1F;
-//		leftArm3.rotateAngleZ = 0.1F;
-//		leftArm4.rotateAngleZ = 0.1F;
-//		rightArm1.rotateAngleZ = -0.1F;
-//		rightArm2.rotateAngleZ = -0.1F;
-//		rightArm3.rotateAngleZ = -0.1F;
-//		rightArm4.rotateAngleZ = -0.1F;
-
+		if(e.isAmbushing()) {
+			dorso.offsetY = 1.125F;
+			leftConn1.rotateAngleZ = 0.3491F;
+			leftConn2.rotateAngleZ = 0.3491F;
+			leftConn3.rotateAngleZ = 0.3491F;
+			leftConn4.rotateAngleZ = 0.3491F;
+			rightConn1.rotateAngleZ = 0.3491F;
+			rightConn2.rotateAngleZ = 0.3491F;
+			rightConn3.rotateAngleZ = 0.3491F;
+			rightConn4.rotateAngleZ = 0.3491F;
+			leftConn11.rotateAngleZ = 0.3491F;
+			leftConn21.rotateAngleZ = 0.3491F;
+			leftConn31.rotateAngleZ = 0.3491F;
+			leftConn41.rotateAngleZ = 0.3491F;
+			rightConn11.rotateAngleZ = 0.3491F;
+			rightConn21.rotateAngleZ = 0.3491F;
+			rightConn31.rotateAngleZ = 0.3491F;
+			rightConn41.rotateAngleZ = 0.3491F;
+			leftArm1.rotateAngleZ = 0.1F;
+			leftArm2.rotateAngleZ = 0.1F;
+			leftArm3.rotateAngleZ = 0.1F;
+			leftArm4.rotateAngleZ = 0.1F;
+			rightArm1.rotateAngleZ = -0.1F;
+			rightArm2.rotateAngleZ = -0.1F;
+			rightArm3.rotateAngleZ = -0.1F;
+			rightArm4.rotateAngleZ = -0.1F;
+			float offset = MathHelper.sin((entitylivingbaseIn.ticksExisted%40 + partialTickTime)/ 6.366F)/6;
+			bait.rotateAngleX = offset;
+			bait2.rotateAngleY = offset;
+			offset = MathHelper.sin((entitylivingbaseIn.ticksExisted%50 + partialTickTime) / 7.95F)/4;
+			bait.rotateAngleY = offset;
+			bait2.rotateAngleX = offset;
+		} else {
+			dorso.offsetY = 0;
+			float swing = MathHelper.cos(limbSwing * 0.662F) * limbSwingAmount;
+			tail.rotateAngleX = swing/8;
+			tail2.rotateAngleX = swing/16;
+			leftArm1.rotateAngleX += swing/8;
+			leftArm2.rotateAngleX -= swing/8;
+			leftArm3.rotateAngleX += swing/8;
+			leftArm4.rotateAngleX -= swing/8;
+			rightArm1.rotateAngleX += swing/8;
+			rightArm2.rotateAngleX -= swing/8;
+			rightArm3.rotateAngleX += swing/8;
+			rightArm4.rotateAngleX -= swing/8;
+			leftArm1.rotateAngleZ += swing/6;
+			leftArm2.rotateAngleZ -= swing/6;
+			leftArm3.rotateAngleZ += swing/6;
+			leftArm4.rotateAngleZ -= swing/6;
+			rightArm1.rotateAngleZ += swing/6;
+			rightArm2.rotateAngleZ -= swing/6;
+			rightArm3.rotateAngleZ += swing/6;
+			rightArm4.rotateAngleZ -= swing/6;
+		}
 
 		// almost final phase
 //		leftArm1.rotateAngleZ = -1.3491F;
@@ -734,7 +761,6 @@ public class ModelSandflatter extends ModelAnimated {
 		Animation a = e.getAttackAnimation();
 		if(a != null) {
 			a.applyTransformations(bodyParts, partialTickTime);
-
 		}
 	}
 

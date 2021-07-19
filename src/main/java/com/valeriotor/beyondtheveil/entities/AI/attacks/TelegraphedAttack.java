@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.entities.AI.attacks;
 
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,6 +37,7 @@ public class TelegraphedAttack {
                 e.attackEntityFrom(source, template.getDamage());
                 if(template.getKnockback() > 0)
                     e.knockBack(attacker, (float)template.getKnockback() * 0.5F, (double) MathHelper.sin((float) (initialRotation * 0.017453292F)), (double)(-MathHelper.cos((float)initialRotation * 0.017453292F)));
+                template.applyPostHitEffects(attacker, e);
             });
             SoundEvent damageSound = template.getDamageSound();
             if(damageSound != null && victims.size() > 0)
@@ -68,6 +68,10 @@ public class TelegraphedAttack {
 
     public int getInitialRotationWeight() {
         return template.getInitialRotationWeight();
+    }
+
+    public void applyPostAttackEffects() {
+        template.applyPostAttackEffects(attacker);
     }
 
 }

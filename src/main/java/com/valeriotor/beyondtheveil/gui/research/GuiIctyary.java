@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.gui.research;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
+import com.valeriotor.beyondtheveil.entities.ictya.EntitySandflatter;
 import com.valeriotor.beyondtheveil.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
@@ -51,6 +52,10 @@ public class GuiIctyary extends GuiScreen {
                 .map(entity -> (EntityIctya) entity)
                 .sorted(Comparator.comparingInt(EntityIctya::getSizeInt).thenComparing(EntityIctya::getName))
                 .collect(Collectors.toList());
+        for (EntityIctya ictya : ictyas) {
+            if(ictya instanceof EntitySandflatter)
+                ((EntitySandflatter)ictya).stopAmbushing();
+        }
         ictyaPages = new ArrayList<>();
         ictyaPages.add(ictyas);
     }
