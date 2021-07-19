@@ -20,7 +20,7 @@ public class AttackAreaBox extends AttackArea{
 
     @Override
     public List<EntityLivingBase> getVictims(EntityLiving source, double initialRotation) {
-        if(true) {
+        /*if(true) {
             AxisAlignedBB BOX = this.BOX.offset(source.posX, source.posY, source.posZ);
             double sizeX = (BOX.maxX- BOX.minX)/3;
             double sizeY = (BOX.maxY- BOX.minY)/3;
@@ -33,7 +33,7 @@ public class AttackAreaBox extends AttackArea{
                     }
                 }
             }
-        }
+        }*/
         return source.world.getEntitiesInAABBexcluding(source, BOX.offset(source.posX, source.posY, source.posZ), e -> e instanceof EntityLivingBase)
         .stream().map(e -> (EntityLivingBase)e).collect(Collectors.toList());
     }

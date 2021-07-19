@@ -72,6 +72,7 @@ public class DOSkillEvents {
     }
 
     public static void doUppercut(EntityPlayer p) {
+        //TODO check barehanded?
         if(DOSkill.UPPERCUT.isActive(p)) {
             EntityLivingBase entity = MathHelperBTV.getClosestLookedAtEntity(p, 4, e -> e != p);
 
