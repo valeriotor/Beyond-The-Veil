@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities.AI.attacks;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -34,7 +35,9 @@ public class AttackAreaShiftedCone extends AttackArea{
 
     private boolean isInShiftedCone(EntityLivingBase source, EntityLivingBase target, double initialRotation) {
         double distance = source.getDistance(target);
-        if(distance > this.distance) return false;
+        if(target instanceof EntityPlayer) {
+            if(distance > this.distance) return false;
+        } else if(distance - target.width > this.distance) return false;
         if(distance < this.distance/8) return true;
         double coneAngle = (farArc-closeArc) / distance;
         double innerRadius = closeArc/coneAngle;

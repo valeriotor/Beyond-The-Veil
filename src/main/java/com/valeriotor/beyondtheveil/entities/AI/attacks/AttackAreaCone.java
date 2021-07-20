@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entities.AI.attacks;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.List;
@@ -30,7 +31,10 @@ public class AttackAreaCone extends AttackArea{
 
     private boolean isInCone(EntityLivingBase source, EntityLivingBase target, double initialRotation) {
         double distance = source.getDistance(target);
-        if(distance > radius) return false;
+        if(target instanceof EntityPlayer) {
+            if(distance > radius) return false;
+        } else if(distance - target.width*1.2 > radius) return false;
+
         if(distance < radius/8) return true;
         return MathHelperBTV.isEntityWithinAngleOfEntity(source, target, initialRotation, degreesToTheLeft, degreesToTheRight);/*
         double rotation = MathHelperBTV.angleBetween(source, target);

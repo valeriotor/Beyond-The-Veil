@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import com.valeriotor.beyondtheveil.entities.IPlayerMinion;
 
+import com.valeriotor.beyondtheveil.entities.ictya.EntityJelly;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +47,11 @@ public class AIRevenge extends EntityAITarget{
 	
 	@Override
 	public void startExecuting() {
-		this.ent.setAttackTarget(attacker);
+		if(attacker instanceof EntityJelly) {
+			this.ent.setAttackTarget(((EntityJelly)attacker).getMaster());
+		} else {
+			this.ent.setAttackTarget(attacker);
+		}
 		this.timer = 0;
 		super.startExecuting();
 	}
@@ -58,6 +63,8 @@ public class AIRevenge extends EntityAITarget{
 		}
 		if(predicate != null && !predicate.test(attacker))
 			return false;
+		if(ent.getRevengeTarget() != attacker) //TODO verify this works correctly for non Ictya entities
+			return false;
 		return super.shouldContinueExecuting();
 	}
 	
@@ -66,7 +73,11 @@ public class AIRevenge extends EntityAITarget{
 		this.timer++;
 		if(this.timer % 20 == 0) {
 			this.timer = 0;
-			this.ent.setAttackTarget(attacker);
+			if(attacker instanceof EntityJelly) {
+				this.ent.setAttackTarget(((EntityJelly)attacker).getMaster());
+			} else {
+				this.ent.setAttackTarget(attacker);
+			}
 		}
 	}
 

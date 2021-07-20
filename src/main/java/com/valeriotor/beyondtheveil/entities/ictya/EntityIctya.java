@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
@@ -70,7 +71,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityPlayer.class, 10, true, false, this::shouldAttack));
 		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityIctya.class, 10, true, false, this::shouldAttack));
 		this.targetTasks.addTask(1, new AINearestAttackableTargetArche<>(this, EntityDeepOne.class, 10, true, false, this::shouldAttack));
-        this.targetTasks.addTask(2, new AIRevenge(this, this::shouldDefend));
+        this.targetTasks.addTask(0, new AIRevenge(this, this::shouldDefend));
         this.tasks.addTask(0, getFleeingAI(this, EntityIctya.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
 		this.tasks.addTask(0, getFleeingAI(this, EntityPlayer.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
 		this.tasks.addTask(0, getFleeingAI(this, EntityDeepOne.class, this::shouldFlee, 5, getSpeed()*2, getSpeed()*2));
@@ -122,7 +123,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	protected void on32Ticks() {
 		if(!world.isRemote && getSize() != IctyaSize.TINY) {
 			if(getCurrentOverMaxFood() > 0.67)
-				heal(Math.max(3, getMaxHealth()/20));
+				heal(Math.max(3, Math.min(getMaxHealth()/20, 12)));
 			
 			if(currentFood >= getFoodPer32Ticks())
 				currentFood -= getFoodPer32Ticks();
@@ -235,6 +236,22 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	        return this.taskOwner.getEntityBoundingBox().grow(targetDistance);
 	    }
 		
+	}
+
+	protected static class AIAttackMeleeAgainstLargeCreatures extends EntityAIAttackMelee {
+
+		public AIAttackMeleeAgainstLargeCreatures(EntityCreature creature, double speedIn, boolean useLongMemory) {
+			super(creature, speedIn, useLongMemory);
+		}
+
+		@Override
+		protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+			double attackReachSqr = super.getAttackReachSqr(attackTarget);
+			if(attackTarget instanceof EntityIctya && ((EntityIctya)attackTarget).getSizeInt() > IctyaSize.MEDIUM.ordinal()) {
+				attackReachSqr += attackTarget.width*0.6F;
+			}
+			return attackReachSqr;
+		}
 	}
 	
 }

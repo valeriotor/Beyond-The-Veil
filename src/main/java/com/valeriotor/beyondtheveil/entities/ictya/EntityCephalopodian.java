@@ -7,11 +7,13 @@ import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entities.AI.attacks.TelegraphedAttackTemplate;
 import com.valeriotor.beyondtheveil.entities.IAnimatedAttacker;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityCephalopodian extends EntityIctya implements IAnimatedAttacker {
@@ -100,5 +102,10 @@ public class EntityCephalopodian extends EntityIctya implements IAnimatedAttacke
 
         ATTACK_LIST = AttackList.immutableAttackListOf(attacks);
 
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        return super.attackEntityFrom(source, amount);
     }
 }

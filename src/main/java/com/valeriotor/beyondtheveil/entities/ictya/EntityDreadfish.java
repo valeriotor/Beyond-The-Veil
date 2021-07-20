@@ -22,7 +22,7 @@ public class EntityDreadfish extends EntityIctya {
 	@Override
 	protected void initEntityAI() {	 	
 		super.initEntityAI();
-		this.tasks.addTask(0, new EntityAIAttackMelee(this, 1.4, true));
+		this.tasks.addTask(0, new AIAttackMeleeAgainstLargeCreatures(this, 1.4, true));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 100));
@@ -36,7 +36,7 @@ public class EntityDreadfish extends EntityIctya {
 		getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(3D);
 		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.2D);
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
-		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12D);
+		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18D);
 	}
 
 	@Override

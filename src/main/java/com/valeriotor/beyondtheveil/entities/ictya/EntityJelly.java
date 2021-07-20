@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entities.ictya;
 
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
+import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya.AIAttackMeleeAgainstLargeCreatures;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 
 import net.minecraft.block.material.Material;
@@ -37,7 +38,7 @@ public class EntityJelly extends EntityMob{
 	@Override
 	protected void initEntityAI() {	 	
 		super.initEntityAI();
-		this.tasks.addTask(0, new EntityAIAttackMelee(this, 0.35, false));
+		this.tasks.addTask(0, new AIAttackMeleeAgainstLargeCreatures(this, 0.35, false));
 	}
 	
 	@Override
@@ -48,7 +49,11 @@ public class EntityJelly extends EntityMob{
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
 		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8D);
 	}
-	
+
+	public EntityManOWar getMaster() {
+		return master;
+	}
+
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
