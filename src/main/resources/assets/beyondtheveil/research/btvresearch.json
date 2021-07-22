@@ -1344,6 +1344,18 @@
                     "text": "research.ICTYARY.stage.0"
                 }
             ]
+        },
+		{
+        "key": "DOSKILLS",
+        "name": "research.DOSKILLS.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23, 21],
+		"hiders": ["METAMORPHOSIS"],
+        "stages": [
+				{
+                    "text": "research.DOSKILLS.stage.0"
+                }
+            ]
         }
 	]
 }

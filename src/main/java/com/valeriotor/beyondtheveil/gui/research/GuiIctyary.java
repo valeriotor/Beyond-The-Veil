@@ -223,4 +223,12 @@ public class GuiIctyary extends GuiScreen {
         buttonList.get(0).enabled = currentPage != 0;
         buttonList.get(1).enabled = currentPage != ictyaPages.size()-1;
     }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if(keyCode == 18)
+            this.mc.displayGuiScreen(new GuiNecronomicon());
+        super.keyTyped(typedChar, keyCode);
+    }
+
 }

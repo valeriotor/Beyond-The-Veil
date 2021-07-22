@@ -212,6 +212,7 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui{
 	private GuiScreen getResearchGui(ResearchStatus status) {
 		switch(status.res.getKey()) {
 			case "ICTYARY": return new GuiIctyary();
+			case "DOSKILLS": return new GuiDOSkills();
 			default: return new GuiResearchPage(status);
 		}
 	}

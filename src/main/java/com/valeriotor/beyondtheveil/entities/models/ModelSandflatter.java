@@ -598,8 +598,8 @@ public class ModelSandflatter extends ModelAnimated {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		if(entity.ticksExisted > 1)
-		dorso.render(f5);
+		if(entity.ticksExisted > 1 || !((EntitySandflatter)entity).isAmbushing())
+			dorso.render(f5);
 	}
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.rotateAngleX = x;
