@@ -14,12 +14,12 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import static com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider.PLAYERDATA;
 
 public enum DOSkill {
-    QUICKSTEP(1, "doquickstep", false),
+    QUICKSTEP(1, "doquickstep", true),
     UPPERCUT(2, "douppercut", true),
 //    BAUBLES(2, "dobaubles", false),
     ROARSINK(2, "doroarsink", true),
-    CLIMBING(2, "doclimbing", false),
-    HEALTH(3, "dohealth", false),
+    CLIMBING(2, "doclimbing", true),
+    HEALTH(3, "dohealth", true),
 //    INVISIBILITY(4, "doinvisibility", true),
     POISON(4, "dopoison", true),
     REGENERATION(4, "doregeneration", true);
@@ -112,6 +112,8 @@ public enum DOSkill {
         data.addString(name, false);
         data.incrementOrSetInteger(PlayerDataLib.ICTYA_USED_BY_SIZE.apply(requiredIctyaSize.name().toLowerCase()), 1, 1, false);
         data.incrementOrSetInteger(PlayerDataLib.ARENA_BOSSES_USED_BY_NAME.apply(getRequiredBossName(getEnemyLevel())), 1, 1, false);
+        if(toggleable)
+            toggle(data);
     }
 
     public void toggle(EntityPlayer p) {
