@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.potions.PotionHeartbreak;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -38,6 +39,7 @@ public class LivingEvents {
 				commandMinions(e);
 				AzacnoParasiteEvents.damageEntity(e);
 				ItemRegistry.coral_staff.commandUndead(e);
+				DOSkillEvents.doPoisonSkill(e);
 			}
 		}
 		e.setCanceled(cancelDamage(e));
@@ -86,8 +88,11 @@ public class LivingEvents {
 	
 	@SubscribeEvent
 	public static void deathEvent(LivingDeathEvent event) {
-		if(event.getSource().getTrueSource() instanceof EntitySkeleton) {
-			((EntitySkeleton)event.getSource().getTrueSource()).setAttackTarget(null);
+		Entity trueSource = event.getSource().getTrueSource();
+		if(trueSource instanceof EntitySkeleton) {
+			((EntitySkeleton) trueSource).setAttackTarget(null);
+		} else if (trueSource instanceof EntityPlayer) {
+			DOSkillEvents.doRegenerationSkill(event);
 		}
 	}
 	

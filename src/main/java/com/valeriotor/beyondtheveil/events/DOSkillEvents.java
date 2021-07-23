@@ -16,12 +16,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,6 +89,24 @@ public class DOSkillEvents {
                     ServerTickEvents.addPlayerTimer(pt);
                 }
             }
+        }
+    }
+
+    public static void doPoisonSkill(LivingHurtEvent e) {
+        EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
+        if(e.getEntityLiving().isNonBoss() && DOSkill.POISON.isActive(p)) {
+            if(p.world.rand.nextInt(4) == 0)
+                e.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.POISON, 20*8, 3));
+        }
+    }
+
+    public static void doRegenerationSkill(LivingDeathEvent event) {
+        EntityPlayer p = (EntityPlayer) event.getSource().getTrueSource();
+        if(DOSkill.REGENERATION.isActive(p)) {
+            float maxHealth = event.getEntityLiving().getMaxHealth();
+            double level = Math.log10(maxHealth);
+            if (level >= 1)
+                p.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, (int) (5 * 20 * level), (int) (level - 1)));
         }
     }
 
