@@ -127,19 +127,8 @@ public class ClientEvents {
 	}
 
 	public void deepOneUppercut(EntityPlayer p) {
-		if(Mouse.isButtonDown(1)
-		&& uppercutCounter == 0
-		&& PlayerDataLib.getCap(p).getString(PlayerDataLib.TRANSFORMED)
-		&& DOSkill.UPPERCUT.isActive(p)) {
-			deepOneUppercutResetTimer();
-			BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.UPPERCUT_ANIMATION));
-		} else {
-			if(uppercutCounter > 0) {
-				if(uppercutCounter == 8) {
-					BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.UPPERCUT));
-				}
-				uppercutCounter--;
-			}
+		if(uppercutCounter > 0) {
+			uppercutCounter--;
 		}
 	}
 

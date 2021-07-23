@@ -50,6 +50,9 @@ public class MessageGenericToClient implements IMessage{
                     case ROAR_PLAYER_SINK:
                         Minecraft.getMinecraft().player.motionY = -4;
                         break;
+                    case UPPERCUT_ANIMATION:
+                        BeyondTheVeil.proxy.cEvents.deepOneUppercutResetTimer();
+                        break;
                 }
             });
             return null;

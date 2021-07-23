@@ -51,11 +51,6 @@ public class MessageGenericToServer implements IMessage {
                     case DEEP_ONE_CLIMB_JUMP:
                         DOSkillEvents.jumpEvent(p);
                         break;
-                    case UPPERCUT_ANIMATION:
-                        DOSkillEvents.doUppercutAnimation(p);
-                        break;
-                    case UPPERCUT:
-                        DOSkillEvents.doUppercut(p);
                 }
             });
             return null;
