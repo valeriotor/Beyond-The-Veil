@@ -119,7 +119,7 @@ public class SyncUtil {
 	public static int incrementIntDataOnServer(EntityPlayer p, boolean temporary, String key, int amount, int defaultVal) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int val = data.incrementOrSetInteger(key, amount, defaultVal, temporary);
-		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, data.getInteger(key) + amount), (EntityPlayerMP) p);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, val), (EntityPlayerMP) p);
 		return val;
 	}
 	

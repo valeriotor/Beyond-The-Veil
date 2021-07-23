@@ -218,11 +218,11 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 			if(getSizeInt() >= IctyaSize.MEDIUM.getSizeInt()) {
 				p.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 10*(int)Math.pow(getSizeInt(), 3), 0, false, false));
 			}
-			String string = "ictya-" + ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(getClass())).getResourcePath();
+			String string = PlayerDataLib.ICTYA_BY_TYPE.apply(ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(getClass())).getResourcePath());
 			IPlayerData data = PlayerDataLib.getCap(p);
 			if(!data.getString(string)) {
 				SyncUtil.addStringDataOnServer(p, false, string);
-				SyncUtil.incrementIntDataOnServer(p, false, "ictya-" + getSize().name().toLowerCase(), 1, 1);
+				SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ICTYA_BY_SIZE.apply(getSize().name().toLowerCase()), 1, 1);
 			}
 		}
 		super.onDeath(cause);

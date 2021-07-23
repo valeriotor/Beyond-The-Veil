@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.gui.research;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.gui.GuiHelper;
@@ -17,8 +18,8 @@ import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -45,9 +46,19 @@ public class GuiDOSkills extends GuiScreen {
     private final EnumSet<DOSkill> unlockableSkills = EnumSet.noneOf(DOSkill.class);
     private DOSkill selectedSkill;
     private List<List<String>> description = new ArrayList<>();
+    private final List<ArenaBossEntry> bossEntries;
 
     public GuiDOSkills() {
         updateUnlockedSkills();
+        IPlayerData data = PlayerDataLib.getCap(Minecraft.getMinecraft().player);
+        bossEntries = ImmutableList.copyOf(data.getInts(false).entrySet().stream()
+                .filter(s -> s.getKey().startsWith("arena-killed-"))
+                .map(ArenaBossEntry::new)
+                .collect(Collectors.toList()));
+        for (ArenaBossEntry a :
+                bossEntries) {
+            System.out.println(a.localizedBossName +" " + a.amountKilled);
+        }
     }
 
     @Override
@@ -98,6 +109,12 @@ public class GuiDOSkills extends GuiScreen {
                 drawString(mc.fontRenderer, s, width/100, textY, 0xFFFFFFFF);
                 textY += 20;
             }
+            textY += 10;
+        }
+        textY = height/10;
+        for (ArenaBossEntry bossEntry : bossEntries) {
+            String s = I18n.format("doskill.bosskill", bossEntry.localizedBossName, bossEntry.amountKilled);
+            drawString(mc.fontRenderer, s,width*7/10, textY, 0xFFFFFF);
             textY += 10;
         }
 
@@ -162,7 +179,9 @@ public class GuiDOSkills extends GuiScreen {
         }
         else if(unlockableSkills.contains(selectedSkill)) {
             unlockButton.displayString = I18n.format("doskill.unlock");
-            if(!selectedSkill.hasPlayerKilledEnoughIctya(mc.player)) unlockButton.enabled = false;
+            if(!selectedSkill.hasPlayerKilledEnoughIctya(mc.player)
+            || !selectedSkill.hasPlayerKilledEnoughBosses(mc.player))
+                unlockButton.enabled = false;
         }
     }
 
@@ -195,7 +214,21 @@ public class GuiDOSkills extends GuiScreen {
         if(unlockableSkills.contains(selectedSkill)) {
             if(!selectedSkill.hasPlayerKilledEnoughIctya(mc.player))
                 description.add(Lists.newArrayList(selectedSkill.getLocalizedKillMoreIctyaMessage()));
+            if(!selectedSkill.hasPlayerKilledEnoughBosses(mc.player))
+                description.add(Lists.newArrayList(selectedSkill.getLocalizedKillMoreBossesMessage()));
         }
         return description;
     }
+
+    private static class ArenaBossEntry {
+        private final String localizedBossName;
+        private final int amountKilled;
+
+
+        private ArenaBossEntry(Entry<String, Integer> entry) {
+            this.localizedBossName = I18n.format("entity." + entry.getKey().replace("arena-killed-", "") + ".name");
+            this.amountKilled = entry.getValue();
+        }
+    }
+
 }

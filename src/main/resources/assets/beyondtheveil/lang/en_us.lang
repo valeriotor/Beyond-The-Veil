@@ -1166,6 +1166,8 @@ research.summoned_surgeon.text=Summon a Surgeon.
 # PLACEHOLDER - SUBJECT TO CHANGE
 ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
 
+doskill.bosskill=%1$s killed: %2$s
+
 ##################
 #MISC
 ##################

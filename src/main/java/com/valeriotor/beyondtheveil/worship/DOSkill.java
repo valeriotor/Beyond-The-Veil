@@ -1,9 +1,15 @@
 package com.valeriotor.beyondtheveil.worship;
 
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.entities.ictya.IctyaSize;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import static com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider.PLAYERDATA;
 
@@ -27,7 +33,8 @@ public enum DOSkill {
         this.level = level;
         this.name = name;
         this.toggleable = toggleable;
-        requiredIctyaSize = IctyaSize.values()[(level - 1) / 2 + 2];
+
+        requiredIctyaSize = IctyaSize.values()[getEnemyLevel()];
     }
 
     public int getLevel() {
@@ -76,14 +83,25 @@ public enum DOSkill {
         }
         return true;
     }
+
     public boolean hasPlayerKilledEnoughIctya(EntityPlayer p) {
         return hasPlayerKilledEnoughIctya(p.getCapability(PLAYERDATA, null));
     }
 
     public boolean hasPlayerKilledEnoughIctya(IPlayerData data) {
-        int killedIctya = data.getOrSetInteger("ictya-" + requiredIctyaSize.name().toLowerCase(), 0, false);
-        int usedIctya = data.getOrSetInteger("ictya-used-" + requiredIctyaSize.name().toLowerCase(), 0, false);
+        int killedIctya = data.getOrSetInteger(PlayerDataLib.ICTYA_BY_SIZE.apply(requiredIctyaSize.name().toLowerCase()), 0, false);
+        int usedIctya = data.getOrSetInteger(PlayerDataLib.ICTYA_USED_BY_SIZE.apply(requiredIctyaSize.name().toLowerCase()), 0, false);
         return killedIctya > usedIctya;
+    }
+    public boolean hasPlayerKilledEnoughBosses(EntityPlayer p) {
+        return hasPlayerKilledEnoughBosses(p.getCapability(PLAYERDATA, null));
+    }
+
+    public boolean hasPlayerKilledEnoughBosses(IPlayerData data) {
+        String requiredBossName = getRequiredBossName(getEnemyLevel());
+        int killedBosses = data.getOrSetInteger(PlayerDataLib.ARENA_BOSSES_KILLED_BY_NAME.apply(requiredBossName), 0, false);
+        int usedBosses = data.getOrSetInteger(PlayerDataLib.ARENA_BOSSES_USED_BY_NAME.apply(requiredBossName), 0, false);
+        return killedBosses > usedBosses;
     }
 
     public void unlock(EntityPlayer p) {
@@ -92,7 +110,8 @@ public enum DOSkill {
 
     public void unlock(IPlayerData data) {
         data.addString(name, false);
-        data.incrementOrSetInteger("ictya-used-" + requiredIctyaSize.name().toLowerCase(), 1, 1, false);
+        data.incrementOrSetInteger(PlayerDataLib.ICTYA_USED_BY_SIZE.apply(requiredIctyaSize.name().toLowerCase()), 1, 1, false);
+        data.incrementOrSetInteger(PlayerDataLib.ARENA_BOSSES_USED_BY_NAME.apply(getRequiredBossName(getEnemyLevel())), 1, 1, false);
     }
 
     public void toggle(EntityPlayer p) {
@@ -113,6 +132,30 @@ public enum DOSkill {
 
     public String getLocalizedKillMoreIctyaMessage() {
         return I18n.format("doskill.unlock." + requiredIctyaSize.name().toLowerCase());
+    }
+
+    public String getLocalizedKillMoreBossesMessage() {
+        return I18n.format("doskill.unlock." + getRequiredBossName(getEnemyLevel()));
+    }
+
+    private String getRequiredBossName(int enemyLevel) {
+        enemyLevel -= 2;
+        final String requiredBossName;
+        Class<? extends EntityArenaBoss> requiredBoss = null;
+        switch (enemyLevel) {
+            case 0:
+                requiredBoss = EntityDeepOneBrute.class;
+                break;
+            case 1:
+                requiredBoss = EntityDeepOneMyrmidon.class;
+                break;
+        }
+        requiredBossName = ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(requiredBoss)).getResourcePath();
+        return requiredBossName;
+    }
+
+    private int getEnemyLevel() {
+        return (level - 1) / 2 + 2;
     }
 
 }

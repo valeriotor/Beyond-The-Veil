@@ -49,10 +49,11 @@ public class MessageDOSkillsGui implements IMessage {
                         break;
                     case UNLOCK:
                         IPlayerData data = PlayerDataLib.getCap(p);
-                        if(message.skill.isUnlockable(data) && message.skill.hasPlayerKilledEnoughIctya(data)) {
-                        message.skill.unlock(data);
-                        data.incrementOrSetInteger("ictya-used-" + message.skill.getRequiredIctyaSize().name().toLowerCase(), 1, 1, false);
-                    }
+                        if(message.skill.isUnlockable(data)
+                        && message.skill.hasPlayerKilledEnoughIctya(data)
+                        && message.skill.hasPlayerKilledEnoughBosses(data)) {
+                            message.skill.unlock(data);
+                        }
                 }
             });
 

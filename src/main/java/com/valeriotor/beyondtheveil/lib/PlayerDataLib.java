@@ -61,8 +61,12 @@ public class PlayerDataLib {
 	public static final String IDOLFOLLY = "idolfolly";
 	public static final String DEATHTELEPORT = "deathtp";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
-	public static final String DEEP_ONE_STUCK_CLIMBING = "dostuckclimbing";
-	
+	public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
+	public static final Function<String, String> ICTYA_BY_SIZE = s -> String.format("ictya-%s", s);
+	public static final Function<String, String> ICTYA_USED_BY_SIZE = s -> String.format("ictya-used-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_KILLED_BY_NAME = s -> String.format("arena-killed-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
+
 	// Strings (Temporary)
 	public static final String DREAMFOCUS = "dreamfocus";
 	
