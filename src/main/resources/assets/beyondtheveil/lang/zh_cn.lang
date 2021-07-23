@@ -245,6 +245,7 @@ entity.crazed_weeper.name=发狂的泣者
 entity.blood_zombie.name=血僵尸
 entity.blood_skeleton.name=血骷髅
 entity.surgeon.name=外科医兽
+entity.dreadfish.name=怖鱼
 
 shoggoth.hasmapalready0=这个修格斯正在筑造建筑...打断这件事恐怕不是什么明智之举，对吧？
 shoggoth.hasmapalready1=当修格斯在做自己的事情时，我应该停止尝试指挥牠。这是很危险的一件事。
@@ -1160,6 +1161,10 @@ research.SURGEON.title=外科医生
 research.SURGEON.stage.0=梦之网连接着所有窥探真相者。<BR>其整个社群存在之地都距我甚远，但其中的一些族类会为它们的盟友和庇护者效劳。<BR>我与大衮的结盟使我能接触到新的族类，这其中包括外科医生，它们会为寻找自己的求索者提供技能帮助。<BR>我必须合成一封传唤类型的信，以此让外科医生到我这来。<BR>然后我只需要对着地面使用信即可。我将完成此事并目睹外科医生的面貌，随后再为他选择工作的具体内容。
 research.SURGEON.stage.1=我曾经很好奇外科医生为何能形成他们自己的社群。<BR>这是因为我过去从不知道外科医生并非职业。<BR>没错，它是一个名为外科医兽的种族。<BR>这一种族并不属于我所处的这个世界。<BR>这是一个被有意制造出来的种族吗？毕竟它们有一个共同的目标。<BR>......<BR>假如我同样是被*制造*出来的物种的一员，并非生于偶然，而是生于某种存在的意愿的呢？我对此一无所知，而我又怎可能知道呢？<BR>外科医兽是个有用的侍从，不过称之为盟友可能更合适。<BR>我必须将他放置在沉梦水篮附近，在那里我想要他，她，或是它，无所谓什么，去完成我安排的工作。<BR>然后我必须对他使用手术工具来指定我想要进行的操作。<BR>接下来，每当病人出现在水篮之中，外科医兽就会进行手术，然后将手术完成的病人放在设备顶部，并自己保留取出的心脏和脊骨。接下来我便可以空手与之交互以获取他收集到的所有材料。<BR>一个更为有用的技巧是在使用外科医生传唤信前将其与附近的箱子绑定。要做到这一点，我可以在手持传唤信时潜行并与箱子交互。<BR>我可以通过在潜行时右击空气来清除传唤信先前的绑定状态。<BR>由绑定的传唤信所召唤的外科医兽将会把所有手术的产物——包括病人和材料——放入与其绑定的箱子中，前提是箱子距它们足够近。<BR>由于物品形式的村民和泣者也能进入沉梦水篮，所以我可以高效地将外科医兽一个接一个的沿输送方向排布。<BR>外科医兽可由其主人使用棍棒来拾起。
 research.summoned_surgeon.text=召唤一位外科医生。
+
+
+# PLACEHOLDER - SUBJECT TO CHANGE
+ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
 
 ##################
 #杂项
