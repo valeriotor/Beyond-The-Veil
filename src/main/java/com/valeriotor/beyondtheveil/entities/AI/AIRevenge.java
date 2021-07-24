@@ -61,9 +61,11 @@ public class AIRevenge extends EntityAITarget{
 		if(this.ent.getRevengeTimer() < 0) {
 			return false;
 		}
+		if(!attacker.isEntityAlive())
+			return false;
 		if(predicate != null && !predicate.test(attacker))
 			return false;
-		if(ent.getRevengeTarget() != attacker) //TODO verify this works correctly for non Ictya entities
+		if(ent.getRevengeTarget() != attacker && attacker.getDistance(ent) > 20) //TODO verify this works correctly for non Ictya entities
 			return false;
 		return super.shouldContinueExecuting();
 	}

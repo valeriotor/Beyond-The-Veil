@@ -25,6 +25,7 @@ public class ModelRegistry {
 	public static ModelDeepOneMyrmidon deepOneMyrmidon;
 	public static ModelCephalopodian cephalopodian;
 	public static ModelSandflatter sandflatter;
+	public static ModelUmancala umancala;
 
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -50,6 +51,7 @@ public class ModelRegistry {
 		deepOneMyrmidon = new ModelDeepOneMyrmidon();
 		cephalopodian = new ModelCephalopodian();
 		sandflatter = new ModelSandflatter();
+		umancala = new ModelUmancala();
 	}
 	
 }

@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.*;
 
+import com.valeriotor.beyondtheveil.entities.projectile.EntityUmancalaBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -43,6 +44,11 @@ public class RegisterRenders {
 		register(EntityDeepOneMyrmidon.class, RenderDeepOneMyrmidon::new);
 		register(EntityCephalopodian.class, RenderCephalopodian::new);
 		register(EntitySandflatter.class, RenderSandflatter::new);
+		register(EntityUmancala.class, RenderUmancala::new);
+
+
+
+		register(EntityUmancalaBall.class, RenderUmancalaBall::new);
 
 		//Starspawn
 		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));

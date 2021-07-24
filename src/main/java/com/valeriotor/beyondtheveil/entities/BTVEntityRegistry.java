@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
 import com.valeriotor.beyondtheveil.entities.ictya.*;
+import com.valeriotor.beyondtheveil.entities.projectile.EntityUmancalaBall;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
@@ -50,6 +51,12 @@ public class BTVEntityRegistry {
 		register("deep_one_myrmidon", EntityDeepOneMyrmidon.class, count++ , 128);
 		register("cephalopodian", EntityCephalopodian.class, count++, 128);
 		register("sandflatter", EntitySandflatter.class, count++, 128);
+		register("umancala", EntityUmancala.class, count++, 128);
+
+
+
+
+		register("umancala_ball", EntityUmancalaBall.class, count++, 128);
 
 		registerSpawnPlacementTypes();
 		
@@ -72,6 +79,7 @@ public class BTVEntityRegistry {
 		EntitySpawnPlacementRegistry.setPlacementType(EntityManOWar.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityCephalopodian.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntitySandflatter.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityUmancala.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.ON_GROUND);
 	}
