@@ -23,6 +23,14 @@ public class EntityUmancalaBall extends EntityFireball {
     }
 
     @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if (!world.isRemote && ticksExisted > 80) {
+            setDead();
+        }
+    }
+
+    @Override
     protected void onImpact(RayTraceResult result) {
         if (!this.world.isRemote) {
             if (result.entityHit != null) {

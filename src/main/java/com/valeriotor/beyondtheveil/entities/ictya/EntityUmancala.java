@@ -27,8 +27,7 @@ public class EntityUmancala extends EntityIctya implements IRangedAttackMob {
     @Override
     protected void initEntityAI() {
         super.initEntityAI();
-//        this.tasks.addTask(0, new AIAttackMeleeAgainstLargeCreatures(this, 1.4, true));
-        tasks.addTask(0, new EntityAIAttackRanged(this, 0.27D, 18, 50));
+        tasks.addTask(0, new EntityAIAttackRanged(this, 0.27D, 18, 25));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(1, new EntityAIWander(this, 0.4D, 100));
