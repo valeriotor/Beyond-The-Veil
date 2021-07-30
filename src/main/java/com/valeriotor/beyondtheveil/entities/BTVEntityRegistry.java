@@ -52,7 +52,7 @@ public class BTVEntityRegistry {
 		register("cephalopodian", EntityCephalopodian.class, count++, 128);
 		register("sandflatter", EntitySandflatter.class, count++, 128);
 		register("umancala", EntityUmancala.class, count++, 128);
-
+		register("bonecage", EntityBoneCage.class, count++, 128);
 
 
 
