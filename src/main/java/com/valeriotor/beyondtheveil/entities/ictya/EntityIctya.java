@@ -8,6 +8,9 @@ import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
 
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.generic.GenericMessageKey;
+import com.valeriotor.beyondtheveil.network.generic.MessageGenericToClient;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityCreature;
@@ -20,6 +23,7 @@ import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -218,9 +222,11 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 			if(getSizeInt() >= IctyaSize.MEDIUM.getSizeInt()) {
 				p.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 10*(int)Math.pow(getSizeInt(), 3), 0, false, false));
 			}
-			String string = PlayerDataLib.ICTYA_BY_TYPE.apply(ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(getClass())).getResourcePath());
+			String resourcePath = ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(getClass())).getResourcePath();
+			String string = PlayerDataLib.ICTYA_BY_TYPE.apply(resourcePath);
 			IPlayerData data = PlayerDataLib.getCap(p);
 			if(!data.getString(string)) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(GenericMessageKey.ICTYARY_ENTRY, resourcePath), (EntityPlayerMP) p);
 				SyncUtil.addStringDataOnServer(p, false, string);
 				SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ICTYA_BY_SIZE.apply(getSize().name().toLowerCase()), 1, 1);
 			}
