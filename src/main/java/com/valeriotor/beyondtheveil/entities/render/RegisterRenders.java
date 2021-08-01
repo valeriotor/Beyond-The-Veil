@@ -45,7 +45,7 @@ public class RegisterRenders {
 		register(EntityCephalopodian.class, RenderCephalopodian::new);
 		register(EntitySandflatter.class, RenderSandflatter::new);
 		register(EntityUmancala.class, RenderUmancala::new);
-		register(EntityBoneCage.class, RenderBoneCage::new);
+		register(EntityBonecage.class, RenderBonecage::new);
 
 
 

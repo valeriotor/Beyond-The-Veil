@@ -9,7 +9,6 @@ import java.util.function.DoubleBinaryOperator;
 import com.valeriotor.beyondtheveil.animations.AnimationTemplate.Transformation;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.models.ModelAnimated;
-import com.valeriotor.beyondtheveil.entities.models.ModelDeepOne;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -88,6 +87,7 @@ public class BTVAnimHelper {
 			case "deep_one_myrmidon" : return ModelRegistry.deepOneMyrmidon;
 			case "cephalopodian" : return ModelRegistry.cephalopodian;
 			case "sandflatter" : return ModelRegistry.sandflatter;
+			case "bonecage" : return ModelRegistry.bonecage;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;

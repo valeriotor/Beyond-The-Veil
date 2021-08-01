@@ -1,0 +1,71 @@
+length: 34
+model: bonecage
+keys
+    SUp: 20
+    SUp1: 21
+    SUpLeft: 22
+    SUpLeft1: 23
+    SLeft: 24
+    SLeft1: 25
+    SDownLeft: 26
+    SDownLeft1: 27
+    SDown: 28
+    SDown1: 29
+    SDownRight: 30
+    SDownRight1: 31
+    SRight: 32
+    SRight1: 33
+    SUpRight: 34
+    SUpRight1: 35
+end
+start: 0: 15
+    SUp1: rotx: -1.4
+    SUpLeft1: rotx: -1.4
+    SUpRight1: rotx: -1.4
+    SDown1: rotx: -1.4
+    SDownLeft1: rotx: -1.4
+    SDownRight1: rotx: -1.4
+    SLeft1: rotx: -1.4
+    SRight1: rotx: -1.4
+    SUp: rotx: 0
+    SUpLeft: rotx: 0
+    SUpRight: rotx: 0
+    SDown: rotx: 0
+    SDownLeft: rotx: 0
+    SDownRight: rotx: 0
+    SLeft: rotx: 0
+    SRight: rotx: 0
+end
+start: 16: 20
+	SUp: rotx: 2.2: quadratic
+    SUpLeft: rotx: 2.2: quadratic
+    SUpRight: rotx: 2.2: quadratic
+    SDown: rotx: 2.2: quadratic
+    SDownLeft: rotx: 2.2: quadratic
+    SDownRight: rotx: 2.2: quadratic
+    SLeft: rotx: 2.2: quadratic
+    SRight: rotx: 2.2: quadratic
+end
+start: 21: 28
+    SUp1: rotx: 1.4
+    SUpLeft1: rotx: 1.4
+    SUpRight1: rotx: 1.4
+    SDown1: rotx: 1.4
+    SDownLeft1: rotx: 1.4
+    SDownRight1: rotx: 1.4
+    SLeft1: rotx: 1.4
+    SRight1: rotx: 1.4
+end
+start: 25: 33
+    SUp: rotx: -2.2
+    SUpLeft: rotx: -2.2
+    SUpRight: rotx: -2.2
+    SDown: rotx: -2.2
+    SDownLeft: rotx: -2.2
+    SDownRight: rotx: -2.2
+    SLeft: rotx: -2.2
+    SRight: rotx: -2.2
+end
+
+
+

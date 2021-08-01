@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -295,5 +298,21 @@ public class MathHelperBTV {
 			return rotation < upperBound && rotation > lowerBound;
 		}
 	}
-	
+
+	public static void moveTowardsEntity(EntityLivingBase still, EntityLivingBase moving, double amplifier) {
+		double xDist = still.posX - moving.posX;
+		double yDist = still.posY - moving.posY;
+		double zDist = still.posZ - moving.posZ;
+		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2)+ Math.pow(zDist, 2));
+		if(dist != 0) {
+			if(moving instanceof EntityPlayerMP && false) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageMovePlayer(xDist/dist*amplifier, yDist/dist*amplifier, zDist/dist*amplifier), (EntityPlayerMP)moving);
+			} else {
+				moving.motionZ = zDist/dist*amplifier;
+				moving.motionZ = yDist/dist*amplifier;
+				moving.motionX = xDist/dist*amplifier;
+			}
+		}
+	}
+
 }
