@@ -22,6 +22,7 @@ import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorScheduledToClien
 import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToClient;
 import com.valeriotor.beyondtheveil.network.research.ResearchSyncer;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.ActivePowers.TransformDeepOne;
 
@@ -89,6 +90,7 @@ public class SyncUtil {
 	public static void addStringDataOnServer(EntityPlayer p, boolean temporary, String string) {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), ((EntityPlayerMP)p));
+		ResearchUtil.markResearchAsUpdated(p, string); //TODO adjust for methods not using SyncUtil
 	}
 	
 	public static void removeStringDataOnServer(EntityPlayer p, String string) {

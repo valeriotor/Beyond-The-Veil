@@ -84,8 +84,7 @@ public class PlayerTickEvents {
 									data.incrementOrSetInteger(PlayerDataLib.FISH_CANOE, 1, 1, false);
 								}else{
 									p.sendMessage(new TextComponentTranslation("canoe.fishing.end"));
-									data.addString(PlayerDataLib.FISHQUEST, false);
-									BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.FISHQUEST), (EntityPlayerMP) p);
+									SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.FISHQUEST);
 								}
 							}
 						}

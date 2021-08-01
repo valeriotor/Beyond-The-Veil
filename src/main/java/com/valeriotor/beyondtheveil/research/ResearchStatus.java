@@ -17,6 +17,7 @@ public class ResearchStatus {
 	private int stage = -1;
 	private boolean learned;
 	private boolean complete = false;
+	private boolean updated = false;
 	
 	public ResearchStatus(Research res) {
 		this.res = res;
@@ -116,6 +117,7 @@ public class ResearchStatus {
 		nbt.setInteger("stage", stage);
 		nbt.setBoolean("learned", learned);
 		nbt.setBoolean("complete", complete);
+		nbt.setBoolean("updated", updated);
 		return nbt;
 	}
 	
@@ -123,6 +125,9 @@ public class ResearchStatus {
 		this.stage = nbt.getInteger("stage");
 		this.learned = this.learned || nbt.getBoolean("learned");
 		this.complete = nbt.getBoolean("complete");
+		if (nbt.hasKey("updated")) {
+			updated = nbt.getBoolean("updated");
+		}
 		return this;
 	}
 	
@@ -162,5 +167,13 @@ public class ResearchStatus {
 		this.complete = true;
 		this.learned = true;
 		return true;
+	}
+
+	public void setUpdated(boolean updated) {
+		this.updated = updated;
+	}
+
+	public boolean isUpdated() {
+		return updated;
 	}
 }

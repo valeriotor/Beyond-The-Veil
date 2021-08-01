@@ -200,7 +200,7 @@ public class BlockIdol extends ModBlock{
                     	PlayerTimer pt = new PlayerTimer(p, player -> BTVPacketHandler.INSTANCE.sendTo(new MessagePlaySound(BTVSounds.getIdBySound(BTVSounds.dagonThump), p.getPosition().toLong()), (EntityPlayerMP)player), i*5);
                     	ServerTickEvents.addPlayerTimer(pt);
                     }
-                    data.addString(PlayerDataLib.IDOLFOLLY, false);
+                    SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.IDOLFOLLY);
                     ServerTickEvents.addMessage(new DelayedMessage(85, new TextComponentTranslation("hit.idol.schiz9"), p));
                     ServerTickEvents.addMessage(new DelayedMessage(115, new TextComponentTranslation("hit.idol.schiz10"), p));
 				}
