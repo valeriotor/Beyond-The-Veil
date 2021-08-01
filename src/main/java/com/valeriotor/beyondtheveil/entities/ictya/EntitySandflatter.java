@@ -209,7 +209,7 @@ public class EntitySandflatter extends EntityIctya implements IAnimatedAttacker 
         TelegraphedAttackTemplate ambushAttack = new TelegraphedAttackTemplateBuilder(AnimationRegistry.sandflatter_ambush, 29, 14, 40, ambushArea, 3)
                 .setPredicate((sandflatter, unused) -> ((EntitySandflatter) sandflatter).isAmbushing())
                 .addPostAttackEffect(sandflatter -> ((EntitySandflatter) sandflatter).stopAmbushing())
-                .addPostHitEffect((unused, target) -> target.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 30, 3)))
+                .addPostHitEffect((unused, target) -> target.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 30, 3))) //TODO maybe use setHealth?
                 .build();
 
         TelegraphedAttackTemplate clawAttack = new TelegraphedAttackTemplateBuilder(AnimationRegistry.sandflatter_claw, 12, 6, 20, clawArea, 7)
