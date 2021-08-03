@@ -27,6 +27,7 @@ public class ModelRegistry {
 	public static ModelSandflatter sandflatter;
 	public static ModelUmancala umancala;
 	public static ModelBonecage bonecage;
+	public static ModelAdeline adeline;
 
 	public static void registerModels() {
 		canoe = new ModelCanoe();
@@ -54,6 +55,7 @@ public class ModelRegistry {
 		sandflatter = new ModelSandflatter();
 		umancala = new ModelUmancala();
 		bonecage = new ModelBonecage();
+		adeline = new ModelAdeline();
 	}
 	
 }

@@ -112,6 +112,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	}
 	
 	protected boolean shouldFlee(EntityLivingBase spooker) {
+		if(spooker instanceof EntityAdeline) return false;
 		int sizeCompare = this.compareSizeTo(spooker);
 		return sizeCompare <= -2 || (this.getSize() == IctyaSize.TINY && sizeCompare <= -1);
 	}

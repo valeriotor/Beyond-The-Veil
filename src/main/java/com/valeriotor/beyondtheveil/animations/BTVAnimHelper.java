@@ -88,6 +88,7 @@ public class BTVAnimHelper {
 			case "cephalopodian" : return ModelRegistry.cephalopodian;
 			case "sandflatter" : return ModelRegistry.sandflatter;
 			case "bonecage" : return ModelRegistry.bonecage;
+			case "adeline" : return ModelRegistry.adeline;
 		default:
 			System.err.println("Error reading model type in " + name + ".btvanim");
 			return null;

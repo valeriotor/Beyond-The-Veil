@@ -42,6 +42,7 @@ public class AnimationRegistry {
 	public static AnimationTemplate sandflatter_ambush;
 	public static AnimationTemplate sandflatter_claw;
 	public static AnimationTemplate bonecage_crunch;
+	public static AnimationTemplate adeline_bite;
 	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
 	public static void loadAnimations(boolean client) {
@@ -83,6 +84,7 @@ public class AnimationRegistry {
 		sandflatter_ambush = createAnimationTemplate("sandflatter_ambush", client);
 		sandflatter_claw = createAnimationTemplate("sandflatter_claw", client);
 		bonecage_crunch = createAnimationTemplate("bonecage_crunch", client);
+		adeline_bite = createAnimationTemplate("adeline_bite", client);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {

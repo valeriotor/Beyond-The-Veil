@@ -1,0 +1,20 @@
+length: 11
+model: adeline
+keys
+	SUp: 4
+	SRight: 6
+	SDown: 8
+	SLeft: 10
+end
+start: 0: 3
+	SUp: rotx: 1.6: quadratic
+    SRight: rotx: 1.6: quadratic
+    SDown: rotx: 1.6: quadratic
+    SLeft: rotx: 1.6: quadratic
+end
+start: 4: 10
+	SUp: rotx: -1.6
+    SRight: rotx: -1.6
+    SDown: rotx: -1.6
+    SLeft: rotx: -1.6
+end

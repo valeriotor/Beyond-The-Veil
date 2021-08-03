@@ -46,6 +46,7 @@ public class RegisterRenders {
 		register(EntitySandflatter.class, RenderSandflatter::new);
 		register(EntityUmancala.class, RenderUmancala::new);
 		register(EntityBonecage.class, RenderBonecage::new);
+		register(EntityAdeline.class, RenderAdeline::new);
 
 
 
