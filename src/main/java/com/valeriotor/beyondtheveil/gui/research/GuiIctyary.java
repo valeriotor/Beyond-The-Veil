@@ -85,7 +85,8 @@ public class GuiIctyary extends GuiScreen {
             }
         }
 
-        if(ictyaPages.get(ictyaPages.size()-1).isEmpty()) ictyaPages.remove(ictyaPages.size()-1); // remove eventual empty final list
+        int lastIndex = ictyaPages.size() - 1;
+        if(ictyaPages.get(lastIndex).isEmpty() && ictyaPages.size() > 1) ictyaPages.remove(lastIndex); // remove eventual empty final list
 
         entryHeight = (height*9/10)/ictyasPerPage;
         entrySeparatorBarHeight = height/85;

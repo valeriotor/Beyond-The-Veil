@@ -1334,11 +1334,63 @@
             ]
         },
 		{
+        "key": "BLACKMIRROR",
+        "name": "research.BLACKMIRROR.title",
+        "icons": [ "beyondtheveil:black_mirror" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 23],
+		"hiders": ["TONEWDEPTHS"],
+        "parents": ["TONEWDEPTHS" ],
+        "stages": [
+				{
+                    "text": "research.BLACKMIRROR.stage.0",
+                    "required_research" : ["usedblack_mirror"],
+					"recipes" : ["beyondtheveil:black_mirror"]
+                },
+                {
+                    "text": "research.BLACKMIRROR.stage.1",
+					"recipes" : ["beyondtheveil:black_mirror"]
+                }
+            ]
+        },
+		{
+        "key": "FLESHCARBONTOKEN",
+        "name": "research.FLESHCARBONTOKEN.title",
+        "icons": [ "beyondtheveil:black_mirror" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20, 25],
+		"hiders": ["BLACKMIRROR"],
+        "parents": ["BLACKMIRROR" ],
+        "stages": [
+				{
+                    "text": "research.FLESHCARBONTOKEN.stage.0",
+                    "required_research" : ["craftedfleshcarbontoken"],
+					"recipes" : ["beyondtheveil:fleshcarbontoken"]
+                },
+                {
+                    "text": "research.FLESHCARBONTOKEN.stage.1",
+					"recipes" : ["beyondtheveil:fleshcarbontoken"]
+                }
+            ]
+        },
+		{
+        "key": "ARCHE",
+        "name": "research.ARCHE.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 21, 27],
+		"hiders": ["FLESHCARBONTOKEN"],
+		"parents" : ["FLESHCARBONTOKEN"],
+        "stages": [
+				{
+                    "text": "research.ARCHE.stage.0"
+                }
+            ]
+        },
+		{
         "key": "ICTYARY",
         "name": "research.ICTYARY.title",
         "icons": [ "minecraft:air" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 21, 21],
-		"hiders": ["METAMORPHOSIS"],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 29],
+		"hiders": ["ARCHE"],
+		"parents" : ["ARCHE"],
         "stages": [
 				{
                     "text": "research.ICTYARY.stage.0"
@@ -1349,8 +1401,9 @@
         "key": "DOSKILLS",
         "name": "research.DOSKILLS.title",
         "icons": [ "minecraft:air" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 23, 21],
-		"hiders": ["METAMORPHOSIS"],
+        "category": "BEYOND_THE_VEIL", "location": [ 23, 29],
+		"hiders": ["ARCHE"],
+		"parents" : ["ARCHE"],
         "stages": [
 				{
                     "text": "research.DOSKILLS.stage.0"
