@@ -3,12 +3,14 @@ package com.valeriotor.beyondtheveil.tileEntities;
 import java.util.List;
 import java.util.function.Function;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityBloodSkeleton;
 import com.valeriotor.beyondtheveil.entities.EntityBloodZombie;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.Teleport;
 import com.valeriotor.beyondtheveil.world.DimensionRegistry;
@@ -82,9 +84,10 @@ public class TileBloodWell extends TileEntity implements ITickable{
 	
 	private void teleportPlayer() {
 		EntityPlayer p = world.getClosestPlayer(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 1, false);
-		if(p != null) {
+		if(p != null && PlayerDataLib.getCap(p).getString("canEnterArche")) { //TODO check for fleshcarbontoken
 			WorldServer w = world.getMinecraftServer().getWorld(DimensionRegistry.ARCHE.getId());
 			BlockPos toPos = BloodHomeList.get(w).findPlayerHome(p);
+			MirrorUtil.updateDefaultDialogue(p, "bloodhome");
 			p.changeDimension(DimensionRegistry.ARCHE.getId(), new Teleport(w, toPos.getX(), toPos.getY(), toPos.getZ()));
 		}
 	}

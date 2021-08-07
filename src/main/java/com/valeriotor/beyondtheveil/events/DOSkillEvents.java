@@ -75,7 +75,7 @@ public class DOSkillEvents {
                 ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_player_uppercut))));
                 BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(UPPERCUT_ANIMATION), (EntityPlayerMP) p);
                 Entity target = event.getTarget();
-                if (target instanceof EntityLivingBase && target.isNonBoss()) {
+                if (target instanceof EntityLivingBase) {
                     EntityLivingBase entity = (EntityLivingBase) target;
                     PlayerTimer pt = new PlayerTimer(p, player -> {
                         if(entity.isEntityAlive()) {
@@ -83,7 +83,8 @@ public class DOSkillEvents {
                             player.world.playSound(null, player.getPosition(), SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 1, 1);
                             float maxHealth = entity.getMaxHealth();
                             double motion = entity.getMaxHealth() >= 100 ? 1.3 * Math.exp((-maxHealth + 80) / 30) : 1.3;
-                            entity.motionY = motion; //TODO: check if player, then send message
+                            if(target.isNonBoss())
+                                entity.motionY = motion; //TODO: check if player, then send message
                         }
                     }, 4);
                     ServerTickEvents.addPlayerTimer(pt);

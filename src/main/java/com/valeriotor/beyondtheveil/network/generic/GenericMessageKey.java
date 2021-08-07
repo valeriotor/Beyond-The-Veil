@@ -5,5 +5,6 @@ public enum GenericMessageKey {
     ROAR_PLAYER_SINK,
     UPPERCUT_ANIMATION,
     ICTYARY_ENTRY,
-    MEMORY_ENTRY;
+    MEMORY_ENTRY,
+    MIRROR_UNLOCK_DATA;
 }

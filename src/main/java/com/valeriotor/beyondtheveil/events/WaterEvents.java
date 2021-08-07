@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.events;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueTemplate;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.items.IDeepOneItem;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
@@ -30,8 +32,10 @@ public class WaterEvents {
 				giveSpeedAndFlight(p, transformed);
 				if((p.ticksExisted & 7) == 0) {
 					giveVisionAndBreathing(p, arche);
-					if((p.ticksExisted & 15) == 0)
+					if ((p.ticksExisted & 15) == 0) {
+						checkArcheDialogue(p, arche);
 						damageArchePlayer(p, arche, transformed);
+					}
 				}
 			} else if(transformed) {
 				if(p.world.isRemote)
@@ -73,11 +77,20 @@ public class WaterEvents {
 			p.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, false, false));
 		}
 	}
+
+	private static void checkArcheDialogue(EntityPlayer p, boolean arche) {
+		if (arche) {
+			MirrorDialogueTemplate currentDialogue = MirrorUtil.getCurrentDialogue(p);
+			if (currentDialogue != null && currentDialogue.getID().equals("bloodhome")) {
+				MirrorUtil.updateDefaultDialogue(p, "archewater");
+			}
+		}
+	}
 	
 	private static void damageArchePlayer(EntityPlayer p, boolean arche, boolean transformed) {
 		if(!transformed && arche && !p.capabilities.isCreativeMode && !p.isSpectator()) {
 			if(!p.world.isRemote) {
-				p.setHealth(p.getHealth()-1);
+				p.setHealth(p.getHealth()-Math.max(1, p.getMaxHealth()/4));
 			} else {
 				p.performHurtAnimation();
 				p.playSound(SoundEvents.ENTITY_PLAYER_HURT_DROWN, 1, 1);

@@ -5,7 +5,7 @@
         "branchLength": 0,
         "endingNodeID": "first_node"
     },
-    "unlocksAtEnd": "testdefaultunlock",
+    "unlocksAtEnd": "afterstart",
     "dialogueNodes" : {
         "first_node": {
             "id" : "first_node",
@@ -203,6 +203,7 @@
                 {
                     "id":"letsgetgoing",
                     "branchLength":0,
+					"unlockedData": ["usedblack_mirror"],
                     "endsDialogue":true,
                     "endingNodeID":"end"
                 }
@@ -214,6 +215,7 @@
                 {
                     "id":"letsgetgoing2",
                     "branchLength":0,
+					"unlockedData": ["usedblack_mirror"],
                     "endsDialogue":true,
                     "endingNodeID":"end"
                 }

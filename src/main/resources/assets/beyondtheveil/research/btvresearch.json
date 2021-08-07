@@ -1357,7 +1357,7 @@
         "name": "research.FLESHCARBONTOKEN.title",
         "icons": [ "beyondtheveil:black_mirror" ],
         "category": "BEYOND_THE_VEIL", "location": [ 20, 25],
-		"hiders": ["BLACKMIRROR"],
+		"hiders": ["BLACKMIRROR", "BLOODWELL"],
         "parents": ["BLACKMIRROR" ],
         "stages": [
 				{

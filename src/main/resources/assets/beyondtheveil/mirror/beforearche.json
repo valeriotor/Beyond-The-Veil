@@ -1,0 +1,57 @@
+{
+    "id" : "beforearche",
+    "startingBranch" : {
+        "id" : "first_branch",
+        "branchLength": 0,
+        "endingNodeID": "first"
+    },
+    "dialogueNodes" : {
+        "first": {
+            "id" : "first",
+            "dialogueOptions" : [
+                {
+                    "id" : "everbeen",
+                    "branchLength" : 1,
+                    "endingNodeID" : "changedlittle"
+                }
+            ]
+        },
+        "changedlittle": {
+            "id": "changedlittle",
+            "dialogueOptions" : [
+                {
+                    "id" : "howdoyouknow",
+                    "branchLength" : 1,
+                    "endingNodeID" : "seenagain"
+                }
+            ]
+        },
+        "seenagain": {
+            "id": "seenagain",
+            "dialogueOptions": [
+                {
+                    "id": "recording",
+                    "branchLength": 2,
+                    "endingNodeID":"spoonfed"
+                }
+            ]
+        },
+        "spoonfed": {
+            "id": "spoonfed",
+            "dialogueOptions": [
+                {
+                    "id":"frodo",
+                    "branchLength":0,
+					"endsDialogue":true,
+                    "endingNodeID":"end"
+                },
+                {
+                    "id":"trust",
+                    "branchLength":1,
+					"endsDialogue":true,
+                    "endingNodeID":"end"
+                }
+            ]
+        }
+    }
+}
