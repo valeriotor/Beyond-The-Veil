@@ -12,11 +12,14 @@ import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogue;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorToServer;
 
+import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
+import org.lwjgl.input.Mouse;
 
 public class GuiBlackMirror extends GuiScreen{
 	private final MirrorDialogue dialogue;
@@ -25,6 +28,8 @@ public class GuiBlackMirror extends GuiScreen{
 	private List<List<String>> splitDialogueOptions;
 	private List<DialogueLine> dialogueLines = new ArrayList<>();
 	private int counter = 30;
+	private int yOptionOffset = 0;
+	private int yFullOptionSize = 0;
 	private DialogueLine nextLine;
 	
 	public GuiBlackMirror(MirrorDialogue dialogue) {
@@ -59,23 +64,46 @@ public class GuiBlackMirror extends GuiScreen{
 	
 	private void drawDialogueOptions(int mouseX, int mouseY) {
 		if(!splitDialogueOptions.isEmpty()) {
+			int yAreaOffset = getOptionAreaYOffset();
 			int yOffset = getDialogueOptionsYOffset();
 			int x = (width - getLineWidth()) / 2;
 			int selectedOption = getHoveredDialogueOption(mouseX, mouseY);
 			for(int i = 0; i < splitDialogueOptions.size(); i++) {
 				List<String> option = splitDialogueOptions.get(i);
 				int xOffset = selectedOption == i ? x+25 : x + 10;
-				drawString(mc.fontRenderer, "> ", x, yOffset, 0xFFAA2200);
+				if(yOffset > yAreaOffset - getTextHeight())
+					drawString(mc.fontRenderer, "> ", x, yOffset, 0xFFAA2200);
 				for(String optionLine : option) {
-					drawString(mc.fontRenderer, optionLine, xOffset, yOffset, 0xFFAA2200);
+					if(yOffset > yAreaOffset - getTextHeight())
+						drawString(mc.fontRenderer, optionLine, xOffset, yOffset, 0xFFAA2200);
 					yOffset += getTextHeight();
+					if (yOffset > height) {
+						break;
+					}
 				}
 			}
+			drawRect(x, yAreaOffset - getTextHeight(), x+getLineWidth(), yAreaOffset - getTextHeight()/4,  0xFF000000);
+			int optionAreaToOptionsDifference = getOptionAreaToOptionsDifference();
+			if (optionAreaToOptionsDifference > 0) {
+				x += getLineWidth()*21/20;
+				int optionAreaHeight = height - yAreaOffset;
+				int scrollSectionHeight = optionAreaHeight *9/10;
+				drawRect(x, yAreaOffset, x + 8, yAreaOffset+scrollSectionHeight, 0xFF333333);
+				int barHeight = scrollSectionHeight * optionAreaHeight / yFullOptionSize;
+				int barY = yAreaOffset + (scrollSectionHeight - barHeight) * yOptionOffset / optionAreaToOptionsDifference;
+				drawRect(x, barY, x+8, barY+barHeight, 0xFFBBBBBB);
+				if (barHeight > 8) {
+					drawRect(x+1, barY+1, x+7, barY+barHeight-1, 0xFF777777);
+					drawRect(x+1, barY+barHeight/2-3, x+7, barY+barHeight/2-2, 0xFF333333);
+				}
+				drawRect(x+1, barY+barHeight/2+2, x+7, barY+barHeight/2+3, 0xFF333333);
+			}
+			GlStateManager.color(1, 1, 1);
 		}
 	}
 	
 	private void drawDialogueLines(float partialTicks) {
-		int yOffset = getDialogueOptionsYOffset() - 20;
+		int yOffset = getOptionAreaYOffset() - 20;
 		if(counter > 15 && counter < 30) {
 			int nextLineSize = nextLine == null ? 1 : nextLine.size();
 			yOffset -= (int)(nextLine.size() * getTextHeight() * Math.pow((counter + partialTicks - 15) / 15, 2));
@@ -112,14 +140,25 @@ public class GuiBlackMirror extends GuiScreen{
 				finishDialogue();
 		}
 	}
-	
+
+	@Override
+	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		int optionAreaToOptionsDifference = getOptionAreaToOptionsDifference();
+		yOptionOffset = MathHelperBTV.clamp(0, Math.max(0, optionAreaToOptionsDifference), yOptionOffset - 4*(int) Math.signum(Mouse.getDWheel()));
+	}
+
+	private int getOptionAreaToOptionsDifference() {
+		return yFullOptionSize - (height - getOptionAreaYOffset());
+	}
+
 	private void finishDialogue() {
 		mc.displayGuiScreen(null);
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageMirrorToServer());
 	}
 	
 	private int getHoveredDialogueOption(int mouseX, int mouseY) {
-		if(!splitDialogueOptions.isEmpty()) {
+		if(!splitDialogueOptions.isEmpty() && mouseY > getOptionAreaYOffset()) {
 			int sideSpace = (width - getLineWidth()) / 2;
 			// The following two ifs are to get in the "options' region"
 			if(mouseX > sideSpace && mouseX < width - sideSpace) {
@@ -149,6 +188,10 @@ public class GuiBlackMirror extends GuiScreen{
 										.map(I18n::format)
 										.map(option -> mc.fontRenderer.listFormattedStringToWidth(option, getLineWidth()))
 										.collect(Collectors.toCollection(ArrayList::new));
+		yFullOptionSize = 0;
+		for (List<String> optionLines : splitDialogueOptions) {
+			yFullOptionSize += optionLines.size() * getTextHeight();
+		}
 	}
 	
 	private int getLineWidth() {
@@ -156,9 +199,13 @@ public class GuiBlackMirror extends GuiScreen{
 	}
 	
 	private int getDialogueOptionsYOffset() {
+		return height * 85 / 100 - yOptionOffset;
+	}
+
+	private int getOptionAreaYOffset() {
 		return height * 85 / 100;
 	}
-	
+
 	private DialogueLine getNextLine() {
 		String unlocalizedNewLine = dialogue.getUnlocalizedDialogueLine();
 		if(unlocalizedNewLine.length() > 0) {
