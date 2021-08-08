@@ -75,7 +75,8 @@ public class ItemRegistry {
 	public static final ModItem surgeon_summons = new ItemSurgeonSummoner("surgeon_summons");
 	public static final ItemCrucible crucible = new ItemCrucible("crucible");
 	public static final ItemBlackMirror black_mirror = new ItemBlackMirror("black_mirror");
-	
+	public static final ModItem fleshcarbontoken = new ModItem("fleshcarbontoken");
+
 	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
 	//public static final ItemTablet scroll = new ItemTablet("scroll");
@@ -131,7 +132,8 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(surgeon_summons, 0, "inventory");
         ClientProxy.registerItemRenderer(crucible, 0, "inventory");
         ClientProxy.registerItemRenderer(black_mirror, 0, "inventory");
-        
+        ClientProxy.registerItemRenderer(fleshcarbontoken, 0, "inventory");
+
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DarkSand), 0, "inventory");
@@ -290,7 +292,8 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.surgeon_summons);
     	registry.register(ItemRegistry.crucible);
     	registry.register(ItemRegistry.black_mirror);
-    	
+    	registry.register(ItemRegistry.fleshcarbontoken);
+
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
     	BlockRegistry.PlantRedstoneWeed.setSeed(redstone_weed_seeds);
