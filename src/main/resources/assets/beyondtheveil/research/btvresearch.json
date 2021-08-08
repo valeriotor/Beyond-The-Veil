@@ -1355,7 +1355,7 @@
 		{
         "key": "FLESHCARBONTOKEN",
         "name": "research.FLESHCARBONTOKEN.title",
-        "icons": [ "beyondtheveil:black_mirror" ],
+        "icons": [ "beyondtheveil:fleshcarbontoken" ],
         "category": "BEYOND_THE_VEIL", "location": [ 20, 25],
 		"hiders": ["BLACKMIRROR", "BLOODWELL"],
         "parents": ["BLACKMIRROR" ],
@@ -1374,7 +1374,7 @@
 		{
         "key": "ARCHE",
         "name": "research.ARCHE.title",
-        "icons": [ "minecraft:air" ],
+        "icons": [ "minecraft:prismarine;1;2" ],
         "category": "BEYOND_THE_VEIL", "location": [ 21, 27],
 		"hiders": ["FLESHCARBONTOKEN"],
 		"parents" : ["FLESHCARBONTOKEN"],
@@ -1387,7 +1387,7 @@
 		{
         "key": "ICTYARY",
         "name": "research.ICTYARY.title",
-        "icons": [ "minecraft:air" ],
+        "icons": [ "minecraft:spawn_egg" ],
         "category": "BEYOND_THE_VEIL", "location": [ 19, 29],
 		"hiders": ["ARCHE"],
 		"parents" : ["ARCHE"],
@@ -1400,7 +1400,7 @@
 		{
         "key": "DOSKILLS",
         "name": "research.DOSKILLS.title",
-        "icons": [ "minecraft:air" ],
+        "icons": [ "minecraft:prismarine_crystals" ],
         "category": "BEYOND_THE_VEIL", "location": [ 23, 29],
 		"hiders": ["ARCHE"],
 		"parents" : ["ARCHE"],
