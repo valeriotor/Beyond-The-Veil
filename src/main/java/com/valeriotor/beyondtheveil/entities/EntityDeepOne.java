@@ -1,10 +1,8 @@
 package com.valeriotor.beyondtheveil.entities;
 
-import java.util.UUID;
-import java.util.function.Supplier;
-
 import com.valeriotor.beyondtheveil.animations.Animation;
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
+import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.AI.AIProtectMaster;
 import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.AI.AISpook;
@@ -14,19 +12,9 @@ import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCity;
 import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCityList;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,9 +28,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, ISpooker, IAnimatedAttacker, IDamageCapper {
     private int i = 0;
@@ -54,6 +46,7 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
     private Animation roarAnim = null;
     private Animation attackAnim = null;
     private int roarCooldown = 300;
+    private boolean naturalDeepCitySpawn = false;
 
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityDeepOne.class, DataSerializers.BYTE);
     private static final DataParameter<Boolean> ROARING = EntityDataManager.<Boolean>createKey(EntityDeepOne.class, DataSerializers.BOOLEAN);
@@ -190,12 +183,49 @@ public class EntityDeepOne extends EntityCreature implements IPlayerGuardian, IS
                 DeepCity city = cityList.getCity(chunkX, chunkZ);
                 if(city != null) {
                     BlockPos cityCenter = city.getCenter();
-                    if(world.getBlockState(getPosition()).getBlock() == Blocks.WATER || (Math.abs(cityCenter.getX()-posX) > 30 && Math.abs(cityCenter.getZ()-posZ) > 30))
+                    if (world.getBlockState(getPosition()).getBlock() == Blocks.WATER || (Math.abs(cityCenter.getX() - posX) > 15 && Math.abs(cityCenter.getZ() - posZ) > 15)) {
+                        naturalDeepCitySpawn = true;
                         return true;
+                    }
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+        if (naturalDeepCitySpawn) {
+            boolean glassFlag = false;
+            for (int i = 0; i < (int) posY - 10; i++) {
+                BlockPos position = getPosition().down(i);
+                Block block = world.getBlockState(position).getBlock();
+                if (block == BlockRegistry.BlockDarkGlass) {
+                    if (!glassFlag) {
+                        glassFlag = true;
+                    } else {
+                        break;
+                    }
+                } else if (glassFlag && (block == BlockRegistry.BlockDeepPrismarine || block == Blocks.SEA_LANTERN)) {
+                    boolean flag = true;
+                    for (int x = -1; x <= 1 && flag; x++) {
+                        for (int y = 1; y <= 3 && flag; y++) {
+                            for (int z = -1; z <= 1 && flag; z++) {
+                                Block checkBlock = world.getBlockState(position.add(x, y, z)).getBlock();
+                                if (checkBlock != Blocks.AIR && checkBlock != Blocks.WATER && (checkBlock != BlockRegistry.BlockDarkGlass || (x == 0 && z == 0))) {
+                                    flag = false;
+                                }
+                            }
+                        }
+                    }
+                    if (flag) {
+                        setPosition(position.getX()+0.5, position.getY()+1, position.getZ()+0.5);
+                        break;
+                    }
+                }
+            }
+        }
+        return super.onInitialSpawn(difficulty, livingdata);
     }
 
     @Override
