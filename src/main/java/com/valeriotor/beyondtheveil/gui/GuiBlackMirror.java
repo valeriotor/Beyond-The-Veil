@@ -190,6 +190,9 @@ public class GuiBlackMirror extends GuiScreen{
 			if(localizedLine.charAt(0) == '[') {
 				color = getColorFromChar(localizedLine.charAt(1));
 				localizedLine = localizedLine.substring(3);
+				if (true) {
+					localizedLine = "- " + localizedLine;
+				}
 			}
 			splitLocalizedLines = widthSplitter.apply(localizedLine);
 		}
