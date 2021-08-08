@@ -24,6 +24,10 @@ public abstract class BiomeArche extends Biome{
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityDeepAngler.class, 25, 1, 1));
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityDreadfish.class, 10, 1, 1));
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityManOWar.class, 7, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityCephalopodian.class, 3, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityBonecage.class, 3, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityAdeline.class, 8, 1, 1));
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityUmancala.class, 8, 1, 1));
 	}
 	
 	@Override

@@ -81,6 +81,8 @@ public class BTVEntityRegistry {
 		EntitySpawnPlacementRegistry.setPlacementType(EntityCephalopodian.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntitySandflatter.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityUmancala.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityBonecage.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityAdeline.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.IN_WATER);
 		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.ON_GROUND);
 	}
