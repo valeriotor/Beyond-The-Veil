@@ -15,11 +15,10 @@ import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.tileEntities.TileBloodWell.BloodMobs;
 
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.*;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemSlab;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -76,6 +75,7 @@ public class ItemRegistry {
 	public static final ItemCrucible crucible = new ItemCrucible("crucible");
 	public static final ItemBlackMirror black_mirror = new ItemBlackMirror("black_mirror");
 	public static final ModItem fleshcarbontoken = new ModItem("fleshcarbontoken");
+	public static ItemInkMask ink_mask; // name: ink_mask
 
 	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
@@ -133,6 +133,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(crucible, 0, "inventory");
         ClientProxy.registerItemRenderer(black_mirror, 0, "inventory");
         ClientProxy.registerItemRenderer(fleshcarbontoken, 0, "inventory");
+        ClientProxy.registerItemRenderer(ink_mask, 0, "inventory");
 
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
@@ -193,7 +194,10 @@ public class ItemRegistry {
 	}
     
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	IForgeRegistry<Item> registry = event.getRegistry();
+		ItemArmor.ArmorMaterial inkMaskMaterial = EnumHelper.addArmorMaterial("ink_mask", "beyondtheveil:ink_mask", 1000, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0);
+		ink_mask = new ItemInkMask("ink_mask", inkMaskMaterial);
+
+		IForgeRegistry<Item> registry = event.getRegistry();
     	registry.register(new ItemBlock(BlockRegistry.DampWood).setRegistryName(BlockRegistry.DampWood.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.FumeSpreader).setRegistryName(BlockRegistry.FumeSpreader.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.DarkSand).setRegistryName(BlockRegistry.DarkSand.getRegistryName()));
@@ -293,6 +297,7 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.crucible);
     	registry.register(ItemRegistry.black_mirror);
     	registry.register(ItemRegistry.fleshcarbontoken);
+    	registry.register(ItemRegistry.ink_mask);
 
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);

@@ -125,8 +125,11 @@ public class WaterEvents {
 	
 	private static void dropArmor(EntityPlayer p) {
 		for(int i = 0; i < 4; i++) {
-			ItemHandlerHelper.giveItemToPlayer(p, p.inventory.armorInventory.get(i), 9+i);
-			p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+			ItemStack armorPiece = p.inventory.armorInventory.get(i);
+			if(armorPiece.getItem() != ItemRegistry.ink_mask) {
+				ItemHandlerHelper.giveItemToPlayer(p, armorPiece, 9 + i);
+				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+			}
 		}
 	}
 	

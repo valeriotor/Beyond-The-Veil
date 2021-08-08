@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
+import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -114,7 +115,9 @@ public class EntityOctid extends EntityIctya{
 		public void startExecuting() {
 			List<Entity> ents = this.entity.world.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().grow(5), e -> e instanceof EntityLivingBase);
 			for(Entity e : ents) {
-				((EntityLivingBase)e).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20*3, 2, false, false));
+				boolean mask = e instanceof EntityPlayer && ((EntityPlayer)e).inventory.armorInventory.get(3).getItem() == ItemRegistry.ink_mask;
+				if(!mask)
+					((EntityLivingBase)e).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20*3, 2, false, false));
 			}
 			((EntityOctid)this.entity).squirt();
 			super.startExecuting();
