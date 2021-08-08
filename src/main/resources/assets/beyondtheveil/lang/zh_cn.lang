@@ -709,10 +709,122 @@ mirror.start.guide.guiding=How will you take me there?你要怎么带我前往�
 mirror.start.guiding.0=[Y]I've been your guiding hand, the one that helped you write.我自始至终在引导你，帮你写下那诸多文段。
 mirror.start.guiding.1=[Y]Our researches are born out of both of our minds. I'll help you through Al Azif.我们的研究滋生于你我的意识。我会用死灵之书指引你前行。
 mirror.start.final.whoareyou2=I still wish to know who you are.我还是想知道你到底是谁。
-mirror.start.final.letsgetgoing=Let's get going then. (End)n那就让我们继续吧。
+mirror.start.final.letsgetgoing=Let's get going then. (End)那就让我们继续吧。
 mirror.start.whoareyou2.0=[Y]A friend. One who had to conceal his own identity for your sake.是你的朋友。为了你不得不隐瞒自己的身份。
 mirror.start.whoareyou2.1=[Y]Cover's blown. We ride together now.端倪渐显。我们如今并驾齐驱。
 mirror.start.final2.letsgetgoing2=Let's get going then. (End)那就让我们继续吧。
+
+mirror.beforearche.first.everbeen=Have you ever been to Arche yourself?你可曾去过太初？
+mirror.beforearche.everbeen.0=[Y]Yes, long ago. Though it has changed little since then.去过，那是很久以前的事了。不过从那以后它变化不大。
+mirror.beforearche.changedlittle.howdoyouknow=How do you know that?你是怎么知道的？
+mirror.beforearche.howdoyouknow.0=[Y]I've seen it again, since then.在那之后我又见到了它。
+mirror.beforearche.seenagain.recording=As in a recording?就像是重览记录一般？
+mirror.beforearche.recording.0=[Y]More like a livestream, though still not quite.更像是亲临其境，但是并不完全真切。
+mirror.beforearche.recording.1=[Y]It's not something I am willing to explain just yet. Some truths must be spoonfed.我现在不想多做解释。有些真相说来话长。
+mirror.beforearche.spoonfed.frodo=Alright, keep your secrets. (End)好吧，继续守住你的秘密吧。
+mirror.beforearche.spoonfed.trust=You realise secrets undermine trust?你知道保密会破坏信任吧？
+mirror.beforearche.trust.0=[Y]Yes. Which is why I will tell you. When the time is ripe.我知道。所以我会告诉你的。只待时机成熟。
+
+mirror.archepreparation.first.here=I'm here.我在这。
+mirror.archepreparation.here.0=[Y]Bring a few torches, Al Azif, this Mirror, and preferably little else. Maybe some normal food, in case you find air pockets to transform into a human again.带上火把、死灵之书、这面镜子，最好再带些别的。比如带些普通的食物，为你找到机会重新变成人类时做好准备。
+mirror.archepreparation.second.veil=How do we reach the Veil from Arche?我们如何从太初前往帷幕？
+mirror.archepreparation.veil.0=[Y]That, I do not know yet. I never got that far myself.我目前还不知道。我自己从未走那么远。
+mirror.archepreparation.veil.1=[Y]Perhaps it will reveal itself whene we're ready for it. 也许，待我们准备妥当，它就会揭示自身。
+mirror.archepreparation.veil.2=[Y]Or perhaps when it is ready for us.又或者要等到它准备好迎接我们之时。
+mirror.archepreparation.veil.3=[Y]For now, focus on getting familiar with Arche. Its food chain, its inhabitants, its challenges.现在，专注于熟悉太初。关注它的食物链，它的原住民，它的挑战。
+mirror.archepreparation.second.arena=The duels with the Deep Ones, how do I start them?与深潜者的决斗，我如何开始？
+mirror.archepreparation.arena.0=[Y]There should be an appropriate mechanism in the large arena, I believe. We'll see when we're there.大型竞技场里应该有所需的机关。我们到那再看。
+mirror.archepreparation.second.ictya=Will the Ictyas attack me on sight?伊克提亚会一见到我就发起攻击吗？
+mirror.archepreparation.ictya.0=[Y]Unlikely. In the Deep One form you'd count as a medium sized Ictya, so only ones that are larger and somewhat hungry will attack you.不太可能。在深潜者形态下，你与中等体型的伊克提亚大小相当，所以只有比你更大的伊克提亚在饥饿时会攻击你。
+mirror.archepreparation.ictya.1=[Y]When available, they'll generally go for smaller prey. Of course, most will retaliate when attacked.一旦找到机会，它们往往捕食更小的猎物。当然，它们中的大多数被攻击时也会反击。
+mirror.archepreparation.second.ready=I'm ready.我准备好了。
+mirror.archepreparation.ready.0=[Y]Then grab the token and enter the Blood Well.那么，握紧信物，踏入血井吧。
+
+mirror.abouttoenter.first.forgot=How do I enter Arche?我怎么进入太初？
+mirror.abouttoenter.forgot.0=[Y]Grab the token and enter the Blood Well.握紧信物，踏入血井。
+mirror.abouttoenter.first.end=(End)
+
+mirror.bloodhome.first.what=What is this place?这是什么地方？
+mirror.bloodhome.what.0=[Y]Your very own Blood Home.独属于你的血宅。
+mirror.bloodhome.what.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.太初之中有多个这种建筑——不同的来访者通常会进入不同的血宅。
+mirror.bloodhome.what.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.你每次进入这片地下世界，都会被传送至这个建筑。随心所欲地把这变成你的基地吧。
+
+mirror.archewater.first.home=What was that red, blood structure I entered Arche through?
+mirror.archewater.home.0=[Y]Your very own Blood Home.
+mirror.archewater.home.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.
+mirror.archewater.home.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.
+mirror.archewater.first.love=I love Arche.
+mirror.archewater.first.hate=I hate Arche.
+mirror.archewater.love.0=[Y]And what do you love most about it?
+mirror.archewater.hate.0=[Y]How come?
+mirror.archewater.loves.immense=It is immense - new emotions spring forth, of freedom and wonder.
+mirror.archewater.loves.ictya=The fauna. Shapes and sizes undreamt of before. Alien, almost.
+mirror.archewater.loves.cities=The cities and architecture of the Deep Ones - a hidden civilization at the very bottom of the world.
+mirror.archewater.loves.foodchain=The food chain itself. A tangible lesson of the crude truth that is survival of the fittest.
+mirror.archewater.hates.immense2=It is immense - I feel tiny. No, less than that.
+mirror.archewater.hates.ictya2=The fauna. I feel vulnerable among these new threats, in their bizarre, almost alien shapes and sizes.
+mirror.archewater.hates.octid=THAT PURPLE INK.
+mirror.archewater.hates.food=The constant search for food, the growing hunger assailing my miserable belly.
+mirror.archewater.immense.0=[Y]Indeed. So close to the Veil and the Truth lying Beyond it, Arche is truly magnificent.
+mirror.archewater.immense.1=[Y]An unparalleled feeling of wonder, though perhaps a bitter one, reminding us of how tiny we are.
+mirror.archewater.ictya.0=[Y]The chaotic, ever churning waters of Arche may well give life to all sorts of bizarre creatures.
+mirror.archewater.ictya.1=[Y]And alien, yes. Perhaps more than one'd think. Other worlds harbour quite similar beings in their own deepest oceans.
+mirror.archewater.ictya2.0=[Y]The chaotic, ever churning waters of Arche may well give life to all sorts of bizarre creatures.
+mirror.archewater.ictya2.1=[Y]And alien, yes. Perhaps more than one'd think. Other worlds harbour quite similar beings in their own deepest oceans.
+mirror.archewater.alien.oceans=Do other worlds have oceans of their own?
+mirror.archewater.alien.life=There's life on other planets?
+mirror.archewater.alien.knowalien=How do you know this?
+mirror.archewater.oceans.0=[Y]Indeed. Arche exists beneath many worlds, and even among the emptiest regions of the universe you can find its waters swirling unendingly.
+mirror.archewater.life.0=[Y]You did not truly believe to be alone in the universe, did you?
+mirror.archewater.life.1=[Y]Yes, civilizations exist on another worlds, spread out among the stars. Some have even visited this world.
+mirror.archewater.visited.which=Which ones?
+mirror.archewater.visited.results=What did they do?
+mirror.archewater.which.0=[Y]Their names would be meaningless to you now. Some had the appearance of fungi, others of ticks, others yet had.. well.. they become hard to describe.
+mirror.archewater.which.1=[Y]Many of them had a penchant for brains, though.
+mirror.archewater.results.0=[Y]Not much. Many of them had a penchant for brains, though, and some villagers are occasionally abducted.
+mirror.archewater.results.1=[Y]Don't be scared. After all, it is no more terrifying than our own organ harvesting.
+mirror.archewater.foodchain.0=[Y]Given the chaotic nature of Arche, it is truly quite marvelous that a hierarchy of order - that is, the food chain - has established itself here.
+mirror.archewater.foodchain.1=[Y]Of course, our goal is to break that order. To ascend the chain, until we sit at its very top.
+mirror.archewater.cities.0=[Y]Their buildings are indeed quite striking - so much so that even your ancestors were initiallay shocked when they first set gaze upon them.
+mirror.archewater.cities.1=[Y]The Deep Ones they'd once believed to be mindless creatures had in truth known enlightenment far before they did.
+mirror.archewater.ancestors.here=My ancestors reached Arche?
+mirror.archewater.here.0=[Y]Some did, yes. Chief among them Saint Jerome, though I do not know what fate he met.
+mirror.archewater.here.1=[Y]Probably not different from his companions. Crushed beneath the pressure of Arche, the few survivors immediately murdered by Ictya and Deep Ones.
+mirror.archewater.food.0=[Y]Progress through Arche should be slow and calculated. Do not hesitate to stop to hunt every so often.
+mirror.archewater.food.1=[Y]A larger Ictya results in a more sizeable repast - at the cost of augmented risk.
+mirror.archewater.octid.0=[Y]Ohh, do I understand. We'll seek a solution together.
+mirror.archewater.octid.1=[Y]Perhaps the Deep Ones have found a defense against it. We could search one in their cities.
+mirror.archewater.first.whatis=Now that I've been to Arche, could you explain to me what it actually is?
+mirror.archewater.whatis.0=[Y]Arche is the deepest of all oceans, yet, even more than that, it is a *concept*.
+mirror.archewater.whatis.1=[Y]Arche is the principle of all that belongs to our world. It is that from which all is born, living and not. 
+mirror.archewater.whatis.2=[Y]Flesh and stone, lightning and bone, the Cosmos and the sea, the Dwellers and thee. All from its waters.
+mirror.archewater.whatis.3=[Y]Arche has been the subject of study of the occult academia for aeons, now. First, by philosophers; then, by warlocks; now, even by scientists.
+mirror.archewater.whatis.4=[Y]However, there is a flaw in all of this. Can you spot it?
+mirror.archewater.flaw.fire=Water may not give birth to fire, its opposite.
+mirror.archewater.flaw.principle=Water may not give birth to itself, even Arche needs a principle.
+mirror.archewater.flaw.nether=Below the world lies the Nether, then only void above and beneath it.
+mirror.archewater.flaw.academic=Aeons of academic study, yet no one has every heard of it?
+mirror.archewater.flaw.none=I see no flaws.
+mirror.archewater.fire.0=[Y]Brilliant answer! That is precisely what the philosophers of yore realised.
+mirror.archewater.fire.1=[Y]So, if fire wasn't born from water - or at least not directly - then there must have been something else, before water, right?
+mirror.archewater.principle.0=[Y]Great answer! Not the one I was thinking of, mind you, but you reached the same conclusion as the philosophers of yore.
+mirror.archewater.principle.1=[Y]What they had noticed was that fire may not have been born from water, for they are opposites on the elemental spectrum.
+mirror.archewater.principle.2=[Y]So, if fire wasn't born from water - or at least not directly - then, just like you said, there must have been something else before water, right?
+mirror.archewater.nether.0[Y]=Ahh, but Arche lies even below the Nether. Although, the answer does in fact relate to that hellish place.
+mirror.archewater.nether.1[Y]=Want to try again?
+mirror.archewater.academic.0=[Y]It is only academics of the occult who studied it, I am afraid. 
+mirror.archewater.academic.1=[Y]In your civilization, a principle of things different from the one posited by religious leaders was considered heretic, as a late friend of yours may have already mentioned.
+mirror.archewater.academic.2=[Y]Care to try again?
+mirror.archewater.none.0=[Y]Nor did the philosophers, at first. But you have seen more Truth than they did, and can attempt a better guess, can't you?
+mirror.archewater.deeper.apeiron=Something deeper than Arche?
+mirror.archewater.apeiron.0=[Y]Yes.. and no. You see, the only answer to this was that the true principle of all things lied not in your universe, but outside it.
+mirror.archewater.apeiron.1=[Y]It would also have explained how the cosmos and the stars and the nebulae came to be, so far from our own oceans. Multiple breaches between our universe and what was "outside".
+mirror.archewater.apeiron.2=[Y]Academia called it "Apeiron". It means "Infinity", and it is that which lies, as it is now believed, Beyond the Veil.
+mirror.archewater.apeiron.3=[Y]It is filtered by the Veil, the Great Dreamer himself, and touches our world through the Void, bringing into existence Arche and all the other deepest oceans in the Cosmos.
+mirror.archewater.apeiron.4=[Y]Then, when fire wanted to burn on our planet, the Void created a middle plane between Arche and the Overworld, and through what we now call the Nether even fire is born from water, channeled by quartz.
+mirror.archewater.apeiron.5=[Y]Likewise flared the stars - to which Dagon is elder, for he was born with Arche, oldest among the living.
+mirror.archewater.apeiron.6=[Y]So everything comes from the waters of Arche, yet even those waters come from Apeiron.
+
 
 ##################
 #药水效果
@@ -1162,9 +1274,24 @@ research.SURGEON.stage.0=梦之网连接着所有窥探真相者。<BR>其整个
 research.SURGEON.stage.1=我曾经很好奇外科医生为何能形成他们自己的社群。<BR>这是因为我过去从不知道外科医生并非职业。<BR>没错，它是一个名为外科医兽的种族。<BR>这一种族并不属于我所处的这个世界。<BR>这是一个被有意制造出来的种族吗？毕竟它们有一个共同的目标。<BR>......<BR>假如我同样是被*制造*出来的物种的一员，并非生于偶然，而是生于某种存在的意愿的呢？我对此一无所知，而我又怎可能知道呢？<BR>外科医兽是个有用的侍从，不过称之为盟友可能更合适。<BR>我必须将他放置在沉梦水篮附近，在那里我想要他，她，或是它，无所谓什么，去完成我安排的工作。<BR>然后我必须对他使用手术工具来指定我想要进行的操作。<BR>接下来，每当病人出现在水篮之中，外科医兽就会进行手术，然后将手术完成的病人放在设备顶部，并自己保留取出的心脏和脊骨。接下来我便可以空手与之交互以获取他收集到的所有材料。<BR>一个更为有用的技巧是在使用外科医生传唤信前将其与附近的箱子绑定。要做到这一点，我可以在手持传唤信时潜行并与箱子交互。<BR>我可以通过在潜行时右击空气来清除传唤信先前的绑定状态。<BR>由绑定的传唤信所召唤的外科医兽将会把所有手术的产物——包括病人和材料——放入与其绑定的箱子中，前提是箱子距它们足够近。<BR>由于物品形式的村民和泣者也能进入沉梦水篮，所以我可以高效地将外科医兽一个接一个的沿输送方向排布。<BR>外科医兽可由其主人使用棍棒来拾起。
 research.summoned_surgeon.text=召唤一位外科医生。
 
+research.BLACKMIRROR.title=Black Mirror
+research.BLACKMIRROR.stage.0=My mind is besieged. A tiny war with at most one casualty.<BR>Is there a Veil within myself?<BR>If a mirror reflects all that is me, then a Black Mirror that gives off no light will reflect nothing but my soul.<BR>And I should NOT peer into my soul.<BR>Spasms seized my writing hand, detaching what is thought from what is told. I must hold steadfast, and impress onto Al Azif only what I, and none other, believe.<BR>I must NOT look within myself. No, no, I MUST.
+research.BLACKMIRROR.stage.1=...<BR>How is this going to work?<BR>Like it always has. Write what's on your mind, and I'll nudge your hand. See how easy it is?<BR>I assure you, it just got a lot harder. I'll ask you not to interfere too much. Let's keep it a monologue.<BR>Alright.<BR>So, Arche. We need a Blood Well.
+research.usedblack_mirror.text=Do NOT use a Black Mirror.
+
+research.FLESHCARBONTOKEN.title=Token of Flesh and Carbon
+research.FLESHCARBONTOKEN.stage.0=So, let me guess, we'll be entering the Blood Well. Just like the dead.<BR>Indeed.<BR>Oh, what an omen.<BR>A Blood Well is connected to Arche itself. The red fluid makes for powerful binding, and the Well is a sort of capillary.<BR>One could see it like this: life and all that exists in our world is pushed upwards from Arche, through Void and bedrock, just like an artery pushes healthy blood to all organs.<BR>Yes, you know exactly what we'll be doing.<BR>We'll be going down the veins of our world. And, just like a vein brings back waste, or carbon dioxide, we will be carrying the detritus of our own world - that is, dead life, decomposing itself into purer carbon. 
+research.FLESHCARBONTOKEN.stage.1=We're ready. Are you excited?<BR>Hopeful, more like. And, please, don't say 'You'. I can hardly tell who's writing what. Besides, shouldn't your voice be yellow?<BR>Ah, but this is *your* writing hand, just nudged here and there. My voice will always be down below, yellow as you see it, telling you what to craft and do.<BR>I still can't tell if I'm making you up.<BR>A tad offensive.<BR>Ah, let's go onwards.
+research.craftedfleshcarbontoken.text=Craft a Token of Flesh and Carbon.
+
+research.ARCHE.title=Arche
+research.ARCHE.stage.0=Arche plays by very different rules compared to our world. One would do best to learn them by heart.<BR>In the deepest oceans there will be very little air, banished to just a few structures. However, when we first get there we will indeed be in one such structure, and therefore get a breather of nice - if not fresh - air.<BR>Said structure will be fairly dark. Bring some torches. Ideally, we should go there in human form, to place those light sources, before transforming into a Deep One.<BR>At the center of the bottom floor of the structure there should be a blood portal back to the Overworld.<BR>Before entering the waters of Arche, you MUST transform. Don't even think about getting wet as a human - you will die. The pressure is too strong.<BR>As you well know, as a Deep One you may only hold maritime items. We won't be able to speak with each other through Al Azif or the Black Mirror. Additionally, your only two available food sources, slugs and fish, cannot be used in Arche. Slugs will swim away, fish restores no hunger. And hunger drains FAST in Arche.<BR>You must become part of the food chain. The creaturs of Arche are known as Ictya - they come in many shapes and sizes. Big fish hunts small fish, and nobody's safe when the big ones get hungry. Kill them to sate your belly.<BR>Reaching the Veil, even through Arche, is no small feat. We'd best grow more powerful. There are dwellings - nay, *cities* of Deep Ones down in Arche. They ask you to prove your worth first by hunting down Ictya, then by challenging their champions in their arenas.<BR>Here in Al Azif we'll record both the Ictyas we've slain and the skills we've acquired.<BR>It's time. Speak to me in the Mirror.
+
 
 # PLACEHOLDER - SUBJECT TO CHANGE
 ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
+
+doskill.bosskill=%1$s 击杀了： %2$s
 
 ##################
 #杂项
