@@ -46,6 +46,7 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
         setPathPriority(PathNodeType.WALKABLE, -8.0F);
         setPathPriority(PathNodeType.BLOCKED, -8.0F);
         setPathPriority(PathNodeType.WATER, 16.0F);
+		currentFood = getSizeInt() > IctyaSize.MEDIUM.ordinal() ? getMaxFood() * 0.8 : getMaxFood();
 	}
 	
 	public abstract IctyaSize getSize();
@@ -92,14 +93,16 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 	protected boolean shouldAttack(EntityLivingBase attacked) {
 		if(getSize() == IctyaSize.TINY) return false;
 		int diff = this.compareSizeTo(attacked);
-		if(diff >= 2) {
-			if(getCurrentOverMaxFood() < 0.85) return true;
+		if (diff == 3) {
+			return getCurrentOverMaxFood() < 0.4;
+		} else if(diff == 2) {
+			return getCurrentOverMaxFood() < 0.85;
 		} else if(diff == 1) {
-			if(getCurrentOverMaxFood() < 0.67) return true;
+			return getCurrentOverMaxFood() < 0.67;
 		} else if(diff == 0) {
-			if(getCurrentOverMaxFood() < 0.5) return true;
+			return getCurrentOverMaxFood() < 0.5;
 		} else if(diff == -1) {
-			if(getCurrentOverMaxFood() < 0.1 && attacked.getHealth() / attacked.getMaxHealth() < 0.3F) return true;
+			return getCurrentOverMaxFood() < 0.1 && attacked.getHealth() / attacked.getMaxHealth() < 0.3F;
 		}
 		return false;
 	}
