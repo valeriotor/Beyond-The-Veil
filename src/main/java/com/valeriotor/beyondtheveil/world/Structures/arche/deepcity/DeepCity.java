@@ -38,7 +38,7 @@ public class DeepCity {
 			components = layout.getAsList();
 		}
 		for(DeepCityStructure dcs : components) {
-			dcs.fillCache(chunks, usedChunks);
+			dcs.fillCache(chunks, usedChunks, world.rand);
 		}
 		loaded = true;
 	}

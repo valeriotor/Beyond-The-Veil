@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.valeriotor.beyondtheveil.world.BTVChunkCache;
@@ -57,11 +58,11 @@ public class DeepCityStructure {
 		return chunkX <= maxChunkX && chunkX >= minChunkX  && chunkZ <= maxChunkZ && chunkZ >= minChunkZ ;
 	}
 	
-	public void fillCache(Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
+	public void fillCache(Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, Random random) {
 		template.fillCache(center, chunks, usedChunks);
 		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if(corridors.contains(facing)) {
-				template.fillCacheForCorridor(center, chunks, usedChunks, facing);
+				template.fillCacheForCorridor(center, chunks, usedChunks, facing, random);
 				template.fillCacheForDoor(center, chunks, usedChunks, facing, true);
 			} else {
 				template.fillCacheForDoor(center, chunks, usedChunks, facing, false);

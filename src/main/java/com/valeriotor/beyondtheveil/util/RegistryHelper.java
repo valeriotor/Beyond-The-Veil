@@ -5,20 +5,7 @@ import javax.annotation.Nullable;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.tileEntities.TileArborealGeneratorBottom;
-import com.valeriotor.beyondtheveil.tileEntities.TileBarrel;
-import com.valeriotor.beyondtheveil.tileEntities.TileBloodWell;
-import com.valeriotor.beyondtheveil.tileEntities.TileCityMapper;
-import com.valeriotor.beyondtheveil.tileEntities.TileDreamFocus;
-import com.valeriotor.beyondtheveil.tileEntities.TileFumeSpreader;
-import com.valeriotor.beyondtheveil.tileEntities.TileGearBench;
-import com.valeriotor.beyondtheveil.tileEntities.TileHeart;
-import com.valeriotor.beyondtheveil.tileEntities.TileLacrymatory;
-import com.valeriotor.beyondtheveil.tileEntities.TileMegydrea;
-import com.valeriotor.beyondtheveil.tileEntities.TileMemorySieve;
-import com.valeriotor.beyondtheveil.tileEntities.TileSlugBait;
-import com.valeriotor.beyondtheveil.tileEntities.TileStatue;
-import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
+import com.valeriotor.beyondtheveil.tileEntities.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -76,7 +63,8 @@ public class RegistryHelper {
 		registerTileEntity(TileGearBench.class, "tilegearbench");
 		registerTileEntity(TileDreamFocus.class, "tiledreamfocus");
 		registerTileEntity(TileMegydrea.class, "tilemegydrea");
-		
+		registerTileEntity(TileDeepChest.class, "tiledeepchest");
+
 	}
 	
 	private static void registerTileEntity(Class<? extends TileEntity> teClass, String name) {

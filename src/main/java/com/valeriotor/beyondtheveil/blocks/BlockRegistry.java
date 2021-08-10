@@ -82,7 +82,8 @@ public class BlockRegistry {
 	public static final BlockDarkGlass BlockDarkGlass = new BlockDarkGlass(BlockNames.DARK_GLASS);
 	public static final BlockDeepPrismarine BlockDeepPrismarine = new BlockDeepPrismarine(BlockNames.DEEP_PRISMARINE);
 	public static final BlockArena BlockArena = new BlockArena(BlockNames.ARENA);
-	
+	public static final BlockDeepChest BlockDeepChest = new BlockDeepChest(BlockNames.DEEP_CHEST);
+
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
 	
@@ -144,7 +145,8 @@ public class BlockRegistry {
 	   	registry.register(BlockDarkGlass);
 		registry.register(BlockDeepPrismarine);
 		registry.register(BlockArena);
-	   	
+		registry.register(BlockDeepChest);
+
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);
 	   	

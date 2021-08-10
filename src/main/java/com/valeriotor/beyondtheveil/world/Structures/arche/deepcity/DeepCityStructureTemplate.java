@@ -1,11 +1,7 @@
 package com.valeriotor.beyondtheveil.world.Structures.arche.deepcity;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.common.base.Charsets;
@@ -16,6 +12,7 @@ import com.valeriotor.beyondtheveil.items.TestItem.JSonStructureBuilder;
 import com.valeriotor.beyondtheveil.world.BTVChunkCache;
 import com.valeriotor.beyondtheveil.util.BlockCoords;
 
+import com.valeriotor.beyondtheveil.world.Structures.loot.LootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.state.IBlockState;
@@ -110,7 +107,7 @@ public class DeepCityStructureTemplate {
 		}
 	}
 	
-	public void fillCacheForCorridor(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, EnumFacing facing) {
+	public void fillCacheForCorridor(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, EnumFacing facing, Random random) {
 		IBlockState glass = BlockRegistry.BlockDarkGlass.getDefaultState();
 		int distance = DeepCityLayout.INDIVIDUAL_WIDTH/2 + 1  - distanceDoorFromCenter;
 		BlockPos pos = center.offset(EnumFacing.UP, DOOR_HEIGHT).offset(facing, distanceDoorFromCenter);
@@ -129,6 +126,25 @@ public class DeepCityStructureTemplate {
 		fillCacheWith3DBlockFill(fromRightGlass, toRightGlass, glass, chunks, usedChunks);
 		fillCacheWith3DBlockFill(fromLeftGlass, toLeftGlass, glass, chunks, usedChunks);
 		fillCacheWith3DBlockFill(fromAir, toAir, Blocks.AIR.getDefaultState(), chunks, usedChunks);
+		int deepChestDistance = random.nextInt(distance * 5);
+		if (deepChestDistance < distance-3) {
+			BlockPos chest = pos.offset(facing, deepChestDistance + 1).offset(facing.rotateYCCW(),1).up();
+			int chunkX = chest.getX() >> 4;
+			int chunkZ = chest.getZ() >> 4;
+			long cPos = ChunkPos.asLong(chunkX, chunkZ);
+			if(!usedChunks.containsKey(cPos))
+				usedChunks.put(cPos, false);
+			if(!usedChunks.get(cPos)) {
+				BTVChunkCache cache = chunks.get(cPos);
+				if(cache == null) {
+					cache = new BTVChunkCache();
+					chunks.put(cPos, cache);
+				}
+				IBlockState state = BlockRegistry.BlockDeepChest.getDefaultState();
+				cache.setBlockState(chest, state);
+				cache.setLootEntry(chest, LootTables.deep_city_corridor.getResourcePath());
+			}
+		}
 	}
 	
 	private void fillCacheWith3DBlockFill(BlockPos from, BlockPos to, IBlockState state, Map<Long,BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
