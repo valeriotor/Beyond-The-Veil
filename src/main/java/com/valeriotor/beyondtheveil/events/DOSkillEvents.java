@@ -84,7 +84,7 @@ public class DOSkillEvents {
                             float maxHealth = entity.getMaxHealth();
                             double motion = entity.getMaxHealth() >= 100 ? 1.3 * Math.exp((-maxHealth + 80) / 30) : 1.3;
                             if(target.isNonBoss())
-                                entity.motionY = motion; //TODO: check if player, then send message
+                                entity.motionY = motion*1.4; //TODO: check if player, then send message
                         }
                     }, 4);
                     ServerTickEvents.addPlayerTimer(pt);
