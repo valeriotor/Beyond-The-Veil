@@ -16,6 +16,7 @@ public class LootTables {
     public static final ResourceLocation hamletTownHall = LootTableList.register(new ResourceLocation(References.MODID, "town_hall"));
     public static final ResourceLocation tablet = LootTableList.register(new ResourceLocation(References.MODID, "inject/tablet"));
     public static final ResourceLocation deep_city_corridor = LootTableList.register(new ResourceLocation(References.MODID, "deep_city_corridor"));
+    public static final ResourceLocation deep_city_beacon = LootTableList.register(new ResourceLocation(References.MODID, "deep_city_beacon"));
     public static final Map<String, ResourceLocation> lootTables;
 
     static {
@@ -25,6 +26,7 @@ public class LootTables {
         tempTables.put(hamletTownHall.getResourcePath(), hamletTownHall);
         tempTables.put(tablet.getResourcePath(), tablet);
         tempTables.put(deep_city_corridor.getResourcePath(), deep_city_corridor);
+        tempTables.put(deep_city_beacon.getResourcePath(), deep_city_beacon);
         lootTables = ImmutableMap.copyOf(tempTables);
     }
 

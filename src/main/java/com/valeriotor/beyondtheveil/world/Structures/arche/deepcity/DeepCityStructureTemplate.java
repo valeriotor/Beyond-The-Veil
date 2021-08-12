@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.items.TestItem.JSonStructureBuilder;
 import com.valeriotor.beyondtheveil.world.BTVChunkCache;
 import com.valeriotor.beyondtheveil.util.BlockCoords;
 
+import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
 import com.valeriotor.beyondtheveil.world.Structures.loot.LootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPrismarine;
@@ -87,17 +88,34 @@ public class DeepCityStructureTemplate {
 		for(BlockCoords bc : coords) {
 			bc.fillCache(center, chunks, usedChunks);
 		}
+		addAdditionalBlocks(center, chunks, usedChunks);
 	}
-	
+
+	private void addAdditionalBlocks(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
+		if (name.equals(ArcheStructuresRegistry.BEACON.name)) { //for now this is how extra chests are added
+			BlockPos pos = center.add(4, 41, -4);
+			long cPos = getcPos(pos.getX(), pos.getZ());
+			if(usedChunks != null && !usedChunks.containsKey(cPos))
+				usedChunks.put(cPos, false);
+			if(usedChunks == null || !usedChunks.get(cPos)) {
+				BTVChunkCache cache = chunks.get(cPos);
+				if(cache == null) {
+					cache = new BTVChunkCache();
+					chunks.put(cPos, cache);
+				}
+				cache.setBlockState(pos, BlockRegistry.BlockDeepChest.getDefaultState());
+				cache.setLootEntry(pos, LootTables.deep_city_beacon.getResourcePath());
+			}
+		}
+	}
+
 	public void fillCacheForDoor(BlockPos center, Map<Long, BTVChunkCache> chunks, Map<Long, Boolean> usedChunks, EnumFacing facing, boolean corridor) {
 		IBlockState state = corridor ? Blocks.AIR.getDefaultState() : BlockRegistry.BlockDarkGlass.getDefaultState();
 		byte[][] coords = doors.get(facing);
 		BlockPos offsetCenter;
 		for(byte[] coord : coords) {
 			offsetCenter = center.add(coord[0], coord[1], coord[2]);
-			int chunkX = offsetCenter.getX() >> 4;
-			int chunkZ = offsetCenter.getZ() >> 4;
-			Long cPos = ChunkPos.asLong(chunkX, chunkZ);
+			long cPos = getcPos(offsetCenter.getX(), offsetCenter.getZ());
 			BTVChunkCache cache = chunks.get(cPos);
 			if(cache == null) {
 				cache = new BTVChunkCache();
@@ -129,11 +147,8 @@ public class DeepCityStructureTemplate {
 		int deepChestDistance = random.nextInt(distance * 5);
 		if (deepChestDistance < distance-3) {
 			BlockPos chest = pos.offset(facing, deepChestDistance + 1).offset(facing.rotateYCCW(),1).up();
-			int chunkX = chest.getX() >> 4;
-			int chunkZ = chest.getZ() >> 4;
-			long cPos = ChunkPos.asLong(chunkX, chunkZ);
-			if(!usedChunks.containsKey(cPos))
-				usedChunks.put(cPos, false);
+			long cPos = getcPos(chest.getX(), chest.getZ());
+			fillUsedChunksMap(usedChunks, cPos);
 			if(!usedChunks.get(cPos)) {
 				BTVChunkCache cache = chunks.get(cPos);
 				if(cache == null) {
@@ -146,17 +161,14 @@ public class DeepCityStructureTemplate {
 			}
 		}
 	}
-	
+
 	private void fillCacheWith3DBlockFill(BlockPos from, BlockPos to, IBlockState state, Map<Long,BTVChunkCache> chunks, Map<Long, Boolean> usedChunks) {
 		MutableBlockPos pos = new MutableBlockPos();
 		for(int x = Math.min(from.getX(), to.getX()); x <= Math.max(from.getX(), to.getX()); x++) {
 			for(int y = Math.min(from.getY(), to.getY()); y <= Math.max(from.getY(), to.getY()); y++) {
 				for(int z = Math.min(from.getZ(), to.getZ()); z <= Math.max(from.getZ(), to.getZ()); z++) {
-					int chunkX = x >> 4;
-					int chunkZ = z >> 4;
-					long cPos = ChunkPos.asLong(chunkX, chunkZ);
-					if(!usedChunks.containsKey(cPos)) 
-						usedChunks.put(cPos, false);
+					long cPos = getcPos(x, z);
+					fillUsedChunksMap(usedChunks, cPos);
 					if(!usedChunks.get(cPos)) {
 						pos.setPos(x, y, z);
 						BTVChunkCache cache = chunks.get(cPos);
@@ -166,12 +178,23 @@ public class DeepCityStructureTemplate {
 						}
 						cache.setBlockState(pos, state);
 					}
-					
+
 				}
 			}
 		}
 	}
-	
+
+	private void fillUsedChunksMap(Map<Long, Boolean> usedChunks, long cPos) {
+		if (!usedChunks.containsKey(cPos))
+			usedChunks.put(cPos, false);
+	}
+
+	private long getcPos(int x, int z) {
+		int chunkX = x >> 4;
+		int chunkZ = z >> 4;
+		return ChunkPos.asLong(chunkX, chunkZ);
+	}
+
 	public int getDistanceDoorFromCenter() {
 		return distanceDoorFromCenter;
 	}

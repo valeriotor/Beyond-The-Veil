@@ -2,7 +2,7 @@
 	"pools": [
 		{
 			"name": "main",
-			"rolls": 5,
+			"rolls": 4,
 			"entries":[
 				{
 					"type": "item",
@@ -16,7 +16,7 @@
 							}
 						}
 					],
-					"weight": 10
+					"weight": 8
 				},
 				{
 					"type": "item",
@@ -30,7 +30,7 @@
 							}
 						}
 					],
-					"weight": 10
+					"weight": 8
 				},
 				{
 					"type": "item",
@@ -41,6 +41,20 @@
 							"count": {
 								"min": 1,
 								"max": 3
+							}
+						}
+					],
+					"weight": 6
+				},
+				{
+					"type": "item",
+					"name": "minecraft:gold_ingot",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 5
 							}
 						}
 					],
@@ -87,11 +101,6 @@
 						}
 					],
 					"weight": 6
-				},
-				{
-					"type": "item",
-					"name": "beyondtheveil:ink_mask",
-					"weight": 3
 				}
 			]
 		}
