@@ -90,8 +90,7 @@ public class TileDeepChest extends TileEntity {
         readUpdateTag(pkt.getNbtCompound());
     }
 
-    public void setLootTable(ResourceLocation p_189404_1_, long p_189404_2_)
-    {
+    public void setLootTable(ResourceLocation p_189404_1_, long p_189404_2_) {
         this.lootTable = p_189404_1_;
         this.lootTableSeed = p_189404_2_;
     }
