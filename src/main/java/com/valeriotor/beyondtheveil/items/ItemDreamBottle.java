@@ -55,15 +55,13 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
-public class ItemDreamBottle extends Item{
+public class ItemDreamBottle extends ModItem{
 	
 	private static final int CAPACITY = 4000;
 	
 	public ItemDreamBottle(String name) {
+		super(name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(References.BTV_TAB);
-		setRegistryName(References.MODID, name);
-		setUnlocalizedName(name);
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DispenseFluidContainer.getInstance());
 	}
 	

@@ -38,10 +38,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 
-	public ItemSawCleaver(ToolMaterial material) {
+	public ItemSawCleaver(ToolMaterial material, String name) {
 		super(material);
-		this.setRegistryName(References.MODID + ":saw_cleaver");
-		this.setUnlocalizedName("saw_cleaver");
+		this.setRegistryName(References.MODID, name);
+		this.setUnlocalizedName("beyondtheveil:" + name);
 		this.addPropertyOverride(new ResourceLocation("Extended"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)

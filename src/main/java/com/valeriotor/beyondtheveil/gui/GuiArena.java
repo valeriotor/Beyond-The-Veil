@@ -3,6 +3,8 @@ package com.valeriotor.beyondtheveil.gui;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageArenaFight;
+import com.valeriotor.beyondtheveil.worship.DOSkill;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -19,7 +21,7 @@ public class GuiArena extends GuiScreen {
     public GuiArena(BlockPos arenaStarterPos) {
         this.arenaStarterPos = arenaStarterPos;
         bruteUnlocked = true;
-        myrmidonUnlocked = true;
+        myrmidonUnlocked = DOSkill.HEALTH.isUnlockable(Minecraft.getMinecraft().player);
         scionUnlocked = false;
     }
 
@@ -38,7 +40,7 @@ public class GuiArena extends GuiScreen {
         scionButton.enabled = scionUnlocked;
         buttonList.add(bruteButton);
         buttonList.add(myrmidonButton);
-        buttonList.add(scionButton);
+//        buttonList.add(scionButton);
     }
 
     @Override

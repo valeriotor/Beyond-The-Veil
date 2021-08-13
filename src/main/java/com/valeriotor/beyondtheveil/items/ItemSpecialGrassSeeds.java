@@ -17,10 +17,12 @@ public class ItemSpecialGrassSeeds extends ItemSeeds{
 
 	private Block grass;
 	
-	public ItemSpecialGrassSeeds(Block crops, Block grass) {
+	public ItemSpecialGrassSeeds(Block crops, Block grass, String name) {
 		super(crops, Blocks.FARMLAND);
 		this.grass = grass;
 		this.setCreativeTab(References.BTV_TAB);
+		setRegistryName(References.MODID, name);
+		setUnlocalizedName(References.MODID + ":" + name);
 	}
 	
 	@Override

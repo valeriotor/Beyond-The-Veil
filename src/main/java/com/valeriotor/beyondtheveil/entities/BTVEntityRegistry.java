@@ -64,7 +64,7 @@ public class BTVEntityRegistry {
 	}
 	
 	private static void register(String name, Class<? extends Entity> entClass, int id, int trackingRange) {
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":" + name), entClass, name, id, BeyondTheVeil.instance, trackingRange, 1, true, 0xF52A37, 0x589BCD);
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":" + name), entClass, "beyondtheveil:" + name, id, BeyondTheVeil.instance, trackingRange, 1, true, 0xF52A37, 0x589BCD);
 	}
 	
 	private static void registerNoEgg(String name, Class<? extends Entity> entClass, int id, int trackingRange) {

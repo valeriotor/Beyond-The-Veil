@@ -12,7 +12,7 @@ public class BlockWornBrickStairs extends BlockStairs{
 	protected BlockWornBrickStairs(IBlockState modelState) {
 		super(modelState);
 		this.setRegistryName(References.MODID, BlockNames.WORNBRICKSTAIRS);
-		this.setUnlocalizedName(BlockNames.WORNBRICKSTAIRS);
+		this.setUnlocalizedName(References.MODID + ":" + BlockNames.WORNBRICKSTAIRS);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 

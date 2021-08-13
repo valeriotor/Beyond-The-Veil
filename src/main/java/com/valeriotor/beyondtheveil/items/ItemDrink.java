@@ -21,11 +21,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class ItemDrink extends Item{
+public class ItemDrink extends ModItem{
 	public ItemDrink(String name) {
-		setRegistryName(References.MODID + ":" + name);
-		setUnlocalizedName(name);
-		this.setCreativeTab(References.BTV_TAB);
+		super(name);
 	}
 	
 	@Override

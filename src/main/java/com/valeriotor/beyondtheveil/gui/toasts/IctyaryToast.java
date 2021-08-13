@@ -19,7 +19,7 @@ public class IctyaryToast implements IToast {
     private boolean hasPlayedSound;
 
     public IctyaryToast(String ictya) {
-        this.ictyaLocalizedName = I18n.format("entity." + ictya + ".name");
+        this.ictyaLocalizedName = I18n.format("entity.beyondtheveil:" + ictya + ".name");
     }
 
     @Override

@@ -23,12 +23,10 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
-public class ItemBlackjack extends Item{
+public class ItemBlackjack extends ModItem{
 	
-	public ItemBlackjack() {
-		this.setRegistryName(References.MODID + ":blackjack");
-		this.setUnlocalizedName("blackjack");
-		this.setCreativeTab(References.BTV_TAB);
+	public ItemBlackjack(String name) {
+		super(name);
 		this.setMaxDamage(150);
 		this.setMaxStackSize(1);
 	}

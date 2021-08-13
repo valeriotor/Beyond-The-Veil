@@ -28,8 +28,8 @@ public class DampLog extends BlockLog{
 	public DampLog() {
 		super();
 		this.setHardness(4.0F);
-		setRegistryName(BlockNames.DAMPLOG);
-		setUnlocalizedName(BlockNames.DAMPLOG);
+		setRegistryName(References.MODID, BlockNames.DAMPLOG);
+		setUnlocalizedName(References.MODID + ":" + BlockNames.DAMPLOG);
 		setCreativeTab(References.BTV_TAB);
 		this.setSoundType(SoundType.WOOD);
 	}

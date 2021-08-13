@@ -27,12 +27,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TestItem extends Item //implements IHasModel
+public class TestItem extends ModItem //implements IHasModel
 {
-	public TestItem() {
-		setRegistryName(References.MODID +":testitem");
-		setUnlocalizedName("testitem");
-		setCreativeTab(References.BTV_TAB);
+	public TestItem(String name) {
+		super(name);
 		setMaxStackSize(1);
 	}
 	

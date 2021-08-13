@@ -13,7 +13,7 @@ public class DampWoodFence extends BlockFence{
 	public DampWoodFence() {
 		super(Material.WOOD, Material.WOOD.getMaterialMapColor());
 		this.setRegistryName(References.MODID, BlockNames.DAMPWOODFENCE);
-		this.setUnlocalizedName(BlockNames.DAMPWOODFENCE);
+		this.setUnlocalizedName(References.MODID + ":" + BlockNames.DAMPWOODFENCE);
 		this.setCreativeTab(References.BTV_TAB);
 		this.useNeighborBrightness = true;
 		this.setHardness(4);

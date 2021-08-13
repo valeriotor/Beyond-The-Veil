@@ -19,12 +19,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class ItemSlugCatcher extends Item{
-	public ItemSlugCatcher() {
-		this.setMaxStackSize(1);
-		this.setCreativeTab(References.BTV_TAB);
-		setRegistryName(References.MODID +":slugcatcher");
-		setUnlocalizedName("slugcatcher");
+public class ItemSlugCatcher extends ModItem{
+	public ItemSlugCatcher(String name) {
+        super(name);
+        this.setMaxStackSize(1);
 	}
 	
 	@Override

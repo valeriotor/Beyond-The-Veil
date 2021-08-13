@@ -190,7 +190,8 @@ public class GuiIctyary extends GuiScreen {
     }
 
     private List<List<String>> createDescription() {
-        String name = selectedEntity.getName().replace("entity.","").replace(".name","");
+        String name = ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(selectedEntity.getClass())).getResourcePath();
+//        String name = selectedEntity.getName().replace("entity.","").replace(".name","");
         String desc = I18n.format("ictya." + name + ".description");
         List<String> paragraphs = Arrays.asList(desc.split("<BR>"));
         List<List<String>> description = paragraphs.stream()

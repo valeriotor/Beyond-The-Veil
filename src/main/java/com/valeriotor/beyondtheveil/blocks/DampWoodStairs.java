@@ -20,7 +20,7 @@ public class DampWoodStairs extends BlockStairs{
 	public DampWoodStairs(IBlockState modelState) {
 		super(modelState);
 		this.setRegistryName(References.MODID, BlockNames.DAMPWOODSTAIRS);
-		this.setUnlocalizedName(BlockNames.DAMPWOODSTAIRS);
+		this.setUnlocalizedName(References.MODID + ":" + BlockNames.DAMPWOODSTAIRS);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 	

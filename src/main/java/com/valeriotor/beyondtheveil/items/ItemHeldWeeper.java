@@ -21,12 +21,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class ItemHeldWeeper extends Item {
+public class ItemHeldWeeper extends ModItem {
 	
 	public ItemHeldWeeper(String name) {
-		this.setRegistryName(name);
-		this.setUnlocalizedName(name);
-		this.setCreativeTab(References.BTV_TAB);
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	

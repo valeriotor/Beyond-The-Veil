@@ -11,7 +11,7 @@ public class ModBlock extends Block{
 	public ModBlock(Material materialIn, String name) {
 		super(materialIn);
 		this.setRegistryName(References.MODID, name);
-		this.setUnlocalizedName(name);
+		this.setUnlocalizedName(References.MODID + ":" + name);
 		this.setCreativeTab(References.BTV_TAB);
 		this.setHardness(4.0F);
 	}

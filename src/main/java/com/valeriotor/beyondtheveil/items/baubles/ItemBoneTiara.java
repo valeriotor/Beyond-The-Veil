@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.items.baubles;
 
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.items.ModItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.potions.PotionRegistry;
@@ -12,13 +13,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ItemBoneTiara extends Item implements IBauble{
+public class ItemBoneTiara extends ModItem implements IBauble{
 	
-	public ItemBoneTiara() {
+	public ItemBoneTiara(String name) {
+		super(name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(References.BTV_TAB);
-		setRegistryName(References.MODID +":bone_tiara");
-		setUnlocalizedName("bone_tiara");
 	}
 	
 	@Override

@@ -26,7 +26,7 @@ public class ItemCrucible extends ItemSword implements IArtifactItem{
 		super(ToolMaterial.IRON);
 		this.setMaxDamage(ConfigLib.crucibleCooldown*20+1);
 		this.setRegistryName(References.MODID, name);
-		this.setUnlocalizedName(name);
+		this.setUnlocalizedName(References.MODID + ":" + name);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 	

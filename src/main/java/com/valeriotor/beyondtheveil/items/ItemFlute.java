@@ -28,12 +28,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFlute extends Item implements IArtifactItem{
-	public ItemFlute() {
+public class ItemFlute extends ModItem implements IArtifactItem{
+	public ItemFlute(String name) {
+		super(name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(References.BTV_TAB);
-		this.setRegistryName(References.MODID + ":flute");
-		this.setUnlocalizedName("flute");
 		this.setMaxDamage(250);
 		
 	}

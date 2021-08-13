@@ -31,10 +31,10 @@ import net.minecraft.world.World;
 
 public class ItemSlug extends ItemFood implements IDeepOneItem{
 	
-	public ItemSlug() {
+	public ItemSlug(String name) {
 		super(4, false);
-		this.setRegistryName(References.MODID + ":slug");
-		this.setUnlocalizedName("slug");
+		this.setRegistryName(References.MODID, name);
+		this.setUnlocalizedName("beyondtheveil:" + name);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 	

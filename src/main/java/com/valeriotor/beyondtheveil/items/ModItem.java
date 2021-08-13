@@ -16,7 +16,7 @@ public class ModItem extends Item{
 	
 	public ModItem(String name) {
 		this.setRegistryName(References.MODID, name);
-		this.setUnlocalizedName(name);
+		this.setUnlocalizedName(References.MODID + ":" + name);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 	
