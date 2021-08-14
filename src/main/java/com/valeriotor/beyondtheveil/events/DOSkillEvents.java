@@ -71,7 +71,7 @@ public class DOSkillEvents {
         if(p.world.isRemote) return;
         IPlayerData data = PlayerDataLib.getCap(p);
         if (data != null) {
-            if (data.getString(PlayerDataLib.TRANSFORMED) && DOSkill.UPPERCUT.isActive(data)) {
+            if (data.getString(PlayerDataLib.TRANSFORMED) && DOSkill.UPPERCUT.isActive(data) && p.getHeldItemMainhand().isEmpty()) {
                 ((WorldServer)p.world).getEntityTracker().sendToTrackingAndSelf(p, BTVPacketHandler.INSTANCE.getPacketFrom(new MessagePlayerAnimation(p.getPersistentID(), AnimationRegistry.getIdFromAnimation(AnimationRegistry.deep_one_player_uppercut))));
                 BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(UPPERCUT_ANIMATION), (EntityPlayerMP) p);
                 Entity target = event.getTarget();
