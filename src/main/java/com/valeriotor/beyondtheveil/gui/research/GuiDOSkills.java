@@ -182,10 +182,10 @@ public class GuiDOSkills extends GuiScreen {
             selectedSkill.unlock(mc.player);
             BTVPacketHandler.INSTANCE.sendToServer(new MessageDOSkillsGui(MessageDOSkillsGui.DOGUIActionType.UNLOCK, selectedSkill));
         }
-        descriptionTextArea.setText(createDescriptionParagraphs());
-        descriptionTextArea.recompute();
         updateUnlockedSkills();
         updateButton();
+        descriptionTextArea.setText(createDescriptionParagraphs());
+        descriptionTextArea.recompute();
     }
 
     private void updateButton() {
