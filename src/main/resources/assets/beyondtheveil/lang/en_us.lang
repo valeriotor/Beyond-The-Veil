@@ -925,7 +925,7 @@ dreams.monumentsearch.fail=No Ocean Monuments found
 
 dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s. I am unaware of what dimension they're in.
 dreams.playersearch.success2=Another player is located at x: %1$s, z: %2$s. I am unaware of what dimension they're in.
-dreams.playersearch.success2=Another player is located at x: %1$s, y: %2$s, z: %3$s. I am unaware of what dimension they're in.
+dreams.playersearch.success3=Another player is located at x: %1$s, y: %2$s, z: %3$s. I am unaware of what dimension they're in.
 dreams.playersearch.name=Their name is %1$s.
 dreams.playeritem.success=Another player is currently wielding: %1$s.
 dreams.playeritem.mildsuccess=Another player was found, but they were wielding nothing.
@@ -1327,6 +1327,28 @@ research.ARCHE.stage.0=Arche plays by very different rules compared to our world
 ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
 
 doskill.bosskill=%1$s killed: %2$s
+doskill.unlock.medium=- A new medium sized Ictya must be slain to unlock this skill.
+doskill.unlock.large=- A new large sized Ictya must be slain to unlock this skill.
+doskill.unlock.deep_one_brute=- A Deep One Brute must be slain to unlock this skill.
+doskill.unlock.deep_one_myrmidon=- A Deep One Myrmidon must be slain to unlock this skill.
+doskill.doquickstep.description=When enabled, this skill lets you do quick sidesteps by pressing the Dodge Key ('Alt' by default). Like all skills, it requires you to be in your Deep One form. The direction of the dodge depends on the currently pressed movement keys (WASD).<BR>When used skillfully, the quickstep can speedily bring one out of danger, escaping perilous attacks. It may not, however, be used underwater or in mid air.
+doskill.douppercut.description=Whereas the quickstep puts distance between you and the enemy by moving you away from it, the uppercut achieves the same result by launching your adversary up in the air, with potentially fatal results in the subsequent landing. This skill, when toggled on, lets you right click on other creatures while barehanded to send them flying upwards.<BR>It does, however, become less effective against powerful enemies with large health pools, as well as bosses. It is also of little use in water combat.
+doskill.doroarsink.description=When enabled, the Sinking Roar empowers your normal roar by violently sending downwards any waterborne creatures affected by it. Additionally, if the creatures possess a limited air supply (such as Players) the roar will also knock all the air out of their lungs, making them immediately start drowning.<BR>Of course, several enemies are quite resistant to your roars: bosses, Ictya, and other creatures more fearsome than you may be entirely unaffected.
+doskill.doclimbing.description=This skill, when toggled on, enables you to jump upwards when adjacent to walls, effectively letting you easily scale vertical surfaces. When you are in mid air and near a solid block, you'll be able to jump off of it - this can be done repeatedly as long as you're near a scalable surface.<BR>Unfortunately, this skill does not work in the arena. There's no escaping the challenge.
+doskill.dohealth.description=A straightforward, passive ability, when enabled this skill simply grants extra health to your Deep One form.
+doskill.dopoison.description=When toggled on this skill gives you a chance to inject enemies with a powerful when you hit them. About one in four hits result in the effect being applied.<BR>It does not, unfortunately, work against bosses.
+doskill.doregeneration.description=When enabled, this skill gives you a regeneration effect every time you slay an enemy. The more powerful the felled creature, the greater the effect. Very weak creatures however might result in no effect being applied.
+doskill.doquickstep.name=Quickstep
+doskill.douppercut.name=Uppercut
+doskill.doroarsink.name=Sinking Roar
+doskill.doclimbing.name=Climbing
+doskill.dohealth.name=Extra Health
+doskill.dopoison.name=Poison Claws
+doskill.doregeneration.name=Corpse Feeding
+doskill.toggled.on=Enabled.
+doskill.toggled.off=Disabled.
+doskill.unlock=Unlock
+doskill.toggle=Toggle
 
 ##################
 #MISC
@@ -1354,6 +1376,9 @@ canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, th
 
 arena.triumph=§6TRIUMPH
 arena.defeat=§4DEFEAT
+
+toast.ictyary=New Ictyary Entry
+toast.memory=New Memory
 
 sleep.transformed=I cannot sleep while transformed.
 sleep.parasite=I don't feel all too well.. I can't sleep.

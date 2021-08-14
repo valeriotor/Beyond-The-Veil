@@ -40,6 +40,10 @@ public class PlayerDataLib {
 	public static final String INTROSPECTION = "introspection";
 	public static final String BONEMEALUSED = "bmealused";
 	public static final String PLANTDREAM = "pdream";
+	public static final Function<String, String> ICTYA_BY_SIZE = s -> String.format("ictya-%s", s);
+	public static final Function<String, String> ICTYA_USED_BY_SIZE = s -> String.format("ictya-used-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_KILLED_BY_NAME = s -> String.format("arena-killed-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
@@ -62,10 +66,6 @@ public class PlayerDataLib {
 	public static final String DEATHTELEPORT = "deathtp";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
 	public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
-	public static final Function<String, String> ICTYA_BY_SIZE = s -> String.format("ictya-%s", s);
-	public static final Function<String, String> ICTYA_USED_BY_SIZE = s -> String.format("ictya-used-%s", s);
-	public static final Function<String, String> ARENA_BOSSES_KILLED_BY_NAME = s -> String.format("arena-killed-%s", s);
-	public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
 
 	// Strings (Temporary)
 	public static final String DREAMFOCUS = "dreamfocus";

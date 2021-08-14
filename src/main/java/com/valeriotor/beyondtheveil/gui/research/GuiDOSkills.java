@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.gui.GuiHelper;
+import com.valeriotor.beyondtheveil.gui.ScrollableTextArea;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
@@ -45,8 +46,8 @@ public class GuiDOSkills extends GuiScreen {
     private final EnumSet<DOSkill> unlockedSkills = EnumSet.noneOf(DOSkill.class);
     private final EnumSet<DOSkill> unlockableSkills = EnumSet.noneOf(DOSkill.class);
     private DOSkill selectedSkill;
-    private List<List<String>> description = new ArrayList<>();
     private final List<ArenaBossEntry> bossEntries;
+    private final ScrollableTextArea descriptionTextArea = new ScrollableTextArea();
 
     public GuiDOSkills() {
         updateUnlockedSkills();
@@ -55,10 +56,6 @@ public class GuiDOSkills extends GuiScreen {
                 .filter(s -> s.getKey().startsWith("arena-killed-"))
                 .map(ArenaBossEntry::new)
                 .collect(Collectors.toList()));
-        for (ArenaBossEntry a :
-                bossEntries) {
-            System.out.println(a.localizedBossName +" " + a.amountKilled);
-        }
     }
 
     @Override
@@ -68,6 +65,19 @@ public class GuiDOSkills extends GuiScreen {
         GuiButton unlockButton = new GuiButton(0, x, height * 9 / 10, 100, 20, "UNLOCK");
         buttonList.add(unlockButton);
         updateButton();
+        descriptionTextArea.setScreenDimensions(height, width);
+        descriptionTextArea.setHeightWidthRatio(0.6f, 19f/50);
+        descriptionTextArea.setTextLineHeight(20);
+        descriptionTextArea.setParagraphBreakHeight(10);
+        descriptionTextArea.recompute();
+        switch (mc.gameSettings.guiScale) {
+            case 0:
+                descriptionTextArea.setScrollAmount(7);
+                break;
+            case 3:
+                descriptionTextArea.setScrollAmount(5);
+                break;
+        }
     }
 
     @Override
@@ -103,14 +113,16 @@ public class GuiDOSkills extends GuiScreen {
         GlStateManager.color(1, 1, 1, 1);
         drawRect(treeTextureX, 0, treeTextureX+5, height, 0xFFAAAAAA);
         GlStateManager.color(1, 1, 1);
-        int textY = height / 3;
-        for (List<String> ss : description) {
-            for (String s: ss) {
-                drawString(mc.fontRenderer, s, width/100, textY, 0xFFFFFFFF);
-                textY += 20;
-            }
-            textY += 10;
+        int textY = height / 4;
+        if(selectedSkill != null) {
+            int titleY = height / 6;
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(width / 100, titleY, 0);
+            GlStateManager.scale(1.5, 1.5, 1);
+            drawString(mc.fontRenderer, selectedSkill.getLocalizedName(), 0, 0, 0xFFFFFFFF);
+            GlStateManager.popMatrix();
         }
+        descriptionTextArea.drawScreen(this, 0xFF000000, 0xFFFFFFFF, width / 100, textY);
         textY = height/10;
         for (ArenaBossEntry bossEntry : bossEntries) {
             String s = I18n.format("doskill.bosskill", bossEntry.localizedBossName, bossEntry.amountKilled);
@@ -149,9 +161,16 @@ public class GuiDOSkills extends GuiScreen {
         DOSkill hoveredSkill = hoveredSkill(mouseX, mouseY);
         if(hoveredSkill != null && (unlockedSkills.contains(hoveredSkill) || unlockableSkills.contains(hoveredSkill))) {
             selectedSkill = hoveredSkill;
-            description = createDescription();
+            descriptionTextArea.setText(createDescriptionParagraphs());
+            descriptionTextArea.recompute();
             updateButton();
         }
+    }
+
+    @Override
+    public void handleMouseInput() throws IOException {
+        super.handleMouseInput();
+        descriptionTextArea.handleMouseInput();
     }
 
     @Override
@@ -163,6 +182,8 @@ public class GuiDOSkills extends GuiScreen {
             selectedSkill.unlock(mc.player);
             BTVPacketHandler.INSTANCE.sendToServer(new MessageDOSkillsGui(MessageDOSkillsGui.DOGUIActionType.UNLOCK, selectedSkill));
         }
+        descriptionTextArea.setText(createDescriptionParagraphs());
+        descriptionTextArea.recompute();
         updateUnlockedSkills();
         updateButton();
     }
@@ -204,20 +225,27 @@ public class GuiDOSkills extends GuiScreen {
         super.keyTyped(typedChar, keyCode);
     }
 
-    private List<List<String>> createDescription() {
+    private List<String> createDescriptionParagraphs() {
         String name = selectedSkill.getName();
         String desc = I18n.format("doskill." + name + ".description");
-        List<String> paragraphs = Arrays.asList(desc.split("<BR>"));
-        List<List<String>> description = paragraphs.stream()
-                .map(s -> GuiHelper.splitStringsByWidth(s, width*3/10, mc.fontRenderer))
-                .collect(Collectors.toList());
+        List<String> paragraphs = new ArrayList<>();
+        paragraphs.addAll(Arrays.asList(desc.split("<BR>")));
         if(unlockableSkills.contains(selectedSkill)) {
-            if(!selectedSkill.hasPlayerKilledEnoughIctya(mc.player))
-                description.add(Lists.newArrayList(selectedSkill.getLocalizedKillMoreIctyaMessage()));
-            if(!selectedSkill.hasPlayerKilledEnoughBosses(mc.player))
-                description.add(Lists.newArrayList(selectedSkill.getLocalizedKillMoreBossesMessage()));
+            if (!selectedSkill.hasPlayerKilledEnoughIctya(mc.player)) {
+                paragraphs.add(selectedSkill.getLocalizedKillMoreIctyaMessage());
+            }
+            if (!selectedSkill.hasPlayerKilledEnoughBosses(mc.player)) {
+                paragraphs.add(selectedSkill.getLocalizedKillMoreBossesMessage());
+            }
+        } else {
+            paragraphs.add("");
+            if (selectedSkill.isActive(mc.player)) {
+                paragraphs.add(I18n.format("doskill.toggled.on"));
+            } else {
+                paragraphs.add(I18n.format("doskill.toggled.off"));
+            }
         }
-        return description;
+        return paragraphs;
     }
 
     private static class ArenaBossEntry {
@@ -226,7 +254,7 @@ public class GuiDOSkills extends GuiScreen {
 
 
         private ArenaBossEntry(Entry<String, Integer> entry) {
-            this.localizedBossName = I18n.format("entity." + entry.getKey().replace("arena-killed-", "") + ".name");
+            this.localizedBossName = I18n.format("entity.beyondtheveil:" + entry.getKey().replace("arena-killed-", "") + ".name");
             this.amountKilled = entry.getValue();
         }
     }
