@@ -72,10 +72,13 @@ public class GuiDOSkills extends GuiScreen {
         descriptionTextArea.recompute();
         switch (mc.gameSettings.guiScale) {
             case 0:
-                descriptionTextArea.setScrollAmount(7);
+                descriptionTextArea.setScrollAmount(9);
+                break;
+            case 2:
+                descriptionTextArea.setScrollAmount(4);
                 break;
             case 3:
-                descriptionTextArea.setScrollAmount(5);
+                descriptionTextArea.setScrollAmount(7);
                 break;
         }
     }
