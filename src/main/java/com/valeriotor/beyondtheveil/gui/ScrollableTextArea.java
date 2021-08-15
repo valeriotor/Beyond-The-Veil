@@ -60,10 +60,6 @@ public class ScrollableTextArea {
         this.paragraphs.clear();
         this.paragraphs.addAll(paragraphs);
         this.text.clear();
-        for (String paragraph : this.paragraphs) {
-            this.text.add(Lists.newArrayList(paragraph));
-            this.text.add(GuiHelper.splitStringsByWidth(paragraph, width - 18, Minecraft.getMinecraft().fontRenderer));
-        }
     }
 
     public void setTextLineHeight(int textLineHeight) {
