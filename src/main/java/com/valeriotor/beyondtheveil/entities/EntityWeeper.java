@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tileEntities.TileLacrymatory;
@@ -125,7 +126,7 @@ public class EntityWeeper extends EntityCreature implements IWeepingEntity, IPla
 				this.specialDialogueCounter = 0;
 				EntityPlayer p = this.getMaster();
 				if(this.specialDialogue < 0) {
-					if(p != null && p.getDistance(this) < 3 && ResearchUtil.isResearchComplete(p, "DREAMBOTTLE") && !ResearchUtil.isResearchKnown(p, "SHOGGOTH")) {
+					if(p != null && p.getDistance(this) < 3 && PlayerDataLib.getCap(p).getString("crafteddream_bottle") && !ResearchUtil.isResearchKnown(p, "SHOGGOTH")) {
 						p.sendMessage(new TextComponentString(new TextComponentTranslation("weeper.shoggoth.call").getFormattedText()));
 						this.specialDialogue = 0;
 					}

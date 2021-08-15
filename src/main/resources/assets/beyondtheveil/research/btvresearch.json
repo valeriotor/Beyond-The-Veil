@@ -697,7 +697,13 @@
                     "text": "research.WEEPERS.stage.2",
 					"recipes" : ["beyondtheveil:lacrymatory"]
                 }
-            ]
+            ],
+            "addenda" : [
+                    {
+                        "text": "research.WEEPERS.addenda.bottle",
+                        "required_research": ["crafteddream_bottle"]
+                    }
+                ]
         },
 		{
         "key": "REVELATIONRING",
