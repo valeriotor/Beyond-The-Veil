@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.entities.ictya.EntityIctya;
 import com.valeriotor.beyondtheveil.entities.ictya.EntitySandflatter;
 import com.valeriotor.beyondtheveil.gui.GuiHelper;
+import com.valeriotor.beyondtheveil.gui.ScrollableTextArea;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
@@ -18,6 +19,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
 import java.awt.*;
 import java.io.IOException;
@@ -38,7 +40,8 @@ public class GuiIctyary extends GuiScreen {
     private int factor;
     private int translateX;
     private int translateY;
-    private List<List<String>> description = new ArrayList<>();
+//    private List<List<String>> description = new ArrayList<>();
+    private final ScrollableTextArea descriptionTextArea = new ScrollableTextArea();
 
     public GuiIctyary() {
         IPlayerData data = PlayerDataLib.getCap(Minecraft.getMinecraft().player);
@@ -98,6 +101,24 @@ public class GuiIctyary extends GuiScreen {
 
         buttonList.get(0).enabled = currentPage != 0;
         buttonList.get(1).enabled = currentPage != ictyaPages.size()-1;
+
+        descriptionTextArea.setScreenDimensions(height, width);
+        descriptionTextArea.setHeightWidthRatio(0.7f, 6f/25);
+        descriptionTextArea.setTextLineHeight(20);
+        descriptionTextArea.setParagraphBreakHeight(10);
+        descriptionTextArea.recompute();
+        switch (mc.gameSettings.guiScale) {
+            case 0:
+                descriptionTextArea.setScrollAmount(9);
+                break;
+            case 2:
+                descriptionTextArea.setScrollAmount(4);
+                break;
+            case 3:
+                descriptionTextArea.setScrollAmount(7);
+                break;
+        }
+
     }
 
     @Override
@@ -135,15 +156,16 @@ public class GuiIctyary extends GuiScreen {
         drawRect(0, distanceFromCeiling, width/4, distanceFromCeiling+entrySeparatorBarHeight, 0xFFAAAAAA);
         String pageCount = (currentPage + 1) + "/" + ictyaPages.size();
         drawCenteredString(mc.fontRenderer, pageCount, width/8, height*380/400, 0xFFFFFFFF);
-        int textY = height/4;
-        for (List<String> ss :
-                description) {
-            for (String s: ss) {
-                drawString(mc.fontRenderer, s, width*76/100, textY, 0xFFFFFFFF);
-                textY += 20;
-            }
-            textY += 10;
+        if(selectedEntity != null) {
+            int titleY = height / 7;
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(width * 76/ 100, titleY, 0);
+            GlStateManager.scale(1.5, 1.5, 1);
+            drawString(mc.fontRenderer, selectedEntity.getDisplayName().getFormattedText(), 0, 0, 0xFFFFFFFF);
+            GlStateManager.popMatrix();
         }
+        int textY = height/4;
+        descriptionTextArea.drawScreen(this, 0xFF000000, 0xFFFFFFFF, width*76/100, textY);
         GlStateManager.popMatrix();
 
 
@@ -185,19 +207,16 @@ public class GuiIctyary extends GuiScreen {
             translateX = 0;
             translateY = 0;
             mc.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
-            description = createDescription();
+            descriptionTextArea.setText(createDescription());
+            descriptionTextArea.recompute();
         }
     }
 
-    private List<List<String>> createDescription() {
+    private List<String> createDescription() {
         String name = ForgeRegistries.ENTITIES.getKey(EntityRegistry.getEntry(selectedEntity.getClass())).getResourcePath();
 //        String name = selectedEntity.getName().replace("entity.","").replace(".name","");
         String desc = I18n.format("ictya." + name + ".description");
-        List<String> paragraphs = Arrays.asList(desc.split("<BR>"));
-        List<List<String>> description = paragraphs.stream()
-                .map(s -> GuiHelper.splitStringsByWidth(s, width*23/100, mc.fontRenderer))
-                .collect(Collectors.toList());
-        return description;
+        return Arrays.asList(desc.split("<BR>"));
     }
 
     @Override
@@ -210,7 +229,11 @@ public class GuiIctyary extends GuiScreen {
             translateX = MathHelperBTV.clamp(-200, 200, (translateX + Mouse.getDX()));
             translateY -= Mouse.getDY();
         }
-        this.factor = MathHelperBTV.clamp(1, 20, this.factor + (int)Math.signum(Mouse.getDWheel()));
+        if (Mouse.getX() < Display.getWidth() * 3 / 4) {
+            this.factor = MathHelperBTV.clamp(1, 20, this.factor + (int) Math.signum(Mouse.getDWheel()));
+        } else {
+            descriptionTextArea.handleMouseInput();
+        }
         super.handleMouseInput();
     }
 
