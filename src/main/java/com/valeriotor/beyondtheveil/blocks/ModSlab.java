@@ -107,7 +107,6 @@ public class ModSlab extends BlockSlab{
 	
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		// TODO Auto-generated method stub
 		return super.getItem(worldIn, pos, state);
 	}
 	

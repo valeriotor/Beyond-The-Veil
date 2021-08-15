@@ -10,7 +10,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
-public class ItemInkMask extends ItemArmor {
+public class ItemInkMask extends ItemArmor implements IDeepOneItem{
 
     public ItemInkMask(String name, ArmorMaterial material) {
         super(material, 0, EntityEquipmentSlot.HEAD);

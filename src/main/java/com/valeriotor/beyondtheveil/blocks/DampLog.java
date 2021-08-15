@@ -91,7 +91,6 @@ public class DampLog extends BlockLog{
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		// TODO Auto-generated method stub
 		return new BlockStateContainer(this, new IProperty[] {LOG_AXIS});
 	}
 	

@@ -43,7 +43,7 @@ public class MessageSawCleaverToServer implements IMessage{
 				}
 				if(flagCleaver || flagDeepOne) {
 					PlayerTimer pt = ServerTickEvents.getPlayerTimer("CleaverDodge", p);
-					if(pt == null && !p.isInWater() && !p.capabilities.isFlying) { // TODO understand why player was flying like wtf
+					if(pt == null && !p.isInWater() && !p.capabilities.isFlying) {
 						IBlockState b = p.world.getBlockState(p.getPosition().add(0, -0.2, 0));
 							if(b.isSideSolid(p.world, p.getPosition().add(0, -0.2, 0), EnumFacing.UP)) {
 								BTVPacketHandler.INSTANCE.sendTo(new MessageSawCleaverToClient(), p);

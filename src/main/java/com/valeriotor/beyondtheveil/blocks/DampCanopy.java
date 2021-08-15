@@ -421,7 +421,6 @@ public class DampCanopy extends ModBlock{
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		// TODO Auto-generated method stub
 		return state.withProperty(SHAPE, getActualShape(state, worldIn, pos));
 	}
 	

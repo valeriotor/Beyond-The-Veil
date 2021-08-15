@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.network.MessagePlayerAnimation;
 import com.valeriotor.beyondtheveil.network.generic.MessageGenericToClient;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.worship.ActivePowers.TransformDeepOne;
 import com.valeriotor.beyondtheveil.worship.DOSkill;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -95,7 +96,7 @@ public class DOSkillEvents {
 
     public static void doPoisonSkill(LivingHurtEvent e) {
         EntityPlayer p = (EntityPlayer) e.getSource().getTrueSource();
-        if(e.getEntityLiving().isNonBoss() && DOSkill.POISON.isActive(p)) {
+        if(e.getEntityLiving().isNonBoss() && DOSkill.POISON.isActive(p) && PlayerDataLib.getCap(p).getString(PlayerDataLib.TRANSFORMED)) {
             if(p.world.rand.nextInt(4) == 0)
                 e.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.POISON, 20*8, 3));
         }

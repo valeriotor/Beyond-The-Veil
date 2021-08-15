@@ -57,7 +57,7 @@ public class BTVEntityRegistry {
 
 
 
-		register("umancala_ball", EntityUmancalaBall.class, count++, 128);
+		registerNoEgg("umancala_ball", EntityUmancalaBall.class, count++, 128);
 
 		registerSpawnPlacementTypes();
 		

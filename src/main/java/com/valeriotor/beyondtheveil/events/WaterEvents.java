@@ -38,8 +38,8 @@ public class WaterEvents {
 					}
 				}
 			} else if(transformed) {
-				if(p.world.isRemote)
-					p.capabilities.isFlying = false;
+//				if(p.world.isRemote)
+				p.capabilities.isFlying = false;
 			}		
 		}
 		if(transformed && (p.ticksExisted & 15) == 0) {

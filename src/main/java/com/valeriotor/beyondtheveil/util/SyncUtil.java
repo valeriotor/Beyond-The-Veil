@@ -90,7 +90,7 @@ public class SyncUtil {
 	public static void addStringDataOnServer(EntityPlayer p, boolean temporary, String string) {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), ((EntityPlayerMP)p));
-		ResearchUtil.markResearchAsUpdated(p, string); //TODO adjust for methods not using SyncUtil
+		ResearchUtil.markResearchAsUpdated(p, string);
 	}
 	
 	public static void removeStringDataOnServer(EntityPlayer p, String string) {

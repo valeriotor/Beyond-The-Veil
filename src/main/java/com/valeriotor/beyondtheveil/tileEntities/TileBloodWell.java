@@ -86,7 +86,7 @@ public class TileBloodWell extends TileEntity implements ITickable{
 	
 	private void teleportPlayer() {
 		EntityPlayer p = world.getClosestPlayer(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 1, false);
-		if(p != null && PlayerDataLib.getCap(p).getString("canEnterArche")) { //TODO check for fleshcarbontoken
+		if(p != null && PlayerDataLib.getCap(p).getString("canEnterArche")) {
 			for (ItemStack i : p.inventory.mainInventory) {
 				if (i.getItem() == ItemRegistry.fleshcarbontoken) {
 					WorldServer w = world.getMinecraftServer().getWorld(DimensionRegistry.ARCHE.getId());

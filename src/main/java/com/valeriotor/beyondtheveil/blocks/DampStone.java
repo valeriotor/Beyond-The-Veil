@@ -13,7 +13,6 @@ public class DampStone extends ModBlock{
 		super(Material.ROCK, BlockNames.DAMPSTONE);
 		this.setHardness(5.0F);
 		this.setSoundType(SoundType.STONE);
-		// TODO Auto-generated constructor stub
 	}
 
 }

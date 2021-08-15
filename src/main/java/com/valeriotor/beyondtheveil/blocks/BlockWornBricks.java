@@ -13,7 +13,6 @@ public class BlockWornBricks extends ModBlock{
 		super(Material.ROCK, BlockNames.WORNBRICKS);
 		this.setHardness(5.0F);
 		this.setSoundType(SoundType.STONE);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -77,7 +77,6 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		// TODO Auto-generated method stub
 		return BBox;
 	}
 	
@@ -150,7 +149,6 @@ public class BlockFumeSpreader extends ModBlock implements ITileEntityProvider{
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		// TODO Auto-generated method stub
 		return super.getActualState(state, worldIn, pos);
 	}
 
