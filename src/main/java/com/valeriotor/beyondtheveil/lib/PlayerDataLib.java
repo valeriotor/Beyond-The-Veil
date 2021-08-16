@@ -44,6 +44,7 @@ public class PlayerDataLib {
 	public static final Function<String, String> ICTYA_USED_BY_SIZE = s -> String.format("ictya-used-%s", s);
 	public static final Function<String, String> ARENA_BOSSES_KILLED_BY_NAME = s -> String.format("arena-killed-%s", s);
 	public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
+	public static final String ARENA_ADVICE = "arenaadvicereceived";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler

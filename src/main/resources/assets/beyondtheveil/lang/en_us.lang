@@ -860,6 +860,13 @@ mirror.archewater.apeiron.5=[Y]Likewise flared the stars - to which Dagon is eld
 mirror.archewater.apeiron.6=[Y]So everything comes from the waters of Arche, yet even those waters come from Apeiron.
 mirror.archewater.first.end=(End)
 
+mirror.arena.first_branch.0=[Y]I believe we just found the arena.
+mirror.arena.first_branch.1=[Y]This is where you can prove your mettle.
+mirror.arena.first.how=How do I begin the battle?
+mirror.arena.how.0=[Y]Try interacting with that red block in the corner.
+mirror.arena.how.1=[Y]Note that the adversaries you'll meet are powerful, and won't go down easily.
+mirror.arena.how.2=[Y]However, you shouldn't fear death. I think you'll be sent back here in case of defeat, without losing any items.
+
 
 ##################
 #POTION EFFECTS

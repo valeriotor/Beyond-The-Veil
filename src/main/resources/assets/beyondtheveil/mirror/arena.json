@@ -1,0 +1,21 @@
+{
+    "id" : "arena",
+    "startingBranch" : {
+        "id" : "first_branch",
+        "branchLength": 2,
+        "endingNodeID": "first"
+    },
+    "dialogueNodes" : {
+        "first": {
+            "id" : "first",
+            "dialogueOptions" : [
+                {
+                    "id" : "how",
+                    "branchLength" : 3,
+					"endsDialogue":true,
+                    "endingNodeID" : "end"
+                }
+            ]
+        }
+    }
+}

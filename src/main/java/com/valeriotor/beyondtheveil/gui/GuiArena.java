@@ -29,9 +29,9 @@ public class GuiArena extends GuiScreen {
     @Override
     public void initGui() {
         int id = 0;
-        String bruteKey = bruteUnlocked ? I18n.format("entity.deep_one_brute.name") : "???";
-        String myrmidonKey = myrmidonUnlocked ? I18n.format("entity.deep_one_myrmidon.name") : "???";
-        String scionKey = scionUnlocked ? I18n.format("entity.scion_of_dagon.name") : "???";
+        String bruteKey = bruteUnlocked ? I18n.format("entity.beyondtheveil:deep_one_brute.name") : "???";
+        String myrmidonKey = myrmidonUnlocked ? I18n.format("entity.beyondtheveil:deep_one_myrmidon.name") : "???";
+        String scionKey = scionUnlocked ? I18n.format("entity.beyondtheveil:scion_of_dagon.name") : "???";
         GuiButton bruteButton = new GuiButton(id++, width/3, height/3, width/3, 20, bruteKey);
         GuiButton myrmidonButton = new GuiButton(id++, width/3, height/2, width/3, 20, myrmidonKey);
         GuiButton scionButton = new GuiButton(id++, width/3, 2*height/3, width/3, 20, scionKey);

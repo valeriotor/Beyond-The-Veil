@@ -34,11 +34,14 @@ public class GuiBlackMirror extends GuiScreen{
 	
 	public GuiBlackMirror(MirrorDialogue dialogue) {
 		this.dialogue = dialogue;
-		addDialogueLine();
 	}
 	
 	@Override
 	public void initGui() {
+		if (dialogueLines.isEmpty()) {
+			nextLine = getNextLine();
+			addDialogueLine();
+		}
 		buttonList.clear();
 		updateDialogueOptions(); // resizes current string lists
 	}

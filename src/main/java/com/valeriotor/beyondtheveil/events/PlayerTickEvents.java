@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.events;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.entities.EntityCanoe;
@@ -14,6 +15,8 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.HamletList;
+import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCity;
+import com.valeriotor.beyondtheveil.world.Structures.arche.deepcity.DeepCityList;
 import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 import com.valeriotor.beyondtheveil.worship.Worship;
@@ -61,6 +64,7 @@ public class PlayerTickEvents {
 				CrawlerWorshipEvents.updateWorships(p);
 				findHamlet(p, data);
 				spawnDeepOnes(p, data);
+				arenaDialogue(p, data);
 			}
 		}
 	}
@@ -164,6 +168,21 @@ public class PlayerTickEvents {
 		}
 		if(w.getBlockState(pos.down()).getBlock() == Blocks.AIR) return false;
 		return true;
+	}
+
+	private static void arenaDialogue(EntityPlayer p, IPlayerData data) {
+		if ((p.ticksExisted & 31) == 0) {
+			if (MirrorUtil.getCurrentDialogue(p).getID().equals("archewater") && !data.getString(PlayerDataLib.ARENA_ADVICE)) {
+				BlockPos ppos = p.getPosition();
+				if(ppos.getY() > 40 && ppos.getY() < 70) {
+					DeepCity city = DeepCityList.get(p.world).getCity(ppos.getX() >> 4, ppos.getZ() >> 4);
+					if (city != null && city.getCenter().getDistance(ppos.getX(), city.getCenter().getY(), ppos.getZ()) < 20) {
+						MirrorUtil.updateDefaultDialogue(p, "arena");
+						p.sendMessage(new TextComponentTranslation("mirror.shivers"));
+					}
+				}
+			}
+		}
 	}
 	
 	private static void setSize(EntityPlayer p, IPlayerData data) {

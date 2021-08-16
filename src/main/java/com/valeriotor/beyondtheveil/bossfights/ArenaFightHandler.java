@@ -1,8 +1,12 @@
 package com.valeriotor.beyondtheveil.bossfights;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
 import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 
@@ -58,6 +62,10 @@ public class ArenaFightHandler {
         if(boss != null) {
             boss.setPosition(arenaStarterPos.getX()+20, arenaStarterPos.getY()+5, arenaStarterPos.getZ()-20);
             player.world.spawnEntity(boss);
+            if (MirrorUtil.getCurrentDialogue(player).getID().equals("arena")) {
+                MirrorUtil.updateDefaultDialogue(player, "archewater");
+                SyncUtil.addStringDataOnServer(player, false, PlayerDataLib.ARENA_ADVICE);
+            }
         }
     }
 

@@ -27,6 +27,7 @@ public class MirrorDialogueRegistry {
 		registerMirrorDialogue("archewater");
 		registerMirrorDialogue("beforearche");
 		registerMirrorDialogue("bloodhome");
+		registerMirrorDialogue("arena");
 
 		noDialogue = dialogues.get("nodialogue");
 	}
