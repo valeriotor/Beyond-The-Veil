@@ -1,0 +1,20 @@
+{
+	"textures": {
+		"0": "beyondtheveil:blocks/blood",
+		"particle": "beyondtheveil:blocks/blood"
+	},
+	"elements": [
+		{
+			"from": [0, 14, 0],
+			"to": [16, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 5.333, 0.666], "texture": "#0"},
+				"east": {"uv": [0, 0, 5.333, 0.666], "texture": "#0"},
+				"south": {"uv": [0, 0, 5.333, 0.666], "texture": "#0"},
+				"west": {"uv": [0, 0, 5.333, 0.666], "texture": "#0"},
+				"up": {"uv": [0, 0, 5.333, 5.333], "texture": "#0"},
+				"down": {"uv": [0, 0, 5.333, 5.333], "texture": "#0"}
+			}
+		}
+	]
+}

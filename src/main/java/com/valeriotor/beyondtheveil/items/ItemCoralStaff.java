@@ -22,7 +22,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-public class ItemCoralStaff extends ModItem{
+public class ItemCoralStaff extends ModItem implements IDeepOneItem{
 
 	public ItemCoralStaff(String name) {
 		super(name);

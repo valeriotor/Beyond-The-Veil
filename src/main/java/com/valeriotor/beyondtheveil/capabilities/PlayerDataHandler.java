@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 
 import com.valeriotor.beyondtheveil.lib.References;
 
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -76,7 +77,7 @@ public class PlayerDataHandler {
 			if(tag.hasKey("strings")) {
 				NBTTagCompound stringTag = (NBTTagCompound) tag.getTag("strings");
 				for(String string : stringTag.getKeySet()) {
-					instance.addString(string, false);
+					instance.addStringFromNBT(string);
 				}
 			}	
 			if(tag.hasKey("ints")) {
@@ -107,19 +108,7 @@ public class PlayerDataHandler {
 		}
 		
 	}
-	
-	public static class Factory implements Callable<IPlayerData>{
 
-		public Factory() {
-			
-		}
-		
-		@Override
-		public IPlayerData call() throws Exception {
-			return new PlayerDataHandler.PlayerData();
-		}
-	}
-	
 	public static class PlayerData implements IPlayerData{
 		
 		public Set<String> strings = new HashSet<>();
@@ -132,8 +121,17 @@ public class PlayerDataHandler {
 
 		@Override
 		public void addString(String string, boolean temporary) {
-			if(!temporary) strings.add(string);
-			else tempStrings.add(string);
+			if(!temporary) {
+				strings.add(string);
+			}
+			else {
+				tempStrings.add(string);
+			}
+		}
+
+		@Override
+		public void addStringFromNBT(String string) {
+			strings.add(string);
 		}
 
 		@Override

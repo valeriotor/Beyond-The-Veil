@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.valeriotor.beyondtheveil.bossfights.ArenaFightHandler;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -15,6 +16,7 @@ import com.valeriotor.beyondtheveil.network.MessageStepAssist;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import com.valeriotor.beyondtheveil.worship.Deities;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -36,9 +38,13 @@ public class TransformDeepOne implements IActivePower{
 		if(!DGWorshipHelper.canTransform(p)) return false;
 		boolean transformed = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED);
 		if(transformed) {
-			SyncUtil.removeStringDataOnServer(p, PlayerDataLib.TRANSFORMED);
-			removeAttributes(p);
-			p.capabilities.isFlying = false;
+			if(!ArenaFightHandler.isPlayerInFight(p.getPersistentID())) {
+				SyncUtil.removeStringDataOnServer(p, PlayerDataLib.TRANSFORMED);
+				removeAttributes(p);
+				p.capabilities.isFlying = false;
+			} else {
+				return false;
+			}
 		}
 		else {
 			SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.TRANSFORMED);
@@ -95,9 +101,10 @@ public class TransformDeepOne implements IActivePower{
 			data.addKeyedString("transformuuid", MathHelper.getRandomUUID().toString());
 		}
 		UUID u = UUID.fromString(data.getKeyedString("transformuuid"));
+		int healthBuff = DOSkill.HEALTH.isActive(data) ? 40 : 20;
 		Multimap<String, AttributeModifier> map = HashMultimap.create();
 		map.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(u, "transformspeed", 1.2, 1));
-		map.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(u, "transformhealth", 20, 0));
+		map.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(u, "transformhealth", healthBuff, 0));
 		map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(u, "transformattack", 6, 0));
 		return map;
 	}

@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
+import com.valeriotor.beyondtheveil.network.MessageMovePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -272,5 +275,44 @@ public class MathHelperBTV {
 	public static long clamp(long min, long max, long val) {
 		return val < min ? min : (val > max ? max : val); 
 	}
-	
+
+	public static double angleBetween(Entity source, Entity target) {
+		return angleBetween(source.posX, source.posZ, target.posX, target.posZ);
+	}
+
+	public static double angleBetween(double sourceX, double sourceZ, double targetX, double targetZ) {
+		double xDiff = targetX - sourceX;
+		double zDiff = targetZ - sourceZ;
+		return Math.atan2(-xDiff, zDiff)*180/Math.PI;
+	}
+
+	public static boolean isEntityWithinAngleOfEntity(EntityLivingBase source, Entity target, double initialRotation, double degreesToTheLeft, double degreesToTheRight) {
+		double rotation = angleBetween(source, target);
+		double lowerBound = initialRotation - degreesToTheLeft;
+		double upperBound = initialRotation + degreesToTheRight;
+		if(lowerBound < -180) {
+			return rotation < upperBound || rotation > lowerBound + 360;
+		} else if(upperBound > 180) {
+			return rotation < upperBound - 360 || rotation > lowerBound;
+		} else {
+			return rotation < upperBound && rotation > lowerBound;
+		}
+	}
+
+	public static void moveTowardsEntity(EntityLivingBase still, EntityLivingBase moving, double amplifier) {
+		double xDist = still.posX - moving.posX;
+		double yDist = still.posY - moving.posY;
+		double zDist = still.posZ - moving.posZ;
+		double dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2)+ Math.pow(zDist, 2));
+		if(dist != 0) {
+			if(moving instanceof EntityPlayerMP && false) {
+				BTVPacketHandler.INSTANCE.sendTo(new MessageMovePlayer(xDist/dist*amplifier, yDist/dist*amplifier, zDist/dist*amplifier), (EntityPlayerMP)moving);
+			} else {
+				moving.motionZ = zDist/dist*amplifier;
+				moving.motionZ = yDist/dist*amplifier;
+				moving.motionX = xDist/dist*amplifier;
+			}
+		}
+	}
+
 }

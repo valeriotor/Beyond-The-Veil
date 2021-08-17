@@ -1,0 +1,6 @@
+{
+    "variants": {
+		"is_starter=false": { "model": "beyondtheveil:arena" },
+		"is_starter=true": { "model": "beyondtheveil:arena"}
+    }
+}

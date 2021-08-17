@@ -1,0 +1,45 @@
+length: 24
+model: deep_one_myrmidon
+keys
+	Torso1: 1
+	Torso2: 2
+	RSArm: 14
+	LUArm: 11
+	RIArm: 18
+	RIFArm: 19
+	Sword: 20
+end
+start: 0: 1
+	Torso1: roty: -0.7: costant
+	Torso2: roty: 0.5: costant
+	RSArm: roty: 0.5: costant
+	RIArm: roty: -1.7: costant
+	LUArm: roty: -0.9: costant
+	RIFArm: roty: 0.17: costant
+	Sword: roty: 1.1: costant
+end
+start: 2: 8
+	Torso1: roty: 0.7
+	Torso2: roty: -0.3
+	RSArm: roty: -0.2
+	RIArm: roty: 1.7
+	RIFArm: roty: -0.17
+	Sword: roty: -1.1
+end
+start: 9: 13
+	Torso1: roty: -0.7: quadratic
+	Torso2: roty: 0.3: quadratic
+	RSArm: roty: 0.2: quadratic
+	RIArm: roty: -1.3: quadratic
+	RIFArm: roty: 0.57: quadratic
+	Sword: roty: 1.33: quadratic
+end
+start: 18: 23
+	Torso1: roty: 0.7
+	Torso2: roty: -0.5
+	RSArm: roty: -0.5
+	RIArm: roty: 1.3
+	LUArm: roty: 0.9
+	RIFArm: roty: -0.57
+	Sword: roty: -1.33
+end

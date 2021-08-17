@@ -18,10 +18,12 @@ import com.valeriotor.beyondtheveil.entities.render.RenderParasite;
 import com.valeriotor.beyondtheveil.entities.render.RenderTransformedPlayer;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.baubles.MessageRevelationRingToServer;
 import com.valeriotor.beyondtheveil.util.CameraRotatorClient;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
@@ -35,10 +37,16 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -70,6 +78,7 @@ public class RenderEvents {
 		EntityPlayer p = event.getEntityPlayer();
 		if(dreamFocusPlayers.contains(p)) {
 			event.setCanceled(true);
+			p.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, p.posX, p.posY, p.posZ, 0, 0, 0);
 		} else if(transformedPlayers.contains(p)) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
@@ -184,11 +193,12 @@ public class RenderEvents {
 		}
 		glowingEnts.clear();
 	}
-	
+	private static final ResourceLocation FOCUS_OVERLAY = new ResourceLocation(References.MODID, "textures/gui/focus_overlay.png");
 	@SubscribeEvent
 	public void onOverlayRenderEvent(RenderWorldLastEvent event) {
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().isGamePaused() || Minecraft.getMinecraft().player.world == null) return;
 		renderCovenantPlayers(event);
+		
 	}
 	
 	public void renderCovenantPlayers(RenderWorldLastEvent event) {
@@ -265,22 +275,47 @@ public class RenderEvents {
 			event.setCanceled(true);
 		}else if(data.getString(PlayerDataLib.TRANSFORMED)
 				&& mc.gameSettings.thirdPersonView == 0) {
+			float counter = BeyondTheVeil.proxy.cEvents.getUppercutCounter();
+
 			event.setCanceled(true);
 	        AbstractClientPlayer abstractclientplayer = mc.player;
 	        float partialTicks = event.getPartialTicks();
 	        float f = 1.0F;
 	        float p_187456_2_ = abstractclientplayer.getSwingProgress(partialTicks);
+	        float x = 0;
+	        if(counter != 0) {
+	        	counter = 12-counter + partialTicks;
+				if(counter <= 3) {
+					x = MathHelper.sin((float) Math.PI/4*(counter-4))*0.6F;
+				} else if(counter <= 7){
+					x = MathHelper.sin((float) Math.PI/8*(counter-4));
+				} else {
+					x = MathHelper.sin((float) Math.PI/10*(counter-4));
+				}
+	        	p_187456_2_ = 0;
+			}
 	        float p_187456_1_ = 0;
 	        float f1 = MathHelper.sqrt(p_187456_2_);
-	        float f2 = -0.3F * MathHelper.sin(f1 * (float)Math.PI);
-	        float f3 = 0.4F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
-	        float f4 = -0.4F * MathHelper.sin(p_187456_2_ * (float)Math.PI);
-	        GlStateManager.translate(f * (f2 + 0.64000005F), f3 + -0.6F + p_187456_1_ * -0.6F, f4 + -0.71999997F);
-	        GlStateManager.rotate(f * 45.0F, 0.0F, 1.0F, 0.0F);
+	        float f2 = -0.45F * MathHelper.sin(f1 * (float)Math.PI);
+	        float f3 = 0.6F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
+	        float f4 = -0.6F * MathHelper.sin(p_187456_2_ * (float)Math.PI);
+
+	        GlStateManager.translate(f * (f2 + 0.64000005F), f3 + -0.6F, f4*0.5 + -0.71999997F);
+	        GlStateManager.translate(0.1, -0.7, -0.2);
+	        if(counter != 0)
+				GlStateManager.translate(0, 0.7*x*3, -0.375);
+//	        GlStateManager.translate(0, 0, -4);
 	        float f5 = MathHelper.sin(p_187456_2_ * p_187456_2_ * (float)Math.PI);
 	        float f6 = MathHelper.sin(f1 * (float)Math.PI);
-	        GlStateManager.rotate(f * f6 * 70.0F, 0.0F, 1.0F, 0.0F);
-	        GlStateManager.rotate(f * f5 * -20.0F, 0.0F, 0.0F, 1.0F);
+			GlStateManager.scale(0.85, 0.85, 0.85);
+			GlStateManager.rotate(-40.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(80.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(-f5*30.0F, 1.0F, 0.0F, 0.0F);
+	        if(counter != 0) {
+//	        	GlStateManager.scale(2, 2, 2);
+//				GlStateManager.translate(-4.5, 0, 0);
+	        	GlStateManager.rotate(x*75, 0, 0, 1);
+			}
 	        this.mc.getTextureManager().bindTexture(RenderTransformedPlayer.deepOneTexture);
 	        GlStateManager.translate(f * -1.0F, 3.6F, 3.5F);
 	        GlStateManager.rotate(f * 120.0F, 0.0F, 0.0F, 1.0F);
@@ -296,10 +331,74 @@ public class RenderEvents {
 		}
 	}
 	
-	public void renderDreamFocusPath(List<Point3d> ps, World w) {
-		if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == ItemRegistry.slug) {
-			for(Point3d p : ps) {
-				w.spawnParticle(EnumParticleTypes.REDSTONE, p.x, p.y, p.z, 255, 0, 0);
+	public void renderDreamFocusPath(List<Point3d> ps, World w, EnumDyeColor dye) {
+		EntityPlayer p = Minecraft.getMinecraft().player;
+		int a = BaublesApi.isBaubleEquipped(p, ItemRegistry.revelation_ring);
+		if(a != -1) {
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getOrSetInteger(String.format(PlayerDataLib.PASSIVE_BAUBLE, a), 1, false) == 1) {
+				for(int i = 0; i < ps.size(); i+=3) {
+					Point3d point = ps.get(i);
+					int color = dye.getColorValue();
+					w.spawnParticle(EnumParticleTypes.REDSTONE, point.x, point.y, point.z, (color >> 16)/255D, ((color >> 8) & 255)/255D, (color & 255)/255D);
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void actualOverlayEvent(RenderGameOverlayEvent event) {
+		if(event.getType() == ElementType.ALL) {
+			int focusCounter = BeyondTheVeil.proxy.cEvents.getFocusCounter();
+			if(focusCounter > 0) {
+				Minecraft.getMinecraft().renderEngine.bindTexture(FOCUS_OVERLAY);
+				int height = event.getResolution().getScaledHeight();
+				int width = event.getResolution().getScaledWidth();
+				GlStateManager.pushMatrix();
+				GlStateManager.enableAlpha();
+				drawModalRectWithCustomSizedTexture(width/2-64, height-100, 0, 0, MathHelperBTV.clamp(0, 127, (focusCounter)*128/300), 32, 128, 32);
+				GlStateManager.disableAlpha();
+				GlStateManager.popMatrix();
+			}
+		}
+	}
+	
+	public static void drawModalRectWithCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
+	
+	@SubscribeEvent
+	public void fogDensityEvent(EntityViewRenderEvent.FogDensity event) {
+		if(event.getEntity() instanceof EntityPlayer && ((EntityPlayer)event.getEntity()).getActivePotionEffect(MobEffects.BLINDNESS) != null) return;
+		if(event.getEntity().dimension == DimensionRegistry.ARCHE.getId()) {
+			GlStateManager.setFog(GlStateManager.FogMode.EXP);
+			event.setDensity(0F);
+			event.setCanceled(true);
+			
+		}		
+		
+	}
+	
+	@SubscribeEvent
+	public void fogColorEvent(EntityViewRenderEvent.FogColors event) {
+		if(event.getEntity().dimension == DimensionRegistry.ARCHE.getId()) {
+			if(event.getEntity() instanceof EntityPlayer && ((EntityPlayer)event.getEntity()).getActivePotionEffect(MobEffects.BLINDNESS) != null) {
+				event.setBlue(1F);
+				event.setGreen(0F);
+				event.setRed(0.78F);
+			} else {
+				event.setBlue(0.2F);
+				event.setGreen(0.02F);
+				event.setRed(0.02F);
 			}
 		}
 	}

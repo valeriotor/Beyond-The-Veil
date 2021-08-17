@@ -21,7 +21,6 @@ public class HamletList extends WorldSavedData{
 	
 	public HamletList(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -23,3 +23,6 @@ Parasite Death&Hurt: dobroide
 Saw Cleaver Transform: CTCollab
 Saw Cleaver Transform Attack: Kneeling
 Worthless: Auesomeman38
+Surgeon: erlipresidente
+Deep Brute smash: studiomandragore
+Arena music: Airwolf89

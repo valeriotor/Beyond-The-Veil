@@ -1,10 +1,13 @@
 package com.valeriotor.beyondtheveil.network;
 
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.events.ServerTickEvents;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer.PlayerTimerBuilder;
 
+import com.valeriotor.beyondtheveil.worship.DOSkill;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +35,13 @@ public class MessageSawCleaverToServer implements IMessage{
 		public IMessage onMessage(MessageSawCleaverToServer message, MessageContext ctx) {
 			EntityPlayerMP p = ctx.getServerHandler().player;
 			p.getServerWorld().addScheduledTask(() -> {
-				if(p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver) {
+				boolean flagCleaver = p.getHeldItemMainhand().getItem() == ItemRegistry.saw_cleaver;
+				boolean flagDeepOne = false;
+				if(!flagCleaver) {
+					IPlayerData data = PlayerDataLib.getCap(p);
+					flagDeepOne = (data.getString(PlayerDataLib.TRANSFORMED) && DOSkill.QUICKSTEP.isActive(data));
+				}
+				if(flagCleaver || flagDeepOne) {
 					PlayerTimer pt = ServerTickEvents.getPlayerTimer("CleaverDodge", p);
 					if(pt == null && !p.isInWater() && !p.capabilities.isFlying) {
 						IBlockState b = p.world.getBlockState(p.getPosition().add(0, -0.2, 0));
@@ -40,8 +49,8 @@ public class MessageSawCleaverToServer implements IMessage{
 								BTVPacketHandler.INSTANCE.sendTo(new MessageSawCleaverToClient(), p);
 								PlayerTimerBuilder ptb = new PlayerTimerBuilder(p)
 															.setTimer(12)
-															.addInterrupt(player -> player.getHeldItemMainhand().getItem() != ItemRegistry.saw_cleaver)
 															.setName("CleaverDodge");
+								if(flagCleaver) ptb.addInterrupt(player -> player.getHeldItemMainhand().getItem() != ItemRegistry.saw_cleaver);
 								ServerTickEvents.addPlayerTimer(ptb.toPlayerTimer());
 								p.getFoodStats().addExhaustion(0.7F);
 						}

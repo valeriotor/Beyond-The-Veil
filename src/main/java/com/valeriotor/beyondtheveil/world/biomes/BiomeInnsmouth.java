@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.world;
+package com.valeriotor.beyondtheveil.world.biomes;
 
 import java.util.Random;
 

@@ -94,9 +94,9 @@ public class CraftingResearchRecipe extends ResearchRecipe {
 	public boolean mouseClicked(GuiResearchPage gui, int mouseX, int mouseY, int mouseButton) {
 		int sel = hoveringArrow(gui, mouseX, mouseY);
 		if(sel == 0)
-			this.page = MathHelperBTV.clamp(0, recipes.size(), page - 1);
+			this.page = MathHelperBTV.clamp(0, recipes.size()-1, page - 1);
 		else if(sel == 1)
-			this.page = MathHelperBTV.clamp(0, recipes.size(), page + 1);
+			this.page = MathHelperBTV.clamp(0, recipes.size()-1, page + 1);
 		if(sel == -1)
 			return false;
 		return true;		

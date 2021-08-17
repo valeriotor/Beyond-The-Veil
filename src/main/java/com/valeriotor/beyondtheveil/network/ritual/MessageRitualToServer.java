@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.events.special.DrowningRitualEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
+import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.worship.DrowningRitual;
 import com.valeriotor.beyondtheveil.worship.DrowningRitual.Phase;
 
@@ -69,8 +70,7 @@ public class MessageRitualToServer implements IMessage{
 					p.setAir(200);
 					if(p.world.getBlockState(p.getPosition().up(4)).getBlock() == Blocks.PACKED_ICE)
 						p.world.setBlockState(p.getPosition().up(4), Blocks.WATER.getDefaultState());
-					p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(PlayerDataLib.RITUALQUEST, false);
-					BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(PlayerDataLib.RITUALQUEST), (EntityPlayerMP) p);
+					SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.RITUALQUEST);
 				}
 			});
 			return null;

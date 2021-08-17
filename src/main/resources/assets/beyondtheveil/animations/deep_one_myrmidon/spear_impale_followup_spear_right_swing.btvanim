@@ -1,0 +1,35 @@
+length: 28
+model: deep_one_myrmidon
+keys
+	Torso2: 2
+	Head: 5
+	RSArm: 14
+	RSFArm: 15
+	Spear: 16
+end
+start: 0: 1
+	Torso2: roty: -0.65: costant
+	Head: roty: 0.46: costant
+	RSArm: roty: -0.64: costant
+	Spear: roty: 1.3: costant
+	Spear: rotx: -0.35: costant
+end
+start: 2: 11
+	Torso2: roty: -0.2
+	RSArm: roty: -0.36
+	RSFArm: roty: -0.32
+	Spear: roty: 0.1
+	Spear: rotx: 0.35
+end
+start: 14: 18
+	Torso2: roty: 1.75: quadratic
+	Head: roty: -0.46: quadratic
+	RSArm: roty: 1.9: quadratic
+	RSFArm: roty: 0.32: quadratic
+	Spear: roty: 0.4: quadratic
+end
+start: 19: 27
+	Torso2: roty: -0.9
+	RSArm: roty: -0.9
+	Spear: roty: -1.8
+end

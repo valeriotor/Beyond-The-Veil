@@ -15,11 +15,10 @@ import com.valeriotor.beyondtheveil.proxy.ClientProxy;
 import com.valeriotor.beyondtheveil.tileEntities.TileBloodWell.BloodMobs;
 
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.*;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemSlab;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -29,33 +28,33 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class ItemRegistry {
 	
 	
-	public static final TestItem testItem = new TestItem();
-	public static final ItemOniricIncense oniricIncense = new ItemOniricIncense();
-	public static final ItemSlugCatcher slugCatcher = new ItemSlugCatcher();
-	public static final ItemSlug slug = new ItemSlug();
-	public static final ItemCanoe canoe = new ItemCanoe();
+	public static final TestItem testItem = new TestItem("testitem");
+	public static final ModItem oniricIncense = new ModItem("oniric_incense");
+	public static final ItemSlugCatcher slugCatcher = new ItemSlugCatcher("slugcatcher");
+	public static final ItemSlug slug = new ItemSlug("slug");
+	public static final ItemCanoe canoe = new ItemCanoe("canoe");
 	public static final ItemDrink rum = new ItemDrink("drink_rum");
 	public static final ItemDrink wine = new ItemDrink("drink_wine");
 	public static final ItemDrink ale = new ItemDrink("drink_ale");
 	public static final ItemDrink vodka = new ItemDrink("drink_vodka");
 	public static final ItemDrink mead = new ItemDrink("drink_mead");
 	public static final ItemDrink cup = new ItemDrink("drink_empty");
-	public static final ItemFlute flute = new ItemFlute();
-	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON);
-	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion();
+	public static final ItemFlute flute = new ItemFlute("flute");
+	public static final ItemSawCleaver saw_cleaver = new ItemSawCleaver(ToolMaterial.IRON, "saw_cleaver");
+	public static final ItemWolfMedallion wolf_medallion = new ItemWolfMedallion("wolf_medallion");
 	public static final ItemTablet tablet = new ItemTablet("tablet");
-	public static final ItemBronzeSphere bronze_sphere= new ItemBronzeSphere();
-	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockNames.REDSTONEWEED).setUnlocalizedName(BlockNames.REDSTONEWEED);
-	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass).setRegistryName(BlockNames.GHOSTWEED).setUnlocalizedName(BlockNames.GHOSTWEED);
-	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS).setRegistryName(BlockNames.VANILLAWEED).setUnlocalizedName(BlockNames.VANILLAWEED);
-	public static final ItemBlackjack blackjack = new ItemBlackjack();
+	public static final ItemBronzeSphere bronze_sphere= new ItemBronzeSphere("bronze_sphere");
+	public static final Item redstone_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass, BlockNames.REDSTONEWEED);
+	public static final Item ghost_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass, BlockNames.GHOSTWEED);
+	public static final Item vanilla_weed_seeds = new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
+	public static final ItemBlackjack blackjack = new ItemBlackjack("blackjack");
 	public static final ModItem spine = new ModItem("spine");
 	public static final ItemHeldVillager held_villager = new ItemHeldVillager("held_villager");
 	public static final ItemHeldWeeper held_weeper = new ItemHeldWeeper("held_weeper");
 	public static final ItemHeldFletum held_fletum = new ItemHeldFletum("held_fletum");
 	public static final ItemHeldShoggoth held_shoggoth = new ItemHeldShoggoth("held_shoggoth");
 	public static final ModItem surgery_tools = new ModItem("surgery_tools");
-	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara();
+	public static final ItemBoneTiara bone_tiara = new ItemBoneTiara("bone_tiara");
 	public static final ItemBleedingBelt bleeding_belt = new ItemBleedingBelt("bleeding_belt");
 	public static final ItemDreamBottle dream_bottle = new ItemDreamBottle("dream_bottle");
 	public static final Item shoggoth_map = new ModItem("shoggoth_map").setMaxStackSize(1);
@@ -72,7 +71,12 @@ public class ItemRegistry {
 	public static final ItemMemoryPhial memory_phial = new ItemMemoryPhial("memory_phial");
 	public static final ItemNecronomicon necronomicon = new ItemNecronomicon("necronomicon");
 	public static final ModItem gear = new ModItem("gear");
-	
+	public static final ModItem surgeon_summons = new ItemSurgeonSummoner("surgeon_summons");
+	public static final ItemCrucible crucible = new ItemCrucible("crucible");
+	public static final ItemBlackMirror black_mirror = new ItemBlackMirror("black_mirror");
+	public static final ModItem fleshcarbontoken = new ModItem("fleshcarbontoken");
+	public static ItemInkMask ink_mask; // name: ink_mask
+
 	
 	//public static final ItemTablet old_map = new ItemTablet("old_map");
 	//public static final ItemTablet scroll = new ItemTablet("scroll");
@@ -81,7 +85,7 @@ public class ItemRegistry {
 	
 	
     public static void initModels() {
-        //ClientProxy.registerItemRenderer(testItem, 0, "inventory");
+        ClientProxy.registerItemRenderer(testItem, 0, "inventory");
         ClientProxy.registerItemRenderer(oniricIncense, 0, "inventory");
         ClientProxy.registerItemRenderer(slugCatcher, 0, "inventory");
         ClientProxy.registerItemRenderer(slug, 0, "inventory");
@@ -125,7 +129,12 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(memory_phial, 0, "inventory");
         ClientProxy.registerItemRenderer(necronomicon, 0, "inventory");
         ClientProxy.registerItemRenderer(gear, 0, "inventory");
-        
+        ClientProxy.registerItemRenderer(surgeon_summons, 0, "inventory");
+        ClientProxy.registerItemRenderer(crucible, 0, "inventory");
+        ClientProxy.registerItemRenderer(black_mirror, 0, "inventory");
+        ClientProxy.registerItemRenderer(fleshcarbontoken, 0, "inventory");
+        ClientProxy.registerItemRenderer(ink_mask, 0, "inventory");
+
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DampWood), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.FumeSpreader), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.DarkSand), 0, "inventory");
@@ -146,6 +155,7 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.SleepChamberAdvanced), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBeanStalk), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockRedstoneGrass), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockGhostGrass), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantArborealGenerator), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantSaplingShrub), 0, "inventory");
         //ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.PlantBreaker), 0, "inventory");
@@ -171,12 +181,24 @@ public class ItemRegistry {
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMemorySieve), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockGearBench), 0, "inventory");
         ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocus), 0, "inventory");
-        
-        
-    }
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocusFluids), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDreamFocusVillagers), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockCurtain), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockMegydrea), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockThickAlgae), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockArchePortal), 0, "inventory");
+        ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDarkGlass), 0, "inventory");
+		ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockArena), 0, "inventory");
+		ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDeepPrismarine), 0, "inventory");
+		ClientProxy.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.BlockDeepChest), 0, "inventory");
+
+	}
     
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	IForgeRegistry<Item> registry = event.getRegistry();
+		ItemArmor.ArmorMaterial inkMaskMaterial = EnumHelper.addArmorMaterial("ink_mask", "beyondtheveil:ink_mask", 1000, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0);
+		ink_mask = new ItemInkMask("ink_mask", inkMaskMaterial);
+
+		IForgeRegistry<Item> registry = event.getRegistry();
     	registry.register(new ItemBlock(BlockRegistry.DampWood).setRegistryName(BlockRegistry.DampWood.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.FumeSpreader).setRegistryName(BlockRegistry.FumeSpreader.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.DarkSand).setRegistryName(BlockRegistry.DarkSand.getRegistryName()));
@@ -197,6 +219,7 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.SleepChamberAdvanced).setRegistryName(BlockRegistry.SleepChamberAdvanced.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantBeanStalk).setRegistryName(BlockRegistry.PlantBeanStalk.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockRedstoneGrass).setRegistryName(BlockRegistry.BlockRedstoneGrass.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockGhostGrass).setRegistryName(BlockRegistry.BlockGhostGrass.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantArborealGenerator).setRegistryName(BlockRegistry.PlantArborealGenerator.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.PlantSaplingShrub).setRegistryName(BlockRegistry.PlantSaplingShrub.getRegistryName()));
     	//registry.register(new ItemBlock(BlockRegistry.PlantBreaker).setRegistryName(BlockRegistry.PlantBreaker.getRegistryName()));
@@ -222,7 +245,17 @@ public class ItemRegistry {
     	registry.register(new ItemBlock(BlockRegistry.BlockMemorySieve).setRegistryName(BlockRegistry.BlockMemorySieve.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockGearBench).setRegistryName(BlockRegistry.BlockGearBench.getRegistryName()));
     	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocus).setRegistryName(BlockRegistry.BlockDreamFocus.getRegistryName()));
-    	//registry.register(ItemRegistry.testItem);
+    	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocusFluids).setRegistryName(BlockRegistry.BlockDreamFocusFluids.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockDreamFocusVillagers).setRegistryName(BlockRegistry.BlockDreamFocusVillagers.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockCurtain).setRegistryName(BlockRegistry.BlockCurtain.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockMegydrea).setRegistryName(BlockRegistry.BlockMegydrea.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockThickAlgae).setRegistryName(BlockRegistry.BlockThickAlgae.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockArchePortal).setRegistryName(BlockRegistry.BlockArchePortal.getRegistryName()));
+    	registry.register(new ItemBlock(BlockRegistry.BlockDarkGlass).setRegistryName(BlockRegistry.BlockDarkGlass.getRegistryName()));
+		registry.register(new ItemBlock(BlockRegistry.BlockDeepPrismarine).setRegistryName(BlockRegistry.BlockDeepPrismarine.getRegistryName()));
+		registry.register(new ItemBlock(BlockRegistry.BlockArena).setRegistryName(BlockRegistry.BlockArena.getRegistryName()));
+		registry.register(new ItemBlock(BlockRegistry.BlockDeepChest).setRegistryName(BlockRegistry.BlockDeepChest.getRegistryName()));
+    	registry.register(ItemRegistry.testItem);
     	registry.register(ItemRegistry.oniricIncense);
     	registry.register(ItemRegistry.slugCatcher);
     	registry.register(ItemRegistry.slug);
@@ -262,7 +295,12 @@ public class ItemRegistry {
     	registry.register(ItemRegistry.memory_phial);
     	registry.register(ItemRegistry.necronomicon);
     	registry.register(ItemRegistry.gear);
-    	
+    	registry.register(ItemRegistry.surgeon_summons);
+    	registry.register(ItemRegistry.crucible);
+    	registry.register(ItemRegistry.black_mirror);
+    	registry.register(ItemRegistry.fleshcarbontoken);
+    	registry.register(ItemRegistry.ink_mask);
+
     	
     	registry.register(ItemRegistry.redstone_weed_seeds);
     	BlockRegistry.PlantRedstoneWeed.setSeed(redstone_weed_seeds);
@@ -275,12 +313,13 @@ public class ItemRegistry {
     
     
     public static Item getRandomArtifact(Random r) {
-    	int a = r.nextInt(4);
+    	int a = r.nextInt(5);
     	switch(a) {
     	case 0: return saw_cleaver;
     	case 1: return flute;
     	case 2: return wolf_medallion;
     	case 3: return bronze_sphere;
+    	case 4: return crucible;
     	default: return null;
     	}
     }

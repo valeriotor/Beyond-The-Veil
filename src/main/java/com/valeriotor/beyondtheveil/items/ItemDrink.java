@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.items;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.lib.References;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -20,11 +21,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class ItemDrink extends Item{
+public class ItemDrink extends ModItem{
 	public ItemDrink(String name) {
-		setRegistryName(References.MODID + ":" + name);
-		setUnlocalizedName(name);
-		this.setCreativeTab(References.BTV_TAB);
+		super(name);
 	}
 	
 	@Override
@@ -34,7 +33,8 @@ public class ItemDrink extends Item{
 			EntityPlayer player = (EntityPlayer) entityLiving;
 			player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 300));
 			player.getFoodStats().addStats(6, 4);
-			
+
+			if(stack.getItem() == ItemRegistry.rum) doRumDebug(player);
 			if (player == null || !player.capabilities.isCreativeMode)
 	        {
 	            stack.shrink(1);
@@ -54,6 +54,10 @@ public class ItemDrink extends Item{
 		}	
 		
 		return stack;
+	}
+	
+	private void doRumDebug(EntityPlayer p) {
+		//MirrorUtil.setScheduledDialogue(p, "start");
 	}
 	
     public EnumAction getItemUseAction(ItemStack stack)

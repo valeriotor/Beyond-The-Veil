@@ -38,9 +38,7 @@ public class MessageSyncResearchToServer implements IMessage{
 			EntityPlayerMP p = ctx.getServerHandler().player;
 			p.getServer().addScheduledTask(() -> {
 				ResearchSyncer sync = message.sync;
-				if(sync.progress) ResearchUtil.progressResearch(p, sync.key);
-				if(sync.learn) ResearchUtil.learnResearch(p, sync.key);
-				if(sync.status != null) p.getCapability(ResearchProvider.RESEARCH, null).addResearchStatus(sync.status);
+				sync.processServer(p);
 			});
 			return null;
 		}

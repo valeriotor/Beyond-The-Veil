@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.tileEntities.TileHeart;
 import com.valeriotor.beyondtheveil.util.ItemHelper;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -74,6 +75,14 @@ public class BlockHeart extends ModBlock implements ITileEntityProvider{
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return super.canPlaceBlockAt(worldIn, pos) && worldIn.getBlockState(pos.down()).isTopSolid();
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if(state.getBlock() != this || !this.canPlaceBlockAt(worldIn, pos)) {
+			this.dropBlockAsItem(worldIn, pos, state, 0);
+			worldIn.setBlockToAir(pos);
+		}
 	}
 	
 	@Override

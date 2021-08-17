@@ -38,10 +38,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 
-	public ItemSawCleaver(ToolMaterial material) {
+	public ItemSawCleaver(ToolMaterial material, String name) {
 		super(material);
-		this.setRegistryName(References.MODID + ":saw_cleaver");
-		this.setUnlocalizedName("saw_cleaver");
+		this.setRegistryName(References.MODID, name);
+		this.setUnlocalizedName("beyondtheveil:" + name);
 		this.addPropertyOverride(new ResourceLocation("Extended"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
@@ -131,8 +131,7 @@ public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 		entities.forEach(e -> {
 			if(e instanceof EntityLivingBase && !e.isDead) {
 				if(normalAttack && entities.indexOf(e) == entities.size()-1) player.attackTargetEntityWithCurrentItem(e);
-				else ((EntityLivingBase) e).attackEntityFrom(DamageSource.GENERIC, (float) (10*Math.pow(player.getCooledAttackStrength(0), 2)));
-				
+				else e.attackEntityFrom(DamageSource.causePlayerDamage(player), (float) (10*Math.pow(player.getCooledAttackStrength(0), 2)));
 			}
 		});
 	}

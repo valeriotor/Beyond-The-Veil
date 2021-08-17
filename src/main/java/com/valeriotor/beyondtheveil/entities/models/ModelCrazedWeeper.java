@@ -161,24 +161,8 @@ public class ModelCrazedWeeper extends ModelAnimated {
         this.HeadSpine.render(f5);
         this.CentralBody.render(f5);
     }
-
-    /**
-     * This is a helper function from Tabula to set the rotation of model parts
-     */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z, boolean addToDefault) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
-        if(addToDefault) {
-	        EnumMap<Transformation, Float> map = new EnumMap<>(Transformation.class);
-	        map.put(Transformation.ROTX, x);
-	        map.put(Transformation.ROTY, y);
-	        map.put(Transformation.ROTZ, z);
-	        defaultAngles.put(modelRenderer, map);
-        }
-    }
     
-    public void setAngles(boolean addToDefault) {
+    protected void setAngles(boolean addToDefault) {
         this.setRotateAngle(LeftTentacle11, -0.27314402793711257F, 0.0F, 0.0F, addToDefault);
         this.setRotateAngle(LeftTentacle22, 0.8196066167365371F, 0.0F, 0.6829473363053812F, addToDefault);
         this.setRotateAngle(HeadTentacle1, -0.22759093446006054F, 0.0F, 0.18203784098300857F, addToDefault);
@@ -223,7 +207,7 @@ public class ModelCrazedWeeper extends ModelAnimated {
     	this.resetStuff();
     	EntityCrazedWeeper weeper = (EntityCrazedWeeper)e;
     	float animTicks = weeper.getAnimationTicks();
-    	float offset = (float) Math.sin(animTicks%40 / 6.366)/20;
+    	float offset = MathHelper.sin(animTicks%40 / 6.366F)/20;
     	this.HeadFront.offsetX = offset/2;
     	this.HeadLeft.offsetY = offset/2;
     	this.HeadRight.offsetX = -offset/4;

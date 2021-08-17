@@ -1,0 +1,53 @@
+length: 22
+model: deep_one_brute
+keys
+	LBody: 0
+	Body: 1
+	Head: 2
+	LUArm: 12
+	RUArm: 14
+	LULeg: 17
+	LLLeg: 18
+	RULeg: 19
+	RLLeg: 20
+end
+start: 0: 5
+	LBody: rotx: -0.4
+	Body: rotx: -0.57
+	Head: rotx: 0.75
+	LUArm: rotx: -1.2
+	RUArm: rotx: -1.2
+	LULeg: tray: -0.3
+	RULeg: tray: -0.3
+	RLLeg: tray: 0.13
+	LULeg: rotz: 0.55
+	RULeg: rotz: -0.55
+	LLLeg: rotx: -0.43
+	RLLeg: rotx: -0.43
+end
+start: 6: 8
+	LBody: rotx: -0.1
+	Body: rotx: -0.13
+	Head: rotx: 0.15
+	LUArm: rotx: -0.2
+	RUArm: rotx: -0.2
+end
+start: 9: 13
+	LBody: rotx: 0.7: quadratic
+	Body: rotx: 0.9: quadratic
+	Head: rotx: -1.3: quadratic
+end
+start: 13: 21
+	LULeg: tray: 0.3
+	RULeg: tray: 0.3
+	RLLeg: tray: -0.13
+	LULeg: rotz: -0.55
+	RULeg: rotz: 0.55
+	LLLeg: rotx: 0.43
+	RLLeg: rotx: 0.43
+	LBody: rotx: -0.2
+	Body: rotx: -0.2
+	Head: rotx: 0.4
+	LUArm: rotx: 1.2
+	RUArm: rotx: 1.2
+end

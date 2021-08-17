@@ -1,5 +1,9 @@
 package com.valeriotor.beyondtheveil.lib;
 
+import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import net.minecraft.entity.player.EntityPlayer;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +40,11 @@ public class PlayerDataLib {
 	public static final String INTROSPECTION = "introspection";
 	public static final String BONEMEALUSED = "bmealused";
 	public static final String PLANTDREAM = "pdream";
+	public static final Function<String, String> ICTYA_BY_SIZE = s -> String.format("ictya-%s", s);
+	public static final Function<String, String> ICTYA_USED_BY_SIZE = s -> String.format("ictya-used-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_KILLED_BY_NAME = s -> String.format("arena-killed-%s", s);
+	public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
+	public static final String ARENA_ADVICE = "arenaadvicereceived";
 	
 	// Ints (Temporary)
 	public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler
@@ -57,7 +66,8 @@ public class PlayerDataLib {
 	public static final String IDOLFOLLY = "idolfolly";
 	public static final String DEATHTELEPORT = "deathtp";
 	public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
-	
+	public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
+
 	// Strings (Temporary)
 	public static final String DREAMFOCUS = "dreamfocus";
 	
@@ -89,5 +99,9 @@ public class PlayerDataLib {
 		tempStrings.add("lhbaptism");
 		allowedStrings = Collections.unmodifiableSet(tempStrings);
 	}
-	
+
+	public static IPlayerData getCap(EntityPlayer p) {
+		return p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+	}
+
 }

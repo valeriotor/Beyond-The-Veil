@@ -1,0 +1,16 @@
+{
+	"rows" : [
+		"QWWQ",
+		"QSSQ",
+		"QHHQ",
+		"QQQQ"
+	],
+	"output" : "beyondtheveil:dream_focus",
+	"map": {
+		"Q" : "minecraft:quartz_block;1;0",
+		"S" : "beyondtheveil:spine",
+		"H" : "beyondtheveil:heart",
+		"W" : "minecraft:water_bucket"
+	},
+	"req" : "DREAMFOCUS;0"
+}

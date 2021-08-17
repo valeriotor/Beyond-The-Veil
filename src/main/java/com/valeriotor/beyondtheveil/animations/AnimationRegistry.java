@@ -1,5 +1,8 @@
 package com.valeriotor.beyondtheveil.animations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnimationRegistry {
 	
 	public static AnimationTemplate deep_one_roar;
@@ -15,57 +18,93 @@ public class AnimationRegistry {
 	public static AnimationTemplate deep_one_right_swing;
 	public static AnimationTemplate deep_one_left_swing;
 	public static AnimationTemplate crazed_weeper_transform;
+	public static AnimationTemplate surgeon_surgery;
+	public static AnimationTemplate surgeon_attack;
+	public static AnimationTemplate muray_bite;
+	public static AnimationTemplate deep_one_brute_left_swing;
+	public static AnimationTemplate deep_one_brute_right_swing;
+	public static AnimationTemplate deep_one_brute_right_followup_swing;
+	public static AnimationTemplate deep_one_brute_left_followup_swing;
+	public static AnimationTemplate deep_one_brute_smash;
+	public static AnimationTemplate deep_one_brute_roar_followup;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale;
+	public static AnimationTemplate deep_one_myrmidon_sword_swing;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale_followup_spear_impale;
+	public static AnimationTemplate deep_one_myrmidon_sword_swing_followup_sword_impale;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale_followup_spear_right_swing;
+	public static AnimationTemplate deep_one_myrmidon_sword_impale_followup_spear_impale;
+	public static AnimationTemplate deep_one_myrmidon_spear_impale_followup_sword_impale;
+	public static AnimationTemplate deep_one_myrmidon_sword_impale_followup_sword_back_swing;
+	public static AnimationTemplate deep_one_player_climb;
+	public static AnimationTemplate deep_one_player_uppercut;
+	public static AnimationTemplate cephalopodian_crunch;
+	public static AnimationTemplate cephalopodian_tentacles;
+	public static AnimationTemplate sandflatter_ambush;
+	public static AnimationTemplate sandflatter_claw;
+	public static AnimationTemplate bonecage_crunch;
+	public static AnimationTemplate adeline_bite;
+	private static List<AnimationTemplate> anims = new ArrayList<>();
 	
-	public static void loadAnimations() {
-		blood_skeleton_left_swing = new AnimationTemplate("blood_skeleton_left_swing");
-		blood_skeleton_right_swing = new AnimationTemplate("blood_skeleton_right_swing");
-		blood_skeleton_idle = new AnimationTemplate("blood_skeleton_idle");
-		blood_skeleton_spook = new AnimationTemplate("blood_skeleton_spook");
-		blood_zombie_idle = new AnimationTemplate("blood_zombie_idle");
-		deep_one_roar = new AnimationTemplate("deep_one_roar");
-		shoggoth_open_mouth = new AnimationTemplate("shoggoth_open_mouth");
-		shoggoth_eye_tentacle = new AnimationTemplate("shoggoth_eye_tentacle");
-		deep_one_left_swing = new AnimationTemplate("deep_one_left_swing");
-		deep_one_right_swing = new AnimationTemplate("deep_one_right_swing");
-		crazed_weeper_transform = new AnimationTemplate("crazed_weeper_transform");
-		blood_zombie_left_swing = new AnimationTemplate("blood_zombie_left_swing");
-		blood_zombie_right_swing = new AnimationTemplate("blood_zombie_right_swing");
+	public static void loadAnimations(boolean client) {
+		anims.clear();
+		blood_skeleton_left_swing = createAnimationTemplate("blood_skeleton_left_swing", client);
+		blood_skeleton_right_swing = createAnimationTemplate("blood_skeleton_right_swing", client);
+		blood_skeleton_idle = createAnimationTemplate("blood_skeleton_idle", client);
+		blood_skeleton_spook = createAnimationTemplate("blood_skeleton_spook", client);
+		blood_zombie_idle = createAnimationTemplate("blood_zombie_idle", client);
+		deep_one_roar = createAnimationTemplate("deep_one_roar", client);
+		shoggoth_open_mouth = createAnimationTemplate("shoggoth_open_mouth", client);
+		shoggoth_eye_tentacle = createAnimationTemplate("shoggoth_eye_tentacle", client);
+		deep_one_left_swing = createAnimationTemplate("deep_one_left_swing", client);
+		deep_one_right_swing = createAnimationTemplate("deep_one_right_swing", client);
+		crazed_weeper_transform = createAnimationTemplate("crazed_weeper_transform", client);
+		blood_zombie_left_swing = createAnimationTemplate("blood_zombie_left_swing", client);
+		blood_zombie_right_swing = createAnimationTemplate("blood_zombie_right_swing", client);
+		surgeon_surgery = createAnimationTemplate("surgeon_surgery", client);
+		surgeon_attack = createAnimationTemplate("surgeon_attack", client);
+		muray_bite = createAnimationTemplate("muray_bite", client);
+		deep_one_brute_left_swing = createAnimationTemplate("deep_one_brute/left_swing", client);
+		deep_one_brute_right_swing = createAnimationTemplate("deep_one_brute/right_swing", client);
+		deep_one_brute_right_followup_swing = createAnimationTemplate("deep_one_brute/right_followup_swing", client);
+		deep_one_brute_left_followup_swing = createAnimationTemplate("deep_one_brute/left_followup_swing", client);
+		deep_one_brute_smash = createAnimationTemplate("deep_one_brute/smash", client);
+		deep_one_brute_roar_followup = createAnimationTemplate("deep_one_brute/roar_followup", client);
+		deep_one_myrmidon_spear_impale = createAnimationTemplate("deep_one_myrmidon/spear_impale", client);
+		deep_one_myrmidon_sword_swing = createAnimationTemplate("deep_one_myrmidon/sword_swing", client);
+		deep_one_myrmidon_spear_impale_followup_spear_impale = createAnimationTemplate("deep_one_myrmidon/spear_impale_followup_spear_impale", client);
+		deep_one_myrmidon_sword_swing_followup_sword_impale = createAnimationTemplate("deep_one_myrmidon/sword_swing_followup_sword_impale", client);
+		deep_one_myrmidon_spear_impale_followup_spear_right_swing = createAnimationTemplate("deep_one_myrmidon/spear_impale_followup_spear_right_swing", client);
+		deep_one_myrmidon_sword_impale_followup_spear_impale = createAnimationTemplate("deep_one_myrmidon/sword_impale_followup_spear_impale", client);
+		deep_one_myrmidon_spear_impale_followup_sword_impale = createAnimationTemplate("deep_one_myrmidon/spear_impale_followup_sword_impale", client);
+		deep_one_myrmidon_sword_impale_followup_sword_back_swing = createAnimationTemplate("deep_one_myrmidon/sword_impale_followup_sword_back_swing", client);
+		deep_one_player_climb = createAnimationTemplate("deep_one_player_climb", client);
+		cephalopodian_crunch = createAnimationTemplate("cephalopodian_crunch", client);
+		cephalopodian_tentacles = createAnimationTemplate("cephalopodian_tentacles", client);
+		deep_one_player_uppercut = createAnimationTemplate("deep_one_player_uppercut", client);
+		sandflatter_ambush = createAnimationTemplate("sandflatter_ambush", client);
+		sandflatter_claw = createAnimationTemplate("sandflatter_claw", client);
+		bonecage_crunch = createAnimationTemplate("bonecage_crunch", client);
+		adeline_bite = createAnimationTemplate("adeline_bite", client);
 	}
 	
 	public static int getIdFromAnimation(AnimationTemplate anim) {
-		if(anim == deep_one_roar) return 0;
-		if(anim == shoggoth_open_mouth) return 1;
-		if(anim == shoggoth_eye_tentacle) return 2;
-		if(anim == blood_zombie_idle) return 3;
-		if(anim == blood_skeleton_idle) return 4;
-		if(anim == blood_skeleton_spook) return 5;
-		if(anim == deep_one_left_swing) return 6;
-		if(anim == deep_one_right_swing) return 7;
-		if(anim == blood_skeleton_left_swing) return 8;
-		if(anim == blood_skeleton_right_swing) return 9;
-		if(anim == crazed_weeper_transform) return 10;
-		if(anim == blood_zombie_left_swing) return 11;
-		if(anim == blood_zombie_right_swing) return 12;
+		for(int i = 0; i < anims.size(); i++) {
+			if(anims.get(i) == anim) {
+				return i;
+			}
+		}
 		return -1;
 	}
 	
 	public static AnimationTemplate getAnimationFromId(int id) {
-		switch(id) {
-			case 0: return deep_one_roar;
-			case 1: return shoggoth_open_mouth;
-			case 2: return shoggoth_eye_tentacle;
-			case 3: return blood_zombie_idle;
-			case 4: return blood_skeleton_idle;
-			case 5: return blood_skeleton_spook;
-			case 6: return deep_one_left_swing;
-			case 7: return deep_one_right_swing;
-			case 8: return blood_skeleton_left_swing;
-			case 9: return blood_skeleton_right_swing;
-			case 10: return crazed_weeper_transform;
-			case 11: return blood_zombie_left_swing;
-			case 12: return blood_zombie_right_swing;
-		}
+		if(id >= 0 && id < anims.size())
+			return anims.get(id);
 		return null;
+	}
+
+	private static AnimationTemplate createAnimationTemplate(String name, boolean client) {
+		if(client) return AnimationTemplate.createTemplate(name, anims);
+		else return AnimationTemplate.createDummyTemplate(anims);
 	}
 	
 }

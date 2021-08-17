@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.items;
 
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityFletum;
 import com.valeriotor.beyondtheveil.entities.EntityWeeper;
@@ -22,12 +23,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class ItemHeldFletum extends Item{
+public class ItemHeldFletum extends ModItem{
 	
 	public ItemHeldFletum(String name) {
-		this.setRegistryName(name);
-		this.setUnlocalizedName(name);
-		this.setCreativeTab(References.BTV_TAB);
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	
@@ -54,7 +53,7 @@ public class ItemHeldFletum extends Item{
 		
 		for(int y = 0; y <= 1; y++) {
 			IBlockState b = w.getBlockState(weeperPos.add(0, y, 0));
-			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory) {
+			if((b.causesSuffocation() || b.isFullBlock()) && b.getBlock() != BlockRegistry.BlockLacrymatory && b.getBlock() != BlockRegistry.BlockDreamFocusVillagers) {
 				return EnumActionResult.FAIL;
 			}
 		}

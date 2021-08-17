@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.worship.ActivePowers.TransformDeepOne;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -57,9 +58,15 @@ public class MessageRemoveStringToClient implements IMessage{
 			}
 			else {
 				Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString(message.key);
-				if(message.key.equals(PlayerDataLib.TRANSFORMED)) {
+				keySpecificAction(message.key);
+			}
+		}
+
+		private void keySpecificAction(String key) {
+			switch(key) {
+				case PlayerDataLib.TRANSFORMED:
 					Minecraft.getMinecraft().player.capabilities.isFlying = false;
-				}
+					break;
 			}
 		}
 		

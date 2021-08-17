@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.valeriotor.beyondtheveil.blocks.BlockWateryCradle;
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
+import com.valeriotor.beyondtheveil.entities.EntityWeeper;
 import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.util.ItemHelper;
 
@@ -179,6 +180,27 @@ public class TileWateryCradle extends TileEntity{
 		public PatientStatus withSpineless(boolean spineless) {return new PatientStatus(this.patient, spineless, this.heartless, this.villagerProfession);}
 		public PatientStatus withHeartless(boolean heartless) {return new PatientStatus(this.patient, this.spineless, heartless, this.villagerProfession);}
 		public PatientStatus withPatient(PatientTypes type) {return new PatientStatus(type, this.spineless, heartless, this.villagerProfession);}
+		
+		public EntityLiving getEntity(World w) {
+			return getEntity(w, this);
+		}
+		
+		public static EntityLiving getEntityFromStack(World w, ItemStack stack) {
+			return getEntity(w, getPatientFromItem(stack));
+		}
+		
+		public static EntityLiving getEntity(World w, PatientStatus ps) {
+			EntityLiving ent = null;
+			if(ps.patient == PatientTypes.VILLAGER) {
+				ent = new EntityCrawlingVillager(w, !ps.spineless, ps.heartless);
+				((EntityCrawlingVillager)ent).setProfession(ps.villagerProfession);
+			} else if(ps.patient == PatientTypes.WEEPER) {
+				ent = new EntityWeeper(w, ps.spineless);
+				((EntityWeeper)ent).setHeartless(ps.heartless);
+			}
+			return ent;
+		}
+		
 	}
 	
 	

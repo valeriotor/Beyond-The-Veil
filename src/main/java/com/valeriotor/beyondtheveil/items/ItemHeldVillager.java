@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.items;
 
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -21,12 +22,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemHeldVillager extends Item {
+public class ItemHeldVillager extends ModItem {
 	
 	public ItemHeldVillager(String name) {
-		this.setRegistryName(name);
-		this.setUnlocalizedName(name);
-		this.setCreativeTab(References.BTV_TAB);
+		super(name);
 		this.setMaxStackSize(1);
 	}
 	

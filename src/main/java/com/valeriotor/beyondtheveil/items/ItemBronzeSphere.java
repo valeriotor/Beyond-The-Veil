@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.items;
 
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 
@@ -17,12 +18,10 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemBronzeSphere extends Item implements IArtifactItem{
+public class ItemBronzeSphere extends ModItem implements IArtifactItem{
 	
-	public ItemBronzeSphere() {
-		this.setRegistryName(References.MODID + ":bronze_sphere");
-		this.setUnlocalizedName("bronze_sphere");
-		this.setCreativeTab(References.BTV_TAB);
+	public ItemBronzeSphere(String name) {
+		super(name);
 	}
 	
 	@Override

@@ -18,22 +18,26 @@ import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -121,6 +125,10 @@ public class PlayerEvents {
 				ServerTickEvents.removePlayerTimer("bcrown1", event.player);
 				ServerTickEvents.removePlayerTimer("bcrown2", event.player);
 			}
+			pt = ServerTickEvents.getPlayerTimer("dreamfocus", event.player);
+			if(pt != null) {
+				pt.terminateEarly();
+			}
 		}
 	}
 	
@@ -157,36 +165,9 @@ public class PlayerEvents {
 			ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ItemRegistry.necronomicon));
 			p.sendMessage(new TextComponentTranslation("beginning.netherreturn"));
 		}
-	}
-	
-	@SubscribeEvent
-	public static void onDeath(LivingDeathEvent event) {
-		if(event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer) event.getEntity();
-			IPlayerData cap = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-			BlockPos pos = p.getPosition();
-			if(!event.isCanceled() && p.dimension == DimensionType.OVERWORLD.getId()) {
-				cap.setInteger(PlayerDataLib.DEATH_X, pos.getX(), false);
-				cap.setInteger(PlayerDataLib.DEATH_Y, pos.getY(), false);
-				cap.setInteger(PlayerDataLib.DEATH_Z, pos.getZ(), false);
-			}
-		} else if(event.getEntity() instanceof EntityElderGuardian) {
-			Entity e = event.getSource().getTrueSource();
-			EntityPlayer p = null;
-			if(e instanceof EntityPlayer) {
-				p = (EntityPlayer)e;
-			} else if(e instanceof IPlayerGuardian) {
-				p = ((IPlayerGuardian)e).getMaster();
-			}
-			if(p != null) {
-				IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
-				if(data.getString(PlayerDataLib.DAGON_DIALOGUE.apply(1)) && !data.getString(PlayerDataLib.DAGONQUEST2)) {
-					int val = SyncUtil.incrementIntDataOnServer(p, false, PlayerDataLib.ELDER_GUARDIANS, 1, 1);
-					if(val == 3) {
-						SyncUtil.addStringDataOnServer(p, false, PlayerDataLib.DAGONQUEST2);
-					}
-				}
-			}
+		PlayerTimer pt = ServerTickEvents.getPlayerTimer("dreamfocus", p);
+		if(pt != null) {
+			pt.terminateEarly();
 		}
 	}
 	
@@ -236,6 +217,18 @@ public class PlayerEvents {
 			if(!p.world.isRemote && !(p instanceof FakePlayer))
 				((IArtifactItem)stack.getItem()).unlockData(p);
 		}
-		
+	}
+	
+	@SubscribeEvent
+	public static void itemUseFinish(LivingEntityUseItemEvent.Finish event) {
+		EntityLivingBase b = event.getEntityLiving();
+		if(b instanceof EntityPlayer && b.dimension == DimensionRegistry.ARCHE.getId() && event.getItem().getItem() instanceof ItemFishFood) {
+			EntityPlayer p = (EntityPlayer)event.getEntityLiving();
+			if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
+				ItemStack stack = event.getItem();
+				ItemFishFood food = (ItemFishFood)stack.getItem();
+				p.getFoodStats().addStats(-food.getHealAmount(stack), -food.getSaturationModifier(stack));
+			}
+		}
 	}
 }

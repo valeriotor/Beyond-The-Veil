@@ -2,8 +2,8 @@ package com.valeriotor.beyondtheveil.dreaming.dreams;
 
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.util.WorldHelper;
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
 import com.valeriotor.beyondtheveil.world.HamletList;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;

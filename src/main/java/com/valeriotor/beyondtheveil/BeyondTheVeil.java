@@ -3,15 +3,21 @@ package com.valeriotor.beyondtheveil;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.IResearch;
+import com.valeriotor.beyondtheveil.capabilities.MirrorCapInstance;
+import com.valeriotor.beyondtheveil.capabilities.MirrorHandler;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler;
+import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler.PlayerData;
 import com.valeriotor.beyondtheveil.capabilities.ResearchHandler;
+import com.valeriotor.beyondtheveil.capabilities.ResearchHandler.ResearchData;
 import com.valeriotor.beyondtheveil.crafting.GearBenchRecipeRegistry;
 import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
 import com.valeriotor.beyondtheveil.fluids.ModFluids;
 import com.valeriotor.beyondtheveil.gui.container.GuiContainerHandler;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.lib.commands.ChangeDimension;
 import com.valeriotor.beyondtheveil.lib.commands.ReloadResources;
 import com.valeriotor.beyondtheveil.lib.commands.SetPlayerData;
 import com.valeriotor.beyondtheveil.multiblock.MultiblockRegistry;
@@ -21,10 +27,12 @@ import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.sacrifice.SacrificeRecipeRegistry;
 import com.valeriotor.beyondtheveil.shoggoth.BuildingRegistry;
 import com.valeriotor.beyondtheveil.util.RegistryHelper;
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
+import com.valeriotor.beyondtheveil.world.DimensionRegistry;
 import com.valeriotor.beyondtheveil.world.StatueChunkLoader;
 import com.valeriotor.beyondtheveil.world.WorldGenBTV;
 import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
 
 import net.minecraftforge.common.ForgeChunkManager;
@@ -63,13 +71,14 @@ public class BeyondTheVeil
     	ModFluids.registerFluids();
         logger = event.getModLog();
         proxy.preInit(event);
-        RegistryHelper.registerEntities();
         BTVPacketHandler.registerPackets();
+        MirrorDialogueRegistry.registerMirrorDialogues();
         //ClientProxy.registerEntity();
         
 
-    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), new PlayerDataHandler.Factory());
-    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), new ResearchHandler.ResearchCapFactory());
+    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), PlayerData::new);
+    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), ResearchData::new);
+    	CapabilityManager.INSTANCE.register(MirrorCapInstance.class, new MirrorHandler.MirrorStorage(), MirrorCapInstance::new);
 
     	MinecraftForge.EVENT_BUS.register(MemoryUnlocks.class);
     	MinecraftForge.TERRAIN_GEN_BUS.register(MemoryUnlocks.class);
@@ -81,16 +90,17 @@ public class BeyondTheVeil
     {	
     	
     	//CapabilityHandler.registerCapabilities();
-    	new BiomeRegistry();
+    	BiomeRegistry.initBiomes();
     	proxy.init(event);
     	proxy.registerEntities();
-    	
+    	DimensionRegistry.registerDimensions();
     	
     	
     	RegistryHelper.registerTileEntities();
     	
     	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
     	HamletStructuresRegistry.registerStructures();
+    	ArcheStructuresRegistry.registerArcheStructures();
     	BuildingRegistry.registerBuildings();
     	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
 		DGWorshipHelper.loadDreamerResearch();
@@ -111,5 +121,6 @@ public class BeyondTheVeil
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new ReloadResources());
         event.registerServerCommand(new SetPlayerData());
+        event.registerServerCommand(new ChangeDimension());
     }
 }

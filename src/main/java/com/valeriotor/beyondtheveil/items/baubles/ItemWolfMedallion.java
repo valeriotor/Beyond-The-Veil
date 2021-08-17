@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.items.IArtifactItem;
+import com.valeriotor.beyondtheveil.items.ModItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
@@ -28,13 +29,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class ItemWolfMedallion extends Item implements IBauble, IActiveBauble, IArtifactItem{
+public class ItemWolfMedallion extends ModItem implements IBauble, IActiveBauble, IArtifactItem{
 	
-	public ItemWolfMedallion() {
+	public ItemWolfMedallion(String name) {
+		super(name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(References.BTV_TAB);
-		setRegistryName(References.MODID +":wolf_medallion");
-		setUnlocalizedName("wolf_medallion");
 	}
 	
 	

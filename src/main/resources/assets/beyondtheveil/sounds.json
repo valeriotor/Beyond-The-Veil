@@ -140,5 +140,26 @@
 			"beyondtheveil:shoggoth_idle0",
 			"beyondtheveil:shoggoth_idle1"
 		]
+	},
+	"surgeon_idle": {
+		"sounds": [
+			"beyondtheveil:surgeon_idle0",
+			"beyondtheveil:surgeon_idle1"
+		]
+	},
+	"deep_one_brute_smash": {
+		"sounds": [
+			"beyondtheveil:deep_one_brute_smash"
+		]
+	},
+	"deep_one_brute_roar": {
+		"sounds": [
+			"beyondtheveil:deep_one_brute_roar"
+		]
+	},
+	"arena_music": {
+		"sounds": [
+			"beyondtheveil:arena_music"
+		]
 	}
 }

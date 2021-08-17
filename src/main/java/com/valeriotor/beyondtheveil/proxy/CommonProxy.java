@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.proxy;
 
+import com.valeriotor.beyondtheveil.animations.Animation;
+import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entities.BTVEntityRegistry;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.events.ClientEvents;
 import com.valeriotor.beyondtheveil.events.RenderEvents;
 import com.valeriotor.beyondtheveil.events.ResearchEvents;
@@ -36,6 +39,7 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent e) {
+	    loadCustomResources();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
@@ -55,13 +59,11 @@ public class CommonProxy {
     	BTVEntityRegistry.register();
     }
     
-    public void openGui(String id, Object... args) {
-    	
-    }
+    public void openGui(String id, Object... args) {}
     
-    public void closeGui(EntityPlayer p) {
-    	
-    }
+    public void closeGui(EntityPlayer p) {}
+
+    public void playArenaSound(EntityArenaBoss boss) {}
     
     public String localizeMessage(String a) {
     	return a;
@@ -74,7 +76,9 @@ public class CommonProxy {
     		event.getRegistry().register(BTVSounds.getSoundById(i));
     }
     
-    public void loadCustomResources() {}
+    public void loadCustomResources() {
+        AnimationRegistry.loadAnimations(false);
+    }
     
     public EntityPlayer getPlayer() {return null;}
     
@@ -83,6 +87,11 @@ public class CommonProxy {
     	ConfigLib.connectionBlue = cfg.get("colors", "Necronomicon Connection Blue", 0, "Blue Color for the connections in Al Azif (default: 0)", 0, 255).getInt();
     	ConfigLib.connectionGreen = cfg.get("colors", "Necronomicon Connection Green", 32, "Green Color for the connections in Al Azif (default: 32)", 0, 255).getInt();
     	ConfigLib.connectionRed = cfg.get("colors", "Necronomicon Connection Red", 0, "Red Color for the connections in Al Azif (default: 0)", 0, 255).getInt();
+    	cfg.setCategoryComment("world", "Some worldgen stuff. Will add more options in the future");
+    	ConfigLib.innsmouthWeight = cfg.get("world", "Voided biome spawn weight", 4, "Min: 1, Max: 99, Default: 4", 1, 99).getInt();
+    	cfg.setCategoryComment("gameplay", "Gameplay related stuff");
+    	ConfigLib.crucibleDamage = cfg.get("gameplay", "The damage dealt by the Crucible", 100, "Min: 1, Max: 1000, Default: 100", 1, 1000).getInt();
+    	ConfigLib.crucibleCooldown = cfg.get("gameplay", "The cooldown, in seconds, for the Crucible to be reused", 120, "Min: 5, Max: 10000, Default: 120", 1, 10000).getInt();
     	cfg.save();
     }
 

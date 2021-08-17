@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigLib {
 	
-	public static int connectionRed, connectionGreen, connectionBlue;
+	public static int connectionRed, connectionGreen, connectionBlue, innsmouthWeight, crucibleDamage, crucibleCooldown;
 	
 	@Mod.EventBusSubscriber
 	public static class EventHandlerConfig {

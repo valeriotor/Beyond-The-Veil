@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToServer
 import com.valeriotor.beyondtheveil.network.research.ResearchSyncer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
@@ -36,7 +37,7 @@ public class ResearchUtil {
 	public static void progressResearch(EntityPlayer p, String key) {
 		p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key).progressStage(p);		
 	}
-	
+
 	public static void learnResearchServer(EntityPlayer p, String key) {
 		learnResearch(p, key);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(key).setLearn(true)), (EntityPlayerMP)p);
@@ -47,11 +48,20 @@ public class ResearchUtil {
 		learnResearch(p, key);
 		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncResearchToServer(new ResearchSyncer(key).setLearn(true)));
 	}
-	
+
+	public static void openUpdatedResearchClient(EntityPlayer player, String key) {
+		setResearchUpdated(player, key, false);
+		BTVPacketHandler.INSTANCE.sendToServer(new MessageSyncResearchToServer(new ResearchSyncer(key).setUpdate(false)));
+	}
+
 	public static void learnResearch(EntityPlayer p, String key) {
 		p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key).learn();
 	}
-	
+
+	public static void setResearchUpdated(EntityPlayer p, String key, boolean updated) {
+		p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key).setUpdated(updated);
+	}
+
 	/** Server-side only
 	 */
 	public static boolean learn(EntityPlayer p) {
@@ -67,42 +77,42 @@ public class ResearchUtil {
 		}
 		return false;
 	}
-	
+
 	public static ResearchStatus getResearch(EntityPlayer p, String key) {
 		if(!(p instanceof FakePlayer))
 			return p.getCapability(ResearchProvider.RESEARCH, null).getResearch(key);
 		return dummyStatus;
 	}
-	
+
 	public static int getResearchStage(EntityPlayer p, String key) {
 		ResearchStatus r = getResearch(p, key);
 		if(r != null) return r.getStage();
 		return -2;
 	}
-	
+
 	public static boolean isResearchVisible(EntityPlayer p, String key) {
 		return getResearch(p, key).isVisible(p);
 	}
-	
+
 	public static boolean isResearchVisible(HashMap<String, ResearchStatus> map, IPlayerData data, String key) {
 		return map.get(key).isVisible(map, data);
 	}
-	
+
 	public static boolean isResearchComplete(EntityPlayer p, String key) {
 		return getResearch(p, key).isComplete();
 	}
-	
+
 	public static boolean isResearchKnown(EntityPlayer p, String key) {
 		return getResearch(p, key).isKnown(p);
 	}
-	
 	public static boolean isResearchOpened(EntityPlayer p, String key) {
 		return getResearchStage(p, key) >= 0;
 	}
+
 	/*public static boolean knowsResearch(EntityPlayer p, String key) {
 		return false;
 	}*/
-	
+
 	public static void completeResearch(EntityPlayer p, String key) {
 		HashMap<String, ResearchStatus> map = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
 		if(map.containsKey(key)) {
@@ -111,7 +121,7 @@ public class ResearchUtil {
 		} else
 			p.sendMessage(new TextComponentString("Research key not found"));
 	}
-	
+
 	public static void resetResearch(EntityPlayer p) {
 		HashMap<String, ResearchStatus> map = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
 		for(Entry<String, ResearchStatus> entry : map.entrySet()) {
@@ -120,7 +130,7 @@ public class ResearchUtil {
 			SyncUtil.removeStringDataOnServer(p, entry.getKey());
 		}
 	}
-	
+
 	public static void printResearch(EntityPlayer p) {
 		HashMap<String, ResearchStatus> map = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
@@ -130,7 +140,44 @@ public class ResearchUtil {
 			}
 		}
 	}
-	
+
+	public static void markResearchAsUpdated(EntityPlayer p, String newDataString) {
+		if (!p.world.isRemote) {
+			HashMap<String, ResearchStatus> map = p.getCapability(ResearchProvider.RESEARCH, null).getResearches();
+			IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
+			for(Entry<String, ResearchStatus> entry : map.entrySet()) {
+				ResearchStatus research = entry.getValue();
+				if(research.isKnown(map, data) && research.getStage() > -1) {
+					boolean flag = false;
+					if (research.canProgressStage(data)) {
+						for (String requirement: research.res.getStages()[research.getStage()].required_research) {
+							if (requirement.equals(newDataString)) {
+								flag = true;
+								break;
+							}
+						}
+					}
+					if (!flag) {
+						for (Research.SubResearch addenda : research.res.getAddenda()) {
+							if (addenda.meetsRequirements(data)) {
+								for (String s : addenda.getRequirements()) {
+									if (s.equals(newDataString)) {
+										flag = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if (flag) {
+						research.setUpdated(true);
+						BTVPacketHandler.INSTANCE.sendTo(new MessageSyncResearchToClient(new ResearchSyncer(entry.getKey()).setUpdate(true)), (EntityPlayerMP)p);
+					}
+				}
+			}
+		}
+	}
+
 	private static ResearchStatus dummyStatus = new ResearchStatus(ResearchRegistry.researches.get("CRYSTALDREAMS")) {
 		@Override
 		public boolean isComplete() {
@@ -147,8 +194,7 @@ public class ResearchUtil {
 		@Override
 		public boolean isVisible(EntityPlayer p) {
 			return false;
-		}	
-		
+		}
+
 	};
-	
 }

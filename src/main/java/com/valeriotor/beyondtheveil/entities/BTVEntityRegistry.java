@@ -2,12 +2,21 @@ package com.valeriotor.beyondtheveil.entities;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
 import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamItem;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
+import com.valeriotor.beyondtheveil.entities.ictya.*;
+import com.valeriotor.beyondtheveil.entities.projectile.EntityUmancalaBall;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -16,26 +25,71 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class BTVEntityRegistry {
 	public static void register() {
 		int count = 101;
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":deep_one"), EntityDeepOne.class, "deep_one", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A35, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":hamlet_dweller"), EntityHamletDweller.class, "hamlet_dweller", count++ , BeyondTheVeil.instance, 128, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":canoe"), EntityCanoe.class, "canoe", count++ , BeyondTheVeil.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crawling_villager"), EntityCrawlingVillager.class, "crawling_villager", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":weeper"), EntityWeeper.class, "weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":fletum"), EntityFletum.class, "fletum", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		//EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":starspawn"), EntityStarspawn.class, "starspawn", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":shoggoth"), EntityShoggoth.class, "shoggoth", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_zombie"), EntityBloodZombie.class, "blood_zombie", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":blood_skeleton"), EntityBloodSkeleton.class, "blood_skeleton", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":crazed_weeper"), EntityCrazedWeeper.class, "crazed_weeper", count++ , BeyondTheVeil.instance, 64, 1, true, 0xF52A37, 0x589BCD);
-		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":dream_item"), EntityDreamItem.class, "dream_item", count++ , BeyondTheVeil.instance, 64, 1, true);
+		register("deep_one", EntityDeepOne.class, count++ , 64);
+		register("hamlet_dweller", EntityHamletDweller.class, count++ , 128);
+		registerNoEgg("canoe", EntityCanoe.class, count++ , 64);
+		register("crawling_villager", EntityCrawlingVillager.class, count++ , 64);
+		register("weeper", EntityWeeper.class, count++ , 64);
+		register("fletum", EntityFletum.class, count++ , 64);
+		//register("starspawn"), EntityStarspawn.class, "starspawn", count++ , 64);
+		register("shoggoth", EntityShoggoth.class, count++ , 64);
+		register("blood_zombie", EntityBloodZombie.class, count++ , 64);
+		register("blood_skeleton", EntityBloodSkeleton.class, count++ , 64);
+		register("crazed_weeper", EntityCrazedWeeper.class, count++ , 64);
+		registerNoEgg("dream_item", EntityDreamItem.class, count++ , 64);
+		registerNoEgg("dream_fluid", EntityDreamFluid.class, count++ , 64);
+		registerNoEgg("dream_villager", EntityDreamVillager.class, count++ , 64);
+		register("surgeon", EntitySurgeon.class, count++ , 64);
+		register("dreadfish", EntityDreadfish.class, count++ , 128);
+		register("muray", EntityMuray.class, count++ , 128);
+		register("octid", EntityOctid.class, count++ , 128);
+		register("deep_angler", EntityDeepAngler.class, count++ , 128);
+		register("sarfin", EntitySarfin.class, count++ , 128);
+		register("man_o_war", EntityManOWar.class, count++ , 128);
+		register("jelly", EntityJelly.class, count++ , 128);
+		register("deep_one_brute", EntityDeepOneBrute.class, count++ , 128);
+		register("deep_one_myrmidon", EntityDeepOneMyrmidon.class, count++ , 128);
+		register("cephalopodian", EntityCephalopodian.class, count++, 128);
+		register("sandflatter", EntitySandflatter.class, count++, 128);
+		register("umancala", EntityUmancala.class, count++, 128);
+		register("bonecage", EntityBonecage.class, count++, 128);
+		register("adeline", EntityAdeline.class, count++, 128);
+
+
+
+		registerNoEgg("umancala_ball", EntityUmancalaBall.class, count++, 128);
+
+		registerSpawnPlacementTypes();
 		
+	}
+	
+	private static void register(String name, Class<? extends Entity> entClass, int id, int trackingRange) {
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":" + name), entClass, "beyondtheveil:" + name, id, BeyondTheVeil.instance, trackingRange, 1, true, 0xF52A37, 0x589BCD);
+	}
+	
+	private static void registerNoEgg(String name, Class<? extends Entity> entClass, int id, int trackingRange) {
+		EntityRegistry.registerModEntity(new ResourceLocation(References.MODID + ":" + name), entClass, name, id, BeyondTheVeil.instance, trackingRange, 1, true);
+	}
+	
+	private static void registerSpawnPlacementTypes() {
+		EntitySpawnPlacementRegistry.setPlacementType(EntityOctid.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDreadfish.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepAngler.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntitySarfin.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityMuray.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityManOWar.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityCephalopodian.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntitySandflatter.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityUmancala.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityBonecage.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityAdeline.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.IN_WATER);
+		EntitySpawnPlacementRegistry.setPlacementType(EntityDeepOne.class, SpawnPlacementType.ON_GROUND);
 	}
 	
 	
 	/** Used for terror and possibly other effects.
-	 * 
-	 * @param e
-	 * @return
+	 *
 	 */
 	public static boolean isScaryEntity(EntityLivingBase e) {
 		if(e instanceof EntityPlayer && ((EntityPlayer)e).getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) return true;
@@ -43,12 +97,18 @@ public class BTVEntityRegistry {
 	}
 	
 	/** Used for terror and possibly other effects.
-	 * 
-	 * @param e
-	 * @return
+	 *
 	 */
 	public static boolean isFearlessEntity(EntityLivingBase e) {
-		return  !e.isNonBoss() ||e instanceof EntityDeepOne || e instanceof EntityWeeper || e instanceof EntityFletum || e instanceof EntityStarspawn || e instanceof EntityShoggoth || e instanceof EntityBloodZombie || e instanceof EntityCrazedWeeper;
+		return  !e.isNonBoss() ||
+				e instanceof EntityDeepOne || 
+				e instanceof EntityWeeper || 
+				e instanceof EntityFletum || 
+				e instanceof EntityStarspawn || 
+				e instanceof EntityShoggoth || 
+				e instanceof EntityBloodZombie || 
+				e instanceof EntityCrazedWeeper ||
+				e instanceof EntityIctya;
 	}
 	
 	

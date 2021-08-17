@@ -1,14 +1,14 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
@@ -41,7 +41,7 @@ public class DreamAnimal extends Dream{
 		AxisAlignedBB bb = new AxisAlignedBB(p.getPosition().add(-5, -5, -5), p.getPosition().add(5, 5, 5));
 		
 		List<Entity> ents = w.getEntitiesInAABBexcluding(p, bb, e -> e instanceof EntityItem);
-		Function<World, EntityAnimal> func = null;
+		Function<World, EntityLiving> func = null;
 		for(Entity e : ents) {
 			func = getAnimalFromItem(((EntityItem)e).getItem().getItem(), w);
 			if(func != null) {
@@ -52,14 +52,14 @@ public class DreamAnimal extends Dream{
 		if(func == null) return false;
 		pos = getEmptyArea(p, w, pos);
 		if(pos == null) return false;	
-		EntityAnimal animal = func.apply(w);
+		EntityLiving animal = func.apply(w);
 		animal.setPosition(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
 		w.spawnEntity(animal);
 		
 		return true;
 	}
 	
-	private Function<World, EntityAnimal> getAnimalFromItem(Item item, World w) {
+	private Function<World, EntityLiving> getAnimalFromItem(Item item, World w) {
 		if(item == Items.BONE) return EntityWolf::new;
 		else if(item == Items.PORKCHOP) return EntityPig::new;
 		else if(item == Items.RABBIT) return EntityRabbit::new;
@@ -69,6 +69,7 @@ public class DreamAnimal extends Dream{
 		else if(item == Items.FISH) return EntityOcelot::new;
 		else if(item == Item.getItemFromBlock(Blocks.RED_MUSHROOM) || item == Item.getItemFromBlock(Blocks.BROWN_MUSHROOM)) return EntityMooshroom::new;
 		else if(item == Items.FEATHER) return w.rand.nextBoolean() ? EntityChicken::new : EntityParrot::new;
+		else if(item == Items.STRING || item == Item.getItemFromBlock(Blocks.WEB)) return EntitySpider::new;
 		else if(item == Items.LEATHER) {
 			int a = w.rand.nextInt(3);
 			switch(a) {

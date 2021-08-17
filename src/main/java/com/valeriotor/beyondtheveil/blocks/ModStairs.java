@@ -10,7 +10,7 @@ public class ModStairs extends BlockStairs{
 	protected ModStairs(IBlockState modelState, String name) {
 		super(modelState);
 		this.setRegistryName(References.MODID, name);
-		this.setUnlocalizedName(name);
+		this.setUnlocalizedName(References.MODID + ":" + name);
 		this.setCreativeTab(References.BTV_TAB);
 	}
 	

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.events;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.blocks.BlockRegistry;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
@@ -42,6 +43,12 @@ public class ResearchEvents {
 			SyncUtil.addStringDataOnServer(p, false, "dreambottlestatue");
 		} else if(key.equals("WEEPERS") && newStage == 2) {
 			SyncUtil.addStringDataOnServer(p, false, "gotweepers");
+		} else if(key.equals("BLACKMIRROR") && newStage == 0) {
+			MirrorUtil.updateDefaultDialogue(p, "start");
+		} else if(key.equals("BLACKMIRROR") && newStage == 1) {
+			MirrorUtil.updateDefaultDialogue(p, "beforearche");
+		} else if(key.equals("ARCHE") && newStage == 0) {
+			MirrorUtil.updateDefaultDialogue(p, "archepreparation");
 		}
 	}
 	

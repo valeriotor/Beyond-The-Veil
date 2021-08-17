@@ -2,56 +2,62 @@
 #ITEMS (Names, lore, special effects)
 ##################
 
-item.oniric_incense.name=Oniric Incense
-item.slug.name=Slug
-item.slugcatcher.name=Slug Catcher
-item.testitem.name=Test Item
-item.canoe.name=Canoe
-item.flute.name=Flute of The Outer Gods
-item.saw_cleaver.name=Saw Cleaver
-item.wolf_medallion.name=Wolf Medallion
-item.drink_ale.name=Cup of Ale
-item.drink_mead.name=Cup of Mead
-item.drink_rum.name=Cup of Rum
-item.drink_vodka.name=Cup of Vodka
-item.drink_wine.name=Cup of Wine
-item.drink_empty.name=Empty Cup
-item.tablet.name=Tablet
-item.bronze_sphere.name=Bronze Sphere
-item.blackjack.name=Blackjack
-item.spine.name=Dorsal Spine
-item.heart.name=Heart
-item.held_villager.name=Villager
-item.held_weeper.name=Weeper
-item.held_fletum.name=Fletum
-item.surgery_tools.name=Surgery Tools
-item.bone_tiara.name=Bone Tiara
-item.bleeding_belt.name=Bleeding Belt
-item.dream_bottle.name=Dream Bottle
-item.redstone_weed.name=Redstone Grass Seeds
-item.ghost_weed.name=Ghost Grass Seeds
-item.vanilla_weed.name=Vanilla Grass Seeds
-item.shoggoth_map.name=Shoggoth Map
-item.held_shoggoth.name=Shoggoth
-item.blood_covenant.name=Blood Covenant
-item.revelation_ring.name=Ring of Revelation
-item.azacno_charm.name=Charm of Azacno
-item.blood_crown.name=Crown of Thorns
-item.coral_staff.name=Coral Staff
-item.sigil_zombie.name=Blood Sigil: Zombie
-item.sigil_skellie.name=Blood Sigil: Skeleton
-item.sacrificial_knife.name=Sacrificial Knife
-item.memory_phial.name=Memory Phial
-item.necronomicon.name=Al Azif
-item.sigil_player.name=Blood Sigil: Player
-item.sigil_pathway.name=Blood Sigil: Pathway
-item.gear.name=Gear
+item.beyondtheveil:oniric_incense.name=Oniric Incense
+item.beyondtheveil:slug.name=Slug
+item.beyondtheveil:slugcatcher.name=Slug Catcher
+item.beyondtheveil:testitem.name=Test Item
+item.beyondtheveil:canoe.name=Canoe
+item.beyondtheveil:flute.name=Flute of The Outer Gods
+item.beyondtheveil:saw_cleaver.name=Saw Cleaver
+item.beyondtheveil:wolf_medallion.name=Wolf Medallion
+item.beyondtheveil:drink_ale.name=Cup of Ale
+item.beyondtheveil:drink_mead.name=Cup of Mead
+item.beyondtheveil:drink_rum.name=Cup of Rum
+item.beyondtheveil:drink_vodka.name=Cup of Vodka
+item.beyondtheveil:drink_wine.name=Cup of Wine
+item.beyondtheveil:drink_empty.name=Empty Cup
+item.beyondtheveil:tablet.name=Tablet
+item.beyondtheveil:bronze_sphere.name=Bronze Sphere
+item.beyondtheveil:blackjack.name=Blackjack
+item.beyondtheveil:spine.name=Dorsal Spine
+item.beyondtheveil:heart.name=Heart
+item.beyondtheveil:held_villager.name=Villager
+item.beyondtheveil:held_weeper.name=Weeper
+item.beyondtheveil:held_fletum.name=Fletum
+item.beyondtheveil:surgery_tools.name=Surgery Tools
+item.beyondtheveil:bone_tiara.name=Bone Tiara
+item.beyondtheveil:bleeding_belt.name=Bleeding Belt
+item.beyondtheveil:dream_bottle.name=Dream Bottle
+item.beyondtheveil:redstone_weed.name=Redstone Grass Seeds
+item.beyondtheveil:ghost_weed.name=Ghost Grass Seeds
+item.beyondtheveil:vanilla_weed.name=Vanilla Grass Seeds
+item.beyondtheveil:shoggoth_map.name=Shoggoth Map
+item.beyondtheveil:held_shoggoth.name=Shoggoth
+item.beyondtheveil:blood_covenant.name=Blood Covenant
+item.beyondtheveil:revelation_ring.name=Ring of Revelation
+item.beyondtheveil:azacno_charm.name=Charm of Azacno
+item.beyondtheveil:blood_crown.name=Crown of Thorns
+item.beyondtheveil:coral_staff.name=Coral Staff
+item.beyondtheveil:sigil_zombie.name=Blood Sigil: Zombie
+item.beyondtheveil:sigil_skellie.name=Blood Sigil: Skeleton
+item.beyondtheveil:sacrificial_knife.name=Sacrificial Knife
+item.beyondtheveil:memory_phial.name=Memory Phial
+item.beyondtheveil:necronomicon.name=Al Azif
+item.beyondtheveil:sigil_player.name=Blood Sigil: Player
+item.beyondtheveil:sigil_pathway.name=Blood Sigil: Pathway
+item.beyondtheveil:gear.name=Gear
+item.beyondtheveil:crucible.name=Crucible
+item.beyondtheveil:surgeon_summons.name=Surgeon Summons
+item.beyondtheveil:black_mirror.name=Black Mirror
+item.beyondtheveil:fleshcarbontoken.name=Token of Flesh and Carbon
+item.beyondtheveil:ink_mask.name=Ink Mask
 
 
 lore.flute=§5§oThe sensation I get by touching, seeing or even thinking of this flute is truly bizarre. It's as if it does not exist in my world.. and yet it's there, in my hands.
 lore.saw_cleaver=§5§oThis weapon.. this bizarre metal contraption, is a masterwork of engineering. Capable of effortlessly switching between its normal and extended form, it also enables its wielder to dodge in the same style of its ancient owners.
 lore.wolf_medallion=§5§oThis metal artifact gives a soft hum whenever close to monsters, alerting its wearer to their presence. It was no doubt used by hunters in eras long past.
 lore.bronze_sphere=§5§oNo no no, this isn't possible, this simply can't be. I KNOW this sphere. I KNOW I've held it. I just.. don't remember it. It must've been in the hamlet where I found it for aeons, by now?
+lore.crucible=§5§oA weapon wielded by demon slayers of yore. Immensely powerful, but needs a long recharge after every use.
 tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=§5§oAn ancient stony slab with weird inscriptions on it. Can I decipher it?
 lore.spine=§5§oWillpower resides in the spine.
@@ -98,6 +104,9 @@ use.blood_sigil.nothealthy=This mob is not at full health.
 use.blood_sigil.notmine=This mob does not serve me.
 use.blood_sigil.path=This location is now bound in the Sigil.
 use.dream_bottle.noplayer=The bound Player is not currently in this world.
+use.surgeon_summoner.boundcontainer=This container's location has been bound to the Surgeon Summons.
+use.surgeon_summoner.unboundcontainer=The Surgeon Summons are no longer bound to a container.
+use.surgeon_summoner.nospace=There is not enough space to summon the Surgeon.
 
 bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepare for the worst, in a matter of seconds.
 
@@ -105,50 +114,62 @@ bauble.blood_crown.activated=The Blood Crown pierced my forehead! I should prepa
 #BLOCKS
 ##################
 
-tile.barrel.name=Barrel
-tile.bricks_blue.name=Blue Bricks
-tile.damp_canopy.name=Damp Canopy
-tile.damp_canopy_wood.name=Damp Canopy (Wood)
-tile.damp_log.name=Damp Log
-tile.damp_stone.name=Damp Stone
-tile.damp_wood.name=Damp Wood
-tile.damp_wood_fence.name=Damp Wood Fence
-tile.damp_wood_stairs.name=Damp Wood Stairs
-tile.dark_sand.name=Dark Sand
-tile.fume_spreader.name=Fume Spreader
-tile.idol.name=Idol
-tile.lamp.name=Lamp
-tile.slug_bait.name=Slug Bait
-tile.worn_bricks.name=Worn Bricks
-tile.worn_brick_stairs.name=Worn Brick Stairs
-tile.sleep_chamber.name=Sleep Chamber
-tile.sleep_chamber_advanced.name=Advanced Sleep Chamber
-tile.beanstalk.name=Beanstalk
-tile.redstone_grass.name=Redstone Grass
-tile.arboreal_generator.name=Arboreal Generator
-tile.sapling_shrub.name=Sapling Shrub
-tile.plant_terra.name=Terra Plant
-tile.plant_ordo.name=Vijhiss
-tile.mutator.name=Plant Mutator
-tile.watery_cradle.name=Watery Cradle
-tile.lacrymatory.name=Lacrymatory
-tile.elder_stone_bricks.name=Elder Stone Bricks
-tile.elder_bricks.name=Elder Bricks
-tile.elder_bricks_chiseled.name=Chiseled Elder Stone Bricks
-tile.elder_stone_brick_stairs.name=Elder Stone Brick Stairs
-tile.elder_slab.name=Elder Stone Slab
-tile.heart.name=Heart
-tile.sacrifice_altar.name=Sacrificial Altar Core
-tile.blood_bricks.name=Blood Stone Bricks
-tile.blood_bricks_stairs.name=Blood Stone Brick Stairs
-tile.blood_bricks_slab.name=Blood Stone Brick Slab
-tile.blood_well.name=Blood Well
-tile.statue.name=Statue
-tile.sacrifice_statue.name=Statue of Sacrifice
-tile.penitence_statue.name=Statue of Penitence
-tile.memory_sieve.name=Memory Sieve
-tile.city_mapper.name=City Mapper
-tile.gear_bench.name=Gear Bench
+tile.beyondtheveil:barrel.name=Barrel
+tile.beyondtheveil:bricks_blue.name=Blue Bricks
+tile.beyondtheveil:damp_canopy.name=Damp Canopy
+tile.beyondtheveil:damp_canopy_wood.name=Damp Canopy (Wood)
+tile.beyondtheveil:damp_log.name=Damp Log
+tile.beyondtheveil:damp_stone.name=Damp Stone
+tile.beyondtheveil:damp_wood.name=Damp Wood
+tile.beyondtheveil:damp_wood_fence.name=Damp Wood Fence
+tile.beyondtheveil:damp_wood_stairs.name=Damp Wood Stairs
+tile.beyondtheveil:dark_sand.name=Dark Sand
+tile.beyondtheveil:fume_spreader.name=Fume Spreader
+tile.beyondtheveil:idol.name=Idol
+tile.beyondtheveil:lamp.name=Lamp
+tile.beyondtheveil:slug_bait.name=Slug Bait
+tile.beyondtheveil:worn_bricks.name=Worn Bricks
+tile.beyondtheveil:worn_brick_stairs.name=Worn Brick Stairs
+tile.beyondtheveil:sleep_chamber.name=Sleep Chamber
+tile.beyondtheveil:sleep_chamber_advanced.name=Advanced Sleep Chamber
+tile.beyondtheveil:beanstalk.name=Beanstalk
+tile.beyondtheveil:redstone_grass.name=Redstone Grass
+tile.beyondtheveil:ghost_grass.name=Ghost Grass
+tile.beyondtheveil:arboreal_generator.name=Arboreal Generator
+tile.beyondtheveil:sapling_shrub.name=Sapling Shrub
+tile.beyondtheveil:plant_terra.name=Terra Plant
+tile.beyondtheveil:plant_ordo.name=Vijhiss
+tile.beyondtheveil:mutator.name=Plant Mutator
+tile.beyondtheveil:watery_cradle.name=Watery Cradle
+tile.beyondtheveil:lacrymatory.name=Lacrymatory
+tile.beyondtheveil:elder_stone_bricks.name=Elder Stone Bricks
+tile.beyondtheveil:elder_bricks.name=Elder Bricks
+tile.beyondtheveil:elder_bricks_chiseled.name=Chiseled Elder Stone Bricks
+tile.beyondtheveil:elder_stone_brick_stairs.name=Elder Stone Brick Stairs
+tile.beyondtheveil:elder_slab.name=Elder Stone Slab
+tile.beyondtheveil:heart.name=Heart
+tile.beyondtheveil:sacrifice_altar.name=Sacrificial Altar Core
+tile.beyondtheveil:blood_bricks.name=Blood Stone Bricks
+tile.beyondtheveil:blood_bricks_stairs.name=Blood Stone Brick Stairs
+tile.beyondtheveil:blood_bricks_slab.name=Blood Stone Brick Slab
+tile.beyondtheveil:blood_well.name=Blood Well
+tile.beyondtheveil:statue.name=Statue
+tile.beyondtheveil:sacrifice_statue.name=Statue of Sacrifice
+tile.beyondtheveil:penitence_statue.name=Statue of Penitence
+tile.beyondtheveil:memory_sieve.name=Memory Sieve
+tile.beyondtheveil:city_mapper.name=City Mapper
+tile.beyondtheveil:gear_bench.name=Gear Bench
+tile.beyondtheveil:dream_focus.name=Dream Focus: Items
+tile.beyondtheveil:dream_focus_fluids.name=Dream Focus: Fluids
+tile.beyondtheveil:dream_focus_villagers.name=Dream Focus: Villagers
+tile.beyondtheveil:megydrea.name=Megydrea
+tile.beyondtheveil:curtain.name=Curtain
+tile.beyondtheveil:thick_algae.name=Thick Algae
+tile.beyondtheveil:arche_portal.name=Arche Portal
+tile.beyondtheveil:dark_glass.name=Dark Glass
+tile.beyondtheveil:deep_prismarine.name=Deep Prismarine
+tile.beyondtheveil:arena.name=Arena Initiator
+tile.beyondtheveil:deep_chest.name=Deep Chest
 
 fluid.tears=Tears
 
@@ -185,7 +206,12 @@ interact.statue.alreadyme=This Statue is already mine.
 interact.statue.alreadyelse=This Statue is bound to someone other than me, and the link of blood cannot be broken.  
 interact.statue.bound=My blood bathes this Statue. It is now bound, our link unbreakable, unbreachable.
 interact.gearbench.dunno=I do not know how to use this.
-interact.lacrymatory.amount=This Lacrymatory holds %1$s/4,000 millibuckets of Tears.
+interact.lacrymatory.amount=This Lacrymatory holds %1$s/4000 millibuckets of Tears.
+interact.arena.mustbedeep=I must be Deep to begin the duel.
+interact.arena.occupied=Someone is already dueling in the Arena.
+
+enter.arche_portal.initiate=Teleporting to the Overworld in 5 seconds.
+enter.arche_portal.interrupt=Teleportation interrupted.
 
 hit.idol.schiz0=I should not try to break it.
 hit.idol.schiz1=I shouldn't be doing this.
@@ -210,21 +236,40 @@ multiblock.dream_shrine=Dream Shrine
 
 multiblock.dream_shrine.checksout=This Dream Shrine has been built correctly.
 multiblock.dream_shrine.noshrine=This is not a Dream Shrine.
+multiblock.sacrifice_altar.checksout=This Sacrifice Altar has been built correctly.
+multiblock.sacrifice_altar.noaltar=This is not a Sacrifice Altar.
 
 ##################
 #ENTITIES
 ##################
 
-entity.deep_one.name=Deep One
-entity.hamlet_dweller.name=Hamlet Dweller
-entity.canoe.name=Canoe
-entity.crawling_villager.name=Crawling Villager
-entity.weeper.name=Weeper
-entity.fletum.name=Fletum
-entity.shoggoth.name=Shoggoth
-entity.crazed_weeper.name=Crazed Weeper
-entity.blood_zombie.name=Blood Zombie
-entity.blood_skeleton.name=Blood Skeleton
+entity.beyondtheveil:deep_one.name=Deep One
+entity.beyondtheveil:hamlet_dweller.name=Hamlet Dweller
+entity.beyondtheveil:canoe.name=Canoe
+entity.beyondtheveil:crawling_villager.name=Crawling Villager
+entity.beyondtheveil:weeper.name=Weeper
+entity.beyondtheveil:fletum.name=Fletum
+entity.beyondtheveil:shoggoth.name=Shoggoth
+entity.beyondtheveil:crazed_weeper.name=Crazed Weeper
+entity.beyondtheveil:blood_zombie.name=Blood Zombie
+entity.beyondtheveil:blood_skeleton.name=Blood Skeleton
+entity.beyondtheveil:surgeon.name=Surgeon
+entity.beyondtheveil:dreadfish.name=Dreadfish
+entity.beyondtheveil:muray.name=Muray
+entity.beyondtheveil:octid.name=Octid
+entity.beyondtheveil:deep_angler.name=Deep Angler
+entity.beyondtheveil:sarfin.name=Sarfin
+entity.beyondtheveil:man_o_war.name=Man O' War
+entity.beyondtheveil:jelly.name=Jelly
+entity.beyondtheveil:deep_one_brute.name=Deep One Brute
+entity.beyondtheveil:deep_one_myrmidon.name=Deep One Myrmidon
+entity.beyondtheveil:cephalopodian.name=Cephalopodian
+entity.beyondtheveil:sandflatter.name=Sandflatter
+entity.beyondtheveil:umancala.name=Umancala
+entity.beyondtheveil:bonecage.name=Bonecage
+entity.beyondtheveil:adeline.name=Adeline
+
+entity.beyondtheveil:umancala_ball.name=Umancala Fireball
 
 shoggoth.hasmapalready0=This Shoggoth is already building.. it wouldn't be wise to interrupt this thing, would it?
 shoggoth.hasmapalready1=I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.
@@ -270,6 +315,10 @@ gui.optionwheel.power.greatdreamer.3=Water Walking
 gui.optionwheel.waterycradle.0=Rip Spine
 gui.optionwheel.waterycradle.1=Fill with Water
 gui.optionwheel.waterycradle.3=Rend Heart
+
+gui.optionwheel.surgeon.0=Rip Spine
+gui.optionwheel.surgeon.1=Fill with Water
+gui.optionwheel.surgeon.3=Rend Heart
 
 gui.dream_bottle.charges=Millibuckets: %1$s
 
@@ -320,6 +369,7 @@ building.pyramid=Pyramid
 building.wall=Wall
 building.road=Road
 building.clinic=Clinic
+building.great_shrine=Great Shrine
 
 angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
 
@@ -614,18 +664,224 @@ weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
 weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
 ##################
+#MIRROR DIALOGUE
+##################
+
+mirror.shivers=My black mirror is shivering.
+mirror.stopshivers=My black mirror stopped shivering.
+mirror.endbutton=(End)
+mirror.continuebutton=(Continue)
+
+mirror.nodialogue.first_node.anyone_there=Is anyone there?
+mirror.nodialogue.anyone_there.0=[Y]There is no answer.
+
+mirror.start.first_node.anyone_there=Is anyone there?
+mirror.start.anyone_there.0=[Y]There is no answer.
+mirror.start.second_node.anyone_there2=IS ANYONE THERE?
+mirror.start.anyone_there2.0=[Y]There is still no answer. You should stop enquiring.
+mirror.start.whosyou.whosyou='You'? WHAT DO YOU MEAN 'YOU'?
+mirror.start.whosyou.0=[Y]...
+mirror.start.whosyou.1=Someone's hiding.. here.. inside of me?
+mirror.start.whoshiding.whoareyou=Who are you? What are you doing.. in my mind?
+mirror.start.whoareyou.0=[Y]You wouldn't understand.
+mirror.start.whoshiding.getout=Get out. Get out get out get out GET OUT OF ME.
+mirror.start.getout.0=[Y]You do not understand what you're asking for.
+mirror.start.getout.1=[Y]I gave you all this.
+mirror.start.gavewhat.gavewhat=Gave me what?
+mirror.start.gavewhat.0=[Y]Everything. I've been your guiding hand.
+mirror.start.gavewhat.name=What is your name?
+mirror.start.understand.name=What is your name?
+mirror.start.name.0=[Y]You can't pronounce it.
+mirror.start.pronounce.parasite=Are you a parasite?
+mirror.start.parasite.0=[Y]Our relationship is mutually beneficial.
+mirror.start.parasite.1=[Y]I granted you knowledge, you granted me a vessel.
+mirror.start.vessel.novessel=Seek another vessel then.
+mirror.start.vessel.more=Then grant me more knowledge.
+mirror.start.vessel.thankful=If it was through you that I reached The Great Dreamer, then I am thankful.
+mirror.start.novessel.0=[Y]Our bond goes too deep for either of us to sunder it.
+mirror.start.novessel.1=[Y]It is far more ancient than either of us.
+mirror.start.novessel.2=[Y]Too much to explain right now. Soon, I'll give you answers. Truth.
+mirror.start.truth.youknow=You know the Truth?
+mirror.start.youknow.0=[Y]A little more than you do.
+mirror.start.youknow.1=[Y]But we can learn more of it, together, if you follow me.
+mirror.start.more.0=[Y]It is no easy task, but I shall.
+mirror.start.more.1=[Y]It is necessary, for us to go forward.
+mirror.start.forward.whereto=Where to?
+mirror.start.whereto.0=[Y]To The Great Dreamer.
+mirror.start.reached1.already=But I reached Him already?!
+mirror.start.already.0=[Y]You have not.
+mirror.start.thankful.0=[Y]Yes, through me it was that you communed.
+mirror.start.thankful.1=[Y]Yet we never truly reached Him.
+mirror.start.reached2.wat=What? I spoke wih Him! I heard Him and He heard me!
+mirror.start.reached2.insignificant=Then.. then I truly am insignificant.. irrelevant..
+mirror.start.wat.0=[Y]Only through Dagon were your thoughts connected. A Veil before the Veil.
+mirror.start.wat.1=Lies beneath lies..
+mirror.start.wat.2=[Y]Indeed.
+mirror.start.insignificant.0=[Y]Several times you have reached this conclusion, but it hasn't yet stuck, has it?
+mirror.start.insignificant.1=[Y]You're taking it harder, or maybe easier, than I did, when I was your age.
+mirror.start.age.old=Wait.. how old are you?
+mirror.start.old.0=[Y]In time, you'll look back at this question, and laugh at it.
+mirror.start.nearlythere.howdreamer=How will we reach The Dreamer?
+mirror.start.howdreamer.0=[Y]Through Arche. The deepest Ocean.
+mirror.start.howdreamer.1=[Y]Beneath Arche there is the Void. And then, the Veil.
+mirror.start.howdreamer.2=[Y]The Great Dreamer Himself.
+mirror.start.dreamer.veil=What exactly *is* the Veil?
+mirror.start.veil.0=[Y]The filter through which what you know as 'reality' is born.
+mirror.start.veil.1=[Y]The curtain that hides all that is True.
+mirror.start.veil.2=[Y]The gateway that only Dreams may go through.
+mirror.start.guide.guiding=How will you take me there?
+mirror.start.guiding.0=[Y]I've been your guiding hand, the one that helped you write.
+mirror.start.guiding.1=[Y]Our researches are born out of both of our minds. I'll help you through Al Azif.
+mirror.start.final.whoareyou2=I still wish to know who you are.
+mirror.start.final.letsgetgoing=Let's get going then. (End)
+mirror.start.whoareyou2.0=[Y]A friend. One who had to conceal his own identity for your sake.
+mirror.start.whoareyou2.1=[Y]Cover's blown. We ride together now.
+mirror.start.final2.letsgetgoing2=Let's get going then. (End)
+
+mirror.afterstart.first.what=What should I do?
+mirror.afterstart.what.0=[Y]Open Al Azif. I'll guide you.
+
+mirror.beforearche.first.everbeen=Have you ever been to Arche yourself?
+mirror.beforearche.everbeen.0=[Y]Yes, long ago. Though it has changed little since then.
+mirror.beforearche.changedlittle.howdoyouknow=How do you know that?
+mirror.beforearche.howdoyouknow.0=[Y]I've seen it again, since then.
+mirror.beforearche.seenagain.recording=As in a recording?
+mirror.beforearche.recording.0=[Y]More like a livestream, though still not quite.
+mirror.beforearche.recording.1=[Y]It's not something I am willing to explain just yet. Some truths must be spoonfed.
+mirror.beforearche.spoonfed.frodo=Alright, keep your secrets. (End)
+mirror.beforearche.spoonfed.trust=You realise secrets undermine trust?
+mirror.beforearche.trust.0=[Y]Yes. Which is why I will tell you. When the time is ripe.
+
+mirror.archepreparation.first.here=I'm here.
+mirror.archepreparation.here.0=[Y]Bring a few torches, Al Azif, this Mirror, and preferably little else. Maybe some normal food, in case you find air pockets to transform into a human again.
+mirror.archepreparation.second.veil=How do we reach the Veil from Arche?
+mirror.archepreparation.veil.0=[Y]That, I do not know yet. I never got that far myself.
+mirror.archepreparation.veil.1=[Y]Perhaps it will reveal itself when we're ready for it. 
+mirror.archepreparation.veil.2=[Y]Or perhaps when it is ready for us.
+mirror.archepreparation.veil.3=[Y]For now, focus on getting familiar with Arche. Its food chain, its inhabitants, its challenges.
+mirror.archepreparation.second.arena=The duels with the Deep Ones, how do I start them?
+mirror.archepreparation.arena.0=[Y]There should be an appropriate mechanism in the large arena, I believe. We'll see when we're there.
+mirror.archepreparation.second.ictya=Will the Ictyas attack me on sight?
+mirror.archepreparation.ictya.0=[Y]Unlikely. In the Deep One form you'd count as a medium sized Ictya, so only ones that are larger and somewhat hungry will attack you.
+mirror.archepreparation.ictya.1=[Y]When available, they'll generally go for smaller prey. Of course, most will retaliate when attacked.
+mirror.archepreparation.second.ready=I'm ready.
+mirror.archepreparation.ready.0=[Y]Then grab the token and enter the Blood Well.
+
+mirror.abouttoenter.first.forgot=How do I enter Arche?
+mirror.abouttoenter.forgot.0=[Y]Grab the token and enter the Blood Well.
+mirror.abouttoenter.first.end=(End)
+
+mirror.bloodhome.first.what=What is this place?
+mirror.bloodhome.what.0=[Y]Your very own Blood Home.
+mirror.bloodhome.what.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.
+mirror.bloodhome.what.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.
+
+mirror.archewater.first.home=What was that red, blood structure I entered Arche through?
+mirror.archewater.home.0=[Y]Your very own Blood Home.
+mirror.archewater.home.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.
+mirror.archewater.home.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.
+mirror.archewater.first.love=I love Arche.
+mirror.archewater.first.hate=I hate Arche.
+mirror.archewater.love.0=[Y]And what do you love most about it?
+mirror.archewater.hate.0=[Y]How come?
+mirror.archewater.loves.immense=It is immense - new emotions spring forth, of freedom and wonder.
+mirror.archewater.loves.ictya=The fauna. Shapes and sizes undreamt of before. Alien, almost.
+mirror.archewater.loves.cities=The cities and architecture of the Deep Ones - a hidden civilization at the very bottom of the world.
+mirror.archewater.loves.foodchain=The food chain itself. A tangible lesson of the crude truth that is survival of the fittest.
+mirror.archewater.loves.notreally=Actually, I don't really love it.
+mirror.archewater.hates.immense2=It is immense - I feel tiny. No, less than that.
+mirror.archewater.hates.ictya=The fauna. I feel vulnerable among these new threats, in their bizarre, almost alien shapes and sizes.
+mirror.archewater.hates.octid=THAT PURPLE INK.
+mirror.archewater.hates.food=The constant search for food, the growing hunger assailing my miserable belly.
+mirror.archewater.hates.notreally=Actually, I don't really hate it.
+mirror.archewater.notreally.0=[Y]Fickle.
+mirror.archewater.immense.0=[Y]Indeed. So close to the Veil and the Truth lying Beyond it, Arche is truly magnificent.
+mirror.archewater.immense.1=[Y]An unparalleled feeling of wonder, though perhaps a bitter one, reminding us of how tiny we are.
+mirror.archewater.immense2.0=[Y]Indeed. So close to the Veil and the Truth lying Beyond it, Arche is a reminder of our inconsequentiality.
+mirror.archewater.immense2.1=[Y]And yet, I find there to be beauty in it too - a sense of wonder, its massive scale dwarfing and outlasting anything we could construct.
+mirror.archewater.ictya.0=[Y]The chaotic, ever churning waters of Arche may well give life to all sorts of bizarre creatures.
+mirror.archewater.ictya.1=[Y]And alien, yes. Perhaps more than one'd think. Other worlds harbour quite similar beings in their own deepest oceans.
+mirror.archewater.alien.oceans=Do other worlds have oceans of their own?
+mirror.archewater.alien.life=There's life on other planets?
+mirror.archewater.alien.knowalien=How do you know all this?
+mirror.archewater.alien.more=There are other things I wish to speak about.
+mirror.archewater.more.0=[Y]Go on.
+mirror.archewater.oceans.0=[Y]Indeed. Arche exists beneath many worlds, and even in the emptiest regions of the universe you can find its waters swirling unendingly.
+mirror.archewater.life.0=[Y]You did not truly believe to be alone in the universe, did you?
+mirror.archewater.life.1=[Y]Yes, civilizations exist on another worlds, spread out among the stars. Some have even visited this world.
+mirror.archewater.visited.which=Which ones?
+mirror.archewater.visited.results=What did they do?
+mirror.archewater.which.0=[Y]Their names would be meaningless to you now. Some had the appearance of fungi, others of ticks, others yet had.. well.. they become hard to describe.
+mirror.archewater.which.1=[Y]Many of them had a penchant for brains, though.
+mirror.archewater.results.0=[Y]Not much. Many of them had a penchant for brains, though, and some villagers are occasionally abducted.
+mirror.archewater.results.1=[Y]Don't be scared. After all, it is no more terrifying than our own organ harvesting.
+mirror.archewater.knowalien.0=[Y]Once again, I must bar you from learning more of my nature. It is for your own good.
+mirror.archewater.knowalien.1=[Y]Suffice to say - I've met many beings from different worlds. *Many*.
+mirror.archewater.foodchain.0=[Y]Given the chaotic nature of Arche, it is truly quite marvelous that a hierarchy of order - that is, the food chain - has established itself here.
+mirror.archewater.foodchain.1=[Y]Of course, our goal is to break that order. To ascend the chain, until we sit at its very top.
+mirror.archewater.cities.0=[Y]Their buildings are indeed quite striking - so much so that even your ancestors were initiallay shocked when they first set gaze upon them.
+mirror.archewater.cities.1=[Y]The Deep Ones they'd once believed to be mindless creatures had in truth known enlightenment far before they did.
+mirror.archewater.ancestors.here=My ancestors reached Arche?
+mirror.archewater.here.0=[Y]Some did, yes. Chief among them Saint Jerome, though I do not know what fate he met.
+mirror.archewater.here.1=[Y]Probably not different from his companions. Crushed beneath the pressure of Arche, the few survivors immediately murdered by Ictya and Deep Ones.
+mirror.archewater.food.0=[Y]Progress through Arche should be slow and calculated. Do not hesitate to stop to hunt every so often.
+mirror.archewater.food.1=[Y]A larger Ictya results in a more sizeable repast - at the cost of augmented risk.
+mirror.archewater.octid.0=[Y]Ohh, do I understand. We'll seek a solution together.
+mirror.archewater.octid.1=[Y]Perhaps the Deep Ones have found a defense against it. We could search one in their cities.
+mirror.archewater.first.whatis=Now that I've been to Arche, could you explain to me what it actually is?
+mirror.archewater.whatis.0=[Y]Arche is the deepest of all oceans, yet, even more than that, it is a *concept*.
+mirror.archewater.whatis.1=[Y]Arche is the principle of all that belongs to our world. It is that from which all is born, living and not. 
+mirror.archewater.whatis.2=[Y]Flesh and stone, lightning and bone, the Cosmos and the sea, the Dwellers and thee. All from its waters.
+mirror.archewater.whatis.3=[Y]Arche has been the subject of study of the occult academia for aeons, now. First, by philosophers; then, by warlocks; now, even by scientists.
+mirror.archewater.whatis.4=[Y]However, there is a flaw in all of this. Can you spot it?
+mirror.archewater.flaw.fire=Water may not give birth to fire, its opposite.
+mirror.archewater.flaw.principle=Water may not give birth to itself, even Arche needs a principle.
+mirror.archewater.flaw.nether=Below the world lies the Nether, then only void above and beneath it.
+mirror.archewater.flaw.academic=Aeons of academic study, yet no one has ever heard of it?
+mirror.archewater.flaw.none=I see no flaws.
+mirror.archewater.fire.0=[Y]Brilliant answer! That is precisely what the philosophers of yore realised.
+mirror.archewater.fire.1=[Y]So, if fire wasn't born from water - or at least not directly - then there must have been something else, before water, right?
+mirror.archewater.principle.0=[Y]Great answer! Not the one I was thinking of, mind you, but you reached the same conclusion as the philosophers of yore.
+mirror.archewater.principle.1=[Y]What they had noticed was that fire may not have been born from water, for they are opposites on the elemental spectrum.
+mirror.archewater.principle.2=[Y]So, if fire wasn't born from water - or at least not directly - then, just like you said, there must have been something else before water, right?
+mirror.archewater.nether.0=[Y]Ahh, but Arche lies even below the Nether. Although, the answer does in fact relate to that hellish place.
+mirror.archewater.nether.1=[Y]Want to try again?
+mirror.archewater.academic.0=[Y]It is only academics of the occult who studied it, I am afraid. 
+mirror.archewater.academic.1=[Y]In your civilization, a principle of things different from the one posited by religious leaders was considered heretic, as a late friend of yours may have already mentioned.
+mirror.archewater.academic.2=[Y]Care to try again?
+mirror.archewater.none.0=[Y]Nor did the philosophers, at first. But you have seen more Truth than they did, and can attempt a better guess, can't you?
+mirror.archewater.deeper.apeiron=Something deeper than Arche?
+mirror.archewater.apeiron.0=[Y]Yes.. and no. You see, the only answer to this was that the true principle of all things lied not in your universe, but outside of it.
+mirror.archewater.apeiron.1=[Y]It would also have explained how the cosmos and the stars and the nebulae came to be, so far from our own oceans. Multiple breaches between our universe and what was "outside".
+mirror.archewater.apeiron.2=[Y]Academia called it "Apeiron". It means "Infinity", and it is that which lies, as it is now believed, Beyond the Veil.
+mirror.archewater.apeiron.3=[Y]It is filtered by the Veil, the Great Dreamer himself, and touches our world through the Void, bringing into existence Arche and all the other deepest oceans in the Cosmos.
+mirror.archewater.apeiron.4=[Y]Then, when fire wanted to burn on our planet, the Void created a middle plane between Arche and the Overworld, and through what we now call the Nether even fire is born from water, channeled by quartz.
+mirror.archewater.apeiron.5=[Y]Likewise flared the stars - to which Dagon is elder, for he was born with Arche, oldest among the living.
+mirror.archewater.apeiron.6=[Y]So everything comes from the waters of Arche, yet even those waters come from Apeiron.
+mirror.archewater.first.end=(End)
+
+mirror.arena.first_branch.0=[Y]I believe we just found the arena.
+mirror.arena.first_branch.1=[Y]This is where you can prove your mettle.
+mirror.arena.first.how=How do I begin the battle?
+mirror.arena.how.0=[Y]Try interacting with that red block in the corner.
+mirror.arena.how.1=[Y]Note that the adversaries you'll meet are powerful, and won't go down easily.
+mirror.arena.how.2=[Y]However, you shouldn't fear death. I think you'll be sent back here in case of defeat, without losing any items.
+
+
+##################
 #POTION EFFECTS
 ##################
 
 effect.folly=Folly
 effect.terror=Terror
+effect.heartbreak=Broken Heart
 
 ##################
 #MEMORIES
 ##################
 
 memory.unlock.message=A Memory of %1$s sticks to my mind. I will not forget it.
-memory.unlock.addenda=This Memory will be found in the "%1$s" research in the Necronomicon.
+memory.unlock.addenda=This Memory will be found in the "%1$s" research in Al Azif.
 
 memory.animal.name=Animal
 memory.beheading.name=Beheading
@@ -634,6 +890,7 @@ memory.crystal.name=Crystal
 memory.darkness.name=Darkness
 memory.death.name=Death
 memory.eldritch.name=Eldritch
+memory.heartbreak.name=Heartbreak
 memory.human.name=Human
 memory.introspection.name=Introspection
 memory.learning.name=Learning
@@ -675,7 +932,7 @@ dreams.monumentsearch.fail=No Ocean Monuments found
 
 dreams.playersearch.success=Another player's coordinate, either x or z, is: %1$s. I am unaware of what dimension they're in.
 dreams.playersearch.success2=Another player is located at x: %1$s, z: %2$s. I am unaware of what dimension they're in.
-dreams.playersearch.success2=Another player is located at x: %1$s, y: %2$s, z: %3$s. I am unaware of what dimension they're in.
+dreams.playersearch.success3=Another player is located at x: %1$s, y: %2$s, z: %3$s. I am unaware of what dimension they're in.
 dreams.playersearch.name=Their name is %1$s.
 dreams.playeritem.success=Another player is currently wielding: %1$s.
 dreams.playeritem.mildsuccess=Another player was found, but they were wielding nothing.
@@ -699,7 +956,9 @@ dreams.animalsearch.toomanyblocks=To properly summon an animal, I should clear s
 dreams.introspection.otherplayer=The Introspection Dream tells me of %1$s.
 dreams.introspection.caster=The Introspection Dream tells me of myself.
 dreams.introspection.deity=Chosen Deity: %1$s.
-dreams.introspection.strength=Attack Multiplier: %1$s Defense Multiplier: %2$s Dream Bonus: %3$s.
+dreams.introspection.attack=Attack Multiplier: %1$s       Attack Multiplier in Water: %2$s
+dreams.introspection.defense=Defense Multiplier: %1$s     Defense Multiplier in Water: %2$s
+dreams.introspection.dream=Dream Bonus: %1$s.
 dreams.introspection.void=Has Dreamt of Void.
 dreams.introspection.novoid=Has not Dreamt of Void.
 dreams.introspection.worship=Worship Type: %1$s. Worship Strength: %2$s.
@@ -716,7 +975,7 @@ tc.research_category.BEYOND_THE_VEIL=Beyond the Veil
 research.FIRSTDREAMS.title=Dreams
 research.didDream.text=I must sleep. I must Dream.
 research.FIRSTDREAMS.stage.0=The last trip I took to the Nether left me with a bizarre feeling. That of plunging down, through stone and bedrock, gods know how far into another realm.<BR>Truly, a bizarre feeling, one that felt to me weirdly.. weirdly..<BR>..nostalgic?<BR>Yes.. a weird nostalgia of an experience I've never lived. A memory that came all of a sudden, when last I dreamt.<BR>A dream. Why, that could indeed be the key!<BR>I must dream once more, I must peer into my own subconscious.  
-research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder.<BR>I once though they'd be merely a window into my own subconscious and yet there seems to be so much more to them than meets the eye.<BR>What if the things I saw in Dreams were not fiction, what if they were true?<BR>What if they showed me part of a great Truth invisible to all but a Dreamer?<BR>I must practice the art of Dreaming. I must be the one to uncover this Truth.<BR>I, and only I, must be the one.
+research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder.<BR>I once thought they'd be merely a window into my own subconscious and yet there seems to be so much more to them than meets the eye.<BR>What if the things I saw in Dreams were not fiction, what if they were true?<BR>What if they showed me part of a great Truth invisible to all but a Dreamer?<BR>I must practice the art of Dreaming. I must be the one to uncover this Truth.<BR>I, and only I, must be the one.
 
 research.FUMESPREADER.title=Memories
 research.firstMemory.text=Make a Memory of Learning.
@@ -735,9 +994,9 @@ research.SLEEPCHAMBER.stage.0=I'd always been proud of my ability to stay awake 
 research.SLEEPCHAMBER.stage.1=This machine, which I named Sleep Chamber, is most curious. Its construction requires a knowledge of mechanics, biology and chemistry so far outside of my usual scope of knowledge that I would dare to deem it... alien?<BR>And yet it came to me, all of a sudden, not through experimentation, but seemingly by itself.<BR>Oh, I'll enquire on that mistery another time.<BR>The Chamber must be opened, and once I'm inside I must close it to start Dreaming. It is capable of putting me to sleep once per day, and wake me up immediately, without any time going by. And yet this istant is enough for the Dream to leave me and do its task as dictated by a nearby Fume Spreader, just like a normal bed.<BR>It is truly unbelievable, and yet I feel like I only scraped the surface of what this journey could lead me to.<BR>It is merely a stepping stone, to shatter all the fake truths I thought I knew.
 research.craftedsleep_chamber.text=Craft a Sleep Chamber.
 
-research.EFFECTDREAMS.title=Affecting myself
+research.EFFECTDREAMS.title=Affecting Myself
 research.EFFECTDREAMS.stage.0=So far my Dreams have been able to grant me knowledge, whether it be of arcane secrets and enigmas or of something as simple as the very ground below me. <BR>And yet, I believe... NO! I am CERTAIN that there is more they can do.<BR>Maybe I am not yet capable of having my Dreams affect the world around me, but I can't help but wonder whether there is any way for my Dreams to affect.. me? Not my mind, but my body.. <BR>Sounds impossible, but I am far past that now, am I not?
-research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how I could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning my body.
+research.EFFECTDREAMS.stage.1=The way a Memory influences a Dream is quite unpredictable. They're messages, after all, and how could I fathom the interpretation of such a message from something as bizarre, as alien as.. a Dream?<BR>I will record here those Memories that change the status effects already conditioning my body.
 research.effectDream.text=Trigger a Memory capable of affecting myself.
 research.EFFECTDREAMS.addenda.power=A Memory of Power, as I slay a beast of no small stature. A cherished moment, one of satisfaction.<BR>It is through it that my Dream will increase the potency of the effects on my body.<BR>Both positive and negative ones, that is.
 research.EFFECTDREAMS.addenda.stillness=A Memory of Stillness, as the Sleep Chamber imprisons me time and time again.<BR>The effects on my body, I won't let them leave me. Through this Memory, my Dream will increase their durations. All of them.<BR>They cannot escape. No one can.
@@ -751,7 +1010,8 @@ research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<
 
 research.INSCRIPTIONS.title=Tablet Inscriptions
 research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
-research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning.
+research.INSCRIPTIONS.stage.1=I've managed to decipher these tablets, but I'm sure there are more. I'll record their content here.<BR>When completed, they can be used to learn new research, just like a Memory of Learning. Just like the Memory, they'll only be consumed if there's something to learn.
+research.inscription_complete.text=Decipher a Tablet.
 
 research.SLEEPCHAMBERADVANCED.title=Advanced Sleep Chamber
 research.SLEEPCHAMBERADVANCED.stage.0=The Sleep Chamber is an extremely useful device, but the progress of research should never stop, it should know no bounds.<BR>New revelations spring to mind on how to make it reach its full potential.
@@ -862,6 +1122,7 @@ research.WEEPERS.stage.1=A tear is a revelation. All should fear the ones who we
 research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Weeper can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, while sneaking, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Weeper or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
 research.filledtears.text=Fill a brain with water.
 research.craftedlacrymatory.text=Craft a Lacrymatory.
+research.WEEPERS.addenda.bottle=Addendum:<BR>There are snippets of Truth among the Weepers' mad ravings. I would do best to get close to them, to grasp onto any secrets they may share.
 
 research.REVELATIONRING.title=Ring of Revelation
 research.REVELATIONRING.stage.0=Weepers and Fleti lack eyes, yet they see more than most.<BR>Their tears are precious, and I shall dampen a ring with them.
@@ -890,7 +1151,7 @@ research.craftedblood_crown.text=Craft a Crown of Thorns.
 
 research.AZACNOCHARM.title=Charm of Azacno
 research.AZACNOCHARM.stage.0=Aeons ago, a great parasite fell from the Cosmos.<BR>Unknown in shape and intent, it laid its nest in the deepest Oceans.<BR>Sucking blood, bringing fear and granting knowledge. To know him is to reach a culmination of my experiments.
-research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected Player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
+research.AZACNOCHARM.stage.1=Azacno was born from a rift in the Veil, yet not one from below our Oceans.<BR>Instead, he came from the stars, crashing into our waters, and communing with The Great Dreamer.<BR>He is of parasitical nature, and so are his followers. The Charm of Azacno is a feared talisman that infects the enemies of its wearer.<BR>Using its active power grants me for a few seconds the ability to infect others, unless they wear the Charm themselves.<BR>Monsters, animals and other mindless beasts will simply be driven back by the terror instilled by the infection.<BR>It is on other Players, however, that the effect is most terrible.<BR>An infected Player slowly succumbs more and more to the infection, as it grows worse and worse. In the end, the effects may even become visible to the eye.<BR>A fate that not even death will save one from. I do not know of any cures yet.<BR>It is of note that this charm is not magical in nature. It is merely a symbol by which Azacno recognizes me as one of his sect, and grants me this power.<BR>It is important I seek alliance with those others who worship The Great Dreamer.
 research.craftedazacno_charm.text=Craft a Charm of Azacno.
 
 research.STATUE.title=Worship
@@ -915,7 +1176,7 @@ research.VALOURSTATUE.stage.0=There is no such thing as Valour.<BR>And even if t
 
 research.SACRIFICEALTAR.title=Altar of Sacrifice
 research.SACRIFICEALTAR.stage.0=I revel in limitless gratitude towards my Patron, yet in agony.<BR>For there is no way I can duly offer Him my thanks.<BR>Or is there?<BR>Blood makes for powerful bonds. It is water and life, all at once.<BR>It is the link that binds all things living to the deepest oceans.<BR>Through blood shall I thank Him, through life and water.<BR>An Altar of Sacrifice, of Hearts and Prismarine.<BR>First, a core.
-research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice.<BR>A heartless villager is to be placed upon the core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
+research.SACRIFICEALTAR.stage.1=I must build a structure, as described below. The hearts will be expended for every sacrifice. I can interact with bare hands with the Core to make sure it's been built correctly.<BR>A heartless villager is to be placed upon the Core. He'll expire in seconds. Then, a boon.<BR>My offerings will be rewarded. Dropping items on the altar before the sacrifice might turn them into something else.<BR>For instance, stone bricks become blood in color and essence. A new resource, one of unknown properties.<BR>A sacrifice without valid offerings will result in a health boost.<BR>I thank You, Great Dreamer, with all my hearts.
 research.craftedsacrifice_altar.text=Craft a Sacrificial Altar Core.
 
 research.CORALSTAFF.title=Coral Staff
@@ -983,8 +1244,16 @@ research.VIJHISS.stage.0=My next Flora Dream should be made with a block of obsi
 research.VIJHISS.stage.1=This plant is somewhat unsettling.<BR>Not only because of its appearance, betraying no sense of belonging to this world.<BR>No, this plant is greedy.<BR>In the most literal sense, in fact!<BR>Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant.<BR>Vijhiss is capable of granting me numerous kinds of seeds, some from this world and some not, some that I have seen already and some entirely new.<BR>My only worry lies in the faint sense of glee that the plant emanates at every trade.
 research.plantvijhiss.text=Dream of Flora with obsidian in hand.
 
+research.MEGYDREA.title=Megydrea
+research.MEGYDREA.stage.0=Should I encourage the avid nature of Vijhiss?<BR>I don't trust that plant, yet the boons may be worth it.<BR>I'll try and give it a bigger piece of gold.
+research.MEGYDREA.stage.1=A new plant, granted to me by Vijhiss. I can obtain more of its kind by giving more gold blocks to that greedy weed.<BR>The Megydrea acts as a fluid tank. It is placed on the ceiling and hangs from there, two blocks tall.<BR>Up to forty buckets of any fluid can be stored.
+research.gotmegydrea.text=Give Vijhiss a gold block.
+
 research.BEHEADINGDREAM.title=Dreams of Beheading
 research.BEHEADINGDREAM.stage.0=A Memory of Beheading, as I cut off a wither skull.<BR>The thought is macabre, yet the death is quick and painless.<BR>Such a Memory can be used to gain my own head. Not a copy, I can swear it breathed up to mere moments ago.<BR>If used on the Dream Shrine while targeted towards a certain Player, it can be instead used to gain that Player's head.<BR>Do these heads not belong to this world? Or even this time?
+
+research.HEARTBREAKDREAM.title=Dreams of Heartbreak
+research.HEARTBREAKDREAM.stage.0=A Memory of Heartbreak, as I lose a loyal friend.<BR>Slowly, sorrow is replaced with anger. Towards those who don't feel my pain, closed in their own cynicism.<BR>A tinge of hypocrisy there?<BR>Shush.<BR>A Memory of Heartbreak makes for a far more offensive Dream than most. When used all non Player creatures within a fairly large distance, as well as I, remain afflicted for a limited time. Our health will be lowered until the effect ends, and a proper combination with Memories of Power and of Stillness makes for an extremely powerful weapon.<BR>Of course, hurting myself in the process is not ideal. With the Dream Shrine, I can properly target specific locations to afflict all the non Player creatures in a 30 block radius centered on the Sigil's location without being penalized for it.<BR>And, of course, I may also target specific Players.<BR>Everyone's had dark periods in their life. I must only make them reminisce.
 
 research.FINALQUEST.title=A Snippet Of Truth
 research.FINALQUEST.stage.0=I am close to a breach.<BR>Dagon calls.
@@ -1005,6 +1274,9 @@ research.WOLFMEDALLION.stage.0=A Medallion used by hunters in ages long past.<BR
 research.BRONZESPHERE.title=Bronze Sphere
 research.BRONZESPHERE.stage.0=I've already held this sphere.<BR>I know I have.<BR>My mind BURNS with recollection as I hold the object.<BR>I hope that reaching the Truth will unVeil this mistery.<BR>For now, it's again in my hands, and I can use it to my advantage.<BR>When activated it enables me to store experience inside it. If I am sneaking the experience is pulled out instead.<BR>A battery of Memories, so to say.
 
+research.CRUCIBLE.title=Crucible
+research.CRUCIBLE.stage.0=A weapon with a red hot blade, used by demon slayers in ages long past.<BR>One man armies they were, more terrible than any of their enemies.<BR>The Crucible is immensely powerful, capable of dishing out colossal damage for every hit.<BR>It is, however, balanced by the fact that for every swing the weapon needs around two minutes of recharging before it can be used again. And of course, many enemies of mine may not suffer too much damage in a single hit, so I must use it wisely.
+
 research.BAUBLERESEARCH.title=Baubles
 research.BAUBLERESEARCH.stage.0=Some items are to be worn outside of my armor slots.<BR>The Baubles I encounter in this journey (and only this journey) may have both active and passive effects.<BR>By holding the Bauble key ('Z' by default) I can choose which Baubles must have their passive effect enabled and which single Bauble is to be the active one.<BR>There can be only one active Bauble, and its effect can be activated by tapping the Bauble Key.
 
@@ -1017,8 +1289,87 @@ research.DEEPROAR.stage.0=While transformed I am unable to use the active effect
 research.TONEWDEPTHS.title=To New Depths
 research.TONEWDEPTHS.stage.0=We must keep going.<BR>Never yield, the Truth draws close, the Veil weakens, my knowledge grows, my will..<BR>What will is left? As if someone ripped my own spine.<BR>No, we'll keep going. We must.<BR>To the bottom of the deepest Oceans.<BR>To Arche, and then to Apeiron.<BR>Our journey won't end until we breach.. until we..<BR>..wait..<BR>..who's 'we'?
 
-research.WATERDREAM.title=Dream of Water
+research.WATERDREAM.title=Dreams of Water
 research.WATERDREAM.stage.0=A Dream of Water, as the thought of the Ocean refuses to leave my mind.<BR>Through this Memory I am able to locate the nearest Ocean Monument.<BR>The Guardians are born from water itself, and as such are closest to God.
+
+research.DREAMFOCUS.title=Dream Focus
+research.DREAMFOCUS.stage.0=Dream Foci are devices that, through their quartz structure and watery surface, can channel Dreams to move objects.<BR>Not my Dreams. Nor those of Weepers, who yet resist the final embrace.<BR>It is those of Fleti that I must harness, so lost in their desperate adoration of what lies Beyond.
+research.DREAMFOCUS.stage.1=A Dream Focus is a wondrous device.<BR>Its small end should be adjacent to the container I wish to pull items from. It can then be activated by placing a Fletum on its top.<BR>However, I must first choose the path the items will take, and I must do it myself.<BR>When no Fletum is on top of the Dream Focus, I can interact with the block with bare hands. I will then be transported to the large end of the Focus, facing away from it, and start to slowly move wherever I am looking, including in the air. This status lasts fifteen seconds, but I can exit it sooner by sneaking.<BR>Once all is done, the path is set. I can check the path at any time by wearing a Ring of Revelation with its passive effect enabled. I can toggle an individual path on and off by using a clay ball on its respective Focus. I may also apply dyes to the Dream Focus to change the path's color.<BR>With the path set, and a Fletum on top, the Focus will pull items from the container every seven and a half seconds. They will start to float in the air following the path I set, and drop on the path's end. All physics will still apply, and sharp turns around block edges may get the items stuck, so I must be careful when creating the path.<BR>The items can be picked up while in the air, by Players and hoppers alike. A careful combination of pathing and hoppers will result in a proper transportation system.<BR>The Focus can be turned off with a redstone signal.<BR>It also seems that floating swords and blackjacks retain their properties while flying through non Player creatures.<BR>Lastly, Villagers and Weepers in their item forms will be inserted in any Watery Cradle in their path.
+research.crafteddream_focus.text=Craft a Dream Focus.
+
+research.CURTAINS.title=Curtains
+research.CURTAINS.stage.0=Curtains are our world's counterpart to the Veil. Separating Truth from lies, behind them act a stageful of actors.<BR>Yes, maybe our reality is really nothing but a theatre.<BR>Still, these curtains I mean to make are a fair deal more mundane. They'll simply act as filters for the items that collide with them.
+research.CURTAINS.stage.1=Curtains act as filters for Dreams, just like the Veil. Some go through, some don't.<BR>In this case it's the Fleti's Dreams and the items they transport that may or may not pass.<BR>A Curtain must be placed under a container, such as a chest. Every time an item goes through, the Curtain checks whether the inventory above contains an instance of that item. If so, the item doesn't go through and stops floating, dropping instead to the ground or, preferably, to an aptly placed hopper.<BR>Having containers both above and below, with appropriate spacing between them to avoid all items being sucked in hoppers, makes for a fairly space-consuming setup, but one that can work well as a sorting system.
+research.craftedcurtain.text=Craft a Curtain.
+
+research.DREAMFOCUSFLUIDS.title=Dream Focus: Fluids
+research.DREAMFOCUSFLUIDS.stage.0=We should not stop at items! Fleti are more than capable of transporting other things.<BR>A Focus for Fluids would be a useful device.
+research.DREAMFOCUSFLUIDS.stage.1=Unlike its item counterpart, a Focus for Fluids plucks fluids from its top and ejects them from its bottom, which is where I'll be when starting to set the path.<BR>Fleti are to be placed on the device's sides, and up to four of them can be placed. Each one increases the amount of fluid transported at a time, in the order 100 -> 300 -> 600 -> 1000 millibuckets per go.<BR>Transported fluids will try to enter any tanks they come in contact with, and will disappear at the end of the path if no containers were found to store them.<BR>It is of note that Fleti that are "fueling" a Dream Focus of any kind will not prevent nearby Weepers or other Fleti from weeping into a Lacrymatory, thus making the Fluid Focus an appropriate method to empty Lacrymatories automatically.<BR>As a last note, floating water also appears to be a powerful fertiliser for nearby crops.
+research.crafteddream_focus_fluids.text=Craft a Dream Focus for fluids.
+
+research.DREAMFOCUSVILLAGERS.title=Dream Focus: Villagers
+research.DREAMFOCUSVILLAGERS.stage.0=My soon-to-be patients, whom I already stripped of all worldly things, seem content in knowing they have nothing more to lose.<BR>Those poor, poor things.<BR>I will take even the floor away from them.
+research.DREAMFOCUSVILLAGERS.stage.1=A Focus for Villagers is capable of moving Villagers in a path of my own choosing.<BR>The path begins from the block's top, by interacting with bare hands while no Fletum is activating the Focus. I will preserve my initial rotation after interacting with the block.<BR>Once the path is set, a Fletum must be placed below the Focus. Once that is done, the device will select every few seconds a Villager to move.<BR>The Villagers are taken from a 11x11 area centered on the Focus, up to 5 blocks above it. Crawling Villagers take precedence and are chosen before any standing ones. Child Villagers won't be taken, they must grow before reaching any usefulness.<BR>A redstone signal may be applied to the Focus to alter its functionality. A fully powered signal will disable the device altogether. A signal of strength between 1 and 14 instead determines how many adult standing Villagers will be left at all times in the area above.<BR>For example, with a signal of strength 3 and 2 standing Villagers above, none will be taken. This way their mating and reproduction is ensured.<BR>Crawling Villagers are exempt from this check, and will always be taken.<BR>If the Focus' path is aimed at a Watery Cradle, a floating Crawling Villager will automatically be placed in it if there are no patients already present. Of course, I must make sure to loop the path back to the Focus in case the Cradle wasn't empty.<BR>This is especially useful considering that a Blackjack floating through a Dream Focus for items will preserve its properties, and may even knockout Villagers while both item and victim are mid air.<BR>Of course, were I to fully automate surgery.. I'd need a Surgeon.
+research.crafteddream_focus_villagers.text=Craft a Dream Focus for Villagers.
+
+research.SURGEON.title=Surgeon
+research.SURGEON.stage.0=A net of Dreams links all those who peeked into the Truth.<BR>Entire societes exist away from me, some of these offering their services to allies and patrons.<BR>My alliance with Dagon brings new contacts, and among these come the Surgeons, offering their skills to those who seek them.<BR>I must craft a letter, a summons of sorts, for a Surgeon to reach me.<BR>I then only need use it on the ground. I'll do it once, then sort the Surgeon's job's details later, once I've taken a look at him.
+research.SURGEON.stage.1=I had wondered why Surgeons would ever form a society of their own.<BR>Little did I know that a Surgeon is not a profession.<BR>No, it is a race.<BR>One that does not belong to my world.<BR>Is this a race made with intent? After all, they all share a singular purpose.<BR>...<BR>What if I, too, were part of a breed that was *made*, not by chance but by will? Without knowing, for how I could I?<BR>A Surgeon is a useful servant, or rather, ally.<BR>I must place him close to a Watery Cradle with which I want him, her, it, whatever, to work.<BR>I must then use Surgery Tools on him to specify which action I want performed.<BR>The Surgeon will then operate every time a patient appears in the Cradle, placing the resulting patient on top of the device and keeping hearts or spines to himself. I can then interact with him with bare hands to be given all materials he gathered.<BR>A much more useful technique however is that of binding the Summons to a nearby chest before using it. To do that I can interact with a chest, wielding the letter, while sneaking.<BR>I can clear the previous binding by right clicking in the air while sneaking.<BR>A Surgeon summoned with a bound Summons will put any output of his operations, both patients and materials, in the bound chest, provided they're sufficiently close to each other.<BR>Since Villagers and Weepers in item form can enter Cradles as well, I can effectively pipeline Surgeons one after the other.<BR>A Surgeon can be picked up by its master with a blackjack.
+research.summoned_surgeon.text=Summon a Surgeon.
+
+research.BLACKMIRROR.title=Black Mirror
+research.BLACKMIRROR.stage.0=My mind is besieged. A tiny war with at most one casualty.<BR>Is there a Veil within myself?<BR>If a mirror reflects all that is me, then a Black Mirror that gives off no light will reflect nothing but my soul.<BR>And I should NOT peer into my soul.<BR>Spasms seized my writing hand, detaching what is thought from what is told. I must hold steadfast, and impress onto Al Azif only what I, and none other, believe.<BR>I must NOT look within myself. No, no, I MUST.
+research.BLACKMIRROR.stage.1=...<BR>How is this going to work?<BR>Like it always has. Write what's on your mind, and I'll nudge your hand. See how easy it is?<BR>I assure you, it just got a lot harder. I'll ask you not to interfere too much. Let's keep it a monologue.<BR>Alright.<BR>So, Arche. We need a Blood Well.
+research.usedblack_mirror.text=Do NOT use a Black Mirror.
+
+research.FLESHCARBONTOKEN.title=Token of Flesh and Carbon
+research.FLESHCARBONTOKEN.stage.0=So, let me guess, we'll be entering the Blood Well. Just like the dead.<BR>Indeed.<BR>Oh, what an omen.<BR>A Blood Well is connected to Arche itself. The red fluid makes for powerful binding, and the Well is a sort of capillary.<BR>One could see it like this: life and all that exists in our world is pushed upwards from Arche, through Void and bedrock, just like an artery pushes healthy blood to all organs.<BR>Yes, you know exactly what we'll be doing.<BR>We'll be going down the veins of our world. And, just like a vein brings back waste, or carbon dioxide, we will be carrying the detritus of our own world - that is, dead life, decomposing itself into purer carbon. 
+research.FLESHCARBONTOKEN.stage.1=We're ready. Are you excited?<BR>Hopeful, more like. And, please, don't say 'You'. I can hardly tell who's writing what. Besides, shouldn't your voice be yellow?<BR>Ah, but this is *your* writing hand, just nudged here and there. My voice will always be down below, yellow as you see it, telling you what to craft and do.<BR>I still can't tell if I'm making you up.<BR>A tad offensive.<BR>Ah, let's go onwards.
+research.craftedfleshcarbontoken.text=Craft a Token of Flesh and Carbon.
+
+research.ARCHE.title=Arche
+research.ARCHE.stage.0=Arche plays by very different rules compared to our world. One would do best to learn them by heart.<BR>In the deepest oceans there will be very little air, banished to just a few structures. However, when we first get there we will indeed be in one such structure, and therefore get a breather of nice - if not fresh - air.<BR>Said structure will be fairly dark. Bring some torches. Ideally, we should go there in human form, to place those light sources, before transforming into a Deep One.<BR>At the center of the bottom floor of the structure there should be a blood portal back to the Overworld.<BR>Before entering the waters of Arche, you MUST transform. Don't even think about getting wet as a human - you will die. The pressure is too strong.<BR>As you well know, as a Deep One you may only hold maritime items. We won't be able to speak with each other through Al Azif or the Black Mirror. Additionally, your only two available food sources, slugs and fish, cannot be used in Arche. Slugs will swim away, fish restores no hunger. And hunger drains FAST in Arche.<BR>You must become part of the food chain. The creaturs of Arche are known as Ictya - they come in many shapes and sizes. Big fish hunts small fish, and nobody's safe when the big ones get hungry. Kill them to sate your belly.<BR>Reaching the Veil, even through Arche, is no small feat. We'd best grow more powerful. There are dwellings - nay, *cities* of Deep Ones down in Arche. They ask you to prove your worth first by hunting down Ictya, then by challenging their champions in their arenas.<BR>Here in Al Azif we'll record both the Ictyas we've slain and the skills we've acquired.<BR>It's time. Speak to me in the Mirror.
+
+research.ICTYARY.title=Ictyary
+research.DOSKILLS.title=Deep One Skills
+
+
+ictya.sarfin.description=The most populous inhabitants of Arche, sarfins are at the very bottom of the food chain, and serve as the primary food source for most larger Ictya, as well as you.<BR>They will never fight back, but are prone to fleeing when a larger creature gets too close. Due to their small size, hunting them can get both hard and frustrating. Try staying some small distance away from them, then quickly close in to attack before they have a chance to escape.
+ictya.octid.description=Easily the most annoying Ictya I've ever encountered, these little jerks are at the bottom of the food chain and never fight back against larger predators. However, as you may have already learned, they tend to flee when a possible predator gets too close, while also spraying pink ink right in their face. Unfortunately they do not distinguish between predator and regular passerby, and might blind you at most inopportune times. Perhaps in the Deep Cities we can find a solution.<BR>At least, the Octids make for a fine food source - stay some distance away from them, then close in quickly to attack before they have a chance to blind you.
+ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
+ictya.deep_angler.description=Small predators found everywhere throughout Arche, Deep Anglers pose little threat to us, generally only preying on tiny Ictya.<BR>They follow an intriguing hunting pattern: when they're hungry and no prey is beside them, they will lure one from afar, then close in quickly once it gets near enough. One wonders whether we could learn from this.
+ictya.dreadfish.description=Dreadfishes are medium sized Ictya. This means that, while generally hunting for smaller prey, they may assail us as well if very hungry.<BR>They are fast and strong, and compared to most other Ictya they have a much closer bond between each other. Attacking one Dreadfish makes all its close by kin retaliate against the offender. This may be used to our advantage: if we get a large sized Ictya to accidentally attack a single Dreadfish, then those nearby will also join the fight.<BR>Just like crows, a large number of Dreadfishes is called a "murder", but for very different reasons.
+ictya.man_o_war.description=Contrary to popular belief, the Man O' War is not a jellyfish. It is, instead, a colony of small organisms that live together in harmony. This is most apparent when observing the Ictya's attack pattern: rather than chasing the enemy itself, it generates small creatures, each known as a "Jelly", which close in on the enemy to damage it, feeding the Man O' War when the target is slain.<BR>They are medium sized, and thus won't attack us unless very hungry.
+ictya.umancala.description=The Umancala's name derives from the words "Umano" and "Calamaro", respectively "Human" and "Squid". The squid part being obvious, the human attribute was given to it by its ancient discoverers when they mistook its flailing tentacles for a human swimmer's legs, used for propulsion in water.<BR>That's where the similarities end, however. The Umancala is a bizarre looking medium sized Ictya, generally preying on smaller Ictya and seldom attacking us, unless very hungry. They hunt by generating extremely hot balls of boiling water which are then fired towards targets, akin to a Blaze's fireballs in the Nether.
+ictya.adeline.description=The Adeline is a translucent medium sized Ictya, of little threat to us unless very hungry. Due to its transparency it can be hard for us to identify it, and it proves even harder for small Ictya, which won't flee even when it closes in on them.<BR>The Adeline got its name from its discoverer: Saint Adeline, wife of the legendary hero Saint Jerome with whom she ventured into Arche to hunt the Deep Ones.<BR>Rumour has it that it was actually Jerome who found it first, but that in his pride he didn't want his name attached to an oversized sea slug.
+ictya.bonecage.description=The Bonecage is an unsettling eel-like large Ictya. Due to its size, it might attack us when hungry.<BR>It's fast, strong and incredibly resilient. It attacks by opening up the boney spikes on its head, then violently closing them on the target as if to encase it in a veritable bone cage. Huge range and the tendency to pull targets in after hitting them means one would do best to avoid its attacks, and try circling it as much as possible to attack it from behind.
+ictya.cephalopodian.description=A large sized squid-like Ictya, the Cephalopodian is a fearsome creature which may be a threat to us when hungry.<BR>It attacks by closing its "mouth-head" on the unfortunate prey. If taken from behind it can also flail its tentacles dealing high knockback, but virtually no damage.<BR>Due to the high damage dealt by its mouth it is preferable to circle it and attack it from behind on its tentacles, though their flailing may prove itself a hindrance.<BR>It is rumoured that within the flaps of its mouth there is a pair of red and blue eyes, though no one has concrete proof of it as of yet.
+ictya.sandflatter.description=One of the most insidious creatures of Arche, the Sandflatter is a lobster-like large Ictya found in the more level regions of Arche. Unlike most other Ictya, it has a clear preference towards you Players, and will always be a threat when one gets unfortunately close.<BR>The small tentacle atop its back is merely a bait for unlucky fools, and if you don't escape the subsequent attack quickly you might not live to regret it.<BR>Once it has dislodged itself from its ambush position, it will chase the victim - if still alive - and rapidly whip down its health with its claws. Its sturdy exoskeleton provides resistance to damage to the Sandflatter unless it is attacked from below, on its softer belly - which is where you should always attack it.<BR>Yes, I should have told you that before you killed one. Apologies.
+
+
+doskill.bosskill=%1$s killed: %2$s
+doskill.unlock.medium=- A new medium sized Ictya must be slain to unlock this skill.
+doskill.unlock.large=- A new large sized Ictya must be slain to unlock this skill.
+doskill.unlock.deep_one_brute=- A Deep One Brute must be slain to unlock this skill.
+doskill.unlock.deep_one_myrmidon=- A Deep One Myrmidon must be slain to unlock this skill.
+doskill.doquickstep.description=When enabled, this skill lets you do quick sidesteps by pressing the Dodge Key ('Alt' by default). Like all skills, it requires you to be in your Deep One form. The direction of the dodge depends on the currently pressed movement keys (WASD).<BR>When used skillfully, the quickstep can speedily bring one out of danger, escaping perilous attacks. It may not, however, be used underwater or in mid air.
+doskill.douppercut.description=Whereas the quickstep puts distance between you and the enemy by moving you away from it, the uppercut achieves the same result by launching your adversary up in the air, with potentially fatal results in the subsequent landing. This skill, when toggled on, lets you right click on other creatures while barehanded to send them flying upwards.<BR>It does, however, become less effective against powerful enemies with large health pools, as well as bosses. It is also of little use in water combat.
+doskill.doroarsink.description=When enabled, the Sinking Roar empowers your normal roar by violently sending downwards any waterborne creatures affected by it. Additionally, if the creatures possess a limited air supply (like Players do) the roar will also knock all the air out of their lungs, making them immediately start drowning.<BR>Of course, several enemies are quite resistant to your roars: bosses, Ictya, and other creatures more fearsome than you may be entirely unaffected.
+doskill.doclimbing.description=This skill, when toggled on, enables you to jump upwards when adjacent to walls, effectively letting you easily scale vertical surfaces. When you are in mid air and near a solid block, you'll be able to jump off of it - this can be done repeatedly as long as you're near a scalable surface.<BR>Unfortunately, this skill does not work in the arena. There's no escaping the challenge.
+doskill.dohealth.description=A straightforward, passive ability, when enabled this skill simply grants extra health to your Deep One form.
+doskill.dopoison.description=When toggled on this skill gives you a chance to inject enemies with a powerful poison when you hit them. About one in four hits result in the effect being applied.<BR>It does not, unfortunately, work against bosses.
+doskill.doregeneration.description=When enabled, this skill gives you a regeneration effect every time you slay an enemy. The more powerful the felled creature, the greater the effect. Very weak creatures however might result in no effect being applied.
+doskill.doquickstep.name=Quickstep
+doskill.douppercut.name=Uppercut
+doskill.doroarsink.name=Sinking Roar
+doskill.doclimbing.name=Climbing
+doskill.dohealth.name=Extra Health
+doskill.dopoison.name=Poison Claws
+doskill.doregeneration.name=Corpse Feeding
+doskill.toggled.on=Enabled.
+doskill.toggled.off=Disabled.
+doskill.unlock=Unlock
+doskill.toggle=Toggle
 
 ##################
 #MISC
@@ -1043,6 +1394,12 @@ teleport.removedpoint=My return point has been reset.
 beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
 canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
 canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
+
+arena.triumph=§6TRIUMPH
+arena.defeat=§4DEFEAT
+
+toast.ictyary=New Ictyary Entry
+toast.memory=New Memory
 
 sleep.transformed=I cannot sleep while transformed.
 sleep.parasite=I don't feel all too well.. I can't sleep.

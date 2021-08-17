@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.network;
 
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -44,6 +45,7 @@ public class MessageSyncDialogueData implements IMessage{
 				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).removeString("dialogue".concat(message.dialogue));
 			} else {
 				ctx.getServerHandler().player.getCapability(PlayerDataProvider.PLAYERDATA, null).addString("dialogue".concat(message.dialogue), false);
+				ResearchUtil.markResearchAsUpdated(ctx.getServerHandler().player, "dialogue".concat(message.dialogue));
 			}
 			});
 			return null;

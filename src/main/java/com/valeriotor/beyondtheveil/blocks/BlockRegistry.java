@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.blocks;
 
 import com.valeriotor.beyondtheveil.blocks.flora.BlockGhostGrass;
+import com.valeriotor.beyondtheveil.blocks.flora.BlockMegydrea;
 import com.valeriotor.beyondtheveil.blocks.flora.BlockMutator;
 import com.valeriotor.beyondtheveil.blocks.flora.BlockRedstoneGrass;
 import com.valeriotor.beyondtheveil.blocks.flora.PlantArborealGenerator;
@@ -16,17 +17,14 @@ import com.valeriotor.beyondtheveil.worship.CrawlerWorship.WorshipType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod.EventBusSubscriber
 public class BlockRegistry {
 	
 	
 	public static final DampWood DampWood = new DampWood();	
 	public static final BlockFumeSpreader FumeSpreader = new BlockFumeSpreader();
-	public static final BlockDarkSand DarkSand = new BlockDarkSand();
+	public static final BlockDarkSand DarkSand = new BlockDarkSand(BlockNames.DARK_SAND);
 	public static final DampStone DampStone = new DampStone();
 	public static final DampLog DampLog = new DampLog();
 	public static final DampWoodStairs DampWoodStairs = new DampWoodStairs(DampWood.getDefaultState());
@@ -63,7 +61,7 @@ public class BlockRegistry {
 	public static final ModSlab SlabElderDouble = (ModSlab) new ModSlab(BlockNames.ELDER_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
 	public static final ModStairs BlockStoneElderBrickStairs = new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
 	public static final Block BlockHeart = new BlockHeart(Material.SPONGE, BlockNames.HEART);
-	public static final Block BlockSacrificeAltar = new ModBlock(Material.IRON, BlockNames.SACRIFICE_ALTAR);
+	public static final Block BlockSacrificeAltar = new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
 	public static final Block BlockBloodBrick = new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
 	public static final ModSlab SlabBloodHalf = (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
 	public static final ModSlab SlabBloodDouble = (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
@@ -75,12 +73,20 @@ public class BlockRegistry {
 	public static final BlockMemorySieve BlockMemorySieve = new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_SIEVE);
 	public static final BlockGearBench BlockGearBench = new BlockGearBench(Material.IRON, BlockNames.GEAR_BENCH);
 	public static final BlockDreamFocus BlockDreamFocus = new BlockDreamFocus(BlockNames.DREAMFOCUS);
-	
+	public static final BlockDreamFocusFluids BlockDreamFocusFluids = new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
+	public static final BlockDreamFocusVillagers BlockDreamFocusVillagers = new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
+	public static final BlockCurtain BlockCurtain = new BlockCurtain(BlockNames.CURTAIN);
+	public static final BlockMegydrea BlockMegydrea = new BlockMegydrea(BlockNames.MEGYDREA);
+	public static final BlockThickAlgae BlockThickAlgae = new BlockThickAlgae(BlockNames.THICK_ALGAE);
+	public static final BlockArchePortal BlockArchePortal = new BlockArchePortal(BlockNames.ARCHE_PORTAL);
+	public static final BlockDarkGlass BlockDarkGlass = new BlockDarkGlass(BlockNames.DARK_GLASS);
+	public static final BlockDeepPrismarine BlockDeepPrismarine = new BlockDeepPrismarine(BlockNames.DEEP_PRISMARINE);
+	public static final BlockArena BlockArena = new BlockArena(BlockNames.ARENA);
+	public static final BlockDeepChest BlockDeepChest = new BlockDeepChest(BlockNames.DEEP_CHEST);
+
 	// Fluid Blocks. Registered in ModFluids to make sure it happens after the Fluids themselves.
 	public static BlockFluidTears BlockFluidTears;
 	
-	
-	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
 		registry.register(DampWood);;
@@ -130,7 +136,17 @@ public class BlockRegistry {
 	   	registry.register(BlockMemorySieve);
 	   	registry.register(BlockGearBench);
 	   	registry.register(BlockDreamFocus);
-	   	
+	   	registry.register(BlockDreamFocusFluids);
+	   	registry.register(BlockDreamFocusVillagers);
+	   	registry.register(BlockCurtain);
+	   	registry.register(BlockMegydrea);
+	   	registry.register(BlockThickAlgae);
+	   	registry.register(BlockArchePortal);
+	   	registry.register(BlockDarkGlass);
+		registry.register(BlockDeepPrismarine);
+		registry.register(BlockArena);
+		registry.register(BlockDeepChest);
+
 	   	ModSlab.registerSlab(SlabElderHalf, SlabElderDouble, registry);
 	   	ModSlab.registerSlab(SlabBloodHalf, SlabBloodDouble, registry);
 	   	

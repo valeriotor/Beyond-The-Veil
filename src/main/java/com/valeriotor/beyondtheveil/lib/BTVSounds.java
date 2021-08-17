@@ -1,8 +1,12 @@
 package com.valeriotor.beyondtheveil.lib;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @ObjectHolder(References.MODID)
@@ -83,68 +87,65 @@ public final class BTVSounds {
 	@ObjectHolder("shoggoth_idle")
 	public static final SoundEvent shoggoth_idle = new SoundEvent(new ResourceLocation(References.MODID, "shoggoth_idle")).setRegistryName("shoggoth_idle");
 	
+	@ObjectHolder("surgeon_idle")
+	public static final SoundEvent surgeon_idle = new SoundEvent(new ResourceLocation(References.MODID, "surgeon_idle")).setRegistryName("surgeon_idle");
+
+	@ObjectHolder("deep_one_brute_smash")
+	public static final SoundEvent deep_one_brute_smash = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_brute_smash")).setRegistryName("deep_one_brute_smash");
+
+	@ObjectHolder("deep_one_brute_roar")
+	public static final SoundEvent deep_one_brute_roar = new SoundEvent(new ResourceLocation(References.MODID, "deep_one_brute_roar")).setRegistryName("deep_one_brute_roar");
+
+	@ObjectHolder("arena_music")
+	public static final SoundEvent arena_music = new SoundEvent(new ResourceLocation(References.MODID, "arena_music")).setRegistryName("arena_music");
+
+	private static final List<SoundEvent> SOUNDS;
+
+	static {
+		List<SoundEvent> sounds = new ArrayList<>();
+		sounds.add(dwellerIdle);
+		sounds.add(dwellerHurt);
+		sounds.add(canoeCreak);
+		sounds.add(flute);
+		sounds.add(sawcleavertransform);
+		sounds.add(sawcleavertransformattack);
+		sounds.add(dreamAlienis);
+		sounds.add(spineRip);
+		sounds.add(heartRip);
+		sounds.add(deepOneRoar);
+		sounds.add(worthless);
+		sounds.add(tension);
+		sounds.add(breathe);
+		sounds.add(dagonThump);
+		sounds.add(dagonTension);
+		sounds.add(parasiteHurt);
+		sounds.add(parasiteDeath);
+		sounds.add(heartbeat);
+		sounds.add(shoggoth_screech);
+		sounds.add(deep_one_transform);
+		sounds.add(weeper_idle);
+		sounds.add(shoggoth_hurt);
+		sounds.add(weeper_transform);
+		sounds.add(fletum_weeping);
+		sounds.add(shoggoth_idle);
+		sounds.add(surgeon_idle);
+		sounds.add(deep_one_brute_smash);
+		sounds.add(deep_one_brute_roar);
+		sounds.add(arena_music);
+		SOUNDS = ImmutableList.copyOf(sounds);
+	}
+
 	public static SoundEvent getSoundById(int id) {
-		switch(id) {
-			case 0: return dwellerIdle;
-			case 1: return dwellerHurt;
-			case 2: return canoeCreak;
-			case 3: return flute;
-			case 4: return sawcleavertransform;
-			case 5: return sawcleavertransformattack;
-			case 6: return dreamAlienis;
-			case 7: return spineRip;
-			case 8: return heartRip;
-			case 9: return deepOneRoar;
-			case 10: return worthless;
-			case 11: return tension;
-			case 12: return breathe;
-			case 13: return dagonThump;
-			case 14: return dagonTension;
-			case 15: return parasiteHurt;
-			case 16: return parasiteDeath;
-			case 17: return heartbeat;
-			case 18: return shoggoth_screech;
-			case 19: return deep_one_transform;
-			case 20: return weeper_idle;
-			case 21: return shoggoth_hurt;
-			case 22: return weeper_transform;
-			case 23: return fletum_weeping;
-			case 24: return shoggoth_idle;
-			default: return null;
-			
-		}
+		if(id >= 0 && id < SOUNDS.size())
+			return SOUNDS.get(id);
+		return null;
 	}
 	
 	public static int getIdBySound(SoundEvent sound) {
-		if(sound.equals(dwellerIdle)) return 0;
-		if(sound.equals(dwellerHurt)) return 1;
-		if(sound.equals(canoeCreak)) return 2;
-		if(sound.equals(flute)) return 3;
-		if(sound.equals(sawcleavertransform)) return 4;
-		if(sound.equals(sawcleavertransformattack)) return 5;
-		if(sound.equals(dreamAlienis)) return 6;
-		if(sound.equals(spineRip)) return 7;
-		if(sound.equals(heartRip)) return 8;
-		if(sound.equals(deepOneRoar)) return 9;
-		if(sound.equals(worthless)) return 10;
-		if(sound.equals(tension)) return 11;
-		if(sound.equals(breathe)) return 12;
-		if(sound.equals(dagonThump)) return 13;
-		if(sound.equals(dagonTension)) return 14;
-		if(sound.equals(parasiteHurt)) return 15;
-		if(sound.equals(parasiteDeath)) return 16;
-		if(sound.equals(heartbeat)) return 17;
-		if(sound.equals(shoggoth_screech)) return 18;
-		if(sound.equals(deep_one_transform)) return 19;
-		if(sound.equals(weeper_idle)) return 20;
-		if(sound.equals(shoggoth_hurt)) return 21;
-		if(sound.equals(weeper_transform)) return 22;
-		if(sound.equals(fletum_weeping)) return 23;
-		if(sound.equals(shoggoth_idle)) return 24;
-		return 0;
+		return SOUNDS.indexOf(sound);
 	}
 	
 	public static int getNumberOfSounds() {
-		return 25;
+		return SOUNDS.size();
 	}
 }

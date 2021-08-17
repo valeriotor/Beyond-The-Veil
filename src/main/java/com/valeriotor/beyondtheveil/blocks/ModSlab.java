@@ -34,7 +34,7 @@ public class ModSlab extends BlockSlab{
 	public ModSlab(String name, Material material, boolean isDouble) {
 		super(material);
 		this.setRegistryName(References.MODID, name);
-		this.setUnlocalizedName(name);
+		this.setUnlocalizedName(References.MODID + ":" + name);
 		this.isDouble = isDouble;
 		IBlockState iblockstate = this.blockState.getBaseState().withProperty(VARIANT, Variant.DEFAULT);
 		
@@ -107,7 +107,6 @@ public class ModSlab extends BlockSlab{
 	
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		// TODO Auto-generated method stub
 		return super.getItem(worldIn, pos, state);
 	}
 	

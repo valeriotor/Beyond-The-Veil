@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.valeriotor.beyondtheveil.world.BiomeRegistry;
+import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -79,7 +79,7 @@ public class TileSlugBait extends TileEntity implements ITickable{
 			}
 			this.sendUpdates(this.world);
 		}else {
-			if(coords[0] != 0 || coords[1] != 0) this.world.spawnParticle(EnumParticleTypes.DRIP_WATER, this.pos.getX()+coords[0]+0.5, this.pos.getY()+1, this.pos.getZ()+coords[1]+0.5, 1, 1, 1);
+			if(coords[0] != 0 || coords[1] != 0) this.world.spawnAlwaysVisibleParticle(EnumParticleTypes.DRIP_WATER.getParticleID(), this.pos.getX()+coords[0]+0.5, this.pos.getY()+1, this.pos.getZ()+coords[1]+0.5, 1, 1, 1);
 		}
 		
 		

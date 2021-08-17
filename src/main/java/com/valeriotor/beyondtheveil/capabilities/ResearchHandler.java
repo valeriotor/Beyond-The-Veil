@@ -93,16 +93,4 @@ public static final ResourceLocation RESEARCH = new ResourceLocation(References.
 		
 	}
 	
-	
-	public static class ResearchCapFactory implements Callable<IResearch> {
-		
-		public ResearchCapFactory() {}
-		
-		@Override
-		public IResearch call() throws Exception {
-			return new ResearchData();
-		}
-		
-	}
-	
 }

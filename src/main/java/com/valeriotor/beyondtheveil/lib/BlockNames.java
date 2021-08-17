@@ -1,7 +1,9 @@
 package com.valeriotor.beyondtheveil.lib;
 
 public class BlockNames {
-	
+
+	public static final String ARCHE_PORTAL = "arche_portal";
+	public static final String ARENA = "arena";
 	public static final String BARREL = "barrel";
 	public static final String BLOODBRICKS = "blood_bricks";
 	public static final String BLOOD_BRICKS_SLAB = "blood_bricks_slab";
@@ -10,8 +12,14 @@ public class BlockNames {
 	public static final String BLOOD_WELL = "blood_well";
 	public static final String BRICKSBLUE = "bricks_blue";
 	public static final String CITYMAPPER = "city_mapper";
-	public static final String DARKSAND = "dark_sand";
+	public static final String CURTAIN = "curtain";
+	public static final String DARK_GLASS = "dark_glass";
+	public static final String DARK_SAND = "dark_sand";
+	public static final String DEEP_CHEST = "deep_chest";
+	public static final String DEEP_PRISMARINE = "deep_prismarine";
 	public static final String DREAMFOCUS = "dream_focus";
+	public static final String DREAMFOCUSFLUIDS = "dream_focus_fluids";
+	public static final String DREAMFOCUSVILLAGERS = "dream_focus_villagers";
 	public static final String ELDER_BRICK = "elder_bricks";
 	public static final String ELDER_STONE_BRICK = "elder_stone_bricks";
 	public static final String ELDER_STONE_BRICK_STAIRS = "elder_stone_brick_stairs";
@@ -24,15 +32,17 @@ public class BlockNames {
 	public static final String IDOL = "idol";
 	public static final String LAMP = "lamp";
 	public static final String LACRYMATORY = "lacrymatory";
+	public static final String MEGYDREA = "megydrea";
 	public static final String MEMORY_SIEVE = "memory_sieve";
 	public static final String MUTATOR = "mutator";
+	public static final String PENITENCE_STATUE = "penitence_statue";
 	public static final String SACRIFICE_ALTAR = "sacrifice_altar";
+	public static final String SACRIFICE_STATUE = "sacrifice_statue";
 	public static final String SLEEPCHAMBER = "sleep_chamber";
 	public static final String SLEEPCHAMBERADVANCED = "sleep_chamber_advanced";
 	public static final String SLUGBAIT = "slug_bait";
 	public static final String STATUE = "statue";
-	public static final String SACRIFICE_STATUE = "sacrifice_statue";
-	public static final String PENITENCE_STATUE = "penitence_statue";
+	public static final String THICK_ALGAE = "thick_algae";
 	public static final String WATERYCRADLE = "watery_cradle";
 	public static final String WORNBRICKS = "worn_bricks";
 	public static final String WORNBRICKSTAIRS = "worn_brick_stairs";
@@ -55,7 +65,4 @@ public class BlockNames {
 	public static final String SAPLINGSHRUB = "sapling_shrub";
 	public static final String PLANTBREAKER = "plant_terra";
 	public static final String PLANTVIJHISS = "plant_ordo";
-	
-	
-	
 }

@@ -1,0 +1,192 @@
+{
+    "id" : "archewater",
+    "startingBranch" : {
+        "id" : "first_branch",
+        "branchLength": 0,
+        "endingNodeID": "first"
+    },
+    "dialogueNodes" : {
+        "first": {
+            "id" : "first",
+            "dialogueOptions" : [
+                {
+                    "id" : "home",
+                    "branchLength" : 3,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "love",
+                    "branchLength" : 1,
+                    "endingNodeID" : "loves"
+                },
+				{
+                    "id" : "hate",
+                    "branchLength" : 1,
+                    "endingNodeID" : "hates"
+                },
+				{
+                    "id" : "whatis",
+                    "branchLength" : 5,
+                    "endingNodeID" : "flaw"
+                },
+				{
+                    "id" : "end",
+                    "branchLength" : 0,
+					"endsDialogue":true,
+                    "endingNodeID":"end"
+                }
+            ]
+        },
+        "loves": {
+            "id": "loves",
+            "dialogueOptions" : [
+                {
+                    "id" : "immense",
+                    "branchLength" : 2,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "ictya",
+                    "branchLength" : 2,
+                    "endingNodeID" : "alien"
+                },
+				{
+                    "id" : "cities",
+                    "branchLength" : 2,
+					"mustHaveData" : ["foundDeepCity"],
+                    "endingNodeID" : "ancestors"
+                },
+				{
+                    "id" : "foodchain",
+                    "branchLength" : 2,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "notreally",
+                    "branchLength" : 1,
+                    "endingNodeID" : "first"
+                }
+            ]
+        },
+        "hates": {
+            "id": "hates",
+            "dialogueOptions" : [
+                {
+                    "id" : "immense2",
+                    "branchLength" : 2,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "ictya",
+                    "branchLength" : 2,
+                    "endingNodeID" : "alien"
+                },
+				{
+                    "id" : "octid",
+                    "branchLength" : 2,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "food",
+                    "branchLength" : 2,
+                    "endingNodeID" : "first"
+                },
+				{
+                    "id" : "notreally",
+                    "branchLength" : 1,
+                    "endingNodeID" : "first"
+                }
+            ]
+        },
+        "alien": {
+            "id": "alien",
+            "dialogueOptions": [
+                {
+                    "id": "oceans",
+                    "branchLength": 1,
+                    "endingNodeID":"alien"
+                },
+				{
+                    "id": "life",
+                    "branchLength": 2,
+                    "endingNodeID":"visited"
+                },
+				{
+                    "id": "knowalien",
+                    "branchLength": 2,
+                    "endingNodeID":"alien"
+                },
+				{
+                    "id": "more",
+                    "branchLength": 1,
+                    "endingNodeID":"first"
+                }
+            ]
+        },
+        "visited": {
+            "id": "visited",
+            "dialogueOptions": [
+                {
+                    "id":"which",
+                    "branchLength":2,
+                    "endingNodeID":"alien"
+                },
+                {
+                    "id":"results",
+                    "branchLength":2,
+                    "endingNodeID":"alien"
+                }
+            ]
+        },
+        "ancestors": {
+            "id": "ancestors",
+            "dialogueOptions": [
+                {
+                    "id":"here",
+                    "branchLength":2,
+                    "endingNodeID":"first"
+                }
+            ]
+        },
+        "flaw": {
+            "id": "flaw",
+            "dialogueOptions" : [
+                {
+                    "id" : "fire",
+                    "branchLength" : 2,
+                    "endingNodeID" : "deeper"
+                },
+				{
+                    "id" : "principle",
+                    "branchLength" : 3,
+                    "endingNodeID" : "deeper"
+                },
+				{
+                    "id" : "nether",
+                    "branchLength" : 2,
+                    "endingNodeID" : "flaw"
+                },
+				{
+                    "id" : "academic",
+                    "branchLength" : 3,
+                    "endingNodeID" : "flaw"
+                },
+				{
+                    "id" : "none",
+                    "branchLength" : 1,
+                    "endingNodeID" : "flaw"
+                }
+            ]
+        },
+        "deeper": {
+            "id": "deeper",
+            "dialogueOptions": [
+                {
+                    "id":"apeiron",
+                    "branchLength":7,
+                    "endingNodeID":"first"
+                }
+            ]
+        }
+    }
+}

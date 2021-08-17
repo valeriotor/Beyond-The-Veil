@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueTemplate;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
 import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capabilities.ResearchProvider;
@@ -15,9 +17,12 @@ import com.valeriotor.beyondtheveil.network.MessageSyncDataToClient;
 import com.valeriotor.beyondtheveil.network.MessageSyncIntDataToServer;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
 import com.valeriotor.beyondtheveil.network.MessageSyncStringDataToServer;
+import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorDefaultToClient;
+import com.valeriotor.beyondtheveil.network.mirror.MessageMirrorScheduledToClient;
 import com.valeriotor.beyondtheveil.network.research.MessageSyncResearchToClient;
 import com.valeriotor.beyondtheveil.network.research.ResearchSyncer;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.worship.AzacnoParasite;
 import com.valeriotor.beyondtheveil.worship.ActivePowers.TransformDeepOne;
 
@@ -34,11 +39,21 @@ public class SyncUtil {
 		syncTransformData(p);
 		syncParasiteData(p);
 		syncResearchData(p);
+		syncMirrorData(p);
 		if(p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 			TransformDeepOne.applyAttributes(p);
 		}
 	}
 	
+	public static void syncMirrorData(EntityPlayer p) {
+		MirrorDialogueTemplate scheduledDialogue = MirrorUtil.getCap(p).getScheduledDialogue();
+		MirrorDialogueTemplate defaultDialogue = MirrorUtil.getCap(p).getDefaultDialogue();
+		if(scheduledDialogue != null)
+			BTVPacketHandler.INSTANCE.sendTo(new MessageMirrorScheduledToClient(scheduledDialogue.getID()), (EntityPlayerMP)p);
+		if(defaultDialogue != null)
+			BTVPacketHandler.INSTANCE.sendTo(new MessageMirrorDefaultToClient(defaultDialogue.getID()), (EntityPlayerMP)p);
+	}
+
 	public static void syncCapabilityData(EntityPlayer p) {
 		Set<String> strings = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = p.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
@@ -75,6 +90,7 @@ public class SyncUtil {
 	public static void addStringDataOnServer(EntityPlayer p, boolean temporary, String string) {
 		p.getCapability(PlayerDataProvider.PLAYERDATA, null).addString(string, temporary);
 		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(string), ((EntityPlayerMP)p));
+		ResearchUtil.markResearchAsUpdated(p, string);
 	}
 	
 	public static void removeStringDataOnServer(EntityPlayer p, String string) {
@@ -105,7 +121,7 @@ public class SyncUtil {
 	public static int incrementIntDataOnServer(EntityPlayer p, boolean temporary, String key, int amount, int defaultVal) {
 		IPlayerData data = p.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		int val = data.incrementOrSetInteger(key, amount, defaultVal, temporary);
-		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, data.getInteger(key) + amount), (EntityPlayerMP) p);
+		BTVPacketHandler.INSTANCE.sendTo(new MessageSyncDataToClient(key, val), (EntityPlayerMP) p);
 		return val;
 	}
 	

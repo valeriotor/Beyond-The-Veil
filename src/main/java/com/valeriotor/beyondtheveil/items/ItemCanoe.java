@@ -22,11 +22,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class ItemCanoe extends Item{
-	public ItemCanoe() {
-		this.setRegistryName(References.MODID + ":canoe");
-		this.setUnlocalizedName("canoe");
-		this.setCreativeTab(References.BTV_TAB);
+public class ItemCanoe extends ModItem{
+	public ItemCanoe(String name) {
+        super(name);
 	}
 	
 	@Override

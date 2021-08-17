@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.shoggoth;
 
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.shoggoth.buildings.BuildingClinic;
+import com.valeriotor.beyondtheveil.shoggoth.buildings.BuildingGreatShrine;
 import com.valeriotor.beyondtheveil.shoggoth.buildings.BuildingLargeTower;
 import com.valeriotor.beyondtheveil.shoggoth.buildings.BuildingPyramid;
 import com.valeriotor.beyondtheveil.shoggoth.buildings.BuildingRoad;
@@ -21,6 +22,7 @@ public class BuildingRegistry {
 	public static BuildingTemplate wall;
 	public static BuildingTemplate road;
 	public static BuildingTemplate clinic;
+	public static BuildingTemplate great_shrine;
 	
 	public static final BuildingTemplate[] templates = new BuildingTemplate[64];
 	
@@ -36,6 +38,7 @@ public class BuildingRegistry {
 		clinic = new BuildingClinic("clinic", count++);
 		wall = new BuildingWall("wall", count++);
 		road = new BuildingRoad("road", count++);
+		great_shrine = new BuildingGreatShrine("great_shrine", count++);
 	}
 	
 }

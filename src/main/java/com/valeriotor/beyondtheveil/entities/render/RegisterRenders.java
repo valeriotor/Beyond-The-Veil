@@ -1,19 +1,18 @@
 package com.valeriotor.beyondtheveil.entities.render;
 
-import com.valeriotor.beyondtheveil.entities.EntityBloodSkeleton;
-import com.valeriotor.beyondtheveil.entities.EntityBloodZombie;
-import com.valeriotor.beyondtheveil.entities.EntityCanoe;
-import com.valeriotor.beyondtheveil.entities.EntityCrawlingVillager;
-import com.valeriotor.beyondtheveil.entities.EntityCrazedWeeper;
-import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
-import com.valeriotor.beyondtheveil.entities.EntityFletum;
-import com.valeriotor.beyondtheveil.entities.EntityHamletDweller;
-import com.valeriotor.beyondtheveil.entities.EntityShoggoth;
-import com.valeriotor.beyondtheveil.entities.EntityStarspawn;
-import com.valeriotor.beyondtheveil.entities.EntityWeeper;
+import java.util.function.Function;
 
+import com.valeriotor.beyondtheveil.entities.*;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneBrute;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamFluid;
+import com.valeriotor.beyondtheveil.entities.dreamfocus.EntityDreamVillager;
+import com.valeriotor.beyondtheveil.entities.ictya.*;
+
+import com.valeriotor.beyondtheveil.entities.projectile.EntityUmancalaBall;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
@@ -21,81 +20,58 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class RegisterRenders {
 	public static void register() {
 		
-		//Deep One
-		RenderingRegistry.registerEntityRenderingHandler(EntityDeepOne.class, new IRenderFactory<EntityDeepOne>(){
-		    @Override
-		    public Render<EntityDeepOne> createRenderFor(RenderManager manager) 
-		    {return new RenderDeepOne(manager);}
-		    });
-		
-		//Hamlet Dweller
-		RenderingRegistry.registerEntityRenderingHandler(EntityHamletDweller.class, new IRenderFactory<EntityHamletDweller>(){
-		    @Override
-		    public Render<EntityHamletDweller> createRenderFor(RenderManager manager) 
-		    {return new RenderHamletDweller(manager);}
-		    });
-		
-		//Canoe
-		RenderingRegistry.registerEntityRenderingHandler(EntityCanoe.class, new IRenderFactory<EntityCanoe>(){
-			@Override
-			public Render<EntityCanoe> createRenderFor(RenderManager manager) 
-			{return new RenderCanoe(manager);}
-			});
-		
-		//Canoe
-		RenderingRegistry.registerEntityRenderingHandler(EntityCrawlingVillager.class, new IRenderFactory<EntityCrawlingVillager>(){
-			@Override
-			public Render<EntityCrawlingVillager> createRenderFor(RenderManager manager) 
-			{return new RenderCrawlingVillager(manager);}
-			});
-		
-		//Weeper
-		RenderingRegistry.registerEntityRenderingHandler(EntityWeeper.class, new IRenderFactory<EntityWeeper>(){
-			@Override
-			public Render<EntityWeeper> createRenderFor(RenderManager manager) 
-			{return new RenderWeeper(manager);}
-			});
-		
-		//Weeper
-		RenderingRegistry.registerEntityRenderingHandler(EntityFletum.class, new IRenderFactory<EntityFletum>(){
-			@Override
-			public Render<EntityFletum> createRenderFor(RenderManager manager) 
-			{return new RenderFletum(manager);}
-			});
-		
+		register(EntityDeepOne.class, RenderDeepOne::new);
+		register(EntityHamletDweller.class, RenderHamletDweller::new);
+		register(EntityCanoe.class, RenderCanoe::new);
+		register(EntityCrawlingVillager.class, RenderCrawlingVillager::new);
+		register(EntityWeeper.class, RenderWeeper::new);
+		register(EntityFletum.class, RenderFletum::new);
+		register(EntityShoggoth.class, RenderShoggoth::new);
+		register(EntityBloodZombie.class, RenderBloodZombie::new);
+		register(EntityBloodSkeleton.class, RenderBloodSkeleton::new);
+		register(EntityCrazedWeeper.class, RenderCrazedWeeper::new);
+		register(EntityDreamFluid.class, RenderDreamFluid::new);
+		register(EntityDreamVillager.class, RenderDreamVillager::new);
+		register(EntitySurgeon.class, RenderSurgeon::new);
+		register(EntityDreadfish.class, RenderDreadfish::new);
+		register(EntityMuray.class, RenderMuray::new);
+		register(EntityOctid.class, RenderOctid::new);
+		register(EntityDeepAngler.class, RenderDeepAngler::new);
+		register(EntitySarfin.class, RenderSarfin::new);
+		register(EntityManOWar.class, RenderManOWar::new);
+		register(EntityJelly.class, RenderJelly::new);
+		register(EntityDeepOneBrute.class, RenderDeepOneBrute::new);
+		register(EntityDeepOneMyrmidon.class, RenderDeepOneMyrmidon::new);
+		register(EntityCephalopodian.class, RenderCephalopodian::new);
+		register(EntitySandflatter.class, RenderSandflatter::new);
+		register(EntityUmancala.class, RenderUmancala::new);
+		register(EntityBonecage.class, RenderBonecage::new);
+		register(EntityAdeline.class, RenderAdeline::new);
+
+
+
+		register(EntityUmancalaBall.class, RenderUmancalaBall::new);
+
 		//Starspawn
-		/*RenderingRegistry.registerEntityRenderingHandler(EntityStarspawn.class, new IRenderFactory<EntityStarspawn>(){
-			@Override
-			public Render<EntityStarspawn> createRenderFor(RenderManager manager) 
-			{return new RenderStarspawn(manager);}
-			});
-		*/
-		//Shoggoth
-		RenderingRegistry.registerEntityRenderingHandler(EntityShoggoth.class, new IRenderFactory<EntityShoggoth>(){
-			@Override
-			public Render<EntityShoggoth> createRenderFor(RenderManager manager) 
-			{return new RenderShoggoth(manager);}
-			});
+		//register(EntityStarspawn.class, new RenderFactory<EntityStarspawn>(RenderStarspawn::new));
 		
-		//Blood Zombie
-		RenderingRegistry.registerEntityRenderingHandler(EntityBloodZombie.class, new IRenderFactory<EntityBloodZombie>(){
-			@Override
-			public Render<EntityBloodZombie> createRenderFor(RenderManager manager) 
-			{return new RenderBloodZombie(manager);}
-			});
-		
-		//Blood Skeleton
-		RenderingRegistry.registerEntityRenderingHandler(EntityBloodSkeleton.class, new IRenderFactory<EntityBloodSkeleton>(){
-			@Override
-			public Render<EntityBloodSkeleton> createRenderFor(RenderManager manager) 
-			{return new RenderBloodSkeleton(manager);}
-			});
-		
-		//Crazed Weeper
-		RenderingRegistry.registerEntityRenderingHandler(EntityCrazedWeeper.class, new IRenderFactory<EntityCrazedWeeper>(){
-			@Override
-			public Render<EntityCrazedWeeper> createRenderFor(RenderManager manager) 
-			{return new RenderCrazedWeeper(manager);}
-			});
 	}
+	
+	private static <T extends Entity> void register(Class<T> entityClass, Function<RenderManager, Render<? super T>> renderFunc) {
+		RenderingRegistry.registerEntityRenderingHandler(entityClass, new RenderFactory<>(renderFunc));
+	}
+	
+	private static class RenderFactory<T extends Entity> implements IRenderFactory<T> {
+		private final Function<RenderManager, Render<? super T>> func;
+		private RenderFactory(Function<RenderManager, Render<? super T>> func) {
+			this.func = func;
+		}
+		
+		@Override
+		public Render<? super T> createRenderFor(RenderManager manager) {
+			return func.apply(manager);
+		}
+		
+	}
+	
 }

@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.proxy;
 
 import com.valeriotor.beyondtheveil.animations.AnimationRegistry;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
+import com.valeriotor.beyondtheveil.entities.bosses.ArenaMusic;
+import com.valeriotor.beyondtheveil.entities.bosses.EntityArenaBoss;
 import com.valeriotor.beyondtheveil.entities.models.ModelRegistry;
 import com.valeriotor.beyondtheveil.entities.render.RegisterRenders;
 import com.valeriotor.beyondtheveil.events.ClientEvents;
@@ -16,11 +19,13 @@ import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.tileEntities.TileBarrel;
 import com.valeriotor.beyondtheveil.tileEntities.TileHeart;
 import com.valeriotor.beyondtheveil.tileEntities.TileLacrymatory;
+import com.valeriotor.beyondtheveil.tileEntities.TileMegydrea;
 import com.valeriotor.beyondtheveil.tileEntities.TileMemorySieve;
 import com.valeriotor.beyondtheveil.tileEntities.TileWateryCradle;
 import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRBarrel;
 import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRHeart;
 import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRLacrymatory;
+import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRMegydrea;
 import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRMemorySieve;
 import com.valeriotor.beyondtheveil.tileEntities.renderers.TESRWateryCradle;
 import com.valeriotor.beyondtheveil.util.RegistryHelper;
@@ -106,11 +111,12 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileHeart.class, new TESRHeart());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMemorySieve.class, new TESRMemorySieve());
         ClientRegistry.bindTileEntitySpecialRenderer(TileBarrel.class, new TESRBarrel());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMegydrea.class, new TESRMegydrea());
     }
     
     @Override
     public void loadCustomResources() {
-    	AnimationRegistry.loadAnimations();
+    	AnimationRegistry.loadAnimations(true);
     	DialogueRequirement.registerRequirements();
     }
     
@@ -118,8 +124,9 @@ public class ClientProxy extends CommonProxy {
     public EntityPlayer getPlayer() {
     	return Minecraft.getMinecraft().player;
     }
-    
-    
-	
-	
+
+    @Override
+    public void playArenaSound(EntityArenaBoss boss) {
+        Minecraft.getMinecraft().getSoundHandler().playSound(new ArenaMusic(boss));
+    }
 }

@@ -1,0 +1,7 @@
+{
+    "variants": {
+		"variant=prismarine": { "model": "minecraft:prismarine_rough" },
+		"variant=prismarine_bricks": { "model": "minecraft:prismarine_bricks" },
+		"variant=dark_prismarine": { "model": "minecraft:prismarine_dark" }
+    }
+}
