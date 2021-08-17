@@ -2,22 +2,17 @@ package com.valeriotor.beyondtheveil.entities.ictya;
 
 import com.google.common.base.Predicate;
 import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
+import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.EntityDeepOne;
 import com.valeriotor.beyondtheveil.entities.IDamageCapper;
-import com.valeriotor.beyondtheveil.entities.AI.AIRevenge;
 import com.valeriotor.beyondtheveil.entities.util.WaterMoveHelper;
-
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.generic.GenericMessageKey;
 import com.valeriotor.beyondtheveil.network.generic.MessageGenericToClient;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -34,6 +29,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -237,7 +233,13 @@ public abstract class EntityIctya extends EntityMob implements IDamageCapper{
 		}
 		super.onDeath(cause);
 	}
-	
+
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		currentFood = getMaxFood() * (world.rand.nextDouble() / 2 + 0.5);
+		return super.onInitialSpawn(difficulty, livingdata);
+	}
+
 	private static class AINearestAttackableTargetArche<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T> {
 
 		public AINearestAttackableTargetArche(EntityCreature creature, Class<T> classTarget, int chance,
