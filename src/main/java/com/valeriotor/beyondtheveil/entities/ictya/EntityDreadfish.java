@@ -40,6 +40,14 @@ public class EntityDreadfish extends EntityIctya {
 	}
 
 	@Override
+	protected boolean shouldAttack(EntityLivingBase attacked) {
+		if (attacked instanceof EntityDreadfish) {
+			return false;
+		}
+		return super.shouldAttack(attacked);
+	}
+
+	@Override
 	public IctyaSize getSize() {
 		return IctyaSize.MEDIUM;
 	}
