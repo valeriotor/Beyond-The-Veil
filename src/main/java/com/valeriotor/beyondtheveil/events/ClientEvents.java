@@ -114,8 +114,9 @@ public class ClientEvents {
 		&& p.getCapability(PlayerDataProvider.PLAYERDATA, null).getString(PlayerDataLib.TRANSFORMED)) {
 			BlockPos ppos = new BlockPos(p.posX, p.posY, p.posZ);
 			IBlockState state = p.world.getBlockState(ppos.down());
+			IBlockState state2 = p.world.getBlockState(ppos);
 			if(!state.isSideSolid(p.world, ppos.down(), EnumFacing.UP)
-			&& state.getBlock() != Blocks.WATER) {
+			&& state2.getBlock() != Blocks.WATER) {
 				climbCounter = 9;
 				BTVPacketHandler.INSTANCE.sendToServer(new MessageGenericToServer(GenericMessageKey.DEEP_ONE_CLIMB_JUMP));
 			}

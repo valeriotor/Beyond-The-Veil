@@ -109,13 +109,13 @@ public class GuiIctyary extends GuiScreen {
         descriptionTextArea.recompute();
         switch (mc.gameSettings.guiScale) {
             case 0:
-                descriptionTextArea.setScrollAmount(9);
+                descriptionTextArea.setScrollAmount(11);
                 break;
             case 2:
-                descriptionTextArea.setScrollAmount(4);
+                descriptionTextArea.setScrollAmount(6);
                 break;
             case 3:
-                descriptionTextArea.setScrollAmount(7);
+                descriptionTextArea.setScrollAmount(9);
                 break;
         }
 

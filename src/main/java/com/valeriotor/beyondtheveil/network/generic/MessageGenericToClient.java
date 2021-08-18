@@ -2,12 +2,8 @@ package com.valeriotor.beyondtheveil.network.generic;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
-import com.valeriotor.beyondtheveil.events.DOSkillEvents;
-import com.valeriotor.beyondtheveil.gui.toasts.IctyaryToast;
-import com.valeriotor.beyondtheveil.gui.toasts.MemoryToast;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -65,10 +61,10 @@ public class MessageGenericToClient implements IMessage{
                         BeyondTheVeil.proxy.cEvents.deepOneUppercutResetTimer();
                         break;
                     case ICTYARY_ENTRY:
-                        Minecraft.getMinecraft().getToastGui().add(new IctyaryToast(message.optionalString));
+                        BeyondTheVeil.proxy.createIctyaryToast(message.optionalString);
                         break;
                     case MEMORY_ENTRY:
-                        Minecraft.getMinecraft().getToastGui().add(new MemoryToast(Memory.getMemoryFromDataName(message.optionalString)));
+                        BeyondTheVeil.proxy.createMemoryToast(Memory.getMemoryFromDataName(message.optionalString));
                         break;
                 }
             });

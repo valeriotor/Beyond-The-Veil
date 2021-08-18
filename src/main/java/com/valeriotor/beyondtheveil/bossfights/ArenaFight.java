@@ -46,7 +46,7 @@ public class ArenaFight {
 
     private void setSaturation(EntityPlayer p) {
         p.getFoodStats().setFoodLevel(17);
-        p.getFoodStats().setFoodSaturationLevel(0);
+//        p.getFoodStats().setFoodSaturationLevel(0);
     }
 
     public boolean equalsStarterPos(BlockPos pos) {
@@ -64,7 +64,8 @@ public class ArenaFight {
         if(player != null) {
             player.setHealth(player.getMaxHealth());
             player.getFoodStats().setFoodLevel(20);
-            player.getFoodStats().setFoodSaturationLevel(20);
+//            player.getFoodStats().setFoodSaturationLevel(20);
+            player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 20, 20));
             if(endAbruptly)
                 player.setPositionAndUpdate(arenaStarterPos.getX()+2, arenaStarterPos.getY()-1, arenaStarterPos.getZ()-1);
             else {

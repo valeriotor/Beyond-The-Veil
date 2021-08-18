@@ -38,8 +38,10 @@ public class MessageArenaFight implements IMessage {
             EntityPlayerMP p = ctx.getServerHandler().player;
             p.getServerWorld().addScheduledTask(() -> {
                 BlockPos pos = message.pos;
-                p.setPositionAndUpdate(pos.getX()+3, pos.getY()+5, pos.getZ()-3);
-                ArenaFightHandler.startFight(p, pos, message.chosenFight);
+                if(!ArenaFightHandler.isArenaOccupied(pos)) {
+                    p.setPositionAndUpdate(pos.getX() + 3, pos.getY() + 5, pos.getZ() - 3);
+                    ArenaFightHandler.startFight(p, pos, message.chosenFight);
+                }
             });
             return null;
         }

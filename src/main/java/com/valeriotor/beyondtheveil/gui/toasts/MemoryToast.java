@@ -20,7 +20,11 @@ public class MemoryToast implements IToast{
     private boolean hasPlayedSound;
     private final ItemStack newStack;
 
-    public MemoryToast(Memory memory) {
+    public static MemoryToast createMemoryToast(Memory memory) {
+        return new MemoryToast(memory);
+    }
+
+    private MemoryToast(Memory memory) {
         this.memory = memory;
         newStack = new ItemStack(ItemRegistry.memory_phial);
         ItemHelper.checkTagCompound(newStack).setString("memory", memory.getDataName());

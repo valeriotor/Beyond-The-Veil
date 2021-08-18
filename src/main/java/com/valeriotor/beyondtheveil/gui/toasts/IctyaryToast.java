@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.gui.toasts;
 
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.toasts.GuiToast;
@@ -18,7 +19,11 @@ public class IctyaryToast implements IToast {
     private final String ictyaLocalizedName;
     private boolean hasPlayedSound;
 
-    public IctyaryToast(String ictya) {
+    public static IctyaryToast createIctyaryToast(String ictya) {
+        return new IctyaryToast(ictya);
+    }
+
+    private IctyaryToast(String ictya) {
         this.ictyaLocalizedName = I18n.format("entity.beyondtheveil:" + ictya + ".name");
     }
 

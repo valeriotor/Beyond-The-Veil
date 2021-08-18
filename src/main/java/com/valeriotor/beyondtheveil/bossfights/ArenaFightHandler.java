@@ -8,12 +8,10 @@ import com.valeriotor.beyondtheveil.entities.bosses.EntityDeepOneMyrmidon;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ArenaFightHandler {
     public static final int DEEP_ONE_BRUTE = 0;
@@ -59,6 +57,9 @@ public class ArenaFightHandler {
             case DEEP_ONE_MYRMIDON: boss = new EntityDeepOneMyrmidon(player.world, player); break;
             case SCION_OF_DAGON:
         }
+        List<EntityArenaBoss> glitchedBosses = player.world.getEntitiesWithinAABB(EntityArenaBoss.class, new AxisAlignedBB(arenaStarterPos.getX() + 3, arenaStarterPos.getY() + 5, arenaStarterPos.getZ() - 3,
+                arenaStarterPos.getX() + 20, arenaStarterPos.getY() + 15, arenaStarterPos.getZ() - 20));
+        glitchedBosses.forEach(player.world::removeEntity);
         if(boss != null) {
             boss.setPosition(arenaStarterPos.getX()+20, arenaStarterPos.getY()+5, arenaStarterPos.getZ()-20);
             player.world.spawnEntity(boss);
