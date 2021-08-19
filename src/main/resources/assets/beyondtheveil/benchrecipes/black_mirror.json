@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		"GGGG",
+		"GOOG",
+		"GOOG",
+		"GGGG"
+	],
+	"output" : "beyondtheveil:black_mirror",
+	"map": {
+		"O" : "minecraft:obsidian",
+		"G" : "minecraft:glass"
+	},
+	"req" : "BLACKMIRROR;0"
+}

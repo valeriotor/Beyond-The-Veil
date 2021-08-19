@@ -1,0 +1,14 @@
+{
+	"rows" : [
+		"CCCC",
+		"CFFC",
+		"CFFC",
+		"CCCC"
+	],
+	"output" : "beyondtheveil:fleshcarbontoken",
+	"map": {
+		"F" : "minecraft:rotten_flesh",
+		"C" : "minecraft:coal;1;1"
+	},
+	"req" : "FLESHCARBONTOKEN;0"
+}
