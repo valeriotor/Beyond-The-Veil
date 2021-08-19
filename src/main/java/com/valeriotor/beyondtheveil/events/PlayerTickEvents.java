@@ -70,10 +70,11 @@ public class PlayerTickEvents {
 	}
 	
 	private static void canoeFishing(EntityPlayer p, IPlayerData data) {
-		if(!p.world.isRemote && p.getRidingEntity() instanceof EntityCanoe && (p.world.getBiome(p.getPosition()) == Biomes.OCEAN 
-				   || p.world.getBiome(p.getPosition()) == BiomeRegistry.innsmouth || p.world.getBiome(p.getPosition()) == Biomes.DEEP_OCEAN)) {
-					if(Math.abs(p.motionX) > 0.01 || Math.abs(p.motionZ) > 0.01) {
-						if((p.world.getWorldTime() & 127) == p.world.rand.nextInt(128)) {
+		if(!p.world.isRemote && p.getRidingEntity() instanceof EntityCanoe) {
+					Biome biome = p.world.getBiome(p.getPosition());
+					if((Math.abs(p.motionX) > 0.01 || Math.abs(p.motionZ) > 0.01) && (biome == Biomes.OCEAN
+					|| biome == BiomeRegistry.innsmouth || biome == Biomes.DEEP_OCEAN)) {
+						if((p.ticksExisted & 63) == p.world.rand.nextInt(64)) {
 							double angle = p.world.rand.nextDouble()*2*Math.PI;
 							double x = Math.sin(angle);
 							double z = Math.cos(angle);
