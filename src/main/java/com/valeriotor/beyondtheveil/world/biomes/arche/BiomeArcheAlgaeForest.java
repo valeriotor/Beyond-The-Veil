@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class BiomeArcheAlgaeForest extends BiomeArche{
 	public static final WorldGenAlgaeTree ALGAE_TREE = new WorldGenAlgaeTree();
 	public BiomeArcheAlgaeForest() {
-		super(BiomeRegistry.ARCHE_ALGAE_FOREST_NAME, new BiomeProperties(BiomeRegistry.ARCHE_ALGAE_FOREST_NAME).setHeightVariation(0.04F).setBaseHeight(-2.4F).setTemperature(0.03F).setRainfall(0.0F).setRainDisabled().setWaterColor(0));
+		super(BiomeRegistry.ARCHE_ALGAE_FOREST_NAME, new BiomeProperties("Arche Algae Forest").setHeightVariation(0.04F).setBaseHeight(-2.4F).setTemperature(0.03F).setRainfall(0.0F).setRainDisabled().setWaterColor(0));
 	}
 	
 	@Override

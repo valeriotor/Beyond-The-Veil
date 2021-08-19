@@ -15,7 +15,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 public class BiomeArcheCaves extends BiomeArche{
 
 	public BiomeArcheCaves() {
-		super(BiomeRegistry.ARCHE_CAVES_NAME, new BiomeProperties(BiomeRegistry.ARCHE_CAVES_NAME).setHeightVariation(2.5F).setBaseHeight(1.5F).setTemperature(0.03F).setRainfall(0.0F).setRainDisabled().setWaterColor(0));
+		super(BiomeRegistry.ARCHE_CAVES_NAME, new BiomeProperties("Arche Caves").setHeightVariation(2.5F).setBaseHeight(1.5F).setTemperature(0.03F).setRainfall(0.0F).setRainDisabled().setWaterColor(0));
 		this.topBlock = BlockRegistry.DarkSand.getDefaultState();
 		this.fillerBlock = BlockRegistry.DarkSand.getDefaultState();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityMuray.class, 60, 1, 1));
