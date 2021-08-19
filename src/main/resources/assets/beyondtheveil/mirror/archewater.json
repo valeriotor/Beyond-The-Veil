@@ -53,7 +53,7 @@
 				{
                     "id" : "cities",
                     "branchLength" : 2,
-					"mustHaveData" : ["foundDeepCity"],
+					"mustHaveData" : ["arenaadvicereceived"],
                     "endingNodeID" : "ancestors"
                 },
 				{
