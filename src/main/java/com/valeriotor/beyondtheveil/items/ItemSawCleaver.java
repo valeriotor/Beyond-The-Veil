@@ -138,7 +138,7 @@ public class ItemSawCleaver extends ItemSword implements IArtifactItem{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+		tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(19)));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	

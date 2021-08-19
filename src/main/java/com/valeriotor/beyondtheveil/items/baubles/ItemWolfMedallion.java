@@ -41,13 +41,7 @@ public class ItemWolfMedallion extends ModItem implements IBauble, IActiveBauble
 	public BaubleType getBaubleType(ItemStack itemstack) {
 		return BaubleType.AMULET;
 	}
-	
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(5)));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
-	
+
 	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
 		if(player.world.isRemote) return;

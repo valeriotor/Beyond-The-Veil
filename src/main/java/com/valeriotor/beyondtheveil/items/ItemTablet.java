@@ -55,7 +55,7 @@ public class ItemTablet extends ModItem{
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if(stack.getItem() == ItemRegistry.tablet) {
-			tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(5)));
+			tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(19)));
 		}
 	}
 	

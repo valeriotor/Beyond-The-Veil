@@ -90,12 +90,4 @@ public class ItemFlute extends ModItem implements IArtifactItem{
 		return super.onItemUseFinish(stack, worldIn, player);
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(I18n.format("lore." + this.getUnlocalizedName().substring(5)));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
-	
-	
 }
