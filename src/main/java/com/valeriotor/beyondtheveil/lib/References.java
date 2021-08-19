@@ -5,10 +5,10 @@ import net.minecraft.creativetab.CreativeTabs;
 public class References {
 	public static final String MODID = "beyondtheveil";
     public static final String NAME = "Beyond The Veil";
-    public static final String VERSION = "1.12.2-0.2.2";
+    public static final String VERSION = "1.12.2-0.3";
     public static final String DEPENDENCIES = "required-after:baubles";
     
-    public static final String PURPLE = "§5§o";
+    public static final String PURPLE = "ï¿½5ï¿½o";
     
     public static CreativeTabs BTV_TAB = new CreativeTabBTV(CreativeTabBTV.getNextID(), MODID);
 }
