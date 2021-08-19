@@ -62,6 +62,7 @@ tooltip.bronze_sphere=%1$s experience currently stashed.
 lore.tablet=§5§oAn ancient stony slab with weird inscriptions on it. Can I decipher it?
 lore.spine=§5§oWillpower resides in the spine.
 lore.surgery_tools=§5§oA set of tools used for surgery. Somewhat rusty, but I am certain my patients won't mind.
+lore.ink_mask=§5§oCan be worn in my Deep One form. Protects against the Octids' ink.
 
 tooltip.held_villager.spineless=§5§oA villager lacking his dorsal spine. He'll never get up.
 tooltip.held_villager.spineful=§5§oAn unconscious villager, ready for experimentation.
