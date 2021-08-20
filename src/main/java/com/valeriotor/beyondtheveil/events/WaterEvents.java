@@ -106,13 +106,15 @@ public class WaterEvents {
 	}
 	
 	private static void dropItems(EntityPlayer p, IPlayerData data) {
-		ItemStack stack = p.getHeldItemMainhand();
-		if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem(), p, data)) {
-			dropItem(p, stack);
-		}
-		stack = p.getHeldItemOffhand();
-		if(stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem(), p, data)) {
-			dropItem(p, stack);
+		if(!p.world.isRemote) {
+			ItemStack stack = p.getHeldItemMainhand();
+			if (stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem(), p, data)) {
+				dropItem(p, stack);
+			}
+			stack = p.getHeldItemOffhand();
+			if (stack.getItem() != Items.AIR && !canDeepOneHold(stack.getItem(), p, data)) {
+				dropItem(p, stack);
+			}
 		}
 	}
 	
@@ -124,11 +126,13 @@ public class WaterEvents {
 	}
 	
 	private static void dropArmor(EntityPlayer p) {
-		for(int i = 0; i < 4; i++) {
-			ItemStack armorPiece = p.inventory.armorInventory.get(i);
-			if(armorPiece.getItem() != ItemRegistry.ink_mask) {
-				ItemHandlerHelper.giveItemToPlayer(p, armorPiece, 9 + i);
-				p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+		if(!p.world.isRemote) {
+			for (int i = 0; i < 4; i++) {
+				ItemStack armorPiece = p.inventory.armorInventory.get(i);
+				if (armorPiece.getItem() != ItemRegistry.ink_mask) {
+					ItemHandlerHelper.giveItemToPlayer(p, armorPiece, 9 + i);
+					p.inventory.armorInventory.set(i, ItemStack.EMPTY);
+				}
 			}
 		}
 	}
