@@ -2,59 +2,62 @@
 #物品（名称、描述和特殊效果）
 ##################
 
-item.oniric_incense.name=浸梦香
-item.slug.name=蛞蝓
-item.slugcatcher.name=捕蛞蝓器
-item.testitem.name=试验物品
-item.canoe.name=独木舟
-item.flute.name=外神长笛
-item.saw_cleaver.name=锯刃
-item.wolf_medallion.name=狼首坠饰
-item.drink_ale.name=啤酒
-item.drink_mead.name=蜜酒
-item.drink_rum.name=朗姆酒
-item.drink_vodka.name=伏特加
-item.drink_wine.name=葡萄酒
-item.drink_empty.name=空杯
-item.tablet.name=石碑
-item.bronze_sphere.name=古铜球
-item.blackjack.name=棍棒
-item.spine.name=背脊
-item.heart.name=心脏
-item.held_villager.name=村民
-item.held_weeper.name=泣者
-item.held_fletum.name=泣囊
-item.surgery_tools.name=手术工具
-item.bone_tiara.name=骨冠
-item.bleeding_belt.name=渗血腰带
-item.dream_bottle.name=饮梦瓶
-item.redstone_weed.name=红石草种
-item.ghost_weed.name=幽灵草种
-item.vanilla_weed.name=寻常草种
-item.shoggoth_map.name=修格斯地图
-item.held_shoggoth.name=修格斯
-item.blood_covenant.name=血契
-item.revelation_ring.name=启示之戒
-item.azacno_charm.name=阿扎克农符咒
-item.blood_crown.name=荆棘冠
-item.coral_staff.name=珊瑚血杖
-item.sigil_zombie.name=血之印记：僵尸
-item.sigil_skellie.name=血之印记：骷髅
-item.sacrificial_knife.name=血祭刀
-item.memory_phial.name=记忆安瓿
-item.necronomicon.name=死灵之书
-item.sigil_player.name=血之印记：玩家
-item.sigil_pathway.name=血之印记：道路
-item.gear.name=齿轮
-item.crucible.name=炽裁
-item.surgeon_summons.name=外科医生传唤信
+item.beyondtheveil:oniric_incense.name=浸梦香
+item.beyondtheveil:slug.name=蛞蝓
+item.beyondtheveil:slugcatcher.name=捕蛞蝓器
+item.beyondtheveil:testitem.name=试验物品
+item.beyondtheveil:canoe.name=独木舟
+item.beyondtheveil:flute.name=外神长笛
+item.beyondtheveil:saw_cleaver.name=锯刃
+item.beyondtheveil:wolf_medallion.name=狼首坠饰
+item.beyondtheveil:drink_ale.name=麦酒
+item.beyondtheveil:drink_mead.name=蜜酒
+item.beyondtheveil:drink_rum.name=朗姆酒
+item.beyondtheveil:drink_vodka.name=伏特加
+item.beyondtheveil:drink_wine.name=葡萄酒
+item.beyondtheveil:drink_empty.name=空杯
+item.beyondtheveil:tablet.name=石碑
+item.beyondtheveil:bronze_sphere.name=古铜球
+item.beyondtheveil:blackjack.name=棍棒
+item.beyondtheveil:spine.name=背脊
+item.beyondtheveil:heart.name=心脏
+item.beyondtheveil:held_villager.name=村民
+item.beyondtheveil:held_weeper.name=泣者
+item.beyondtheveil:held_fletum.name=泣囊
+item.beyondtheveil:surgery_tools.name=手术工具
+item.beyondtheveil:bone_tiara.name=骨冠
+item.beyondtheveil:bleeding_belt.name=渗血腰带
+item.beyondtheveil:dream_bottle.name=饮梦瓶
+item.beyondtheveil:redstone_weed.name=红石草种
+item.beyondtheveil:ghost_weed.name=幽灵草种
+item.beyondtheveil:vanilla_weed.name=青草草种
+item.beyondtheveil:shoggoth_map.name=修格斯地图
+item.beyondtheveil:held_shoggoth.name=修格斯
+item.beyondtheveil:blood_covenant.name=血契
+item.beyondtheveil:revelation_ring.name=启示之戒
+item.beyondtheveil:azacno_charm.name=阿扎刻侬护符
+item.beyondtheveil:blood_crown.name=荆棘冠
+item.beyondtheveil:coral_staff.name=珊瑚血杖
+item.beyondtheveil:sigil_zombie.name=血之印记：僵尸
+item.beyondtheveil:sigil_skellie.name=血之印记：骷髅
+item.beyondtheveil:sacrificial_knife.name=血祭刀
+item.beyondtheveil:memory_phial.name=记忆安瓿
+item.beyondtheveil:necronomicon.name=死灵之书
+item.beyondtheveil:sigil_player.name=血之印记：玩家
+item.beyondtheveil:sigil_pathway.name=血之印记：道路
+item.beyondtheveil:gear.name=齿轮
+item.beyondtheveil:crucible.name=炽裁
+item.beyondtheveil:surgeon_summons.name=外科医生传唤信
+item.beyondtheveil:black_mirror.name=Black Mirror
+item.beyondtheveil:fleshcarbontoken.name=Token of Flesh and Carbon
+item.beyondtheveil:ink_mask.name=Ink Mask
 
 
 lore.flute=§5§o触摸、注视甚至思考这支长笛都会给我带来极其诡异的感受。那感觉仿佛是它并不存在于我的世界......然而它却在这里，在我的掌中。
 lore.saw_cleaver=§5§o这件武器...这一怪诞的奇异金属制品是工程学的杰作。它能够轻易地在其普通形态和延展形态间转换，同时也能使其使用者在战斗间灵活闪避，如同锯刃的远古主人。
 lore.wolf_medallion=§5§o这件金属饰品会在怪物靠近时发出低吼，向它的佩戴者发出警告。这无疑是远古之时猎人使用的物品。
 lore.bronze_sphere=§5§o不不不，这不可能，这绝不可能。我§l认得§5§o这个球。我§l知道§5§o我曾拿起它。我只是...没能想起它。时光流转至今，在我发现它的渔村里，想必它已历尽沧桑了吧？
-lore.crucible=§5§o往昔的斩魔人所挥舞的武器。极其强大，但是每次使用后都需要再充能很久。
+lore.crucible=§5§o往昔的斩魔人所持有的武器。极其强大，但是每次使用后都需要再充能很久。
 tooltip.bronze_sphere=球内存有 %1$s 点经验值。
 lore.tablet=§5§o一块古老的石碑，上面刻着怪异的碑文。我能破译它吗？
 lore.spine=§5§o意志力居于脊骨之中。
@@ -111,56 +114,62 @@ bauble.blood_crown.activated=荆棘冠刺痛了我的前额！我必须立刻准
 #方块
 ##################
 
-tile.barrel.name=潮木桶
-tile.bricks_blue.name=暗蓝砖
-tile.damp_canopy.name=潮木顶瓦
-tile.damp_canopy_wood.name=潮木顶瓦（实木）
-tile.damp_log.name=潮木原木
-tile.damp_stone.name=潮石
-tile.damp_wood.name=潮木木板
-tile.damp_wood_fence.name=潮木栅栏
-tile.damp_wood_stairs.name=潮木台阶
-tile.dark_sand.name=暗蓝沙
-tile.fume_spreader.name=熏香器
-tile.idol.name=神像
-tile.lamp.name=油灯
-tile.slug_bait.name=蛞蝓诱捕器
-tile.worn_bricks.name=磨损暗蓝砖
-tile.worn_brick_stairs.name=磨损暗蓝砖楼梯
-tile.sleep_chamber.name=沉眠室
-tile.sleep_chamber_advanced.name=进阶沉眠室
-tile.beanstalk.name=豆茎
-tile.redstone_grass.name=红石草方块
-tile.ghost_grass.name=幽灵草方块
-tile.arboreal_generator.name=造树之木
-tile.sapling_shrub.name=树种灌木
-tile.plant_terra.name=大地之植
-tile.plant_ordo.name=维祭斯
-tile.mutator.name=植物诱变器
-tile.watery_cradle.name=沉梦水篮
-tile.lacrymatory.name=泪瓶
-tile.elder_stone_bricks.name=古老石砖
-tile.elder_bricks.name=古老砖
-tile.elder_bricks_chiseled.name=錾制古老石砖
-tile.elder_stone_brick_stairs.name=古老石砖楼梯
-tile.elder_slab.name=古老石砖台阶
-tile.heart.name=心脏
-tile.sacrifice_altar.name=献祭祭坛核心
-tile.blood_bricks.name=血石砖
-tile.blood_bricks_stairs.name=血石砖楼梯
-tile.blood_bricks_slab.name=血石砖台阶
-tile.blood_well.name=血井
-tile.statue.name=雕像
-tile.sacrifice_statue.name=牺牲雕像
-tile.penitence_statue.name=忏悔雕像
-tile.memory_sieve.name=唤忆池
-tile.city_mapper.name=城市测绘台
-tile.gear_bench.name=齿轮工作台
-tile.dream_focus.name=梦之聚焦仪：移物
-tile.dream_focus_fluids.name=梦之聚焦仪：移液
-tile.dream_focus_villagers.name=梦之聚焦仪：村民
-tile.megydrea.name=迈祭德泪亚
-tile.curtain.name=帘幕
+tile.beyondtheveil:barrel.name=潮木桶
+tile.beyondtheveil:bricks_blue.name=暗蓝砖
+tile.beyondtheveil:damp_canopy.name=潮木顶瓦
+tile.beyondtheveil:damp_canopy_wood.name=潮木顶瓦（实木）
+tile.beyondtheveil:damp_log.name=潮木原木
+tile.beyondtheveil:damp_stone.name=潮石
+tile.beyondtheveil:damp_wood.name=潮木木板
+tile.beyondtheveil:damp_wood_fence.name=潮木栅栏
+tile.beyondtheveil:damp_wood_stairs.name=潮木楼梯
+tile.beyondtheveil:dark_sand.name=暗蓝沙
+tile.beyondtheveil:fume_spreader.name=熏香器
+tile.beyondtheveil:idol.name=神像
+tile.beyondtheveil:lamp.name=油灯
+tile.beyondtheveil:slug_bait.name=蛞蝓诱捕器
+tile.beyondtheveil:worn_bricks.name=磨损暗蓝砖
+tile.beyondtheveil:worn_brick_stairs.name=磨损暗蓝砖楼梯
+tile.beyondtheveil:sleep_chamber.name=沉眠室
+tile.beyondtheveil:sleep_chamber_advanced.name=进阶沉眠室
+tile.beyondtheveil:beanstalk.name=豆茎
+tile.beyondtheveil:redstone_grass.name=红石草方块
+tile.beyondtheveil:ghost_grass.name=幽灵草方块
+tile.beyondtheveil:arboreal_generator.name=造树之木
+tile.beyondtheveil:sapling_shrub.name=树苗灌木
+tile.beyondtheveil:plant_terra.name=大地之植
+tile.beyondtheveil:plant_ordo.name=维祭丝
+tile.beyondtheveil:mutator.name=植物诱变器
+tile.beyondtheveil:watery_cradle.name=沉梦水篮
+tile.beyondtheveil:lacrymatory.name=泪瓶
+tile.beyondtheveil:elder_stone_bricks.name=古老石砖
+tile.beyondtheveil:elder_bricks.name=古老砖块
+tile.beyondtheveil:elder_bricks_chiseled.name=錾制古老石砖
+tile.beyondtheveil:elder_stone_brick_stairs.name=古老石砖楼梯
+tile.beyondtheveil:elder_slab.name=古老石砖台阶
+tile.beyondtheveil:heart.name=心脏
+tile.beyondtheveil:sacrifice_altar.name=献祭祭坛核心
+tile.beyondtheveil:blood_bricks.name=血石砖
+tile.beyondtheveil:blood_bricks_stairs.name=血石砖楼梯
+tile.beyondtheveil:blood_bricks_slab.name=血石砖台阶
+tile.beyondtheveil:blood_well.name=血井
+tile.beyondtheveil:statue.name=雕像
+tile.beyondtheveil:sacrifice_statue.name=牺牲雕像
+tile.beyondtheveil:penitence_statue.name=忏悔雕像
+tile.beyondtheveil:memory_sieve.name=唤忆池
+tile.beyondtheveil:city_mapper.name=城市测绘台
+tile.beyondtheveil:gear_bench.name=齿轮工作台
+tile.beyondtheveil:dream_focus.name=梦之聚焦仪：移物
+tile.beyondtheveil:dream_focus_fluids.name=梦之聚焦仪：移液
+tile.beyondtheveil:dream_focus_villagers.name=梦之聚焦仪：村民
+tile.beyondtheveil:megydrea.name=迈祭德泪芽
+tile.beyondtheveil:curtain.name=帘幕
+tile.beyondtheveil:thick_algae.name=Thick Algae
+tile.beyondtheveil:arche_portal.name=Arche Portal
+tile.beyondtheveil:dark_glass.name=Dark Glass
+tile.beyondtheveil:deep_prismarine.name=Deep Prismarine
+tile.beyondtheveil:arena.name=Arena Initiator
+tile.beyondtheveil:deep_chest.name=Deep Chest
 
 fluid.tears=泪
 
@@ -198,6 +207,11 @@ interact.statue.alreadyelse=这个雕像已经与其他人绑定，其血契无�
 interact.statue.bound=这个雕像浴我之血。它已经与我绑定，我们的联系牢不可破，坚不可摧。
 interact.gearbench.dunno=我不知道如何使用这个装置。
 interact.lacrymatory.amount=这个泪瓶存有 %1$s/4000 毫桶的泪。
+interact.arena.mustbedeep=I must be Deep to begin the duel.我必须深潜化以开始决斗。
+interact.arena.occupied=Someone is already dueling in the Arena.角斗场上已经有人在进行决斗。
+
+enter.arche_portal.initiate=Teleporting to the Overworld in 5 seconds.5 秒后传送至主世界。
+enter.arche_portal.interrupt=Teleportation interrupted.传送中止。
 
 hit.idol.schiz0=我不该试图破坏它。
 hit.idol.schiz1=我不该这么做。
@@ -229,17 +243,33 @@ multiblock.sacrifice_altar.noaltar=这不是献祭祭坛的结构。
 #实体
 ##################
 
-entity.deep_one.name=深潜者
-entity.hamlet_dweller.name=旧渔村居民
-entity.canoe.name=独木舟
-entity.crawling_villager.name=爬行的村民
-entity.weeper.name=泣者
-entity.fletum.name=泣囊
-entity.shoggoth.name=修格斯
-entity.crazed_weeper.name=发狂的泣者
-entity.blood_zombie.name=血僵尸
-entity.blood_skeleton.name=血骷髅
-entity.surgeon.name=外科医兽
+entity.beyondtheveil:deep_one.name=深潜者
+entity.beyondtheveil:hamlet_dweller.name=旧渔村居民
+entity.beyondtheveil:canoe.name=独木舟
+entity.beyondtheveil:crawling_villager.name=爬行的村民
+entity.beyondtheveil:weeper.name=泣者
+entity.beyondtheveil:fletum.name=泣囊
+entity.beyondtheveil:shoggoth.name=修格斯
+entity.beyondtheveil:crazed_weeper.name=发狂的泣者
+entity.beyondtheveil:blood_zombie.name=血僵尸
+entity.beyondtheveil:blood_skeleton.name=血骷髅
+entity.beyondtheveil:surgeon.name=外科医兽
+entity.beyondtheveil:dreadfish.name=Dreadfish怖鱼
+entity.beyondtheveil:muray.name=Muray
+entity.beyondtheveil:octid.name=Octid
+entity.beyondtheveil:deep_angler.name=Deep Angler
+entity.beyondtheveil:sarfin.name=Sarfin
+entity.beyondtheveil:man_o_war.name=Man O' War
+entity.beyondtheveil:jelly.name=Jelly
+entity.beyondtheveil:deep_one_brute.name=Deep One Brute
+entity.beyondtheveil:deep_one_myrmidon.name=Deep One Myrmidon
+entity.beyondtheveil:cephalopodian.name=Cephalopodian
+entity.beyondtheveil:sandflatter.name=Sandflatter
+entity.beyondtheveil:umancala.name=Umancala
+entity.beyondtheveil:bonecage.name=Bonecage
+entity.beyondtheveil:adeline.name=Adeline
+
+entity.beyondtheveil:umancala_ball.name=Umancala Fireball
 
 shoggoth.hasmapalready0=这个修格斯正在筑造建筑...打断这件事恐怕不是什么明智之举，对吧？
 shoggoth.hasmapalready1=当修格斯在做自己的事情时，我应该停止尝试指挥牠。这是很危险的一件事。
@@ -272,7 +302,7 @@ gui.activebauble.bauble3=腰带
 gui.activebauble.bauble4=头饰
 gui.activebauble.bauble5=服饰
 gui.activebauble.bauble6=坠饰
-gui.activebauble.help=左键点击以设定为当前开启主动效果的饰品（仅允许有一个）。/右键点击以开关被动效果。/绿色：主动效果开启，被动效果开启。/黄色：主动效果开启，被动效果关闭。/紫色：主动效果未开启，被动效果关闭。/红色：主动效果未开启，被动效果关闭。
+gui.activebauble.help=左键点击以设定为当前开启主动效果的饰品（仅允许有一个）。/右键点击以开关被动效果。/绿色：主动效果开启，被动效果开启。/黄色：主动效果开启，被动效果关闭。/紫色：主动效果未开启，被动效果开启。/红色：主动效果未开启，被动效果关闭。
 gui.activebauble.active=当前已开启主动效果。
 gui.activebauble.inactive=当前未开启主动效果。
 gui.activebauble.passiveon=被动效果开启。
@@ -634,6 +664,211 @@ weeper.shoggoth.please2=§5§o§l求求您了主人，杀死我。
 weeper.shoggoth.promised=§5§o§l主人，您答应过我了。
 
 ##################
+#MIRROR DIALOGUE心镜会话
+##################
+
+mirror.shivers=My black mirror is shivering.我的黑镜正在颤动。
+mirror.stopshivers=My black mirror stopped shivering.我的黑镜停止了颤动。
+mirror.endbutton=(End)
+mirror.continuebutton=(Continue)
+
+mirror.nodialogue.first_node.anyone_there=Is anyone there?有人在那吗？
+mirror.nodialogue.anyone_there.0=[Y]There is no answer.并无答复。
+
+mirror.start.first_node.anyone_there=Is anyone there?有人在那吗？
+mirror.start.anyone_there.0=[Y]There is no answer.并无答复。
+mirror.start.second_node.anyone_there2=IS ANYONE THERE?到底谁在那？
+mirror.start.anyone_there2.0=[Y]There is still no answer. You should stop enquiring.依旧没有答复。你应该停止询问了。
+mirror.start.whosyou.whosyou='You'? WHAT DO YOU MEAN 'YOU'?“你”？你所说的“你”是什么意思？
+mirror.start.whosyou.0=[Y]...
+mirror.start.whosyou.1=Someone's hiding.. here.. inside of me?有人躲在...这里...在我的意识之中？
+mirror.start.whoshiding.whoareyou=Who are you? What are you doing.. in my mind?你是谁？你在我的脑海里...在做什么？
+mirror.start.whoareyou.0=[Y]You wouldn't understand.你理解不了的。
+mirror.start.whoshiding.getout=Get out. Get out get out get out GET OUT OF ME.走开。出去走开离开滚出我的脑袋。
+mirror.start.getout.0=[Y]You do not understand what you're asking for.你不理解你所做出的是怎样的请求。
+mirror.start.getout.1=[Y]I gave you all this.我给了你这一切。
+mirror.start.gavewhat.gavewhat=Gave me what?给了我什么？
+mirror.start.gavewhat.0=[Y]Everything. I've been your guiding hand.一切。我始终在引导你。
+mirror.start.gavewhat.name=What is your name?你的名字是什么？
+mirror.start.understand.name=What is your name?你的名字是什么？
+mirror.start.name.0=[Y]You can't pronounce it.你无法读出它。
+mirror.start.pronounce.parasite=Are you a parasite?你是寄生虫吗？
+mirror.start.parasite.0=[Y]Our relationship is mutually beneficial.我们的关系是共生。
+mirror.start.parasite.1=[Y]I granted you knowledge, you granted me a vessel.我赋予你知识，你给予我容器。
+mirror.start.vessel.novessel=Seek another vessel then.那就去找别的容器。
+mirror.start.vessel.more=Then grant me more knowledge.那么给我更多知识吧。
+mirror.start.vessel.thankful=If it was through you that I reached The Great Dreamer, then I am thankful.如果是在你的帮助下我才接触了伟大长梦者，那么我很感激。
+mirror.start.novessel.0=[Y]Our bond goes too deep for either of us to sunder it.我们的联系对彼此而言已密不可分。
+mirror.start.novessel.1=[Y]It is far more ancient than either of us.它比你我都远为古老。
+mirror.start.novessel.2=[Y]Too much to explain right now. Soon, I'll give you answers. Truth.现在无需过多解释。不久后，我就会给你答案。也即真相。
+mirror.start.truth.youknow=You know the Truth?你知道真相？
+mirror.start.youknow.0=[Y]A little more than you do.比你知道的略多些。
+mirror.start.youknow.1=[Y]But we can learn more of it, together, if you follow me.但如果你追随我，那么我们都能学到更多。
+mirror.start.more.0=[Y]It is no easy task, but I shall.这虽然并非易事，但我理应如此。
+mirror.start.more.1=[Y]It is necessary, for us to go forward.我们必须求索下去。
+mirror.start.forward.whereto=Where to?前往何方？
+mirror.start.whereto.0=[Y]To The Great Dreamer.去觐见伟大长梦者。
+mirror.start.reached1.already=But I reached Him already?!但我已经接触到祂了啊？！
+mirror.start.already.0=[Y]You have not.你还没有。
+mirror.start.thankful.0=[Y]Yes, through me it was that you communed.没错，在我的帮助下，你完成了共鸣。
+mirror.start.thankful.1=[Y]Yet we never truly reached Him.但我们并未真正接触祂。
+mirror.start.reached2.wat=What? I spoke wih Him! I heard Him and He heard me!你在说什么？我曾与祂交谈！我曾聆听祂的圣音，而祂也曾垂听我的话语！
+mirror.start.reached2.insignificant=Then.. then I truly am insignificant.. irrelevant..那么...那么我真的是个微不足道...无关紧要的...
+mirror.start.wat.0=[Y]Only through Dagon were your thoughts connected. A Veil before the Veil.只有通过大衮，你的思想才能连接他处。接通那帷幕前的帷幕。
+mirror.start.wat.1=Lies beneath lies..谎言之下的谎言...
+mirror.start.wat.2=[Y]Indeed.的确。
+mirror.start.insignificant.0=[Y]Several times you have reached this conclusion, but it hasn't yet stuck, has it?有那么几次你已经得出了这个结论，但还没完全铭记在心，对吧？
+mirror.start.insignificant.1=[Y]You're taking it harder, or maybe easier, than I did, when I was your age.你在接受这一事实时，比起当年与你同龄的我，要更为困难，又或者更为轻易。
+mirror.start.age.old=Wait.. how old are you?等下...你年寿几何？
+mirror.start.old.0=[Y]In time, you'll look back at this question and laugh out loud at it.过不了多久，你会回头再看这个问题，然后付之一笑。
+mirror.start.nearlythere.howdreamer=How will we reach The Dreamer?我们要如何接触长梦者？
+mirror.start.howdreamer.0=[Y]Through Arche. The deepest Ocean.穿过太初。极渊之海。
+mirror.start.howdreamer.1=[Y]Beneath Arche there is the Void. And then, the Veil.太初之下是虚空。虚空之底，即是帷幕。
+mirror.start.howdreamer.2=[Y]The Great Dreamer Himself.伟大长梦者的本体。
+mirror.start.dreamer.veil=What exactly *is* the Veil?帷幕到底*是*什么？
+mirror.start.veil.0=[Y]The filter through which what you know as 'reality' is born.是滤布，穿过它后，你所知晓的“现实”得以诞生。
+mirror.start.veil.1=[Y]The curtain that hides all that is True.是帘幕，隐藏了万千真实。
+mirror.start.veil.2=[Y]The gateway that only Dreams may go through.是门户，唯有梦能穿过彼处。
+mirror.start.guide.guiding=How will you take me there?你要怎么带我前往那里？
+mirror.start.guiding.0=[Y]I've been your guiding hand, the one that helped you write.我自始至终在引导你，帮你写下那诸多文段。
+mirror.start.guiding.1=[Y]Our researches are born out of both of our minds. I'll help you through Al Azif.我们的研究滋生于你我的意识。我会用死灵之书指引你前行。
+mirror.start.final.whoareyou2=I still wish to know who you are.我还是想知道你到底是谁。
+mirror.start.final.letsgetgoing=Let's get going then. (End)那就让我们继续吧。
+mirror.start.whoareyou2.0=[Y]A friend. One who had to conceal his own identity for your sake.是你的朋友。为了你不得不隐瞒自己的身份。
+mirror.start.whoareyou2.1=[Y]Cover's blown. We ride together now.端倪渐显。我们如今并驾齐驱。
+mirror.start.final2.letsgetgoing2=Let's get going then. (End)那就让我们继续吧。
+
+mirror.afterstart.first.what=What should I do?我该做什么？
+mirror.afterstart.what.0=[Y]Open Al Azif. I'll guide you.打开死灵之书。我会指引你。
+
+mirror.beforearche.first.everbeen=Have you ever been to Arche yourself?你可曾去过太初？
+mirror.beforearche.everbeen.0=[Y]Yes, long ago. Though it has changed little since then.去过，那是很久以前的事了。不过从那以后它变化不大。
+mirror.beforearche.changedlittle.howdoyouknow=How do you know that?你是怎么知道的？
+mirror.beforearche.howdoyouknow.0=[Y]I've seen it again, since then.在那之后我又见到了它。
+mirror.beforearche.seenagain.recording=As in a recording?就像是重览记录一般？
+mirror.beforearche.recording.0=[Y]More like a livestream, though still not quite.更像是亲临其境，但是并不完全真切。
+mirror.beforearche.recording.1=[Y]It's not something I am willing to explain just yet. Some truths must be spoonfed.我现在不想多做解释。有些真相说来话长。
+mirror.beforearche.spoonfed.frodo=Alright, keep your secrets. (End)好吧，继续守住你的秘密吧。
+mirror.beforearche.spoonfed.trust=You realise secrets undermine trust?你知道保密会破坏信任吧？
+mirror.beforearche.trust.0=[Y]Yes. Which is why I will tell you. When the time is ripe.我知道。所以我会告诉你的。只待时机成熟。
+
+mirror.archepreparation.first.here=I'm here.我在这。
+mirror.archepreparation.here.0=[Y]Bring a few torches, Al Azif, this Mirror, and preferably little else. Maybe some normal food, in case you find air pockets to transform into a human again.带上火把、死灵之书、这面镜子，最好再带些别的。比如带些普通的食物，为你找到机会重新变成人类时做好准备。
+mirror.archepreparation.second.veil=How do we reach the Veil from Arche?我们如何从太初前往帷幕？
+mirror.archepreparation.veil.0=[Y]That, I do not know yet. I never got that far myself.我目前还不知道。我自己从未走那么远。
+mirror.archepreparation.veil.1=[Y]Perhaps it will reveal itself when we're ready for it. 也许，待我们准备妥当，它就会揭示自身。
+mirror.archepreparation.veil.2=[Y]Or perhaps when it is ready for us.又或者要等到它准备好迎接我们之时。
+mirror.archepreparation.veil.3=[Y]For now, focus on getting familiar with Arche. Its food chain, its inhabitants, its challenges.现在，专注于熟悉太初。关注它的食物链，它的原住民，它的挑战。
+mirror.archepreparation.second.arena=The duels with the Deep Ones, how do I start them?与深潜者的决斗，我如何开始？
+mirror.archepreparation.arena.0=[Y]There should be an appropriate mechanism in the large arena, I believe. We'll see when we're there.大型竞技场里应该有所需的机关。我们到那再看。
+mirror.archepreparation.second.ictya=Will the Ictyas attack me on sight?伊克提亚会一见到我就发起攻击吗？
+mirror.archepreparation.ictya.0=[Y]Unlikely. In the Deep One form you'd count as a medium sized Ictya, so only ones that are larger and somewhat hungry will attack you.不太可能。在深潜者形态下，你与中等体型的伊克提亚大小相当，所以只有比你更大的伊克提亚在饥饿时会攻击你。
+mirror.archepreparation.ictya.1=[Y]When available, they'll generally go for smaller prey. Of course, most will retaliate when attacked.一旦找到机会，它们往往捕食更小的猎物。当然，它们中的大多数被攻击时也会反击。
+mirror.archepreparation.second.ready=I'm ready.我准备好了。
+mirror.archepreparation.ready.0=[Y]Then grab the token and enter the Blood Well.那么，握紧信物，踏入血井吧。
+
+mirror.abouttoenter.first.forgot=How do I enter Arche?我怎么进入太初？
+mirror.abouttoenter.forgot.0=[Y]Grab the token and enter the Blood Well.握紧信物，踏入血井。
+mirror.abouttoenter.first.end=(End)
+
+mirror.bloodhome.first.what=What is this place?这是什么地方？
+mirror.bloodhome.what.0=[Y]Your very own Blood Home.独属于你的血宅。
+mirror.bloodhome.what.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.太初之中有多个这种建筑——不同的来访者通常会进入不同的血宅。
+mirror.bloodhome.what.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.你每次进入这片地下世界，都会被传送至这个建筑。随心所欲地把这变成你的基地吧。
+
+mirror.archewater.first.home=What was that red, blood structure I entered Arche through?
+mirror.archewater.home.0=[Y]Your very own Blood Home.
+mirror.archewater.home.1=[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.
+mirror.archewater.home.2=[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.
+mirror.archewater.first.love=I love Arche.
+mirror.archewater.first.hate=I hate Arche.
+mirror.archewater.love.0=[Y]And what do you love most about it?
+mirror.archewater.hate.0=[Y]How come?
+mirror.archewater.loves.immense=It is immense - new emotions spring forth, of freedom and wonder.
+mirror.archewater.loves.ictya=The fauna. Shapes and sizes undreamt of before. Alien, almost.
+mirror.archewater.loves.cities=The cities and architecture of the Deep Ones - a hidden civilization at the very bottom of the world.
+mirror.archewater.loves.foodchain=The food chain itself. A tangible lesson of the crude truth that is survival of the fittest.
+mirror.archewater.loves.notreally=Actually, I don't really love it.
+mirror.archewater.hates.immense2=It is immense - I feel tiny. No, less than that.
+mirror.archewater.hates.ictya=The fauna. I feel vulnerable among these new threats, in their bizarre, almost alien shapes and sizes.
+mirror.archewater.hates.octid=THAT PURPLE INK.
+mirror.archewater.hates.food=The constant search for food, the growing hunger assailing my miserable belly.
+mirror.archewater.hates.notreally=Actually, I don't really hate it.
+mirror.archewater.notreally.0=[Y]Fickle.
+mirror.archewater.immense.0=[Y]Indeed. So close to the Veil and the Truth lying Beyond it, Arche is truly magnificent.
+mirror.archewater.immense.1=[Y]An unparalleled feeling of wonder, though perhaps a bitter one, reminding us of how tiny we are.
+mirror.archewater.immense2.0=[Y]Indeed. So close to the Veil and the Truth lying Beyond it, Arche is a reminder of our inconsequentiality.
+mirror.archewater.immense2.1=[Y]And yet, I find there to be beauty in it too - a sense of wonder, its massive scale dwarfing and outlasting anything we could construct.
+mirror.archewater.ictya.0=[Y]The chaotic, ever churning waters of Arche may well give life to all sorts of bizarre creatures.
+mirror.archewater.ictya.1=[Y]And alien, yes. Perhaps more than one'd think. Other worlds harbour quite similar beings in their own deepest oceans.
+mirror.archewater.alien.oceans=Do other worlds have oceans of their own?
+mirror.archewater.alien.life=There's life on other planets?
+mirror.archewater.alien.knowalien=How do you know all this?
+mirror.archewater.alien.more=There are other things I wish to speak about.
+mirror.archewater.more.0=[Y]Go on.
+mirror.archewater.oceans.0=[Y]Indeed. Arche exists beneath many worlds, and even in the emptiest regions of the universe you can find its waters swirling unendingly.
+mirror.archewater.life.0=[Y]You did not truly believe to be alone in the universe, did you?
+mirror.archewater.life.1=[Y]Yes, civilizations exist on another worlds, spread out among the stars. Some have even visited this world.
+mirror.archewater.visited.which=Which ones?
+mirror.archewater.visited.results=What did they do?
+mirror.archewater.which.0=[Y]Their names would be meaningless to you now. Some had the appearance of fungi, others of ticks, others yet had.. well.. they become hard to describe.
+mirror.archewater.which.1=[Y]Many of them had a penchant for brains, though.
+mirror.archewater.results.0=[Y]Not much. Many of them had a penchant for brains, though, and some villagers are occasionally abducted.
+mirror.archewater.results.1=[Y]Don't be scared. After all, it is no more terrifying than our own organ harvesting.
+mirror.archewater.knowalien.0=[Y]Once again, I must bar you from learning more of my nature. It is for your own good.
+mirror.archewater.knowalien.1=[Y]Suffice to say - I've met many beings from different worlds. *Many*.
+mirror.archewater.foodchain.0=[Y]Given the chaotic nature of Arche, it is truly quite marvelous that a hierarchy of order - that is, the food chain - has established itself here.
+mirror.archewater.foodchain.1=[Y]Of course, our goal is to break that order. To ascend the chain, until we sit at its very top.
+mirror.archewater.cities.0=[Y]Their buildings are indeed quite striking - so much so that even your ancestors were initiallay shocked when they first set gaze upon them.
+mirror.archewater.cities.1=[Y]The Deep Ones they'd once believed to be mindless creatures had in truth known enlightenment far before they did.
+mirror.archewater.ancestors.here=My ancestors reached Arche?
+mirror.archewater.here.0=[Y]Some did, yes. Chief among them Saint Jerome, though I do not know what fate he met.
+mirror.archewater.here.1=[Y]Probably not different from his companions. Crushed beneath the pressure of Arche, the few survivors immediately murdered by Ictya and Deep Ones.
+mirror.archewater.food.0=[Y]Progress through Arche should be slow and calculated. Do not hesitate to stop to hunt every so often.
+mirror.archewater.food.1=[Y]A larger Ictya results in a more sizeable repast - at the cost of augmented risk.
+mirror.archewater.octid.0=[Y]Ohh, do I understand. We'll seek a solution together.
+mirror.archewater.octid.1=[Y]Perhaps the Deep Ones have found a defense against it. We could search one in their cities.
+mirror.archewater.first.whatis=Now that I've been to Arche, could you explain to me what it actually is?
+mirror.archewater.whatis.0=[Y]Arche is the deepest of all oceans, yet, even more than that, it is a *concept*.
+mirror.archewater.whatis.1=[Y]Arche is the principle of all that belongs to our world. It is that from which all is born, living and not. 
+mirror.archewater.whatis.2=[Y]Flesh and stone, lightning and bone, the Cosmos and the sea, the Dwellers and thee. All from its waters.
+mirror.archewater.whatis.3=[Y]Arche has been the subject of study of the occult academia for aeons, now. First, by philosophers; then, by warlocks; now, even by scientists.
+mirror.archewater.whatis.4=[Y]However, there is a flaw in all of this. Can you spot it?
+mirror.archewater.flaw.fire=Water may not give birth to fire, its opposite.
+mirror.archewater.flaw.principle=Water may not give birth to itself, even Arche needs a principle.
+mirror.archewater.flaw.nether=Below the world lies the Nether, then only void above and beneath it.
+mirror.archewater.flaw.academic=Aeons of academic study, yet no one has ever heard of it?
+mirror.archewater.flaw.none=I see no flaws.
+mirror.archewater.fire.0=[Y]Brilliant answer! That is precisely what the philosophers of yore realised.
+mirror.archewater.fire.1=[Y]So, if fire wasn't born from water - or at least not directly - then there must have been something else, before water, right?
+mirror.archewater.principle.0=[Y]Great answer! Not the one I was thinking of, mind you, but you reached the same conclusion as the philosophers of yore.
+mirror.archewater.principle.1=[Y]What they had noticed was that fire may not have been born from water, for they are opposites on the elemental spectrum.
+mirror.archewater.principle.2=[Y]So, if fire wasn't born from water - or at least not directly - then, just like you said, there must have been something else before water, right?
+mirror.archewater.nether.0=[Y]Ahh, but Arche lies even below the Nether. Although, the answer does in fact relate to that hellish place.
+mirror.archewater.nether.1=[Y]Want to try again?
+mirror.archewater.academic.0=[Y]It is only academics of the occult who studied it, I am afraid. 
+mirror.archewater.academic.1=[Y]In your civilization, a principle of things different from the one posited by religious leaders was considered heretic, as a late friend of yours may have already mentioned.
+mirror.archewater.academic.2=[Y]Care to try again?
+mirror.archewater.none.0=[Y]Nor did the philosophers, at first. But you have seen more Truth than they did, and can attempt a better guess, can't you?
+mirror.archewater.deeper.apeiron=Something deeper than Arche?
+mirror.archewater.apeiron.0=[Y]Yes.. and no. You see, the only answer to this was that the true principle of all things lied not in your universe, but outside of it.
+mirror.archewater.apeiron.1=[Y]It would also have explained how the cosmos and the stars and the nebulae came to be, so far from our own oceans. Multiple breaches between our universe and what was "outside".
+mirror.archewater.apeiron.2=[Y]Academia called it "Apeiron". It means "Infinity", and it is that which lies, as it is now believed, Beyond the Veil.
+mirror.archewater.apeiron.3=[Y]It is filtered by the Veil, the Great Dreamer himself, and touches our world through the Void, bringing into existence Arche and all the other deepest oceans in the Cosmos.
+mirror.archewater.apeiron.4=[Y]Then, when fire wanted to burn on our planet, the Void created a middle plane between Arche and the Overworld, and through what we now call the Nether even fire is born from water, channeled by quartz.
+mirror.archewater.apeiron.5=[Y]Likewise flared the stars - to which Dagon is elder, for he was born with Arche, oldest among the living.
+mirror.archewater.apeiron.6=[Y]So everything comes from the waters of Arche, yet even those waters come from Apeiron.
+mirror.archewater.first.end=(End)
+
+mirror.arena.first_branch.0=[Y]I believe we just found the arena.
+mirror.arena.first_branch.1=[Y]This is where you can prove your mettle.
+mirror.arena.first.how=How do I begin the battle?
+mirror.arena.how.0=[Y]Try interacting with that red block in the corner.
+mirror.arena.how.1=[Y]Note that the adversaries you'll meet are powerful, and won't go down easily.
+mirror.arena.how.2=[Y]However, you shouldn't fear death. I think you'll be sent back here in case of defeat, without losing any items.
+
+
+##################
 #药水效果
 ##################
 
@@ -697,7 +932,7 @@ dreams.monumentsearch.fail=未找到海底遗迹
 
 dreams.playersearch.success=某个其他玩家的坐标，可能为x坐标或z坐标: %1$s。我不知道他们在哪个维度。 
 dreams.playersearch.success2=某个其他玩家位于 x： %1$s， z： %2$s。我不知道他们在哪个维度。
-dreams.playersearch.success2=某个其他玩家位于 x： %1$s， y： %2$s， z： %3$s。我不知道他们在哪个维度。
+dreams.playersearch.success3=某个其他玩家位于 x： %1$s， y： %2$s， z： %3$s。我不知道他们在哪个维度。
 dreams.playersearch.name=他们的名字是 %1$s。
 dreams.playeritem.success=某个其他玩家手中所持的物品： %1$s。
 dreams.playeritem.mildsuccess=发现某个其他玩家，但他们手中没有物品。
@@ -776,6 +1011,7 @@ research.HUMANDREAMS.addenda.tool=一段关于器具的记忆，在我合成强�
 research.INSCRIPTIONS.title=石碑铭文
 research.INSCRIPTIONS.stage.0=这些古老石碑上的铭文可以被破译。<BR>其内容可能令人不安，但我对知识的求索不会因此而停下。但愿如此。
 research.INSCRIPTIONS.stage.1=我已经设法破译了这些石碑上的文字，但我不太确定是否还有更多内容。我已经将这些内容记录于此。<BR>当破译完成后，这些内容可被用于解锁新的研究，如同唤知之忆那样。就像记忆一样，它们仅在有物可学时才会被消耗。
+research.inscription_complete.text=破译石碑上的铭文。
 
 research.SLEEPCHAMBERADVANCED.title=进阶沉眠室
 research.SLEEPCHAMBERADVANCED.stage.0=沉眠室是个相当有用的设备，但研究的进程不应就此终止，其前景绝无止境。<BR>新的启示跃入我的头脑之中，我想到了发挥其全部潜能的方法。
@@ -808,13 +1044,13 @@ research.FindHamlet.text=定位一个旧渔村。
 research.LHKeeper.text=与灯塔看守交谈。
 
 research.IDOL.title=共鸣
-research.IDOL.stage.0=有时候，我们会自以为神。万能的、无上的神，整个世界必须向我们俯首称臣。神，是造物主，能重塑整个世界。<BR>但我们就好像是易受哄骗的愚人。<BR>大海。<BR>无边，永恒，莫测。它真的在乎我们做了什么吗？在它面前，高大雄伟的建筑显得无比渺小，而它的年寿又超越我们最为强劲坚固的巨型装置，但它会因此而对我们投来哪怕是一丝一毫的关注吗？<BR>大海即是无限的象征，前所未有的接近无限，时刻提醒着我们意识到自己的§l微不足道§r。<BR>大海，它具有着令旧渔村居民无比神往的广远，是§l不可知的§r。我们可以费尽终生冀望研究它的每一个缝隙和角落，然而这一切都是徒劳，因为在它无边无际的领域以及它变化多端的混沌自然之中，居于其中的事物...或者居于其底的事物...往往会逃过我们的视线。除非它们主动来寻找我们。<BR>没错，大海一定就是关键。在它无边的、不可知的无限之中，§l必定§r隐藏着我们正在寻找的一切。就如同某种门户，打开这扇门就能看到帷幕彼端。在大海无底的深渊中，我们一定要找到裂隙。<BR>水§l散发§r着悚异的气息，尤其是那个渔村中的古怪堕落者所崇拜的某种...某种...<BR>没错。某种...当然，他们绝非堕落者，因为他们远比§l我们§r更早地找到了解决方法。<BR>如果他们的神祇真的是帷幕彼端的展现形式，将真相从我们所有人眼前隐藏，如果他们对梦和海的狂热是出于与我们共同的天性...那么我们必须寻求共鸣。<BR>与那伟大长梦者共鸣。
+research.IDOL.stage.0=有时候，我们会自以为神。万能的、无上的神，整个世界必须向我们俯首称臣。神，是造物主，能重塑整个世界。<BR>但我们就好像是易受哄骗的愚人。<BR>大海。<BR>无边，永恒，莫测。它真的在乎我们做了什么吗？在它面前，高大雄伟的建筑显得无比渺小，而它的年寿又超越我们最为强劲坚固的巨型装置，但它会因此而对我们投来哪怕是一丝一毫的关注吗？<BR>大海即是无限的象征，前所未有的接近无限，时刻提醒着我们意识到自己的§l微不足道§r。<BR>§r大海，它具有着令旧渔村居民无比神往的广远，是§l不可知的§r。我们可以费尽终生冀望研究它的每一个缝隙和角落，然而这一切都是徒劳，因为在它无边无际的领域以及它变化多端的混沌自然之中，居于其中的事物...或者居于其底的事物...往往会逃过我们的视线。除非它们主动来寻找我们。<BR>没错，大海一定就是关键。在它无边的、不可知的无限之中，§l必定§r隐藏着我们正在寻找的一切。就如同某种门户，打开这扇门就能看到帷幕彼端。在大海无底的深渊中，我们一定要找到裂隙。<BR>水§l散发§r着悚异的气息，尤其是那个渔村中的古怪堕落者所崇拜的某种...某种...<BR>§r没错。某种...当然，他们绝非堕落者，因为他们远比§l我们§r更早地找到了解决方法。<BR>如果他们的神祇真的是帷幕彼端的展现形式，将真相从我们所有人眼前隐藏，如果他们对梦和海的狂热是出于与我们共同的天性...那么我们必须寻求共鸣。<BR>与那伟大长梦者共鸣。
 research.IDOL.stage.1=我谦卑地向你发誓献上我的生命，伟大长梦者。<BR>我否定过往的所有信仰，所有我曾深信不疑的神灵。<BR>我对你而言微不足道。大海，是你在主世界的化身，是你的象征之物。<BR>你对我而言是不可知的。遍布虚空的虚无，即是你高深莫测的本质。<BR>你所深藏的彼端万象皆存。那即是真相，被帷幕所藏。<BR>赐予我们知识，如此我们方能揭穿一切谎言。<BR>赐予我们力量，如此我们方能在迎接真相时幸存。<BR>赐予我们勇气...如此我们方能聆听你的神圣之音。
 research.IdolInteract.text=在渔村的神像前祈祷。
 
 research.SLUGS.title=蛞蝓
 research.SLUGS.stage.0=与伟大长梦者共鸣是至高的荣耀。实不相瞒，给祂留下印象并使祂对我产生兴趣，无可置疑地是我有史以来最大的成就。<BR>然而共鸣的强度十分微弱，因为我太过弱小，而我的存在无可救药地与主世界牢牢绑定。<BR>祂深知如此。祂希望帮助我。真的，祂是这么想的！<BR>这些生物就如同它们降生时所在的水一样，黏滑、无定形、难以捕捉。它们就是一些渔村居民赖以维生的白色蛞蝓。它们是共鸣之门的钥匙。<BR>我需要一个诱捕器，而伟大长梦者赐予了我制造它的知识。多么讽刺却又耐人寻味的是，那些无定形的、近乎混沌的蛞蝓竟会被形态完美而有序的食盐所吸引！<BR>蛞蝓诱捕器必须被放在水中。其上方不能有水，但其四个侧面必须有水。为了发挥最大性能，它应被放置在11×11的方形水域的中央。<BR>如果达到要求，我就能看到微小的颗粒，而不久后我就能看到水面上出现蛞蝓充满水的身体。它们就好像是凭空出现的，并且在片刻后就会突然消失。我必须将捕蛞蝓器小心的对准它们，然后再使用。<BR>再然后...我必须吃下它们。这是唯一的办法。我并不喜欢，但我必须这么做。<BR>一旦我吃下一些蛞蝓，比如说，大约20只，我就应当再次与神像接触。
-research.SLUGS.stage.1=我的梦变得更加强效，我就知道会这样，我知晓我明白§l我深知如此§r。<BR>祂在垂听我的心声，伟大长梦者§l垂听了我的呼唤。§r<BR>我现在意识到崇拜伟大长梦者绝不仅是偶尔的祈祷，而是一种生活的方式。<BR>从今往后，我们的行动流程应该是吃下蛞蝓，吃下蛞蝓，吃下更多的蛞蝓。它们尝起来味道会变得越来越没那么糟糕，这我很确定。<BR>我也应该和渔民们拉近关系，以向他们学习。这么做会使我变得更像他们。毕竟他们是世世代代中最为杰出的人。而我的祖先却未能明白这一点。<BR>当这一切都完成后，我必须和神像接触。
+research.SLUGS.stage.1=我的梦变得更加强效，我就知道会这样，我知晓我明白§l我深知如此§r。<BR>§r祂在垂听我的心声，伟大长梦者§l垂听了我的呼唤。§r<BR>我现在意识到崇拜伟大长梦者绝不仅是偶尔的祈祷，而是一种生活的方式。<BR>从今往后，我们的行动流程应该是吃下蛞蝓，吃下蛞蝓，吃下更多的蛞蝓。它们尝起来味道会变得越来越没那么糟糕，这我很确定。<BR>我也应该和渔民们拉近关系，以向他们学习。这么做会使我变得更像他们。毕竟他们是世世代代中最为杰出的人。而我的祖先却未能明白这一点。<BR>当这一切都完成后，我必须和神像接触。
 research.!SLUGS.text=吃下20条蛞蝓，与神像交互。
 
 research.FISHERMEN.title=渔夫
@@ -837,7 +1073,7 @@ research.!BAPTISM.text=溺水。然后是神像。
 research.ALLIANCE.title=结盟
 research.ALLIANCE.stage.0=到如今，我已变得十分强大。<BR>但接下来我将何去何从？<BR>我应当等待迹象的出现。我只靠自己什么也做不了...无能为力。
 research.ALLIANCE.stage.1=§l大衮§r。<BR>古卷以隐晦的言语谈及祂，称祂为深渊之主，深潜者之王。<BR>祂是伟大长梦者的第一个、也是最为重要的崇拜者。<BR>祂注意到了我。祂派遣深潜者来帮助我，尽管时间十分短暂。<BR>我给祂留下印象了吗？祂是在寻找某种盟友吗？<BR>现在我的研究已经超出了旧渔村居民的知识范围，是时候去寻找新的援手了。<BR>大衮，我接受你的提议，我将在海洋深处再次与你交谈。
-research.ALLIANCE.stage.2=声音在我的内心§l回响§r。<BR>祂的话语如同战鼓的轰鸣，其间没有请求，只有§l命令§r。<BR>我被赐予了三个金块。我应当把它们赠予旧渔村的灰袍渔夫，然后共鸣。<BR>我无意去了解不服从会发生什么。<BR>噢，我到底让自己陷入了何等境地啊。
+research.ALLIANCE.stage.2=声音在我的内心§l回响§r。<BR>§r祂的话语如同战鼓的轰鸣，其间没有请求，只有§l命令§r。<BR>我被赐予了三个金块。我应当把它们赠予旧渔村的灰袍渔夫，然后共鸣。<BR>我无意去了解不服从会发生什么。<BR>噢，我到底让自己陷入了何等境地啊。
 research.ALLIANCE.stage.3=伟大长梦者...我误会了祂的意图。<BR>大衮赐予了我无与伦比的恩惠。<BR>借由进入施展力量的姿态，我能够召唤一个深潜者为我提供援助。长按以选择深潜之力，点按以施展这份力量。<BR>为了这份力量，我所做的真的值得吗？以及那随之而来的知识，真的值得吗？<BR>我将继续前进。毕竟...我难道还有选择吗？
 research.wait.text=等待。期许。
 research.hearing.text=在大海深处吃下一条蛞蝓。
@@ -846,7 +1082,7 @@ research.!ALLIANCE.text=将金块带给旧渔村的居民。与神像共鸣。
 research.METAMORPHOSIS.title=蜕变
 research.METAMORPHOSIS.stage.0=大衮呼唤着我。<BR>我必须再次与祂交谈。<BR>我无处可逃。
 research.METAMORPHOSIS.stage.1=海底遗迹的守卫者...是大衮的臣族？<BR>然而祂却命我杀死它们，仅仅是为了一个测试。祂一定是在对我做出裁断。<BR>祂所说的“入祂之列”是什么意思？我不是正在为祂效劳吗？
-research.METAMORPHOSIS.stage.2=此致获得这些手稿的不幸者...<BR>停止阅读。看看你的皮肤。花点时间去赞美它。赞美你自己的，美丽的，纯洁的肌肤。<BR>现在开始想象。想象皮肤变成了蓝色。缓慢地失去其本色。想象你接着看到它裂开破碎，如同风干的石皮。<BR>想象你看到它被取代，坚硬的蓝色鳞片覆盖了其原来的位置，被绿色的粘液包围。黏滑，粘连，恶臭，这份恐怖来自你自身。<BR>你的头颅拱向前方，你的下颔可向三个方向开启，你的脊骨爆出体外化作背鳍。<PAGE>我总是有些轻视自己，因为我的心神不宁，我的失败，以及我的缺陷。<BR>这全新的形态是一份祝福。<BR>我被重塑为神的形体。或者说，是祂大祭司大衮的形体。<BR>我如此完美，堪称绝妙的恐怖。<BR>无论我对这一形态是爱是恨，我都会说这是一种神力。我获得了强大的力量和极高的伤害抗性，在水下时尤为明显。<BR>但我与此同时也失去了穿戴盔甲和手持非海生物品的能力，所谓海生物品是如同蛞蝓和鱼之类的物体。<BR>我很确信，这份力量的特性比我目前所知的更多。我将探索这一形态所具有的其他能力。<BR>我无比感激你，大衮，因为如今我已深潜。
+research.METAMORPHOSIS.stage.2=此致获得这些手稿的不幸者...<BR>停止阅读。看看你的皮肤。花点时间去赞美它。赞美你自己的，美丽的，纯洁的肌肤。<BR>现在开始想象。想象皮肤变成了蓝色。缓慢地失去其本色。想象你接着看到它裂开破碎，如同风干的石皮。<BR>想象你看到它被取代，坚硬的蓝色鳞片覆盖了其原来的位置，被绿色的粘液包围。黏滑，粘连，恶臭，这份恐怖来自你自身。<BR>你的头颅拱向前方，你的下颔可向三个方向开启，你的脊骨爆出体外化作背鳍。<PAGE>我总是有些轻视自己，因为我的心神不宁，我的失败，以及我的缺陷。<BR>这全新的形态是一份祝福。<BR>我被重塑为神的形体。或者说，是祂的大祭司大衮的形体。<BR>我如此完美，堪称绝妙的恐怖。<BR>无论我对这一形态是爱是恨，我都会说这是一种神力。我获得了强大的力量和极高的伤害抗性，在水下时尤为明显。<BR>但我与此同时也失去了穿戴盔甲和手持非海生物品的能力，所谓海生物品是如同蛞蝓和鱼之类的物体。<BR>我很确信，这份力量的特性比我目前所知的更多。我将探索这一形态所具有的其他能力。<BR>我无比感激你，大衮，因为如今我已深潜。
 research.hearing2.text=在大海深处吃下一条蛞蝓。
 research.!METAMORPHOSIS.text=杀死三只远古守卫者。与神像共鸣。
 
@@ -860,7 +1096,7 @@ research.DREAMBOTTLE.addenda.statue=附记：<BR>使用雕像来获取崇拜加�
 
 research.WATERWALKING.title=水影步
 research.WATERWALKING.stage.0=伟大的父神大衮，我来了。
-research.WATERWALKING.stage.1=末地被吞没在虚空之中，后者正是伟大长梦者之帷幕的外层壁垒。<BR>我必将在此处于水中入梦。我必须同时梦见黑暗、悚异、知识和虚空。不知为何我会知道这一点。<BR>我在水中无法使用床或沉眠室，所以我必须找第三种途径来入梦。
+research.WATERWALKING.stage.1=末地被吞没在虚空之中，后者正是伟大长梦者之帷幕的外层壁垒。<BR>我必将在此处于水中入梦。我必须同时梦见黑暗、悚异、唤知和虚空。不知为何我会知道这一点。<BR>我在水中无法使用床或沉眠室，所以我必须找第三种途径来入梦。
 research.WATERWALKING.stage.2=水影步是与大海融为一体的艺术。<BR>当我在水中使用这一深潜之力，我将被传送至任意位置或我所看向的任意实体，后者的前提是实体也在水中。<BR>除此之外，在潜行时使用水影步将设置路径点。再次使用这份力量将会使我传送回路径点，同时删除该路径点。<BR>真的，我现在与海的联系从未如此密切，我已成为其本质的一部分。<BR>一个渺小、微不足道的部分，居身于深不可测的无限之中。
 research.hearing3.text=在大海深处吃下一条蛞蝓。
 research.!WATERWALKING.text=在末地中以水沐身并入梦。然后与神像共鸣。
@@ -886,6 +1122,7 @@ research.WEEPERS.stage.1=泪滴是启示。所有人都应该畏惧哭泣之人�
 research.WEEPERS.stage.2=在习得新知时哭泣是再自然不过的一件事。毕竟，突然意识到自己微不足道并非是容易接受的情形。<BR>哭泣时不应强忍泪水或蹙眉掩饰，因为泪十分珍贵。泪是面对真相时谦卑的象征，也是其所蕴含的一切的象征。<BR>如果一个哭泣之人希望保存自己的泪水，并在之后用桶来收集泪水，那么他应当在泪瓶所在处哭泣。出于某种原因，落入泪瓶的泪水的力量不会消散。<BR>也正因此，泣者和泣囊就派上了用场。使用棍棒即可直接捡起泣者，而泣囊则需要在潜行时空手捡起，虽然这可能令人作呕。<BR>二者都可以被使用于泪瓶，然后它们将在哭泣时让泪水流入其中。它们不应走得太远，因此有必要在它们周围设置障碍以使它们无法逃离。<BR>除此之外，每个泪瓶仅能供它们中的一员哭泣，无论是泣者或泣囊，两者之间都不应相距太近。具体来说，相距不少于三格。<BR>话说回来，我曾多少次因孤独而默默流泪？
 research.filledtears.text=将一个大脑充满水。
 research.craftedlacrymatory.text=合成一个泪瓶。
+research.WEEPERS.addenda.bottle=Addendum:<BR>There are snippets of Truth among the Weepers' mad ravings. I would do best to get close to them, to grasp onto any secrets they may share.
 
 research.REVELATIONRING.title=启示之戒
 research.REVELATIONRING.stage.0=泣者和泣囊没有眼睛，然而他们所见远超常人。<BR>他们的眼泪弥足珍贵，我应该用这些眼泪润泽一枚戒指。
@@ -912,15 +1149,15 @@ research.BLOODCROWN.stage.0=如果我终将被杀死，我希望那是由我自�
 research.BLOODCROWN.stage.1=洒满鲜血和脊骨粉末的荆棘冠是一件恐怖之物。<BR>当它的被动效果开启时，它会给予我在遭受致命一击后依然伫立的意志与力量，刺痛我的前额，使我沐浴在自己的鲜血之中。<BR>但是一切恩赐都有其代价。在效果消去之后，我将在短时间内再次变回凡躯，而在最后所有先前被免去的伤害将一并被施加到我的身上。<BR>我必须明智地使用荆棘冠，并且准备好治疗自己。
 research.craftedblood_crown.text=合成一顶荆棘冠。
 
-research.AZACNOCHARM.title=阿扎克农符咒
+research.AZACNOCHARM.title=阿扎刻侬护符
 research.AZACNOCHARM.stage.0=万世之前，一个强大的寄生虫从宇宙中坠入这个世界。<BR>其形其意无人知晓，而它将巢穴建在大海的至深之处。<BR>吸吮鲜血，带来恐惧，授予知识。认识了他，我的试验就将迎来顶峰。
-research.AZACNOCHARM.stage.1=阿扎克农生于帷幕的裂隙，但并非来自我们的海洋之下。<BR>相反，他自群星而来，坠入我们的水域，并与伟大长梦者发生共鸣。<BR>他具有寄生的天性，他的追随者同样如此。阿扎克农符咒是一种令人恐惧的护身符，会感染佩戴者的敌人。<BR>使用它的主动效果会给予我持续数秒的感染其它生物的能力，除非它们自己也佩戴有阿扎克农符咒。<BR>怪物，动物和其他失智的野兽仅仅会因由感染注入的恐惧而被驱离。<BR>然而，对其他玩家而言，感染效果极其可怖。<BR>一个被感染的玩家会渐渐地被感染击垮，感染会愈发恶化。在感染的末期，其效果甚至肉眼可见。<BR>纵然是死亡也无法将其从这悲惨命运中拯救出来。我尚且不知道有任何治愈方法。<BR>值得注意的是，这一符咒在本质上与魔法无关。它仅仅是一个象征，表明阿扎克农将我视为他的教徒，并因此授予我这份力量。<BR>寻求与其他伟大长梦者的崇拜者结盟，对我而言十分重要。
-research.craftedazacno_charm.text=合成一个阿扎克农符咒。
+research.AZACNOCHARM.stage.1=阿扎刻侬生于帷幕的裂隙，但并非来自我们的海洋之下。<BR>相反，他自群星而来，坠入我们的水域，并与伟大长梦者发生共鸣。<BR>他具有寄生的天性，他的追随者同样如此。阿扎刻侬护符是一种令人恐惧的护身符，会感染佩戴者的敌人。<BR>使用它的主动效果会给予我持续数秒的感染其它生物的能力，除非它们自己也佩戴有阿扎刻侬护符。<BR>怪物，动物和其他失智的野兽仅仅会因由感染注入的恐惧而被驱离。<BR>然而，对其他玩家而言，感染效果极其可怖。<BR>一个被感染的玩家会渐渐地被感染击垮，感染会愈发恶化。在感染的末期，其效果甚至肉眼可见。<BR>纵然是死亡也无法将其从这悲惨命运中拯救出来。我尚且不知道有任何治愈方法。<BR>值得注意的是，这一符咒在本质上与魔法无关。它仅仅是一个象征，表明阿扎刻侬将我视为他的教徒，并因此授予我这份力量。<BR>寻求与其他伟大长梦者的崇拜者结盟，对我而言十分重要。
+research.craftedazacno_charm.text=合成一个阿扎刻侬护符。
 
 research.STATUE.title=崇拜
 research.STATUE.stage.0=那些毫无价值的可怜人，失去脊梁的村民们，不一定需要变成泣囊才能派上用场。<BR>当他们被束缚在地面之上，他们可能会认为自己无助且无用。要我说，这不过是庸人自扰！他们所需要的仅仅是一位向导。<BR>确切来说，是一位神。<BR>我会欣然委身此事。<BR>这需要一个象征。比如说，一个雕像。<BR>然后，是联结。用我的血即可。<BR>毕竟血能造就强力的联系。
 research.STATUE.stage.1=何其精妙。这个雕像描绘了我在祈祷和安抚自己神灵时的形象。<BR>我必须为我的追随者树立榜样，对吧？<BR>这个雕像必须被放好，然后让爬行的村民将其围起来，这些村民的脊骨被剥离，意志已经粉碎。<BR>当然，我也必须确保他们不会逃避义务。他们将被囚禁。<BR>最后，我需要让雕像染我之血，以使其与我连接。这是自我牺牲之举。<BR>毕竟我必须树立榜样。
-research.STATUE.stage.2=我感受到了他们。他们的祷告。<BR>这就是为神的感受。<BR>他们使我被强化，我的力量为止一振。<BR>例如，我能通过与大衮的契约生成更多的深潜者。<BR>我在激活深潜之力和主动效果后所需的恢复时间变得更少。甚至梦也似乎变得更具效力。<BR>虽然一次仅能使用一个雕像，但那就足够了。<BR>我，现在，真正具有了神性。我至高无上，我权倾一方，我...我...<BR>...这一切是我应得的吗？还是说我已因傲慢犯下罪过？
+research.STATUE.stage.2=我感受到了他们。他们的祷告。<BR>这就是为神的感受。<BR>他们使我被强化，我的力量为之一振。<BR>例如，我能通过与大衮的契约生成更多的深潜者。<BR>我在激活深潜之力和主动效果后所需的恢复时间变得更少。甚至梦也似乎变得更具效力。<BR>虽然一次仅能使用一个雕像，但那就足够了。<BR>我，现在，真正具有了神性。我至高无上，我权倾一方，我...我...<BR>...这一切是我应得的吗？还是说我已因傲慢犯下罪过？
 research.craftedstatue.text=合成一个雕像。
 research.linkedstatue.text=将一个雕像与我连接。
 
@@ -953,7 +1190,7 @@ research.BLOODWELL.stage.1=血井如心脏般跳动。亡灵生物被它所吸�
 research.builtwell.text=建造一口血井。
 
 research.SHOGGOTH.title=修格斯
-research.SHOGGOTH.stage.0=修格斯。<BR>这些无定形的大块血肉，在万古以前被浪涛从海岸上冲刷而去。<BR>牠们是古老者之奴仆，宏伟城市的筑造者。<BR>牠们生于泪水。<BR>我必须建造一口修格斯池。亦即，3×3×3的泪方块组成的立方体，需要确保每个方块都已被填充。然后需要在其中放入三只泣囊。<BR>一旦这些都已完成，我必须进入其中，并通过饮泪瓶同时梦见黑暗、悚异、知识和虚空。<BR>修格斯绝非温和的生物。牠们会攻击视野内除主人外的所有动物和玩家。如果牠在杀戮时变得过度愉悦，那么甚至牠的主人也不再安全。<BR>修格斯可通过棍棒来捡拾，这一操作的前提是牠的状态足够平静。
+research.SHOGGOTH.stage.0=修格斯。<BR>这些无定形的大块血肉，在万古以前被浪涛从海岸上冲刷而去。<BR>牠们是古老者之奴仆，宏伟城市的筑造者。<BR>牠们生于泪水。<BR>我必须建造一口修格斯池。亦即，3×3×3的泪方块组成的立方体，需要确保每个方块都已被填充。然后需要在其中放入三只泣囊。<BR>一旦这些都已完成，我必须进入其中，并通过饮泪瓶同时梦见黑暗、悚异、唤知和虚空。<BR>修格斯绝非温和的生物。牠们会攻击视野内除主人外的所有动物和玩家。如果牠在杀戮时变得过度愉悦，那么甚至牠的主人也不再安全。<BR>修格斯可通过棍棒来捡拾，这一操作的前提是牠的状态足够平静。
 
 research.CITYMAPPER.title=城市绘图
 research.CITYMAPPER.stage.0=修格斯曾建造城市。<BR>牠们将重操旧业。
@@ -968,7 +1205,7 @@ research.DEATHDREAM.stage.0=一场关于死亡的梦境，在我又一次重生�
 research.DEATHDREAM.addenda.teleport=看来，通过使用与我自己绑定的玩家印记将我自身设为目标，然后在降梦神龛上使用死亡之梦，能将我直接传送至我在主世界最后一次死亡的地点。<BR>但这是如何做到的？一个如此简单的梦是怎么移动我整个身体的？<BR>这会成为揭开帷幕的关键吗？
 
 research.REPAIRDREAM.title=修补之梦
-research.REPAIRDREAM.stage.0=一场关于修补的梦境，在我于铁砧上挥锤之时浮现。<BR>我并不能真正死亡，然而我的许多工具却被必朽的事实所困扰。这一记忆恰好能解决我所面临的问题，修复我所穿戴的装备和挥舞的器具。
+research.REPAIRDREAM.stage.0=一场关于修补的梦境，在我于铁砧上挥锤之时浮现。<BR>我并不能真正死亡，然而我的许多工具却被必朽的事实所困扰。这一记忆恰好能解决我所面临的问题，修复我所穿戴的装备和手持的器具。
 
 research.ANIMALDREAM.title=动物之梦
 research.ANIMALDREAM.stage.0=一场关于动物的梦境，在我亲手喂养一只动物时浮现。<BR>在梦见这段记忆之前在附近扔下一个特定的物品，将会在入梦后生成一只与该物品相关的动物。<BR>至于我的梦境是从何处攫来生物，我对此只能有所推测。<PAGE>这里给出可使用物品的示例，如使用生猪排来生成猪，使用骨头来生成狼，使用皮革来生成牛、马乃至羊驼。当然，还有更多例子有待发现。
@@ -1002,15 +1239,15 @@ research.ARBOREALGENERATOR.stage.0=下次我梦见植物之前，我应该在手
 research.ARBOREALGENERATOR.stage.1=这棵小巧而精美的树木被称作造树之木。<BR>它是一种很有用的植物，会缓慢在它的四个侧面生成树苗。<BR>它起初会创造小型的灌木。它们会发出极其微弱的红石信号，这或许能派上用场。<BR>这些小型灌木随后会变成各种类型的树苗。<BR>这棵植物绝不属于这个世界，我确信这一点。
 research.plantgenerator.text=手持一颗钻石并梦见植物。
 
-research.VIJHISS.title=维祭斯
+research.VIJHISS.title=维祭丝
 research.VIJHISS.stage.0=我下次进入植物之梦时应该手持一个黑曜石。<BR>我*知道*会有事发生。
-research.VIJHISS.stage.1=这个植物有些令人不安。<BR>不仅是因为它的外貌显得并不属于这个世界。<BR>关键是，这个植物非常贪婪。<BR>这里说的就是字面意义上的贪婪，绝无虚构！<BR>维祭斯渴求并接受金子。使用这种由尊贵的黄色金属铸成的锭将能向这棵植物索取报酬。<BR>维祭斯能够给予我各种种子，有些来自这个世界，有些则并非这个世界所有，有些我已目睹熟知，有些则是全新的品种。<BR>我仅有的担忧在于这棵植物在每次交易后所表现出的微弱的欢欣之情。
+research.VIJHISS.stage.1=这个植物有些令人不安。<BR>不仅是因为它的外貌显得并不属于这个世界。<BR>关键是，这个植物非常贪婪。<BR>这里说的就是字面意义上的贪婪，绝无虚构！<BR>维祭丝渴求并接受金子。使用这种由尊贵的黄色金属铸成的锭将能向这棵植物索取报酬。<BR>维祭丝能够给予我各种种子，有些来自这个世界，有些则并非这个世界所有，有些我已目睹熟知，有些则是全新的品种。<BR>我仅有的担忧在于这棵植物在每次交易后所表现出的微弱的欢欣之情。
 research.plantvijhiss.text=手持一块黑曜石并梦见植物。
 
-research.MEGYDREA.title=迈祭德泪亚
-research.MEGYDREA.stage.0=我应该助长维祭斯所表现出的贪婪天性吗？<BR>我不信任这棵植株，但它所带来的好处或许值得我这么做。<BR>我将尝试给它更大块的金子。
-research.MEGYDREA.stage.1=一种新的植物，由维祭斯授予于我。我可以给这个贪婪的野草更多的金块以获得更多该类型的植物。<BR>迈祭德泪亚可充当液体储罐。它有两格高，可被放置并悬挂于天花板下方。<BR>最多可储存40桶任意类型的液体。
-research.gotmegydrea.text=给予维祭斯一个金块。
+research.MEGYDREA.title=迈祭德泪芽
+research.MEGYDREA.stage.0=我应该助长维祭丝所表现出的贪婪天性吗？<BR>我不信任这棵植株，但它所带来的好处或许值得我这么做。<BR>我将尝试给它更大块的金子。
+research.MEGYDREA.stage.1=一种新的植物，由维祭丝授予于我。我可以给这个贪婪的野草更多的金块以获得更多该类型的植物。<BR>迈祭德泪芽可充当液体储罐。它有两格高，可被放置并悬挂于天花板下方。<BR>最多可储存40桶任意类型的液体。
+research.gotmegydrea.text=给予维祭丝一个金块。
 
 research.BEHEADINGDREAM.title=斩首之梦
 research.BEHEADINGDREAM.stage.0=一段关于斩首的记忆，在我斩获凋零骷髅头颅之时留在心间。<BR>头颅掉落这种念头令人毛骨悚然，但其带来的死亡却异常迅速且毫无痛苦。<BR>这样的记忆可用于获得我自己的头颅。所获得的并非是复制品，我发誓它在片刻之前仍在呼吸。<BR>如果在把特定玩家作为目标时于降梦神龛上使用它，那么取而代之的是它可被用于获得那个玩家的头颅。<BR>这些头颅是不属于这个世界吗？或者说，甚至不属于这一时间？
@@ -1029,7 +1266,7 @@ research.FLUTE.title=外神长笛
 research.FLUTE.stage.0=这把长笛不属于这个世界。它轻若无物，只留下旋律诡异的微弱回音。<BR>尽管我在用嘴触碰它时感到十分犹豫，但它的效果非常强大。<BR>吹奏它时，我附近的所有生物，乃至玩家，都会被痴愚效果所控制，疯狂地扭动身体。<BR>如果我的意志并未被证明足够坚强，甚至我自身也会受到影响。<BR>一些生物受到的影响或许更加恐怖。我应当多加小心。
 
 research.SAWCLEAVER.title=锯刃
-research.SAWCLEAVER.stage.0=锯刃在很久以前为怪物猎人们所使用。<BR>怪物猎人是我的先祖。<BR>使用锯刃时可令它在收缩和延展两种形态间切换。前者如同剑类武器，后者则允许我攻击附近的所有敌人，代价是伤害值更低且没有击退效果。如果我把握好时机，在战斗时将锯刃切换至延展形态，那么这一动作也能造成一次攻击。<BR>此外，使用这把武器时，我可以像它远古的主人一样闪避。通过按下躲避键（默认为'ALT'键），我可以快速地向自己当前的移动方向移步。<BR>然而，我感到困惑。我真的应该追随我先祖的脚步吗？
+research.SAWCLEAVER.stage.0=锯刃在很久以前为怪物猎人们所使用。<BR>怪物猎人是我的先祖。<BR>使用锯刃时可令它在收缩和延展两种形态间切换。前者如同剑类武器，后者则允许我攻击附近的所有敌人，代价是伤害值更低且没有击退效果。如果我把握好时机，在战斗时将锯刃切换至延展形态，那么这一动作也能造成一次攻击。<BR>此外，使用这把武器时，我可以像它远古的主人一样闪避。通过按下闪避键（默认为'ALT'键），我可以快速地向自己当前的移动方向移步。<BR>然而，我感到困惑。我真的应该追随我先祖的脚步吗？
 
 research.WOLFMEDALLION.title=狼首坠饰
 research.WOLFMEDALLION.stage.0=狼首坠饰是一种在很久以前被猎人们所使用的坠饰。<BR>怪物猎人们。<BR>当它的被动效果处于开启状态时，我会定期收到警告，从而获知我身边敌对怪物的数目。<BR>当它的主动效果被使用时，我能够暂时地看见所有附近的实体。<BR>并准备好应对最坏的情况。
@@ -1053,7 +1290,7 @@ research.TONEWDEPTHS.title=极渊之渊
 research.TONEWDEPTHS.stage.0=我们必须继续下去。<BR>永不屈服，因为真相在即，帷幕将隐，我的知识日益增长，我的意志...<BR>我还剩下什么意志吗？我心惶惶，如同脊骨已经被人剥离。<BR>不，我们仍将继续。我们必须如此。<BR>潜往大海极深的底部。<BR>前往太初，然后抵达无穷。<BR>我们的旅途永不终结，直到我们揭开...直到我们...<BR>...等等...<BR>...“我们”是指谁？
 
 research.WATERDREAM.title=深水之梦
-research.WATERDREAM.stage.0==一场关于水的梦境，关于海洋的想法仿佛拒绝离开我的脑海。<BR>借助这段记忆，我能够知晓离我最近的海底遗迹的位置。<BR>守卫者自身生于水中，也因此离神最近。
+research.WATERDREAM.stage.0=一场关于水的梦境，关于海洋的想法仿佛拒绝离开我的脑海。<BR>借助这段记忆，我能够知晓离我最近的海底遗迹的位置。<BR>守卫者自身生于水中，也因此离神最近。
 
 research.DREAMFOCUS.title=梦之聚焦仪
 research.DREAMFOCUS.stage.0=梦之聚焦仪是通过其石英结构和容水表面引导梦境以移动物体的设备。<BR>梦之聚焦仪所引导的并非是我的梦。同样也并非泣者的梦，他们仍然在抵触梦境终极的怀抱。<BR>我必须利用的生物是泣囊，这些迷失于对彼端之物的极度崇拜之中的生物正合我意。
@@ -1062,7 +1299,7 @@ research.crafteddream_focus.text=合成一台梦之聚焦仪。
 
 research.CURTAINS.title=帘幕
 research.CURTAINS.stage.0=帘幕是我们的世界中帷幕的对应物。帷幕将真相从谎言中分离，帷幕之后有一群演员在静默地表演。<BR>是的，或许我们的现实无非只是一座剧院。<BR>不过，我现在所说的帘幕则要平凡的多。它们仅仅是作为与其碰撞的物品的滤器。
-research.CURTAINS.stage.1=帘幕可以滤梦，就像帷幕一样。有些梦可以通过，有些则不可。<BR>就具体情况而言，帘幕被用于决定泣囊的梦和它们运输的物品可以通过或不可通过。<BR>帘幕必须放置在容器下方（例如箱子）。每当一个物品通过，帘幕会检查其上方的容器中是否有同种物品。如果有，那么物品不会穿过帘幕，并会停止悬浮，转而掉落在地，又或者最好是进入放置位置合理的漏斗之中。<BR>在帘幕的上方和下方都放置容器，在容器之间留下适当间距以免所有的物品都被吸入漏斗，这么做会占用相当大的空间，但也能创建一个运作良好的物品分拣系统。
+research.CURTAINS.stage.1=帘幕可以滤梦，就像帷幕一样。有些梦可以通过，有些则不可。<BR>就具体情况而言，帘幕被用于决定泣囊的梦以及它们运输的物品是否可以通过。<BR>帘幕必须放置在容器下方（例如箱子）。每当一个物品通过，帘幕会检查其上方的容器中是否有同种物品。如果有，那么物品不会穿过帘幕，并会停止悬浮，转而掉落在地，又或者最好是进入放置位置合理的漏斗之中。<BR>在帘幕的上方和下方都放置容器，在容器之间留下适当间距以免所有的物品都被吸入漏斗，这么做会占用相当大的空间，但也能创建一个运作良好的物品分拣系统。
 research.craftedcurtain.text=合成一块帘幕。
 
 research.DREAMFOCUSFLUIDS.title=梦之聚焦仪：移液
@@ -1077,8 +1314,62 @@ research.crafteddream_focus_villagers.text=合成一台用于移动村民的梦�
 
 research.SURGEON.title=外科医生
 research.SURGEON.stage.0=梦之网连接着所有窥探真相者。<BR>其整个社群存在之地都距我甚远，但其中的一些族类会为它们的盟友和庇护者效劳。<BR>我与大衮的结盟使我能接触到新的族类，这其中包括外科医生，它们会为寻找自己的求索者提供技能帮助。<BR>我必须合成一封传唤类型的信，以此让外科医生到我这来。<BR>然后我只需要对着地面使用信即可。我将完成此事并目睹外科医生的面貌，随后再为他选择工作的具体内容。
-research.SURGEON.stage.1=我曾经很好奇外科医生为何能形成他们自己的社群。<BR>这是因为我过去从不知道外科医生并非职业。<BR>没错，它是一个名为外科医兽的种族。<BR>这一种族并不属于我所处的这个世界。<BR>这是一个被有意制造出来的种族吗？毕竟它们有一个共同的目标。<BR>......<BR>假如我同样是被*制造*出来的物种的一员，并非生于偶然，而是生于某种存在的意愿的呢？我对此一无所知，而我又怎可能知道呢？<BR>外科医兽是个有用的侍从，不过称之为盟友可能更合适。<BR>我必须将他放置在沉梦水篮附近，在那里我想要他，她，或是它，无所谓什么，去完成我安排的工作。<BR>然后我必须对他使用手术工具来指定我想要进行的操作。<BR>接下来，每当病人出现在水篮之中，外科医兽就会进行手术，然后将手术完成的病人放在设备顶部，并自己保留取出的心脏和脊骨。接下来我便可以空手与之交互以获取他收集到的所有材料。<BR>一个更为有用的技巧是在使用外科医生传唤信前将其与附近的箱子绑定。这样我就可以在手持传唤信时潜行与箱子交互了。<BR>我可以通过在潜行时右击空气来清除传唤信先前的绑定状态。<BR>由绑定的传唤信所召唤的外科医兽将会把所有手术的产物——包括病人和材料——放入与其绑定的箱子中，前提是箱子距它们足够近。<BR>由于物品形式的村民和泣者也能进入沉梦水篮，所以我可以高效地将外科医兽一个接一个的沿输送方向排布。<BR>外科医兽可由其主人使用棍棒来拾起。
+research.SURGEON.stage.1=我曾经很好奇外科医生为何能形成他们自己的社群。<BR>这是因为我过去从不知道外科医生并非职业。<BR>没错，它是一个名为外科医兽的种族。<BR>这一种族并不属于我所处的这个世界。<BR>这是一个被有意制造出来的种族吗？毕竟它们有一个共同的目标。<BR>......<BR>假如我同样是被*制造*出来的物种的一员，并非生于偶然，而是生于某种存在的意愿的呢？我对此一无所知，而我又怎可能知道呢？<BR>外科医兽是个有用的侍从，不过称之为盟友可能更合适。<BR>我必须将他放置在沉梦水篮附近，在那里我想要他，她，或是它，无所谓什么，去完成我安排的工作。<BR>然后我必须对他使用手术工具来指定我想要进行的操作。<BR>接下来，每当病人出现在水篮之中，外科医兽就会进行手术，然后将手术完成的病人放在设备顶部，并自己保留取出的心脏和脊骨。接下来我便可以空手与之交互以获取他收集到的所有材料。<BR>一个更为有用的技巧是在使用外科医生传唤信前将其与附近的箱子绑定。要做到这一点，我可以在手持传唤信时潜行并与箱子交互。<BR>我可以通过在潜行时右击空气来清除传唤信先前的绑定状态。<BR>由绑定的传唤信所召唤的外科医兽将会把所有手术的产物——包括病人和材料——放入与其绑定的箱子中，前提是箱子距它们足够近。<BR>由于物品形式的村民和泣者也能进入沉梦水篮，所以我可以高效地将外科医兽一个接一个的沿输送方向排布。<BR>外科医兽可由其主人使用棍棒来拾起。
 research.summoned_surgeon.text=召唤一位外科医生。
+
+research.BLACKMIRROR.title=Black Mirror
+research.BLACKMIRROR.stage.0=My mind is besieged. A tiny war with at most one casualty.<BR>Is there a Veil within myself?<BR>If a mirror reflects all that is me, then a Black Mirror that gives off no light will reflect nothing but my soul.<BR>And I should NOT peer into my soul.<BR>Spasms seized my writing hand, detaching what is thought from what is told. I must hold steadfast, and impress onto Al Azif only what I, and none other, believe.<BR>I must NOT look within myself. No, no, I MUST.
+research.BLACKMIRROR.stage.1=...<BR>How is this going to work?<BR>Like it always has. Write what's on your mind, and I'll nudge your hand. See how easy it is?<BR>I assure you, it just got a lot harder. I'll ask you not to interfere too much. Let's keep it a monologue.<BR>Alright.<BR>So, Arche. We need a Blood Well.
+research.usedblack_mirror.text=Do NOT use a Black Mirror.
+
+research.FLESHCARBONTOKEN.title=Token of Flesh and Carbon
+research.FLESHCARBONTOKEN.stage.0=So, let me guess, we'll be entering the Blood Well. Just like the dead.<BR>Indeed.<BR>Oh, what an omen.<BR>A Blood Well is connected to Arche itself. The red fluid makes for powerful binding, and the Well is a sort of capillary.<BR>One could see it like this: life and all that exists in our world is pushed upwards from Arche, through Void and bedrock, just like an artery pushes healthy blood to all organs.<BR>Yes, you know exactly what we'll be doing.<BR>We'll be going down the veins of our world. And, just like a vein brings back waste, or carbon dioxide, we will be carrying the detritus of our own world - that is, dead life, decomposing itself into purer carbon. 
+research.FLESHCARBONTOKEN.stage.1=We're ready. Are you excited?<BR>Hopeful, more like. And, please, don't say 'You'. I can hardly tell who's writing what. Besides, shouldn't your voice be yellow?<BR>Ah, but this is *your* writing hand, just nudged here and there. My voice will always be down below, yellow as you see it, telling you what to craft and do.<BR>I still can't tell if I'm making you up.<BR>A tad offensive.<BR>Ah, let's go onwards.
+research.craftedfleshcarbontoken.text=Craft a Token of Flesh and Carbon.
+
+research.ARCHE.title=Arche
+research.ARCHE.stage.0=Arche plays by very different rules compared to our world. One would do best to learn them by heart.<BR>In the deepest oceans there will be very little air, banished to just a few structures. However, when we first get there we will indeed be in one such structure, and therefore get a breather of nice - if not fresh - air.<BR>Said structure will be fairly dark. Bring some torches. Ideally, we should go there in human form, to place those light sources, before transforming into a Deep One.<BR>At the center of the bottom floor of the structure there should be a blood portal back to the Overworld.<BR>Before entering the waters of Arche, you MUST transform. Don't even think about getting wet as a human - you will die. The pressure is too strong.<BR>As you well know, as a Deep One you may only hold maritime items. We won't be able to speak with each other through Al Azif or the Black Mirror. Additionally, your only two available food sources, slugs and fish, cannot be used in Arche. Slugs will swim away, fish restores no hunger. And hunger drains FAST in Arche.<BR>You must become part of the food chain. The creaturs of Arche are known as Ictya - they come in many shapes and sizes. Big fish hunts small fish, and nobody's safe when the big ones get hungry. Kill them to sate your belly.<BR>Reaching the Veil, even through Arche, is no small feat. We'd best grow more powerful. There are dwellings - nay, *cities* of Deep Ones down in Arche. They ask you to prove your worth first by hunting down Ictya, then by challenging their champions in their arenas.<BR>Here in Al Azif we'll record both the Ictyas we've slain and the skills we've acquired.<BR>It's time. Speak to me in the Mirror.
+
+research.ICTYARY.title=Ictyary
+research.DOSKILLS.title=Deep One Skills
+
+
+ictya.sarfin.description=The most populous inhabitants of Arche, sarfins are at the very bottom of the food chain, and serve as the primary food source for most larger Ictya, as well as you.<BR>They will never fight back, but are prone to fleeing when a larger creature gets too close. Due to their small size, hunting them can get both hard and frustrating. Try staying some small distance away from them, then quickly close in to attack before they have a chance to escape.
+ictya.octid.description=Easily the most annoying Ictya I've ever encountered, these little jerks are at the bottom of the food chain and never fight back against larger predators. However, as you may have already learned, they tend to flee when a possible predator gets too close, while also spraying pink ink right in their face. Unfortunately they do not distinguish between predator and regular passerby, and might blind you at most inopportune times. Perhaps in the Deep Cities we can find a solution.<BR>At least, the Octids make for a fine food source - stay some distance away from them, then close in quickly to attack before they have a chance to blind you.
+ictya.muray.description=Murays are found in the caves of Arche. They're small predators, and generally only attack the smallest of Ictya, though if hungry they may prey on creatures of their size.<BR>They don't pose a threat to us, though they will retaliate if attacked.<BR>Quite beautiful to look at when they slither through the waters of Arche. A bit less so when their three-sided jaws are open wide.
+ictya.deep_angler.description=Small predators found everywhere throughout Arche, Deep Anglers pose little threat to us, generally only preying on tiny Ictya.<BR>They follow an intriguing hunting pattern: when they're hungry and no prey is beside them, they will lure one from afar, then close in quickly once it gets near enough. One wonders whether we could learn from this.
+ictya.dreadfish.description=Dreadfishes are medium sized Ictya. This means that, while generally hunting for smaller prey, they may assail us as well if very hungry.<BR>They are fast and strong, and compared to most other Ictya they have a much closer bond between each other. Attacking one Dreadfish makes all its close by kin retaliate against the offender. This may be used to our advantage: if we get a large sized Ictya to accidentally attack a single Dreadfish, then those nearby will also join the fight.<BR>Just like crows, a large number of Dreadfishes is called a "murder", but for very different reasons.
+ictya.man_o_war.description=Contrary to popular belief, the Man O' War is not a jellyfish. It is, instead, a colony of small organisms that live together in harmony. This is most apparent when observing the Ictya's attack pattern: rather than chasing the enemy itself, it generates small creatures, each known as a "Jelly", which close in on the enemy to damage it, feeding the Man O' War when the target is slain.<BR>They are medium sized, and thus won't attack us unless very hungry.
+ictya.umancala.description=The Umancala's name derives from the words "Umano" and "Calamaro", respectively "Human" and "Squid". The squid part being obvious, the human attribute was given to it by its ancient discoverers when they mistook its flailing tentacles for a human swimmer's legs, used for propulsion in water.<BR>That's where the similarities end, however. The Umancala is a bizarre looking medium sized Ictya, generally preying on smaller Ictya and seldom attacking us, unless very hungry. They hunt by generating extremely hot balls of boiling water which are then fired towards targets, akin to a Blaze's fireballs in the Nether.
+ictya.adeline.description=The Adeline is a translucent medium sized Ictya, of little threat to us unless very hungry. Due to its transparency it can be hard for us to identify it, and it proves even harder for small Ictya, which won't flee even when it closes in on them.<BR>The Adeline got its name from its discoverer: Saint Adeline, wife of the legendary hero Saint Jerome with whom she ventured into Arche to hunt the Deep Ones.<BR>Rumour has it that it was actually Jerome who found it first, but that in his pride he didn't want his name attached to an oversized sea slug.
+ictya.bonecage.description=The Bonecage is an unsettling eel-like large Ictya. Due to its size, it might attack us when hungry.<BR>It's fast, strong and incredibly resilient. It attacks by opening up the boney spikes on its head, then violently closing them on the target as if to encase it in a veritable bone cage. Huge range and the tendency to pull targets in after hitting them means one would do best to avoid its attacks, and try circling it as much as possible to attack it from behind.
+ictya.cephalopodian.description=A large sized squid-like Ictya, the Cephalopodian is a fearsome creature which may be a threat to us when hungry.<BR>It attacks by closing its "mouth-head" on the unfortunate prey. If taken from behind it can also flail its tentacles dealing high knockback, but virtually no damage.<BR>Due to the high damage dealt by its mouth it is preferable to circle it and attack it from behind on its tentacles, though their flailing may prove itself a hindrance.<BR>It is rumoured that within the flaps of its mouth there is a pair of red and blue eyes, though no one has concrete proof of it as of yet.
+ictya.sandflatter.description=One of the most insidious creatures of Arche, the Sandflatter is a lobster-like large Ictya found in the more level regions of Arche. Unlike most other Ictya, it has a clear preference towards you Players, and will always be a threat when one gets unfortunately close.<BR>The small tentacle atop its back is merely a bait for unlucky fools, and if you don't escape the subsequent attack quickly you might not live to regret it.<BR>Once it has dislodged itself from its ambush position, it will chase the victim - if still alive - and rapidly whip down its health with its claws. Its sturdy exoskeleton provides resistance to damage to the Sandflatter unless it is attacked from below, on its softer belly - which is where you should always attack it.<BR>Yes, I should have told you that before you killed one. Apologies.
+
+
+doskill.bosskill=%1$s 击杀了： %2$s
+doskill.unlock.medium=- A new medium sized Ictya must be slain to unlock this skill.
+doskill.unlock.large=- A new large sized Ictya must be slain to unlock this skill.
+doskill.unlock.deep_one_brute=- A Deep One Brute must be slain to unlock this skill.
+doskill.unlock.deep_one_myrmidon=- A Deep One Myrmidon must be slain to unlock this skill.
+doskill.doquickstep.description=When enabled, this skill lets you do quick sidesteps by pressing the Dodge Key ('Alt' by default). Like all skills, it requires you to be in your Deep One form. The direction of the dodge depends on the currently pressed movement keys (WASD).<BR>When used skillfully, the quickstep can speedily bring one out of danger, escaping perilous attacks. It may not, however, be used underwater or in mid air.
+doskill.douppercut.description=Whereas the quickstep puts distance between you and the enemy by moving you away from it, the uppercut achieves the same result by launching your adversary up in the air, with potentially fatal results in the subsequent landing. This skill, when toggled on, lets you right click on other creatures while barehanded to send them flying upwards.<BR>It does, however, become less effective against powerful enemies with large health pools, as well as bosses. It is also of little use in water combat.
+doskill.doroarsink.description=When enabled, the Sinking Roar empowers your normal roar by violently sending downwards any waterborne creatures affected by it. Additionally, if the creatures possess a limited air supply (like Players do) the roar will also knock all the air out of their lungs, making them immediately start drowning.<BR>Of course, several enemies are quite resistant to your roars: bosses, Ictya, and other creatures more fearsome than you may be entirely unaffected.
+doskill.doclimbing.description=This skill, when toggled on, enables you to jump upwards when adjacent to walls, effectively letting you easily scale vertical surfaces. When you are in mid air and near a solid block, you'll be able to jump off of it - this can be done repeatedly as long as you're near a scalable surface.<BR>Unfortunately, this skill does not work in the arena. There's no escaping the challenge.
+doskill.dohealth.description=A straightforward, passive ability, when enabled this skill simply grants extra health to your Deep One form.
+doskill.dopoison.description=When toggled on this skill gives you a chance to inject enemies with a powerful poison when you hit them. About one in four hits result in the effect being applied.<BR>It does not, unfortunately, work against bosses.
+doskill.doregeneration.description=When enabled, this skill gives you a regeneration effect every time you slay an enemy. The more powerful the felled creature, the greater the effect. Very weak creatures however might result in no effect being applied.
+doskill.doquickstep.name=Quickstep
+doskill.douppercut.name=Uppercut
+doskill.doroarsink.name=Sinking Roar
+doskill.doclimbing.name=Climbing
+doskill.dohealth.name=Extra Health
+doskill.dopoison.name=Poison Claws
+doskill.doregeneration.name=Corpse Feeding
+doskill.toggled.on=Enabled.
+doskill.toggled.off=Disabled.
+doskill.unlock=Unlock
+doskill.toggle=Toggle
 
 ##################
 #杂项
@@ -1103,6 +1394,12 @@ teleport.removedpoint=我的返回点已重置。
 beginning.netherreturn=一本崭新的书躺在我的手中，准备着写入新的篇章。我将称之为死灵之书。
 canoe.fishing.start=一条鱼？凭空而来？它是自己跳进船里的还是...          ...我应该在这保持一段时间。
 canoe.fishing.end=我觉得已经弄到的鱼够多了。我应该吃下足够多的蛞蝓，然后与神像共鸣。
+
+arena.triumph=§6胜利
+arena.defeat=§4落败
+
+toast.ictyary=New Ictyary Entry
+toast.memory=New Memory
 
 sleep.transformed=我在深潜化时无法入睡。
 sleep.parasite=我感觉不太舒服...我睡不着。
