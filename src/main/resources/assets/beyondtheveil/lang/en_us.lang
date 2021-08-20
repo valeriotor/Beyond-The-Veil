@@ -1346,7 +1346,12 @@ ictya.adeline.description=The Adeline is a translucent medium sized Ictya, of li
 ictya.bonecage.description=The Bonecage is an unsettling eel-like large Ictya. Due to its size, it might attack us when hungry.<BR>It's fast, strong and incredibly resilient. It attacks by opening up the boney spikes on its head, then violently closing them on the target as if to encase it in a veritable bone cage. Huge range and the tendency to pull targets in after hitting them means one would do best to avoid its attacks, and try circling it as much as possible to attack it from behind.
 ictya.cephalopodian.description=A large sized squid-like Ictya, the Cephalopodian is a fearsome creature which may be a threat to us when hungry.<BR>It attacks by closing its "mouth-head" on the unfortunate prey. If taken from behind it can also flail its tentacles dealing high knockback, but virtually no damage.<BR>Due to the high damage dealt by its mouth it is preferable to circle it and attack it from behind on its tentacles, though their flailing may prove itself a hindrance.<BR>It is rumoured that within the flaps of its mouth there is a pair of red and blue eyes, though no one has concrete proof of it as of yet.
 ictya.sandflatter.description=One of the most insidious creatures of Arche, the Sandflatter is a lobster-like large Ictya found in the more level regions of Arche. Unlike most other Ictya, it has a clear preference towards you Players, and will always be a threat when one gets unfortunately close.<BR>The small tentacle atop its back is merely a bait for unlucky fools, and if you don't escape the subsequent attack quickly you might not live to regret it.<BR>Once it has dislodged itself from its ambush position, it will chase the victim - if still alive - and rapidly whip down its health with its claws. Its sturdy exoskeleton provides resistance to damage to the Sandflatter unless it is attacked from below, on its softer belly - which is where you should always attack it.<BR>Yes, I should have told you that before you killed one. Apologies.
-
+ictya.size.TINY=Tiny
+ictya.size.SMALL=Small
+ictya.size.MEDIUM=Medium
+ictya.size.LARGE=Large
+ictya.size.HUGE=Huge
+ictya.size.COLOSSAL=Colossal
 
 doskill.bosskill=%1$s killed: %2$s
 doskill.unlock.medium=- A new medium sized Ictya must be slain to unlock this skill.
