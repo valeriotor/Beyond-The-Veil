@@ -75,7 +75,7 @@ public class EntityUmancala extends EntityIctya implements IRangedAttackMob {
         double d2 = target.posX - this.posX;
         double d3 = target.getEntityBoundingBox().minY + (double)(target.height / 2.0F) - (0.5D + this.posY);
         double d4 = target.posZ - this.posZ;
-        world.playEvent((EntityPlayer)null, 1016, new BlockPos(this), 0);
+//        world.playEvent((EntityPlayer)null, 1016, new BlockPos(this), 0);
         EntityUmancalaBall projectile = new EntityUmancalaBall(world, this, d2, d3, d4);
         projectile.posX = this.posX;
         projectile.posY = this.posY;
