@@ -71,7 +71,6 @@ public class GuiNecronomicon extends GuiScreen implements IItemRenderGui {
             }
             if (entry.getValue().isUpdated()) {
                 updated.add(entry.getKey());
-                System.out.println(entry.getKey());
             }
         }
 
