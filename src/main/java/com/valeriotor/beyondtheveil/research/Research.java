@@ -138,7 +138,7 @@ public class Research {
 	
 	public static class SubResearch {
 		String text;
-		String[] required_research;
+		private String[] required_research;
 		String[] recipes;
 		
 		public boolean meetsRequirements(EntityPlayer p) {

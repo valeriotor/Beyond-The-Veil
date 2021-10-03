@@ -150,7 +150,7 @@ public class ResearchUtil {
 				if(research.isKnown(map, data) && research.getStage() > -1) {
 					boolean flag = false;
 					if (research.canProgressStage(data)) {
-						for (String requirement: research.res.getStages()[research.getStage()].required_research) {
+						for (String requirement: research.res.getStages()[research.getStage()].getRequirements()) {
 							if (requirement.equals(newDataString)) {
 								flag = true;
 								break;
