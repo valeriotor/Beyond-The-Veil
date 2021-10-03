@@ -5,9 +5,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
-import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
-import com.valeriotor.beyondtheveil.capabilities.PlayerDataProvider;
-import com.valeriotor.beyondtheveil.capabilities.ResearchProvider;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
+import com.valeriotor.beyondtheveil.blackmirror.MirrorUtil;
+import com.valeriotor.beyondtheveil.capabilities.*;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.entities.IPlayerGuardian;
 import com.valeriotor.beyondtheveil.events.special.AzacnoParasiteEvents;
@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.items.ItemRegistry;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
 import com.valeriotor.beyondtheveil.network.MessageSyncPlayerRender;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.SyncUtil;
 import com.valeriotor.beyondtheveil.world.DimensionRegistry;
@@ -53,11 +54,11 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {
-	
+
 	@SubscribeEvent
 	public static void wakeUpEvent(PlayerWakeUpEvent event) {
 		if(event.getEntityPlayer().world.getWorldTime()>23900) {
-		
+
 		if(event.getEntityPlayer() != null) {
 			if(!event.getEntityPlayer().world.isRemote) {
 				DreamHandler.chooseDream(event.getEntityPlayer(), 1, true);
@@ -65,12 +66,12 @@ public class PlayerEvents {
 			}
 		}
 		}
-		
-		
+
+
 		//IInternalMethodHandler.progressResearch(event.getEntityPlayer(), "FIRSTDREAMS");
-		
+
 	}
-	
+
 	@SubscribeEvent
 	public static void sleepEvent(PlayerSleepInBedEvent event) {
 		EntityPlayer p = event.getEntityPlayer();
@@ -82,7 +83,7 @@ public class PlayerEvents {
 			if(!p.world.isRemote) p.sendMessage(new TextComponentTranslation("sleep.parasite"));
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void breakingEvent(PlayerEvent.BreakSpeed event) {
 		EntityPlayer p = event.getEntityPlayer();
@@ -90,12 +91,12 @@ public class PlayerEvents {
 			if(DGWorshipHelper.hasWaterPowers(p)) {
 				if(p.isInsideOfMaterial(Material.WATER)) {
 					if(!EnchantmentHelper.getAquaAffinityModifier(p))
-						event.setNewSpeed(event.getOriginalSpeed() * 5);					
+						event.setNewSpeed(event.getOriginalSpeed() * 5);
 				}
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
 		if(!event.player.world.isRemote) {
@@ -104,9 +105,23 @@ public class PlayerEvents {
 				AzacnoParasiteEvents.parasites.put(event.player.getPersistentID(), new AzacnoParasite(event.player, parasiteProgress));
 			SyncUtil.syncPlayerData(event.player);
 			DGWorshipHelper.calculateModifier(event.player);
+            fixDialogue(event.player);
 		}
 	}
-	
+
+	private static void fixDialogue(EntityPlayer player) {
+        MirrorCapInstance mirrorCap = player.getCapability(MirrorProvider.MIRROR, null);
+        if (mirrorCap.getDefaultDialogue().equals(MirrorDialogueRegistry.getNoDialogueTemplate())) {
+            if (ResearchUtil.getResearchStage(player, "ARCHE") == 0) {
+                MirrorUtil.updateDefaultDialogue(player, "archepreparation");
+            } else if (ResearchUtil.getResearchStage(player, "BLACKMIRROR") == 1) {
+                MirrorUtil.updateDefaultDialogue(player, "beforearche");
+            } else if (ResearchUtil.getResearchStage(player, "BLACKMIRROR") == 0) {
+                MirrorUtil.updateDefaultDialogue(player, "start");
+            }
+        }
+    }
+
 	@SubscribeEvent
 	public static void logoutEvent(PlayerLoggedOutEvent event) {
 		if(event.player.world.isRemote) {
@@ -131,31 +146,31 @@ public class PlayerEvents {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void cloneEvent(PlayerEvent.Clone event) {
 		EntityPlayer original = event.getOriginal();
 		EntityPlayer player = event.getEntityPlayer();
-		
+
 		Set<String> strings = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getStrings(false);
 		HashMap<String, Integer> ints = original.getCapability(PlayerDataProvider.PLAYERDATA, null).getInts(false);
 		IPlayerData newData = player.getCapability(PlayerDataProvider.PLAYERDATA, null);
 		for(String string : strings) {
 			newData.addString(string, false);
 		}
-			
+
 		for(Entry<String, Integer> entry : ints.entrySet()) {
 			newData.setInteger(entry.getKey(), entry.getValue(), false);
 		}
 		player.getCapability(ResearchProvider.RESEARCH, null).putResearches(original.getCapability(ResearchProvider.RESEARCH, null).getResearches());
-		
+		player.getCapability(MirrorProvider.MIRROR, null).cloneCapability(original.getCapability(MirrorProvider.MIRROR, null));
 	}
-	
+
 	@SubscribeEvent
 	public static void respawnEvent(PlayerRespawnEvent event) {
 		SyncUtil.syncPlayerData(event.player);
 	}
-	
+
 	@SubscribeEvent
 	public static void changeDimensionEvent(PlayerChangedDimensionEvent event) {
 		EntityPlayer p = event.player;
@@ -170,7 +185,7 @@ public class PlayerEvents {
 			pt.terminateEarly();
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void playerStartTracking(PlayerEvent.StartTracking event) {
 		if(event.getTarget() instanceof EntityPlayer) {
@@ -185,10 +200,10 @@ public class PlayerEvents {
 			if(data.getString(PlayerDataLib.DREAMFOCUS)) {
 				BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), true, MessageSyncPlayerRender.Type.DREAMFOCUS), (EntityPlayerMP)event.getEntityPlayer());
 			}
-				
+
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void playerStopTracking(PlayerEvent.StopTracking event) {
 		if(event.getTarget() instanceof EntityPlayer) {
@@ -198,7 +213,7 @@ public class PlayerEvents {
 			BTVPacketHandler.INSTANCE.sendTo(new MessageSyncPlayerRender(target.getPersistentID(), false, MessageSyncPlayerRender.Type.DREAMFOCUS), (EntityPlayerMP)event.getEntityPlayer());
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void jumpEvent(LivingJumpEvent event) {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
@@ -208,7 +223,7 @@ public class PlayerEvents {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void pickupItemEvent(ItemPickupEvent event) {
 		ItemStack stack = event.getStack();
@@ -218,7 +233,7 @@ public class PlayerEvents {
 				((IArtifactItem)stack.getItem()).unlockData(p);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void itemUseFinish(LivingEntityUseItemEvent.Finish event) {
 		EntityLivingBase b = event.getEntityLiving();

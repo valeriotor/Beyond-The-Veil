@@ -59,6 +59,13 @@ public class MirrorCapInstance {
 		if(nbt.hasKey("template_id"))
 			scheduledDialogue = new MirrorScheduler(nbt);
 	}
+
+	public void cloneCapability(MirrorCapInstance original) {
+		if (!(original.scheduledDialogue instanceof MirrorSchedulerTimed)) {
+			scheduledDialogue = original.scheduledDialogue;
+		}
+		defaultDialogue = original.defaultDialogue;
+	}
 	
 	private class MirrorScheduler {
 		
