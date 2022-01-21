@@ -81,7 +81,7 @@ public class WaterEvents {
 	private static void checkArcheDialogue(EntityPlayer p, boolean arche) {
 		if (arche) {
 			MirrorDialogueTemplate currentDialogue = MirrorUtil.getCurrentDialogue(p);
-			if (currentDialogue != null && currentDialogue.getID().equals("bloodhome") && !p.world.isRemote) {
+			if (currentDialogue != null && currentDialogue.getID().equals("bloodhome") && !p.world.isRemote && p.ticksExisted > 10) {
 				MirrorUtil.updateDefaultDialogue(p, "archewater");
 			}
 		}
