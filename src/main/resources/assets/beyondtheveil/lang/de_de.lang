@@ -356,11 +356,11 @@ gui.drowned.gnawing=Ich bin das nagende Gefühl im Hinterkopf
 gui.drowned.nogd=Der Große Träumer erhört dich nicht.
 gui.drowned.noac=Die Götter deiner Vorfahren existieren nicht.
 
-# gui.research_page.complete=Progress
+gui.research_page.complete=Fortschritt
 
-# keys.dodge=Dodge
-# keys.activebauble=Use/Manage Baubles
-# keys.power=Use/Select Power
+keys.dodge=Ausweichen
+keys.activebauble=Baubles nutzen/verwalten
+keys.power=Fähigkeit nutzen/auswählen
 
 
 # ##################
