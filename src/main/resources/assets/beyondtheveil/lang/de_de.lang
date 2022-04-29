@@ -11,7 +11,7 @@
 item.beyondtheveil:oniric_incense.name=Onirischer Weihrauch
 item.beyondtheveil:slug.name=Schnecke
 item.beyondtheveil:slugcatcher.name=Schneckenfänger
-#item.beyondtheveil:testitem.name=Test Item
+item.beyondtheveil:testitem.name=Test Gegenstand
 item.beyondtheveil:canoe.name=Kanu
 item.beyondtheveil:flute.name=Flöte der Äußeren Götter
 item.beyondtheveil:saw_cleaver.name=Sägebeil
@@ -28,8 +28,8 @@ item.beyondtheveil:blackjack.name=Blackjack
 item.beyondtheveil:spine.name=Wirbelsäule
 item.beyondtheveil:heart.name=Herz
 item.beyondtheveil:held_villager.name=Dorfbewohner
-# item.beyondtheveil:held_weeper.name=Schluchzer
-# item.beyondtheveil:held_fletum.name=Fletum
+item.beyondtheveil:held_weeper.name=Schluchzer
+item.beyondtheveil:held_fletum.name=Fletum
 item.beyondtheveil:surgery_tools.name=Operationsbesteck
 item.beyondtheveil:bone_tiara.name=Knochen Tiara
 item.beyondtheveil:bleeding_belt.name=Blutender Gürtel
@@ -52,7 +52,7 @@ item.beyondtheveil:necronomicon.name=Al Azif
 item.beyondtheveil:sigil_player.name=Blutsigel: Spieler
 item.beyondtheveil:sigil_pathway.name=Blutsigel: Pfad
 item.beyondtheveil:gear.name=Zahnrad
-# item.beyondtheveil:crucible.name=Crucible
+item.beyondtheveil:crucible.name=Crucible
 item.beyondtheveil:surgeon_summons.name=Chirurgenbeschwörung
 
 
@@ -141,7 +141,7 @@ tile.beyondtheveil:ghost_grass.name=Geistergras
 tile.beyondtheveil:arboreal_generator.name=Arborealgenerator
 tile.beyondtheveil:sapling_shrub.name=Setzlingsbusch
 # NYI? #tile.plant_terra.name=Terra Pflanze
-# No translation required #tile.plant_ordo.name=Vijhiss
+tile.plant_ordo.name=Vijhiss
 # NYI? #tile.beyondtheveil:mutator.name=Plant Mutator
 tile.beyondtheveil:watery_cradle.name=Wässrige Wiege
 tile.beyondtheveil:lacrymatory.name=Lacrimarium
@@ -162,7 +162,7 @@ tile.beyondtheveil:penitence_statue.name=Statue der Buße
 tile.beyondtheveil:memory_sieve.name=Erinnerungssieb
 tile.beyondtheveil:city_mapper.name=Stadtkartograph
 tile.beyondtheveil:gear_bench.name=Zahnradtisch
-tile.beyondtheveil:dream_focus.name=Traumfokus: Gegensände
+tile.beyondtheveil:dream_focus.name=Traumfokus: Gegenstände
 tile.beyondtheveil:dream_focus_fluids.name=Traumfokus: Flüssigkeiten
 tile.beyondtheveil:dream_focus_villagers.name=Traumfokus: Dorfbewohner
 tile.beyondtheveil:megydrea.name=Megydrea
@@ -269,10 +269,8 @@ entity.beyondtheveil:deep_one_brute.name=Tiefe Wesen Grobian
 entity.beyondtheveil:deep_one_myrmidon.name=Tiefe Wesen Myrmidon
 entity.beyondtheveil:cephalopodian.name=Cephalopode
 entity.beyondtheveil:sandflatter.name=Sandfplätter
-# no translation required
 entity.beyondtheveil:umancala.name=Umancala
 entity.beyondtheveil:bonecage.name=Knochenkäfig
-# no translation required
 entity.beyondtheveil:adeline.name=Adeline
 
 entity.beyondtheveil:umancala_ball.name=Umancala Feuerball
@@ -327,22 +325,22 @@ gui.optionwheel.surgeon.0=Wirbelsäule ausreißen
 gui.optionwheel.surgeon.1=Mit Wasser füllen
 gui.optionwheel.surgeon.3=Herz entnehmen
 
-# gui.dream_bottle.charges=Millibuckets: %1$s
+gui.dream_bottle.charges=Millibuckets: %1$s
 
-# gui.city_mapper.buildingx=Center X: %1$s
-# gui.city_mapper.buildingy=Center Y: %1$s
-# gui.city_mapper.buildingrot=Facing: %1$s
-# gui.city_mapper.buildinglength=Length: %1$s
-# gui.city_mapper.buildingwidth=Width: %1$s
-# gui.city_mapper.buildingsize=Size: %1$sx%2$s
-# gui.city_mapper.rot0=North
-# gui.city_mapper.rot1=East
-# gui.city_mapper.rot2=South
-# gui.city_mapper.rot3=West
-# gui.city_mapper.create=Create
-# gui.city_mapper.save=Save Changes
-# gui.city_mapper.reloadmap=Reload Map
-# gui.city_mapper.incsize=TIP: It is recommended to increase GUI size for the purpose of this task.
+gui.city_mapper.buildingx=Zentrales X: %1$s
+gui.city_mapper.buildingy=Zentrales Y: %1$s
+gui.city_mapper.buildingrot=Ausrichtung: %1$s
+gui.city_mapper.buildinglength=Länge: %1$s
+gui.city_mapper.buildingwidth=Breite: %1$s
+gui.city_mapper.buildingsize=Größe: %1$sx%2$s
+gui.city_mapper.rot0=Nördlich
+gui.city_mapper.rot1=Östlich
+gui.city_mapper.rot2=Südlich
+gui.city_mapper.rot3=Westlich
+gui.city_mapper.create=Erstellen
+gui.city_mapper.save=Änderungen Speichern
+gui.city_mapper.reloadmap=Karte neu laden
+gui.city_mapper.incsize=TIPP: Für diese Aufgabe empfiehlt sich, die GUI-Größe zu erhöhen.
 
 # gui.drowned.youdrowned=You Drowned
 # gui.drowned.greatdreamer=Believe in the Great Dreamer
