@@ -11,7 +11,7 @@
 item.beyondtheveil:oniric_incense.name=Onirischer Weihrauch
 item.beyondtheveil:slug.name=Schnecke
 item.beyondtheveil:slugcatcher.name=Schneckenfänger
-#item.beyondtheveil:testitem.name=Test Item
+item.beyondtheveil:testitem.name=Test Gegenstand
 item.beyondtheveil:canoe.name=Kanu
 item.beyondtheveil:flute.name=Flöte der Äußeren Götter
 item.beyondtheveil:saw_cleaver.name=Sägebeil
@@ -25,11 +25,11 @@ item.beyondtheveil:drink_empty.name=Leere Tasse
 item.beyondtheveil:tablet.name=Tablett
 item.beyondtheveil:bronze_sphere.name=Bronze Sphäre
 item.beyondtheveil:blackjack.name=Blackjack
-item.beyondtheveil:spine.name=Brustwirbelsäule
+item.beyondtheveil:spine.name=Wirbelsäule
 item.beyondtheveil:heart.name=Herz
 item.beyondtheveil:held_villager.name=Dorfbewohner
-# item.beyondtheveil:held_weeper.name=Weeper
-# item.beyondtheveil:held_fletum.name=Fletum
+item.beyondtheveil:held_weeper.name=Schluchzer
+item.beyondtheveil:held_fletum.name=Fletum
 item.beyondtheveil:surgery_tools.name=Operationsbesteck
 item.beyondtheveil:bone_tiara.name=Knochen Tiara
 item.beyondtheveil:bleeding_belt.name=Blutender Gürtel
@@ -37,22 +37,22 @@ item.beyondtheveil:dream_bottle.name=Traumflasche
 item.beyondtheveil:redstone_weed.name=Redstonegras-Samen
 item.beyondtheveil:ghost_weed.name=Geistergras-Samen
 item.beyondtheveil:vanilla_weed.name=Vanilla Grassamen
-item.beyondtheveil:shoggoth_map.name=Shoggoth Karte
-item.beyondtheveil:held_shoggoth.name=Shoggoth
+item.beyondtheveil:shoggoth_map.name=Shoggothen-Stadtplan
+item.beyondtheveil:held_shoggoth.name=Shoggothe
 item.beyondtheveil:blood_covenant.name=Blutschwur
 item.beyondtheveil:revelation_ring.name=Ring der Offenbarung
 item.beyondtheveil:azacno_charm.name=Talisman von Azacno
-item.beyondtheveil:blood_crown.name=Talisman der Dornen
+item.beyondtheveil:blood_crown.name=Dornenkrone
 item.beyondtheveil:coral_staff.name=Korallenstab
-item.beyondtheveil:sigil_zombie.name=Blutsigel: Zombie
-item.beyondtheveil:sigil_skellie.name=Blutsigel: Skelett
+item.beyondtheveil:sigil_zombie.name=Blutsiegel: Zombie
+item.beyondtheveil:sigil_skellie.name=Blutsiegel: Skelett
 item.beyondtheveil:sacrificial_knife.name=Opfermesser
 item.beyondtheveil:memory_phial.name=Erinnerungsphiole
 item.beyondtheveil:necronomicon.name=Al Azif
-item.beyondtheveil:sigil_player.name=Blutsigel: Spieler
-item.beyondtheveil:sigil_pathway.name=Blutsigel: Pfad
-item.beyondtheveil:gear.name=Ausrüstung
-# item.beyondtheveil:crucible.name=Crucible
+item.beyondtheveil:sigil_player.name=Blutsiegel: Spieler
+item.beyondtheveil:sigil_pathway.name=Blutsiegel: Pfad
+item.beyondtheveil:gear.name=Zahnrad
+item.beyondtheveil:crucible.name=Crucible
 item.beyondtheveil:surgeon_summons.name=Chirurgenbeschwörung
 
 
@@ -66,18 +66,18 @@ lore.tablet=§5§oEine uralte Steinplatte mit eigenartigen Inschriften. Kann ich
 lore.spine=§5§oWillenskraft wohnt der Wirbelsäule inne.
 lore.surgery_tools=§5§oEine Reihe von Werkzeugen für die Chirurgie. Etwas rostig, aber ich bin mir sicher, dass es meinen Patienten nichts ausmacht.
 
-tooltip.held_villager.spineless=§5§oEin Dorfbewohner, dem die Brustwirbelsäule fehlt. Er wird niemals aufstehen.
+tooltip.held_villager.spineless=§5§oEin Dorfbewohner, dem die Wirbelsäule fehlt. Er wird niemals aufstehen.
 tooltip.held_villager.spineful=§5§oEin bewusstloser Dorfbewohner, bereit für Experimente.
 tooltip.held_villager.spinefulheartless=§5§oEin Dorfbewohner ohne sein Herz, er wird schon bald verscheiden.
 tooltip.held_villager.spinelessheartless=§5§oSowohl die Wirbelsäule als auch das Herz wurden diesem Dorfbewohner herausgerissen. Wirklich, eine wertlose Kreatur.
-tooltip.held_weeper.spineless=§5§oEin Weeper ohne seine Wirbelsäule ist nichts als sein Kopf.
+tooltip.held_weeper.spineless=§5§oEin Schluchzer ohne seine Wirbelsäule ist nichts als sein Kopf.
 tooltip.held_weeper.spineful=§5§oEine Abscheulichkeit.
 tooltip.held_weeper.spinefulheartless=§5§oMan braucht kein Herz um zu weinen. Er wird schon überleben.
-tooltip.held_weeper.spinelessheartless=§5§o§5§oEin Weeper ohne seine Wirbelsäule ist nichts als sein Kopf. Dieser hat nichtmal ein Herz..
-tooltip.held_fletum=§5§oEin körperloser Kopf, erfüllt in seiner Trauer.
+tooltip.held_weeper.spinelessheartless=§5§oEin Schluchzer ohne seine Wirbelsäule ist nichts als sein Kopf. Dieser hat nichtmal ein Herz..
+tooltip.held_fletum=§5§oEin körperloser Kopf, erfüllt in seinem Kummer.
 tooltip.held_shoggoth=§5§oEs schläft. Wecke es nicht auf. Bitte.
 
-tooltip.dream_bottle.containing=Enthält: 
+tooltip.dream_bottle.containing=Enthält:
 tooltip.dream_bottle.charges=Konservierte Tränen: %1$s mB
 tooltip.dream_bottle.none=NICHTS
 
@@ -85,14 +85,14 @@ tooltip.statue.owner=Diese Statue gehört %1$s.
 tooltip.statue.noowner=Diese Statue hat keinen Besitzer.
 
 tooltip.memory_phial.stored=Diese Phiole enthält %1$s.
-tooltip.memory_phial.empty=Diese Phiole ist leer. 
+tooltip.memory_phial.empty=Diese Phiole ist leer.
 
-tooltip.blood_sigil_blood_skellie.amount=Dieses Sigel enthält %1$s Blutskelette.
-tooltip.blood_sigil_blood_zombie.amount=Dieses Sigel enthält %1$s Blutzombies.
-tooltip.blood_sigil_pathway.nopath=Dieses Sigel ist an keinen Ort gebunden.
-tooltip.blood_sigil_pathway.path=Dieses Sigel ist an x: %1$s, y: %2$s, z: %3$s gebunden.
-tooltip.blood_sigil_player.noplayer=Dieses Sigel ist an keinen Spieler gebunden.
-tooltip.blood_sigil_player.player=Dieses Sigel an %1$s gebunden.
+tooltip.blood_sigil_blood_skellie.amount=Dieses Siegel enthält %1$s Blutskelette.
+tooltip.blood_sigil_blood_zombie.amount=Dieses Siegel enthält %1$s Blutzombies.
+tooltip.blood_sigil_pathway.nopath=Dieses Siegel ist an keinen Ort gebunden.
+tooltip.blood_sigil_pathway.path=Dieses Siegel ist an x: %1$s, y: %2$s, z: %3$s gebunden.
+tooltip.blood_sigil_player.noplayer=Dieses Siegel ist an keinen Spieler gebunden.
+tooltip.blood_sigil_player.player=Dieses Siegel an %1$s gebunden.
 
 artifact.medallion.humming1=Das Medallion summt. Es ist ein Gegner in der Nähe.
 artifact.medallion.humming=Das Medallion summt. Es sind %1$s Gegner in der Nähe.
@@ -100,18 +100,18 @@ artifact.medallion.creepers=Es sind Creeper in der Nähe.
 
 use.coral_staff.lastlinked=Das zuletzt verknüpfte Herz befindet sich bei x: %1$s, y: %2$s, z: %3$s.
 use.coral_staff.clear=Gespeicherte Position gelöscht.
-use.blood_sigil.amount=Dieses Sigel ist jetzt mit %1$s Untoten verknüpft.
-use.blood_sigil.emptysigil=Dieses Sigel ist leer.
+use.blood_sigil.amount=Dieses Siegel ist jetzt mit %1$s Untoten verknüpft.
+use.blood_sigil.emptysigil=Dieses Siegel ist leer.
 use.blood_sigil.emptywell=Der Brunnen hat keine weiteren dieser Untoten.
-use.blood_sigil.nothealthy=Dieser Mob ist nicht bei voller Gesundheit.
-use.blood_sigil.notmine=Dieser Mob gehorcht mir nicht.
-use.blood_sigil.path=Dieser Standort ist nun im Sigel gebunden.
+use.blood_sigil.nothealthy=Dieses Wesen ist nicht bei voller Gesundheit.
+use.blood_sigil.notmine=Dieses Wesen ist mir nicht untertan.
+use.blood_sigil.path=Dieser Standort ist nun im Siegel gebunden.
 use.dream_bottle.noplayer=Der gebundene Spieler ist nicht in dieser Welt.
 use.surgeon_summoner.boundcontainer=Der Standort dieses Containers wurde an die Chirurgenbeschwörung gebunden.
 use.surgeon_summoner.unboundcontainer=Die Chirurgenbeschwörung ist nicht mehr an einen Container gebunden.
 use.surgeon_summoner.nospace=Nicht genügend Platz, um den Chirurgen zu beschwören.
 
-bauble.blood_crown.activated=Die Blutkrone durchbohrt meine Stirn! Ich sollte mich auf das Schlimmste vorbereiten, in wenigen Sekunden!
+bauble.blood_crown.activated=Die Dornenkrone durchbohrt meine Stirn! Ich sollte mich auf das Schlimmste vorbereiten, in wenigen Sekunden!
 
 ##################
 #BLÖCKE
@@ -120,14 +120,14 @@ bauble.blood_crown.activated=Die Blutkrone durchbohrt meine Stirn! Ich sollte mi
 tile.beyondtheveil:barrel.name=Fass
 tile.beyondtheveil:bricks_blue.name=Blauziegelsteine
 tile.beyondtheveil:damp_canopy.name=Feuchtbaldachin
-tile.beyondtheveil:damp_canopy_wood.name=Feuchtbaldachin (mit Holz)
+tile.beyondtheveil:damp_canopy_wood.name=Feuchtbaldachin (Holz)
 tile.beyondtheveil:damp_log.name=Feuchtstamm
 tile.beyondtheveil:damp_stone.name=Feuchtstein
 tile.beyondtheveil:damp_wood.name=Feuchtholz
 tile.beyondtheveil:damp_wood_fence.name=Feuchtholzzaun
 tile.beyondtheveil:damp_wood_stairs.name=Feuchtholztreppe
 tile.beyondtheveil:dark_sand.name=Dunkelsand
-tile.beyondtheveil:fume_spreader.name=Dunstverteiler
+tile.beyondtheveil:fume_spreader.name=Rauchverteiler
 tile.beyondtheveil:idol.name=Götzenbild
 tile.beyondtheveil:lamp.name=Leuchte
 tile.beyondtheveil:slug_bait.name=Schneckenköder
@@ -140,9 +140,9 @@ tile.beyondtheveil:redstone_grass.name=Redstonegras
 tile.beyondtheveil:ghost_grass.name=Geistergras
 tile.beyondtheveil:arboreal_generator.name=Arborealgenerator
 tile.beyondtheveil:sapling_shrub.name=Setzlingsbusch
-# Not in game? #tile.plant_terra.name=Terra Pflanze
-# No translation required #tile.plant_ordo.name=Vijhiss
-tile.beyondtheveil:mutator.name=Plant Mutator
+# NYI? #tile.plant_terra.name=Terra Pflanze
+tile.plant_ordo.name=Vijhiss
+# NYI? #tile.beyondtheveil:mutator.name=Plant Mutator
 tile.beyondtheveil:watery_cradle.name=Wässrige Wiege
 tile.beyondtheveil:lacrymatory.name=Lacrimarium
 tile.beyondtheveil:elder_stone_bricks.name=Alten Steinziegel
@@ -161,12 +161,18 @@ tile.beyondtheveil:sacrifice_statue.name=Statue der Opferung
 tile.beyondtheveil:penitence_statue.name=Statue der Buße
 tile.beyondtheveil:memory_sieve.name=Erinnerungssieb
 tile.beyondtheveil:city_mapper.name=Stadtkartograph
-tile.beyondtheveil:gear_bench.name=Ausrüstungstisch
-tile.beyondtheveil:dream_focus.name=Traumfokus: Gegensände
+tile.beyondtheveil:gear_bench.name=Zahnradtisch
+tile.beyondtheveil:dream_focus.name=Traumfokus: Gegenstände
 tile.beyondtheveil:dream_focus_fluids.name=Traumfokus: Flüssigkeiten
 tile.beyondtheveil:dream_focus_villagers.name=Traumfokus: Dorfbewohner
 tile.beyondtheveil:megydrea.name=Megydrea
 tile.beyondtheveil:curtain.name=Vorhang
+tile.beyondtheveil:thick_algae.name=Dichte Algen
+tile.beyondtheveil:arche_portal.name=Arche Portal
+tile.beyondtheveil:dark_glass.name=Dunkles Glas
+tile.beyondtheveil:deep_prismarine.name=Tiefes Prismarin
+tile.beyondtheveil:arena.name=Arena Starter
+tile.beyondtheveil:deep_chest.name=Tiefe Kiste
 
 fluid.tears=Tränen
 
@@ -178,7 +184,7 @@ interact.idol.slugs=Meine Wirbelsäule klappert. Die Stimme ist unmenschlich, me
 interact.idol.fish_quest=Mein Herz zittert. Es wurden schreckliche Dinge gesprochen, die Verbindung gestärkt.
 interact.idol.drowned=Ich vergieße eine Träne. Neues Wissen wurde gewährt, eine entsetzende Wahrheit.
 interact.lacrymatory.full=Dieses Lacrimarium ist bereits gebunden.
-interact.lacrymatory.success=Das %1$s ist nun an das Lacrimarium gebunden.
+interact.lacrymatory.success=Der %1$s ist nun an das Lacrimarium gebunden.
 interact.citymapper.loading=Der Stadtkartograph lädt langsam die Umgebung.
 interact.citymapper.player0=Jemand anderes verwendet gerade den Stadtkartographen.
 interact.citymapper.player1=Der Stadtkartograph wird noch immer von jemand anderem verwendet.
@@ -204,6 +210,11 @@ interact.statue.alreadyelse=Diese Statue ist an jemand anderen als mich gebunden
 interact.statue.bound=Mein Blut tränkt diese Statue. Sie ist jetzt gebunden, unsere Verbindung ist nicht zu brechen, nicht zu trennen.
 interact.gearbench.dunno=Ich weiß nicht, wie das zu benutzen ist.
 interact.lacrymatory.amount=Das Lacrimarium ist mit %1$s/4000 mB Tränen gefüllt.
+interact.arena.mustbedeep=Ich muss Tief sein, um das Duell zu starten.
+interact.arena.occupied=Es duelliert sich bereits jemand in der Arena.
+
+enter.arche_portal.initiate=Teleportiere zur Oberwelt in 5 Sekunden.
+enter.arche_portal.interrupt=Teleportation unterbrochen.
 
 hit.idol.schiz0=Ich sollte nicht versuchen, das zu zerstören.
 hit.idol.schiz1=Ich sollte das nicht tun.
@@ -240,17 +251,33 @@ entity.beyondtheveil:deep_one.name=Tiefes Wesen
 entity.beyondtheveil:hamlet_dweller.name=Weilerbewohner
 entity.beyondtheveil:canoe.name=Kanu
 entity.beyondtheveil:crawling_villager.name=Kriechender Dorfbewohner
-# entity.beyondtheveil:weeper.name=Weeper
-# entity.beyondtheveil:fletum.name=Fletum
-entity.beyondtheveil:shoggoth.name=Shoggoth
-entity.beyondtheveil:crazed_weeper.name=Wahnsinniger Weeper
+entity.beyondtheveil:weeper.name=Schluchzer
+entity.beyondtheveil:fletum.name=Fletum
+entity.beyondtheveil:shoggoth.name=Shoggothe
+entity.beyondtheveil:crazed_weeper.name=Wahnsinniger Schluchzer
 entity.beyondtheveil:blood_zombie.name=Blutzombie
 entity.beyondtheveil:blood_skeleton.name=Blutskelett
 entity.beyondtheveil:surgeon.name=Chirurg
+entity.beyondtheveil:dreadfish.name=Schreckensfisch
+entity.beyondtheveil:muray.name=Muräne
+entity.beyondtheveil:octid.name=Oktid
+entity.beyondtheveil:deep_angler.name=Tiefer Angler
+entity.beyondtheveil:sarfin.name=Sarfine
+entity.beyondtheveil:man_o_war.name=Blasenqualle
+entity.beyondtheveil:jelly.name=Mini-Qualle
+entity.beyondtheveil:deep_one_brute.name=Tiefe Wesen Grobian
+entity.beyondtheveil:deep_one_myrmidon.name=Tiefe Wesen Myrmidon
+entity.beyondtheveil:cephalopodian.name=Cephalopode
+entity.beyondtheveil:sandflatter.name=Sandfplätter
+entity.beyondtheveil:umancala.name=Umancala
+entity.beyondtheveil:bonecage.name=Knochenkäfig
+entity.beyondtheveil:adeline.name=Adeline
 
-shoggoth.hasmapalready0=Dieser Shoggoth baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
-shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggoth Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
-shoggoth.hasmapalready2=Nur ein Narr würde die Aufmerksamkeit eines Shoggothen auf ich ziehen.. und ich bin kein Narr, oder?
+entity.beyondtheveil:umancala_ball.name=Umancala Feuerball
+
+shoggoth.hasmapalready0=Dieser Shoggothe baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
+shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggothe Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
+shoggoth.hasmapalready2=Nur ein Narr würde die Aufmerksamkeit eines Shoggothen auf ich lenken.. und ich bin kein Narr, oder?
 shoggoth.hasmapalready3=Stop.
 
 ##################
@@ -266,12 +293,12 @@ gui.tablet.inscription1=Wissen soll gefürchtet werden,<BR>nicht gesucht.<BR>Es 
 gui.tablet.inscription2=Unendliche viele von Dir, in unendlich vielen Augenblicken,<BR>unter unendlich vielen Zeitlinien<BR>in unendlich vielen Unendlichkeiten.<BR>Du bist nichts. Vergiss das nicht.
 gui.tablet.inscription3=Die Tiefsten Ozeane berühren die Leere.<BR>Wasser ist nicht sicher, es ist Chaos.<BR>Und doch entspringt daraus Leben.
 #TODO: refine last sentence of gui.tablet.inscription4
-gui.tablet.inscription4=Tode über Tode über Tode.<BR>Aber du bist nicht wirklich unsterblich.<BR>Du bist nichts für die Ewigkeit.
+gui.tablet.inscription4=Tode über Tode über Tode.<BR>Aber du bist nicht wirklich unsterblich.<BR>Du bist nichts gegenüber der Ewigkeit.
 gui.tablet.inscription5=Der Große Träumer<BR>filtert den Schleier<BR>in die Realität.<BR>Träume wandern durch Ihn hindurch.
 gui.tablet.inscription6=Er ist das nagende Gefühl<BR>in deinem Hinterkopf,<BR>dass dich zu heillosen Handlungen treibt.<BR>Du kannst nicht entkommen.
-# gui.tablet.inscription7=City builders, aeons old.<BR>Even the greatest civilization<BR>is no match to Time.
-# gui.tablet.inscription8=Masses of flesh,<BR>born from unfiltered Chaos.<BR>Among their screeches<BR>you can hear weeping.
-# gui.tablet.inscription9=Fear the Judgement<BR>of Dagon, ArchPriest<BR>of The Great Dreamer.<BR>Do not seek it.
+gui.tablet.inscription7=Städtebauer, Äonen alt.<BR>Selbst die mächtigste Zivilisation<BR>ist der Zeit nicht gewachsen.
+gui.tablet.inscription8=Massen an Fleisch,<BR>geboren aus ungefiltertem Chaos.<BR>Unter ihrem Kreischen<BR>hört man Schluchzen.
+gui.tablet.inscription9=Fürchte das Urteil<BR>des Dagon, HohePriester<BR>des Großen Träumers.<BR>Strebe nicht danach.
 
 gui.activebauble.bauble0=Halskette
 gui.activebauble.bauble1=Ring 1
@@ -292,106 +319,110 @@ gui.optionwheel.power.greatdreamer.3=Wasserlaufen
 
 gui.optionwheel.waterycradle.0=Wirbelsäule ausreißen
 gui.optionwheel.waterycradle.1=Mit Wasser füllen
-gui.optionwheel.waterycradle.3=Herz zerreißen
+gui.optionwheel.waterycradle.3=Herz entnehmen
 
 gui.optionwheel.surgeon.0=Wirbelsäule ausreißen
 gui.optionwheel.surgeon.1=Mit Wasser füllen
-gui.optionwheel.surgeon.3=Herz zerreißen
+gui.optionwheel.surgeon.3=Herz entnehmen
 
-# gui.dream_bottle.charges=Millibuckets: %1$s
+gui.dream_bottle.charges=Millibuckets: %1$s
 
-# gui.city_mapper.buildingx=Center X: %1$s
-# gui.city_mapper.buildingy=Center Y: %1$s
-# gui.city_mapper.buildingrot=Facing: %1$s
-# gui.city_mapper.buildinglength=Length: %1$s 
-# gui.city_mapper.buildingwidth=Width: %1$s 
-# gui.city_mapper.buildingsize=Size: %1$sx%2$s 
-# gui.city_mapper.rot0=North
-# gui.city_mapper.rot1=East
-# gui.city_mapper.rot2=South
-# gui.city_mapper.rot3=West
-# gui.city_mapper.create=Create
-# gui.city_mapper.save=Save Changes
-# gui.city_mapper.reloadmap=Reload Map
-# gui.city_mapper.incsize=TIP: It is recommended to increase GUI size for the purpose of this task.
+gui.city_mapper.buildingx=Zentrales X: %1$s
+gui.city_mapper.buildingy=Zentrales Y: %1$s
+gui.city_mapper.buildingrot=Ausrichtung: %1$s
+gui.city_mapper.buildinglength=Länge: %1$s
+gui.city_mapper.buildingwidth=Breite: %1$s
+gui.city_mapper.buildingsize=Größe: %1$sx%2$s
+gui.city_mapper.rot0=Nördlich
+gui.city_mapper.rot1=Östlich
+gui.city_mapper.rot2=Südlich
+gui.city_mapper.rot3=Westlich
+gui.city_mapper.create=Erstellen
+gui.city_mapper.save=Änderungen Speichern
+gui.city_mapper.reloadmap=Karte neu laden
+gui.city_mapper.incsize=TIPP: Für diese Aufgabe empfiehlt sich, die GUI-Größe zu erhöhen.
 
-# gui.drowned.youdrowned=You Drowned
-# gui.drowned.greatdreamer=Believe in the Great Dreamer
-# gui.drowned.ancientgods=Believe in the gods of your ancestors
-# gui.drowned.yourself=Believe in Yourself
-# gui.drowned.believe=Believe
-# gui.drowned.know=Know
-# gui.drowned.youare=YOU ARE 
-# gui.drowned.nothing=NOTHING
-# gui.drowned.insignificant=INSIGNIFICANT
-# gui.drowned.worthless=WORTHLESS
-# gui.drowned.gnawing=I am the Gnawing Sensation at the back of your mind
-# gui.drowned.nogd=The Great Dreamer won't listen to you.
-# gui.drowned.noac=The gods of your ancestors do not exist.
+gui.drowned.youdrowned=Du bist ertrunken.
+gui.drowned.greatdreamer=An den Großen Träumer glauben
+gui.drowned.ancientgods=An die Götter deiner Vorfahren glauben
+gui.drowned.yourself=An dich selbst glauben
+gui.drowned.believe=Glauben
+gui.drowned.know=Wissen
+gui.drowned.youare=DU BIST
+gui.drowned.nothing=NICHTS
+gui.drowned.insignificant=UNBEDEUTEND
+gui.drowned.worthless=WERTLOS
+gui.drowned.gnawing=Ich bin das nagende Gefühl im Hinterkopf
+gui.drowned.nogd=Der Große Träumer erhört dich nicht.
+gui.drowned.noac=Die Götter deiner Vorfahren existieren nicht.
 
-# gui.research_page.complete=Progress
+gui.research_page.complete=Fortschritt
 
-# keys.dodge=Dodge
-# keys.activebauble=Use/Manage Baubles
-# keys.power=Use/Select Power
+keys.dodge=Ausweichen
+keys.activebauble=Baubles nutzen/verwalten
+keys.power=Fähigkeit nutzen/auswählen
 
 
-# ##################
-# #SHOGGOTH
-# ##################
+##################
+#SHOGGOTHE
+##################
 
-# building.talltower=Tall Tower
-# building.tower=Tower
-# building.largetower=Large Tower
-# building.pyramid=Pyramid
-# building.wall=Wall
-# building.road=Road
-# building.clinic=Clinic
-# building.great_shrine=Great Shrine
+building.talltower=Hoher Turm
+building.tower=Turm
+building.largetower=Großer Turm
+building.pyramid=Pyramide
+building.wall=Mauer
+building.road=Straße
+building.clinic=Klinik
+building.great_shrine=Großer Schrein
 
-# angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
+angry.shoggoth.bad=Ein Shoggothe, der ständig andere tötet, wird sich irgendwann gegen seinen Meister wenden.
 
-# ##################
-# #DAGON DIALOGUE
-# ##################
+##################
+#DAGON DIALOGUE
+##################
 
-# dagon.greeting.0=IT IS NOT ALLIANCE I SEEK
-# dagon.greeting.1=YOU WILL SERVE ME
-# dagon.greeting.2=GRAND REWARDS AWAIT YOUR SUCCESS
-# dagon.greeting.3=UNSPEAKABLE CONSEQUENCES WILL FOLLOW YOUR FAILURES
-# dagon.greeting.4=YOU ARE MY HERALD
-# dagon.greeting.5=BRING THIS GOLD TO THE DWELLERS
-# dagon.greeting.6=SO THAT THEY MAY KNOW YOU AS MY AMBASSADOR
-# dagon.greeting.7=THEN COMMUNE WITH GOD'S IDOL
-# dagon.greeting.8=I WILL HEAR YOU
-# dagon.bringgold=These three golden blocks must be brought to the Fisherman Dwellers. We should make haste.
+dagon.greeting.0=ICH BIN NICHT AUF EIN BÜNDNIS AUS
+dagon.greeting.1=DU WIRST MIR DIENEN
+dagon.greeting.2=PRÄCHTIGE SCHÄTZE ERWARTEN DEINEN ERFOLG
+dagon.greeting.3=UNSÄGLICHE KONSEQUENZEN WERDEN DEINEM VERSAGEN NACHFOLGEN
+dagon.greeting.4=DU BIST MEIN VORBOTE
+dagon.greeting.5=BRING DIESES GOLD ZU DEN BEWOHNERN
+dagon.greeting.6=SODASS SIE DICH ALS MEINEN BOTSCHAFTER ERKENNEN KÖNNEN
+# TODO: refine dagon.greeting.7 / dagon.judgement.3
+dagon.greeting.7=DANN KOMMUNIZIERE MIT DEM BILD GOTTES
+# TODO: choose one: dagon grants an audience: "ICH WERDE DICH ANHÖREN" / dagon will hear what the player says to the idol: "ICH WERDE DICH HÖREN"
+dagon.greeting.8=ICH WERDE DICH ANHÖREN
+dagon.bringgold=Diese drei goldenen Blöcke müssen zu den Fischer-Bewohnern gebracht werden. Wir sollten uns beeilen.
 
-# dagon.judgement.0=YOU WILL JOIN MY RANKS
-# dagon.judgement.1=PROVE YOUR WORTH TO ME
-# dagon.judgement.2=SLAY THREE OF MY ELDER GUARDIANS
-# dagon.judgement.3=THEN COMMUNE WITH GOD'S IDOL
-# dagon.slayguardians=Three Elder Guardians, in their ancient ocean monuments. A trifle, right?
+dagon.judgement.0=DU WIRST DICH MEINEM HEER ANSCHLIESSEN
+dagon.judgement.1=BEWEISE MIR DEINEN WERT
+dagon.judgement.2=TÖTE DREI MEINER GROSSEN WÄCHTER
+dagon.judgement.3=DANN KOMMUNIZIERE MIT DEM BILD GOTTES
+dagon.slayguardians=Drei Große Wächter, in ihren alten Ozeanmonumenten. Eine Lappalie, oder?
 
-# dagon.seaborn.0=ALL LIFE IS BORN FROM WATER
-# dagon.seaborn.1=THROUGH BLOOD THEY ARE LINKED TO THE DEEP
-# dagon.seaborn.2=YOUR LINK GROWS EVER STRONGER
-# dagon.seaborn.3=YOU MUST BATHE IN THE LAND OF ENDERMEN
-# dagon.seaborn.4=ENGULFED IN THE VOID AND CLOSEST TO GOD
-# dagon.seaborn.5=THERE YOU WILL DREAM WHILE IN WATER
-# dagon.seaborn.6=AND THE OCEANS WILL BE YOURS
-# dagon.endbath=We must bathe in the End, and there we must Dream.
+dagon.seaborn.0=ALLES LEBEN ENTSPRINGT DEM WASSER
+dagon.seaborn.1=DURCH BLUT SIND SIE DER TIEFE VERBUNDEN
+dagon.seaborn.2=DEINE VERBINDUNG WIRD IMMER STÄRKER
+dagon.seaborn.3=DU MUSST IM LAND DER ENDERMEN BADEN
+dagon.seaborn.4=VON DER LEERE VERSCHLUNGEN UND GOTT AM NÄCHSTEN
+dagon.seaborn.5=DORT WIRST DU IM WASSER TRÄUMEN
+dagon.seaborn.6=UND DIE OZEANE WERDEN DEIN SEIN
+dagon.endbath=Wir müssen im Ende baden, und dort müssen wir Träumen.
 
-# dagon.killkeeper.0=SLAY THE LIGHTHOUSE KEEPER
-# dagon.killkeeper.1=HIS DEATH WON'T MATTER
-# dagon.killkeeper.2=PROVE HIS WORTHLESSNESS
-# dagon.killkeeper.3=AND I WILL GRANT YOU SOME TRUTH
-# dagon.lastwords=A necessary murder. Should I listen to his last words?
+dagon.killkeeper.0=TÖTE DEN LEUCHTTURMWÄCHTER
+dagon.killkeeper.1=SEIN TOD WIRD UNERHEBLICH SEIN
+dagon.killkeeper.2=BEWEISE SEINE WERTLOSIGKEIT
+dagon.killkeeper.3=UND ICH WERDE DIR EIN WENIG WAHRHEIT GEWÄHREN
+dagon.lastwords=Ein notwendiger Mord. Soll ich seine letzten Worte anhören?
 
-# dagon.final.0=HE WAS IRRELEVANT
-# dagon.final.1=AND SO ARE YOU
-# dagon.final.2=YOUR DEATH WILL COME IN ITS OWN TIME
-# dagon.final.3=SEEK WORTH IN PRAYER
-# dagon.final.4=GOD WILL NOT LISTEN
+dagon.final.0=ER WAR BELANGLOS
+dagon.final.1=UND DU BIST ES AUCH
+# TODO: not feeling too happy with dagon.final.2, needs work
+dagon.final.2=DEIN TOD WIRD ZU SEINER ZEIT KOMMEN
+# TODO: could also go with "GELTUNG" instead of "WERT"
+dagon.final.3=SUCHE IM GEBET NACH WERT
+dagon.final.4=GOTT WIRD NICHT ZUHÖREN
 
 # ##################
 # #DWELLER DIALOGUE
@@ -404,7 +435,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # dweller.fisherman.greeting2=§5§oOutsiders are not welcome here.
 # dweller.fisherman.greeting3=§5§oPlease, please stop coming after us.
 
-# dweller.trustedfisherman.greeting0=§5§oHmph. 
+# dweller.trustedfisherman.greeting0=§5§oHmph.
 # dweller.trustedfisherman.greeting1=§5§oYou did well to join us.
 # dweller.trustedfisherman.greeting2=§5§oBeing a fisherman isn't hard here, the fish just come to us.
 # dweller.trustedfisherman.greeting3=§5§oDon't like the slugs? You'll soon appreciate them.
@@ -550,7 +581,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # dweller.lhkeeperimpressed.talk1=I am impressed by your open mind, realising the misdeeds of your ancestors and disavowing them. |:And most of all, I am impressed at how wholly you pledge yourself to your new belief.
 # dweller.lhkeeperimpressed.talk2=Be wary of disappointment. Sooner or later, it'll come. It'll sting.
 # dweller.lhkeepercanoe.talk0=For now, get on a canoe and sail. Talk to a carpenter.
-# dweller.lhkeeperritualintro.talk0=But now, it's time you take the next step. 
+# dweller.lhkeeperritualintro.talk0=But now, it's time you take the next step.
 # dweller.lhkeeperritual.talk0=We Dwellers can't breathe water from the moment we're born. No, it comes later.
 # dweller.lhkeeperritual.talk1=It is only through endless devotion to The Great Dreamer that an outsider such as you may be granted this Gift. :To us it's different. Genetic. I won't mention the details.
 # dweller.lhkeeperritual.talk2=But ultimately, for both of our kinds it is only through an act of faith that we may be granted the Gift. |:You must drown.
@@ -585,23 +616,23 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # dweller.scholar.talk1=I am this Hamlet's Scholar! A rare profession nowadays. :Haha. Most of us are dead.
 # dweller.scholar.talk2=No worries though. Thou art a friend, ain't ya? |:Feel free to browse the Town Hall.
 # dweller.scholarseeya.talk0=See thee later, dude.
-# dweller.scholarweeper.talk0=Oi, art thou dabblin' in the art of Weeper making? |:Nice.
+# dweller.scholarweeper.talk0=Oi, art thou dabblin' in the art of Schluchzer making? |:Nice.
 # dweller.scholarweeper.talk1=Ya know, back in the day we used to make Weepers too. :Then we stopped, since some people didn't like that practice of ours, and in the end we had enough to weep of our own!
-# dweller.scholarweeper.talk2=Yeah, things were tough back then. :My friends named me Weeper Ad Honorem after me pa and me ma were.. ya know..
+# dweller.scholarweeper.talk2=Yeah, things were tough back then. :My friends named me Schluchzer Ad Honorem after me pa and me ma were.. ya know..
 # dweller.scholarweeper.talk3=We still weep at times, absorbed in recollection. :So please, friend, hearken our chants. :And weep with us.
 # dweller.scholarseeya2.talk0=See thee later, dude.
 # dweller.scholarshoggoth.talk0=Oi, dost thou knoweth what a SHOGGOTH is?
-# dweller.scholarshoggoth.talk0.option0=Yes, I do. 
-# dweller.scholarshoggoth.talk0.option1=Enlighten me. 
+# dweller.scholarshoggoth.talk0.option0=Yes, I do.
+# dweller.scholarshoggoth.talk0.option1=Enlighten me.
 # dweller.scholarshoggoth.sorrytalk0=Oh. |I'm sorry, really. |:That is not a knowledge borne lightly.
 # dweller.scholarshoggoth.sorrytalk1=I beg of thee, friend. :Don't trust the Shoggoth. Thou will regret it.
 # dweller.scholarshoggoth.sorrytalk2=It was that voice in thy head that told ya how to make one, eh?
-# dweller.scholarshoggoth.sorrytalk2.option0=What voice? 
-# dweller.scholarshoggoth.sorrytalk2.option1=Yes. 
+# dweller.scholarshoggoth.sorrytalk2.option0=What voice?
+# dweller.scholarshoggoth.sorrytalk2.option1=Yes.
 # dweller.scholarshoggoth.enlightentalk0=Oh no I'm not doin' that. :Thou art lucky enough as it is, my dude.
 # dweller.scholarshoggoth.enlightentalk1=Yet I fear that that voice in thy head will, sooner or later, tell thee how to make one.
-# dweller.scholarshoggoth.enlightentalk1.option0=What voice? 
-# dweller.scholarshoggoth.enlightentalk1.option1=Tell me more. 
+# dweller.scholarshoggoth.enlightentalk1.option0=What voice?
+# dweller.scholarshoggoth.enlightentalk1.option1=Tell me more.
 # dweller.scholarbreath.talk0=Remember when ya were baptised and then breathed HARD in a voice that wasn't thine? :Heh.
 # dweller.scholarseeya3.talk0=See thee later, dude.
 
@@ -641,13 +672,13 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
 # weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
-# ##################
-# #POTION EFFECTS
-# ##################
+##################
+#TRANK EFFEKTE
+##################
 
-# effect.folly=Folly
-# effect.terror=Terror
-# effect.heartbreak=Broken Heart
+effect.folly=Verrücktheit
+effect.terror=Schrecken
+effect.heartbreak=Gebrochenes Herz
 
 # ##################
 # #MEMORIES
@@ -747,7 +778,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 
 # research.FIRSTDREAMS.title=Dreams
 # research.didDream.text=I must sleep. I must Dream.
-# research.FIRSTDREAMS.stage.0=The last trip I took to the Nether left me with a bizarre feeling. That of plunging down, through stone and bedrock, gods know how far into another realm.<BR>Truly, a bizarre feeling, one that felt to me weirdly.. weirdly..<BR>..nostalgic?<BR>Yes.. a weird nostalgia of an experience I've never lived. A memory that came all of a sudden, when last I dreamt.<BR>A dream. Why, that could indeed be the key!<BR>I must dream once more, I must peer into my own subconscious.  
+# research.FIRSTDREAMS.stage.0=The last trip I took to the Nether left me with a bizarre feeling. That of plunging down, through stone and bedrock, gods know how far into another realm.<BR>Truly, a bizarre feeling, one that felt to me weirdly.. weirdly..<BR>..nostalgic?<BR>Yes.. a weird nostalgia of an experience I've never lived. A memory that came all of a sudden, when last I dreamt.<BR>A dream. Why, that could indeed be the key!<BR>I must dream once more, I must peer into my own subconscious.
 # research.FIRSTDREAMS.stage.1=Dreams are a thing of wonder.<BR>I once though they'd be merely a window into my own subconscious and yet there seems to be so much more to them than meets the eye.<BR>What if the things I saw in Dreams were not fiction, what if they were true?<BR>What if they showed me part of a great Truth invisible to all but a Dreamer?<BR>I must practice the art of Dreaming. I must be the one to uncover this Truth.<BR>I, and only I, must be the one.
 
 # research.FUMESPREADER.title=Memories
@@ -779,7 +810,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.HUMANDREAMS.stage.0=Sometimes, when Dreaming, I get a bizarre feeling.<BR>People like me, even ones I have never known, start appearing in my thoughts. And yet, I feel like it's not a mere construct of my mind, of my subconscious.<BR>No. I think that our Dreams converge within the same point, that they touch each other, and that those presences within my thoughts are REAL.<BR>I believe that, through my "Dreaming expertise", I could know more about those others, that I could probe their Dreams while they remain unaware.<BR>I should take advantage of this. I could try to give birth to a new Memory, one that has a social interaction at its core, so as to point my Dream in the direction of others.<BR>Maybe initiating a simple trade with a villager could work?
 # research.HUMANDREAMS.stage.1=I have reason to believe that, within their own weird, a-dimensional plane of existence, Dreams are all adjacent to each other. To all others. At the same time, at all times.<BR>While their position may shift in relation to our world (such as when they go straight down through bedrock), my Dreams are tangent to all others.<BR>This is a breakthrough discovery. As a Dreamer more expert than most, I can probe the Dreams of others with my Own, learning things about them while ignoring any privacy they think they have. I should keep working on this ability, so that it may reach its full potential.<BR>Still, this new knowledge brings with itself a new fear.<BR>Fear that there could be other Dreamers, greater than myself, and that my excessive forays into Dreaming only made me more vulnerable.<BR>Other Dreamers, that could possibly not even be human.<PAGE>A Memory of Human was triggered by initiating a trade with one of those dim-witted Villagers. Sooner or later, I'll make them pay for their inane prices.<BR>This Memory makes for Dreams of no great consequence, for now. It enables me to know of the position of others like me, but just one of either their x or z coordinates, for a single unnamed human other than myself, provided there is at least one at the time of Dreaming.
 # research.memHUMAN.text=Initiate a trade with a Villager, see where it leads.
-# research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<BR>Yet, I burn with envy at the idea of others wielding items mightier than mine.<BR>Through this Memory, I can learn of what item is held in the main hand of a single unnamed human other than myself, provided there is at least one at the time of Dreaming. 
+# research.HUMANDREAMS.addenda.tool=A Memory of Tools, as I craft a powerful one.<BR>Yet, I burn with envy at the idea of others wielding items mightier than mine.<BR>Through this Memory, I can learn of what item is held in the main hand of a single unnamed human other than myself, provided there is at least one at the time of Dreaming.
 
 # research.INSCRIPTIONS.title=Tablet Inscriptions
 # research.INSCRIPTIONS.stage.0=These ancient stone tablets can be deciphered.<BR>Their contents may be unsettling, but my pursuit of knowledge won't be stopped by this. I hope.
@@ -829,7 +860,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.FISHERMEN.stage.0=First, I'll record here the correct steps for a successful manual use of the bait.<BR>The slug bait must be placed in water. There must be no water on top of it, but it must be surrounded by water on its 4 sides. For best performance it should be in the center of an 11x11 square of water.<BR>If the requirements are met, and I am able to see the faintest of particles, I should soon see the watery essence of the slugs on the water surface. They seemingly appear from nothingness, and pop back out of existence in a few moments. I must aim carefully my slug catcher at them, and use it.<PAGE>Secondly, I am loathe to realize that this manual task will, in the long run, become a bore. The grey robed fishermen in the Hamlet however seem well versed in the art of slug catching.<BR>I can thus employ them to my needs. Interacting with them with a gold ingot in hand will make them follow me, and I'll be able to bring them near to a slug bait, then maybe give them a small nudge to get them on top of it.<BR>Once on the bait, I must ensure they get a steady supply of gold ingots. For each one they get, they'll fish for a minute. The slugs will be dropped on the ground, or get put in a chest adjacent to the Dweller.<BR>I might want to build around them so they do not leave their position.
 
 # research.CANOE.title=Gifts from the Deep
-# research.CANOE.stage.0=The Hamlet Dwellers' diet, other than slugs, consist mostly of fish. Their barrels are full of cod.<BR>It seems they use their canoes to go fishing. These are built by the carpenters, the Dwellers with dark brown suits who live in two-story houses with normal oak ladders.<BR>Not every Hamlet has carpenters, but they're fairly common.  
+# research.CANOE.stage.0=The Hamlet Dwellers' diet, other than slugs, consist mostly of fish. Their barrels are full of cod.<BR>It seems they use their canoes to go fishing. These are built by the carpenters, the Dwellers with dark brown suits who live in two-story houses with normal oak ladders.<BR>Not every Hamlet has carpenters, but they're fairly common.
 # research.CANOE.stage.1=According to the carpenter, the Dweller Fishermen ride their canoes into the Ocean and.. the fish just come to them?<BR>I should attempt that as well, not just in any water but in those of the Ocean itself.<BR>If anything does in fact happen, I shall keep at it for a while, then top it off with a fair deal of slugs. After that, I shall commune.
 # research.CANOE.stage.2=The Ocean itself.. it answers to me, its crashing waves a soothing voice, its blue immensity a vigilant eye, its shapeless water a loving hand.<BR>I have a link with the Ocean now, I am stronger because of it, especially in the water that binds us.<BR>And yet, our link is not strong enough.. I am still a creature of the surface, am I not?
 # research.carpenter.text=Talk with the Hamlet's carpenter.
@@ -840,7 +871,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.BAPTISM.stage.1=I am immortal. Right? I am, am I not?<BR>Maybe it isn't death I fear, but failure. A fate even worse, I reckon. Over and over, it will drive me to madness. And what good is immortality then?<BR>The pool must be tight. One by one wide, and exactly five blocks deep, all of it filled by still water.<BR>I must let myself sink in it, and once I reach the bottom, I must commune, eating a slug.<BR>Then I'll wait. And I will believe, like never before.<BR>Merciful God, don't let me drown.
 # research.BAPTISM.stage.2=I was born from water, like all things that be. I live by water, my means of Holy Communion.<BR>Now, I am water.<BR>Now, I am something. I hope.<BR>To know more of the Truth means to know less of myself. Am I truly a worthless wretch?<BR>My certainties grow weaker.
 # research.lhbaptism.text=Talk with the Lighthouse Keeper.
-# research.!BAPTISM.text=Drown. Then the Idol. 
+# research.!BAPTISM.text=Drown. Then the Idol.
 
 # research.ALLIANCE.title=Alliance
 # research.ALLIANCE.stage.0=In time, I shall grow yet stronger.<BR>But where is it I go from now?<BR>I must wait for signs. There is nothing I can do by myself.. nothing.
@@ -859,7 +890,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.!METAMORPHOSIS.text=Slay three Elder Guardians. Commune.
 
 # research.DREAMBOTTLE.title=Dream Bottle
-# research.DREAMBOTTLE.stage.0=I shed a tear when I was baptised.<BR>A sliver of Truth, it was, reminding me of my worthlessness.<BR>And yet, it was that very tear that led me to *know*.<BR>I cannot amass my own tears, I am no professional Weeper, am I?<BR>Am I?<BR>I'll seek help in bodies other than mine.
+# research.DREAMBOTTLE.stage.0=I shed a tear when I was baptised.<BR>A sliver of Truth, it was, reminding me of my worthlessness.<BR>And yet, it was that very tear that led me to *know*.<BR>I cannot amass my own tears, I am no professional Schluchzer, am I?<BR>Am I?<BR>I'll seek help in bodies other than mine.
 # research.DREAMBOTTLE.stage.1=Through Weepers and Fleti I am granted knowledge, and through Dreams I shall utilize and magnify such knowledge.<BR>A Dream Bottle is what I must craft. An invaluable tool that will let me Dream limitless times per day, with multiple Memories at a time.<BR>The only price will be tears. But not my own.
 # research.DREAMBOTTLE.stage.2=The Dream Bottle stores tears. It can be used on a Lacrymatory to be filled up to its maximum capacity, and used again to be emptied as much as possible.<BR>It can store up to 4 buckets of tears.<BR>It can then be used without sneaking to be filled with Memories, up to four.<BR>Now, whenever I drink the Bottle's contents while sneaking I will be able to Dream anywhere, anytime, as many times as I want.<BR>One bucket of tears for every Dream, that's the exchange rate.<BR>As I learn of this new tool, new possibilities open up to me in the art of Dreaming.
 # research.gotweepers.text=Find a way to gather tears.
@@ -890,8 +921,8 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 
 # research.WEEPERS.title=Weepers
 # research.WEEPERS.stage.0=The person I once was would've reeled in disgust at the idea of ripping spines and tearing hearts. Now I barely flinch.<BR>But this..? This new idea that springs forth in my mind, through the uncanny doings of The Great Dreamer? Even now my hands tremble.<BR>To fill their brains with water, to make them SEE things as they truly are. Their brains filled, so they may only weep.
-# research.WEEPERS.stage.1=A tear is a revelation. All should fear the ones who weep, for they know more than most.<BR>A Weeper is a Villager whose head was enlarged to monstruos size, filled by water.<BR>A Fletum is a Weeper who's lost its spine. It needs no body, it is whole within its head.<BR>They Dream, they learn, they weep. I must harvest their tears, they are knowledge.
-# research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Weeper can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, while sneaking, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Weeper or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
+# research.WEEPERS.stage.1=A tear is a revelation. All should fear the ones who weep, for they know more than most.<BR>A Schluchzer is a Villager whose head was enlarged to monstruos size, filled by water.<BR>A Fletum is a Schluchzer who's lost its spine. It needs no body, it is whole within its head.<BR>They Dream, they learn, they weep. I must harvest their tears, they are knowledge.
+# research.WEEPERS.stage.2=It is most natural to weep when one learns something. The sudden realization of one's own insignificance is no small deal, after all.<BR>It should not be held back, nor frowned upon, for tears are precious. A sign of humility before the Truth, and all that it entails.<BR>A Lacrymatory is where one should weep, in case one wishes to preserve their tears, to be then picked up through buckets. For some reason, when fallen into the Lacrymatory their power does not expire.<BR>And so it is, that Weepers and Fleti come to usefulness. A Schluchzer can be picked up directly through the use of a blackjack, whereas a Fletum requires only my bare hands, while sneaking, disgusting as it may be.<BR>Both of them can be used upon the Lacrymatory, and they'll weep in it. They must not wander far, and thus it is important to build around them so they don't escape.<BR>Additionally, only one of them can be used per Lacrymatory, and no two of them, whether they be Schluchzer or Fletum, should be too close to each other. No less than three blocks, per say.<BR>After all, how many times have I cried in my loneliness?
 # research.filledtears.text=Fill a brain with water.
 # research.craftedlacrymatory.text=Craft a Lacrymatory.
 
@@ -912,7 +943,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 
 # research.BLOODCOVENANT.title=Covenant of Blood
 # research.BLOODCOVENANT.stage.0=Through blood, different lives are linked.<BR>The dark red fluid is not of this world, and the links are of eldritch nature. I may find use for such bonds, yet this time I cannot do it alone. I need other Players.
-# research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all other Players who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally. 
+# research.BLOODCOVENANT.stage.1=The relation between blood and water grows ever closer.<BR>All life came from water, after it turned to blood. All life is linked by this one origin.<BR>The Covenant of Blood is based upon these links. When I activate it while submerged in water, I will for a few brief moments see all other Players who, like me, wear the ring and are waterborne.<BR>When looking at one of them, activating the ring again will let me instantaneously travel to my ally.
 # research.craftedblood_covenant.text=Craft a Covenant of Blood.
 
 # research.BLOODCROWN.title=Crown of Thorns
@@ -930,7 +961,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.STATUE.stage.1=How pretty. It depicts me as I pray and appease my own God.<BR>I must set an example for my followers, don't I?<BR>The Statue must be placed, then surrounded with crawling Villagers, their spines ripped and their wills broken.<BR>Of course, I must also make sure they don't flee from duty. They are to be imprisoned.<BR>Lastly, I need to cut myself on the Statue, to link it to me. It is an act of self sacrifice.<BR>I must set an example, after all.
 # research.STATUE.stage.2=I feel them. Their prayers.<BR>This must be what it's like to be a GOD.<BR>They leave me strengthened, my powers invigorated.<BR>For instance, more Deep Ones can be summoned through my pact with Dagon.<BR>It takes less time for me to recover from activating Powers or Baubles. Even Dreams seem to grow stronger.<BR>Only a single Statue can be used at a time, but that is enough.<BR>I, now, am truly godly. I am grand, mighty, I am.. I am..<BR>..do I deserve all this? Or have I sinned of arrogance?
 # research.craftedstatue.text=Craft a Statue.
-# research.linkedstatue.text=Link a Statue to myself. 
+# research.linkedstatue.text=Link a Statue to myself.
 
 # research.SACRIFICESTATUE.title=Statue of Sacrifice
 # research.SACRIFICESTATUE.stage.0=Could I seek meaning in selflessness?<BR>To pay myself for someone else's wellbeing? Quite a change from my previous attitudes, and yet, I have followers to take care of now!<BR>I shall build a Statue that portrays me in a very different position, then.
@@ -957,7 +988,7 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 
 # research.BLOODWELL.title=Blood Well
 # research.BLOODWELL.stage.0=If the undead's desire for blood is so great, then I shall answer to that desire as best as I may.<BR>I shall cover them with the sweet, red substance.<BR>I will build a well that will hoard such undead, bind them to me, so that I may rule them.<BR>A simple structure of blood bricks. The heart must be placed last.
-# research.BLOODWELL.stage.1=The Well still beats. The dead are drawn towards it, even more so than to normal hearts.<BR>Once they enter the Well, the dead are gone, stored in it. Or, rather, through it.<BR>Blutsigels can be made for both Zombies and Skeletons. When these undead enter the Well they can later be reacquired through the use of Sigils by using these on the central block of the Well. The Sigils can then be used on the ground to summon my own Blood Undead.<BR>Sigils can be emptied in the Well by sneaking. Summoned Blood Undead can be put back in the Sigil by using it upon them.<BR>I do not know how the Well stores the dead. I imagine it could be a link to some other location, in or out of this world. I truly wish I could enter it myself.<BR>Alas, I am not dead as of yet.
+# research.BLOODWELL.stage.1=The Well still beats. The dead are drawn towards it, even more so than to normal hearts.<BR>Once they enter the Well, the dead are gone, stored in it. Or, rather, through it.<BR>Blutsiegels can be made for both Zombies and Skeletons. When these undead enter the Well they can later be reacquired through the use of Sigils by using these on the central block of the Well. The Sigils can then be used on the ground to summon my own Blood Undead.<BR>Sigils can be emptied in the Well by sneaking. Summoned Blood Undead can be put back in the Sigil by using it upon them.<BR>I do not know how the Well stores the dead. I imagine it could be a link to some other location, in or out of this world. I truly wish I could enter it myself.<BR>Alas, I am not dead as of yet.
 # research.builtwell.text=Build a Blood Well.
 
 # research.SHOGGOTH.title=Shoggoth
@@ -983,12 +1014,12 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 
 # research.DREAMSHRINE.title=Dream Shrine
 # research.DREAMSHRINE.stage.0=The Nether lies halfway between the Overworld and the Deepest Oceans. Surrounded by Void on both sides, it is closer to the true Void, the true Veil that lies beneath All.<BR>Even that accursed land of fire was born from water.<BR>Like all things that be.<BR>And even though it's small in surface compared to the Overworld, some Dreams go through it still.<BR>Quartz makes for a powerful conductor, not only of redstone but even of Dreams.<BR>A Shrine of Dreams, made of Quartz, to cast them wherever I desire. That is my new goal.<BR>All I require is a way to bind specific locations.. even specific people.. to focus my Dreams towards them.
-# research.DREAMSHRINE.stage.1=The Dream Shrine is to be used in tandem with the Dream Bottle, as well as a Pathway or Player Blutsigel.<BR>The correct creation of the structure can be verified by using on the central chiseled quartz block either one of those sigils.<BR>While standing exactly on top of the central chiseled quartz block, by holding the Dream Bottle in my main hand and the bound sigil in the offhand I am capable of casting Dreams towards specific locations or people.<BR>As an example, Dreams that inspect the ground will work as if they were used atop the location or Player bound in the sigil.<BR>Dreams that targeted random Players can now target specific ones, and even certain Dreams that would only affect myself can now be utilized upon others.<BR>From my base I am now able to see and command all kinds of things. A precious knowledge, one that must be kept tight and silent.
+# research.DREAMSHRINE.stage.1=The Dream Shrine is to be used in tandem with the Dream Bottle, as well as a Pathway or Player Blutsiegel.<BR>The correct creation of the structure can be verified by using on the central chiseled quartz block either one of those sigils.<BR>While standing exactly on top of the central chiseled quartz block, by holding the Dream Bottle in my main hand and the bound sigil in the offhand I am capable of casting Dreams towards specific locations or people.<BR>As an example, Dreams that inspect the ground will work as if they were used atop the location or Player bound in the sigil.<BR>Dreams that targeted random Players can now target specific ones, and even certain Dreams that would only affect myself can now be utilized upon others.<BR>From my base I am now able to see and command all kinds of things. A precious knowledge, one that must be kept tight and silent.
 # research.boundpathway2.text=Find a way to bind locations.
 
-# research.BLOODSIGILS.title=Blutsigels
+# research.BLOODSIGILS.title=Blutsiegels
 # research.BLOODSIGILS.stage.0=Through blood we're bound not just to the Deepest Oceans, but to All.<BR>A Pathway Sigil can be used to bind to itself a location in the world, simply by using it.<BR>I should try it before bringing my research forwards.
-# research.BLOODSIGILS.stage.1=Indeed, the Blutsigel has forged an unbreakable bond.<BR>Through these Pathway Sigils I will be able to target specific locations.<BR>There is, however, another type of Sigil: the Player Sigil, that can bind a specific person to itself.<BR>More difficult to use, this one requires to be held in my hands, either main or offhand, as I injure another Player enough for them to bleed.<BR>Once their blood is in my hands, so too shall their fate be mine to dictate.
+# research.BLOODSIGILS.stage.1=Indeed, the Blutsiegel has forged an unbreakable bond.<BR>Through these Pathway Sigils I will be able to target specific locations.<BR>There is, however, another type of Sigil: the Player Sigil, that can bind a specific person to itself.<BR>More difficult to use, this one requires to be held in my hands, either main or offhand, as I injure another Player enough for them to bleed.<BR>Once their blood is in my hands, so too shall their fate be mine to dictate.
 # research.boundpathway.text=Make a Pathway Sigil.
 
 # research.PLANTDREAMS.title=Dreams of Flora
@@ -1088,31 +1119,37 @@ gui.optionwheel.surgeon.3=Herz zerreißen
 # research.SURGEON.stage.1=I had wondered why Surgeons would ever form a society of their own.<BR>Little did I know that a Surgeon is not a profession.<BR>No, it is a race.<BR>One that does not belong to my world.<BR>Is this a race made with intent? After all, they all share a singular purpose.<BR>...<BR>What if I, too, were part of a breed that was *made*, not by chance but by will? Without knowing, for how I could I?<BR>A Surgeon is a useful servant, or rather, ally.<BR>I must place him close to a Watery Cradle with which I want him, her, it, whatever, to work.<BR>I must then use Surgery Tools on him to specify which action I want performed.<BR>The Surgeon will then operate every time a patient appears in the Cradle, placing the resulting patient on top of the device and keeping hearts or spines to himself. I can then interact with him with bare hands to be given all materials he gathered.<BR>A much more useful technique however is that of binding the Summons to a nearby chest before using it. To do that I can interact with a chest, wielding the letter, while sneaking.<BR>I can clear the previous binding by right clicking in the air while sneaking.<BR>A Surgeon summoned with a bound Summons will put any output of his operations, both patients and materials, in the bound chest, provided they're sufficiently close to each other.<BR>Since Villagers and Weepers in item form can enter Cradles as well, I can effectively pipeline Surgeons one after the other.<BR>A Surgeon can be picked up by its master with a blackjack.
 # research.summoned_surgeon.text=Summon a Surgeon.
 
-# ##################
-# #MISC
-# ##################
+##################
+#MISC
+##################
 
-# deity.none=None
-# deity.greatdreamer=The Great Dreamer
+deity.none=Keine
+deity.greatdreamer=Der Große Träumer
 
-# worship.default=Default
-# worship.penitence=Penitence
-# worship.sacrifice=Sacrifice
+worship.default=Standard
+worship.penitence=Buße
+worship.sacrifice=Aufopferung
 
-# power.cooldown=The Power requires %1$s more seconds of cooldown.
-# bauble.cooldown=The Bauble requires %1$s more seconds of cooldown.
-# roar.cooldown=The Roar requires %1$s more seconds of cooldown.
+power.cooldown=Die Fähigkeit benötigt weitere %1$s Sekunden Abklingzeit.
+bauble.cooldown=Das Bauble benötigt weitere %1$s Sekunden Abklingzeit.
+roar.cooldown=Das Gebrüll benötigt weitere %1$s Sekunden Abklingzeit.
 
-# teleport.setposition=My current position has been set as my return point.
-# teleport.inwater=I must be in water to use this Power.
-# teleport.wrongdimension=My last return point was in a different dimension. Using this Power again in the next 20 seconds will remove the return point.
-# teleport.removedpoint=My return point has been reset.
+teleport.setposition=Meine aktuelle Position wurde als Rückkehrpunkt festgelegt.
+teleport.inwater=Ich muss im Wasser sein, um diese Fähigkeit zu nutzen.
+teleport.wrongdimension=Mein letzter Rückkehrpunkt war in einer anderen Dimension. Wenn du diese Kraft in den nächsten 20 Sekunden erneut verwendest, wird der Rückkehrpunkt entfernt.
+teleport.removedpoint=Mein Rückkehrpunkt wurde zurückgesetzt.
 
-# beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
-# canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
-# canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
+beginning.netherreturn=Ein neues Buch liegt in meinen Händen, bereit geschrieben zu werden. Al Azif werde ich es nennen.
+canoe.fishing.start=Ein Fisch? Aus dem nichts? Ist er hereingesprungen oder...          ...ich sollte noch eine Weile dabei bleiben.
+canoe.fishing.end=Ich glaube, ich habe genug Fisch gewonnen. Ich sollte ausreichend Schnecken essen und dann mit dem Götzenbild kommunizieren.
 
-# sleep.transformed=I cannot sleep while transformed.
-# sleep.parasite=I don't feel all too well.. I can't sleep.
+arena.triumph=§6SIEG
+arena.defeat=§4NIEDERLAGE
 
-# itemGroup.beyondtheveil=Beyond The Veil
+toast.ictyary=Neuer Eintrag im Ictyarium
+toast.memory=Neue Erinnerung
+
+sleep.transformed=Ich kann nicht schlafen, während ich verwandelt bin.
+sleep.parasite=Ich fühle mich nicht gut... ich kann nicht schlafen.
+
+itemGroup.beyondtheveil=Beyond The Veil
