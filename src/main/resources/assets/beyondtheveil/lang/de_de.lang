@@ -672,13 +672,13 @@ dagon.final.4=GOTT WIRD NICHT ZUHÖREN
 # weeper.shoggoth.please2=§5§oPLEASE MASTER, KILL ME.
 # weeper.shoggoth.promised=§5§oMASTER, YOU PROMISED.
 
-# ##################
-# #POTION EFFECTS
-# ##################
+##################
+#TRANK EFFEKTE
+##################
 
-# effect.folly=Folly
-# effect.terror=Terror
-# effect.heartbreak=Broken Heart
+effect.folly=Verrücktheit
+effect.terror=Schrecken
+effect.heartbreak=Gebrochenes Herz
 
 # ##################
 # #MEMORIES
