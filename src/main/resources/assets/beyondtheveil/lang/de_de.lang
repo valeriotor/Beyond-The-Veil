@@ -363,20 +363,20 @@ keys.activebauble=Baubles nutzen/verwalten
 keys.power=Fähigkeit nutzen/auswählen
 
 
-# ##################
-# #SHOGGOTH
-# ##################
+##################
+#SHOGGOTHE
+##################
 
-# building.talltower=Tall Tower
-# building.tower=Tower
-# building.largetower=Large Tower
-# building.pyramid=Pyramid
-# building.wall=Wall
-# building.road=Road
-# building.clinic=Clinic
-# building.great_shrine=Great Shrine
+building.talltower=Hoher Turm
+building.tower=Turm
+building.largetower=Großer Turm
+building.pyramid=Pyramide
+building.wall=Mauer
+building.road=Straße
+building.clinic=Klinik
+building.great_shrine=Großer Schrein
 
-# angry.shoggoth.bad=A Shoggoth that keeps slaying others will eventually turn upon its master.
+angry.shoggoth.bad=Ein Shoggothe, der ständig andere tötet, wird sich irgendwann gegen seinen Meister wenden.
 
 # ##################
 # #DAGON DIALOGUE
