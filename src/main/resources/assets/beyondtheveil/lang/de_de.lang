@@ -1119,31 +1119,37 @@ effect.heartbreak=Gebrochenes Herz
 # research.SURGEON.stage.1=I had wondered why Surgeons would ever form a society of their own.<BR>Little did I know that a Surgeon is not a profession.<BR>No, it is a race.<BR>One that does not belong to my world.<BR>Is this a race made with intent? After all, they all share a singular purpose.<BR>...<BR>What if I, too, were part of a breed that was *made*, not by chance but by will? Without knowing, for how I could I?<BR>A Surgeon is a useful servant, or rather, ally.<BR>I must place him close to a Watery Cradle with which I want him, her, it, whatever, to work.<BR>I must then use Surgery Tools on him to specify which action I want performed.<BR>The Surgeon will then operate every time a patient appears in the Cradle, placing the resulting patient on top of the device and keeping hearts or spines to himself. I can then interact with him with bare hands to be given all materials he gathered.<BR>A much more useful technique however is that of binding the Summons to a nearby chest before using it. To do that I can interact with a chest, wielding the letter, while sneaking.<BR>I can clear the previous binding by right clicking in the air while sneaking.<BR>A Surgeon summoned with a bound Summons will put any output of his operations, both patients and materials, in the bound chest, provided they're sufficiently close to each other.<BR>Since Villagers and Weepers in item form can enter Cradles as well, I can effectively pipeline Surgeons one after the other.<BR>A Surgeon can be picked up by its master with a blackjack.
 # research.summoned_surgeon.text=Summon a Surgeon.
 
-# ##################
-# #MISC
-# ##################
+##################
+#MISC
+##################
 
-# deity.none=None
-# deity.greatdreamer=The Great Dreamer
+deity.none=Keine
+deity.greatdreamer=Der Große Träumer
 
-# worship.default=Default
-# worship.penitence=Penitence
-# worship.sacrifice=Sacrifice
+worship.default=Standard
+worship.penitence=Buße
+worship.sacrifice=Aufopferung
 
-# power.cooldown=The Power requires %1$s more seconds of cooldown.
-# bauble.cooldown=The Bauble requires %1$s more seconds of cooldown.
-# roar.cooldown=The Roar requires %1$s more seconds of cooldown.
+power.cooldown=Die Fähigkeit benötigt weitere %1$s Sekunden Abklingzeit.
+bauble.cooldown=Das Bauble benötigt weitere %1$s Sekunden Abklingzeit.
+roar.cooldown=Das Gebrüll benötigt weitere %1$s Sekunden Abklingzeit.
 
-# teleport.setposition=My current position has been set as my return point.
-# teleport.inwater=I must be in water to use this Power.
-# teleport.wrongdimension=My last return point was in a different dimension. Using this Power again in the next 20 seconds will remove the return point.
-# teleport.removedpoint=My return point has been reset.
+teleport.setposition=Meine aktuelle Position wurde als Rückkehrpunkt festgelegt.
+teleport.inwater=Ich muss im Wasser sein, um diese Fähigkeit zu nutzen.
+teleport.wrongdimension=Mein letzter Rückkehrpunkt war in einer anderen Dimension. Wenn du diese Kraft in den nächsten 20 Sekunden erneut verwendest, wird der Rückkehrpunkt entfernt.
+teleport.removedpoint=Mein Rückkehrpunkt wurde zurückgesetzt.
 
-# beginning.netherreturn=A new book lies in my hands, ready to be written. Al Azif I shall call it.
-# canoe.fishing.start=A fish? From nowhere? Did it jump in or...          ...I should keep at this for a while.
-# canoe.fishing.end=I think I've gained enough fish. I should eat enough slugs, then commune with the Idol.
+beginning.netherreturn=Ein neues Buch liegt in meinen Händen, bereit geschrieben zu werden. Al Azif werde ich es nennen.
+canoe.fishing.start=Ein Fisch? Aus dem nichts? Ist er hereingesprungen oder...          ...ich sollte noch eine Weile dabei bleiben.
+canoe.fishing.end=Ich glaube, ich habe genug Fisch gewonnen. Ich sollte ausreichend Schnecken essen und dann mit dem Götzenbild kommunizieren.
 
-# sleep.transformed=I cannot sleep while transformed.
-# sleep.parasite=I don't feel all too well.. I can't sleep.
+arena.triumph=§6SIEG
+arena.defeat=§4NIEDERLAGE
 
-# itemGroup.beyondtheveil=Beyond The Veil
+toast.ictyary=Neuer Eintrag im Ictyarium
+toast.memory=Neue Erinnerung
+
+sleep.transformed=Ich kann nicht schlafen, während ich verwandelt bin.
+sleep.parasite=Ich fühle mich nicht gut... ich kann nicht schlafen.
+
+itemGroup.beyondtheveil=Beyond The Veil
