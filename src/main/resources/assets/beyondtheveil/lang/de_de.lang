@@ -342,19 +342,19 @@ gui.city_mapper.save=Änderungen Speichern
 gui.city_mapper.reloadmap=Karte neu laden
 gui.city_mapper.incsize=TIPP: Für diese Aufgabe empfiehlt sich, die GUI-Größe zu erhöhen.
 
-# gui.drowned.youdrowned=You Drowned
-# gui.drowned.greatdreamer=Believe in the Great Dreamer
-# gui.drowned.ancientgods=Believe in the gods of your ancestors
-# gui.drowned.yourself=Believe in Yourself
-# gui.drowned.believe=Believe
-# gui.drowned.know=Know
-# gui.drowned.youare=YOU ARE
-# gui.drowned.nothing=NOTHING
-# gui.drowned.insignificant=INSIGNIFICANT
-# gui.drowned.worthless=WORTHLESS
-# gui.drowned.gnawing=I am the Gnawing Sensation at the back of your mind
-# gui.drowned.nogd=The Great Dreamer won't listen to you.
-# gui.drowned.noac=The gods of your ancestors do not exist.
+gui.drowned.youdrowned=Du bist ertrunken.
+gui.drowned.greatdreamer=An den Großen Träumer glauben
+gui.drowned.ancientgods=An die Götter deiner Vorfahren glauben
+gui.drowned.yourself=An dich selbst glauben
+gui.drowned.believe=Glauben
+gui.drowned.know=Wissen
+gui.drowned.youare=DU BIST
+gui.drowned.nothing=NICHTS
+gui.drowned.insignificant=UNBEDEUTEND
+gui.drowned.worthless=WERTLOS
+gui.drowned.gnawing=Ich bin das nagende Gefühl im Hinterkopf
+gui.drowned.nogd=Der Große Träumer erhört dich nicht.
+gui.drowned.noac=Die Götter deiner Vorfahren existieren nicht.
 
 # gui.research_page.complete=Progress
 
