@@ -253,7 +253,7 @@ entity.beyondtheveil:canoe.name=Kanu
 entity.beyondtheveil:crawling_villager.name=Kriechender Dorfbewohner
 entity.beyondtheveil:weeper.name=Schluchzer
 entity.beyondtheveil:fletum.name=Fletum
-entity.beyondtheveil:shoggoth.name=Shoggoth
+entity.beyondtheveil:shoggoth.name=Shoggothe
 entity.beyondtheveil:crazed_weeper.name=Wahnsinniger Schluchzer
 entity.beyondtheveil:blood_zombie.name=Blutzombie
 entity.beyondtheveil:blood_skeleton.name=Blutskelett
@@ -275,8 +275,8 @@ entity.beyondtheveil:adeline.name=Adeline
 
 entity.beyondtheveil:umancala_ball.name=Umancala Feuerball
 
-shoggoth.hasmapalready0=Dieser Shoggoth baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
-shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggoth Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
+shoggoth.hasmapalready0=Dieser Shoggothe baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
+shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggothe Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
 shoggoth.hasmapalready2=Nur ein Narr würde die Aufmerksamkeit eines Shoggothen auf ich lenken.. und ich bin kein Narr, oder?
 shoggoth.hasmapalready3=Stop.
 
