@@ -37,8 +37,8 @@ item.beyondtheveil:dream_bottle.name=Traumflasche
 item.beyondtheveil:redstone_weed.name=Redstonegras-Samen
 item.beyondtheveil:ghost_weed.name=Geistergras-Samen
 item.beyondtheveil:vanilla_weed.name=Vanilla Grassamen
-item.beyondtheveil:shoggoth_map.name=Shoggoth Karte
-item.beyondtheveil:held_shoggoth.name=Shoggoth
+item.beyondtheveil:shoggoth_map.name=Shoggothen-Stadtplan
+item.beyondtheveil:held_shoggoth.name=Shoggothe
 item.beyondtheveil:blood_covenant.name=Blutschwur
 item.beyondtheveil:revelation_ring.name=Ring der Offenbarung
 item.beyondtheveil:azacno_charm.name=Talisman von Azacno
@@ -378,47 +378,51 @@ building.great_shrine=Großer Schrein
 
 angry.shoggoth.bad=Ein Shoggothe, der ständig andere tötet, wird sich irgendwann gegen seinen Meister wenden.
 
-# ##################
-# #DAGON DIALOGUE
-# ##################
+##################
+#DAGON DIALOGUE
+##################
 
-# dagon.greeting.0=IT IS NOT ALLIANCE I SEEK
-# dagon.greeting.1=YOU WILL SERVE ME
-# dagon.greeting.2=GRAND REWARDS AWAIT YOUR SUCCESS
-# dagon.greeting.3=UNSPEAKABLE CONSEQUENCES WILL FOLLOW YOUR FAILURES
-# dagon.greeting.4=YOU ARE MY HERALD
-# dagon.greeting.5=BRING THIS GOLD TO THE DWELLERS
-# dagon.greeting.6=SO THAT THEY MAY KNOW YOU AS MY AMBASSADOR
-# dagon.greeting.7=THEN COMMUNE WITH GOD'S IDOL
-# dagon.greeting.8=I WILL HEAR YOU
-# dagon.bringgold=These three golden blocks must be brought to the Fisherman Dwellers. We should make haste.
+dagon.greeting.0=ICH BIN NICHT AUF EIN BÜNDNIS AUS
+dagon.greeting.1=DU WIRST MIR DIENEN
+dagon.greeting.2=PRÄCHTIGE SCHÄTZE ERWARTEN DEINEN ERFOLG
+dagon.greeting.3=UNSÄGLICHE KONSEQUENZEN WERDEN DEINEM VERSAGEN NACHFOLGEN
+dagon.greeting.4=DU BIST MEIN VORBOTE
+dagon.greeting.5=BRING DIESES GOLD ZU DEN BEWOHNERN
+dagon.greeting.6=SODASS SIE DICH ALS MEINEN BOTSCHAFTER ERKENNEN KÖNNEN
+# TODO: refine dagon.greeting.7 / dagon.judgement.3
+dagon.greeting.7=DANN KOMMUNIZIERE MIT DEM BILD GOTTES
+# TODO: choose one: dagon grants an audience: "ICH WERDE DICH ANHÖREN" / dagon will hear what the player says to the idol: "ICH WERDE DICH HÖREN"
+dagon.greeting.8=ICH WERDE DICH ANHÖREN
+dagon.bringgold=Diese drei goldenen Blöcke müssen zu den Fischer-Bewohnern gebracht werden. Wir sollten uns beeilen.
 
-# dagon.judgement.0=YOU WILL JOIN MY RANKS
-# dagon.judgement.1=PROVE YOUR WORTH TO ME
-# dagon.judgement.2=SLAY THREE OF MY ELDER GUARDIANS
-# dagon.judgement.3=THEN COMMUNE WITH GOD'S IDOL
-# dagon.slayguardians=Three Elder Guardians, in their ancient ocean monuments. A trifle, right?
+dagon.judgement.0=DU WIRST DICH MEINEM HEER ANSCHLIESSEN
+dagon.judgement.1=BEWEISE MIR DEINEN WERT
+dagon.judgement.2=TÖTE DREI MEINER GROSSEN WÄCHTER
+dagon.judgement.3=DANN KOMMUNIZIERE MIT DEM BILD GOTTES
+dagon.slayguardians=Drei Große Wächter, in ihren alten Ozeanmonumenten. Eine Lappalie, oder?
 
-# dagon.seaborn.0=ALL LIFE IS BORN FROM WATER
-# dagon.seaborn.1=THROUGH BLOOD THEY ARE LINKED TO THE DEEP
-# dagon.seaborn.2=YOUR LINK GROWS EVER STRONGER
-# dagon.seaborn.3=YOU MUST BATHE IN THE LAND OF ENDERMEN
-# dagon.seaborn.4=ENGULFED IN THE VOID AND CLOSEST TO GOD
-# dagon.seaborn.5=THERE YOU WILL DREAM WHILE IN WATER
-# dagon.seaborn.6=AND THE OCEANS WILL BE YOURS
-# dagon.endbath=We must bathe in the End, and there we must Dream.
+dagon.seaborn.0=ALLES LEBEN ENTSPRINGT DEM WASSER
+dagon.seaborn.1=DURCH BLUT SIND SIE DER TIEFE VERBUNDEN
+dagon.seaborn.2=DEINE VERBINDUNG WIRD IMMER STÄRKER
+dagon.seaborn.3=DU MUSST IM LAND DER ENDERMEN BADEN
+dagon.seaborn.4=VON DER LEERE VERSCHLUNGEN UND GOTT AM NÄCHSTEN
+dagon.seaborn.5=DORT WIRST DU IM WASSER TRÄUMEN
+dagon.seaborn.6=UND DIE OZEANE WERDEN DEIN SEIN
+dagon.endbath=Wir müssen im Ende baden, und dort müssen wir Träumen.
 
-# dagon.killkeeper.0=SLAY THE LIGHTHOUSE KEEPER
-# dagon.killkeeper.1=HIS DEATH WON'T MATTER
-# dagon.killkeeper.2=PROVE HIS WORTHLESSNESS
-# dagon.killkeeper.3=AND I WILL GRANT YOU SOME TRUTH
-# dagon.lastwords=A necessary murder. Should I listen to his last words?
+dagon.killkeeper.0=TÖTE DEN LEUCHTTURMWÄCHTER
+dagon.killkeeper.1=SEIN TOD WIRD UNERHEBLICH SEIN
+dagon.killkeeper.2=BEWEISE SEINE WERTLOSIGKEIT
+dagon.killkeeper.3=UND ICH WERDE DIR EIN WENIG WAHRHEIT GEWÄHREN
+dagon.lastwords=Ein notwendiger Mord. Soll ich seine letzten Worte anhören?
 
-# dagon.final.0=HE WAS IRRELEVANT
-# dagon.final.1=AND SO ARE YOU
-# dagon.final.2=YOUR DEATH WILL COME IN ITS OWN TIME
-# dagon.final.3=SEEK WORTH IN PRAYER
-# dagon.final.4=GOD WILL NOT LISTEN
+dagon.final.0=ER WAR BELANGLOS
+dagon.final.1=UND DU BIST ES AUCH
+# TODO: not feeling too happy with dagon.final.2, needs work
+dagon.final.2=DEIN TOD WIRD ZU SEINER ZEIT KOMMEN
+# TODO: could also go with "GELTUNG" instead of "WERT"
+dagon.final.3=SUCHE IM GEBET NACH WERT
+dagon.final.4=GOTT WIRD NICHT ZUHÖREN
 
 # ##################
 # #DWELLER DIALOGUE
