@@ -167,6 +167,12 @@ tile.beyondtheveil:dream_focus_fluids.name=Traumfokus: Flüssigkeiten
 tile.beyondtheveil:dream_focus_villagers.name=Traumfokus: Dorfbewohner
 tile.beyondtheveil:megydrea.name=Megydrea
 tile.beyondtheveil:curtain.name=Vorhang
+tile.beyondtheveil:thick_algae.name=Dichte Algen
+tile.beyondtheveil:arche_portal.name=Arche Portal
+tile.beyondtheveil:dark_glass.name=Dunkles Glas
+tile.beyondtheveil:deep_prismarine.name=Tiefes Prismarin
+tile.beyondtheveil:arena.name=Arena Starter
+tile.beyondtheveil:deep_chest.name=Tiefe Kiste
 
 fluid.tears=Tränen
 
@@ -204,6 +210,11 @@ interact.statue.alreadyelse=Diese Statue ist an jemand anderen als mich gebunden
 interact.statue.bound=Mein Blut tränkt diese Statue. Sie ist jetzt gebunden, unsere Verbindung ist nicht zu brechen, nicht zu trennen.
 interact.gearbench.dunno=Ich weiß nicht, wie das zu benutzen ist.
 interact.lacrymatory.amount=Das Lacrimarium ist mit %1$s/4000 mB Tränen gefüllt.
+interact.arena.mustbedeep=Ich muss Tief sein, um das Duell zu starten.
+interact.arena.occupied=Es duelliert sich bereits jemand in der Arena.
+
+enter.arche_portal.initiate=Teleportiere zur Oberwelt in 5 Sekunden.
+enter.arche_portal.interrupt=Teleportation unterbrochen.
 
 hit.idol.schiz0=Ich sollte nicht versuchen, das zu zerstören.
 hit.idol.schiz1=Ich sollte das nicht tun.
@@ -247,6 +258,24 @@ entity.beyondtheveil:crazed_weeper.name=Wahnsinniger Weeper
 entity.beyondtheveil:blood_zombie.name=Blutzombie
 entity.beyondtheveil:blood_skeleton.name=Blutskelett
 entity.beyondtheveil:surgeon.name=Chirurg
+entity.beyondtheveil:dreadfish.name=Schreckensfisch
+entity.beyondtheveil:muray.name=Muräne
+entity.beyondtheveil:octid.name=Oktid
+entity.beyondtheveil:deep_angler.name=Tiefer Angler
+entity.beyondtheveil:sarfin.name=Sarfine
+entity.beyondtheveil:man_o_war.name=Blasenqualle
+entity.beyondtheveil:jelly.name=Mini-Qualle
+entity.beyondtheveil:deep_one_brute.name=Tiefe Wesen Grobian
+entity.beyondtheveil:deep_one_myrmidon.name=Tiefe Wesen Myrmidon
+entity.beyondtheveil:cephalopodian.name=Cephalopode
+entity.beyondtheveil:sandflatter.name=Sandfplätter
+# no translation required
+entity.beyondtheveil:umancala.name=Umancala
+entity.beyondtheveil:bonecage.name=Knochenkäfig
+# no translation required
+entity.beyondtheveil:adeline.name=Adeline
+
+entity.beyondtheveil:umancala_ball.name=Umancala Feuerball
 
 shoggoth.hasmapalready0=Dieser Shoggoth baut bereits.. es wäre nicht ratsam, dieses Ding zu unterbrechen, oder?
 shoggoth.hasmapalready1=Ich sollte aufhören dem Shoggoth Befehle zu erteilen, während es sein Ding macht. Das ist gefährlich.
