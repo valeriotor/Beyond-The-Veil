@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube",
+  "loader": "forge:multi-layer",
+  "layers": {
+    "translucent": {
+      "parent": "beyondtheveil:block/fume_spreader"
+    }
+  }
+}

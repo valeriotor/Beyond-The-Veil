@@ -1,6 +1,0 @@
-{
-    "parent": "block/crop",
-    "textures": {
-        "crop": "beyondtheveil:blocks/crops/ghost_weed3"
-    }
-}

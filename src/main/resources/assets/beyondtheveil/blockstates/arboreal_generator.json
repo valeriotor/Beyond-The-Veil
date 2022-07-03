@@ -1,6 +1,0 @@
-{
-    "variants": {
-		"half=bottom": { "model": "beyondtheveil:arboreal_generator_bottom" },
-		"half=top": { "model": "beyondtheveil:arboreal_generator_top" }
-    }
-}

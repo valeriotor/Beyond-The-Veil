@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "beyondtheveil:blocks/damp_wood",
-        "top": "beyondtheveil:blocks/damp_wood",
-        "side": "beyondtheveil:blocks/damp_wood"
-    }
-}

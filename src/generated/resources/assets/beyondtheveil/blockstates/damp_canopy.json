@@ -1,0 +1,158 @@
+{
+  "variants": {
+    "facing=north,flat=false,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy",
+      "y": 180
+    },
+    "facing=south,flat=false,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy"
+    },
+    "facing=west,flat=false,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy",
+      "y": 90
+    },
+    "facing=east,flat=false,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy",
+      "y": 270
+    },
+    "facing=north,flat=true,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 180
+    },
+    "facing=south,flat=true,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy_flat"
+    },
+    "facing=west,flat=true,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 90
+    },
+    "facing=east,flat=true,shape=straight": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 270
+    },
+    "facing=north,flat=false,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 180
+    },
+    "facing=south,flat=false,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_inner"
+    },
+    "facing=west,flat=false,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 90
+    },
+    "facing=east,flat=false,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 270
+    },
+    "facing=north,flat=true,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 180
+    },
+    "facing=south,flat=true,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat"
+    },
+    "facing=west,flat=true,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 90
+    },
+    "facing=east,flat=true,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 270
+    },
+    "facing=north,flat=false,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 270
+    },
+    "facing=south,flat=false,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 90
+    },
+    "facing=west,flat=false,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 180
+    },
+    "facing=east,flat=false,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_inner",
+      "y": 360
+    },
+    "facing=north,flat=true,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 270
+    },
+    "facing=south,flat=true,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 90
+    },
+    "facing=west,flat=true,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 180
+    },
+    "facing=east,flat=true,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 360
+    },
+    "facing=north,flat=false,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 180
+    },
+    "facing=south,flat=false,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_outer"
+    },
+    "facing=west,flat=false,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 90
+    },
+    "facing=east,flat=false,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 270
+    },
+    "facing=north,flat=true,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 180
+    },
+    "facing=south,flat=true,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat"
+    },
+    "facing=west,flat=true,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 90
+    },
+    "facing=east,flat=true,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 270
+    },
+    "facing=north,flat=false,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 270
+    },
+    "facing=south,flat=false,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 90
+    },
+    "facing=west,flat=false,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 180
+    },
+    "facing=east,flat=false,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_outer",
+      "y": 360
+    },
+    "facing=north,flat=true,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 270
+    },
+    "facing=south,flat=true,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 90
+    },
+    "facing=west,flat=true,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 180
+    },
+    "facing=east,flat=true,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_canopy_flat",
+      "y": 360
+    }
+  }
+}

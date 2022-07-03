@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "beyondtheveil:blocks/blood_bricks",
-        "top": "beyondtheveil:blocks/blood_bricks",
-        "side": "beyondtheveil:blocks/blood_bricks"
-    }
-}

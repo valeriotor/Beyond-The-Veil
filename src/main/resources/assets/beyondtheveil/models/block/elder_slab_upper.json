@@ -1,8 +1,0 @@
-{
-    "parent": "block/upper_slab",
-    "textures": {
-        "bottom": "beyondtheveil:blocks/elder_slab_top",
-        "top": "beyondtheveil:blocks/elder_slab_top",
-        "side": "beyondtheveil:blocks/elder_slab_side"
-    }
-}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "beyondtheveil:block/worn_bricks",
+    "bottom": "beyondtheveil:block/worn_bricks",
+    "top": "beyondtheveil:block/worn_bricks"
+  }
+}

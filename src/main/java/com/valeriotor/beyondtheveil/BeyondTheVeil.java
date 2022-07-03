@@ -1,126 +1,87 @@
 package com.valeriotor.beyondtheveil;
 
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.Gson;
-import com.valeriotor.beyondtheveil.blackmirror.MirrorDialogueRegistry;
-import com.valeriotor.beyondtheveil.capabilities.IPlayerData;
-import com.valeriotor.beyondtheveil.capabilities.IResearch;
-import com.valeriotor.beyondtheveil.capabilities.MirrorCapInstance;
-import com.valeriotor.beyondtheveil.capabilities.MirrorHandler;
-import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler;
-import com.valeriotor.beyondtheveil.capabilities.PlayerDataHandler.PlayerData;
-import com.valeriotor.beyondtheveil.capabilities.ResearchHandler;
-import com.valeriotor.beyondtheveil.capabilities.ResearchHandler.ResearchData;
-import com.valeriotor.beyondtheveil.crafting.GearBenchRecipeRegistry;
-import com.valeriotor.beyondtheveil.events.MemoryUnlocks;
-import com.valeriotor.beyondtheveil.fluids.ModFluids;
-import com.valeriotor.beyondtheveil.gui.container.GuiContainerHandler;
+import com.mojang.logging.LogUtils;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.lib.commands.ChangeDimension;
-import com.valeriotor.beyondtheveil.lib.commands.ReloadResources;
-import com.valeriotor.beyondtheveil.lib.commands.SetPlayerData;
-import com.valeriotor.beyondtheveil.multiblock.MultiblockRegistry;
-import com.valeriotor.beyondtheveil.network.BTVPacketHandler;
-import com.valeriotor.beyondtheveil.proxy.CommonProxy;
-import com.valeriotor.beyondtheveil.research.ResearchRegistry;
-import com.valeriotor.beyondtheveil.sacrifice.SacrificeRecipeRegistry;
-import com.valeriotor.beyondtheveil.shoggoth.BuildingRegistry;
-import com.valeriotor.beyondtheveil.util.RegistryHelper;
-import com.valeriotor.beyondtheveil.world.DimensionRegistry;
-import com.valeriotor.beyondtheveil.world.StatueChunkLoader;
-import com.valeriotor.beyondtheveil.world.WorldGenBTV;
-import com.valeriotor.beyondtheveil.world.Structures.HamletStructuresRegistry;
-import com.valeriotor.beyondtheveil.world.Structures.arche.ArcheStructuresRegistry;
-import com.valeriotor.beyondtheveil.world.biomes.BiomeRegistry;
-import com.valeriotor.beyondtheveil.worship.DGWorshipHelper;
-
-import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 
-@Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES)
+import java.util.stream.Collectors;
+
+// The value here should match an entry in the META-INF/mods.toml file
+@Mod(References.MODID)
 public class BeyondTheVeil
 {
-	@SidedProxy(clientSide = "com.valeriotor.beyondtheveil.proxy.ClientProxy", serverSide = "com.valeriotor.beyondtheveil.proxy.ServerProxy")
-    public static CommonProxy proxy;
-	
-	@Mod.Instance
-	public static BeyondTheVeil instance;
-    
+    // Directly reference a slf4j logger
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static Logger logger;
-    public static Gson gson = new Gson();
-    static {
-    	FluidRegistry.enableUniversalBucket();
-    }
-
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    public BeyondTheVeil()
     {
-    	ModFluids.registerFluids();
-        logger = event.getModLog();
-        proxy.preInit(event);
-        BTVPacketHandler.registerPackets();
-        MirrorDialogueRegistry.registerMirrorDialogues();
-        //ClientProxy.registerEntity();
-        
+        // Register the setup method for modloading
+        Registration.init();
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        // Register the enqueueIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        // Register the processIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 
-    	CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataHandler.DataStorage(), PlayerData::new);
-    	CapabilityManager.INSTANCE.register(IResearch.class, new ResearchHandler.ResearchStorage(), ResearchData::new);
-    	CapabilityManager.INSTANCE.register(MirrorCapInstance.class, new MirrorHandler.MirrorStorage(), MirrorCapInstance::new);
-
-    	MinecraftForge.EVENT_BUS.register(MemoryUnlocks.class);
-    	MinecraftForge.TERRAIN_GEN_BUS.register(MemoryUnlocks.class);
-        
+        // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(this);
+        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
     }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {	
-    	
-    	//CapabilityHandler.registerCapabilities();
-    	BiomeRegistry.initBiomes();
-    	proxy.init(event);
-    	proxy.registerEntities();
-    	DimensionRegistry.registerDimensions();
-    	
-    	
-    	RegistryHelper.registerTileEntities();
-    	
-    	GameRegistry.registerWorldGenerator(new WorldGenBTV(), 10000);
-    	HamletStructuresRegistry.registerStructures();
-    	ArcheStructuresRegistry.registerArcheStructures();
-    	BuildingRegistry.registerBuildings();
-    	NetworkRegistry.INSTANCE.registerGuiHandler(BeyondTheVeil.instance, new GuiContainerHandler());
-		DGWorshipHelper.loadDreamerResearch();
-		ResearchRegistry.registerResearchesFirst();
+    private void setup(final FMLCommonSetupEvent event)
+    {
+        // some preinit code
+
     }
-    
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        ResearchRegistry.registerResearchesSecond();
-        GearBenchRecipeRegistry.registerGearBenchRecipes();
-        SacrificeRecipeRegistry.registerSacrificeRecipes();
-        MultiblockRegistry.registerMultiblocks();
-        ForgeChunkManager.setForcedChunkLoadingCallback(instance, new StatueChunkLoader());
-        proxy.postInit(event);
+
+    private void enqueueIMC(final InterModEnqueueEvent event)
+    {
+        // Some example code to dispatch IMC to another mod
+        InterModComms.sendTo("examplemod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
-    
-    @EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
-        event.registerServerCommand(new ReloadResources());
-        event.registerServerCommand(new SetPlayerData());
-        event.registerServerCommand(new ChangeDimension());
+
+    private void processIMC(final InterModProcessEvent event)
+    {
+        // Some example code to receive and process InterModComms from other mods
+        LOGGER.info("Got IMC {}", event.getIMCStream().
+                map(m->m.messageSupplier().get()).
+                collect(Collectors.toList()));
+    }
+
+    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event)
+    {
+        // Do something when the server starts
+        LOGGER.info("HELLO from server starting");
+    }
+
+    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
+    // Event bus for receiving Registry Events)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents
+    {
+        @SubscribeEvent
+        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
+        {
+            // Register a new block here
+            LOGGER.info("HELLO from Register Block");
+        }
     }
 }

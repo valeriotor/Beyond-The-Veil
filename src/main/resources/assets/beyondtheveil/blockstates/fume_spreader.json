@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "is_full=false": { "model": "beyondtheveil:fume_spreader" },
-		"is_full=true": { "model": "beyondtheveil:fume_spreader_incense" }
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "horizontal_facing=east": { "model": "beyondtheveil:sacrifice_statue", "y" : 270 },
-        "horizontal_facing=south": { "model": "beyondtheveil:sacrifice_statue" },
-        "horizontal_facing=west": { "model": "beyondtheveil:sacrifice_statue", "y" : 90 },
-        "horizontal_facing=north": { "model": "beyondtheveil:sacrifice_statue", "y" : 180 }
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "parent": "block/upper_slab",
-    "textures": {
-        "bottom": "beyondtheveil:blocks/blood_slab_top",
-        "top": "beyondtheveil:blocks/blood_slab_top",
-        "side": "beyondtheveil:blocks/blood_slab_side"
-    }
-}

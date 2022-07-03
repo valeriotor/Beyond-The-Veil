@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "half=bottom,variant=default": { "model": "beyondtheveil:blood_bricks_slab_double" },
-        "half=top,variant=default": { "model": "beyondtheveil:blood_bricks_slab_double" }
-    }
-}

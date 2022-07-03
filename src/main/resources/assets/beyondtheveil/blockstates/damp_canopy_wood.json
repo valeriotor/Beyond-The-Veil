@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=east": { "model": "beyondtheveil:damp_canopy_wood", "y" : 270 },
-        "facing=south": { "model": "beyondtheveil:damp_canopy_wood" },
-        "facing=west": { "model": "beyondtheveil:damp_canopy_wood", "y" : 90 },
-        "facing=north": { "model": "beyondtheveil:damp_canopy_wood", "y" : 180 }
-    }
-}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "full=false": {
+      "model": "beyondtheveil:block/fume_spreader_empty"
+    },
+    "full=true": {
+      "model": "beyondtheveil:block/fume_spreader_full"
+    }
+  }
+}

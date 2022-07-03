@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "beyondtheveil:damp_wood",
+    "beyondtheveil:damp_log",
+    "beyondtheveil:damp_filled_canopy",
+    "beyondtheveil:damp_canopy",
+    "beyondtheveil:damp_wood_stairs",
+    "beyondtheveil:damp_wood_fence",
+    "beyondtheveil:sleep_chamber",
+    "beyondtheveil:fish_barrel"
+  ]
+}

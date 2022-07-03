@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "beyondtheveil:worn_bricks",
+    "beyondtheveil:worn_brick_stairs",
+    "beyondtheveil:blue_bricks",
+    "beyondtheveil:lamp",
+    "beyondtheveil:slug_bait",
+    "beyondtheveil:gear_bench"
+  ]
+}

@@ -1,14 +1,22 @@
 package com.valeriotor.beyondtheveil.lib;
 
-import net.minecraft.creativetab.CreativeTabs;
+
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class References {
-	public static final String MODID = "beyondtheveil";
+    public static final String MODID = "beyondtheveil";
     public static final String NAME = "Beyond The Veil";
-    public static final String VERSION = "1.12.2-0.3.2";
-    public static final String DEPENDENCIES = "required-after:baubles";
-    
-    public static final String PURPLE = "�5�o";
-    
-    public static CreativeTabs BTV_TAB = new CreativeTabBTV(CreativeTabBTV.getNextID(), MODID);
+
+    public static final String TAB_NAME = MODID;
+    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(TAB_NAME) {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(Items.DIAMOND);
+        }
+    };
+
+
+
 }

@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=east": { "model": "beyondtheveil:curtain", "y" : 270 },
-        "facing=south": { "model": "beyondtheveil:curtain" },
-        "facing=west": { "model": "beyondtheveil:curtain", "y" : 90 },
-        "facing=north": { "model": "beyondtheveil:curtain", "y" : 180 }
-    }
-}

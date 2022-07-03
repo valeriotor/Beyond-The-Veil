@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "age=0": { "model": "beyondtheveil:crops/weed_stage0" },
-        "age=1": { "model": "beyondtheveil:crops/redstoneweed_stage1" },
-        "age=2": { "model": "beyondtheveil:crops/redstoneweed_stage2" },
-        "age=3": { "model": "beyondtheveil:crops/redstoneweed_stage3" }
-    }
-}
