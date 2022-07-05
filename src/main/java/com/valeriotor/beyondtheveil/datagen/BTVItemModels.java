@@ -34,7 +34,6 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(GEAR_BENCH_ITEM.getId().getPath(), modLoc("block/gear_bench"));
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
-        singleTexture(SLUG_CATCHER.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG_CATCHER.getId().getPath()));
         singleTexture(SLUG.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG.getId().getPath()));
         singleTexture(CANOE.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + CANOE.getId().getPath()));
         singleTexture(RUM.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/beverages/" + RUM.getId().getPath()));
