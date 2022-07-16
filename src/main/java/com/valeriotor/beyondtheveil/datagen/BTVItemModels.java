@@ -32,6 +32,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(FUME_SPREADER_ITEM.getId().getPath(), modLoc("block/fume_spreader"));
         withExistingParent(SLEEP_CHAMBER_ITEM.getId().getPath(), modLoc("block/sleep_chamber"));
         withExistingParent(GEAR_BENCH_ITEM.getId().getPath(), modLoc("block/gear_bench"));
+        withExistingParent(DEEP_ONE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
         singleTexture(SLUG.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG.getId().getPath()));

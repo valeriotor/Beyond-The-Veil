@@ -2,10 +2,13 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
+import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.item.SlugCatcherItem;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,6 +16,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,6 +30,7 @@ public class Registration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, References.MODID);
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.MODID);
+    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.MODID);
 
     public static void init() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -33,7 +38,10 @@ public class Registration {
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
         CONTAINERS.register(bus);
+        ENTITIES.register(bus);
     }
+
+    public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 2.1F).clientTrackingRange(32).build("deep_one"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(References.ITEM_GROUP);
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD);
@@ -89,10 +97,16 @@ public class Registration {
     public static final RegistryObject<Item> CUP = ITEMS.register("drink_empty", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> FLUTE = ITEMS.register("flute", () -> new Item(ITEM_PROPERTIES));
 
+
+    public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+
+
     public static final RegistryObject<BlockEntityType<GearBenchBE>> GEAR_BENCH_BE = BLOCK_ENTITIES.register(GEAR_BENCH.getId().getPath(), () -> BlockEntityType.Builder.of(GearBenchBE::new, GEAR_BENCH.get()).build(null));
     public static final RegistryObject<BlockEntityType<SlugBaitBE>> SLUG_BAIT_BE = BLOCK_ENTITIES.register(SLUG_BAIT.getId().getPath(), () -> BlockEntityType.Builder.of(SlugBaitBE::new, SLUG_BAIT.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = CONTAINERS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
+
+
 
 
     private static <B extends Block> RegistryObject<Item> fromBlock(RegistryObject<B> blockObject) {
