@@ -35,7 +35,7 @@ public class SlugCatcherItem extends Item {
         float xRot = pPlayer.getXRot();
         float yHeadRot = pPlayer.getYHeadRot();
 
-        final double BLOCK_DISTANCE = 12.0D;
+        final double BLOCK_DISTANCE = 20.0D;
         final double ANGLE_CONVERSION = Math.PI / 180;
 
         double ySin = -Math.sin(xRot * ANGLE_CONVERSION);
@@ -69,8 +69,7 @@ public class SlugCatcherItem extends Item {
                 for (int i = -6; i <= 6; i++) {
                     for (int j = -6; j <= 6; j++) {
                         BlockEntity blockEntity = level.getBlockEntity(hitPos.offset(i, 0, j));
-                        if (blockEntity instanceof SlugBaitBE) {
-                            SlugBaitBE be = (SlugBaitBE) blockEntity;
+                        if (blockEntity instanceof SlugBaitBE be) {
                             if (be.isSlugCloseOnXZPlane(hit, 1)) {
                                 be.catchSlug();
                                 ItemEntity e = new ItemEntity(level, x + xSin, y + ySin, z + zCos, new ItemStack(Registration.SLUG.get()));

@@ -87,6 +87,7 @@ public class SlugBaitBE extends BlockEntity {
     }
 
     public boolean isSlugCloseOnXZPlane(Vec3 vec, double distance) {
+        if(!slugPresent) return false;
         double slugX = worldPosition.getX() + 0.5 + offsetX;
         double slugZ = worldPosition.getZ() + 0.5 + offsetZ;
         return vec.x < slugX + distance && vec.x > slugX - distance && vec.z < slugZ + distance && vec.z > slugZ - distance;
