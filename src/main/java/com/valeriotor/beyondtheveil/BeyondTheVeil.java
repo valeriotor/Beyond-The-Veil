@@ -1,7 +1,9 @@
 package com.valeriotor.beyondtheveil;
 
+import com.google.gson.Gson;
 import com.mojang.logging.LogUtils;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,6 +29,7 @@ public class BeyondTheVeil
 {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Gson GSON = new Gson();
 
     public BeyondTheVeil()
     {
@@ -47,7 +50,8 @@ public class BeyondTheVeil
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
-
+        ResearchRegistry.registerResearchesFirst();
+        ResearchRegistry.registerResearchesSecond();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

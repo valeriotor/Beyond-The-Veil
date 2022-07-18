@@ -1,0 +1,1420 @@
+{
+	"entries" :[
+        {
+        "key": "FIRSTDREAMS",
+        "name": "research.FIRSTDREAMS.title",
+        "icons": [ "minecraft:bed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
+		"parents": [],
+		"hiders" : ["thebeginning"],
+        "stages": [
+                {
+                    "text": "research.FIRSTDREAMS.stage.0",
+					"required_research": ["didDream"]
+                },
+				{
+                    "text": "research.FIRSTDREAMS.stage.1"
+                }
+            ]
+        },
+        {
+        "key": "FUMESPREADER",
+        "name": "research.FUMESPREADER.title",
+        "icons": [ "beyondtheveil:memory_sieve" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,0 ],
+        "hiders": ["FIRSTDREAMS"],
+        "parents": [ "FIRSTDREAMS" ],
+        "stages": [
+				{
+					"text": "research.FUMESPREADER.stage.0",
+					"required_research": ["firstMemory"],
+                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING"]
+				},
+                {
+                    "text": "research.FUMESPREADER.stage.1",
+                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                }
+            ]
+        },
+		{
+        "key": "CRYSTALDREAMS",
+        "name": "research.CRYSTALDREAMS.title",
+        "icons": [ "minecraft:iron_ingot" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4, 0 ],
+		"learn": "true",
+        "parents": [ "FUMESPREADER" ],
+        "stages": [
+				{
+					"text": "research.CRYSTALDREAMS.stage.0",
+					"required_research": ["metalDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memMETAL"]
+				},
+                {
+                    "text": "research.CRYSTALDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memMETAL"]
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.CRYSTALDREAMS.addenda.crystal",
+					"required_research": ["memCRYSTAL"],
+					"recipes": ["beyondtheveil:memory_phial;memCRYSTAL"]
+				},
+				{
+					"text": "research.CRYSTALDREAMS.addenda.sentience",
+					"required_research": ["memSENTIENCE"],
+					"recipes": ["beyondtheveil:memory_phial;memSENTIENCE"]
+				}
+			]
+        },
+		{
+        "key": "EFFECTDREAMS",
+        "name": "research.EFFECTDREAMS.title",
+        "icons": [ "minecraft:potion" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,-3 ],
+        "hiders":["CRYSTALDREAMS"],
+        "parents": [ "CRYSTALDREAMS" ],
+        "stages": [
+				{
+					"text": "research.EFFECTDREAMS.stage.0",
+					"required_research": ["effectDream"]
+				},
+                {
+                    "text": "research.EFFECTDREAMS.stage.1"
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.EFFECTDREAMS.addenda.power",
+					"required_research": ["memPOWER"],
+                    "recipes": ["beyondtheveil:memory_phial;memPOWER"]
+				},
+				{
+					"text": "research.EFFECTDREAMS.addenda.stillness",
+					"required_research": ["memSTILLNESS"],
+                    "recipes": ["beyondtheveil:memory_phial;memSTILLNESS"]
+				},
+				{
+					"text": "research.EFFECTDREAMS.addenda.change",
+					"required_research": ["memCHANGE"],
+                    "recipes": ["beyondtheveil:memory_phial;memCHANGE"]
+				}
+			]
+        },
+		{
+        "key": "HUMANDREAMS",
+        "name": "research.HUMANDREAMS.title",
+        "icons": [ "minecraft:skull;1;3" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,-3 ],
+        "hiders":["CRYSTALDREAMS"],
+        "parents": [ "CRYSTALDREAMS" ],
+        "stages": [
+				{
+					"text": "research.HUMANDREAMS.stage.0",
+					"required_research": ["memHUMAN"]
+				},
+                {
+                    "text": "research.HUMANDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memHUMAN"]
+                }
+            ],
+			"addenda": [
+				{
+					"text": "research.HUMANDREAMS.addenda.tool",
+					"required_research": ["memTOOL"],
+                    "recipes": ["beyondtheveil:memory_phial;memTOOL"]
+				}
+			]
+        },
+		{
+        "key": "SLEEPCHAMBER",
+        "name": "research.SLEEPCHAMBER.title",
+        "icons": [ "beyondtheveil:sleep_chamber" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4, 3 ],
+        "learn": "true",
+        "parents": [ "CRYSTALDREAMS" ],
+        "stages": [
+				{
+					"text": "research.SLEEPCHAMBER.stage.0",
+					"required_research": ["craftedsleep_chamber"],
+                    "recipes": ["beyondtheveil:gear", "beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
+				},
+                {
+                    "text": "research.SLEEPCHAMBER.stage.1",
+                    "recipes": ["beyondtheveil:gear","beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
+                }
+            ]
+        },
+		{
+        "key": "SLEEPCHAMBERADVANCED",
+        "name": "research.SLEEPCHAMBERADVANCED.title",
+        "icons": [ "beyondtheveil:sleep_chamber_advanced" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2, 3 ],
+        "learn": "true",
+        "hiders":  ["HUMANDREAMS"],
+        "parents": [ "SLEEPCHAMBER" ],
+        "stages": [
+				{
+					"text": "research.SLEEPCHAMBERADVANCED.stage.0",
+					"required_research": ["craftedsleep_chamber_advanced"],
+                    "recipes": ["beyondtheveil:sleep_chamber_advanced"]
+				},
+                {
+                    "text": "research.SLEEPCHAMBERADVANCED.stage.1",
+                    "recipes": ["beyondtheveil:sleep_chamber_advanced"]
+                }
+            ]
+        },
+		{
+        "key": "INSCRIPTIONS",
+        "name": "research.INSCRIPTIONS.title",
+        "icons": [ "beyondtheveil:tablet" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0, 5],
+		"hiders": ["solvedTablet"],
+        "stages": [
+				{
+					"text": "research.INSCRIPTIONS.stage.0",
+					"required_research": ["inscription_complete"]
+				},
+				{
+					"text": "research.INSCRIPTIONS.stage.1"
+				}
+            ],
+			"addenda": [
+				{
+					"text": "gui.tablet.inscription0",
+					"required_research": ["inscription0"]
+				},
+				{
+					"text": "gui.tablet.inscription1",
+					"required_research": ["inscription1"]
+				},
+				{
+					"text": "gui.tablet.inscription2",
+					"required_research": ["inscription2"]
+				},
+				{
+					"text": "gui.tablet.inscription3",
+					"required_research": ["inscription3"]
+				},
+				{
+					"text": "gui.tablet.inscription4",
+					"required_research": ["inscription4"]
+				},
+				{
+					"text": "gui.tablet.inscription5",
+					"required_research": ["inscription5"]
+				},
+				{
+					"text": "gui.tablet.inscription6",
+					"required_research": ["inscription6"]
+				},
+				{
+					"text": "gui.tablet.inscription7",
+					"required_research": ["inscription7"]
+				},
+				{
+					"text": "gui.tablet.inscription8",
+					"required_research": ["inscription8"]
+				},
+				{
+					"text": "gui.tablet.inscription9",
+					"required_research": ["inscription9"]
+				}
+			]
+        },
+		{
+        "key": "VOIDDREAMS",
+        "name": "research.VOIDDREAMS.title",
+        "icons": [ "minecraft:obsidian" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,2 ],
+        "parents": [ "SLEEPCHAMBER", "HUMANDREAMS" ],
+        "hiders" : ["HUMANDREAMS"],
+        "stages": [
+				{
+					"text": "research.VOIDDREAMS.stage.0",
+					"required_research": ["voidDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memVOID"]
+				},
+                {
+                    "text": "research.VOIDDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memVOID"]
+                }
+            ]
+        },
+		{
+        "key": "FIRSTCONTACT",
+        "name": "research.FIRSTCONTACT.title",
+        "icons": [ "minecraft:ender_eye" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,2 ],
+        "hiders": ["VOIDDREAMS"],
+        "parents": [ "VOIDDREAMS" ],
+        "stages": [
+				{
+					"text": "research.FIRSTCONTACT.stage.0",
+					"required_research": ["eldritchDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memELDRITCH"]
+				},
+                {
+                    "text": "research.FIRSTCONTACT.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memELDRITCH"]
+                }
+            ]
+        },
+        {
+        "key": "STRONGHOLD",
+        "name": "research.STRONGHOLD.title",
+        "icons": [ "minecraft:stonebrick" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,0 ],
+        "hiders":["FIRSTCONTACT"],
+        "parents": [ "FIRSTCONTACT" ],
+        "stages": [
+                {
+                    "text": "research.STRONGHOLD.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "DARKDREAMS",
+        "name": "research.DARKDREAMS.title",
+        "icons": [ "beyondtheveil:dark_sand" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,2 ],
+        "hiders": ["FIRSTCONTACT"],
+        "parents": [ "FIRSTCONTACT" ],
+        "stages": [
+				{
+					"text": "research.DARKDREAMS.stage.0",
+					"required_research": ["darknessDream"],
+                    "recipes": ["beyondtheveil:memory_phial;memDARKNESS"]
+				},
+                {
+                    "text": "research.DARKDREAMS.stage.1",
+                    "recipes": ["beyondtheveil:memory_phial;memDARKNESS"]
+                }
+            ]
+        },
+		{
+        "key": "FISHINGHAMLET",
+        "name": "research.FISHINGHAMLET.title",
+        "icons": [ "beyondtheveil:damp_canopy" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,4 ],
+		"hiders": ["DARKDREAMS"],
+        "parents": [ "DARKDREAMS" ],
+        "stages": [
+				{
+					"text": "research.FISHINGHAMLET.stage.0",
+					"required_research": ["FindHamlet"]
+				},
+                {
+                    "text": "research.FISHINGHAMLET.stage.1",
+					"required_research": ["LHKeeper"]
+                },
+                {
+                    "text": "research.FISHINGHAMLET.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "IDOL",
+        "name": "research.IDOL.title",
+        "icons": [ "beyondtheveil:idol" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,6 ],
+		"hiders": ["FISHINGHAMLET"],
+        "parents": [ "FISHINGHAMLET" ],
+        "stages": [
+				{
+					"text": "research.IDOL.stage.0",
+					"required_research": ["IdolInteract"]
+				},
+                {
+                    "text": "research.IDOL.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "WATERDREAM",
+        "name": "research.WATERDREAM.title",
+        "icons": [ "minecraft:prismarine" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 13,8 ],
+		"hiders": ["IDOL"],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.WATERDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memWATER"]
+				}
+            ]
+        },
+		{
+        "key": "SLUGS",
+        "name": "research.SLUGS.title",
+        "icons": [ "beyondtheveil:slug" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,6 ],
+		"hiders": ["IDOL"],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.SLUGS.stage.0",
+					"required_research": ["!SLUGS"],
+					"recipes" : ["beyondtheveil:slug_bait", "beyondtheveil:slugcatcher"]
+				},
+                {
+                    "text": "research.SLUGS.stage.1",
+					"recipes" : ["beyondtheveil:slug_bait", "beyondtheveil:slugcatcher"]
+                }
+            ]
+        },
+		{
+        "key": "FISHERMEN",
+        "name": "research.FISHERMEN.title",
+        "icons": [ "beyondtheveil:slugcatcher" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,4 ],
+		"hiders": ["SLUGS"],
+        "parents": [ "SLUGS" ],
+        "stages": [
+				{
+					"text": "research.FISHERMEN.stage.0"
+				}
+            ]
+        },
+		{
+        "key": "CANOE",
+        "name": "research.CANOE.title",
+        "icons": [ "beyondtheveil:canoe" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17,6 ],
+		"hiders": ["IDOL"],
+        "parents": [ "SLUGS" ],
+        "stages": [
+				{
+					"text": "research.CANOE.stage.0",
+					"required_research": ["carpenter"]
+				},
+                {
+                    "text": "research.CANOE.stage.1",
+					"required_research": ["!CANOE"]
+                },
+                {
+                    "text": "research.CANOE.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "BAPTISM",
+        "name": "research.BAPTISM.title",
+        "icons": [ "minecraft:water_bucket"],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,8 ],
+		"hiders": ["IDOL"],
+        "parents": [ "CANOE" ],
+        "stages": [
+				{
+					"text": "research.BAPTISM.stage.0",
+					"required_research": ["lhbaptism"]
+				},
+                {
+                    "text": "research.BAPTISM.stage.1",
+					"required_research": ["!BAPTISM"]
+                },
+                {
+                    "text": "research.BAPTISM.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "ALLIANCE",
+        "name": "research.ALLIANCE.title",
+        "icons": [ "minecraft:diamond_sword" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,10 ],
+		"hiders": ["IDOL"],
+        "parents": [ "BAPTISM" ],
+        "stages": [
+				{
+					"text": "research.ALLIANCE.stage.0",
+					"required_research": ["wait"]
+				},
+                {
+                    "text": "research.ALLIANCE.stage.1",
+					"required_research": ["hearing"]
+                },
+                {
+                    "text": "research.ALLIANCE.stage.2",
+					"required_research": ["!ALLIANCE"]
+                },
+                {
+                    "text": "research.ALLIANCE.stage.3"
+                }
+            ]
+        },
+		{
+        "key": "METAMORPHOSIS",
+        "name": "research.METAMORPHOSIS.title",
+        "icons": [ "minecraft:prismarine_shard" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "ALLIANCE" ],
+        "stages": [
+				{
+					"text": "research.METAMORPHOSIS.stage.0",
+					"required_research": ["hearing2"]
+				},
+                {
+                    "text": "research.METAMORPHOSIS.stage.1",
+					"required_research": ["!METAMORPHOSIS"]
+                },
+                {
+                    "text": "research.METAMORPHOSIS.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "DEEPROAR",
+        "name": "research.DEEPROAR.title",
+        "icons": [ "minecraft:record_stal" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,12 ],
+		"hiders": ["METAMORPHOSIS"],
+        "parents": [ "METAMORPHOSIS" ],
+        "stages": [
+				{
+					"text": "research.DEEPROAR.stage.0"
+				}
+            ]
+        },
+		{
+        "key": "DREAMBOTTLE",
+        "name": "research.DREAMBOTTLE.title",
+        "icons": [ "beyondtheveil:dream_bottle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "ALLIANCE" ],
+        "stages": [
+				{
+					"text": "research.DREAMBOTTLE.stage.0",
+					"required_research": ["gotweepers"]
+				},
+                {
+                    "text": "research.DREAMBOTTLE.stage.1",
+					"required_research": ["crafteddream_bottle"],
+					"recipes" : ["beyondtheveil:dream_bottle"]
+                },
+                {
+                    "text": "research.DREAMBOTTLE.stage.2",
+					"recipes" : ["beyondtheveil:dream_bottle"]
+                }
+            ],
+		"addenda" : [
+				{
+					"text": "research.DREAMBOTTLE.addenda.statue",
+					"required_research": ["dreambottlestatue"]
+				}
+			]
+        },
+		{
+        "key": "WATERWALKING",
+        "name": "research.WATERWALKING.title",
+        "icons": [ "minecraft:diamond_boots" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "METAMORPHOSIS" ],
+        "stages": [
+				{
+					"text": "research.WATERWALKING.stage.0",
+					"required_research": ["hearing3"]
+				},
+                {
+                    "text": "research.WATERWALKING.stage.1",
+					"required_research": ["!WATERWALKING"]
+                },
+                {
+                    "text": "research.WATERWALKING.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "DREAMSHRINE",
+        "name": "research.DREAMSHRINE.title",
+        "icons": [ "minecraft:quartz_block" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+					"text": "research.DREAMSHRINE.stage.0",
+					"required_research": ["boundpathway"]
+				},
+                {
+                    "text": "research.DREAMSHRINE.stage.1",
+					"recipes" : ["dream_shrine"]
+                }
+            ]
+        },
+		{
+        "key": "DEATHDREAM",
+        "name": "research.DEATHDREAM.title",
+        "icons": [ "minecraft:rotten_flesh" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,7],
+		"hiders": ["memDEATH"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.DEATHDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memDEATH"]
+                }
+            ],
+		"addenda" : [
+				{
+					"text": "research.DEATHDREAM.addenda.teleport",
+					"required_research": ["deathtp"]
+				}
+			]
+        },
+		{
+        "key": "REPAIRDREAM",
+        "name": "research.REPAIRDREAM.title",
+        "icons": [ "minecraft:wool" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,9],
+		"hiders": ["memREPAIR"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.REPAIRDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memREPAIR"]
+                }
+            ]
+        },
+		{
+        "key": "ANIMALDREAM",
+        "name": "research.ANIMALDREAM.title",
+        "icons": [ "minecraft:leather" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,11],
+		"hiders": ["memANIMAL"],
+        "parents": [ "DREAMBOTTLE" ],
+        "stages": [
+				{
+                    "text": "research.ANIMALDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memANIMAL"]
+                }
+            ]
+        },
+		{
+        "key": "BEHEADINGDREAM",
+        "name": "research.BEHEADINGDREAM.title",
+        "icons": [ "minecraft:skull;1;1" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,15],
+		"hiders": ["memBEHEADING"],
+        "parents": [ "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.BEHEADINGDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memBEHEADING"]
+                }
+            ]
+        },
+		{
+        "key": "HEARTBREAKDREAM",
+        "name": "research.HEARTBREAKDREAM.title",
+        "icons": [ "minecraft:red_flower" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23,17],
+		"hiders": ["memHEARTBREAK"],
+        "parents": [ "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.HEARTBREAKDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memHEARTBREAK"]
+                }
+            ]
+        },
+		{
+        "key": "WATERYCRADLE",
+        "name": "research.WATERYCRADLE.title",
+        "icons": [ "beyondtheveil:watery_cradle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,12],
+		"hiders": ["IDOL"],
+		"meta": ["HIDDEN"],
+        "parents": [ "IDOL" ],
+        "stages": [
+				{
+					"text": "research.WATERYCRADLE.stage.0",
+					"required_research": ["craftedwatery_cradle"],
+					"recipes" : ["beyondtheveil:watery_cradle"]
+				},
+                {
+                    "text": "research.WATERYCRADLE.stage.1",
+					"recipes" : ["beyondtheveil:watery_cradle", "beyondtheveil:blackjack", "beyondtheveil:surgery_tools"]
+                }
+            ]
+        },
+		{
+        "key": "SPINES",
+        "name": "research.SPINES.title",
+        "icons": [ "beyondtheveil:spine" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "WATERYCRADLE" ],
+        "stages": [
+				{
+					"text": "research.SPINES.stage.0",
+					"required_research": ["extractedspine"]
+				},
+                {
+                    "text": "research.SPINES.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "HEARTS",
+        "name": "research.HEARTS.title",
+        "icons": [ "beyondtheveil:heart" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,10 ],
+		"hiders": ["IDOL"],
+        "parents": [ "WATERYCRADLE" ],
+        "stages": [
+				{
+					"text": "research.HEARTS.stage.0",
+					"required_research": ["tornheart"]
+				},
+                {
+                    "text": "research.HEARTS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "WEEPERS",
+        "name": "research.WEEPERS.title",
+        "icons": [ "beyondtheveil:held_fletum" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "SPINES", "HEARTS" ],
+        "stages": [
+				{
+					"text": "research.WEEPERS.stage.0",
+					"required_research": ["filledtears"]
+                },
+                {
+					"text": "research.WEEPERS.stage.1",
+					"required_research": ["craftedlacrymatory"],
+					"recipes" : ["beyondtheveil:lacrymatory"]
+				},
+                {
+                    "text": "research.WEEPERS.stage.2",
+					"recipes" : ["beyondtheveil:lacrymatory"]
+                }
+            ],
+            "addenda" : [
+                    {
+                        "text": "research.WEEPERS.addenda.bottle",
+                        "required_research": ["crafteddream_bottle"]
+                    }
+                ]
+        },
+		{
+        "key": "REVELATIONRING",
+        "name": "research.REVELATIONRING.title",
+        "icons": [ "beyondtheveil:revelation_ring" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,12 ],
+		"hiders": ["IDOL"],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+					"text": "research.REVELATIONRING.stage.0",
+					"required_research": ["craftedrevelation_ring"],
+					"recipes" : ["beyondtheveil:revelation_ring"]
+                },
+                {
+					"text": "research.REVELATIONRING.stage.1",
+					"recipes" : ["beyondtheveil:revelation_ring"]
+				}
+            ]
+        },
+		{
+        "key": "BONETIARA",
+        "name": "research.BONETIARA.title",
+        "icons": [ "beyondtheveil:bone_tiara" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,14 ],
+		"hiders": ["IDOL"],
+        "parents": [ "SPINES" ],
+        "stages": [
+				{
+					"text": "research.BONETIARA.stage.0",
+					"required_research": ["craftedbone_tiara"],
+					"recipes" : ["beyondtheveil:bone_tiara"]
+                },
+                {
+					"text": "research.BONETIARA.stage.1",
+					"recipes" : ["beyondtheveil:bone_tiara"]
+				}
+            ]
+        },
+		{
+        "key": "BLEEDINGBELT",
+        "name": "research.BLEEDINGBELT.title",
+        "icons": [ "beyondtheveil:bleeding_belt" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,10 ],
+		"hiders": ["IDOL"],
+        "parents": [ "HEARTS" ],
+        "stages": [
+				{
+					"text": "research.BLEEDINGBELT.stage.0",
+					"required_research": ["craftedbleeding_belt"],
+					"recipes" : ["beyondtheveil:bleeding_belt"]
+                },
+                {
+					"text": "research.BLEEDINGBELT.stage.1",
+					"recipes" : ["beyondtheveil:bleeding_belt"]
+				}
+            ]
+        },
+		{
+        "key": "BLOODCOVENANT",
+        "name": "research.BLOODCOVENANT.title",
+        "icons": [ "beyondtheveil:blood_covenant" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,11 ],
+		"hiders": ["IDOL"],
+        "parents": [ "BLEEDINGBELT", "REVELATIONRING" ],
+        "stages": [
+				{
+					"text": "research.BLOODCOVENANT.stage.0",
+					"required_research": ["craftedblood_covenant"],
+					"recipes" : ["beyondtheveil:blood_covenant"]
+                },
+                {
+					"text": "research.BLOODCOVENANT.stage.1",
+					"recipes" : ["beyondtheveil:blood_covenant"]
+				}
+            ]
+        },
+		{
+        "key": "BLOODCROWN",
+        "name": "research.BLOODCROWN.title",
+        "icons": [ "beyondtheveil:blood_crown" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -1,13],
+		"hiders": ["IDOL"],
+        "parents": [ "BLEEDINGBELT", "BONETIARA" ],
+        "stages": [
+				{
+					"text": "research.BLOODCROWN.stage.0",
+					"required_research": ["craftedblood_crown"],
+					"recipes" : ["beyondtheveil:blood_crown"]
+                },
+                {
+					"text": "research.BLOODCROWN.stage.1",
+					"recipes" : ["beyondtheveil:blood_crown"]
+				}
+            ]
+        },
+		{
+        "key": "AZACNOCHARM",
+        "name": "research.AZACNOCHARM.title",
+        "icons": [ "beyondtheveil:azacno_charm" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -3,12],
+        "learn":"true",
+        "parents": [ "BLOODCOVENANT", "BLOODCROWN" ],
+        "stages": [
+				{
+					"text": "research.AZACNOCHARM.stage.0",
+					"required_research": ["craftedazacno_charm"],
+					"recipes" : ["beyondtheveil:azacno_charm"]
+                },
+                {
+					"text": "research.AZACNOCHARM.stage.1",
+					"recipes" : ["beyondtheveil:azacno_charm"]
+				}
+            ]
+        },
+		{
+        "key": "DREAMFOCUS",
+        "name": "research.DREAMFOCUS.title",
+        "icons": [ "beyondtheveil:dream_focus" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, 16],
+		"hiders": ["WEEPERS"],
+        "parents": ["REVELATIONRING" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUS.stage.0",
+                    "required_research" : ["crafteddream_focus"],
+					"recipes" : ["beyondtheveil:dream_focus"]
+                },
+                {
+                    "text": "research.DREAMFOCUS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus"]
+                }
+            ]
+        },
+		{
+        "key": "DREAMFOCUSFLUIDS",
+        "name": "research.DREAMFOCUSFLUIDS.title",
+        "icons": [ "beyondtheveil:dream_focus_fluids" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 16],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUSFLUIDS.stage.0",
+                    "required_research" : ["crafteddream_focus_fluids"],
+					"recipes" : ["beyondtheveil:dream_focus_fluids"]
+                },
+                {
+                    "text": "research.DREAMFOCUSFLUIDS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus_fluids"]
+                }
+            ]
+        },
+		{
+        "key": "DREAMFOCUSVILLAGERS",
+        "name": "research.DREAMFOCUSVILLAGERS.title",
+        "icons": [ "beyondtheveil:dream_focus_villagers" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 19],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.DREAMFOCUSVILLAGERS.stage.0",
+                    "required_research" : ["crafteddream_focus_villagers"],
+					"recipes" : ["beyondtheveil:dream_focus_villagers"]
+                },
+                {
+                    "text": "research.DREAMFOCUSVILLAGERS.stage.1",
+					"recipes" : ["beyondtheveil:dream_focus_villagers"]
+                }
+            ]
+        },
+		{
+        "key": "SURGEON",
+        "name": "research.SURGEON.title",
+        "icons": [ "beyondtheveil:surgeon_summons" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, 21],
+		"hiders": ["DREAMFOCUSVILLAGERS", "FINALQUEST"],
+        "parents": ["DREAMFOCUSVILLAGERS" ],
+        "stages": [
+				{
+                    "text": "research.SURGEON.stage.0",
+                    "required_research" : ["summoned_surgeon"],
+					"recipes" : ["beyondtheveil:surgeon_summons"]
+                },
+                {
+                    "text": "research.SURGEON.stage.1",
+					"recipes" : ["beyondtheveil:surgeon_summons"]
+                }
+            ]
+        },
+		{
+        "key": "CURTAINS",
+        "name": "research.CURTAINS.title",
+        "icons": [ "beyondtheveil:curtain" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, 19],
+		"hiders": ["DREAMFOCUS"],
+        "parents": ["DREAMFOCUS" ],
+        "stages": [
+				{
+                    "text": "research.CURTAINS.stage.0",
+                    "required_research" : ["craftedcurtain"],
+					"recipes" : ["beyondtheveil:curtain"]
+                },
+                {
+                    "text": "research.CURTAINS.stage.1",
+					"recipes" : ["beyondtheveil:curtain"]
+                }
+            ]
+        },
+		{
+        "key": "STATUE",
+        "name": "research.STATUE.title",
+        "icons": [ "beyondtheveil:statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,17],
+        "hiders": ["ALLIANCE"],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+					"text": "research.STATUE.stage.0",
+					"required_research": ["craftedstatue"],
+                    "recipes": ["beyondtheveil:statue"]
+                },
+                {
+					"text": "research.STATUE.stage.1",
+					"required_research": ["linkedstatue"],
+                    "recipes": ["beyondtheveil:statue", "beyondtheveil:sacrificial_knife"]
+				},
+                {
+					"text": "research.STATUE.stage.2",
+                    "recipes": ["beyondtheveil:statue", "beyondtheveil:sacrificial_knife"]
+				}
+            ]
+        },
+		{
+        "key": "SACRIFICESTATUE",
+        "name": "research.SACRIFICESTATUE.title",
+        "icons": [ "beyondtheveil:sacrifice_statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 1,19],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.SACRIFICESTATUE.stage.0",
+					"required_research": ["craftedsacrifice_statue"],
+                    "recipes": ["beyondtheveil:sacrifice_statue"]
+                },
+                {
+					"text": "research.SACRIFICESTATUE.stage.1",
+                    "recipes": ["beyondtheveil:sacrifice_statue"]
+				}
+            ]
+        },
+		{
+        "key": "PENITENCESTATUE",
+        "name": "research.PENITENCESTATUE.title",
+        "icons": [ "beyondtheveil:penitence_statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,19],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.PENITENCESTATUE.stage.0",
+					"required_research": ["craftedpenitence_statue"],
+                    "recipes": ["beyondtheveil:penitence_statue"]
+                },
+                {
+					"text": "research.PENITENCESTATUE.stage.1",
+                    "recipes": ["beyondtheveil:penitence_statue"]
+				}
+            ]
+        },
+		{
+        "key": "VALOURSTATUE",
+        "name": "research.VALOURSTATUE.title",
+        "icons": [ "beyondtheveil:statue" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 3,21],
+        "hiders": ["STATUE", "SACRIFICEALTAR"],
+        "parents": [ "PENITENCESTATUE", "SACRIFICESTATUE" ],
+        "stages": [
+				{
+					"text": "research.VALOURSTATUE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "INTROSPECTIONDREAM",
+        "name": "research.INTROSPECTIONDREAM.title",
+        "icons": [ "minecraft:writable_book" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0,17 ],
+		"hiders": ["memINTROSPECTION"],
+        "parents": [ "STATUE" ],
+        "stages": [
+				{
+					"text": "research.INTROSPECTIONDREAM.stage.0",
+					"recipes" : ["beyondtheveil:memory_phial;memINTROSPECTION"]
+				}
+            ]
+        },
+		{
+        "key": "SACRIFICEALTAR",
+        "name": "research.SACRIFICEALTAR.title",
+        "icons": [ "beyondtheveil:sacrifice_altar" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,7],
+		"hiders": ["IDOL"],
+        "parents": [ "HEARTS" ],
+        "stages": [
+				{
+                    "text": "research.SACRIFICEALTAR.stage.0",
+                    "recipes" : ["beyondtheveil:sacrifice_altar"],
+					"required_research": ["craftedsacrifice_altar"]
+                },
+                {
+                    "text": "research.SACRIFICEALTAR.stage.1",
+                    "recipes" : ["beyondtheveil:sacrifice_altar", "sacrifice_altar", "sacrifice;bricks"]
+                }
+            ]
+        },
+		{
+        "key": "BLOODWELL",
+        "name": "research.BLOODWELL.title",
+        "icons": [ "beyondtheveil:blood_well" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,5],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.BLOODWELL.stage.0",
+                    "recipes" : ["blood_well"],
+					"required_research": ["builtwell"]
+                },
+                {
+                    "text": "research.BLOODWELL.stage.1",
+                    "recipes" : ["blood_well", "sacrifice;undeadsigil"]
+                }
+            ]
+        },
+		{
+        "key": "CORALSTAFF",
+        "name": "research.CORALSTAFF.title",
+        "icons": [ "beyondtheveil:coral_staff" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,9],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.CORALSTAFF.stage.0",
+                    "recipes" : ["sacrifice;staff"],
+					"required_research": ["craftedstaff"]
+                },
+                {
+                    "text": "research.CORALSTAFF.stage.1",
+                    "recipes" : ["sacrifice;staff"]
+                }
+            ]
+        },
+		{
+        "key": "BLOODSIGILS",
+        "name": "research.BLOODSIGILS.title",
+        "icons": [ "beyondtheveil:sigil_pathway" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,5],
+		"hiders": ["IDOL"],
+        "parents": [ "SACRIFICEALTAR" ],
+        "stages": [
+				{
+                    "text": "research.BLOODSIGILS.stage.0",
+                    "recipes" : ["sacrifice;sigil_pathway"],
+					"required_research": ["boundpathway"]
+                },
+                {
+                    "text": "research.BLOODSIGILS.stage.1",
+                    "recipes" : ["sacrifice;sigil_pathway", "sacrifice;sigil_player"]
+                }
+            ]
+        },
+		{
+        "key": "SHOGGOTH",
+        "name": "research.SHOGGOTH.title",
+        "icons": [ "beyondtheveil:held_shoggoth" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,19],
+		"hiders": ["shoggothsecret"],
+        "parents": [ "WEEPERS" ],
+        "stages": [
+				{
+                    "text": "research.SHOGGOTH.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "CITYMAPPER",
+        "name": "research.CITYMAPPER.title",
+        "icons": [ "beyondtheveil:city_mapper" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6, 22],
+		"hiders": ["SHOGGOTH"],
+        "parents": ["SHOGGOTH" ],
+        "stages": [
+				{
+                    "text": "research.CITYMAPPER.stage.0",
+                    "required_research" : ["craftedcity_mapper"],
+					"recipes" : ["beyondtheveil:city_mapper"]
+                },
+                {
+                    "text": "research.CITYMAPPER.stage.1",
+					"recipes" : ["beyondtheveil:city_mapper", "beyondtheveil:elder_stone_bricks"]
+                }
+            ]
+        },
+		{
+        "key": "CLINIC",
+        "name": "research.CLINIC.title",
+        "icons": [ "beyondtheveil:elder_stone_bricks" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,24],
+		"learn" : "true",
+        "parents": [ "CITYMAPPER" ],
+        "stages": [
+				{
+                    "text": "research.CLINIC.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "PLANTDREAMS",
+        "name": "research.PLANTDREAMS.title",
+        "icons": [ "minecraft:sapling" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 0, -5],
+		"hiders": ["memPLANT"],
+        "parents": ["EFFECTDREAMS", "HUMANDREAMS" ],
+        "stages": [
+				{
+                    "text": "research.PLANTDREAMS.stage.0",
+                    "required_research" : ["plantDream"],
+					"recipes" : ["beyondtheveil:memory_phial;memPLANT"]
+                },
+                {
+                    "text": "research.PLANTDREAMS.stage.1",
+					"recipes" : ["beyondtheveil:memory_phial;memPLANT"]
+                }
+            ]
+        },
+		{
+        "key": "VANILLASEEDS",
+        "name": "research.VANILLASEEDS.title",
+        "icons": [ "beyondtheveil:vanilla_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -2, -4],
+		"hiders": ["vanillaseeds"],
+        "parents": ["PLANTDREAMS"],
+        "stages": [
+				{
+                    "text": "research.VANILLASEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "REDSTONESEEDS",
+        "name": "research.REDSTONESEEDS.title",
+        "icons": [ "beyondtheveil:redstone_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -4, -2],
+		"hiders": ["redstoneseeds"],
+        "parents": [ "VANILLASEEDS" ],
+        "stages": [
+				{
+                    "text": "research.REDSTONESEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "GHOSTSEEDS",
+        "name": "research.GHOSTSEEDS.title",
+        "icons": [ "beyondtheveil:ghost_weed" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -5, 0],
+		"hiders": ["ghostseeds"],
+        "parents": [ "REDSTONESEEDS" ],
+        "stages": [
+				{
+                    "text": "research.GHOSTSEEDS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "VIJHISS",
+        "name": "research.VIJHISS.title",
+        "icons": [ "beyondtheveil:plant_ordo" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, -2],
+		"hiders": ["GHOSTSEEDS"],
+        "parents": [ "GHOSTSEEDS" ],
+        "stages": [
+				{
+                    "text": "research.VIJHISS.stage.0",
+                    "required_research" : ["plantvijhiss"]
+                },
+				{
+                    "text": "research.VIJHISS.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "MEGYDREA",
+        "name": "research.MEGYDREA.title",
+        "icons": [ "beyondtheveil:megydrea" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -9, -4],
+		"hiders": ["usedvijhiss"],
+        "parents": [ "VIJHISS" ],
+        "stages": [
+				{
+                    "text": "research.MEGYDREA.stage.0",
+                    "required_research" : ["gotmegydrea"]
+                },
+				{
+                    "text": "research.MEGYDREA.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "ARBOREALGENERATOR",
+        "name": "research.ARBOREALGENERATOR.title",
+        "icons": [ "beyondtheveil:arboreal_generator" ],
+        "category": "BEYOND_THE_VEIL", "location": [ -7, 2],
+		"learn" : "true",
+        "parents": [ "GHOSTSEEDS" ],
+        "stages": [
+				{
+                    "text": "research.ARBOREALGENERATOR.stage.0",
+                    "required_research" : ["plantgenerator"]
+                },
+				{
+                    "text": "research.ARBOREALGENERATOR.stage.1"
+                }
+            ]
+        },
+		{
+        "key": "FINALQUEST",
+        "name": "research.FINALQUEST.title",
+        "icons": [ "beyondtheveil:necronomicon" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18, 16],
+		"hiders": ["IDOL"],
+        "parents": [ "WATERWALKING", "DREAMSHRINE" ],
+        "stages": [
+				{
+                    "text": "research.FINALQUEST.stage.0",
+                    "required_research" : ["hearing4"]
+                },
+				{
+                    "text": "research.FINALQUEST.stage.1",
+                    "required_research" : ["killedkeeper"]
+                },
+				{
+                    "text": "research.FINALQUEST.stage.2"
+                }
+            ]
+        },
+		{
+        "key": "FLUTE",
+        "name": "research.FLUTE.title",
+        "icons": [ "beyondtheveil:flute" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15, -2],
+		"hiders": ["artifactflute"],
+        "stages": [
+				{
+                    "text": "research.FLUTE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "WOLFMEDALLION",
+        "name": "research.WOLFMEDALLION.title",
+        "icons": [ "beyondtheveil:wolf_medallion" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17, -2],
+		"hiders": ["artifactwolf_medallion"],
+        "stages": [
+				{
+                    "text": "research.WOLFMEDALLION.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "SAWCLEAVER",
+        "name": "research.SAWCLEAVER.title",
+        "icons": [ "beyondtheveil:saw_cleaver" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15, 0],
+		"hiders": ["artifactsaw_cleaver"],
+        "stages": [
+				{
+                    "text": "research.SAWCLEAVER.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "BRONZESPHERE",
+        "name": "research.BRONZESPHERE.title",
+        "icons": [ "beyondtheveil:bronze_sphere" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17, 0],
+		"hiders": ["artifactbronze_sphere"],
+        "stages": [
+				{
+                    "text": "research.BRONZESPHERE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "CRUCIBLE",
+        "name": "research.CRUCIBLE.title",
+        "icons": [ "beyondtheveil:crucible" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 0],
+		"hiders": ["artifactcrucible"],
+        "stages": [
+				{
+                    "text": "research.CRUCIBLE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "BAUBLERESEARCH",
+        "name": "research.BAUBLERESEARCH.title",
+        "icons": [ "baubles:ring" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2, 5],
+		"hiders": ["baubleresearch"],
+        "stages": [
+				{
+                    "text": "research.BAUBLERESEARCH.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "TONEWDEPTHS",
+        "name": "research.TONEWDEPTHS.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18, 21],
+		"hiders": ["FINALQUEST"],
+		"parents" : ["SHOGGOTH", "FINALQUEST"],
+        "stages": [
+				{
+                    "text": "research.TONEWDEPTHS.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "BLACKMIRROR",
+        "name": "research.BLACKMIRROR.title",
+        "icons": [ "beyondtheveil:black_mirror" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 23],
+		"hiders": ["TONEWDEPTHS"],
+        "parents": ["TONEWDEPTHS" ],
+        "stages": [
+				{
+                    "text": "research.BLACKMIRROR.stage.0",
+                    "required_research" : ["usedblack_mirror"],
+					"recipes" : ["beyondtheveil:black_mirror"]
+                },
+                {
+                    "text": "research.BLACKMIRROR.stage.1",
+					"recipes" : ["beyondtheveil:black_mirror"]
+                }
+            ]
+        },
+		{
+        "key": "FLESHCARBONTOKEN",
+        "name": "research.FLESHCARBONTOKEN.title",
+        "icons": [ "beyondtheveil:fleshcarbontoken" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 20, 25],
+		"hiders": ["BLACKMIRROR", "BLOODWELL"],
+        "parents": ["BLACKMIRROR" ],
+        "stages": [
+				{
+                    "text": "research.FLESHCARBONTOKEN.stage.0",
+                    "required_research" : ["craftedfleshcarbontoken"],
+					"recipes" : ["beyondtheveil:fleshcarbontoken"]
+                },
+                {
+                    "text": "research.FLESHCARBONTOKEN.stage.1",
+					"recipes" : ["beyondtheveil:fleshcarbontoken"]
+                }
+            ]
+        },
+		{
+        "key": "ARCHE",
+        "name": "research.ARCHE.title",
+        "icons": [ "minecraft:prismarine;1;2" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 21, 27],
+		"hiders": ["FLESHCARBONTOKEN"],
+		"parents" : ["FLESHCARBONTOKEN"],
+        "stages": [
+				{
+                    "text": "research.ARCHE.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "ICTYARY",
+        "name": "research.ICTYARY.title",
+        "icons": [ "minecraft:spawn_egg" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 19, 29],
+		"hiders": ["ARCHE"],
+		"parents" : ["ARCHE"],
+        "stages": [
+				{
+                    "text": "research.ICTYARY.stage.0"
+                }
+            ]
+        },
+		{
+        "key": "DOSKILLS",
+        "name": "research.DOSKILLS.title",
+        "icons": [ "minecraft:prismarine_crystals" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 23, 29],
+		"hiders": ["ARCHE"],
+		"parents" : ["ARCHE"],
+        "stages": [
+				{
+                    "text": "research.DOSKILLS.stage.0"
+                }
+            ]
+        }
+	]
+}
