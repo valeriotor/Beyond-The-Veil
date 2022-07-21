@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil;
 import com.google.gson.Gson;
 import com.mojang.logging.LogUtils;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -50,6 +51,7 @@ public class BeyondTheVeil
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
+        Messages.register();
         ResearchRegistry.registerResearchesFirst();
         ResearchRegistry.registerResearchesSecond();
     }

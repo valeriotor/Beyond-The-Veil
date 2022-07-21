@@ -2,7 +2,7 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
 import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
-import com.valeriotor.beyondtheveil.gui.GearBenchGui;
+import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

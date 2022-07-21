@@ -123,12 +123,10 @@ public class ResearchStatus {
     }
 
     public ResearchStatus readFromNBT(CompoundTag nbt) {
-        this.stage = nbt.getInt("stage");
-        this.learned = this.learned || nbt.getBoolean("learned");
-        this.complete = nbt.getBoolean("complete");
-        if (nbt.contains("updated")) {
-            updated = nbt.getBoolean("updated");
-        }
+        if(nbt.contains("stage")) this.stage = nbt.getInt("stage");
+        if(nbt.contains("learned")) this.learned = this.learned || nbt.getBoolean("learned");
+        if(nbt.contains("complete")) this.complete = nbt.getBoolean("complete");
+        if (nbt.contains("updated")) this.updated = nbt.getBoolean("updated");
         return this;
     }
 
@@ -176,5 +174,16 @@ public class ResearchStatus {
 
     public boolean isUpdated() {
         return updated;
+    }
+
+    @Override
+    public String toString() {
+        return "ResearchStatus{" +
+                "res=" + res +
+                ", stage=" + stage +
+                ", learned=" + learned +
+                ", complete=" + complete +
+                ", updated=" + updated +
+                '}';
     }
 }
