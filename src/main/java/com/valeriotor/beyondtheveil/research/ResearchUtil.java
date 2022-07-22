@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.ResearchSyncer;
 import com.valeriotor.beyondtheveil.networking.SyncResearchToClientPacket;
@@ -18,7 +19,7 @@ import java.util.Map.Entry;
 
 public class ResearchUtil {
 
-    public static void progressResearchServer(Player p, String key) {
+    public static void progressResearchServerAndSync(Player p, String key) {
         progressResearch(p, key);
         ResearchStatus newStatus = getResearch(p, key);
         Messages.sendToPlayer(new SyncResearchToClientPacket(ResearchSyncer.oneResearchToClient(newStatus)), (ServerPlayer) p);
@@ -28,7 +29,7 @@ public class ResearchUtil {
         p.getCapability(ResearchProvider.RESEARCH, null).ifPresent(researchData -> researchData.getResearch(key).progressStage(p));
     }
 
-    public static void learnResearchServer(Player p, String key) {
+    public static void learnResearchServerAndSync(Player p, String key) {
         learnResearch(p, key);
         ResearchStatus newStatus = getResearch(p, key);
         Messages.sendToPlayer(new SyncResearchToClientPacket(ResearchSyncer.oneResearchToClient(newStatus)), (ServerPlayer) p);
@@ -49,10 +50,10 @@ public class ResearchUtil {
             PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);
             for (Entry<String, ResearchStatus> entry : stati.entrySet()) {
                 if (entry.getValue().isLearnable(stati, data)) {
-                    ResearchUtil.learnResearchServer(p, entry.getKey());
+                    ResearchUtil.learnResearchServerAndSync(p, entry.getKey());
                     if (entry.getKey().equals("CRYSTALDREAMS"))
-                        //Memory.METAL.unlock(p, false);
-                        return true;
+                        Memory.METAL.unlock(p, false);
+                    return true;
                 }
             }
         }
@@ -74,7 +75,18 @@ public class ResearchUtil {
         return DUMMY_STATUS;
     }
 
-    public static int getResearchStage(Player p, String key) {
+    public static Map<String, ResearchStatus> getResearches(Player p) {
+        if(!(p instanceof FakePlayer)) {
+            Optional<ResearchData> capability = p.getCapability(ResearchProvider.RESEARCH).resolve();
+            if (capability.isPresent()) {
+                return capability.get().getResearches();
+            }
+        }
+        return new HashMap<>();
+    }
+
+
+        public static int getResearchStage(Player p, String key) {
         ResearchStatus r = getResearch(p, key);
         if (r != null) return r.getStage();
         return -2;

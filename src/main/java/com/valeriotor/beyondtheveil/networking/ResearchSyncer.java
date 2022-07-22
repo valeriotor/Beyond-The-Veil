@@ -87,7 +87,7 @@ public abstract class ResearchSyncer {
 
         @Override
         public void process(Player p) {
-            if(progress) ResearchUtil.progressResearchServer(p, key);
+            if(progress) ResearchUtil.progressResearchServerAndSync(p, key);
             if(updateMark) ResearchUtil.setResearchUpdated(p, key, updateValue);
         }
     }

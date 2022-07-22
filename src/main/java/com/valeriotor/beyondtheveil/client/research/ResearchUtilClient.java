@@ -12,14 +12,14 @@ public class ResearchUtilClient {
         syncer.process(Minecraft.getInstance().player);
     }
 
-    public static void progressResearchClient(String key) {
+    public static void progressResearchClientAndSync(String key) {
         if (Minecraft.getInstance().player != null) {
             ResearchUtil.progressResearch(Minecraft.getInstance().player, key);
             Messages.sendToServer(new SyncResearchToServerPacket(ResearchSyncer.oneResearchToServer(key).setProgress(true)));
         }
     }
 
-    public static void openUpdatedResearchClient(String key) {
+    public static void openUpdatedResearchClientAndSync(String key) {
         if (Minecraft.getInstance().player != null) {
             ResearchUtil.setResearchUpdated(Minecraft.getInstance().player, key, false);
             Messages.sendToServer(new SyncResearchToServerPacket(ResearchSyncer.oneResearchToServer(key).setUpdateMark(false)));

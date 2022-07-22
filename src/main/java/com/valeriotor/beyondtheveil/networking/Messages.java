@@ -37,6 +37,17 @@ public class Messages {
                 .encoder(SyncResearchToServerPacket::toBytes)
                 .consumer(SyncResearchToServerPacket::handle)
                 .add();
+
+        net.messageBuilder(SyncPlayerDataPacket.ToClient.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncPlayerDataPacket.ToClient::new)
+                .encoder(SyncPlayerDataPacket.ToClient::toBytes)
+                .consumer(SyncPlayerDataPacket.ToClient::handle)
+                .add();
+        net.messageBuilder(SyncPlayerDataPacket.ToServer.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncPlayerDataPacket.ToServer::new)
+                .encoder(SyncPlayerDataPacket.ToServer::toBytes)
+                .consumer(SyncPlayerDataPacket.ToServer::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

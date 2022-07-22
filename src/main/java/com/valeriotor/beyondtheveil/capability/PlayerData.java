@@ -199,8 +199,8 @@ public class PlayerData {
         @Override public boolean getBoolean(String key) {return false;}
         @Override public boolean getBoolean(String key, boolean temporary) {return false;}
         @Override public void setInteger(String key, int value, boolean temporary) {}
-        @Override public Integer incrementOrSetInteger(String key, int amount, int valueIfAbsent, boolean temporary) {return null;}
-        @Override public Integer getOrSetInteger(String key, int valueIfAbsent, boolean temporary) {return null;}
+        @Override public Integer incrementOrSetInteger(String key, int amount, int valueIfAbsent, boolean temporary) {return valueIfAbsent;}
+        @Override public Integer getOrSetInteger(String key, int valueIfAbsent, boolean temporary) {return valueIfAbsent;}
         @Override public Integer getInteger(String key) {return null;}
         @Override public Integer getInteger(String key, boolean temporary) {return null;}
         @Override public void setLong(String key, long value, boolean temporary) {}

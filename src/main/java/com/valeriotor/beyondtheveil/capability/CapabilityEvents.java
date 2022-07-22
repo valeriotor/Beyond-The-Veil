@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +22,7 @@ public class CapabilityEvents {
 
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Player) {
+        if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer)) {
             if (!event.getObject().getCapability(PLAYER_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(References.MODID, "player_data"), new PlayerDataProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "research_data"), new ResearchProvider());
