@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -22,19 +23,25 @@ public abstract class ResearchSyncer {
         return new MarkResearchesToClient(toUpdate);
     }
 
+    public static AllResearchesToClient allResearchesToClient(CompoundTag researchData) {
+        return new AllResearchesToClient(researchData);
+    }
+
     public static ResearchSyncer fromServer(CompoundTag nbt) {
         String type = nbt.getString("syncType");
         if(OneResearchToClient.class.descriptorString().equals(type)) {
             return new OneResearchToClient(nbt);
         } else if (MarkResearchesToClient.class.descriptorString().equals(type)) {
             return new MarkResearchesToClient(nbt);
+        } else if (AllResearchesToClient.class.descriptorString().equals(type)) {
+            return new AllResearchesToClient(nbt);
         }
         return null;
     }
 
     public static ResearchSyncer fromClient(CompoundTag nbt) {
-        String type = nbt.getString("type");
-        if(OneResearchToServer.class.descriptorString().equals(type)) {
+        String type = nbt.getString("syncType");
+        if(OneResearchToServer.class.descriptorString().equals(nbt.getString("syncType"))) {
             return new OneResearchToServer(nbt);
         }
         return null;
@@ -147,6 +154,25 @@ public abstract class ResearchSyncer {
             for (String s : updatedResearches) {
                 ResearchUtil.setResearchUpdated(p, s, true);
             }
+        }
+    }
+
+    public static class AllResearchesToClient extends ResearchSyncer {
+
+        private CompoundTag researchData;
+
+        private AllResearchesToClient(CompoundTag researchData) {
+            this.researchData = researchData;
+        }
+
+        @Override
+        protected void writeToNBT_internal(CompoundTag nbt) {
+            nbt.put("data", researchData);
+        }
+
+        @Override
+        public void process(Player p) {
+            ResearchUtilClient.loadResearchDataNBT(researchData);
         }
     }
 

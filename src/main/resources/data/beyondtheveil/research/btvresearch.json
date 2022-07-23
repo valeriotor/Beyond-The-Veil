@@ -3,7 +3,7 @@
         {
         "key": "FIRSTDREAMS",
         "name": "research.FIRSTDREAMS.title",
-        "icons": [ "minecraft:bed" ],
+        "icons": [ "minecraft:red_bed" ],
         "category": "BEYOND_THE_VEIL", "location": [ 0,0 ],
 		"parents": [],
 		"hiders" : ["thebeginning"],

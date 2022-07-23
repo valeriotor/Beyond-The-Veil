@@ -1,8 +1,10 @@
-package com.valeriotor.beyondtheveil;
+package com.valeriotor.beyondtheveil.client;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
 import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
+import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -26,6 +28,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FUME_SPREADER.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.SLEEP_CHAMBER.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.GEAR_BENCH.get(), RenderType.cutout());
+            ResearchRegistryClient.registerConnectionsAndRecipes();
         });
 
     }

@@ -7,7 +7,7 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.world.entity.player.Player;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.Map;
 
 public class ResearchConnection {
 
@@ -31,7 +31,7 @@ public class ResearchConnection {
         return ResearchUtil.isResearchVisible(p, startKey) && ResearchUtil.isResearchVisible(p, endKey);
     }
 
-    public boolean isVisible(HashMap<String, ResearchStatus> map, PlayerData data) {
+    public boolean isVisible(Map<String, ResearchStatus> map, PlayerData data) {
         return ResearchUtil.isResearchVisible(map, data, startKey) && ResearchUtil.isResearchVisible(map, data, endKey);
     }
 

@@ -9,7 +9,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class SyncPlayerDataPacket {
+public abstract class SyncPlayerDataPacket {
 
     private Type type;
     private final String key;

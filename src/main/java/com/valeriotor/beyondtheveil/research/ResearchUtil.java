@@ -96,7 +96,7 @@ public class ResearchUtil {
         return getResearch(p, key).isVisible(p);
     }
 
-    public static boolean isResearchVisible(HashMap<String, ResearchStatus> map, PlayerData data, String key) {
+    public static boolean isResearchVisible(Map<String, ResearchStatus> map, PlayerData data, String key) {
         return map.get(key).isVisible(map, data);
     }
 

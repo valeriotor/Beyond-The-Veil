@@ -1,8 +1,14 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -43,6 +49,11 @@ public class SlugCatcherItem extends Item {
         double zCos = Math.cos(yHeadRot * ANGLE_CONVERSION) * Math.cos(xRot * ANGLE_CONVERSION);
 
         if (pLevel.isClientSide) {
+            //DataUtil.setBoolean(pPlayer, "thebeginning", true, false);
+            //DataUtil.setBoolean(pPlayer, "didDream", true, false);
+            //ResearchStatus firstdreams = pPlayer.getCapability(ResearchProvider.RESEARCH).resolve().get().getResearch("FIRSTDREAMS");
+            //firstdreams.complete(pPlayer);
+            //GuiHelper.openClientSideGui(GuiHelper.GuiType.NECRONOMICON);
             final int PARTICLE_START = 25;
             final int PARTICLE_COUNT = 100;
             ClientLevel level = (ClientLevel) pLevel;
