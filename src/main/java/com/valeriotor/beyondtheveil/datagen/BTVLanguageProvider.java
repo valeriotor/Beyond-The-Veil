@@ -45,6 +45,41 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(MEAD.get(), "Cup of Mead");
         add(CUP.get(), "Empty Cup");
         add(FLUTE.get(), "Flute of the Outer Gods");
+        add(WOLF_MEDALLION.get(), "Wolf Medallion");
+        add(TABLET.get(), "Tablet");
+        add(BRONZE_SPHERE.get(), "Bronze Sphere");
+        add(REDSTONE_WEED_SEEDS.get(), "Redstone Grass Seeds");
+        add(GHOST_WEED_SEEDS.get(), "Ghost Grass Seeds");
+        add(VANILLA_WEED_SEEDS.get(), "Vanilla Grass Seeds");
+        add(BLACKJACK.get(), "Blackjack");
+        add(SPINE.get(), "Spine");
+        add(HELD_VILLAGER.get(), "Villager");
+        add(HELD_WEEPER.get(), "Weeper");
+        add(HELD_FLETUM.get(), "Fletum");
+        add(HELD_SHOGGOTH.get(), "Shoggoth");
+        add(SURGERY_TOOLS.get(), "Surgery Tools");
+        add(BONE_TIARA.get(), "Bone Tiara");
+        add(BLEEDING_BELT.get(), "Bleeding Belt");
+        add(DREAM_BOTTLE.get(), "Dream Bottle");
+        add(SHOGGOTH_MAP.get(), "Shoggoth Map");
+        add(BLOOD_COVENANT.get(), "Blood Covenant");
+        add(REVELATION_RING.get(), "Ring of Revelation");
+        add(AZACNO_CHARM.get(), "Charm of Azacno");
+        add(BLOOD_CROWN.get(), "Crown of Thorns");
+        add(CORAL_STAFF.get(), "Coral Staff");
+        add(SIGIL_ZOMBIE.get(), "Blood Sigil: Zombie");
+        add(SIGIL_SKELLIE.get(), "Blood Sigil: Skeleton");
+        add(SIGIL_PLAYER.get(), "Blood Sigil: Player");
+        add(SIGIL_PATHWAY.get(), "Blood Sigil: Pathway");
+        add(SACRIFICIAL_KNIFE.get(), "Sacrificial Knife");
+        add(MEMORY_PHIAL.get(), "Memory Phial");
+        add(NECRONOMICON.get(), "Al Azif");
+        add(GEAR.get(), "Gear");
+        add(SURGEON_SUMMONS.get(), "Surgeon Summons");
+        add(CRUCIBLE.get(), "Crucible");
+        add(BLACK_MIRROR.get(), "Black Mirror");
+        add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
+
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
 

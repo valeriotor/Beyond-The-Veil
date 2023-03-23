@@ -97,6 +97,41 @@ public class Registration {
     public static final RegistryObject<Item> CUP = ITEMS.register("drink_empty", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> FLUTE = ITEMS.register("flute", () -> new Item(ITEM_PROPERTIES));
 
+    public static final RegistryObject<Item> WOLF_MEDALLION = ITEMS.register("wolf_medallion", () -> new Item(ITEM_PROPERTIES)); // new ItemWolfMedallion("wolf_medallion");
+    public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new Item(ITEM_PROPERTIES)); // new ItemTablet("tablet");
+    public static final RegistryObject<Item> BRONZE_SPHERE= ITEMS.register("bronze_sphere", () -> new Item(ITEM_PROPERTIES)); // new ItemBronzeSphere("bronze_sphere");
+    public static final RegistryObject<Item> REDSTONE_WEED_SEEDS = ITEMS.register("redstone_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass, BlockNames.REDSTONEWEED);
+    public static final RegistryObject<Item> GHOST_WEED_SEEDS = ITEMS.register("ghost_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass, BlockNames.GHOSTWEED);
+    public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
+    public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackjack("blackjack");
+    public static final RegistryObject<Item> SPINE = ITEMS.register("spine", () -> new Item(ITEM_PROPERTIES)); // new ModItem("spine");
+    public static final RegistryObject<Item> HELD_VILLAGER = ITEMS.register("held_villager", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldVillager("held_villager");
+    public static final RegistryObject<Item> HELD_WEEPER = ITEMS.register("held_weeper", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldWeeper("held_weeper");
+    public static final RegistryObject<Item> HELD_FLETUM = ITEMS.register("held_fletum", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldFletum("held_fletum");
+    public static final RegistryObject<Item> HELD_SHOGGOTH = ITEMS.register("held_shoggoth", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldShoggoth("held_shoggoth");
+    public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
+    public static final RegistryObject<Item> BONE_TIARA = ITEMS.register("bone_tiara", () -> new Item(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
+    public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
+    public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", () -> new Item(ITEM_PROPERTIES)); // new ItemDreamBottle("dream_bottle");
+    public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);
+    public static final RegistryObject<Item> BLOOD_COVENANT = ITEMS.register("blood_covenant", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
+    public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
+    public static final RegistryObject<Item> AZACNO_CHARM = ITEMS.register("azacno_charm", () -> new Item(ITEM_PROPERTIES)); // new ItemAzacnoCharm("azacno_charm").setMaxStackSize(1);
+    public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCrown("blood_crown").setMaxStackSize(1);
+    public static final RegistryObject<Item> CORAL_STAFF = ITEMS.register("coral_staff", () -> new Item(ITEM_PROPERTIES)); // new ItemCoralStaff("coral_staff");
+    public static final RegistryObject<Item> SIGIL_ZOMBIE = ITEMS.register("sigil_zombie", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilUndead("sigil_zombie", BloodMobs.BLOOD_ZOMBIE);
+    public static final RegistryObject<Item> SIGIL_SKELLIE = ITEMS.register("sigil_skellie", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilUndead("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
+    public static final RegistryObject<Item> SIGIL_PLAYER = ITEMS.register("sigil_player", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPlayer("sigil_player");
+    public static final RegistryObject<Item> SIGIL_PATHWAY = ITEMS.register("sigil_pathway", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPathway("sigil_pathway");
+    public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", () -> new Item(ITEM_PROPERTIES)); // new ItemSacrificialKnife("sacrificial_knife");
+    public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", () -> new Item(ITEM_PROPERTIES)); // new ItemMemoryPhial("memory_phial");
+    public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", () -> new Item(ITEM_PROPERTIES)); // new ItemNecronomicon("necronomicon");
+    public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
+    public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
+    public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
+    public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackMirror("black_mirror");
+    public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
+
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
