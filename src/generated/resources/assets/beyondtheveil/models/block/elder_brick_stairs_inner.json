@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "beyondtheveil:block/elder_brick",
+    "bottom": "beyondtheveil:block/elder_brick",
+    "top": "beyondtheveil:block/elder_brick"
+  }
+}

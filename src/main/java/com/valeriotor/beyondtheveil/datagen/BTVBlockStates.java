@@ -7,6 +7,9 @@ import com.valeriotor.beyondtheveil.block.SleepChamberBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
@@ -14,6 +17,7 @@ import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
+import static net.minecraft.data.models.model.ModelLocationUtils.getModelLocation;
 
 public class BTVBlockStates extends BlockStateProvider {
 
@@ -37,10 +41,25 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(BLUE_BRICKS.get());
         stairsBlock(WORN_BRICK_STAIRS.get(), modLoc("block/" + WORN_BRICKS.getId().getPath()));
         horizontalBlock(GEAR_BENCH.get(), new ExistingModelFile(modLoc("block/" + GEAR_BENCH.getId().getPath()), models().existingFileHelper));
+        simpleBlock(ELDER_BRICK.get());
+        slabBlock(ELDER_BRICK_SLAB.get(), getModelLocation(ELDER_BRICK.get()), modLoc("block/" + ELDER_BRICK.getId().getPath()));
+        stairsBlock(ELDER_BRICK_STAIRS.get(), modLoc("block/" + ELDER_BRICK.getId().getPath()));
+        simpleBlock(ELDER_STONE_BRICK.get());
+        slabBlock(ELDER_STONE_BRICK_SLAB.get(), getModelLocation(ELDER_STONE_BRICK.get()), modLoc("block/" + ELDER_STONE_BRICK.getId().getPath()));
+        stairsBlock(ELDER_STONE_BRICK_STAIRS.get(), modLoc("block/" + ELDER_STONE_BRICK.getId().getPath()));
+        simpleBlock(ELDER_STONE_BRICK_CHISELED.get());
+        simpleBlock(ELDER_SMOOTH_STONE.get());
+        registerSmoothStoneSlab(ELDER_SMOOTH_STONE_SLAB.get(), modLoc("block/" + ELDER_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + ELDER_SMOOTH_STONE.getId().getPath()));
+
 
         registerCanopy();
         registerFumeSpreader();
         registerSleepChamber();
+    }
+
+    private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
+        slabBlock(block, models().slab(block.getRegistryName().getPath(), side, top, top), models().slabTop(block.getRegistryName().getPath() + "_top", side, top, top), models().orientable(block.getRegistryName().getPath() + "_double", side, side, top));
+
     }
 
     private void registerCanopy() {
@@ -91,6 +110,7 @@ public class BTVBlockStates extends BlockStateProvider {
         //builder.part().modelFile(fume_spreader).addModel();
         BlockModelBuilder fumeSpreaderFullModel = models().getBuilder("beyondtheveil:block/fume_spreader_full")
                 .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/fume_spreader"))
                 .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .submodel(RenderType.solid(), incense_parent)
                         .submodel(RenderType.translucent(), parent))
@@ -98,6 +118,7 @@ public class BTVBlockStates extends BlockStateProvider {
 
         BlockModelBuilder fumeSpreaderEmptyModel = models().getBuilder("beyondtheveil:block/fume_spreader_empty")
                 .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/fume_spreader"))
                 .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .submodel(RenderType.translucent(), parent))
                 .end();

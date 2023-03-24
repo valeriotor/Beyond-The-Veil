@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "beyondtheveil:block/elder_stone_brick",
+    "bottom": "beyondtheveil:block/elder_stone_brick",
+    "top": "beyondtheveil:block/elder_stone_brick"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "beyondtheveil:block/elder_smooth_stone_slab_side",
+    "bottom": "beyondtheveil:block/elder_smooth_stone",
+    "top": "beyondtheveil:block/elder_smooth_stone"
+  }
+}

@@ -32,6 +32,15 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(FUME_SPREADER_ITEM.getId().getPath(), modLoc("block/fume_spreader"));
         withExistingParent(SLEEP_CHAMBER_ITEM.getId().getPath(), modLoc("block/sleep_chamber"));
         withExistingParent(GEAR_BENCH_ITEM.getId().getPath(), modLoc("block/gear_bench"));
+        withExistingParent(ELDER_BRICK_ITEM.getId().getPath(), modLoc("block/elder_brick"));
+        withExistingParent(ELDER_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/elder_brick_slab"));
+        withExistingParent(ELDER_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/elder_brick_stairs"));
+        withExistingParent(ELDER_STONE_BRICK_ITEM.getId().getPath(), modLoc("block/elder_stone_brick"));
+        withExistingParent(ELDER_STONE_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/elder_stone_brick_slab"));
+        withExistingParent(ELDER_STONE_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/elder_stone_brick_stairs"));
+        withExistingParent(ELDER_STONE_BRICK_CHISELED_ITEM.getId().getPath(), modLoc("block/elder_stone_brick_chiseled"));
+        withExistingParent(ELDER_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone"));
+        withExistingParent(ELDER_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone_slab"));
         withExistingParent(DEEP_ONE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
