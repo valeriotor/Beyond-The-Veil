@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "beyondtheveil:block/blood_brick_slab_top"
+    },
+    "type=bottom": {
+      "model": "beyondtheveil:block/blood_brick_slab"
+    },
+    "type=double": {
+      "model": "beyondtheveil:block/blood_brick"
+    }
+  }
+}

@@ -42,6 +42,11 @@ public class BTVBlockTags extends BlockTagsProvider {
                 .add(ELDER_STONE_BRICK_CHISELED.get())
                 .add(ELDER_SMOOTH_STONE.get())
                 .add(ELDER_SMOOTH_STONE_SLAB.get())
+                .add(BLOOD_BRICK.get())
+                .add(BLOOD_BRICK_SLAB.get())
+                .add(BLOOD_BRICK_STAIRS.get())
+                .add(BLOOD_SMOOTH_STONE.get())
+                .add(BLOOD_SMOOTH_STONE_SLAB.get())
                 .add(GEAR_BENCH.get());
         tag(BlockTags.WOODEN_FENCES)
                 .add(DAMP_WOOD_FENCE.get());

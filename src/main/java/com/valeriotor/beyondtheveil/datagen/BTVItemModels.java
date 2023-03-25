@@ -41,6 +41,12 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(ELDER_STONE_BRICK_CHISELED_ITEM.getId().getPath(), modLoc("block/elder_stone_brick_chiseled"));
         withExistingParent(ELDER_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone"));
         withExistingParent(ELDER_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone_slab"));
+        withExistingParent(BLOOD_BRICK_ITEM.getId().getPath(), modLoc("block/blood_brick"));
+        withExistingParent(BLOOD_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/blood_brick_slab"));
+        withExistingParent(BLOOD_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/blood_brick_stairs"));
+        withExistingParent(BLOOD_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone"));
+        withExistingParent(BLOOD_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone_slab"));
+        withExistingParent(HEART_ITEM.getId().getPath(), modLoc("block/heart"));
         withExistingParent(DEEP_ONE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));

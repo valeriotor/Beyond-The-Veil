@@ -44,6 +44,7 @@ public class SlugBaitBE extends BlockEntity {
         }
         checkWaterCounter--;
         if (checkWaterCounter <= 0) {
+            System.out.println(checkWaterCounter);
             checkWaterCounter = 50;
             if (level.getBlockState(worldPosition.relative(Direction.SOUTH)).getBlock() != Blocks.WATER ||
                     level.getBlockState(worldPosition.relative(Direction.NORTH)).getBlock() != Blocks.WATER ||

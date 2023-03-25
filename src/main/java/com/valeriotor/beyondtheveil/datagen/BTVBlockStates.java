@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.DampCanopyBlock;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
 import com.valeriotor.beyondtheveil.block.SleepChamberBlock;
@@ -8,10 +7,12 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -50,6 +51,12 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(ELDER_STONE_BRICK_CHISELED.get());
         simpleBlock(ELDER_SMOOTH_STONE.get());
         registerSmoothStoneSlab(ELDER_SMOOTH_STONE_SLAB.get(), modLoc("block/" + ELDER_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + ELDER_SMOOTH_STONE.getId().getPath()));
+        simpleBlock(BLOOD_BRICK.get());
+        slabBlock(BLOOD_BRICK_SLAB.get(), getModelLocation(BLOOD_BRICK.get()), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
+        stairsBlock(BLOOD_BRICK_STAIRS.get(), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
+        simpleBlock(BLOOD_SMOOTH_STONE.get());
+        registerSmoothStoneSlab(BLOOD_SMOOTH_STONE_SLAB.get(), modLoc("block/" + BLOOD_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + BLOOD_SMOOTH_STONE.getId().getPath()));
+        simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
 
 
         registerCanopy();
