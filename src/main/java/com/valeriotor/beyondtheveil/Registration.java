@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
+import com.valeriotor.beyondtheveil.item.CoralStaffItem;
 import com.valeriotor.beyondtheveil.item.SlugCatcherItem;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.GearBenchBE;
@@ -195,7 +196,7 @@ public class Registration {
     public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
     public static final RegistryObject<Item> AZACNO_CHARM = ITEMS.register("azacno_charm", () -> new Item(ITEM_PROPERTIES)); // new ItemAzacnoCharm("azacno_charm").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCrown("blood_crown").setMaxStackSize(1);
-    public static final RegistryObject<Item> CORAL_STAFF = ITEMS.register("coral_staff", () -> new Item(ITEM_PROPERTIES)); // new ItemCoralStaff("coral_staff");
+    public static final RegistryObject<Item> CORAL_STAFF = ITEMS.register("coral_staff", CoralStaffItem::new); // new ItemCoralStaff("coral_staff");
     public static final RegistryObject<Item> SIGIL_ZOMBIE = ITEMS.register("sigil_zombie", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilUndead("sigil_zombie", BloodMobs.BLOOD_ZOMBIE);
     public static final RegistryObject<Item> SIGIL_SKELLIE = ITEMS.register("sigil_skellie", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilUndead("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
     public static final RegistryObject<Item> SIGIL_PLAYER = ITEMS.register("sigil_player", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPlayer("sigil_player");

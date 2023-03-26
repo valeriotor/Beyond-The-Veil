@@ -26,6 +26,7 @@ public class SlugBaitBE extends BlockEntity {
 
     public void addMinerals() {
         mineralCounter = 300 * 20;
+        setChanged();
     }
 
     public boolean isEmpty() {

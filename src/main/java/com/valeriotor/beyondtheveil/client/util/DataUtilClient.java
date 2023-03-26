@@ -13,6 +13,10 @@ import java.util.Optional;
 
 public class DataUtilClient {
 
+    public static Player getPlayer() {
+        return Minecraft.getInstance().player;
+    }
+
     public static void loadPlayerDataNBT(CompoundTag data) {
         if (Minecraft.getInstance().player != null) {
             Optional<PlayerData> resolve = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
