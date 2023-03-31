@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.item.CoralStaffItem;
+import com.valeriotor.beyondtheveil.item.NecronomiconItem;
 import com.valeriotor.beyondtheveil.item.SlugCatcherItem;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.GearBenchBE;
@@ -203,7 +204,7 @@ public class Registration {
     public static final RegistryObject<Item> SIGIL_PATHWAY = ITEMS.register("sigil_pathway", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPathway("sigil_pathway");
     public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", () -> new Item(ITEM_PROPERTIES)); // new ItemSacrificialKnife("sacrificial_knife");
     public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", () -> new Item(ITEM_PROPERTIES)); // new ItemMemoryPhial("memory_phial");
-    public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", () -> new Item(ITEM_PROPERTIES)); // new ItemNecronomicon("necronomicon");
+    public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");

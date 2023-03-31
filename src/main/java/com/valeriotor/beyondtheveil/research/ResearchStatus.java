@@ -144,7 +144,7 @@ public class ResearchStatus {
         this.complete(p.getCapability(ResearchProvider.RESEARCH, null).map(ResearchData::getResearches).get(), p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(DUMMY));
     }
 
-    public boolean complete(Map<String, ResearchStatus> map, PlayerData data) {
+    public boolean complete(Map<String, ResearchStatus> map, PlayerData data) { // TODO make this always capable of completing? Rename
         for(String key : this.res.getHiders()) {
             if(!map.containsKey(key))
                 return false;

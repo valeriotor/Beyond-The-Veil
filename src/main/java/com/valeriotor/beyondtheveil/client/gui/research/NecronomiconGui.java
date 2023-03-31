@@ -47,7 +47,7 @@ public class NecronomiconGui extends Screen {
     private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
 
     public NecronomiconGui() {
-        super(new TextComponent("")); // TODO change to TranslatableComponent("gui.necronomicon")
+        super(new TranslatableComponent("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
         Map<String, ResearchStatus> map = ResearchUtil.getResearches(Minecraft.getInstance().player);
         PlayerData data = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
         this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
@@ -83,8 +83,6 @@ public class NecronomiconGui extends Screen {
     @Override
     public void init() {
         stars.clear();
-        this.topX = 0;
-        this.topY = 0;
         Random r = minecraft.player.getRandom();
         int a = 100 + r.nextInt(50);
         for (int i = 0; i < a; i++) {
@@ -229,7 +227,7 @@ public class NecronomiconGui extends Screen {
             if (status.getStage() == -1) ResearchUtilClient.progressResearchClientAndSync(res.getKey());
             if (status.isUpdated()) ResearchUtilClient.openUpdatedResearchClientAndSync(res.getKey());
             savePositionData();
-            //minecraft.setScreen(getResearchGui(status));
+            minecraft.setScreen(getResearchGui(status));
             return true;
         }
         return false;
@@ -239,8 +237,8 @@ public class NecronomiconGui extends Screen {
         return switch (status.res.getKey()) {
             //case "ICTYARY" -> new GuiIctyary();
             //case "DOSKILLS" -> new GuiDOSkills();
-            //default -> new GuiResearchPage(status);
-            default -> null;
+            default -> new ResearchPageGui(status);
+            //default -> null;
         };
     }
 

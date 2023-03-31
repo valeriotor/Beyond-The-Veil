@@ -220,6 +220,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.drowned.nogd", "The Great Dreamer won't listen to you.");
         add("gui.drowned.noac", "The gods of your ancestors do not exist.");
 
+        add("gui.necronomicon", "Al Azif");
         add("gui.research_page.complete", "Progress");
 
         add("keys.dodge", "Dodge");
