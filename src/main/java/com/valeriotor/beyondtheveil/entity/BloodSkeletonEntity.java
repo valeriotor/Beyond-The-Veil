@@ -5,9 +5,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 
 public class BloodSkeletonEntity extends Monster {
@@ -20,6 +24,9 @@ public class BloodSkeletonEntity extends Monster {
     protected void registerGoals() {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -28,7 +35,8 @@ public class BloodSkeletonEntity extends Monster {
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
-                .add(Attributes.ATTACK_DAMAGE, 18.0D);
+                .add(Attributes.ATTACK_DAMAGE, 18.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 2);
     }
 
 }
