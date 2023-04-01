@@ -84,7 +84,10 @@ public class ResearchPageGui extends Screen {
             }
         }
         //int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || minecraft.gameSettings.guiScale == 0 ? 90 : 130) - 5;
-        progress = addRenderableWidget(new Button(width / 2 - 60, height / 4, 120, 20, new TranslatableComponent("gui.research_page.complete"), button -> {
+        if (progress != null) {
+            removeWidget(progress);
+        }
+        progress = addRenderableWidget(new Button(width / 2 - 60, height / 2 + backgroundHeight * 13 / 54, 120, 20, new TranslatableComponent("gui.research_page.complete"), button -> {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             init();
         }));

@@ -17,6 +17,10 @@ public class DataUtilClient {
         return Minecraft.getInstance().player;
     }
 
+    public static void askSyncToServer() {
+
+    }
+
     public static void loadPlayerDataNBT(CompoundTag data) {
         if (Minecraft.getInstance().player != null) {
             Optional<PlayerData> resolve = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();

@@ -54,6 +54,12 @@ public class Messages {
                 .encoder(SyncAllPlayerDataToClientPacket::toBytes)
                 .consumer(SyncAllPlayerDataToClientPacket::handle)
                 .add();
+
+        net.messageBuilder(GenericToServerPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(GenericToServerPacket::new)
+                .encoder(GenericToServerPacket::toBytes)
+                .consumer(GenericToServerPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

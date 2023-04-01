@@ -2,11 +2,9 @@ package com.valeriotor.beyondtheveil.capability;
 
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.networking.Messages;
-import com.valeriotor.beyondtheveil.networking.ResearchSyncer;
-import com.valeriotor.beyondtheveil.networking.SyncAllPlayerDataToClientPacket;
-import com.valeriotor.beyondtheveil.networking.SyncResearchToClientPacket;
+import com.valeriotor.beyondtheveil.networking.*;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,9 +30,17 @@ import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.
 public class CapabilityEvents {
 
     @SubscribeEvent
-    public static void syncCapabilities(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.getPlayer().level.isClientSide) {
-            Player p = event.getPlayer();
+    public static void logInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+        syncCapabilities(event.getPlayer());
+    }
+
+    @SubscribeEvent
+    public static void changeDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
+        syncCapabilities(event.getPlayer());
+    }
+
+    public static void syncCapabilities(Player p) {
+        if (p != null && !p.level.isClientSide) {
             p.getCapability(PLAYER_DATA).resolve().ifPresent(data -> {
                 CompoundTag dataTag = new CompoundTag();
                 data.saveToNBT(dataTag);
@@ -56,17 +63,27 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "player_data"), new PlayerDataProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "research_data"), new ResearchProvider());
             }
+            if (event.getObject().level.isClientSide() && ClientSetup.isConnectionPresent()) {
+                GenericToServerPacket message = new GenericToServerPacket(GenericToServerPacket.MessageType.ASK_DATA_SYNC);
+                Messages.sendToServer(message);
+            }
         }
     }
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
+        LazyOptional<PlayerData> capability = event.getOriginal().getCapability(PLAYER_DATA);
+        LazyOptional<PlayerData> capability2 = event.getPlayer().getCapability(PLAYER_DATA);
         event.getOriginal().getCapability(PLAYER_DATA).ifPresent(oldData -> {
             event.getPlayer().getCapability(PLAYER_DATA).ifPresent(oldData::copyToNewStore);
         });
+        boolean b = capability.isPresent();
+        boolean b2 = capability2.isPresent();
         event.getOriginal().getCapability(RESEARCH).ifPresent(oldData -> {
             event.getPlayer().getCapability(RESEARCH).ifPresent(oldData::copyToNewStore);
         });
+        event.getOriginal().invalidateCaps();
     }
 
     @SubscribeEvent

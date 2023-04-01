@@ -63,6 +63,8 @@ public class NecronomiconGui extends Screen {
                     newClickables.add(entry.getValue().res);
                 } else {
                     clickables.add(entry.getValue().res);
+                    boolean b = entry.getValue().isHidden(Minecraft.getInstance().player);
+                    boolean a = b;
                 }
             } else if (entry.getValue().isVisible(map, data)) {
                 visibles.add(entry.getValue().res);
@@ -143,15 +145,13 @@ public class NecronomiconGui extends Screen {
             ItemStack[] icons = res.getIconStacks();
             if (icons.length > 0)
                 itemRenderer.renderGuiItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
-            if (mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
-                renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), mouseX, mouseY);
-            }
             if (updated.contains(res.getKey())) {
-                pPoseStack.pushPose();
-                pPoseStack.translate(0, 0, 1000);
-                RenderSystem.setShaderTexture(2, RESEARCH_UPDATED_MARKER);
-                blit(pPoseStack, resX - topX + 4, resY - topY - 12, 24, 24, 0, 0, 24, 24);
-                pPoseStack.popPose();
+                RenderSystem.setShaderTexture(0, RESEARCH_UPDATED_MARKER);
+                blit(pPoseStack, resX - topX + 4, resY - topY - 12, 0, 0, 24, 24, 24, 24);
+            }
+            if (mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
+                //RenderSystem.depthFunc(3);
+                renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), mouseX, mouseY);
             }
         }
     }
@@ -162,6 +162,8 @@ public class NecronomiconGui extends Screen {
             blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
             //drawModalRectWithCustomSizedTexture(resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
         }
+        // TEST FOR FOREGROUND renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), resX - topX, resY - topY);
+
     }
 
     private void drawConnection(PoseStack pPoseStack, ResearchConnection rc, float partialTicks) {

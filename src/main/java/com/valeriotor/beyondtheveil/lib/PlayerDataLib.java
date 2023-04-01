@@ -51,8 +51,10 @@ public class PlayerDataLib {
     public static final String MAPPER_PLAYER_INTERACT = "mpi"; // This isn't used as a key by itself, but only with an int added to the end e.g. mpi1
     public static final String IDOLBREAK = "idol_break";
 
-    // Strings (Non-temporary)
+    // Booleans (Non-temporary)
     public static final String FISHQUEST = "fish_quest";
+    public static final String THEBEGINNING = "thebeginning";
+    public static final String DIDDREAM = "didDream";
     public static final String RITUALQUEST = "drowned";
     public static final String DAGONQUEST = "dagon_gold";
     public static final String DAGONQUEST2 = "dagon_elder";
@@ -68,7 +70,7 @@ public class PlayerDataLib {
     public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
     public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
 
-    // Strings (Temporary)
+    // Booleans (Temporary)
     public static final String DREAMFOCUS = "dreamfocus";
 
     // Longs (Non-temporary)

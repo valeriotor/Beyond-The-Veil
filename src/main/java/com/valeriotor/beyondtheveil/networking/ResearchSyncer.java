@@ -172,7 +172,7 @@ public abstract class ResearchSyncer {
 
         @Override
         public void process(Player p) {
-            ResearchUtilClient.loadResearchDataNBT(researchData);
+            ResearchUtilClient.loadResearchDataNBT(researchData.getCompound("data"));
         }
     }
 
