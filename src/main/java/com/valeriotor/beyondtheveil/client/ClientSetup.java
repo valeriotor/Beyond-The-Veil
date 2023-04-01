@@ -1,13 +1,17 @@
 package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonCrawlingModel;
+import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonModel;
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
+import com.valeriotor.beyondtheveil.client.render.entity.BloodSkeletonRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -44,13 +48,19 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DeepOneModel.LAYER_LOCATION, DeepOneModel::createBodyLayer);
+        event.registerLayerDefinition(BloodSkeletonCrawlingModel.LAYER_LOCATION, BloodSkeletonCrawlingModel::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(Registration.DEEP_ONE.get(), DeepOneRenderer::new);
+        event.registerEntityRenderer(Registration.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
+    }
+
+    public static boolean isConnectionPresent() {
+        return Minecraft.getInstance().getConnection() != null && Minecraft.getInstance().getConnection().getConnection() != null;
     }
 
 
