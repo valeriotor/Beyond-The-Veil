@@ -5,6 +5,8 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.entity.BloodSkeletonEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -15,9 +17,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class BloodSkeletonCrawlingModel extends EntityModel<LivingEntity> {
+public class BloodSkeletonCrawlingModel extends AnimatedModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "blood_skeleton_crawling"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION;
+	private static final String name = "blood_skeleton";
+
+	static {
+		LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, name), "main");
+	}
+
 	private final ModelPart body;
 	private final ModelPart legs;
 	private final ModelPart spine;
@@ -33,19 +41,20 @@ public class BloodSkeletonCrawlingModel extends EntityModel<LivingEntity> {
 	private final ModelPart right_leg;
 
 	public BloodSkeletonCrawlingModel(ModelPart root) {
-		body = root.getChild("body");
-		legs = root.getChild("legs");
-		spine = body.getChild("spine");
-		spine_upper = spine.getChild("spine_upper");
-		head = spine_upper.getChild("head");
-		right_clavicle = spine.getChild("right_clavicle");
-		left_clavicle = spine.getChild("left_clavicle");
-		right_arm = right_clavicle.getChild("right_arm");
-		left_arm = left_clavicle.getChild("left_arm");
-		right_lower_arm = right_arm.getChild("right_lower_arm");
-		left_lower_arm = left_arm.getChild("left_lower_arm");
-		left_leg = legs.getChild("left_leg");
-		right_leg = legs.getChild("right_leg");
+		super(name);
+		body = registerAnimatedPart("body", root.getChild("body"));
+		legs = registerAnimatedPart("legs", root.getChild("legs"));
+		spine = registerAnimatedPart("spine", body.getChild("spine"));
+		spine_upper = registerAnimatedPart("spine_upper", spine.getChild("spine_upper"));
+		head = registerAnimatedPart("head", spine_upper.getChild("head"));
+		right_clavicle = registerAnimatedPart("right_clavicle", spine.getChild("right_clavicle"));
+		left_clavicle = registerAnimatedPart("left_clavicle", spine.getChild("left_clavicle"));
+		right_arm = registerAnimatedPart("right_arm", right_clavicle.getChild("right_arm"));
+		left_arm = registerAnimatedPart("left_arm", left_clavicle.getChild("left_arm"));
+		right_lower_arm = registerAnimatedPart("right_lower_arm", right_arm.getChild("right_lower_arm"));
+		left_lower_arm = registerAnimatedPart("left_lower_arm", left_arm.getChild("left_lower_arm"));
+		left_leg = registerAnimatedPart("left_leg", legs.getChild("left_leg"));
+		right_leg = registerAnimatedPart("right_leg", legs.getChild("right_leg"));
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -193,21 +202,37 @@ public class BloodSkeletonCrawlingModel extends EntityModel<LivingEntity> {
 	}
 
 	@Override
-	public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(LivingEntity entity1, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		// -1.4835F + 0.96F
+		BloodSkeletonEntity entity = (BloodSkeletonEntity) entity1;
 		float swingLeft = Mth.cos(limbSwing * 0.45F) * 1.54F * limbSwingAmount;
 		float swingRight = Mth.cos(limbSwing * 0.45F + (float) Math.PI) * 1.54F * limbSwingAmount;
 		if(swingLeft < 0) swingLeft /= 3;
 		if(swingRight < 0) swingRight /= 3;
-		left_arm.xRot = -1.4835F + swingLeft;
+		if(entity.getAttackAnimation() == null) {
+			left_arm.xRot = -1.4835F + swingLeft;
+			left_arm.zRot = -0.2182F + Math.min(0, Mth.sin(limbSwing * 0.45F + (float) Math.PI) * 1F * limbSwingAmount);
+			float swingBody = Mth.abs(Mth.cos(limbSwing * 0.45F) * 0.23F * limbSwingAmount);
+			body.xRot = 1.2217F + swingBody;
+			head.xRot = -0.8727F - swingBody*2.3F;
+		}
 		right_arm.xRot = -1.4835F + swingRight;
-		left_arm.zRot = -0.2182F + Math.min(0, Mth.sin(limbSwing * 0.45F + (float) Math.PI) * 1F * limbSwingAmount);
 		right_arm.zRot = 0.2182F - Math.min(0, Mth.sin(limbSwing * 0.45F) * 1F * limbSwingAmount);
 		left_leg.xRot = -0.1745F + Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.3F * limbSwingAmount;
 		right_leg.xRot = -0.1745F + Mth.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
-		float swingBody = Mth.abs(Mth.cos(limbSwing * 0.45F) * 0.23F * limbSwingAmount);
-		body.xRot = 1.2217F + swingBody;
-		head.xRot = -0.8727F - swingBody*2.3F;
+	}
+
+	@Override
+	public void prepareMobModel(LivingEntity entity1, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+		BloodSkeletonEntity entity = (BloodSkeletonEntity) entity1;
+
+		for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
+			defaultPartPose.part().loadPose(defaultPartPose.pose());
+		}
+		Animation attack = entity.getAttackAnimation();
+		if (attack != null) {
+			attack.apply(pPartialTick);
+		}
 	}
 
 	@Override

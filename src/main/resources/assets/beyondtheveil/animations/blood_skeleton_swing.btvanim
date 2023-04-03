@@ -1,0 +1,14 @@
+model: blood_skeleton
+length: 35
+start: 0: 20
+    rotx: body: 0.6: linear: absolute
+    rotx: left_arm: -0.85: linear: absolute
+    roty: left_arm: -1.08: linear: absolute
+    rotz: left_arm: -0.384: linear: absolute
+start: 20: 25
+    rotx: body: 1.22: linear: absolute
+    rotx: left_arm: -2.34: linear: absolute
+start: 25: 35
+    rotx: left_arm: -1.483: linear: absolute
+    roty: left_arm: 0: linear: absolute
+    rotz: left_arm: -0.22: linear: absolute

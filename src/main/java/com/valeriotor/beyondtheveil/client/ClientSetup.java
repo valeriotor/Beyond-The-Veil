@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonCrawlingModel;
 import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonModel;
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
@@ -57,6 +58,11 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
+    }
+
+    @SubscribeEvent
+    public static void onEntityRenderersEvent(EntityRenderersEvent.AddLayers event) {
+        AnimationRegistry.loadAnimations(true);
     }
 
     public static boolean isConnectionPresent() {
