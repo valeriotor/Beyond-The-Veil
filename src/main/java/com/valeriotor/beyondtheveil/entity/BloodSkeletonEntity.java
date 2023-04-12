@@ -56,7 +56,7 @@ public class BloodSkeletonEntity extends Monster {
                 attackAnimation = null;
             }
         } else {
-            attackAnimation = new Animation(AnimationRegistry.blood_skeleton_swing);
+            //attackAnimation = new Animation(AnimationRegistry.blood_skeleton_swing);
         }
     }
 }
