@@ -47,6 +47,7 @@ public class BTVBlockTags extends BlockTagsProvider {
                 .add(BLOOD_BRICK_STAIRS.get())
                 .add(BLOOD_SMOOTH_STONE.get())
                 .add(BLOOD_SMOOTH_STONE_SLAB.get())
+                .add(SACRIFICE_ALTAR.get())
                 .add(GEAR_BENCH.get());
         tag(BlockTags.WOODEN_FENCES)
                 .add(DAMP_WOOD_FENCE.get());
