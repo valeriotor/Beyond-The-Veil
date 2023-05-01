@@ -19,7 +19,6 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +33,10 @@ public class NecronomiconGui extends Screen {
     int topX;
     int topY;
     int factor = 3;
+    int pupilNextXOffset;
+    int pupilNextYOffset;
+    int pupilXOffset = 0;
+    int pupilYOffset = 0;
     List<Research> newClickables = new ArrayList<>();
     List<Research> clickables = new ArrayList<>();
     List<Research> visibles = new ArrayList<>();
@@ -45,6 +48,8 @@ public class NecronomiconGui extends Screen {
 
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
     private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
+    private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
+    private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
 
     public NecronomiconGui() {
         super(new TranslatableComponent("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
@@ -112,6 +117,8 @@ public class NecronomiconGui extends Screen {
         for (Research r : clickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : visibles) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : newClickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
+        drawEye(pPoseStack, pPartialTick, pMouseX, pMouseY);
+
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
 
@@ -137,6 +144,28 @@ public class NecronomiconGui extends Screen {
     @Override
     public void tick() {
         counter++;
+        if ((counter & 31) == 0) {
+            int mouseX = (int)(this.minecraft.mouseHandler.xpos() * (double)this.minecraft.getWindow().getGuiScaledWidth() / (double)this.minecraft.getWindow().getScreenWidth());
+            int mouseY = (int)(this.minecraft.mouseHandler.ypos() * (double)this.minecraft.getWindow().getGuiScaledHeight() / (double)this.minecraft.getWindow().getScreenHeight());
+            if (mouseX > width - 142 && mouseY > height - 142) {
+                double degree = Math.atan2(mouseY-(height-142+64), mouseX-(width-142+64));
+                double magnitude = Math.min(11, Math.sqrt(Math.pow(mouseX-(width-142+64), 2) + Math.pow(mouseY-(height-142+64), 2)))/2;
+                double xMul = Math.cos(degree);
+                double yMul = Math.sin(degree);
+                pupilNextXOffset = (int) (magnitude * xMul);
+                pupilNextYOffset = (int) (magnitude * yMul);
+            } else {
+                int degree = minecraft.player.getRandom().nextInt(360);
+                int magnitude = minecraft.player.getRandom().nextInt(4, 12);
+                double xMul = Math.cos(degree * Math.PI / 180);
+                double yMul = Math.sin(degree * Math.PI / 180);
+                pupilNextXOffset = (int) (magnitude * xMul);
+                pupilNextYOffset = (int) (magnitude * yMul);
+            }
+        } else if ((counter & 31) == 4) {
+            pupilXOffset = pupilNextXOffset;
+            pupilYOffset = pupilNextYOffset;
+        }
     }
 
     private void drawResearch(PoseStack pPoseStack, Research res, int mouseX, int mouseY) {
@@ -182,6 +211,28 @@ public class NecronomiconGui extends Screen {
                 fill(pPoseStack, i, y, i + 1, y + 1, connectionColor);
             }
             pPoseStack.popPose();
+        }
+    }
+
+    private void drawEye(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+        if (!updated.isEmpty() || true) {
+
+            int counterMod32 = counter & 31;
+            int pupilX = (int) (pupilXOffset + (pupilNextXOffset - pupilXOffset) * (counterMod32 + partialTicks) / 4);
+            int pupilY = (int) (pupilYOffset + (pupilNextYOffset - pupilYOffset) * (counterMod32 + partialTicks) / 4);
+
+            poseStack.pushPose();
+            poseStack.translate(width - 142 + 64, height - 142 + 64, 0);
+            if (mouseX > width - 142 && mouseY > height - 142) {
+                poseStack.scale(1.1F, 1.1F, 0);
+            }
+
+            RenderSystem.setShaderTexture(0, EYE);
+            RenderSystem.enableBlend();
+            blit(poseStack, -64, -64, 0, 0, 128, 128, 128, 128);
+            RenderSystem.setShaderTexture(0, EYE_PUPIL);
+            blit(poseStack, -64 + pupilX, -64 + pupilY, 0, 0, 128, 128, 128, 128);
+            poseStack.popPose();
         }
     }
 
