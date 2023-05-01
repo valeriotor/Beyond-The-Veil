@@ -37,16 +37,23 @@ public class NecronomiconGui extends Screen {
     int pupilNextYOffset;
     int pupilXOffset = 0;
     int pupilYOffset = 0;
+    int highlightOriginX = 0;
+    int highlightOriginY = 0;
     List<Research> newClickables = new ArrayList<>();
     List<Research> clickables = new ArrayList<>();
     List<Research> visibles = new ArrayList<>();
-    Set<String> updated = new HashSet<>();
+    Set<Research> updated = new HashSet<>();
     List<ResearchConnection> connections = new ArrayList<>();
     List<Point> stars = new ArrayList<>();
     int counter = 0;
+    Research highlightedMarkedResearch;
+    Iterator<Research> highlightIterator;
+    int highlightCounter = 0;
     int connectionColor;
 
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
+    private static final ResourceLocation RESEARCH_BACKGROUND_WHITE = new ResourceLocation(References.MODID, "textures/gui/res_background_white.png");
+    private static final ResourceLocation RESEARCH_HIGHLIGHT = new ResourceLocation(References.MODID, "textures/gui/res_highlight.png");
     private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
@@ -75,7 +82,7 @@ public class NecronomiconGui extends Screen {
                 visibles.add(entry.getValue().res);
             }
             if (entry.getValue().isUpdated()) {
-                updated.add(entry.getKey());
+                updated.add(entry.getValue().res);
             }
         }
 
@@ -100,6 +107,13 @@ public class NecronomiconGui extends Screen {
     @Override
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+
+        if (highlightedMarkedResearch != null && counter - highlightCounter < 10) {
+            float magnitude = (float) Math.log10((1 + pPartialTick + counter - highlightCounter));
+            topX = (int) ((highlightedMarkedResearch.getX()*15*factor - width / 2 - highlightOriginX) * magnitude) + highlightOriginX;
+            topY = (int) ((highlightedMarkedResearch.getY()*15*factor - height / 2 - highlightOriginY) * magnitude) + highlightOriginY;
+        }
+
         fill(pPoseStack, 0, 0, width, height, 0xFF000000);
         for (ResearchConnection rc : connections)
             this.drawConnection(pPoseStack, rc, pPartialTick);
@@ -108,12 +122,12 @@ public class NecronomiconGui extends Screen {
         }
         RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
         RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
-        for (Research r : clickables) this.drawResearchBackground(r, pPoseStack);
+        for (Research r : clickables) this.drawResearchBackground(r, pPoseStack, pPartialTick);
         RenderSystem.setShaderColor(0.25F, 0.25F, 0.25F, 1);
-        for (Research r : visibles) this.drawResearchBackground(r, pPoseStack);
+        for (Research r : visibles) this.drawResearchBackground(r, pPoseStack, pPartialTick);
         float coloring = 0.52F + (float) (Math.sin((this.counter + pPartialTick) / 30 * 2 * Math.PI) / 4);
         RenderSystem.setShaderColor(coloring, coloring, coloring, 1);
-        for (Research r : newClickables) this.drawResearchBackground(r, pPoseStack);
+        for (Research r : newClickables) this.drawResearchBackground(r, pPoseStack, pPartialTick);
         for (Research r : clickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : visibles) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : newClickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
@@ -166,6 +180,9 @@ public class NecronomiconGui extends Screen {
             pupilXOffset = pupilNextXOffset;
             pupilYOffset = pupilNextYOffset;
         }
+        if (counter - highlightCounter > 30) {
+            highlightedMarkedResearch = null;
+        }
     }
 
     private void drawResearch(PoseStack pPoseStack, Research res, int mouseX, int mouseY) {
@@ -174,7 +191,7 @@ public class NecronomiconGui extends Screen {
             ItemStack[] icons = res.getIconStacks();
             if (icons.length > 0)
                 itemRenderer.renderGuiItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
-            if (updated.contains(res.getKey())) {
+            if (updated.contains(res)) {
                 RenderSystem.setShaderTexture(0, RESEARCH_UPDATED_MARKER);
                 blit(pPoseStack, resX - topX + 4, resY - topY - 12, 0, 0, 24, 24, 24, 24);
             }
@@ -185,10 +202,28 @@ public class NecronomiconGui extends Screen {
         }
     }
 
-    private void drawResearchBackground(Research res, PoseStack pPoseStack) {
+    private void drawResearchBackground(Research res, PoseStack pPoseStack, float partialTicks) {
         int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
         if (resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {
-            blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+            if (res != highlightedMarkedResearch || counter - highlightCounter > 10) {
+                blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                if (res == highlightedMarkedResearch) {
+                    RenderSystem.setShaderTexture(0, RESEARCH_HIGHLIGHT);
+                    RenderSystem.enableBlend();
+                    int increase = (int) ((partialTicks+counter- highlightCounter -10)*3);
+                    RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, Math.max(0, Math.min(1, (highlightCounter + 31 - counter - partialTicks) / 11F)));
+                    blit(pPoseStack, resX - topX - 4 - increase, resY - topY - 4 - increase, 0, 0, 24+increase*2, 24+increase*2, 24+increase*2, 24+increase*2);
+                    RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
+                    RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
+                }
+            } else {
+                RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND_WHITE);
+                RenderSystem.setShaderColor((partialTicks+counter- highlightCounter)/20F+0.5F, (partialTicks+counter- highlightCounter)/20F+0.5F, (partialTicks+counter- highlightCounter)/20F+0.5F, 1);
+                blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
+                RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
+
+            }
             //drawModalRectWithCustomSizedTexture(resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
         }
         // TEST FOR FOREGROUND renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), resX - topX, resY - topY);
@@ -215,7 +250,7 @@ public class NecronomiconGui extends Screen {
     }
 
     private void drawEye(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
-        if (!updated.isEmpty() || true) {
+        if (!updated.isEmpty()) {
 
             int counterMod32 = counter & 31;
             int pupilX = (int) (pupilXOffset + (pupilNextXOffset - pupilXOffset) * (counterMod32 + partialTicks) / 4);
@@ -228,6 +263,7 @@ public class NecronomiconGui extends Screen {
             }
 
             RenderSystem.setShaderTexture(0, EYE);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.enableBlend();
             blit(poseStack, -64, -64, 0, 0, 128, 128, 128, 128);
             RenderSystem.setShaderTexture(0, EYE_PUPIL);
@@ -252,6 +288,18 @@ public class NecronomiconGui extends Screen {
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (super.mouseClicked(pMouseX, pMouseY, pButton)) {
+            return true;
+        }
+        if ((!updated.isEmpty()) && (pMouseX > width - 142 && pMouseY > height - 142)) {
+            if (highlightIterator == null || !highlightIterator.hasNext()) {
+                highlightIterator = updated.iterator();
+            }
+            highlightedMarkedResearch = highlightIterator.next();
+            highlightCounter = counter;
+            highlightOriginX = topX;
+            highlightOriginY = topY;
+            //topX = highlightedMarkedResearch.getX()*15*factor - width/2;
+            //topY = highlightedMarkedResearch.getY()*15*factor - height/2;
             return true;
         }
         for (Research res : this.clickables) {
