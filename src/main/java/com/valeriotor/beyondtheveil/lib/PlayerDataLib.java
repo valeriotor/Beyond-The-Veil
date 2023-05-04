@@ -55,6 +55,7 @@ public class PlayerDataLib {
     public static final String FISHQUEST = "fish_quest";
     public static final String THEBEGINNING = "thebeginning";
     public static final String DIDDREAM = "didDream";
+    public static final String MADE_BOOKMARK = "made_bookmark";
     public static final String RITUALQUEST = "drowned";
     public static final String DAGONQUEST = "dagon_gold";
     public static final String DAGONQUEST2 = "dagon_elder";
@@ -77,33 +78,43 @@ public class PlayerDataLib {
     public static final String LASTDREAMTINDAY = "lastdreamday";
     public static final String LASTDREAMTINWORLD = "lastdreamworld";
 
+    // Strings (Non-temporary)
+    public static final Function<Integer, String> BOOKMARK = i -> String.format("bookmark%d", i);
+
+
     // Used to clear client-side data in one fell swoop.
     public static final String ALL = "all";
 
 
-    public static final Set<String> allowedInts;
-    public static final Set<String> allowedStrings;
+    private static final Set<String> allowedKeys = new HashSet<>();
 
     static {
         Set<String> tempInts = new HashSet<>();
-        tempInts.add(SELECTED_BAUBLE);
+        allowedKeys.add(SELECTED_BAUBLE);
         for(int i = 0; i < 8; i++)
-            tempInts.add(String.format(PASSIVE_BAUBLE, i));
-        tempInts.add(SELECTED_POWER);
-        tempInts.add(NECRO_X);
-        tempInts.add(NECRO_Y);
-        tempInts.add(NECRO_FACTOR);
-        allowedInts = Collections.unmodifiableSet(tempInts);
-        Set<String> tempStrings = new HashSet<String>();
-        tempStrings.add("eldritchDream");
-        tempStrings.add("LHKeeper");
-        tempStrings.add("carpenter");
-        tempStrings.add("lhbaptism");
-        allowedStrings = Collections.unmodifiableSet(tempStrings);
+            allowedKeys.add(String.format(PASSIVE_BAUBLE, i));
+        for (int i = 0; i < 16; i++) {
+            allowedKeys.add(BOOKMARK.apply(i));
+        }
+        allowedKeys.add(SELECTED_POWER);
+        allowedKeys.add(NECRO_X);
+        allowedKeys.add(NECRO_Y);
+        allowedKeys.add(NECRO_FACTOR);
+        allowedKeys.add(MADE_BOOKMARK);
+        allowedKeys.add("eldritchDream");
+        allowedKeys.add("LHKeeper");
+        allowedKeys.add("carpenter");
+        allowedKeys.add("lhbaptism");
+
+        // TODO verify these as you go
     }
 
     public static PlayerData getCap(Player p) {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY);
+    }
+
+    public static boolean isKeyFromClientAllowed(String key) {
+        return allowedKeys.contains(key);
     }
 
 }

@@ -221,6 +221,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.drowned.noac", "The gods of your ancestors do not exist.");
 
         add("gui.necronomicon", "Al Azif");
+        add("gui.necronomicon.bookmarkmade", "Bookmark created");
         add("gui.research_page.complete", "Progress");
 
         add("keys.dodge", "Dodge");

@@ -137,6 +137,19 @@ public class PlayerData {
         }
     }
 
+    public boolean removeString(String key) {
+        boolean success = false;
+        if (strings.containsKey(key)) {
+            strings.remove(key);
+            success = true;
+        }
+        if (tempStrings.containsKey(key)) {
+            tempStrings.remove(key);
+            success = true;
+        }
+        return success;
+    }
+
     public void saveToNBT(CompoundTag compoundTag) {
         CompoundTag booleans = new CompoundTag();
         CompoundTag ints = new CompoundTag();

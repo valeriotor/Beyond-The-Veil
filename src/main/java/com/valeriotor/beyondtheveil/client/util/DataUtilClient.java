@@ -52,10 +52,30 @@ public class DataUtilClient {
         }
     }
 
+    public static void removeString(String key) {
+        if (Minecraft.getInstance().player != null) {
+            DataUtil.removeString(Minecraft.getInstance().player, key);
+        }
+    }
+
+    public static void setBooleanAndSync(String key, boolean value, boolean temporary) {
+        setBoolean(key, value, temporary);
+        Messages.sendToServer(SyncPlayerDataPacket.toServer(key).setBoolean(value));
+    }
+
+    public static void setStringAndSync(String key, String value, boolean temporary) {
+        setString(key, value, temporary);
+        Messages.sendToServer(SyncPlayerDataPacket.toServer(key).setString(value));
+    }
+
     public static void setIntAndSync(String key, int value, boolean temporary) {
         setInt(key, value, temporary);
         Messages.sendToServer(SyncPlayerDataPacket.toServer(key).setInt(value));
     }
 
+    public static void removeStringAndSync(String key) {
+        removeString(key);
+        Messages.sendToServer(SyncPlayerDataPacket.toServer(key).removeString());
+    }
 
 }

@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.lib.ConfigLib;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.Research;
+import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
@@ -21,6 +22,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
@@ -30,26 +33,29 @@ import java.util.Map.Entry;
 
 public class NecronomiconGui extends Screen {
 
-    int topX;
-    int topY;
-    int factor = 3;
-    int pupilNextXOffset;
-    int pupilNextYOffset;
-    int pupilXOffset = 0;
-    int pupilYOffset = 0;
-    int highlightOriginX = 0;
-    int highlightOriginY = 0;
-    List<Research> newClickables = new ArrayList<>();
-    List<Research> clickables = new ArrayList<>();
-    List<Research> visibles = new ArrayList<>();
-    Set<Research> updated = new HashSet<>();
-    List<ResearchConnection> connections = new ArrayList<>();
-    List<Point> stars = new ArrayList<>();
-    int counter = 0;
-    Research highlightedMarkedResearch;
-    Iterator<Research> highlightIterator;
-    int highlightCounter = 0;
-    int connectionColor;
+    private static final int MAX_BOOKMARKS = 16;
+    private int topX;
+    private int topY;
+    private int factor = 3;
+    private int pupilNextXOffset;
+    private int pupilNextYOffset;
+    private int pupilXOffset = 0;
+    private int pupilYOffset = 0;
+    private int highlightOriginX = 0;
+    private int highlightOriginY = 0;
+    private List<Research> newClickables = new ArrayList<>();
+    private List<Research> clickables = new ArrayList<>();
+    private List<Research> visibles = new ArrayList<>();
+    private Set<Research> updated = new HashSet<>();
+    private List<ResearchConnection> connections = new ArrayList<>();
+    private List<Point> stars = new ArrayList<>();
+    private int counter = 0;
+    private Research highlightedMarkedResearch;
+    private Iterator<Research> highlightIterator;
+    private int highlightCounter = 0;
+    private int connectionColor;
+    private List<Research> bookmarks = new ArrayList<>();
+    private boolean showBookmarkHint;
 
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
     private static final ResourceLocation RESEARCH_BACKGROUND_WHITE = new ResourceLocation(References.MODID, "textures/gui/res_background_white.png");
@@ -57,6 +63,9 @@ public class NecronomiconGui extends Screen {
     private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
+    private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed.png");
+    private static final ResourceLocation MOUSE_RIGHT_CLICK = new ResourceLocation(References.MODID, "textures/gui/mouse_right_click.png");
+    private int firstBookmarkMadeCounter = 0;
 
     public NecronomiconGui() {
         super(new TranslatableComponent("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
@@ -76,7 +85,7 @@ public class NecronomiconGui extends Screen {
                 } else {
                     clickables.add(entry.getValue().res);
                     boolean b = entry.getValue().isHidden(Minecraft.getInstance().player);
-                    boolean a = b;
+                    boolean a = b; // what's this for??
                 }
             } else if (entry.getValue().isVisible(map, data)) {
                 visibles.add(entry.getValue().res);
@@ -92,6 +101,7 @@ public class NecronomiconGui extends Screen {
             }
         }
         this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (ConfigLib.connectionGreen << 8) | ConfigLib.connectionBlue;
+        showBookmarkHint = !data.getBoolean(PlayerDataLib.MADE_BOOKMARK) && map.get("FUMESPREADER").getStage() >= 1; // TODO this should be FUMESPREADER, change if otherwise
     }
 
     @Override
@@ -102,7 +112,19 @@ public class NecronomiconGui extends Screen {
         for (int i = 0; i < a; i++) {
             stars.add(new Point(r.nextInt(this.width), r.nextInt(this.height)));
         }
-    }
+        bookmarks.clear();
+        PlayerData data = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
+        for (int i = 0; i < MAX_BOOKMARKS; i++) {
+            String resName = data.getString(PlayerDataLib.BOOKMARK.apply(i));
+            if (resName != null) {
+                bookmarks.add(ResearchRegistry.researches.get(resName));
+            } else {
+                break;
+            }
+        }
+        //bookmarks.add(ResearchRegistry.researches.get("FIRSTDREAMS"));
+        //bookmarks.add(ResearchRegistry.researches.get("FUMESPREADER"));
+    };
 
     @Override
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
@@ -131,29 +153,11 @@ public class NecronomiconGui extends Screen {
         for (Research r : clickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : visibles) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
         for (Research r : newClickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
+        drawBookmarks(pPoseStack, pMouseX, pMouseY, pPartialTick);
         drawEye(pPoseStack, pPartialTick, pMouseX, pMouseY);
 
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
-
-    //@Override
-    //public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    //    GlStateManager.color(0.8F, 0.8F, 0.8F);
-    //    mc.renderEngine.bindTexture(RESEARCH_BACKGROUND);
-    //    for (Research r : clickables) this.drawResearchBackground(r);
-    //    GlStateManager.color(0.25F, 0.25F, 0.25F);
-    //    for (Research r : visibles) this.drawResearchBackground(r);
-    //    float coloring = 0.52F + (float) (Math.sin((this.counter + partialTicks) / 30 * 2 * Math.PI) / 4);
-    //    GlStateManager.color(coloring, coloring, coloring);
-    //    for (Research r : newClickables) this.drawResearchBackground(r);
-//
-    //    RenderHelper.enableStandardItemLighting();
-    //    for (Research r : clickables) this.drawResearch(r, mouseX, mouseY);
-    //    for (Research r : visibles) this.drawResearch(r, mouseX, mouseY);
-    //    for (Research r : newClickables) this.drawResearch(r, mouseX, mouseY);
-    //    super.drawScreen(mouseX, mouseY, partialTicks);
-    //}
-
 
     @Override
     public void tick() {
@@ -183,6 +187,33 @@ public class NecronomiconGui extends Screen {
         if (counter - highlightCounter > 30) {
             highlightedMarkedResearch = null;
         }
+        if (firstBookmarkMadeCounter > 0) {
+            firstBookmarkMadeCounter--;
+        }
+    }
+
+    private void drawBookmarks(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        poseStack.pushPose();
+        Research hovered = getHoveredBookmark(mouseX, mouseY);
+        if (firstBookmarkMadeCounter > 0) {
+            drawString(poseStack, minecraft.font, new TranslatableComponent("gui.necronomicon.bookmarkmade"), 2, 25, 0xFFFFFF | ((0xFF * Math.min(20, firstBookmarkMadeCounter) / 20) << 24));
+        }
+        poseStack.translate(0,0,120);
+        RenderSystem.enableBlend();
+        RenderSystem.setShaderTexture(0, BOOKMARK);
+        int y = 50;
+        for (Research res : bookmarks) {
+            int x = res == hovered ? 0 : -65;
+            blit(poseStack, x, y, 0, 0, 80, 20, 80, 20);
+            if(x == 0) {
+                drawString(poseStack, minecraft.font, new TranslatableComponent(res.getName()), x + 2, y + 6, 0xFFAAE2E2);
+                RenderSystem.setShaderTexture(0, BOOKMARK);
+                RenderSystem.enableBlend();
+            }
+            y += 24;
+        }
+        RenderSystem.disableBlend();
+        poseStack.popPose();
     }
 
     private void drawResearch(PoseStack pPoseStack, Research res, int mouseX, int mouseY) {
@@ -198,6 +229,12 @@ public class NecronomiconGui extends Screen {
             if (mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
                 //RenderSystem.depthFunc(3);
                 renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), mouseX, mouseY);
+                if(showBookmarkHint) {
+                    RenderSystem.enableBlend();
+                    RenderSystem.setShaderTexture(0, MOUSE_RIGHT_CLICK);
+                    blit(pPoseStack, mouseX + 5, mouseY + 10, 0, 0, 32, 32, 32, 32);
+                    RenderSystem.disableBlend();
+                }
             }
         }
     }
@@ -302,11 +339,28 @@ public class NecronomiconGui extends Screen {
             //topY = highlightedMarkedResearch.getY()*15*factor - height/2;
             return true;
         }
+        Research bookmark = getHoveredBookmark(pMouseX, pMouseY);
+        if (bookmark != null) {
+            if (pButton == 0) {
+                highlightedMarkedResearch = bookmark;
+                highlightCounter = counter;
+                highlightOriginX = topX;
+                highlightOriginY = topY;
+            } else {
+                int index = bookmarks.indexOf(bookmark);
+                bookmarks.remove(index);
+                // we scaled back the bookmarks list, let's scale back the capability data as well
+                for (; index < bookmarks.size(); index++) {
+                    DataUtilClient.setStringAndSync(PlayerDataLib.BOOKMARK.apply(index), bookmarks.get(index).getKey(), false);
+                }
+                DataUtilClient.removeStringAndSync(PlayerDataLib.BOOKMARK.apply(index));
+            }
+        }
         for (Research res : this.clickables) {
-            if (openResearch(res, pMouseX, pMouseY)) return true;
+            if (openResearch(res, pMouseX, pMouseY, pButton)) return true;
         }
         for (Research res : this.newClickables) {
-            if (openResearch(res, pMouseX, pMouseY)) return true;
+            if (openResearch(res, pMouseX, pMouseY, pButton)) return true;
         }
         return false;
     }
@@ -321,17 +375,46 @@ public class NecronomiconGui extends Screen {
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
-    private boolean openResearch(Research res, double mouseX, double mouseY) {
+    private boolean openResearch(Research res, double mouseX, double mouseY, int mouseButton) {
         int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
         if (mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
-            ResearchStatus status = ResearchUtil.getResearch(minecraft.player, res.getKey());
-            if (status.getStage() == -1) ResearchUtilClient.progressResearchClientAndSync(res.getKey());
-            if (status.isUpdated()) ResearchUtilClient.openUpdatedResearchClientAndSync(res.getKey());
-            savePositionData();
-            minecraft.setScreen(getResearchGui(status));
-            return true;
+            if (mouseButton == 0) {
+                ResearchStatus status = ResearchUtil.getResearch(minecraft.player, res.getKey());
+                if (status.getStage() == -1) ResearchUtilClient.progressResearchClientAndSync(res.getKey());
+                if (status.isUpdated()) ResearchUtilClient.openUpdatedResearchClientAndSync(res.getKey());
+                savePositionData();
+                minecraft.setScreen(getResearchGui(status));
+                return true;
+            } else {
+                if (bookmarks.size() < MAX_BOOKMARKS && !bookmarks.contains(res)) {
+                    bookmarks.add(res);
+                    DataUtilClient.setStringAndSync(PlayerDataLib.BOOKMARK.apply(bookmarks.size()-1), res.getKey(), false);
+                    minecraft.player.playSound(SoundEvents.BOOK_PUT, 1, 1);
+                    if (showBookmarkHint) {
+                        DataUtilClient.setBooleanAndSync(PlayerDataLib.MADE_BOOKMARK, true, false);
+                        showBookmarkHint = false;
+                        firstBookmarkMadeCounter = 80;
+                    }
+                } else {
+                    minecraft.player.playSound(SoundEvents.LEVER_CLICK, 1, 1);
+                }
+
+            }
         }
         return false;
+    }
+
+    private Research getHoveredBookmark(double mouseX, double mouseY) {
+        if (mouseX < 81 && mouseY > 50) {
+            int y = 50;
+            for (Research res : bookmarks) {
+                y += 24;
+                if(mouseY <= y) {
+                    return res;
+                }
+            }
+        }
+        return null;
     }
 
     private Screen getResearchGui(ResearchStatus status) {
