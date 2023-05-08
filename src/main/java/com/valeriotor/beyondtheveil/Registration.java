@@ -75,7 +75,7 @@ public class Registration {
     public static final RegistryObject<Block> SLEEP_CHAMBER = BLOCKS.register("sleep_chamber", () -> new SleepChamberBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(4f, 7f).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> GEAR_BENCH = BLOCKS.register("gear_bench", () -> new GearBenchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(4f, 7f).sound(SoundType.WOOD)));
 
-    //public static final RegistryObject<Block> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new Block(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
+    public static final RegistryObject<Block> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new WateryCradleBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     //public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new Block(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
     //public static final RegistryObject<Block> CITY_MAPPER = BLOCKS.register("city_mapper", () -> new Block(BRICK_PROPERTIES)); // new BlockCityMapper(BlockNames.CITYMAPPER);
     public static final RegistryObject<Block> ELDER_STONE_BRICK = BLOCKS.register("elder_stone_brick", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK).setHardness(10).setResistance(3000);
@@ -130,7 +130,7 @@ public class Registration {
     public static final RegistryObject<Item> FUME_SPREADER_ITEM = fromBlock(FUME_SPREADER);
     public static final RegistryObject<Item> SLEEP_CHAMBER_ITEM = fromBlock(SLEEP_CHAMBER);
     public static final RegistryObject<Item> GEAR_BENCH_ITEM = fromBlock(GEAR_BENCH);
-    //public static final RegistryObject<Item> WATERY_CRADLE_ITEM = fromBlock(WATERY_CRADLE);
+    public static final RegistryObject<Item> WATERY_CRADLE_ITEM = fromBlock(WATERY_CRADLE);
     //public static final RegistryObject<Item> LACRYMATORY_ITEM = fromBlock(LACRYMATORY);
     //public static final RegistryObject<Item> CITY_MAPPER_ITEM = fromBlock(CITY_MAPPER);
     public static final RegistryObject<Item> ELDER_STONE_BRICK_ITEM = fromBlock(ELDER_STONE_BRICK);

@@ -63,6 +63,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerCanopy();
         registerFumeSpreader();
         registerSleepChamber();
+        registerWateryCradle();
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -153,6 +154,29 @@ public class BTVBlockStates extends BlockStateProvider {
             return ConfiguredModel.builder().modelFile(file).rotationY((int)state.getValue(SleepChamberBlock.FACING).toYRot()).build();
         });
 
+    }
+
+    private void registerWateryCradle() {
+        ExistingModelFile wateryCradle_solid = new ExistingModelFile(modLoc("block/watery_cradle_solid"), models().existingFileHelper);
+        ExistingModelFile wateryCradle_translucent = new ExistingModelFile(modLoc("block/watery_cradle_translucent"), models().existingFileHelper);
+
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/watery_cradle_solid1"), models().existingFileHelper);
+        parent.parent(wateryCradle_solid);
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/watery_cradle_translucent1"), models().existingFileHelper);
+        translucent_parent.parent(wateryCradle_translucent);
+
+        BlockModelBuilder wateryCradle = models().getBuilder("beyondtheveil:block/watery_cradle")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/watery_cradle"))
+                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .submodel(RenderType.solid(), parent))
+                        .submodel(RenderType.translucent(), translucent_parent)
+                .end();
+
+        getVariantBuilder(WATERY_CRADLE.get())
+                .forAllStates(state -> {
+                    return ConfiguredModel.builder().modelFile(wateryCradle).build();
+        });
     }
 
 }
