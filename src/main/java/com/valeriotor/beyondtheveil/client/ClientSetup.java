@@ -2,12 +2,10 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonCrawlingModel;
-import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonModel;
-import com.valeriotor.beyondtheveil.client.model.entity.BloodZombieModel;
-import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
+import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
 import com.valeriotor.beyondtheveil.client.render.entity.BloodSkeletonRenderer;
+import com.valeriotor.beyondtheveil.client.render.entity.BloodWraithRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.BloodZombieRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
@@ -54,6 +52,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DeepOneModel.LAYER_LOCATION, DeepOneModel::createBodyLayer);
         event.registerLayerDefinition(BloodSkeletonCrawlingModel.LAYER_LOCATION, BloodSkeletonCrawlingModel::createBodyLayer);
         event.registerLayerDefinition(BloodZombieModel.LAYER_LOCATION, BloodZombieModel::createBodyLayer);
+        event.registerLayerDefinition(BloodWraithModel.LAYER_LOCATION, BloodWraithModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -61,6 +60,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.DEEP_ONE.get(), DeepOneRenderer::new);
         event.registerEntityRenderer(Registration.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
         event.registerEntityRenderer(Registration.BLOOD_ZOMBIE.get(), BloodZombieRenderer::new);
+        event.registerEntityRenderer(Registration.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
     }
