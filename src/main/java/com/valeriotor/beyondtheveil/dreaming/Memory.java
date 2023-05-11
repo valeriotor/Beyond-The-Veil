@@ -50,6 +50,10 @@ public enum Memory {
         return "mem".concat(this.name());
     }
 
+    public ItemStack getItem() {
+        return item;
+    }
+
     public boolean isUnlockable(Player p) {
         if (reqs == null || reqs.length == 0) return true;
         PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);

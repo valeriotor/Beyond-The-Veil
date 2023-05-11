@@ -46,8 +46,9 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(BLOOD_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/blood_brick_stairs"));
         withExistingParent(BLOOD_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone"));
         withExistingParent(BLOOD_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone_slab"));
-        withExistingParent(SACRIFICE_ALTAR.getId().getPath(), modLoc("block/sacrifice_altar"));
-        withExistingParent(WATERY_CRADLE.getId().getPath(), modLoc("block/watery_cradle"));
+        withExistingParent(SACRIFICE_ALTAR_ITEM.getId().getPath(), modLoc("block/sacrifice_altar"));
+        withExistingParent(WATERY_CRADLE_ITEM.getId().getPath(), modLoc("block/watery_cradle"));
+        withExistingParent(MEMORY_SIEVE_ITEM.getId().getPath(), modLoc("block/memory_sieve"));
         withExistingParent(DEEP_ONE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_ZOMBIE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

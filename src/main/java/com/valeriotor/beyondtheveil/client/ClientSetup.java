@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
+import com.valeriotor.beyondtheveil.client.render.blockentity.MemorySieveBER;
 import com.valeriotor.beyondtheveil.client.render.entity.BloodSkeletonRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.BloodWraithRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.BloodZombieRenderer;
@@ -12,7 +13,9 @@ import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
+import com.valeriotor.beyondtheveil.tile.MemorySieveBE;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -40,8 +43,11 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.GEAR_BENCH.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.HEART.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.WATERY_CRADLE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
+            ItemBlockRenderTypes.setRenderLayer(Registration.MEMORY_SIEVE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();
+            BlockColors blockColors = Minecraft.getInstance().getBlockColors();
+            blockColors.register((pState, pLevel, pPos, pTintIndex) -> 0x287082, Registration.MEMORY_SIEVE.get());
         });
 
     }
@@ -63,6 +69,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
+        event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
     }
 
     @SubscribeEvent

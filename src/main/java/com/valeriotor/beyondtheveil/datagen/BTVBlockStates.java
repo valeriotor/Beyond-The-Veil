@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -64,6 +65,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFumeSpreader();
         registerSleepChamber();
         registerWateryCradle();
+        registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -177,6 +179,29 @@ public class BTVBlockStates extends BlockStateProvider {
                 .forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(wateryCradle).build();
         });
+    }
+
+    private void registerSolidAndTranslucentBlock(String name, ResourceLocation particleTexture, Block block) {
+        ExistingModelFile solid = new ExistingModelFile(modLoc("block/" + name + "_solid"), models().existingFileHelper);
+        ExistingModelFile translucent = new ExistingModelFile(modLoc("block/" + name + "_translucent"), models().existingFileHelper);
+
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + name + "_solid1"), models().existingFileHelper);
+        parent.parent(solid);
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + name + "_translucent1"), models().existingFileHelper);
+        translucent_parent.parent(translucent);
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + name)
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", particleTexture)
+                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                .submodel(RenderType.solid(), parent))
+                .submodel(RenderType.translucent(), translucent_parent)
+                .end();
+
+        getVariantBuilder(block)
+                .forAllStates(state -> {
+                    return ConfiguredModel.builder().modelFile(builder).build();
+                });
     }
 
 }

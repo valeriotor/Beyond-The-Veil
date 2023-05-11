@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "minecraft:block/stone"
+  },
+  "loader": "forge:multi-layer",
+  "layers": {
+    "solid": {
+      "parent": "beyondtheveil:block/memory_sieve_solid"
+    },
+    "translucent": {
+      "parent": "beyondtheveil:block/memory_sieve_translucent"
+    }
+  }
+}
