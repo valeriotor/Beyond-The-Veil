@@ -83,6 +83,9 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
 
+        add("tooltip.memory_phial.stored", "This phial stores %1$s.");
+        add("tooltip.memory_phial.empty", "This phial is empty.");
+
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");
         add("interact.idol.power", "NEW POWER: Hold Power key ('R' by default) to choose Power, tap it to cast.");

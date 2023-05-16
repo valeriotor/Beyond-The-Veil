@@ -1044,6 +1044,8 @@
   "teleport.wrongdimension": "My last return point was in a different dimension. Using this Power again in the next 20 seconds will remove the return point.",
   "toast.ictyary": "New Ictyary Entry",
   "toast.memory": "New Memory",
+  "tooltip.memory_phial.empty": "This phial is empty.",
+  "tooltip.memory_phial.stored": "This phial stores %1$s.",
   "weeper.dialogue.0": "\u00A75\u00A7oWhen I gaze at the horrors before me, all I have left is to weep.",
   "weeper.dialogue.1": "\u00A75\u00A7oYou are lucky, master, in your ignorance of what lies Beyond.",
   "weeper.dialogue.2": "\u00A75\u00A7oMaster, the water you put in my brain.. it's agonizing, yet the pain is not of physical nature.",
