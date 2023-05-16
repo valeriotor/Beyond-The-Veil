@@ -20,7 +20,7 @@ public class BloodWraithRenderer extends LivingEntityRenderer<LivingEntity, Bloo
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/blood_wraith.png");
 
     public BloodWraithRenderer(EntityRendererProvider.Context context) {
-        super(context, new BloodWraithModel(context.bakeLayer(BloodWraithModel.LAYER_LOCATION)), 1F);
+        super(context, new BloodWraithModel(context.bakeLayer(BloodWraithModel.LAYER_LOCATION)), 0F);
     }
 
     @Override
