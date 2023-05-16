@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "beyondtheveil:block/damp_filled_canopy"
-  }
-}

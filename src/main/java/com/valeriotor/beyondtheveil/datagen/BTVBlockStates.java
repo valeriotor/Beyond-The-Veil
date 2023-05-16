@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.DampCanopyBlock;
+import com.valeriotor.beyondtheveil.block.DampFilledCanopyBlock;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
 import com.valeriotor.beyondtheveil.block.SleepChamberBlock;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -33,7 +34,6 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(DARK_SAND.get());
         stairsBlock(DAMP_WOOD_STAIRS.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
         fenceBlock(DAMP_WOOD_FENCE.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
-        simpleBlock(DAMP_FILLED_CANOPY.get());
         logBlock(DAMP_LOG.get());
         simpleBlock(WORN_BRICKS.get());
         horizontalBlock(IDOL.get(), new ExistingModelFile(modLoc("block/idol"), models().existingFileHelper));
@@ -105,6 +105,34 @@ public class BTVBlockStates extends BlockStateProvider {
                             .rotationY(rotation) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 }, DampCanopyBlock.WATERLOGGED);
+
+        ExistingModelFile damp_filled_canopy = new ExistingModelFile(modLoc("block/damp_filled_canopy"), models().existingFileHelper);
+        ExistingModelFile damp_filled_canopy_outer = new ExistingModelFile(modLoc("block/damp_filled_canopy_outer"), models().existingFileHelper);
+        ExistingModelFile damp_filled_canopy_inner = new ExistingModelFile(modLoc("block/damp_filled_canopy_inner"), models().existingFileHelper);
+
+        getVariantBuilder(DAMP_FILLED_CANOPY.get())
+                .forAllStatesExcept(state -> {
+                    ModelFile file = null;
+                    file = switch (state.getValue(DampFilledCanopyBlock.SHAPE)) {
+                        case STRAIGHT -> damp_filled_canopy;
+                        case INNER_LEFT -> damp_filled_canopy_inner;
+                        case INNER_RIGHT -> damp_filled_canopy_inner;
+                        case OUTER_LEFT -> damp_filled_canopy_outer;
+                        case OUTER_RIGHT -> damp_filled_canopy_outer;
+                    };
+
+                    int rotation = switch (state.getValue(DampFilledCanopyBlock.SHAPE)) {
+                        case STRAIGHT -> (int) state.getValue(DampFilledCanopyBlock.FACING).toYRot();
+                        case INNER_LEFT -> ((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot());
+                        case INNER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot())+90);
+                        case OUTER_LEFT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot()));
+                        case OUTER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot())+90);
+                    };
+                    return ConfiguredModel.builder()
+                            .modelFile(file) // Can show 'modelFile'
+                            .rotationY(rotation) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
+                }, DampFilledCanopyBlock.WATERLOGGED);
     }
 
     private void registerFumeSpreader() {

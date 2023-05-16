@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.entity.BloodWraithEntity;
 import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.item.CoralStaffItem;
+import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.item.NecronomiconItem;
 import com.valeriotor.beyondtheveil.item.SlugCatcherItem;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -62,7 +63,7 @@ public class Registration {
     public static final RegistryObject<RotatedPillarBlock> DAMP_LOG = BLOCKS.register("damp_log", () -> new RotatedPillarBlock(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<StairBlock> DAMP_WOOD_STAIRS = BLOCKS.register("damp_wood_stairs", () -> new StairBlock(() -> DAMP_WOOD.get().defaultBlockState(), DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> DAMP_CANOPY = BLOCKS.register("damp_canopy", () -> new DampCanopyBlock(DAMP_CANOPY_PROPERTIES));
-    public static final RegistryObject<Block> DAMP_FILLED_CANOPY = BLOCKS.register("damp_filled_canopy", () -> new Block(DAMP_CANOPY_PROPERTIES));
+    public static final RegistryObject<Block> DAMP_FILLED_CANOPY = BLOCKS.register("damp_filled_canopy", () -> new DampFilledCanopyBlock(DAMP_CANOPY_PROPERTIES));
     public static final RegistryObject<Block> WORN_BRICKS = BLOCKS.register("worn_bricks", () -> new Block(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> IDOL = BLOCKS.register("idol", () -> new IdolBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
     public static final RegistryObject<Block> FISH_BARREL = BLOCKS.register("fish_barrel", () -> new FishBarrelBlock(DAMP_WOOD_PROPERTIES));
@@ -207,7 +208,7 @@ public class Registration {
     public static final RegistryObject<Item> SIGIL_PLAYER = ITEMS.register("sigil_player", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPlayer("sigil_player");
     public static final RegistryObject<Item> SIGIL_PATHWAY = ITEMS.register("sigil_pathway", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilPathway("sigil_pathway");
     public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", () -> new Item(ITEM_PROPERTIES)); // new ItemSacrificialKnife("sacrificial_knife");
-    public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", () -> new Item(ITEM_PROPERTIES)); // new ItemMemoryPhial("memory_phial");
+    public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", MemoryPhialItem::new); // new ItemMemoryPhial("memory_phial");
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");

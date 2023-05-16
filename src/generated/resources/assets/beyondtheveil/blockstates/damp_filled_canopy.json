@@ -1,7 +1,81 @@
 {
   "variants": {
-    "": {
+    "facing=north,shape=straight": {
+      "model": "beyondtheveil:block/damp_filled_canopy",
+      "y": 180
+    },
+    "facing=south,shape=straight": {
       "model": "beyondtheveil:block/damp_filled_canopy"
+    },
+    "facing=west,shape=straight": {
+      "model": "beyondtheveil:block/damp_filled_canopy",
+      "y": 90
+    },
+    "facing=east,shape=straight": {
+      "model": "beyondtheveil:block/damp_filled_canopy",
+      "y": 270
+    },
+    "facing=north,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 180
+    },
+    "facing=south,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner"
+    },
+    "facing=west,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 90
+    },
+    "facing=east,shape=inner_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 270
+    },
+    "facing=north,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 270
+    },
+    "facing=south,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 90
+    },
+    "facing=west,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 180
+    },
+    "facing=east,shape=inner_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_inner",
+      "y": 360
+    },
+    "facing=north,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 180
+    },
+    "facing=south,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer"
+    },
+    "facing=west,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 90
+    },
+    "facing=east,shape=outer_left": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 270
+    },
+    "facing=north,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 270
+    },
+    "facing=south,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 90
+    },
+    "facing=west,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 180
+    },
+    "facing=east,shape=outer_right": {
+      "model": "beyondtheveil:block/damp_filled_canopy_outer",
+      "y": 360
     }
   }
 }
