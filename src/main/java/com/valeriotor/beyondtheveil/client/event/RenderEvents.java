@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -30,66 +31,65 @@ import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCA
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RenderEvents {
-    private static double fov = 90;
 
     @SubscribeEvent
-    public static void fovEvent(FOVModifierEvent event) {
-        fov = event.getFov();
-    }
-
-    @SubscribeEvent
-    public static void overlayEvent(RenderLevelLastEvent event) {
+    public static void renderWorldLastEvent(RenderLevelLastEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
-            //draw(event.getPoseStack());
-            float pPartialTicks = event.getPartialTick();
-            Vec3 vec3 = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-            double d0 = vec3.x();
-            double d1 = vec3.y();
-            double d2 = vec3.z();
-            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-            event.getPoseStack().pushPose();
-            event.getPoseStack().translate(-381 - d0, 64 - d1, -58 - d2);
-            //event.getPoseStack().translate(3, 3, 3);
-            float f = (float) Math.floorMod(player.tickCount, 40) + event.getPartialTick();
-            float f1 = 1024 < 0 ? f : -f;
-            float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
-            float f15 = -1.0F + f2;
-            float f16 = (float) 1024 * 1 * (0.5F / 0.25F) + f15;
-            event.getPoseStack().mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
-            //renderBeaconBeam(event.getPoseStack(), bufferSource, BEAM_LOCATION, event.getPartialTick(), 1.0F, player.tickCount, 0, 1024, new float[]{1,0,0,1}, 0.2F, 0.25F);
-            renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 1, 1, 1.0F, 0, 100, 0.0F, 0.2F, 0.25F, 0.0F, -0.25F, 0.0F, 0.0F, -0.25F, 0.0F, 1.0F, f16, f15);
-            event.getPoseStack().popPose();
-            RenderSystem.clear(256, Minecraft.ON_OSX);
-            bufferSource.endBatch();
-            //renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 1, 1, 1.0F, 0, 100, 0.0F, 0.2F, f7, pGlowRadius, -pGlowRadius, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
+            for (ClientData.Waypoint waypoint: ClientData.getInstance().waypoints) {
 
 
-            //float texScale = 1.0F;
-            //int heightOffset = 360;
-            ////float texOffset = -((float)-player.tickCount * 0.2F - Mth.m_14143_((float)-gameTime * 0.1F)) * 0.6F;
-            //float red = 1;
-            //float blue = 1;
-            //float green = 1;
-            //float alpha = 1;
-            //VertexConsumer beamBuffer = bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false));
-            ////float f2 = Mth.lerp(pPartialTicks, player.xBobO, player.xBob);
-            ////float f3 = Mth.lerp(pPartialTicks, player.yBobO, player.yBob);
+                //draw(event.getPoseStack());
+                float pPartialTicks = event.getPartialTick();
+                Vec3 vec3 = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+                double d0 = vec3.x();
+                double d1 = vec3.y();
+                double d2 = vec3.z();
+                MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+                event.getPoseStack().pushPose();
+                BlockPos pos = waypoint.pos;
+                event.getPoseStack().translate(pos.getX() - d0, pos.getY() - d1, pos.getZ() - d2);
+                //event.getPoseStack().translate(3, 3, 3);
+                float f = (float) Math.floorMod(player.tickCount, 40) + event.getPartialTick();
+                float f1 = 1024 < 0 ? f : -f;
+                float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
+                float f15 = -1.0F + f2;
+                float f16 = (float) 1024 * 1 * (0.5F / 0.25F) + f15;
+                event.getPoseStack().mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
+                //renderBeaconBeam(event.getPoseStack(), bufferSource, BEAM_LOCATION, event.getPartialTick(), 1.0F, player.tickCount, 0, 1024, new float[]{1,0,0,1}, 0.2F, 0.25F);
+                renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 1, 1, 1.0F, 0, 300, 0.0F, 0.2F, 0.25F, 0.0F, -0.25F, 0.0F, 0.0F, -0.25F, 0.0F, 1.0F, f16, f15);
+                event.getPoseStack().popPose();
+                RenderSystem.clear(256, Minecraft.ON_OSX);
+                bufferSource.endBatch();
+                //renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 1, 1, 1.0F, 0, 100, 0.0F, 0.2F, f7, pGlowRadius, -pGlowRadius, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
+
+
+                //float texScale = 1.0F;
+                //int heightOffset = 360;
+                ////float texOffset = -((float)-player.tickCount * 0.2F - Mth.m_14143_((float)-gameTime * 0.1F)) * 0.6F;
+                //float red = 1;
+                //float blue = 1;
+                //float green = 1;
+                //float alpha = 1;
+                //VertexConsumer beamBuffer = bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false));
+                ////float f2 = Mth.lerp(pPartialTicks, player.xBobO, player.xBob);
+                ////float f3 = Mth.lerp(pPartialTicks, player.yBobO, player.yBob);
 //
-            //float f = player.walkDist - player.walkDistO;
-            //float f1 = -(player.walkDist + f * pPartialTicks);
-            //float f2 = Mth.lerp(pPartialTicks, player.oBob, player.bob);
-            //event.getPoseStack().translate((double)-(Mth.sin(f1 * (float)Math.PI) * f2 * 0.5F), (double)-(-Math.abs(Mth.cos(f1 * (float)Math.PI) * f2)), 0.0D);
-            //event.getPoseStack().mulPose(Vector3f.ZP.rotationDegrees(-Mth.sin(f1 * (float)Math.PI) * f2 * 3.0F));
-            //event.getPoseStack().mulPose(Vector3f.XP.rotationDegrees(-Math.abs(Mth.cos(f1 * (float)Math.PI - 0.2F) * f2) * 5.0F));
+                //float f = player.walkDist - player.walkDistO;
+                //float f1 = -(player.walkDist + f * pPartialTicks);
+                //float f2 = Mth.lerp(pPartialTicks, player.oBob, player.bob);
+                //event.getPoseStack().translate((double)-(Mth.sin(f1 * (float)Math.PI) * f2 * 0.5F), (double)-(-Math.abs(Mth.cos(f1 * (float)Math.PI) * f2)), 0.0D);
+                //event.getPoseStack().mulPose(Vector3f.ZP.rotationDegrees(-Mth.sin(f1 * (float)Math.PI) * f2 * 3.0F));
+                //event.getPoseStack().mulPose(Vector3f.XP.rotationDegrees(-Math.abs(Mth.cos(f1 * (float)Math.PI - 0.2F) * f2) * 5.0F));
 //
-            //float V2 = -1.0F + 0;
-            //float innerV1 = 360 * texScale * 0.5F / 2 + V2;
-            //renderPart(event.getPoseStack(), beamBuffer, red, blue, green, alpha, 0, heightOffset, 0.0F, 2, 2, 0.0F, -2, 0.0F, 0.0F, -2, 0.0F, 1.0F, innerV1, V2);
-            //event.getPoseStack().popPose();
-            //Minecraft.getInstance().gameRenderer.resetProjectionMatrix(Minecraft.getInstance().gameRenderer.getProjectionMatrix(fov));
+                //float V2 = -1.0F + 0;
+                //float innerV1 = 360 * texScale * 0.5F / 2 + V2;
+                //renderPart(event.getPoseStack(), beamBuffer, red, blue, green, alpha, 0, heightOffset, 0.0F, 2, 2, 0.0F, -2, 0.0F, 0.0F, -2, 0.0F, 1.0F, innerV1, V2);
+                //event.getPoseStack().popPose();
+                //Minecraft.getInstance().gameRenderer.resetProjectionMatrix(Minecraft.getInstance().gameRenderer.getProjectionMatrix(fov));
 //
-            ////bufferSource.endLastBatch();
+                ////bufferSource.endLastBatch();
+            }
         }
     }
 

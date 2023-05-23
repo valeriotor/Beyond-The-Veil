@@ -18,6 +18,7 @@ public class DataGenerators {
             BTVBlockTags blockTags = new BTVBlockTags(generator, event.getExistingFileHelper());
             generator.addProvider(blockTags);
             generator.addProvider(new BTVItemTags(generator, blockTags, event.getExistingFileHelper()));
+            //TODO create ConfiguredStructureTagsProvider
         }
         if (event.includeClient()) {
             generator.addProvider(new BTVBlockStates(generator, event.getExistingFileHelper()));

@@ -50,6 +50,10 @@ public enum Memory {
         return "mem".concat(this.name());
     }
 
+    public String getDreamName() {
+        return name().toLowerCase().concat("Dream");
+    }
+
     public ItemStack getItem() {
         return item;
     }

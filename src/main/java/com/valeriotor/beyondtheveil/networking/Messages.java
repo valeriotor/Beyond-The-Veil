@@ -60,6 +60,13 @@ public class Messages {
                 .encoder(GenericToServerPacket::toBytes)
                 .consumer(GenericToServerPacket::handle)
                 .add();
+
+        net.messageBuilder(GenericToClientPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(GenericToClientPacket::new)
+                .encoder(GenericToClientPacket::toBytes)
+                .consumer(GenericToClientPacket::handle)
+                .add();
+
     }
 
     public static <MSG> void sendToServer(MSG message) {
