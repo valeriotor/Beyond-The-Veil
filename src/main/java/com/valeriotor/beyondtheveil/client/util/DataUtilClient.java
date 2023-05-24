@@ -1,14 +1,20 @@
 package com.valeriotor.beyondtheveil.client.util;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
+import com.valeriotor.beyondtheveil.capability.PlayerData.Counter;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.List;
 import java.util.Optional;
 
 public class DataUtilClient {
@@ -23,8 +29,16 @@ public class DataUtilClient {
 
     public static void loadPlayerDataNBT(CompoundTag data) {
         if (Minecraft.getInstance().player != null) {
+            ClientData.newInstance();
             Optional<PlayerData> resolve = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
-            resolve.ifPresent(playerData -> playerData.loadFromNBT(data));
+            PlayerData playerData = resolve.get();
+            playerData.loadFromNBT(data);
+            List<Counter> counters = playerData.getCounters();
+            for (Counter c : counters) {
+                if (c.getType() instanceof WaypointType waypointType) {
+                    ClientData.getInstance().addWaypoint(waypointType, BlockPos.of(playerData.getLong(waypointType.posDataKey)), waypointType.unlocalizedName);
+                }
+            }
         }
     }
 

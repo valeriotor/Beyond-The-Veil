@@ -3,6 +3,8 @@ package com.valeriotor.beyondtheveil.dreaming.dreams;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.commands.arguments.ResourceOrTagLocationArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -37,7 +39,7 @@ public class DreamWater extends Dream{
         ServerLevel sl = (ServerLevel) l;
         BlockPos blockpos = sl.findNearestMapFeature(ConfiguredStructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false);
         if (blockpos != null) {
-            Messages.sendToPlayer(GenericToClientPacket.createWaypoint("oi", blockpos, 0), (ServerPlayer) p);
+            DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
             return true;
         }
         return false;

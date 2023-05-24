@@ -40,19 +40,27 @@ public class CapabilityEvents {
     }
 
     public static void syncCapabilities(Player p) {
+        syncCapabilities(p, true, true);
+    }
+
+    public static void syncCapabilities(Player p, boolean playerData, boolean researchData) {
         if (p != null && !p.level.isClientSide) {
-            p.getCapability(PLAYER_DATA).resolve().ifPresent(data -> {
-                CompoundTag dataTag = new CompoundTag();
-                data.saveToNBT(dataTag);
-                SyncAllPlayerDataToClientPacket message = new SyncAllPlayerDataToClientPacket(dataTag);
-                Messages.sendToPlayer(message, (ServerPlayer) p);
-            });
-            p.getCapability(RESEARCH).resolve().ifPresent(data -> {
-                CompoundTag dataTag = new CompoundTag();
-                data.saveToNBT(dataTag);
-                SyncResearchToClientPacket message = new SyncResearchToClientPacket(ResearchSyncer.allResearchesToClient(dataTag));
-                Messages.sendToPlayer(message, (ServerPlayer) p);
-            });
+            if(playerData) {
+                p.getCapability(PLAYER_DATA).resolve().ifPresent(data -> {
+                    CompoundTag dataTag = new CompoundTag();
+                    data.saveToNBT(dataTag);
+                    SyncAllPlayerDataToClientPacket message = new SyncAllPlayerDataToClientPacket(dataTag);
+                    Messages.sendToPlayer(message, (ServerPlayer) p);
+                });
+            }
+            if(researchData) {
+                p.getCapability(RESEARCH).resolve().ifPresent(data -> {
+                    CompoundTag dataTag = new CompoundTag();
+                    data.saveToNBT(dataTag);
+                    SyncResearchToClientPacket message = new SyncResearchToClientPacket(ResearchSyncer.allResearchesToClient(dataTag));
+                    Messages.sendToPlayer(message, (ServerPlayer) p);
+                });
+            }
         }
     }
 

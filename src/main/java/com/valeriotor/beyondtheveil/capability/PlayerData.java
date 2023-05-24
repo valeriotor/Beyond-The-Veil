@@ -1,12 +1,10 @@
 package com.valeriotor.beyondtheveil.capability;
 
+import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class PlayerData {
 
@@ -20,6 +18,7 @@ public class PlayerData {
     private final Map<String, Long> tempLongs = new HashMap<>();
     private final Map<String, String> strings = new HashMap<>();
     private final Map<String, String> tempStrings = new HashMap<>();
+    private final List<Counter> counters = new ArrayList<>();
 
     public void setBoolean(String key, boolean value, boolean temporary) {
         if (value) {
@@ -150,11 +149,56 @@ public class PlayerData {
         return success;
     }
 
+    /** Creates a new counter, or updates the timer of a previous one if one of the same type already existed
+     * @return timer of the previously existing counter of the same type, 0 if absent
+     */
+    public int createCounter(CounterType type, int timer) {
+        for (Counter c : counters) {
+            if (c.type == type) {
+                int prev = c.counter;
+                c.counter = timer;
+                return prev;
+            }
+        }
+        counters.add(new Counter(timer, type));
+        return 0;
+    }
+
+    /** @return finished CounterTypes
+     */
+    public List<CounterType> tickCounters() {
+        List<CounterType> finished = new ArrayList<>();
+        Iterator<Counter> counterIterator = counters.listIterator();
+        while (counterIterator.hasNext()) {
+            Counter c = counterIterator.next();
+            c.counter--;
+            if (c.counter <= 0) {
+                counterIterator.remove();
+                finished.add(c.type);
+            }
+        }
+        return finished;
+    }
+
+    public boolean hasCounterType(CounterType type) {
+        for (Counter c : counters) {
+            if (c.type == type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Counter> getCounters() {
+        return counters;
+    }
+
     public void saveToNBT(CompoundTag compoundTag) {
         CompoundTag booleans = new CompoundTag();
         CompoundTag ints = new CompoundTag();
         CompoundTag longs = new CompoundTag();
         CompoundTag strings = new CompoundTag();
+        CompoundTag counters = new CompoundTag();
         for (String s : this.booleans) {
             booleans.putBoolean(s, true);
         }
@@ -167,10 +211,14 @@ public class PlayerData {
         for (Entry<String, String> e : this.strings.entrySet()) {
             strings.putString(e.getKey(), e.getValue());
         }
+        for (Counter c : this.counters) {
+            counters.putInt(c.type.name(), c.counter);
+        }
         compoundTag.put("booleans", booleans);
         compoundTag.put("ints", ints);
         compoundTag.put("longs", longs);
         compoundTag.put("strings", strings);
+        compoundTag.put("counters", counters);
     }
 
     public void loadFromNBT(CompoundTag compoundTag) {
@@ -196,6 +244,12 @@ public class PlayerData {
                 this.strings.put(key, strings.getString(key));
             }
         }
+        if (compoundTag.contains("counters")) {
+            CompoundTag counters = compoundTag.getCompound("counters");
+            for (String key : counters.getAllKeys()) {
+                this.counters.add(new Counter(counters.getInt(key), CounterType.fromName(key)));
+            }
+        }
     }
 
     /** Assumes new store is empty
@@ -205,6 +259,7 @@ public class PlayerData {
         newStore.ints.putAll(ints);
         newStore.longs.putAll(longs);
         newStore.strings.putAll(strings);
+        newStore.counters.addAll(counters);
     }
 
     private static class FallBack extends PlayerData {
@@ -227,6 +282,19 @@ public class PlayerData {
         @Override public void copyToNewStore(PlayerData newStore) {}
     }
 
+    public static class Counter {
+        int counter;
+        CounterType type;
+
+        public Counter(int counter, CounterType type) {
+            this.counter = counter;
+            this.type = type;
+        }
+
+        public CounterType getType() {
+            return type;
+        }
+    }
 
 
 }

@@ -77,6 +77,7 @@ public class PlayerDataLib {
     // Longs (Non-temporary)
     public static final String LASTDREAMTINDAY = "lastdreamday";
     public static final String LASTDREAMTINWORLD = "lastdreamworld";
+    public static final String WAYPOINT_OCEAN = "waypoint_ocean";
 
     // Strings (Non-temporary)
     public static final Function<Integer, String> BOOKMARK = i -> String.format("bookmark%d", i);

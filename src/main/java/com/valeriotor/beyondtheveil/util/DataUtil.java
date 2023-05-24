@@ -2,16 +2,26 @@ package com.valeriotor.beyondtheveil.util;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
 
 public class DataUtil {
+
+    public static void createWaypoint(Player p, WaypointType type, int time, BlockPos pos) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.setLong(type.posDataKey, pos.asLong(), false);
+            playerData.createCounter(type, time);
+            Messages.sendToPlayer(GenericToClientPacket.createWaypoint(type, pos, 0), (ServerPlayer) p);
+        });
+    }
 
     public static void setBooleanOnServerAndSync(Player p, String key, boolean value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {

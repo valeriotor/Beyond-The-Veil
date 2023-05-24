@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.networking;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,12 +15,18 @@ import java.util.function.Supplier;
 
 public class GenericToClientPacket {
 
-    public static GenericToClientPacket createWaypoint(String unlocalizedName, BlockPos pos, int color) {
+    public static GenericToClientPacket createWaypoint(WaypointType type, BlockPos pos, int color) {
         CompoundTag tag = new CompoundTag();
-        tag.putString("name", unlocalizedName);
+        tag.putString("type", type.name());
         tag.putLong("pos", pos.asLong());
         tag.putInt("color", color);
         return new GenericToClientPacket(MessageType.WAYPOINT, tag);
+    }
+
+    public static GenericToClientPacket removeWaypoint(WaypointType type) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("type", type.name());
+        return new GenericToClientPacket(MessageType.WAYPOINT_REMOVE, tag);
     }
 
     private final MessageType type;
@@ -45,9 +52,9 @@ public class GenericToClientPacket {
         ctx.enqueueWork(() -> {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 switch (type) {
-                    case WAYPOINT -> {
-                        ClientData.getInstance().addWaypoint(tag);
-                    }
+                    case WAYPOINT -> ClientData.getInstance().addWaypoint(tag);
+
+                    case WAYPOINT_REMOVE -> ClientData.getInstance().removeWaypoint(tag);
                 }
 
             });
@@ -57,7 +64,8 @@ public class GenericToClientPacket {
 
 
     private enum MessageType {
-        WAYPOINT;
+        WAYPOINT,
+        WAYPOINT_REMOVE;
     }
 
 }
