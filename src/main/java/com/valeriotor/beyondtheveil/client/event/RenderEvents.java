@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.event;
 
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix3f;
@@ -8,6 +9,7 @@ import com.mojang.math.Vector3f;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.FOVModifierEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,10 +36,38 @@ import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCA
 public class RenderEvents {
 
     @SubscribeEvent
+    public static void renderGameOverlay(RenderGameOverlayEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            int reminisceTimePressed = InputEvents.getReminisceTimePressed();
+            if (reminisceTimePressed > 0) {
+                PoseStack poseStack = event.getMatrixStack();
+                poseStack.pushPose();
+                Matrix4f matrix4f = poseStack.last().pose();
+                Window window = Minecraft.getInstance().getWindow();
+                int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTicks()) / 40, 2) * 255);
+
+                innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), alpha << 24);
+                //poseStack.pushPose();
+                //innerFill(matrix4f, window.getGuiScaledWidth()/3, window.getGuiScaledHeight()/3, window.getGuiScaledWidth()*2/3, window.getGuiScaledHeight()*2/3, (alpha << 24) | 0xFFFFFF);
+                //poseStack.popPose();
+
+                //for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
+                //    poseStack.pushPose();
+                //    poseStack.translate(0,0,-1);
+                //    innerFill(matrix4f, window.getWidth()/3, window.getHeight()/3, window.getWidth()*2/3, window.getHeight()*2/3, (alpha << 24) | 0xFFFFFF);
+                //    poseStack.popPose();
+                //}
+                poseStack.popPose();
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void renderWorldLastEvent(RenderLevelLastEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
-            for (ClientData.Waypoint waypoint: ClientData.getInstance().waypoints) {
+            for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
 
 
                 //draw(event.getPoseStack());
@@ -48,16 +79,24 @@ public class RenderEvents {
                 MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
                 event.getPoseStack().pushPose();
                 BlockPos pos = waypoint.pos;
-                event.getPoseStack().translate(pos.getX() - d0, pos.getY() - d1, pos.getZ() - d2);
+                double distanceSqr = vec3.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
+                Vec3 subtract = new Vec3(pos.getX(), pos.getY(), pos.getZ()).subtract(vec3);
+                if (subtract.x * subtract.x + subtract.z * subtract.z > 256 * 256) {
+                    double ratio = 256 / subtract.length();
+                    subtract = new Vec3(subtract.x * ratio, subtract.y, subtract.z * ratio);
+                    // pos = new BlockPos(pos.getX() / ratio, pos.getY() / ratio, pos.getZ() / ratio);
+                }
+                event.getPoseStack().translate(subtract.x(), pos.getY() - d1, subtract.z());
                 //event.getPoseStack().translate(3, 3, 3);
+                final float beamRadius = 0.5F;
                 float f = (float) Math.floorMod(player.tickCount, 40) + event.getPartialTick();
                 float f1 = 1024 < 0 ? f : -f;
                 float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
                 float f15 = -1.0F + f2;
-                float f16 = (float) 1024 * 1 * (0.5F / 0.25F) + f15;
+                float f16 = (float) 1024 * 1 * (0.5F / beamRadius) + f15;
                 event.getPoseStack().mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
                 //renderBeaconBeam(event.getPoseStack(), bufferSource, BEAM_LOCATION, event.getPartialTick(), 1.0F, player.tickCount, 0, 1024, new float[]{1,0,0,1}, 0.2F, 0.25F);
-                renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 1, 1, 1.0F, 0, 300, 0.0F, 0.2F, 0.25F, 0.0F, -0.25F, 0.0F, 0.0F, -0.25F, 0.0F, 1.0F, f16, f15);
+                renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 0, 1, 1.0F, 0, 300, 0.0F, beamRadius, beamRadius, 0.0F, -beamRadius, 0.0F, 0.0F, -beamRadius, 0.0F, 1.0F, f16, f15);
                 event.getPoseStack().popPose();
                 RenderSystem.clear(256, Minecraft.ON_OSX);
                 bufferSource.endBatch();
@@ -149,6 +188,39 @@ public class RenderEvents {
 
     private static void addVertex(Matrix4f pPose, Matrix3f pNormal, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pY, float pX, float pZ, float pU, float pV) {
         pConsumer.vertex(pPose, pX, (float) pY, pZ).color(pRed, pGreen, pBlue, pAlpha).uv(pU, pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+    }
+
+    private static void innerFill(Matrix4f pMatrix, int pMinX, int pMinY, int pMaxX, int pMaxY, int pColor) {
+        if (pMinX < pMaxX) {
+            int i = pMinX;
+            pMinX = pMaxX;
+            pMaxX = i;
+        }
+
+        if (pMinY < pMaxY) {
+            int j = pMinY;
+            pMinY = pMaxY;
+            pMaxY = j;
+        }
+
+        float f3 = (float) (pColor >> 24 & 255) / 255.0F;
+        float f = (float) (pColor >> 16 & 255) / 255.0F;
+        float f1 = (float) (pColor >> 8 & 255) / 255.0F;
+        float f2 = (float) (pColor & 255) / 255.0F;
+        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        bufferbuilder.vertex(pMatrix, (float) pMinX, (float) pMaxY, 0.0F).color(f, f1, f2, f3).endVertex();
+        bufferbuilder.vertex(pMatrix, (float) pMaxX, (float) pMaxY, 0.0F).color(f, f1, f2, f3).endVertex();
+        bufferbuilder.vertex(pMatrix, (float) pMaxX, (float) pMinY, 0.0F).color(f, f1, f2, f3).endVertex();
+        bufferbuilder.vertex(pMatrix, (float) pMinX, (float) pMinY, 0.0F).color(f, f1, f2, f3).endVertex();
+        bufferbuilder.end();
+        BufferUploader.end(bufferbuilder);
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
     }
 
 

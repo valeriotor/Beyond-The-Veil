@@ -1,7 +1,8 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
-import net.minecraft.nbt.CompoundTag;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -30,6 +31,14 @@ public class GenericToServerPacket {
                 case ASK_DATA_SYNC -> {
                     CapabilityEvents.syncCapabilities(ctx.getSender());
                 }
+                case REMINISCING_START -> {
+                    if(ctx.getSender() != null)
+                        DataUtil.setBoolean(ctx.getSender(), PlayerDataLib.REMINISCING, true, true);
+                }
+                case REMINISCING_STOP -> {
+                    if(ctx.getSender() != null)
+                        DataUtil.setBoolean(ctx.getSender(), PlayerDataLib.REMINISCING, false, true);
+                }
             }
         });
         return true;
@@ -37,7 +46,9 @@ public class GenericToServerPacket {
 
 
     public enum MessageType {
-        ASK_DATA_SYNC;
+        ASK_DATA_SYNC,
+        REMINISCING_START,
+        REMINISCING_STOP;
     }
 
 }

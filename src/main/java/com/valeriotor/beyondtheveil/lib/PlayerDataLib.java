@@ -73,6 +73,7 @@ public class PlayerDataLib {
 
     // Booleans (Temporary)
     public static final String DREAMFOCUS = "dreamfocus";
+    public static final String REMINISCING = "reminiscing";
 
     // Longs (Non-temporary)
     public static final String LASTDREAMTINDAY = "lastdreamday";
