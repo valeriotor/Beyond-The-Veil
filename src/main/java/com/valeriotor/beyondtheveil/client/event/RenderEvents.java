@@ -3,12 +3,13 @@ package com.valeriotor.beyondtheveil.client.event;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.*;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -24,16 +25,28 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.FOVModifierEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
 import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RenderEvents {
+
+    private static volatile double fov = 0;
+
+    @SubscribeEvent
+    public static void fieldOfViewEvent(EntityViewRenderEvent.FieldOfView event) {
+        fov = event.getFOV();
+    }
 
     @SubscribeEvent
     public static void renderGameOverlay(RenderGameOverlayEvent event) {
@@ -48,6 +61,72 @@ public class RenderEvents {
                 int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTicks()) / 40, 2) * 255);
 
                 innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), alpha << 24);
+                RenderSystem.enableBlend();
+                RenderSystem.setShaderTexture(0, NecronomiconGui.RESEARCH_HIGHLIGHT);
+                GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
+                poseStack.pushPose();
+                //poseStack.last().pose().multiply(gameRenderer.getProjectionMatrix(fov));
+                for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
+                    if (reminisceTimePressed < 20) {
+                        continue;
+                    }
+                    Vec3 vec3 = gameRenderer.getMainCamera().getPosition();
+                    double d0 = vec3.x();
+                    double d1 = vec3.y();
+                    double d2 = vec3.z();
+                    MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+                    BlockPos pos = waypoint.pos;
+                    pos = new BlockPos(-366, 64, -134);
+
+                    double relX = pos.getX() - d0;
+                    double relZ = pos.getZ() - d2;
+
+                    double v = Math.atan2(-relX, relZ) * 180 / Math.PI;
+                    float yRot = player.getViewYRot(event.getPartialTicks()) % 360;
+                    if (yRot > 180) {
+                        yRot -= 360;
+                    }
+                    double yaw = (yRot - v) % 360;
+                    if (yaw > 180) {
+                        yaw -= 360;
+                    }
+                    yaw *= -1;
+                    double relY = pos.getY() - d1;
+                    double dist = Math.sqrt(relX * relX + relZ * relZ);
+                    double v1 = -Math.atan2(relY, dist) * 180 / Math.PI;
+                    double pitch = v1 - gameRenderer.getMainCamera().getXRot();
+                    double scaleFactor = window.getGuiScaledHeight() / Math.tan((Minecraft.getInstance().options.fov / 2) * Math.PI / 180);
+                    int y = (int) (window.getGuiScaledHeight() * pitch / 70);
+                    int x = (int) (window.getGuiScaledWidth() * yaw / 102);
+                    x = (int) (Math.tan((yaw / 2) * Math.PI / 180) * scaleFactor);
+                    y = (int) (Math.tan((pitch / 2) * Math.PI / 180) * scaleFactor);
+                    RenderSystem.setShaderColor(1,1,1,1);
+                    int ticks = player.tickCount % 20;
+                    while (ticks < 70) {
+                        poseStack.pushPose();
+                        poseStack.translate(x + window.getGuiScaledWidth() / 2 - 12 * (ticks) * 30/ 70, y + window.getGuiScaledHeight() / 2 - 12 * (ticks) * 30/ 70, 0);
+                        poseStack.scale((float)(ticks) * 30/ 70, (float)(ticks) * 30 / 70, 1);
+                        RenderSystem.setShaderColor(0.5F,0.1F,0.99F,1 - (float) ticks / 70);
+                        GuiComponent.blit(poseStack, 0,0, 0, 0, 24, 24, 24, 24);
+                        poseStack.popPose();
+                        ticks += 20;
+                    }
+                    //player.getFieldOfViewModifier()
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "fov: " + String.valueOf(Minecraft.getInstance().options.fov), 10, 10, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "relY: " + String.valueOf(relY), 10, 30, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "relZ: " + String.valueOf(relZ), 10, 50, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "yaw: " + String.valueOf(yaw), 10, 70, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "pitch: " + String.valueOf(pitch), 10, 90, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "x: " + String.valueOf(x), 10, 110, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "y: " + String.valueOf(y), 10, 130, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "camera pitch: " + String.valueOf(gameRenderer.getMainCamera().getXRot()), 10, 150, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "v1: " + String.valueOf(v1), 10, 170, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "nearplane topLeft: " + String.valueOf(gameRenderer.getMainCamera().getNearPlane().getTopLeft()), 10, 190, 0xFFFFFFFF);
+                    //GuiComponent.drawString(poseStack, Minecraft.getInstance().font, "nearplane topRight: " + String.valueOf(gameRenderer.getMainCamera().getNearPlane().getTopRight()), 10, 210, 0xFFFFFFFF);
+
+                }
+                poseStack.popPose();
+
                 //poseStack.pushPose();
                 //innerFill(matrix4f, window.getGuiScaledWidth()/3, window.getGuiScaledHeight()/3, window.getGuiScaledWidth()*2/3, window.getGuiScaledHeight()*2/3, (alpha << 24) | 0xFFFFFF);
                 //poseStack.popPose();
@@ -79,6 +158,7 @@ public class RenderEvents {
                 MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
                 event.getPoseStack().pushPose();
                 BlockPos pos = waypoint.pos;
+                pos = new BlockPos(-366, 64, -134);
                 double distanceSqr = vec3.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
                 Vec3 subtract = new Vec3(pos.getX(), pos.getY(), pos.getZ()).subtract(vec3);
                 if (subtract.x * subtract.x + subtract.z * subtract.z > 256 * 256) {

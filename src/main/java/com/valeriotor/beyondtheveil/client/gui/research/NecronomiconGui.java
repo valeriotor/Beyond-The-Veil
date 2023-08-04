@@ -59,7 +59,7 @@ public class NecronomiconGui extends Screen {
 
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
     private static final ResourceLocation RESEARCH_BACKGROUND_WHITE = new ResourceLocation(References.MODID, "textures/gui/res_background_white.png");
-    private static final ResourceLocation RESEARCH_HIGHLIGHT = new ResourceLocation(References.MODID, "textures/gui/res_highlight.png");
+    public static final ResourceLocation RESEARCH_HIGHLIGHT = new ResourceLocation(References.MODID, "textures/gui/res_highlight.png");
     private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
