@@ -10,7 +10,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DreamHandler {
 
@@ -35,16 +37,17 @@ public class DreamHandler {
     private static final int[][] MULTIPLIERS = {{1,1},{-1,-1},{1,-1},{-1,1}};
     private static List<FumeSpreaderBE> findFumeSpreader(Player p, Level level, BlockPos playerPos, int max) {
         List<FumeSpreaderBE> spreaders = new ArrayList<>();
+        Set<Memory> memories = new HashSet<>();
         if(max == 0) return spreaders;
-        checkColumnForSpreader(p,0, 0, level, playerPos, spreaders, max);
+        checkColumnForSpreader(p,0, 0, level, playerPos, spreaders, max, memories);
         for (int i = 1; i < 4 && spreaders.size() < max; i++) {
             for (int j = 0; j <= i && spreaders.size() < max; j++) {
                 int multipliersToCheck = j == 0 ? 2 : 4;
                 for (int k = 0; k < multipliersToCheck && spreaders.size() < max; k++) {
                     int[] multiplier = MULTIPLIERS[k];
-                    checkColumnForSpreader(p,i * multiplier[0], j * multiplier[1], level, playerPos, spreaders, max);
+                    checkColumnForSpreader(p,i * multiplier[0], j * multiplier[1], level, playerPos, spreaders, max, memories);
                     if (i != j) {
-                        checkColumnForSpreader(p,j * multiplier[0], i * multiplier[1], level, playerPos, spreaders, max);
+                        checkColumnForSpreader(p,j * multiplier[0], i * multiplier[1], level, playerPos, spreaders, max, memories);
                     }
                 }
             }
@@ -52,14 +55,15 @@ public class DreamHandler {
         return spreaders;
     }
 
-    private static void checkColumnForSpreader(Player p, int xOffset, int zOffset, Level level, BlockPos startPos, List<FumeSpreaderBE> spreaders, int max) {
+    private static void checkColumnForSpreader(Player p, int xOffset, int zOffset, Level level, BlockPos startPos, List<FumeSpreaderBE> spreaders, int max, Set<Memory> memories) {
         if(spreaders.size() >= max) return;
         for (int yOffset = -1; yOffset < 3; yOffset++) {
             BlockEntity entity = level.getBlockEntity(startPos.offset(xOffset, yOffset, zOffset));
             if (entity instanceof FumeSpreaderBE fumeSpreaderBE) {
                 Memory storedMemory = fumeSpreaderBE.getStoredMemory();
-                if (storedMemory != null && storedMemory.isUnlocked(p)) {
+                if (storedMemory != null && storedMemory.isUnlocked(p) && !memories.contains(storedMemory)) {
                     spreaders.add(fumeSpreaderBE);
+                    memories.add(storedMemory);
                     if (spreaders.size() >= max) {
                         return;
                     }
