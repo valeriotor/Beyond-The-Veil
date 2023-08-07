@@ -21,7 +21,7 @@ import java.util.concurrent.Executor;
 public class DreamWater extends Dream{
 
     public DreamWater() {
-        super(Memory.WATER, 5);
+        super(Memory.WATER, 5, ReminiscenceWaypoint::new);
     }
 
     @Override
@@ -39,7 +39,9 @@ public class DreamWater extends Dream{
         ServerLevel sl = (ServerLevel) l;
         BlockPos blockpos = sl.findNearestMapFeature(ConfiguredStructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false);
         if (blockpos != null) {
-            DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
+            //DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
+            Reminiscence r = new ReminiscenceWaypoint(blockpos, 0x7F16FF);
+            DataUtil.addReminiscence(p, Memory.WATER, r);
             return true;
         }
         return false;

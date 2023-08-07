@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.*;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
+import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -52,54 +53,8 @@ public class RenderEvents {
     public static void renderGameOverlay(RenderGameOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
-            int reminisceTimePressed = InputEvents.getReminisceTimePressed();
-            if (reminisceTimePressed > 0) {
-                PoseStack poseStack = event.getMatrixStack();
-                poseStack.pushPose();
-                Matrix4f matrix4f = poseStack.last().pose();
-                Window window = Minecraft.getInstance().getWindow();
-                int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTicks()) / 40, 2) * 255);
+            ReminiscenceClient.renderReminiscence(event);
 
-                innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), alpha << 24);
-                if (InputEvents.getSelectedReminiscence() != null) {
-                    GuiComponent.drawString(poseStack, Minecraft.getInstance().font, InputEvents.getSelectedReminiscence().getClass().toString(), 10, 30, 0xFFFFFFFF);
-                }
-                RenderSystem.enableBlend();
-                RenderSystem.setShaderTexture(0, NecronomiconGui.RESEARCH_HIGHLIGHT);
-                GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
-                for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
-                    if (reminisceTimePressed < 20) {
-                        continue;
-                    }
-                    // Note: this does not account for FOV changes such as sprinting, nor effects such as bobbing. It only takes into account the FOV value from the options
-                    Vec3 vec3 = gameRenderer.getMainCamera().getPosition();
-                    BlockPos pos = waypoint.pos;
-                    Quaternion q = gameRenderer.getMainCamera().rotation().copy();
-                    q.conj();
-                    Vector3f vector = new Vector3f((float) (pos.getX() - vec3.x), (float) (pos.getY() - vec3.y), (float) (pos.getZ() - vec3.z));
-                    vector.transform(q);
-                    double distanceFromScreen = window.getGuiScaledHeight() / Math.tan((Minecraft.getInstance().options.fov / 2) * Math.PI / 180);
-                    double scaleFactor = distanceFromScreen / vector.z() / 2; // I should have divided the camera angle by two I guess, but idk how to do it so this works too, in this context at least
-                    int x = (int) -(vector.x() * scaleFactor);
-                    int y = (int) -(vector.y() * scaleFactor);
-                    if (vector.z() < 0) {
-                        continue;
-                    }
-                    RenderSystem.setShaderColor(1,1,1,1);
-                    int ticks = player.tickCount % 20;
-                    while (ticks < 70) {
-                        poseStack.pushPose();
-                        poseStack.translate(x + window.getGuiScaledWidth() / 2 - 12 * (ticks) * 30/ 70, y + window.getGuiScaledHeight() / 2 - 12 * (ticks) * 30/ 70, 0);
-                        poseStack.scale((float)(ticks) * 30/ 70, (float)(ticks) * 30 / 70, 1);
-                        RenderSystem.setShaderColor(0.5F,0.1F,0.99F,1 - (float) ticks / 70);
-                        GuiComponent.blit(poseStack, 0,0, 0, 0, 24, 24, 24, 24);
-                        poseStack.popPose();
-                        ticks += 20;
-                    }
-
-                }
-                poseStack.popPose();
-            }
         }
     }
 
@@ -207,7 +162,7 @@ public class RenderEvents {
         pConsumer.vertex(pPose, pX, (float) pY, pZ).color(pRed, pGreen, pBlue, pAlpha).uv(pU, pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    private static void innerFill(Matrix4f pMatrix, int pMinX, int pMinY, int pMaxX, int pMaxY, int pColor) {
+    public static void innerFill(Matrix4f pMatrix, int pMinX, int pMinY, int pMaxX, int pMaxY, int pColor) {
         if (pMinX < pMaxX) {
             int i = pMinX;
             pMinX = pMaxX;

@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 public class ReminiscenceUnderground extends Reminiscence{
 
     private final Map<Integer, String[][]> layers;
-    private Map<String, Integer> counter = new HashMap<>();
+    private final Map<String, Integer> counter = new HashMap<>();
 
     public ReminiscenceUnderground() {
         layers = new HashMap<>();
@@ -78,5 +78,13 @@ public class ReminiscenceUnderground extends Reminiscence{
             }
         }
         count();
+    }
+
+    public Map<Integer, String[][]> getLayers() {
+        return layers;
+    }
+
+    public Map<String, Integer> getCounter() {
+        return counter;
     }
 }
