@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.networking;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +30,10 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.WAYPOINT_REMOVE, tag);
     }
 
+    public static GenericToClientPacket syncReminiscences(CompoundTag tag) {
+        return new GenericToClientPacket(MessageType.SYNC_REMINISCENCES, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -53,10 +58,9 @@ public class GenericToClientPacket {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 switch (type) {
                     case WAYPOINT -> ClientData.getInstance().addWaypoint(tag);
-
                     case WAYPOINT_REMOVE -> ClientData.getInstance().removeWaypoint(tag);
+                    case SYNC_REMINISCENCES -> DataUtilClient.loadReminiscences(tag);
                 }
-
             });
         });
         return true;
@@ -65,7 +69,8 @@ public class GenericToClientPacket {
 
     private enum MessageType {
         WAYPOINT,
-        WAYPOINT_REMOVE;
+        WAYPOINT_REMOVE,
+        SYNC_REMINISCENCES;
     }
 
 }

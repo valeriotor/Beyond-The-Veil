@@ -17,6 +17,7 @@ import java.util.Set;
 public class DreamHandler {
 
     public static void dream(Player p) {
+        DataUtil.clearReminiscences(p);
         List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level, p.getOnPos(), 1);
         //spreaders.sort(Comparator.comparingInt(be -> Dream.REGISTRY.get(be.getStoredMemory()).getPriority()));
         List<FumeSpreaderBE> successes = new ArrayList<>();
@@ -33,6 +34,7 @@ public class DreamHandler {
             BlockPos pos = spreader.getBlockPos();
             p.level.setBlock(pos, p.level.getBlockState(pos).setValue(FumeSpreaderBlock.FULL, false), 3);
         }
+        DataUtil.syncReminiscences(p);
     }
     private static final int[][] MULTIPLIERS = {{1,1},{-1,-1},{1,-1},{-1,1}};
     private static List<FumeSpreaderBE> findFumeSpreader(Player p, Level level, BlockPos playerPos, int max) {
@@ -61,7 +63,7 @@ public class DreamHandler {
             BlockEntity entity = level.getBlockEntity(startPos.offset(xOffset, yOffset, zOffset));
             if (entity instanceof FumeSpreaderBE fumeSpreaderBE) {
                 Memory storedMemory = fumeSpreaderBE.getStoredMemory();
-                if (storedMemory != null && storedMemory.isUnlocked(p) && !memories.contains(storedMemory)) {
+                if (storedMemory != null /*&& storedMemory.isUnlocked(p) */&& !memories.contains(storedMemory)) {
                     spreaders.add(fumeSpreaderBE);
                     memories.add(storedMemory);
                     if (spreaders.size() >= max) {

@@ -4,6 +4,9 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerData.Counter;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
@@ -38,6 +41,18 @@ public class DataUtilClient {
                 if (c.getType() instanceof WaypointType waypointType) {
                     ClientData.getInstance().addWaypoint(waypointType, BlockPos.of(playerData.getLong(waypointType.posDataKey)), waypointType.unlocalizedName);
                 }
+            }
+        }
+    }
+
+    public static void loadReminiscences(CompoundTag tag) {
+        if (Minecraft.getInstance().player != null) {
+            DataUtil.clearReminiscences(getPlayer());
+            for (String key : tag.getAllKeys()) {
+                Memory m = Memory.getMemoryFromDataName(key);
+                Reminiscence r = Dream.REMINISCENCE_REGISTRY.get(m).get();
+                r.load(tag.getCompound(key));
+                DataUtil.addReminiscence(Minecraft.getInstance().player, m, r);
             }
         }
     }

@@ -2,18 +2,55 @@ package com.valeriotor.beyondtheveil.util;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class DataUtil {
+
+    public static void clearReminiscences(Player p) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(PlayerData::clearReminiscences);
+    }
+
+
+    public static void addReminiscence(Player p, Memory m, Reminiscence r) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.addReminiscence(m, r);
+        });
+    }
+
+    public static void syncReminiscences(Player p) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            Set<Map.Entry<Memory, Reminiscence>> entries = playerData.getReminiscences().entrySet();
+            if (!entries.isEmpty()) {
+                CompoundTag reminiscences = new CompoundTag();
+                for (Map.Entry<Memory, Reminiscence> e : entries) {
+                    reminiscences.put(e.getKey().getDataName(), e.getValue().save());
+                }
+                Messages.sendToPlayer(GenericToClientPacket.syncReminiscences(reminiscences), (ServerPlayer) p);
+            } else {
+                Messages.sendToPlayer(GenericToClientPacket.syncReminiscences(new CompoundTag()), (ServerPlayer) p);
+            }
+        });
+    }
+
+    public static EnumMap<Memory, Reminiscence> getReminiscences(Player p) {
+        return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getReminiscences();
+    }
+
 
     public static void createWaypoint(Player p, WaypointType type, int time, BlockPos pos) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {

@@ -61,6 +61,9 @@ public class RenderEvents {
                 int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTicks()) / 40, 2) * 255);
 
                 innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), alpha << 24);
+                if (InputEvents.getSelectedReminiscence() != null) {
+                    GuiComponent.drawString(poseStack, Minecraft.getInstance().font, InputEvents.getSelectedReminiscence().getClass().toString(), 10, 30, 0xFFFFFFFF);
+                }
                 RenderSystem.enableBlend();
                 RenderSystem.setShaderTexture(0, NecronomiconGui.RESEARCH_HIGHLIGHT);
                 GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;

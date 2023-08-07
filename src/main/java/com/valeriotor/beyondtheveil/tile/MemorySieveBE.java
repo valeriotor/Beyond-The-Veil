@@ -50,7 +50,7 @@ public class MemorySieveBE extends BlockEntity {
             } else {
                 for (Memory m : Memory.values()) {
                     ItemStack memStack = m.getItem();
-                    if (heldItem.getItem() == memStack.getItem() && m.isUnlocked(p)) {
+                    if (heldItem.getItem() == memStack.getItem() /*&& m.isUnlocked(p)*/) {
                         //if(!memStack.getHasSubtypes() || heldItem.getMetadata() == memStack.getMetadata()) {
                         ItemStack newStack = new ItemStack(Registration.MEMORY_PHIAL.get());
                         newStack.getOrCreateTag().putString("memory", m.getDataName());

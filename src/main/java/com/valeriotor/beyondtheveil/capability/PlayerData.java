@@ -1,5 +1,8 @@
 package com.valeriotor.beyondtheveil.capability;
 
+import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
 
@@ -19,6 +22,7 @@ public class PlayerData {
     private final Map<String, String> strings = new HashMap<>();
     private final Map<String, String> tempStrings = new HashMap<>();
     private final List<Counter> counters = new ArrayList<>();
+    private final EnumMap<Memory, Reminiscence> reminiscences = new EnumMap<>(Memory.class);
 
     public void setBoolean(String key, boolean value, boolean temporary) {
         if (value) {
@@ -193,12 +197,27 @@ public class PlayerData {
         return counters;
     }
 
+    public boolean addReminiscence(Memory memory, Reminiscence reminiscence) {
+        boolean returnValue = reminiscences.containsKey(memory);
+        reminiscences.put(memory, reminiscence);
+        return returnValue;
+    }
+
+    public void clearReminiscences() {
+        reminiscences.clear();
+    }
+
+    public EnumMap<Memory, Reminiscence> getReminiscences() {
+        return reminiscences;
+    }
+
     public void saveToNBT(CompoundTag compoundTag) {
         CompoundTag booleans = new CompoundTag();
         CompoundTag ints = new CompoundTag();
         CompoundTag longs = new CompoundTag();
         CompoundTag strings = new CompoundTag();
         CompoundTag counters = new CompoundTag();
+        CompoundTag reminiscences = new CompoundTag();
         for (String s : this.booleans) {
             booleans.putBoolean(s, true);
         }
@@ -214,11 +233,15 @@ public class PlayerData {
         for (Counter c : this.counters) {
             counters.putInt(c.type.name(), c.counter);
         }
+        for (Entry<Memory, Reminiscence> e : this.reminiscences.entrySet()) {
+            reminiscences.put(e.getKey().getDataName(), e.getValue().save());
+        }
         compoundTag.put("booleans", booleans);
         compoundTag.put("ints", ints);
         compoundTag.put("longs", longs);
         compoundTag.put("strings", strings);
         compoundTag.put("counters", counters);
+        compoundTag.put("reminiscences", reminiscences);
     }
 
     public void loadFromNBT(CompoundTag compoundTag) {
@@ -250,6 +273,15 @@ public class PlayerData {
                 this.counters.add(new Counter(counters.getInt(key), CounterType.fromName(key)));
             }
         }
+        if (compoundTag.contains("reminiscences")) {
+            CompoundTag reminiscences = compoundTag.getCompound("reminiscences");
+            for (String key : reminiscences.getAllKeys()) {
+                Memory memory = Memory.getMemoryFromDataName(key);
+                Reminiscence reminiscence = Dream.REMINISCENCE_REGISTRY.get(memory).get();
+                reminiscence.load(reminiscences.getCompound(key));
+                this.reminiscences.put(memory, reminiscence);
+            }
+        }
     }
 
     /** Assumes new store is empty
@@ -263,6 +295,7 @@ public class PlayerData {
     }
 
     private static class FallBack extends PlayerData {
+        // TODO find another way that doesn't require editing for every change to the main class
         @Override public void setBoolean(String key, boolean value, boolean temporary) {}
         @Override public boolean getBoolean(String key) {return false;}
         @Override public boolean getBoolean(String key, boolean temporary) {return false;}
