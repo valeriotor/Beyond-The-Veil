@@ -5,10 +5,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.MemorySieveBER;
-import com.valeriotor.beyondtheveil.client.render.entity.BloodSkeletonRenderer;
-import com.valeriotor.beyondtheveil.client.render.entity.BloodWraithRenderer;
-import com.valeriotor.beyondtheveil.client.render.entity.BloodZombieRenderer;
-import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
+import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
@@ -65,6 +62,7 @@ public class ClientSetup {
         event.registerLayerDefinition(BloodSkeletonCrawlingModel.LAYER_LOCATION, BloodSkeletonCrawlingModel::createBodyLayer);
         event.registerLayerDefinition(BloodZombieModel.LAYER_LOCATION, BloodZombieModel::createBodyLayer);
         event.registerLayerDefinition(BloodWraithModel.LAYER_LOCATION, BloodWraithModel::createBodyLayer);
+        event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -73,6 +71,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
         event.registerEntityRenderer(Registration.BLOOD_ZOMBIE.get(), BloodZombieRenderer::new);
         event.registerEntityRenderer(Registration.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
+        event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

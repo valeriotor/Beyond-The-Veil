@@ -1,10 +1,7 @@
 package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.entity.BloodSkeletonEntity;
-import com.valeriotor.beyondtheveil.entity.BloodWraithEntity;
-import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
-import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
+import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +18,7 @@ public class Setup {
         event.put(Registration.BLOOD_SKELETON.get(), BloodSkeletonEntity.prepareAttributes().build());
         event.put(Registration.BLOOD_ZOMBIE.get(), BloodZombieEntity.prepareAttributes().build());
         event.put(Registration.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
+        event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 
     @SubscribeEvent
