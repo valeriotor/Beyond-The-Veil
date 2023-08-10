@@ -6,18 +6,25 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class DreamUnderground extends Dream {
 
     private final Set<Block> searchedBlocks;
+    private final Set<Block> allBlocks;
 
     public DreamUnderground(Memory memory, int priority, Set<Block> searchedBlocks) {
         super(memory, priority, ReminiscenceUnderground::new);
-        this.searchedBlocks = searchedBlocks;
+        this.searchedBlocks = new HashSet<>();
+        this.allBlocks = new HashSet<>();
+        this.searchedBlocks.addAll(searchedBlocks);
+        this.allBlocks.addAll(Set.of(Blocks.STONE, Blocks.AIR, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE));
+        this.allBlocks.addAll(searchedBlocks);
     }
 
     @Override
@@ -40,14 +47,14 @@ public class DreamUnderground extends Dream {
         if (p != null) {
             // TODO if has dreamt of void expand radius from 1 to 4
             // TODO if a proficient dreamer display blocks as it goes down (otherwise increase counters only)
-            int radius = 1;
+            int radius = 2;
             for (int y = pos.getY(); y > l.getMinBuildHeight(); y--) {
                 String[][] layer = new String[radius * 2 + 1][radius * 2 + 1];
                 layers.put(y, layer);
                 for (int x = -radius; x <= radius; x++) {
                     for (int z = -radius; z <= radius; z++) {
                         Block block = l.getBlockState(pos.offset(x, y - pos.getY(), z)).getBlock();
-                        if (block.getRegistryName() != null && searchedBlocks.contains(block)) {
+                        if (block.getRegistryName() != null && allBlocks.contains(block)) {
                             //counter.put(block.getRegistryName().toString(), counter.get(block.getRegistryName().toString()) + 1);
                             layer[x + radius][z + radius] = block.getRegistryName().toString();
                         } else {
@@ -57,6 +64,7 @@ public class DreamUnderground extends Dream {
                 }
             }
         }
+        // TODO make this not "count" the non searched blocks (e.g. diorite, deepslate, etc.)
         Reminiscence reminiscence = new ReminiscenceUnderground(layers);
         DataUtil.addReminiscence(p, memory, reminiscence);
         return true;

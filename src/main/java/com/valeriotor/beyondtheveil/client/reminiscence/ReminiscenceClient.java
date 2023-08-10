@@ -44,6 +44,7 @@ public abstract class ReminiscenceClient {
     protected abstract void render(RenderGameOverlayEvent event);
     protected void tick() {}
     protected void reset() {}
+    protected void mouseScroll(InputEvent.MouseScrollEvent event) {}
 
     public static void renderReminiscence(RenderGameOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
@@ -105,6 +106,12 @@ public abstract class ReminiscenceClient {
                     selectedReminiscence %= reminiscences.size();
                 }
             }
+        }
+    }
+
+    public static void mouseScrollEvent(InputEvent.MouseScrollEvent event) {
+        if (reminiscences.size() > 0) {
+            reminiscences.get(selectedReminiscence).mouseScroll(event);
         }
     }
 

@@ -35,6 +35,12 @@ public class InputEvents {
         ReminiscenceClient.keyInputEvent(event);
     }
 
+
+    @SubscribeEvent
+    public static void mouseScrollEvent(InputEvent.MouseScrollEvent event) {
+        ReminiscenceClient.mouseScrollEvent(event);
+    }
+
     @SubscribeEvent
     public static void screenOpenEvent(ScreenOpenEvent event) {
         ReminiscenceClient.screenOpenEvent(event);
