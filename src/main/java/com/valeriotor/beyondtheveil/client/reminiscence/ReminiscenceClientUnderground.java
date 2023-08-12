@@ -41,21 +41,29 @@ import java.util.*;
 
 public class ReminiscenceClientUnderground extends ReminiscenceClient {
 
-    private record Count(ItemStack stack, int count) {
+    private class Count {
+        public Count(ItemStack stack) {
+            this.stack = stack;
+        }
+
+        private ItemStack stack;
+        private int counter;
     }
 
     private final Map<Integer, BlockState[][]> layers = new HashMap<>();
-    private final List<Count> sortedCounter;
+    private final Map<String, Count> sortedCounter;
+    private final Set<String> blocksToCount;
     private int ticks = 0;
     private int y;
+    private final int maxY;
+    private int seenY;
     private boolean wentDown = false;
 
     public ReminiscenceClientUnderground(ReminiscenceUnderground reminiscenceUnderground) {
-        this.sortedCounter = reminiscenceUnderground.getCounter().entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .map(entry -> new Count(new ItemStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(entry.getKey()))), entry.getValue()))
-                .toList();
-        this.y = reminiscenceUnderground.getLayers().keySet().stream().max(Comparator.comparingInt(Integer::intValue)).orElse(0);
+        this.maxY = this.y = reminiscenceUnderground.getLayers().keySet().stream().max(Comparator.comparingInt(Integer::intValue)).orElse(0);
+        seenY = maxY + 1;
+        this.blocksToCount = reminiscenceUnderground.getCountedBlocks();
+        this.sortedCounter = new TreeMap<>();
         for (Map.Entry<Integer, String[][]> entry : reminiscenceUnderground.getLayers().entrySet()) {
             BlockState[][] blockStates = new BlockState[entry.getValue().length][entry.getValue().length];
             for (int i = 0; i < entry.getValue().length; i++) {
@@ -71,7 +79,7 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
                 }
                 Block filler = counters.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).get().getKey();
                 for (Tuple<Integer, Integer> toFill : unplaced) {
-                    blockStates[toFill.getA()][toFill.getB()] = filler.defaultBlockState();
+                    blockStates[toFill.getA()][toFill.getB()] = Blocks.STONE.defaultBlockState();
                 }
             }
             layers.put(entry.getKey(), blockStates);
@@ -88,8 +96,8 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
         //poseStack.translate(window.getGuiScaledWidth() / 2, window.getGuiScaledHeight() / 2, 0);
         //poseStack.scale(2.5F, 2.5F, 2.5F);
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        for (int i = 0; i < sortedCounter.size(); i++) {
-            Count count = sortedCounter.get(i);
+        int offset = 0;
+        for (Count count : sortedCounter.values()) {
             BakedModel pBakedmodel = itemRenderer.getModel(count.stack, (Level) null, (LivingEntity) null, 0);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
             RenderSystem.enableBlend();
@@ -97,7 +105,7 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             PoseStack posestack = RenderSystem.getModelViewStack();
             posestack.pushPose();
-            posestack.translate((double) window.getGuiScaledWidth() / 2 - (double) maxSideLengthForLayer / 2 + 100 * i, (double) window.getGuiScaledHeight() / 8, (double) (100.0F + itemRenderer.blitOffset));
+            posestack.translate((double) window.getGuiScaledWidth() / 2 - (double) maxSideLengthForLayer / 2 + 100 * offset, (double) window.getGuiScaledHeight() / 8, (double) (100.0F + itemRenderer.blitOffset));
             posestack.translate(8.0D, 8.0D, 0.0D);
             posestack.scale(1.0F, -1.0F, 1.0F);
             posestack.scale(16.0F, 16.0F, 16.0F);
@@ -121,10 +129,11 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
             RenderSystem.applyModelViewMatrix();
             RenderSystem.setShaderColor(1, 1, 1, 1);
             poseStack.pushPose();
-            poseStack.translate(window.getGuiScaledWidth() / 2 - maxSideLengthForLayer / 2 + 100 * (i) + 30, window.getGuiScaledHeight() / 8, 0);
+            poseStack.translate(window.getGuiScaledWidth() / 2 - maxSideLengthForLayer / 2 + 100 * (offset) + 30, window.getGuiScaledHeight() / 8, 0);
             poseStack.scale(2, 2, 1);
-            GuiComponent.drawString(event.getMatrixStack(), Minecraft.getInstance().font, "x" + Math.min(count.count, ticks / 2), 0, 0, 0xFFFFFFFF);
+            GuiComponent.drawString(event.getMatrixStack(), Minecraft.getInstance().font, "x" + Math.min(count.counter, ticks / 2), 0, 0, 0xFFFFFFFF);
             poseStack.popPose();
+            offset++;
         }
         BlockState[][] layer = layers.get(y);
         if (layer != null) {
@@ -168,11 +177,53 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
                 wentDown = true;
             }
         }
+        if (layers.containsKey(seenY - 1)) {
+            seenY--;
+            BlockState[][] layer = layers.get(seenY);
+            if (layer != null) {
+                for (int i = 0; i < layer.length; i++) {
+                    for (int j = 0; j < layer.length; j++) {
+                        Block block = layer[i][j].getBlock();
+                        String name = block.getRegistryName().toString();
+                        if (blocksToCount.contains(name)) {
+                            if (!sortedCounter.containsKey(name)) {
+                                sortedCounter.put(name, new Count(new ItemStack(block)));
+                            }
+                            sortedCounter.get(name).counter++;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
     protected void reset() {
         ticks = 0;
+        //y = maxY;
+        //wentDown = false;
+        if (wentDown) {
+            sortedCounter.clear();
+            seenY = maxY+1;
+            while (layers.containsKey(seenY - 1)) {
+                seenY--;
+                BlockState[][] layer = layers.get(seenY);
+                if (layer != null) {
+                    for (int i = 0; i < layer.length; i++) {
+                        for (int j = 0; j < layer.length; j++) {
+                            Block block = layer[i][j].getBlock();
+                            String name = block.getRegistryName().toString();
+                            if (blocksToCount.contains(name)) {
+                                if (!sortedCounter.containsKey(name)) {
+                                    sortedCounter.put(name, new Count(new ItemStack(block)));
+                                }
+                                sortedCounter.get(name).counter++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

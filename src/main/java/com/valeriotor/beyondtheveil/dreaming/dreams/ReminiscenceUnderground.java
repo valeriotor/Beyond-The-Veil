@@ -4,38 +4,24 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class ReminiscenceUnderground extends Reminiscence{
 
     private final Map<Integer, String[][]> layers;
-    private final Map<String, Integer> counter = new HashMap<>();
+    private final Set<String> countedBlocks;
 
     public ReminiscenceUnderground() {
         layers = new HashMap<>();
+        countedBlocks = new HashSet<>();
     }
 
-    public ReminiscenceUnderground(Map<Integer, String[][]> layers) {
+    public ReminiscenceUnderground(Map<Integer, String[][]> layers, Set<String> countedBlocks) {
         this.layers = layers;
-        count();
-    }
-
-    private void count() {
-        counter.clear();
-        for (Entry<Integer, String[][]> e : layers.entrySet()) {
-            for (String[] row : e.getValue()) {
-                for (String block : row) {
-                    if ("null".equals(block)) {
-                        continue;
-                    }
-                    if (!counter.containsKey(block)) {
-                        counter.put(block, 0);
-                    }
-                    counter.put(block, counter.get(block) + 1);
-                }
-            }
-        }
+        this.countedBlocks = countedBlocks;
     }
 
     @Override
@@ -56,6 +42,11 @@ public class ReminiscenceUnderground extends Reminiscence{
             }
         }
         tag.putInt("radius", radius);
+        CompoundTag countedBlocks = new CompoundTag();
+        tag.put("counted", countedBlocks);
+        for (String countedBlock : this.countedBlocks) {
+            countedBlocks.putBoolean(countedBlock, true);
+        }
         return tag;
     }
 
@@ -64,7 +55,7 @@ public class ReminiscenceUnderground extends Reminiscence{
         layers.clear();
         int radius = tag.getInt("radius");
         for (String key : tag.getAllKeys()) {
-            if ("radius".equals(key)) {
+            if ("radius".equals(key) || "counted".equals(key)) {
                 continue;
             }
             String[][] layer = new String[2 * radius + 1][2 * radius + 1];
@@ -77,14 +68,17 @@ public class ReminiscenceUnderground extends Reminiscence{
                 }
             }
         }
-        count();
+        if (tag.contains("counted")) {
+            CompoundTag countedTag = tag.getCompound("counted");
+            countedBlocks.addAll(countedTag.getAllKeys());
+        }
     }
 
     public Map<Integer, String[][]> getLayers() {
         return layers;
     }
 
-    public Map<String, Integer> getCounter() {
-        return counter;
+    public Set<String> getCountedBlocks() {
+        return countedBlocks;
     }
 }

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DreamUnderground extends Dream {
 
@@ -23,7 +24,7 @@ public class DreamUnderground extends Dream {
         this.searchedBlocks = new HashSet<>();
         this.allBlocks = new HashSet<>();
         this.searchedBlocks.addAll(searchedBlocks);
-        this.allBlocks.addAll(Set.of(Blocks.STONE, Blocks.AIR, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE));
+        this.allBlocks.addAll(Set.of(Blocks.STONE, Blocks.AIR, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE, Blocks.DIRT, Blocks.GRASS, Blocks.SAND, Blocks.SANDSTONE, Blocks.WATER, Blocks.GRAVEL));
         this.allBlocks.addAll(searchedBlocks);
     }
 
@@ -64,8 +65,7 @@ public class DreamUnderground extends Dream {
                 }
             }
         }
-        // TODO make this not "count" the non searched blocks (e.g. diorite, deepslate, etc.)
-        Reminiscence reminiscence = new ReminiscenceUnderground(layers);
+        Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> b.getRegistryName().toString()).collect(Collectors.toSet()));
         DataUtil.addReminiscence(p, memory, reminiscence);
         return true;
     }
