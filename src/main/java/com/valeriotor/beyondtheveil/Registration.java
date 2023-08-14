@@ -3,14 +3,13 @@ package com.valeriotor.beyondtheveil;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.*;
-import com.valeriotor.beyondtheveil.item.CoralStaffItem;
-import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
-import com.valeriotor.beyondtheveil.item.NecronomiconItem;
-import com.valeriotor.beyondtheveil.item.SlugCatcherItem;
+import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -48,6 +47,7 @@ public class Registration {
     public static final RegistryObject<EntityType<BloodZombieEntity>> BLOOD_ZOMBIE = ENTITIES.register("blood_zombie", () -> EntityType.Builder.of(BloodZombieEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_zombie"));
     public static final RegistryObject<EntityType<BloodWraithEntity>> BLOOD_WRAITH = ENTITIES.register("blood_wraith", () -> EntityType.Builder.of(BloodWraithEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_wraith"));
     public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(7, 5F).clientTrackingRange(32).build("nautilus"));
+    public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(References.ITEM_GROUP);
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD);
@@ -185,7 +185,7 @@ public class Registration {
     public static final RegistryObject<Item> REDSTONE_WEED_SEEDS = ITEMS.register("redstone_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass, BlockNames.REDSTONEWEED);
     public static final RegistryObject<Item> GHOST_WEED_SEEDS = ITEMS.register("ghost_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass, BlockNames.GHOSTWEED);
     public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
-    public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackjack("blackjack");
+    public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", BlackjackItem::new); // new ItemBlackjack("blackjack");
     public static final RegistryObject<Item> SPINE = ITEMS.register("spine", () -> new Item(ITEM_PROPERTIES)); // new ModItem("spine");
     public static final RegistryObject<Item> HELD_VILLAGER = ITEMS.register("held_villager", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldVillager("held_villager");
     public static final RegistryObject<Item> HELD_WEEPER = ITEMS.register("held_weeper", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldWeeper("held_weeper");
