@@ -187,7 +187,7 @@ public class Registration {
     public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
     public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", BlackjackItem::new); // new ItemBlackjack("blackjack");
     public static final RegistryObject<Item> SPINE = ITEMS.register("spine", () -> new Item(ITEM_PROPERTIES)); // new ModItem("spine");
-    public static final RegistryObject<Item> HELD_VILLAGER = ITEMS.register("held_villager", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldVillager("held_villager");
+    public static final RegistryObject<HeldVillagerItem> HELD_VILLAGER = ITEMS.register("held_villager", HeldVillagerItem::new); // new ItemHeldVillager("held_villager");
     public static final RegistryObject<Item> HELD_WEEPER = ITEMS.register("held_weeper", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldWeeper("held_weeper");
     public static final RegistryObject<Item> HELD_FLETUM = ITEMS.register("held_fletum", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldFletum("held_fletum");
     public static final RegistryObject<Item> HELD_SHOGGOTH = ITEMS.register("held_shoggoth", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldShoggoth("held_shoggoth");
@@ -226,6 +226,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<HeartBE>> HEART_BE = BLOCK_ENTITIES.register(HEART.getId().getPath(), () -> BlockEntityType.Builder.of(HeartBE::new, HEART.get()).build(null));
     public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = CONTAINERS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
 

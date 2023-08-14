@@ -14,8 +14,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -26,9 +29,11 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.gossip.GossipContainer;
 import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
@@ -73,6 +78,21 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
                 .add(Attributes.ATTACK_DAMAGE, 18.0D);
     }
 
+    @Override
+    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
+            if(!level.isClientSide) {
+                ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
+                CompoundTag tag = new CompoundTag();
+                addAdditionalSaveData(tag);
+                heldVillager.getOrCreateTag().put("data", tag);
+                pPlayer.setItemSlot(EquipmentSlot.MAINHAND, heldVillager);
+                discard();
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.interactAt(pPlayer, pVec, pHand);
+    }
 
     @Override
     public VillagerData getVillagerData() {
@@ -80,6 +100,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     }
 
 
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.getVillagerData()).resultOrPartial(LOGGER::error).ifPresent((p_204072_) -> {
@@ -96,9 +117,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
         pCompound.putInt("Xp", this.villagerXp);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+    @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("VillagerData", 10)) {
