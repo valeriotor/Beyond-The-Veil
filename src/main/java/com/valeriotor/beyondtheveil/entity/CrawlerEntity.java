@@ -5,28 +5,22 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.gossip.GossipContainer;
 import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,11 +32,12 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.Set;
-import java.util.UUID;
 
 public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.VILLAGER_DATA);
+    private static final EntityDataAccessor<Boolean> DATA_CRAWLING = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
+    private int startCrawl = -20;
     @Nullable
     private Tag gossips;
     @Nullable
@@ -52,6 +47,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
+        this.moveControl = new CrawlerMoveControl(this);
     }
 
 
@@ -67,6 +63,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(8, new PanicGoal(this, 1.0D));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -167,6 +164,11 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
+        this.entityData.define(DATA_CRAWLING, false);
+    }
+
+    public int getCrawling() {
+        return 20 - (tickCount - startCrawl);
     }
 
     public void setGossips(Tag pGossips) {
@@ -186,6 +188,44 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     }
     public void setVillagerXp(int pVillagerXp) {
         this.villagerXp = pVillagerXp;
+    }
+
+    // Animation sync code became a bit convoluted as I converged on the right technique. Don't look too much into it
+    @Override
+    public void tick() {
+        super.tick();
+        if (level.isClientSide) {
+            boolean crawl = entityData.get(DATA_CRAWLING);
+            if (crawl && getCrawling() < 1) {
+                startCrawl = tickCount;
+            }
+        }
+    }
+
+    private static class CrawlerMoveControl extends MoveControl {
+        public CrawlerMoveControl(CrawlerEntity pMob) {
+            super(pMob);
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (mob.level.isClientSide) {
+                return;
+            }
+            CrawlerEntity mob = (CrawlerEntity) this.mob;
+            if(mob.getSpeed() == 0) {
+                mob.getEntityData().set(DATA_CRAWLING, false);
+                mob.startCrawl = -20;
+            } else {
+                if (mob.getCrawling() <= 0) {
+                    mob.entityData.set(DATA_CRAWLING, true);
+                    mob.startCrawl = mob.tickCount;
+                } else if (mob.getCrawling() < 10) {
+                    mob.setSpeed(0);
+                }
+            }
+        }
     }
 
 }

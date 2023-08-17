@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedModel, VillagerHeadModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -67,7 +68,9 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 
 	@Override
 	public void setupAnim(CrawlerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		int crawling = entity.getCrawling();
+		float armSwing = crawling < -1 ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
+		arms.xRot = -2.3998F - armSwing;
 	}
 
 	@Override
