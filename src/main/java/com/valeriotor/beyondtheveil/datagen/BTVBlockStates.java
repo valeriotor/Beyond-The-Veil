@@ -1,20 +1,17 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.block.DampCanopyBlock;
-import com.valeriotor.beyondtheveil.block.DampFilledCanopyBlock;
-import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
-import com.valeriotor.beyondtheveil.block.SleepChamberBlock;
+import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.*;
+import com.valeriotor.beyondtheveil.client.model.loader.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -59,6 +56,8 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSmoothStoneSlab(BLOOD_SMOOTH_STONE_SLAB.get(), modLoc("block/" + BLOOD_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + BLOOD_SMOOTH_STONE.getId().getPath()));
         simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
         simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
+        simpleBlock(FLASK_LARGE.get(), new ExistingModelFile(modLoc("block/flask_large"), models().existingFileHelper));
+        //horizontalBlock(FLASK_SHELF.get(), new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper));
 
 
         registerCanopy();
@@ -66,6 +65,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSleepChamber();
         registerWateryCradle();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
+        registerFlaskShelf();
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -229,6 +229,27 @@ public class BTVBlockStates extends BlockStateProvider {
         getVariantBuilder(block)
                 .forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(builder).build();
+                });
+    }
+
+    private void registerFlaskShelfOLD() {
+        BlockModelBuilder generatorModel = models().getBuilder(FLASK_SHELF.getId().getPath())
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .customLoader((blockModelBuilder, helper) -> new CustomLoaderBuilder<BlockModelBuilder>(FlaskShelfModelLoader.FLASK_SHELF_LOADER, blockModelBuilder, helper) { })
+                .end();
+        simpleBlock(FLASK_SHELF.get(), generatorModel);
+    }
+
+    private void registerFlaskShelf() {
+        ExistingModelFile empty = new ExistingModelFile(mcLoc("block/air"), models().existingFileHelper);
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper);
+        getVariantBuilder(FLASK_SHELF.get())
+                .forAllStatesExcept(state -> {
+                    ModelFile file = state.getValue(FlaskShelfBlock.CENTER) ? base : empty;
+                    return ConfiguredModel.builder()
+                            .modelFile(file) // Can show 'modelFile'
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
                 });
     }
 

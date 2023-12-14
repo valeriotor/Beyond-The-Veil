@@ -24,6 +24,7 @@ public class BTVBlockTags extends BlockTagsProvider {
                 .add(DAMP_WOOD_STAIRS.get())
                 .add(DAMP_WOOD_FENCE.get())
                 .add(SLEEP_CHAMBER.get())
+                .add(FLASK_SHELF.get())
                 .add(FISH_BARREL.get());
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(DARK_SAND.get());

@@ -3,6 +3,10 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
+import com.valeriotor.beyondtheveil.client.model.loader.FlaskModelLoader;
+import com.valeriotor.beyondtheveil.client.model.loader.FlaskShelfModelLoader;
+import com.valeriotor.beyondtheveil.client.model.loader.OrphanLoaderRegistry;
+import com.valeriotor.beyondtheveil.client.render.blockentity.FlaskShelfBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.MemorySieveBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.WateryCradleBER;
@@ -11,6 +15,7 @@ import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.tile.MemorySieveBE;
 import net.minecraft.client.Minecraft;
@@ -24,6 +29,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -45,6 +53,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.HEART.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.WATERY_CRADLE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.MEMORY_SIEVE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
+            ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_LARGE.get(), RenderType.translucent());
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();
             BlockColors blockColors = Minecraft.getInstance().getBlockColors();
@@ -79,6 +88,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
         event.registerBlockEntityRenderer(Registration.WATERY_CRADLE_BE.get(), WateryCradleBER::new);
+        event.registerBlockEntityRenderer(Registration.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
     }
 
     @SubscribeEvent
@@ -89,6 +99,19 @@ public class ClientSetup {
     public static boolean isConnectionPresent() {
         return Minecraft.getInstance().getConnection() != null && Minecraft.getInstance().getConnection().getConnection() != null;
     }
+
+    @SubscribeEvent
+    public static void onModelRegistryEvent(ModelRegistryEvent event) {
+        //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
+        //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
+    }
+
+    //@SubscribeEvent
+    //public static void onModelBakeEvent(ModelBakeEvent event) {
+    //    OrphanLoaderRegistry.cacheBlockModel("flask_large");
+    //    OrphanLoaderRegistry.bakeModels(event);
+    //}
+
 
 
 }
