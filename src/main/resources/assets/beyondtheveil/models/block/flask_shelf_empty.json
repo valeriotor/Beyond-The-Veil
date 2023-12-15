@@ -1,0 +1,9 @@
+{
+  "texture_size": [
+    48,
+    48
+  ],
+  "textures": {
+    "particle": "beyondtheveil:block/flask_shelf"
+  }
+}

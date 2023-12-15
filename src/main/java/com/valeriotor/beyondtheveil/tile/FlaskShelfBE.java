@@ -25,6 +25,8 @@ public class FlaskShelfBE extends BlockEntity {
     public static final ModelProperty<List<Flask>> FLASKS_PROPERTY = new ModelProperty<>();
     private final List<Flask> flasks = new ArrayList<>();
 
+    private int test = 0;
+
     public FlaskShelfBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.FLASK_SHELF_BE.get(), pWorldPosition, pBlockState);
     }
@@ -59,6 +61,14 @@ public class FlaskShelfBE extends BlockEntity {
             flaskTag.put(String.valueOf(i), f.toNBT());
             i++;
         }
+    }
+
+
+    public void increaseTest() {
+        test++;
+    }
+    public int testInt() {
+        return test;
     }
 
 

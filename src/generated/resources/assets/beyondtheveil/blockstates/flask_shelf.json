@@ -1,34 +1,139 @@
 {
   "variants": {
-    "center=false,facing=north": {
-      "model": "minecraft:block/air",
+    "facing=north,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
       "y": 180
     },
-    "center=true,facing=north": {
-      "model": "beyondtheveil:block/flask_shelf",
+    "facing=west,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=east,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
       "y": 180
     },
-    "center=false,facing=south": {
-      "model": "minecraft:block/air"
+    "facing=west,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
     },
-    "center=true,facing=south": {
+    "facing=east,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=2,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=2,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=2,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=east,level=2,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=0,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=0,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=0,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=east,level=0,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=1,side=1": {
       "model": "beyondtheveil:block/flask_shelf"
     },
-    "center=false,facing=west": {
-      "model": "minecraft:block/air",
-      "y": 90
+    "facing=south,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf",
+      "y": 180
     },
-    "center=true,facing=west": {
+    "facing=west,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf",
+      "y": 270
+    },
+    "facing=east,level=1,side=1": {
       "model": "beyondtheveil:block/flask_shelf",
       "y": 90
     },
-    "center=false,facing=east": {
-      "model": "minecraft:block/air",
+    "facing=north,level=2,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=2,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=2,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
       "y": 270
     },
-    "center=true,facing=east": {
-      "model": "beyondtheveil:block/flask_shelf",
+    "facing=east,level=2,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
       "y": 270
+    },
+    "facing=east,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=east,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=north,level=2,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=south,level=2,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=2,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=east,level=2,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
     }
   }
 }

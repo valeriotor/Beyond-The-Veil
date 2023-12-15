@@ -241,14 +241,14 @@ public class BTVBlockStates extends BlockStateProvider {
     }
 
     private void registerFlaskShelf() {
-        ExistingModelFile empty = new ExistingModelFile(mcLoc("block/air"), models().existingFileHelper);
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/flask_shelf_empty"), models().existingFileHelper);
         ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper);
         getVariantBuilder(FLASK_SHELF.get())
                 .forAllStatesExcept(state -> {
-                    ModelFile file = state.getValue(FlaskShelfBlock.CENTER) ? base : empty;
+                    ModelFile file = state.getValue(FlaskShelfBlock.SIDE) == 1 && state.getValue(FlaskShelfBlock.LEVEL) == 1 ? base : empty;
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
-                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
     }
