@@ -57,6 +57,8 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
         simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
         simpleBlock(FLASK_LARGE.get(), new ExistingModelFile(modLoc("block/flask_large"), models().existingFileHelper));
+        simpleBlock(FLASK_MEDIUM.get(), new ExistingModelFile(modLoc("block/flask_medium"), models().existingFileHelper));
+        simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));
         //horizontalBlock(FLASK_SHELF.get(), new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper));
 
 

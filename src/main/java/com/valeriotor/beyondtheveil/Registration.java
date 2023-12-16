@@ -6,10 +6,8 @@ import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -111,7 +109,9 @@ public class Registration {
     //public static final RegistryObject<Block> ARENA = BLOCKS.register("arena", () -> new Block(BRICK_PROPERTIES)); // new BlockArena(BlockNames.ARENA);
     //public static final RegistryObject<Block> DEEP_CHEST = BLOCKS.register("deep_chest", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepChest(BlockNames.DEEP_CHEST);
 
-    public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new LargeFlaskBlock(BRICK_PROPERTIES)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.LARGE)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.MEDIUM)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_SMALL = BLOCKS.register("flask_small", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.SMALL)); // TODO GLASS PROPERTIES
 
 
 
@@ -172,6 +172,8 @@ public class Registration {
     //public static final RegistryObject<Item> ARENA_ITEM = fromBlock(ARENA);
     //public static final RegistryObject<Item> DEEP_CHEST_ITEM = fromBlock(DEEP_CHEST);
     public static final RegistryObject<Item> FLASK_LARGE_ITEM = fromBlock(FLASK_LARGE);
+    public static final RegistryObject<Item> FLASK_MEDIUM_ITEM = fromBlock(FLASK_MEDIUM);
+    public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);

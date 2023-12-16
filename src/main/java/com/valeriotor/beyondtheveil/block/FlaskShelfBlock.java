@@ -1,12 +1,14 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -73,12 +75,62 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return getOcclusionShape(state, p_60556_, p_60557_);
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext p_60558_) {
+        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        if (pState.getValue(LEVEL) == 2) {
+            BlockPos centerPos = findCenter(pPos, pState);
+            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+                if (flaskShelfBE.testInt() % 2 == 0) {
+                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+                }
+            }
+        }
+        return baseShape;
+    }
+
+    @Override
+    public VoxelShape getVisualShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        if (pState.getValue(LEVEL) == 2) {
+            BlockPos centerPos = findCenter(pPos, pState);
+            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+                if (flaskShelfBE.testInt() % 2 == 0) {
+                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+                }
+            }
+        }
+        return baseShape;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        if (pState.getValue(LEVEL) == 2) {
+            BlockPos centerPos = findCenter(pPos, pState);
+            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+                if (flaskShelfBE.testInt() % 2 == 0) {
+                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+                }
+            }
+        }
+        return baseShape;
     }
 
     @Override
     public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        if (pState.getValue(LEVEL) == 2) {
+            BlockPos centerPos = findCenter(pPos, pState);
+            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+                if (flaskShelfBE.testInt() % 2 == 0) {
+                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+                }
+            }
+        }
+        return baseShape;
+    }
+
+    public VoxelShape getBaseShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
         VoxelShape returnValue = null;
         if (pState.getValue(LEVEL) == 0) {
             returnValue = switch (pState.getValue(FACING)) {
@@ -105,14 +157,6 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
                 default -> null;
             };
         }
-        if (pState.getValue(LEVEL) == 2) {
-            BlockPos centerPos = findCenter(pPos, pState);
-            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-                if (flaskShelfBE.testInt() % 2 == 0) {
-                    //returnValue = Shapes.or(returnValue, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-                }
-            }
-        }
         return returnValue;
     }
 
@@ -123,6 +167,14 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        BlockPos centerPos = findCenter(pPos, pState);
+        if (!pLevel.isClientSide && pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
+            Item held = pPlayer.getItemInHand(pHand).getItem();
+            if (Block.byItem(held) instanceof FlaskBlock && pHit.getLocation().y() - pPos.getY() == a * 3) {
+                be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit);
+            }
+
+        }
         System.out.println(pHit.getLocation());
         if (pHand == InteractionHand.MAIN_HAND && pLevel.getBlockEntity(pPos) instanceof FlaskShelfBE flaskShelfBE) {
             flaskShelfBE.increaseTest();
