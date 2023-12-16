@@ -2,7 +2,9 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
@@ -31,11 +35,17 @@ public class FlaskShelfBE extends BlockEntity {
 
     public static final ModelProperty<List<Flask>> FLASKS_PROPERTY = new ModelProperty<>();
     public final List<Flask> flasks = new ArrayList<>();
+    public final VoxelShape[][] shapes = new VoxelShape[3][3]; // Shape for each of the 3x3 shelves: [0: bottom, 1: medium, 2: top][0: left, 1: center, 2: right]
 
     private int test = 0;
 
     public FlaskShelfBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.FLASK_SHELF_BE.get(), pWorldPosition, pBlockState);
+        for (int i = 0; i < shapes.length; i++) {
+            for (int j = 0; j < shapes[i].length; j++) {
+                shapes[i][j] = Shapes.empty();
+            }
+        }
     }
 
     @Override
@@ -52,11 +62,13 @@ public class FlaskShelfBE extends BlockEntity {
         for (String key: flasks1.getAllKeys()) {
             flasks.add(new Flask(flasks1.getCompound(key)));
         }
+        computeFlasksShape();
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
+        pTag.putInt("dummy", 0);
         saveClientData(pTag);
     }
 
@@ -78,6 +90,26 @@ public class FlaskShelfBE extends BlockEntity {
         flasks.add(newFlask);
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        computeFlasksShape();
+    }
+
+    private void computeFlasksShape() {
+        BlockState state = this.getBlockState();
+        for (int i = -1; i <= 1; i++) {
+            for (int y = 0; y < 3; y++) {
+                Direction facing = state.getValue(FlaskShelfBlock.FACING);
+                shapes[y][i + 1] = FlaskShelfBlock.getBaseShape(y, i+1, facing);
+                int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
+                int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
+                for (Flask f : flasks) {
+                    if(f.getY() >= worldPosition.getY()+y-1 && f.getY() <= worldPosition.getY()+y) {
+                        shapes[y][i + 1] = Shapes.or(shapes[y][i + 1], f.computeShapeWithOffset(f.getX()-worldPosition.getX()-0.5-x, f.getY()-worldPosition.getY()-y+1, f.getZ()-worldPosition.getZ()-0.5-z));
+                    }
+                }
+                //pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(SIDE, i+1).setValue(LEVEL, y), 3);
+            }
+        }
+        System.out.println("done");
     }
 
 
@@ -164,6 +196,24 @@ public class FlaskShelfBE extends BlockEntity {
 
         public double getZ() {
             return z;
+        }
+
+        private VoxelShape computeShapeWithOffset(double offsetX, double offsetY, double offsetZ) {
+            //double[][] arrays = switch (size) {
+            //    case SMALL -> new double[][] {FlaskBlock.SMALL1, FlaskBlock.SMALL2, FlaskBlock.SMALL3, FlaskBlock.SMALL4, FlaskBlock.SMALL5, FlaskBlock.SMALL6};
+            //    case MEDIUM -> new double[][] {FlaskBlock.MEDIUM1, FlaskBlock.MEDIUM2, FlaskBlock.MEDIUM3, FlaskBlock.MEDIUM4, FlaskBlock.MEDIUM5, FlaskBlock.MEDIUM6};
+            //    case LARGE -> new double[][] {FlaskBlock.LARGE1, FlaskBlock.LARGE2, FlaskBlock.LARGE3, FlaskBlock.LARGE4, FlaskBlock.LARGE5, FlaskBlock.LARGE6};
+            //};
+            double[][] arrays = switch (size) {
+                case SMALL -> new double[][] {FlaskBlock.SMALL_SIMPLE};
+                case MEDIUM -> new double[][] {FlaskBlock.MEDIUM_SIMPLE};
+                case LARGE -> new double[][] {FlaskBlock.LARGE_SIMPLE};
+            };
+            VoxelShape shape = Shapes.empty();
+            for (double[] array : arrays) {
+                shape = Shapes.or(shape, Shapes.box(array[0] + offsetX, array[1] + offsetY, array[2] + offsetZ, array[3] + offsetX, array[4] + offsetY, array[5] + offsetZ));
+            }
+            return shape;
         }
     }
 

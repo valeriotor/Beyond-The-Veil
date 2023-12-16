@@ -76,49 +76,73 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext p_60558_) {
-        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
-        if (pState.getValue(LEVEL) == 2) {
-            BlockPos centerPos = findCenter(pPos, pState);
-            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-                if (flaskShelfBE.testInt() % 2 == 0) {
-                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-                }
-            }
+        VoxelShape baseShape = getBaseShape(pState);
+        BlockPos centerPos = findCenter(pPos, pState);
+        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+            //baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
+            baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
         }
         return baseShape;
+        //if (pState.getValue(LEVEL) == 2) {
+        //    BlockPos centerPos = findCenter(pPos, pState);
+        //    if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+        //        if (flaskShelfBE.testInt() % 2 == 0) {
+        //            //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+        //        }
+        //    }
+        //}
+        //return baseShape;
     }
 
     @Override
     public VoxelShape getVisualShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
-        if (pState.getValue(LEVEL) == 2) {
-            BlockPos centerPos = findCenter(pPos, pState);
-            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-                if (flaskShelfBE.testInt() % 2 == 0) {
-                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-                }
-            }
+        VoxelShape baseShape = getBaseShape(pState);
+        BlockPos centerPos = findCenter(pPos, pState);
+        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+            baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
+            //baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
         }
         return baseShape;
+        //VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        //if (pState.getValue(LEVEL) == 2) {
+        //    BlockPos centerPos = findCenter(pPos, pState);
+        //    if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+        //        if (flaskShelfBE.testInt() % 2 == 0) {
+        //            //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+        //        }
+        //    }
+        //}
+        //return baseShape;
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
-        if (pState.getValue(LEVEL) == 2) {
-            BlockPos centerPos = findCenter(pPos, pState);
-            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-                if (flaskShelfBE.testInt() % 2 == 0) {
-                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-                }
-            }
+        VoxelShape baseShape = getBaseShape(pState);
+        BlockPos centerPos = findCenter(pPos, pState);
+        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+            //baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
+            baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
         }
         return baseShape;
     }
+
+    //@Override
+    //public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    //    VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+    //    if (pState.getValue(LEVEL) == 2) {
+    //        BlockPos centerPos = findCenter(pPos, pState);
+    //        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+    //            if (flaskShelfBE.testInt() % 2 == 0) {
+    //                //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
+    //            }
+    //        }
+    //    }
+    //    return baseShape;
+    //}
 
     @Override
     public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
+        VoxelShape baseShape = getBaseShape(pState);
         if (pState.getValue(LEVEL) == 2) {
             BlockPos centerPos = findCenter(pPos, pState);
             if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
@@ -130,30 +154,34 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
         return baseShape;
     }
 
-    public VoxelShape getBaseShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+    public static VoxelShape getBaseShape(BlockState pState) {
+        return getBaseShape(pState.getValue(LEVEL), pState.getValue(SIDE), pState.getValue(FACING));
+    }
+
+    public static VoxelShape getBaseShape(int level, int side, Direction facing) {
         VoxelShape returnValue = null;
-        if (pState.getValue(LEVEL) == 0) {
-            returnValue = switch (pState.getValue(FACING)) {
+        if (level == 0) {
+            returnValue = switch (facing) {
                 case NORTH -> L0_NORTH;
                 case SOUTH -> L0_SOUTH;
                 case WEST -> L0_WEST;
                 case EAST -> L0_EAST;
                 default -> null;
             };
-        } else if (pState.getValue(LEVEL) == 1) {
-            returnValue = switch (pState.getValue(FACING)) {
-                case NORTH -> pState.getValue(SIDE) == 1 ? L1_NORTH : (pState.getValue(SIDE) == 0 ? L1_NORTH_LEFT : L1_NORTH_RIGHT);
-                case SOUTH -> pState.getValue(SIDE) == 1 ? L1_SOUTH : (pState.getValue(SIDE) == 0 ? L1_SOUTH_LEFT : L1_SOUTH_RIGHT);
-                case WEST -> pState.getValue(SIDE) == 1 ? L1_WEST : (pState.getValue(SIDE) == 0 ? L1_WEST_LEFT : L1_WEST_RIGHT);
-                case EAST -> pState.getValue(SIDE) == 1 ? L1_EAST : (pState.getValue(SIDE) == 0 ? L1_EAST_LEFT : L1_EAST_RIGHT);
+        } else if (level == 1) {
+            returnValue = switch (facing) {
+                case NORTH -> side == 1 ? L1_NORTH : (side == 0 ? L1_NORTH_LEFT : L1_NORTH_RIGHT);
+                case SOUTH -> side == 1 ? L1_SOUTH : (side == 0 ? L1_SOUTH_LEFT : L1_SOUTH_RIGHT);
+                case WEST -> side == 1 ? L1_WEST : (side == 0 ? L1_WEST_LEFT : L1_WEST_RIGHT);
+                case EAST -> side == 1 ? L1_EAST : (side == 0 ? L1_EAST_LEFT : L1_EAST_RIGHT);
                 default -> null;
             };
-        } else if (pState.getValue(LEVEL) == 2) {
-            returnValue = switch (pState.getValue(FACING)) {
-                case NORTH -> pState.getValue(SIDE) == 1 ? L2_NORTH : (pState.getValue(SIDE) == 0 ? L2_NORTH_LEFT : L2_NORTH_RIGHT);
-                case SOUTH -> pState.getValue(SIDE) == 1 ? L2_SOUTH : (pState.getValue(SIDE) == 0 ? L2_SOUTH_LEFT : L2_SOUTH_RIGHT);
-                case WEST -> pState.getValue(SIDE) == 1 ? L2_WEST : (pState.getValue(SIDE) == 0 ? L2_WEST_LEFT : L2_WEST_RIGHT);
-                case EAST -> pState.getValue(SIDE) == 1 ? L2_EAST : (pState.getValue(SIDE) == 0 ? L2_EAST_LEFT : L2_EAST_RIGHT);
+        } else if (level == 2) {
+            returnValue = switch (facing) {
+                case NORTH -> side == 1 ? L2_NORTH : (side == 0 ? L2_NORTH_LEFT : L2_NORTH_RIGHT);
+                case SOUTH -> side == 1 ? L2_SOUTH : (side == 0 ? L2_SOUTH_LEFT : L2_SOUTH_RIGHT);
+                case WEST -> side == 1 ? L2_WEST : (side == 0 ? L2_WEST_LEFT : L2_WEST_RIGHT);
+                case EAST -> side == 1 ? L2_EAST : (side == 0 ? L2_EAST_LEFT : L2_EAST_RIGHT);
                 default -> null;
             };
         }
@@ -172,6 +200,7 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
             Item held = pPlayer.getItemInHand(pHand).getItem();
             if (Block.byItem(held) instanceof FlaskBlock && pHit.getLocation().y() - pPos.getY() == a * 3) {
                 be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit);
+                return InteractionResult.SUCCESS;
             }
 
         }
