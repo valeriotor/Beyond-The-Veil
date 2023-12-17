@@ -3,14 +3,15 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.block.GearBenchBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 
 public class BTVLanguageProvider extends LanguageProvider {
 
-    public BTVLanguageProvider(DataGenerator gen, String locale) {
-        super(gen, References.MODID, locale);
+    public BTVLanguageProvider(PackOutput output, String locale) {
+        super(output, References.MODID, locale);
     }
 
     @Override

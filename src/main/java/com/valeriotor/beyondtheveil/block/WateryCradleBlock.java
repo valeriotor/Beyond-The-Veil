@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.block;
 
-import com.valeriotor.beyondtheveil.tile.MemorySieveBE;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +13,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -25,7 +23,7 @@ public class WateryCradleBlock extends Block implements EntityBlock {
     private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1, 0.0625 * 15, 1);
 
     public WateryCradleBlock(Properties properties) {
-        super(BlockBehaviour.Properties.of(Material.METAL).strength(5.0F, 7.0F).noOcclusion());
+        super(BlockBehaviour.Properties.of().strength(5.0F, 7.0F).noOcclusion());
     }
 
 

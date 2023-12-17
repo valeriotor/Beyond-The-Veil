@@ -50,7 +50,7 @@ public class BloodSkeletonEntity extends Monster {
     @Override
     public void tick() {
         super.tick();
-        if(level.isClientSide()) {
+        if(level().isClientSide()) {
             if (attackAnimation != null) {
                 attackAnimation.update();
                 if (attackAnimation.isDone()) {

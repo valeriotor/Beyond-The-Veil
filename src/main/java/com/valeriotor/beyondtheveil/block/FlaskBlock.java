@@ -87,7 +87,7 @@ public class FlaskBlock extends Block {
     }
 
     public enum FlaskSize {
-        SMALL(100), MEDIUM(350), LARGE(1000);
+        SMALL(100), MEDIUM(250), LARGE(500);
 
         private final int capacity;
 

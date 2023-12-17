@@ -17,14 +17,14 @@ public class BlackjackItem extends Item {
 
 
     public BlackjackItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
             if (pInteractionTarget instanceof Villager villager) {
-                Level l = pInteractionTarget.level;
+                Level l = pInteractionTarget.level();
                 CrawlerEntity crawler = villager.convertTo(Registration.CRAWLER.get(), false);
                 if (crawler != null) {
                     crawler.setData(villager);

@@ -18,11 +18,11 @@ public class DreamHandler {
 
     public static void dream(Player p) {
         DataUtil.clearReminiscences(p);
-        List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level, p.getOnPos(), 1);
+        List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level(), p.getOnPos(), 1);
         //spreaders.sort(Comparator.comparingInt(be -> Dream.REGISTRY.get(be.getStoredMemory()).getPriority()));
         List<FumeSpreaderBE> successes = new ArrayList<>();
         for (FumeSpreaderBE be : spreaders) {
-            if (Dream.REGISTRY.get(be.getStoredMemory()).activate(p, p.level)) {
+            if (Dream.REGISTRY.get(be.getStoredMemory()).activate(p, p.level())) {
                 successes.add(be);
             }
         }
@@ -32,7 +32,7 @@ public class DreamHandler {
             DataUtil.setBooleanOnServerAndSync(p, spreader.getStoredMemory().name() + "Dream", true, false);
             spreader.setStoredMemory(null);
             BlockPos pos = spreader.getBlockPos();
-            p.level.setBlock(pos, p.level.getBlockState(pos).setValue(FumeSpreaderBlock.FULL, false), 3);
+            p.level().setBlock(pos, p.level().getBlockState(pos).setValue(FumeSpreaderBlock.FULL, false), 3);
         }
         DataUtil.syncReminiscences(p);
     }

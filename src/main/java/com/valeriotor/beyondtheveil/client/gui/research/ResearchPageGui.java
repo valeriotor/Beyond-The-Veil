@@ -1,9 +1,8 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
@@ -11,16 +10,15 @@ import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,9 +45,9 @@ public class ResearchPageGui extends Screen {
     public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
 
     public ResearchPageGui(ResearchStatus status) {
-        super(new TranslatableComponent(status.res.getName()));
+        super(Component.translatable(status.res.getName()));
         this.status = status;
-        title = new TranslatableComponent(status.res.getName()).getString();
+        title = Component.translatable(status.res.getName()).getString();
     }
 
     @Override
@@ -87,10 +85,12 @@ public class ResearchPageGui extends Screen {
         if (progress != null) {
             removeWidget(progress);
         }
-        progress = addRenderableWidget(new Button(width / 2 - 60, height / 2 + backgroundHeight * 13 / 54, 120, 20, new TranslatableComponent("gui.research_page.complete"), button -> {
+
+        Button b = Button.builder(Component.translatable("gui.research_page.complete"), button -> {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             init();
-        }));
+        }).bounds(width / 2 - 60, height / 2 + backgroundHeight * 13 / 54, 120, 20).build();
+        progress = addRenderableWidget(b);
         if (!status.canProgressStage(minecraft.player)) {
             progress.visible = false;
             String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
@@ -139,11 +139,12 @@ public class ResearchPageGui extends Screen {
     //}
 
     @Override
-    public void render(PoseStack pPoseStack, int mouseX, int mouseY, float partialTicks) {
-        fill(pPoseStack, 0, 0, width, height, 0xFF000000);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        PoseStack pPoseStack = guiGraphics.pose();
+        guiGraphics.fill(0, 0, width, height, 0xFF000000);
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
-        RenderSystem.setShaderTexture(0, BACKGROUND);
+        //RenderSystem.setShaderTexture(0, BACKGROUND);
 
         pPoseStack.pushPose();
         pPoseStack.translate(this.width / 2, this.height / 2, 0);
@@ -152,52 +153,51 @@ public class ResearchPageGui extends Screen {
         //} else {
 //
         //}
-        blit(pPoseStack, -backgroundWidth / 2, -backgroundHeight / 2, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
-        drawString(pPoseStack, font, String.format("X: %d, Y: %d", width, height), -width/2+10, -height/2+10, 0xFFFFFFFF);
+        guiGraphics.blit(BACKGROUND, -backgroundWidth / 2, -backgroundHeight / 2, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+        guiGraphics.drawString(font, String.format("X: %d, Y: %d", width, height), -width / 2 + 10, -height / 2 + 10, 0xFFFFFFFF);
 
         if (true /*this.shownRecipe == null*/) {
             pPoseStack.pushPose();
             pPoseStack.scale(1.5F, 1.5F, 1);
-            drawCenteredString(pPoseStack, minecraft.font, title, 0, -backgroundHeight * 10 / 54, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
+            guiGraphics.drawCenteredString(minecraft.font, title, 0, -backgroundHeight * 10 / 54, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
             pPoseStack.popPose();
             if (this.pages.size() > this.page * 2) {
                 int i = 0;
                 for (FormattedCharSequence s : this.pages.get(this.page * 2)) {
-                    drawString(pPoseStack, minecraft.font, s, -lineStart, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
+                    guiGraphics.drawString(minecraft.font, s, -lineStart, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
                 }
             }
             if (this.pages.size() > this.page * 2 + 1) {
                 int i = 0;
                 for (FormattedCharSequence s : this.pages.get(this.page * 2 + 1)) {
-                    drawString(pPoseStack, minecraft.font, s, backgroundWidth / 134, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
+                    guiGraphics.drawString(minecraft.font, s, backgroundWidth / 134, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
                 }
             }
             if (!progress.visible) {
                 if (this.reqText != null) {
                     int i = 0;
                     for (String s : this.reqText) {
-                        drawCenteredString(pPoseStack, font, s, 0, backgroundHeight * 13 / 54 + (i++) * 15, 0xFFFE9600);
+                        guiGraphics.drawCenteredString(font, s, 0, backgroundHeight * 13 / 54 + (i++) * 15, 0xFFFE9600);
                     }
                 }
             }
             if (this.pages.size() > 2) {
-                RenderSystem.setShaderTexture(0, ARROW);
                 pPoseStack.pushPose();
                 pPoseStack.translate(178 * backgroundWidth / 670, 131 * backgroundWidth / 670, 0);
                 if (this.page < (this.pages.size() + 1) / 2 - 1) {
                     if (hoveringRightArrow(mouseX, mouseY))
                         pPoseStack.scale(1.5F, 1.5F, 1);
-                    blit(pPoseStack, -16, -16, 0, 0, 32, 32, 32, 32);
+                    guiGraphics.blit(ARROW, -16, -16, 0, 0, 32, 32, 32, 32);
                 }
                 pPoseStack.popPose();
                 pPoseStack.pushPose();
                 RenderSystem.setShaderColor(1, 1, 1, 1);
-                pPoseStack.translate(-178*backgroundWidth/670, 131*backgroundWidth/670, 0);
-                pPoseStack.mulPose(Vector3f.ZP.rotation((float) Math.PI));
+                pPoseStack.translate(-178 * backgroundWidth / 670, 131 * backgroundWidth / 670, 0);
+                pPoseStack.mulPose(Axis.ZP.rotation((float) Math.PI));
                 if (this.page > 0) {
                     if (hoveringLeftArrow(mouseX, mouseY))
                         pPoseStack.scale(1.5F, 1.5F, 1);
-                    blit(pPoseStack, -16, -16, 0, 0, 32, 32, 32, 32);
+                    guiGraphics.blit(ARROW, -16, -16, 0, 0, 32, 32, 32, 32);
                 }
                 pPoseStack.popPose();
             }
@@ -225,7 +225,7 @@ public class ResearchPageGui extends Screen {
         //if(hoveredKey != -1) {
         //    recipes.get(hoveredKey).renderTooltip(this, mouseX + 20, mouseY + 10);
         //}
-        super.render(pPoseStack, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     //@Override

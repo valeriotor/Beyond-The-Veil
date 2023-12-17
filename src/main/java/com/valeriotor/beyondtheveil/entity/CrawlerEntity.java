@@ -53,7 +53,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
 
     public void setData(Villager source) {
         setVillagerData(source.getVillagerData());
-        setGossips(source.getGossips().store(NbtOps.INSTANCE).getValue());
+        setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
         setTradeOffers(source.getOffers().createTag());
         setVillagerXp(source.getVillagerXp());
     }
@@ -78,7 +78,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
         if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
-            if(!level.isClientSide) {
+            if(!level().isClientSide) {
                 ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
                 CompoundTag tag = new CompoundTag();
                 addAdditionalSaveData(tag);
@@ -194,7 +194,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
     @Override
     public void tick() {
         super.tick();
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             boolean crawl = entityData.get(DATA_CRAWLING);
             if (crawl && getCrawling() < 1) {
                 startCrawl = tickCount;
@@ -210,7 +210,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
         @Override
         public void tick() {
             super.tick();
-            if (mob.level.isClientSide) {
+            if (mob.level().isClientSide) {
                 return;
             }
             CrawlerEntity mob = (CrawlerEntity) this.mob;

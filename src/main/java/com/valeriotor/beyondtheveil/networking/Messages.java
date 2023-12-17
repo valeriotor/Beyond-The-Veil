@@ -30,41 +30,41 @@ public class Messages {
         net.messageBuilder(SyncResearchToClientPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SyncResearchToClientPacket::new)
                 .encoder(SyncResearchToClientPacket::toBytes)
-                .consumer(SyncResearchToClientPacket::handle)
+                .consumerNetworkThread(SyncResearchToClientPacket::handle)
                 .add();
         net.messageBuilder(SyncResearchToServerPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(SyncResearchToServerPacket::new)
                 .encoder(SyncResearchToServerPacket::toBytes)
-                .consumer(SyncResearchToServerPacket::handle)
+                .consumerNetworkThread(SyncResearchToServerPacket::handle)
                 .add();
 
         net.messageBuilder(SyncPlayerDataPacket.ToClient.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SyncPlayerDataPacket.ToClient::new)
                 .encoder(SyncPlayerDataPacket.ToClient::toBytes)
-                .consumer(SyncPlayerDataPacket.ToClient::handle)
+                .consumerNetworkThread(SyncPlayerDataPacket.ToClient::handle)
                 .add();
         net.messageBuilder(SyncPlayerDataPacket.ToServer.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(SyncPlayerDataPacket.ToServer::new)
                 .encoder(SyncPlayerDataPacket.ToServer::toBytes)
-                .consumer(SyncPlayerDataPacket.ToServer::handle)
+                .consumerNetworkThread(SyncPlayerDataPacket.ToServer::handle)
                 .add();
 
         net.messageBuilder(SyncAllPlayerDataToClientPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SyncAllPlayerDataToClientPacket::new)
                 .encoder(SyncAllPlayerDataToClientPacket::toBytes)
-                .consumer(SyncAllPlayerDataToClientPacket::handle)
+                .consumerNetworkThread(SyncAllPlayerDataToClientPacket::handle)
                 .add();
 
         net.messageBuilder(GenericToServerPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(GenericToServerPacket::new)
                 .encoder(GenericToServerPacket::toBytes)
-                .consumer(GenericToServerPacket::handle)
+                .consumerNetworkThread(GenericToServerPacket::handle)
                 .add();
 
         net.messageBuilder(GenericToClientPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(GenericToClientPacket::new)
                 .encoder(GenericToClientPacket::toBytes)
-                .consumer(GenericToClientPacket::handle)
+                .consumerNetworkThread(GenericToClientPacket::handle)
                 .add();
 
     }

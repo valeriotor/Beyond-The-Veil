@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "side": "beyondtheveil:block/damp_log",
-    "end": "beyondtheveil:block/damp_log_top"
+    "end": "beyondtheveil:block/damp_log_top",
+    "side": "beyondtheveil:block/damp_log"
   }
 }

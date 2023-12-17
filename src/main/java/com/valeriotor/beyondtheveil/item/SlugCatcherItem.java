@@ -30,7 +30,7 @@ import net.minecraft.world.phys.Vec3;
 public class SlugCatcherItem extends Item {
 
     public SlugCatcherItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class SlugCatcherItem extends Item {
             ClipContext context = new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null);
             HitResult r = level.clip(context);
             Vec3 hit = r.getLocation();
-            BlockPos hitPos = new BlockPos(hit);
+            BlockPos hitPos = BlockPos.containing(hit);
             if (level.getBlockState(hitPos) == Blocks.WATER.defaultBlockState()) {
                 for (int i = -6; i <= 6; i++) {
                     for (int j = -6; j <= 6; j++) {

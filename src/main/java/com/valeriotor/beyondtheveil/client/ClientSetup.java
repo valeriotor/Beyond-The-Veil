@@ -2,36 +2,24 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
-import com.valeriotor.beyondtheveil.client.model.loader.FlaskModelLoader;
-import com.valeriotor.beyondtheveil.client.model.loader.FlaskShelfModelLoader;
-import com.valeriotor.beyondtheveil.client.model.loader.OrphanLoaderRegistry;
 import com.valeriotor.beyondtheveil.client.render.blockentity.FlaskShelfBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.MemorySieveBER;
 import com.valeriotor.beyondtheveil.client.render.blockentity.WateryCradleBER;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
-import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
-import com.valeriotor.beyondtheveil.tile.HeartBE;
-import com.valeriotor.beyondtheveil.tile.MemorySieveBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.Material;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -62,9 +50,14 @@ public class ClientSetup {
             blockColors.register((pState, pLevel, pPos, pTintIndex) -> 0x287082, Registration.MEMORY_SIEVE.get());
             ItemColors itemColors = Minecraft.getInstance().getItemColors();
             itemColors.register(new MemoryPhialItem.MemoryPhialColor(), Registration.MEMORY_PHIAL.get());
-            ClientRegistry.registerKeyBinding(KeyBindings.reminisce);
         });
 
+    }
+
+
+    @SubscribeEvent
+    public static void onRegisterKeybindings(RegisterKeyMappingsEvent event) {
+        event.register(KeyBindings.reminisce);
     }
 
 
@@ -102,11 +95,11 @@ public class ClientSetup {
         return Minecraft.getInstance().getConnection() != null && Minecraft.getInstance().getConnection().getConnection() != null;
     }
 
-    @SubscribeEvent
-    public static void onModelRegistryEvent(ModelRegistryEvent event) {
-        //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
-        //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
-    }
+    //@SubscribeEvent
+    //public static void onModelRegistryEvent(ModelRegistryEvent event) {
+    //    //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
+    //    //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
+    //}
 
     //@SubscribeEvent
     //public static void onModelBakeEvent(ModelBakeEvent event) {

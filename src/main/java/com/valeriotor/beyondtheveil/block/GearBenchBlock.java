@@ -5,7 +5,6 @@ import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -76,7 +75,7 @@ public class GearBenchBlock extends Block implements EntityBlock {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
-                        return new TranslatableComponent(GUI_GEAR_BENCH);
+                        return Component.translatable(GUI_GEAR_BENCH);
                     }
 
                     @Nullable
@@ -85,7 +84,7 @@ public class GearBenchBlock extends Block implements EntityBlock {
                         return new GearBenchContainer(pContainerId, pPos, pPlayerInventory, player);
                     }
                 };
-                NetworkHooks.openGui((ServerPlayer) pPlayer, containerProvider, be.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, containerProvider, be.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

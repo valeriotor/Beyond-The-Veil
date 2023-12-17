@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,22 +21,21 @@ public class GearBenchGui extends AbstractContainerScreen<GearBenchContainer> {
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(pPoseStack);
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+    public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.renderTooltip(guiGraphics, pMouseX, pMouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int pMouseX, int pMouseY) {
 
     }
 
     @Override
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         int relX = (this.width - this.imageWidth) / 2;
         int relY = this.height / 2 - 116;
-        this.blit(pPoseStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

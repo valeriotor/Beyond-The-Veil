@@ -5,7 +5,6 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,7 +16,7 @@ import java.util.List;
 public class MemoryPhialItem extends Item {
 
     public MemoryPhialItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(64));
+        super(new Item.Properties().stacksTo(64));
     }
 
     @Override
@@ -25,7 +24,7 @@ public class MemoryPhialItem extends Item {
         CompoundTag tag = pStack.getOrCreateTag();
         Memory m = Memory.getMemoryFromDataName(tag.getString("memory"));
 
-        pTooltipComponents.add(m == null ? new TranslatableComponent("tooltip.memory_phial.empty") : new TranslatableComponent("tooltip.memory_phial.stored", new TranslatableComponent(m.getLocalizationKey())));
+        pTooltipComponents.add(m == null ? Component.translatable("tooltip.memory_phial.empty") : Component.translatable("tooltip.memory_phial.stored", Component.translatable(m.getLocalizationKey())));
     }
 
     public static class MemoryPhialColor implements ItemColor {

@@ -31,12 +31,12 @@ public class CapabilityEvents {
 
     @SubscribeEvent
     public static void logInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        syncCapabilities(event.getPlayer());
+        syncCapabilities(event.getEntity());
     }
 
     @SubscribeEvent
     public static void changeDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
-        syncCapabilities(event.getPlayer());
+        syncCapabilities(event.getEntity());
     }
 
     public static void syncCapabilities(Player p) {
@@ -44,7 +44,7 @@ public class CapabilityEvents {
     }
 
     public static void syncCapabilities(Player p, boolean playerData, boolean researchData) {
-        if (p != null && !p.level.isClientSide) {
+        if (p != null && !p.level().isClientSide) {
             if(playerData) {
                 p.getCapability(PLAYER_DATA).resolve().ifPresent(data -> {
                     CompoundTag dataTag = new CompoundTag();
@@ -71,7 +71,7 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "player_data"), new PlayerDataProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "research_data"), new ResearchProvider());
             }
-            if (event.getObject().level.isClientSide() && ClientSetup.isConnectionPresent()) {
+            if (event.getObject().level().isClientSide() && ClientSetup.isConnectionPresent()) {
                 GenericToServerPacket message = new GenericToServerPacket(GenericToServerPacket.MessageType.ASK_DATA_SYNC);
                 Messages.sendToServer(message);
             }
@@ -82,14 +82,14 @@ public class CapabilityEvents {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().reviveCaps();
         LazyOptional<PlayerData> capability = event.getOriginal().getCapability(PLAYER_DATA);
-        LazyOptional<PlayerData> capability2 = event.getPlayer().getCapability(PLAYER_DATA);
+        LazyOptional<PlayerData> capability2 = event.getEntity().getCapability(PLAYER_DATA);
         event.getOriginal().getCapability(PLAYER_DATA).ifPresent(oldData -> {
-            event.getPlayer().getCapability(PLAYER_DATA).ifPresent(oldData::copyToNewStore);
+            event.getEntity().getCapability(PLAYER_DATA).ifPresent(oldData::copyToNewStore);
         });
         boolean b = capability.isPresent();
         boolean b2 = capability2.isPresent();
         event.getOriginal().getCapability(RESEARCH).ifPresent(oldData -> {
-            event.getPlayer().getCapability(RESEARCH).ifPresent(oldData::copyToNewStore);
+            event.getEntity().getCapability(RESEARCH).ifPresent(oldData::copyToNewStore);
         });
         event.getOriginal().invalidateCaps();
     }

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -9,8 +10,8 @@ import static com.valeriotor.beyondtheveil.Registration.*;
 
 public class BTVItemModels extends ItemModelProvider {
 
-    public BTVItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, References.MODID, existingFileHelper);
+    public BTVItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, References.MODID, existingFileHelper);
     }
 
     @Override

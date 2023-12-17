@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.sounds.SoundEvent;
@@ -58,7 +59,7 @@ public class NautilusEntity extends Entity {
     }
 
     protected void doPlayerRide(Player pPlayer) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             pPlayer.setYRot(this.getYRot());
             pPlayer.setXRot(this.getXRot());
             pPlayer.startRiding(this);
@@ -83,8 +84,8 @@ public class NautilusEntity extends Entity {
 
     @Override
     @Nullable
-    public Entity getControllingPassenger() {
-        return this.getFirstPassenger();
+    public LivingEntity getControllingPassenger() {
+        return this.getFirstPassenger() instanceof LivingEntity le ? le : null;
     }
 
     @Override
@@ -94,7 +95,7 @@ public class NautilusEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this);
     }
 
@@ -167,7 +168,7 @@ public class NautilusEntity extends Entity {
         if (this.isControlledByLocalInstance()) {
 
             this.floatBoat();
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 this.controlBoat();
                 //this.level.sendPacketToServer(new ServerboundPaddleBoatPacket(this.getPaddleState(0), this.getPaddleState(1)));
             }
@@ -185,7 +186,7 @@ public class NautilusEntity extends Entity {
     private void tickLerp() {
         if (this.isControlledByLocalInstance()) {
             this.lerpSteps = 0;
-            this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
+            // TODO check this from 1.20.1 port this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
         }
 
         if (this.lerpSteps > 0) {
@@ -253,7 +254,7 @@ public class NautilusEntity extends Entity {
     }
 
 
-    public void positionRider(Entity pPassenger) {
+    public void positionRider(Entity pPassenger, Entity.MoveFunction pCallback) {
         if (this.hasPassenger(pPassenger)) {
             float f = 0.0F;
             float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());

@@ -21,8 +21,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -144,13 +142,13 @@ public class FlaskShelfBE extends BlockEntity {
         load(pkt.getTag());
     }
 
-    @Nonnull
-    @Override
-    public IModelData getModelData() {
-        return new ModelDataMap.Builder()
-                .withInitial(FLASKS_PROPERTY, flasks)
-                .build();
-    }
+    //@Nonnull
+    //@Override
+    //public IModelData getModelData() {
+    //    return new ModelDataMap.Builder()
+    //            .withInitial(FLASKS_PROPERTY, flasks)
+    //            .build();
+    //}
 
 
     public class Flask {

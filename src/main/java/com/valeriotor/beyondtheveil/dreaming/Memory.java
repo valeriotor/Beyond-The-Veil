@@ -6,7 +6,8 @@ import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -85,12 +86,12 @@ public enum Memory {
             }
             if (sendMessage) {
                 //TODO BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(GenericMessageKey.MEMORY_ENTRY, getDataName()), (ServerPlayer) p);
-                p.sendMessage(new TranslatableComponent("memory.unlock.message", getTranslationComponent()), p.getUUID());
+                p.sendSystemMessage(Component.translatable("memory.unlock.message", getTranslationComponent()));
                 for (Entry<String, ResearchStatus> entry : ResearchUtil.getResearches(p).entrySet()) {
                     for (Research.SubResearch addendum : entry.getValue().res.getAddenda()) {
                         for (String req : addendum.getRequirements()) {
                             if (req.equals(dataName)) {
-                                p.sendMessage(new TranslatableComponent("memory.unlock.addenda", new TranslatableComponent(entry.getValue().res.getName())), p.getUUID());
+                                p.sendSystemMessage(Component.translatable("memory.unlock.addenda", Component.translatable(entry.getValue().res.getName())));
                                 return;
                             }
                         }
@@ -112,8 +113,8 @@ public enum Memory {
         return "memory.".concat(this.name().toLowerCase().concat(".name"));
     }
 
-    public TranslatableComponent getTranslationComponent() {
-        return new TranslatableComponent(getLocalizationKey());
+    public MutableComponent getTranslationComponent() {
+        return Component.translatable(getLocalizationKey());
     }
 
     public static Memory getMemoryFromDataName(String key) {

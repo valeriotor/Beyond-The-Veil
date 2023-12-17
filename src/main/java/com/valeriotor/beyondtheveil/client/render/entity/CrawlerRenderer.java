@@ -21,9 +21,9 @@ public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
 
     public CrawlerRenderer(EntityRendererProvider.Context context) {
         super(context, new CrawlerModel(context.bakeLayer(CrawlerModel.LAYER_LOCATION)), 1F);
-        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
         this.addLayer(new VillagerProfessionLayer<>(this, context.getResourceManager(), "villager"));
-        this.addLayer(new CrossedArmsItemLayer<>(this));
+        this.addLayer(new CrossedArmsItemLayer<>(this, context.getItemInHandRenderer()));
     }
 
     @Override

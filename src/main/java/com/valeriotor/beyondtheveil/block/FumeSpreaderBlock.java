@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -102,7 +103,7 @@ public class FumeSpreaderBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pos, Random pRandom) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pos, RandomSource pRandom) {
         BlockEntity entity = pLevel.getBlockEntity(pos);
         if (entity instanceof FumeSpreaderBE be) {
             Memory memory = be.getStoredMemory();

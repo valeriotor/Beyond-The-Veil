@@ -1,17 +1,9 @@
 package com.valeriotor.beyondtheveil.client.reminiscence;
 
-import com.google.common.collect.Comparators;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
-import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.KeyBindings;
-import com.valeriotor.beyondtheveil.client.event.InputEvents;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
-import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -21,15 +13,12 @@ import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.ScreenOpenEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
+import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -41,20 +30,20 @@ public abstract class ReminiscenceClient {
     private static int selectedReminiscence = -1;
     private static final List<ReminiscenceClient> reminiscences = new ArrayList<>();
 
-    protected abstract void render(RenderGameOverlayEvent event);
+    protected abstract void render(RenderGuiOverlayEvent event);
     protected void tick() {}
     protected void reset() {}
-    protected void mouseScroll(InputEvent.MouseScrollEvent event) {}
+    protected void mouseScroll(InputEvent.MouseScrollingEvent event) {}
 
-    public static void renderReminiscence(RenderGameOverlayEvent event) {
+    public static void renderReminiscence(RenderGuiOverlayEvent  event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             if (reminisceTimePressed > 0) {
-                PoseStack poseStack = event.getMatrixStack();
+                PoseStack poseStack = event.getGuiGraphics().pose();
                 poseStack.pushPose();
                 Matrix4f matrix4f = poseStack.last().pose();
                 Window window = Minecraft.getInstance().getWindow();
-                int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTicks()) / 40, 2) * 255);
+                int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTick()) / 40, 2) * 255);
 
                 RenderEvents.innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), alpha << 24);
 
@@ -92,7 +81,7 @@ public abstract class ReminiscenceClient {
         }
     }
 
-    public static void keyInputEvent(InputEvent.KeyInputEvent event) {
+    public static void keyInputEvent(InputEvent.Key event) {
         if(event.getAction() == GLFW.GLFW_PRESS && reminisceTimePressed >= 20) {
             if ((event.getKey() == GLFW.GLFW_KEY_ESCAPE || event.getKey() == Minecraft.getInstance().options.keyInventory.getKey().getValue())) {
                 reminisceTimePressed = 19;
@@ -109,13 +98,13 @@ public abstract class ReminiscenceClient {
         }
     }
 
-    public static void mouseScrollEvent(InputEvent.MouseScrollEvent event) {
+    public static void mouseScrollEvent(InputEvent.MouseScrollingEvent event) {
         if (reminiscences.size() > 0) {
             reminiscences.get(selectedReminiscence).mouseScroll(event);
         }
     }
 
-    public static void screenOpenEvent(ScreenOpenEvent event) {
+    public static void screenOpenEvent(ScreenEvent.Opening event) {
         if (preventScreenOpen && event.getScreen() != null) {
             event.setCanceled(true);
             preventScreenOpen = false;

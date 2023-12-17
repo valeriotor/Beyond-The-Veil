@@ -30,7 +30,7 @@ public class CoralStaffItem extends Item {
 
 
     public CoralStaffItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override
@@ -38,14 +38,14 @@ public class CoralStaffItem extends Item {
         if (!(entity instanceof LivingEntity)) {
             return false;
         }
-        if (!player.level.isClientSide()) {
+        if (!player.level().isClientSide()) {
             Vec3 pos = new Vec3(entity.getX(), entity.getY(), entity.getZ());
-            List<Mob> undeads = player.level.getEntities(EntityTypeTest.forClass(Mob.class), AABB.ofSize(pos, 64, 64, 64), e -> e.getMobType() == MobType.UNDEAD);
+            List<Mob> undeads = player.level().getEntities(EntityTypeTest.forClass(Mob.class), AABB.ofSize(pos, 64, 64, 64), e -> e.getMobType() == MobType.UNDEAD);
             for (Mob undead : undeads) {
                 undead.setTarget(((LivingEntity) entity));
                 // but not IPlayerGuardian mobs belonging to other players
             }
-            ((ServerLevel)player.level).getChunkSource().broadcastAndSend(player, new ClientboundAnimatePacket(entity, 5));
+            ((ServerLevel)player.level()).getChunkSource().broadcastAndSend(player, new ClientboundAnimatePacket(entity, 5));
         }
         return true;
     }

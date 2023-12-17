@@ -3,7 +3,7 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.research.ResearchConnection;
@@ -19,11 +19,12 @@ import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
@@ -68,7 +69,7 @@ public class NecronomiconGui extends Screen {
     private int firstBookmarkMadeCounter = 0;
 
     public NecronomiconGui() {
-        super(new TranslatableComponent("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
+        super(Component.translatable("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
         Map<String, ResearchStatus> map = ResearchUtil.getResearches(Minecraft.getInstance().player);
         PlayerData data = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
         this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
@@ -107,7 +108,7 @@ public class NecronomiconGui extends Screen {
     @Override
     public void init() {
         stars.clear();
-        Random r = minecraft.player.getRandom();
+        RandomSource r = minecraft.player.getRandom();
         int a = 100 + r.nextInt(50);
         for (int i = 0; i < a; i++) {
             stars.add(new Point(r.nextInt(this.width), r.nextInt(this.height)));
@@ -127,36 +128,36 @@ public class NecronomiconGui extends Screen {
     };
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-
+    public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        PoseStack pPoseStack = guiGraphics.pose();
         if (highlightedMarkedResearch != null && counter - highlightCounter < 10) {
             float magnitude = (float) Math.log10((1 + pPartialTick + counter - highlightCounter));
             topX = (int) ((highlightedMarkedResearch.getX()*15*factor - width / 2 - highlightOriginX) * magnitude) + highlightOriginX;
             topY = (int) ((highlightedMarkedResearch.getY()*15*factor - height / 2 - highlightOriginY) * magnitude) + highlightOriginY;
         }
 
-        fill(pPoseStack, 0, 0, width, height, 0xFF000000);
-        for (ResearchConnection rc : connections)
-            this.drawConnection(pPoseStack, rc, pPartialTick);
-        for (Point p : stars) {
-            fill(pPoseStack, p.x, p.y, p.x + 1, p.y + 1, 0xFFFFFFFF);
-        }
-        RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
-        RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
-        for (Research r : clickables) this.drawResearchBackground(r, pPoseStack, pPartialTick);
-        RenderSystem.setShaderColor(0.25F, 0.25F, 0.25F, 1);
-        for (Research r : visibles) this.drawResearchBackground(r, pPoseStack, pPartialTick);
-        float coloring = 0.52F + (float) (Math.sin((this.counter + pPartialTick) / 30 * 2 * Math.PI) / 4);
-        RenderSystem.setShaderColor(coloring, coloring, coloring, 1);
-        for (Research r : newClickables) this.drawResearchBackground(r, pPoseStack, pPartialTick);
-        for (Research r : clickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
-        for (Research r : visibles) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
-        for (Research r : newClickables) this.drawResearch(pPoseStack, r, pMouseX, pMouseY);
-        drawBookmarks(pPoseStack, pMouseX, pMouseY, pPartialTick);
-        drawEye(pPoseStack, pPartialTick, pMouseX, pMouseY);
 
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+        guiGraphics.fill(0, 0, width, height, 0xFF000000);
+        for (ResearchConnection rc : connections)
+            this.drawConnection(guiGraphics, rc, pPartialTick);
+        for (Point p : stars) {
+            guiGraphics.fill(p.x, p.y, p.x + 1, p.y + 1, 0xFFFFFFFF);
+        }
+        guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
+        for (Research r : clickables) this.drawResearchBackground(r, guiGraphics, pPartialTick);
+        guiGraphics.setColor(0.25F, 0.25F, 0.25F, 1);
+        for (Research r : visibles) this.drawResearchBackground(r, guiGraphics, pPartialTick);
+        float coloring = 0.52F + (float) (Math.sin((this.counter + pPartialTick) / 30 * 2 * Math.PI) / 4);
+        guiGraphics.setColor(coloring, coloring, coloring, 1);
+        for (Research r : newClickables) this.drawResearchBackground(r, guiGraphics, pPartialTick);
+        for (Research r : clickables) this.drawResearch(guiGraphics, r, pMouseX, pMouseY);
+        for (Research r : visibles) this.drawResearch(guiGraphics, r, pMouseX, pMouseY);
+        for (Research r : newClickables) this.drawResearch(guiGraphics, r, pMouseX, pMouseY);
+        drawBookmarks(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        drawEye(guiGraphics, pPartialTick, pMouseX, pMouseY);
+
+        super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        //super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 
     @Override
@@ -192,22 +193,22 @@ public class NecronomiconGui extends Screen {
         }
     }
 
-    private void drawBookmarks(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    private void drawBookmarks(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         Research hovered = getHoveredBookmark(mouseX, mouseY);
         if (firstBookmarkMadeCounter > 0) {
-            drawString(poseStack, minecraft.font, new TranslatableComponent("gui.necronomicon.bookmarkmade"), 2, 25, 0xFFFFFF | ((0xFF * Math.min(20, firstBookmarkMadeCounter) / 20) << 24));
+            guiGraphics.drawString(minecraft.font, Component.translatable("gui.necronomicon.bookmarkmade"), 2, 25, 0xFFFFFF | ((0xFF * Math.min(20, firstBookmarkMadeCounter) / 20) << 24));
         }
-        poseStack.translate(0,0,120);
+        poseStack.translate(0, 0, 120);
         RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, BOOKMARK);
+        //RenderSystem.setShaderTexture(0, BOOKMARK);
         int y = 50;
         for (Research res : bookmarks) {
             int x = res == hovered ? 0 : -65;
-            blit(poseStack, x, y, 0, 0, 80, 20, 80, 20);
-            if(x == 0) {
-                drawString(poseStack, minecraft.font, new TranslatableComponent(res.getName()), x + 2, y + 6, 0xFFAAE2E2);
-                RenderSystem.setShaderTexture(0, BOOKMARK);
+            guiGraphics.blit(BOOKMARK, x, y, 0, 0, 80, 20, 80, 20);
+            if (x == 0) {
+                guiGraphics.drawString(minecraft.font, Component.translatable(res.getName()), x + 2, y + 6, 0xFFAAE2E2);
                 RenderSystem.enableBlend();
             }
             y += 24;
@@ -216,49 +217,47 @@ public class NecronomiconGui extends Screen {
         poseStack.popPose();
     }
 
-    private void drawResearch(PoseStack pPoseStack, Research res, int mouseX, int mouseY) {
+    private void drawResearch(GuiGraphics guiGraphics, Research res, int mouseX, int mouseY) {
+        PoseStack poseStack = guiGraphics.pose();
         int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
         if (resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {
             ItemStack[] icons = res.getIconStacks();
-            if (icons.length > 0)
-                itemRenderer.renderGuiItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
+            if (icons.length > 0) {
+                guiGraphics.setColor(1, 1, 1,1);
+                guiGraphics.renderItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
+            }
             if (updated.contains(res)) {
-                RenderSystem.setShaderTexture(0, RESEARCH_UPDATED_MARKER);
-                blit(pPoseStack, resX - topX + 4, resY - topY - 12, 0, 0, 24, 24, 24, 24);
+                guiGraphics.blit(RESEARCH_UPDATED_MARKER, resX - topX + 4, resY - topY - 12, 0, 0, 24, 24, 24, 24);
             }
             if (mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
                 //RenderSystem.depthFunc(3);
-                renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), mouseX, mouseY);
-                if(showBookmarkHint) {
+                guiGraphics.renderTooltip(minecraft.font, Component.translatable(res.getName()), mouseX, mouseY);
+                if (showBookmarkHint) {
                     RenderSystem.enableBlend();
-                    RenderSystem.setShaderTexture(0, MOUSE_RIGHT_CLICK);
-                    blit(pPoseStack, mouseX + 5, mouseY + 10, 0, 0, 32, 32, 32, 32);
+                    guiGraphics.blit(MOUSE_RIGHT_CLICK, mouseX + 5, mouseY + 10, 0, 0, 32, 32, 32, 32);
                     RenderSystem.disableBlend();
                 }
             }
         }
     }
 
-    private void drawResearchBackground(Research res, PoseStack pPoseStack, float partialTicks) {
+    private void drawResearchBackground(Research res, GuiGraphics guiGraphics, float partialTicks) {
+        PoseStack pPoseStack = guiGraphics.pose();
         int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
         if (resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {
             if (res != highlightedMarkedResearch || counter - highlightCounter > 10) {
-                blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                guiGraphics.blit(RESEARCH_BACKGROUND, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
                 if (res == highlightedMarkedResearch) {
-                    RenderSystem.setShaderTexture(0, RESEARCH_HIGHLIGHT);
                     RenderSystem.enableBlend();
-                    int increase = (int) ((partialTicks+counter- highlightCounter -10)*3);
-                    RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, Math.max(0, Math.min(1, (highlightCounter + 31 - counter - partialTicks) / 11F)));
-                    blit(pPoseStack, resX - topX - 4 - increase, resY - topY - 4 - increase, 0, 0, 24+increase*2, 24+increase*2, 24+increase*2, 24+increase*2);
-                    RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
-                    RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
+                    int increase = (int) ((partialTicks + counter - highlightCounter - 10) * 3);
+                    guiGraphics.setColor(0.8F, 0.8F, 0.8F, Math.max(0, Math.min(1, (highlightCounter + 31 - counter - partialTicks) / 11F)));
+                    guiGraphics.blit(RESEARCH_HIGHLIGHT, resX - topX - 4 - increase, resY - topY - 4 - increase, 0, 0, 24 + increase * 2, 24 + increase * 2, 24 + increase * 2, 24 + increase * 2);
+                    guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
                 }
             } else {
-                RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND_WHITE);
-                RenderSystem.setShaderColor((partialTicks+counter- highlightCounter)/20F+0.5F, (partialTicks+counter- highlightCounter)/20F+0.5F, (partialTicks+counter- highlightCounter)/20F+0.5F, 1);
-                blit(pPoseStack, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
-                RenderSystem.setShaderTexture(0, RESEARCH_BACKGROUND);
-                RenderSystem.setShaderColor(0.8F, 0.8F, 0.8F, 1);
+                guiGraphics.setColor((partialTicks + counter - highlightCounter) / 20F + 0.5F, (partialTicks + counter - highlightCounter) / 20F + 0.5F, (partialTicks + counter - highlightCounter) / 20F + 0.5F, 1);
+                guiGraphics.blit(RESEARCH_BACKGROUND_WHITE, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
 
             }
             //drawModalRectWithCustomSizedTexture(resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
@@ -267,7 +266,8 @@ public class NecronomiconGui extends Screen {
 
     }
 
-    private void drawConnection(PoseStack pPoseStack, ResearchConnection rc, float partialTicks) {
+    private void drawConnection(GuiGraphics guiGraphics, ResearchConnection rc, float partialTicks) {
+        PoseStack pPoseStack = guiGraphics.pose();
         if (rc.shouldRender(topX, topY, width, height)) {
             Point left = rc.getLeftPoint(), right = rc.getRightPoint();
             double dist = left.distance(right) * 15 * factor;
@@ -275,18 +275,20 @@ public class NecronomiconGui extends Screen {
             pPoseStack.pushPose();
             double phi = Math.asin((right.y - left.y) * 15 * factor / dist);
             pPoseStack.translate(lx - topX + 8, ly - topY + 8, 0);
-            pPoseStack.mulPose(Vector3f.XP.rotation((float) (phi * 180 / Math.PI)));
+
+            pPoseStack.mulPose(Axis.XP.rotation((float) (phi * 180 / Math.PI)));
             for (int i = 0; i < dist; i++) {
                 int signum = (int) Math.signum(counter % 80 - 40);
                 double amplifier = 15 * (signum * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
                 int y = (int) (amplifier * Math.sin(i * Math.PI / dist));
-                fill(pPoseStack, i, y, i + 1, y + 1, connectionColor);
+                guiGraphics.fill(i, y, i + 1, y + 1, connectionColor);
             }
             pPoseStack.popPose();
         }
     }
 
-    private void drawEye(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+    private void drawEye(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        PoseStack poseStack = guiGraphics.pose();
         if (!updated.isEmpty()) {
 
             int counterMod32 = counter & 31;
@@ -299,12 +301,10 @@ public class NecronomiconGui extends Screen {
                 poseStack.scale(1.1F, 1.1F, 0);
             }
 
-            RenderSystem.setShaderTexture(0, EYE);
-            RenderSystem.setShaderColor(1, 1, 1, 1);
+            guiGraphics.setColor(1, 1, 1, 1);
             RenderSystem.enableBlend();
-            blit(poseStack, -64, -64, 0, 0, 128, 128, 128, 128);
-            RenderSystem.setShaderTexture(0, EYE_PUPIL);
-            blit(poseStack, -64 + pupilX, -64 + pupilY, 0, 0, 128, 128, 128, 128);
+            guiGraphics.blit(EYE, -64, -64, 0, 0, 128, 128, 128, 128);
+            guiGraphics.blit(EYE_PUPIL, -64 + pupilX, -64 + pupilY, 0, 0, 128, 128, 128, 128);
             poseStack.popPose();
         }
     }

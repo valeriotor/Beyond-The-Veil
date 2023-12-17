@@ -1,26 +1,23 @@
 package com.valeriotor.beyondtheveil.container;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.Nullable;
 
 public class GearBenchContainer extends AbstractContainerMenu {
 
@@ -36,13 +33,13 @@ public class GearBenchContainer extends AbstractContainerMenu {
         //this.addSlot(new SlotGearBenchOutput(gb.output, gb, 0, 138, 24));
 
         if (blockEntity != null) {
-            blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 for (int i = 0; i < h.getSlots(); i++) {
                     addSlot(new SlotItemHandler(h, i, 8 + 18 * (i % 4), -2 + 18 * (i / 4)));
                 }
             });
         }
-        blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h ->
+        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(h ->
                 addSlot(new GearBenchOutputSlot(h, 0, 138, 24, blockEntity)));
 
         final int PLAYER_INVENTORY_XPOS = 8;
@@ -137,7 +134,7 @@ public class GearBenchContainer extends AbstractContainerMenu {
 
         @Override
         public void onTake(Player pPlayer, ItemStack pStack) {
-            LazyOptional<IItemHandler> lazyCap = benchBE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+            LazyOptional<IItemHandler> lazyCap = benchBE.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP);
             if (lazyCap.isPresent()) {
                 IItemHandler cap = lazyCap.orElse(null);
                 for (int i = 0; i < 16; i++) {

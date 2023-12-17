@@ -1,21 +1,24 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 
 public class BTVBlockTags extends BlockTagsProvider {
 
-    public BTVBlockTags(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, References.MODID, helper);
+    public BTVBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+        super(output, lookupProvider, References.MODID, helper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider pProvider) {
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(DAMP_WOOD.get())
                 .add(DAMP_LOG.get())

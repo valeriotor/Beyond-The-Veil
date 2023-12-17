@@ -1,28 +1,30 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.*;
-import com.valeriotor.beyondtheveil.client.model.loader.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
-import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 import static net.minecraft.data.models.model.ModelLocationUtils.getModelLocation;
 
 public class BTVBlockStates extends BlockStateProvider {
 
-    public BTVBlockStates(DataGenerator gen, ExistingFileHelper helper) {
-        super(gen, References.MODID, helper);
+    public BTVBlockStates(PackOutput output, ExistingFileHelper helper) {
+        super(output, References.MODID, helper);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class BTVBlockStates extends BlockStateProvider {
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
-        slabBlock(block, models().slab(block.getRegistryName().getPath(), side, top, top), models().slabTop(block.getRegistryName().getPath() + "_top", side, top, top), models().orientable(block.getRegistryName().getPath() + "_double", side, side, top));
+        slabBlock(block, models().slab(ForgeRegistries.BLOCKS.getKey(block).getPath(), side, top, top), models().slabTop(ForgeRegistries.BLOCKS.getKey(block).getPath() + "_top", side, top, top), models().orientable(ForgeRegistries.BLOCKS.getKey(block).getPath() + "_double", side, side, top));
 
     }
 
@@ -144,24 +146,26 @@ public class BTVBlockStates extends BlockStateProvider {
 
         BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/fume_spreader1"), models().existingFileHelper);
         parent.parent(fume_spreader);
+        parent.renderType("translucent");
         BlockModelBuilder incense_parent = new BlockModelBuilder(modLoc("block/fume_spreader_incense1"), models().existingFileHelper);
         incense_parent.parent(incense_filling);
+        incense_parent.renderType("solid");
 
         //builder.part().modelFile(incense_filling).addModel().condition(FumeSpreaderBlock.FULL, true);
         //builder.part().modelFile(fume_spreader).addModel();
         BlockModelBuilder fumeSpreaderFullModel = models().getBuilder("beyondtheveil:block/fume_spreader_full")
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", modLoc("block/fume_spreader"))
-                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .submodel(RenderType.solid(), incense_parent)
-                        .submodel(RenderType.translucent(), parent))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/fume_spreader1", incense_parent)
+                        .child("block/fume_spreader_incense1", parent))
                 .end();
 
         BlockModelBuilder fumeSpreaderEmptyModel = models().getBuilder("beyondtheveil:block/fume_spreader_empty")
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", modLoc("block/fume_spreader"))
-                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .submodel(RenderType.translucent(), parent))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/fume_spreader1", parent))
                 .end();
 
         getVariantBuilder(FUME_SPREADER.get())
@@ -194,15 +198,17 @@ public class BTVBlockStates extends BlockStateProvider {
 
         BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/watery_cradle_solid1"), models().existingFileHelper);
         parent.parent(wateryCradle_solid);
+        parent.renderType("solid");
         BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/watery_cradle_translucent1"), models().existingFileHelper);
         translucent_parent.parent(wateryCradle_translucent);
+        translucent_parent.renderType("translucent");
 
         BlockModelBuilder wateryCradle = models().getBuilder("beyondtheveil:block/watery_cradle")
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", modLoc("block/watery_cradle"))
-                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .submodel(RenderType.solid(), parent))
-                        .submodel(RenderType.translucent(), translucent_parent)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/watery_cradle_solid1", parent))
+                        .child("block/watery_cradle_translucent1", translucent_parent)
                 .end();
 
         getVariantBuilder(WATERY_CRADLE.get())
@@ -217,29 +223,23 @@ public class BTVBlockStates extends BlockStateProvider {
 
         BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + name + "_solid1"), models().existingFileHelper);
         parent.parent(solid);
+        parent.renderType("solid");
         BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + name + "_translucent1"), models().existingFileHelper);
         translucent_parent.parent(translucent);
+        translucent_parent.renderType("translucent");
 
         BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + name)
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", particleTexture)
-                .customLoader((blockModelBuilder, helper) -> MultiLayerModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                .submodel(RenderType.solid(), parent))
-                .submodel(RenderType.translucent(), translucent_parent)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                .child("block/" + name + "_solid1", parent))
+                .child("block/" + name + "_translucent1", translucent_parent)
                 .end();
 
         getVariantBuilder(block)
                 .forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(builder).build();
                 });
-    }
-
-    private void registerFlaskShelfOLD() {
-        BlockModelBuilder generatorModel = models().getBuilder(FLASK_SHELF.getId().getPath())
-                .parent(models().getExistingFile(mcLoc("cube")))
-                .customLoader((blockModelBuilder, helper) -> new CustomLoaderBuilder<BlockModelBuilder>(FlaskShelfModelLoader.FLASK_SHELF_LOADER, blockModelBuilder, helper) { })
-                .end();
-        simpleBlock(FLASK_SHELF.get(), generatorModel);
     }
 
     private void registerFlaskShelf() {

@@ -6,15 +6,18 @@ import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,9 +30,10 @@ public class Registration {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.MODID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, References.MODID);
-    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.MODID);
-    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.MODID);
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.MODID);
+    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
+    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.MODID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, References.MODID);
 
     public static void init() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -38,6 +42,7 @@ public class Registration {
         BLOCK_ENTITIES.register(bus);
         CONTAINERS.register(bus);
         ENTITIES.register(bus);
+        CREATIVE_TAB.register(bus);
     }
 
     public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 2.1F).clientTrackingRange(32).build("deep_one"));
@@ -47,12 +52,12 @@ public class Registration {
     public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(7, 5F).clientTrackingRange(32).build("nautilus"));
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
 
-    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(References.ITEM_GROUP);
-    public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD);
-    public static final BlockBehaviour.Properties DAMP_CANOPY_PROPERTIES = BlockBehaviour.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD).noOcclusion();
-    public static final BlockBehaviour.Properties DARK_SAND_PROPERTIES = BlockBehaviour.Properties.of(Material.SAND).strength(3f).sound(SoundType.SAND);
-    public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of(Material.STONE).strength(3.0F, 7.0F);
-    public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of(Material.STONE).strength(3.0F, 7.0F);
+    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
+    public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD);
+    public static final BlockBehaviour.Properties DAMP_CANOPY_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).noOcclusion();
+    public static final BlockBehaviour.Properties DARK_SAND_PROPERTIES = BlockBehaviour.Properties.of().strength(3f).sound(SoundType.SAND);
+    public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F);
+    public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F);
 
     public static final RegistryObject<Block> DAMP_WOOD = BLOCKS.register("damp_wood", () -> new Block(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> DARK_SAND = BLOCKS.register("dark_sand", () -> new Block(DARK_SAND_PROPERTIES));
@@ -61,16 +66,16 @@ public class Registration {
     public static final RegistryObject<Block> DAMP_CANOPY = BLOCKS.register("damp_canopy", () -> new DampCanopyBlock(DAMP_CANOPY_PROPERTIES));
     public static final RegistryObject<Block> DAMP_FILLED_CANOPY = BLOCKS.register("damp_filled_canopy", () -> new DampFilledCanopyBlock(DAMP_CANOPY_PROPERTIES));
     public static final RegistryObject<Block> WORN_BRICKS = BLOCKS.register("worn_bricks", () -> new Block(DAMP_WOOD_PROPERTIES));
-    public static final RegistryObject<Block> IDOL = BLOCKS.register("idol", () -> new IdolBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+    public static final RegistryObject<Block> IDOL = BLOCKS.register("idol", () -> new IdolBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F))); // TODO NO DROPS
     public static final RegistryObject<Block> FISH_BARREL = BLOCKS.register("fish_barrel", () -> new FishBarrelBlock(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> SLUG_BAIT = BLOCKS.register("slug_bait", () -> new SlugBaitBlock(DAMP_WOOD_PROPERTIES));
-    public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new LampBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2f).lightLevel(state -> 12).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new LampBlock(BlockBehaviour.Properties.of().strength(2f).lightLevel(state -> 12).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> BLUE_BRICKS = BLOCKS.register("blue_bricks", () -> new Block(BRICK_PROPERTIES));
     public static final RegistryObject<StairBlock> WORN_BRICK_STAIRS = BLOCKS.register("worn_brick_stairs", () -> new StairBlock(() -> WORN_BRICKS.get().defaultBlockState(), DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<FenceBlock> DAMP_WOOD_FENCE = BLOCKS.register("damp_wood_fence", () -> new FenceBlock(DAMP_WOOD_PROPERTIES));
-    public static final RegistryObject<Block> FUME_SPREADER = BLOCKS.register("fume_spreader", () -> new FumeSpreaderBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f).sound(SoundType.GLASS)));
-    public static final RegistryObject<Block> SLEEP_CHAMBER = BLOCKS.register("sleep_chamber", () -> new SleepChamberBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(4f, 7f).sound(SoundType.WOOD)));
-    public static final RegistryObject<Block> GEAR_BENCH = BLOCKS.register("gear_bench", () -> new GearBenchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(4f, 7f).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> FUME_SPREADER = BLOCKS.register("fume_spreader", () -> new FumeSpreaderBlock(BlockBehaviour.Properties.of().strength(3f).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> SLEEP_CHAMBER = BLOCKS.register("sleep_chamber", () -> new SleepChamberBlock(BlockBehaviour.Properties.of().strength(4f, 7f).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> GEAR_BENCH = BLOCKS.register("gear_bench", () -> new GearBenchBlock(BlockBehaviour.Properties.of().strength(4f, 7f).sound(SoundType.WOOD)));
 
     public static final RegistryObject<Block> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new WateryCradleBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<Block> FLASK_SHELF = BLOCKS.register("flask_shelf", () -> new FlaskShelfBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
@@ -91,7 +96,7 @@ public class Registration {
     public static final RegistryObject<StairBlock> BLOOD_BRICK_STAIRS = BLOCKS.register("blood_brick_stairs", () -> new StairBlock(() -> BLOOD_BRICK.get().defaultBlockState(), BRICK_PROPERTIES)); // new ModStairs(BlockBloodBrick.getDefaultState(), BlockNames.BLOOD_BRICKS_STAIRS);
     public static final RegistryObject<Block> BLOOD_SMOOTH_STONE = BLOCKS.register("blood_smooth_stone", () -> new Block(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
     public static final RegistryObject<SlabBlock> BLOOD_SMOOTH_STONE_SLAB = BLOCKS.register("blood_smooth_stone_slab", () -> new SlabBlock(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
-    public static final RegistryObject<Block> HEART = BLOCKS.register("heart", () -> new HeartBlock(BlockBehaviour.Properties.of(Material.SPONGE).strength(0.5F))); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
+    public static final RegistryObject<Block> HEART = BLOCKS.register("heart", () -> new HeartBlock(BlockBehaviour.Properties.of().strength(0.5F))); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
     //public static final RegistryObject<Block> BLOOD_WELL = BLOCKS.register("blood_well", () -> new Block(BRICK_PROPERTIES)); // new BlockBloodWell(Material.PORTAL, BlockNames.BLOOD_WELL);
     //public static final RegistryObject<Block> STATUE = BLOCKS.register("statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.STATUE, WorshipType.DEFAULT);
     //public static final RegistryObject<Block> SACRIFICE_STATUE = BLOCKS.register("sacrifice_statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.SACRIFICE_STATUE, WorshipType.SACRIFICE);
@@ -240,7 +245,103 @@ public class Registration {
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = CONTAINERS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
 
 
+    public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
+            .displayItems((features, output) -> {
 
+                output.accept(MEMORY_SIEVE.get());
+                output.accept(FLASK_LARGE.get());
+                output.accept(FLASK_MEDIUM.get());
+                output.accept(FLASK_SMALL.get());
+
+                output.accept(DAMP_WOOD.get());
+                output.accept(DARK_SAND.get());
+                output.accept(DAMP_LOG.get());
+                output.accept(DAMP_WOOD_STAIRS.get());
+                output.accept(DAMP_CANOPY.get());
+                output.accept(DAMP_FILLED_CANOPY.get());
+                output.accept(WORN_BRICKS.get());
+                output.accept(IDOL.get());
+                output.accept(FISH_BARREL.get());
+                output.accept(SLUG_BAIT.get());
+                output.accept(LAMP.get());
+                output.accept(BLUE_BRICKS.get());
+                output.accept(WORN_BRICK_STAIRS.get());
+                output.accept(DAMP_WOOD_FENCE.get());
+                output.accept(FUME_SPREADER.get());
+                output.accept(SLEEP_CHAMBER.get());
+                output.accept(GEAR_BENCH.get());
+                output.accept(WATERY_CRADLE.get());
+                output.accept(FLASK_SHELF.get());
+                output.accept(ELDER_STONE_BRICK.get());
+                output.accept(ELDER_STONE_BRICK_CHISELED.get());
+                output.accept(ELDER_STONE_BRICK_SLAB.get());
+                output.accept(ELDER_STONE_BRICK_STAIRS.get());
+                output.accept(ELDER_BRICK.get());
+                output.accept(ELDER_BRICK_SLAB.get());
+                output.accept(ELDER_BRICK_STAIRS.get());
+                output.accept(ELDER_SMOOTH_STONE.get());
+                output.accept(ELDER_SMOOTH_STONE_SLAB.get());
+                output.accept(BLOOD_BRICK.get());
+                output.accept(SACRIFICE_ALTAR.get());
+                output.accept(BLOOD_BRICK_SLAB.get());
+                output.accept(BLOOD_BRICK_STAIRS.get());
+                output.accept(BLOOD_SMOOTH_STONE.get());
+                output.accept(BLOOD_SMOOTH_STONE_SLAB.get());
+                output.accept(HEART.get());
+
+                output.accept(ONIRIC_INCENSE.get());
+                output.accept(SLUG_CATCHER.get());
+                output.accept(SLUG.get());
+                output.accept(CANOE.get());
+                output.accept(RUM.get());
+                output.accept(WINE.get());
+                output.accept(ALE.get());
+                output.accept(VODKA.get());
+                output.accept(MEAD.get());
+                output.accept(CUP.get());
+                output.accept(FLUTE.get());
+
+                output.accept(WOLF_MEDALLION.get());
+                output.accept(TABLET.get());
+                output.accept(BRONZE_SPHERE.get());
+                output.accept(REDSTONE_WEED_SEEDS.get());
+                output.accept(GHOST_WEED_SEEDS.get());
+                output.accept(VANILLA_WEED_SEEDS.get());
+                output.accept(BLACKJACK.get());
+                output.accept(SPINE.get());
+                output.accept(HELD_VILLAGER.get());
+                output.accept(HELD_WEEPER.get());
+                output.accept(HELD_FLETUM.get());
+                output.accept(HELD_SHOGGOTH.get());
+                output.accept(SURGERY_TOOLS.get());
+                output.accept(BONE_TIARA.get());
+                output.accept(BLEEDING_BELT.get());
+                output.accept(DREAM_BOTTLE.get());
+                output.accept(SHOGGOTH_MAP.get());
+                output.accept(BLOOD_COVENANT.get());
+                output.accept(REVELATION_RING.get());
+                output.accept(AZACNO_CHARM.get());
+                output.accept(BLOOD_CROWN.get());
+                output.accept(CORAL_STAFF.get());
+                output.accept(SIGIL_ZOMBIE.get());
+                output.accept(SIGIL_SKELLIE.get());
+                output.accept(SIGIL_PLAYER.get());
+                output.accept(SIGIL_PATHWAY.get());
+                output.accept(SACRIFICIAL_KNIFE.get());
+                output.accept(MEMORY_PHIAL.get());
+                output.accept(NECRONOMICON.get());
+                output.accept(GEAR.get());
+                output.accept(SURGEON_SUMMONS.get());
+                output.accept(CRUCIBLE.get());
+                output.accept(BLACK_MIRROR.get());
+                output.accept(FLESH_CARBON_TOKEN.get());
+
+                output.accept(DEEP_ONE_EGG.get());
+                output.accept(BLOOD_SKELETON_EGG.get());
+                output.accept(BLOOD_ZOMBIE_EGG.get());
+                output.accept(BLOOD_WRAITH_EGG.get());
+
+    }).build());
 
     private static <B extends Block> RegistryObject<Item> fromBlock(RegistryObject<B> blockObject) {
         return ITEMS.register(blockObject.getId().getPath(), () -> new BlockItem(blockObject.get(), ITEM_PROPERTIES));

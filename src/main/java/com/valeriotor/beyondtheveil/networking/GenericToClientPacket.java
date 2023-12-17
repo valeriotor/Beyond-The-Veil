@@ -44,7 +44,7 @@ public class GenericToClientPacket {
 
     public GenericToClientPacket(FriendlyByteBuf buf) {
         this.type = buf.readEnum(MessageType.class);
-        this.tag = buf.readAnySizeNbt();
+        this.tag = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf) {

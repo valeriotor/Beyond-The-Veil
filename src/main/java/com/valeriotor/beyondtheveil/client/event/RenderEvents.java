@@ -1,56 +1,30 @@
 package com.valeriotor.beyondtheveil.client.event;
 
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.*;
-import com.valeriotor.beyondtheveil.client.ClientData;
-import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BeaconRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.FOVModifierEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.lang.reflect.Method;
-import java.util.Arrays;
-
-import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION;
+import org.joml.Matrix4f;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RenderEvents {
 
-    private static volatile double fov = 0;
+    //private static volatile double fov = 0;
+//
+    //@SubscribeEvent
+    //public static void fieldOfViewEvent(EntityViewRenderEvent.FieldOfView event) {
+    //    fov = event.getFOV();
+    //}
 
     @SubscribeEvent
-    public static void fieldOfViewEvent(EntityViewRenderEvent.FieldOfView event) {
-        fov = event.getFOV();
-    }
-
-    @SubscribeEvent
-    public static void renderGameOverlay(RenderGameOverlayEvent event) {
+    public static void renderGameOverlay(RenderGuiOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             ReminiscenceClient.renderReminiscence(event);
@@ -59,14 +33,14 @@ public class RenderEvents {
     }
 
     @SubscribeEvent
-    public static void renderWorldLastEvent(RenderLevelLastEvent event) {
+    public static void renderWorldLastEvent(RenderLevelStageEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
         }
     }
 
-    @Deprecated
-    private static void legacyWaypointVisualization(RenderLevelLastEvent event, LocalPlayer player) {
+    /*@Deprecated
+    private static void legacyWaypointVisualization(RenderLevelStageEvent event, LocalPlayer player) {
         for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
 
 
@@ -160,7 +134,7 @@ public class RenderEvents {
 
     private static void addVertex(Matrix4f pPose, Matrix3f pNormal, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pY, float pX, float pZ, float pU, float pV) {
         pConsumer.vertex(pPose, pX, (float) pY, pZ).color(pRed, pGreen, pBlue, pAlpha).uv(pU, pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
-    }
+    }*/
 
     public static void innerFill(Matrix4f pMatrix, int pMinX, int pMinY, int pMaxX, int pMaxY, int pColor) {
         if (pMinX < pMaxX) {
@@ -181,7 +155,7 @@ public class RenderEvents {
         float f2 = (float) (pColor & 255) / 255.0F;
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
+        //RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -189,9 +163,8 @@ public class RenderEvents {
         bufferbuilder.vertex(pMatrix, (float) pMaxX, (float) pMaxY, 0.0F).color(f, f1, f2, f3).endVertex();
         bufferbuilder.vertex(pMatrix, (float) pMaxX, (float) pMinY, 0.0F).color(f, f1, f2, f3).endVertex();
         bufferbuilder.vertex(pMatrix, (float) pMinX, (float) pMinY, 0.0F).color(f, f1, f2, f3).endVertex();
-        bufferbuilder.end();
-        BufferUploader.end(bufferbuilder);
-        RenderSystem.enableTexture();
+        BufferUploader.drawWithShader(bufferbuilder.end()); // TODO with shader or just draw()?
+        //RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 

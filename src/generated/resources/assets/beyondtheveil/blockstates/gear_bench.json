@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "beyondtheveil:block/gear_bench",
+      "y": 90
+    },
     "facing=north": {
       "model": "beyondtheveil:block/gear_bench"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "beyondtheveil:block/gear_bench",
       "y": 270
-    },
-    "facing=east": {
-      "model": "beyondtheveil:block/gear_bench",
-      "y": 90
     }
   }
 }

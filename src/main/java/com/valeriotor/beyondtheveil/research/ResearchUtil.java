@@ -9,7 +9,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.ResearchSyncer;
 import com.valeriotor.beyondtheveil.networking.SyncResearchToClientPacket;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.FakePlayer;
@@ -43,7 +43,7 @@ public class ResearchUtil {
      * Server-side only
      */
     public static boolean learn(Player p) {
-        if (p.level.isClientSide) return false;
+        if (p.level().isClientSide) return false;
         Optional<ResearchData> capability = p.getCapability(ResearchProvider.RESEARCH, null).resolve();
         if (capability.isPresent()) {
             Map<String, ResearchStatus> stati = capability.get().getResearches();
@@ -117,7 +117,7 @@ public class ResearchUtil {
 	}*/
 
     public static void completeResearch(Player p, String key) {
-        if (p.level.isClientSide) return;
+        if (p.level().isClientSide) return;
         p.getCapability(ResearchProvider.RESEARCH, null).ifPresent(researchData -> {
             Map<String, ResearchStatus> map = researchData.getResearches();
             if (map.containsKey(key)) {
@@ -125,7 +125,7 @@ public class ResearchUtil {
                 ResearchStatus newStatus = getResearch(p, key);
                 Messages.sendToPlayer(new SyncResearchToClientPacket(ResearchSyncer.oneResearchToClient(newStatus)), (ServerPlayer) p);
             } else {
-                p.sendMessage(new TextComponent("Research key not found"), p.getUUID());
+                p.sendSystemMessage(Component.translatable("Research key not found"));
             }
         });
 
@@ -148,7 +148,7 @@ public class ResearchUtil {
             PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);
             for (Entry<String, ResearchStatus> entry : map.entrySet()) {
                 if (entry.getValue().isVisible(map, data)) {
-                    p.sendMessage(new TextComponent(entry.getKey() + " Stage: " + entry.getValue().getStage()), p.getUUID());
+                    p.sendSystemMessage(Component.translatable(entry.getKey() + " Stage: " + entry.getValue().getStage()));
                 }
             }
         });
@@ -156,7 +156,7 @@ public class ResearchUtil {
     }
 
     public static void markResearchAsUpdated(Player p, String newDataString) {
-        if (!p.level.isClientSide) {
+        if (!p.level().isClientSide) {
             p.getCapability(ResearchProvider.RESEARCH, null).ifPresent(researchData -> {
                 Map<String, ResearchStatus> map = researchData.getResearches();
                 PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);

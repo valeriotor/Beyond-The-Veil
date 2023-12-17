@@ -10,12 +10,6 @@ public class References {
     public static final String NAME = "Beyond The Veil";
 
     public static final String TAB_NAME = MODID;
-    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(TAB_NAME) {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(Items.DIAMOND);
-        }
-    };
 
 
 

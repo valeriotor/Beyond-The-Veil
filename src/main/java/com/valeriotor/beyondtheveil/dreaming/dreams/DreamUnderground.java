@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,9 +56,9 @@ public class DreamUnderground extends Dream {
                 for (int x = -radius; x <= radius; x++) {
                     for (int z = -radius; z <= radius; z++) {
                         Block block = l.getBlockState(pos.offset(x, y - pos.getY(), z)).getBlock();
-                        if (block.getRegistryName() != null && allBlocks.contains(block)) {
+                        if (ForgeRegistries.BLOCKS.getKey(block) != null && allBlocks.contains(block)) {
                             //counter.put(block.getRegistryName().toString(), counter.get(block.getRegistryName().toString()) + 1);
-                            layer[x + radius][z + radius] = block.getRegistryName().toString();
+                            layer[x + radius][z + radius] = ForgeRegistries.BLOCKS.getKey(block).toString();
                         } else {
                             layer[x + radius][z + radius] = "null";
                         }
@@ -65,7 +66,7 @@ public class DreamUnderground extends Dream {
                 }
             }
         }
-        Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> b.getRegistryName().toString()).collect(Collectors.toSet()));
+        Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b).toString()).collect(Collectors.toSet()));
         DataUtil.addReminiscence(p, memory, reminiscence);
         return true;
     }

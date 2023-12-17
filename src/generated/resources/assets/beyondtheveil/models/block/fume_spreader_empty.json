@@ -1,12 +1,16 @@
 {
   "parent": "minecraft:block/cube",
+  "children": {
+    "block/fume_spreader1": {
+      "parent": "beyondtheveil:block/fume_spreader",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "block/fume_spreader1"
+  ],
+  "loader": "forge:composite",
   "textures": {
     "particle": "beyondtheveil:block/fume_spreader"
-  },
-  "loader": "forge:multi-layer",
-  "layers": {
-    "translucent": {
-      "parent": "beyondtheveil:block/fume_spreader"
-    }
   }
 }

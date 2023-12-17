@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 public class HeldVillagerItem extends Item {
 
     public HeldVillagerItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
 

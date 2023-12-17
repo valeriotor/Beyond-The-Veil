@@ -63,7 +63,7 @@ public class SlugBaitBE extends BlockEntity {
                 slugPresent = true;
                 offsetX = level.random.nextBoolean() ? -level.random.nextDouble() * 4 - 1 : level.random.nextDouble() * 4 + 1;
                 offsetZ = level.random.nextBoolean() ? -level.random.nextDouble() * 4 - 1 : level.random.nextDouble() * 4 + 1;
-                if (level.getBlockState(new BlockPos(worldPosition.getX() + offsetX + 0.5, worldPosition.getY(), worldPosition.getZ() + offsetZ + 0.5)) != Blocks.WATER.defaultBlockState()) {
+                if (level.getBlockState(BlockPos.containing(worldPosition.getX() + offsetX + 0.5, worldPosition.getY(), worldPosition.getZ() + offsetZ + 0.5)) != Blocks.WATER.defaultBlockState()) {
                     slugPresent = false;
                     slugCounter = 20;
                 }
@@ -74,7 +74,7 @@ public class SlugBaitBE extends BlockEntity {
             } else {
                 offsetZ += offsetZ < 0 ? 0.06D : -0.06D;
             }
-            if (level.getBlockState(new BlockPos(worldPosition.getX() + offsetX + 0.5, worldPosition.getY(), worldPosition.getZ() + offsetZ + 0.5)) != Blocks.WATER.defaultBlockState()) {
+            if (level.getBlockState(BlockPos.containing(worldPosition.getX() + offsetX + 0.5, worldPosition.getY(), worldPosition.getZ() + offsetZ + 0.5)) != Blocks.WATER.defaultBlockState()) {
                 slugPresent = false;
                 slugCounter = 20;
                 return;

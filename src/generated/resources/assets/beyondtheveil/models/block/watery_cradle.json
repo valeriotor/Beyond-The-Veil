@@ -1,15 +1,21 @@
 {
   "parent": "minecraft:block/cube",
+  "children": {
+    "block/watery_cradle_solid1": {
+      "parent": "beyondtheveil:block/watery_cradle_solid",
+      "render_type": "minecraft:solid"
+    },
+    "block/watery_cradle_translucent1": {
+      "parent": "beyondtheveil:block/watery_cradle_translucent",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "block/watery_cradle_solid1",
+    "block/watery_cradle_translucent1"
+  ],
+  "loader": "forge:composite",
   "textures": {
     "particle": "beyondtheveil:block/watery_cradle"
-  },
-  "loader": "forge:multi-layer",
-  "layers": {
-    "solid": {
-      "parent": "beyondtheveil:block/watery_cradle_solid"
-    },
-    "translucent": {
-      "parent": "beyondtheveil:block/watery_cradle_translucent"
-    }
   }
 }

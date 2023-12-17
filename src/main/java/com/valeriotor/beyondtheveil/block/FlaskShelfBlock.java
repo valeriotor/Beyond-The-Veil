@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -22,11 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BedPart;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -70,7 +66,7 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     private static final VoxelShape L2_SOUTH_RIGHT = Shapes.box(0, a*2, a, 1-2*a, a*3, 1-4*a);
 
     public FlaskShelfBlock(Properties properties) {
-        super(BlockBehaviour.Properties.of(Material.WOOD).strength(5.0F, 7.0F).noOcclusion());
+        super(BlockBehaviour.Properties.of().strength(5.0F, 7.0F).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SIDE, 0).setValue(LEVEL, 0));
     }
 

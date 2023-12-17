@@ -1,15 +1,21 @@
 {
   "parent": "minecraft:block/cube",
+  "children": {
+    "block/memory_sieve_solid1": {
+      "parent": "beyondtheveil:block/memory_sieve_solid",
+      "render_type": "minecraft:solid"
+    },
+    "block/memory_sieve_translucent1": {
+      "parent": "beyondtheveil:block/memory_sieve_translucent",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "block/memory_sieve_solid1",
+    "block/memory_sieve_translucent1"
+  ],
+  "loader": "forge:composite",
   "textures": {
     "particle": "minecraft:block/stone"
-  },
-  "loader": "forge:multi-layer",
-  "layers": {
-    "solid": {
-      "parent": "beyondtheveil:block/memory_sieve_solid"
-    },
-    "translucent": {
-      "parent": "beyondtheveil:block/memory_sieve_translucent"
-    }
   }
 }

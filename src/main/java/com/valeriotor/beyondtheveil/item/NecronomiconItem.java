@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 
 public class NecronomiconItem extends Item {
     public NecronomiconItem() {
-        super(new Item.Properties().tab(References.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override
