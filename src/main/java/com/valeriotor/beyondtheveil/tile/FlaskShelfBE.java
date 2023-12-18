@@ -191,7 +191,7 @@ public class FlaskShelfBE extends BlockEntity {
 
     @Override
     public AABB getRenderBoundingBox() {
-        return super.getRenderBoundingBox();
+        return new AABB(getBlockPos().offset(-1, -1, -1), getBlockPos().offset(2,2,2));
     }
 
     //@Nonnull
