@@ -1,8 +1,17 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,10 +34,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkEvent;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 public class FlaskShelfBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -164,6 +179,18 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+        super.attack(pState, pLevel, pPos, pPlayer);
+        BlockPos centerPos = findCenter(pPos, pState);
+        if (pLevel.isClientSide && pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
+            HitResult hr = ClientData.getInstance().getClientHitResult();
+            if (hr instanceof BlockHitResult blockHitResult) {
+                Messages.sendToServer(new BreakFlaskMessage(hr.getLocation().x, hr.getLocation().y, hr.getLocation().z));
+            }
+        }
+    }
+
+    @Override
     public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
         return super.getBlockSupportShape(pState, pReader, pPos);
     }
@@ -262,4 +289,44 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return pState.getValue(SIDE) == 1 && pState.getValue(LEVEL) == 1 ? new FlaskShelfBE(pPos, pState) : null; // TODO change second one to set it as simple
     }
+
+    public static class BreakFlaskMessage {
+        private final double x, y, z;
+
+        public BreakFlaskMessage(double x, double y, double z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        public BreakFlaskMessage(FriendlyByteBuf buf) {
+            this.x = buf.readDouble();
+            this.y = buf.readDouble();
+            this.z = buf.readDouble();
+        }
+
+        public void toBytes(FriendlyByteBuf buf) {
+            buf.writeDouble(x);
+            buf.writeDouble(y);
+            buf.writeDouble(z);
+        }
+
+        public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+            NetworkEvent.Context ctx = supplier.get();
+            ctx.enqueueWork(() -> {
+                BlockPos hitPos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+                ServerPlayer sender = ctx.getSender();
+                Level l = sender.level();
+                BlockState blockState = l.getBlockState(hitPos);
+                if (blockState.getBlock() == Registration.FLASK_SHELF.get()) {
+                    BlockPos centerPos = ((FlaskShelfBlock) Registration.FLASK_SHELF.get()).findCenter(hitPos, blockState);
+                    if (l.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
+                        be.tryBreakFlask(hitPos, sender, new Vec3(x, y, z));
+                    }
+                }
+            });
+            return true;
+        }
+    }
+
 }

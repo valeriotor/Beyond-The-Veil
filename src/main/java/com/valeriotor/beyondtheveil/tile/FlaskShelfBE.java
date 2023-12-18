@@ -5,11 +5,14 @@ import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -102,11 +105,24 @@ public class FlaskShelfBE extends BlockEntity {
         return true;
     }
 
-    public Flask getLookedAtFlask(Level pLevel, BlockPos selectedShelfPos, BlockHitResult pHit) {
+    public void tryBreakFlask(BlockPos selectedShelfPos, Player pPlayer, Vec3 hitLocation) {
+        Flask f = getLookedAtFlask(pPlayer.level(), selectedShelfPos, hitLocation);
+        if (f != null) {
+            flasks.remove(f);
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            }
+            computeFlasksShape();
+            level.playSound(null, getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
+            // TODO drop the flask
+        }
+    }
+
+    public Flask getLookedAtFlask(Level pLevel, BlockPos selectedShelfPos, Vec3 hitLocation) {
         for (Flask flask : flasks) {
             AABB flaskAABB = getAABB(flask.size, flask.x, flask.y, flask.z);
-            Vec3 loc = pHit.getLocation();
-            if (containsButSlightlyLarger(loc, flaskAABB)) {
+            if (containsButSlightlyLarger(hitLocation, flaskAABB)) {
                 return flask;
             }
         }

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -65,6 +66,12 @@ public class Messages {
                 .decoder(GenericToClientPacket::new)
                 .encoder(GenericToClientPacket::toBytes)
                 .consumerNetworkThread(GenericToClientPacket::handle)
+                .add();
+
+        net.messageBuilder(FlaskShelfBlock.BreakFlaskMessage.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(FlaskShelfBlock.BreakFlaskMessage::new)
+                .encoder(FlaskShelfBlock.BreakFlaskMessage::toBytes)
+                .consumerNetworkThread(FlaskShelfBlock.BreakFlaskMessage::handle)
                 .add();
 
     }

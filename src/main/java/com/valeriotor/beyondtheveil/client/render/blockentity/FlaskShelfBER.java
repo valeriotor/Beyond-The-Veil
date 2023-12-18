@@ -74,7 +74,7 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
         }
         FlaskShelfBE.Flask lookedAt = null;
         if (shelfPos != null) {
-            lookedAt = pBlockEntity.getLookedAtFlask(p.level(), shelfPos, bhr);
+            lookedAt = pBlockEntity.getLookedAtFlask(p.level(), shelfPos, bhr.getLocation());
         }
         for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
             pPoseStack.pushPose();

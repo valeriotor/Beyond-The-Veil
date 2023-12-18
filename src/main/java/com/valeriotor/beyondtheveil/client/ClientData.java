@@ -2,9 +2,11 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -56,6 +58,10 @@ public class ClientData {
                 break;
             }
         }
+    }
+
+    public HitResult getClientHitResult() {
+        return Minecraft.getInstance().hitResult;
     }
 
 
