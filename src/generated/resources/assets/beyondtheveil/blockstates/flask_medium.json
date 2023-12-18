@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
+    "color=0": {
       "model": "beyondtheveil:block/flask_medium"
+    },
+    "color=1": {
+      "model": "beyondtheveil:block/flask_medium_wrong"
+    },
+    "color=2": {
+      "model": "beyondtheveil:block/flask_medium_selected"
     }
   }
 }

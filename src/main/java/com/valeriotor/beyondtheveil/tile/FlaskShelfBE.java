@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,7 +36,6 @@ public class FlaskShelfBE extends BlockEntity {
     public final List<Flask> flasks = new ArrayList<>();
     public final VoxelShape[][] shapes = new VoxelShape[3][3]; // Shape for each of the 3x3 shelves: [0: bottom, 1: medium, 2: top][0: left, 1: center, 2: right]
 
-    private int test = 0;
 
     public FlaskShelfBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.FLASK_SHELF_BE.get(), pWorldPosition, pBlockState);
@@ -80,15 +80,69 @@ public class FlaskShelfBE extends BlockEntity {
         }
     }
 
-    public void tryPlaceFlask(Level pLevel, BlockPos selectedShelfPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public boolean tryPlaceFlask(Level pLevel, BlockPos selectedShelfPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         FlaskBlock flaskBlock = (FlaskBlock) Block.byItem(stack.getItem());
         Vec3 location = pHit.getLocation();
-        Flask newFlask = new Flask(location.x, location.y, location.z, flaskBlock.size);
-        flasks.add(newFlask);
-        setChanged();
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-        computeFlasksShape();
+        boolean intersects = intersects(pLevel, selectedShelfPos, pHit, flaskBlock);
+        if (intersects) {
+            return false;
+        }
+        if(!pLevel.isClientSide) {
+            Flask newFlask = new Flask(location.x, location.y, location.z, flaskBlock.size);
+            flasks.add(newFlask);
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            }
+            computeFlasksShape();
+            if(!pPlayer.isCreative())
+                pPlayer.getItemInHand(pHand).shrink(1);
+        }
+        return true;
+    }
+
+    public Flask getLookedAtFlask(Level pLevel, BlockPos selectedShelfPos, BlockHitResult pHit) {
+        for (Flask flask : flasks) {
+            AABB flaskAABB = getAABB(flask.size, flask.x, flask.y, flask.z);
+            Vec3 loc = pHit.getLocation();
+            if (containsButSlightlyLarger(loc, flaskAABB)) {
+                return flask;
+            }
+        }
+        return null;
+    }
+
+    private boolean containsButSlightlyLarger(Vec3 vec3, AABB aabb) {
+        return containsButSlightlyLarger(vec3.x, vec3.y, vec3.z, aabb);
+    }
+
+    private boolean containsButSlightlyLarger(double pX, double pY, double pZ, AABB aabb) {
+        return pX >= aabb.minX && pX <= aabb.maxX && pY >= aabb.minY && pY <= aabb.maxY && pZ >= aabb.minZ && pZ <= aabb.maxZ;
+    }
+
+    public boolean intersects(Level pLevel, BlockPos selectedShelfPos, BlockHitResult pHit, FlaskBlock flaskBlock) {
+        Vec3 locRelativeToSelectedBlock = pHit.getLocation().subtract(selectedShelfPos.getX(), selectedShelfPos.getY(), selectedShelfPos.getZ());
+        VoxelShape shape = pLevel.getBlockState(selectedShelfPos).getShape(pLevel, selectedShelfPos);
+        FlaskBlock.FlaskSize size = flaskBlock == Registration.FLASK_SMALL.get() ? FlaskBlock.FlaskSize.SMALL : (flaskBlock == Registration.FLASK_MEDIUM.get() ? FlaskBlock.FlaskSize.MEDIUM : FlaskBlock.FlaskSize.LARGE);
+        AABB newFlaskAABB = getAABB(size, locRelativeToSelectedBlock.x, locRelativeToSelectedBlock.y, locRelativeToSelectedBlock.z);
+        boolean intersects = false;
+        for (AABB box: shape.toAabbs()) {
+            if (newFlaskAABB.intersects(box)) {
+                intersects = true;
+                break;
+            }
+        }
+        return intersects;
+    }
+
+    /** Coordinates should be relative to selectedShelfPos
+     */
+    private AABB getAABB(FlaskBlock.FlaskSize size, double x, double y, double z) {
+        double[] array = size.getSimpleShape();
+        x -= 0.5;
+        z -= 0.5;
+        return new AABB(x + array[0], y + array[1], z + array[2], x + array[3], y + array[4], z + array[5]);
     }
 
     private void computeFlasksShape() {
@@ -110,13 +164,6 @@ public class FlaskShelfBE extends BlockEntity {
         System.out.println("done");
     }
 
-
-    public void increaseTest() {
-        test++;
-    }
-    public int testInt() {
-        return test;
-    }
 
 
     @Override
@@ -140,6 +187,11 @@ public class FlaskShelfBE extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(pkt.getTag());
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return super.getRenderBoundingBox();
     }
 
     //@Nonnull

@@ -58,9 +58,9 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSmoothStoneSlab(BLOOD_SMOOTH_STONE_SLAB.get(), modLoc("block/" + BLOOD_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + BLOOD_SMOOTH_STONE.getId().getPath()));
         simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
         simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
-        simpleBlock(FLASK_LARGE.get(), new ExistingModelFile(modLoc("block/flask_large"), models().existingFileHelper));
-        simpleBlock(FLASK_MEDIUM.get(), new ExistingModelFile(modLoc("block/flask_medium"), models().existingFileHelper));
-        simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));
+        //simpleBlock(FLASK_LARGE.get(), new ExistingModelFile(modLoc("block/flask_large"), models().existingFileHelper));
+        //simpleBlock(FLASK_MEDIUM.get(), new ExistingModelFile(modLoc("block/flask_medium"), models().existingFileHelper));
+        //simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));
         //horizontalBlock(FLASK_SHELF.get(), new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper));
 
 
@@ -70,6 +70,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerWateryCradle();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerFlaskShelf();
+        registerFlasks();
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -253,6 +254,27 @@ public class BTVBlockStates extends BlockStateProvider {
                             .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
+    }
+
+    private void registerFlasks() {
+        registerFlask("large", FLASK_LARGE.get());
+        registerFlask("medium", FLASK_MEDIUM.get());
+        registerFlask("small", FLASK_SMALL.get());
+    }
+
+    private void registerFlask(String name, Block block) {
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_" + name), models().existingFileHelper);
+        ExistingModelFile wrong = new ExistingModelFile(modLoc("block/flask_" + name + "_wrong"), models().existingFileHelper);
+        ExistingModelFile selected = new ExistingModelFile(modLoc("block/flask_" + name + "_selected"), models().existingFileHelper);
+        getVariantBuilder(block).forAllStates(state -> {
+            ModelFile file = switch (state.getValue(FlaskBlock.COLOR)) {
+                case 0 -> base;
+                case 1 -> wrong;
+                case 2 -> selected;
+                default -> throw new IllegalStateException("Unexpected value: " + state.getValue(FlaskBlock.COLOR));
+            };
+            return ConfiguredModel.builder().modelFile(file).build();
+        });
     }
 
 }

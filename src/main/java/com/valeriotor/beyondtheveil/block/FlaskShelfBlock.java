@@ -79,15 +79,6 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
             baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
         }
         return baseShape;
-        //if (pState.getValue(LEVEL) == 2) {
-        //    BlockPos centerPos = findCenter(pPos, pState);
-        //    if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-        //        if (flaskShelfBE.testInt() % 2 == 0) {
-        //            //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-        //        }
-        //    }
-        //}
-        //return baseShape;
     }
 
     @Override
@@ -99,16 +90,6 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
             //baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
         }
         return baseShape;
-        //VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
-        //if (pState.getValue(LEVEL) == 2) {
-        //    BlockPos centerPos = findCenter(pPos, pState);
-        //    if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-        //        if (flaskShelfBE.testInt() % 2 == 0) {
-        //            //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-        //        }
-        //    }
-        //}
-        //return baseShape;
     }
 
     @Override
@@ -122,31 +103,9 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
         return baseShape;
     }
 
-    //@Override
-    //public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-    //    VoxelShape baseShape = getBaseShape(pState, pLevel, pPos);
-    //    if (pState.getValue(LEVEL) == 2) {
-    //        BlockPos centerPos = findCenter(pPos, pState);
-    //        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-    //            if (flaskShelfBE.testInt() % 2 == 0) {
-    //                //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-    //            }
-    //        }
-    //    }
-    //    return baseShape;
-    //}
-
     @Override
     public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
         VoxelShape baseShape = getBaseShape(pState);
-        if (pState.getValue(LEVEL) == 2) {
-            BlockPos centerPos = findCenter(pPos, pState);
-            if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
-                if (flaskShelfBE.testInt() % 2 == 0) {
-                    //baseShape = Shapes.or(baseShape, Shapes.box(0, 0, 0, a * 9, a * 9, a * 9));
-                }
-            }
-        }
         return baseShape;
     }
 
@@ -192,17 +151,14 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         BlockPos centerPos = findCenter(pPos, pState);
-        if (!pLevel.isClientSide && pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
+        if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
             Item held = pPlayer.getItemInHand(pHand).getItem();
             if (Block.byItem(held) instanceof FlaskBlock && pHit.getLocation().y() - pPos.getY() == a * 3) {
-                be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit);
-                return InteractionResult.SUCCESS;
+                if (be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit))
+                    return InteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS; // eh I guess I need it here too so that the flask isn't placed as an adjacent, individual block
             }
 
-        }
-        System.out.println(pHit.getLocation());
-        if (pHand == InteractionHand.MAIN_HAND && pLevel.getBlockEntity(pPos) instanceof FlaskShelfBE flaskShelfBE) {
-            flaskShelfBE.increaseTest();
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }

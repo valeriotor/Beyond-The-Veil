@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 
 public class WateryCradleBER implements BlockEntityRenderer<WateryCradleBE> {
 
@@ -23,4 +24,8 @@ public class WateryCradleBER implements BlockEntityRenderer<WateryCradleBE> {
         }
     }
 
+    @Override
+    public boolean shouldRenderOffScreen(WateryCradleBE pBlockEntity) {
+        return true;
+    }
 }

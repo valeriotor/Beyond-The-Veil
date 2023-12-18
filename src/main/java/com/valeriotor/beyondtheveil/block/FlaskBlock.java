@@ -1,9 +1,12 @@
 package com.valeriotor.beyondtheveil.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -38,9 +41,9 @@ public class FlaskBlock extends Block {
     public static final double[] SMALL4 = {7*a, 4.5*a, 7*a, 9*a, 4.75*a, 9*a};
     public static final double[] SMALL5 = {7.25*a, 4.75*a, 7.25*a, 8.75*a, 5*a, 8.75*a};
     public static final double[] SMALL6 = {7.5*a, 5*a, 7.5*a, 8.5*a, 5.5*a, 8.5*a};
-    public static final double[] LARGE_SIMPLE = {4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a};
-    public static final double[] MEDIUM_SIMPLE = {5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a};
-    public static final double[] SMALL_SIMPLE = {6.5*a, 0, 6.5*a, 9.5*a, 5.5*a, 9.5*a};
+    public static final double[] LARGE_SIMPLE = FlaskSize.LARGE.simpleShape;
+    public static final double[] MEDIUM_SIMPLE = FlaskSize.MEDIUM.simpleShape;
+    public static final double[] SMALL_SIMPLE = FlaskSize.SMALL.simpleShape;
 
     static {
         VoxelShape shapeLarge = Shapes.box(LARGE1[0],LARGE1[1],LARGE1[2],LARGE1[3],LARGE1[4],LARGE1[5]);
@@ -69,12 +72,16 @@ public class FlaskBlock extends Block {
         SHAPE_SMALL = shapeSmall;
     }
 
+    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2); // 0 base, 1 wrong, 2 selected
+
+
     public final FlaskSize size;
 
     public FlaskBlock(Properties properties, FlaskSize size) {
         super(properties);
         this.size = size;
         sizeToBlock.put(size, this);
+        this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 0));
     }
 
     @Override
@@ -86,13 +93,24 @@ public class FlaskBlock extends Block {
         };
     }
 
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(COLOR);
+    }
+
     public enum FlaskSize {
-        SMALL(100), MEDIUM(250), LARGE(500);
+        SMALL(100, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}), MEDIUM(250, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}), LARGE(500, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a});
 
         private final int capacity;
+        private final double[] simpleShape;
 
-        FlaskSize(int capacity) {
+        FlaskSize(int capacity, double[] simpleShape) {
             this.capacity = capacity;
+            this.simpleShape = simpleShape;
+        }
+
+        public double[] getSimpleShape() {
+            return simpleShape;
         }
     }
 
