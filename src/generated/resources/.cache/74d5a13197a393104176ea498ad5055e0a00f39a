@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-17T19:40:08.7865363	Item Models: beyondtheveil
+// 1.20.1	2023-12-24T20:34:14.8694551	Item Models: beyondtheveil
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
 540649a72e51acc85ca94b97512d8d225aa6db6b assets/beyondtheveil/models/item/black_mirror.json
@@ -80,6 +80,7 @@ bdfa9c48a15d11fbb328153dca660e615d77f289 assets/beyondtheveil/models/item/slug_b
 e0a2244f5f7f30c7b5056bdbf86cc6af8eab471d assets/beyondtheveil/models/item/spine.json
 cf6c1d4ac8de2c9ea93641017592929ed9450b96 assets/beyondtheveil/models/item/surgeon_summons.json
 f5559c752aca39809a377b09d517ed5bcdc635b3 assets/beyondtheveil/models/item/surgery_tools.json
+f26ee84f95e28cae85edb5899423a1e1c0bfa071 assets/beyondtheveil/models/item/syringe.json
 c293a59f72019d4d3687fafa3d82d0f56640f785 assets/beyondtheveil/models/item/tablet.json
 1ae74006754a206b30b97d8e838d021b90966f60 assets/beyondtheveil/models/item/vanilla_weed_seeds.json
 a31fd4ede196339e363150cded841b3d43e23f05 assets/beyondtheveil/models/item/watery_cradle.json
