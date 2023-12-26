@@ -1,20 +1,33 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FlaskBlock extends Block {
+public class FlaskBlock extends Block implements EntityBlock {
 
     public static final Map<FlaskSize, FlaskBlock> sizeToBlock = new EnumMap<>(FlaskSize.class);
     private static final double a = 0.0625;
@@ -98,20 +111,68 @@ public class FlaskBlock extends Block {
         builder.add(COLOR);
     }
 
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        ItemStack itemStack = pPlayer.getItemInHand(pHand);
+        if (!pLevel.isClientSide && itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent() && pLevel.getBlockEntity(pPos) instanceof FlaskBE be) {
+            IFluidHandlerItem iFluidHandlerItem = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().get();
+            be.getTank().fill(iFluidHandlerItem.drain(1000, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+            return InteractionResult.SUCCESS;
+        }
+        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new FlaskBE(pPos, pState);
+    }
+
     public enum FlaskSize {
-        SMALL(100, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}), MEDIUM(250, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}), LARGE(500, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a});
+        SMALL(100, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}, a/4, 4.5*a, 7*a, 9*a),
+        MEDIUM(250, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 6.5*a, 6*a, 10*a),
+        LARGE(500, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a}, a/2, 8.5*a, 5*a, 11*a);
 
         private final int capacity;
         private final double[] simpleShape;
+        private final double minRenderHeight;
+        private final double maxRenderHeight;
+        private final double minRenderHorizontal;
+        private final double maxRenderHorizontal;
 
-        FlaskSize(int capacity, double[] simpleShape) {
+        FlaskSize(int capacity, double[] simpleShape, double minRenderHeight, double maxRenderHeight, double minRenderHorizontal, double maxRenderHorizontal) {
             this.capacity = capacity;
             this.simpleShape = simpleShape;
+            this.minRenderHeight = minRenderHeight;
+            this.maxRenderHeight = maxRenderHeight;
+            this.minRenderHorizontal = minRenderHorizontal;
+            this.maxRenderHorizontal = maxRenderHorizontal;
         }
 
         public double[] getSimpleShape() {
             return simpleShape;
         }
+
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public double getMinRenderHeight() {
+            return minRenderHeight;
+        }
+
+        public double getMaxRenderHeight() {
+            return maxRenderHeight;
+        }
+
+        public double getMinRenderHorizontal() {
+            return minRenderHorizontal;
+        }
+
+        public double getMaxRenderHorizontal() {
+            return maxRenderHorizontal;
+        }
+
     }
 
 

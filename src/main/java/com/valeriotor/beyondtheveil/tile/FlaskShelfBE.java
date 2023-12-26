@@ -177,7 +177,6 @@ public class FlaskShelfBE extends BlockEntity {
                 //pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(SIDE, i+1).setValue(LEVEL, y), 3);
             }
         }
-        System.out.println("done");
     }
 
 
@@ -280,6 +279,31 @@ public class FlaskShelfBE extends BlockEntity {
                 shape = Shapes.or(shape, Shapes.box(array[0] + offsetX, array[1] + offsetY, array[2] + offsetZ, array[3] + offsetX, array[4] + offsetY, array[5] + offsetZ));
             }
             return shape;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Flask flask = (Flask) o;
+
+            if (Double.compare(flask.x, x) != 0) return false;
+            if (Double.compare(flask.y, y) != 0) return false;
+            return Double.compare(flask.z, z) == 0;
+        }
+
+        @Override
+        public int hashCode() {
+            int result;
+            long temp;
+            temp = Double.doubleToLongBits(x);
+            result = (int) (temp ^ (temp >>> 32));
+            temp = Double.doubleToLongBits(y);
+            result = 31 * result + (int) (temp ^ (temp >>> 32));
+            temp = Double.doubleToLongBits(z);
+            result = 31 * result + (int) (temp ^ (temp >>> 32));
+            return result;
         }
     }
 

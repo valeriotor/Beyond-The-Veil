@@ -4,10 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
-import com.valeriotor.beyondtheveil.client.render.blockentity.FlaskShelfBER;
-import com.valeriotor.beyondtheveil.client.render.blockentity.HeartBER;
-import com.valeriotor.beyondtheveil.client.render.blockentity.MemorySieveBER;
-import com.valeriotor.beyondtheveil.client.render.blockentity.WateryCradleBER;
+import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
@@ -84,6 +81,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
         event.registerBlockEntityRenderer(Registration.WATERY_CRADLE_BE.get(), WateryCradleBER::new);
         event.registerBlockEntityRenderer(Registration.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
+        event.registerBlockEntityRenderer(Registration.FLASK_BE.get(), FlaskBER::new);
     }
 
     @SubscribeEvent

@@ -104,6 +104,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(BLACK_MIRROR.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + BLACK_MIRROR.getId().getPath()));
         singleTexture(FLESH_CARBON_TOKEN.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + FLESH_CARBON_TOKEN.getId().getPath()));
         singleTexture(HEART_ITEM.getId().getPath(),         mcLoc("item/generated"), "layer0", modLoc("item/" + HEART_ITEM.getId().getPath()));
+        singleTexture(SYRINGE.getId().getPath(),            mcLoc("item/generated"), "layer0", modLoc("item/" + SYRINGE.getId().getPath()));
 
 
     }

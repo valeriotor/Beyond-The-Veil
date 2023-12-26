@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
@@ -226,6 +227,7 @@ public class Registration {
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
     public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackMirror("black_mirror");
     public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
+    public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(ITEM_PROPERTIES));
 
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -239,6 +241,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<HeartBE>> HEART_BE = BLOCK_ENTITIES.register(HEART.getId().getPath(), () -> BlockEntityType.Builder.of(HeartBE::new, HEART.get()).build(null));
     public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskShelfBE>> FLASK_SHELF_BE = BLOCK_ENTITIES.register(FLASK_SHELF.getId().getPath(), () -> BlockEntityType.Builder.of(FlaskShelfBE::new, FLASK_SHELF.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get()).build(null));
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
 
@@ -335,6 +338,7 @@ public class Registration {
                 output.accept(CRUCIBLE.get());
                 output.accept(BLACK_MIRROR.get());
                 output.accept(FLESH_CARBON_TOKEN.get());
+                output.accept(SYRINGE.get());
 
                 output.accept(DEEP_ONE_EGG.get());
                 output.accept(BLOOD_SKELETON_EGG.get());
