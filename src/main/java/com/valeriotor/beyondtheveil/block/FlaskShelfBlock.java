@@ -39,6 +39,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -167,11 +168,16 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         BlockPos centerPos = findCenter(pPos, pState);
         if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
-            Item held = pPlayer.getItemInHand(pHand).getItem();
+            ItemStack itemStack = pPlayer.getItemInHand(pHand);
+            Item held = itemStack.getItem();
             if (Block.byItem(held) instanceof FlaskBlock && pHit.getLocation().y() - pPos.getY() == a * 3) {
                 if (be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit))
                     return InteractionResult.SUCCESS;
                 return InteractionResult.SUCCESS; // eh I guess I need it here too so that the flask isn't placed as an adjacent, individual block
+            } else {
+                if (be.interactLiquid(pLevel, pPos, pPlayer, pHand, pHit)) {
+                    return InteractionResult.SUCCESS;
+                }
             }
 
         }

@@ -113,11 +113,9 @@ public class FlaskBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (!pLevel.isClientSide && itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent() && pLevel.getBlockEntity(pPos) instanceof FlaskBE be) {
-            IFluidHandlerItem iFluidHandlerItem = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().get();
-            be.getTank().fill(iFluidHandlerItem.drain(1000, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-            return InteractionResult.SUCCESS;
+        if (pLevel.getBlockEntity(pPos) instanceof FlaskBE be) {
+            if(be.tryFillFromItem(pLevel, pPos, pPlayer, pHand, pHit))
+                return InteractionResult.SUCCESS;
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
@@ -129,9 +127,9 @@ public class FlaskBlock extends Block implements EntityBlock {
     }
 
     public enum FlaskSize {
-        SMALL(100, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}, a/4, 4.5*a, 7*a, 9*a),
-        MEDIUM(250, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 6.5*a, 6*a, 10*a),
-        LARGE(500, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a}, a/2, 8.5*a, 5*a, 11*a);
+        SMALL(1000, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}, a/4, 4.5*a, 7*a, 9*a),
+        MEDIUM(2500, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 6.5*a, 6*a, 10*a),
+        LARGE(5000, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a}, a/2, 8.5*a, 5*a, 11*a);
 
         private final int capacity;
         private final double[] simpleShape;

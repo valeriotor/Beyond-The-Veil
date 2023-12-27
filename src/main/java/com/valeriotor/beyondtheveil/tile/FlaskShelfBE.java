@@ -26,6 +26,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelProperty;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -129,6 +134,26 @@ public class FlaskShelfBE extends BlockEntity {
         return null;
     }
 
+    public boolean interactLiquid(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        ItemStack itemStack = pPlayer.getItemInHand(pHand);
+        if (itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+            if (pLevel.isClientSide) {
+                return true;
+            }
+            if (itemStack.getItem() != Registration.SYRINGE.get()) {
+                Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
+                if (lookedAtFlask != null) {
+                    lookedAtFlask.holder.map(handler -> FluidUtil.interactWithFluidHandler(pPlayer, pHand, handler)).orElse(false);
+                    setChanged();
+                    if (level != null) {
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean containsButSlightlyLarger(Vec3 vec3, AABB aabb) {
         return containsButSlightlyLarger(vec3.x, vec3.y, vec3.z, aabb);
     }
@@ -223,12 +248,15 @@ public class FlaskShelfBE extends BlockEntity {
         // fill level
         private final double x, y, z;
         private final FlaskBlock.FlaskSize size;
+        private FluidTank tank;
+        private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
         private Flask(double x, double y, double z, FlaskBlock.FlaskSize size) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.size = size;
+            this.tank = FlaskBE.getTankByFlaskType(size);
         }
 
         private Flask(CompoundTag tag) {
@@ -236,6 +264,8 @@ public class FlaskShelfBE extends BlockEntity {
             this.y = tag.getDouble("y");
             this.z = tag.getDouble("z");
             this.size = FlaskBlock.FlaskSize.values()[tag.getInt("size")];
+            this.tank = FlaskBE.getTankByFlaskType(size);
+            tank.readFromNBT(tag.getCompound("tank"));
         }
 
         private CompoundTag toNBT() {
@@ -244,6 +274,7 @@ public class FlaskShelfBE extends BlockEntity {
             tag.putDouble("y", y);
             tag.putDouble("z", z);
             tag.putInt("size", size.ordinal());
+            tag.put("tank", tank.writeToNBT(new CompoundTag()));
             return tag;
         }
 
@@ -261,6 +292,10 @@ public class FlaskShelfBE extends BlockEntity {
 
         public double getZ() {
             return z;
+        }
+
+        public FluidTank getTank() {
+            return tank;
         }
 
         private VoxelShape computeShapeWithOffset(double offsetX, double offsetY, double offsetZ) {

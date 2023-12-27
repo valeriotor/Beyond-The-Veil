@@ -11,10 +11,13 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.fluids.IFluidTank;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -31,18 +34,19 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
     @Override
     public void render(FlaskBE flask, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay) {
         FlaskBlock.FlaskSize size = ((FlaskBlock) flask.getBlockState().getBlock()).size;
-        renderFlask(flask, partialTicks, pPoseStack, buffers, pPackedLight, overlay, size);
+        if(flask.hasLevel())
+            renderFlask(flask.getTank(), flask.getLevel(), flask.getBlockPos(), partialTicks, pPoseStack, buffers, pPackedLight, overlay, size);
     }
 
-    public static void renderFlask(FlaskBE flask, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskSize size) {
-        if (!flask.hasLevel() || flask.getTank().getFluidAmount() == 0) {
+    public static void renderFlask(IFluidTank tank, Level level, BlockPos pos, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskSize size) {
+        if (tank.getFluidAmount() == 0) {
             return;
         }
-        float percentFilled = flask.getTank().getFluidAmount() / (float) size.getCapacity();
-        FluidState fluidState = flask.getTank().getFluid().getFluid().defaultFluidState();
+        float percentFilled = tank.getFluidAmount() / (float) size.getCapacity();
+        FluidState fluidState = tank.getFluid().getFluid().defaultFluidState();
 
         float maxHeight = (float) ((size.getMaxRenderHeight() - size.getMinRenderHeight()) * percentFilled + size.getMinRenderHeight());
-        TextureAtlasSprite[] fluidSprites = ForgeHooksClient.getFluidSprites(flask.getLevel(), flask.getBlockPos(), fluidState);
+        TextureAtlasSprite[] fluidSprites = ForgeHooksClient.getFluidSprites(level, pos, fluidState);
         TextureAtlasSprite stillSprite = fluidSprites[0];
         float minX = (float) size.getMinRenderHorizontal(), maxX = (float) size.getMaxRenderHorizontal();
         float minHeight = (float) size.getMinRenderHeight();

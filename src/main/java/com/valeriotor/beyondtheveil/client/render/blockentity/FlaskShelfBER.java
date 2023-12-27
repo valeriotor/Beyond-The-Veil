@@ -73,13 +73,14 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
 
         }
         FlaskShelfBE.Flask lookedAt = null;
-        if (shelfPos != null) {
+        if (shelfPos != null && !Minecraft.getInstance().options.hideGui) {
             lookedAt = pBlockEntity.getLookedAtFlask(p.level(), shelfPos, bhr.getLocation());
         }
         for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
             pPoseStack.pushPose();
             pPoseStack.translate(flask.getX() - pos.getX() - 0.5, flask.getY() - pos.getY(), flask.getZ() - pos.getZ() - 0.5);
             Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, flask == lookedAt && !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
+            FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize()); // TODO maybe use exact location instead of center BE
             pPoseStack.popPose();
         }
         HitResult hitResult = Minecraft.getInstance().hitResult;
