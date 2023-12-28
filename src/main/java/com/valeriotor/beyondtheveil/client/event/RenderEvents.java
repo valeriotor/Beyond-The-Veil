@@ -7,24 +7,43 @@ import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidInteractionRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
+
+import java.awt.*;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RenderEvents {
@@ -79,7 +98,7 @@ public class RenderEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             ReminiscenceClient.renderReminiscence(event);
-
+            renderSyringeContents(event);
         }
     }
 
@@ -90,102 +109,6 @@ public class RenderEvents {
         }
     }
 
-    /*@Deprecated
-    private static void legacyWaypointVisualization(RenderLevelStageEvent event, LocalPlayer player) {
-        for (ClientData.Waypoint waypoint : ClientData.getInstance().waypoints) {
-
-
-            //draw(event.getPoseStack());
-            float pPartialTicks = event.getPartialTick();
-            Vec3 vec3 = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-            double d0 = vec3.x();
-            double d1 = vec3.y();
-            double d2 = vec3.z();
-            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-            event.getPoseStack().pushPose();
-            BlockPos pos = waypoint.pos;
-            pos = new BlockPos(-366, 64, -134);
-            double distanceSqr = vec3.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
-            Vec3 subtract = new Vec3(pos.getX(), pos.getY(), pos.getZ()).subtract(vec3);
-            if (subtract.x * subtract.x + subtract.z * subtract.z > 256 * 256) {
-                double ratio = 256 / subtract.length();
-                subtract = new Vec3(subtract.x * ratio, subtract.y, subtract.z * ratio);
-                // pos = new BlockPos(pos.getX() / ratio, pos.getY() / ratio, pos.getZ() / ratio);
-            }
-            event.getPoseStack().translate(subtract.x(), pos.getY() - d1, subtract.z());
-            //event.getPoseStack().translate(3, 3, 3);
-            final float beamRadius = 0.5F;
-            float f = (float) Math.floorMod(player.tickCount, 40) + event.getPartialTick();
-            float f1 = 1024 < 0 ? f : -f;
-            float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
-            float f15 = -1.0F + f2;
-            float f16 = (float) 1024 * 1 * (0.5F / beamRadius) + f15;
-            event.getPoseStack().mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
-            //renderBeaconBeam(event.getPoseStack(), bufferSource, BEAM_LOCATION, event.getPartialTick(), 1.0F, player.tickCount, 0, 1024, new float[]{1,0,0,1}, 0.2F, 0.25F);
-            renderPart(event.getPoseStack(), bufferSource.getBuffer(RenderType.beaconBeam(BEAM_LOCATION, false)), 1, 0, 1, 1.0F, 0, 300, 0.0F, beamRadius, beamRadius, 0.0F, -beamRadius, 0.0F, 0.0F, -beamRadius, 0.0F, 1.0F, f16, f15);
-            event.getPoseStack().popPose();
-            RenderSystem.clear(256, Minecraft.ON_OSX);
-            bufferSource.endBatch();
-        }
-    }
-
-    public static void renderBeaconBeam(PoseStack pPoseStack, MultiBufferSource.BufferSource pBufferSource, ResourceLocation pBeamLocation, float pPartialTick, float pTextureScale, long pGameTime, int pYOffset, int pHeight, float[] pColors, float pBeamRadius, float pGlowRadius) {
-        int i = pYOffset + pHeight;
-        pPoseStack.pushPose();
-        pPoseStack.translate(0.5D, 0.0D, 0.5D);
-        float f = (float) Math.floorMod(pGameTime, 40) + pPartialTick;
-        float f1 = pHeight < 0 ? f : -f;
-        float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
-        float f3 = pColors[0];
-        float f4 = pColors[1];
-        float f5 = pColors[2];
-        pPoseStack.pushPose();
-        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
-        float f6 = 0.0F;
-        float f8 = 0.0F;
-        float f9 = -pBeamRadius;
-        float f10 = 0.0F;
-        float f11 = 0.0F;
-        float f12 = -pBeamRadius;
-        float f13 = 0.0F;
-        float f14 = 1.0F;
-        float f15 = -1.0F + f2;
-        float f16 = (float) pHeight * pTextureScale * (0.5F / pBeamRadius) + f15;
-        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, false)), f3, f4, f5, 1.0F, pYOffset, i, 0.0F, pBeamRadius, pBeamRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
-        pPoseStack.popPose();
-        f6 = -pGlowRadius;
-        float f7 = -pGlowRadius;
-        f8 = -pGlowRadius;
-        f9 = -pGlowRadius;
-        f13 = 0.0F;
-        f14 = 1.0F;
-        f15 = -1.0F + f2;
-        f16 = (float) pHeight * pTextureScale + f15;
-        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, true)), f3, f4, f5, 0.125F, pYOffset, i, f6, f7, pGlowRadius, f8, f9, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
-        pPoseStack.popPose();
-
-    }
-
-    private static void renderPart(PoseStack pPoseStack, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pMinY, int pMaxY, float pX0, float pZ0, float pX1, float pZ1, float pX2, float pZ2, float pX3, float pZ3, float pMinU, float pMaxU, float pMinV, float pMaxV) {
-        PoseStack.Pose posestack$pose = pPoseStack.last();
-        Matrix4f matrix4f = posestack$pose.pose();
-        Matrix3f matrix3f = posestack$pose.normal();
-        renderQuad(matrix4f, matrix3f, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMaxY, pX0, pZ0, pX1, pZ1, pMinU, pMaxU, pMinV, pMaxV);
-        renderQuad(matrix4f, matrix3f, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMaxY, pX3, pZ3, pX2, pZ2, pMinU, pMaxU, pMinV, pMaxV);
-        renderQuad(matrix4f, matrix3f, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMaxY, pX1, pZ1, pX3, pZ3, pMinU, pMaxU, pMinV, pMaxV);
-        renderQuad(matrix4f, matrix3f, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMaxY, pX2, pZ2, pX0, pZ0, pMinU, pMaxU, pMinV, pMaxV);
-    }
-
-    private static void renderQuad(Matrix4f pPose, Matrix3f pNormal, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pMinY, int pMaxY, float pMinX, float pMinZ, float pMaxX, float pMaxZ, float pMinU, float pMaxU, float pMinV, float pMaxV) {
-        addVertex(pPose, pNormal, pConsumer, pRed, pGreen, pBlue, pAlpha, pMaxY, pMinX, pMinZ, pMaxU, pMinV);
-        addVertex(pPose, pNormal, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMinX, pMinZ, pMaxU, pMaxV);
-        addVertex(pPose, pNormal, pConsumer, pRed, pGreen, pBlue, pAlpha, pMinY, pMaxX, pMaxZ, pMinU, pMaxV);
-        addVertex(pPose, pNormal, pConsumer, pRed, pGreen, pBlue, pAlpha, pMaxY, pMaxX, pMaxZ, pMinU, pMinV);
-    }
-
-    private static void addVertex(Matrix4f pPose, Matrix3f pNormal, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pY, float pX, float pZ, float pU, float pV) {
-        pConsumer.vertex(pPose, pX, (float) pY, pZ).color(pRed, pGreen, pBlue, pAlpha).uv(pU, pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
-    }*/
 
     public static void innerFill(Matrix4f pMatrix, int pMinX, int pMinY, int pMaxX, int pMaxY, int pColor) {
         if (pMinX < pMaxX) {
@@ -219,5 +142,66 @@ public class RenderEvents {
         RenderSystem.disableBlend();
     }
 
+    private static final ResourceLocation SYRINGE_TANK_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/overlay/syringe_tank.png");
+    private static void renderSyringeContents(RenderGuiOverlayEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) {
+            return;
+        }
+        ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (itemStack.getItem() != Registration.SYRINGE.get() || !itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+            return;
+        }
+        GuiGraphics guiGraphics = event.getGuiGraphics();
+        int width = guiGraphics.guiWidth();
+        int height = guiGraphics.guiHeight();
+        final int TOP_Y = height / 20;
+        final int LEFT_X = width / 40;
+        final float SIZE_MULTIPLIER = 1.5F;
+        guiGraphics.blit(SYRINGE_TANK_TEXTURE, LEFT_X, TOP_Y, (int) (44*SIZE_MULTIPLIER), (int) (142*SIZE_MULTIPLIER), (float) 0, (float) 0, (int) (44*SIZE_MULTIPLIER), (int) (142*SIZE_MULTIPLIER), (int) (44*SIZE_MULTIPLIER), (int) (142*SIZE_MULTIPLIER));
+        IFluidHandlerItem syringe = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
+        FluidStack fluidInTank = syringe.getFluidInTank(0);
+        if(!fluidInTank.isEmpty()) {
+            FluidState defaultFluidState = fluidInTank.getFluid().defaultFluidState();
+            IClientFluidTypeExtensions props = IClientFluidTypeExtensions.of(defaultFluidState);
+            BlockPos pos = player.getOnPos();
+            ClientLevel level = player.clientLevel;
+            ResourceLocation stillTexture = props.getStillTexture();
+            TextureAtlasSprite stillSprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(stillTexture);
+            //TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(props.getStillTexture(defaultFluidState, level, pos));
+            float percentFilled = fluidInTank.getAmount() / (float) syringe.getTankCapacity(0);
+            final int X_BASE_OFFSET = 6; // WITHOUT MULTIPLIER
+            final int Y_BASE_OFFSET = 133;
+            for (int i = 0; i < 4; i++) {
+                if (i * 0.25F >= percentFilled) {
+                    break;
+                }
+                int heightOfQuartile = (int) (SIZE_MULTIPLIER * 128 * (percentFilled - 0.25F * i));
+                float currentBaseX = LEFT_X + X_BASE_OFFSET * SIZE_MULTIPLIER;
+                float currentBaseY = TOP_Y + (Y_BASE_OFFSET - 32 * i) * SIZE_MULTIPLIER;
+                float currentTopY = currentBaseY - heightOfQuartile;
+                if(fluidInTank.getFluid() == Fluids.WATER) {
+                    int averageWaterColor = BiomeColors.getAverageWaterColor(level, pos);
+                    float r = ((averageWaterColor >> 16) & 255) / 255F;
+                    float g = ((averageWaterColor >> 8) & 255) / 255F;
+                    float b = ((averageWaterColor) & 255) / 255F;
+                    guiGraphics.blit((int) currentBaseX, (int) (currentBaseY - 32 * SIZE_MULTIPLIER), 0, (int) (32 * SIZE_MULTIPLIER), (int) (32 * SIZE_MULTIPLIER), stillSprite, r, g, b, 1);
+                } else {
+                    guiGraphics.blit((int) currentBaseX, (int) (currentBaseY - 32 * SIZE_MULTIPLIER), 0, (int) (32 * SIZE_MULTIPLIER), (int) (32 * SIZE_MULTIPLIER), stillSprite);
+                }
+                if (heightOfQuartile < SIZE_MULTIPLIER * 32)
+                    guiGraphics.blit(SYRINGE_TANK_TEXTURE, (int) currentBaseX, (int) (currentBaseY - 32 * SIZE_MULTIPLIER), (int) (32 * SIZE_MULTIPLIER), (int) (32 * SIZE_MULTIPLIER - heightOfQuartile), X_BASE_OFFSET*SIZE_MULTIPLIER, Y_BASE_OFFSET*SIZE_MULTIPLIER - 32 * SIZE_MULTIPLIER, (int) (32 * SIZE_MULTIPLIER), (int) (32 * SIZE_MULTIPLIER - heightOfQuartile), (int) (44 * SIZE_MULTIPLIER), (int) (142 * SIZE_MULTIPLIER));
+//            guiGraphics.blit(stillTexture, currentBaseX, currentTopY, 32*SIZE_MULTIPLIER, heightOfQuartile, 0, 0, 32*SIZE_MULTIPLIER, heightOfQuartile, 32*SIZE_MULTIPLIER, 32*SIZE_MULTIPLIER);
+
+            }
+            guiGraphics.drawString(Minecraft.getInstance().font, String.format("%d mB", fluidInTank.getAmount()), (int) (LEFT_X + 48 * SIZE_MULTIPLIER), (int) (TOP_Y + (142 / 2) * SIZE_MULTIPLIER), 0xFFFFFF00);
+            guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable(fluidInTank.getTranslationKey()), (int) (LEFT_X + 48 * SIZE_MULTIPLIER), (int) (TOP_Y + (142 / 2) * SIZE_MULTIPLIER + 7), 0xFFFFFF00);
+        }
+        for (int i = 0; i < 4; i++) {
+            float currentBaseX = LEFT_X + 35*SIZE_MULTIPLIER;
+            float currentBaseY = TOP_Y + (133 - 32*(i+1))*SIZE_MULTIPLIER;
+            guiGraphics.fill((int) currentBaseX, (int) currentBaseY, (int) (currentBaseX+3*SIZE_MULTIPLIER), (int) (currentBaseY+1*SIZE_MULTIPLIER), 0xFF000000);
+        }
+    }
 
 }

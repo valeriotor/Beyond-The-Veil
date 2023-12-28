@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,21 +50,43 @@ public class FlaskBE extends BlockEntity {
     /**
      * Server-Side only
      */
-    public boolean tryFillFromItem(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult tryFillFromItem(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
+
         if (itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
-            if (pLevel.isClientSide) {
-                return true;
-            }
             if (itemStack.getItem() != Registration.SYRINGE.get()) {
-                FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHit.getDirection());
-            }
-            setChanged();
-            if (level != null) {
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                if (!pLevel.isClientSide) {
+                    FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHit.getDirection());
+                }
+                return InteractionResult.SUCCESS;
+            } else {
+                if (!pLevel.isClientSide) {
+
+                    IFluidHandlerItem syringe = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
+                    if (!pPlayer.isShiftKeyDown()) {
+                        if (syringe.fill(tank.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
+                            syringe.fill(tank.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                            setChanged();
+                            if (level != null) {
+                                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                            }
+                        }
+                    } else {
+                        if (tank.fill(syringe.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
+                            tank.fill(syringe.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                            setChanged();
+                            if (level != null) {
+                                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                            }
+                        }
+                    }
+
+                    return InteractionResult.SUCCESS;
+                }
+                return InteractionResult.SUCCESS;
             }
         }
-        return false;
+        return InteractionResult.FAIL;
     }
 
     @Override

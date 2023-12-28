@@ -227,7 +227,7 @@ public class Registration {
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
     public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackMirror("black_mirror");
     public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
-    public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", SyringeItem::new);
 
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
