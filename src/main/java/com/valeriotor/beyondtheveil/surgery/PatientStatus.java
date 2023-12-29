@@ -12,11 +12,13 @@ public class PatientStatus {
         return 10;
     }
 
+
     private int sedative;
 
     private int softness;
     private SurgicalLocation incisedLocation = null;
-    private PatientState state;
+    private PatientCondition condition;
+    private int currentPain;
 
     private boolean tooSoftForSoftOrganExtraction() {
         return softness >= 10; // TODO link to server data
@@ -65,5 +67,23 @@ public class PatientStatus {
     public void performingPainfulOperation(PainLevel painLevel) {
 
     }
+
+    public boolean hasString(String s) {
+        return false;
+    }
+
+    public void setCondition(PatientCondition condition) {
+        this.condition = condition;
+    }
+
+    public PatientCondition getCondition() {
+        return condition;
+    }
+
+    public void setCurrentPain(int value) {
+        this.currentPain = value;
+    }
+
+    // TODO Once currentLevel reaches 33/100 set sedative amount to 0 (unless condition is ASLEEP_FOREVER)
 
 }

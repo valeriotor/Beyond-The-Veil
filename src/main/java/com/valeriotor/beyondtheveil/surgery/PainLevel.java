@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery;
 
 public enum PainLevel {
-    LOW,
+    NEGLIGIBLE,
     MEDIUM,
     HIGH,
     EXTREME
