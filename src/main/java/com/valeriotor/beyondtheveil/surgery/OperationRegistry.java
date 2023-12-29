@@ -24,9 +24,10 @@ public class OperationRegistry {
     public record InsertionEntry(Operation operation, Item item) {
     }
 
-    private static final Map<Fluid, List<InjectionEntry>> INJECTION_OPERATIONS = new HashMap<>();
-    private static final List<ExtractionEntry> EXTRACTION_OPERATIONS = new ArrayList<>();
-    private static final Map<Item, List<InsertionEntry>> INSERTION_OPERATIONS = new HashMap<>();
+    static final Map<String, Operation> OPERATIONS_BY_NAME = new HashMap<>();
+    static final Map<Fluid, List<InjectionEntry>> INJECTION_OPERATIONS = new HashMap<>();
+    static final List<ExtractionEntry> EXTRACTION_OPERATIONS = new ArrayList<>();
+    static final Map<Item, List<InsertionEntry>> INSERTION_OPERATIONS = new HashMap<>();
 
     private final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")
             .setPainLevel(s -> s.hasString("softened") ? PainLevel.MEDIUM : PainLevel.EXTREME)
@@ -91,7 +92,7 @@ public class OperationRegistry {
                     s.setCondition(PatientCondition.STABLE);
                 }
             })
-            .setEraseLiquid(true)
+            .setEraseFluid(true)
             .buildInjectionOperation(INJECTION_OPERATIONS, Fluids.WATER, 32);
 
 

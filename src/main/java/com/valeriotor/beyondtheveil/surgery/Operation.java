@@ -26,12 +26,12 @@ public class Operation {
     private final int capacityRequirement;
     private final int maximumTimesAllowed;
     private final boolean persistent;
-    private final boolean eraseLiquid;
+    private final boolean eraseFluid;
 
     public Operation(String name, Function<PatientStatus, PainLevel> painLevel, Predicate<PatientStatus> requirementForSuccessfulCompletion,
                      Function<PatientStatus, String> completionMessage, Consumer<PatientStatus> statusChangeOnSuccess, PatientCondition conditionIfFailed,
                      Function<PatientStatus, LivingEntity> entityChange, Set<SurgicalLocation> allowedLocations,
-                     int capacityRequirement, int maximumTimesAllowed, boolean persistent, boolean eraseLiquid) {
+                     int capacityRequirement, int maximumTimesAllowed, boolean persistent, boolean eraseFluid) {
         this.name = name;
         this.painLevel = painLevel;
         this.requirementForSuccessfulCompletion = requirementForSuccessfulCompletion;
@@ -43,7 +43,55 @@ public class Operation {
         this.capacityRequirement = capacityRequirement;
         this.maximumTimesAllowed = maximumTimesAllowed;
         this.persistent = persistent;
-        this.eraseLiquid = eraseLiquid;
+        this.eraseFluid = eraseFluid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Function<PatientStatus, PainLevel> getPainLevel() {
+        return painLevel;
+    }
+
+    public Predicate<PatientStatus> getRequirementForSuccessfulCompletion() {
+        return requirementForSuccessfulCompletion;
+    }
+
+    public Function<PatientStatus, String> getCompletionMessage() {
+        return completionMessage;
+    }
+
+    public Consumer<PatientStatus> getStatusChangeOnSuccess() {
+        return statusChangeOnSuccess;
+    }
+
+    public PatientCondition getConditionIfFailed() {
+        return conditionIfFailed;
+    }
+
+    public Function<PatientStatus, LivingEntity> getEntityChange() {
+        return entityChange;
+    }
+
+    public Set<SurgicalLocation> getAllowedLocations() {
+        return allowedLocations;
+    }
+
+    public int getCapacityRequirement() {
+        return capacityRequirement;
+    }
+
+    public int getMaximumTimesAllowed() {
+        return maximumTimesAllowed;
+    }
+
+    public boolean isPersistent() {
+        return persistent;
+    }
+
+    public boolean isEraseFluid() {
+        return eraseFluid;
     }
 
     public static class Builder {
@@ -59,7 +107,9 @@ public class Operation {
         private int capacityRequirement = 0;
         private int maximumTimesAllowed = 1; // if value > 1 add a number at the end of the name when adding it to patient state
         private boolean persistent = false; // does data stay after removing patient from bed/cradle?
-        private boolean eraseLiquid = false;
+        private boolean eraseFluid = false;
+        private boolean updateClientOnSuccess = false; // TODO include these if necessary
+        private boolean updateClientOnFailure = false;
 
         public Builder(String name) {
             this.name = name;
@@ -130,22 +180,24 @@ public class Operation {
             return this;
         }
 
-        /** For injection operations, should a successful completion set the liquid's current amount to 0?
+        /** For injection operations, should a successful completion set the fluid's current amount to 0?
          *  For example, this is useful for repeating an operation multiple times, like coagulation.
          *
          */
-        public Builder setEraseLiquid(boolean eraseLiquid) {
-            this.eraseLiquid = eraseLiquid;
+        public Builder setEraseFluid(boolean eraseFluid) {
+            this.eraseFluid = eraseFluid;
             return this;
         }
 
         private Operation buildOperation() {
-            return new Operation(name, painLevel, requirementForSuccessfulCompletion, completionMessage, statusChangeOnSuccess, conditionIfFailed, entityChange, allowedLocations, capacityRequirement, maximumTimesAllowed, persistent, eraseLiquid);
+            return new Operation(name, painLevel, requirementForSuccessfulCompletion, completionMessage, statusChangeOnSuccess, conditionIfFailed, entityChange, allowedLocations, capacityRequirement, maximumTimesAllowed, persistent, eraseFluid);
         }
 
         public Operation buildInjectionOperation(Map<Fluid, List<OperationRegistry.InjectionEntry>> registry, Fluid fluid, int amount) {
             Operation op = buildOperation();
             registry.computeIfAbsent(fluid, k -> new ArrayList<>()).add(new OperationRegistry.InjectionEntry(op, fluid, amount));
+            registry.get(fluid).sort(Comparator.comparingInt(OperationRegistry.InjectionEntry::amount));
+            OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }
 
@@ -156,12 +208,14 @@ public class Operation {
         public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements) {
             Operation op = buildOperation();
             registry.add(new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+            OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }
 
         public Operation buildInsertionOperation(Map<Item, List<OperationRegistry.InsertionEntry>> registry, Item item) {
             Operation op = buildOperation();
             registry.computeIfAbsent(item, k -> new ArrayList<>()).add(new OperationRegistry.InsertionEntry(op, item));
+            OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }
 
