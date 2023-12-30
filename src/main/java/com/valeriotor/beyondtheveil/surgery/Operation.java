@@ -27,11 +27,21 @@ public class Operation {
     private final int maximumTimesAllowed;
     private final boolean persistent;
     private final boolean eraseFluid;
+    private final boolean requiresIncision;
 
-    public Operation(String name, Function<PatientStatus, PainLevel> painLevel, Predicate<PatientStatus> requirementForSuccessfulCompletion,
-                     Function<PatientStatus, String> completionMessage, Consumer<PatientStatus> statusChangeOnSuccess, PatientCondition conditionIfFailed,
-                     Function<PatientStatus, LivingEntity> entityChange, Set<SurgicalLocation> allowedLocations,
-                     int capacityRequirement, int maximumTimesAllowed, boolean persistent, boolean eraseFluid) {
+    public Operation(String name,
+                     Function<PatientStatus, PainLevel> painLevel,
+                     Predicate<PatientStatus> requirementForSuccessfulCompletion,
+                     Function<PatientStatus, String> completionMessage,
+                     Consumer<PatientStatus> statusChangeOnSuccess,
+                     PatientCondition conditionIfFailed,
+                     Function<PatientStatus, LivingEntity> entityChange,
+                     Set<SurgicalLocation> allowedLocations,
+                     int capacityRequirement,
+                     int maximumTimesAllowed,
+                     boolean persistent,
+                     boolean eraseFluid,
+                     boolean requiresIncision) {
         this.name = name;
         this.painLevel = painLevel;
         this.requirementForSuccessfulCompletion = requirementForSuccessfulCompletion;
@@ -44,6 +54,7 @@ public class Operation {
         this.maximumTimesAllowed = maximumTimesAllowed;
         this.persistent = persistent;
         this.eraseFluid = eraseFluid;
+        this.requiresIncision = requiresIncision;
     }
 
     public String getName() {
@@ -94,6 +105,10 @@ public class Operation {
         return eraseFluid;
     }
 
+    public boolean isRequiresIncision() {
+        return requiresIncision;
+    }
+
     public static class Builder {
         private final String name;
         private Function<PatientStatus, PainLevel> painLevel = s -> PainLevel.NEGLIGIBLE;
@@ -110,6 +125,7 @@ public class Operation {
         private boolean eraseFluid = false;
         private boolean updateClientOnSuccess = false; // TODO include these if necessary
         private boolean updateClientOnFailure = false;
+        private boolean requiresIncision = false;
 
         public Builder(String name) {
             this.name = name;
@@ -189,8 +205,13 @@ public class Operation {
             return this;
         }
 
+        public Builder setRequiresIncision(boolean requiresIncision) {
+            this.requiresIncision = requiresIncision;
+            return this;
+        }
+
         private Operation buildOperation() {
-            return new Operation(name, painLevel, requirementForSuccessfulCompletion, completionMessage, statusChangeOnSuccess, conditionIfFailed, entityChange, allowedLocations, capacityRequirement, maximumTimesAllowed, persistent, eraseFluid);
+            return new Operation(name, painLevel, requirementForSuccessfulCompletion, completionMessage, statusChangeOnSuccess, conditionIfFailed, entityChange, allowedLocations, capacityRequirement, maximumTimesAllowed, persistent, eraseFluid, requiresIncision);
         }
 
         public Operation buildInjectionOperation(Map<Fluid, List<OperationRegistry.InjectionEntry>> registry, Fluid fluid, int amount) {
@@ -218,7 +239,6 @@ public class Operation {
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }
-
 
     }
 }

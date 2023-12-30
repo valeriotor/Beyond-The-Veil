@@ -35,6 +35,7 @@ public class OperationRegistry {
             .setCompletionMessage(s -> s.hasString("too_soft") ? "surgery.extract_heart.too_soft" : null)
             .addAllowedLocation(SurgicalLocation.CHEST)
             .setPersistent(true)
+            .setRequiresIncision(true)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()));
 
     private final Operation EXTRACT_SPINE = new Operation.Builder("extract_spine")
@@ -42,6 +43,7 @@ public class OperationRegistry {
             .addAllowedLocation(SurgicalLocation.BACK)
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
             .setPersistent(true)
+            .setRequiresIncision(true)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()));
 
     private final Operation FILL_BRAIN = new Operation.Builder("fill_brain")

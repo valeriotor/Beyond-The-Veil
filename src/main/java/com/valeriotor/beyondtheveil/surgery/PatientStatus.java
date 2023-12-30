@@ -1,13 +1,18 @@
 package com.valeriotor.beyondtheveil.surgery;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Tuple;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PatientStatus {
 
@@ -22,31 +27,14 @@ public class PatientStatus {
     }
 
 
-    private int sedative;
-
-    private int softness;
-    private SurgicalLocation incisedLocation = null;
-    private PatientCondition condition;
+    private SurgicalLocation exposedLocation = SurgicalLocation.CHEST; // Just to be sure it's never null
+    private boolean incised = false;
+    private PatientCondition condition = PatientCondition.STABLE;
     private int leftoverCapacity;
     private int currentPain;
     private Map<Fluid, Integer> fluidAmounts = new HashMap<>();
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
 
-    private boolean tooSoftForSoftOrganExtraction() {
-        return softness >= 10; // TODO link to server data
-    }
-
-    private boolean overTooSoftThreshold() {
-        return softness >= 100; // TODO
-    }
-
-    private boolean overIncisionSoftnessThreshold() {
-        return softness >= 1; // TODO
-    }
-
-    private boolean isSufficientlySedated() {
-        return sedative >= enoughSedativeThreshold();
-    }
 
     public void increaseSedative() {
 
@@ -60,8 +48,32 @@ public class PatientStatus {
 
     }
 
-    private void performIncision(SurgicalLocation location) { // Slightly painful, or extremely painful if not soft enough
-        incisedLocation = location;
+    /** Can only change position if there is currently no incision
+     */
+    public void setExposedLocation(SurgicalLocation location) {
+        if (!incised) {
+            exposedLocation = location;
+        }
+    }
+
+    private boolean performIncision(SurgicalLocation location) { // TODO Slightly painful, or extremely painful if not soft enough
+        if (incised) {
+            return false;
+        }
+        PainLevel painLevel = flags.getOrDefault("soften", 0) > 0 ? PainLevel.MEDIUM : PainLevel.EXTREME;
+        incised = true;
+        if (increasesCurrentPain(painLevel)) {
+            increaseCurrentPain(40);
+        }
+        return true;
+    }
+
+    private boolean sewIncision() {
+        if (!incised) {
+            return false;
+        }
+        incised = false;
+        return true;
     }
 
     // TODO maybe a patient in pain left alone for too long should start bleeding or dying
@@ -72,12 +84,12 @@ public class PatientStatus {
     public ItemStack extract(Player player) {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
-            if (operation.getAllowedLocations().contains(incisedLocation) && extractionOperation.additionalRequirements().test(this)) {
-                Tuple<Boolean, Boolean> result = elaborateOperation(player, operation);
-                if (result.getA() && increasesCurrentPain(operation.getPainLevel().apply(this))) {
+            if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation)) {
+                boolean success = elaborateOperation(player, operation);
+                if (increasesCurrentPain(operation.getPainLevel().apply(this))) {
                     increaseCurrentPain(34);
                 }
-                if (result.getA() && result.getB()) {
+                if (success) {
                     return extractionOperation.stack().copy();
                 }
             }
@@ -92,25 +104,16 @@ public class PatientStatus {
         if (insertionEntries == null || insertionEntries.isEmpty()) {
             return false;
         }
-        PainLevel painLevel = null;
-        for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
-            if (insertionEntry.operation().getAllowedLocations().contains(incisedLocation)) {
-                painLevel = insertionEntry.operation().getPainLevel().apply(this);
-            }
-        }
-        if (painLevel == null) { // No applicable location was found
-            return false;
-        }
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
             Operation operation = insertionEntry.operation();
-
-            Tuple<Boolean, Boolean> result = elaborateOperation(player, operation);
-            if (result.getA()) {
+            if (canPerformOperation(operation)) {
+                elaborateOperation(player, operation);
+                PainLevel painLevel = operation.getPainLevel().apply(this);
                 if (increasesCurrentPain(painLevel)) {
                     increaseCurrentPain(34);
                 }
+                return true;
             }
-            return result.getA();
         }
         return false;
     }
@@ -130,7 +133,7 @@ public class PatientStatus {
             // if we are already over the max amount).
             // Note that the operations in the registry are sorted by ascending amount
             OperationRegistry.InjectionEntry injectionEntry = injectionEntries.get(i);
-            if (injectionEntry.operation().getAllowedLocations().contains(incisedLocation)) {
+            if (canPerformOperation(injectionEntry.operation())) {
                 painLevel = injectionEntry.operation().getPainLevel().apply(this);
             }
             if (newAmount <= injectionEntry.amount()) {
@@ -138,14 +141,14 @@ public class PatientStatus {
             }
         }
         if (painLevel == null) {
-            return; // No applicable (i.e. for this surgical location) operation was found
+            return; // No applicable operation was found
         }
 
         for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
             if (injectionEntry.amount() == newAmount) {
                 Operation operation = injectionEntry.operation();
-                Tuple<Boolean, Boolean> result = elaborateOperation(player, operation);
-                if (result.getA()) {
+                if(canPerformOperation(operation)) {
+                    elaborateOperation(player, operation);
                     if (operation.isEraseFluid()) {
                         fluidAmounts.put(fluid, 0);
                     }
@@ -155,19 +158,14 @@ public class PatientStatus {
         if (increasesCurrentPain(painLevel)) { // Injections increase pain per tick
             increaseCurrentPain(2);
         }
+        // TODO special case for injecting water: sync with client every 10mB (to enlarge patient head)
     }
 
-    /** @return A tuple of two values:
-     *  Value A is whether the operation *was performed or not*. This return value may be used, for example, to see
-     *  whether the item was consumed during an insertion operation.
-     *  Value B is whether the operation succedeed or failed (both of which may only happen if the operation was performed).
+    /** @return whether the operation succedeed or failed
      */
-    private Tuple<Boolean, Boolean> elaborateOperation(Player player, Operation operation) {
-        if (!operation.getAllowedLocations().contains(incisedLocation) ||
-            operation.getCapacityRequirement() > leftoverCapacity ||
-            (operation.getMaximumTimesAllowed() >= 0 && operation.getMaximumTimesAllowed() <= flags.getOrDefault(operation.getName(), 0))) {
-            return new Tuple<>(false, false);
-        }
+    private boolean elaborateOperation(Player player, Operation operation) {
+        //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
+        //if (!canPerformOperation) return canPerformOperation;
 
         boolean success = operation.getRequirementForSuccessfulCompletion().test(this);
         String completionMessage = operation.getCompletionMessage().apply(this);
@@ -178,11 +176,19 @@ public class PatientStatus {
             operation.getStatusChangeOnSuccess().accept(this);
             // TODO entityChange
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0)+1);
-            return new Tuple<>(true, true);
+            return true;
         } else {
             setCondition(operation.getConditionIfFailed());
-            return new Tuple<>(true, false);
+            return false;
         }
+    }
+
+    @Nullable
+    private boolean canPerformOperation(Operation operation) {
+        return (!operation.isRequiresIncision() || incised) &&
+                operation.getAllowedLocations().contains(exposedLocation) &&
+                operation.getCapacityRequirement() <= leftoverCapacity &&
+                (operation.getMaximumTimesAllowed() < 0 || operation.getMaximumTimesAllowed() > flags.getOrDefault(operation.getName(), 0));
     }
 
     private boolean wasTooPainfulToSucceed(PainLevel painLevel) {
@@ -195,7 +201,7 @@ public class PatientStatus {
     }
 
     private boolean increasesCurrentPain(PainLevel painLevel) {
-        return switch (painLevel) {
+        return condition != PatientCondition.ASLEEP_FOREVER && switch (painLevel) {
             case NEGLIGIBLE -> false;
             case MEDIUM -> flags.getOrDefault("sedate", 0) == 0;
             case HIGH -> true;
@@ -211,6 +217,10 @@ public class PatientStatus {
         if (currentPain >= 80) {
             setCondition(PatientCondition.DEAD);
         }
+    }
+
+    public void increaseLeftoverCapacity(int amount) {
+        leftoverCapacity += amount;
     }
 
     /**
@@ -243,6 +253,44 @@ public class PatientStatus {
         this.currentPain = value;
     }
 
-    // TODO Once currentLevel reaches 33/100 set sedative amount to 0 (unless condition is ASLEEP_FOREVER)
+    public CompoundTag saveToNBT(CompoundTag tag) {
+        tag.putString("condition", condition.name());
+        tag.putInt("current_pain", currentPain);
+        tag.putInt("leftover_capacity", leftoverCapacity);
+        tag.putString("exposed_location", exposedLocation.name());
+        tag.putBoolean("incised", incised);
+        CompoundTag flagTag = new CompoundTag();
+        for (Map.Entry<String, Integer> entry : flags.entrySet()) {
+            flagTag.putInt(entry.getKey(), entry.getValue());
+        }
+        tag.put("flags", flagTag);
+        CompoundTag fluidTag = new CompoundTag();
+        for (Map.Entry<Fluid, Integer> entry : fluidAmounts.entrySet()) {
+            ResourceLocation fluidKey = ForgeRegistries.FLUIDS.getKey(entry.getKey());
+            if (fluidKey != null) {
+                fluidTag.putInt(fluidKey.toString(), entry.getValue());
+            }
+        }
+        tag.put("fluids", fluidTag);
+        return tag;
+    }
+
+    public void loadFromNBT(CompoundTag tag) {
+        condition = PatientCondition.valueOf(tag.getString("condition"));
+        currentPain = tag.getInt("current_pain");
+        leftoverCapacity = tag.getInt("leftover_capacity");
+        exposedLocation = SurgicalLocation.valueOf(tag.getString("exposed_location"));
+        incised = tag.getBoolean("incised");
+        CompoundTag flagTag = tag.getCompound("flags");
+        for (String key : flagTag.getAllKeys()) {
+            flags.put(key, flagTag.getInt(key));
+        }
+        CompoundTag fluidTag = tag.getCompound("fluids");
+        for (String key : fluidTag.getAllKeys()) {
+            Fluid f = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(key));
+            fluidAmounts.put(f, fluidTag.getInt(key));
+        }
+    }
+
 
 }
