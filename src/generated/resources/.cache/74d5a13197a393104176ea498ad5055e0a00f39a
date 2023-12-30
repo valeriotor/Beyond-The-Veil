@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-24T20:34:14.8694551	Item Models: beyondtheveil
+// 1.20.1	2023-12-30T17:56:31.1711072	Item Models: beyondtheveil
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
 540649a72e51acc85ca94b97512d8d225aa6db6b assets/beyondtheveil/models/item/black_mirror.json
@@ -17,6 +17,7 @@ c4eec04da222d4f5e3a18aecd856184775e3ff34 assets/beyondtheveil/models/item/blood_
 fcf59a6fee0094df1f0e33beebf5c5f7de0d3561 assets/beyondtheveil/models/item/bone_tiara.json
 e184cc6fec8ef94ea9dda5167cdcbdb6145b44aa assets/beyondtheveil/models/item/bronze_sphere.json
 4825394776dfd0ddc223aa0019ff71367143f521 assets/beyondtheveil/models/item/canoe.json
+ac99cf2d7f6c3f7c56901fe6461ca06068df16f0 assets/beyondtheveil/models/item/coagulant_bucket.json
 3f686ab6e84a3cba9d52614e4de61f08b8eb31f7 assets/beyondtheveil/models/item/coral_staff.json
 5a397be87203b09aa26958757b273e3389493b92 assets/beyondtheveil/models/item/crucible.json
 64cde50a504da3d05f68258f5cf9c23ca495862e assets/beyondtheveil/models/item/damp_canopy.json
@@ -69,6 +70,7 @@ ddc62887706a7471a412f64d15c7d914b58c2a6a assets/beyondtheveil/models/item/oniric
 4595d5f709e65efe33d2c4f7ffe8b7c1d4617c40 assets/beyondtheveil/models/item/revelation_ring.json
 690ea1f3132694138569531da72660612fa51f55 assets/beyondtheveil/models/item/sacrifice_altar.json
 3b91ab14247232d6ab7625a9753a38e5638bd194 assets/beyondtheveil/models/item/sacrificial_knife.json
+de3a9251229d896b13d5cbea687f93278a311966 assets/beyondtheveil/models/item/sedative_bucket.json
 e28db6717dc9cb19e42cc3795f1c7d3d3d104e3e assets/beyondtheveil/models/item/shoggoth_map.json
 ef7f9408fc0d50b16a45b2b78ea10819dbdbb3ab assets/beyondtheveil/models/item/sigil_pathway.json
 1e5ca1fefe986387ccc8bd1d0ac5d2731ce5ea67 assets/beyondtheveil/models/item/sigil_player.json
@@ -77,6 +79,7 @@ ef7f9408fc0d50b16a45b2b78ea10819dbdbb3ab assets/beyondtheveil/models/item/sigil_
 c58713ce42f31ac95a938334bd8e0d45317f6027 assets/beyondtheveil/models/item/sleep_chamber.json
 622b7e0622e56b293d9059b437b92220c824ae81 assets/beyondtheveil/models/item/slug.json
 bdfa9c48a15d11fbb328153dca660e615d77f289 assets/beyondtheveil/models/item/slug_bait.json
+088184a3966e3871bf5ec8321d92b44b18a156d5 assets/beyondtheveil/models/item/softener_bucket.json
 e0a2244f5f7f30c7b5056bdbf86cc6af8eab471d assets/beyondtheveil/models/item/spine.json
 cf6c1d4ac8de2c9ea93641017592929ed9450b96 assets/beyondtheveil/models/item/surgeon_summons.json
 f5559c752aca39809a377b09d517ed5bcdc635b3 assets/beyondtheveil/models/item/surgery_tools.json
