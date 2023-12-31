@@ -29,42 +29,42 @@ public class SyringeItem extends Item {
         return new FluidHandlerItemStack(stack, 100);
     }
 
-    @Override
-    public int getUseDuration(ItemStack pStack) {
-        return 72000;
-    }
+    //@Override
+    //public int getUseDuration(ItemStack pStack) {
+    //    return 72000;
+    //}
+//
+    //@Override
+    //public UseAnim getUseAnimation(ItemStack pStack) {
+    //    return UseAnim.BOW;
+    //}
+//
+    //@Override
+    //public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+    //    BlockPos clickedPos = context.getClickedPos();
+    //    Level level = context.getLevel();
+    //    Block block = level.getBlockState(clickedPos).getBlock();
+    //    if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
+    //        if (context.getPlayer() != null) {
+    //            context.getPlayer().startUsingItem(context.getHand());
+    //            return InteractionResult.PASS;
+    //        }
+    //    }
+    //    return InteractionResult.FAIL;
+    //}
+//
+    //@Override
+    //public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
+    //    return true;
+    //}
+//
+    //@Override
+    //public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+    //    super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
+    //}
 
-    @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.BOW;
-    }
-
-    @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        BlockPos clickedPos = context.getClickedPos();
-        Level level = context.getLevel();
-        Block block = level.getBlockState(clickedPos).getBlock();
-        if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
-            if (context.getPlayer() != null) {
-                context.getPlayer().startUsingItem(context.getHand());
-                return InteractionResult.PASS;
-            }
-        }
-        return InteractionResult.FAIL;
-    }
-
-    @Override
-    public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
-        return true;
-    }
-
-    @Override
-    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
-        super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
-    }
-
-    @Override
-    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-        return true;
-    }
+    //@Override
+    //public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+    //    return true;
+    //}
 }

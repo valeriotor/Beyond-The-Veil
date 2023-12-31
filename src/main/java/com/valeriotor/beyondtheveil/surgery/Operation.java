@@ -176,6 +176,11 @@ public class Operation {
             return this;
         }
 
+        public Builder allowAllLocations() {
+            this.allowedLocations.addAll(List.of(SurgicalLocation.values()));
+            return this;
+        }
+
         public Builder setCapacityRequirement(int capacityRequirement) {
             this.capacityRequirement = capacityRequirement;
             return this;

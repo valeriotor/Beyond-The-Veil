@@ -237,6 +237,10 @@ public class Registration {
     public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackMirror("black_mirror");
     public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
     public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", SyringeItem::new);
+    public static final RegistryObject<Item> SCALPEL = ITEMS.register("scalpel", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> FORCEPS = ITEMS.register("forceps", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> TONGS = ITEMS.register("tongs", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SEWING_NEEDLE = ITEMS.register("sewing_needle", () -> new Item(ITEM_PROPERTIES));
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -366,6 +370,10 @@ public class Registration {
                 output.accept(BLACK_MIRROR.get());
                 output.accept(FLESH_CARBON_TOKEN.get());
                 output.accept(SYRINGE.get());
+                output.accept(SCALPEL.get());
+                output.accept(FORCEPS.get());
+                output.accept(TONGS.get());
+                output.accept(SEWING_NEEDLE.get());
 
                 output.accept(SEDATIVE_BUCKET.get());
                 output.accept(SOFTENER_BUCKET.get());

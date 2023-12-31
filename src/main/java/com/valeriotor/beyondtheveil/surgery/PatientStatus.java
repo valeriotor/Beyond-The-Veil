@@ -5,8 +5,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,6 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 public class PatientStatus {
+
+    public PatientStatus() {
+    }
+    public PatientStatus(SurgicalLocation exposedLocation) {
+        this.exposedLocation = exposedLocation;
+    }
 
     private static int tooMuchSedativeThreshold() {
         //TODO link to server data
@@ -36,18 +44,6 @@ public class PatientStatus {
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
 
 
-    public void increaseSedative() {
-
-    }
-
-    private void decreaseSedative() {
-
-    }
-
-    public void increaseSoftness() {
-
-    }
-
     /** Can only change position if there is currently no incision
      */
     public void setExposedLocation(SurgicalLocation location) {
@@ -56,11 +52,15 @@ public class PatientStatus {
         }
     }
 
-    private boolean performIncision(SurgicalLocation location) { // TODO Slightly painful, or extremely painful if not soft enough
+    public boolean performIncision() { // TODO Slightly painful, or extremely painful if not soft enough
         if (incised) {
             return false;
         }
         PainLevel painLevel = flags.getOrDefault("soften", 0) > 0 ? PainLevel.MEDIUM : PainLevel.EXTREME;
+        if (painLevel == PainLevel.EXTREME) {
+            setCondition(PatientCondition.DEAD);
+            return true;
+        }
         incised = true;
         if (increasesCurrentPain(painLevel)) {
             increaseCurrentPain(40);
@@ -68,7 +68,7 @@ public class PatientStatus {
         return true;
     }
 
-    private boolean sewIncision() {
+    public boolean sewIncision() {
         if (!incised) {
             return false;
         }
@@ -85,10 +85,10 @@ public class PatientStatus {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
             if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation)) {
-                boolean success = elaborateOperation(player, operation);
                 if (increasesCurrentPain(operation.getPainLevel().apply(this))) {
                     increaseCurrentPain(34);
                 }
+                boolean success = elaborateOperation(player, operation);
                 if (success) {
                     return extractionOperation.stack().copy();
                 }
@@ -97,33 +97,35 @@ public class PatientStatus {
         return null;
     }
 
-    /** @return if the item was consumed. ItemStack shrinking logic should be handled upstream.
+    /** @return if the operation was performed (and therefore the item was consumed).
+     *  ItemStack shrinking logic should be handled upstream.
      */
-    public boolean insert(Player player, InteractionHand interactionHand, ItemStack heldInForceps) {
-        List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps.getItem());
+    public boolean insert(Player player, Item heldInForceps) {
+        List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps);
         if (insertionEntries == null || insertionEntries.isEmpty()) {
             return false;
         }
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
             Operation operation = insertionEntry.operation();
             if (canPerformOperation(operation)) {
-                elaborateOperation(player, operation);
                 PainLevel painLevel = operation.getPainLevel().apply(this);
                 if (increasesCurrentPain(painLevel)) {
                     increaseCurrentPain(34);
                 }
+                elaborateOperation(player, operation);
                 return true;
             }
         }
         return false;
     }
 
-    public void inject(Player player, InteractionHand interactionHand, Fluid fluid) {
-        int newAmount = fluidAmounts.getOrDefault(fluid, 0) + 1;
+    public boolean inject(Player player, FluidStack fluidStack) {
+        Fluid fluid = fluidStack.getFluid();
+        int newAmount = fluidAmounts.getOrDefault(fluid, 0) + fluidStack.getAmount();
         fluidAmounts.put(fluid, newAmount);
         List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.INJECTION_OPERATIONS.get(fluid);
         if (injectionEntries == null || injectionEntries.isEmpty()) {
-            return; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
+            return false; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
         }
         PainLevel painLevel = null;
         for (int i = 0; i < injectionEntries.size(); i++) {
@@ -141,13 +143,18 @@ public class PatientStatus {
             }
         }
         if (painLevel == null) {
-            return; // No applicable operation was found
+            return false; // No applicable operation was found
         }
-
+        boolean animationThreshold = false;
+        if (increasesCurrentPain(painLevel)) { // Injections increase pain per tick
+            animationThreshold = increaseCurrentPain(2);
+        }
+        boolean operationPerformed = false;
         for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
             if (injectionEntry.amount() == newAmount) {
                 Operation operation = injectionEntry.operation();
-                if(canPerformOperation(operation)) {
+                if (canPerformOperation(operation)) {
+                    operationPerformed = true;
                     elaborateOperation(player, operation);
                     if (operation.isEraseFluid()) {
                         fluidAmounts.put(fluid, 0);
@@ -155,10 +162,8 @@ public class PatientStatus {
                 }
             }
         }
-        if (increasesCurrentPain(painLevel)) { // Injections increase pain per tick
-            increaseCurrentPain(2);
-        }
         // TODO special case for injecting water: sync with client every 10mB (to enlarge patient head)
+        return operationPerformed || animationThreshold;
     }
 
     /** @return whether the operation succedeed or failed
@@ -167,7 +172,7 @@ public class PatientStatus {
         //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
         //if (!canPerformOperation) return canPerformOperation;
 
-        boolean success = operation.getRequirementForSuccessfulCompletion().test(this);
+        boolean success = operation.getRequirementForSuccessfulCompletion().test(this) && !condition.isTerminal();
         String completionMessage = operation.getCompletionMessage().apply(this);
         if (completionMessage != null) {
             player.sendSystemMessage(Component.translatable(completionMessage));
@@ -209,7 +214,9 @@ public class PatientStatus {
         };
     }
 
-    private void increaseCurrentPain(int amount) {
+    /** @return if the pain exceeded an animation threshold
+     */
+    private boolean increaseCurrentPain(int amount) {
         currentPain += amount;
         if (currentPain >= 60) {
             flags.put("sedate", 0);
@@ -217,39 +224,37 @@ public class PatientStatus {
         if (currentPain >= 80) {
             setCondition(PatientCondition.DEAD);
         }
-    }
-
-    public void increaseLeftoverCapacity(int amount) {
-        leftoverCapacity += amount;
-    }
-
-    /**
-     * Tickwise function, used while e.g. slicing incision
-     * Can be used client side to animate the patient if not sufficiently sedated (i.e. in pain and thrashing about)
-     * Can be used server side to decrease sedation level if performing high pain operation
-     */
-    public void performingPainfulOperation(PainLevel painLevel) {
-
-    }
-
-    public boolean hasString(String s) {
+        int[] animationThresholds = new int[]{30, 60, 70};
+        for (int animationThreshold : animationThresholds) {
+            if (currentPain >= animationThreshold && currentPain - amount < animationThreshold) {
+                return true;
+            }
+        }
         return false;
     }
 
-    public void setCondition(PatientCondition condition) {
-        this.condition = condition;
-        if (condition == PatientCondition.DEAD) {
+    void increaseLeftoverCapacity(int amount) {
+        leftoverCapacity += amount;
+    }
+
+    boolean hasString(String s) {
+        return false;
+    }
+
+    void setCondition(PatientCondition condition) {
+        if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
             // TODO play sound, show particles, do something
         } else if (condition == PatientCondition.BLEEDING) {
             // TODO maybe show particles?
         }
+        this.condition = condition;
     }
 
     public PatientCondition getCondition() {
         return condition;
     }
 
-    public void setCurrentPain(int value) {
+    void setCurrentPain(int value) {
         this.currentPain = value;
     }
 
