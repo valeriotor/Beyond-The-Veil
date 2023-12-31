@@ -175,7 +175,7 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
                     return InteractionResult.SUCCESS;
                 return InteractionResult.SUCCESS; // eh I guess I need it here too so that the flask isn't placed as an adjacent, individual block
             } else {
-                return be.interactLiquid(pLevel, pPos, pPlayer, pHand, pHit);
+                //return be.interactLiquid(pLevel, pPos, pPlayer, pHand, pHit);
             }
 
         }
@@ -267,7 +267,7 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
     }
 
-    private BlockPos findCenter(BlockPos pPos, BlockState pState) {
+    public BlockPos findCenter(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(FACING);
         int i = -pState.getValue(SIDE)+1;
         int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);

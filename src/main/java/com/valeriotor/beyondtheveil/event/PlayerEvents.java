@@ -7,8 +7,10 @@ import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -51,11 +53,14 @@ public class PlayerEvents {
         Player player = event.getEntity();
         Level level = player.level();
         Block block = level.getBlockState(event.getPos()).getBlock();
-        if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
-            if (player.getItemInHand(event.getHand()).getItem() == Registration.SYRINGE.get()) {
-                event.setUseItem(Event.Result.DENY);
-                event.setUseBlock(Event.Result.ALLOW);
-            }
+        //if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
+        //    if (player.getItemInHand(event.getHand()).getItem() == Registration.SYRINGE.get()) {
+        //        //event.setUseItem(Event.Result.DENY);
+        //        //event.setUseBlock(Event.Result.DENY);
+        //    }
+        //}
+        if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SYRINGE.get() && level.getBlockEntity(event.getPos()) instanceof SurgicalBE) {
+            event.setUseBlock(Event.Result.DENY);
         }
     }
 

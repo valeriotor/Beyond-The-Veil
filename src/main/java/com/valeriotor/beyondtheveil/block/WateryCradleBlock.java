@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -40,6 +41,9 @@ public class WateryCradleBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
+        if (stack.getItem() == Registration.SYRINGE.get()) {
+            return InteractionResult.SUCCESS;
+        }
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if (entity instanceof WateryCradleBE cradle) {
             boolean success = cradle.interact(pPlayer, stack, pHand);
