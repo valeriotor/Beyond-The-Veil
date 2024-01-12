@@ -66,6 +66,7 @@ public class ClientSetup {
         event.registerLayerDefinition(BloodWraithModel.LAYER_LOCATION, BloodWraithModel::createBodyLayer);
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
+        event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -76,6 +77,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
         event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
         event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
+        event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

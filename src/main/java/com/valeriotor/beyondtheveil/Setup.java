@@ -19,6 +19,7 @@ public class Setup {
         event.put(Registration.BLOOD_ZOMBIE.get(), BloodZombieEntity.prepareAttributes().build());
         event.put(Registration.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
         event.put(Registration.CRAWLER.get(), CrawlerEntity.prepareAttributes().build());
+        event.put(Registration.WEEPER.get(), WeeperEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 
