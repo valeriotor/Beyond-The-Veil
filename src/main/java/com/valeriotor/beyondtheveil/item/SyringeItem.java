@@ -95,7 +95,13 @@ public class SyringeItem extends Item {
             }
         }
     }
-//
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem();
+    }
+
+    //
     //@Override
     //public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
     //    return true;
