@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "beyondtheveil:item/syringe"
+    "layer0": "beyondtheveil:item/forceps"
   }
 }
