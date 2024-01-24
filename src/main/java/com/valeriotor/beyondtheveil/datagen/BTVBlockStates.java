@@ -2,7 +2,6 @@ package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -74,6 +73,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerFlaskShelf();
         registerFlasks();
+        registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -278,6 +278,24 @@ public class BTVBlockStates extends BlockStateProvider {
             };
             return ConfiguredModel.builder().modelFile(file).build();
         });
+    }
+
+    /** The empty model is necessary for particles
+     */
+    private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock3by2 block) {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/" + modelName), models().existingFileHelper);
+        getVariantBuilder(block)
+                .forAllStatesExcept(state -> {
+                    ModelFile file = state.getValue(block.getSideProperty()) == block.getHorizontalRadius() && state.getValue(block.getLevelProperty()) == block.getCenterY() ? base : empty;
+                    if (file == empty) {
+
+                    }
+                    return ConfiguredModel.builder()
+                            .modelFile(file) // Can show 'modelFile'
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
+                });
     }
 
 }

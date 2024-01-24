@@ -88,6 +88,7 @@ public class Registration {
 
     public static final RegistryObject<Block> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new WateryCradleBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<FlaskShelfBlock> FLASK_SHELF = BLOCKS.register("flask_shelf", () -> new FlaskShelfBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
+    public static final RegistryObject<SurgeryBedBlock> SURGERY_BED = BLOCKS.register("surgery_bed", () -> new SurgeryBedBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     //public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new Block(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
     //public static final RegistryObject<Block> CITY_MAPPER = BLOCKS.register("city_mapper", () -> new Block(BRICK_PROPERTIES)); // new BlockCityMapper(BlockNames.CITYMAPPER);
     public static final RegistryObject<Block> ELDER_STONE_BRICK = BLOCKS.register("elder_stone_brick", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK).setHardness(10).setResistance(3000);
@@ -151,6 +152,7 @@ public class Registration {
     public static final RegistryObject<Item> WATERY_CRADLE_ITEM = fromBlock(WATERY_CRADLE);
 
     public static final RegistryObject<Item> FLASK_SHELF_ITEM = fromBlock(FLASK_SHELF);
+    public static final RegistryObject<Item> SURGERY_BED_ITEM = fromBlock(SURGERY_BED);
     //public static final RegistryObject<Item> LACRYMATORY_ITEM = fromBlock(LACRYMATORY);
     //public static final RegistryObject<Item> CITY_MAPPER_ITEM = fromBlock(CITY_MAPPER);
     public static final RegistryObject<Item> ELDER_STONE_BRICK_ITEM = fromBlock(ELDER_STONE_BRICK);
@@ -258,6 +260,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<HeartBE>> HEART_BE = BLOCK_ENTITIES.register(HEART.getId().getPath(), () -> BlockEntityType.Builder.of(HeartBE::new, HEART.get()).build(null));
     public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskShelfBE>> FLASK_SHELF_BE = BLOCK_ENTITIES.register(FLASK_SHELF.getId().getPath(), () -> BlockEntityType.Builder.of(FlaskShelfBE::new, FLASK_SHELF.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SurgeryBedBE>> SURGERY_BED_BE = BLOCK_ENTITIES.register(SURGERY_BED.getId().getPath(), () -> BlockEntityType.Builder.of(SurgeryBedBE::new, SURGERY_BED.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get()).build(null));
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
@@ -307,6 +310,7 @@ public class Registration {
                 output.accept(GEAR_BENCH.get());
                 output.accept(WATERY_CRADLE.get());
                 output.accept(FLASK_SHELF.get());
+                output.accept(SURGERY_BED.get());
                 output.accept(ELDER_STONE_BRICK.get());
                 output.accept(ELDER_STONE_BRICK_CHISELED.get());
                 output.accept(ELDER_STONE_BRICK_SLAB.get());

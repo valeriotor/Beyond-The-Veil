@@ -45,7 +45,7 @@ public class OperationRegistry {
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
             .setPersistent(true)
             .setRequiresIncision(true)
-            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()));
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()));
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .setPainLevel(PainLevel.HIGH)

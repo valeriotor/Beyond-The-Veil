@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=east,level=0,side=1": {
+      "model": "beyondtheveil:block/surgery_bed"
+    },
+    "facing=east,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=east,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=east,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=east,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=north,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=north,level=0,side=1": {
+      "model": "beyondtheveil:block/surgery_bed",
+      "y": 270
+    },
+    "facing=north,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=north,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=north,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=north,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=south,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=south,level=0,side=1": {
+      "model": "beyondtheveil:block/surgery_bed",
+      "y": 90
+    },
+    "facing=south,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=south,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=south,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=south,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "facing=west,level=0,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=0,side=1": {
+      "model": "beyondtheveil:block/surgery_bed",
+      "y": 180
+    },
+    "facing=west,level=0,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=1,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=1,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=west,level=1,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    }
+  }
+}

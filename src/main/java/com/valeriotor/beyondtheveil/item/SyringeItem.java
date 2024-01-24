@@ -77,20 +77,25 @@ public class SyringeItem extends Item {
             HitResult hitResult = p.pick(p.getEntityReach(), 0, false);
             if (hitResult instanceof BlockHitResult bhr) {
                 BlockPos pos = bhr.getBlockPos();
-                BlockState lookedAtShelfState = level.getBlockState(pos);
+                BlockState lookedAtState = level.getBlockState(pos);
                 BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (lookedAtShelfState.getBlock() == Registration.FLASK_SHELF.get()) {
-                    BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtShelfState);
+                if (lookedAtState.getBlock() == Registration.FLASK_SHELF.get()) {
+                    BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
                     if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
                         ItemStack itemStack = p.getItemInHand(InteractionHand.MAIN_HAND);
                         Item held = itemStack.getItem();
                         be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
                     }
-                } else if (lookedAtShelfState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
+                } else if (lookedAtState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
                     flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
                 } else if (blockEntity instanceof SurgicalBE surgicalBE) {
                     surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
                     // IMPORTANT: SurgicalBE base Block should return PASS in the use method when wielding syringe
+                } else if (lookedAtState.getBlock() == Registration.SURGERY_BED.get()) {
+                    BlockPos centerPos = Registration.SURGERY_BED.get().findCenter(pos, lookedAtState);
+                    if (level.getBlockEntity(centerPos) instanceof SurgicalBE surgicalBE) {
+                        surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
+                    }
                 }
             }
         }

@@ -69,7 +69,7 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 	@Override
 	public void setupAnim(CrawlerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		int crawling = entity.getCrawling();
-		float armSwing = crawling < -1 ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
+		float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
 		arms.xRot = -2.3998F - armSwing;
 	}
 

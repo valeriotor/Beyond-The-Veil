@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -33,11 +34,12 @@ import org.slf4j.Logger;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
+public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, SurgeryPatient {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.VILLAGER_DATA);
     private static final EntityDataAccessor<Boolean> DATA_CRAWLING = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
     private int startCrawl = -20;
+    private boolean surgeryPatient = false;
     @Nullable
     private Tag gossips;
     @Nullable
@@ -200,6 +202,15 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder {
                 startCrawl = tickCount;
             }
         }
+    }
+
+    @Override
+    public void markAsPatient() {
+        surgeryPatient = true;
+    }
+
+    public boolean isSurgeryPatient() {
+        return surgeryPatient;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

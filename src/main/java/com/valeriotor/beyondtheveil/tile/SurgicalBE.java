@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -126,6 +127,9 @@ public abstract class SurgicalBE extends BlockEntity {
         if (pTag != null && pTag.contains("entity")) {
             if (level != null && level.isClientSide) {
                 entity = Registration.CRAWLER.get().create(level);
+                if (entity instanceof SurgeryPatient) { // Will not be redundant once we expand to other patient types
+                    ((SurgeryPatient) entity).markAsPatient();
+                }
                 CompoundTag tag = pTag.getCompound("entity");
                 entity.readAdditionalSaveData(tag);
             } else {
@@ -140,6 +144,14 @@ public abstract class SurgicalBE extends BlockEntity {
             entityData = null;
         }
 
+    }
+
+    protected CompoundTag getEntityData() {
+        return entityData;
+    }
+
+    protected PatientStatus getPatientStatus() {
+        return patientStatus;
     }
 
     @Override

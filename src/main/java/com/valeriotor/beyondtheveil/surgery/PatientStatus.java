@@ -52,6 +52,10 @@ public class PatientStatus {
         }
     }
 
+    public SurgicalLocation getExposedLocation() {
+        return exposedLocation;
+    }
+
     public boolean performIncision() { // TODO Slightly painful, or extremely painful if not soft enough
         if (incised) {
             return false;
