@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 public class WateryCradleBE extends SurgicalBE {
@@ -23,6 +24,11 @@ public class WateryCradleBE extends SurgicalBE {
 
     public WateryCradleBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.WATERY_CRADLE_BE.get(), pWorldPosition, pBlockState, SurgicalLocation.SKULL);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(getBlockPos().offset(-1, 0, -1), getBlockPos().offset(1,1,1));
     }
 
 

@@ -20,9 +20,6 @@ public class PatientStatus {
 
     public PatientStatus() {
     }
-    public PatientStatus(SurgicalLocation exposedLocation) {
-        this.exposedLocation = exposedLocation;
-    }
 
     private static int tooMuchSedativeThreshold() {
         //TODO link to server data

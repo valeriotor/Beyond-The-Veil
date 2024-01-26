@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerHeadModel;
@@ -71,6 +72,20 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 		int crawling = entity.getCrawling();
 		float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
 		arms.xRot = -2.3998F - armSwing;
+		head.xRot = -1.3526F;
+		leftLeg.xRot = -0.1745F;
+		rightLeg.xRot = -0.1745F;
+		if (entity.isSurgeryPatient()) {
+			SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
+			if (exposedLocation == SurgicalLocation.BACK) {
+				head.xRot = 0;
+			} else if (exposedLocation == SurgicalLocation.CHEST) {
+				head.xRot = 0;
+				arms.xRot = 0;
+				leftLeg.xRot = 0.1745F;
+				rightLeg.xRot = 0.1745F;
+			}
+		}
 	}
 
 	@Override

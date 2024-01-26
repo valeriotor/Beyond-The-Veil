@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 public class SurgeryBedBE extends SurgicalBE {
     public SurgeryBedBE(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -43,5 +44,10 @@ public class SurgeryBedBE extends SurgicalBE {
     @Override
     public PatientStatus getPatientStatus() {
         return super.getPatientStatus();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(getBlockPos().offset(-1, 0, -1), getBlockPos().offset(1,2,1));
     }
 }

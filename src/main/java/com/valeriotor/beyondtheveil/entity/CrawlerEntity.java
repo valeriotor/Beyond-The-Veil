@@ -6,6 +6,8 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -45,6 +47,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Nullable
     private CompoundTag tradeOffers;
     private int villagerXp;
+    private PatientStatus patientStatus;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -209,8 +212,19 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         surgeryPatient = true;
     }
 
+    @Override
     public boolean isSurgeryPatient() {
         return surgeryPatient;
+    }
+
+    @Override
+    public void setPatientStatus(PatientStatus patientStatus) {
+        this.patientStatus = patientStatus;
+    }
+
+    @Override
+    public PatientStatus getPatientStatus() {
+        return patientStatus;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

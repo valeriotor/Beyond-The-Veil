@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.*;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

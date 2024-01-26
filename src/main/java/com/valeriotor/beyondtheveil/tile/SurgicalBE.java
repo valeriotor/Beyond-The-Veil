@@ -67,10 +67,11 @@ public abstract class SurgicalBE extends BlockEntity {
                 CompoundTag itemTag = in.getOrCreateTag();
                 if (itemTag.contains("data")) {
                     entityData = itemTag.getCompound("data");
-                    patientStatus = new PatientStatus(defaultLocation);
+                    patientStatus = new PatientStatus();
                     if(itemTag.contains("status")) {
                         patientStatus.loadFromNBT(itemTag.getCompound("status"));
                     }
+                    patientStatus.setExposedLocation(defaultLocation);
                     in.shrink(1);
                     setChanged();
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
@@ -125,19 +126,20 @@ public abstract class SurgicalBE extends BlockEntity {
 
     private void loadPatient(CompoundTag pTag) {
         if (pTag != null && pTag.contains("entity")) {
+            patientStatus = new PatientStatus();
+            if (pTag.contains("status")) {
+                patientStatus.loadFromNBT(pTag.getCompound("status"));
+            }
             if (level != null && level.isClientSide) {
                 entity = Registration.CRAWLER.get().create(level);
                 if (entity instanceof SurgeryPatient) { // Will not be redundant once we expand to other patient types
                     ((SurgeryPatient) entity).markAsPatient();
+                    ((SurgeryPatient) entity).setPatientStatus(patientStatus);
                 }
                 CompoundTag tag = pTag.getCompound("entity");
                 entity.readAdditionalSaveData(tag);
             } else {
                 entityData = pTag.getCompound("entity");
-            }
-            patientStatus = new PatientStatus();
-            if (pTag.contains("status")) {
-                patientStatus.loadFromNBT(pTag.getCompound("status"));
             }
         } else {
             entity = null;

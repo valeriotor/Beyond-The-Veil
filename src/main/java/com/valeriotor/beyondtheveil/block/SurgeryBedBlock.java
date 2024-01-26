@@ -1,9 +1,8 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
-import com.valeriotor.beyondtheveil.tile.SurgicalBE;
-import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

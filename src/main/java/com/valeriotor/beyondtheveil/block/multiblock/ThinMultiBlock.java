@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.block;
+package com.valeriotor.beyondtheveil.block.multiblock;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,24 +16,21 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.Nullable;
 
-/** Can be as tall and as wide as you wish, but only 1 block "deep" (i.e. in the direction where the player is facing
- *  when placing it)
- *
- */
-public abstract class ThinMultiBlock3by2 extends Block {
-
+public abstract class ThinMultiBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 
-    public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 2-1);
-    public static final int levels = 2;
-    public static final IntegerProperty SIDE = IntegerProperty.create("side", 0, 1*2);
-    public static final int centerY = (2-1) / 2;
-    public static final int horizontalRadius = 1;
+    public final int levels;
+    public final int centerY;
+    public final int horizontalRadius;
 
-    public ThinMultiBlock3by2(Properties pProperties) {
+    public ThinMultiBlock(Properties pProperties, int levels, int centerY, int horizontalRadius) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SIDE, 1).setValue(LEVEL, centerY));
+        this.levels = levels;
+        this.centerY = centerY;
+        this.horizontalRadius = horizontalRadius;
+
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(getSideProperty(), horizontalRadius).setValue(getLevelProperty(), centerY));
     }
 
     @Override
@@ -50,12 +47,12 @@ public abstract class ThinMultiBlock3by2 extends Block {
                 }
             }
         }
-        return defaultBlockState().setValue(FACING, opposite).setValue(SIDE, horizontalRadius).setValue(LEVEL, 0);
+        return defaultBlockState().setValue(FACING, opposite).setValue(getSideProperty(), horizontalRadius).setValue(getLevelProperty(), 0);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(SIDE).add(LEVEL);
+        builder.add(FACING).add(getSideProperty()).add(getLevelProperty());
     }
 
     @Override
@@ -78,10 +75,10 @@ public abstract class ThinMultiBlock3by2 extends Block {
 
     public BlockPos findCenter(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(FACING);
-        int i = -pState.getValue(SIDE)+horizontalRadius;
+        int i = -pState.getValue(getSideProperty())+horizontalRadius;
         int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
         int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-        return pPos.offset(x, - pState.getValue(LEVEL), z);
+        return pPos.offset(x, - pState.getValue(getLevelProperty()), z);
     }
 
     @Override
@@ -92,21 +89,13 @@ public abstract class ThinMultiBlock3by2 extends Block {
                 Direction facing = pState.getValue(FACING);
                 int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
                 int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-                pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(SIDE, i+horizontalRadius).setValue(LEVEL, y), 3);
+                pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(getSideProperty(), i+horizontalRadius).setValue(getLevelProperty(), y), 3);
             }
         }
     }
 
     public boolean isCenter(BlockState state) {
-        return state.getValue(SIDE) == horizontalRadius && state.getValue(LEVEL) == centerY;
-    }
-
-    public IntegerProperty getSideProperty() {
-        return SIDE;
-    }
-
-    public IntegerProperty getLevelProperty() {
-        return LEVEL;
+        return state.getValue(getSideProperty()) == horizontalRadius && state.getValue(getLevelProperty()) == centerY;
     }
 
     public int getHorizontalRadius() {
@@ -117,4 +106,7 @@ public abstract class ThinMultiBlock3by2 extends Block {
         return centerY;
     }
 
+    public abstract IntegerProperty getSideProperty();
+
+    public abstract IntegerProperty getLevelProperty();
 }
