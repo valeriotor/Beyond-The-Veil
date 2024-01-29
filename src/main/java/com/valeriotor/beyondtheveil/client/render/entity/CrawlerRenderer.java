@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonCrawlingModel;
 import com.valeriotor.beyondtheveil.client.model.entity.CrawlerModel;
+import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -28,6 +29,7 @@ public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
         this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
         this.addLayer(new VillagerProfessionLayer<>(this, context.getResourceManager(), "villager"));
         this.addLayer(new CrossedArmsItemLayer<>(this, context.getItemInHandRenderer()));
+        this.addLayer(new PatientWoundLayer<>(this, context.getModelSet()));
     }
 
     @Override

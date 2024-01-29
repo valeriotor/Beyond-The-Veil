@@ -49,6 +49,10 @@ public class PatientStatus {
         }
     }
 
+    public boolean isIncised() {
+        return incised;
+    }
+
     public SurgicalLocation getExposedLocation() {
         return exposedLocation;
     }

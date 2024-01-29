@@ -202,4 +202,10 @@ public abstract class SurgicalBE extends BlockEntity {
         return entity;
     }
 
+    public void tickClient() {
+        if (entity != null) {
+            entity.tick();
+        }
+    }
+
 }

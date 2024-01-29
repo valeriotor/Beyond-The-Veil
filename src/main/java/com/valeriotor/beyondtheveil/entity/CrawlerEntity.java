@@ -83,7 +83,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
         if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
-            if(!level().isClientSide) {
+            if (!level().isClientSide) {
                 ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
                 CompoundTag tag = new CompoundTag();
                 addAdditionalSaveData(tag);
@@ -142,20 +142,19 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     }
 
 
-
     protected void addOffersFromItemListings(MerchantOffers pGivenMerchantOffers, VillagerTrades.ItemListing[] pNewTrades, int pMaxNumbers) {
         Set<Integer> set = Sets.newHashSet();
         if (pNewTrades.length > pMaxNumbers) {
-            while(set.size() < pMaxNumbers) {
+            while (set.size() < pMaxNumbers) {
                 set.add(this.random.nextInt(pNewTrades.length));
             }
         } else {
-            for(int i = 0; i < pNewTrades.length; ++i) {
+            for (int i = 0; i < pNewTrades.length; ++i) {
                 set.add(i);
             }
         }
 
-        for(Integer integer : set) {
+        for (Integer integer : set) {
             VillagerTrades.ItemListing villagertrades$itemlisting = pNewTrades[integer];
             MerchantOffer merchantoffer = villagertrades$itemlisting.getOffer(this, this.random);
             if (merchantoffer != null) {
@@ -183,6 +182,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public void setTradeOffers(CompoundTag pTradeOffers) {
         this.tradeOffers = pTradeOffers;
     }
+
     public void setVillagerData(VillagerData p_34376_) {
         VillagerData villagerdata = this.getVillagerData();
         if (villagerdata.getProfession() != p_34376_.getProfession()) {
@@ -191,6 +191,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
         this.entityData.set(DATA_VILLAGER_DATA, p_34376_);
     }
+
     public void setVillagerXp(int pVillagerXp) {
         this.villagerXp = pVillagerXp;
     }
@@ -198,12 +199,19 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     // Animation sync code became a bit convoluted as I converged on the right technique. Don't look too much into it
     @Override
     public void tick() {
-        super.tick();
-        if (level().isClientSide) {
-            boolean crawl = entityData.get(DATA_CRAWLING);
-            if (crawl && getCrawling() < 1) {
-                startCrawl = tickCount;
+        if (!isSurgeryPatient()) {
+            super.tick();
+            if (level().isClientSide) {
+                if (!isSurgeryPatient()) {
+                    boolean crawl = entityData.get(DATA_CRAWLING);
+                    if (crawl && getCrawling() < 1) {
+                        startCrawl = tickCount;
+                    }
+                }
             }
+        } else {
+            tickCount++;
+            // TODO do pain animations
         }
     }
 
@@ -239,7 +247,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 return;
             }
             CrawlerEntity mob = (CrawlerEntity) this.mob;
-            if(mob.getSpeed() == 0) {
+            if (mob.getSpeed() == 0) {
                 mob.getEntityData().set(DATA_CRAWLING, false);
                 mob.startCrawl = -20;
             } else {

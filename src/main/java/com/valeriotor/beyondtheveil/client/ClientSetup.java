@@ -4,6 +4,8 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
@@ -67,6 +69,12 @@ public class ClientSetup {
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
+
+
+
+        // RenderLayer models
+        event.registerLayerDefinition(WoundModel.LAYER_LOCATION, WoundModel::createBodyLayer);
+        event.registerLayerDefinition(ChestWoundModel.LAYER_LOCATION, ChestWoundModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -85,6 +93,11 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
         event.registerBlockEntityRenderer(Registration.SURGERY_BED_BE.get(), SurgeryBedBER::new);
         event.registerBlockEntityRenderer(Registration.FLASK_BE.get(), FlaskBER::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterLayers(EntityRenderersEvent.AddLayers event) {
+
     }
 
     @SubscribeEvent

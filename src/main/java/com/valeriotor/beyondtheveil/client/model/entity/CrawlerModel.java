@@ -84,6 +84,8 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 				arms.xRot = 0;
 				leftLeg.xRot = 0.1745F;
 				rightLeg.xRot = 0.1745F;
+			} else if (exposedLocation == SurgicalLocation.SKULL) {
+				head.xRot = -1.3526F / 2.5F;
 			}
 		}
 	}
