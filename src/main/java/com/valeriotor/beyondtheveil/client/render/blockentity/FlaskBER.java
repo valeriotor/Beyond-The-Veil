@@ -56,37 +56,6 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
         Matrix3f normal = pPoseStack.last().normal();
 
         VertexConsumer buffer = buffers.getBuffer(Sheets.solidBlockSheet());
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F + radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT + radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F - radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(3), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-        //buffer.vertex(model, 0.4675F + radius, HEIGHT - radius, 0.5325F - radius).color(1, 0, 0, 1F).uv(sprite.getU(0), sprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)./*lightmap(upLMa, upLMb).*/endVertex();
-
-        //pPoseStack.popPose();
 
         buffer.vertex(model, maxX, minHeight, maxX).color(1, 1, 1, 1F).uv(stillSprite.getU(0), stillSprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)/*.lightmap(upLMa, upLMb)*/.endVertex();
         buffer.vertex(model, maxX, minHeight, minX).color(1, 1, 1, 1F).uv(stillSprite.getU(4), stillSprite.getV(0)).overlayCoords(overlay).uv2(0xFFFFFF).normal(1, 0, 0)/*.lightmap(upLMa, upLMb)*/.endVertex();
@@ -119,6 +88,7 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
         buffer.vertex(model, maxX, maxHeight, minX).color(1, 1, 1, 1F).uv(stillSprite.getU(0), stillSprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(0, 0, -1)/*.lightmap(upLMa, upLMb)*/.endVertex();
 
         pPoseStack.popPose();
+
 
     }
 }

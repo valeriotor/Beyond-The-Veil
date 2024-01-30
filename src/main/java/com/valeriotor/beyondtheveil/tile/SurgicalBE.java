@@ -152,7 +152,7 @@ public abstract class SurgicalBE extends BlockEntity {
         return entityData;
     }
 
-    protected PatientStatus getPatientStatus() {
+    public PatientStatus getPatientStatus() {
         return patientStatus;
     }
 

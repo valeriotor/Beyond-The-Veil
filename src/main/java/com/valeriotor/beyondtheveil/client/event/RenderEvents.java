@@ -3,9 +3,15 @@ package com.valeriotor.beyondtheveil.client.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.tile.FlaskBE;
+import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -21,12 +27,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -99,6 +108,7 @@ public class RenderEvents {
         if (player != null) {
             ReminiscenceClient.renderReminiscence(event);
             renderSyringeContents(event);
+            renderSurgeryOverlays(event);
         }
     }
 
@@ -145,7 +155,7 @@ public class RenderEvents {
     private static final ResourceLocation SYRINGE_TANK_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/overlay/syringe_tank.png");
     private static void renderSyringeContents(RenderGuiOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null) {
+        if (player == null || !(event instanceof RenderGuiOverlayEvent.Pre)) {
             return;
         }
         ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -202,6 +212,66 @@ public class RenderEvents {
             float currentBaseY = TOP_Y + (133 - 32*(i+1))*SIZE_MULTIPLIER;
             guiGraphics.fill((int) currentBaseX, (int) currentBaseY, (int) (currentBaseX+3*SIZE_MULTIPLIER), (int) (currentBaseY+1*SIZE_MULTIPLIER), 0xFF000000);
         }
+    }
+
+    private static void renderSurgeryOverlays(RenderGuiOverlayEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        GuiGraphics gg = event.getGuiGraphics();
+        if (player == null || !(event instanceof RenderGuiOverlayEvent.Pre)) {
+            return;
+        }
+        Item mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
+        Item offhandItem = player.getItemInHand(InteractionHand.OFF_HAND).getItem();
+        final int X_OFFSET = gg.guiWidth() / 2 + 10;
+        HitResult hitResult = Minecraft.getInstance().hitResult;
+        if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
+            if (hitResult instanceof BlockHitResult bhr) {
+                BlockPos lookedAtPos = bhr.getBlockPos();
+                BlockState blockState = player.level().getBlockState(lookedAtPos);
+                BlockEntity be = player.level().getBlockEntity(lookedAtPos);
+                if (blockState.getBlock() instanceof FlaskBlock && be instanceof FlaskBE flaskBE) {
+                    FluidStack fluid = flaskBE.getTank().getFluid();
+                    if (!fluid.isEmpty() && (mainHandItem == Registration.SYRINGE.get())) {
+                        gg.drawString(Minecraft.getInstance().font, fluid.getDisplayName(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
+                        gg.drawString(Minecraft.getInstance().font, fluid.getAmount() + " mB/" + flaskBE.getTank().getTankCapacity(0) + " mB", X_OFFSET, gg.guiHeight() / 2 + 15, 0xFF000000 | Color.YELLOW.getRGB());
+                    }
+                } else if (blockState.getBlock() == Registration.FLASK_SHELF.get()) {
+                    BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(lookedAtPos, blockState);
+                    if (player.level().getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
+                        FlaskShelfBE.Flask lookedAtFlask = flaskShelfBE.getLookedAtFlask(player.level(), lookedAtPos, bhr.getLocation());
+                        if (lookedAtFlask != null) {
+                            FluidStack fluid = lookedAtFlask.getTank().getFluid();
+                            if (!fluid.isEmpty() && (mainHandItem == Registration.SYRINGE.get())) {
+                                gg.drawString(Minecraft.getInstance().font, fluid.getDisplayName(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
+                                gg.drawString(Minecraft.getInstance().font, fluid.getAmount() + " mB/" + lookedAtFlask.getTank().getTankCapacity(0) + " mB", X_OFFSET, gg.guiHeight() / 2 + 15, 0xFF000000 | Color.YELLOW.getRGB());
+                            }
+                        }
+                    }
+                } else if (blockState.getBlock() == Registration.SURGERY_BED.get() || blockState.getBlock() == Registration.WATERY_CRADLE.get()) {
+                    // replace with findCenter from thinmultiblock when the time comes
+                    BlockPos center;
+                    if (blockState.getBlock() == Registration.SURGERY_BED.get()) {
+                        center = Registration.SURGERY_BED.get().findCenter(lookedAtPos, blockState);
+                    } else {
+                        center = lookedAtPos;
+                    }
+                    if (player.level().getBlockEntity(center) instanceof SurgicalBE surgicalBE && (isSurgicalItem(mainHandItem) || isSurgicalItem(offhandItem))) {
+                        PatientStatus patientStatus = surgicalBE.getPatientStatus();
+                        if (surgicalBE.getEntity() != null && patientStatus != null) {
+                            gg.drawString(Minecraft.getInstance().font, "Status: " + patientStatus.getCondition().toString(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static boolean isSurgicalItem(Item item) {
+        return item == Registration.SYRINGE.get()
+                || item == Registration.SCALPEL.get()
+                || item == Registration.SEWING_NEEDLE.get()
+                || item == Registration.TONGS.get()
+                || item == Registration.FORCEPS.get();
     }
 
 }
