@@ -5,6 +5,8 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -48,6 +50,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private CompoundTag tradeOffers;
     private int villagerXp;
     private PatientStatus patientStatus;
+    private Animation painAnimation;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -202,15 +205,29 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         if (!isSurgeryPatient()) {
             super.tick();
             if (level().isClientSide) {
-                if (!isSurgeryPatient()) {
-                    boolean crawl = entityData.get(DATA_CRAWLING);
-                    if (crawl && getCrawling() < 1) {
-                        startCrawl = tickCount;
-                    }
+                boolean crawl = entityData.get(DATA_CRAWLING);
+                if (crawl && getCrawling() < 1) {
+                    startCrawl = tickCount;
                 }
+
             }
         } else {
             tickCount++;
+            if (painAnimation == null) {
+                if (patientStatus.getCurrentPain() >= 0) {
+                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
+                        //painAnimation = new Animation(AnimationRegistry.crawler_back_pain_high_1);
+                    } else {
+                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
+                    }
+                }
+            } else {
+                if (painAnimation.isDone()) {
+                    painAnimation = null;
+                } else {
+                    painAnimation.update();
+                }
+            }
             // TODO do pain animations
         }
     }
@@ -233,6 +250,10 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Override
     public PatientStatus getPatientStatus() {
         return patientStatus;
+    }
+
+    public Animation getPainAnimation() {
+        return painAnimation;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

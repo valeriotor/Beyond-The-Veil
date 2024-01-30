@@ -5,6 +5,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -18,9 +19,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedModel, VillagerHeadModel {
+public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements HeadedModel, VillagerHeadModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "crawler_model"), "main");
+	private static final String name = "crawler";
 	private final ModelPart body;
 	private final ModelPart head;
 	private final ModelPart helmet;
@@ -31,14 +33,15 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 	private final ModelPart arms;
 
 	public CrawlerModel(ModelPart root) {
-		this.body = root.getChild("body");
-		this.head = body.getChild("head");
-		this.helmet = head.getChild("helmet");
-		this.brim = head.getChild("brim");
-		this.nose = head.getChild("nose");
-		this.rightLeg = body.getChild("RightLeg");
-		this.leftLeg = body.getChild("LeftLeg");
-		this.arms = body.getChild("arms");
+		super(name);
+		this.body = registerAnimatedPart("body", root.getChild("body"));
+		this.head = registerAnimatedPart("head", body.getChild("head"));
+		this.helmet = registerAnimatedPart("helmet", head.getChild("helmet"));
+		this.brim = registerAnimatedPart("brim", head.getChild("brim"));
+		this.nose = registerAnimatedPart("nose", head.getChild("nose"));
+		this.rightLeg = registerAnimatedPart("rightLeg", body.getChild("RightLeg"));
+		this.leftLeg = registerAnimatedPart("leftLeg", body.getChild("LeftLeg"));
+		this.arms = registerAnimatedPart("arms", body.getChild("arms"));
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -70,11 +73,22 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 	@Override
 	public void setupAnim(CrawlerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		int crawling = entity.getCrawling();
-		float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
-		arms.xRot = -2.3998F - armSwing;
-		head.xRot = -1.3526F;
-		leftLeg.xRot = -0.1745F;
-		rightLeg.xRot = -0.1745F;
+		if(!entity.isSurgeryPatient()) {
+			float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
+			arms.xRot = -2.3998F - armSwing;
+		}
+	}
+
+	@Override
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+
+	@Override
+	public void prepareMobModel(CrawlerEntity entity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+		for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
+			defaultPartPose.part().loadPose(defaultPartPose.pose());
+		}
 		if (entity.isSurgeryPatient()) {
 			SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
 			if (exposedLocation == SurgicalLocation.BACK) {
@@ -88,11 +102,11 @@ public class CrawlerModel extends EntityModel<CrawlerEntity> implements HeadedMo
 				head.xRot = -1.3526F / 2.5F;
 			}
 		}
-	}
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		Animation painAnimation = entity.getPainAnimation();
+		if (painAnimation != null) {
+			painAnimation.apply(pPartialTick);
+		}
 	}
 
 	@Override

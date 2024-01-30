@@ -263,6 +263,10 @@ public class PatientStatus {
         this.currentPain = value;
     }
 
+    public int getCurrentPain() {
+        return currentPain;
+    }
+
     public CompoundTag saveToNBT(CompoundTag tag) {
         tag.putString("condition", condition.name());
         tag.putInt("current_pain", currentPain);

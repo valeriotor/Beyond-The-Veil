@@ -1,0 +1,12 @@
+model: crawler
+length: 40
+start: 0: 5
+    roty: head: -0.5: linear: absolute
+start: 5: 15
+    roty: head: 0.5: linear: absolute
+start: 15: 25
+    roty: head: -0.5: linear: absolute
+start: 25: 35
+    roty: head: 0.5: linear: absolute
+start: 35: 40
+    roty: head: 0: linear: absolute

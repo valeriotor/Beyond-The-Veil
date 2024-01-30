@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AnimatedModel extends EntityModel<LivingEntity> {
+public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<T> {
 
-    private static final Map<String, AnimatedModel> REGISTRY = new HashMap<>();
+    private static final Map<String, AnimatedModel<? extends LivingEntity>> REGISTRY = new HashMap<>();
 
-    public static AnimatedModel getModel(String name) {
+    public static AnimatedModel<? extends LivingEntity> getModel(String name) {
         return REGISTRY.get(name);
     }
 

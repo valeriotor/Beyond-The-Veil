@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class BloodSkeletonCrawlingModel extends AnimatedModel {
+public class BloodSkeletonCrawlingModel extends AnimatedModel<BloodSkeletonEntity> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION;
 	private static final String name = "blood_skeleton";
@@ -202,7 +202,7 @@ public class BloodSkeletonCrawlingModel extends AnimatedModel {
 	}
 
 	@Override
-	public void setupAnim(LivingEntity entity1, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(BloodSkeletonEntity entity1, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		// -1.4835F + 0.96F
 		BloodSkeletonEntity entity = (BloodSkeletonEntity) entity1;
 		float swingLeft = Mth.cos(limbSwing * 0.45F) * 1.54F * limbSwingAmount;
@@ -223,7 +223,7 @@ public class BloodSkeletonCrawlingModel extends AnimatedModel {
 	}
 
 	@Override
-	public void prepareMobModel(LivingEntity entity1, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+	public void prepareMobModel(BloodSkeletonEntity entity1, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
 		BloodSkeletonEntity entity = (BloodSkeletonEntity) entity1;
 
 		for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {

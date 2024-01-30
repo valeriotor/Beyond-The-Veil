@@ -1,0 +1,99 @@
+model: crawler
+length: 155
+start: 0: 3
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 3: 6
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 6: 9
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 9: 12
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 12: 15
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 15: 18
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 18: 21
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 21: 24
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 0: 1
+    rotx: head: 0: immediate: absolute
+start: 1: 3
+    rotx: head: -1.2: linear: absolute
+start: 3: 6
+    rotx: head: 0: linear: absolute
+start: 6: 9
+    rotx: head: -1.2: linear: absolute
+start: 9: 12
+    rotx: head: 0: linear: absolute
+start: 12: 15
+    rotx: head: -1.2: linear: absolute
+start: 15: 18
+    rotx: head: 0: linear: absolute
+start: 18: 21
+    rotx: head: -1.2: linear: absolute
+start: 21: 24
+    rotx: head: 0: linear: absolute
+start: 24: 27
+    rotx: head: -1.2: linear: absolute
+start: 27: 30
+    rotx: head: 0: linear: absolute
+start: 32: 40
+    roty: head: -0.6: linear: absolute
+start: 40: 56
+    roty: head: 0.6: linear: absolute
+start: 66: 72
+    rotx: head: -1.6: linear: absolute
+start: 66: 68
+    roty: head: -0.1: quadratic: absolute
+start: 68: 72
+    roty: head: 0.1: quadratic: absolute
+start: 72: 75
+    roty: head: -0.1: quadratic: absolute
+start: 75: 80
+    roty: head: 0.1: quadratic: absolute
+start: 80: 90
+    roty: head: -0.1: quadratic: absolute
+start: 90: 100
+    roty: head: 0.1: quadratic: absolute
+start: 66: 69
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 69: 72
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 72: 75
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 75: 78
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 78: 81
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 81: 84
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 84: 87
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 87: 90
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 100: 102
+    rotx: head: 0: linear: absolute
+    roty: head: 0: linear: absolute
+start: 102: 112
+    rotx: head: -0.1: linear: absolute
+start: 112: 122
+    rotx: head: 0.1: linear: absolute
+start: 122: 132
+    rotx: head: -0.1: linear: absolute
+start: 132: 142
+    rotx: head: 0.1: linear: absolute
+start: 142: 152
+    rotx: head: 0: linear: absolute
