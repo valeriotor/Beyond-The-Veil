@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
@@ -22,6 +23,7 @@ public class WoundModel<T extends Entity> extends EntityModel<T> {
 	private final ModelPart bb_main;
 
 	public WoundModel(ModelPart root) {
+		super(RenderType::entityTranslucent);
 		this.bb_main = root.getChild("bb_main");
 	}
 
@@ -29,17 +31,15 @@ public class WoundModel<T extends Entity> extends EntityModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition bb_main = partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create().texOffs(2, 2).addBox(-1.0F, -6.99F, -6.0F, 2.0F, 1.0F, 9.0F, new CubeDeformation(0.0F))
-				.texOffs(10, 10).addBox(-0.5F, -6.9F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-				.texOffs(12, 10).addBox(-0.5F, -6.9F, -7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 0).addBox(-0.5F, -7.01F, 1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition bb_main = partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -7.01F, 1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.025F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.05F, -1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.1F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.1F, -4.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 0).addBox(-0.5F, -7.05F, -5.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+				.texOffs(0, 0).addBox(-0.5F, -7.05F, -5.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+				.texOffs(-11, 5).addBox(-1.5F, -6.99F, -7.0F, 3.0F, 0.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.01F, 0.0F));
 
-		return LayerDefinition.create(meshdefinition, 32, 32);
+		return LayerDefinition.create(meshdefinition, 8, 16);
 	}
 
 	@Override
