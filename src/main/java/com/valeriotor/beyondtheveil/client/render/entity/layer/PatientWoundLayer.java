@@ -15,9 +15,11 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class PatientWoundLayer<T extends LivingEntity & SurgeryPatient, M extends EntityModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound.png");
+    private static final ResourceLocation CHEST_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound.png");
     private final WoundModel<T> woundModel;
     private final ChestWoundModel<T> chestWoundModel;
 
@@ -42,7 +44,10 @@ public class PatientWoundLayer<T extends LivingEntity & SurgeryPatient, M extend
     }
 
     @Override
-    protected ResourceLocation getTextureLocation(T pEntity) {
+    protected @NotNull ResourceLocation getTextureLocation(T pEntity) {
+        if (pEntity.isSurgeryPatient() && pEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
+            return CHEST_WOUND_TEXTURE;
+        }
         return WOUND_TEXTURE;
     }
 }

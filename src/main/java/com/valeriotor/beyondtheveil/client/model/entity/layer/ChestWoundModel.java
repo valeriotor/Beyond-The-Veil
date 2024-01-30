@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -27,6 +28,7 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
     private final ModelPart heart;
 
     public ChestWoundModel(ModelPart root) {
+        super(RenderType::entityTranslucent);
         this.wound = root.getChild("wound");
         this.heart = root.getChild("heart");
     }
@@ -35,15 +37,11 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition wound = partdefinition.addOrReplaceChild("wound", CubeListBuilder.create(), PartPose.offset(0.0F, 23.5F, -4.0F));
+        PartDefinition wound = partdefinition.addOrReplaceChild("wound", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -0.24F, -1.5F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 23.5F, -4.0F));
 
-        PartDefinition cube_r1 = wound.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(6, 9).addBox(0.0F, -0.15F, -1.0F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.03054F, 0.0F));
+        PartDefinition heart = partdefinition.addOrReplaceChild("heart", CubeListBuilder.create().texOffs(0, 5).addBox(0.5F, -0.15F, -0.5F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 23.5F, -4.0F));
 
-        PartDefinition heart = partdefinition.addOrReplaceChild("heart", CubeListBuilder.create(), PartPose.offset(0.0F, 23.41F, -4.0F));
-
-        PartDefinition cube_r2 = heart.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(7, 10).addBox(0.5F, 0.25F, -0.5F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.03054F, 0.0F));
-
-        return LayerDefinition.create(meshdefinition, 32, 32);
+        return LayerDefinition.create(meshdefinition, 16, 8);
     }
 
     @Override
@@ -63,12 +61,14 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
             offset = 1 - ((floatingModulus - 29) / 3);
         }
         offset *= 0.2F;
-        heart.y = 23.41F + (entity.getPatientStatus().getCondition() != PatientCondition.DEAD ? offset : 0);
+        heart.y = 23.5F + (entity.getPatientStatus().getCondition() != PatientCondition.DEAD ? offset : 0);
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        //wound.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        wound.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         heart.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
+
+
 }
