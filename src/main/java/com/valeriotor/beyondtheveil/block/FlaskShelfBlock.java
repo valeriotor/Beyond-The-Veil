@@ -174,8 +174,8 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
                 if (be.tryPlaceFlask(pLevel, pPos, pPlayer, pHand, pHit))
                     return InteractionResult.SUCCESS;
                 return InteractionResult.SUCCESS; // eh I guess I need it here too so that the flask isn't placed as an adjacent, individual block
-            } else {
-                //return be.interactLiquid(pLevel, pPos, pPlayer, pHand, pHit);
+            } else if (held != Registration.SYRINGE.get()) {
+                return be.interactLiquid(pLevel, pPos, pPlayer, pHand, pHit);
             }
 
         }

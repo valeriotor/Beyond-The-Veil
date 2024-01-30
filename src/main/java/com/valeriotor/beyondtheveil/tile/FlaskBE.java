@@ -57,6 +57,10 @@ public class FlaskBE extends BlockEntity {
             if (itemStack.getItem() != Registration.SYRINGE.get()) {
                 if (!pLevel.isClientSide) {
                     FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHit.getDirection());
+                    setChanged();
+                    if (level != null) {
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    }
                 }
                 return InteractionResult.SUCCESS;
             } else {
