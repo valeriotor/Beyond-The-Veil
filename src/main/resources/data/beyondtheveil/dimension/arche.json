@@ -1,0 +1,11 @@
+{
+  "type": "beyondtheveil:arche_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:ocean"
+    },
+    "settings": "beyondtheveil:arche_noise"
+  }
+}

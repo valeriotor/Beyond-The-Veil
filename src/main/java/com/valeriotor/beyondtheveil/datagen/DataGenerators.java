@@ -7,6 +7,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Set;
+
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
@@ -17,6 +19,8 @@ public class DataGenerators {
         //generator.addProvider(new BTVLootTables(generator));
         DataProvider.Factory<BTVBlockTags> blockTags = output -> new BTVBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTags);
+        DataProvider.Factory<BTVWorldGen> btvWorldGenFactory = output -> new BTVWorldGen(output, event.getLookupProvider(), Set.of(References.MODID));
+        generator.addProvider(event.includeServer(), btvWorldGenFactory);
         //DataProvider.Factory<BTVItemTags> itemTags = output -> new BTVItemTags(output, event.getLookupProvider(), blockTags, event.getExistingFileHelper());
         //generator.addProvider(event.includeServer(), itemTags);
         //TODO create ConfiguredStructureTagsProvider
