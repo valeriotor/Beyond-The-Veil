@@ -21,7 +21,7 @@ public class SurgeryBedBER implements BlockEntityRenderer<SurgeryBedBE> {
         if (pBlockEntity.getEntity() != null) {
             pPoseStack.pushPose();
             //pPoseStack.scale(0.85F, 0.8F, 0.85F);
-            pPoseStack.translate(0.5, 1.0625, 0.5);
+            pPoseStack.translate(0.5, 0.9375, 0.5);
             if (pBlockEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
                 pPoseStack.translate(0, 6.1/16, 0);
                 //pPoseStack.mulPose(Axis.XP.rotation((float) Math.PI));
