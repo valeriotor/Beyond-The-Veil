@@ -17,9 +17,9 @@ public class WateryCradleBER implements BlockEntityRenderer<WateryCradleBE> {
     public void render(WateryCradleBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         if (pBlockEntity.getEntity() != null) {
             pPoseStack.pushPose();
-            pPoseStack.scale(0.95F, 0.8F, 0.95F);
+            pPoseStack.scale(0.93F, 0.8F, 0.93F);
             //pPoseStack.mulPose(Quaternion.fromYXZ((float) Math.PI/2, 0, 0));
-            Minecraft.getInstance().getEntityRenderDispatcher().render(pBlockEntity.getEntity(), 0.5, 0.3, 0.5, 0, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
+            Minecraft.getInstance().getEntityRenderDispatcher().render(pBlockEntity.getEntity(), 0.525, 0.31, 0.5, 0, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
             pPoseStack.popPose();
         }
     }
