@@ -37,7 +37,7 @@ public class WoundModel<T extends Entity> extends EntityModel<T> {
 				.texOffs(0, 0).addBox(-0.5F, -7.1F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.1F, -4.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(-0.5F, -7.05F, -5.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-				.texOffs(-11, 5).addBox(-1.5F, -6.99F, -7.0F, 3.0F, 0.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.01F, 0.0F));
+				.texOffs(-11, 5).addBox(-1.5F, -6.89F, -7.0F, 3.0F, 0.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.01F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 8, 16);
 	}
