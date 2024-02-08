@@ -21,7 +21,7 @@ public class InputEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             if (player.getVehicle() instanceof NautilusEntity nautilus && event.phase == TickEvent.Phase.END) {
-                nautilus.setInput(player.input.left, player.input.right, player.input.up, player.input.down, player.input.jumping);
+                nautilus.setInput(player.input.left, player.input.right, player.input.up, player.input.down, player.input.jumping, player.input.shiftKeyDown);
             }
         }
     }

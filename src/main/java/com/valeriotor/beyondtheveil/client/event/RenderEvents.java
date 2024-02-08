@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -44,6 +45,7 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -64,6 +66,26 @@ public class RenderEvents {
     //public static void fieldOfViewEvent(EntityViewRenderEvent.FieldOfView event) {
     //    fov = event.getFOV();
     //}
+
+    @SubscribeEvent
+    public static void fogEvent(ViewportEvent.RenderFog event) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            event.setFarPlaneDistance(100);
+            //event.setNearPlaneDistance(40);
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void fogColorEvent(ViewportEvent.ComputeFogColor event) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            event.setRed(0);
+            event.setGreen(0);
+            event.setBlue(0);
+        }
+    }
 
     @SubscribeEvent
     public static void renderFlaskShelfOutline(RenderHighlightEvent.Block event) {
