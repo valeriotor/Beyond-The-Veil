@@ -36,7 +36,7 @@ public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
     @Override
     public void render(NautilusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
         pMatrixStack.pushPose();
-        pMatrixStack.translate(0.0D, 0.375D, 0.0D);
+        pMatrixStack.translate(0.0D, 1.376D, 0.0D);
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(180.0F - pEntityYaw));
 
 

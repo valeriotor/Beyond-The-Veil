@@ -655,7 +655,7 @@ public class NautilusEntity extends Entity {
     }
 
     protected float getSinglePassengerXOffset() {
-        return 0.0F;
+        return 1.0F;
     }
 
     public boolean hasEnoughSpaceFor(Entity pEntity) {
@@ -679,8 +679,8 @@ public class NautilusEntity extends Entity {
                 }
             }
 
-            Vec3 vec3 = (new Vec3((double)f, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
-            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + (double)f1, this.getZ() + vec3.z);
+            Vec3 vec3 = (new Vec3((double)f, -0.5D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
+            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + (double)f1 + 0.75, this.getZ() + vec3.z);
             pPassenger.setYRot(pPassenger.getYRot() + this.deltaRotation);
             pPassenger.setYHeadRot(pPassenger.getYHeadRot() + this.deltaRotation);
             this.clampRotation(pPassenger);
