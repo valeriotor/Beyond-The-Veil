@@ -101,6 +101,7 @@ public class NautilusEntity extends Entity {
     private boolean inputDown;
     private boolean jumping;
     private boolean shiftKeyDown;
+    private boolean sprinting;
     private double waterLevel;
     private float landFriction;
     private Boat.Status status;
@@ -645,8 +646,10 @@ public class NautilusEntity extends Entity {
             }
 
             float y = 0;
-            if (this.jumping) {
+            if (this.jumping && this.isInWater()) {
                 y = 0.06F;
+            } else if (this.sprinting) {
+                y = -0.06F;
             }
 
             this.setDeltaMovement(this.getDeltaMovement().add((double)(Mth.sin(-this.getYRot() * ((float)Math.PI / 180F)) * f), y, (double)(Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * f)));
@@ -885,13 +888,14 @@ public class NautilusEntity extends Entity {
         return livingentity1;
     }
 
-    public void setInput(boolean pInputLeft, boolean pInputRight, boolean pInputUp, boolean pInputDown, boolean jumping, boolean shiftKeyDown) {
+    public void setInput(boolean pInputLeft, boolean pInputRight, boolean pInputUp, boolean pInputDown, boolean jumping, boolean shiftKeyDown, boolean sprinting) {
         this.inputLeft = pInputLeft;
         this.inputRight = pInputRight;
         this.inputUp = pInputUp;
         this.inputDown = pInputDown;
         this.jumping = jumping;
         this.shiftKeyDown = shiftKeyDown;
+        this.sprinting = sprinting;
     }
 
     public boolean isUnderWater() {
