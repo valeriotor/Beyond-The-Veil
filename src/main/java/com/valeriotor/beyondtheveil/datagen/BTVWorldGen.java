@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.datagen;
 
+import com.valeriotor.beyondtheveil.world.biome.BTVBiomes;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -14,7 +15,8 @@ public class BTVWorldGen extends DatapackBuiltinEntriesProvider {
 
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.DIMENSION_TYPE, BTVDimensions::registerType)
-            .add(Registries.LEVEL_STEM, BTVDimensions::registerStem);
+            .add(Registries.LEVEL_STEM, BTVDimensions::registerStem)
+            .add(Registries.BIOME, BTVBiomes::bootstrapBiomes);
 
     public BTVWorldGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, Set<String> modIds) {
         super(output, registries, BUILDER, modIds);

@@ -3,8 +3,33 @@
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "minecraft:end_barrens"
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "beyondtheveil:arche_plains",
+          "parameters": {
+            "temperature": 0,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": -1,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "beyondtheveil:arche_caves",
+          "parameters": {
+            "temperature": 0,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 1,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        }
+      ]
     },
     "settings": "beyondtheveil:arche_noise"
   }

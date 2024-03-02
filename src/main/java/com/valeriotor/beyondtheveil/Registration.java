@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -123,6 +125,8 @@ public class Registration {
     //public static final RegistryObject<Block> DEEP_PRISMARINE = BLOCKS.register("deep_prismarine", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepPrismarine(BlockNames.DEEP_PRISMARINE);
     //public static final RegistryObject<Block> ARENA = BLOCKS.register("arena", () -> new Block(BRICK_PROPERTIES)); // new BlockArena(BlockNames.ARENA);
     //public static final RegistryObject<Block> DEEP_CHEST = BLOCKS.register("deep_chest", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepChest(BlockNames.DEEP_CHEST);
+    public static final RegistryObject<GrowingPlantHeadBlock> BLACK_KELP = BLOCKS.register("black_kelp", () -> new BlackKelpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
+    public static final RegistryObject<GrowingPlantBodyBlock> BLACK_KELP_PLANT = BLOCKS.register("black_kelp_plant", () -> new BlackKelpPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
 
     public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.LARGE)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.MEDIUM)); // TODO GLASS PROPERTIES
@@ -192,6 +196,7 @@ public class Registration {
     public static final RegistryObject<Item> FLASK_LARGE_ITEM = fromBlock(FLASK_LARGE);
     public static final RegistryObject<Item> FLASK_MEDIUM_ITEM = fromBlock(FLASK_MEDIUM);
     public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
+    public static final RegistryObject<Item> BLACK_KELP_ITEM = fromBlock(BLACK_KELP);
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
@@ -327,6 +332,7 @@ public class Registration {
                 output.accept(BLOOD_SMOOTH_STONE.get());
                 output.accept(BLOOD_SMOOTH_STONE_SLAB.get());
                 output.accept(HEART.get());
+                output.accept(BLACK_KELP.get());
 
                 output.accept(ONIRIC_INCENSE.get());
                 output.accept(SLUG_CATCHER.get());

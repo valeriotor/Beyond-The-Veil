@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "beyondtheveil:block/black_kelp_plant"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "minecraft:clamp",
+    "input": {
+      "type": "minecraft:shifted_noise",
+      "noise": "minecraft:erosion",
+      "xz_scale": 1,
+      "y_scale": 0,
+      "shift_x": "minecraft:shift_x",
+      "shift_y": 0,
+      "shift_z": "minecraft:shift_z"
+    },
+    "min": -0.3,
+    "max": 0.25
+  }
+}

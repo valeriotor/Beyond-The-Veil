@@ -44,6 +44,8 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_LARGE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_MEDIUM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SMALL.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP_PLANT.get(), RenderType.cutout());
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();
             BlockColors blockColors = Minecraft.getInstance().getBlockColors();
