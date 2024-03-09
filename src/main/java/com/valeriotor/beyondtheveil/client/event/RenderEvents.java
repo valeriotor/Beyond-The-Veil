@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.event;
 
+import com.google.gson.internal.reflect.ReflectionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.valeriotor.beyondtheveil.Registration;
@@ -7,6 +8,7 @@ import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
@@ -65,6 +67,14 @@ public class RenderEvents {
     //@SubscribeEvent
     //public static void fieldOfViewEvent(EntityViewRenderEvent.FieldOfView event) {
     //    fov = event.getFOV();
+    //}
+
+    //@SubscribeEvent
+    //public static void computeCameraAnglesEvent(ViewportEvent.ComputeCameraAngles event) {
+    //    LocalPlayer p = Minecraft.getInstance().player;
+    //    if (p != null && p.isPassenger() && p.getVehicle() instanceof NautilusEntity && event.getCamera().isDetached()) {
+    //        event.getCamera().move(-event.getCamera().getMaxZoom(4F), 0, 0);
+    //    }
     //}
 
     @SubscribeEvent

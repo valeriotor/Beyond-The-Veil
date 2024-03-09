@@ -59,7 +59,7 @@ public class Registration {
     public static final RegistryObject<EntityType<BloodSkeletonEntity>> BLOOD_SKELETON = ENTITIES.register("blood_skeleton", () -> EntityType.Builder.of(BloodSkeletonEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_skeleton"));
     public static final RegistryObject<EntityType<BloodZombieEntity>> BLOOD_ZOMBIE = ENTITIES.register("blood_zombie", () -> EntityType.Builder.of(BloodZombieEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_zombie"));
     public static final RegistryObject<EntityType<BloodWraithEntity>> BLOOD_WRAITH = ENTITIES.register("blood_wraith", () -> EntityType.Builder.of(BloodWraithEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_wraith"));
-    public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(7, 5F).clientTrackingRange(32).build("nautilus"));
+    public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(5.6F, 5F).clientTrackingRange(32).build("nautilus"));
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
     public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(1.8F, 0.7F).clientTrackingRange(32).build("weeper"));
 

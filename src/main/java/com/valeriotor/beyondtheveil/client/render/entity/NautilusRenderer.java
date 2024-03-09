@@ -42,6 +42,7 @@ public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
 
         pMatrixStack.scale(-1.0F, -1.0F, 1.0F);
         //pMatrixStack.mulPose(Axis.YP.rotationDegrees(90.0F));
+        model.prepareMobModel(pEntity, 0, 0, pPartialTicks);
         model.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
         model.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
