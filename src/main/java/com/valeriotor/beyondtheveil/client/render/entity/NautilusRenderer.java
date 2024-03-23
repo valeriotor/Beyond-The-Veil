@@ -16,11 +16,11 @@ import net.minecraft.resources.ResourceLocation;
 public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/nautilus.png");
-    private final TestNautilus model;
+    private final TestNautilus<NautilusEntity> model;
 
     public NautilusRenderer(EntityRendererProvider.Context context) {
         super(context);
-        model = new TestNautilus(context.bakeLayer(TestNautilus.LAYER_LOCATION));
+        model = new TestNautilus<>(context.bakeLayer(TestNautilus.LAYER_LOCATION));
     }
 
     @Override
