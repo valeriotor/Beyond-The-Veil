@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
+import com.valeriotor.beyondtheveil.util.LegacyStructure;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,6 +54,7 @@ public class BeyondTheVeil
         Messages.register();
         ResearchRegistry.registerResearchesFirst();
         ResearchRegistry.registerResearchesSecond();
+        LegacyStructure.registerLegacyStructures();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

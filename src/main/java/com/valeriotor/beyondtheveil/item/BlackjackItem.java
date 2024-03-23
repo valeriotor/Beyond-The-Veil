@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.util.LegacyStructure;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 public class BlackjackItem extends Item {
@@ -36,5 +38,10 @@ public class BlackjackItem extends Item {
         return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
     }
 
-
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        if(!context.getLevel().isClientSide)
+            LegacyStructure.lighthouse.generateStructure(context.getLevel(), context.getClickedPos());
+        return super.onItemUseFirst(stack, context);
+    }
 }

@@ -29,7 +29,7 @@ public class BTVPlacements {
 
         final Holder<ConfiguredFeature<?, ?>> BLACK_KELP_CONFIG = configuredFeatureGetter.getOrThrow(BTVFeatures.BLACK_KELP);
 
-        context.register(BLACK_KELP, new PlacedFeature(BLACK_KELP_CONFIG, List.of(NoiseBasedCountPlacement.of(80, 80.0D, 0.0D), CountOnEveryLayerPlacement.of(1), BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(Direction.DOWN.getNormal(), Registration.DARK_SAND.get())), BiomeFilter.biome())));
+        context.register(BLACK_KELP, new PlacedFeature(BLACK_KELP_CONFIG, List.of(NoiseBasedCountPlacement.of(40, 150.0D, 0.0D), CountOnEveryLayerPlacement.of(1), BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(Direction.DOWN.getNormal(), Registration.DARK_SAND.get())), BiomeFilter.biome())));
 
     }
 
