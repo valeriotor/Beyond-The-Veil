@@ -1,14 +1,11 @@
 package com.valeriotor.beyondtheveil.client.event;
 
-import com.google.gson.internal.reflect.ReflectionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
-import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
-import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
@@ -35,19 +32,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -55,12 +48,10 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 
 import java.awt.*;
 
@@ -70,7 +61,7 @@ import static net.minecraft.client.renderer.LevelRenderer.getLightColor;
 public class RenderEvents {
 
     private static final ResourceLocation RAIN_LOCATION = new ResourceLocation(References.MODID, "textures/environment/current.png");
-    private static final float[] rainSizeX = new float[1024];
+    private static final float[] rainSizeY = new float[1024];
     private static final float[] rainSizeZ = new float[1024];
 
     static {
@@ -79,7 +70,7 @@ public class RenderEvents {
                 float f = (float)(j - 16);
                 float f1 = (float)(i - 16);
                 float f2 = Mth.sqrt(f * f + f1 * f1);
-                rainSizeX[i << 5 | j] = -f1 / f2;
+                rainSizeY[i << 5 | j] = -f1 / f2;
                 rainSizeZ[i << 5 | j] = f / f2;
             }
         }
@@ -115,14 +106,15 @@ public class RenderEvents {
         double pCamX = camera.getPosition().x();
         double pCamY = camera.getPosition().y();
         double pCamZ = camera.getPosition().z();
-        float f = 1.0F;
+        float f = (event.getRenderTick() % (110*20)) / (float)(110*20);
+        float speedIncrement = f <= 0.5F ? 0.3F : 0.3F+(f-0.5F)*4;
         if (!(f <= 0.0F)) {
             mc.gameRenderer.lightTexture().turnOnLightLayer();
 //            pLightTexture.turnOnLightLayer();
             Level level = mc.level;
-            int i = Mth.floor(pCamX);
-            int j = Mth.floor(pCamY);
-            int k = Mth.floor(pCamZ);
+            int x = Mth.floor(pCamX);
+            int y = Mth.floor(pCamY);
+            int z = Mth.floor(pCamZ);
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             RenderSystem.disableCull();
@@ -139,42 +131,34 @@ public class RenderEvents {
             RenderSystem.setShader(GameRenderer::getParticleShader);
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-            for(int j1 = k - l; j1 <= k + l; ++j1) {
-                for(int k1 = i - l; k1 <= i + l; ++k1) {
-                    //if (Math.abs(j1 - k) < 1 && Math.abs(k1 - i) < 1) {
+            for(int z1 = z - l; z1 <= z + l; ++z1) {
+                for(int y1 = y - l; y1 <= y + l; ++y1) {
+                    //if (z1 - z != 1 || y1 - x != 1) {
                     //    continue;
                     //}
-                    //if (j1 - k != 1 || k1 - i != 1) {
-                    //    continue;
-                    //}
-                    int l1 = (j1 - k + 16) * 32 + k1 - i + 16;
-                    double d0 = (double)rainSizeX[l1] * 0.5D;
+                    int l1 = (z1 - z + 16) * 32 + y1 - y + 16;
+                    double d0 = (double) rainSizeY[l1] * 0.5D;
                     double d1 = (double)rainSizeZ[l1] * 0.5D;
-                    blockpos$mutableblockpos.set((double)k1, camera.getPosition().y(), (double)j1);
-                    Biome biome = level.getBiome(blockpos$mutableblockpos).value();
                     if (true) {
-                        int i2 = level.getHeight(Heightmap.Types.MOTION_BLOCKING, k1, j1);
-                        i2 = 1;
-                        int j2 = j - l;
-                        int k2 = j + l;
-                        if (j2 < i2) {
-                            j2 = i2;
-                        }
+                        int i2 = 1;
+                        int x1 = x - l*5/2;
+                        int x2 = x + l*5/2;
+                        boolean doubleRender = Math.abs(z1 - z) <= 1 && Math.abs(y1 - y) <= 1;
 
-                        if (k2 < i2) {
-                            k2 = i2;
-                        }
-
-                        int l2 = i2;
-                        if (i2 < j) {
-                            l2 = j;
-                        }
-
-                        if (j2 != k2) {
-                            RandomSource randomsource = RandomSource.create((long)(k1 * k1 * 3121 + k1 * 45238971 ^ j1 * j1 * 418711 + j1 * 13761));
-                            blockpos$mutableblockpos.set(k1, j2, j1);
-                            Biome.Precipitation biome$precipitation = biome.getPrecipitationAt(blockpos$mutableblockpos);
-                            if (true) {
+                        for (int i = 0; i < 2; i++) {
+                            if (i == 0 && !doubleRender) {
+                                continue;
+                            }
+                            if (doubleRender) {
+                                if (i == 0) {
+                                    x1 = x + 2;
+                                } else {
+                                    x1 = x - l * 2;
+                                    x2 = x - 2;
+                                }
+                            }
+                            if (x1 != x2) {
+                                RandomSource randomsource = RandomSource.create((long)(y1 * y1 * 3121 + y1 * 45238971 ^ z1 * z1 * 418711 + z1 * 13761));
                                 if (i1 != 0) {
                                     if (i1 >= 0) {
                                         tesselator.end();
@@ -185,29 +169,34 @@ public class RenderEvents {
                                     bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
                                 }
 
-                                int i3 = mc.levelRenderer.getTicks() + k1 * k1 * 3121 + k1 * 45238971 + j1 * j1 * 418711 + j1 * 13761 & 31;
+                                int i3 = mc.levelRenderer.getTicks() + y1 * y1 * 3121 + y1 * 45238971 + z1 * z1 * 418711 + z1 * 13761 & 31;
                                 float f2 = -((float)i3 + pPartialTick) / 32.0F * (3.0F + randomsource.nextFloat());
-                                f2 *= 2F;
-                                double d2 = (double)k1 + 0.5D - pCamX;
-                                double d4 = (double)j1 + 0.5D - pCamZ;
+                                f2 *= 3 * speedIncrement;
+                                double d2 = (double)y1 + 0.5D - pCamY;
+                                double d4 = (double)z1 + 0.5D - pCamZ;
                                 float f3 = (float)Math.sqrt(d2 * d2 + d4 * d4) / (float)l;
                                 float f4 = ((1.0F - f3 * f3) * 0.5F + 0.5F) * f;
-                                blockpos$mutableblockpos.set(k1, l2, j1);
+                                blockpos$mutableblockpos.set(x, y1, z1);
                                 int j3 = getLightColor(level, blockpos$mutableblockpos);
-                                //bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)j2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)j2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)k2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)k2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
 
-                                //bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)j2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ - d1 + 0.5D).uv(1.0F, (float)j2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)k2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ + d1 + 0.5D).uv(0.0F, (float)k2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                bufferbuilder.vertex((double)x2 - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)x1 * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                bufferbuilder.vertex((double)x2 - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)x1 * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                bufferbuilder.vertex((double)x1 - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)x2 * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                bufferbuilder.vertex((double)x1 - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)x2 * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
 
-                                bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)j2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)k2 - pCamY, (double)j1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)j2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)k1 - pCamX + d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)k2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)k1 - pCamX - d0 + 0.5D, (double)j2 - pCamY, (double)j1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)k2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
                             }
                         }
                     }
