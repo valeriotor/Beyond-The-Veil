@@ -60,6 +60,10 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
         simpleBlock(BLACK_KELP.get(), new ExistingModelFile(modLoc("block/black_kelp"), models().existingFileHelper));
         simpleBlock(BLACK_KELP_PLANT.get(), new ExistingModelFile(modLoc("block/black_kelp_plant"), models().existingFileHelper));
+        simpleBlock(DARK_GLASS.get());
+        simpleBlock(ARENA.get());
+        simpleBlock(DEEP_CHEST.get(), new ExistingModelFile(modLoc("block/deep_chest"), models().existingFileHelper));
+
         simpleBlock(SEDATIVE_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
         simpleBlock(SOFTENER_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
         simpleBlock(COAGULANT_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));

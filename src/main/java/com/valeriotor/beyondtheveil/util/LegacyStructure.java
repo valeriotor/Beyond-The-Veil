@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -25,10 +26,19 @@ import java.util.Map;
 public class LegacyStructure {
 
     public static LegacyStructure lighthouse;
+    public static LegacyStructure deep_arena;
+    public static LegacyStructure deep_beacon;
+    public static LegacyStructure deep_home1;
 
     public static void registerLegacyStructures() {
         lighthouse = new LegacyStructure("lighthouse");
         lighthouse.registerBlocks();
+        deep_arena = new LegacyStructure("deep_arena");
+        deep_arena.registerBlocks();
+        deep_beacon = new LegacyStructure("deep_beacon");
+        deep_beacon.registerBlocks();
+        deep_home1 = new LegacyStructure("deep_home1");
+        deep_home1.registerBlocks();
     }
 
     private final String name;
@@ -73,6 +83,9 @@ public class LegacyStructure {
                         }
                     }
                 }
+                if (state.getBlock() == Blocks.PRISMARINE) {
+                    state = Blocks.DARK_PRISMARINE.defaultBlockState();
+                }
                 level.setBlock(centerPos.offset(coords[0], coords[1], coords[2]), state, 3);
                 level.updateNeighborsAt(centerPos.offset(coords[0], coords[1], coords[2]), entry.getKey());
             }
@@ -97,7 +110,8 @@ public class LegacyStructure {
                 for(int i = 0; i < entry.getValue().size(); i++) {
                     bytes[i] = entry.getValue().get(i);
                 }
-                map.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(entry.getKey())), bytes);
+                if(entry.getKey().contains(":"))
+                    map.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(entry.getKey())), bytes);
             }
             return map;
         }

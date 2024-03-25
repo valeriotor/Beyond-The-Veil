@@ -127,10 +127,10 @@ public class Registration {
     //public static final RegistryObject<Block> MEGYDREA = BLOCKS.register("megydrea", () -> new Block(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
     //public static final RegistryObject<Block> THICK_ALGAE = BLOCKS.register("thick_algae", () -> new Block(BRICK_PROPERTIES)); // new BlockThickAlgae(BlockNames.THICK_ALGAE);
     //public static final RegistryObject<Block> ARCHE_PORTAL = BLOCKS.register("arche_portal", () -> new Block(BRICK_PROPERTIES)); // new BlockArchePortal(BlockNames.ARCHE_PORTAL);
-    //public static final RegistryObject<Block> DARK_GLASS = BLOCKS.register("dark_glass", () -> new Block(BRICK_PROPERTIES)); // new BlockDarkGlass(BlockNames.DARK_GLASS);
+    public static final RegistryObject<Block> DARK_GLASS = BLOCKS.register("dark_glass", () -> new Block(BRICK_PROPERTIES)); // new BlockDarkGlass(BlockNames.DARK_GLASS);
     //public static final RegistryObject<Block> DEEP_PRISMARINE = BLOCKS.register("deep_prismarine", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepPrismarine(BlockNames.DEEP_PRISMARINE);
-    //public static final RegistryObject<Block> ARENA = BLOCKS.register("arena", () -> new Block(BRICK_PROPERTIES)); // new BlockArena(BlockNames.ARENA);
-    //public static final RegistryObject<Block> DEEP_CHEST = BLOCKS.register("deep_chest", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepChest(BlockNames.DEEP_CHEST);
+    public static final RegistryObject<Block> ARENA = BLOCKS.register("arena", () -> new Block(BRICK_PROPERTIES)); // new BlockArena(BlockNames.ARENA);
+    public static final RegistryObject<Block> DEEP_CHEST = BLOCKS.register("deep_chest", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepChest(BlockNames.DEEP_CHEST);
     public static final RegistryObject<GrowingPlantHeadBlock> BLACK_KELP = BLOCKS.register("black_kelp", () -> new BlackKelpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<GrowingPlantBodyBlock> BLACK_KELP_PLANT = BLOCKS.register("black_kelp_plant", () -> new BlackKelpPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
 
@@ -195,10 +195,10 @@ public class Registration {
     //public static final RegistryObject<Item> MEGYDREA_ITEM = fromBlock(MEGYDREA);
     //public static final RegistryObject<Item> THICK_ALGAE_ITEM = fromBlock(THICK_ALGAE);
     //public static final RegistryObject<Item> ARCHE_PORTAL_ITEM = fromBlock(ARCHE_PORTAL);
-    //public static final RegistryObject<Item> DARK_GLASS_ITEM = fromBlock(DARK_GLASS);
+    public static final RegistryObject<Item> DARK_GLASS_ITEM = fromBlock(DARK_GLASS);
     //public static final RegistryObject<Item> DEEP_PRISMARINE_ITEM = fromBlock(DEEP_PRISMARINE);
-    //public static final RegistryObject<Item> ARENA_ITEM = fromBlock(ARENA);
-    //public static final RegistryObject<Item> DEEP_CHEST_ITEM = fromBlock(DEEP_CHEST);
+    public static final RegistryObject<Item> ARENA_ITEM = fromBlock(ARENA);
+    public static final RegistryObject<Item> DEEP_CHEST_ITEM = fromBlock(DEEP_CHEST);
     public static final RegistryObject<Item> FLASK_LARGE_ITEM = fromBlock(FLASK_LARGE);
     public static final RegistryObject<Item> FLASK_MEDIUM_ITEM = fromBlock(FLASK_MEDIUM);
     public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
@@ -340,6 +340,9 @@ public class Registration {
                 output.accept(BLOOD_SMOOTH_STONE_SLAB.get());
                 output.accept(HEART.get());
                 output.accept(BLACK_KELP.get());
+                output.accept(DARK_GLASS.get());
+                output.accept(ARENA.get());
+                output.accept(DEEP_CHEST.get());
 
                 output.accept(ONIRIC_INCENSE.get());
                 output.accept(SLUG_CATCHER.get());

@@ -1,4 +1,5 @@
-// 1.20.1	2024-03-02T15:58:58.9619422	Item Models: beyondtheveil
+// 1.20.1	2024-03-25T22:38:55.4599591	Item Models: beyondtheveil
+1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
 714c2fc61979be0e6994fdda5632b4002fe13931 assets/beyondtheveil/models/item/black_kelp.json
@@ -27,7 +28,9 @@ ac99cf2d7f6c3f7c56901fe6461ca06068df16f0 assets/beyondtheveil/models/item/coagul
 71a171a37e0dff3a96289349a9c38fe4a45c2fa7 assets/beyondtheveil/models/item/damp_wood.json
 a524405ae8a54976a681432840ada52da85f71cc assets/beyondtheveil/models/item/damp_wood_fence.json
 feb0d16e525df1960f4f292ac16d8a089b016ba0 assets/beyondtheveil/models/item/damp_wood_stairs.json
+6902fd74aa1240244ba631c29104e15499638af8 assets/beyondtheveil/models/item/dark_glass.json
 ce03b66c65988dad3ce2de96d5130c07aef1be20 assets/beyondtheveil/models/item/dark_sand.json
+c9a5a0db11dc2de4c054144a352510d7981c4e76 assets/beyondtheveil/models/item/deep_chest.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/deep_one.json
 d975ca696a098842e78f732633f34013a2f62cbd assets/beyondtheveil/models/item/dream_bottle.json
 c7e7287af3d98f5938834d5dde704d0bb829ec39 assets/beyondtheveil/models/item/drink_ale.json
