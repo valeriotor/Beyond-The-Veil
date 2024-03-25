@@ -32,6 +32,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -139,64 +141,80 @@ public class RenderEvents {
                     int l1 = (z1 - z + 16) * 32 + y1 - y + 16;
                     double d0 = (double) rainSizeY[l1] * 0.5D;
                     double d1 = (double)rainSizeZ[l1] * 0.5D;
-                    if (true) {
-                        int i2 = 1;
-                        int x1 = x - l*5/2;
-                        int x2 = x + l*5/2;
-                        boolean doubleRender = Math.abs(z1 - z) <= 1 && Math.abs(y1 - y) <= 1;
-
-                        for (int i = 0; i < 2; i++) {
-                            if (i == 0 && !doubleRender) {
+                    int xStart = x - l*2;
+                    int xEnd = xStart;
+                    blockpos$mutableblockpos.set(xStart, y1, z1);
+                    boolean waterPhase = level.getBlockState(blockpos$mutableblockpos).is(Blocks.WATER);
+                    boolean doubleRender = Math.abs(z1 - z) <= 1 && Math.abs(y1 - y) <= 1;
+                    while (xEnd <= x + l * 2) {
+                        xEnd++;
+                        blockpos$mutableblockpos.set(xEnd, y1, z1);
+                        Block b = level.getBlockState(blockpos$mutableblockpos).getBlock();
+                        if (!waterPhase && b == Blocks.WATER && (Math.abs(xEnd - x) > 2 || !doubleRender)) {
+                            waterPhase = true;
+                            xStart = xEnd;
+                        } else if (waterPhase && (b != Blocks.WATER || xEnd == x + l*2 || (doubleRender && xEnd == x - 2))) {
+                            waterPhase = false;
+                            int i2 = 1;
+                            int x1 = x - l*4/2;
+                            int x2 = x + l*4/2;
+                            blockpos$mutableblockpos.set(x, y1, z1);
+                            if (level.getBlockState(blockpos$mutableblockpos).getBlock() != Blocks.WATER) {
                                 continue;
                             }
-                            if (doubleRender) {
-                                if (i == 0) {
-                                    x1 = x + 2;
-                                } else {
-                                    x1 = x - l * 2;
-                                    x2 = x - 2;
+
+                            for (int i = 0; i < 2; i++) {
+                                if (i == 0 && true){//!doubleRender) {
+                                    continue;
                                 }
-                            }
-                            if (x1 != x2) {
-                                RandomSource randomsource = RandomSource.create((long)(y1 * y1 * 3121 + y1 * 45238971 ^ z1 * z1 * 418711 + z1 * 13761));
-                                if (i1 != 0) {
-                                    if (i1 >= 0) {
-                                        tesselator.end();
+                                if (doubleRender) {
+                                    if (i == 0) {
+                                        x1 = x + 2;
+                                    } else {
+                                        x1 = x - l * 2;
+                                        x2 = x - 2;
+                                    }
+                                }
+                                if (x1 != x2) {
+                                    RandomSource randomsource = RandomSource.create((long)(y1 * y1 * 3121 + y1 * 45238971 ^ z1 * z1 * 418711 + z1 * 13761));
+                                    if (i1 != 0) {
+                                        if (i1 >= 0) {
+                                            tesselator.end();
+                                        }
+
+                                        i1 = 0;
+                                        RenderSystem.setShaderTexture(0, RAIN_LOCATION);
+                                        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
                                     }
 
-                                    i1 = 0;
-                                    RenderSystem.setShaderTexture(0, RAIN_LOCATION);
-                                    bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+                                    int i3 = mc.levelRenderer.getTicks() + y1 * y1 * 3121 + y1 * 45238971 + z1 * z1 * 418711 + z1 * 13761 & 31;
+                                    float f2 = -((float)i3 + pPartialTick) / 32.0F * (3.0F + randomsource.nextFloat());
+                                    f2 *= 3 * speedIncrement;
+                                    double d2 = (double)y1 + 0.5D - pCamY;
+                                    double d4 = (double)z1 + 0.5D - pCamZ;
+                                    float f3 = (float)Math.sqrt(d2 * d2 + d4 * d4) / (float)l;
+                                    float f4 = ((1.0F - f3 * f3) * 0.5F + 0.5F) * f;
+                                    int j3 = getLightColor(level, blockpos$mutableblockpos);
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+
+                                    bufferbuilder.vertex((double)xEnd - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)xStart * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    bufferbuilder.vertex((double)xEnd - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)xStart * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    bufferbuilder.vertex((double)xStart - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)xEnd * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    bufferbuilder.vertex((double)xStart - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)xEnd * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
+                                    //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
                                 }
-
-                                int i3 = mc.levelRenderer.getTicks() + y1 * y1 * 3121 + y1 * 45238971 + z1 * z1 * 418711 + z1 * 13761 & 31;
-                                float f2 = -((float)i3 + pPartialTick) / 32.0F * (3.0F + randomsource.nextFloat());
-                                f2 *= 3 * speedIncrement;
-                                double d2 = (double)y1 + 0.5D - pCamY;
-                                double d4 = (double)z1 + 0.5D - pCamZ;
-                                float f3 = (float)Math.sqrt(d2 * d2 + d4 * d4) / (float)l;
-                                float f4 = ((1.0F - f3 * f3) * 0.5F + 0.5F) * f;
-                                blockpos$mutableblockpos.set(x, y1, z1);
-                                int j3 = getLightColor(level, blockpos$mutableblockpos);
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-
-                                bufferbuilder.vertex((double)x2 - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)x1 * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)x2 - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)x1 * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)x1 - pCamX, (double)y1 - pCamY + d0 + 0.5D, (double)z1 - pCamZ + d1 + 0.5D).uv((float)x2 * 0.25F + f2, 1.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                bufferbuilder.vertex((double)x1 - pCamX, (double)y1 - pCamY - d0 + 0.5D, (double)z1 - pCamZ - d1 + 0.5D).uv((float)x2 * 0.25F + f2, 0.0F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(0.0F, (float)x2 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x1 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*+ d1*/ + 0.5D).uv(0.25F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
-                                //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x1 - pCamY, (double)z1 - pCamZ /*- d1*/ + 0.5D).uv(0.0F + f2, (float)x2 * 1F).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
                             }
                         }
                     }
