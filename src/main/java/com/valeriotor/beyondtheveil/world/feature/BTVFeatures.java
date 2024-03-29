@@ -22,7 +22,7 @@ public class BTVFeatures {
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placedFeatureGetter = context.lookup(Registries.PLACED_FEATURE);
 
-        final Holder<PlacedFeature> FANCY_OAK_CHECKED = placedFeatureGetter.getOrThrow(BTVPlacements.BLACK_KELP);
+        final Holder<PlacedFeature> HOLDER = placedFeatureGetter.getOrThrow(BTVPlacements.BLACK_KELP);
 
         context.register(BLACK_KELP, new ConfiguredFeature<>(Registration.BLACK_KELP_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
     }

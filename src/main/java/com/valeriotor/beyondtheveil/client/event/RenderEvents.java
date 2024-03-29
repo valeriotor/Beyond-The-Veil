@@ -239,6 +239,11 @@ public class RenderEvents {
             event.setFarPlaneDistance(100);
             //event.setNearPlaneDistance(-100);
             event.setCanceled(true);
+        } else if (p.isUnderWater()) {
+            event.setFarPlaneDistance(300);
+            //event.setNearPlaneDistance(-100);
+            event.setCanceled(true);
+
         }
     }
 

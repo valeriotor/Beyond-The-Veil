@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
+import com.valeriotor.beyondtheveil.world.structures.DeepCityPiece;
+import com.valeriotor.beyondtheveil.world.structures.DeepCityStructure;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,11 +22,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -46,6 +49,8 @@ public class Registration {
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, References.MODID);
+    private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
+    private static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, References.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, References.MODID);
 
     public static void init() {
@@ -58,6 +63,8 @@ public class Registration {
         CONTAINERS.register(bus);
         ENTITIES.register(bus);
         FEATURES.register(bus);
+        STRUCTURE_TYPES.register(bus);
+        STRUCTURE_PIECE_TYPES.register(bus);
         CREATIVE_TAB.register(bus);
     }
 
@@ -294,6 +301,9 @@ public class Registration {
     public static final ForgeFlowingFluid.Properties COAGULANT_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.COAGULANT_FLUID_TYPE, SOURCE_FLUID_COAGULANT, FLOWING_FLUID_COAGULANT).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.COAGULANT_BLOCK).bucket(Registration.COAGULANT_BUCKET);
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
+
+    public static final RegistryObject<StructureType<DeepCityStructure>> DEEP_CITY = STRUCTURE_TYPES.register("deep_city", () -> () -> DeepCityStructure.CODEC);
+    public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {
