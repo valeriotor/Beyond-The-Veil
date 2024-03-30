@@ -1,9 +1,12 @@
 package com.valeriotor.beyondtheveil.world.structures;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -18,12 +21,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
 
@@ -32,7 +37,7 @@ import java.util.*;
 
 public class DeepCityPiece extends TemplateStructurePiece {
 
-    public static final int INDIVIDUAL_WIDTH = 41;
+    public static final int INDIVIDUAL_WIDTH = 39;
     public static final int GRID_RADIUS = 3;
     private final BlockPos centerPos;
     private int radius;
@@ -60,12 +65,14 @@ public class DeepCityPiece extends TemplateStructurePiece {
         this.centerPos = centerPos;
         this.radius = radius;
         this.doorRadius = doorRadius;
+        this.boundingBox = new BoundingBox(centerPos.getX()-((INDIVIDUAL_WIDTH-1)/2), boundingBox.minY(), centerPos.getZ()-((INDIVIDUAL_WIDTH-1)/2), centerPos.getX()+((INDIVIDUAL_WIDTH-1)/2), boundingBox.maxY(), centerPos.getZ()+((INDIVIDUAL_WIDTH-1)/2));
     }
 
     public DeepCityPiece(StructureTemplateManager pStructureTemplateManager, CompoundTag pTag) {
         super(Registration.DEEP_CITY_PIECE.get(), pTag, pStructureTemplateManager, (p_227512_) -> makeSettings(Rotation.valueOf(pTag.getString("Rot"))));
         this.radius = pTag.getInt("radius");
         this.centerPos = templatePosition.offset(this.radius, 0, this.radius);
+        this.boundingBox = new BoundingBox(centerPos.getX()-((INDIVIDUAL_WIDTH-1)/2), boundingBox.minY(), centerPos.getZ()-((INDIVIDUAL_WIDTH-1)/2), centerPos.getX()+((INDIVIDUAL_WIDTH-1)/2), boundingBox.maxY(), centerPos.getZ()+((INDIVIDUAL_WIDTH-1)/2));
         if (pTag.contains("corridor0")) {
             for (int i = 0; i < 4; i++) {
                 corridors[i] = pTag.getBoolean("corridor" + i);
@@ -103,7 +110,35 @@ public class DeepCityPiece extends TemplateStructurePiece {
     @Override
     public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
         //pBox = new BoundingBox(centerPos.getX()-128, centerPos.getY()-20, centerPos.getZ()-128,centerPos.getX()+128, centerPos.getY()+220, centerPos.getZ()+128);
-        super.postProcess(pLevel, pStructureManager, pGenerator, pRandom, pBox, pChunkPos, pPos);
+        //super.postProcess(pLevel, pStructureManager, pGenerator, pRandom, pBox, pChunkPos, pPos);
+        this.placeSettings.setBoundingBox(pBox);
+        //this.boundingBox = this.template.getBoundingBox(this.placeSettings, this.templatePosition);
+        if (this.template.placeInWorld(pLevel, this.templatePosition, pPos, this.placeSettings, pRandom, 2)) {
+            for(StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.STRUCTURE_BLOCK)) {
+                if (structuretemplate$structureblockinfo.nbt() != null) {
+                    StructureMode structuremode = StructureMode.valueOf(structuretemplate$structureblockinfo.nbt().getString("mode"));
+                    if (structuremode == StructureMode.DATA) {
+                        this.handleDataMarker(structuretemplate$structureblockinfo.nbt().getString("metadata"), structuretemplate$structureblockinfo.pos(), pLevel, pRandom, pBox);
+                    }
+                }
+            }
+
+            for(StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo1 : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.JIGSAW)) {
+                if (structuretemplate$structureblockinfo1.nbt() != null) {
+                    String s = structuretemplate$structureblockinfo1.nbt().getString("final_state");
+                    BlockState blockstate = Blocks.AIR.defaultBlockState();
+
+                    try {
+                        blockstate = BlockStateParser.parseForBlock(pLevel.holderLookup(Registries.BLOCK), s, true).blockState();
+                    } catch (CommandSyntaxException commandsyntaxexception) {
+                        //LOGGER.error("Error while parsing blockstate {} in jigsaw block @ {}", s, structuretemplate$structureblockinfo1.pos());
+                    }
+
+                    pLevel.setBlock(structuretemplate$structureblockinfo1.pos(), blockstate, 3);
+                }
+            }
+        }
+        //this.boundingBox = new BoundingBox(centerPos.getX()-20, boundingBox.minY(), centerPos.getZ()-20, centerPos.getX()+20, boundingBox.maxY(), centerPos.getZ()+20);
         int DOOR_HEIGHT = 18;
         //pBox = new BoundingBox(centerPos.getX()-128, centerPos.getY()+3, centerPos.getZ()-128, centerPos.getX()+128, centerPos.getY()+320, centerPos.getZ()+128);
 
@@ -118,7 +153,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         direction = direction.getOpposite();
         int distance = INDIVIDUAL_WIDTH / 2 + 1 - doorRadius - 1;
         pos = pos.relative(direction, doorRadius + 1);
-        pos = pos.offset(centerPos.offset(-radius, 0, -radius).multiply(-1));
+        pos = pos.offset(centerPos.offset(-((INDIVIDUAL_WIDTH-1)/2), 0, -((INDIVIDUAL_WIDTH-1)/2)).multiply(-1));
         //BlockPos from = new BlockPos(box.minX(), box.minY(), box.minZ()).offset(centerPos.multiply(-1));
         //BlockPos to = new BlockPos(box.maxX(), box.maxY(), box.maxZ()).offset(centerPos.multiply(-1));
         //generateBox(level, box, from.getX(), from.getY(), from.getZ(), to.getX(), to.getY(), to.getZ(), Blocks.AMETHYST_BLOCK.defaultBlockState(), Blocks.AMETHYST_BLOCK.defaultBlockState(), false);
@@ -143,7 +178,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
     protected void placeBlock(WorldGenLevel pLevel, BlockState pBlockstate, int pX, int pY, int pZ, BoundingBox pBoundingbox) {
         BlockPos blockpos = this.getWorldPos(pX, pY, pZ);
-        if (true) {
+        if (pBoundingbox.isInside(blockpos)) {
             if (this.canBeReplaced(pLevel, pX, pY, pZ, pBoundingbox)) {
                 //if (this.mirror != Mirror.NONE) {
                 //    pBlockstate = pBlockstate.mirror(this.mirror);
@@ -278,7 +313,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         }
 
         private boolean outOfGrid(Point point) {
-            return Math.abs(point.x) > 3 || Math.abs(point.y) > 3;
+            return Math.abs(point.x) > GRID_RADIUS || Math.abs(point.y) > GRID_RADIUS;
         }
 
         private Point offsetPoint(Direction facing) {

@@ -39,10 +39,10 @@ public class DeepCityStructure extends Structure {
 
     private void generatePieces(StructurePiecesBuilder pBuilder, BlockPos pStartPos, Rotation pRotation, Structure.GenerationContext pContext) {
         List<StructurePiece> list = Lists.newArrayList();
-        DeepCityPiece.DeepCityLayout layout = new DeepCityPiece.DeepCityLayout(pContext.random(), pStartPos.offset(19, 0, 19), pContext.structureTemplateManager());
+        DeepCityPiece.DeepCityLayout layout = new DeepCityPiece.DeepCityLayout(pContext.random(), pStartPos, pContext.structureTemplateManager());
         layout.generate();
         list.addAll(layout.getAsList());
-        list.add(new DeepCityPiece(pContext.structureTemplateManager(), "arena_top", Rotation.NONE, pStartPos.offset(19, 48, 19), 19, 5));
+        list.add(new DeepCityPiece(pContext.structureTemplateManager(), "arena_top", Rotation.NONE, pStartPos.offset(0, 48, 0), 19, 5));
         list.forEach(pBuilder::addPiece);
     } // 1031 -489 --- 1069 -451  // 990 -530 --- 1002 -518
 
