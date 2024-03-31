@@ -89,7 +89,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
     private static StructurePlaceSettings makeSettings(Rotation pRotation) {
         //BlockIgnoreProcessor blockignoreprocessor = pOverwrite ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
-        return (new StructurePlaceSettings()).setIgnoreEntities(true).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).setRotation(pRotation);
+        return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).setRotation(pRotation);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         //BlockPos to = new BlockPos(box.maxX(), box.maxY(), box.maxZ()).offset(centerPos.multiply(-1));
         //generateBox(level, box, from.getX(), from.getY(), from.getZ(), to.getX(), to.getY(), to.getZ(), Blocks.AMETHYST_BLOCK.defaultBlockState(), Blocks.AMETHYST_BLOCK.defaultBlockState(), false);
         //BlockPos pos = center.offset(EnumFacing.UP, DOOR_HEIGHT).offset(facing, distanceDoorFromCenter);
-        BlockPos fromAir = pos.relative(direction.getCounterClockWise(), 1).above();
+        BlockPos fromAir = pos.relative(direction.getCounterClockWise(), 1).relative(direction.getOpposite(), 1).above();
         BlockPos toAir = pos.relative(direction.getCounterClockWise().getOpposite(), 1).relative(direction, distance).relative(Direction.UP, 3);
         BlockPos fromLeftGlass = pos.relative(direction.getCounterClockWise(), 2).above();
         BlockPos toLeftGlass = pos.relative(direction.getCounterClockWise(), 2).relative(direction, distance).relative(Direction.UP, 3);
@@ -178,7 +178,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
     protected void placeBlock(WorldGenLevel pLevel, BlockState pBlockstate, int pX, int pY, int pZ, BoundingBox pBoundingbox) {
         BlockPos blockpos = this.getWorldPos(pX, pY, pZ);
-        if (pBoundingbox.isInside(blockpos)) {
+        if (blockpos.getX() >= pBoundingbox.minX() && blockpos.getX() <= pBoundingbox.maxX() && blockpos.getZ() >= pBoundingbox.minZ() && blockpos.getZ() <= pBoundingbox.maxZ()) {
             if (this.canBeReplaced(pLevel, pX, pY, pZ, pBoundingbox)) {
                 //if (this.mirror != Mirror.NONE) {
                 //    pBlockstate = pBlockstate.mirror(this.mirror);

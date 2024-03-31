@@ -1,6 +1,6 @@
 {
   "type": "beyondtheveil:deep_city",
-  "biomes": "minecraft:plains",
+  "biomes": "#beyondtheveil:has_structure/deep_city",
   "spawn_overrides": {},
   "step": "surface_structures"
 }

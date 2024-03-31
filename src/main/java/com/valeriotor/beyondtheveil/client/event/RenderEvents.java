@@ -236,8 +236,8 @@ public class RenderEvents {
     public static void fogEvent(ViewportEvent.RenderFog event) {
         LocalPlayer p = Minecraft.getInstance().player;
         if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
-            event.setFarPlaneDistance(100);
-            //event.setNearPlaneDistance(-100);
+            event.setFarPlaneDistance(120);
+            event.setNearPlaneDistance(30);
             event.setCanceled(true);
         } else if (p.isUnderWater()) {
             event.setFarPlaneDistance(300);
