@@ -105,6 +105,10 @@ public class DeepOneModel extends EntityModel<LivingEntity> {
         //right_lower_jaw.xRot = (float) (32.5 * Math.PI / 180);
         //left_lower_jaw.yRot = (float) (-37.5 * Math.PI / 180);
         //right_lower_jaw.yRot = (float) (37.5 * Math.PI / 180);
+        //left_lower_jaw.xRot = 0;
+        //right_lower_jaw.xRot = 0;
+        //left_lower_jaw.yRot = 0;
+        //right_lower_jaw.yRot = 0;
     }
 
     @Override
