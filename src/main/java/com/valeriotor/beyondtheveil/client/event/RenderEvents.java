@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
+import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
@@ -20,6 +21,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
@@ -29,6 +31,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,10 +47,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderHighlightEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -93,6 +94,26 @@ public class RenderEvents {
     //        event.getCamera().move(-event.getCamera().getMaxZoom(4F), 0, 0);
     //    }
     //}
+
+    //private static RenderTransformedPlayer deepOnePlayerRenderer = new RenderTransformedPlayer();
+
+    @SubscribeEvent
+    public static void renderTransformedPlayer(RenderPlayerEvent event) {
+        if (false) {
+            Player p = event.getEntity();
+            Entity entity = Minecraft.getInstance().getCameraEntity();
+            double d0 = p.xOld + (p.position().x - p.xOld) * (double)event.getPartialTick();
+            double d1 = p.yOld + (p.position().y - p.yOld) * (double)event.getPartialTick();
+            double d2 = p.zOld + (p.position().z - p.zOld) * (double)event.getPartialTick();
+            double d3 = entity.xOld + (entity.position().x - entity.xOld) * (double)event.getPartialTick();
+            double d4 = entity.yOld + (entity.position().y - entity.yOld) * (double)event.getPartialTick();
+            double d5 = entity.zOld + (entity.position().z - entity.zOld) * (double)event.getPartialTick();
+            float f = Mth.lerp(event.getPartialTick(), p.yRotO, p.getYRot());
+            event.setCanceled(true);
+            EntityRenderer<LivingEntity> deepOneRenderer = (EntityRenderer<LivingEntity>) Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(Registration.DEEP_ONE.get());
+            deepOneRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+        }
+    }
 
     @SubscribeEvent
     public static void renderCurrent(RenderLevelStageEvent event) {

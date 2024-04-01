@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
 public class DeepOneModel extends EntityModel<LivingEntity> {
@@ -109,6 +110,22 @@ public class DeepOneModel extends EntityModel<LivingEntity> {
         //right_lower_jaw.xRot = 0;
         //left_lower_jaw.yRot = 0;
         //right_lower_jaw.yRot = 0;
+
+        boolean flag = entity.getFallFlyingTicks() > 4;
+
+        float f = 1.0F;
+        if (flag) {
+            f = (float)entity.getDeltaMovement().lengthSqr();
+            f /= 0.2F;
+            f *= f * f;
+        }
+
+        if (f < 1.0F) {
+            f = 1.0F;
+        }
+
+        this.right_leg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f;
+        this.left_leg.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1F * limbSwingAmount / f;
     }
 
     @Override
