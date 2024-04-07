@@ -101,13 +101,13 @@ public class RenderEvents {
     public static void renderTransformedPlayer(RenderPlayerEvent event) {
         if (false) {
             Player p = event.getEntity();
-            Entity entity = Minecraft.getInstance().getCameraEntity();
-            double d0 = p.xOld + (p.position().x - p.xOld) * (double)event.getPartialTick();
-            double d1 = p.yOld + (p.position().y - p.yOld) * (double)event.getPartialTick();
-            double d2 = p.zOld + (p.position().z - p.zOld) * (double)event.getPartialTick();
-            double d3 = entity.xOld + (entity.position().x - entity.xOld) * (double)event.getPartialTick();
-            double d4 = entity.yOld + (entity.position().y - entity.yOld) * (double)event.getPartialTick();
-            double d5 = entity.zOld + (entity.position().z - entity.zOld) * (double)event.getPartialTick();
+            //Entity entity = Minecraft.getInstance().getCameraEntity();
+            //double d0 = p.xOld + (p.position().x - p.xOld) * (double)event.getPartialTick();
+            //double d1 = p.yOld + (p.position().y - p.yOld) * (double)event.getPartialTick();
+            //double d2 = p.zOld + (p.position().z - p.zOld) * (double)event.getPartialTick();
+            //double d3 = entity.xOld + (entity.position().x - entity.xOld) * (double)event.getPartialTick();
+            //double d4 = entity.yOld + (entity.position().y - entity.yOld) * (double)event.getPartialTick();
+            //double d5 = entity.zOld + (entity.position().z - entity.zOld) * (double)event.getPartialTick();
             float f = Mth.lerp(event.getPartialTick(), p.yRotO, p.getYRot());
             event.setCanceled(true);
             EntityRenderer<LivingEntity> deepOneRenderer = (EntityRenderer<LivingEntity>) Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(Registration.DEEP_ONE.get());
@@ -260,7 +260,7 @@ public class RenderEvents {
             event.setFarPlaneDistance(120);
             event.setNearPlaneDistance(30);
             event.setCanceled(true);
-        } else if (p.isUnderWater()) {
+        } else if (p.isUnderWater()) { // TODO eventually remove this...
             event.setFarPlaneDistance(300);
             //event.setNearPlaneDistance(-100);
             event.setCanceled(true);

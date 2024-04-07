@@ -1,0 +1,6 @@
+{
+  "type": "beyondtheveil:hamlet",
+  "biomes": "minecraft:plains",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

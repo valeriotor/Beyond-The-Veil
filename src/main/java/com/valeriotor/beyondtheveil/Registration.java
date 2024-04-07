@@ -10,6 +10,8 @@ import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
 import com.valeriotor.beyondtheveil.world.structures.DeepCityPiece;
 import com.valeriotor.beyondtheveil.world.structures.DeepCityStructure;
+import com.valeriotor.beyondtheveil.world.structures.HamletPieces;
+import com.valeriotor.beyondtheveil.world.structures.HamletStructure;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -303,7 +305,9 @@ public class Registration {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
 
     public static final RegistryObject<StructureType<DeepCityStructure>> DEEP_CITY = STRUCTURE_TYPES.register("deep_city", () -> () -> DeepCityStructure.CODEC);
+    public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
     public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
+    public static final RegistryObject<StructurePieceType> HAMLET_BUILDING_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_building_piece", () -> HamletPieces.HamletBuildingPiece::new);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {

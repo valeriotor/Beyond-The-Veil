@@ -29,6 +29,15 @@ public class LegacyStructure {
     public static LegacyStructure deep_arena;
     public static LegacyStructure deep_beacon;
     public static LegacyStructure deep_home1;
+    public static LegacyStructure hamlet_house1;
+    public static LegacyStructure hamlet_house2;
+    public static LegacyStructure hamlet_house_two_floors;
+    public static LegacyStructure hamlet_idol;
+    public static LegacyStructure hamlet_hall;
+    public static LegacyStructure hamlet_saloon;
+    public static LegacyStructure hamlet_small_hut;
+    public static LegacyStructure hamlet_storehouse;
+    public static LegacyStructure hamlet_storehouse2;
 
     public static void registerLegacyStructures() {
         lighthouse = new LegacyStructure("lighthouse");
@@ -38,7 +47,26 @@ public class LegacyStructure {
         deep_beacon = new LegacyStructure("deep_beacon");
         deep_beacon.registerBlocks();
         deep_home1 = new LegacyStructure("deep_home1");
-        deep_home1.registerBlocks();
+        deep_home1.registerBlocks();;
+        hamlet_house1 = new LegacyStructure("hamlet_house1");
+        hamlet_house1.registerBlocks();
+        hamlet_house2 = new LegacyStructure("hamlet_house2");
+        hamlet_house2.registerBlocks();
+        hamlet_house_two_floors = new LegacyStructure("hamlet_house_two_floors");
+        hamlet_house_two_floors.registerBlocks();
+        hamlet_idol = new LegacyStructure("hamlet_idol");
+        hamlet_idol.registerBlocks();
+        hamlet_hall = new LegacyStructure("hamlet_hall");
+        hamlet_hall.registerBlocks();
+        hamlet_saloon = new LegacyStructure("hamlet_saloon");
+        hamlet_saloon.registerBlocks();
+        hamlet_small_hut = new LegacyStructure("hamlet_small_hut");
+        hamlet_small_hut.registerBlocks();
+        hamlet_storehouse = new LegacyStructure("hamlet_storehouse");
+        hamlet_storehouse.registerBlocks();
+        hamlet_storehouse2 = new LegacyStructure("hamlet_storehouse2");
+        hamlet_storehouse2.registerBlocks();
+
     }
 
     private final String name;
