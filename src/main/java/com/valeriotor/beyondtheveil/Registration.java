@@ -308,6 +308,7 @@ public class Registration {
     public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
     public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_BUILDING_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_building_piece", () -> HamletPieces.HamletBuildingPiece::new);
+    public static final RegistryObject<StructurePieceType> HAMLET_STREET_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_street_piece", () -> HamletPieces.StreetPiece::new);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {

@@ -10,11 +10,18 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
@@ -23,8 +30,8 @@ import java.util.*;
 
 public class HamletPieces {
 
-    private record WeightedBuilding(String name, Weight weight, int width, int depth,
-                                    int max) implements WeightedEntry {
+    private record WeightedBuilding(String name, Weight weight, int width, int depth, int max,
+                                    int doorX) implements WeightedEntry {
         @Override
         public Weight getWeight() {
             return this.weight;
@@ -35,15 +42,15 @@ public class HamletPieces {
 
     static {
         List<WeightedBuilding> list = new ArrayList<>();
-        list.add(new WeightedBuilding("house1", Weight.of(10), 20, 16, 10));
-        list.add(new WeightedBuilding("house2", Weight.of(10), 18, 18, 10));
-        list.add(new WeightedBuilding("house_two_floors", Weight.of(10), 17, 17, 1));
-        list.add(new WeightedBuilding("hut", Weight.of(10), 15, 15, 10));
-        list.add(new WeightedBuilding("inn", Weight.of(10), 25, 21, 10));
-        list.add(new WeightedBuilding("lighthouse", Weight.of(10), 25, 20, 1));
-        list.add(new WeightedBuilding("storehouse1", Weight.of(10), 25, 22, 4));
-        list.add(new WeightedBuilding("storehouse2", Weight.of(10), 19, 23, 4));
-        list.add(new WeightedBuilding("town_hall", Weight.of(10), 27, 20, 1));
+        list.add(new WeightedBuilding("house1", Weight.of(10), 20, 16, 10, 4));
+        list.add(new WeightedBuilding("house2", Weight.of(10), 18, 18, 10, 3));
+        list.add(new WeightedBuilding("house_two_floors", Weight.of(10), 17, 17, 1, 3));
+        list.add(new WeightedBuilding("hut", Weight.of(10), 15, 15, 10, 3));
+        list.add(new WeightedBuilding("inn", Weight.of(10), 25, 21, 10, 12));
+        list.add(new WeightedBuilding("lighthouse", Weight.of(10), 25, 20, 1, 2));
+        list.add(new WeightedBuilding("storehouse1", Weight.of(10), 25, 22, 4, 5));
+        list.add(new WeightedBuilding("storehouse2", Weight.of(10), 19, 23, 4, 5));
+        list.add(new WeightedBuilding("town_hall", Weight.of(10), 27, 20, 1, 9));
 
         //list.add(new WeightedBuilding("idol", Weight.of(10), 17, 17, 1));
         buildingTypes = WeightedRandomList.create(list);
@@ -77,6 +84,68 @@ public class HamletPieces {
         }
     }
 
+    public static class StreetPiece extends StructurePiece {
+
+        private final int[][] streetGrid;
+        private final BlockPos centerPos;
+
+        public StreetPiece(int[][] streetGrid, Rotation rotation, BlockPos centerPos) {
+            super(Registration.HAMLET_BUILDING_PIECE.get(), 0, new BoundingBox(centerPos.getX(), centerPos.getY(), centerPos.getZ(), centerPos.getX() + 128, centerPos.getY() + 250, centerPos.getZ() + 128));
+            this.streetGrid = streetGrid;
+            this.centerPos = centerPos;
+        }
+
+        public StreetPiece(CompoundTag pTag) {
+            super(Registration.HAMLET_STREET_PIECE.get(), pTag);
+            CompoundTag streetTag = pTag.getCompound("streetTag");
+            streetGrid = new int[pTag.getInt("streetX")][pTag.getInt("streetZ")];
+            for (String key : streetTag.getAllKeys()) {
+                String[] s = key.split(" ");
+                int i = Integer.parseInt(s[0]);
+                int j = Integer.parseInt(s[1]);
+                streetGrid[i][j] = streetTag.getInt(key);
+            }
+            if (pTag.contains("centerPos")) {
+                centerPos = BlockPos.of(pTag.getLong("centerPos"));
+            } else {
+                centerPos = BlockPos.ZERO;
+            }
+
+        }
+
+        public StreetPiece(StructurePieceSerializationContext context, CompoundTag tag) {
+            this(tag);
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
+            CompoundTag streetTag = new CompoundTag();
+            for (int i = 0; i < streetGrid.length; i++) {
+                for (int j = 0; j < streetGrid[0].length; j++) {
+                    streetTag.putInt(i + " " + j, streetGrid[i][j]);
+                }
+            }
+            pTag.put("streetTag", streetTag);
+            pTag.putInt("streetX", streetGrid.length);
+            pTag.putInt("streetZ", streetGrid[0].length);
+            pTag.putLong("centerPos", centerPos.asLong());
+        }
+
+        @Override
+        public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
+            for (int z = 0; z < streetGrid.length; z++) {
+                int[] row = streetGrid[z];
+                for (int x = 0; x < row.length; x++) {
+                    int y = -61;// pGenerator.getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE, pLevel, pRandom);
+                    if (streetGrid[z][x] > 0) {
+                        placeBlock(pLevel, Registration.DAMP_WOOD.get().defaultBlockState(), x + centerPos.getX(), y, z + centerPos.getZ(), pBox);
+                    }
+                }
+            }
+        }
+    }
+
+
     private static final int MIN_BUILDINGS_PER_QUADRANT = 5;
     private static final int MAX_BUILDINGS_PER_QUADRANT = 15;
     private static final int QUADRANT_BUILDINGS_PER_AXIS = 4;
@@ -98,15 +167,25 @@ public class HamletPieces {
             this.width = width;
             this.depth = depth;
         }
+
+        int getXOffset() {
+            int width = rotation == Rotation.NONE || rotation == Rotation.CLOCKWISE_180 ? this.width : this.depth;
+            return (width - (type.width - 8)) / 2;
+        }
+
+        int getZOffset() {
+            int depth = rotation == Rotation.NONE || rotation == Rotation.CLOCKWISE_180 ? this.depth : this.width;
+            return (depth - (type.depth - 8)) / 2;
+        }
     }
 
-    public static List<HamletBuildingPiece> layout(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, BlockPos centerPos) {
+    public static List<StructurePiece> layout(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, BlockPos centerPos) {
         List<WeightedBuilding> weightedBuildings = Lists.newArrayList(buildingTypes.unwrap());
         return layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, centerPos);
     }
 
 
-    private static List<HamletBuildingPiece> layoutQuadrant(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, List<WeightedBuilding> allowedBuildingTypes, BlockPos centerPos) {
+    private static List<StructurePiece> layoutQuadrant(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, List<WeightedBuilding> allowedBuildingTypes, BlockPos centerPos) {
         WeightedRandomList<WeightedBuilding> weightedAllowedBuildingTypes = WeightedRandomList.create(allowedBuildingTypes);
         BuildingOnGrid[][] quadrant = new BuildingOnGrid[QUADRANT_BUILDINGS_PER_AXIS][QUADRANT_BUILDINGS_PER_AXIS];
         int buildingsInQuadrant = rand.nextInt(MIN_BUILDINGS_PER_QUADRANT, MAX_BUILDINGS_PER_QUADRANT);
@@ -181,11 +260,12 @@ public class HamletPieces {
                 }
             }
         }
-        List<HamletBuildingPiece> pieces = new ArrayList<>();
+        int[][] grid = new int[QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE][QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE];
+        List<StructurePiece> pieces = new ArrayList<>();
         for (BuildingOnGrid[] buildingsOnGrid : quadrant) {
             for (BuildingOnGrid buildingOnGrid : buildingsOnGrid) {
                 if (buildingOnGrid != null) {
-                    BlockPos offset = centerPos.offset(buildingOnGrid.x, 0, buildingOnGrid.z);
+                    BlockPos offset = centerPos.offset(buildingOnGrid.x + buildingOnGrid.getXOffset(), 0, buildingOnGrid.z + buildingOnGrid.getZOffset()); // TODO OFFSET BY (WIDTH-TYPE.WIDTH)/2 AND SAME FOR HEIGHT
                     if (buildingOnGrid.rotation == Rotation.CLOCKWISE_180) {
                         offset = offset.offset(buildingOnGrid.type.width - 8, 0, buildingOnGrid.type.depth - 8);
                     } else if (buildingOnGrid.rotation == Rotation.COUNTERCLOCKWISE_90) {
@@ -194,13 +274,102 @@ public class HamletPieces {
                         offset = offset.offset(buildingOnGrid.type.depth - 8, 0, 0);
                     }
                     pieces.add(new HamletBuildingPiece(manager, buildingOnGrid.type, buildingOnGrid.rotation, offset));
+
+                    for (int dx = 0; dx < buildingOnGrid.width + 1; dx++) {
+                        grid[buildingOnGrid.z][buildingOnGrid.x + dx] = 1;
+                        grid[buildingOnGrid.z + buildingOnGrid.depth][buildingOnGrid.x + dx] = 1;
+                    }
+
+                    for (int dz = 0; dz < buildingOnGrid.depth + 1; dz++) {
+                        grid[buildingOnGrid.z + dz][buildingOnGrid.x] = 1;
+                        grid[buildingOnGrid.z + dz][buildingOnGrid.x + buildingOnGrid.width] = 1;
+                    }
+
+                    for (int dx = 1; dx < buildingOnGrid.width; dx++) {
+                        for (int dz = 1; dz < buildingOnGrid.depth; dz++) {
+                            grid[buildingOnGrid.z + dz][buildingOnGrid.x + dx] = 2;
+                        }
+                    }
                 }
             }
         }
-        for (HamletBuildingPiece piece : pieces) {
-            System.out.println(piece.templatePosition() + " " + piece.getRotation());
+        //for (int[] ints : grid) {
+        //    System.out.println(Arrays.toString(ints));
+        //}
+        //for (HamletBuildingPiece piece : pieces) {
+        //    System.out.println(piece.templatePosition() + " " + piece.getRotation());
+        //}
+        int[][] streetGrid = new int[QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE][QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE];
+
+
+        for (int manhattanDistance = 0; manhattanDistance < QUADRANT_BUILDINGS_PER_AXIS * 2 - 1; manhattanDistance++) {
+            for (int i = 0; i < manhattanDistance + 1; i++) {
+                int j = manhattanDistance - i;
+                if (i >= QUADRANT_BUILDINGS_PER_AXIS || j >= QUADRANT_BUILDINGS_PER_AXIS) {
+                    continue;
+                }
+                BuildingOnGrid piece = quadrant[i][j];
+                if (piece != null) {
+                    int x = piece.x + switch (piece.rotation) {
+                        case NONE -> piece.getXOffset() + piece.type.doorX;
+                        case CLOCKWISE_90 -> 0;
+                        case CLOCKWISE_180 -> piece.getXOffset() + piece.type.width - 8 - piece.type.doorX;
+                        case COUNTERCLOCKWISE_90 -> piece.width;
+                    };
+
+                    int z = piece.z + switch (piece.rotation) {
+                        case NONE -> piece.depth;
+                        case CLOCKWISE_90 -> piece.getZOffset() + piece.type.doorX;
+                        case CLOCKWISE_180 -> 0;
+                        case COUNTERCLOCKWISE_90 -> piece.getZOffset() + piece.type.width - 8 - piece.type.doorX;
+                    };
+                    int currentStreetNode = getGridElement(streetGrid, z, x);
+                    while (currentStreetNode == 0) {
+                        int valLeft = getGridElement(grid, z, x - 1);
+                        int valRight = getGridElement(grid, z - 1, x);
+                        int direction = -1;
+                        if (valLeft == 0 || valLeft == 1) {
+                            if (valRight <= 1) {
+                                direction = rand.nextInt(2);
+                            } else {
+                                direction = 0;
+                            }
+                        } else if (valRight == 0 || valRight == 1) {
+                            direction = 1;
+                        }
+
+                        if (direction == 0) {
+                            streetGrid[z][x] |= 1;
+                            x -= 1;
+                            currentStreetNode = getGridElement(streetGrid, z, x);
+                            if (x >= 0) {
+                                streetGrid[z][x] |= 2;
+                            }
+                        } else if (direction == 1) {
+                            streetGrid[z][x] |= 4;
+                            z -= 1;
+                            currentStreetNode = getGridElement(streetGrid, z, x);
+                            if (z >= 0) {
+                                streetGrid[z][x] |= 8;
+                            }
+                        } else if (direction == -1) {
+                            currentStreetNode = -1;
+                        }
+                    }
+                }
+            }
         }
+
+        pieces.add(new StreetPiece(streetGrid, Rotation.NONE, centerPos));
+
         return pieces;
+    }
+
+    private static int getGridElement(int[][] grid, int x, int z) {
+        if (x < 0 || x > grid.length || z < 0 || z > grid[0].length) {
+            return -1;
+        }
+        return grid[x][z];
     }
 
 
