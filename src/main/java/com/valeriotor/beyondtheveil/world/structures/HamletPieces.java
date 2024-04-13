@@ -42,14 +42,14 @@ public class HamletPieces {
 
     static {
         List<WeightedBuilding> list = new ArrayList<>();
-        list.add(new WeightedBuilding("house1", Weight.of(10), 20, 16, 10, 4));
-        list.add(new WeightedBuilding("house2", Weight.of(10), 18, 18, 10, 3));
-        list.add(new WeightedBuilding("house_two_floors", Weight.of(10), 17, 17, 1, 3));
-        list.add(new WeightedBuilding("hut", Weight.of(10), 15, 15, 10, 3));
-        list.add(new WeightedBuilding("inn", Weight.of(10), 25, 21, 10, 12));
-        list.add(new WeightedBuilding("lighthouse", Weight.of(10), 25, 20, 1, 2));
-        list.add(new WeightedBuilding("storehouse1", Weight.of(10), 25, 22, 4, 5));
-        list.add(new WeightedBuilding("storehouse2", Weight.of(10), 19, 23, 4, 5));
+        list.add(new WeightedBuilding("house1", Weight.of(10), 20, 16, 7, 4));
+        list.add(new WeightedBuilding("house2", Weight.of(10), 18, 18, 7, 3));
+        list.add(new WeightedBuilding("house_two_floors", Weight.of(10), 17, 17, 3, 3));
+        list.add(new WeightedBuilding("hut", Weight.of(10), 15, 15, 7, 3));
+        list.add(new WeightedBuilding("inn", Weight.of(5), 25, 21, 2, 12));
+        list.add(new WeightedBuilding("lighthouse", Weight.of(1000), 25, 20, 1, 2));
+        list.add(new WeightedBuilding("storehouse1", Weight.of(5), 25, 22, 4, 5));
+        list.add(new WeightedBuilding("storehouse2", Weight.of(2), 19, 23, 2, 5));
         list.add(new WeightedBuilding("town_hall", Weight.of(10), 27, 20, 1, 9));
 
         //list.add(new WeightedBuilding("idol", Weight.of(10), 17, 17, 1));
@@ -87,12 +87,16 @@ public class HamletPieces {
     public static class StreetPiece extends StructurePiece {
 
         private final int[][] streetGrid;
+        private final Rotation streetRotation;
         private final BlockPos centerPos;
+        //private final List<BlockPos> blocks;
 
-        public StreetPiece(int[][] streetGrid, Rotation rotation, BlockPos centerPos) {
-            super(Registration.HAMLET_BUILDING_PIECE.get(), 0, new BoundingBox(centerPos.getX(), centerPos.getY(), centerPos.getZ(), centerPos.getX() + 128, centerPos.getY() + 250, centerPos.getZ() + 128));
+        public StreetPiece(int[][] streetGrid, Rotation rotation, BlockPos centerPos, BoundingBox box) {
+            super(Registration.HAMLET_BUILDING_PIECE.get(), 0, box);
             this.streetGrid = streetGrid;
+            streetRotation = rotation;
             this.centerPos = centerPos;
+            this.boundingBox = box;
         }
 
         public StreetPiece(CompoundTag pTag) {
@@ -109,6 +113,11 @@ public class HamletPieces {
                 centerPos = BlockPos.of(pTag.getLong("centerPos"));
             } else {
                 centerPos = BlockPos.ZERO;
+            }
+            if (pTag.contains("streetRotation")) {
+                streetRotation = Rotation.valueOf(pTag.getString("streetRotation"));
+            } else {
+                streetRotation = Rotation.NONE;
             }
 
         }
@@ -129,6 +138,7 @@ public class HamletPieces {
             pTag.putInt("streetX", streetGrid.length);
             pTag.putInt("streetZ", streetGrid[0].length);
             pTag.putLong("centerPos", centerPos.asLong());
+            pTag.putString("streetRotation", streetRotation.toString());
         }
 
         @Override
@@ -138,7 +148,8 @@ public class HamletPieces {
                 for (int x = 0; x < row.length; x++) {
                     int y = -61;// pGenerator.getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE, pLevel, pRandom);
                     if (streetGrid[z][x] > 0) {
-                        placeBlock(pLevel, Registration.DAMP_WOOD.get().defaultBlockState(), x + centerPos.getX(), y, z + centerPos.getZ(), pBox);
+                        BlockPos pos = centerPos.offset(new BlockPos(x, 0, z).rotate(streetRotation));
+                        placeBlock(pLevel, Registration.DAMP_WOOD.get().defaultBlockState(), pos.getX(), pos.getY(), pos.getZ(), pBox);
                     }
                 }
             }
@@ -147,7 +158,7 @@ public class HamletPieces {
 
 
     private static final int MIN_BUILDINGS_PER_QUADRANT = 5;
-    private static final int MAX_BUILDINGS_PER_QUADRANT = 15;
+    private static final int MAX_BUILDINGS_PER_QUADRANT = 10;
     private static final int QUADRANT_BUILDINGS_PER_AXIS = 4;
     private static final int QUADRANT_SQUARE_SIDE = 30;
 
@@ -179,13 +190,28 @@ public class HamletPieces {
         }
     }
 
-    public static List<StructurePiece> layout(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, BlockPos centerPos) {
-        List<WeightedBuilding> weightedBuildings = Lists.newArrayList(buildingTypes.unwrap());
-        return layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, centerPos);
+    private record TempBuildingPiece(StructureTemplateManager pStructureTemplateManager, WeightedBuilding building, Rotation rotation, BlockPos templatePosition) {
+        HamletBuildingPiece toHamletBuildingPiece(BlockPos centerPos, Rotation rotation) {
+            Rotation finalRotation = this.rotation.getRotated(rotation);
+            BlockPos finalTemplatePosition = centerPos.offset(templatePosition.rotate(rotation));
+            return new HamletBuildingPiece(pStructureTemplateManager, building, finalRotation, finalTemplatePosition);
+        }
     }
 
 
-    private static List<StructurePiece> layoutQuadrant(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, List<WeightedBuilding> allowedBuildingTypes, BlockPos centerPos) {
+    public static List<StructurePiece> layout(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, BlockPos centerPos) {
+        List<WeightedBuilding> weightedBuildings = Lists.newArrayList(buildingTypes.unwrap());
+        List<StructurePiece> allPieces = new ArrayList<>();
+        for (Rotation rotation : Rotation.values()) {
+            BlockPos offsetCenterPos = centerPos.offset(new BlockPos(3, 0, 3).rotate(rotation));
+            StreetPiece streetPiece = layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, offsetCenterPos, allPieces, rotation);
+        }
+        //return layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, centerPos);
+        return allPieces;
+    }
+
+
+    private static StreetPiece layoutQuadrant(RandomSource rand, StructureTemplateManager manager, Map<WeightedBuilding, Integer> numbersPerType, List<WeightedBuilding> allowedBuildingTypes, BlockPos centerPos, List<StructurePiece> returnList, Rotation rotation) {
         WeightedRandomList<WeightedBuilding> weightedAllowedBuildingTypes = WeightedRandomList.create(allowedBuildingTypes);
         BuildingOnGrid[][] quadrant = new BuildingOnGrid[QUADRANT_BUILDINGS_PER_AXIS][QUADRANT_BUILDINGS_PER_AXIS];
         int buildingsInQuadrant = rand.nextInt(MIN_BUILDINGS_PER_QUADRANT, MAX_BUILDINGS_PER_QUADRANT);
@@ -261,11 +287,10 @@ public class HamletPieces {
             }
         }
         int[][] grid = new int[QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE][QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE];
-        List<StructurePiece> pieces = new ArrayList<>();
         for (BuildingOnGrid[] buildingsOnGrid : quadrant) {
             for (BuildingOnGrid buildingOnGrid : buildingsOnGrid) {
                 if (buildingOnGrid != null) {
-                    BlockPos offset = centerPos.offset(buildingOnGrid.x + buildingOnGrid.getXOffset(), 0, buildingOnGrid.z + buildingOnGrid.getZOffset()); // TODO OFFSET BY (WIDTH-TYPE.WIDTH)/2 AND SAME FOR HEIGHT
+                    BlockPos offset = new BlockPos(buildingOnGrid.x + buildingOnGrid.getXOffset(), 0, buildingOnGrid.z + buildingOnGrid.getZOffset()); // TODO OFFSET BY (WIDTH-TYPE.WIDTH)/2 AND SAME FOR HEIGHT
                     if (buildingOnGrid.rotation == Rotation.CLOCKWISE_180) {
                         offset = offset.offset(buildingOnGrid.type.width - 8, 0, buildingOnGrid.type.depth - 8);
                     } else if (buildingOnGrid.rotation == Rotation.COUNTERCLOCKWISE_90) {
@@ -273,7 +298,10 @@ public class HamletPieces {
                     } else if (buildingOnGrid.rotation == Rotation.CLOCKWISE_90) {
                         offset = offset.offset(buildingOnGrid.type.depth - 8, 0, 0);
                     }
-                    pieces.add(new HamletBuildingPiece(manager, buildingOnGrid.type, buildingOnGrid.rotation, offset));
+
+                    Rotation finalRotation = buildingOnGrid.rotation.getRotated(rotation);
+                    BlockPos finalTemplatePosition = centerPos.offset(offset.rotate(rotation));
+                    returnList.add(new HamletBuildingPiece(manager, buildingOnGrid.type, finalRotation, finalTemplatePosition));
 
                     for (int dx = 0; dx < buildingOnGrid.width + 1; dx++) {
                         grid[buildingOnGrid.z][buildingOnGrid.x + dx] = 1;
@@ -359,10 +387,11 @@ public class HamletPieces {
                 }
             }
         }
+        BlockPos offsetBB = centerPos.offset(new BlockPos(128, 0, 128).rotate(rotation));
+        BoundingBox box = new BoundingBox(Math.min(offsetBB.getX(), centerPos.getX()), centerPos.getY(), Math.min(offsetBB.getZ(), centerPos.getZ()), Math.max(offsetBB.getX(), centerPos.getX()), centerPos.getY() + 250, Math.max(offsetBB.getZ(), centerPos.getZ()));
+        returnList.add(new StreetPiece(streetGrid, rotation, centerPos, box));
+        return null;
 
-        pieces.add(new StreetPiece(streetGrid, Rotation.NONE, centerPos));
-
-        return pieces;
     }
 
     private static int getGridElement(int[][] grid, int x, int z) {
