@@ -33,7 +33,7 @@ public class HamletStructure extends Structure {
 
     private void generatePieces(StructurePiecesBuilder pBuilder, BlockPos pStartPos, Rotation pRotation, Structure.GenerationContext pContext) {
         List<StructurePiece> list = Lists.newArrayList();
-        list.addAll(HamletPieces.layout(pContext.random(), pContext.structureTemplateManager(), new HashMap<>(), pStartPos));
+        list.addAll(HamletPieces.layout(pContext, pContext.random(), pContext.structureTemplateManager(), new HashMap<>(), pStartPos));
         list.forEach(pBuilder::addPiece);
     }
 
