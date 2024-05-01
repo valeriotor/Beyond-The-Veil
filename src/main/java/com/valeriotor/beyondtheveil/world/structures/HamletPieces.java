@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.world.structures;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -15,7 +16,9 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -28,10 +31,12 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.material.FluidState;
 
 import java.util.*;
 
 public class HamletPieces {
+
 
     private record WeightedBuilding(String name, Weight weight, int width, int depth, int max,
                                     int doorX) implements WeightedEntry {
@@ -192,7 +197,7 @@ public class HamletPieces {
             for (BlockPos blockPos : blocks) {
                 BlockState state = pLevel.getBlockState(blockPos);
                 BlockState outputState;
-                if (state.getBlock() == Blocks.WATER) {
+                if (state.getBlock() == Blocks.WATER || state.getBlock() == Registration.DAMP_WOOD.get()) {
                     outputState = Registration.DAMP_WOOD.get().defaultBlockState();
                 } else {
                     outputState = Registration.BLUE_BRICKS.get().defaultBlockState();
@@ -250,7 +255,7 @@ public class HamletPieces {
         List<WeightedBuilding> weightedBuildings = Lists.newArrayList(buildingTypes.unwrap());
         List<StructurePiece> allPieces = new ArrayList<>();
         for (Rotation rotation : Rotation.values()) {
-            BlockPos offsetCenterPos = centerPos.offset(new BlockPos(5, 0, 5).rotate(rotation));
+            BlockPos offsetCenterPos = centerPos.offset(new BlockPos(0, 0, 0).rotate(rotation));
             layoutQuadrant(pContext, rand, manager, numbersPerType, weightedBuildings, offsetCenterPos, allPieces, rotation);
         }
         allPieces.add(new HamletBuildingPiece(manager, "idol", Rotation.NONE, centerPos.offset(-4, 0, -4)));
@@ -278,7 +283,7 @@ public class HamletPieces {
                         Rotation rot = Rotation.getRandom(rand);
                         //rot = Rotation.NONE;
                         boolean parallel = rot == Rotation.NONE || rot == Rotation.CLOCKWISE_180;
-                        quadrant[i][j] = new BuildingOnGrid(building, rot, i * QUADRANT_SQUARE_SIDE, j * QUADRANT_SQUARE_SIDE, (parallel ? building.width : building.depth) - rand.nextInt(4) - 2, (parallel ? building.depth : building.width) - rand.nextInt(4) - 2);
+                        quadrant[i][j] = new BuildingOnGrid(building, rot, i * QUADRANT_SQUARE_SIDE + 6, j * QUADRANT_SQUARE_SIDE + 6, (parallel ? building.width : building.depth) - rand.nextInt(4) - 2, (parallel ? building.depth : building.width) - rand.nextInt(4) - 2);
                         //quadrant[i][j] = new BuildingOnGrid(building, rot, i * QUADRANT_SQUARE_SIDE, j * QUADRANT_SQUARE_SIDE, 18, 13);
                         //quadrant[i][j] = new BuildingOnGrid(manager, building, Rotation.getRandom(rand), new BlockPos(i * QUADRANT_SQUARE_SIDE, 0, j * QUADRANT_SQUARE_SIDE));
                         numbersPerType.put(building, numbersPerType.getOrDefault(building, 0) + 1);
@@ -293,6 +298,13 @@ public class HamletPieces {
 
         int[][] heightMapX = new int[QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE][QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE];
         int[][] heightMapZ = new int[QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE][QUADRANT_BUILDINGS_PER_AXIS * QUADRANT_SQUARE_SIDE];
+
+        for (int i = 0; i < heightMapX.length; i++) {
+            for (int j = 0; j < heightMapX.length; j++) {
+                heightMapX[j][i] = i < 7 ? 5 : 3;
+                heightMapZ[j][i] = i < 7 ? 5 : 3;
+            }
+        }
 
         for (int manhattanDistance = 0; manhattanDistance < QUADRANT_BUILDINGS_PER_AXIS * 2 - 1; manhattanDistance++) {
             for (int i = 0; i < manhattanDistance + 1; i++) {

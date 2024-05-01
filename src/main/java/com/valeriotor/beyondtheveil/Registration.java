@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil;
 
+import com.google.common.collect.ImmutableSet;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.*;
@@ -39,6 +40,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Set;
 
 
 public class Registration {
