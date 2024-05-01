@@ -1,0 +1,22 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "beyondtheveil:dark_sand",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "block": "minecraft:water",
+            "predicate_type": "minecraft:block_match"
+          },
+          "output_state": {
+            "Name": "beyondtheveil:damp_wood"
+          }
+        }
+      ]
+    }
+  ]
+}

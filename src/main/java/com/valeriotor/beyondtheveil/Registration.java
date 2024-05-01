@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
+import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import com.valeriotor.beyondtheveil.world.structures.DeepCityPiece;
 import com.valeriotor.beyondtheveil.world.structures.DeepCityStructure;
 import com.valeriotor.beyondtheveil.world.structures.HamletPieces;
@@ -27,6 +28,9 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
@@ -56,6 +60,7 @@ public class Registration {
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, References.MODID);
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
     private static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, References.MODID);
+    private static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, References.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, References.MODID);
 
     public static void init() {
@@ -70,6 +75,7 @@ public class Registration {
         FEATURES.register(bus);
         STRUCTURE_TYPES.register(bus);
         STRUCTURE_PIECE_TYPES.register(bus);
+        STRUCTURE_PROCESSORS.register(bus);
         CREATIVE_TAB.register(bus);
     }
 
@@ -312,6 +318,7 @@ public class Registration {
     public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_BUILDING_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_building_piece", () -> HamletPieces.HamletBuildingPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_STREET_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_street_piece", () -> HamletPieces.StreetPiece::new);
+    public static final RegistryObject<StructureProcessorType<HamletBuildingsProcessor>> HAMLET_BUILDINGS_PROCESSOR = STRUCTURE_PROCESSORS.register("hamlet_buildings_processor", () -> () -> HamletBuildingsProcessor.CODEC);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {

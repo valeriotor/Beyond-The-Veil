@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -103,7 +105,7 @@ public class HamletPieces {
 
         private static StructurePlaceSettings makeSettings(Rotation pRotation) {
             //BlockIgnoreProcessor blockignoreprocessor = pOverwrite ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
-            return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).setRotation(pRotation); // TODO add dark sand to wood planks processor
+            return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).addProcessor(new HamletBuildingsProcessor()).setRotation(pRotation); // TODO add dark sand to wood planks processor
         }
     }
 
@@ -413,6 +415,22 @@ public class HamletPieces {
                         case CLOCKWISE_180 -> 0;
                         case COUNTERCLOCKWISE_90 -> piece.getZOffset() + piece.type.width - 8 - piece.type.doorX;
                     };
+
+                    int doorToStreetDist = switch (piece.rotation) {
+                        case NONE -> piece.depth - (piece.type.depth - 8 + piece.getZOffset());
+                        case CLOCKWISE_90 -> piece.getXOffset();
+                        case CLOCKWISE_180 -> piece.getZOffset();
+                        case COUNTERCLOCKWISE_90 -> piece.width - (piece.type.depth - 8 + piece.getXOffset());
+                    };
+
+                    for (int k = 0; k < doorToStreetDist + 1; k++) {
+                        int toPlaceX = x + ((piece.rotation == Rotation.NONE || piece.rotation == Rotation.CLOCKWISE_180) ? 0 : (piece.rotation == Rotation.COUNTERCLOCKWISE_90 ? -k - 1 : k + 1));
+                        int toPlaceZ = z + ((piece.rotation == Rotation.CLOCKWISE_90 || piece.rotation == Rotation.COUNTERCLOCKWISE_90) ? 0 : (piece.rotation == Rotation.NONE ? -k - 1 : k + 1));
+                        streetBlocks.add(makeStreetBlockPos(context, centerPos, toPlaceX, toPlaceZ, rotation));
+                        Direction rotated = piece.rotation.rotate(Direction.EAST);
+                        streetBlocks.add(makeStreetBlockPos(context, centerPos, toPlaceX + rotated.getStepX(), toPlaceZ + rotated.getStepZ(), rotation));
+                    }
+
                     int currentStreetNode = getGridElement(streetGrid, z, x);
                     if (currentStreetNode == 0) {
                         setGridElement(streetGrid, z, x, 2);
@@ -507,7 +525,7 @@ public class HamletPieces {
         }
         BlockPos offsetBB = centerPos.offset(new BlockPos(128, 0, 128).rotate(rotation));
         BoundingBox box = new BoundingBox(Math.min(offsetBB.getX(), centerPos.getX()), centerPos.getY(), Math.min(offsetBB.getZ(), centerPos.getZ()), Math.max(offsetBB.getX(), centerPos.getX()), centerPos.getY() + 250, Math.max(offsetBB.getZ(), centerPos.getZ()));
-        returnList.add(new StreetPiece(streetGrid, rotation, centerPos, box, streetBlocks));
+        returnList.add(0, new StreetPiece(streetGrid, rotation, centerPos, box, streetBlocks));
 
     }
 
@@ -528,7 +546,7 @@ public class HamletPieces {
         BlockPos offset = new BlockPos(offsetX, 0, offsetZ).rotate(rotation);
         BlockPos finalPos = centerPos.offset(offset);
         int firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(finalPos.getX(), finalPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        return finalPos.atY(firstFreeHeight-1);
+        return finalPos.atY(firstFreeHeight - 1);
     }
 
 
