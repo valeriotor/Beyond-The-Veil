@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.capability;
 
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
@@ -11,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.FakePlayer;
@@ -24,6 +27,7 @@ import java.util.Optional;
 
 import static com.valeriotor.beyondtheveil.capability.PlayerDataProvider.PLAYER_DATA;
 import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.RESEARCH;
+import static com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider.TRIGGER_DATA;
 
 
 @Mod.EventBusSubscriber
@@ -76,6 +80,11 @@ public class CapabilityEvents {
                 Messages.sendToServer(message);
             }
         }
+        if (event.getObject() instanceof Villager) { // TODO all the others
+            if (!event.getObject().getCapability(TRIGGER_DATA).isPresent()) {
+                event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
+            }
+        }
     }
 
     @SubscribeEvent
@@ -98,6 +107,7 @@ public class CapabilityEvents {
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(PlayerData.class);
         event.register(ResearchData.class);
+        event.register(TriggerData.class);
     }
 
 }
