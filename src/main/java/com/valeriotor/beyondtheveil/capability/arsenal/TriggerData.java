@@ -5,8 +5,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,10 +22,13 @@ public class TriggerData {
     private List<UUID> ignoredPlayers = new ArrayList<>();
     private UUID master = null;
     private int seeingDistance = 32;
+    private boolean triggered = false;
+    private int priority;
+    private DyeColor mutex = null;
 
     public List<LivingEntity> getPotentialTargets(LivingEntity triggerableEntity) {
         if (targetType == null) {
-            return null;
+            return new ArrayList<>();
         }
         if (targetType.isRestricted()) {
             return restrictedTargets.stream().map(uuid -> fromUUID((ServerLevel) triggerableEntity.level(), uuid)).toList();
@@ -33,7 +38,7 @@ public class TriggerData {
 
     public List<LivingEntity> getTriggerers(LivingEntity triggerableEntity) {
         if (triggerType == null) {
-            return null;
+            return new ArrayList<>();
         }
         if (triggerType.isRestricted()) {
             return restrictedTriggerers.stream().map(uuid -> fromUUID((ServerLevel) triggerableEntity.level(), uuid)).toList();
@@ -41,20 +46,29 @@ public class TriggerData {
         return triggerType.getPotentialTargets(triggerableEntity, this);
     }
 
+
+    public void clearRestrictedTargets() {
+        restrictedTargets.clear();
+    }
+    public void clearRestrictedTriggerers() {
+        restrictedTriggerers.clear();
+    }
+
     public void cleanLists(LivingEntity triggerableEntity) {
-        ServerLevel level = (ServerLevel) triggerableEntity.level();
-        Iterator<UUID> iterator = restrictedTargets.listIterator();
-        while (iterator.hasNext()) {
-            LivingEntity target = fromUUID(level, iterator.next());
-            if (target == null || target.isDeadOrDying() || target.distanceToSqr(triggerableEntity) > seeingDistance * seeingDistance) {
-                iterator.remove();
+        if (triggerableEntity.level() instanceof ServerLevel level) {
+            Iterator<UUID> iterator = restrictedTargets.listIterator();
+            while (iterator.hasNext()) {
+                LivingEntity target = fromUUID(level, iterator.next());
+                if (target == null || target.isDeadOrDying() || target.distanceToSqr(triggerableEntity) > seeingDistance * seeingDistance) {
+                    iterator.remove();
+                }
             }
-        }
-        iterator = restrictedTriggerers.listIterator();
-        while (iterator.hasNext()) {
-            LivingEntity target = fromUUID(level, iterator.next());
-            if (target == null || target.isDeadOrDying() || target.distanceToSqr(triggerableEntity) > seeingDistance * seeingDistance) {
-                iterator.remove();
+            iterator = restrictedTriggerers.listIterator();
+            while (iterator.hasNext()) {
+                LivingEntity target = fromUUID(level, iterator.next());
+                if (target == null || target.isDeadOrDying() || target.distanceToSqr(triggerableEntity) > seeingDistance * seeingDistance) {
+                    iterator.remove();
+                }
             }
         }
     }
@@ -106,7 +120,32 @@ public class TriggerData {
         return ignoredPlayers;
     }
 
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public DyeColor getMutex() {
+        return mutex;
+    }
+
+    public void setMutex(DyeColor mutex) {
+        this.mutex = mutex;
+    }
+
     public void saveToNBT(CompoundTag tag) {
+
         CompoundTag triggerersTag = new CompoundTag();
         CompoundTag targetsTag = new CompoundTag();
         CompoundTag ignoredPlayersTag = new CompoundTag();
@@ -119,6 +158,10 @@ public class TriggerData {
         for (UUID uuid : ignoredPlayers) {
             ignoredPlayersTag.putBoolean(uuid.toString(), true);
         }
+        tag.put("triggerers", triggerersTag);
+        tag.put("targets", targetsTag);
+        tag.put("ignoredPlayers", ignoredPlayersTag);
+
         if (master != null) {
             tag.putString("master", master.toString());
         }
@@ -129,7 +172,16 @@ public class TriggerData {
             tag.putString("targetType", targetType.name());
         }
 
+        if (mutex != null) {
+            tag.putInt("mutex", mutex.getId());
+        }
+
+        tag.putBoolean("triggered", triggered);
+        tag.putInt("priority", priority);
+
     }
+
+    private static final boolean DEBUG = true;
 
     public void loadFromNBT(CompoundTag tag) {
         restrictedTriggerers.clear();
@@ -151,6 +203,7 @@ public class TriggerData {
         }
         if (tag.contains("master")) {
             master = UUID.fromString(tag.getString("master"));
+            ignoredPlayers.add(master);
         }
         seeingDistance = tag.getInt("seeingDistance");
 
@@ -159,6 +212,19 @@ public class TriggerData {
             String targetType1 = tag.getString("targetType");
             triggerType = TargetingType.valueOf(triggerType1);
             targetType = TargetingType.valueOf(targetType1);
+        }
+
+        if (tag.contains("mutex")) {
+            mutex = DyeColor.byId(tag.getInt("mutex"));
+        }
+
+        triggered = tag.getBoolean("triggered");
+        priority = tag.getInt("priority");
+
+        if (DEBUG) {
+            triggerType = TargetingType.WAS_HIT;
+            targetType = TargetingType.HOSTILE_NEARBY;
+            mutex = DyeColor.BLACK;
         }
 
     }

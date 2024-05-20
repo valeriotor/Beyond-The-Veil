@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -80,7 +81,7 @@ public class CapabilityEvents {
                 Messages.sendToServer(message);
             }
         }
-        if (event.getObject() instanceof Villager) { // TODO all the others
+        if (event.getObject() instanceof Villager || event.getObject() instanceof Pillager) { // TODO all the others
             if (!event.getObject().getCapability(TRIGGER_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
             }
