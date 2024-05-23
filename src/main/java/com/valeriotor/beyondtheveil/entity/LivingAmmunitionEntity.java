@@ -87,17 +87,22 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
         super.tick();
         if (level().isClientSide) {
             if (explodingAnimation == null || explodingAnimation.isDone()) {
-                if (false) {
+                if (true) {
                     explodingAnimation = new Animation(AnimationRegistry.ammunition_explode);
+                    explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
                 }
-                //explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
             } else {
                 explodingAnimation.update();
+                explodingAnimationBrokenBody.update();
             }
         }
     }
 
     public Animation getExplodingAnimation() {
         return explodingAnimation;
+    }
+
+    public Animation getExplodingAnimationBrokenBody() {
+        return explodingAnimationBrokenBody;
     }
 }

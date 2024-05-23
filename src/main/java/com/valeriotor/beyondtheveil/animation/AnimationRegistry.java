@@ -25,7 +25,7 @@ public class AnimationRegistry {
         crawler_pain_low_1 = registerAnimation("crawler_pain_low_1", client, i++);
         crawler_back_pain_high_1 = registerAnimation("crawler_back_pain_high_1", client, i++);
         ammunition_explode = registerAnimation("ammunition_explode", client, i++);
-        //ammunition_explode_body = registerAnimation("ammunition_explode_body", client, i++);
+        ammunition_explode_body = registerAnimation("ammunition_explode_body", client, i++);
     }
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {

@@ -147,7 +147,9 @@ public abstract class Transformer {
 
         @Override
         public void modify(float animationTicks, OperatorWithStartAmount operator) {
-            part.visible = operator.operator.apply(animationTicks, operator.startAmount) >= 0;
+            float apply = operator.operator.apply(animationTicks, operator.startAmount);
+            part.visible = apply >= 0;
+            int x = 0;
         }
     }
 

@@ -1,0 +1,12 @@
+model: broken_body
+length: 35
+start: 12: 13
+    visi: upper: 1: immediate: absolute
+    visi: lower: 1: immediate: absolute
+    rotx: upper: -0.44: sqrt: absolute
+    rotx: lower: -0.44: sqrt: absolute
+start: 13: 16
+    rotx: lower: 1.32: linear: relative
+    rotx: upper: -1.32: linear: relative
+    tray: upper: -20: linear: relative
+    traz: upper: +20: linear: relative

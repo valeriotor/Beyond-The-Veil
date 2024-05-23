@@ -23,42 +23,48 @@ import net.minecraft.world.entity.LivingEntity;
 public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity> implements HeadedModel, VillagerHeadModel {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "living_ammunition"), "main");
-	private static final String name = "living_ammunition";
+    private static final String name = "living_ammunition";
 
-	private final ModelPart body;
-	private final ModelPart cloth;
-	private final ModelPart head;
-	private final ModelPart helmet;
-	private final ModelPart brim;
-	private final ModelPart nose;
-	private final ModelPart rightLeg;
-	private final ModelPart leftLeg;
-	private final ModelPart rightLowerLeg;
-	private final ModelPart leftLowerLeg;
-	private final ModelPart arms;
+    private final ModelPart body;
+    private final ModelPart legs;
+    private final ModelPart main;
+    private final ModelPart cloth;
+    private final ModelPart head;
+    private final ModelPart helmet;
+    private final ModelPart brim;
+    private final ModelPart nose;
+    private final ModelPart rightLeg;
+    private final ModelPart leftLeg;
+    private final ModelPart rightLowerLeg;
+    private final ModelPart leftLowerLeg;
+    private final ModelPart arms;
 
     public LivingAmmunitionModel(ModelPart root) {
-		super(name);
-		this.body = registerAnimatedPart("body", root.getChild("body"));
-		this.cloth = registerAnimatedPart("cloth", body.getChild("cloth"));
-		this.head = registerAnimatedPart("head", body.getChild("head"));
-		this.helmet = registerAnimatedPart("helmet", head.getChild("helmet"));
-		this.brim = registerAnimatedPart("brim", head.getChild("brim"));
-		this.nose = registerAnimatedPart("nose", head.getChild("nose"));
-		this.rightLeg = registerAnimatedPart("rightLeg", body.getChild("RightLeg"));
-		this.leftLeg = registerAnimatedPart("leftLeg", body.getChild("LeftLeg"));
-		this.rightLowerLeg = registerAnimatedPart("rightLowerLeg", rightLeg.getChild("RightLowerLeg"));
-		this.leftLowerLeg = registerAnimatedPart("leftLowerLeg", leftLeg.getChild("LeftLowerLeg"));
-		this.arms = registerAnimatedPart("arms", body.getChild("arms"));
+        super(name);
+        this.body = registerAnimatedPart("body", root.getChild("body"));
+        this.legs = registerAnimatedPart("legs", root.getChild("legs"));
+        this.cloth = registerAnimatedPart("cloth", body.getChild("cloth"));
+        this.main = registerAnimatedPart("main", body.getChild("main"));
+        this.head = registerAnimatedPart("head", body.getChild("head"));
+        this.helmet = registerAnimatedPart("helmet", head.getChild("helmet"));
+        this.brim = registerAnimatedPart("brim", head.getChild("brim"));
+        this.nose = registerAnimatedPart("nose", head.getChild("nose"));
+        this.rightLeg = registerAnimatedPart("rightLeg", legs.getChild("RightLeg"));
+        this.leftLeg = registerAnimatedPart("leftLeg", legs.getChild("LeftLeg"));
+        this.rightLowerLeg = registerAnimatedPart("rightLowerLeg", rightLeg.getChild("RightLowerLeg"));
+        this.leftLowerLeg = registerAnimatedPart("leftLowerLeg", leftLeg.getChild("LeftLowerLeg"));
+        this.arms = registerAnimatedPart("arms", body.getChild("arms"));
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 12.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition cloth = body.addOrReplaceChild("cloth", CubeListBuilder.create().texOffs(0, 38).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 18.0F, 6.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition main = body.addOrReplaceChild("main", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 12.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition cloth = body.addOrReplaceChild("cloth", CubeListBuilder.create().texOffs(0, 38).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 18.0F, 6.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8.0F, 10.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -24.0F, 0.0F, 0.0F, 0.0F, 0.5236F));
 
@@ -72,55 +78,62 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
                 .texOffs(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(44, 22).mirror().addBox(4.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -22.0F, 0.0F, -0.7854F, 0.0F, 0.0F));
 
-        PartDefinition RightLeg = body.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -12.0F, 0.0F, 0.192F, 0.0F, 0.0349F));
+        PartDefinition legs = partdefinition.addOrReplaceChild("legs", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create().texOffs(0, 30).addBox(-2.0F, 8.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F))
-				.texOffs(4, 22).mirror().addBox(-2.0F, 12.01F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition LeftLeg = legs.addOrReplaceChild("LeftLeg", CubeListBuilder.create().texOffs(0, 22).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(2.0F, -12.0F, 0.0F, -0.1745F, 0.0F, -0.0349F));
 
-		PartDefinition LeftLeg = body.addOrReplaceChild("LeftLeg", CubeListBuilder.create().texOffs(0, 22).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(2.0F, -12.0F, 0.0F, -0.1745F, 0.0F, -0.0349F));
+        PartDefinition LeftLowerLeg = LeftLeg.addOrReplaceChild("LeftLowerLeg", CubeListBuilder.create().texOffs(0, 30).mirror().addBox(-2.0F, 8.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(4, 22).addBox(-2.0F, 12.01F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition LeftLowerLeg = LeftLeg.addOrReplaceChild("LeftLowerLeg", CubeListBuilder.create().texOffs(0, 30).mirror().addBox(-2.0F, 8.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(4, 22).addBox(-2.0F, 12.01F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition RightLeg = legs.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -12.0F, 0.0F, 0.192F, 0.0F, 0.0349F));
+
+        PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create().texOffs(0, 30).addBox(-2.0F, 8.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(4, 22).mirror().addBox(-2.0F, 12.01F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
     @Override
     public void setupAnim(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		//body.xRot = - Mth.PI * 5 / 36;
-		//head.xRot = - Mth.PI * 15 / 36;
-		//rightLeg.xRot = Mth.PI * 10 / 36;
-		//arms.xRot = -1.75F;
-		//cloth.visible = false;
-		//leftLeg.z -= 5.5F;
-		//rightLeg.z -= 5.5F;
-		//leftLeg.y += 2;
-		//rightLeg.y += 2;
+        //body.xRot = - Mth.PI * 15 / 36;
+        //legs.xRot += Mth.PI * 5 / 36;
+        //head.xRot = - Mth.PI * 15 / 36;
+        //rightLeg.xRot = Mth.PI * 10 / 36;
+        //arms.xRot = -1.75F;
+        //cloth.visible = false;
+        //main.visible = false;
+        //body.y -= 20;
+        //body.z += 20;
+        //leftLeg.z -= 5.5F;
+        //rightLeg.z -= 5.5F;
+        //leftLeg.y += 2;
+        //rightLeg.y += 2;
     }
 
-	@Override
-	public void prepareMobModel(LivingAmmunitionEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
-		resetParts();
-		Animation explodingAnimation = pEntity.getExplodingAnimation();
-		if (explodingAnimation != null) {
-			explodingAnimation.apply(pPartialTick);
-		}
-	}
+    @Override
+    public void prepareMobModel(LivingAmmunitionEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        resetParts();
+        Animation explodingAnimation = pEntity.getExplodingAnimation();
+        if (explodingAnimation != null) {
+            explodingAnimation.apply(pPartialTick);
+        }
+    }
 
-	@Override
+    @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        legs.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
-	@Override
-	public ModelPart getHead() {
-		return head;
-	}
+    @Override
+    public ModelPart getHead() {
+        return head;
+    }
 
-	@Override
-	public void hatVisible(boolean pVisible) {
-		head.visible = pVisible;
-		helmet.visible = pVisible;
-		brim.visible = pVisible;
-	}
+    @Override
+    public void hatVisible(boolean pVisible) {
+        head.visible = pVisible;
+        helmet.visible = pVisible;
+        brim.visible = pVisible;
+    }
 }

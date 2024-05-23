@@ -1,9 +1,16 @@
 model: living_ammunition
 length: 35
-start: 0: 3
-    rotx: body: -0.44: linear: absolute
-    rotx: head: -1.32: linear: absolute
-    rotx: rightLeg: 0.88: linear: absolute
-    rotx: arms: -1.75: linear: absolute
-start: 2: 10
+start: 10: 13
+    rotx: body: -0.44: sqrt: absolute
+    rotx: legs: -0.44: sqrt: absolute
+    rotx: head: -1.32: sqrt: absolute
+    rotx: rightLeg: 0.88: sqrt: absolute
+    rotx: arms: -1.75: sqrt: absolute
+start: 13: 14
     visi: cloth: -1: immediate: absolute
+    visi: main: -1: immediate: absolute
+start: 13: 16
+    rotx: legs: 1.32: linear: relative
+    rotx: body: -1.32: linear: relative
+    tray: body: -20: linear: relative
+    traz: body: +20: linear: relative

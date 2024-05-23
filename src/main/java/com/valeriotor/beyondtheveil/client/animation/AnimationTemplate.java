@@ -9,6 +9,7 @@ import it.unimi.dsi.fastutil.floats.FloatBinaryOperator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -89,6 +90,7 @@ public class AnimationTemplate {
         if (absolute) {
             return switch (func) {
                 case "quadratic" -> (a, b) -> (float) ((amount - b) * Math.pow((a - start) / (end - start), 2) + b);
+                case "sqrt" -> (a, b) -> (float) ((amount - b) * Mth.sqrt((a - start) / (end - start)) + b); // is there something faster than square root with similar behaviour..?
                 case "linear" -> (a, b) -> (amount - b) * (a - start) / (end - start) + b;
                 case "immediate" -> (a, b) -> amount;
                 default -> null;
@@ -96,6 +98,7 @@ public class AnimationTemplate {
         } else {
             return switch (func) {
                 case "quadratic" -> (a, b) -> (float) (amount * Math.pow((a - start) / (end - start), 2) + b);
+                case "sqrt" -> (a, b) -> (float) (amount * Mth.sqrt((a - start) / (end - start)) + b);
                 case "linear" -> (a, b) -> amount * (a - start) / (end - start) + b;
                 case "immediate" -> (a, b) -> b + amount;
                 default -> null;
