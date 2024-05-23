@@ -39,7 +39,7 @@ public abstract class Transformer {
             case TRAX -> defaultValues.x;
             case TRAY -> defaultValues.y;
             case TRAZ -> defaultValues.z;
-            case VISI -> 1; //TODO
+            case VISI -> part.visible ? 1 : -1;
         };
         int currentTick = 0;
         for (FloatBinaryOperatorWithInterval operator : operators) {
@@ -62,7 +62,7 @@ public abstract class Transformer {
             case TRAX -> new TranslatorX(transformerOperators, part);
             case TRAY -> new TranslatorY(transformerOperators, part);
             case TRAZ -> new TranslatorZ(transformerOperators, part);
-            case VISI -> null; //TODO
+            case VISI -> new Hider(transformerOperators, part);
         };
 
     }
@@ -136,6 +136,18 @@ public abstract class Transformer {
         @Override
         public void modify(float animationTicks, OperatorWithStartAmount operator) {
             part.z = operator.operator.apply(animationTicks, operator.startAmount);
+        }
+    }
+
+    private static class Hider extends Transformer {
+
+        public Hider(List<OperatorWithStartAmount> operators, ModelPart part) {
+            super(operators, part);
+        }
+
+        @Override
+        public void modify(float animationTicks, OperatorWithStartAmount operator) {
+            part.visible = operator.operator.apply(animationTicks, operator.startAmount) >= 0;
         }
     }
 

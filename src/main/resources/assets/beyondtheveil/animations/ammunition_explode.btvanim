@@ -1,0 +1,9 @@
+model: living_ammunition
+length: 35
+start: 0: 3
+    rotx: body: -0.44: linear: absolute
+    rotx: head: -1.32: linear: absolute
+    rotx: rightLeg: 0.88: linear: absolute
+    rotx: arms: -1.75: linear: absolute
+start: 2: 10
+    visi: cloth: -1: immediate: absolute

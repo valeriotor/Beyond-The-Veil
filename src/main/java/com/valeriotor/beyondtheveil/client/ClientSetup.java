@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
@@ -73,12 +74,14 @@ public class ClientSetup {
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
+        event.registerLayerDefinition(LivingAmmunitionModel.LAYER_LOCATION, LivingAmmunitionModel::createBodyLayer);
 
 
 
         // RenderLayer models
         event.registerLayerDefinition(WoundModel.LAYER_LOCATION, WoundModel::createBodyLayer);
         event.registerLayerDefinition(ChestWoundModel.LAYER_LOCATION, ChestWoundModel::createBodyLayer);
+        event.registerLayerDefinition(BrokenBodyModel.LAYER_LOCATION, BrokenBodyModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -90,6 +93,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
         event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
         event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
+        event.registerEntityRenderer(Registration.LIVING_AMMUNITION.get(), LivingAmmunitionRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

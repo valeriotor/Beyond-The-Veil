@@ -28,14 +28,25 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
     public ModelPart getPart(String name) {
         return animatedParts.get(name);
     }
-
     protected ModelPart registerAnimatedPart(String name, ModelPart part) {
+        return registerAnimatedPart(name, part, true);
+    }
+
+    protected ModelPart registerAnimatedPart(String name, ModelPart part, boolean visible) {
+        part.visible = visible;
         animatedParts.put(name, part);
-        defaultPartPoses.add(new ModelPartAndDefaultPose(part, part.storePose()));
+        defaultPartPoses.add(new ModelPartAndDefaultPose(part, part.storePose(), visible));
         return part;
     }
 
-    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose) {
+    protected void resetParts() {
+        for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
+            defaultPartPose.part().loadPose(defaultPartPose.pose());
+            defaultPartPose.part.visible = defaultPartPose.visible;
+        }
+    }
+
+    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose, boolean visible) {
     }
 
 

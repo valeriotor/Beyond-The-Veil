@@ -86,6 +86,7 @@ public class Registration {
     public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(5.6F, 5F).clientTrackingRange(32).build("nautilus"));
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
     public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(1.8F, 0.7F).clientTrackingRange(32).build("weeper"));
+    public static final RegistryObject<EntityType<LivingAmmunitionEntity>> LIVING_AMMUNITION = ENTITIES.register("living_ammunition", () -> EntityType.Builder.of(LivingAmmunitionEntity::new, MobCategory.CREATURE).sized(1.8F, 0.7F).clientTrackingRange(32).build("living_ammunition"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD);
