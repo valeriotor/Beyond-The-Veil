@@ -1,12 +1,26 @@
 model: broken_body
-length: 35
-start: 12: 13
+length: 45
+start: 10: 25
+    rotx: head: -1.32: sqrt: absolute
+    rotx: upper_visible: -0.44: sqrt: absolute
+start: 25: 30
+    rotx: upper_visible: -0.54: sqrt: absolute
+    rotx: head: -1.45: sqrt: absolute
+start: 29: 30
     visi: upper: 1: immediate: absolute
     visi: lower: 1: immediate: absolute
-    rotx: upper: -0.44: sqrt: absolute
-    rotx: lower: -0.44: sqrt: absolute
-start: 13: 16
+    rotx: upper: -0.54: immediate: absolute
+    rotx: lower: -0.54: immediate: absolute
+start: 30: 35
     rotx: lower: 1.32: linear: relative
     rotx: upper: -1.32: linear: relative
+    rotx: upper_visible: -1.32: linear: relative
     tray: upper: -20: linear: relative
+    tray: upper_visible: -20: linear: relative
     traz: upper: +20: linear: relative
+    traz: upper_visible: +20: linear: relative
+start: 35: 45
+    rotx: upper: -2: linear: relative
+    rotx: upper_visible: -2: linear: relative
+    traz: upper: +90: linear: relative
+    traz: upper_visible: +90: linear: relative

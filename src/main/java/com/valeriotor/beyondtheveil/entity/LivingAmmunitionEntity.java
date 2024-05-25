@@ -87,7 +87,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
         super.tick();
         if (level().isClientSide) {
             if (explodingAnimation == null || explodingAnimation.isDone()) {
-                if (true) {
+                if (false) {
                     explodingAnimation = new Animation(AnimationRegistry.ammunition_explode);
                     explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
                 }

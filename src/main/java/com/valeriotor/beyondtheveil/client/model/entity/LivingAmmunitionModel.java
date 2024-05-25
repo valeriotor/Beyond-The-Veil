@@ -95,7 +95,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
 
     @Override
     public void setupAnim(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        //body.xRot = - Mth.PI * 15 / 36;
+        //body.xRot = - Mth.PI * 45 / 36;
         //legs.xRot += Mth.PI * 5 / 36;
         //head.xRot = - Mth.PI * 15 / 36;
         //rightLeg.xRot = Mth.PI * 10 / 36;
@@ -103,7 +103,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
         //cloth.visible = false;
         //main.visible = false;
         //body.y -= 20;
-        //body.z += 20;
+        //body.z += 90;
         //leftLeg.z -= 5.5F;
         //rightLeg.z -= 5.5F;
         //leftLeg.y += 2;
