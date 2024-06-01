@@ -1,11 +1,11 @@
 package com.valeriotor.beyondtheveil;
 
-import com.google.common.collect.ImmutableSet;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.fluid.SurgicalFluidType;
 import com.valeriotor.beyondtheveil.item.*;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.world.structures.DeepCityPiece;
 import com.valeriotor.beyondtheveil.world.structures.DeepCityStructure;
 import com.valeriotor.beyondtheveil.world.structures.HamletPieces;
 import com.valeriotor.beyondtheveil.world.structures.HamletStructure;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -28,8 +29,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -44,8 +43,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Set;
 
 
 public class Registration {
@@ -77,6 +74,8 @@ public class Registration {
         STRUCTURE_PIECE_TYPES.register(bus);
         STRUCTURE_PROCESSORS.register(bus);
         CREATIVE_TAB.register(bus);
+
+        BTVParticles.init(bus);
     }
 
     public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 2.1F).clientTrackingRange(32).build("deep_one"));

@@ -1,8 +1,6 @@
 package com.valeriotor.beyondtheveil.capability.arsenal;
 
-import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
-import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
-import com.valeriotor.beyondtheveil.surgery.arsenal.TargetingType;
+import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -253,6 +251,8 @@ public class TriggerData {
             triggerType = TargetingType.WAS_HIT;
             targetType = TargetingType.HOSTILE_NEARBY;
             mutex = DyeColor.BLACK;
+            effect = new ArsenalEffect(ArsenalEffectRegistry.HARM, 3, 1, true);
+            burst = new Burst(BurstRegistry.BASE, 0);
         }
 
     }

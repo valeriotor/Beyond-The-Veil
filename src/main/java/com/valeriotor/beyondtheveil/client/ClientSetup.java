@@ -7,10 +7,12 @@ import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
+import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
@@ -21,6 +23,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -111,6 +114,11 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onEntityRenderersEvent(EntityRenderersEvent.AddLayers event) {
         AnimationRegistry.loadAnimations(true);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterParticleProvidersEvent (RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(BTVParticles.BLOODSPILL.get(), BloodspillParticle.BloodspillParticleProvider::new);
     }
 
     public static boolean isConnectionPresent() {

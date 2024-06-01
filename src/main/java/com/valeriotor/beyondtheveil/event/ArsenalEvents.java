@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -143,8 +144,10 @@ public class ArsenalEvents {
                 if (next.getKey().isDeadOrDying() || next.getValue().isDeadOrDying()) {
                     iterator.remove();
                 } else {
-                    TriggerData triggerData = next.getValue().getCapability(TriggerDataProvider.TRIGGER_DATA).orElseThrow(IllegalStateException::new);
-                    if (!triggerData.isTriggered() || !triggerData.getPotentialTargets(next.getValue()).contains(next.getKey())) {
+                    // TODO investigate why this capability may not be present
+                    LazyOptional<TriggerData> capability = next.getValue().getCapability(TriggerDataProvider.TRIGGER_DATA);
+                    TriggerData triggerData = capability.isPresent() ? capability.orElseThrow(IllegalStateException::new) : null;
+                    if (triggerData == null || !triggerData.isTriggered() || !triggerData.getPotentialTargets(next.getValue()).contains(next.getKey())) {
                         iterator.remove();
                     }
                 }

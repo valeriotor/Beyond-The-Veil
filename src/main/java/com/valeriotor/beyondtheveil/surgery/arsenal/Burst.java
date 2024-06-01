@@ -1,6 +1,10 @@
 package com.valeriotor.beyondtheveil.surgery.arsenal;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+
+import java.util.List;
 
 public class Burst {
 
@@ -16,6 +20,15 @@ public class Burst {
     public Burst(BurstType burstType, int extension) {
         this.burstType = burstType;
         this.extension = extension;
+    }
+
+
+    public void createParticles(Mob attacker) {
+        burstType.createParticles(attacker, extension);
+    }
+
+    public List<LivingEntity> getHitEntities(Mob attacker) {
+        return burstType.getHitEntities(attacker, extension);
     }
 
     public CompoundTag writeToNBT(CompoundTag tag) {
