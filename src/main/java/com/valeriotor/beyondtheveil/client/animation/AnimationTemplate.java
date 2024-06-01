@@ -110,7 +110,7 @@ public class AnimationTemplate {
     }
 
     enum TransformationType {
-        ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ, VISI;
+        ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ, RESX, RESY, RESZ, VISI;
 
         static TransformationType getType(String name) {
             for (TransformationType type : TransformationType.values()) {

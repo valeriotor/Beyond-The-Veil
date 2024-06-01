@@ -108,6 +108,10 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
         //rightLeg.z -= 5.5F;
         //leftLeg.y += 2;
         //rightLeg.y += 2;
+        //main.xScale = 1.25F;
+        //main.yScale = 1.25F;
+        //main.y = 5;
+        //main.zScale = 1.25F;
     }
 
     @Override

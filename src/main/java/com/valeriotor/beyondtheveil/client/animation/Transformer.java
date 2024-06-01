@@ -39,6 +39,9 @@ public abstract class Transformer {
             case TRAX -> defaultValues.x;
             case TRAY -> defaultValues.y;
             case TRAZ -> defaultValues.z;
+            case RESX -> part.xScale;
+            case RESY -> part.yScale;
+            case RESZ -> part.zScale;
             case VISI -> part.visible ? 1 : -1;
         };
         int currentTick = 0;
@@ -62,6 +65,9 @@ public abstract class Transformer {
             case TRAX -> new TranslatorX(transformerOperators, part);
             case TRAY -> new TranslatorY(transformerOperators, part);
             case TRAZ -> new TranslatorZ(transformerOperators, part);
+            case RESX -> new RescalerX(transformerOperators, part);
+            case RESY -> new RescalerY(transformerOperators, part);
+            case RESZ -> new RescalerZ(transformerOperators, part);
             case VISI -> new Hider(transformerOperators, part);
         };
 
@@ -136,6 +142,42 @@ public abstract class Transformer {
         @Override
         public void modify(float animationTicks, OperatorWithStartAmount operator) {
             part.z = operator.operator.apply(animationTicks, operator.startAmount);
+        }
+    }
+
+    private static class RescalerX extends Transformer {
+
+        public RescalerX(List<OperatorWithStartAmount> operators, ModelPart part) {
+            super(operators, part);
+        }
+
+        @Override
+        public void modify(float animationTicks, OperatorWithStartAmount operator) {
+            part.xScale = operator.operator.apply(animationTicks, operator.startAmount);
+        }
+    }
+
+    private static class RescalerY extends Transformer {
+
+        public RescalerY(List<OperatorWithStartAmount> operators, ModelPart part) {
+            super(operators, part);
+        }
+
+        @Override
+        public void modify(float animationTicks, OperatorWithStartAmount operator) {
+            part.yScale = operator.operator.apply(animationTicks, operator.startAmount);
+        }
+    }
+
+    private static class RescalerZ extends Transformer {
+
+        public RescalerZ(List<OperatorWithStartAmount> operators, ModelPart part) {
+            super(operators, part);
+        }
+
+        @Override
+        public void modify(float animationTicks, OperatorWithStartAmount operator) {
+            part.zScale = operator.operator.apply(animationTicks, operator.startAmount);
         }
     }
 

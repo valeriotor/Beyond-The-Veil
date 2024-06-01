@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
+import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.*;
 import com.valeriotor.beyondtheveil.research.Research;
@@ -81,7 +82,7 @@ public class CapabilityEvents {
                 Messages.sendToServer(message);
             }
         }
-        if (event.getObject() instanceof Villager || event.getObject() instanceof Pillager) { // TODO all the others
+        if (event.getObject() instanceof Villager || event.getObject() instanceof Pillager || event.getObject() instanceof AmmunitionEntity) { // TODO all the others
             if (!event.getObject().getCapability(TRIGGER_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
             }

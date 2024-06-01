@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.capability.arsenal;
 
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
+import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import com.valeriotor.beyondtheveil.surgery.arsenal.TargetingType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +22,8 @@ public class TriggerData {
     private List<UUID> restrictedTriggerers = new ArrayList<>();
     private List<UUID> restrictedTargets = new ArrayList<>();
     private List<UUID> ignoredPlayers = new ArrayList<>();
+    private ArsenalEffect effect;
+    private Burst burst;
     private UUID master = null;
     private int seeingDistance = 32;
     private boolean triggered = false;
@@ -144,6 +148,22 @@ public class TriggerData {
         this.mutex = mutex;
     }
 
+    public void setBurst(Burst burst) {
+        this.burst = burst;
+    }
+
+    public void setEffect(ArsenalEffect effect) {
+        this.effect = effect;
+    }
+
+    public Burst getBurst() {
+        return burst;
+    }
+
+    public ArsenalEffect getEffect() {
+        return effect;
+    }
+
     public void saveToNBT(CompoundTag tag) {
 
         CompoundTag triggerersTag = new CompoundTag();
@@ -178,6 +198,14 @@ public class TriggerData {
 
         tag.putBoolean("triggered", triggered);
         tag.putInt("priority", priority);
+
+        if (effect != null) {
+            tag.put("effect", effect.writeToNBT(new CompoundTag()));
+        }
+
+        if (burst != null) {
+            tag.put("burst", burst.writeToNBT(new CompoundTag()));
+        }
 
     }
 

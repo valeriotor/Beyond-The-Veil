@@ -35,7 +35,7 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
     protected ModelPart registerAnimatedPart(String name, ModelPart part, boolean visible) {
         part.visible = visible;
         animatedParts.put(name, part);
-        defaultPartPoses.add(new ModelPartAndDefaultPose(part, part.storePose(), visible));
+        defaultPartPoses.add(new ModelPartAndDefaultPose(part, part.storePose(), part.xScale, part.yScale, part.zScale, visible));
         return part;
     }
 
@@ -43,10 +43,13 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
         for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
             defaultPartPose.part().loadPose(defaultPartPose.pose());
             defaultPartPose.part.visible = defaultPartPose.visible;
+            defaultPartPose.part.xScale = defaultPartPose.xScale;
+            defaultPartPose.part.yScale = defaultPartPose.yScale;
+            defaultPartPose.part.zScale = defaultPartPose.zScale;
         }
     }
 
-    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose, boolean visible) {
+    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose, float xScale, float yScale, float zScale, boolean visible) {
     }
 
 

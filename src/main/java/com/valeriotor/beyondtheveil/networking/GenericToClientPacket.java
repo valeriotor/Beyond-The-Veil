@@ -1,17 +1,22 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class GenericToClientPacket {
@@ -32,6 +37,14 @@ public class GenericToClientPacket {
 
     public static GenericToClientPacket syncReminiscences(CompoundTag tag) {
         return new GenericToClientPacket(MessageType.SYNC_REMINISCENCES, tag);
+    }
+
+    public static GenericToClientPacket startAnimation(AnimationTemplate animation, int entityId, int channel) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("id", entityId);
+        tag.putInt("anim", AnimationRegistry.idFromAnimation(animation));
+        tag.putInt("channel", channel);
+        return new GenericToClientPacket(MessageType.START_ANIMATION, tag);
     }
 
     private final MessageType type;
@@ -60,6 +73,7 @@ public class GenericToClientPacket {
                     case WAYPOINT -> ClientData.getInstance().addWaypoint(tag);
                     case WAYPOINT_REMOVE -> ClientData.getInstance().removeWaypoint(tag);
                     case SYNC_REMINISCENCES -> DataUtilClient.loadReminiscences(tag);
+                    case START_ANIMATION -> ClientMethods.startEntityAnimation(tag);
                 }
             });
         });
@@ -70,7 +84,8 @@ public class GenericToClientPacket {
     private enum MessageType {
         WAYPOINT,
         WAYPOINT_REMOVE,
-        SYNC_REMINISCENCES;
+        SYNC_REMINISCENCES,
+        START_ANIMATION;
     }
 
 }

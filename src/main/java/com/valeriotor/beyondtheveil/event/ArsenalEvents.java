@@ -86,7 +86,7 @@ public class ArsenalEvents {
     @SubscribeEvent
     public static void entityTickEvent(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
-        if ((e.level().getGameTime() & 15) == 15 && e.getCapability(TriggerDataProvider.TRIGGER_DATA).isPresent() && e instanceof Mob entity) {
+        if ((e.level().getGameTime() & 7) == 7 && e.getCapability(TriggerDataProvider.TRIGGER_DATA).isPresent() && e instanceof Mob entity) {
             TriggerData triggerData = entity.getCapability(TriggerDataProvider.TRIGGER_DATA).orElseThrow(IllegalStateException::new);
             triggerData.cleanLists(entity);
             if (triggerData.isTriggered() && triggerData.getPotentialTargets(entity).isEmpty()) {
@@ -108,7 +108,7 @@ public class ArsenalEvents {
 
     @SubscribeEvent
     public static void levelTickEvent(TickEvent.LevelTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && (event.level.getGameTime() & 15) == 0 && triggeredEntities.containsKey(event.level)) {
+        if (event.phase == TickEvent.Phase.END && (event.level.getGameTime() & 7) == 0 && triggeredEntities.containsKey(event.level)) {
             // TODO clear mutexes with ammunition that are no longer alive or
             List<Mob> triggeredMobs = triggeredEntities.get(event.level);
             triggeredMobs.removeIf(e -> !e.isAlive());

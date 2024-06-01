@@ -5,7 +5,11 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -17,7 +21,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.npc.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -26,9 +36,10 @@ import org.slf4j.Logger;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder {
+public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.VILLAGER_DATA);
+
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
     }
@@ -43,6 +54,13 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
                 .add(Attributes.FOLLOW_RANGE, 64.0D);
     }
 
+    @Override
+    protected void registerGoals() {
+        //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
+    }
 
     @Override
     public VillagerData getVillagerData() {
@@ -53,9 +71,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.getVillagerData()).resultOrPartial(LOGGER::error).ifPresent((p_204072_) -> {
-            pCompound.put("VillagerData", p_204072_);
-        });
+        VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.getVillagerData()).resultOrPartial(LOGGER::error).ifPresent((p_204072_) -> pCompound.put("VillagerData", p_204072_));
     }
 
     @Override
@@ -86,15 +102,13 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            if (explodingAnimation == null || explodingAnimation.isDone()) {
-                if (false) {
-                    explodingAnimation = new Animation(AnimationRegistry.ammunition_explode);
-                    explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
-                }
-            } else {
+            if (explodingAnimation != null && !explodingAnimation.isDone()) {
                 explodingAnimation.update();
                 explodingAnimationBrokenBody.update();
-            }
+            }// else {
+            //    explodingAnimation = new Animation(AnimationRegistry.ammunition_explode);
+            //    explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
+            //}
         }
     }
 
@@ -104,5 +118,20 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
 
     public Animation getExplodingAnimationBrokenBody() {
         return explodingAnimationBrokenBody;
+    }
+
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        switch (channel) {
+            case 0:
+                explodingAnimation = new Animation(animationTemplate);
+            case 1:
+                explodingAnimationBrokenBody = new Animation(animationTemplate);
+        }
+    }
+
+    @Override
+    public TriggerData getTriggerData() {
+        return getCapability(TriggerDataProvider.TRIGGER_DATA).orElseThrow(IllegalArgumentException::new);
     }
 }

@@ -6,6 +6,19 @@ start: 10: 25
     rotx: head: -1.32: sqrt: absolute
     rotx: rightLeg: 0.88: sqrt: absolute
     rotx: arms: -1.75: sqrt: absolute
+    resx: cloth: 1.45: sqrt: absolute
+    resz: cloth: 1.45: sqrt: absolute
+    resx: main: 1.45: sqrt: absolute
+    resz: main: 1.45: sqrt: absolute
+start: 25: 27:
+    resx: cloth: 0.05: sqrt: relative
+    resz: cloth: 0.05: sqrt: relative
+start: 27: 29:
+    resx: cloth: -0.1: sqrt: relative
+    resz: cloth: -0.1: sqrt: relative
+start: 29: 30:
+    resx: cloth: 0.1: sqrt: relative
+    resz: cloth: 0.1: sqrt: relative
 start: 25: 30
     rotx: body: -0.54: sqrt: absolute
     rotx: legs: -0.54: sqrt: absolute
