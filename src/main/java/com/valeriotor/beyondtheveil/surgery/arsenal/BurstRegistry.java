@@ -21,16 +21,6 @@ public class BurstRegistry {
     static final Map<String, BurstType> REGISTRY = new HashMap<>();
 
     public static final BurstType BASE = register(new BurstType("base") {
-        @Override
-        public void createParticles(Mob attacker, int extension) {
-            int radius = 4 * (extension + 1);
-            Vec3 burstCentre = burstCentre(attacker, radius);
-            double speedX = -Math.sin(Math.toRadians(attacker.getYRot()));
-            double speedZ = Math.cos(Math.toRadians(attacker.getYRot()));
-            for (int i = 0; i < 1; i++) {
-                ((ServerLevel) attacker.level()).sendParticles(ParticleTypes.CRIT, attacker.getX(), burstCentre.y + 1, attacker.getZ(), 100, speedX, 0, speedZ, 1);
-            }
-        }
 
         @Override
         public List<LivingEntity> getHitEntities(Mob attacker, int extension) {
@@ -38,7 +28,7 @@ public class BurstRegistry {
             Vec3 burstCentre = burstCentre(attacker, radius);
             AABB filter = new AABB(burstCentre.x - 10, burstCentre.y - 10, burstCentre.z - 10, burstCentre.x + 10, burstCentre.y + 10, burstCentre.z + 10);
             Player master = attacker instanceof Minion ? ((Minion) attacker).getMaster() : null;
-            List<LivingEntity> entities = attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> e.distanceToSqr(burstCentre) < 4 * radius * radius && e != attacker && e != master && (!(e instanceof Minion) || ((Minion) e).getMaster() != master));
+            List<LivingEntity> entities = attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> (e.getX() - burstCentre.x) * (e.getX() - burstCentre.x) + (e.getZ() - burstCentre.z) * (e.getZ() - burstCentre.z) < 4 * radius * radius && e.getY() - burstCentre.y < radius * 5 && e != attacker && e != master && (!(e instanceof Minion) || ((Minion) e).getMaster() != master));
             return entities;
         }
 

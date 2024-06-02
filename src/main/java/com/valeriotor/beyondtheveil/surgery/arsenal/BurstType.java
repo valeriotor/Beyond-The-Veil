@@ -17,8 +17,6 @@ public abstract class BurstType {
         return name;
     }
 
-    public abstract void createParticles(Mob attacker, int extension);
-
     public abstract List<LivingEntity> getHitEntities(Mob attacker, int extension);
 
 }

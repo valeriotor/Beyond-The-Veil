@@ -42,11 +42,12 @@ public class ArsenalEffectRegistry {
     public static final ArsenalEffectType BAD_OMEN = register(new ArsenalEffectType.VanillaArsenalEffectType("bad_omen", MobEffects.BAD_OMEN));
 
 
-    // vulnerability
-    // disrobe
-    // drop weapon
-    // terror
+    // vulnerability (acid)
+    // disrobe (higher duration modifier makes actual duration shorter rather than longer) (higher amplifier may make the armor fall on the ground or remove multiple pieces)
+    // drop weapon (ditto)
     // folly
+    // terror
+    // fearsome
     // harm undead
     // harm arthropods
     // enweb
@@ -63,7 +64,7 @@ public class ArsenalEffectRegistry {
     // make everyone target you
     // make everyone who's targeting you target someone else
     // extra vulnerable to knockback
-    // random movements (status effect moving the target left and right every second or so)
+    // random movements (status effect moving the target left and right every second or so (less when powered))
     // short immortality (but hp is set to half a heart at effect's end)
     // a
 

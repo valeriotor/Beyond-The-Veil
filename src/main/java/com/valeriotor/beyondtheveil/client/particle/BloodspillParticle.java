@@ -16,8 +16,9 @@ public class BloodspillParticle extends TextureSheetParticle {
         this.lifetime = 24;
         this.yd *= 2.5;
         //this.yd += Math.random() / 2;
-        this.xd *= 4.5;
-        this.zd *= 4.5;
+        double norm = pXSpeed * pXSpeed + pZSpeed * pZSpeed;
+        this.xd *= 2 * norm;
+        this.zd *= 2 * norm;
         //this.xd += Math.random() / 2;
     }
 

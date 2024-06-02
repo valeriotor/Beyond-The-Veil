@@ -22,9 +22,8 @@ public class Burst {
         this.extension = extension;
     }
 
-
-    public void createParticles(Mob attacker) {
-        burstType.createParticles(attacker, extension);
+    public int getExtension() {
+        return extension;
     }
 
     public List<LivingEntity> getHitEntities(Mob attacker) {

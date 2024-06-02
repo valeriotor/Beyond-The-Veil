@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.entity;
 
-import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
@@ -16,41 +15,32 @@ import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.npc.*;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.VILLAGER_DATA);
-    private static final EntityDataAccessor<Boolean> DATA_BLEEDING = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.INT);
     private boolean wasBleeding = false;
     private int attackTimer = -1;
     private int deathTimer = -1;
+    private float fixedLookAngle;
 
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
@@ -105,7 +95,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
-        this.entityData.define(DATA_BLEEDING, false);
+        this.entityData.define(DATA_BLEEDING, -1);
     }
 
     public void setVillagerData(VillagerData p_34376_) {
@@ -119,7 +109,6 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     @Override
     public void tick() {
         super.tick();
-        // TODO lock in rotation and position
         if (level().isClientSide) {
             if (explodingAnimation != null && !explodingAnimation.isDone()) {
                 explodingAnimation.update();
@@ -129,7 +118,8 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
             //    explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);
             //}
             //level().addParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 2, getZ(), 5, 5, 0);
-            if (entityData.get(DATA_BLEEDING)) {
+            int bleeding = entityData.get(DATA_BLEEDING);
+            if (bleeding >= 0) {
                 double xComponent = -Math.sin(Math.toRadians(getYRot()));
                 double zComponent = Math.cos(Math.toRadians(getYRot()));
                 if (!wasBleeding) {
@@ -138,9 +128,9 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
                         double direction = Math.random() * 2 * Math.PI;
                         double xSpeed = -Math.sin(direction);
                         double zSpeed = Math.cos(direction);
-                        for (int j = 0; j < 5; j++) {
-                            level().addParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + Math.random()), 1.5, zSpeed * (1 + Math.random()));
-                            level().addParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + Math.random()), 0, zSpeed * (1 + Math.random()));
+                        for (int j = 0; j < 5 * (1 + bleeding); j++) {
+                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + bleeding) * (1 + Math.random()), 1.5, zSpeed * (1 + bleeding) * (1 + Math.random()));
+                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + bleeding) * (1 + Math.random()), 0, zSpeed * (1 + bleeding) * (1 + Math.random()));
                         }
                     }
                 }
@@ -153,31 +143,48 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
         } else {
             if (deathTimer >= 0) {
                 getNavigation().stop();
+                //yBodyRot = fixedLookAngle;
+                LivingEntity target = getTarget();
+                if (target != null) {
+                    getLookControl().setLookAt(target);
+                }
                 deathTimer--;
                 if (deathTimer == 0) {
                     remove(RemovalReason.KILLED);
                 }
             } else if (attackTimer >= 0) {
                 getNavigation().stop();
+                //yBodyRot = fixedLookAngle;
+                LivingEntity target = getTarget();
+                if (target != null) {
+                    getLookControl().setLookAt(target);
+                }
                 attackTimer--;
                 if (attackTimer == 0) {
                     TriggerData data = getTriggerData();
                     Burst burst = data.getBurst();
                     ArsenalEffect effect = data.getEffect();
                     if (burst != null) {
-                        burst.createParticles(this);
                         List<LivingEntity> hitEntities = burst.getHitEntities(this);
                         for (LivingEntity hitEntity : hitEntities) {
                             if (hitEntity != this && effect != null) {
                                 effect.process(this, hitEntity);
                             }
                         }
+                        entityData.set(DATA_BLEEDING, burst.getExtension());
+                    } else {
+                        entityData.set(DATA_BLEEDING, 3);
                     }
                     deathTimer = 15;
-                    entityData.set(DATA_BLEEDING, true);
                 }
             }
         }
+    }
+
+    @Override
+    public void move(MoverType pType, Vec3 pPos) {
+        //if(attackTimer == -1 && deathTimer == -1)
+        super.move(pType, pPos);
     }
 
     public Animation getExplodingAnimation() {
@@ -214,6 +221,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     @Override
     public void startBurst() {
         attackTimer = 30;
+        fixedLookAngle = yBodyRot;
     }
 
     @Override
