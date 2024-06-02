@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.fluid.SurgicalFluidType;
 import com.valeriotor.beyondtheveil.item.*;
+import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
@@ -76,6 +77,7 @@ public class Registration {
         CREATIVE_TAB.register(bus);
 
         BTVParticles.init(bus);
+        BTVEffects.init(bus);
     }
 
     public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 2.1F).clientTrackingRange(32).build("deep_one"));
