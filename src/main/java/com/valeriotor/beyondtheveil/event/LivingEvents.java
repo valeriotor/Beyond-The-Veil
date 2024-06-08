@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.EnderManAngerEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -101,6 +102,16 @@ public class LivingEvents {
         if (entity.hasEffect(BTVEffects.FOLLY.get())) {
             event.setNewTarget(null);
         }
+    }
+
+    @SubscribeEvent
+    public static void fallEvent(LivingFallEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.hasEffect(BTVEffects.SINK.get())) {
+            MobEffectInstance effect = entity.getEffect(BTVEffects.SINK.get());
+            event.setDamageMultiplier((effect.getAmplifier() + 1) * 2);
+        }
+
     }
 
 

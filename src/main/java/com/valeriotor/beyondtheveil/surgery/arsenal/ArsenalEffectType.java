@@ -23,16 +23,34 @@ public abstract class ArsenalEffectType {
     public static class ArsenalStatusEffectType extends ArsenalEffectType {
 
         private final MobEffect effect;
+        private final DurationArray durationArray;
+
 
         public ArsenalStatusEffectType(String name, MobEffect effect) {
+            this(name, effect, DurationArray.DEFAULT);
+        }
+
+        public ArsenalStatusEffectType(String name, MobEffect effect, DurationArray durationArray) {
             super(name);
             this.effect = effect;
+            this.durationArray = durationArray;
         }
 
         @Override
         public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             amplifier = effect == MobEffects.DAMAGE_RESISTANCE ? Math.min(3, amplifier) : amplifier;
-            target.addEffect(new MobEffectInstance(effect, duration, amplifier, false, !hideParticles));
+            target.addEffect(new MobEffectInstance(effect, durationArray.durationArray[duration], amplifier, false, !hideParticles));
+        }
+
+        public enum DurationArray {
+            DEFAULT(10, 20, 35, 70),
+            SMALL_DESCENDING(16, 8, 4, 2);
+
+            final int[] durationArray;
+
+            DurationArray(int i, int i1, int i2, int i3) {
+                durationArray = new int[]{i, i1, i2, i3};
+            }
         }
     }
 

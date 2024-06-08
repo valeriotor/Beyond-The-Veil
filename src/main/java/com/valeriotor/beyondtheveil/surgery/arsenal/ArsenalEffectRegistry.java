@@ -1,7 +1,24 @@
 package com.valeriotor.beyondtheveil.surgery.arsenal;
 
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType.ArsenalStatusEffectType.DurationArray;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,22 +59,79 @@ public class ArsenalEffectRegistry {
     public static final ArsenalEffectType DOLPHINS_GRACE = register(new ArsenalEffectType.ArsenalStatusEffectType("dolphins_grace", MobEffects.DOLPHINS_GRACE));
     public static final ArsenalEffectType BAD_OMEN = register(new ArsenalEffectType.ArsenalStatusEffectType("bad_omen", MobEffects.BAD_OMEN));
     public static final ArsenalEffectType VULNERABILITY = register(new ArsenalEffectType.ArsenalStatusEffectType("vulnerability", BTVEffects.VULNERABILITY.get()));
+    public static final ArsenalEffectType DISROBE = register(new ArsenalEffectType.ArsenalStatusEffectType("disrobe", BTVEffects.DISROBE.get(), DurationArray.SMALL_DESCENDING));
+    public static final ArsenalEffectType DROP_ITEM = register(new ArsenalEffectType.ArsenalStatusEffectType("drop_item", BTVEffects.DROP_ITEM.get(), DurationArray.SMALL_DESCENDING));
+    public static final ArsenalEffectType FOLLY = register(new ArsenalEffectType.ArsenalStatusEffectType("folly", BTVEffects.FOLLY.get()));
+    public static final ArsenalEffectType TERROR = register(new ArsenalEffectType.ArsenalStatusEffectType("terror", BTVEffects.TERROR.get()));
+    public static final ArsenalEffectType FEARSOME = register(new ArsenalEffectType.ArsenalStatusEffectType("fearsome", BTVEffects.FEARSOME.get()));
 
+    public static final ArsenalEffectType HARM_UNDEAD = register(new ArsenalEffectType("harm_undead") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            if (target.getMobType() == MobType.UNDEAD) {
+                target.hurt(target.damageSources().magic(), (float) (15 << amplifier));
+            }
+        }
+    });
 
-    // vulnerability (acid)
-    // disrobe (higher duration modifier makes actual duration shorter rather than longer) (higher amplifier may make the armor fall on the ground or remove multiple pieces)
-    // drop weapon (ditto)
-    // folly
-    // terror
-    // fearsome
-    // harm undead
-    // harm arthropods
-    // enweb
-    // damage armor
+    public static final ArsenalEffectType HARM_ARTHROPODS = register(new ArsenalEffectType("harm_arthropods") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            if (target.getMobType() == MobType.ARTHROPOD) {
+                target.hurt(target.damageSources().magic(), (float) (15 << amplifier));
+            }
+        }
+    });
+
+    public static final ArsenalEffectType ENWEB = register(new ArsenalEffectType("enweb") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            amplifier = 0;
+            Level l = target.level();
+            for (int x = -amplifier; x <= amplifier; x++) {
+                for (int z = -amplifier; z <= amplifier; z++) {
+                    for (int y = 0; y < 2 + amplifier - (Math.abs(x) + Math.abs(z)) / 2; y++) {
+                        BlockPos pos = new BlockPos(target.blockPosition().offset(x, y, z));
+                        BlockState blockState = l.getBlockState(pos);
+                        if (blockState.canBeReplaced()) {
+                            l.destroyBlock(pos, true, attacker);
+                            l.setBlock(pos, Blocks.COBWEB.defaultBlockState(), 3);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    public static final ArsenalEffectType DAMAGE_ARMOR = register(new ArsenalEffectType("damage_armor") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            double damagePercent = 0.15 * amplifier;
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                if (slot.isArmor()) {
+                    ItemStack armorSlot = target.getItemBySlot(slot);
+                    if (armorSlot.isDamageableItem()) {
+                        armorSlot.hurtAndBreak((int) (armorSlot.getMaxDamage() * damagePercent), target, e -> e.broadcastBreakEvent(slot));
+                    }
+                }
+            }
+        }
+    });
+
+    public static final ArsenalEffectType KNOCK_UPWARDS = register(new ArsenalEffectType("knock_upwards") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            if (target instanceof ServerPlayer player) {
+                Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, amplifier, 0), player);
+            } else {
+                target.setDeltaMovement(0, amplifier, 0);
+            }
+        }
+    });
+
     // create slime
     // encase in ice
     // make spectral (can't hit or be hit, render semi-invisible? Can we use mixins? Must change line 120-121 of LivingEntityRenderer)
-    // teleport up
     // switch place with master
     // quick sink, extra fall damage, prevents flight
     // reflect damage (if powered it reflects to the owner of the attacking entity, if any)
@@ -77,7 +151,6 @@ public class ArsenalEffectRegistry {
 
 
     // unrelated: blood spell to teleport yourself to a random nearby area (to get out of sticky situations) to get out of sticky situations
-
 
 
 }

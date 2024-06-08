@@ -24,12 +24,12 @@ public class BurstRegistry {
 
         @Override
         public List<LivingEntity> getHitEntities(Mob attacker, int extension) {
-            double radius = (extension + 1);
+            double radius = (extension + 1) * 3;
             Vec3 burstCentre = attacker.position(); //burstCentre(attacker, radius);
             AABB filter = new AABB(burstCentre.x - 10, burstCentre.y - 10, burstCentre.z - 10, burstCentre.x + 10, burstCentre.y + 10, burstCentre.z + 10);
             Player master = attacker instanceof Minion ? ((Minion) attacker).getMaster() : null;
             // TODO Maybe add e.hasLineOfSight(attacker)
-            return attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> (e.getX() - burstCentre.x) * (e.getX() - burstCentre.x) + (e.getZ() - burstCentre.z) * (e.getZ() - burstCentre.z) < 4 * radius * radius && e.getY() - burstCentre.y < radius * 5 && e != attacker && e != master && (!(e instanceof Minion) || ((Minion) e).getMaster() != master));
+            return attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> (e.getX() - burstCentre.x) * (e.getX() - burstCentre.x) + (e.getZ() - burstCentre.z) * (e.getZ() - burstCentre.z) < 4 * radius * radius && e.getY() - burstCentre.y < radius * 3 && e != attacker && e != master && (!(e instanceof Minion) || ((Minion) e).getMaster() != master));
         }
 
         private Vec3 burstCentre(Mob attacker, double radius) {

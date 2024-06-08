@@ -58,12 +58,18 @@ public class GenericToClientPacket {
     }
 
     public static GenericToClientPacket movePlayer(double motionX, double motionY, double motionZ) {
+        return movePlayer(motionX, motionY, motionZ, true, true, true);
+    }
+
+    public static GenericToClientPacket movePlayer(double motionX, double motionY, double motionZ, boolean absoluteX, boolean absoluteY, boolean absoluteZ) {
         CompoundTag tag = new CompoundTag();
         tag.putDouble("motionX", motionX);
         tag.putDouble("motionY", motionY);
         tag.putDouble("motionZ", motionZ);
+        tag.putBoolean("absoluteX", absoluteX);
+        tag.putBoolean("absoluteY", absoluteY);
+        tag.putBoolean("absoluteZ", absoluteZ);
         return new GenericToClientPacket(MessageType.MOVE, tag);
-
     }
 
     private final MessageType type;

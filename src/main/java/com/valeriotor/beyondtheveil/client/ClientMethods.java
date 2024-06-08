@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
 
@@ -27,7 +28,11 @@ public class ClientMethods {
             double motionX = tag.getDouble("motionX");
             double motionY = tag.getDouble("motionY");
             double motionZ = tag.getDouble("motionZ");
-            Minecraft.getInstance().player.setDeltaMovement(new Vec3(motionX, motionY, motionZ));
+            LocalPlayer player = Minecraft.getInstance().player;
+            motionX = tag.getBoolean("absoluteX") ? motionX : player.getDeltaMovement().x + motionX;
+            motionY = tag.getBoolean("absoluteY") ? motionY : player.getDeltaMovement().y + motionY;
+            motionZ = tag.getBoolean("absoluteZ") ? motionZ : player.getDeltaMovement().z + motionZ;
+            player.setDeltaMovement(new Vec3(motionX, motionY, motionZ));
         }
     }
 

@@ -173,7 +173,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
                         }
                         entityData.set(DATA_BLEEDING, burst.getExtension());
                     } else {
-                        entityData.set(DATA_BLEEDING, 3);
+                        entityData.set(DATA_BLEEDING, 2);
                     }
                     deathTimer = 15;
                 }
