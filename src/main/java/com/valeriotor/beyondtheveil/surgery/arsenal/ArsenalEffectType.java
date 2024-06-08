@@ -20,11 +20,11 @@ public abstract class ArsenalEffectType {
 
     public abstract void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles);
 
-    public static class VanillaArsenalEffectType extends ArsenalEffectType {
+    public static class ArsenalStatusEffectType extends ArsenalEffectType {
 
         private final MobEffect effect;
 
-        public VanillaArsenalEffectType(String name, MobEffect effect) {
+        public ArsenalStatusEffectType(String name, MobEffect effect) {
             super(name);
             this.effect = effect;
         }

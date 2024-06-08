@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.EnderManAngerEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -89,6 +91,15 @@ public class LivingEvents {
                 }
 
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void targetEvent(LivingChangeTargetEvent event) {
+        // TODO test this
+        LivingEntity entity = event.getEntity();
+        if (entity.hasEffect(BTVEffects.FOLLY.get())) {
+            event.setNewTarget(null);
         }
     }
 

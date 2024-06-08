@@ -5,7 +5,9 @@ import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
@@ -47,6 +49,23 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.START_ANIMATION, tag);
     }
 
+    public static GenericToClientPacket rotateCamera(float newYaw, float newPitch, int timeInTicks) {
+        CompoundTag tag = new CompoundTag();
+        tag.putFloat("newYaw", newYaw);
+        tag.putFloat("newPitch", newPitch);
+        tag.putInt("timeInTicks", timeInTicks);
+        return new GenericToClientPacket(MessageType.ROTATE_CAMERA, tag);
+    }
+
+    public static GenericToClientPacket movePlayer(double motionX, double motionY, double motionZ) {
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("motionX", motionX);
+        tag.putDouble("motionY", motionY);
+        tag.putDouble("motionZ", motionZ);
+        return new GenericToClientPacket(MessageType.MOVE, tag);
+
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -74,6 +93,8 @@ public class GenericToClientPacket {
                     case WAYPOINT_REMOVE -> ClientData.getInstance().removeWaypoint(tag);
                     case SYNC_REMINISCENCES -> DataUtilClient.loadReminiscences(tag);
                     case START_ANIMATION -> ClientMethods.startEntityAnimation(tag);
+                    case ROTATE_CAMERA -> RenderEvents.startCameraRotation(new CameraRotator(tag));
+                    case MOVE -> ClientMethods.movePlayer(tag);
                 }
             });
         });
@@ -85,7 +106,9 @@ public class GenericToClientPacket {
         WAYPOINT,
         WAYPOINT_REMOVE,
         SYNC_REMINISCENCES,
-        START_ANIMATION;
+        START_ANIMATION,
+        ROTATE_CAMERA,
+        MOVE
     }
 
 }

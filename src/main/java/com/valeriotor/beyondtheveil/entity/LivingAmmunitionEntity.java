@@ -129,8 +129,8 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
                         double xSpeed = -Math.sin(direction);
                         double zSpeed = Math.cos(direction);
                         for (int j = 0; j < 5 * (1 + bleeding); j++) {
-                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + bleeding) * (1 + Math.random()), 1.5, zSpeed * (1 + bleeding) * (1 + Math.random()));
-                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1 + bleeding) * (1 + Math.random()), 0, zSpeed * (1 + bleeding) * (1 + Math.random()));
+                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
+                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 0, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
                         }
                     }
                 }

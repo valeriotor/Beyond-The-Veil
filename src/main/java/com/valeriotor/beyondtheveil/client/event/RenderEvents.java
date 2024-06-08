@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
+import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -50,6 +51,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -66,6 +68,7 @@ public class RenderEvents {
     private static final ResourceLocation RAIN_LOCATION = new ResourceLocation(References.MODID, "textures/environment/current.png");
     private static final float[] rainSizeY = new float[1024];
     private static final float[] rainSizeZ = new float[1024];
+    private static CameraRotator rotator;
 
     static {
         for(int i = 0; i < 32; ++i) {
@@ -77,6 +80,38 @@ public class RenderEvents {
                 rainSizeZ[i << 5 | j] = f / f2;
             }
         }
+    }
+
+    public static void startCameraRotation(CameraRotator newRotator) {
+        rotator = newRotator;
+    }
+
+    @SubscribeEvent
+    public static void renderTickEvent(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            if (rotator != null) {
+                boolean done = rotator.update();
+                LocalPlayer player = Minecraft.getInstance().player;
+                if (player != null) {
+                    player.setYHeadRot((float) rotator.computeYaw(0));
+                    player.setYRot((float) rotator.computeYaw(0));
+                    player.setXRot((float) rotator.computePitch(0));
+                }
+                if (done) {
+                    rotator = null;
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void computeCameraAngles(ViewportEvent.ComputeCameraAngles event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null && rotator != null) {
+            //event.setYaw((float) rotator.computeYaw(event.getPartialTick()));
+            //event.setPitch((float) rotator.computeYaw(event.getPartialTick()));
+        }
+        //event.setYaw(0);
     }
 
 
