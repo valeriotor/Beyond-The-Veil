@@ -65,6 +65,7 @@ public class ArsenalEffectRegistry {
     public static final ArsenalEffectType TERROR = register(new ArsenalEffectType.ArsenalStatusEffectType("terror", BTVEffects.TERROR.get()));
     public static final ArsenalEffectType FEARSOME = register(new ArsenalEffectType.ArsenalStatusEffectType("fearsome", BTVEffects.FEARSOME.get()));
     public static final ArsenalEffectType SINK = register(new ArsenalEffectType.ArsenalStatusEffectType("sink", BTVEffects.SINK.get()));
+    public static final ArsenalEffectType CAMOUFLAGE = register(new ArsenalEffectType.ArsenalStatusEffectType("camouflage", BTVEffects.CAMOUFLAGE.get()));
 
     public static final ArsenalEffectType HARM_UNDEAD = register(new ArsenalEffectType("harm_undead") {
         @Override

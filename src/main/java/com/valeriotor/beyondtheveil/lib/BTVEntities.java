@@ -3,10 +3,14 @@ package com.valeriotor.beyondtheveil.lib;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
+
 
 public class BTVEntities {
 
@@ -29,6 +33,20 @@ public class BTVEntities {
             } else {
                 scared.setDeltaMovement(new Vec3(xDist / dist, 0, zDist / dist));
             }
+        }
+    }
+
+    public enum BTVFlags {
+        CAMOUFLAGED(0);
+
+        private final int flag;
+
+        BTVFlags(int flag) {
+            this.flag = flag;
+        }
+
+        public int getFlag() {
+            return flag;
         }
     }
 }

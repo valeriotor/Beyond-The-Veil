@@ -40,7 +40,6 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     private boolean wasBleeding = false;
     private int attackTimer = -1;
     private int deathTimer = -1;
-    private float fixedLookAngle;
 
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
@@ -104,7 +103,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
 
     public boolean isExploding() {
         return true;
-    }
+    } // TODO rename
 
     @Override
     public void tick() {
@@ -198,16 +197,9 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         switch (channel) {
-            case 0:
-                explodingAnimation = new Animation(animationTemplate);
-            case 1:
-                explodingAnimationBrokenBody = new Animation(animationTemplate);
+            case 0 -> explodingAnimation = new Animation(animationTemplate);
+            case 1 -> explodingAnimationBrokenBody = new Animation(animationTemplate);
         }
-    }
-
-    @Override
-    public TriggerData getTriggerData() {
-        return getCapability(TriggerDataProvider.TRIGGER_DATA).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
@@ -221,7 +213,6 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
     @Override
     public void startBurst() {
         attackTimer = 30;
-        fixedLookAngle = yBodyRot;
     }
 
     @Override

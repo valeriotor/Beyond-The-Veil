@@ -15,11 +15,14 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class WeeperModel extends EntityModel<WeeperEntity> {
+public class WeeperModel extends AnimatedModel<WeeperEntity> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "weeper"), "main");
+	private static final String name = "weeper";
 	private final ModelPart body;
 	private final ModelPart legs;
+	private final ModelPart head1;
+	private final ModelPart head2;
 	private final ModelPart blob1;
 	private final ModelPart blob2;
 	private final ModelPart blob3;
@@ -31,18 +34,20 @@ public class WeeperModel extends EntityModel<WeeperEntity> {
 	private final ModelPart blob9;
 
 	public WeeperModel(ModelPart root) {
-		this.body = root.getChild("body");
-		this.legs = root.getChild("legs");
-		ModelPart head2 = body.getChild("upper_body_1").getChild("upper_body_2").getChild("head1").getChild("head2");
-		this.blob1 = head2.getChild("blob1");
-		this.blob2 = head2.getChild("blob2");
-		this.blob3 = head2.getChild("blob3");
-		this.blob4 = head2.getChild("blob4");
-		this.blob5 = head2.getChild("blob5");
-		this.blob6 = head2.getChild("blob6");
-		this.blob7 = head2.getChild("blob7");
-		this.blob8 = head2.getChild("blob8");
-		this.blob9 = head2.getChild("blob9");
+		super(name);
+		this.body = registerAnimatedPart("body", root.getChild("body"));
+		this.legs = registerAnimatedPart("legs", root.getChild("legs"));
+		this.head1 = registerAnimatedPart("head1", body.getChild("upper_body_1").getChild("upper_body_2").getChild("head1"));
+		this.head2 = registerAnimatedPart("head2", head1.getChild("head2"));
+		this.blob1 = registerAnimatedPart("blob1", head2.getChild("blob1"));
+		this.blob2 = registerAnimatedPart("blob2", head2.getChild("blob2"));
+		this.blob3 = registerAnimatedPart("blob3", head2.getChild("blob3"));
+		this.blob4 = registerAnimatedPart("blob4", head2.getChild("blob4"));
+		this.blob5 = registerAnimatedPart("blob5", head2.getChild("blob5"));
+		this.blob6 = registerAnimatedPart("blob6", head2.getChild("blob6"));
+		this.blob7 = registerAnimatedPart("blob7", head2.getChild("blob7"));
+		this.blob8 = registerAnimatedPart("blob8", head2.getChild("blob8"));
+		this.blob9 = registerAnimatedPart("blob9", head2.getChild("blob9"));
 	}
 
 	public static LayerDefinition createBodyLayer() {

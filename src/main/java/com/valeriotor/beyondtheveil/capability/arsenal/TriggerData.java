@@ -251,7 +251,7 @@ public class TriggerData {
             triggerType = TargetingType.WAS_HIT;
             targetType = TargetingType.HOSTILE_NEARBY;
             mutex = DyeColor.BLACK;
-            effect = new ArsenalEffect(ArsenalEffectRegistry.HARM_UNDEAD, 3, 1, true);
+            effect = new ArsenalEffect(ArsenalEffectRegistry.CAMOUFLAGE, 3, 1, true);
             burst = new Burst(BurstRegistry.BASE, 0);
         }
 

@@ -21,8 +21,9 @@ public class BTVEffects {
     public static final RegistryObject<MobEffect> DROP_ITEM = MOB_EFFECTS.register("drop_item", () -> new GenericEffect(MobEffectCategory.HARMFUL, 0x01094));
     public static final RegistryObject<MobEffect> FOLLY = MOB_EFFECTS.register("folly", () -> new FollyEffect(MobEffectCategory.HARMFUL, 0x01094));
     public static final RegistryObject<MobEffect> TERROR = MOB_EFFECTS.register("terror", () -> new TerrorEffect(MobEffectCategory.HARMFUL, 0x01094));
-    public static final RegistryObject<MobEffect> FEARSOME = MOB_EFFECTS.register("fearsome", () -> new FearsomeEffect(MobEffectCategory.HARMFUL, 0x01094));
+    public static final RegistryObject<MobEffect> FEARSOME = MOB_EFFECTS.register("fearsome", () -> new FearsomeEffect(MobEffectCategory.BENEFICIAL, 0x01094));
     public static final RegistryObject<MobEffect> SINK = MOB_EFFECTS.register("sink", () -> new SinkEffect(MobEffectCategory.HARMFUL, 0x01094));
+    public static final RegistryObject<MobEffect> CAMOUFLAGE = MOB_EFFECTS.register("camouflage", () -> new GenericEffect(MobEffectCategory.BENEFICIAL, 0x01094));
 
 
 

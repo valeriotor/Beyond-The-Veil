@@ -119,6 +119,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onRegisterParticleProvidersEvent (RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(BTVParticles.BLOODSPILL.get(), BloodspillParticle.BloodspillParticleProvider::new);
+        event.registerSpriteSet(BTVParticles.TEARSPILL.get(), BloodspillParticle.BloodspillParticleProvider::new);
     }
 
     public static boolean isConnectionPresent() {

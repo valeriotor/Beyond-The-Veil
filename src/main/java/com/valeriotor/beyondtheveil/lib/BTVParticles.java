@@ -18,6 +18,7 @@ public class BTVParticles {
     }
 
     public static final RegistryObject<SimpleParticleType> BLOODSPILL = PARTICLE_TYPES.register("bloodspill", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> TEARSPILL = PARTICLE_TYPES.register("tearspill", () -> new SimpleParticleType(false));
 
 
 }

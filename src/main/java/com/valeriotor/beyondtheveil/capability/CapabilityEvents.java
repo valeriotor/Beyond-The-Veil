@@ -82,7 +82,7 @@ public class CapabilityEvents {
                 Messages.sendToServer(message);
             }
         }
-        if (event.getObject() instanceof Villager || event.getObject() instanceof Pillager || event.getObject() instanceof AmmunitionEntity) { // TODO all the others
+        if (event.getObject() instanceof Villager || event.getObject() instanceof Pillager || event.getObject() instanceof AmmunitionEntity) {
             if (!event.getObject().getCapability(TRIGGER_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
             }
