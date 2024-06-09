@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.surgery.arsenal;
 
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -11,14 +12,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +64,7 @@ public class ArsenalEffectRegistry {
     public static final ArsenalEffectType FOLLY = register(new ArsenalEffectType.ArsenalStatusEffectType("folly", BTVEffects.FOLLY.get()));
     public static final ArsenalEffectType TERROR = register(new ArsenalEffectType.ArsenalStatusEffectType("terror", BTVEffects.TERROR.get()));
     public static final ArsenalEffectType FEARSOME = register(new ArsenalEffectType.ArsenalStatusEffectType("fearsome", BTVEffects.FEARSOME.get()));
+    public static final ArsenalEffectType SINK = register(new ArsenalEffectType.ArsenalStatusEffectType("sink", BTVEffects.SINK.get()));
 
     public static final ArsenalEffectType HARM_UNDEAD = register(new ArsenalEffectType("harm_undead") {
         @Override
@@ -129,15 +130,44 @@ public class ArsenalEffectRegistry {
         }
     });
 
-    // create slime
+    public static final ArsenalEffectType CREATE_SLIME = register(new ArsenalEffectType("create_slime") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            if (!(target instanceof Slime)) {
+                Slime slime = new Slime(EntityType.SLIME, target.level());
+                slime.setSize((amplifier + 2) * 2, true);
+                slime.setPos(target.position());
+                target.level().addFreshEntity(slime);
+                slime.setTarget(target);
+            }
+        }
+    });
+
+    public static final ArsenalEffectType EVERYONE_TARGET = register(new ArsenalEffectType("everyone_target") {
+        @Override
+        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+            double d = switch (amplifier) {
+                case 0 -> 10;
+                case 1 -> 20;
+                case 2 -> 35;
+                case 3 -> 50;
+                default -> throw new IllegalStateException("Unexpected value: " + amplifier);
+            };
+            AABB aabb = AABB.ofSize(target.position(), d, d, d);
+            for (Entity entity : target.level().getEntities(target, aabb, e -> !(e instanceof PlayerMinion))) {
+                if (entity instanceof Mob mob) {
+                    mob.setTarget(target);
+                }
+            }
+        }
+    });
+
     // encase in ice
     // make spectral (can't hit or be hit, render semi-invisible? Can we use mixins? Must change line 120-121 of LivingEntityRenderer)
     // switch place with master
-    // quick sink, extra fall damage, prevents flight
     // reflect damage (if powered it reflects to the owner of the attacking entity, if any)
     // explode after a few seconds
     // mimic blocks?? (render 2 blocks or more in place of the entity, depending on what was under them at that point. Inspired by sandflatter)
-    // make everyone target you
     // make everyone who's targeting you target someone else
     // extra vulnerable to knockback
     // random movements (status effect moving the target left and right every second or so (less when powered))
