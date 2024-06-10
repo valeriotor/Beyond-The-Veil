@@ -5,6 +5,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.EntityModel;
@@ -20,6 +21,8 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "weeper"), "main");
 	private static final String name = "weeper";
 	private final ModelPart body;
+	private final ModelPart upper_body_1;
+	private final ModelPart upper_body_2;
 	private final ModelPart legs;
 	private final ModelPart head1;
 	private final ModelPart head2;
@@ -32,12 +35,18 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 	private final ModelPart blob7;
 	private final ModelPart blob8;
 	private final ModelPart blob9;
+	private final ModelPart right_arm1;
+	private final ModelPart right_arm2;
+	private final ModelPart left_arm1;
+	private final ModelPart left_arm2;
 
 	public WeeperModel(ModelPart root) {
 		super(name);
 		this.body = registerAnimatedPart("body", root.getChild("body"));
 		this.legs = registerAnimatedPart("legs", root.getChild("legs"));
-		this.head1 = registerAnimatedPart("head1", body.getChild("upper_body_1").getChild("upper_body_2").getChild("head1"));
+		this.upper_body_1 = registerAnimatedPart("upper_body_1", body.getChild("upper_body_1"));
+		this.upper_body_2 = registerAnimatedPart("upper_body_2", upper_body_1.getChild("upper_body_2"));
+		this.head1 = registerAnimatedPart("head1", upper_body_2.getChild("head1"));
 		this.head2 = registerAnimatedPart("head2", head1.getChild("head2"));
 		this.blob1 = registerAnimatedPart("blob1", head2.getChild("blob1"));
 		this.blob2 = registerAnimatedPart("blob2", head2.getChild("blob2"));
@@ -48,6 +57,10 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 		this.blob7 = registerAnimatedPart("blob7", head2.getChild("blob7"));
 		this.blob8 = registerAnimatedPart("blob8", head2.getChild("blob8"));
 		this.blob9 = registerAnimatedPart("blob9", head2.getChild("blob9"));
+		this.right_arm1 = registerAnimatedPart("right_arm1", upper_body_2.getChild("right_arm1"));
+		this.right_arm2 = registerAnimatedPart("right_arm2", right_arm1.getChild("right_arm2"));
+		this.left_arm1 = registerAnimatedPart("left_arm1", upper_body_2.getChild("left_arm1"));
+		this.left_arm2 = registerAnimatedPart("left_arm2", left_arm1.getChild("left_arm2"));
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -156,6 +169,57 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 		blob7.z = -0.75F + offset8;
 		blob8.z = 2.25F - offset9;
 		blob9.z = 1.75F + offset1;
+
+		//body.xRot = (float) -0.3054F;
+		//upper_body_1.xRot = (float) 0.1745F;
+		//upper_body_1.yRot = (float) 0.1745F;
+		//upper_body_2.xRot = (float) -0.3054F;
+		//upper_body_2.yRot = (float) 0.3054F;
+
+		//body.xRot = (float) -0.3054F;
+		//upper_body_1.xRot = (float) 0.1745F;
+		//upper_body_1.yRot = (float) -0.345F;
+		//upper_body_2.xRot = (float) -0.6054F;
+		//upper_body_2.yRot = (float) -0.5054F;
+		//head1.xRot = (float) 0.5F;
+
+		//body.xRot = (float) -0.3054F;
+		//upper_body_1.xRot = (float) 1.1745F;
+		//upper_body_1.yRot = (float) 0.1745F;
+		//upper_body_2.xRot = (float) -0.3054F;
+		//upper_body_2.yRot = (float) 0.3054F;
+
+		//body.xRot = (float) 0;
+		//upper_body_1.xRot = (float) 0.1745F;
+		//upper_body_1.yRot = (float) 0.5;
+		//upper_body_2.xRot = (float) -0.3054F;
+		//upper_body_2.yRot = (float) 0.5F;
+		//head1.xRot = (float) 0F;
+
+
+		//right_arm1.xRot = (float) 0;
+		//right_arm1.yRot = (float) 0;
+		//right_arm1.zRot = (float) 0.5;
+		//right_arm2.xRot = (float) 0.8727F;
+		//right_arm2.xRot = (float) 1;
+
+
+		//left_arm1.xRot = (float) 0;
+		//left_arm1.yRot = (float) 3;
+		//left_arm1.zRot = (float) -0.5;
+		//left_arm2.xRot = (float) 0.8727F;
+		//left_arm2.xRot = (float) 0;
+
+
+	}
+
+	@Override
+	public void prepareMobModel(WeeperEntity entity, float pLimbSwing, float pLimbSwingAmount, float pa) {
+		resetParts();
+		Animation explodingAnimation = entity.getExplodingAnimation();
+		if (explodingAnimation != null) {
+			explodingAnimation.apply(pa);
+		};
 	}
 
 	@Override

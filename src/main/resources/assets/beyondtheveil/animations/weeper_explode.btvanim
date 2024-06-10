@@ -1,0 +1,67 @@
+model: weeper
+length: 45
+start: 5: 10
+    rotx: body: -0.3054: linear: absolute
+    rotx: upper_body_1: 0.1745: linear: absolute
+    roty: upper_body_1: 0.1745: linear: absolute
+    rotx: upper_body_2: -0.3054: linear: absolute
+    roty: upper_body_2: 0.3054: linear: absolute
+    rotx: right_arm1: 0: linear: absolute
+    roty: right_arm1: 1: linear: absolute
+    rotz: right_arm1: 1.7: linear: absolute
+    rotx: right_arm2: -0.7: linear: absolute
+    rotx: left_arm1: 0: linear: absolute
+    roty: left_arm1: -1: linear: absolute
+    rotz: left_arm1: -1.7: linear: absolute
+    rotx: left_arm2: -0.7: linear: absolute
+start: 10: 15
+    roty: upper_body_1: -0.345: linear: absolute
+    rotx: upper_body_2: -0.6054: linear: absolute
+    roty: upper_body_2: -0.5054: linear: absolute
+    rotx: head1: 0.5: linear: absolute
+start: 15: 22
+    rotx: upper_body_1: 1.1745: linear: absolute
+    roty: upper_body_1: 0.174: linear: absolute
+    rotx: upper_body_2: -0.3054: linear: absolute
+    roty: upper_body_2: 0.3054: linear: absolute
+    rotx: head1: 0.1: linear: relative
+start: 22: 27:
+    rotx: upper_body_1: 0.2: linear: relative
+    roty: upper_body_1: 0.07: linear: relative
+    rotx: head1: 0.07: linear: relative
+start: 27: 30:
+    rotx: body: 0: quadratic: absolute
+    rotx: upper_body_1: 0.1745: quadratic: absolute
+    roty: upper_body_1: 0: quadratic: absolute
+    rotx: upper_body_2: -0.3054: quadratic: absolute
+    roty: upper_body_2: 0: quadratic: absolute
+    rotx: head1: 0: quadratic: absolute
+start: 30: 31
+    visi: head1: -1: immediate: absolute
+start: 30: 33
+    roty: upper_body_1: 0.5: linear: absolute
+    roty: upper_body_2: 0.5: linear: absolute
+    roty: right_arm1: 0: linear: absolute
+    roty: left_arm1: 3: linear: absolute
+    rotz: right_arm1: 0.5: linear: absolute
+    rotz: left_arm1: -0.5: linear: absolute
+    rotx: right_arm2: 1: linear: absolute
+    rotx: left_arm2: 0: linear: absolute
+start: 33: 38
+    roty: upper_body_1: -0.5: quadratic: absolute
+    roty: upper_body_2: -0.5: quadratic: absolute
+    roty: right_arm1: -3: quadratic: absolute
+    roty: left_arm1: 0: quadratic: absolute
+    rotz: right_arm1: -0.5: quadratic: absolute
+    rotz: left_arm1: -0.5: quadratic: absolute
+    rotx: right_arm2: 0: quadratic: absolute
+    rotx: left_arm2: 1: quadratic: absolute
+start: 38: 45
+    roty: upper_body_1: 0.5: quadratic: absolute
+    roty: upper_body_2: 0.5: quadratic: absolute
+    roty: right_arm1: 0: quadratic: absolute
+    roty: left_arm1: 3: quadratic: absolute
+    rotz: right_arm1: 0.5: quadratic: absolute
+    rotz: left_arm1: -0.5: quadratic: absolute
+    rotx: right_arm2: 1: quadratic: absolute
+    rotx: left_arm2: 0: quadratic: absolute

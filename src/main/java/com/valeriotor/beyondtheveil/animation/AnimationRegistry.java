@@ -16,6 +16,7 @@ public class AnimationRegistry {
     public static AnimationTemplate crawler_back_pain_high_1;
     public static AnimationTemplate ammunition_explode;
     public static AnimationTemplate ammunition_explode_body;
+    public static AnimationTemplate weeper_explode;
 
     public static void loadAnimations(boolean client) {
         animations.clear();
@@ -26,6 +27,7 @@ public class AnimationRegistry {
         crawler_back_pain_high_1 = registerAnimation("crawler_back_pain_high_1", client, i++);
         ammunition_explode = registerAnimation("ammunition_explode", client, i++);
         ammunition_explode_body = registerAnimation("ammunition_explode_body", client, i++);
+        weeper_explode = registerAnimation("weeper_explode", client, i++);
     }
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {

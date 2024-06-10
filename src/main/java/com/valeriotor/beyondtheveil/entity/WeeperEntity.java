@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
@@ -61,7 +62,9 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
 
     @Override
     public List<GenericToClientPacket> getAnimationPackets() {
-        return new ArrayList<>();
+        List<GenericToClientPacket> animationPackets = new ArrayList<>();
+        animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.weeper_explode, getId(), 0));
+        return animationPackets;
     }
 
     @Override
