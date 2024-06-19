@@ -33,6 +33,6 @@ public class LivingAmmunitionGoal<T extends PathfinderMob & AnimatedEntity & Amm
     @Override
     protected double getAttackReachSqr(LivingEntity pAttackTarget) {
         // TODO depend on burst
-        return super.getAttackReachSqr(pAttackTarget);
+        return super.getAttackReachSqr(pAttackTarget) + 2;
     }
 }

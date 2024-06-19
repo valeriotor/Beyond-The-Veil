@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
@@ -27,6 +28,7 @@ import java.util.List;
 public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity{
 
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.BOOLEAN);
     private Animation explodingAnimation;
     private boolean wasBleeding = false;
     private int attackTimer = -1;
@@ -41,7 +43,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     protected void registerGoals() {
         //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
     }
@@ -58,6 +60,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_BLEEDING, -1);
+        this.entityData.define(DATA_TARGETING, false);
     }
 
     @Override
@@ -119,6 +122,11 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
             }
 
         } else {
+            if (getTarget() == null) {
+                entityData.set(DATA_TARGETING, false);
+            } else if(getNavigation().isInProgress()){
+                entityData.set(DATA_TARGETING, true);
+            }
             if (deathTimer >= 0) {
                 getNavigation().stop();
                 //yBodyRot = fixedLookAngle;
@@ -157,5 +165,9 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                 }
             }
         }
+    }
+
+    public boolean isTargeting() {
+        return entityData.get(DATA_TARGETING);
     }
 }

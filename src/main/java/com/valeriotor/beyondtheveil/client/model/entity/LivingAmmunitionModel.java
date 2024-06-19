@@ -95,6 +95,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
 
     @Override
     public void setupAnim(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+
         //body.xRot = - Mth.PI * 45 / 36;
         //legs.xRot += Mth.PI * 5 / 36;
         //head.xRot = - Mth.PI * 15 / 36;
@@ -115,9 +116,37 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
     }
 
     @Override
-    public void prepareMobModel(LivingAmmunitionEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+    public void prepareMobModel(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
         resetParts();
-        Animation explodingAnimation = pEntity.getExplodingAnimation();
+        float ageInTicks = entity.tickCount + pPartialTick;
+        float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (24 * 1.5F)) / 15;
+        float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 45;
+        float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 45;
+        head.zRot = 0.5236F + offset1;
+        body.xRot = offset2;
+        body.zRot = offset3;
+
+        boolean flag = entity.getFallFlyingTicks() > 4;
+
+        float f = 1.0F;
+        if (flag) {
+            f = (float) entity.getDeltaMovement().lengthSqr();
+            f /= 0.2F;
+            f *= f * f;
+        }
+
+        if (f < 1.0F) {
+            f = 1.0F;
+        }
+
+        if(entity.getExplodingAnimation() == null) {
+            this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f;
+            this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f;
+            head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
+            head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
+        }
+
+        Animation explodingAnimation = entity.getExplodingAnimation();
         if (explodingAnimation != null) {
             explodingAnimation.apply(pPartialTick);
         }
