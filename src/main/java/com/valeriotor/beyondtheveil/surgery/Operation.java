@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery;
 
+import com.google.common.collect.Lists;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +11,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
 
 public class Operation {
 
@@ -16,7 +19,6 @@ public class Operation {
     // create extraction operation: location, item, additional requirements to be considered
     // create insertion operation: location, item
     private final String name;
-    private final Function<PatientStatus, PainLevel> painLevel;
     private final Predicate<PatientStatus> requirementForSuccessfulCompletion;
     private final Function<PatientStatus, String> completionMessage;
     private final Consumer<PatientStatus> statusChangeOnSuccess;
@@ -28,41 +30,34 @@ public class Operation {
     private final boolean persistent;
     private final boolean eraseFluid;
     private final boolean requiresIncision;
+    private final int duration;
+    private final ToDoubleFunction<PatientStatus> painPerTick;
+    private final double painForFailure;
+    private final Consumer<PatientStatus> onConsume;
+    private final Predicate<PatientStatus> isAdded;
 
-    public Operation(String name,
-                     Function<PatientStatus, PainLevel> painLevel,
-                     Predicate<PatientStatus> requirementForSuccessfulCompletion,
-                     Function<PatientStatus, String> completionMessage,
-                     Consumer<PatientStatus> statusChangeOnSuccess,
-                     PatientCondition conditionIfFailed,
-                     Function<PatientStatus, LivingEntity> entityChange,
-                     Set<SurgicalLocation> allowedLocations,
-                     int capacityRequirement,
-                     int maximumTimesAllowed,
-                     boolean persistent,
-                     boolean eraseFluid,
-                     boolean requiresIncision) {
-        this.name = name;
-        this.painLevel = painLevel;
-        this.requirementForSuccessfulCompletion = requirementForSuccessfulCompletion;
-        this.completionMessage = completionMessage;
-        this.statusChangeOnSuccess = statusChangeOnSuccess;
-        this.conditionIfFailed = conditionIfFailed;
-        this.entityChange = entityChange;
-        this.allowedLocations = Collections.unmodifiableSet(allowedLocations);
-        this.capacityRequirement = capacityRequirement;
-        this.maximumTimesAllowed = maximumTimesAllowed;
-        this.persistent = persistent;
-        this.eraseFluid = eraseFluid;
-        this.requiresIncision = requiresIncision;
+    public Operation(Builder b) {
+        this.name = b.name;
+        this.requirementForSuccessfulCompletion = b.requirementForSuccessfulCompletion;
+        this.completionMessage = b.completionMessage;
+        this.statusChangeOnSuccess = b.statusChangeOnSuccess;
+        this.conditionIfFailed = b.conditionIfFailed;
+        this.entityChange = b.entityChange;
+        this.allowedLocations = Collections.unmodifiableSet(b.allowedLocations);
+        this.capacityRequirement = b.capacityRequirement;
+        this.maximumTimesAllowed = b.maximumTimesAllowed;
+        this.persistent = b.persistent;
+        this.eraseFluid = b.eraseFluid;
+        this.requiresIncision = b.requiresIncision;
+        this.duration = b.duration;
+        this.painPerTick = b.painPerTick;
+        this.painForFailure = b.painForFailure;
+        this.onConsume = b.onConsume;
+        this.isAdded = b.isAdded;
     }
 
     public String getName() {
         return name;
-    }
-
-    public Function<PatientStatus, PainLevel> getPainLevel() {
-        return painLevel;
     }
 
     public Predicate<PatientStatus> getRequirementForSuccessfulCompletion() {
@@ -109,9 +104,28 @@ public class Operation {
         return requiresIncision;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public ToDoubleFunction<PatientStatus> getPainPerTick() {
+        return painPerTick;
+    }
+
+    public double getPainForFailure() {
+        return painForFailure;
+    }
+
+    public Consumer<PatientStatus> getOnConsume() {
+        return onConsume;
+    }
+
+    public Predicate<PatientStatus> isAdded() {
+        return isAdded;
+    }
+
     public static class Builder {
         private final String name;
-        private Function<PatientStatus, PainLevel> painLevel = s -> PainLevel.NEGLIGIBLE;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
         private Function<PatientStatus, String> completionMessage = s -> null; // translation key
         private Consumer<PatientStatus> statusChangeOnSuccess = s -> {
@@ -126,18 +140,53 @@ public class Operation {
         private boolean updateClientOnSuccess = false; // TODO include these if necessary
         private boolean updateClientOnFailure = false;
         private boolean requiresIncision = false;
+        private int duration;
+        private ToDoubleFunction<PatientStatus> painPerTick = s -> 0;
+        private double painForFailure = Integer.MAX_VALUE;
+        private Consumer<PatientStatus> onConsume = s -> {
+        };
+        private Predicate<PatientStatus> isAdded = s -> true;
 
         public Builder(String name) {
             this.name = name;
         }
 
-        public Builder setPainLevel(PainLevel painLevel) {
-            this.painLevel = s -> painLevel;
+        public Builder setDuration(int duration) {
+            this.duration = duration;
             return this;
         }
 
-        public Builder setPainLevel(Function<PatientStatus, PainLevel> painLevel) {
-            this.painLevel = painLevel;
+        public Builder setPainPerTick(double painPerTick) {
+            return setPainPerTick(s -> painPerTick);
+        }
+
+        public Builder setPainPerTick(ToDoubleFunction<PatientStatus> painPerTick) {
+            this.painPerTick = painPerTick;
+            return this;
+        }
+
+        /**
+         * At what pain level is the operation guaranteed to fail
+         */
+        public Builder setPainForFailure(double painForFailure) { // because we're making it deterministic I guess?
+            this.painForFailure = painForFailure;
+            return this;
+        }
+
+        /**
+         * Used in injections and insertions, respectively when consuming 1mB of fluid or the whole item
+         */
+        public Builder onConsume(Consumer<PatientStatus> onConsume) {
+            this.onConsume = onConsume;
+            return this;
+        }
+
+        /**
+         * Used in injections and insertions, to determine whether the mB or the item is added to the PatientStatus
+         * after consumption
+         */
+        public Builder isAdded(Predicate<PatientStatus> isAdded) {
+            this.isAdded = isAdded;
             return this;
         }
 
@@ -201,9 +250,9 @@ public class Operation {
             return this;
         }
 
-        /** For injection operations, should a successful completion set the fluid's current amount to 0?
-         *  For example, this is useful for repeating an operation multiple times, like coagulation.
-         *
+        /**
+         * For injection operations, should a successful completion set the fluid's current amount to 0?
+         * For example, this is useful for repeating an operation multiple times, like coagulation.
          */
         public Builder setEraseFluid(boolean eraseFluid) {
             this.eraseFluid = eraseFluid;
@@ -215,14 +264,16 @@ public class Operation {
             return this;
         }
 
+        // TODO particle effects
+
         private Operation buildOperation() {
-            return new Operation(name, painLevel, requirementForSuccessfulCompletion, completionMessage, statusChangeOnSuccess, conditionIfFailed, entityChange, allowedLocations, capacityRequirement, maximumTimesAllowed, persistent, eraseFluid, requiresIncision);
+            return new Operation(this);
         }
 
-        public Operation buildInjectionOperation(Map<Fluid, List<OperationRegistry.InjectionEntry>> registry, Fluid fluid, int amount) {
+        public Operation buildInjectionOperation(Fluid fluid, int amount) {
             Operation op = buildOperation();
-            registry.computeIfAbsent(fluid, k -> new ArrayList<>()).add(new OperationRegistry.InjectionEntry(op, fluid, amount));
-            registry.get(fluid).sort(Comparator.comparingInt(OperationRegistry.InjectionEntry::amount));
+            OperationRegistry.INJECTION_OPERATIONS.computeIfAbsent(fluid, k -> new ArrayList<>()).add(new OperationRegistry.InjectionEntry(op, fluid, amount));
+            OperationRegistry.INJECTION_OPERATIONS.get(fluid).sort(Comparator.comparingInt(OperationRegistry.InjectionEntry::amount));
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }
@@ -241,6 +292,13 @@ public class Operation {
         public Operation buildInsertionOperation(Map<Item, List<OperationRegistry.InsertionEntry>> registry, Item item) {
             Operation op = buildOperation();
             registry.computeIfAbsent(item, k -> new ArrayList<>()).add(new OperationRegistry.InsertionEntry(op, item));
+            OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
+            return op;
+        }
+
+        public Operation buildIncisionOperation(SurgicalLocation location) { // may one day be more specific surgical locations
+            Operation op = buildOperation();
+            OperationRegistry.INCISION_OPERATIONS.put(location, new OperationRegistry.IncisionEntry(op, location));
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }

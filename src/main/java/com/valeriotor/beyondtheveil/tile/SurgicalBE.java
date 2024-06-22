@@ -96,9 +96,10 @@ public abstract class SurgicalBE extends BlockEntity {
                 operationPerformed = patientStatus.inject(p, drained);
             }
         } else if (i == Registration.SCALPEL.get()) {
-            operationPerformed = patientStatus.performIncision();
+            operationPerformed = patientStatus.performIncision(p);
         } else if (i == Registration.FORCEPS.get()) {
             CompoundTag forcepTag = in.getOrCreateTag();
+            // replace with full compound tag of item?
             Item contained = forcepTag.contains("contained") ? ForgeRegistries.ITEMS.getValue(new ResourceLocation(forcepTag.getString("contained"))) : null;
             if (contained != null) {
                 operationPerformed = patientStatus.insert(p, contained);

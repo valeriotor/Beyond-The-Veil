@@ -31,10 +31,10 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class SyringeItem extends Item {
+public class SyringeItem extends SurgeryItem {
 
     public SyringeItem() {
-        super(new Item.Properties().stacksTo(1));
+        super(SurgeryItemType.SYRINGE);
     }
 
     @Override
@@ -43,67 +43,19 @@ public class SyringeItem extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
-        return 72000;
-    }
-
-    @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.BOW;
-    }
-
-    @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        BlockPos clickedPos = context.getClickedPos();
-        Level level = context.getLevel();
-        Block block = level.getBlockState(clickedPos).getBlock();
-        if (context.getPlayer() != null) {
-            context.getPlayer().startUsingItem(context.getHand());
-            return InteractionResult.PASS;
-        }
-        //if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
-        //}
-        return InteractionResult.FAIL;
-    }
-
-    @SubscribeEvent
-    public static void tickEvent(TickEvent.PlayerTickEvent event) {
-        if (event.side.isClient()) {
-            return;
-        }
-        Player p = event.player;
-        Level level = p.level();
-        if (p.isUsingItem() && p.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SYRINGE.get()) {
-            HitResult hitResult = p.pick(p.getEntityReach(), 0, false);
-            if (hitResult instanceof BlockHitResult bhr) {
-                BlockPos pos = bhr.getBlockPos();
-                BlockState lookedAtState = level.getBlockState(pos);
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (lookedAtState.getBlock() == Registration.FLASK_SHELF.get()) {
-                    BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
-                    if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
-                        ItemStack itemStack = p.getItemInHand(InteractionHand.MAIN_HAND);
-                        Item held = itemStack.getItem();
-                        be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
-                    }
-                } else if (lookedAtState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
-                    flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
-                } else if (blockEntity instanceof SurgicalBE surgicalBE) {
-                    surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
-                    // IMPORTANT: SurgicalBE base Block should return PASS in the use method when wielding syringe
-                } else if (lookedAtState.getBlock() == Registration.SURGERY_BED.get()) {
-                    BlockPos centerPos = Registration.SURGERY_BED.get().findCenter(pos, lookedAtState);
-                    if (level.getBlockEntity(centerPos) instanceof SurgicalBE surgicalBE) {
-                        surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
-                    }
-                }
+    protected void interactWithBE(Player p, Level level, BlockPos pos, BlockState lookedAtState, BlockEntity blockEntity, BlockHitResult bhr) {
+        if (lookedAtState.getBlock() == Registration.FLASK_SHELF.get()) {
+            BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
+            if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
+                ItemStack itemStack = p.getItemInHand(InteractionHand.MAIN_HAND);
+                Item held = itemStack.getItem();
+                be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
             }
+        } else if (lookedAtState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
+            flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+        } else {
+            super.interactWithBE(p, level, pos, lookedAtState, blockEntity, bhr);
         }
-    }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return oldStack.getItem() != newStack.getItem();
     }
 
     //
