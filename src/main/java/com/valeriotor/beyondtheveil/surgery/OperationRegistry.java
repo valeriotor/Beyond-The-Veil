@@ -36,15 +36,19 @@ public class OperationRegistry {
     static final Map<SurgicalLocation, OperationRegistry.IncisionEntry> INCISION_OPERATIONS = new HashMap<>();
 
     private static final Operation INCISE_BACK = new Operation.Builder("incise_back")
-            .setPainPerTick(0.9)
-            .setDuration(120)
+            .setPainPerTick(0.54)
+            .setDuration(200)
             .setPainForFailure(40)
+            .setSuccessParticles(true)
+            .setProgressParticles(true)
             .buildIncisionOperation(SurgicalLocation.BACK);
 
     private static final Operation INCISE_CHEST = new Operation.Builder("incise_chest")
-            .setPainPerTick(3)
-            .setDuration(80)
+            .setPainPerTick(1.5)
+            .setDuration(160)
             .setPainForFailure(150)
+            .setSuccessParticles(true)
+            .setProgressParticles(true)
             .buildIncisionOperation(SurgicalLocation.CHEST);
 
     private static final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")

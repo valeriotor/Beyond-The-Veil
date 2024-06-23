@@ -93,19 +93,19 @@ public abstract class SurgicalBE extends BlockEntity {
             IFluidHandlerItem syringe = in.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
             FluidStack drained = syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
             if (!drained.isEmpty()) {
-                usingItem = patientStatus.inject(p, drained);
+                usingItem = patientStatus.inject(p, drained, this);
             }
         } else if (i == Registration.SCALPEL.get()) {
-            usingItem = patientStatus.performIncision(p);
+            usingItem = patientStatus.performIncision(p, this);
         } else if (i == Registration.FORCEPS.get()) {
             CompoundTag forcepTag = in.getOrCreateTag();
             // replace with full compound tag of item?
             Item contained = forcepTag.contains("contained") ? ForgeRegistries.ITEMS.getValue(new ResourceLocation(forcepTag.getString("contained"))) : null;
             if (contained != null) {
-                usingItem = patientStatus.insert(p, contained);
+                usingItem = patientStatus.insert(p, contained, this);
             }
         } else if (i == Registration.TONGS.get()) {
-            usingItem = patientStatus.extract(p);
+            usingItem = patientStatus.extract(p, this);
         } else if (i == Registration.SEWING_NEEDLE.get()) {
             usingItem = patientStatus.sewIncision();
         }

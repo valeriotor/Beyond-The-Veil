@@ -2,11 +2,15 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -67,20 +71,21 @@ public class PatientStatus {
         return exposedLocation;
     }
 
-    public boolean performIncision(Player p) { // TODO Slightly painful, or extremely painful if not soft enough
+    public boolean performIncision(Player p, SurgicalBE be) { // TODO Slightly painful, or extremely painful if not soft enough
         if (incised) {
             return false;
         }
         OperationRegistry.IncisionEntry op = OperationRegistry.INCISION_OPERATIONS.get(this.exposedLocation);
         if (op != null && !condition.isTerminal()) {
             Operation operation = op.operation();
-            increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+            perTickActions(p, operation, be);
             if (currentPain >= operation.getPainForFailure()) {
                 setCondition(operation.getConditionIfFailed());
             } else {
                 int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.SCALPEL.name(), 0, true);
                 if (currentDuration >= operation.getDuration()) {
-                    incised = elaborateOperation(p, operation);
+                    incised = elaborateOperation(p, operation, be);
+                    // TODO slight move head to one side animation?
                     setDirty(true);
                     p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                 }
@@ -103,17 +108,17 @@ public class PatientStatus {
 
     }
 
-    public boolean extract(Player p) {
+    public boolean extract(Player p, SurgicalBE be) {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
             if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation)) {
-                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                perTickActions(p, operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else {
                     int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true);
                     if (currentDuration >= operation.getDuration()) {
-                        boolean success = elaborateOperation(p, operation);
+                        boolean success = elaborateOperation(p, operation, be);
                         if (success) {
                             setDirty(true);
                             ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().copy());
@@ -130,7 +135,7 @@ public class PatientStatus {
      * @return if the operation was performed (and therefore the item was consumed).
      * ItemStack shrinking logic should be handled upstream.
      */
-    public boolean insert(Player p, Item heldInForceps) {
+    public boolean insert(Player p, Item heldInForceps, SurgicalBE be) {
         List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps);
         if (insertionEntries == null || insertionEntries.isEmpty()) {
             return false;
@@ -138,13 +143,13 @@ public class PatientStatus {
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
             Operation operation = insertionEntry.operation();
             if (canPerformOperation(operation)) {
-                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                perTickActions(p, operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else {
                     int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.FORCEPS.name(), 0, true);
                     if (currentDuration >= operation.getDuration()) {
-                        boolean success = elaborateOperation(p, operation);
+                        boolean success = elaborateOperation(p, operation, be);
                         if (success) {
                             setDirty(true);
                         }
@@ -156,7 +161,7 @@ public class PatientStatus {
         return false;
     }
 
-    public boolean inject(Player p, FluidStack fluidStack) {
+    public boolean inject(Player p, FluidStack fluidStack, SurgicalBE be) {
         Fluid fluid = fluidStack.getFluid();
         if (fluidStack.isEmpty()) {
             return false;
@@ -170,12 +175,12 @@ public class PatientStatus {
         for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
             Operation operation = injectionEntry.operation();
             if (canPerformOperation(operation)) {
-                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                perTickActions(p, operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else if (newAmount > injectionEntry.amount()) {
                     setDirty(true);
-                    elaborateOperation(p, operation);
+                    elaborateOperation(p, operation, be);
                     if (operation.isEraseFluid()) {
                         fluidAmounts.put(fluid, 0D);
                     }
@@ -191,7 +196,7 @@ public class PatientStatus {
     /**
      * @return whether the operation succedeed or failed
      */
-    private boolean elaborateOperation(Player player, Operation operation) {
+    private boolean elaborateOperation(Player player, Operation operation, SurgicalBE be) {
         //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
         //if (!canPerformOperation) return canPerformOperation;
 
@@ -204,6 +209,12 @@ public class PatientStatus {
             operation.getStatusChangeOnSuccess().accept(this);
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
+            if (operation.isSuccessParticles()) {
+                //level().addAlwaysVisibleParticle(BTVParticles.TEARSPILL.get(), getX(), getY() + 1.5, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
+
+                BlockPos blockPos = be.getBlockPos();
+                ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5, blockPos.getY() + 1.2, blockPos.getZ() + 0.5, 50, 0, 0, 0, 1);
+            }
             return true;
         } else {
             setCondition(operation.getConditionIfFailed());
@@ -217,6 +228,14 @@ public class PatientStatus {
                 operation.getAllowedLocations().contains(exposedLocation) &&
                 operation.getCapacityRequirement() <= leftoverCapacity &&
                 (operation.getMaximumTimesAllowed() < 0 || operation.getMaximumTimesAllowed() > flags.getOrDefault(operation.getName(), 0));
+    }
+
+    private void perTickActions(Player player, Operation operation, SurgicalBE be) {
+        increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+        if (operation.isProgressParticles()) {
+            BlockPos blockPos = be.getBlockPos();
+            ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5, blockPos.getY() + 1.2, blockPos.getZ() + 0.5, 1, 0, 0, 0, 0.5);
+        }
     }
 
     /**
@@ -235,9 +254,6 @@ public class PatientStatus {
         //if (currentPain >= 60) {
         //    flags.put("sedate", 0);
         //}
-        if (currentPain >= 80) {
-            setCondition(PatientCondition.DEAD);
-        }
         int[] animationThresholds = new int[]{1, 10, 30, 50};
         for (int animationThreshold : animationThresholds) {
             if (currentPain >= animationThreshold && currentPain - amount < animationThreshold) {

@@ -35,6 +35,9 @@ public class Operation {
     private final double painForFailure;
     private final Consumer<PatientStatus> onConsume;
     private final Predicate<PatientStatus> isAdded;
+    private final boolean progressParticles;
+    private final boolean successParticles;
+    private final boolean failureParticles;
 
     public Operation(Builder b) {
         this.name = b.name;
@@ -54,6 +57,9 @@ public class Operation {
         this.painForFailure = b.painForFailure;
         this.onConsume = b.onConsume;
         this.isAdded = b.isAdded;
+        this.progressParticles = b.progressParticles;
+        this.successParticles = b.successParticles;
+        this.failureParticles = b.failureParticles;
     }
 
     public String getName() {
@@ -124,6 +130,18 @@ public class Operation {
         return isAdded;
     }
 
+    public boolean isProgressParticles() {
+        return progressParticles;
+    }
+
+    public boolean isSuccessParticles() {
+        return successParticles;
+    }
+
+    public boolean isFailureParticles() {
+        return failureParticles;
+    }
+
     public static class Builder {
         private final String name;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
@@ -146,6 +164,9 @@ public class Operation {
         private Consumer<PatientStatus> onConsume = s -> {
         };
         private Predicate<PatientStatus> isAdded = s -> true;
+        private boolean progressParticles = false;
+        private boolean successParticles = false;
+        private boolean failureParticles = false;
 
         public Builder(String name) {
             this.name = name;
@@ -264,7 +285,20 @@ public class Operation {
             return this;
         }
 
-        // TODO particle effects
+        public Builder setProgressParticles(boolean progressParticles) {
+            this.progressParticles = progressParticles;
+            return this;
+        }
+
+        public Builder setSuccessParticles(boolean successParticles) {
+            this.successParticles = successParticles;
+            return this;
+        }
+
+        //public Builder setFailureParticles(boolean failureParticles) {
+            //this.failureParticles = failureParticles;
+            //return this;
+        //}
 
         private Operation buildOperation() {
             return new Operation(this);

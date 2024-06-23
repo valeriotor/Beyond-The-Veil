@@ -17,7 +17,7 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SurgerySoundInstance extends AbstractTickableSoundInstance {
 
-    private static Set<BlockPos> toRemovePositions = new HashSet<>();
+    private static Set<BlockPos> toRemovePositions = new HashSet<>(); // TODO make this into a map to integer, increase on ticks, remove when value is 2 or 3 or something like that
 
     private final BlockPos bePos;
 
