@@ -135,6 +135,15 @@ public class DataUtil {
         return value;
     }
 
+    public static Long getOrSetLong(Player p, String key, long valueIfAbsent, boolean temporary) {
+        Optional<PlayerData> capability = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve();
+        Long value = null;
+        if (capability.isPresent()) {
+            value = capability.get().getOrSetLong(key, valueIfAbsent, temporary);
+        }
+        return value;
+    }
+
     public static Integer incrementOrSetIntegerOnServerAndSync(Player p, String key, int amount, int valueIfAbsent, boolean temporary) {
         Integer value = incrementOrSetInteger(p, key, amount, valueIfAbsent, temporary);
         if (value != null) {

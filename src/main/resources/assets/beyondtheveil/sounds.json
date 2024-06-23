@@ -1,0 +1,8 @@
+{
+  "incising": {
+    "sounds": [ "beyondtheveil:incising" ]
+  },
+  "incision": {
+    "sounds": [ "beyondtheveil:incision" ]
+  }
+}

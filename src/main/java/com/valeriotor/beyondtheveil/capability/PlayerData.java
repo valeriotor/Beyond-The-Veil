@@ -76,6 +76,13 @@ public class PlayerData {
         return valueIfAbsent;
     }
 
+    public Long getOrSetLong(String key, long valueIfAbsent, boolean temporary) {
+        Long a = getLong(key);
+        if (a != null) return a;
+        setLong(key, valueIfAbsent, temporary);
+        return valueIfAbsent;
+    }
+
     public Integer getInteger(String key) {
         if (ints.containsKey(key)) return ints.get(key);
         else if (tempInts.containsKey(key)) return tempInts.get(key);

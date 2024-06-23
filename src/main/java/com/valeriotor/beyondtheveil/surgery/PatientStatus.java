@@ -2,10 +2,12 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PatientStatus {
+
+    private boolean dirty;
 
     public PatientStatus() {
     }
@@ -67,20 +72,20 @@ public class PatientStatus {
             return false;
         }
         OperationRegistry.IncisionEntry op = OperationRegistry.INCISION_OPERATIONS.get(this.exposedLocation);
-        if (op != null) {
+        if (op != null && !condition.isTerminal()) {
             Operation operation = op.operation();
-            boolean animationThreshold = increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+            increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
             if (currentPain >= operation.getPainForFailure()) {
                 setCondition(operation.getConditionIfFailed());
             } else {
                 int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.SCALPEL.name(), 0, true);
                 if (currentDuration >= operation.getDuration()) {
-                    boolean success = elaborateOperation(p, operation);
-                    incised = success;
-                    return true;
+                    incised = elaborateOperation(p, operation);
+                    setDirty(true);
+                    p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                 }
             }
-            return false;
+            return true;
         }
         return false;
     }
@@ -98,11 +103,11 @@ public class PatientStatus {
 
     }
 
-    public ItemStack extract(Player p) {
+    public boolean extract(Player p) {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
             if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation)) {
-                boolean animationThreshold = increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else {
@@ -110,13 +115,15 @@ public class PatientStatus {
                     if (currentDuration >= operation.getDuration()) {
                         boolean success = elaborateOperation(p, operation);
                         if (success) {
-                            return extractionOperation.stack().copy();
+                            setDirty(true);
+                            ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().copy());
                         }
                     }
                 }
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     /**
@@ -131,7 +138,7 @@ public class PatientStatus {
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
             Operation operation = insertionEntry.operation();
             if (canPerformOperation(operation)) {
-                boolean animationThreshold = increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else {
@@ -139,10 +146,11 @@ public class PatientStatus {
                     if (currentDuration >= operation.getDuration()) {
                         boolean success = elaborateOperation(p, operation);
                         if (success) {
-                            return true;
+                            setDirty(true);
                         }
                     }
                 }
+                return true;
             }
         }
         return false;
@@ -150,22 +158,23 @@ public class PatientStatus {
 
     public boolean inject(Player p, FluidStack fluidStack) {
         Fluid fluid = fluidStack.getFluid();
+        if (fluidStack.isEmpty()) {
+            return false;
+        }
         double newAmount = fluidAmounts.getOrDefault(fluid, 0D) + fluidStack.getAmount();
         fluidAmounts.put(fluid, newAmount);
         List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.INJECTION_OPERATIONS.get(fluid);
         if (injectionEntries == null || injectionEntries.isEmpty()) {
-            return false; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
+            return true; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
         }
-        boolean operationPerformed = false;
-        boolean animationThreshold = false;
         for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
             Operation operation = injectionEntry.operation();
             if (canPerformOperation(operation)) {
-                animationThreshold = increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+                increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else if (newAmount > injectionEntry.amount()) {
-                    operationPerformed = true;
+                    setDirty(true);
                     elaborateOperation(p, operation);
                     if (operation.isEraseFluid()) {
                         fluidAmounts.put(fluid, 0D);
@@ -176,7 +185,7 @@ public class PatientStatus {
 
         }
         // TODO special case for injecting water: sync with client every 10mB (to enlarge patient head)
-        return operationPerformed || animationThreshold;
+        return true;
     }
 
     /**
@@ -193,7 +202,7 @@ public class PatientStatus {
         }
         if (success) {
             operation.getStatusChangeOnSuccess().accept(this);
-            // TODO entityChange
+            // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             return true;
         } else {
@@ -213,13 +222,14 @@ public class PatientStatus {
     /**
      * @return if the pain exceeded an animation threshold
      */
-    private boolean increaseCurrentPain(double amount) {
+    private void increaseCurrentPain(double amount) {
+        // TODO maybe the amount of pain just added should also affect the animation type
         double sedativeAmount = fluidAmounts.getOrDefault(Registration.SOURCE_FLUID_SEDATIVE.get(), 0D);
         double leftoverSedative = Math.max(0, sedativeAmount - amount);
         amount -= (sedativeAmount - leftoverSedative);
         fluidAmounts.put(Registration.SOURCE_FLUID_SEDATIVE.get(), leftoverSedative);
         if (amount <= 0) {
-            return false;
+            return;
         }
         currentPain += amount;
         //if (currentPain >= 60) {
@@ -231,10 +241,9 @@ public class PatientStatus {
         int[] animationThresholds = new int[]{1, 10, 30, 50};
         for (int animationThreshold : animationThresholds) {
             if (currentPain >= animationThreshold && currentPain - amount < animationThreshold) {
-                return true;
+                setDirty(true);
             }
         }
-        return false;
     }
 
     void increaseLeftoverCapacity(int amount) {
@@ -252,7 +261,7 @@ public class PatientStatus {
             // TODO maybe show particles?
         }
         this.condition = condition;
-        // This should update the client. Use markDirty at this point
+        setDirty(true);
     }
 
     public PatientCondition getCondition() {
@@ -310,5 +319,11 @@ public class PatientStatus {
         }
     }
 
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
 
+    public boolean isDirty() {
+        return dirty;
+    }
 }

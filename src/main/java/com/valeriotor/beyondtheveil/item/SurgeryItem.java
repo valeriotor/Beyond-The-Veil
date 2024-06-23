@@ -1,10 +1,15 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +26,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +51,10 @@ public class SurgeryItem extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack pStack) {
         return UseAnim.BOW;
+    }
+
+    public SurgeryItemType getType() {
+        return type;
     }
 
     @Override
@@ -78,32 +88,49 @@ public class SurgeryItem extends Item {
                 BlockEntity blockEntity = level.getBlockEntity(pos);
                 surgeryItem.interactWithBE(p, level, pos, lookedAtState, blockEntity, bhr);
             } else {
-                DataUtil.setInt(p, surgeryItem.type.name(), 0, true);
+                surgeryItem.resetCounterAndStopSound(p);
             }
         }
         for (SurgeryItem surgeryItem : REGISTRY) {
             if (!surgeryItem.equals(usedItem)) { // that one is fully handled by the if statement
-                DataUtil.setInt(p, surgeryItem.type.name(), 0, true);
+                surgeryItem.resetCounterAndStopSound(p);
             }
         }
     }
 
     protected void interactWithBE(Player p, Level level, BlockPos pos, BlockState lookedAtState, BlockEntity blockEntity, BlockHitResult bhr) {
+        boolean usingItem = false;
         if (blockEntity instanceof SurgicalBE surgicalBE) {
-            surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
-            DataUtil.incrementOrSetInteger(p, this.type.name(), 1, 1, true);
+            usingItem = surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
         } else if (lookedAtState.getBlock() == Registration.SURGERY_BED.get()) {
             BlockPos centerPos = Registration.SURGERY_BED.get().findCenter(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof SurgicalBE surgicalBE) {
-                surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
-                DataUtil.incrementOrSetInteger(p, this.type.name(), 1, 1, true);
+                usingItem = surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
             }
+        }
+        if (usingItem) {
+            increaseCounterAndStartSound(p, pos);
         } else {
-            DataUtil.setInt(p, this.type.name(), 0, true);
+            resetCounterAndStopSound(p);
         }
     }
 
+    private void increaseCounterAndStartSound(Player p, BlockPos bePos) {
+        Integer newValue = DataUtil.incrementOrSetInteger(p, type.name(), 1, 1, true);
+        if (newValue != null && newValue == 1) {
+            DataUtil.setLong(p, type.name() + "_pos", bePos.asLong(), true);
+            Messages.sendToTrackingAndSelf(GenericToClientPacket.startSurgerySound(type, bePos), p);
+        }
+    }
 
+    protected void resetCounterAndStopSound(Player p) {
+        int prev = DataUtil.getOrSetInteger(p, type.name(), 0, true);
+        if (prev > 0) {
+            DataUtil.setInt(p, type.name(), 0, true);
+            long pos = DataUtil.getLong(p, type.name() + "_pos");
+            Messages.sendToTrackingAndSelf(GenericToClientPacket.stopSurgerySound(BlockPos.of(pos)), p);
+        }
+    }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
@@ -111,7 +138,17 @@ public class SurgeryItem extends Item {
     }
 
     public enum SurgeryItemType {
-        SCALPEL, FORCEPS, TONGS, SYRINGE
+        SCALPEL(BTVSounds.INCISING), FORCEPS(null), TONGS(null), SYRINGE(null);
+
+        private final RegistryObject<SoundEvent> sound;
+
+        SurgeryItemType(RegistryObject<SoundEvent> sound) {
+            this.sound = sound;
+        }
+
+        public RegistryObject<SoundEvent> getSound() {
+            return sound;
+        }
     }
 
 

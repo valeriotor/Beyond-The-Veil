@@ -1,24 +1,22 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
-import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
+import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class GenericToClientPacket {
@@ -72,7 +70,21 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.MOVE, tag);
     }
 
-    private final MessageType type;
+    public static GenericToClientPacket startSurgerySound(SurgeryItem.SurgeryItemType type, BlockPos bePos) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("type", type.name());
+        tag.putLong("pos", bePos.asLong());
+        return new GenericToClientPacket(MessageType.START_SURGERY_SOUND, tag);
+    }
+
+    public static GenericToClientPacket stopSurgerySound(BlockPos bePos) {
+        CompoundTag tag = new CompoundTag();
+        tag.putLong("pos", bePos.asLong());
+        return new GenericToClientPacket(MessageType.STOP_SURGERY_SOUND, tag);
+    }
+
+
+        private final MessageType type;
     private final CompoundTag tag;
 
     public GenericToClientPacket(MessageType type, CompoundTag tag) {
@@ -101,6 +113,8 @@ public class GenericToClientPacket {
                     case START_ANIMATION -> ClientMethods.startEntityAnimation(tag);
                     case ROTATE_CAMERA -> RenderEvents.startCameraRotation(new CameraRotator(tag));
                     case MOVE -> ClientMethods.movePlayer(tag);
+                    case START_SURGERY_SOUND -> ClientMethods.startSurgerySound(tag);
+                    case STOP_SURGERY_SOUND -> SurgerySoundInstance.stopSound(tag);
                 }
             });
         });
@@ -114,7 +128,9 @@ public class GenericToClientPacket {
         SYNC_REMINISCENCES,
         START_ANIMATION,
         ROTATE_CAMERA,
-        MOVE
+        MOVE,
+        START_SURGERY_SOUND,
+        STOP_SURGERY_SOUND
     }
 
 }

@@ -60,7 +60,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                 return true;
             } else {
-                handleSurgery(p, in);
+                return handleSurgery(p, in);
             }
         } else {
             if (in.getItem() instanceof HeldVillagerItem) {
@@ -83,39 +83,33 @@ public abstract class SurgicalBE extends BlockEntity {
 
     }
 
-    private void handleSurgery(Player p, ItemStack in) {
+    private boolean handleSurgery(Player p, ItemStack in) {
         if (patientStatus == null) {
-            return;
+            return false;
         }
         Item i = in.getItem();
-        boolean operationPerformed = false; // Whether to update client
+        boolean usingItem = false; // Whether to update client
         if (i == Registration.SYRINGE.get()) {
             IFluidHandlerItem syringe = in.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
             FluidStack drained = syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
             if (!drained.isEmpty()) {
-                operationPerformed = patientStatus.inject(p, drained);
+                usingItem = patientStatus.inject(p, drained);
             }
         } else if (i == Registration.SCALPEL.get()) {
-            operationPerformed = patientStatus.performIncision(p);
+            usingItem = patientStatus.performIncision(p);
         } else if (i == Registration.FORCEPS.get()) {
             CompoundTag forcepTag = in.getOrCreateTag();
             // replace with full compound tag of item?
             Item contained = forcepTag.contains("contained") ? ForgeRegistries.ITEMS.getValue(new ResourceLocation(forcepTag.getString("contained"))) : null;
             if (contained != null) {
-                operationPerformed = patientStatus.insert(p, contained);
+                usingItem = patientStatus.insert(p, contained);
             }
         } else if (i == Registration.TONGS.get()) {
-            ItemStack extracted = patientStatus.extract(p);
-            if(extracted != null)
-                ItemHandlerHelper.giveItemToPlayer(p, extracted);
-            operationPerformed = extracted != null;
+            usingItem = patientStatus.extract(p);
         } else if (i == Registration.SEWING_NEEDLE.get()) {
-            operationPerformed = patientStatus.sewIncision();
+            usingItem = patientStatus.sewIncision();
         }
-        if (operationPerformed) {
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-        }
+        return usingItem;
     }
 
     @Override
@@ -206,6 +200,14 @@ public abstract class SurgicalBE extends BlockEntity {
     public void tickClient() {
         if (entity != null) {
             entity.tick();
+        }
+    }
+
+    public void tickServer() {
+        if (patientStatus != null && patientStatus.isDirty()) {
+            setChanged();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            patientStatus.setDirty(false);
         }
     }
 

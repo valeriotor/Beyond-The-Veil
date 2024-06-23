@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
+import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
@@ -46,6 +47,9 @@ public class SurgeryBedBlock  extends ThinMultiBlock3by2 implements EntityBlock 
         if (stack.getItem() == Registration.SYRINGE.get()) { // Handled by SyringeItem
             return InteractionResult.SUCCESS;
         }
+        if (stack.getItem() instanceof SurgeryItem) {
+            return InteractionResult.SUCCESS;
+        }
         BlockPos centerPos = findCenter(pPos, pState);
         BlockEntity entity = pLevel.getBlockEntity(centerPos);
         if (entity instanceof SurgeryBedBE surgicalBE) {
@@ -59,7 +63,9 @@ public class SurgeryBedBlock  extends ThinMultiBlock3by2 implements EntityBlock 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide()) {
-            return null;
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if(pBlockEntity instanceof SurgeryBedBE) ((SurgeryBedBE) pBlockEntity).tickServer();
+            };
         }
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if(pBlockEntity instanceof SurgeryBedBE) ((SurgeryBedBE) pBlockEntity).tickClient();
