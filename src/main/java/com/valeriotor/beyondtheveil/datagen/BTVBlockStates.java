@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.*;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
@@ -204,6 +205,7 @@ public class BTVBlockStates extends BlockStateProvider {
     }
 
     private void registerWateryCradle() {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + "flask_shelf_empty"), models().existingFileHelper);
         ExistingModelFile wateryCradle_solid = new ExistingModelFile(modLoc("block/watery_cradle_solid"), models().existingFileHelper);
         ExistingModelFile wateryCradle_translucent = new ExistingModelFile(modLoc("block/watery_cradle_translucent"), models().existingFileHelper);
 
@@ -223,9 +225,10 @@ public class BTVBlockStates extends BlockStateProvider {
                 .end();
 
         getVariantBuilder(WATERY_CRADLE.get())
-                .forAllStates(state -> {
-                    return ConfiguredModel.builder().modelFile(wateryCradle).build();
-        });
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(WATERY_CRADLE.get().getSideProperty()) == 1 ? wateryCradle : empty)
+                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .build());
     }
 
     private void registerSolidAndTranslucentBlock(String name, ResourceLocation particleTexture, Block block) {

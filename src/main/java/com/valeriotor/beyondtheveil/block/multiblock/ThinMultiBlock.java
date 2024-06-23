@@ -30,7 +30,11 @@ public abstract class ThinMultiBlock extends Block {
         this.centerY = centerY;
         this.horizontalRadius = horizontalRadius;
 
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(getSideProperty(), horizontalRadius).setValue(getLevelProperty(), centerY));
+        BlockState blockState = this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(getSideProperty(), horizontalRadius);
+        if (getLevelProperty() != null) {
+            blockState = blockState.setValue(getLevelProperty(), centerY);
+        }
+        this.registerDefaultState(blockState);
     }
 
     @Override
@@ -47,19 +51,26 @@ public abstract class ThinMultiBlock extends Block {
                 }
             }
         }
-        return defaultBlockState().setValue(FACING, opposite).setValue(getSideProperty(), horizontalRadius).setValue(getLevelProperty(), 0);
+        BlockState blockState = defaultBlockState().setValue(FACING, opposite).setValue(getSideProperty(), horizontalRadius);
+        if (getLevelProperty() != null) {
+            blockState = blockState.setValue(getLevelProperty(), 0);
+        }
+        return blockState;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(getSideProperty()).add(getLevelProperty());
+        builder.add(FACING).add(getSideProperty());
+        if (getLevelProperty() != null) {
+            builder.add(getLevelProperty());
+        }
     }
 
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         BlockPos center = findCenter(pPos, pState);
         for (int i = -horizontalRadius; i <= horizontalRadius; i++) {
-            for (int y = -centerY; y <= levels-1-centerY; y++) {
+            for (int y = -centerY; y <= levels - 1 - centerY; y++) {
                 int x = pState.getValue(FACING).getAxis() == Direction.Axis.X ? 0 : i;
                 int z = pState.getValue(FACING).getAxis() == Direction.Axis.Z ? 0 : i;
                 BlockPos neighbourPos = center.offset(x, y, z);
@@ -75,27 +86,31 @@ public abstract class ThinMultiBlock extends Block {
 
     public BlockPos findCenter(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(FACING);
-        int i = -pState.getValue(getSideProperty())+horizontalRadius;
+        int i = -pState.getValue(getSideProperty()) + horizontalRadius;
         int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
         int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-        return pPos.offset(x, - pState.getValue(getLevelProperty()), z);
+        return pPos.offset(x, getLevelProperty() != null ? -pState.getValue(getLevelProperty()) : 0, z);
     }
 
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         for (int i = -horizontalRadius; i <= horizontalRadius; i++) {
             for (int y = 0; y < levels; y++) {
-                if(i == 0 && y == 0) continue;
+                if (i == 0 && y == 0) continue;
                 Direction facing = pState.getValue(FACING);
                 int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
                 int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-                pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(getSideProperty(), i+horizontalRadius).setValue(getLevelProperty(), y), 3);
+                BlockState blockState = pState.setValue(getSideProperty(), i + horizontalRadius);
+                if (getLevelProperty() != null) {
+                    blockState = blockState.setValue(getLevelProperty(), y);
+                }
+                pLevel.setBlock(pPos.offset(x, y, z), blockState, 3);
             }
         }
     }
 
     public boolean isCenter(BlockState state) {
-        return state.getValue(getSideProperty()) == horizontalRadius && state.getValue(getLevelProperty()) == centerY;
+        return state.getValue(getSideProperty()) == horizontalRadius && (getLevelProperty() == null || state.getValue(getLevelProperty()) == centerY);
     }
 
     public int getHorizontalRadius() {

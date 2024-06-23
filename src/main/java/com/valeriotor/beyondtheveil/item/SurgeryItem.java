@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -102,8 +103,8 @@ public class SurgeryItem extends Item {
         boolean usingItem = false;
         if (blockEntity instanceof SurgicalBE surgicalBE) {
             usingItem = surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
-        } else if (lookedAtState.getBlock() == Registration.SURGERY_BED.get()) {
-            BlockPos centerPos = Registration.SURGERY_BED.get().findCenter(pos, lookedAtState);
+        } else if (lookedAtState.getBlock() instanceof ThinMultiBlock thinMultiBlock) {
+            BlockPos centerPos = thinMultiBlock.findCenter(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof SurgicalBE surgicalBE) {
                 usingItem = surgicalBE.interact(p, p.getItemInHand(InteractionHand.MAIN_HAND), InteractionHand.MAIN_HAND);
             }

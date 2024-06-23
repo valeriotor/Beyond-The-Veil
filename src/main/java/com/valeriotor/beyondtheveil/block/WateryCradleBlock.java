@@ -1,7 +1,11 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
+import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -23,7 +27,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class WateryCradleBlock extends Block implements EntityBlock {
+public class WateryCradleBlock extends ThinMultiBlock3by1 implements EntityBlock {
     private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1, 0.0625 * 15, 1);
 
     public WateryCradleBlock(Properties properties) {
@@ -47,9 +51,10 @@ public class WateryCradleBlock extends Block implements EntityBlock {
         if (stack.getItem() == Registration.SYRINGE.get()) {
             return InteractionResult.SUCCESS;
         }
-        BlockEntity entity = pLevel.getBlockEntity(pPos);
-        if (entity instanceof WateryCradleBE cradle) {
-            boolean success = cradle.interact(pPlayer, stack, pHand);
+        BlockPos centerPos = findCenter(pPos, pState);
+        BlockEntity entity = pLevel.getBlockEntity(centerPos);
+        if (entity instanceof SurgicalBE surgicalBE) {
+            boolean success = surgicalBE.interact(pPlayer, stack, pHand);
             return success ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
         return InteractionResult.PASS;
@@ -58,14 +63,16 @@ public class WateryCradleBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new WateryCradleBE(pPos, pState);
+        return isCenter(pState) ? new WateryCradleBE(pPos, pState) : null;
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide()) {
-            return null;
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if(pBlockEntity instanceof WateryCradleBE) ((WateryCradleBE) pBlockEntity).tickServer();
+            };
         }
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if(pBlockEntity instanceof WateryCradleBE) ((WateryCradleBE) pBlockEntity).tickClient();
