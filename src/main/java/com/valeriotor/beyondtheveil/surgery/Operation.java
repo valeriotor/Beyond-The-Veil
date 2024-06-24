@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -38,6 +39,7 @@ public class Operation {
     private final boolean progressParticles;
     private final boolean successParticles;
     private final boolean failureParticles;
+    private final Vec3 particleOffset;
 
     public Operation(Builder b) {
         this.name = b.name;
@@ -60,6 +62,7 @@ public class Operation {
         this.progressParticles = b.progressParticles;
         this.successParticles = b.successParticles;
         this.failureParticles = b.failureParticles;
+        this.particleOffset = b.particleOffset;
     }
 
     public String getName() {
@@ -142,6 +145,10 @@ public class Operation {
         return failureParticles;
     }
 
+    public Vec3 getParticleOffset() {
+        return particleOffset;
+    }
+
     public static class Builder {
         private final String name;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
@@ -167,6 +174,7 @@ public class Operation {
         private boolean progressParticles = false;
         private boolean successParticles = false;
         private boolean failureParticles = false;
+        private Vec3 particleOffset = Vec3.ZERO;
 
         public Builder(String name) {
             this.name = name;
@@ -292,6 +300,11 @@ public class Operation {
 
         public Builder setSuccessParticles(boolean successParticles) {
             this.successParticles = successParticles;
+            return this;
+        }
+
+        public Builder setParticleOffset(Vec3 particleOffset) {
+            this.particleOffset = particleOffset;
             return this;
         }
 

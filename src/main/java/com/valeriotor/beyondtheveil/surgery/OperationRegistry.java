@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class OperationRegistry {
             .setPainForFailure(150)
             .setSuccessParticles(true)
             .setProgressParticles(true)
+            .setParticleOffset(new Vec3(-0.1, 0, 0.15))
             .buildIncisionOperation(SurgicalLocation.CHEST);
 
     private static final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")

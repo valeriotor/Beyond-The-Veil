@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +18,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -213,7 +216,9 @@ public class PatientStatus {
                 //level().addAlwaysVisibleParticle(BTVParticles.TEARSPILL.get(), getX(), getY() + 1.5, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
 
                 BlockPos blockPos = be.getBlockPos();
-                ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5, blockPos.getY() + 1.2, blockPos.getZ() + 0.5, 50, 0, 0, 0, 1);
+                Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+                Vec3 offset = operation.getParticleOffset().yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+                ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 50, 0, 0, 0, 1);
             }
             return true;
         } else {
@@ -234,7 +239,10 @@ public class PatientStatus {
         increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
         if (operation.isProgressParticles()) {
             BlockPos blockPos = be.getBlockPos();
-            ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5, blockPos.getY() + 1.2, blockPos.getZ() + 0.5, 1, 0, 0, 0, 0.5);
+            Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+            Vec3 base = operation.getParticleOffset();
+            Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+            ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 1, 0, 0, 0, 0.5);
         }
     }
 
