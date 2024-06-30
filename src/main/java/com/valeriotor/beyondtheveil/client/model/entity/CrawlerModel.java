@@ -102,6 +102,11 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 				arms.xRot = 0;
 				leftLeg.xRot = 0.1745F;
 				rightLeg.xRot = 0.1745F;
+				if (entity.getPatientStatus().isDead()) {
+					head.yRot = 0.9F;
+					leftLeg.yRot = 0.5F;
+					rightLeg.yRot = -0.5F;
+				}
 			} else if (exposedLocation == SurgicalLocation.SKULL) {
 				head.xRot = -1.3526F / 2.5F;
 				arms.xRot = -2.7F;

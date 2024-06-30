@@ -218,23 +218,23 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 int currentAbsolutePainThreshold = patientStatus.getCurrentAbsolutePainThreshold();
                 int currentMissingPainThreshold = patientStatus.getCurrentMissingPainThreshold();
                 if (currentMissingPainThreshold >= 3 || currentAbsolutePainThreshold >= 3) {
-                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
-                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_high_1);
-                    } else {
-                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
-                    }
+                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                        case BACK -> AnimationRegistry.crawler_back_pain_high_1;
+                        case CHEST -> AnimationRegistry.crawler_chest_pain_high;
+                        case SKULL -> null;
+                    });
                 } else if (currentMissingPainThreshold == 2 || currentAbsolutePainThreshold == 2) {
-                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
-                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_medium);
-                    } else {
-                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
-                    }
+                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                        case BACK -> AnimationRegistry.crawler_back_pain_medium;
+                        case CHEST -> AnimationRegistry.crawler_chest_pain_medium;
+                        case SKULL -> null;
+                    });
                 } else if (currentMissingPainThreshold == 1 || currentAbsolutePainThreshold == 1) {
-                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
-                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_low);
-                    } else {
-                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
-                    }
+                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                        case BACK -> AnimationRegistry.crawler_back_pain_low;
+                        case CHEST -> AnimationRegistry.crawler_chest_pain_low;
+                        case SKULL -> null;
+                    });
                 }
             } else {
                 if (painAnimation != null) {
@@ -248,7 +248,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                     if (patientStatus.isDead() && !patientStatus.didFinalAnimation()) {
                         deathAnimation = switch (patientStatus.getExposedLocation()) {
                             case BACK -> new Animation(AnimationRegistry.crawler_back_death);
-                            case CHEST -> null;
+                            case CHEST -> new Animation(AnimationRegistry.crawler_chest_death);
                             case SKULL -> null;
                         };
                     }

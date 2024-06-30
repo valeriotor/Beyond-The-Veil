@@ -13,6 +13,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +26,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,6 +68,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 if (itemTag.contains("data")) {
                     entityData = itemTag.getCompound("data");
                     patientStatus = new PatientStatus();
+                    patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
                     if(itemTag.contains("status")) {
                         patientStatus.loadFromNBT(itemTag.getCompound("status"));
                     }
@@ -137,6 +138,9 @@ public abstract class SurgicalBE extends BlockEntity {
                 entity.readAdditionalSaveData(tag);
             } else {
                 entityData = pTag.getCompound("entity");
+            }
+            if (level != null && !level.isClientSide) {
+                patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
             }
         } else {
             entity = null;

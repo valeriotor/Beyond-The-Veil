@@ -12,12 +12,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Tuple;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
@@ -61,7 +60,13 @@ public class PatientStatus {
     private int countdownTicks = 0;
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
+    private ServerLevel level;
+    private BlockPos pos;
 
+    public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
+        this.level = level;
+        this.pos = pos;
+    }
 
     /**
      * Can only change position if there is currently no incision
@@ -296,6 +301,9 @@ public class PatientStatus {
         }
 
         if (missing != currentMissingPainThreshold) {
+            if (missing > currentMissingPainThreshold && level != null) {
+                level.playSound(null, pos, SoundEvents.VILLAGER_HURT, SoundSource.NEUTRAL, 1, 1);
+            }
             currentMissingPainThreshold = missing;
             setDirty(true);
         }
@@ -331,6 +339,9 @@ public class PatientStatus {
     void setCondition(PatientCondition condition) {
         if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
             countdownTicks = 5;
+            if (level != null) {
+                level.playSound(null, pos, SoundEvents.VILLAGER_DEATH, SoundSource.NEUTRAL, 1, 1);
+            }
             // TODO play sound, show particles, animations, something
         } else if (condition == PatientCondition.BLEEDING) {
             // TODO maybe show particles?
