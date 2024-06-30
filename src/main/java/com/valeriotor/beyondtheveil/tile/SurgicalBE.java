@@ -126,7 +126,9 @@ public abstract class SurgicalBE extends BlockEntity {
                 patientStatus.loadFromNBT(pTag.getCompound("status"));
             }
             if (level != null && level.isClientSide) {
-                entity = Registration.CRAWLER.get().create(level);
+                if (entity == null || entity.getClass() != CrawlerEntity.class) { // TODO check if this is correct. Also use entity type
+                    entity = Registration.CRAWLER.get().create(level);
+                }
                 if (entity instanceof SurgeryPatient) { // Will not be redundant once we expand to other patient types
                     ((SurgeryPatient) entity).markAsPatient();
                     ((SurgeryPatient) entity).setPatientStatus(patientStatus);
@@ -204,6 +206,9 @@ public abstract class SurgicalBE extends BlockEntity {
     }
 
     public void tickServer() {
+        if (patientStatus != null) {
+            patientStatus.tick(false);
+        }
         if (patientStatus != null && patientStatus.isDirty()) {
             setChanged();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);

@@ -9,7 +9,6 @@ import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -93,6 +92,11 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 			SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
 			if (exposedLocation == SurgicalLocation.BACK) {
 				head.xRot = 0;
+				if (entity.getPatientStatus().isDead()) {
+					head.yRot = 0.9F;
+					leftLeg.yRot = -0.5F;
+					rightLeg.yRot = 0.5F;
+				}
 			} else if (exposedLocation == SurgicalLocation.CHEST) {
 				head.xRot = 0;
 				arms.xRot = 0;
@@ -102,12 +106,15 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 				head.xRot = -1.3526F / 2.5F;
 				arms.xRot = -2.7F;
 			}
+			Animation painAnimation = entity.getPainAnimation();
+			Animation deathAnimation = entity.getDeathAnimation();
+			if (painAnimation != null && !entity.getPatientStatus().isDead()) {
+				painAnimation.apply(pPartialTick);
+			} else if (deathAnimation != null) {
+				deathAnimation.apply(pPartialTick);
+			}
 		}
 
-		Animation painAnimation = entity.getPainAnimation();
-		if (painAnimation != null) {
-			painAnimation.apply(pPartialTick);
-		}
 	}
 
 	@Override

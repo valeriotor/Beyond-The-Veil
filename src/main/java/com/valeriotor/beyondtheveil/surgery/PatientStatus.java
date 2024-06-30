@@ -47,12 +47,18 @@ public class PatientStatus {
         return 10;
     }
 
-
+    private static final double[] ABSOLUTE_PAIN_THRESHOLDS = new double[]{10, 30, 50};
+    private static final double[] MISSING_PAIN_THRESHOLDS = new double[]{100, 60, 30};
     private SurgicalLocation exposedLocation = SurgicalLocation.CHEST; // Just to be sure it's never null
     private boolean incised = false;
     private PatientCondition condition = PatientCondition.STABLE;
     private int leftoverCapacity;
     private double currentPain;
+    private int currentAbsolutePainThreshold; // from 0 to ABSOLUTE_PAIN_THRESHOLDS.length
+    private int currentMissingPainThreshold; // from 0 to MISSING_PAIN_THRESHOLDS.length
+    private int ticksSinceLastAddedPain;
+    private boolean didFinalAnimation;
+    private int countdownTicks = 0;
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
 
@@ -108,7 +114,18 @@ public class PatientStatus {
 
     // TODO maybe a patient in pain left alone for too long should start bleeding or dying
     public void tick(boolean clientSide) {
-
+        if (!clientSide) {
+            ticksSinceLastAddedPain = Math.max(0, ticksSinceLastAddedPain - 1);
+            if (currentMissingPainThreshold > 0 && ticksSinceLastAddedPain == 0) {
+                currentMissingPainThreshold = 0;
+                setDirty(true);
+            }
+            countdownTicks = Math.max(0, countdownTicks - 1);
+            if (!didFinalAnimation && countdownTicks == 1) {
+                didFinalAnimation = true;
+                setDirty(true);
+            }
+        }
     }
 
     public boolean extract(Player p, SurgicalBE be) {
@@ -170,7 +187,6 @@ public class PatientStatus {
             return false;
         }
         double newAmount = fluidAmounts.getOrDefault(fluid, 0D) + fluidStack.getAmount();
-        fluidAmounts.put(fluid, newAmount);
         List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.INJECTION_OPERATIONS.get(fluid);
         if (injectionEntries == null || injectionEntries.isEmpty()) {
             return true; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
@@ -179,6 +195,10 @@ public class PatientStatus {
             Operation operation = injectionEntry.operation();
             if (canPerformOperation(operation)) {
                 perTickActions(p, operation, be);
+                if (operation.isAdded(this)) {
+                    fluidAmounts.put(fluid, newAmount);
+                }
+                operation.onConsume(this);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else if (newAmount > injectionEntry.amount()) {
@@ -236,7 +256,7 @@ public class PatientStatus {
     }
 
     private void perTickActions(Player player, Operation operation, SurgicalBE be) {
-        increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this));
+        increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this), operation.getPainForFailure());
         if (operation.isProgressParticles()) {
             BlockPos blockPos = be.getBlockPos();
             Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
@@ -246,11 +266,12 @@ public class PatientStatus {
         }
     }
 
-    /**
-     * @return if the pain exceeded an animation threshold
-     */
-    private void increaseCurrentPain(double amount) {
+    private void increaseCurrentPain(double amount, double amountForFailure) {
         // TODO maybe the amount of pain just added should also affect the animation type
+        // TODO or the ticks remaining until death at this rate
+        //  or maximum(ticksRemaining, currentPain)
+        //  Mark dirty when the current amount of added pain differs from the last tick one
+        //  Check in tickServer if pain wasn't increased in the last few ticks and if so mark dirty again
         double sedativeAmount = fluidAmounts.getOrDefault(Registration.SOURCE_FLUID_SEDATIVE.get(), 0D);
         double leftoverSedative = Math.max(0, sedativeAmount - amount);
         amount -= (sedativeAmount - leftoverSedative);
@@ -259,14 +280,43 @@ public class PatientStatus {
             return;
         }
         currentPain += amount;
+        ticksSinceLastAddedPain = 3;
         //if (currentPain >= 60) {
         //    flags.put("sedate", 0);
         //}
-        int[] animationThresholds = new int[]{1, 10, 30, 50};
-        for (int animationThreshold : animationThresholds) {
-            if (currentPain >= animationThreshold && currentPain - amount < animationThreshold) {
-                setDirty(true);
+        updateAbsolutePainThreshold();
+
+        double ticksTillFailure = (amountForFailure - currentPain) / amount;
+        int missing = MISSING_PAIN_THRESHOLDS.length;
+        for (int i = 0; i < MISSING_PAIN_THRESHOLDS.length; i++) {
+            if (ticksTillFailure > MISSING_PAIN_THRESHOLDS[i]) {
+                missing = i;
+                break;
             }
+        }
+
+        if (missing != currentMissingPainThreshold) {
+            currentMissingPainThreshold = missing;
+            setDirty(true);
+        }
+    }
+
+    void decreasePain(double amount) {
+        currentPain = Math.max(currentPain - amount, 0);
+        updateAbsolutePainThreshold();
+    }
+
+    private void updateAbsolutePainThreshold() {
+        int absolute = ABSOLUTE_PAIN_THRESHOLDS.length;
+        for (int i = 0; i < ABSOLUTE_PAIN_THRESHOLDS.length; i++) {
+            if (currentPain < ABSOLUTE_PAIN_THRESHOLDS[i]) {
+                absolute = i;
+                break;
+            }
+        }
+        if (absolute != currentAbsolutePainThreshold) {
+            currentAbsolutePainThreshold = absolute;
+            setDirty(true);
         }
     }
 
@@ -280,6 +330,7 @@ public class PatientStatus {
 
     void setCondition(PatientCondition condition) {
         if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
+            countdownTicks = 5;
             // TODO play sound, show particles, animations, something
         } else if (condition == PatientCondition.BLEEDING) {
             // TODO maybe show particles?
@@ -300,8 +351,12 @@ public class PatientStatus {
         return currentPain;
     }
 
-    public void decreasePain(double amount) {
-        currentPain = Math.max(currentPain - amount, 0);
+    public int getCurrentAbsolutePainThreshold() {
+        return currentAbsolutePainThreshold;
+    }
+
+    public int getCurrentMissingPainThreshold() {
+        return currentMissingPainThreshold;
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -310,6 +365,8 @@ public class PatientStatus {
         tag.putInt("leftover_capacity", leftoverCapacity);
         tag.putString("exposed_location", exposedLocation.name());
         tag.putBoolean("incised", incised);
+        //tag.putInt("absolute_threshold", currentAbsolutePainThreshold);
+        tag.putInt("missing_threshold", currentMissingPainThreshold);
         CompoundTag flagTag = new CompoundTag();
         for (Map.Entry<String, Integer> entry : flags.entrySet()) {
             flagTag.putInt(entry.getKey(), entry.getValue());
@@ -323,6 +380,7 @@ public class PatientStatus {
             }
         }
         tag.put("fluids", fluidTag);
+        tag.putBoolean("didFinalAnimation", didFinalAnimation);
         return tag;
     }
 
@@ -332,6 +390,8 @@ public class PatientStatus {
         leftoverCapacity = tag.getInt("leftover_capacity");
         exposedLocation = SurgicalLocation.valueOf(tag.getString("exposed_location"));
         incised = tag.getBoolean("incised");
+        currentMissingPainThreshold = tag.getInt("missing_threshold"); // needs to be synced to client, even if we don't care about persistence
+        updateAbsolutePainThreshold();
         CompoundTag flagTag = tag.getCompound("flags");
         for (String key : flagTag.getAllKeys()) {
             flags.put(key, flagTag.getInt(key));
@@ -341,6 +401,7 @@ public class PatientStatus {
             Fluid f = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(key));
             fluidAmounts.put(f, fluidTag.getDouble(key));
         }
+        didFinalAnimation = tag.getBoolean("didFinalAnimation");
     }
 
     public void setDirty(boolean dirty) {
@@ -349,5 +410,13 @@ public class PatientStatus {
 
     public boolean isDirty() {
         return dirty;
+    }
+
+    public boolean isDead() {
+        return condition == PatientCondition.DEAD;
+    }
+
+    public boolean didFinalAnimation() {
+        return didFinalAnimation;
     }
 }

@@ -100,7 +100,7 @@ public class OperationRegistry {
 
     private static final Operation SEDATE = new Operation.Builder("sedate_too_much")
             //.setPainLevel(PainLevel.NEGLIGIBLE)
-            .isAdded(s -> s.getCurrentPain() == 0)
+            .isAdded(s -> s.getCurrentPain() <= 0.1)
             .onConsume(patientStatus -> patientStatus.decreasePain(1))
             .allowAllLocations()
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.ASLEEP_FOREVER))

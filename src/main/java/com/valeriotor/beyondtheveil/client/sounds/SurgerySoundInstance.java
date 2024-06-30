@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client.sounds;
 
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,7 @@ public class SurgerySoundInstance extends AbstractTickableSoundInstance {
     @Override
     public void tick() {
         if (toRemovePositions.contains(bePos)) {
-            toRemovePositions.remove(bePos);
+            //toRemovePositions.remove(bePos);
             stop();
         }
     }
@@ -40,7 +41,7 @@ public class SurgerySoundInstance extends AbstractTickableSoundInstance {
 
     @SubscribeEvent
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
+        if (event.phase == TickEvent.Phase.END && !Minecraft.getInstance().isPaused()) {
             toRemovePositions.clear();
         }
     }

@@ -51,6 +51,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private int villagerXp;
     private PatientStatus patientStatus;
     private Animation painAnimation;
+    private Animation deathAnimation;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -213,19 +214,50 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             }
         } else {
             tickCount++;
-            if (painAnimation == null) {
-                if (patientStatus.getCurrentPain() >= 0) {
+            if (painAnimation == null && !patientStatus.isDead()) {
+                int currentAbsolutePainThreshold = patientStatus.getCurrentAbsolutePainThreshold();
+                int currentMissingPainThreshold = patientStatus.getCurrentMissingPainThreshold();
+                if (currentMissingPainThreshold >= 3 || currentAbsolutePainThreshold >= 3) {
                     if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
-                        //painAnimation = new Animation(AnimationRegistry.crawler_back_pain_high_1);
+                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_high_1);
+                    } else {
+                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
+                    }
+                } else if (currentMissingPainThreshold == 2 || currentAbsolutePainThreshold == 2) {
+                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
+                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_medium);
+                    } else {
+                        //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
+                    }
+                } else if (currentMissingPainThreshold == 1 || currentAbsolutePainThreshold == 1) {
+                    if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
+                        painAnimation = new Animation(AnimationRegistry.crawler_back_pain_low);
                     } else {
                         //painAnimation = new Animation(AnimationRegistry.crawler_pain_low_1);
                     }
                 }
             } else {
-                if (painAnimation.isDone()) {
-                    painAnimation = null;
+                if (painAnimation != null) {
+                    if (painAnimation.isDone()) {
+                        painAnimation = null;
+                    } else {
+                        painAnimation.update();
+                    }
+                }
+                if (deathAnimation == null) {
+                    if (patientStatus.isDead() && !patientStatus.didFinalAnimation()) {
+                        deathAnimation = switch (patientStatus.getExposedLocation()) {
+                            case BACK -> new Animation(AnimationRegistry.crawler_back_death);
+                            case CHEST -> null;
+                            case SKULL -> null;
+                        };
+                    }
                 } else {
-                    painAnimation.update();
+                    if (deathAnimation.isDone()) {
+                        deathAnimation = null;
+                    } else {
+                        deathAnimation.update();
+                    }
                 }
             }
             // TODO do pain animations
@@ -254,6 +286,10 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
     public Animation getPainAnimation() {
         return painAnimation;
+    }
+
+    public Animation getDeathAnimation() {
+        return deathAnimation;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

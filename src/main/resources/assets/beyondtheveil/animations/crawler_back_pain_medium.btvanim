@@ -1,0 +1,50 @@
+model: crawler
+length: 58
+start: 0: 1
+    rotx: head: 0: immediate: absolute
+start: 1: 6
+    rotx: head: -1.6: linear: absolute
+start: 0: 2
+    roty: head: -0.1: quadratic: absolute
+start: 2: 6
+    roty: head: 0.1: quadratic: absolute
+start: 6: 9
+    roty: head: -0.1: quadratic: absolute
+start: 9: 14
+    roty: head: 0.1: quadratic: absolute
+start: 14: 24
+    roty: head: -0.1: quadratic: absolute
+start: 24: 34
+    roty: head: 0.1: quadratic: absolute
+start: 34: 42
+    rotx: head: 0: linear: absolute
+start: 34: 38
+    roty: head: -0.1: quadratic: absolute
+start: 38: 42
+    roty: head: 0.1: quadratic: absolute
+start: 42: 46
+    roty: head: -0.1: quadratic: absolute
+start: 46: 50
+    roty: head: 0: quadratic: absolute
+start: 0: 3
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 3: 6
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 6: 9
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 9: 12
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 12: 15
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 15: 18
+	rotx: leftLeg: 0.1745: linear: absolute
+	rotx: rightLeg: -0.1745: linear: absolute
+start: 18: 21
+	rotx: leftLeg: -0.1745: linear: absolute
+	rotx: rightLeg: 0.1745: linear: absolute
+start: 21: 24
+	rotx: rightLeg: -0.1745: linear: absolute

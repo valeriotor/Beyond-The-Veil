@@ -40,8 +40,8 @@ public class BlackjackItem extends Item {
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        if(!context.getLevel().isClientSide)
-            LegacyStructure.hamlet_storehouse2.generateStructure(context.getLevel(), context.getClickedPos());
+        //if(!context.getLevel().isClientSide)
+            //LegacyStructure.hamlet_storehouse2.generateStructure(context.getLevel(), context.getClickedPos());
         return super.onItemUseFirst(stack, context);
     }
 }

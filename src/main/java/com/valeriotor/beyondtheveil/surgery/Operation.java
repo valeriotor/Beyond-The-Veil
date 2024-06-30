@@ -125,12 +125,12 @@ public class Operation {
         return painForFailure;
     }
 
-    public Consumer<PatientStatus> getOnConsume() {
-        return onConsume;
+    public void onConsume(PatientStatus status) {
+        onConsume.accept(status);
     }
 
-    public Predicate<PatientStatus> isAdded() {
-        return isAdded;
+    public boolean isAdded(PatientStatus status) {
+        return isAdded.test(status);
     }
 
     public boolean isProgressParticles() {
