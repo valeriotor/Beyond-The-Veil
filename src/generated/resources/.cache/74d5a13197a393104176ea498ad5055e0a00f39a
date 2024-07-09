@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-22T17:07:25.1231411	Item Models: beyondtheveil
+// 1.20.1	2024-07-08T23:29:21.7133717	Item Models: beyondtheveil
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
@@ -49,6 +49,7 @@ b767a464832cd3cc7e6b93893ffc0643dcecd20e assets/beyondtheveil/models/item/elder_
 123b8f900af4d421abf0d53cb2af51aadcb4432e assets/beyondtheveil/models/item/elder_stone_brick_slab.json
 c5d98263e552b3fe29460af066def139dfd43d07 assets/beyondtheveil/models/item/elder_stone_brick_stairs.json
 519ad39fab493e41501bfc128c373ea531ffb80d assets/beyondtheveil/models/item/fish_barrel.json
+9a34e5ab63240bae6afe5037f2dc74e6677fa020 assets/beyondtheveil/models/item/flask_item.json
 a7dc805976449f6d0b5dd0372c354b68f8c4ddc5 assets/beyondtheveil/models/item/flask_large.json
 9a5f55d7ba3cd8ae4bfd9c9c2aa38070a276f5bc assets/beyondtheveil/models/item/flask_medium.json
 c5043432f11b092f7984a105e0e5bec1663c721a assets/beyondtheveil/models/item/flask_shelf.json

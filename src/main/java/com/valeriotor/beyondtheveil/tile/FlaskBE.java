@@ -76,8 +76,9 @@ public class FlaskBE extends BlockEntity {
                             }
                         }
                     } else {
-                        if (tank.fill(syringe.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
-                            tank.fill(syringe.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                        if (true || tank.fill(syringe.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
+                            //tank.fill(syringe.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                            tank.fill(new FluidStack(Registration.SOURCE_FLUID_LIQUID_BLAZE_POWDER.get(), 5), IFluidHandler.FluidAction.EXECUTE);
                             setChanged();
                             if (level != null) {
                                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);

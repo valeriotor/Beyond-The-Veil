@@ -273,6 +273,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlask("large", FLASK_LARGE.get());
         registerFlask("medium", FLASK_MEDIUM.get());
         registerFlask("small", FLASK_SMALL.get());
+        registerFlask("item", FLASK_ITEM.get());
     }
 
     private void registerFlask(String name, Block block) {

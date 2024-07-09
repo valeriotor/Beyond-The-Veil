@@ -1,11 +1,14 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.google.common.collect.Sets;
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,10 +25,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class FlaskBlock extends Block implements EntityBlock {
 
@@ -36,6 +42,7 @@ public class FlaskBlock extends Block implements EntityBlock {
     private static final VoxelShape SHAPE_LARGE;
     private static final VoxelShape SHAPE_MEDIUM;
     private static final VoxelShape SHAPE_SMALL;
+    private static final VoxelShape SHAPE_ITEM;
     public static final double[] LARGE1 = {5*a, 0, 5*a, 11*a, a/2, 11*a};
     public static final double[] LARGE2 = {5 * a, a / 2, 4.5 * a, 11 * a, 8.5*a, 11.5 * a};
     public static final double[] LARGE3 = {4.5 * a, a / 2, 5 * a, 11.5 * a, 8.5*a, 11 * a};
@@ -54,6 +61,7 @@ public class FlaskBlock extends Block implements EntityBlock {
     public static final double[] SMALL4 = {7*a, 4.5*a, 7*a, 9*a, 4.75*a, 9*a};
     public static final double[] SMALL5 = {7.25*a, 4.75*a, 7.25*a, 8.75*a, 5*a, 8.75*a};
     public static final double[] SMALL6 = {7.5*a, 5*a, 7.5*a, 8.5*a, 5.5*a, 8.5*a};
+    public static final double[] ITEM_SIMPLE = FlaskSize.ITEM.simpleShape;
     public static final double[] LARGE_SIMPLE = FlaskSize.LARGE.simpleShape;
     public static final double[] MEDIUM_SIMPLE = FlaskSize.MEDIUM.simpleShape;
     public static final double[] SMALL_SIMPLE = FlaskSize.SMALL.simpleShape;
@@ -83,6 +91,7 @@ public class FlaskBlock extends Block implements EntityBlock {
         SHAPE_LARGE = shapeLarge;
         SHAPE_MEDIUM = shapeMedium;
         SHAPE_SMALL = shapeSmall;
+        SHAPE_ITEM = shapeSmall;
     }
 
     public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2); // 0 base, 1 wrong, 2 selected
@@ -103,6 +112,7 @@ public class FlaskBlock extends Block implements EntityBlock {
             case SMALL -> SHAPE_SMALL;
             case MEDIUM -> SHAPE_MEDIUM;
             case LARGE -> SHAPE_LARGE;
+            case ITEM -> SHAPE_ITEM;
         };
     }
 
@@ -126,9 +136,10 @@ public class FlaskBlock extends Block implements EntityBlock {
     }
 
     public enum FlaskSize {
-        SMALL(1000, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}, a/4, 4.5*a, 7*a, 9*a),
-        MEDIUM(2500, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 6.5*a, 6*a, 10*a),
-        LARGE(5000, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a}, a/2, 8.5*a, 5*a, 11*a);
+        SMALL(1000, new double[]{6.75*a, 0, 6.75*a, 9.25*a, 5.5*a, 9.25*a}, a/4, 4.5*a, 7*a, 9*a, false),
+        MEDIUM(2500, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 6.5*a, 6*a, 10*a, false),
+        LARGE(5000, new double[]{4.5*a, 0, 4.5*a, 11.5*a, 10.5*a, 11.5*a}, a/2, 8.5*a, 5*a, 11*a, false),
+        ITEM(0, new double[]{5.5*a, 0, 5.5*a, 10.5*a, 8*a, 10.5*a}, a/2, 8.5*a, 5*a, 11*a, true);
 
         private final int capacity;
         private final double[] simpleShape;
@@ -136,14 +147,16 @@ public class FlaskBlock extends Block implements EntityBlock {
         private final double maxRenderHeight;
         private final double minRenderHorizontal;
         private final double maxRenderHorizontal;
+        private final boolean allowsItems;
 
-        FlaskSize(int capacity, double[] simpleShape, double minRenderHeight, double maxRenderHeight, double minRenderHorizontal, double maxRenderHorizontal) {
+        FlaskSize(int capacity, double[] simpleShape, double minRenderHeight, double maxRenderHeight, double minRenderHorizontal, double maxRenderHorizontal, boolean allowsItems) {
             this.capacity = capacity;
             this.simpleShape = simpleShape;
             this.minRenderHeight = minRenderHeight;
             this.maxRenderHeight = maxRenderHeight;
             this.minRenderHorizontal = minRenderHorizontal;
             this.maxRenderHorizontal = maxRenderHorizontal;
+            this.allowsItems = allowsItems;
         }
 
         public double[] getSimpleShape() {
@@ -170,6 +183,9 @@ public class FlaskBlock extends Block implements EntityBlock {
             return maxRenderHorizontal;
         }
 
+        public boolean allowsItems() {
+            return allowsItems;
+        }
     }
 
 

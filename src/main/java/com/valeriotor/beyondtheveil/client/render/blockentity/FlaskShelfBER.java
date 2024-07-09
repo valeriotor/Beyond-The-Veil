@@ -9,12 +9,15 @@ import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,9 +28,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
+    private final ItemRenderer itemRenderer;
 
     public FlaskShelfBER(BlockEntityRendererProvider.Context context) {
+            itemRenderer = context.getItemRenderer();
     }
 
     @Override
@@ -76,11 +84,15 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
         if (shelfPos != null && !Minecraft.getInstance().options.hideGui) {
             lookedAt = pBlockEntity.getLookedAtFlask(p.level(), shelfPos, bhr.getLocation());
         }
-        for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
+        Vec3 v = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        for (FlaskShelfBE.Flask flask : pBlockEntity.flasks.stream().sorted(Comparator.comparingDouble(f -> -Mth.square(f.getX() - v.x) - Mth.square(f.getY() - v.y) - Mth.square(f.getZ() - v.z))).toList()) {
+        //for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
             pPoseStack.pushPose();
             pPoseStack.translate(flask.getX() - pos.getX() - 0.5, flask.getY() - pos.getY(), flask.getZ() - pos.getZ() - 0.5);
-            Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, flask == lookedAt && !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
-            FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize()); // TODO maybe use exact location instead of center BE
+            if (flask.getSize() == FlaskBlock.FlaskSize.ITEM || true) {
+                Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, flask == lookedAt && !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
+                FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize(), itemRenderer); // TODO maybe use exact location instead of center BE
+            }
             pPoseStack.popPose();
         }
         HitResult hitResult = Minecraft.getInstance().hitResult;

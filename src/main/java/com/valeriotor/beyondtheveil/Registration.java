@@ -159,6 +159,7 @@ public class Registration {
     public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.LARGE)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.MEDIUM)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_SMALL = BLOCKS.register("flask_small", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.SMALL)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_ITEM = BLOCKS.register("flask_item", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.ITEM)); // TODO GLASS PROPERTIES
 
     public static final RegistryObject<LiquidBlock> SEDATIVE_BLOCK = BLOCKS.register("sedative_block", () -> new LiquidBlock(Registration.SOURCE_FLUID_SEDATIVE, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> SOFTENER_BLOCK = BLOCKS.register("softener_block", () -> new LiquidBlock(Registration.SOURCE_FLUID_SOFTENER, BlockBehaviour.Properties.copy(Blocks.WATER)));
@@ -224,6 +225,7 @@ public class Registration {
     public static final RegistryObject<Item> FLASK_LARGE_ITEM = fromBlock(FLASK_LARGE);
     public static final RegistryObject<Item> FLASK_MEDIUM_ITEM = fromBlock(FLASK_MEDIUM);
     public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
+    public static final RegistryObject<Item> FLASK_ITEM_ITEM = fromBlock(FLASK_ITEM);
     public static final RegistryObject<Item> BLACK_KELP_ITEM = fromBlock(BLACK_KELP);
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
@@ -277,6 +279,7 @@ public class Registration {
     public static final RegistryObject<Item> FORCEPS = ITEMS.register("forceps", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.FORCEPS));
     public static final RegistryObject<Item> TONGS = ITEMS.register("tongs", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.TONGS));
     public static final RegistryObject<Item> SEWING_NEEDLE = ITEMS.register("sewing_needle", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -294,7 +297,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskShelfBE>> FLASK_SHELF_BE = BLOCK_ENTITIES.register(FLASK_SHELF.getId().getPath(), () -> BlockEntityType.Builder.of(FlaskShelfBE::new, FLASK_SHELF.get()).build(null));
     public static final RegistryObject<BlockEntityType<SurgeryBedBE>> SURGERY_BED_BE = BLOCK_ENTITIES.register(SURGERY_BED.getId().getPath(), () -> BlockEntityType.Builder.of(SurgeryBedBE::new, SURGERY_BED.get()).build(null));
-    public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get(), FLASK_ITEM.get()).build(null));
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
 
@@ -303,6 +306,8 @@ public class Registration {
     public static final RegistryObject<FluidType> SEDATIVE_FLUID_TYPE = FLUID_TYPES.register("sedative_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/sedative_still"), new ResourceLocation(References.MODID, "block/fluids/sedative_flow"), new ResourceLocation(References.MODID, "block/fluids/sedative_overlay"), 0xFFC13719));
     public static final RegistryObject<FluidType> SOFTENER_FLUID_TYPE = FLUID_TYPES.register("softener_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/softener_still"), new ResourceLocation(References.MODID, "block/fluids/softener_flow"), new ResourceLocation(References.MODID, "block/fluids/softener_overlay"), 0xFFF4C42F));
     public static final RegistryObject<FluidType> COAGULANT_FLUID_TYPE = FLUID_TYPES.register("coagulant_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/coagulant_still"), new ResourceLocation(References.MODID, "block/fluids/coagulant_flow"), new ResourceLocation(References.MODID, "block/fluids/coagulant_overlay"), 0xFFBA10CD));
+    // TODO rename this into Serum X49B8 - Strength (and all subsequent vanilla effects turned Arsenal effects as well)
+    public static final RegistryObject<FluidType> LIQUID_BLAZE_POWDER_FLUID_TYPE = FLUID_TYPES.register("liquid_blaze_powder_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/coagulant_still"), new ResourceLocation(References.MODID, "block/fluids/coagulant_flow"), new ResourceLocation(References.MODID, "block/fluids/coagulant_overlay"), 0xFFBA10CD));
 
     public static final RegistryObject<FlowingFluid> SOURCE_FLUID_SEDATIVE = FLUIDS.register("sedative_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.SEDATIVE_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_FLUID_SEDATIVE = FLUIDS.register("sedative_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.SEDATIVE_PROPERTIES));
@@ -310,10 +315,13 @@ public class Registration {
     public static final RegistryObject<FlowingFluid> FLOWING_FLUID_SOFTENER = FLUIDS.register("softener_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.SOFTENER_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.COAGULANT_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.COAGULANT_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.LIQUID_BLAZE_POWDER_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.COAGULANT_PROPERTIES));
 
     public static final ForgeFlowingFluid.Properties SEDATIVE_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SEDATIVE_FLUID_TYPE, SOURCE_FLUID_SEDATIVE, FLOWING_FLUID_SEDATIVE).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SEDATIVE_BLOCK).bucket(Registration.SEDATIVE_BUCKET);
     public static final ForgeFlowingFluid.Properties SOFTENER_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SOFTENER_FLUID_TYPE, SOURCE_FLUID_SOFTENER, FLOWING_FLUID_SOFTENER).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SOFTENER_BLOCK).bucket(Registration.SOFTENER_BUCKET);
     public static final ForgeFlowingFluid.Properties COAGULANT_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.COAGULANT_FLUID_TYPE, SOURCE_FLUID_COAGULANT, FLOWING_FLUID_COAGULANT).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.COAGULANT_BLOCK).bucket(Registration.COAGULANT_BUCKET);
+    public static final ForgeFlowingFluid.Properties LIQUID_BLAZE_POWDER_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.LIQUID_BLAZE_POWDER_FLUID_TYPE, SOURCE_FLUID_LIQUID_BLAZE_POWDER, FLOWING_FLUID_LIQUID_BLAZE_POWDER).slopeFindDistance(2).levelDecreasePerBlock(2);
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
 
@@ -331,6 +339,7 @@ public class Registration {
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());
+                output.accept(FLASK_ITEM.get());
 
                 output.accept(DAMP_WOOD.get());
                 output.accept(DARK_SAND.get());
@@ -424,6 +433,7 @@ public class Registration {
                 output.accept(FORCEPS.get());
                 output.accept(TONGS.get());
                 output.accept(SEWING_NEEDLE.get());
+                output.accept(PLUCKED_EYE.get());
 
                 output.accept(SEDATIVE_BUCKET.get());
                 output.accept(SOFTENER_BUCKET.get());

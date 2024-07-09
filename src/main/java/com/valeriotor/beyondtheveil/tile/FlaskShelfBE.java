@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,6 +34,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -58,7 +61,7 @@ public class FlaskShelfBE extends BlockEntity {
 
     @Override
     public void load(CompoundTag pTag) {
-        if(pTag != null) {
+        if (pTag != null) {
             super.load(pTag);
         }
         loadClientData(pTag);
@@ -67,7 +70,7 @@ public class FlaskShelfBE extends BlockEntity {
     private void loadClientData(CompoundTag pTag) {
         flasks.clear();
         CompoundTag flasks1 = pTag.getCompound("flasks");
-        for (String key: flasks1.getAllKeys()) {
+        for (String key : flasks1.getAllKeys()) {
             flasks.add(new Flask(flasks1.getCompound(key)));
         }
         computeFlasksShape();
@@ -98,7 +101,7 @@ public class FlaskShelfBE extends BlockEntity {
         if (intersects) {
             return false;
         }
-        if(!pLevel.isClientSide) {
+        if (!pLevel.isClientSide) {
             Flask newFlask = new Flask(location.x, location.y, location.z, flaskBlock.size);
             flasks.add(newFlask);
             setChanged();
@@ -106,7 +109,7 @@ public class FlaskShelfBE extends BlockEntity {
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
             }
             computeFlasksShape();
-            if(!pPlayer.isCreative())
+            if (!pPlayer.isCreative())
                 pPlayer.getItemInHand(pHand).shrink(1);
         }
         return true;
@@ -178,6 +181,26 @@ public class FlaskShelfBE extends BlockEntity {
                 }
                 return InteractionResult.SUCCESS;
             }
+        } else if (itemStack.getItem() instanceof SurgeryIngredient) {
+            if (!pLevel.isClientSide) {
+                Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
+                if (lookedAtFlask != null) {
+                    pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.insertItem(0, itemStack, false));
+                    setChanged();
+                    return InteractionResult.SUCCESS;
+                }
+            }
+            return InteractionResult.SUCCESS;
+        } else if (itemStack.isEmpty()) {
+            if (!pLevel.isClientSide) {
+                Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
+                if (lookedAtFlask != null) {
+                    pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 4, false));
+                    setChanged();
+                    return InteractionResult.SUCCESS;
+                }
+            }
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
@@ -196,7 +219,7 @@ public class FlaskShelfBE extends BlockEntity {
         FlaskBlock.FlaskSize size = flaskBlock == Registration.FLASK_SMALL.get() ? FlaskBlock.FlaskSize.SMALL : (flaskBlock == Registration.FLASK_MEDIUM.get() ? FlaskBlock.FlaskSize.MEDIUM : FlaskBlock.FlaskSize.LARGE);
         AABB newFlaskAABB = getAABB(size, locRelativeToSelectedBlock.x, locRelativeToSelectedBlock.y, locRelativeToSelectedBlock.z);
         boolean intersects = false;
-        for (AABB box: shape.toAabbs()) {
+        for (AABB box : shape.toAabbs()) {
             if (newFlaskAABB.intersects(box)) {
                 intersects = true;
                 break;
@@ -205,7 +228,8 @@ public class FlaskShelfBE extends BlockEntity {
         return intersects;
     }
 
-    /** Coordinates should be relative to selectedShelfPos
+    /**
+     * Coordinates should be relative to selectedShelfPos
      */
     private AABB getAABB(FlaskBlock.FlaskSize size, double x, double y, double z) {
         double[] array = size.getSimpleShape();
@@ -219,19 +243,18 @@ public class FlaskShelfBE extends BlockEntity {
         for (int i = -1; i <= 1; i++) {
             for (int y = 0; y < 3; y++) {
                 Direction facing = state.getValue(FlaskShelfBlock.FACING);
-                shapes[y][i + 1] = FlaskShelfBlock.getBaseShape(y, i+1, facing);
+                shapes[y][i + 1] = FlaskShelfBlock.getBaseShape(y, i + 1, facing);
                 int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
                 int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
                 for (Flask f : flasks) {
-                    if(f.getY() >= worldPosition.getY()+y-1 && f.getY() <= worldPosition.getY()+y) {
-                        shapes[y][i + 1] = Shapes.or(shapes[y][i + 1], f.computeShapeWithOffset(f.getX()-worldPosition.getX()-0.5-x, f.getY()-worldPosition.getY()-y+1, f.getZ()-worldPosition.getZ()-0.5-z));
+                    if (f.getY() >= worldPosition.getY() + y - 1 && f.getY() <= worldPosition.getY() + y) {
+                        shapes[y][i + 1] = Shapes.or(shapes[y][i + 1], f.computeShapeWithOffset(f.getX() - worldPosition.getX() - 0.5 - x, f.getY() - worldPosition.getY() - y + 1, f.getZ() - worldPosition.getZ() - 0.5 - z));
                     }
                 }
                 //pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(SIDE, i+1).setValue(LEVEL, y), 3);
             }
         }
     }
-
 
 
     @Override
@@ -259,7 +282,7 @@ public class FlaskShelfBE extends BlockEntity {
 
     @Override
     public AABB getRenderBoundingBox() {
-        return new AABB(getBlockPos().offset(-1, -1, -1), getBlockPos().offset(2,2,2));
+        return new AABB(getBlockPos().offset(-1, -1, -1), getBlockPos().offset(2, 2, 2));
     }
 
     //@Nonnull
@@ -279,12 +302,26 @@ public class FlaskShelfBE extends BlockEntity {
         private FluidTank tank;
         private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
+        private ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
+            return new ItemStackHandler(4) {
+                @Override
+                public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                    return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
+                }
+            };
+        }
+
+        private final ItemStackHandler stackHandler;
+        private final LazyOptional<IItemHandler> stackHolder;
+
         private Flask(double x, double y, double z, FlaskBlock.FlaskSize size) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.size = size;
             this.tank = FlaskBE.getTankByFlaskType(size);
+            stackHandler = createStackHandler(size);
+            stackHolder = LazyOptional.of(() -> stackHandler);
         }
 
         private Flask(CompoundTag tag) {
@@ -294,6 +331,11 @@ public class FlaskShelfBE extends BlockEntity {
             this.size = FlaskBlock.FlaskSize.values()[tag.getInt("size")];
             this.tank = FlaskBE.getTankByFlaskType(size);
             tank.readFromNBT(tag.getCompound("tank"));
+            stackHandler = createStackHandler(size);
+            stackHolder = LazyOptional.of(() -> stackHandler);
+            if (tag.contains("stack")) {
+                stackHandler.deserializeNBT(tag.getCompound("stack"));
+            }
         }
 
         private CompoundTag toNBT() {
@@ -303,6 +345,7 @@ public class FlaskShelfBE extends BlockEntity {
             tag.putDouble("z", z);
             tag.putInt("size", size.ordinal());
             tag.put("tank", tank.writeToNBT(new CompoundTag()));
+            tag.put("stack", stackHandler.serializeNBT());
             return tag;
         }
 
@@ -333,9 +376,10 @@ public class FlaskShelfBE extends BlockEntity {
             //    case LARGE -> new double[][] {FlaskBlock.LARGE1, FlaskBlock.LARGE2, FlaskBlock.LARGE3, FlaskBlock.LARGE4, FlaskBlock.LARGE5, FlaskBlock.LARGE6};
             //};
             double[][] arrays = switch (size) {
-                case SMALL -> new double[][] {FlaskBlock.SMALL_SIMPLE};
-                case MEDIUM -> new double[][] {FlaskBlock.MEDIUM_SIMPLE};
-                case LARGE -> new double[][] {FlaskBlock.LARGE_SIMPLE};
+                case SMALL -> new double[][]{FlaskBlock.SMALL_SIMPLE};
+                case MEDIUM -> new double[][]{FlaskBlock.MEDIUM_SIMPLE};
+                case LARGE -> new double[][]{FlaskBlock.LARGE_SIMPLE};
+                case ITEM -> new double[][]{FlaskBlock.ITEM_SIMPLE};
             };
             VoxelShape shape = Shapes.empty();
             for (double[] array : arrays) {

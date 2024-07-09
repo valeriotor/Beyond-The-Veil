@@ -48,6 +48,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_LARGE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_MEDIUM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SMALL.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_ITEM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP_PLANT.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DARK_GLASS.get(), RenderType.translucent());
