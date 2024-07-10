@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cube",
+  "loader": "beyondtheveil:flask_shelf_loader"
+}

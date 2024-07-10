@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/cube",
+  "children": {
+    "base": {
+      "parent": "beyondtheveil:block/flask_shelf",
+      "render_type": "minecraft:solid"
+    },
+    "loader": {
+      "parent": "beyondtheveil:block/flask_shelf_to_bake",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "base",
+    "loader"
+  ],
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "beyondtheveil:block/flask_shelf"
+  }
+}

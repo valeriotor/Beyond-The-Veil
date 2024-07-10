@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-08T23:28:48.5992489	Block States: beyondtheveil
+// 1.20.1	2024-07-11T00:08:56.1365216	Block States: beyondtheveil
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
 bdd3341be1acaa3da82bcfaa457ba7c961e34848 assets/beyondtheveil/blockstates/black_kelp.json
 b44951772ae404bf314c38552d2c8217d6246ca3 assets/beyondtheveil/blockstates/black_kelp_plant.json
@@ -31,7 +31,7 @@ c88d04126424abe54ac4559589f67cc51e118f8d assets/beyondtheveil/blockstates/fish_b
 6697a2cc3f542217f9947f2ec37f63bb3ac01c61 assets/beyondtheveil/blockstates/flask_item.json
 ea67bb617a055fe084aacc03e5bc6baff8db2541 assets/beyondtheveil/blockstates/flask_large.json
 2ec2fcb262e9cefddb35c172f3a3245cd170a373 assets/beyondtheveil/blockstates/flask_medium.json
-c3a23531d0c7ef0dc8a3fd42ffeac3c2550634ae assets/beyondtheveil/blockstates/flask_shelf.json
+726782345ec513c124bd3bd8ba730ccf03641654 assets/beyondtheveil/blockstates/flask_shelf.json
 dd122c3438862dbc3c3178b6dee5ce134f268ac9 assets/beyondtheveil/blockstates/flask_small.json
 9e18b2fa0aa838b2d917315e35e6f428f75565e7 assets/beyondtheveil/blockstates/fume_spreader.json
 83172ccced02b6d3e0ce389c45bf659943996250 assets/beyondtheveil/blockstates/gear_bench.json
@@ -87,6 +87,7 @@ d24f006c412656f54036bd94aa06e7aeead30c57 assets/beyondtheveil/models/block/elder
 ad0508a1afef9cb2894f2243afafa8ffdab6ab88 assets/beyondtheveil/models/block/elder_stone_brick_stairs.json
 2cb7623e9bc628c309e26a659e6b112f8d67e2ae assets/beyondtheveil/models/block/elder_stone_brick_stairs_inner.json
 29b467def274e3ba2ced074397c7a05d15fd6d50 assets/beyondtheveil/models/block/elder_stone_brick_stairs_outer.json
+83f42e3f9a586dad178a3335aac763a1bc71a1ce assets/beyondtheveil/models/block/flask_shelf_complete.json
 e94910257ecc88274ae4221c6b63d7294a204120 assets/beyondtheveil/models/block/fume_spreader_empty.json
 ad27b82899763f842e1ce39706eda1f747a6f350 assets/beyondtheveil/models/block/fume_spreader_full.json
 2d3fd84a7c2c7faf528189babb6824bc98d0ba98 assets/beyondtheveil/models/block/memory_sieve.json

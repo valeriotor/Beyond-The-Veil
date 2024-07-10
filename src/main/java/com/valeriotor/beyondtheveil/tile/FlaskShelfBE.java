@@ -27,6 +27,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelDataManager;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -48,6 +50,9 @@ public class FlaskShelfBE extends BlockEntity {
     public static final ModelProperty<List<Flask>> FLASKS_PROPERTY = new ModelProperty<>();
     public final List<Flask> flasks = new ArrayList<>();
     public final VoxelShape[][] shapes = new VoxelShape[3][3]; // Shape for each of the 3x3 shelves: [0: bottom, 1: medium, 2: top][0: left, 1: center, 2: right]
+
+    public static final ModelProperty<List<Flask>> FLASK_PROPERTY = new ModelProperty<>();
+    public static final ModelProperty<BlockPos> POS_PROPERTY = new ModelProperty<>();
 
 
     public FlaskShelfBE(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -278,11 +283,22 @@ public class FlaskShelfBE extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(pkt.getTag());
+
+        requestModelDataUpdate();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().offset(-1, -1, -1), getBlockPos().offset(2, 2, 2));
+    }
+
+    @Override
+    public @NotNull ModelData getModelData() {
+        return ModelData.builder()
+                .with(FLASK_PROPERTY, flasks)
+                .with(POS_PROPERTY, getBlockPos())
+                .build();
     }
 
     //@Nonnull

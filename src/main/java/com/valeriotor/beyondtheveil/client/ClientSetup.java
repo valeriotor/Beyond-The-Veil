@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
+import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
@@ -22,6 +23,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,6 +51,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_MEDIUM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SMALL.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_ITEM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SHELF.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP_PLANT.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DARK_GLASS.get(), RenderType.translucent());
@@ -127,11 +130,12 @@ public class ClientSetup {
         return Minecraft.getInstance().getConnection() != null && Minecraft.getInstance().getConnection().getConnection() != null;
     }
 
-    //@SubscribeEvent
-    //public static void onModelRegistryEvent(ModelRegistryEvent event) {
-    //    //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
-    //    //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
-    //}
+    @SubscribeEvent
+    public static void onModelRegistryEvent(ModelEvent.RegisterGeometryLoaders event) {
+        event.register(FlaskShelfModelLoader.FLASK_SHELF_LOADER.getPath(), new FlaskShelfModelLoader());
+        //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
+        //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
+    }
 
     //@SubscribeEvent
     //public static void onModelBakeEvent(ModelBakeEvent event) {

@@ -17,7 +17,7 @@
       "y": 90
     },
     "facing=east,level=1,side=1": {
-      "model": "beyondtheveil:block/flask_shelf",
+      "model": "beyondtheveil:block/flask_shelf_complete",
       "y": 90
     },
     "facing=east,level=1,side=2": {
@@ -49,7 +49,7 @@
       "model": "beyondtheveil:block/flask_shelf_empty"
     },
     "facing=north,level=1,side=1": {
-      "model": "beyondtheveil:block/flask_shelf"
+      "model": "beyondtheveil:block/flask_shelf_complete"
     },
     "facing=north,level=1,side=2": {
       "model": "beyondtheveil:block/flask_shelf_empty"
@@ -80,7 +80,7 @@
       "y": 180
     },
     "facing=south,level=1,side=1": {
-      "model": "beyondtheveil:block/flask_shelf",
+      "model": "beyondtheveil:block/flask_shelf_complete",
       "y": 180
     },
     "facing=south,level=1,side=2": {
@@ -116,7 +116,7 @@
       "y": 270
     },
     "facing=west,level=1,side=1": {
-      "model": "beyondtheveil:block/flask_shelf",
+      "model": "beyondtheveil:block/flask_shelf_complete",
       "y": 270
     },
     "facing=west,level=1,side=2": {

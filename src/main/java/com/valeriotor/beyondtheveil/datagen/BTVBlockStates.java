@@ -1,8 +1,10 @@
 package com.valeriotor.beyondtheveil.datagen;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
+import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -10,10 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -112,9 +111,9 @@ public class BTVBlockStates extends BlockStateProvider {
                     int rotation = switch (state.getValue(DampCanopyBlock.SHAPE)) {
                         case STRAIGHT -> (int) state.getValue(DampCanopyBlock.FACING).toYRot();
                         case INNER_LEFT -> ((int) state.getValue(DampCanopyBlock.FACING).toYRot());
-                        case INNER_RIGHT -> (((int) state.getValue(DampCanopyBlock.FACING).toYRot())+90);
+                        case INNER_RIGHT -> (((int) state.getValue(DampCanopyBlock.FACING).toYRot()) + 90);
                         case OUTER_LEFT -> (((int) state.getValue(DampCanopyBlock.FACING).toYRot()));
-                        case OUTER_RIGHT -> (((int) state.getValue(DampCanopyBlock.FACING).toYRot())+90);
+                        case OUTER_RIGHT -> (((int) state.getValue(DampCanopyBlock.FACING).toYRot()) + 90);
                     };
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
@@ -140,9 +139,9 @@ public class BTVBlockStates extends BlockStateProvider {
                     int rotation = switch (state.getValue(DampFilledCanopyBlock.SHAPE)) {
                         case STRAIGHT -> (int) state.getValue(DampFilledCanopyBlock.FACING).toYRot();
                         case INNER_LEFT -> ((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot());
-                        case INNER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot())+90);
+                        case INNER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot()) + 90);
                         case OUTER_LEFT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot()));
-                        case OUTER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot())+90);
+                        case OUTER_RIGHT -> (((int) state.getValue(DampFilledCanopyBlock.FACING).toYRot()) + 90);
                     };
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
@@ -182,7 +181,8 @@ public class BTVBlockStates extends BlockStateProvider {
 
         getVariantBuilder(FUME_SPREADER.get())
                 .forAllStates(state -> {
-                    if (state.getValue(FumeSpreaderBlock.FULL)) return ConfiguredModel.builder().modelFile(fumeSpreaderFullModel).build();
+                    if (state.getValue(FumeSpreaderBlock.FULL))
+                        return ConfiguredModel.builder().modelFile(fumeSpreaderFullModel).build();
                     else return ConfiguredModel.builder().modelFile(fumeSpreaderEmptyModel).build();
                 });
     }
@@ -196,10 +196,10 @@ public class BTVBlockStates extends BlockStateProvider {
         getVariantBuilder(SLEEP_CHAMBER.get()).forAllStates(state -> {
             if (state.getValue(SleepChamberBlock.HALF) == DoubleBlockHalf.UPPER) {
                 ModelFile file = state.getValue(SleepChamberBlock.OPEN) ? sleep_chamber_upper_open : sleep_chamber_upper;
-                return ConfiguredModel.builder().modelFile(file).rotationY((int)state.getValue(SleepChamberBlock.FACING).toYRot()).build();
+                return ConfiguredModel.builder().modelFile(file).rotationY((int) state.getValue(SleepChamberBlock.FACING).toYRot()).build();
             }
             ModelFile file = state.getValue(SleepChamberBlock.OPEN) ? sleep_chamber_lower_open : sleep_chamber_lower;
-            return ConfiguredModel.builder().modelFile(file).rotationY((int)state.getValue(SleepChamberBlock.FACING).toYRot()).build();
+            return ConfiguredModel.builder().modelFile(file).rotationY((int) state.getValue(SleepChamberBlock.FACING).toYRot()).build();
         });
 
     }
@@ -221,13 +221,13 @@ public class BTVBlockStates extends BlockStateProvider {
                 .texture("particle", modLoc("block/watery_cradle"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .child("block/watery_cradle_solid1", parent))
-                        .child("block/watery_cradle_translucent1", translucent_parent)
+                .child("block/watery_cradle_translucent1", translucent_parent)
                 .end();
 
         getVariantBuilder(WATERY_CRADLE.get())
                 .forAllStates(state -> ConfiguredModel.builder()
                         .modelFile(state.getValue(WATERY_CRADLE.get().getSideProperty()) == 1 ? wateryCradle : empty)
-                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                         .build());
     }
 
@@ -246,7 +246,7 @@ public class BTVBlockStates extends BlockStateProvider {
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", particleTexture)
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                .child("block/" + name + "_solid1", parent))
+                        .child("block/" + name + "_solid1", parent))
                 .child("block/" + name + "_translucent1", translucent_parent)
                 .end();
 
@@ -259,12 +259,27 @@ public class BTVBlockStates extends BlockStateProvider {
     private void registerFlaskShelf() {
         ExistingModelFile empty = new ExistingModelFile(modLoc("block/flask_shelf_empty"), models().existingFileHelper);
         ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper);
+        ExistingModelFile loader = new ExistingModelFile(modLoc("block/flask_shelf_to_bake"), models().existingFileHelper);
+        BlockModelBuilder baseBuilder = new BlockModelBuilder(modLoc("block/flask_shelf1"), models().existingFileHelper);
+        baseBuilder.parent(base);
+        baseBuilder.renderType("solid");
+        BlockModelBuilder loaderBuilder = new BlockModelBuilder(modLoc("block/flask_shelf_to_bake1"), models().existingFileHelper);
+        loaderBuilder.parent(loader);
+        loaderBuilder.renderType("translucent");
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/flask_shelf_complete")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/flask_shelf"))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("base", baseBuilder).child("loader", loaderBuilder))
+                .end();
+
         getVariantBuilder(FLASK_SHELF.get())
                 .forAllStatesExcept(state -> {
-                    ModelFile file = state.getValue(FlaskShelfBlock.SIDE) == 1 && state.getValue(FlaskShelfBlock.LEVEL) == 1 ? base : empty;
+                    ModelFile file = state.getValue(FlaskShelfBlock.SIDE) == 1 && state.getValue(FlaskShelfBlock.LEVEL) == 1 ? builder : empty;
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
-                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
     }
@@ -291,7 +306,8 @@ public class BTVBlockStates extends BlockStateProvider {
         });
     }
 
-    /** The empty model is necessary for particles
+    /**
+     * The empty model is necessary for particles
      */
     private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock3by2 block) {
         ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
@@ -304,7 +320,7 @@ public class BTVBlockStates extends BlockStateProvider {
                     }
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
-                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
     }

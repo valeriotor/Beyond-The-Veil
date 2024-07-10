@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client.render.blockentity;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.mojang.math.Transformation;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
@@ -21,6 +22,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -35,7 +37,7 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
     private final ItemRenderer itemRenderer;
 
     public FlaskShelfBER(BlockEntityRendererProvider.Context context) {
-            itemRenderer = context.getItemRenderer();
+        itemRenderer = context.getItemRenderer();
     }
 
     @Override
@@ -85,14 +87,17 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
             lookedAt = pBlockEntity.getLookedAtFlask(p.level(), shelfPos, bhr.getLocation());
         }
         Vec3 v = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-        for (FlaskShelfBE.Flask flask : pBlockEntity.flasks.stream().sorted(Comparator.comparingDouble(f -> -Mth.square(f.getX() - v.x) - Mth.square(f.getY() - v.y) - Mth.square(f.getZ() - v.z))).toList()) {
-        //for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
+        for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
             pPoseStack.pushPose();
             pPoseStack.translate(flask.getX() - pos.getX() - 0.5, flask.getY() - pos.getY(), flask.getZ() - pos.getZ() - 0.5);
-            if (flask.getSize() == FlaskBlock.FlaskSize.ITEM || true) {
-                Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, flask == lookedAt && !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
-                FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize(), itemRenderer); // TODO maybe use exact location instead of center BE
-            }
+            //pPoseStack.mulPose(pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getRotation());
+            //if (flask == lookedAt) {
+            //    pPoseStack.pushPose();
+            //    //pPoseStack.scale(1.1F, 1.1F, 1.1F);
+            //    Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
+            //    pPoseStack.popPose();
+            //}
+            FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize(), itemRenderer); // TODO maybe use exact location instead of center BE
             pPoseStack.popPose();
         }
         HitResult hitResult = Minecraft.getInstance().hitResult;
@@ -111,9 +116,6 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
     public boolean shouldRenderOffScreen(FlaskShelfBE pBlockEntity) {
         return true;
     }
-
-
-
 
 
 }
