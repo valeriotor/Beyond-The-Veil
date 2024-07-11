@@ -192,6 +192,9 @@ public class FlaskShelfBE extends BlockEntity {
                 if (lookedAtFlask != null) {
                     pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.insertItem(0, itemStack, false));
                     setChanged();
+                    if (level != null) {
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -202,6 +205,9 @@ public class FlaskShelfBE extends BlockEntity {
                 if (lookedAtFlask != null) {
                     pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 4, false));
                     setChanged();
+                    if (level != null) {
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -383,6 +389,10 @@ public class FlaskShelfBE extends BlockEntity {
 
         public FluidTank getTank() {
             return tank;
+        }
+
+        public ItemStackHandler getStackHandler() {
+            return stackHandler;
         }
 
         private VoxelShape computeShapeWithOffset(double offsetX, double offsetY, double offsetZ) {

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +26,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,11 +35,25 @@ public class FlaskBE extends BlockEntity {
 
     private FluidTank tank;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
+    private ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
+        return new ItemStackHandler(4) {
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
+            }
+        };
+    }
+
+    private final ItemStackHandler stackHandler;
+    private final LazyOptional<IItemHandler> stackHolder;
 
 
     public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.FLASK_BE.get(), pWorldPosition, pBlockState);
-        tank = getTankByFlaskType(((FlaskBlock) pBlockState.getBlock()).size);
+        FlaskBlock.FlaskSize size = ((FlaskBlock) pBlockState.getBlock()).size;
+        tank = getTankByFlaskType(size);
+        stackHandler = createStackHandler(size);
+        stackHolder = LazyOptional.of(() -> stackHandler);
     }
 
     public static FluidTank getTankByFlaskType(FlaskBlock.FlaskSize size) {
@@ -45,6 +62,10 @@ public class FlaskBE extends BlockEntity {
 
     public FluidTank getTank() {
         return tank;
+    }
+
+    public ItemStackHandler getStackHandler() {
+        return stackHandler;
     }
 
     /**
@@ -90,6 +111,26 @@ public class FlaskBE extends BlockEntity {
                 }
                 return InteractionResult.SUCCESS;
             }
+        } else if (itemStack.getItem() instanceof SurgeryIngredient) {
+            if (!pLevel.isClientSide) {
+                pPlayer.setItemInHand(pHand, stackHandler.insertItem(0, itemStack, false));
+                setChanged();
+                if (level != null) {
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.SUCCESS;
+        } else if (itemStack.isEmpty()) {
+            if (!pLevel.isClientSide) {
+                pPlayer.setItemInHand(pHand, stackHandler.extractItem(0, 4, false));
+                setChanged();
+                if (level != null) {
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
@@ -104,6 +145,9 @@ public class FlaskBE extends BlockEntity {
 
     private void loadCommonData(CompoundTag tag) {
         tank.readFromNBT(tag);
+        if (tag.contains("stack")) {
+            stackHandler.deserializeNBT(tag.getCompound("stack"));
+        }
     }
 
     @Override
@@ -114,6 +158,7 @@ public class FlaskBE extends BlockEntity {
 
     private void saveCommonData(CompoundTag tag) {
         tank.writeToNBT(tag);
+        tag.put("stack", stackHandler.serializeNBT());
     }
 
     @Override

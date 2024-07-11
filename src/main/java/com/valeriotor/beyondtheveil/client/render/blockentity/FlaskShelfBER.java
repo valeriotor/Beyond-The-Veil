@@ -28,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -90,6 +91,7 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
         for (FlaskShelfBE.Flask flask : pBlockEntity.flasks) {
             pPoseStack.pushPose();
             pPoseStack.translate(flask.getX() - pos.getX() - 0.5, flask.getY() - pos.getY(), flask.getZ() - pos.getZ() - 0.5);
+            Direction direction = pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             //pPoseStack.mulPose(pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getRotation());
             //if (flask == lookedAt) {
             //    pPoseStack.pushPose();
@@ -97,7 +99,7 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
             //    Minecraft.getInstance().getBlockRenderer().renderSingleBlock(FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState().setValue(FlaskBlock.COLOR, !holdingFlask ? 2 : 0), pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
             //    pPoseStack.popPose();
             //}
-            FlaskBER.renderFlask(flask.getTank(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize(), itemRenderer); // TODO maybe use exact location instead of center BE
+            FlaskBER.renderFlask(direction, flask.getTank(), flask.getStackHandler(), pBlockEntity.getLevel(), pBlockEntity.getBlockPos(), pPartialTick, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay, flask.getSize(), itemRenderer); // TODO maybe use exact location instead of center BE
             pPoseStack.popPose();
         }
         HitResult hitResult = Minecraft.getInstance().hitResult;

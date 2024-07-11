@@ -26,6 +26,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.ItemStackHandler;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -44,11 +45,11 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
     @Override
     public void render(FlaskBE flask, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay) {
         FlaskBlock.FlaskSize size = ((FlaskBlock) flask.getBlockState().getBlock()).size;
-        if(flask.hasLevel())
-            renderFlask(flask.getTank(), flask.getLevel(), flask.getBlockPos(), partialTicks, pPoseStack, buffers, pPackedLight, overlay, size, itemRenderer);
+        if (flask.hasLevel())
+            renderFlask(Direction.NORTH, flask.getTank(), flask.getStackHandler(), flask.getLevel(), flask.getBlockPos(), partialTicks, pPoseStack, buffers, pPackedLight, overlay, size, itemRenderer);
     }
 
-    public static void renderFlask(IFluidTank tank, Level level, BlockPos pos, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskSize size, ItemRenderer itemRenderer) {
+    public static void renderFlask(Direction direction, IFluidTank tank, ItemStackHandler stackHandler, Level level, BlockPos pos, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskSize size, ItemRenderer itemRenderer) {
 
         //if(size == FlaskBlock.FlaskSize.LARGE) {
         //    for (int i = 0; i < 6; i++) {
@@ -136,29 +137,46 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
 
             pPoseStack.popPose();
         } else if (size == FlaskBlock.FlaskSize.ITEM) {
-            pPoseStack.pushPose();
-            pPoseStack.translate(0.45F, 0.44, 0.45);
-            pPoseStack.translate(0, Mth.sin((Minecraft.getInstance().player.tickCount + partialTicks) / 40) / 40 - 0.2795F, 0);
-            pPoseStack.scale(0.175F, 0.175F, 0.175F);
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(20));
-            itemRenderer.renderStatic(new ItemStack(Registration.PLUCKED_EYE.get()), ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
-            pPoseStack.popPose();
-            pPoseStack.pushPose();
-            pPoseStack.translate(0.55F, 0.44, 0.45);
-            pPoseStack.translate(0, Mth.sin((Minecraft.getInstance().player.tickCount + partialTicks) / 40) / 40 - 0.2325F, 0);
-            pPoseStack.scale(0.175F, 0.175F, 0.175F);
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(-20));
-            itemRenderer.renderStatic(new ItemStack(Registration.PLUCKED_EYE.get()), ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
-            pPoseStack.popPose();
-            pPoseStack.pushPose();
-            pPoseStack.translate(0.5F, 0.44, 0.45);
-            pPoseStack.translate(0, Mth.sin((Minecraft.getInstance().player.tickCount + partialTicks) / 40) / 40 - 0.1425F, 0);
-            pPoseStack.scale(0.175F, 0.175F, 0.175F);
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(40));
-            itemRenderer.renderStatic(new ItemStack(Registration.PLUCKED_EYE.get()), ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
-            pPoseStack.popPose();
+            if (Minecraft.getInstance().player != null) {
+                float ticks = Minecraft.getInstance().player.tickCount + partialTicks;
+                TRANSFORMS[0][0] = 0.425;
+                TRANSFORMS[1][0] = 0.55;
+                TRANSFORMS[2][0] = 0.425;
+
+                ItemStack stackInSlot = stackHandler.getStackInSlot(0);
+                if (!stackInSlot.isEmpty()) {
+                    ItemStack toRender = new ItemStack(stackInSlot.getItem());
+                    for (int i = 0; i < stackInSlot.getCount() && i < 4; i++) {
+                        pPoseStack.pushPose();
+                        pPoseStack.translate(0.5, 0, 0.5);
+                        pPoseStack.mulPose(Axis.YP.rotationDegrees((-direction.get2DDataValue() + 2) * 90));
+                        pPoseStack.translate(TRANSFORMS[i][0] - 0.5, TRANSFORMS[i][1], TRANSFORMS[i][2] - 0.5);
+                        pPoseStack.translate(0, Mth.sin(ticks / 40) / 60 - 0.025, 0.03);
+                        pPoseStack.scale(0.15F, 0.15F, 0.15F);
+                        pPoseStack.mulPose(Axis.YP.rotationDegrees((float) TRANSFORMS[i][3]));
+                        itemRenderer.renderStatic(toRender, ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
+                        pPoseStack.popPose();
+                    }
+                }
+
+            }
+            //pPoseStack.pushPose();
+            //pPoseStack.translate(0.55F, 0.44, 0.45);
+            //pPoseStack.translate(0, Mth.sin((Minecraft.getInstance().player.tickCount + partialTicks) / 40) / 40 - 0.2325F, 0);
+            //pPoseStack.scale(0.175F, 0.175F, 0.175F);
+            //pPoseStack.mulPose(Axis.YP.rotationDegrees(-20));
+            //itemRenderer.renderStatic(new ItemStack(Registration.PLUCKED_EYE.get()), ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
+            //pPoseStack.popPose();
+            //pPoseStack.pushPose();
+            //pPoseStack.translate(0.5F, 0.44, 0.45);
+            //pPoseStack.translate(0, Mth.sin((Minecraft.getInstance().player.tickCount + partialTicks) / 40) / 40 - 0.1425F, 0);
+            //pPoseStack.scale(0.175F, 0.175F, 0.175F);
+            //pPoseStack.mulPose(Axis.YP.rotationDegrees(40));
+            //itemRenderer.renderStatic(new ItemStack(Registration.PLUCKED_EYE.get()), ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
+            //pPoseStack.popPose();
         }
-
-
     }
+
+    private static final double[][] TRANSFORMS = new double[][]{new double[]{0.45, 0.44 - 0.2795, 0.45, 20}, new double[]{0.55, 0.44 - 0.2325, 0.45, -20}, new double[]{0.5, 0.44 - 0.1425, 0.45, 40}, new double[]{0.55, 0.44 - 0.0925, 0.45, -20}};
+
 }
