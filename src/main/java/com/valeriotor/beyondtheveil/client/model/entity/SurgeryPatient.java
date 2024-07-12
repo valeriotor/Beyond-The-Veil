@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.model.entity;
 
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 
 /**
@@ -23,6 +24,8 @@ public interface SurgeryPatient {
     void setPatientStatus(PatientStatus location);
 
     PatientStatus getPatientStatus();
+
+    PatientType getPatientType();
 
 
 }

@@ -60,6 +60,13 @@ public class DataUtil {
         });
     }
 
+    public static void setTagOnServerAndSync(Player p, String key, CompoundTag value) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.setTag(key, value);
+            Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setTag(value), (ServerPlayer) p);
+        });
+    }
+
     public static void setBooleanOnServerAndSync(Player p, String key, boolean value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.setBoolean(key, value, temporary);
@@ -88,6 +95,12 @@ public class DataUtil {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.setLong(key, value, temporary);
             Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setLong(value), (ServerPlayer) p);
+        });
+    }
+
+    public static void setTag(Player p, String key, CompoundTag value) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.setTag(key, value);
         });
     }
 

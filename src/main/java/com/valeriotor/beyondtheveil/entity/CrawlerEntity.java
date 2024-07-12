@@ -6,9 +6,11 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -87,12 +89,16 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
         if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
+        //if (pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
             if (!level().isClientSide) {
-                ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
-                CompoundTag tag = new CompoundTag();
-                addAdditionalSaveData(tag);
-                heldVillager.getOrCreateTag().put("data", tag);
-                pPlayer.setItemSlot(EquipmentSlot.MAINHAND, heldVillager);
+                //startRiding(pPlayer);
+                //ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
+                //CompoundTag tag = new CompoundTag();
+                //addAdditionalSaveData(tag);
+                //heldVillager.getOrCreateTag().put("data", tag);
+                //pPlayer.setItemSlot(EquipmentSlot.MAINHAND, heldVillager);
+                //discard();
+                pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> data.getCrossSync().setHeldPatient(this, pPlayer));
                 discard();
             }
             return InteractionResult.SUCCESS;
@@ -187,6 +193,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         this.tradeOffers = pTradeOffers;
     }
 
+    @Override
     public void setVillagerData(VillagerData p_34376_) {
         VillagerData villagerdata = this.getVillagerData();
         if (villagerdata.getProfession() != p_34376_.getProfession()) {
@@ -282,6 +289,11 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Override
     public PatientStatus getPatientStatus() {
         return patientStatus;
+    }
+
+    @Override
+    public PatientType getPatientType() {
+        return PatientType.VILLAGER;
     }
 
     public Animation getPainAnimation() {

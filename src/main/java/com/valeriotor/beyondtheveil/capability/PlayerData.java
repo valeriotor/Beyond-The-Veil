@@ -21,6 +21,7 @@ public class PlayerData {
     private final Map<String, Long> tempLongs = new HashMap<>();
     private final Map<String, String> strings = new HashMap<>();
     private final Map<String, String> tempStrings = new HashMap<>();
+    private final Map<String, CompoundTag> tags = new HashMap<>();
     private final List<Counter> counters = new ArrayList<>();
     private final EnumMap<Memory, Reminiscence> reminiscences = new EnumMap<>(Memory.class);
 
@@ -158,6 +159,14 @@ public class PlayerData {
             success = true;
         }
         return success;
+    }
+
+    public void setTag(String key, CompoundTag tag) {
+        tags.put(key, tag);
+    }
+
+    public CompoundTag getTag(String key) {
+        return tags.getOrDefault(key, null);
     }
 
     /** Creates a new counter, or updates the timer of a previous one if one of the same type already existed
@@ -299,10 +308,12 @@ public class PlayerData {
         newStore.longs.putAll(longs);
         newStore.strings.putAll(strings);
         newStore.counters.addAll(counters);
+        newStore.tags.putAll(tags);
     }
 
     private static class FallBack extends PlayerData {
         // TODO find another way that doesn't require editing for every change to the main class
+        // this is so stupid how could you wtf
         @Override public void setBoolean(String key, boolean value, boolean temporary) {}
         @Override public boolean getBoolean(String key) {return false;}
         @Override public boolean getBoolean(String key, boolean temporary) {return false;}

@@ -1,18 +1,21 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -83,8 +86,22 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.STOP_SURGERY_SOUND, tag);
     }
 
+    public static GenericToClientPacket crossSync(Player sender, CrossSync data) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("id", sender.getUUID().toString());
+        CompoundTag crossSyncTag = new CompoundTag();
+        data.saveToNBT(crossSyncTag);
+        tag.put("cross_sync", crossSyncTag);
+        return new GenericToClientPacket(MessageType.CROSS_SYNC, tag);
+    }
 
-        private final MessageType type;
+    public static GenericToClientPacket stopCrossSync(Player sender) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("id", sender.getUUID().toString());
+        return new GenericToClientPacket(MessageType.STOP_CROSS_SYNC, tag);
+    }
+
+    private final MessageType type;
     private final CompoundTag tag;
 
     public GenericToClientPacket(MessageType type, CompoundTag tag) {
@@ -115,6 +132,8 @@ public class GenericToClientPacket {
                     case MOVE -> ClientMethods.movePlayer(tag);
                     case START_SURGERY_SOUND -> ClientMethods.startSurgerySound(tag);
                     case STOP_SURGERY_SOUND -> SurgerySoundInstance.stopSound(tag);
+                    case CROSS_SYNC -> CrossSyncHolder.setCrossSync(tag);
+                    case STOP_CROSS_SYNC -> CrossSyncHolder.stopCrossSync(tag);
                 }
             });
         });
@@ -130,7 +149,9 @@ public class GenericToClientPacket {
         ROTATE_CAMERA,
         MOVE,
         START_SURGERY_SOUND,
-        STOP_SURGERY_SOUND
+        STOP_SURGERY_SOUND,
+        CROSS_SYNC,
+        STOP_CROSS_SYNC
     }
 
 }

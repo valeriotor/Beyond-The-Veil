@@ -1,10 +1,14 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,26 +55,56 @@ public abstract class SurgicalBE extends BlockEntity {
             return true;
         if (entityData != null) {
             if (in.isEmpty() && !p.isShiftKeyDown()) {
-                ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
-                heldVillager.getOrCreateTag().put("data", entityData);
-                heldVillager.getOrCreateTag().put("status", patientStatus.saveToNBT(new CompoundTag()));
-                p.setItemSlot(hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, heldVillager);
-                entityData = null;
-                patientStatus = null;
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                return true;
+                //ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
+                //heldVillager.getOrCreateTag().put("data", entityData);
+                //heldVillager.getOrCreateTag().put("status", patientStatus.saveToNBT(new CompoundTag()));
+                //p.setItemSlot(hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, heldVillager);
+                if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
+                    CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
+                    CrossSync crossSync = csData.getCrossSync();
+                    if (crossSync.getHeldPatientData() == null) {
+                        crossSync.setHeldPatient(PatientType.VILLAGER, entityData, p);
+                        entityData = null;
+                        patientStatus = null;
+                        setChanged();
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                        return true;
+                    }
+                } else {
+                    // TODO player becomes patient
+                }
+
             } else {
                 return handleSurgery(p, in);
             }
         } else {
+            if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
+                CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
+                CrossSync crossSync = csData.getCrossSync();
+                Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
+                if (heldPatientEntity != null) {
+                    entityData = crossSync.getHeldPatientData();
+                    patientStatus = new PatientStatus();
+                    patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+                    // TODO if(itemTag.contains("status")) { BUT DO WE WANT THIS
+                    // TODO patientStatus.loadFromNBT(itemTag.getCompound("status"));
+                    // TODO }
+
+                    // TODO patientStatus.setPatientType(crossSync.getHeldPatientType()); WE DO WANT *THIS*
+                    patientStatus.setExposedLocation(defaultLocation);
+                    crossSync.setHeldPatient(null, p);
+                    setChanged();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                }
+
+            }
             if (in.getItem() instanceof HeldVillagerItem) {
                 CompoundTag itemTag = in.getOrCreateTag();
                 if (itemTag.contains("data")) {
                     entityData = itemTag.getCompound("data");
                     patientStatus = new PatientStatus();
                     patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
-                    if(itemTag.contains("status")) {
+                    if (itemTag.contains("status")) {
                         patientStatus.loadFromNBT(itemTag.getCompound("status"));
                     }
                     patientStatus.setExposedLocation(defaultLocation);
@@ -115,7 +150,7 @@ public abstract class SurgicalBE extends BlockEntity {
 
     @Override
     public void load(CompoundTag pTag) {
-        if(pTag != null)
+        if (pTag != null)
             super.load(pTag);
         loadPatient(pTag);
     }

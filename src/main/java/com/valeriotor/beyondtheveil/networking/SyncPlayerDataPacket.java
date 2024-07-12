@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.networking;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,6 +22,7 @@ public abstract class SyncPlayerDataPacket {
     private String valueString;
     private int valueInt;
     private long valueLong;
+    private CompoundTag valueTag;
 
     public static SyncPlayerDataPacket toServer(String key) {
         return new ToServer(key);
@@ -28,6 +30,12 @@ public abstract class SyncPlayerDataPacket {
 
     public static SyncPlayerDataPacket toClient(String key) {
         return new ToClient(key);
+    }
+
+    public final SyncPlayerDataPacket setTag(CompoundTag value) {
+        this.type = Type.TAG;
+        valueTag = value;
+        return this;
     }
 
     public final SyncPlayerDataPacket setBoolean(boolean value) {
@@ -75,6 +83,7 @@ public abstract class SyncPlayerDataPacket {
                 case STRING -> valueString = buf.readUtf();
                 case INT -> valueInt = buf.readInt();
                 case LONG -> valueLong = buf.readLong();
+                case TAG -> valueTag = buf.readNbt();
             }
         }
     }
@@ -89,6 +98,7 @@ public abstract class SyncPlayerDataPacket {
                 case STRING -> buf.writeUtf(valueString);
                 case INT -> buf.writeInt(valueInt);
                 case LONG -> buf.writeLong(valueLong);
+                case TAG -> buf.writeNbt(valueTag);
             }
         }
     }
@@ -104,6 +114,7 @@ public abstract class SyncPlayerDataPacket {
                             case STRING -> DataUtilClient.setString(key, valueString, false);
                             case INT -> DataUtilClient.setInt(key, valueInt, false);
                             case LONG -> DataUtilClient.setLong(key, valueLong, false);
+                            case TAG -> DataUtilClient.setTag(key, valueTag);
                         }
                     } else {
                         DataUtilClient.removeString(key);
@@ -118,6 +129,7 @@ public abstract class SyncPlayerDataPacket {
                             case STRING -> DataUtil.setString(p, key, valueString, false);
                             case INT -> DataUtil.setInt(p, key, valueInt, false);
                             case LONG -> DataUtil.setLong(p, key, valueLong, false);
+                            case TAG -> DataUtil.setTag(p, key, valueTag);
                         }
                     } else {
                         DataUtil.removeString(p, key);
@@ -151,7 +163,7 @@ public abstract class SyncPlayerDataPacket {
     }
 
     private enum Type {
-        BOOLEAN, STRING, INT, LONG;
+        BOOLEAN, STRING, INT, LONG, TAG
     }
 
 }

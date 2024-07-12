@@ -75,6 +75,7 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 		if(!entity.isSurgeryPatient()) {
 			float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
 			arms.xRot = -2.3998F - armSwing;
+			//arms.xRot = -1;
 		}
 	}
 
@@ -119,6 +120,12 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 				deathAnimation.apply(pPartialTick);
 			}
 		}
+		//head.xRot = 1;
+		//arms.xRot = 1;
+		//leftLeg.xRot = -1;
+		//rightLeg.xRot = -1;
+		//leftLeg.z = 0.5F;
+		//rightLeg.z = 0.5F;
 
 	}
 

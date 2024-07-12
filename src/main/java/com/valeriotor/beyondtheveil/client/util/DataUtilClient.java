@@ -60,6 +60,12 @@ public class DataUtilClient {
         }
     }
 
+    public static void setTag(String key, CompoundTag value) {
+        if (Minecraft.getInstance().player != null) {
+            DataUtil.setTag(Minecraft.getInstance().player, key, value);
+        }
+    }
+
     public static void setBoolean(String key, boolean value, boolean temporary) {
         if (Minecraft.getInstance().player != null) {
             DataUtil.setBoolean(Minecraft.getInstance().player, key, value, temporary);

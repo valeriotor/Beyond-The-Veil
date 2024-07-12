@@ -3,6 +3,11 @@ package com.valeriotor.beyondtheveil.event;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
+import com.valeriotor.beyondtheveil.block.WateryCradleBlock;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -11,6 +16,7 @@ import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -30,7 +36,7 @@ public class PlayerEvents {
         Player p = event.getEntity();
         if (p != null && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
             DreamHandler.dream(p);
-            if(ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0)
+            if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0)
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DIDDREAM, true, false);
         }
     }
@@ -41,7 +47,7 @@ public class PlayerEvents {
 
         if (event.getFrom() == Level.NETHER && event.getTo() == Level.OVERWORLD && !DataUtil.getBoolean(p, PlayerDataLib.THEBEGINNING)) {
             boolean added = p.addItem(new ItemStack(Registration.NECRONOMICON.get()));
-            if(added) {
+            if (added) {
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.THEBEGINNING, true, false);
                 p.sendSystemMessage(Component.translatable("beginning.netherreturn"));
             }
@@ -59,8 +65,21 @@ public class PlayerEvents {
         //        //event.setUseBlock(Event.Result.DENY);
         //    }
         //}
-        if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SYRINGE.get() && level.getBlockEntity(event.getPos()) instanceof SurgicalBE) {
+        ItemStack itemInHand = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (itemInHand.getItem() == Registration.SYRINGE.get() && level.getBlockEntity(event.getPos()) instanceof SurgicalBE) {
             event.setUseBlock(Event.Result.DENY);
+        }
+        if (itemInHand.isEmpty() && player.isShiftKeyDown()) {
+            if (player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
+                CrossSyncData csData = player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
+                CrossSync crossSync = csData.getCrossSync();
+                Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
+                if (heldPatientEntity != null) {
+                    heldPatientEntity.setPos(event.getHitVec().getLocation());
+                    level.addFreshEntity(heldPatientEntity);
+                    crossSync.setHeldPatient(null, player);
+                }
+            }
         }
     }
 

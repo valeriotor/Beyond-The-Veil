@@ -2,11 +2,14 @@ package com.valeriotor.beyondtheveil.client.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -35,6 +38,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -164,9 +168,9 @@ public class RenderEvents {
     }
 
     @SubscribeEvent
-    public static void renderTransformedPlayer(RenderPlayerEvent event) {
+    public static void renderPlayer(RenderPlayerEvent event) {
+        Player p = event.getEntity();
         if (false) {
-            Player p = event.getEntity();
             //Entity entity = Minecraft.getInstance().getCameraEntity();
             //double d0 = p.xOld + (p.position().x - p.xOld) * (double)event.getPartialTick();
             //double d1 = p.yOld + (p.position().y - p.yOld) * (double)event.getPartialTick();
@@ -178,6 +182,19 @@ public class RenderEvents {
             event.setCanceled(true);
             EntityRenderer<LivingEntity> deepOneRenderer = (EntityRenderer<LivingEntity>) Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(Registration.DEEP_ONE.get());
             deepOneRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+        }
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+        if (crossSync != null) { // in theory this should never be null
+            Mob heldPatientEntity = crossSync.getHeldPatientEntity(p.level());
+            if (heldPatientEntity != null) {
+                PoseStack poseStack = event.getPoseStack();
+                poseStack.pushPose();
+                float scaleFactor = 1;
+                poseStack.scale(scaleFactor, scaleFactor, scaleFactor);
+                poseStack.mulPose(Axis.YP.rotation((float) (Math.PI - Math.toRadians(Mth.rotLerp(event.getPartialTick(), p.yBodyRotO, p.yBodyRot)))));
+                Minecraft.getInstance().getEntityRenderDispatcher().render(heldPatientEntity, -0.4, 1.3, 0.1, 0, event.getPartialTick(), poseStack, event.getMultiBufferSource(), event.getPackedLight());
+                poseStack.popPose();
+            }
         }
     }
 
