@@ -24,7 +24,9 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -411,8 +413,24 @@ public class RenderEvents {
 
     @SubscribeEvent
     public static void renderWorldLastEvent(RenderLevelStageEvent event) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if (player != null) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+            float partialTick = Minecraft.getInstance().getPartialTick();
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+            if (crossSync != null && event.getStage() == RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
+                Mob heldPatientEntity = crossSync.getHeldPatientEntity(p.level());
+                if (heldPatientEntity != null) {
+                    PoseStack poseStack = event.getPoseStack();
+                    poseStack.pushPose();
+                    float scaleFactor = 1;
+                    poseStack.scale(scaleFactor, scaleFactor, scaleFactor);
+                    poseStack.mulPose(Axis.YP.rotation((float) (Math.PI - Math.toRadians(Mth.rotLerp(partialTick, p.yBodyRotO, p.yBodyRot)))));
+                    MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+                    EntityRenderDispatcher erd = Minecraft.getInstance().getEntityRenderDispatcher();
+                    erd.render(heldPatientEntity, -0.4, 0, 0.1, 0, partialTick, poseStack, bufferSource, erd.getPackedLightCoords(p, partialTick));
+                    poseStack.popPose();
+                }
+            }
         }
     }
 
