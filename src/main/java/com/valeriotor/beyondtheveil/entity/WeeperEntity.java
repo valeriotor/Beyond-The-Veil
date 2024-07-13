@@ -2,16 +2,23 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -20,12 +27,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity{
+public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity, SurgeryPatient {
 
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.BOOLEAN);
@@ -33,6 +42,9 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     private boolean wasBleeding = false;
     private int attackTimer = -1;
     private int deathTimer = -1;
+    private boolean surgeryPatient;
+    private PatientStatus patientStatus;
+    private boolean held;
 
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
@@ -73,7 +85,6 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     @Override
     public void startBurst() {
         attackTimer = 30;
-
     }
 
     @Override
@@ -169,5 +180,72 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
 
     public boolean isTargeting() {
         return entityData.get(DATA_TARGETING);
+    }
+
+    @Override
+    public void markAsPatient() {
+        surgeryPatient = true;
+    }
+
+    @Override
+    public boolean isSurgeryPatient() {
+        return surgeryPatient;
+    }
+
+    @Override
+    public void setPatientStatus(PatientStatus patientStatus) {
+        this.patientStatus = patientStatus;
+    }
+
+    @Override
+    public PatientStatus getPatientStatus() {
+        return patientStatus;
+    }
+
+    @Override
+    public PatientType getPatientType() {
+        return PatientType.WEEPER;
+    }
+
+    @Override
+    public void setHeld(boolean held) {
+        this.held = held;
+    }
+
+    @Override
+    public boolean isHeld() {
+        return held;
+    }
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setHeld(false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putBoolean("held", held);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        if (pCompound.contains("held")) {
+            held = pCompound.getBoolean("held");
+        }
+    }
+
+    @Override
+    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
+            if (!level().isClientSide) {
+                pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> data.getCrossSync().setHeldPatient(this, pPlayer));
+                discard();
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.interactAt(pPlayer, pVec, pHand);
     }
 }

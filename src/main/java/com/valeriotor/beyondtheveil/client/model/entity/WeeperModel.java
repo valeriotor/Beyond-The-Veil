@@ -176,6 +176,21 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         //left_arm2.xRot = (float) 0.8727F;
         //left_arm2.xRot = (float) 0;
 
+        if (!entity.isSurgeryPatient()) {
+            if (entity.isHeld()) {
+                body.xRot = (float) 1.2;
+                upper_body_1.xRot = (float) 0.5;
+                left_arm1.xRot = (float) -1.5;
+                right_arm1.xRot = (float) -1.5;
+                head1.xRot = (float) 0.8;
+                legs.xRot = (float) 0.5;
+                body.y = 20;
+                legs.y = 22;
+                body.z = 5;
+                legs.z = 5;
+            }
+        }
+
 
     }
 
@@ -185,99 +200,103 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         //right_arm2.xRot = -1.2727F;
         //left_arm2.xRot = -1.2727F;
 
-        float ageInTicks = entity.tickCount + pa;
+        if (!entity.isHeld()) {
 
-        float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 15;
-        float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 15;
-        float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (14 * 1.5F)) / 15;
-        float offset4 = Mth.sin((float) Math.PI * 2 * ageInTicks / (15 * 1.5F)) / 15;
-        float offset5 = Mth.sin((float) Math.PI * 2 * ageInTicks / (16 * 1.5F)) / 15;
-        float offset6 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 15;
-        float offset7 = Mth.sin((float) Math.PI * 2 * ageInTicks / (18 * 1.5F)) / 15;
-        float offset8 = Mth.sin((float) Math.PI * 2 * ageInTicks / (19 * 1.5F)) / 15;
-        float offset9 = Mth.sin((float) Math.PI * 2 * ageInTicks / (20 * 1.5F)) / 15;
+            float ageInTicks = entity.tickCount + pa;
 
-        blob1.x = 0.0F + offset1;
-        blob2.x = 5.0F - offset2;
-        blob3.x = 3.0F + offset3;
-        blob4.x = 3.0F - offset4;
-        blob5.x = 3.0F + offset5;
-        blob6.x = 3.0F - offset6;
-        blob7.x = -0.75F + offset7;
-        blob8.x = -0.75F - offset8;
-        blob9.x = 5.0F + offset9;
+            float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 15;
+            float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 15;
+            float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (14 * 1.5F)) / 15;
+            float offset4 = Mth.sin((float) Math.PI * 2 * ageInTicks / (15 * 1.5F)) / 15;
+            float offset5 = Mth.sin((float) Math.PI * 2 * ageInTicks / (16 * 1.5F)) / 15;
+            float offset6 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 15;
+            float offset7 = Mth.sin((float) Math.PI * 2 * ageInTicks / (18 * 1.5F)) / 15;
+            float offset8 = Mth.sin((float) Math.PI * 2 * ageInTicks / (19 * 1.5F)) / 15;
+            float offset9 = Mth.sin((float) Math.PI * 2 * ageInTicks / (20 * 1.5F)) / 15;
 
-        blob1.y = 0.0F + offset3;
-        blob2.y = -0.25F - offset4;
-        blob3.y = -1.5F + offset5;
-        blob4.y = -3.5F - offset6;
-        blob5.y = 0.5F + offset7;
-        blob6.y = 1.0F - offset8;
-        blob7.y = -0.75F + offset9;
-        blob8.y = -0.75F - offset1;
-        blob9.y = 2.25F + offset2;
+            blob1.x = 0.0F + offset1;
+            blob2.x = 5.0F - offset2;
+            blob3.x = 3.0F + offset3;
+            blob4.x = 3.0F - offset4;
+            blob5.x = 3.0F + offset5;
+            blob6.x = 3.0F - offset6;
+            blob7.x = -0.75F + offset7;
+            blob8.x = -0.75F - offset8;
+            blob9.x = 5.0F + offset9;
 
-        blob1.z = 0.0F + offset2;
-        blob2.z = 1.0F - offset3;
-        blob3.z = 4.0F + offset4;
-        blob4.z = 2.0F - offset5;
-        blob5.z = -1.0F + offset6;
-        blob6.z = 3.25F - offset7;
-        blob7.z = -0.75F + offset8;
-        blob8.z = 2.25F - offset9;
-        blob9.z = 1.75F + offset1;
+            blob1.y = 0.0F + offset3;
+            blob2.y = -0.25F - offset4;
+            blob3.y = -1.5F + offset5;
+            blob4.y = -3.5F - offset6;
+            blob5.y = 0.5F + offset7;
+            blob6.y = 1.0F - offset8;
+            blob7.y = -0.75F + offset9;
+            blob8.y = -0.75F - offset1;
+            blob9.y = 2.25F + offset2;
 
-        body.yRot = offset5;
-        upper_body_1.xRot = 0.1745F + offset1 / 4;
+            blob1.z = 0.0F + offset2;
+            blob2.z = 1.0F - offset3;
+            blob3.z = 4.0F + offset4;
+            blob4.z = 2.0F - offset5;
+            blob5.z = -1.0F + offset6;
+            blob6.z = 3.25F - offset7;
+            blob7.z = -0.75F + offset8;
+            blob8.z = 2.25F - offset9;
+            blob9.z = 1.75F + offset1;
 
-        //right_leg1.yRot = offset3 / 2;
-        //left_leg1.yRot = offset8 / 2;
+            body.yRot = offset5;
+            upper_body_1.xRot = 0.1745F + offset1 / 4;
 
-        float offset10 = Mth.sin((float) Math.PI * 6 * ageInTicks / (60F)) / 16;
-        float offset11 = Mth.sin((float) Math.PI * 6 * ageInTicks / (80F) + 0.4F) / 16;
-        float offset12 = Mth.sin((float) Math.PI * 6 * ageInTicks / (90F) + 0.5F) / 16;
-        float offset13 = Mth.sin((float) Math.PI * 6 * ageInTicks / (50F) + 1) / 16;
+            //right_leg1.yRot = offset3 / 2;
+            //left_leg1.yRot = offset8 / 2;
 
-        boolean flag = entity.getFallFlyingTicks() > 4;
+            float offset10 = Mth.sin((float) Math.PI * 6 * ageInTicks / (60F)) / 16;
+            float offset11 = Mth.sin((float) Math.PI * 6 * ageInTicks / (80F) + 0.4F) / 16;
+            float offset12 = Mth.sin((float) Math.PI * 6 * ageInTicks / (90F) + 0.5F) / 16;
+            float offset13 = Mth.sin((float) Math.PI * 6 * ageInTicks / (50F) + 1) / 16;
 
-        float f = 1.0F;
-        if (flag) {
-            f = (float) entity.getDeltaMovement().lengthSqr();
-            f /= 0.2F;
-            f *= f * f;
+            boolean flag = entity.getFallFlyingTicks() > 4;
+
+            float f = 1.0F;
+            if (flag) {
+                f = (float) entity.getDeltaMovement().lengthSqr();
+                f /= 0.2F;
+                f *= f * f;
+            }
+
+            if (f < 1.0F) {
+                f = 1.0F;
+            }
+
+            if (!entity.isTargeting()) {
+                right_arm1.xRot = offset10;
+                right_arm1.yRot = offset10;
+                right_arm2.xRot = 0.8727F + offset11;
+                left_arm1.xRot = offset12;
+                left_arm2.xRot = 0.8727F + offset13;
+                body.xRot = -0.3054F + Mth.cos(limbSwing * 0.4331F) * 1F * limbSwingAmount / f / 7.5F;
+            } else {
+                body.xRot = 0;
+                float offset14 = Mth.cos(limbSwing * 1.2662F) * 1F * limbSwingAmount / f / 5;
+                float offset15 = Mth.cos(limbSwing * 1.2662F + (float) Math.PI) * 1F * limbSwingAmount / f / 5;
+                right_arm1.xRot = -1.5F + offset14; //offset10;
+                right_arm1.yRot = 0.75F + offset14; //offset10;
+                left_arm1.xRot = -1.5F + offset15; //offset10;
+                left_arm1.yRot = -0.75F + offset15; //offset10;
+            }
+
+
+            this.right_leg1.xRot = -0.3927F + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f;
+            this.left_leg1.xRot = -0.3927F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f;
+            // if null target
+            body.zRot = Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 3.5F;
+
+            Animation explodingAnimation = entity.getExplodingAnimation();
+            if (explodingAnimation != null) {
+                explodingAnimation.apply(pa);
+            }
         }
 
-        if (f < 1.0F) {
-            f = 1.0F;
-        }
-
-        if (!entity.isTargeting()) {
-            right_arm1.xRot = offset10;
-            right_arm1.yRot = offset10;
-            right_arm2.xRot = 0.8727F + offset11;
-            left_arm1.xRot = offset12;
-            left_arm2.xRot = 0.8727F + offset13;
-            body.xRot = -0.3054F + Mth.cos(limbSwing * 0.4331F) * 1F * limbSwingAmount / f / 7.5F;
-        } else {
-            body.xRot = 0;
-            float offset14 = Mth.cos(limbSwing * 1.2662F) * 1F * limbSwingAmount / f / 5;
-            float offset15 = Mth.cos(limbSwing * 1.2662F + (float) Math.PI) * 1F * limbSwingAmount / f / 5;
-            right_arm1.xRot = -1.5F + offset14; //offset10;
-            right_arm1.yRot = 0.75F + offset14; //offset10;
-            left_arm1.xRot = -1.5F + offset15; //offset10;
-            left_arm1.yRot = -0.75F + offset15; //offset10;
-        }
-
-
-        this.right_leg1.xRot = -0.3927F + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f;
-        this.left_leg1.xRot = -0.3927F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f;
-        // if null target
-        body.zRot = Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 3.5F;
-
-        Animation explodingAnimation = entity.getExplodingAnimation();
-        if (explodingAnimation != null) {
-            explodingAnimation.apply(pa);
-        }
     }
 
     @Override
