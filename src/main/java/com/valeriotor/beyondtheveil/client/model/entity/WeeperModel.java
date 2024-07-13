@@ -8,11 +8,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -41,6 +44,8 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
     private final ModelPart left_arm2;
     private final ModelPart right_leg1;
     private final ModelPart left_leg1;
+    private final ModelPart right_leg2;
+    private final ModelPart left_leg2;
 
     public WeeperModel(ModelPart root) {
         super(name);
@@ -65,6 +70,8 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         this.left_arm2 = registerAnimatedPart("left_arm2", left_arm1.getChild("left_arm2"));
         this.right_leg1 = registerAnimatedPart("right_leg1", legs.getChild("right_leg1"));
         this.left_leg1 = registerAnimatedPart("left_leg1", legs.getChild("left_leg1"));
+        this.right_leg2 = registerAnimatedPart("right_leg2", right_leg1.getChild("right_leg2"));
+        this.left_leg2 = registerAnimatedPart("left_leg2", left_leg1.getChild("left_leg2"));
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -176,20 +183,7 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         //left_arm2.xRot = (float) 0.8727F;
         //left_arm2.xRot = (float) 0;
 
-        if (!entity.isSurgeryPatient()) {
-            if (entity.isHeld()) {
-                body.xRot = (float) 1.2;
-                upper_body_1.xRot = (float) 0.5;
-                left_arm1.xRot = (float) -1.5;
-                right_arm1.xRot = (float) -1.5;
-                head1.xRot = (float) 0.8;
-                legs.xRot = (float) 0.5;
-                body.y = 20;
-                legs.y = 22;
-                body.z = 5;
-                legs.z = 5;
-            }
-        }
+
 
 
     }
@@ -199,50 +193,52 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         resetParts();
         //right_arm2.xRot = -1.2727F;
         //left_arm2.xRot = -1.2727F;
+        LocalPlayer p = Minecraft.getInstance().player;
 
-        if (!entity.isHeld()) {
+        float ageInTicks = entity.isHeld() || entity.isSurgeryPatient() ? (p != null ? p.tickCount + pa : 0) : entity.tickCount + pa;
 
-            float ageInTicks = entity.tickCount + pa;
+        float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 15;
+        float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 15;
+        float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (14 * 1.5F)) / 15;
+        float offset4 = Mth.sin((float) Math.PI * 2 * ageInTicks / (15 * 1.5F)) / 15;
+        float offset5 = Mth.sin((float) Math.PI * 2 * ageInTicks / (16 * 1.5F)) / 15;
+        float offset6 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 15;
+        float offset7 = Mth.sin((float) Math.PI * 2 * ageInTicks / (18 * 1.5F)) / 15;
+        float offset8 = Mth.sin((float) Math.PI * 2 * ageInTicks / (19 * 1.5F)) / 15;
+        float offset9 = Mth.sin((float) Math.PI * 2 * ageInTicks / (20 * 1.5F)) / 15;
 
-            float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 15;
-            float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 15;
-            float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (14 * 1.5F)) / 15;
-            float offset4 = Mth.sin((float) Math.PI * 2 * ageInTicks / (15 * 1.5F)) / 15;
-            float offset5 = Mth.sin((float) Math.PI * 2 * ageInTicks / (16 * 1.5F)) / 15;
-            float offset6 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 15;
-            float offset7 = Mth.sin((float) Math.PI * 2 * ageInTicks / (18 * 1.5F)) / 15;
-            float offset8 = Mth.sin((float) Math.PI * 2 * ageInTicks / (19 * 1.5F)) / 15;
-            float offset9 = Mth.sin((float) Math.PI * 2 * ageInTicks / (20 * 1.5F)) / 15;
+        blob1.x = 0.0F + offset1;
+        blob2.x = 5.0F - offset2;
+        blob3.x = 3.0F + offset3;
+        blob4.x = 3.0F - offset4;
+        blob5.x = 3.0F + offset5;
+        blob6.x = 3.0F - offset6;
+        blob7.x = -0.75F + offset7;
+        blob8.x = -0.75F - offset8;
+        blob9.x = 5.0F + offset9;
 
-            blob1.x = 0.0F + offset1;
-            blob2.x = 5.0F - offset2;
-            blob3.x = 3.0F + offset3;
-            blob4.x = 3.0F - offset4;
-            blob5.x = 3.0F + offset5;
-            blob6.x = 3.0F - offset6;
-            blob7.x = -0.75F + offset7;
-            blob8.x = -0.75F - offset8;
-            blob9.x = 5.0F + offset9;
+        blob1.y = 0.0F + offset3;
+        blob2.y = -0.25F - offset4;
+        blob3.y = -1.5F + offset5;
+        blob4.y = -3.5F - offset6;
+        blob5.y = 0.5F + offset7;
+        blob6.y = 1.0F - offset8;
+        blob7.y = -0.75F + offset9;
+        blob8.y = -0.75F - offset1;
+        blob9.y = 2.25F + offset2;
 
-            blob1.y = 0.0F + offset3;
-            blob2.y = -0.25F - offset4;
-            blob3.y = -1.5F + offset5;
-            blob4.y = -3.5F - offset6;
-            blob5.y = 0.5F + offset7;
-            blob6.y = 1.0F - offset8;
-            blob7.y = -0.75F + offset9;
-            blob8.y = -0.75F - offset1;
-            blob9.y = 2.25F + offset2;
+        blob1.z = 0.0F + offset2;
+        blob2.z = 1.0F - offset3;
+        blob3.z = 4.0F + offset4;
+        blob4.z = 2.0F - offset5;
+        blob5.z = -1.0F + offset6;
+        blob6.z = 3.25F - offset7;
+        blob7.z = -0.75F + offset8;
+        blob8.z = 2.25F - offset9;
+        blob9.z = 1.75F + offset1;
 
-            blob1.z = 0.0F + offset2;
-            blob2.z = 1.0F - offset3;
-            blob3.z = 4.0F + offset4;
-            blob4.z = 2.0F - offset5;
-            blob5.z = -1.0F + offset6;
-            blob6.z = 3.25F - offset7;
-            blob7.z = -0.75F + offset8;
-            blob8.z = 2.25F - offset9;
-            blob9.z = 1.75F + offset1;
+        if (!entity.isHeld() && !entity.isSurgeryPatient()) {
+
 
             body.yRot = offset5;
             upper_body_1.xRot = 0.1745F + offset1 / 4;
@@ -294,6 +290,98 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
             Animation explodingAnimation = entity.getExplodingAnimation();
             if (explodingAnimation != null) {
                 explodingAnimation.apply(pa);
+            }
+        } else {
+            if (!entity.isSurgeryPatient()) {
+                if (entity.isHeld()) {
+                    body.xRot = (float) 1.2;
+                    upper_body_1.xRot = (float) 0.5;
+                    left_arm1.xRot = (float) -1.5;
+                    right_arm1.xRot = (float) -1.5;
+                    head1.xRot = (float) 0.8;
+                    legs.xRot = (float) 0.5;
+                    body.y = 20;
+                    legs.y = 22;
+                    body.z = 5;
+                    legs.z = 5;
+                }
+            } else {
+                SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
+                if (exposedLocation == SurgicalLocation.BACK) {
+                    float offset13 = Mth.sin((float) Math.PI * 2 * ageInTicks / (90F)) / 16;
+                    body.xRot = (float) 1.2;
+                    //upper_body_1.xRot = (float) 0;
+                    left_arm1.xRot = (float) -1;
+                    left_arm1.yRot = (float) -1.4;
+                    left_arm2.xRot = (float) 0;
+                    left_arm2.zRot = (float) 0.3;
+                    left_arm2.yRot = (float) 1.1 + offset13;
+                    left_arm2.z = (float) 0.15;
+                    left_arm2.y = (float) 6.75;
+                    left_arm2.x = (float) -0.55;
+                    right_arm1.xRot = (float) -1;
+                    right_arm1.yRot = (float) 1.4;
+                    right_arm2.xRot = (float) 0;
+                    right_arm2.zRot = (float) -0.3;
+                    right_arm2.yRot = (float) -1.1 + offset13;
+                    right_arm2.z = (float) 0.15;
+                    right_arm2.y = (float) 6.75;
+                    right_arm2.x = (float) 0.55;
+                    head1.xRot = (float) -0.35;
+                    legs.xRot = (float) 1.7;
+                    right_leg2.xRot = 0.35F;
+                    left_leg2.xRot = 0.35F;
+                    body.y = 22;
+                    legs.y = 22;
+                    //body.z = 5;
+                    //legs.z = 5;
+
+                } else if (exposedLocation == SurgicalLocation.CHEST) {
+
+                    body.xRot = (float) 1.5;
+                    upper_body_1.xRot = (float) 0;
+                    left_arm2.xRot = (float) 1.4;
+                    right_arm2.xRot = (float) 1.4;
+                    head1.xRot = (float) -0.35;
+                    legs.xRot = (float) 1.85;
+                    right_leg2.xRot = 0.35F;
+                    left_leg2.xRot = 0.35F;
+                    body.y = 18.7F;
+                    legs.y = 18.7F;
+                } else if (exposedLocation == SurgicalLocation.SKULL) {
+                    body.xRot = (float) 1.5;
+                    upper_body_1.xRot = (float) 0;
+                    left_arm1.xRot = (float) -0.25;
+                    left_arm1.yRot = (float) 0.25;
+                    right_arm1.xRot = (float) -0.25;
+                    right_arm1.yRot = (float) -0.25;
+                    //left_arm1.yRot = (float) 0.6;
+                    //left_arm1.zRot = (float) -0.7;
+                    //left_arm2.xRot = (float) 0;
+                    //left_arm2.zRot = (float) 0.7;
+                    //left_arm2.yRot = (float) 1.1;
+                    //left_arm2.z = (float) 0.15;
+                    //left_arm2.y = (float) 6.75;
+                    //left_arm2.x = (float) -0.55;
+                    //right_arm1.xRot = (float) -1.5;
+                    //right_arm1.yRot = (float) -0.6;
+                    //right_arm1.zRot = (float) 0.7;
+                    //right_arm2.xRot = (float) 0;
+                    //right_arm2.zRot = (float) -0.7;
+                    //right_arm2.yRot = (float) -1.1;
+                    //right_arm2.z = (float) 0.15;
+                    //right_arm2.y = (float) 6.75;
+                    //right_arm2.x = (float) -0.55;
+                    head1.xRot = (float) -0.35;
+                    legs.xRot = (float) 1.7;
+                    right_leg2.xRot = 0.35F;
+                    left_leg2.xRot = 0.35F;
+                    body.y = 19;
+                    legs.y = 19;
+                    //body.z = 5;
+                    //legs.z = 5;
+
+                }
             }
         }
 

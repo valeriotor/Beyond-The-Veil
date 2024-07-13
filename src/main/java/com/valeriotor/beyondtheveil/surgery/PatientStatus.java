@@ -33,20 +33,8 @@ public class PatientStatus {
 
     private boolean dirty;
 
-    public PatientStatus() {
-    }
-
-    private static int tooMuchSedativeThreshold() {
-        //TODO link to server data
-        return 100;
-    }
-
-    private static int enoughSedativeThreshold() {
-        //TODO link to server data
-        return 10;
-    }
-
     private static final double[] ABSOLUTE_PAIN_THRESHOLDS = new double[]{10, 30, 50};
+
     private static final double[] MISSING_PAIN_THRESHOLDS = new double[]{100, 60, 30};
     private SurgicalLocation exposedLocation = SurgicalLocation.CHEST; // Just to be sure it's never null
     private boolean incised = false;
@@ -62,6 +50,15 @@ public class PatientStatus {
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
     private ServerLevel level;
     private BlockPos pos;
+    private final PatientType patientType;
+
+    public PatientStatus(PatientType patientType) {
+        this.patientType = patientType;
+    }
+
+    public PatientType getPatientType() {
+        return patientType;
+    }
 
     public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
         this.level = level;

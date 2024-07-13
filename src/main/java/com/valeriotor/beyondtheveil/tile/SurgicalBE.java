@@ -38,7 +38,7 @@ public abstract class SurgicalBE extends BlockEntity {
 
     private final SurgicalLocation defaultLocation;
     private PatientStatus patientStatus;
-    private CrawlerEntity entity; // Exists only client side. TODO will probably have to convert this to an interface or abstract class extended by other entity types
+    private Mob entity; // Exists only client side. TODO will probably have to convert this to an interface or abstract class extended by other entity types
     private CompoundTag entityData; // Exists only server side
 
 
@@ -63,7 +63,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if (crossSync.getHeldPatientData() == null) {
-                        crossSync.setHeldPatient(PatientType.VILLAGER, entityData, p);
+                        crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
                         entityData = null;
                         patientStatus = null;
                         setChanged();
@@ -84,7 +84,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
                 if (heldPatientEntity != null) {
                     entityData = crossSync.getHeldPatientData();
-                    patientStatus = new PatientStatus();
+                    patientStatus = new PatientStatus(crossSync.getHeldPatientType());
                     patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
                     // TODO if(itemTag.contains("status")) { BUT DO WE WANT THIS
                     // TODO patientStatus.loadFromNBT(itemTag.getCompound("status"));
@@ -98,22 +98,22 @@ public abstract class SurgicalBE extends BlockEntity {
                 }
 
             }
-            if (in.getItem() instanceof HeldVillagerItem) {
-                CompoundTag itemTag = in.getOrCreateTag();
-                if (itemTag.contains("data")) {
-                    entityData = itemTag.getCompound("data");
-                    patientStatus = new PatientStatus();
-                    patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
-                    if (itemTag.contains("status")) {
-                        patientStatus.loadFromNBT(itemTag.getCompound("status"));
-                    }
-                    patientStatus.setExposedLocation(defaultLocation);
-                    in.shrink(1);
-                    setChanged();
-                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                    return true;
-                }
-            }
+            //if (in.getItem() instanceof HeldVillagerItem) {
+            //    CompoundTag itemTag = in.getOrCreateTag();
+            //    if (itemTag.contains("data")) {
+            //        entityData = itemTag.getCompound("data");
+            //        patientStatus = new PatientStatus();
+            //        patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+            //        if (itemTag.contains("status")) {
+            //            patientStatus.loadFromNBT(itemTag.getCompound("status"));
+            //        }
+            //        patientStatus.setExposedLocation(defaultLocation);
+            //        in.shrink(1);
+            //        setChanged();
+            //        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            //        return true;
+            //    }
+            //}
         }
         return false;
 
@@ -157,17 +157,19 @@ public abstract class SurgicalBE extends BlockEntity {
 
     private void loadPatient(CompoundTag pTag) {
         if (pTag != null && pTag.contains("entity")) {
-            patientStatus = new PatientStatus();
+            PatientType type = pTag.contains("type") ? PatientType.valueOf(pTag.getString("type")) : PatientType.VILLAGER;
+            patientStatus = new PatientStatus(type);
             if (pTag.contains("status")) {
                 patientStatus.loadFromNBT(pTag.getCompound("status"));
             }
             if (level != null && level.isClientSide) {
-                if (entity == null || entity.getClass() != CrawlerEntity.class) { // TODO check if this is correct. Also use entity type
-                    entity = Registration.CRAWLER.get().create(level);
+                if (entity == null) { // TODO check if this is correct. Also use entity type
+                    entity = type.getMobFunction().apply(level);
+                    entity.setYHeadRot(0);
                 }
-                if (entity instanceof SurgeryPatient) { // Will not be redundant once we expand to other patient types
-                    ((SurgeryPatient) entity).markAsPatient();
-                    ((SurgeryPatient) entity).setPatientStatus(patientStatus);
+                if (entity instanceof SurgeryPatient sp) { // Will not be redundant once we expand to other patient types
+                    sp.markAsPatient();
+                    sp.setPatientStatus(patientStatus);
                 }
                 CompoundTag tag = pTag.getCompound("entity");
                 entity.readAdditionalSaveData(tag);
@@ -180,6 +182,7 @@ public abstract class SurgicalBE extends BlockEntity {
         } else {
             entity = null;
             entityData = null;
+            patientStatus = null;
         }
 
     }
@@ -206,6 +209,7 @@ public abstract class SurgicalBE extends BlockEntity {
             CompoundTag statusTag = new CompoundTag();
             patientStatus.saveToNBT(statusTag);
             pTag.put("status", statusTag);
+            pTag.putString("type", patientStatus.getPatientType().name());
         }
     }
 
@@ -234,7 +238,7 @@ public abstract class SurgicalBE extends BlockEntity {
     }
 
 
-    public CrawlerEntity getEntity() {
+    public Mob getEntity() {
         return entity;
     }
 

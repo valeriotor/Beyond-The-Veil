@@ -44,6 +44,10 @@ public class CrossSync {
         return heldPatientData;
     }
 
+    public PatientType getHeldPatientType() {
+        return heldPatientType;
+    }
+
     public Mob getHeldPatientEntity(Level level) {
         if (heldPatientType == null) {
             return null;
