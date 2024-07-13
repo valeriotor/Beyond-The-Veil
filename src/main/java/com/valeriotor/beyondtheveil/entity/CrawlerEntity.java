@@ -54,6 +54,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private PatientStatus patientStatus;
     private Animation painAnimation;
     private Animation deathAnimation;
+    private boolean held;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -127,6 +128,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         }
 
         pCompound.putInt("Xp", this.villagerXp);
+        pCompound.putBoolean("held", held);
     }
 
     @Override
@@ -147,6 +149,9 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
         if (pCompound.contains("Xp", 3)) {
             this.villagerXp = pCompound.getInt("Xp");
+        }
+        if (pCompound.contains("held")) {
+            held = pCompound.getBoolean("held");
         }
 
     }
@@ -294,6 +299,22 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Override
     public PatientType getPatientType() {
         return PatientType.VILLAGER;
+    }
+
+    @Override
+    public void setHeld(boolean held) {
+        this.held = held;
+    }
+
+    @Override
+    public boolean isHeld() {
+        return held;
+    }
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setHeld(false);
     }
 
     public Animation getPainAnimation() {

@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.block.WateryCradleBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -76,6 +77,7 @@ public class PlayerEvents {
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
                 if (heldPatientEntity != null) {
                     heldPatientEntity.setPos(event.getHitVec().getLocation());
+                    //((SurgeryPatient) heldPatientEntity).setHeld(false);
                     level.addFreshEntity(heldPatientEntity);
                     crossSync.setHeldPatient(null, player);
                 }

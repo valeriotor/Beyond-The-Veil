@@ -27,5 +27,9 @@ public interface SurgeryPatient {
 
     PatientType getPatientType();
 
+    void setHeld(boolean held);
+
+    boolean isHeld();
+
 
 }

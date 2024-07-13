@@ -50,6 +50,7 @@ public class CrossSync {
         } else if (heldPatientEntity == null) {
             heldPatientEntity = heldPatientType.getMobFunction().apply(level);
             heldPatientEntity.readAdditionalSaveData(heldPatientData);
+            ((SurgeryPatient) heldPatientEntity).setHeld(true);
         }
         return heldPatientEntity;
     }

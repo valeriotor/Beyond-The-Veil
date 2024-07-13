@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import net.minecraft.world.entity.Mob;
@@ -17,7 +18,7 @@ public enum PatientType {
 
     private final Function<Level, Mob> mobFunction;
 
-    PatientType(Function<Level, Mob> mobFunction) {
+    <T extends Mob & SurgeryPatient> PatientType(Function<Level, Mob> mobFunction) {
         this.mobFunction = mobFunction;
     }
 
