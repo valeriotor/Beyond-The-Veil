@@ -4,5 +4,11 @@
   },
   "incision": {
     "sounds": [ "beyondtheveil:incision" ]
+  },
+  "head_stretch": {
+    "sounds": [ "beyondtheveil:head_stretch1", "beyondtheveil:head_stretch2" ]
+  },
+  "head_explode": {
+    "sounds": [ "beyondtheveil:head_explode" ]
   }
 }

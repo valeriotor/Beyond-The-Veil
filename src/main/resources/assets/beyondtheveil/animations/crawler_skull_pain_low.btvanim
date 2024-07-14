@@ -4,8 +4,8 @@ start: 0: 1
     rotx: head: -0.54104: immediate: absolute
     rotx: arms: -2.7: immediate: absolute
 start: 1: 6
-    roty: head: -0.25: linear: absolute
+    roty: head: -0.15: linear: absolute
 start: 7: 15
-    roty: head: 0.25: linear: absolute
+    roty: head: 0.15: linear: absolute
 start: 16: 24
     roty: head: 0: linear: absolute

@@ -9,12 +9,14 @@ import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -93,9 +95,10 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 
 	@Override
 	public void prepareMobModel(CrawlerEntity entity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
-		for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
-			defaultPartPose.part().loadPose(defaultPartPose.pose());
-		}
+		resetParts();
+		LocalPlayer p = Minecraft.getInstance().player;
+		float ageInTicks = entity.isHeld() || entity.isSurgeryPatient() ? (p != null ? p.tickCount + pPartialTick : 0) : entity.tickCount + pPartialTick;
+
 		if (entity.isSurgeryPatient()) {
 			SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
 			if (exposedLocation == SurgicalLocation.BACK) {
@@ -118,11 +121,21 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 			} else if (exposedLocation == SurgicalLocation.SKULL) {
 				head.xRot = -0.54104F;
 				arms.xRot = -2.7F;
-				head.xScale = 1.1F;
-				head.yScale = 1.1F;
-				head.zScale = 1.1F;
+				nose.visible = false;
+				double waterAmount = entity.getPatientStatus().getWaterAmount();
+				float rescale = (float) (waterAmount / 2250);
+				if (waterAmount > 100) {
+					rescale += Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 150;
+					head.yRot = (float) (Mth.sin((float) Math.PI * 2 * ageInTicks / (3.5F)) / (65));
+					if (waterAmount > 498) {
+						rescale *= 2;
+					}
+				}
+				head.xScale = 1 + rescale;
+				head.yScale = 1 + rescale;
+				head.zScale = 1 + rescale;
 				if (entity.getPatientStatus().isDead()) {
-					head.yRot = 0;
+					head.xRot = 0;
 				}
 			}
 			Animation painAnimation = entity.getPainAnimation();

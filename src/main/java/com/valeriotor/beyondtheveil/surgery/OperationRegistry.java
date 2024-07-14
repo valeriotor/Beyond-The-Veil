@@ -78,17 +78,19 @@ public class OperationRegistry {
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
             .setPainPerTick(1)
+            .setPainForFailure(50)
+            .setStatusChangeOnSuccess(PatientStatus::explode)
             // TODO .setEntityChange(s -> new WeeperEntity())
             // TODO sendClientMessage(explode head animation)
             // TODO can be done even if terminal condition?
-            .setStatusChangeOnSuccess(s -> {
-                if (s.getCondition() == PatientCondition.DEAD) {
-                    s.setCondition(PatientCondition.RESURRECTED);
-                } else if (s.getCondition().isTerminal()) {
-                    s.setCondition(PatientCondition.STABLE);
-                }
-            })
-            .buildInjectionOperation(Fluids.WATER, 500);
+            //.setStatusChangeOnSuccess(s -> {
+            //    if (s.getCondition() == PatientCondition.DEAD) {
+            //        s.setCondition(PatientCondition.RESURRECTED);
+            //    } else if (s.getCondition().isTerminal()) {
+            //        s.setCondition(PatientCondition.STABLE);
+            //    }
+            //})
+            .buildInjectionOperation(Fluids.WATER, 490);
 
     //private static final Operation SEDATE = new Operation.Builder("sedate") // TODO transform in SEDATE_PAIN?
             //.setPainLevel(PainLevel.NEGLIGIBLE)

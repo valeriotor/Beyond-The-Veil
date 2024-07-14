@@ -261,7 +261,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                         deathAnimation = switch (patientStatus.getExposedLocation()) {
                             case BACK -> new Animation(AnimationRegistry.crawler_back_death);
                             case CHEST -> new Animation(AnimationRegistry.crawler_chest_death);
-                            case SKULL -> null;
+                            case SKULL -> new Animation(AnimationRegistry.crawler_skull_death);
                         };
                     }
                 } else {

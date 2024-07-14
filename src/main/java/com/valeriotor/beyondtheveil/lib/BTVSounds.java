@@ -13,6 +13,8 @@ public class BTVSounds {
 
     public static final RegistryObject<SoundEvent> INCISING = registerSound("incising");
     public static final RegistryObject<SoundEvent> INCISION = registerSound("incision");
+    public static final RegistryObject<SoundEvent> HEAD_STRETCH = registerSound("head_stretch");
+    public static final RegistryObject<SoundEvent> HEAD_EXPLODE = registerSound("head_explode");
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);

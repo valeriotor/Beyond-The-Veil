@@ -4,7 +4,7 @@ start: 0: 1
     rotx: head: -0.54104: immediate: absolute
     rotx: arms: -2.7: immediate: absolute
 start: 1: 6
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 0: 2
     roty: head: -0.1: quadratic: absolute
 start: 2: 6
@@ -27,6 +27,7 @@ start: 42: 46
     roty: head: -0.1: quadratic: absolute
 start: 46: 50
     rotx: head: -0.54104: linear: absolute
+    roty: head: 0: quadratic: absolute
 start: 0: 3
 	rotx: rightLeg: 0.1745: linear: absolute
 start: 3: 6

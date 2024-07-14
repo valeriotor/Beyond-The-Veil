@@ -96,7 +96,6 @@ public abstract class SurgicalBE extends BlockEntity {
                     setChanged();
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                 }
-
             }
             //if (in.getItem() instanceof HeldVillagerItem) {
             //    CompoundTag itemTag = in.getOrCreateTag();
@@ -127,9 +126,9 @@ public abstract class SurgicalBE extends BlockEntity {
         boolean usingItem = false; // Whether to update client
         if (i == Registration.SYRINGE.get()) {
             IFluidHandlerItem syringe = in.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
-            FluidStack drained = syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
+            FluidStack drained = syringe.drain(1, IFluidHandler.FluidAction.SIMULATE);
             if (!drained.isEmpty()) {
-                usingItem = patientStatus.inject(p, drained, this);
+                usingItem = patientStatus.inject(p, drained, this, syringe);
             }
         } else if (i == Registration.SCALPEL.get()) {
             usingItem = patientStatus.performIncision(p, this);
@@ -158,12 +157,13 @@ public abstract class SurgicalBE extends BlockEntity {
     private void loadPatient(CompoundTag pTag) {
         if (pTag != null && pTag.contains("entity")) {
             PatientType type = pTag.contains("type") ? PatientType.valueOf(pTag.getString("type")) : PatientType.VILLAGER;
+            boolean differentType = patientStatus == null || type != patientStatus.getPatientType();
             patientStatus = new PatientStatus(type);
             if (pTag.contains("status")) {
                 patientStatus.loadFromNBT(pTag.getCompound("status"));
             }
             if (level != null && level.isClientSide) {
-                if (entity == null) { // TODO check if this is correct. Also use entity type
+                if (entity == null || differentType) { // TODO check if this is correct. Also use entity type
                     entity = type.getMobFunction().apply(level);
                     entity.setYHeadRot(0);
                 }
@@ -252,10 +252,17 @@ public abstract class SurgicalBE extends BlockEntity {
         if (patientStatus != null) {
             patientStatus.tick(false);
         }
-        if (patientStatus != null && patientStatus.isDirty()) {
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-            patientStatus.setDirty(false);
+        if (patientStatus != null) {
+            if (patientStatus.isDirty()) {
+                if (patientStatus.isExploded()) {
+                    patientStatus = new PatientStatus(PatientType.WEEPER);
+                    patientStatus.setExposedLocation(defaultLocation);
+                }
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                patientStatus.setDirty(false);
+            }
+            patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
         }
     }
 

@@ -26,23 +26,23 @@ start: 0: 1
     rotx: head: -0.54104: immediate: absolute
     rotx: arms: -2.7: immediate: absolute
 start: 1: 3
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 3: 6
     rotx: head: 0: linear: absolute
 start: 6: 9
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 9: 12
     rotx: head: 0: linear: absolute
 start: 12: 15
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 15: 18
     rotx: head: 0: linear: absolute
 start: 18: 21
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 21: 24
     rotx: head: 0: linear: absolute
 start: 24: 27
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 27: 30
     rotx: head: 0: linear: absolute
 start: 32: 40
@@ -50,7 +50,7 @@ start: 32: 40
 start: 40: 56
     roty: head: 0.6: linear: absolute
 start: 66: 72
-    rotx: head: -0.7: linear: absolute
+    rotx: head: -0.5: linear: absolute
 start: 66: 68
     roty: head: -0.1: quadratic: absolute
 start: 68: 72

@@ -18,9 +18,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -51,6 +55,8 @@ public class PatientStatus {
     private ServerLevel level;
     private BlockPos pos;
     private final PatientType patientType;
+    private boolean exploded;
+    private int ticksSinceLastInjection; // To slow down weeper creation
 
     public PatientStatus(PatientType patientType) {
         this.patientType = patientType;
@@ -183,12 +189,13 @@ public class PatientStatus {
         return false;
     }
 
-    public boolean inject(Player p, FluidStack fluidStack, SurgicalBE be) {
+    public boolean inject(Player p, FluidStack fluidStack, SurgicalBE be, IFluidHandlerItem syringe) {
         Fluid fluid = fluidStack.getFluid();
         if (fluidStack.isEmpty()) {
             return false;
         }
-        double newAmount = fluidAmounts.getOrDefault(fluid, 0D) + fluidStack.getAmount();
+        double prevAmount = fluidAmounts.getOrDefault(fluid, 0D);
+        double newAmount = prevAmount + fluidStack.getAmount();
         List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.INJECTION_OPERATIONS.get(fluid);
         if (injectionEntries == null || injectionEntries.isEmpty()) {
             return true; // TODO or should we be more cruel? If we inserted some not-allowed fluid maybe patient should suffer from it
@@ -196,26 +203,54 @@ public class PatientStatus {
         for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
             Operation operation = injectionEntry.operation();
             if (canPerformOperation(operation)) {
-                perTickActions(p, operation, be);
-                if (operation.isAdded(this)) {
-                    fluidAmounts.put(fluid, newAmount);
-                }
-                operation.onConsume(this);
-                if (currentPain >= operation.getPainForFailure()) {
-                    setCondition(operation.getConditionIfFailed());
-                } else if (newAmount > injectionEntry.amount()) {
-                    setDirty(true);
-                    elaborateOperation(p, operation, be);
-                    if (operation.isEraseFluid()) {
-                        fluidAmounts.put(fluid, 0D);
+                boolean enoughTicks = true;
+                if (fluid == Fluids.WATER && exposedLocation == SurgicalLocation.SKULL) {
+                    if (ticksSinceLastInjection <= 0) {
+                        ticksSinceLastInjection = (int) (prevAmount / 100);
+                    } else {
+                        ticksSinceLastInjection--;
+                        enoughTicks = false;
                     }
+                }
+                if (enoughTicks) {
+                    perTickActions(p, operation, be);
+                    syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
+                    if (operation.isAdded(this)) {
+                        fluidAmounts.put(fluid, newAmount);
+                        if (fluid == Fluids.WATER && exposedLocation == SurgicalLocation.SKULL) {
+                            if (Math.floor(newAmount / 5) > Math.floor(prevAmount / 5)) {
+                                setDirty(true);
+                            }
+                            if (!condition.isTerminal()) {
+                                if (Math.floor(newAmount / 90) > Math.floor(prevAmount / 90)) {
+                                    level.playSound(null, pos, BTVSounds.HEAD_STRETCH.get(), SoundSource.NEUTRAL, 1, 1);
+                                }
+                            }
+
+                        }
+                    }
+                    operation.onConsume(this);
+                    if (currentPain >= operation.getPainForFailure()) {
+                        setCondition(operation.getConditionIfFailed());
+                    } else if (newAmount > injectionEntry.amount()) {
+                        setDirty(true);
+                        elaborateOperation(p, operation, be);
+                        if (operation.isEraseFluid()) {
+                            fluidAmounts.put(fluid, 0D);
+                        }
+                    }
+
                 }
                 break;
             }
 
         }
-        // TODO special case for injecting water: sync with client every 10mB (to enlarge patient head)
+
         return true;
+    }
+
+    public double getWaterAmount() {
+        return fluidAmounts.getOrDefault(Fluids.WATER, 0D);
     }
 
     /**
@@ -274,6 +309,9 @@ public class PatientStatus {
         //  or maximum(ticksRemaining, currentPain)
         //  Mark dirty when the current amount of added pain differs from the last tick one
         //  Check in tickServer if pain wasn't increased in the last few ticks and if so mark dirty again
+        if (patientType == PatientType.WEEPER) {
+            return;
+        }
         double sedativeAmount = fluidAmounts.getOrDefault(Registration.SOURCE_FLUID_SEDATIVE.get(), 0D);
         double leftoverSedative = Math.max(0, sedativeAmount - amount);
         amount -= (sedativeAmount - leftoverSedative);
@@ -298,7 +336,7 @@ public class PatientStatus {
         }
 
         if (missing != currentMissingPainThreshold) {
-            if (missing > currentMissingPainThreshold && level != null) {
+            if (missing > currentMissingPainThreshold && level != null && !condition.isTerminal()) {
                 level.playSound(null, pos, SoundEvents.VILLAGER_HURT, SoundSource.NEUTRAL, 1, 1);
             }
             currentMissingPainThreshold = missing;
@@ -327,6 +365,24 @@ public class PatientStatus {
 
     void increaseLeftoverCapacity(int amount) {
         leftoverCapacity += amount;
+    }
+
+    void explode() {
+        if (!condition.isTerminal()) {
+            level.playSound(null, pos, BTVSounds.HEAD_EXPLODE.get(), SoundSource.NEUTRAL, 1, 1);
+            for (int i = 1; i < 30; i++) {
+                Direction rotation = level.getBlockState(pos).getValue(HorizontalDirectionalBlock.FACING);
+                Vec3 base = new Vec3(0, 0.95, i / 10D - 1.5);
+                Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+                level.sendParticles(BTVParticles.BLOODSPILL.get(), pos.getX() + 0.5 + offset.x, pos.getY() + offset.y - 1, pos.getZ() + 0.5 + offset.z, 50, 0, 0, 0, 1);
+            }
+        }
+        exploded = true;
+        setDirty(true);
+    }
+
+    public boolean isExploded() {
+        return exploded;
     }
 
     boolean hasString(String s) {
