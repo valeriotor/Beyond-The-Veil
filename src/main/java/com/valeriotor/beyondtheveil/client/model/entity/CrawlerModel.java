@@ -116,8 +116,14 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 					rightLeg.yRot = -0.5F;
 				}
 			} else if (exposedLocation == SurgicalLocation.SKULL) {
-				head.xRot = -1.3526F / 2.5F;
+				head.xRot = -0.54104F;
 				arms.xRot = -2.7F;
+				head.xScale = 1.1F;
+				head.yScale = 1.1F;
+				head.zScale = 1.1F;
+				if (entity.getPatientStatus().isDead()) {
+					head.yRot = 0;
+				}
 			}
 			Animation painAnimation = entity.getPainAnimation();
 			Animation deathAnimation = entity.getDeathAnimation();

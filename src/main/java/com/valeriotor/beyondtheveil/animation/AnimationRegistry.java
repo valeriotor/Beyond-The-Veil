@@ -18,8 +18,12 @@ public class AnimationRegistry {
     public static AnimationTemplate crawler_chest_pain_low;
     public static AnimationTemplate crawler_chest_pain_medium;
     public static AnimationTemplate crawler_chest_pain_high;
+    public static AnimationTemplate crawler_skull_pain_low;
+    public static AnimationTemplate crawler_skull_pain_medium;
+    public static AnimationTemplate crawler_skull_pain_high;
     public static AnimationTemplate crawler_back_death;
     public static AnimationTemplate crawler_chest_death;
+    public static AnimationTemplate crawler_skull_death;
     public static AnimationTemplate ammunition_explode;
     public static AnimationTemplate ammunition_explode_body;
     public static AnimationTemplate weeper_explode;
@@ -35,8 +39,12 @@ public class AnimationRegistry {
         crawler_chest_pain_low = registerAnimation("crawler_chest_pain_low", client, i++);
         crawler_chest_pain_medium = registerAnimation("crawler_chest_pain_medium", client, i++);
         crawler_chest_pain_high = registerAnimation("crawler_chest_pain_high", client, i++);
+        crawler_skull_pain_low = registerAnimation("crawler_skull_pain_low", client, i++);
+        crawler_skull_pain_medium = registerAnimation("crawler_skull_pain_medium", client, i++);
+        crawler_skull_pain_high = registerAnimation("crawler_skull_pain_high", client, i++);
         crawler_back_death = registerAnimation("crawler_back_death", client, i++);
         crawler_chest_death = registerAnimation("crawler_chest_death", client, i++);
+        crawler_skull_death = registerAnimation("crawler_skull_death", client, i++);
         ammunition_explode = registerAnimation("ammunition_explode", client, i++);
         ammunition_explode_body = registerAnimation("ammunition_explode_body", client, i++);
         weeper_explode = registerAnimation("weeper_explode", client, i++);

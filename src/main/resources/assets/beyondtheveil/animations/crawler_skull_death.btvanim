@@ -1,0 +1,19 @@
+model: crawler
+length: 26
+start: 0: 1
+    rotx: head: -0.54104: immediate: absolute
+    rotx: arms: -2.7: immediate: absolute
+start: 1: 4
+    rotx: head: -1.6: linear: absolute
+start: 4: 12
+    rotx: head: -0.7: linear
+start: 12: 15
+    rotx: head: 0: linear: absolute
+start: 11: 25
+    roty: head: 0.9: linear: absolute
+start: 0: 3
+	rotx: rightLeg: 0.5: linear: absolute
+	rotx: leftLeg: 0.5: linear: absolute
+start: 4: 8
+	rotx: rightLeg: -0.1745: linear: absolute
+	rotx: leftLeg: -0.1745: linear: absolute

@@ -233,19 +233,19 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                     painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_high_1;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_high;
-                        case SKULL -> null;
+                        case SKULL -> AnimationRegistry.crawler_skull_pain_high;
                     });
                 } else if (currentMissingPainThreshold == 2 || currentAbsolutePainThreshold == 2) {
                     painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_medium;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_medium;
-                        case SKULL -> null;
+                        case SKULL -> AnimationRegistry.crawler_skull_pain_medium;
                     });
                 } else if (currentMissingPainThreshold == 1 || currentAbsolutePainThreshold == 1) {
                     painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_low;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_low;
-                        case SKULL -> null;
+                        case SKULL -> AnimationRegistry.crawler_skull_pain_low;
                     });
                 }
             } else {
