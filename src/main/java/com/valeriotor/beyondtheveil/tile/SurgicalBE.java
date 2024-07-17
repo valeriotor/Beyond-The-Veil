@@ -7,10 +7,12 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -24,9 +26,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -158,14 +162,20 @@ public abstract class SurgicalBE extends BlockEntity {
         if (pTag != null && pTag.contains("entity")) {
             PatientType type = pTag.contains("type") ? PatientType.valueOf(pTag.getString("type")) : PatientType.VILLAGER;
             boolean differentType = patientStatus == null || type != patientStatus.getPatientType();
+            boolean createdWeeper = patientStatus != null && type == PatientType.WEEPER && patientStatus.getPatientType() != PatientType.WEEPER;
             patientStatus = new PatientStatus(type);
             if (pTag.contains("status")) {
                 patientStatus.loadFromNBT(pTag.getCompound("status"));
             }
             if (level != null && level.isClientSide) {
+                //explodeParticles();
                 if (entity == null || differentType) { // TODO check if this is correct. Also use entity type
                     entity = type.getMobFunction().apply(level);
                     entity.setYHeadRot(0);
+                    if (createdWeeper) {
+                        //explodeParticles();
+                        weeperCreated();
+                    }
                 }
                 if (entity instanceof SurgeryPatient sp) { // Will not be redundant once we expand to other patient types
                     sp.markAsPatient();
@@ -185,6 +195,28 @@ public abstract class SurgicalBE extends BlockEntity {
             patientStatus = null;
         }
 
+    }
+
+    protected void weeperCreated() {
+
+    }
+
+    private void explodeParticles() {
+        if (level != null) {
+            Direction rotation = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+            for (int i = 0; i < 30; i++) {
+                double direction = Math.random() * 2 * Math.PI;
+                double xSpeed = -Math.sin(direction);
+
+                double zSpeed = Math.cos(direction);
+                for (int j = 0; j < 10; j++) {
+                    Vec3 base = new Vec3(0, 0.55, j / 8D);
+                    Vec3 rotated = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+                    level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), worldPosition.getX() + rotated.x + 0.5, worldPosition.getY() + rotated.y, worldPosition.getZ() + rotated.z + 0.5, xSpeed * (1 + Math.random()), 1.5, zSpeed * (1 + Math.random()));
+                    //level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), xSpeed * (1 + Math.random()), 0, zSpeed * (1 + Math.random()));
+                }
+            }
+        }
     }
 
     protected CompoundTag getEntityData() {

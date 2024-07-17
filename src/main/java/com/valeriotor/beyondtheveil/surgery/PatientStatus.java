@@ -206,7 +206,7 @@ public class PatientStatus {
                 boolean enoughTicks = true;
                 if (fluid == Fluids.WATER && exposedLocation == SurgicalLocation.SKULL) {
                     if (ticksSinceLastInjection <= 0) {
-                        ticksSinceLastInjection = (int) (prevAmount / 100);
+                        ticksSinceLastInjection = prevAmount > 470 ? 8 : (int) (prevAmount / 100);
                     } else {
                         ticksSinceLastInjection--;
                         enoughTicks = false;
@@ -222,7 +222,8 @@ public class PatientStatus {
                                 setDirty(true);
                             }
                             if (!condition.isTerminal()) {
-                                if (Math.floor(newAmount / 90) > Math.floor(prevAmount / 90)) {
+                                int period = newAmount > 300 ? 35 : 90;
+                                if (Math.floor(newAmount / period) > Math.floor(prevAmount / period) && newAmount < 450) {
                                     level.playSound(null, pos, BTVSounds.HEAD_STRETCH.get(), SoundSource.NEUTRAL, 1, 1);
                                 }
                             }
@@ -245,6 +246,7 @@ public class PatientStatus {
             }
 
         }
+        //level.sendParticles(BTVParticles.BLOODSPILL.get(), pos.getX() + 0.5 + 0, pos.getY() + 0.95 - 0.75, pos.getZ() + 0.5 + 0, 55, 0, 0, 0, 0.4);
 
         return true;
     }
@@ -370,12 +372,16 @@ public class PatientStatus {
     void explode() {
         if (!condition.isTerminal()) {
             level.playSound(null, pos, BTVSounds.HEAD_EXPLODE.get(), SoundSource.NEUTRAL, 1, 1);
-            for (int i = 1; i < 30; i++) {
-                Direction rotation = level.getBlockState(pos).getValue(HorizontalDirectionalBlock.FACING);
-                Vec3 base = new Vec3(0, 0.95, i / 10D - 1.5);
-                Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
-                level.sendParticles(BTVParticles.BLOODSPILL.get(), pos.getX() + 0.5 + offset.x, pos.getY() + offset.y - 1, pos.getZ() + 0.5 + offset.z, 50, 0, 0, 0, 1);
-            }
+            Direction rotation = level.getBlockState(pos).getValue(HorizontalDirectionalBlock.FACING);
+            //for (int i = 0; i < 30; i++) {
+            //    for (int j = 0; j < 7; j++) {
+            //        Vec3 base = new Vec3(j / 16D - 0.15, 0.85, (i / 10D) - 1.5);
+            //        Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+            //        level.sendParticles(BTVParticles.BLOODSPILL.get(), pos.getX() + 0.5 + offset.x, pos.getY() + offset.y, pos.getZ() + 0.5 + offset.z, 5, 0, 0, 0, 0);
+//
+            //    }
+            //}
+
         }
         exploded = true;
         setDirty(true);

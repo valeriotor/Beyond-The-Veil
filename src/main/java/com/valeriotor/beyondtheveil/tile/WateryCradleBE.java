@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,6 +23,9 @@ import org.jetbrains.annotations.Nullable;
 public class WateryCradleBE extends SurgicalBE {
 
 
+    private Mob backupEntity;
+    private int weeperCreatedTicks;
+
     public WateryCradleBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(Registration.WATERY_CRADLE_BE.get(), pWorldPosition, pBlockState, SurgicalLocation.SKULL);
     }
@@ -31,11 +35,33 @@ public class WateryCradleBE extends SurgicalBE {
         return new AABB(getBlockPos().offset(-1, 0, -1), getBlockPos().offset(1,1,1));
     }
 
+    @Override
+    protected void weeperCreated() {
+        this.backupEntity = getEntity();
+        weeperCreatedTicks = 180;
+    }
+
+    @Override
+    public void tickClient() {
+        super.tickClient();
+        if (backupEntity != null) {
+            backupEntity.tick();
+        }
+        if (weeperCreatedTicks > 0) {
+            weeperCreatedTicks--;
+            if (weeperCreatedTicks == 70) {
+                backupEntity = null;
+            }
+        }
+    }
+
+    public Mob getBackupEntity() {
+        return backupEntity;
+    }
+
+    public int getWeeperCreatedTicks() {
+        return weeperCreatedTicks;
+    }
 
 
-    //public void tickClient() {
-    //    if (itemEntity != null) {
-    //        itemEntity.tick();
-    //    }
-    //}
 }

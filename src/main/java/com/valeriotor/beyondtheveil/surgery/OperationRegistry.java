@@ -77,7 +77,7 @@ public class OperationRegistry {
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
-            .setPainPerTick(1)
+            .setPainPerTick(s -> s.getWaterAmount() < 420 ? 0.47 : 0)
             .setPainForFailure(50)
             .setStatusChangeOnSuccess(PatientStatus::explode)
             // TODO .setEntityChange(s -> new WeeperEntity())
