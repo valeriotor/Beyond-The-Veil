@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "beyondtheveil:block/vein_stone1"
+      },
+      {
+        "model": "beyondtheveil:block/vein_stone2"
+      },
+      {
+        "model": "beyondtheveil:block/vein_stone3"
+      },
+      {
+        "model": "beyondtheveil:block/vein_stone4"
+      },
+      {
+        "model": "beyondtheveil:block/vein_stone5"
+      }
+    ]
+  }
+}

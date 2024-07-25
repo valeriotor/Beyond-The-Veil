@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -43,6 +42,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(ELDER_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone"));
         withExistingParent(ELDER_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone_slab"));
         withExistingParent(BLOOD_BRICK_ITEM.getId().getPath(), modLoc("block/blood_brick"));
+        withExistingParent(VEIN_STONE_ITEM.getId().getPath(), modLoc("block/vein_stone1"));
         withExistingParent(BLOOD_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/blood_brick_slab"));
         withExistingParent(BLOOD_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/blood_brick_stairs"));
         withExistingParent(BLOOD_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone"));

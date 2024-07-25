@@ -1,10 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.*;
-import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
-import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +14,8 @@ import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.IntFunction;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 import static net.minecraft.data.models.model.ModelLocationUtils.getModelLocation;
@@ -52,6 +51,7 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(ELDER_SMOOTH_STONE.get());
         registerSmoothStoneSlab(ELDER_SMOOTH_STONE_SLAB.get(), modLoc("block/" + ELDER_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + ELDER_SMOOTH_STONE.getId().getPath()));
         simpleBlock(BLOOD_BRICK.get());
+        registerVeinStoneVariants();
         slabBlock(BLOOD_BRICK_SLAB.get(), getModelLocation(BLOOD_BRICK.get()), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
         stairsBlock(BLOOD_BRICK_STAIRS.get(), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
         simpleBlock(BLOOD_SMOOTH_STONE.get());
@@ -85,7 +85,11 @@ public class BTVBlockStates extends BlockStateProvider {
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
         slabBlock(block, models().slab(ForgeRegistries.BLOCKS.getKey(block).getPath(), side, top, top), models().slabTop(ForgeRegistries.BLOCKS.getKey(block).getPath() + "_top", side, top, top), models().orientable(ForgeRegistries.BLOCKS.getKey(block).getPath() + "_double", side, side, top));
+    }
 
+    private void registerVeinStoneVariants() {
+        IntFunction<ConfiguredModel> func = i -> new ConfiguredModel(models().cubeAll("vein_stone" + i, modLoc("block/vein_stone" + i)));
+        simpleBlock(VEIN_STONE.get(), func.apply(1), func.apply(2), func.apply(3), func.apply(4), func.apply(5));
     }
 
     private void registerCanopy() {

@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-08T23:29:21.7133717	Item Models: beyondtheveil
+// 1.20.1	2024-07-26T00:27:17.034103	Item Models: beyondtheveil
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
@@ -93,6 +93,7 @@ f5559c752aca39809a377b09d517ed5bcdc635b3 assets/beyondtheveil/models/item/surger
 c293a59f72019d4d3687fafa3d82d0f56640f785 assets/beyondtheveil/models/item/tablet.json
 1ef95dc919aa83d684e4594859b46ae997d870c6 assets/beyondtheveil/models/item/tongs.json
 1ae74006754a206b30b97d8e838d021b90966f60 assets/beyondtheveil/models/item/vanilla_weed_seeds.json
+c6e7ab35f0e7f4cd7a7e9600b5feca59502453de assets/beyondtheveil/models/item/vein_stone.json
 a31fd4ede196339e363150cded841b3d43e23f05 assets/beyondtheveil/models/item/watery_cradle.json
 2832aa0785e478c6094657a37b0eff5dc32f2f66 assets/beyondtheveil/models/item/wolf_medallion.json
 6d2553e683a5bf8f43e0499b4d31833a90111595 assets/beyondtheveil/models/item/worn_bricks.json
