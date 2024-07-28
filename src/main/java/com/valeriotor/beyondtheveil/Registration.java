@@ -12,10 +12,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
-import com.valeriotor.beyondtheveil.world.structures.DeepCityPiece;
-import com.valeriotor.beyondtheveil.world.structures.DeepCityStructure;
-import com.valeriotor.beyondtheveil.world.structures.HamletPieces;
-import com.valeriotor.beyondtheveil.world.structures.HamletStructure;
+import com.valeriotor.beyondtheveil.world.structures.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -130,7 +127,7 @@ public class Registration {
     public static final RegistryObject<Block> ELDER_SMOOTH_STONE = BLOCKS.register("elder_smooth_stone", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<SlabBlock> ELDER_SMOOTH_STONE_SLAB = BLOCKS.register("elder_smooth_stone_slab", () -> new SlabBlock(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<Block> BLOOD_BRICK = BLOCKS.register("blood_brick", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
-    public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
+    public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> SACRIFICE_ALTAR = BLOCKS.register("sacrifice_altar", () -> new SacrificeAltarBlock(BRICK_PROPERTIES)); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
     public static final RegistryObject<SlabBlock> BLOOD_BRICK_SLAB = BLOCKS.register("blood_brick_slab", () -> new SlabBlock(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
     public static final RegistryObject<StairBlock> BLOOD_BRICK_STAIRS = BLOCKS.register("blood_brick_stairs", () -> new StairBlock(() -> BLOOD_BRICK.get().defaultBlockState(), BRICK_PROPERTIES)); // new ModStairs(BlockBloodBrick.getDefaultState(), BlockNames.BLOOD_BRICKS_STAIRS);
@@ -328,9 +325,11 @@ public class Registration {
 
     public static final RegistryObject<StructureType<DeepCityStructure>> DEEP_CITY = STRUCTURE_TYPES.register("deep_city", () -> () -> DeepCityStructure.CODEC);
     public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
+    public static final RegistryObject<StructureType<DeepVeinStructure>> DEEP_VEIN = STRUCTURE_TYPES.register("deep_vein", () -> () -> DeepVeinStructure.CODEC);
     public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_BUILDING_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_building_piece", () -> HamletPieces.HamletBuildingPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_STREET_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_street_piece", () -> HamletPieces.StreetPiece::new);
+    public static final RegistryObject<StructurePieceType> DEEP_VEIN_PIECE = STRUCTURE_PIECE_TYPES.register("deep_vein_piece", () -> DeepVeinStructure.DeepVeinPiece::new);
     public static final RegistryObject<StructureProcessorType<HamletBuildingsProcessor>> HAMLET_BUILDINGS_PROCESSOR = STRUCTURE_PROCESSORS.register("hamlet_buildings_processor", () -> () -> HamletBuildingsProcessor.CODEC);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))

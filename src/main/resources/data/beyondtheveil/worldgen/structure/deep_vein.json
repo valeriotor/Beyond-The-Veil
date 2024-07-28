@@ -1,0 +1,6 @@
+{
+  "type": "beyondtheveil:deep_vein",
+  "biomes": "beyondtheveil:arche_plains",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

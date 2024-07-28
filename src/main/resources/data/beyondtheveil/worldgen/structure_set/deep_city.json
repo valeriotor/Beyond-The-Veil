@@ -2,13 +2,17 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 14281547,
-    "separation": 8,
-    "spacing": 32
+    "separation": 16,
+    "spacing": 48
   },
   "structures": [
     {
       "structure": "beyondtheveil:deep_city",
       "weight": 1
+    },
+    {
+      "structure": "beyondtheveil:deep_vein",
+      "weight": 8
     }
   ]
 }
