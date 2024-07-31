@@ -13,6 +13,7 @@ public class PlayerDataLib {
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";
+    public static final String VEIN_POS = "vein_pos";
 
     // Ints (Non-temporary)
     public static final String TIMESDREAMT = "timesDreamt";
