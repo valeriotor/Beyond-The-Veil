@@ -1,8 +1,10 @@
 package com.valeriotor.beyondtheveil.client.event;
 
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
@@ -23,6 +25,9 @@ public class InputEvents {
         if (player != null) {
             if (player.getVehicle() instanceof NautilusEntity nautilus && event.phase == TickEvent.Phase.END) {
                 nautilus.setInput(player.input.left, player.input.right, player.input.up, player.input.down, player.input.jumping, player.input.shiftKeyDown, Minecraft.getInstance().options.keySprint.isDown());
+            }
+            if (player.level().dimension() == BTVDimensions.ARCHE_LEVEL && !Minecraft.getInstance().isPaused()) {
+                ClientData.getInstance().archeSavedData.tick(false);
             }
         }
     }

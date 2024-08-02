@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
@@ -206,17 +207,28 @@ public class RenderEvents {
             return;
         }
         Minecraft mc = Minecraft.getInstance();
-        if (mc == null || true) {
+        if (mc.level == null || mc.level.dimension() != BTVDimensions.ARCHE_LEVEL) {
             return;
         }
+        long ticks = ClientData.getInstance().archeSavedData.getCycle(); //mc.levelRenderer.getTicks();
+        final long TICKS_PER_CYCLE = 16383;
+        final long CURRENT_DURATION = 20 * 178;
+        final long CURRENT_START = TICKS_PER_CYCLE - CURRENT_DURATION;
+        final int CURRENT_PEAK = 110 * 20;
+        ticks &= TICKS_PER_CYCLE;
+        if (ticks < CURRENT_START) {
+            return;
+        }
+        ticks -= CURRENT_START;
+
         float pPartialTick = event.getPartialTick();
         Camera camera = event.getCamera();
         double pCamX = camera.getPosition().x();
         double pCamY = camera.getPosition().y();
         double pCamZ = camera.getPosition().z();
-        float f = (event.getRenderTick() % (110 * 20)) / (float) (110 * 20);
-        float speedIncrement = f <= 0.5F ? 0.3F : 0.3F + (f - 0.5F) * 4;
-        if (!(f <= 0.0F)) {
+        float intensity = ticks <= CURRENT_PEAK - 1 ? (ticks % (CURRENT_PEAK)) / (float) (CURRENT_PEAK) : (CURRENT_DURATION - ticks) / (float) (CURRENT_DURATION - CURRENT_PEAK);
+        float speedIncrement = intensity <= 0.5F ? 0.3F : 0.3F + (intensity - 0.5F) * 4;
+        if (!(intensity <= 0.0F)) {
             mc.gameRenderer.lightTexture().turnOnLightLayer();
 //            pLightTexture.turnOnLightLayer();
             Level level = mc.level;
@@ -235,7 +247,7 @@ public class RenderEvents {
 
             RenderSystem.depthMask(Minecraft.useShaderTransparency());
             int i1 = -1;
-            float f1 = (float) mc.levelRenderer.getTicks() + pPartialTick;
+            float f1 = (float) ticks + pPartialTick;
             RenderSystem.setShader(GameRenderer::getParticleShader);
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
@@ -293,13 +305,13 @@ public class RenderEvents {
                                         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
                                     }
 
-                                    int i3 = mc.levelRenderer.getTicks() + y1 * y1 * 3121 + y1 * 45238971 + z1 * z1 * 418711 + z1 * 13761 & 31;
+                                    long i3 = (ticks + (y1 * y1 * 3121) + (y1 * 45238971) + (z1 * z1 * 418711) + (z1 * 13761)) & 31;
                                     float f2 = -((float) i3 + pPartialTick) / 32.0F * (3.0F + randomsource.nextFloat());
                                     f2 *= 3 * speedIncrement;
                                     double d2 = (double) y1 + 0.5D - pCamY;
                                     double d4 = (double) z1 + 0.5D - pCamZ;
                                     float f3 = (float) Math.sqrt(d2 * d2 + d4 * d4) / (float) l;
-                                    float f4 = ((1.0F - f3 * f3) * 0.5F + 0.5F) * f;
+                                    float f4 = ((1.0F - f3 * f3) * 0.5F + 0.5F) * intensity;
                                     int j3 = getLightColor(level, blockpos$mutableblockpos);
                                     //bufferbuilder.vertex((double)y1 - pCamX - d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ - d1 + 0.5D).uv(0.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();
                                     //bufferbuilder.vertex((double)y1 - pCamX + d0 + 0.5D, (double)x2 - pCamY, (double)z1 - pCamZ + d1 + 0.5D).uv(1.0F, (float)x1 * 0.25F + f2).color(1.0F, 1.0F, 1.0F, f4).uv2(j3).endVertex();

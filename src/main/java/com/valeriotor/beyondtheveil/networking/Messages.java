@@ -2,10 +2,12 @@ package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -84,6 +86,10 @@ public class Messages {
 
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
+    }
+
+    public static <MSG> void sendToDimension(MSG message, ResourceKey<Level> dimension) {
+        INSTANCE.send(PacketDistributor.DIMENSION.with(() -> dimension), message);
     }
 
     public static <MSG> void sendToTracking(MSG message, Entity entity) {

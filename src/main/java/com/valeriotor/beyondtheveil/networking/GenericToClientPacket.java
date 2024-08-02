@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.WaypointType;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -101,6 +102,12 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.STOP_CROSS_SYNC, tag);
     }
 
+    public static GenericToClientPacket syncArcheData(ArcheSavedData data) {
+        CompoundTag tag = new CompoundTag();
+        tag.put("data", data.save(new CompoundTag()));
+        return new GenericToClientPacket(MessageType.SYNC_ARCHE_DATA, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -134,6 +141,7 @@ public class GenericToClientPacket {
                     case STOP_SURGERY_SOUND -> SurgerySoundInstance.stopSound(tag);
                     case CROSS_SYNC -> CrossSyncHolder.setCrossSync(tag);
                     case STOP_CROSS_SYNC -> CrossSyncHolder.stopCrossSync(tag);
+                    case SYNC_ARCHE_DATA -> ClientData.getInstance().syncArcheData(tag);
                 }
             });
         });
@@ -151,7 +159,8 @@ public class GenericToClientPacket {
         START_SURGERY_SOUND,
         STOP_SURGERY_SOUND,
         CROSS_SYNC,
-        STOP_CROSS_SYNC
+        STOP_CROSS_SYNC,
+        SYNC_ARCHE_DATA
     }
 
 }

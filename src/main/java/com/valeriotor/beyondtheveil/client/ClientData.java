@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -34,6 +35,7 @@ public class ClientData {
     //}
 
     public final List<Waypoint> waypoints = new ArrayList<>();
+    public ArcheSavedData archeSavedData = new ArcheSavedData();
 
     public void addWaypoint(CompoundTag tag) {
         WaypointType type = WaypointType.valueOf(tag.getString("type"));
@@ -63,6 +65,10 @@ public class ClientData {
 
     public HitResult getClientHitResult() {
         return Minecraft.getInstance().hitResult;
+    }
+
+    public void syncArcheData(CompoundTag tag) {
+        archeSavedData = new ArcheSavedData(tag.getCompound("data"));
     }
 
 
