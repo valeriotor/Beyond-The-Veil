@@ -46,6 +46,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.GEAR_BENCH.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.HEART.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.WATERY_CRADLE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
+            ItemBlockRenderTypes.setRenderLayer(Registration.PATIENT_POD.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.MEMORY_SIEVE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_LARGE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_MEDIUM.get(), RenderType.translucent());

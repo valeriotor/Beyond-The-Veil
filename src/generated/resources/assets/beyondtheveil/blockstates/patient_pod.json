@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,level=0": {
+      "model": "beyondtheveil:block/patient_pod",
+      "y": 270
+    },
+    "facing=east,level=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "facing=north,level=0": {
+      "model": "beyondtheveil:block/patient_pod",
+      "y": 180
+    },
+    "facing=north,level=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "facing=south,level=0": {
+      "model": "beyondtheveil:block/patient_pod"
+    },
+    "facing=south,level=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "facing=west,level=0": {
+      "model": "beyondtheveil:block/patient_pod",
+      "y": 90
+    },
+    "facing=west,level=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    }
+  }
+}

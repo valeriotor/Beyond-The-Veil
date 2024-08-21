@@ -77,6 +77,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFumeSpreader();
         registerSleepChamber();
         registerWateryCradle();
+        registerPatientPod();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerFlaskShelf();
         registerFlasks();
@@ -232,6 +233,33 @@ public class BTVBlockStates extends BlockStateProvider {
                 .forAllStates(state -> ConfiguredModel.builder()
                         .modelFile(state.getValue(WATERY_CRADLE.get().getSideProperty()) == 1 ? wateryCradle : empty)
                         .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .build());
+    }
+
+    private void registerPatientPod() {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + "flask_shelf_empty"), models().existingFileHelper);
+        ExistingModelFile patientPod_solid = new ExistingModelFile(modLoc("block/patient_pod_solid"), models().existingFileHelper);
+        ExistingModelFile patientPod_translucent = new ExistingModelFile(modLoc("block/patient_pod_translucent"), models().existingFileHelper);
+
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/patient_pod_solid1"), models().existingFileHelper);
+        parent.parent(patientPod_solid);
+        parent.renderType("solid");
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/patient_pod_translucent1"), models().existingFileHelper);
+        translucent_parent.parent(patientPod_translucent);
+        translucent_parent.renderType("translucent");
+
+        BlockModelBuilder patientPod = models().getBuilder("beyondtheveil:block/patient_pod")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/patient_pod"))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/patient_pod_solid1", parent))
+                .child("block/patient_pod_translucent1", translucent_parent)
+                .end();
+
+        getVariantBuilder(PATIENT_POD.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(PATIENT_POD.get().getLevelProperty()) == 0 ? patientPod : empty)
+                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                         .build());
     }
 

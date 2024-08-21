@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/cube",
+  "children": {
+    "block/patient_pod_solid1": {
+      "parent": "beyondtheveil:block/patient_pod_solid",
+      "render_type": "minecraft:solid"
+    },
+    "block/patient_pod_translucent1": {
+      "parent": "beyondtheveil:block/patient_pod_translucent",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "block/patient_pod_solid1",
+    "block/patient_pod_translucent1"
+  ],
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "beyondtheveil:block/patient_pod"
+  }
+}
