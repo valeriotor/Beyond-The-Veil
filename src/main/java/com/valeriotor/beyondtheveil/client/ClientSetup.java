@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -83,6 +84,7 @@ public class ClientSetup {
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
         event.registerLayerDefinition(LivingAmmunitionModel.LAYER_LOCATION, LivingAmmunitionModel::createBodyLayer);
+        event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
 
 
 
@@ -102,6 +104,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
         event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
         event.registerEntityRenderer(Registration.LIVING_AMMUNITION.get(), LivingAmmunitionRenderer::new);
+        event.registerEntityRenderer(Registration.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

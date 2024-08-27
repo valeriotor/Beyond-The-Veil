@@ -65,6 +65,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(BLOOD_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_ZOMBIE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_WRAITH_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(BLOOD_CULTIST_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(),     mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
         singleTexture(SLUG.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG.getId().getPath()));

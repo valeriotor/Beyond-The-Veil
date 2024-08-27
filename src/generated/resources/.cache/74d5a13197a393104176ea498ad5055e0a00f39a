@@ -1,4 +1,4 @@
-// 1.20.1	2024-08-21T16:40:53.1294634	Item Models: beyondtheveil
+// 1.20.1	2024-08-27T19:09:29.9705333	Item Models: beyondtheveil
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
@@ -10,6 +10,7 @@ c434b9cfca825ff17f87e5f2c3745a600d69a15b assets/beyondtheveil/models/item/blood_
 cf9741301f333ece1806dc9aee2e3d3048211afe assets/beyondtheveil/models/item/blood_brick_stairs.json
 4b39f44d4bda8d0ac6251b421920407cd1aac25b assets/beyondtheveil/models/item/blood_covenant.json
 6c31a2b7b0d9cf650336866eda1d0473e1a009f6 assets/beyondtheveil/models/item/blood_crown.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/blood_cultist.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/blood_skeleton.json
 c4eec04da222d4f5e3a18aecd856184775e3ff34 assets/beyondtheveil/models/item/blood_smooth_stone.json
 1894dd8c50e35f29f0cf49b8564fd405bc74357f assets/beyondtheveil/models/item/blood_smooth_stone_slab.json

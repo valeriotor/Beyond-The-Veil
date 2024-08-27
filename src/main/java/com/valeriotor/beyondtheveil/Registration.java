@@ -86,6 +86,7 @@ public class Registration {
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
     public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("weeper"));
     public static final RegistryObject<EntityType<LivingAmmunitionEntity>> LIVING_AMMUNITION = ENTITIES.register("living_ammunition", () -> EntityType.Builder.of(LivingAmmunitionEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("living_ammunition"));
+    public static final RegistryObject<EntityType<BloodCultistEntity>> BLOOD_CULTIST = ENTITIES.register("blood_cultist", () -> EntityType.Builder.of(BloodCultistEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("blood_cultist"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD);
@@ -289,6 +290,7 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_ZOMBIE_EGG = ITEMS.register("blood_zombie", () -> new ForgeSpawnEggItem(BLOOD_ZOMBIE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_WRAITH_EGG = ITEMS.register("blood_wraith", () -> new ForgeSpawnEggItem(BLOOD_WRAITH, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BLOOD_CULTIST_EGG = ITEMS.register("blood_cultist", () -> new ForgeSpawnEggItem(BLOOD_CULTIST, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
 
     public static final RegistryObject<BlockEntityType<GearBenchBE>> GEAR_BENCH_BE = BLOCK_ENTITIES.register(GEAR_BENCH.getId().getPath(), () -> BlockEntityType.Builder.of(GearBenchBE::new, GEAR_BENCH.get()).build(null));
@@ -447,6 +449,7 @@ public class Registration {
                 output.accept(BLOOD_SKELETON_EGG.get());
                 output.accept(BLOOD_ZOMBIE_EGG.get());
                 output.accept(BLOOD_WRAITH_EGG.get());
+                output.accept(BLOOD_CULTIST_EGG.get());
 
     }).build());
 
