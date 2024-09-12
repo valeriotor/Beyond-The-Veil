@@ -39,12 +39,12 @@ public class DeepOneEntity extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
-        //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
+        //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+        //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+        ////this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
+        //this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
