@@ -83,7 +83,7 @@ public class TextUtil {
                 String currentLine = strings.get(i);
                 int currentLineLength = currentLine.length();
                 while (i < strings.size() && lengthSoFar + currentLineLength <= propertyToBe.start) {
-                    textLines.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(strings.get(i))), propertiesForCurrentLine.stream().toList()));
+                    textLines.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(strings.get(i))), propertiesForCurrentLine.stream().toList(), f));
                     propertiesForCurrentLine.clear();
                     lengthSoFar += currentLineLength;
                     i++;
