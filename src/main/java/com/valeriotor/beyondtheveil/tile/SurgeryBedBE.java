@@ -48,6 +48,6 @@ public class SurgeryBedBE extends SurgicalBE {
 
     @Override
     public AABB getRenderBoundingBox() {
-        return new AABB(getBlockPos().offset(-1, 0, -1), getBlockPos().offset(1,2,1));
+        return new AABB(getBlockPos().offset(-1, 0, -1), getBlockPos().offset(2,2,2));
     }
 }
