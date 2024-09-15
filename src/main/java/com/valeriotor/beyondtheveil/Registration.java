@@ -131,6 +131,7 @@ public class Registration {
     public static final RegistryObject<Block> BLOOD_BRICK = BLOCKS.register("blood_brick", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<SacrificeAltarBlock> SACRIFICE_ALTAR = BLOCKS.register("sacrifice_altar", () -> new SacrificeAltarBlock(BRICK_PROPERTIES)); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
+    public static final RegistryObject<BloodBasinBlock> BLOOD_BASIN = BLOCKS.register("blood_basin", () -> new BloodBasinBlock(BRICK_PROPERTIES)); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
     public static final RegistryObject<SlabBlock> BLOOD_BRICK_SLAB = BLOCKS.register("blood_brick_slab", () -> new SlabBlock(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
     public static final RegistryObject<StairBlock> BLOOD_BRICK_STAIRS = BLOCKS.register("blood_brick_stairs", () -> new StairBlock(() -> BLOOD_BRICK.get().defaultBlockState(), BRICK_PROPERTIES)); // new ModStairs(BlockBloodBrick.getDefaultState(), BlockNames.BLOOD_BRICKS_STAIRS);
     public static final RegistryObject<Block> BLOOD_SMOOTH_STONE = BLOCKS.register("blood_smooth_stone", () -> new Block(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
@@ -199,6 +200,7 @@ public class Registration {
     public static final RegistryObject<Item> ELDER_SMOOTH_STONE_SLAB_ITEM = fromBlock(ELDER_SMOOTH_STONE_SLAB);
     //public static final RegistryObject<Item> HEART_ITEM = fromBlock(HEART);
     public static final RegistryObject<Item> SACRIFICE_ALTAR_ITEM = fromBlock(SACRIFICE_ALTAR);
+    public static final RegistryObject<Item> BLOOD_BASIN_ITEM = fromBlock(BLOOD_BASIN);
     public static final RegistryObject<Item> BLOOD_BRICK_ITEM = fromBlock(BLOOD_BRICK);
     public static final RegistryObject<Item> VEIN_STONE_ITEM = fromBlock(VEIN_STONE);
     public static final RegistryObject<Item> BLOOD_BRICK_SLAB_ITEM = fromBlock(BLOOD_BRICK_SLAB);
@@ -303,6 +305,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<SacrificeAltarBE>> SACRIFICE_ALTAR_BE = BLOCK_ENTITIES.register(SACRIFICE_ALTAR.getId().getPath(), () -> BlockEntityType.Builder.of(SacrificeAltarBE::new, SACRIFICE_ALTAR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BloodBasinBE>> BLOOD_BASIN_BE = BLOCK_ENTITIES.register(BLOOD_BASIN.getId().getPath(), () -> BlockEntityType.Builder.of(BloodBasinBE::new, BLOOD_BASIN.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = CONTAINERS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
 
@@ -379,6 +382,7 @@ public class Registration {
                 output.accept(BLOOD_BRICK.get());
                 output.accept(VEIN_STONE.get());
                 output.accept(SACRIFICE_ALTAR.get());
+                output.accept(BLOOD_BASIN.get());
                 output.accept(BLOOD_BRICK_SLAB.get());
                 output.accept(BLOOD_BRICK_STAIRS.get());
                 output.accept(BLOOD_SMOOTH_STONE.get());

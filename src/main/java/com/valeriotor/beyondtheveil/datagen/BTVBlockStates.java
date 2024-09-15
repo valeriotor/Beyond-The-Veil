@@ -58,7 +58,7 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(BLOOD_SMOOTH_STONE.get());
         registerSmoothStoneSlab(BLOOD_SMOOTH_STONE_SLAB.get(), modLoc("block/" + BLOOD_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + BLOOD_SMOOTH_STONE.getId().getPath()));
         simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
-        //simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
+        simpleBlock(BLOOD_BASIN.get(), new ExistingModelFile(modLoc("block/blood_basin"), models().existingFileHelper));
         simpleBlock(BLACK_KELP.get(), new ExistingModelFile(modLoc("block/black_kelp"), models().existingFileHelper));
         simpleBlock(BLACK_KELP_PLANT.get(), new ExistingModelFile(modLoc("block/black_kelp_plant"), models().existingFileHelper));
         simpleBlock(DARK_GLASS.get());
