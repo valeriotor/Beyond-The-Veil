@@ -1,7 +1,94 @@
 {
   "variants": {
-    "": {
+    "depth=0,facing=east,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "depth=0,facing=east,side=1": {
+      "model": "beyondtheveil:block/sacrifice_altar",
+      "y": 90
+    },
+    "depth=0,facing=east,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "depth=0,facing=north,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "depth=0,facing=north,side=1": {
       "model": "beyondtheveil:block/sacrifice_altar"
+    },
+    "depth=0,facing=north,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "depth=0,facing=south,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "depth=0,facing=south,side=1": {
+      "model": "beyondtheveil:block/sacrifice_altar",
+      "y": 180
+    },
+    "depth=0,facing=south,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "depth=0,facing=west,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "depth=0,facing=west,side=1": {
+      "model": "beyondtheveil:block/sacrifice_altar",
+      "y": 270
+    },
+    "depth=0,facing=west,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "depth=1,facing=east,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "depth=1,facing=east,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "depth=1,facing=east,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 90
+    },
+    "depth=1,facing=north,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "depth=1,facing=north,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "depth=1,facing=north,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty"
+    },
+    "depth=1,facing=south,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "depth=1,facing=south,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "depth=1,facing=south,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 180
+    },
+    "depth=1,facing=west,side=0": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "depth=1,facing=west,side=1": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
+    },
+    "depth=1,facing=west,side=2": {
+      "model": "beyondtheveil:block/flask_shelf_empty",
+      "y": 270
     }
   }
 }

@@ -112,6 +112,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
         event.registerBlockEntityRenderer(Registration.SURGERY_BED_BE.get(), SurgeryBedBER::new);
         event.registerBlockEntityRenderer(Registration.FLASK_BE.get(), FlaskBER::new);
+        event.registerBlockEntityRenderer(Registration.SACRIFICE_ALTAR_BE.get(), SacrificeAltarBER::new);
     }
 
     @SubscribeEvent

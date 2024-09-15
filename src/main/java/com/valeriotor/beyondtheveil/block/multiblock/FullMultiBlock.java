@@ -10,25 +10,28 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ThinMultiBlock extends FullMultiBlock {
+public abstract class FullMultiBlock extends Block{
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 
     public final int levels;
     public final int centerY;
     public final int horizontalRadius;
+    public final int horizontalDepth;
 
-    public ThinMultiBlock(Properties pProperties, int levels, int centerY, int horizontalRadius) {
-        super(pProperties, levels, centerY, horizontalRadius, 0);
+    public FullMultiBlock(BlockBehaviour.Properties pProperties, int levels, int centerY, int horizontalRadius, int horizontalDepth) {
+        super(pProperties);
         this.levels = levels;
         this.centerY = centerY;
         this.horizontalRadius = horizontalRadius;
+        this.horizontalDepth = horizontalDepth;
 
         BlockState blockState = this.stateDefinition.any().setValue(FACING, Direction.NORTH);
         if (getLevelProperty() != null) {
@@ -37,16 +40,14 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
         if (getSideProperty() != null) {
             blockState = blockState.setValue(getSideProperty(), horizontalRadius);
         }
+        if (getDepthProperty() != null) {
+            blockState = blockState.setValue(getDepthProperty(), 0);
+        }
 
         this.registerDefaultState(blockState);
     }
 
     @Override
-    public IntegerProperty getDepthProperty() {
-        return null;
-    }
-
-    /*@Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos blockpos = context.getClickedPos();
         Level level = context.getLevel();
@@ -67,6 +68,9 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
         if (getSideProperty() != null) {
             blockState = blockState.setValue(getSideProperty(), horizontalRadius);
         }
+        if (getDepthProperty() != null) {
+            blockState = blockState.setValue(getDepthProperty(), 0);
+        }
         return blockState;
     }
 
@@ -79,6 +83,9 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
         if (getSideProperty() != null) {
             builder.add(getSideProperty());
         }
+        if (getDepthProperty() != null) {
+            builder.add(getDepthProperty());
+        }
     }
 
     @Override
@@ -86,13 +93,16 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
         BlockPos center = findCenter(pPos, pState);
         for (int i = -horizontalRadius; i <= horizontalRadius; i++) {
             for (int y = -centerY; y <= levels - 1 - centerY; y++) {
-                int x = pState.getValue(FACING).getAxis() == Direction.Axis.X ? 0 : i;
-                int z = pState.getValue(FACING).getAxis() == Direction.Axis.Z ? 0 : i;
-                BlockPos neighbourPos = center.offset(x, y, z);
-                BlockState neighbour = pLevel.getBlockState(neighbourPos);
-                if (neighbour.is(this) && neighbour.getValue(FACING) == pState.getValue(FACING)) {
-                    pLevel.setBlock(neighbourPos, Blocks.AIR.defaultBlockState(), 35);
-                    pLevel.levelEvent(pPlayer, 2001, neighbourPos, Block.getId(neighbour));
+                for (int j = 0; j < horizontalDepth; j++) {
+                    Direction facing = pState.getValue(FACING);
+                    int x = facing.getAxis() == Direction.Axis.X ? (facing == Direction.EAST ? -j : j) : i;
+                    int z = facing.getAxis() == Direction.Axis.Z ? (facing == Direction.SOUTH ? -j : j) : i;
+                    BlockPos neighbourPos = center.offset(x, y, z);
+                    BlockState neighbour = pLevel.getBlockState(neighbourPos);
+                    if (neighbour.is(this) && neighbour.getValue(FACING) == facing) {
+                        pLevel.setBlock(neighbourPos, Blocks.AIR.defaultBlockState(), 35);
+                        pLevel.levelEvent(pPlayer, 2001, neighbourPos, Block.getId(neighbour));
+                    }
                 }
             }
         }
@@ -102,8 +112,9 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
     public BlockPos findCenter(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(FACING);
         int i = getSideProperty() != null ? -pState.getValue(getSideProperty()) + horizontalRadius : 0;
-        int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
-        int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
+        int j = getDepthProperty() != null ? -pState.getValue(getDepthProperty()) : 0;
+        int x = facing.getAxis() == Direction.Axis.X ? (facing == Direction.EAST ? -j : j) : (facing == Direction.NORTH ? -i : i);
+        int z = facing.getAxis() == Direction.Axis.Z ? (facing == Direction.SOUTH ? -j : j) : (facing == Direction.EAST ? -i : i);
         return pPos.offset(x, getLevelProperty() != null ? -pState.getValue(getLevelProperty()) : 0, z);
     }
 
@@ -111,24 +122,32 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         for (int i = -horizontalRadius; i <= horizontalRadius; i++) {
             for (int y = 0; y < levels; y++) {
-                if (i == 0 && y == 0) continue;
-                Direction facing = pState.getValue(FACING);
-                int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
-                int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-                BlockState blockState = pState;
-                if (getLevelProperty() != null) {
-                    blockState = blockState.setValue(getLevelProperty(), y);
+                for (int j = 0; j < horizontalDepth; j++) {
+                    if (i == 0 && y == 0 && j == 0) continue;
+                    Direction facing = pState.getValue(FACING);
+                    int x = facing.getAxis() == Direction.Axis.X ? (facing == Direction.EAST ? -j : j) : (facing == Direction.NORTH ? -i : i);
+                    int z = facing.getAxis() == Direction.Axis.Z ? (facing == Direction.SOUTH ? -j : j) : (facing == Direction.EAST ? -i : i);
+                    BlockState blockState = pState;
+                    if (getLevelProperty() != null) {
+                        blockState = blockState.setValue(getLevelProperty(), y);
+                    }
+                    if (getSideProperty() != null) {
+                        blockState = blockState.setValue(getSideProperty(), i + horizontalRadius);
+                    }
+                    if (getDepthProperty() != null) {
+                        blockState = blockState.setValue(getDepthProperty(), j);
+                    }
+                    pLevel.setBlock(pPos.offset(x, y, z), blockState, 3);
+
                 }
-                if (getSideProperty() != null) {
-                    blockState = blockState.setValue(getSideProperty(), i + horizontalRadius);
-                }
-                pLevel.setBlock(pPos.offset(x, y, z), blockState, 3);
             }
         }
     }
 
     public boolean isCenter(BlockState state) {
-        return (getSideProperty() == null || state.getValue(getSideProperty()) == horizontalRadius) && (getLevelProperty() == null || state.getValue(getLevelProperty()) == centerY);
+        return (getSideProperty() == null || state.getValue(getSideProperty()) == horizontalRadius)
+                && (getLevelProperty() == null || state.getValue(getLevelProperty()) == centerY)
+                && (getDepthProperty() == null || state.getValue(getDepthProperty()) == 0);
     }
 
     public int getHorizontalRadius() {
@@ -140,6 +159,20 @@ public abstract class ThinMultiBlock extends FullMultiBlock {
     }
 
     public abstract IntegerProperty getSideProperty();
+    public abstract IntegerProperty getLevelProperty();
+    public abstract IntegerProperty getDepthProperty();
 
-    public abstract IntegerProperty getLevelProperty();*/
+    public int getSideValue(BlockState state) {
+        return getSideProperty() == null ? 0 : state.getValue(getSideProperty());
+    }
+
+    public int getLevelValue(BlockState state) {
+        return getLevelProperty() == null ? 0 : state.getValue(getLevelProperty());
+    }
+
+    public int getDepthValue(BlockState state) {
+        return getDepthProperty() == null ? 0 : state.getValue(getDepthProperty());
+    }
+
+
 }

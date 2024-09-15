@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.*;
+import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
@@ -57,7 +58,7 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(BLOOD_SMOOTH_STONE.get());
         registerSmoothStoneSlab(BLOOD_SMOOTH_STONE_SLAB.get(), modLoc("block/" + BLOOD_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + BLOOD_SMOOTH_STONE.getId().getPath()));
         simpleBlock(HEART.get(), new ExistingModelFile(modLoc("block/heart"), models().existingFileHelper));
-        simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
+        //simpleBlock(SACRIFICE_ALTAR.get(), new ExistingModelFile(modLoc("block/sacrifice_altar"), models().existingFileHelper));
         simpleBlock(BLACK_KELP.get(), new ExistingModelFile(modLoc("block/black_kelp"), models().existingFileHelper));
         simpleBlock(BLACK_KELP_PLANT.get(), new ExistingModelFile(modLoc("block/black_kelp_plant"), models().existingFileHelper));
         simpleBlock(DARK_GLASS.get());
@@ -82,6 +83,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlaskShelf();
         registerFlasks();
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
+        registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -353,6 +355,22 @@ public class BTVBlockStates extends BlockStateProvider {
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
                             .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
+                });
+    }
+
+    private void registerFullMultiBlock(String modelName, String emptyModelName, FullMultiBlock block) {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/" + modelName), models().existingFileHelper);
+        getVariantBuilder(block)
+                .forAllStatesExcept(state -> {
+                    ModelFile file = block.getSideValue(state) == block.getHorizontalRadius() && block.getLevelValue(state) == block.getCenterY() && block.getDepthValue(state) == 0 ? base : empty;
+                    if (file == empty) {
+
+                    }
+                    return ConfiguredModel.builder()
+                            .modelFile(file) // Can show 'modelFile'
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
     }
