@@ -79,6 +79,7 @@ public class PlayerDataLib {
     // Longs (Non-temporary)
     public static final String LASTDREAMTINDAY = "lastdreamday";
     public static final String LASTDREAMTINWORLD = "lastdreamworld";
+    public static final String SACRIFICE_ALTAR = "sacrifice_altar";
     public static final String WAYPOINT_OCEAN = "waypoint_ocean";
 
     // Strings (Non-temporary)

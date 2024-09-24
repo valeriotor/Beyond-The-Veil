@@ -13,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -58,5 +60,18 @@ public class SacrificeAltarBlock extends FullMultiBlock implements EntityBlock {
             return success ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (!pLevel.isClientSide()) {
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if(pBlockEntity instanceof SacrificeAltarBE sacrificeAltarBE) sacrificeAltarBE.tickServer();
+            };
+        }
+        return (pLevel1, pPos, pState1, pBlockEntity) -> {
+            if(pBlockEntity instanceof SacrificeAltarBE sacrificeAltarBE) sacrificeAltarBE.tickClient();
+        };
     }
 }

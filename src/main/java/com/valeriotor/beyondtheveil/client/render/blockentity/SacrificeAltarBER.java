@@ -2,9 +2,7 @@ package com.valeriotor.beyondtheveil.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
-import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -19,7 +17,7 @@ public class SacrificeAltarBER implements BlockEntityRenderer<SacrificeAltarBE> 
 
     @Override
     public void render(SacrificeAltarBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        if (pBlockEntity.getEntity() != null) {
+        if (pBlockEntity.getVictim() != null) {
             pPoseStack.pushPose();
             //pPoseStack.scale(0.85F, 0.8F, 0.85F);
             Direction value = pBlockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
@@ -28,7 +26,7 @@ public class SacrificeAltarBER implements BlockEntityRenderer<SacrificeAltarBE> 
             //pPoseStack.mulPose(Axis.XP.rotation((float) Math.PI));
             pPoseStack.mulPose(Axis.YP.rotation((float) ((-value.get2DDataValue() - 1) * Math.PI / 2)));
             pPoseStack.translate(-0.5, 0, 0);
-            Minecraft.getInstance().getEntityRenderDispatcher().render(pBlockEntity.getEntity(), 0, 0, 0, 0, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
+            Minecraft.getInstance().getEntityRenderDispatcher().render(pBlockEntity.getVictim(), 0, 0, 0, 0, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
             pPoseStack.popPose();
         }
     }

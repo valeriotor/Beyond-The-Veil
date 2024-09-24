@@ -35,11 +35,11 @@ public class BloodBasinBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-
+        // TODO should this have been server side only?
         ItemStack stack = pPlayer.getItemInHand(pHand);
         BlockEntity entity = pLevel.getBlockEntity(pPos);
-        if (entity instanceof BloodBasinBE sieve) {
-            sieve.interact(pPlayer, pHand, stack);
+        if (entity instanceof BloodBasinBE basin) {
+            basin.interact(pPlayer, pHand, stack);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

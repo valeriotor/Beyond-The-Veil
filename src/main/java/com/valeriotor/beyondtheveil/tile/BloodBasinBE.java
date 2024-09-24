@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -51,6 +53,11 @@ public class BloodBasinBE extends BlockEntity {
                 player.setItemInHand(hand, left);
                 setChanged();
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            } else {
+                Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                if (altarLong != -1 && level.getBlockEntity(BlockPos.of(altarLong)) instanceof SacrificeAltarBE sacrificeAltar) {
+                    sacrificeAltar.addBasin(getBlockPos());
+                }
             }
         } else {
             ItemHandlerHelper.giveItemToPlayer(player, stackHandler.extractItem(0, 64, false));
