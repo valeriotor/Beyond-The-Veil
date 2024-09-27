@@ -51,8 +51,7 @@ public class BloodBasinBE extends BlockEntity {
             if (stack.getItem() != Registration.SACRIFICIAL_KNIFE.get()) {
                 ItemStack left = stackHandler.insertItem(0, stack, false);
                 player.setItemInHand(hand, left);
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                updateClient();
             } else {
                 Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
                 if (altarLong != -1 && level.getBlockEntity(BlockPos.of(altarLong)) instanceof SacrificeAltarBE sacrificeAltar) {
@@ -61,13 +60,22 @@ public class BloodBasinBE extends BlockEntity {
             }
         } else {
             ItemHandlerHelper.giveItemToPlayer(player, stackHandler.extractItem(0, 64, false));
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            updateClient();
         }
+    }
+
+    private void updateClient() {
+        setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
     }
 
     public ItemStackHandler getStackHandler() {
         return stackHandler;
+    }
+
+    public void removeItem() {
+        stackHandler.setStackInSlot(0, ItemStack.EMPTY);
+        updateClient();
     }
 
     @Override

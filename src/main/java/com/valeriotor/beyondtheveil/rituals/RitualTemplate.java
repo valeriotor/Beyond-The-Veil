@@ -1,17 +1,17 @@
 package com.valeriotor.beyondtheveil.rituals;
 
+import com.google.common.collect.Lists;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RitualTemplate {
 
+    private final String name;
     private final int startingPrimaryInstability;
     private final int primaryInstabilityRate;
     private final int secondaryInstabilityRate;
@@ -20,6 +20,7 @@ public class RitualTemplate {
     private final Consumer<Player> otherEffects;
 
     private RitualTemplate(RitualTemplateBuilder builder) {
+        this.name = builder.name;
         this.startingPrimaryInstability = builder.startingPrimaryInstability;
         this.primaryInstabilityRate = builder.primaryInstabilityRate;
         this.secondaryInstabilityRate = builder.secondaryInstabilityRate;
@@ -28,8 +29,13 @@ public class RitualTemplate {
         this.otherEffects = builder.otherEffects;
     }
 
-    public class RitualTemplateBuilder {
+    public String getName() {
+        return name;
+    }
 
+    public static class RitualTemplateBuilder {
+
+        private final String name;
         private final int startingPrimaryInstability;
         private final int primaryInstabilityRate;
         private final int secondaryInstabilityRate;
@@ -37,7 +43,8 @@ public class RitualTemplate {
         private BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private Consumer<Player> otherEffects;
 
-        public RitualTemplateBuilder(int startingPrimaryInstability, int primaryInstabilityRate, int secondaryInstabilityRate) {
+        public RitualTemplateBuilder(String name, int startingPrimaryInstability, int primaryInstabilityRate, int secondaryInstabilityRate) {
+            this.name = name;
             this.startingPrimaryInstability = startingPrimaryInstability;
             this.primaryInstabilityRate = primaryInstabilityRate;
             this.secondaryInstabilityRate = secondaryInstabilityRate;
@@ -64,8 +71,11 @@ public class RitualTemplate {
             return this;
         }
 
-        public RitualTemplate toTemplate() {
+        public RitualTemplate toTemplate(Map<Item, Map<List<Item>, RitualTemplate>> dictionary, Map<String, RitualTemplate> by_name) {
             RitualTemplate template = new RitualTemplate(this);
+            Map<List<Item>, RitualTemplate> templatesByInverseIngredients = dictionary.computeIfAbsent(template.ingredients.get(template.ingredients.size() - 1), i -> new HashMap<>());
+            templatesByInverseIngredients.put(Lists.reverse(template.ingredients), template);
+            by_name.put(name, template);
             return template;
         }
 

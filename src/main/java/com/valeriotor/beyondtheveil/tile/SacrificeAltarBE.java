@@ -103,7 +103,7 @@ public class SacrificeAltarBE extends BlockEntity {
             }
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
-                ritualStatus = RitualStatus.startRitual(level, basinsToBeUsed);
+                ritualStatus = RitualStatus.startRitual((ServerLevel) level, getBlockPos(), basinsToBeUsed);
                 playerInitiating = null;
                 basinsToBeUsed.clear();
                 updateClient();
@@ -138,6 +138,8 @@ public class SacrificeAltarBE extends BlockEntity {
 
         if (tag.contains("ritualStatus")) {
             ritualStatus = new RitualStatus(tag.getCompound("ritualStatus"));
+        } else {
+            ritualStatus = null;
         }
     }
 
@@ -258,23 +260,30 @@ public class SacrificeAltarBE extends BlockEntity {
             prev = prev.add(-facing.getStepX() * 0.5, 0.5, -facing.getStepZ() * 0.5);
             if (counter % 4 == 0) {
                 int rescaledCounter = counter / 4;
-                for (int i = 0; i < basinsToBeUsed.size(); i++) {
-                    Vec3 curr = basinsToBeUsed.get(i).getCenter();
-                    double dist = curr.distanceTo(prev);
-                    double distX = curr.x() - prev.x();
-                    double distY = curr.y() - prev.y();
-                    double distZ = curr.z() - prev.z();
-                    final double PER_BLOCK = 3;
-                    for (int j = 0; j < (dist) * PER_BLOCK; j++) {
-                        double currDist = j / PER_BLOCK + (1 / PER_BLOCK / 10 * (rescaledCounter % 10));
-                        double percent = currDist / (dist);//
-                        double sinOffset = Math.sin(percent * Math.PI) / 3 * Math.sin(rescaledCounter * 2 * Math.PI / (80D));
-                        level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x() + distX * percent + Math.random() * 0.125 - 0.0625, prev.y() + distY * percent + 0.75 + Math.random() * 0.125 - 0.0625 + sinOffset, prev.z() + distZ * percent + Math.random() * 0.125 - 0.0625, 0, 0, 0);
-                    }
-                    prev = curr;
-                }
+                int endsAtAltar = ritualStatus != null ? 1 : 0;
+                makeParticles(prev, rescaledCounter, endsAtAltar);
 
             }
+        }
+    }
+
+    private void makeParticles(Vec3 prev, int rescaledCounter, int endsAtAltar) {
+        Vec3 altar = prev;
+        List<BlockPos> toUse = endsAtAltar == 1 ? ritualStatus.getAltars() : basinsToBeUsed;
+        for (int i = 0; i < toUse.size() + endsAtAltar; i++) {
+            Vec3 curr = i == toUse.size() ? altar : toUse.get(i).getCenter();
+            double dist = curr.distanceTo(prev);
+            double distX = curr.x() - prev.x();
+            double distY = curr.y() - prev.y();
+            double distZ = curr.z() - prev.z();
+            final double PER_BLOCK = 3;
+            for (int j = 0; j < (dist) * PER_BLOCK; j++) {
+                double currDist = j / PER_BLOCK + (1 / PER_BLOCK / 10 * (rescaledCounter % 10));
+                double percent = currDist / (dist);//
+                double sinOffset = Math.sin(percent * Math.PI) / 3 * Math.sin(rescaledCounter * 2 * Math.PI / (80D));
+                level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x() + distX * percent + Math.random() * 0.125 - 0.0625, prev.y() + distY * percent + 0.75 + Math.random() * 0.125 - 0.0625 + sinOffset, prev.z() + distZ * percent + Math.random() * 0.125 - 0.0625, 0, 0, 0);
+            }
+            prev = curr;
         }
     }
 
@@ -288,7 +297,21 @@ public class SacrificeAltarBE extends BlockEntity {
                     Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
                     if (altarLong == -1 || !BlockPos.of(altarLong).equals(getBlockPos()) || getBlockPos().distSqr(player.blockPosition()) >= MAX_PLAYER_DISTANCE_SQR || player.getMainHandItem().getItem() != Registration.SACRIFICIAL_KNIFE.get())
                         breakChain();
+                    else {
+                        for (BlockPos blockPos : basinsToBeUsed) {
+                            if (!(level.getBlockEntity(blockPos) instanceof BloodBasinBE)) {
+                                breakChain();
+                                break;
+                            }
+                        }
+                    }
                 } else breakChain();
+            }
+        }
+        if (ritualStatus != null) {
+            if (ritualStatus.tick(level)) {
+                ritualStatus = null;
+                updateClient();
             }
         }
     }
