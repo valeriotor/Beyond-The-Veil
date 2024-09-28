@@ -18,6 +18,7 @@ import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -72,7 +73,7 @@ public class SacrificeAltarBE extends BlockEntity {
                         return true;
                     }
                 }
-            } else if (in.getItem() == Registration.SACRIFICIAL_KNIFE.get()) {
+            } else if (in.getItem() == Registration.SACRIFICIAL_KNIFE.get() && !patientStatus.isDead()) {
                 executeChain(p);
             }
         } else {
@@ -305,7 +306,7 @@ public class SacrificeAltarBE extends BlockEntity {
             for (int j = 0; j < (dist) * PER_BLOCK; j++) {
                 double currDist = j / PER_BLOCK + (1 / PER_BLOCK / 10 * (rescaledCounter % 10));
                 double percent = currDist / (dist);//
-                double sinOffset = Math.sin(percent * Math.PI) / 3 * Math.sin(rescaledCounter * 2 * Math.PI / (80D));
+                double sinOffset = Math.sin(percent * Math.PI) / 6 * Math.sin(rescaledCounter * 2 * Math.PI / (80D));
                 level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x() + distX * percent + Math.random() * 0.125 - 0.0625, prev.y() + distY * percent + 0.75 + Math.random() * 0.125 - 0.0625 + sinOffset, prev.z() + distZ * percent + Math.random() * 0.125 - 0.0625, 0, 0, 0);
             }
             prev = curr;
@@ -314,43 +315,62 @@ public class SacrificeAltarBE extends BlockEntity {
 
     public void tickServer() {
         // TODO every 10 ticks (on the 10th tick) if player not found within x blocks or if he doesn't wield knife then break chain (patient dies?)
-        if (patientStatus != null) {
-            patientStatus.tick(false);
-            if (patientStatus.isDirty()) {
-                updateClient();
+        if (this.level instanceof ServerLevel sl) {
+            if (patientStatus != null) {
+                patientStatus.setLevelAndCoords(sl, getBlockPos());
+                patientStatus.tick(false);
+                if (patientStatus.isDirty()) {
+                    updateClient();
+                }
             }
-        }
-        counter++;
-        if (counter % 10 == 9) {
-            if (playerInitiating != null && level != null) {
-                Player player = level.getPlayerByUUID(playerInitiating);
-                if (player != null) {
-                    Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
-                    if (altarLong == -1 || !BlockPos.of(altarLong).equals(getBlockPos()) || getBlockPos().distSqr(player.blockPosition()) >= MAX_PLAYER_DISTANCE_SQR || player.getMainHandItem().getItem() != Registration.SACRIFICIAL_KNIFE.get())
-                        breakChain();
-                    else {
-                        for (BlockPos blockPos : basinsToBeUsed) {
-                            if (!(level.getBlockEntity(blockPos) instanceof BloodBasinBE)) {
-                                breakChain();
-                                break;
+            counter++;
+            if (counter % 10 == 9) {
+                if (playerInitiating != null) {
+                    Player player = sl.getPlayerByUUID(playerInitiating);
+                    if (player != null) {
+                        Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                        if (altarLong == -1 || !BlockPos.of(altarLong).equals(getBlockPos()) || getBlockPos().distSqr(player.blockPosition()) >= MAX_PLAYER_DISTANCE_SQR || player.getMainHandItem().getItem() != Registration.SACRIFICIAL_KNIFE.get())
+                            breakChain();
+                        else {
+                            for (BlockPos blockPos : basinsToBeUsed) {
+                                if (!(sl.getBlockEntity(blockPos) instanceof BloodBasinBE)) {
+                                    breakChain();
+                                    break;
+                                }
                             }
                         }
-                    }
-                } else breakChain();
+                    } else breakChain();
+                }
             }
-        }
-        if (level == null) {
-            ritualStatus = null;
-        }
-        if (ritualStatus != null) {
-            if (ritualStatus.tick(level)) {
+            if (ritualStatus != null) {
                 Vec3 centerPos = getCenterPos();
-                ritualStatus.terminationEffects((ServerLevel) level, centerPos);
-                killVictim();
-                ritualStatus = null;
-                updateClient();
+                if (counter % 4 == 0) {
+                    renderOrb();
+                }
+                setChanged();
+                if (ritualStatus.tick(sl)) {
+                    ritualStatus.terminationEffects(sl, centerPos);
+                    killVictim();
+                    ritualStatus = null;
+                    updateClient();
+                }
             }
+
         }
+    }
+
+    private void renderOrb() {
+        Vec3 centerPos = getCenterPos();
+        ServerLevel sl = (ServerLevel) level;
+        int currentHop = ritualStatus.getCurrentHop();
+        double progressUntilNextHop = ritualStatus.getProgressUntilNextHop();
+        Vec3 start = currentHop == 0 ? centerPos : ritualStatus.getAltars().get(currentHop - 1).getCenter();
+        Vec3 end = currentHop == ritualStatus.getAltars().size() ? centerPos : ritualStatus.getAltars().get(currentHop).getCenter();
+        double distanceRatio = progressUntilNextHop / ritualStatus.getDistances()[currentHop];
+        Vec3 orbPos = new Vec3(start.x + (end.x - start.x) * distanceRatio, start.y + (end.y - start.y) * distanceRatio, start.z + (end.z - start.z) * distanceRatio);
+        sl.sendParticles(BTVParticles.BLOODSPILL.get(), orbPos.x, orbPos.y + 0.75, orbPos.z, 50, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, 0);
+        sl.sendParticles(ParticleTypes.SMOKE, orbPos.x, orbPos.y + 0.75, orbPos.z, 25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, 0);
+
     }
 
     private void breakChain() {

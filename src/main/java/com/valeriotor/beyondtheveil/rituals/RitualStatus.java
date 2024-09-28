@@ -106,6 +106,18 @@ public class RitualStatus {
         return initiator;
     }
 
+    public int getCurrentHop() {
+        return currentHop;
+    }
+
+    public double getProgressUntilNextHop() {
+        return progressUntilNextHop;
+    }
+
+    public double[] getDistances() {
+        return distances;
+    }
+
     public List<BlockPos> getAltars() {
         return altars;
     }
