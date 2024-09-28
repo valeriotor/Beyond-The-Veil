@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.rituals.RitualStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -103,7 +105,7 @@ public class SacrificeAltarBE extends BlockEntity {
             }
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
-                ritualStatus = RitualStatus.startRitual((ServerLevel) level, getBlockPos(), basinsToBeUsed);
+                ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed);
                 playerInitiating = null;
                 basinsToBeUsed.clear();
                 updateClient();
@@ -131,6 +133,8 @@ public class SacrificeAltarBE extends BlockEntity {
         loadPatient(tag);
         if (tag.contains("playerInitiating")) {
             playerInitiating = UUID.fromString(tag.getString("playerInitiating"));
+        } else {
+            playerInitiating = null;
         }
         basinsToBeUsed.clear();
         CompoundTag basins = tag.getCompound("basins");
@@ -255,23 +259,44 @@ public class SacrificeAltarBE extends BlockEntity {
         }
         counter++;
         if (level != null) {
-            Direction facing = getBlockState().getValue(FullMultiBlock.FACING);
-            Vec3 prev = getBlockPos().getCenter();
-            prev = prev.add(-facing.getStepX() * 0.5, 0.5, -facing.getStepZ() * 0.5);
+            Vec3 prev = getCenterPos();
+            if (ritualStatus != null || playerInitiating != null) {
+                for (int i = 0; i < 3; i++) {
+                    level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
+                }
+            }
             if (counter % 4 == 0) {
                 int rescaledCounter = counter / 4;
-                int endsAtAltar = ritualStatus != null ? 1 : 0;
+                boolean endsAtAltar = ritualStatus != null;
                 makeParticles(prev, rescaledCounter, endsAtAltar);
 
             }
         }
     }
 
-    private void makeParticles(Vec3 prev, int rescaledCounter, int endsAtAltar) {
+    @NotNull
+    private Vec3 getCenterPos() {
+        Direction facing = getBlockState().getValue(FullMultiBlock.FACING);
+        Vec3 prev = getBlockPos().getCenter();
+        prev = prev.add(-facing.getStepX() * 0.6 -facing.getStepZ() * 0.2, 0.5, -facing.getStepZ() * 0.6 + facing.getStepX() * 0.2);
+        return prev;
+    }
+
+    private void makeParticles(Vec3 prev, int rescaledCounter, boolean endsAtAltar) {
+        if (level == null) {
+            return;
+        }
         Vec3 altar = prev;
-        List<BlockPos> toUse = endsAtAltar == 1 ? ritualStatus.getAltars() : basinsToBeUsed;
-        for (int i = 0; i < toUse.size() + endsAtAltar; i++) {
-            Vec3 curr = i == toUse.size() ? altar : toUse.get(i).getCenter();
+        Vec3 player = null;
+        if (playerInitiating != null && level.getPlayerByUUID(playerInitiating) != null) {
+            player = level.getPlayerByUUID(playerInitiating).position();
+        }
+        List<BlockPos> toUse = endsAtAltar ? ritualStatus.getAltars() : basinsToBeUsed;
+        for (int i = 0; i < toUse.size() + 1; i++) {
+            Vec3 curr = i == toUse.size() ? (endsAtAltar ? altar : player) : toUse.get(i).getCenter();
+            if (curr == null) {
+                return;
+            }
             double dist = curr.distanceTo(prev);
             double distX = curr.x() - prev.x();
             double distY = curr.y() - prev.y();
@@ -289,6 +314,12 @@ public class SacrificeAltarBE extends BlockEntity {
 
     public void tickServer() {
         // TODO every 10 ticks (on the 10th tick) if player not found within x blocks or if he doesn't wield knife then break chain (patient dies?)
+        if (patientStatus != null) {
+            patientStatus.tick(false);
+            if (patientStatus.isDirty()) {
+                updateClient();
+            }
+        }
         counter++;
         if (counter % 10 == 9) {
             if (playerInitiating != null && level != null) {
@@ -308,8 +339,14 @@ public class SacrificeAltarBE extends BlockEntity {
                 } else breakChain();
             }
         }
+        if (level == null) {
+            ritualStatus = null;
+        }
         if (ritualStatus != null) {
             if (ritualStatus.tick(level)) {
+                Vec3 centerPos = getCenterPos();
+                ritualStatus.terminationEffects((ServerLevel) level, centerPos);
+                killVictim();
                 ritualStatus = null;
                 updateClient();
             }
@@ -324,7 +361,11 @@ public class SacrificeAltarBE extends BlockEntity {
     }
 
     private void killVictim() {
-        // TODO
+        if (patientStatus != null && patientStatus.getCondition() != PatientCondition.DEAD && level instanceof ServerLevel sl) {
+            patientStatus.setCondition(PatientCondition.DEAD);
+            Vec3 centerPos = getCenterPos();
+            sl.sendParticles(BTVParticles.BLOODSPILL.get(), centerPos.x, centerPos.y - 0.2, centerPos.z, 100, (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25, 1);
+        }
     }
 
 

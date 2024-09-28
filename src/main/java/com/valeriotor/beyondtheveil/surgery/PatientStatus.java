@@ -395,7 +395,7 @@ public class PatientStatus {
         return flags.containsKey(s);
     }
 
-    void setCondition(PatientCondition condition) {
+    public void setCondition(PatientCondition condition) {
         if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
             countdownTicks = 5;
             if (level != null) {

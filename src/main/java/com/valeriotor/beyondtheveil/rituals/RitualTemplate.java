@@ -33,6 +33,26 @@ public class RitualTemplate {
         return name;
     }
 
+    public List<Item> getIngredients() {
+        return ingredients;
+    }
+
+    public BiFunction<List<ItemStack>, Player, List<ItemStack>> getOutputs() {
+        return outputs;
+    }
+
+    public int getStartingPrimaryInstability() {
+        return startingPrimaryInstability;
+    }
+
+    public int getPrimaryInstabilityRate() {
+        return primaryInstabilityRate;
+    }
+
+    public int getSecondaryInstabilityRate() {
+        return secondaryInstabilityRate;
+    }
+
     public static class RitualTemplateBuilder {
 
         private final String name;

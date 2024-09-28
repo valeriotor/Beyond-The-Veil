@@ -5,11 +5,13 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -73,9 +75,21 @@ public class BloodBasinBE extends BlockEntity {
         return stackHandler;
     }
 
-    public void removeItem() {
+    public ItemStack removeItem() {
+        ItemStack stack = stackHandler.getStackInSlot(0);
         stackHandler.setStackInSlot(0, ItemStack.EMPTY);
         updateClient();
+        return stack;
+    }
+
+    public void createParticles(boolean progressing) {
+        if (level instanceof ServerLevel sl) {
+            if (progressing) {
+                sl.sendParticles(ParticleTypes.FLAME, getBlockPos().getX() + 0.5, getBlockPos().getY() + 1.2, getBlockPos().getZ() + 0.5, 10, 0, 0.1, 0, 0.01);
+            } else {
+                sl.sendParticles(ParticleTypes.FLAME, getBlockPos().getX() + 0.5, getBlockPos().getY() + 1.2, getBlockPos().getZ() + 0.5, 100, 0, 0.1, 0, 0.05);
+            }
+        }
     }
 
     @Override
