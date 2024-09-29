@@ -5,8 +5,8 @@ import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class Element {
 
-    protected final int width;
-    protected final int height;
+    private final int width;
+    private final int height;
 
     protected Element(int width, int height) {
         this.width = width;

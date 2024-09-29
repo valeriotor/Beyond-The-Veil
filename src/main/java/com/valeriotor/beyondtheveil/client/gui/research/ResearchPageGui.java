@@ -6,11 +6,13 @@ import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
+import com.valeriotor.beyondtheveil.client.gui.research.text.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,6 +31,7 @@ public class ResearchPageGui extends Screen {
     private final ResearchStatus status;
     private final String title;
     private List<List<FormattedCharSequence>> pages = new ArrayList<>();
+    private DoubleTextPages pages2;
     private List<String> reqText;
     private Button progress;
     //private List<ResearchRecipe> recipes = new ArrayList<>();
@@ -68,6 +71,8 @@ public class ResearchPageGui extends Screen {
         pages.clear();
         //recipes.clear();
         //shownRecipe = null;
+        String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey());
+        pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + backgroundWidth * 3 / 134, pageHeight, lineWidth, Minecraft.getInstance().font);
         String[] pages = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<PAGE>");
         this.formatText(pages);
         //this.makeRecipes(this.status.res.getStages()[this.status.getStage()].getRecipes());
@@ -147,6 +152,12 @@ public class ResearchPageGui extends Screen {
         //RenderSystem.setShaderTexture(0, BACKGROUND);
 
         pPoseStack.pushPose();
+        pPoseStack.pushPose();
+        int pX = width / 2 - lineStart;
+        int pY = height / 2 - backgroundWidth * 11 / 54;
+        pPoseStack.translate(pX, pY, 0);
+        pages2.render(pPoseStack, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY);
+        pPoseStack.popPose();
         pPoseStack.translate(this.width / 2, this.height / 2, 0);
         //if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0) { TODO check gui scales
         //    GlStateManager.scale(0.75, 0.75, 0.75);
@@ -154,25 +165,25 @@ public class ResearchPageGui extends Screen {
 //
         //}
         guiGraphics.blit(BACKGROUND, -backgroundWidth / 2, -backgroundHeight / 2, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
-        guiGraphics.drawString(font, String.format("X: %d, Y: %d", width, height), -width / 2 + 10, -height / 2 + 10, 0xFFFFFFFF);
+        guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), -width / 2 + 10, -height / 2 + 10, 0xFFFFFFFF);
 
         if (true /*this.shownRecipe == null*/) {
             pPoseStack.pushPose();
             pPoseStack.scale(1.5F, 1.5F, 1);
             guiGraphics.drawCenteredString(minecraft.font, title, 0, -backgroundHeight * 10 / 54, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
             pPoseStack.popPose();
-            if (this.pages.size() > this.page * 2) {
-                int i = 0;
-                for (FormattedCharSequence s : this.pages.get(this.page * 2)) {
-                    guiGraphics.drawString(minecraft.font, s, -lineStart, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
-                }
-            }
-            if (this.pages.size() > this.page * 2 + 1) {
-                int i = 0;
-                for (FormattedCharSequence s : this.pages.get(this.page * 2 + 1)) {
-                    guiGraphics.drawString(minecraft.font, s, backgroundWidth / 134, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
-                }
-            }
+            //if (this.pages.size() > this.page * 2) {
+            //    int i = 0;
+            //    for (FormattedCharSequence s : this.pages.get(this.page * 2)) {
+            //        guiGraphics.drawString(minecraft.font, s, -lineStart, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
+            //    }
+            //}
+            //if (this.pages.size() > this.page * 2 + 1) {
+            //    int i = 0;
+            //    for (FormattedCharSequence s : this.pages.get(this.page * 2 + 1)) {
+            //        guiGraphics.drawString(minecraft.font, s, backgroundWidth / 134, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
+            //    }
+            //}
             if (!progress.visible) {
                 if (this.reqText != null) {
                     int i = 0;

@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class TextUtil {
 
-    public static List<TextLine> parseText(String localized, int width, Font f) {
+    public static List<Element> parseText(String localized, int width, Font f) {
         StringBuilder builder = new StringBuilder();
         List<PropertyToBe> properties = new ArrayList<>();
         int propertyStart = -1, propertyEnd = -1;
@@ -70,7 +70,7 @@ public class TextUtil {
             strings.add(builder.substring(pCurrentPos, pContentWidth));
             styles.add(pStyle);
         });
-        List<TextLine> textLines = new ArrayList<>();
+        List<Element> textLines = new ArrayList<>();
         adjustFormatting(strings, properties);
 
         i = 0;
