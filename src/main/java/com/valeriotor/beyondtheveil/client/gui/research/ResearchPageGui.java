@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,12 +14,15 @@ import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
@@ -27,9 +31,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResearchPageGui extends Screen {
+    private final int ARROW_WIDTH = 16;
+    private final int ARROW_HEIGHT = 16;
+    private int arrowXOffset;
+    private int arrowYOffset;
 
     private final ResearchStatus status;
     private final String title;
+    private int titleWidth;
+    private Font titleFont;
+    private Font textFont;
     private List<List<FormattedCharSequence>> pages = new ArrayList<>();
     private DoubleTextPages pages2;
     private List<String> reqText;
@@ -37,15 +48,25 @@ public class ResearchPageGui extends Screen {
     //private List<ResearchRecipe> recipes = new ArrayList<>();
     //private ResearchRecipe shownRecipe;
     private int page = 0;
-    private int backgroundWidth;
-    private int backgroundHeight;
     private int lineWidth;
     private int lineStart;
     private int pageHeight;
+    private int pageLeftX;
+    private int pageTopY;
+    private int pageRightX;
+    private int pageBottomY;
 
-    private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_page_small.png");
-    public static final ResourceLocation ARROW = new ResourceLocation(References.MODID, "textures/gui/right_arrow.png");
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research_background.png");
+    private static final ResourceLocation FRAME = new ResourceLocation(References.MODID, "textures/gui/research_frame.png");
+    private static final ResourceLocation UNDERLINING_LEFT = new ResourceLocation(References.MODID, "textures/gui/research/underlining_left.png");
+    private static final ResourceLocation UNDERLINING_RIGHT = new ResourceLocation(References.MODID, "textures/gui/research/underlining_right.png");
+    public static final ResourceLocation LEFT_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/left_arrow.png");
+    public static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/right_arrow.png");
     public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
+    private int middleSpace;
+    private int blackPageHeight;
+    private int blackPageWidth;
+
 
     public ResearchPageGui(ResearchStatus status) {
         super(Component.translatable(status.res.getName()));
@@ -56,36 +77,43 @@ public class ResearchPageGui extends Screen {
     @Override
     public void init() {
 
-        if (width * 54 >= height * 67) {
-            backgroundHeight = height;
-            backgroundWidth = height * 67 / 54;
-        } else {
-            backgroundWidth = width;
-            backgroundHeight = width * 54 / 67;
+        int blackPageMargin = Math.min(200 * width / 1400 + 75, 300);
+        pageTopY = height * blackPageMargin / 1440;
+        pageBottomY = (height * (1440 - blackPageMargin)) / 1440;
+        this.blackPageHeight = pageBottomY - pageTopY;
+        this.blackPageWidth = blackPageHeight * 1511 / 1082;
+        pageLeftX = width / 2 - blackPageWidth / 2;
+        pageRightX = width / 2 + blackPageWidth / 2;
+        if (pageLeftX < 20) {
+            pageLeftX = 20;
+            pageRightX = width - 20;
+            blackPageWidth = width - 40;
+            blackPageHeight = blackPageWidth * 1082 / 1511;
+            pageTopY = height / 2 - blackPageHeight / 2;
+            pageBottomY = height / 2 + blackPageHeight / 2;
         }
-        lineWidth = 19 * backgroundWidth / 67;
-        lineStart = lineWidth + backgroundWidth * 3 / 134;
-        pageHeight = 21 * backgroundWidth / 67;
+
+        lineWidth = (blackPageWidth * 5 / 7) / 2;
+        middleSpace = (blackPageWidth / 10) / 2;
+        pageHeight = blackPageHeight * 6 / 10;
+
+        titleFont = minecraft.font;
+        textFont = minecraft.font;
+
+        titleWidth = Math.min(titleFont.width(title) * 2, (pageRightX - pageLeftX) * 9 / 10);
+
+        arrowXOffset = (blackPageWidth * 52 / 70) / 2;
+        arrowYOffset = blackPageHeight * 17 / 50;
 
         this.page = 0;
         pages.clear();
         //recipes.clear();
         //shownRecipe = null;
         String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey());
-        pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + backgroundWidth * 3 / 134, pageHeight, lineWidth, Minecraft.getInstance().font);
-        String[] pages = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey()).split("<PAGE>");
-        this.formatText(pages);
-        //this.makeRecipes(this.status.res.getStages()[this.status.getStage()].getRecipes());
-        PlayerData data = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);
-        if (this.status.isComplete()) {
-            for (Research.SubResearch sr : this.status.res.getAddenda()) {
-                if (sr.meetsRequirements(data)) {
-                    pages = I18n.get(sr.getTextKey()).split("<PAGE>");
-                    this.formatText(pages);
-                    //this.makeRecipes(sr.getRecipes());
-                }
-            }
-        }
+        //localized = "It feels natural to dismiss dreams as a trick of the mind, when such dismissal could itself be the trick.\\n\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\n\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself? \\n\\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch. \\n\\nBut what if it hid an ocean?";
+
+        pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+        // TODO ADDENDA
         //int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || minecraft.gameSettings.guiScale == 0 ? 90 : 130) - 5;
         if (progress != null) {
             removeWidget(progress);
@@ -94,7 +122,7 @@ public class ResearchPageGui extends Screen {
         Button b = Button.builder(Component.translatable("gui.research_page.complete"), button -> {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             init();
-        }).bounds(width / 2 - 60, height / 2 + backgroundHeight * 13 / 54, 120, 20).build();
+        }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 1000, 120, 20).build();
         progress = addRenderableWidget(b);
         if (!status.canProgressStage(minecraft.player)) {
             progress.visible = false;
@@ -106,32 +134,6 @@ public class ResearchPageGui extends Screen {
                         .collect(Collectors.toList());
         }
 
-    }
-
-    private void formatText(String[] pages) {
-        List<FormattedCharSequence> ls;
-        int i = 0;
-        this.pages.add(new ArrayList<>());
-        for (int k = 0; k < pages.length; k++) {
-            String s0 = pages[k];
-            i = 0;
-            String[] paragraphs = s0.split("<BR>");
-            for (String s : paragraphs) {
-                ls = GuiHelper.splitStringsByWidth(s, lineWidth, minecraft.font);
-                for (FormattedCharSequence ss : ls) {
-                    if (i > pageHeight) {
-                        i = 0;
-                        this.pages.add(new ArrayList<>());
-                    }
-                    this.pages.get(this.pages.size() - 1).add(ss);
-                    i += 15;
-                }
-                i += 15;
-                this.pages.get(this.pages.size() - 1).add(FormattedCharSequence.EMPTY);
-            }
-            if (k < pages.length - 1)
-                this.pages.add(new ArrayList<>());
-        }
     }
 
     //private void makeRecipes(String[] recipes) {
@@ -147,95 +149,73 @@ public class ResearchPageGui extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         PoseStack pPoseStack = guiGraphics.pose();
         guiGraphics.fill(0, 0, width, height, 0xFF000000);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
+        //RenderSystem.setShaderColor(1, 1, 1, 1);
+        guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
+        guiGraphics.fill(pageLeftX, pageTopY, pageRightX, pageBottomY, 0x99000000);
 
-        //RenderSystem.setShaderTexture(0, BACKGROUND);
+        int frameLeftX = pageLeftX - (pageRightX - pageLeftX) * 45 / 1421;
+        int frameTopY = pageTopY - (pageBottomY - pageTopY) * 45 / 992;
+        int frameWidth = (pageRightX - pageLeftX) * 1511 / 1421;
+        int frameHeight = (pageBottomY - pageTopY) * 1082 / 992;
+        guiGraphics.blit(FRAME, frameLeftX, frameTopY, frameWidth, frameHeight, 0, 0, 1511, 1082, 1511, 1082);
+
+        int underlineTopY = height / 2 - blackPageHeight * 38 / 100 ;
+        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY, width / 2 + titleWidth / 2, underlineTopY + 3, 0x7F344234);
+        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY + 1, width / 2 + titleWidth / 2, underlineTopY + 2, 0xFF344234);
+
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.blit(UNDERLINING_LEFT, width / 2 - titleWidth / 2 - 20, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_RIGHT, width / 2 + titleWidth / 2, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
+
+        guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), 10, 10, 0xFFFFFFFF);
 
         pPoseStack.pushPose();
-        pPoseStack.pushPose();
-        int pX = width / 2 - lineStart;
-        int pY = height / 2 - backgroundWidth * 11 / 54;
+        int pX = width / 2 - lineWidth - middleSpace;
+        int pY = height / 2 - blackPageHeight * 287 / 1000;
         pPoseStack.translate(pX, pY, 0);
         pages2.render(pPoseStack, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY);
         pPoseStack.popPose();
-        pPoseStack.translate(this.width / 2, this.height / 2, 0);
-        //if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0) { TODO check gui scales
-        //    GlStateManager.scale(0.75, 0.75, 0.75);
-        //} else {
-//
-        //}
-        guiGraphics.blit(BACKGROUND, -backgroundWidth / 2, -backgroundHeight / 2, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
-        guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), -width / 2 + 10, -height / 2 + 10, 0xFFFFFFFF);
 
-        if (true /*this.shownRecipe == null*/) {
+
+        if (!pages2.isFirstScreen()) {
             pPoseStack.pushPose();
-            pPoseStack.scale(1.5F, 1.5F, 1);
-            guiGraphics.drawCenteredString(minecraft.font, title, 0, -backgroundHeight * 10 / 54, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
+            pPoseStack.translate(width / 2 - arrowXOffset - ARROW_WIDTH / 2, height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
+            if (hoveringLeftArrow(mouseX, mouseY)) {
+                pPoseStack.scale(1.5F, 1.5F, 1);
+            }
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            guiGraphics.blit(LEFT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
             pPoseStack.popPose();
-            //if (this.pages.size() > this.page * 2) {
-            //    int i = 0;
-            //    for (FormattedCharSequence s : this.pages.get(this.page * 2)) {
-            //        guiGraphics.drawString(minecraft.font, s, -lineStart, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
-            //    }
-            //}
-            //if (this.pages.size() > this.page * 2 + 1) {
-            //    int i = 0;
-            //    for (FormattedCharSequence s : this.pages.get(this.page * 2 + 1)) {
-            //        guiGraphics.drawString(minecraft.font, s, backgroundWidth / 134, -backgroundHeight * 11 / 54 + (i++) * 15, 0xFFFFFFFF);
-            //    }
-            //}
-            if (!progress.visible) {
-                if (this.reqText != null) {
-                    int i = 0;
-                    for (String s : this.reqText) {
-                        guiGraphics.drawCenteredString(font, s, 0, backgroundHeight * 13 / 54 + (i++) * 15, 0xFFFE9600);
-                    }
-                }
-            }
-            if (this.pages.size() > 2) {
-                pPoseStack.pushPose();
-                pPoseStack.translate(178 * backgroundWidth / 670, 131 * backgroundWidth / 670, 0);
-                if (this.page < (this.pages.size() + 1) / 2 - 1) {
-                    if (hoveringRightArrow(mouseX, mouseY))
-                        pPoseStack.scale(1.5F, 1.5F, 1);
-                    guiGraphics.blit(ARROW, -16, -16, 0, 0, 32, 32, 32, 32);
-                }
-                pPoseStack.popPose();
-                pPoseStack.pushPose();
-                RenderSystem.setShaderColor(1, 1, 1, 1);
-                pPoseStack.translate(-178 * backgroundWidth / 670, 131 * backgroundWidth / 670, 0);
-                pPoseStack.mulPose(Axis.ZP.rotation((float) Math.PI));
-                if (this.page > 0) {
-                    if (hoveringLeftArrow(mouseX, mouseY))
-                        pPoseStack.scale(1.5F, 1.5F, 1);
-                    guiGraphics.blit(ARROW, -16, -16, 0, 0, 32, 32, 32, 32);
-                }
-                pPoseStack.popPose();
-            }
-        } else {
-            //shownRecipe.render(this, mouseX, mouseY);
         }
-        //int hoveredKey = this.hoveringRecipeKey(mouseX, mouseY);
-        /*for(int i = 0; i < 6 && i < recipes.size(); i++) {
-
-            RenderHelper.enableGUIStandardItemLighting();
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(-160 + i * 25, 125, 0);
-            if(hoveredKey == i) {
-                GlStateManager.scale(2, 2, 2);
+        if (!pages2.isLastScreen()) {
+            pPoseStack.pushPose();
+            pPoseStack.translate(width / 2 + arrowXOffset + ARROW_WIDTH / 2, height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
+            if (hoveringRightArrow(mouseX, mouseY)) {
+                pPoseStack.scale(1.5F, 1.5F, 1);
             }
-//            itemRenderer.renderGuiItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            guiGraphics.blit(RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+            pPoseStack.popPose();
+        }
 
-            recipes.get(i).renderKey(this);
-            GlStateManager.popMatrix();
-            mc.renderEngine.bindTexture(CIRCLE);
-            drawModalRectWithCustomSizedTexture(-164 + i *25, 121, 0, 0, 25, 25, 25, 25);
-        }*/
-
+        pPoseStack.pushPose();
+        pPoseStack.translate(this.width / 2, this.height / 2 - blackPageHeight * 38 / 100, 0);
+        pPoseStack.scale(1.5F, 1.5F, 1);
+        guiGraphics.drawCenteredString(minecraft.font, title, 0, -10, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
         pPoseStack.popPose();
-        //if(hoveredKey != -1) {
-        //    recipes.get(hoveredKey).renderTooltip(this, mouseX + 20, mouseY + 10);
-        //}
+
+        if (!progress.visible) {
+            if (this.reqText != null) {
+                int i = 0;
+                for (String s : this.reqText) {
+                    guiGraphics.drawCenteredString(font, s, width / 2, height / 2 + blackPageHeight * 35 / 100 + (i++) * 15, 0xFFFE9600);
+                }
+            }
+        }
+
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
@@ -248,17 +228,18 @@ public class ResearchPageGui extends Screen {
     //}
 
 
-
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (super.mouseClicked(mouseX, mouseY, mouseButton))
             return true;
         //int a = this.hoveringRecipeKey(mouseX, mouseY);
-        if(hoveringLeftArrow(mouseX, mouseY)) {
-            this.page = MathHelperBTV.clamp(0, (this.pages.size() + 1) / 2 - 1, this.page - 1);
+        if (hoveringLeftArrow(mouseX, mouseY) && !pages2.isFirstScreen()) {
+            pages2.previousScreen();
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
             return true;
-        } else if(hoveringRightArrow(mouseX, mouseY)) {
-            this.page = MathHelperBTV.clamp(0, (this.pages.size() + 1) / 2 - 1, this.page + 1);
+        } else if (hoveringRightArrow(mouseX, mouseY) && !pages2.isLastScreen()) {
+            pages2.nextScreen();
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
             return true;
         }
         return false;
@@ -272,37 +253,33 @@ public class ResearchPageGui extends Screen {
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) { // TODO
         //if(keyCode == 18)
         //if(this.shownRecipe == null)
-        minecraft.setScreen(new NecronomiconGui());
+        InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
+        if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+            minecraft.setScreen(new NecronomiconGui());
+        } else if (this.minecraft.options.keyLeft.matches(pKeyCode, pScanCode) && !pages2.isFirstScreen()) {
+            pages2.previousScreen();
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
+        } else if (this.minecraft.options.keyRight.matches(pKeyCode, pScanCode) && !pages2.isLastScreen()) {
+            pages2.nextScreen();
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
+        }
         //else
 //                this.shownRecipe = null;
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
-    /*@Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        if(keyCode == 18)
-            if(this.shownRecipe == null)
-                this.mc.displayGuiScreen(new GuiNecronomicon());
-            else
-                this.shownRecipe = null;
-        super.keyTyped(typedChar, keyCode);
-    }*/
-
     private boolean hoveringLeftArrow(double mouseX, double mouseY) {
-        //if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0)
-        //    return mouseX > this.width / 2 - 182 * 3/4 && mouseX < this.width / 2 - 150 * 3/4 && mouseY > this.height / 2 + 115 * 3/4 && mouseY < this.height / 2 + (115 + 32) * 3/4;
-        return mouseX > this.width / 2 - adjustToGuiScale(194) && mouseX < this.width / 2 - adjustToGuiScale(162) && mouseY > this.height / 2 + adjustToGuiScale(115) && mouseY < this.height / 2 + adjustToGuiScale(115 + 32);
+        int rightX = this.width / 2 - arrowXOffset;
+        int topY = this.height / 2 + arrowYOffset;
+        return mouseX >= rightX - ARROW_WIDTH && mouseX <= rightX && mouseY >= topY && mouseY < topY + ARROW_HEIGHT;
     }
 
     private boolean hoveringRightArrow(double mouseX, double mouseY) {
-        //if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0)
-        //    return mouseX > this.width / 2 + 150 * 3/4 && mouseX < this.width / 2 + 182 * 3/4 && mouseY > this.height / 2 + 115 * 3/4 && mouseY < this.height / 2 + (115 + 32) * 3/4;
-        return mouseX > this.width / 2 + adjustToGuiScale(162) && mouseX < this.width / 2 + adjustToGuiScale(194) && mouseY > this.height / 2 + adjustToGuiScale(115) && mouseY < this.height / 2 + adjustToGuiScale(115 + 32);
+        int leftX = this.width / 2 + arrowXOffset;
+        int topY = this.height / 2 + arrowYOffset;
+        return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
     }
 
-    private int adjustToGuiScale(int original) {
-        return original*backgroundWidth/670;
-    }
 
     //private int hoveringRecipeKey(int mouseX, int mouseY) {
     //    mouseX -= this.width / 2;

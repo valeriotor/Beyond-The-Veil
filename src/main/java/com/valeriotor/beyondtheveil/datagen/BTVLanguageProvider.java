@@ -797,7 +797,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.FIRSTDREAMS.title", "Dreams");
         add("research.didDream.text", "I must sleep. I must Dream.");
-        add("research.FIRSTDREAMS.stage.0", "The last trip I took to the Nether left me with a bizarre feeling. That of plunging down, through stone and bedrock, gods know how far into another realm.<BR>Truly, a bizarre feeling, one that felt to me weirdly.. weirdly..<BR>..nostalgic?<BR>Yes.. a weird nostalgia of an experience I've never lived. A memory that came all of a sudden, when last I dreamt.<BR>A dream. Why, that could indeed be the key!<BR>I must dream once more, I must peer into my own subconscious.");
+        add("research.FIRSTDREAMS.stage.0", "It feels natural to dismiss dreams as a trick of the mind, when such dismissal could itself be the trick.\n" +
+                "The sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\n" +
+                "Could I be underestimating their import? Are they born from my daily sensations, or could they tell me something *more*, about the world and about myself? \n" +
+                "The desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch. But what if it hid an ocean?");
         add("research.FIRSTDREAMS.stage.1", "Dreams are a thing of wonder.<BR>I once thought they'd be merely a window into my own subconscious and yet there seems to be so much more to them than meets the eye.<BR>What if the things I saw in Dreams were not fiction, what if they were true?<BR>What if they showed me part of a great Truth invisible to all but a Dreamer?<BR>I must practice the art of Dreaming. I must be the one to uncover this Truth.<BR>I, and only I, must be the one.");
 
         add("research.FUMESPREADER.title", "Memories");

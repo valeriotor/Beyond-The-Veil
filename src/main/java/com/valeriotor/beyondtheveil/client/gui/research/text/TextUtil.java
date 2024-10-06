@@ -16,7 +16,9 @@ import java.util.Objects;
 public class TextUtil {
 
     public static List<Element> parseText(String localized, int width, Font f) {
+        List<StringBuilder> builders = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
+        builders.add(builder);
         List<PropertyToBe> properties = new ArrayList<>();
         int propertyStart = -1, propertyEnd = -1;
         StringBuilder propertyBuilder = new StringBuilder();
@@ -30,7 +32,10 @@ public class TextUtil {
                         builder.append((char) c);
                         i++;
                     } else if (c == 'n') {
-                        builder.append("\n");
+                        builder = new StringBuilder(" ");
+                        i++;
+                        builders.add(builder);
+                        escaping = false;
                         //i++;
                     } else if (c == 'p') {
                         // new page line
@@ -66,10 +71,12 @@ public class TextUtil {
         }
         List<String> strings = new ArrayList<>();
         List<Style> styles = new ArrayList<>();
-        f.getSplitter().splitLines(builder.toString(), width, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
-            strings.add(builder.substring(pCurrentPos, pContentWidth));
-            styles.add(pStyle);
-        });
+        for (StringBuilder builder1 : builders) {
+            f.getSplitter().splitLines(builder1.toString(), width, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
+                strings.add(builder1.substring(pCurrentPos, pContentWidth));
+                styles.add(pStyle);
+            });
+        }
         List<Element> textLines = new ArrayList<>();
         adjustFormatting(strings, properties);
 
