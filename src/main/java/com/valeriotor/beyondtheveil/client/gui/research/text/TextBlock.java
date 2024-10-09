@@ -33,7 +33,7 @@ public class TextBlock extends Element{
     }
 
     private TextBlock(String localized, int width, int height, Font f) {
-        this(TextUtil.parseText(localized, width, f), width, height, f);
+        this(new TextUtil().parseText(localized, width, f), width, height, f);
     }
 
     private TextBlock(List<? extends Element> lines, int width, int height, Font f) {
