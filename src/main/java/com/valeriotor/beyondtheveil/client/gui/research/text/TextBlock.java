@@ -20,11 +20,14 @@ public class TextBlock extends Element{
         while (i < elements.size()) {
             Element newElement = elements.get(i);
             heightSoFar += newElement.getHeight();
-            if (heightSoFar > height && i > startIndex) { // we have "i > startIndex" to accomodate at least one element in the block
+            if (heightSoFar > height && i > startIndex && !newElement.insertOutOfBounds()) { // we have "i > startIndex" to accomodate at least one element in the block
                 break;
             }
             elementsSoFar.add(newElement);
             i++;
+            if (heightSoFar > height) {
+                break;
+            }
         }
         return new Tuple<>(new TextBlock(elementsSoFar, width, height, f), i);
     }

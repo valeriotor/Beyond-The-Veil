@@ -22,4 +22,8 @@ public abstract class Element {
     public int getHeight() {
         return height;
     }
+
+    public boolean insertOutOfBounds() {
+        return false;
+    }
 }

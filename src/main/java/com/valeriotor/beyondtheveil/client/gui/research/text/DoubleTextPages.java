@@ -17,7 +17,8 @@ public class DoubleTextPages extends Element {
     private int index;
 
     public static DoubleTextPages makePages(String localized, int width, int height, int blockWidth, Font f) {
-        List<Element> elements = TextUtil.parseText(localized, blockWidth, f);
+        TextUtil textUtil = new TextUtil();
+        List<Element> elements = textUtil.parseText2(localized, blockWidth, f);
         List<TextBlock> blocks = new ArrayList<>();
         int index = 0;
         while (index < elements.size()) {
