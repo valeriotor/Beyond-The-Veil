@@ -40,12 +40,12 @@ public class ResearchStatus {
     public boolean progressStage(Player p) {
         PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(DUMMY);
         Research.SubResearch[] stages = this.res.getStages();
-        if(this.stage >= 0 && this.stage < stages.length) {
-            if(stages[stage].meetsRequirements(data)) {
+        if (this.stage >= 0 && this.stage < stages.length) {
+            if (stages[stage].meetsRequirements(data)) {
                 this.progressStage_internal(p);
                 return true;
             }
-        } else if(this.stage == -1) {
+        } else if (this.stage == -1) {
             this.progressStage_internal(p);
             return true;
         }
@@ -54,10 +54,10 @@ public class ResearchStatus {
 
     private void progressStage_internal(Player p) {
         int maxStage = res.getStages().length - 1;
-        if(this.stage < maxStage) {
+        if (this.stage < maxStage) {
             this.stage++;
             //ResearchEvents.progressResearchEvent(p, res.getKey(), this.stage); //TODO put this back!!!!!
-            if(this.stage == maxStage)
+            if (this.stage == maxStage)
                 this.complete = true;
         }
 
@@ -68,8 +68,8 @@ public class ResearchStatus {
     }
 
     public boolean isHidden(Map<String, ResearchStatus> map, PlayerData data) {
-        for(String key : this.res.getHiders()) {
-            if((!map.containsKey(key) || !map.get(key).complete) && !data.getBoolean(key)) return true;
+        for (String key : this.res.getHiders()) {
+            if ((!map.containsKey(key) || !map.get(key).complete) && !data.getBoolean(key)) return true;
         }
         return false;
     }
@@ -96,8 +96,18 @@ public class ResearchStatus {
     }
 
     public boolean parentsComplete(Map<String, ResearchStatus> map) {
-        for(String s: this.res.getParents()) {
-            if(!map.containsKey(s) || !map.get(s).complete) return false;
+        for (String s : this.res.getParents()) {
+            if (!map.containsKey(s)) {
+                return false;
+            }
+            String[] split = s.split(";");
+            if (split.length == 1) {
+                if (!map.get(s).complete) {
+                    return false;
+                }
+            } else if (map.get(split[0]).getStage() < Integer.parseInt(split[1])) {
+                return false;
+            }
         }
         return true;
     }
@@ -123,9 +133,9 @@ public class ResearchStatus {
     }
 
     public ResearchStatus readFromNBT(CompoundTag nbt) {
-        if(nbt.contains("stage")) this.stage = nbt.getInt("stage");
-        if(nbt.contains("learned")) this.learned = this.learned || nbt.getBoolean("learned");
-        if(nbt.contains("complete")) this.complete = nbt.getBoolean("complete");
+        if (nbt.contains("stage")) this.stage = nbt.getInt("stage");
+        if (nbt.contains("learned")) this.learned = this.learned || nbt.getBoolean("learned");
+        if (nbt.contains("complete")) this.complete = nbt.getBoolean("complete");
         if (nbt.contains("updated")) this.updated = nbt.getBoolean("updated");
         return this;
     }
@@ -145,21 +155,21 @@ public class ResearchStatus {
     }
 
     public boolean complete(Map<String, ResearchStatus> map, PlayerData data) { // TODO make this always capable of completing? Rename
-        for(String key : this.res.getHiders()) {
-            if(!map.containsKey(key))
+        for (String key : this.res.getHiders()) {
+            if (!map.containsKey(key))
                 return false;
-            if(!map.get(key).complete)
-                if(!map.get(key).complete(map, data))
+            if (!map.get(key).complete)
+                if (!map.get(key).complete(map, data))
                     return false;
-            if(!data.getBoolean(key)) {
+            if (!data.getBoolean(key)) {
                 data.setBoolean(key, true, false);
             }
         }
-        for(String key : this.res.getParents()) {
-            if(!map.containsKey(key))
+        for (String key : this.res.getParents()) {
+            if (!map.containsKey(key))
                 return false;
-            if(!map.get(key).complete)
-                if(!map.get(key).complete(map, data))
+            if (!map.get(key).complete)
+                if (!map.get(key).complete(map, data))
                     return false;
         }
         this.stage = res.getStages().length - 1;
