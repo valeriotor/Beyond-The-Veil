@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "B": {
+      "tag": "minecraft:wooden_buttons"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    " B ",
+    "GWG",
+    " G "
+  ],
+  "result": {
+    "count": 3,
+    "item": "beyondtheveil:memory_phial"
+  },
+  "show_notification": true
+}

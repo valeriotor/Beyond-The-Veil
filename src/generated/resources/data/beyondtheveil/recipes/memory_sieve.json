@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "SWS",
+    " S ",
+    "SSS"
+  ],
+  "result": {
+    "item": "beyondtheveil:memory_sieve"
+  },
+  "show_notification": true
+}

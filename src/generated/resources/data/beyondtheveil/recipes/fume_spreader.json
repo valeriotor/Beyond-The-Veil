@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "GOG",
+    "G G",
+    "OOO"
+  ],
+  "result": {
+    "item": "beyondtheveil:fume_spreader"
+  },
+  "show_notification": true
+}

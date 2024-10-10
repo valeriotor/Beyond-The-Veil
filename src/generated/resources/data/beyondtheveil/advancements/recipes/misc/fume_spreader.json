@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tear": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:fume_spreader"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beyondtheveil:fume_spreader"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_tear",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beyondtheveil:fume_spreader"
+    ]
+  },
+  "sends_telemetry_event": false
+}
