@@ -1,11 +1,10 @@
-package com.valeriotor.beyondtheveil.client.gui.research.text;
+package com.valeriotor.beyondtheveil.client.gui.elements;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.valeriotor.beyondtheveil.client.gui.research.text.property.Property;
+import com.valeriotor.beyondtheveil.client.gui.elements.property.Property;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;

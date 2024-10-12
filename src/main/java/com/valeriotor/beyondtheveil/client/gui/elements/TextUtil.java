@@ -1,8 +1,8 @@
-package com.valeriotor.beyondtheveil.client.gui.research.text;
+package com.valeriotor.beyondtheveil.client.gui.elements;
 
-import com.valeriotor.beyondtheveil.client.gui.research.text.property.CaptionProperty;
-import com.valeriotor.beyondtheveil.client.gui.research.text.property.LinkProperty;
-import com.valeriotor.beyondtheveil.client.gui.research.text.property.Property;
+import com.valeriotor.beyondtheveil.client.gui.elements.property.CaptionProperty;
+import com.valeriotor.beyondtheveil.client.gui.elements.property.LinkProperty;
+import com.valeriotor.beyondtheveil.client.gui.elements.property.Property;
 import net.minecraft.client.gui.Font;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;

@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.client.gui.research.text;
+package com.valeriotor.beyondtheveil.client.gui.elements;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;

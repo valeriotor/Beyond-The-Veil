@@ -69,7 +69,9 @@ public class ResearchStatus {
 
     public boolean isHidden(Map<String, ResearchStatus> map, PlayerData data) {
         for (String key : this.res.getHiders()) {
-            if ((!map.containsKey(key) || !map.get(key).complete) && !data.getBoolean(key)) return true;
+            String[] split = key.split(";");
+            String potentialResearchKey = split[0];
+            if ((!map.containsKey(potentialResearchKey) || (!map.get(potentialResearchKey).complete && split.length == 1) || (map.get(potentialResearchKey).getStage() < Integer.parseInt(split[1]))) && !data.getBoolean(key)) return true;
         }
         return false;
     }
@@ -97,15 +99,12 @@ public class ResearchStatus {
 
     public boolean parentsComplete(Map<String, ResearchStatus> map) {
         for (String s : this.res.getParents()) {
-            if (!map.containsKey(s)) {
-                return false;
-            }
             String[] split = s.split(";");
             if (split.length == 1) {
-                if (!map.get(s).complete) {
+                if (!map.containsKey(s) || !map.get(s).complete) {
                     return false;
                 }
-            } else if (map.get(split[0]).getStage() < Integer.parseInt(split[1])) {
+            } else if (!map.containsKey(split[0]) || map.get(split[0]).getStage() < Integer.parseInt(split[1])) {
                 return false;
             }
         }
@@ -165,7 +164,7 @@ public class ResearchStatus {
                 data.setBoolean(key, true, false);
             }
         }
-        for (String key : this.res.getParents()) {
+        for (String key : this.res.getParentKeys()) {
             if (!map.containsKey(key))
                 return false;
             if (!map.get(key).complete)

@@ -276,7 +276,7 @@ public class NecronomiconGui extends Screen {
             double phi = Math.asin((right.y - left.y) * 15 * factor / dist);
             pPoseStack.translate(lx - topX + 8, ly - topY + 8, 0);
 
-            pPoseStack.mulPose(Axis.XP.rotation((float) (phi * 180 / Math.PI)));
+            pPoseStack.mulPose(Axis.ZP.rotation((float) (phi)));
             for (int i = 0; i < dist; i++) {
                 int signum = (int) Math.signum(counter % 80 - 40);
                 double amplifier = 15 * (signum * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
@@ -419,6 +419,7 @@ public class NecronomiconGui extends Screen {
 
     private Screen getResearchGui(ResearchStatus status) {
         return switch (status.res.getKey()) {
+            case "CRAFTING" -> new CraftingRegistryGui(status);
             //case "ICTYARY" -> new GuiIctyary();
             //case "DOSKILLS" -> new GuiDOSkills();
             default -> new ResearchPageGui(status);

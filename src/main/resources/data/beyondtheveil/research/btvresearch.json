@@ -14,12 +14,28 @@
                 },
 				{
                     "text": "research.FIRSTDREAMS.stage.1",
-                    "required_research": ["metalReminiscence"]
+                    "required_research": ["metalReminiscence"],
+                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
                 },
                 {
-                  "text": "research.FIRSTDREAMS.stage.2"
+                  "text": "research.FIRSTDREAMS.stage.2",
+                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
                 }
             ]
+        },
+        {
+          "key": "CRAFTING",
+          "name": "research.CRAFTING.title",
+          "icons": [ "minecraft:crafting_table" ],
+          "category": "BEYOND_THE_VEIL", "location": [ 0,-2 ],
+          "parents": [],
+          "hiders" : ["FIRSTDREAMS;1"],
+          "parents": [ "FIRSTDREAMS;1" ],
+          "stages": [
+            {
+              "text": "research.CRAFTING.stage.0"
+            }
+          ]
         },
         {
         "key": "FUMESPREADER",

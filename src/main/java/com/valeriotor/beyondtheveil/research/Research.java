@@ -70,6 +70,14 @@ public class Research {
         return this.parents;
     }
 
+    public String[] getParentKeys() {
+        String[] keys = new String[parents.length];
+        for (int i = 0; i < parents.length; i++) {
+            keys[i] = parents[i].split(";")[0];
+        }
+        return keys;
+    }
+
     public SubResearch[] getStages() {
         return this.stages;
     }

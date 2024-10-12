@@ -76,7 +76,7 @@ public class ResearchUtil {
     }
 
     public static Map<String, ResearchStatus> getResearches(Player p) {
-        if(!(p instanceof FakePlayer)) {
+        if (!(p instanceof FakePlayer)) {
             Optional<ResearchData> capability = p.getCapability(ResearchProvider.RESEARCH).resolve();
             if (capability.isPresent()) {
                 return capability.get().getResearches();
@@ -86,10 +86,23 @@ public class ResearchUtil {
     }
 
 
-        public static int getResearchStage(Player p, String key) {
+    public static int getResearchStage(Player p, String key) {
         ResearchStatus r = getResearch(p, key);
         if (r != null) return r.getStage();
         return -2;
+    }
+
+    public static Set<String> getKnownRecipes(Player p) {
+        Map<String, ResearchStatus> researches = getResearches(p);
+        Set<String> knownRecipes = new HashSet<>();
+        for (ResearchStatus value : researches.values()) {
+            if (value.isVisible(p) && value.getStage() >= 0) {
+                for (int i = 0; i < value.res.getStages().length && i < value.getStage(); i++) {
+                    knownRecipes.addAll(value.res.getRecipes());
+                }
+            }
+        }
+        return knownRecipes;
     }
 
     public static boolean isResearchVisible(Player p, String key) {

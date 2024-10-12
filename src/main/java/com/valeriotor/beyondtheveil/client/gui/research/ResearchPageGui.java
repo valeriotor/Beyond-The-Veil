@@ -3,17 +3,10 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
-import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
-import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
-import com.valeriotor.beyondtheveil.client.gui.research.text.DoubleTextPages;
-import com.valeriotor.beyondtheveil.client.gui.research.text.TextUtil;
+import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
-import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -111,7 +104,7 @@ public class ResearchPageGui extends Screen {
         //recipes.clear();
         //shownRecipe = null;
         String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey());
-        localized = "It feels {natural to dismiss dreams}[caption:test] as a trick of the mind, when such §rdismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself? \\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch. \\nBut what if it hid an ocean?";
+        //localized = "It feels {natural to dismiss dreams}[caption:test] as a trick of the mind, when such §rdismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself? \\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch. \\nBut what if it hid an ocean?";
         //TextUtil util = new TextUtil();
         //util.parseText2(localized2, lineWidth, Minecraft.getInstance().font);
 
@@ -125,7 +118,7 @@ public class ResearchPageGui extends Screen {
         Button b = Button.builder(Component.translatable("gui.research_page.complete"), button -> {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             init();
-        }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 1000, 120, 20).build();
+        }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 100, 120, 20).build();
         progress = addRenderableWidget(b);
         if (!status.canProgressStage(minecraft.player)) {
             progress.visible = false;
@@ -153,7 +146,12 @@ public class ResearchPageGui extends Screen {
         PoseStack pPoseStack = guiGraphics.pose();
         guiGraphics.fill(0, 0, width, height, 0xFF000000);
         //RenderSystem.setShaderColor(1, 1, 1, 1);
-        guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
+        if (width < 2560 && height < 1440) {
+            guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
+        } else {
+            guiGraphics.blit(BACKGROUND, 0, 0, width, height, 0, 0, 2560, 1440, 2560, 1440);
+        }
+
         guiGraphics.fill(pageLeftX, pageTopY, pageRightX, pageBottomY, 0x99000000);
 
         int frameLeftX = pageLeftX - (pageRightX - pageLeftX) * 45 / 1421;

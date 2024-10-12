@@ -1,4 +1,4 @@
-package com.valeriotor.beyondtheveil.client.gui.research.text.property;
+package com.valeriotor.beyondtheveil.client.gui.elements.property;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
