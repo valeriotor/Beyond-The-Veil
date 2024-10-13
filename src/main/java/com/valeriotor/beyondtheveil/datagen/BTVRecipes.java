@@ -25,7 +25,7 @@ public class BTVRecipes extends RecipeProvider {
                 .define('S', Blocks.STONE)
                 .define('W', Items.WATER_BUCKET)
                 .group("Beyond the Veil")
-                .unlockedBy("has_tear", has(Registration.MEMORY_SIEVE.get()))
+                .unlockedBy("has_memory_sieve", has(Registration.MEMORY_SIEVE.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.MEMORY_PHIAL.get(), 3)
@@ -36,7 +36,7 @@ public class BTVRecipes extends RecipeProvider {
                 .define('W', Items.WATER_BUCKET)
                 .define('B', ItemTags.WOODEN_BUTTONS)
                 .group("Beyond the Veil")
-                .unlockedBy("has_tear", has(Registration.MEMORY_PHIAL.get()))
+                .unlockedBy("has_memory_phial", has(Registration.MEMORY_PHIAL.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.FUME_SPREADER.get(), 1)
@@ -46,7 +46,7 @@ public class BTVRecipes extends RecipeProvider {
                 .define('G', Blocks.GLASS)
                 .define('O', Items.GOLD_INGOT)
                 .group("Beyond the Veil")
-                .unlockedBy("has_tear", has(Registration.FUME_SPREADER.get()))
+                .unlockedBy("has_fume_spreader", has(Registration.FUME_SPREADER.get()))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ONIRIC_INCENSE.get())
@@ -54,7 +54,7 @@ public class BTVRecipes extends RecipeProvider {
                 .requires(Items.FLINT)
                 .requires(Blocks.GRAVEL)
                 .group("Beyond the Veil")
-                .unlockedBy("has_tear", has(Registration.ONIRIC_INCENSE.get()))
+                .unlockedBy("has_oniric_incense", has(Registration.ONIRIC_INCENSE.get()))
                 .save(consumer);
 
     }

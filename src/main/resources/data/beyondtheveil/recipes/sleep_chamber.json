@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "G": {
+      "item": "beyondtheveil:gear"
+    }
+  },
+  "pattern": [
+    "PPPP",
+    "PWWP",
+    "PGGP",
+    "PPPP"
+  ],
+  "result": {
+    "item": "beyondtheveil:sleep_chamber"
+  },
+  "show_notification": true
+}

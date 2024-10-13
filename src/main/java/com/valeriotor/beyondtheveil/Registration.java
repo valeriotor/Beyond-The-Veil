@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
@@ -20,6 +21,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -56,6 +60,8 @@ public class Registration {
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
     private static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, References.MODID);
     private static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, References.MODID);
+    private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, References.MODID);
+    private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, References.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, References.MODID);
 
     public static void init() {
@@ -71,6 +77,8 @@ public class Registration {
         STRUCTURE_TYPES.register(bus);
         STRUCTURE_PIECE_TYPES.register(bus);
         STRUCTURE_PROCESSORS.register(bus);
+        RECIPE_TYPES.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
         CREATIVE_TAB.register(bus);
 
         BTVParticles.init(bus);
@@ -339,6 +347,14 @@ public class Registration {
     public static final RegistryObject<StructurePieceType> HAMLET_STREET_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_street_piece", () -> HamletPieces.StreetPiece::new);
     public static final RegistryObject<StructurePieceType> DEEP_VEIN_PIECE = STRUCTURE_PIECE_TYPES.register("deep_vein_piece", () -> DeepVeinStructure.DeepVeinPiece::new);
     public static final RegistryObject<StructureProcessorType<HamletBuildingsProcessor>> HAMLET_BUILDINGS_PROCESSOR = STRUCTURE_PROCESSORS.register("hamlet_buildings_processor", () -> () -> HamletBuildingsProcessor.CODEC);
+
+    public static final RegistryObject<RecipeType<GearBenchRecipe>> GEAR_BENCH_RECIPE_TYPE = RECIPE_TYPES.register("gear_bench_recipe_type", () -> new RecipeType<>() {
+        public String toString() {
+            return "gear_bench";
+        }
+    });
+
+    public static final RegistryObject<RecipeSerializer<?>> GEAR_BENCH_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("gear_bench", GearBenchRecipe.Serializer::new);
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {

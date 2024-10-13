@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_tear": {
+    "has_memory_phial": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_tear",
+      "has_memory_phial",
       "has_the_recipe"
     ]
   ],

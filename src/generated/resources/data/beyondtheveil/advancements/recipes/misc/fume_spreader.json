@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_tear": {
+    "has_fume_spreader": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_tear",
+      "has_fume_spreader",
       "has_the_recipe"
     ]
   ],

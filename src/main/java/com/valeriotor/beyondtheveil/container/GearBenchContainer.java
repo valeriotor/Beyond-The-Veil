@@ -1,38 +1,48 @@
 package com.valeriotor.beyondtheveil.container;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
+import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 public class GearBenchContainer extends AbstractContainerMenu {
 
-    private BlockEntity blockEntity;
+    private GearBenchBE blockEntity;
     private Player playerEntity;
     private IItemHandler playerInventory;
 
     public GearBenchContainer(int pContainerId, BlockPos pos, Inventory playerInventory, Player player) {
         super(Registration.GEAR_BENCH_CONTAINER.get(), pContainerId);
         this.playerEntity = player;
-        this.blockEntity = player.getCommandSenderWorld().getBlockEntity(pos);
+        BlockEntity blockEntity = player.getCommandSenderWorld().getBlockEntity(pos);
         this.playerInventory = new InvWrapper(playerInventory);
         //this.addSlot(new SlotGearBenchOutput(gb.output, gb, 0, 138, 24));
 
-        if (blockEntity != null) {
+        if (blockEntity instanceof GearBenchBE gearBenchBE) {
+            this.blockEntity = gearBenchBE;
             blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 for (int i = 0; i < h.getSlots(); i++) {
                     addSlot(new SlotItemHandler(h, i, 8 + 18 * (i % 4), -2 + 18 * (i / 4)));
@@ -122,6 +132,10 @@ public class GearBenchContainer extends AbstractContainerMenu {
             slot.onTake(pPlayer, stack);
         }
         return itemStack;
+    }
+
+    public ItemStack getCraftItem(int slot) {
+        return blockEntity.getCraftItem(slot);
     }
 
     private static class GearBenchOutputSlot extends SlotItemHandler {
