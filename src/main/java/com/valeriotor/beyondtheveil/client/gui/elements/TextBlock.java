@@ -32,7 +32,7 @@ public class TextBlock extends Element{
         return new Tuple<>(new TextBlock(elementsSoFar, width, height, f), i);
     }
 
-    private TextBlock(String localized, int width, int height, Font f) {
+    public TextBlock(String localized, int width, int height, Font f) {
         this(new TextUtil().parseText(localized, width, f), width, height, f);
     }
 
@@ -48,7 +48,7 @@ public class TextBlock extends Element{
         for (int i = 0; i < lines.size(); i++) {
             poseStack.pushPose();
             poseStack.translate(0, yOffset, 0);
-            lines.get(i).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - 15 * i);
+            lines.get(i).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - yOffset);
             yOffset += lines.get(i).getHeight();
             poseStack.popPose();
         }

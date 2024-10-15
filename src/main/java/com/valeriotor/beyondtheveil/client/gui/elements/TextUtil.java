@@ -42,7 +42,14 @@ public class TextUtil {
             List<Word> wordBlock = words.get(i);
             List<String> lines = new ArrayList<>();
             StringBuilder text = new StringBuilder();
-            wordBlock.forEach(w -> text.append(w.toFormattedString(true)));
+            for (int i1 = 0; i1 < wordBlock.size(); i1++) {
+                Word w = wordBlock.get(i1);
+                Word nextWord = null;
+                if (i1 < wordBlock.size() - 1) {
+                    nextWord = wordBlock.get(i1 + 1);
+                }
+                text.append(w.toFormattedString(true, nextWord));
+            }
             f.getSplitter().splitLines(text.toString(), width, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
                 lines.add(text.substring(pCurrentPos, pContentWidth));
             });
@@ -81,10 +88,20 @@ public class TextUtil {
                                         StringBuilder propertyText = new StringBuilder();
                                         List<Word> subList = wordBlock.subList(firstWordInLine, currentPropertyStart);
                                         for (int k = 0; k < subList.size(); k++) {
-                                            Word word = subList.get(k);
-                                            precedingText.append(word.toFormattedString(k != 0));
+                                            Word word = subList.get(k), nextWord = null;
+                                            if (k < subList.size() - 1) {
+                                                nextWord = subList.get(k + 1);
+                                            }
+                                            precedingText.append(word.toFormattedString(k != 0, nextWord));
                                         }
-                                        wordBlock.subList(currentPropertyStart, currentWord).forEach(w -> propertyText.append(w.toFormattedString(true)));
+                                        subList = wordBlock.subList(currentPropertyStart, currentWord);
+                                        for (int k = 0; k < subList.size(); k++) {
+                                            Word w = subList.get(k), nextWord = null;;
+                                            if (k < subList.size() - 1) {
+                                                nextWord = subList.get(k + 1);
+                                            }
+                                            propertyText.append(w.toFormattedString(true, nextWord));
+                                        }
                                         int propertyStart = f.width(FormattedText.of(precedingText.toString()));
                                         int propertyWidth = f.width(FormattedText.of(propertyText.toString()));
                                         properties.add(makeProperty(currentProperty, propertyStart, propertyStart + propertyWidth));
@@ -111,16 +128,19 @@ public class TextUtil {
 
     private void processCharacter(int c, boolean finalCharacter) {
         if (backslashEscape) {
-            if (c == 'n' || c == 'p') {
+            BreakType breakType = null;
+            for (BreakType type : BreakType.values()) {
+                if (type.breakCharacter == (char) c) {
+                    breakType = type;
+                    break;
+                }
+            }
+            if (breakType != null) {
                 createWord(c);
                 prevSeparator = "";
                 currentWords = new ArrayList<>();
                 words.add(currentWords);
-                breakTypes.add(switch (c) {
-                    case 'n' -> BreakType.PARAGRAPH;
-                    case 'p' -> BreakType.PAGE;
-                    default -> throw new IllegalStateException("Unexpected value: " + c);
-                });
+                breakTypes.add(breakType);
             } else {
                 wordBuilder.append((char) c);
             }
@@ -149,8 +169,9 @@ public class TextUtil {
         } else if (c == '\\') {
             backslashEscape = true;
         } else if (c == '§') {
+            createWord(c);
             formatEscape = true;
-        } else if (c == ' ') {
+        } else if (c == ' ' && phase != ParsingPhase.PROPERTY_VALUE) {
             createWord(c);
             prevSeparator = " ";
         } else if (phase != ParsingPhase.PROPERTY_VALUE) {
@@ -172,7 +193,7 @@ public class TextUtil {
             if (phase == ParsingPhase.PROPERTY_TEXT) {
                 wordsWithProperty.add(word);
             }
-            if (c == '{' || c == '}') {
+            if (c == '{' || c == '}' || c == '§') {
                 prevSeparator = "";
             } else {
                 prevSeparator = String.valueOf(c);
@@ -194,6 +215,7 @@ public class TextUtil {
             default -> throw new IllegalStateException("Unexpected value: " + split[0]);
         };
     }
+
     private enum ParsingPhase {
         NORMAL, PROPERTY_TEXT, AWAITING_VALUE, PROPERTY_VALUE
 
@@ -201,9 +223,13 @@ public class TextUtil {
 
     private enum BreakType {
 
-        PARAGRAPH(Separators::paragraphSeparator), PAGE(Separators::pageSeparator);
-        private IntFunction<Element> separator;
-        BreakType(IntFunction<Element> separator) {
+
+        SMALL('1', Separators::smallSeparator), PARAGRAPH('n', Separators::paragraphSeparator), PAGE('p', Separators::pageSeparator);
+        private final char breakCharacter;
+        private final IntFunction<Element> separator;
+
+        BreakType(char breakCharacter, IntFunction<Element> separator) {
+            this.breakCharacter = breakCharacter;
             this.separator = separator;
         }
 
@@ -232,12 +258,18 @@ public class TextUtil {
             return property;
         }
 
-        public String toFormattedString(boolean includeSeparator) {
+        public String toFormattedString(boolean includeSeparator, Word next) {
             StringBuilder builder = new StringBuilder(includeSeparator ? prevWordSeparator : "");
             formattings.forEach(s -> builder.append("§").append(s));
             builder.append(word);
             if (!formattings.isEmpty()) {
-                builder.append("§r");
+                if (next == null) {
+                    builder.append("§r");
+                } else {
+                    if (!next.formattings.equals(formattings)) {
+                        builder.append("§r");
+                    }
+                }
             }
             return builder.toString();
         }

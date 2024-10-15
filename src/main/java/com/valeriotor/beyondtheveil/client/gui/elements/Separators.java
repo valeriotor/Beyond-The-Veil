@@ -5,6 +5,9 @@ import net.minecraft.client.gui.GuiGraphics;
 
 public class Separators {
 
+    public static Separator smallSeparator(int width) {
+        return new SmallSeparator(width);
+    }
     public static Separator paragraphSeparator(int width) {
         return new ParagraphSeparator(width);
     }
@@ -29,6 +32,12 @@ public class Separators {
         }
     }
 
+    private static class SmallSeparator extends Separator {
+        private SmallSeparator(int width) {
+            super(width, 5);
+        }
+
+    }
 
     private static class ParagraphSeparator extends Separator {
         private ParagraphSeparator(int width) {

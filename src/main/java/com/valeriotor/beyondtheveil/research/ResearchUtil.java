@@ -92,13 +92,17 @@ public class ResearchUtil {
         return -2;
     }
 
-    public static Set<String> getKnownRecipes(Player p) {
+    public static Map<String, Research> getKnownRecipes(Player p) {
         Map<String, ResearchStatus> researches = getResearches(p);
-        Set<String> knownRecipes = new HashSet<>();
+        Map<String, Research> knownRecipes = new HashMap<>();
         for (ResearchStatus value : researches.values()) {
             if (value.isVisible(p) && value.getStage() >= 0) {
                 for (int i = 0; i < value.res.getStages().length && i < value.getStage(); i++) {
-                    knownRecipes.addAll(value.res.getRecipes());
+                    for (String recipe : value.res.getRecipes()) {
+                        if (!knownRecipes.containsKey(recipe)) {
+                            knownRecipes.put(recipe, value.res);
+                        }
+                    }
                 }
             }
         }
