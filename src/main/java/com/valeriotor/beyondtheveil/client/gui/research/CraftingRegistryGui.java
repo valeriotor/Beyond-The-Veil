@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.TextBlock;
+import com.valeriotor.beyondtheveil.client.gui.elements.TextUtil;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
@@ -21,12 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CraftingRegistryGui extends Screen {
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_background.png");
@@ -34,6 +38,8 @@ public class CraftingRegistryGui extends Screen {
     private static final ResourceLocation ENTRY = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_entry.png");
     private static final ResourceLocation SELECTION1 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_1.png");
     private static final ResourceLocation SELECTION2 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_2.png");
+    private static final ResourceLocation GRID3 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_3.png");
+    private static final ResourceLocation GRID4 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_4.png");
 
 
     private int pageLeftX;
@@ -50,6 +56,7 @@ public class CraftingRegistryGui extends Screen {
     private int listLeftX, listLeftY;
     private int titleX, titleY;
     private int textBlockX, textBlockY;
+    private int gridX, gridY, gridWidth;
     private int CTCategoryX, CTCategoryY, GBCategoryX, GBCategoryY;
     private boolean CTCategory = true, GBCategory;
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
@@ -59,6 +66,9 @@ public class CraftingRegistryGui extends Screen {
     private final Map<String, Research> knownRecipesByName;
     private Component selectedTitle;
     private TextBlock selectedText;
+    private CraftingGrid grid;
+    private CraftingEntry selectedEntry;
+    private int counter = 0;
 
 
     public CraftingRegistryGui(ResearchStatus status) {
@@ -69,7 +79,7 @@ public class CraftingRegistryGui extends Screen {
         for (String s : knownRecipesByName.keySet()) {
             String key = s.split(";")[0];
             Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
-            if (item != null && !craftingTableRecipes.contains(item)) {
+            if (item != null) {
                 Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key));
                 if (recipe.isPresent()) {
                     if (recipe.get() instanceof CraftingRecipe cr) {
@@ -125,6 +135,13 @@ public class CraftingRegistryGui extends Screen {
         titleY = pageTopY + 100 * pageHeight / 1261;
         textBlockX = pageLeftX + 670 * pageWidth / 1577;
         textBlockY = pageTopY + 220 * pageHeight / 1261;
+        gridX = pageLeftX + 556 * pageWidth / 1577;
+        gridY = pageTopY + 651 * pageHeight / 1261;
+        gridWidth = 979 * pageWidth / 1577;
+
+        if (selectedEntry != null) {
+            selectEntry(selectedEntry.stack.getItem(), selectedEntry.recipe);
+        }
 
     }
 
@@ -132,16 +149,21 @@ public class CraftingRegistryGui extends Screen {
         List<CraftingEntry> entries = new ArrayList<>();
         if (CTCategory) {
             for (CraftingRecipe craftingTableRecipe : craftingTableRecipes) {
-                entries.add(new CraftingEntry(craftingTableRecipe.getResultItem(minecraft.level.registryAccess()).getItem()));
+                entries.add(new CraftingEntry(craftingTableRecipe.getResultItem(minecraft.level.registryAccess()).getItem(), craftingTableRecipe));
             }
         }
         if (GBCategory) {
             for (GearBenchRecipe gearBenchRecipe : gearBenchRecipes) {
-                entries.add(new CraftingEntry(gearBenchRecipe.getResultItem(minecraft.level.registryAccess()).getItem()));
+                entries.add(new CraftingEntry(gearBenchRecipe.getResultItem(minecraft.level.registryAccess()).getItem(), gearBenchRecipe));
             }
         }
         entries.sort(Comparator.comparing(e -> e.stack.getItem().getDescription().getString()));
         itemList = new ScrollableList(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
+    }
+
+    @Override
+    public void tick() {
+        counter++;
     }
 
     @Override
@@ -199,6 +221,13 @@ public class CraftingRegistryGui extends Screen {
             guiGraphics.renderItem(gearBench, -8, -8);
             pose.popPose();
         }
+
+        if (grid != null) {
+            pose.pushPose();
+            pose.translate(gridX, gridY, 0);
+            grid.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - gridX, pMouseY - gridY);
+            pose.popPose();
+        }
     }
 
     private boolean hoveringCTSelection(int mouseX, int mouseY) {
@@ -252,23 +281,29 @@ public class CraftingRegistryGui extends Screen {
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
 
-    private void selectEntry(Item item) {
+    private void selectEntry(Item item, Recipe<?> recipe) {
         selectedTitle = item.getDescription();
         String localizedText = I18n.get(item.getDescriptionId() + ".crafting");
         localizedText += "\\n";
         Research research = knownRecipesByName.get(ForgeRegistries.ITEMS.getKey(item).toString());
         localizedText += I18n.get("research.CRAFTING.introduced", Component.translatable(research.getName()).getString(), research.getKey());
-        selectedText = new TextBlock(localizedText, 800 * pageWidth / 1577, 400 * pageHeight / 1261, Minecraft.getInstance().font);
+        int width = 800 * pageWidth / 1577;
+        List<Element> elements = new TextUtil().parseText(localizedText, width, Minecraft.getInstance().font);
+        //elements.add(new CraftingGrid(width, 100, recipe));
+        selectedText = TextBlock.fillBlockWithElements(elements, 0, width, 400 * pageHeight / 1261, Minecraft.getInstance().font).getA();
+        grid = new CraftingGrid(width, 100, recipe);
     }
 
     private class CraftingEntry extends Element {
 
         private final ItemStack stack;
+        private final Recipe<?> recipe;
         private final float scaleFactor;
 
-        public CraftingEntry(Item result) {
+        protected CraftingEntry(Item result, Recipe<?> recipe) {
             super(entryListWidth - scrollbarWidth, entryListHeight / 6);
             stack = new ItemStack(result);
+            this.recipe = recipe;
             scaleFactor = Math.min(1, getHeight() / 40F);
         }
 
@@ -296,13 +331,64 @@ public class CraftingRegistryGui extends Screen {
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
-                selectEntry(stack.getItem());
+                selectEntry(stack.getItem(), recipe);
+                selectedEntry = this;
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 return true;
             }
             return false;
         }
     }
+
+    private class CraftingGrid extends Element {
+
+        private final Recipe<?> recipe;
+        private final List<ItemStack[]> stacks;
+
+        protected CraftingGrid(int width, int height, Recipe<?> recipe) {
+            super(width, height);
+            this.recipe = recipe;
+            stacks = recipe.getIngredients().stream().map(Ingredient::getItems).collect(Collectors.toList());
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+            int side = 0, pX = 0, pY = 0;
+            if (recipe instanceof CraftingRecipe) {
+                side = 3;
+                pX = getWidth() / 4 - 31;
+                if (pX < 5) {
+                    pX = 5;
+                }
+                graphics.blit(GRID3, pX, pY, 63, 63, 0, 0, 63, 63, 63, 63);
+            } else if (recipe instanceof GearBenchRecipe) {
+                side = 4;
+                pX = getWidth() / 4 - 41;
+                if (pX < 5) {
+                    pX = 5;
+                }
+                graphics.blit(GRID4, pX, pY, 83, 83, 0, 0, 83, 83, 83, 83);
+            }
+            for (int i = 0; i < stacks.size(); i++) {
+                int x = pX + (i % side) * 22 + 10;
+                int y = pY + (i / side) * 22 + 10;
+                ItemStack[] itemStacks = stacks.get(i);
+                if (itemStacks.length > 0) {
+                    ItemStack itemStack = itemStacks[(counter / 20) % itemStacks.length];
+                    graphics.renderItem(itemStack, x - 8, y - 8);
+                    if (relativeMouseX >= x - 10 && relativeMouseX <= x + 10 && relativeMouseY >= y - 10 && relativeMouseY <= y + 10) {
+                        graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public boolean insertOutOfBounds() {
+            return true;
+        }
+    }
+
 
 
 }
