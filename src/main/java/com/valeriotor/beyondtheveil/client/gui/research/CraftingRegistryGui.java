@@ -40,6 +40,7 @@ public class CraftingRegistryGui extends Screen {
     private static final ResourceLocation SELECTION2 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_2.png");
     private static final ResourceLocation GRID3 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_3.png");
     private static final ResourceLocation GRID4 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_4.png");
+    private static final ResourceLocation GRID_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_arrow.png");
 
 
     private int pageLeftX;
@@ -57,6 +58,7 @@ public class CraftingRegistryGui extends Screen {
     private int titleX, titleY;
     private int textBlockX, textBlockY;
     private int gridX, gridY, gridWidth;
+    private float gridFactor;
     private int CTCategoryX, CTCategoryY, GBCategoryX, GBCategoryY;
     private boolean CTCategory = true, GBCategory;
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
@@ -68,7 +70,6 @@ public class CraftingRegistryGui extends Screen {
     private TextBlock selectedText;
     private CraftingGrid grid;
     private CraftingEntry selectedEntry;
-    private int counter = 0;
 
 
     public CraftingRegistryGui(ResearchStatus status) {
@@ -135,9 +136,10 @@ public class CraftingRegistryGui extends Screen {
         titleY = pageTopY + 100 * pageHeight / 1261;
         textBlockX = pageLeftX + 670 * pageWidth / 1577;
         textBlockY = pageTopY + 220 * pageHeight / 1261;
-        gridX = pageLeftX + 556 * pageWidth / 1577;
+        gridX = pageLeftX + (556 + 70) * pageWidth / 1577;
         gridY = pageTopY + 651 * pageHeight / 1261;
-        gridWidth = 979 * pageWidth / 1577;
+        gridWidth = 949 * pageWidth / 1577;
+        gridFactor = gridWidth / 200F;
 
         if (selectedEntry != null) {
             selectEntry(selectedEntry.stack.getItem(), selectedEntry.recipe);
@@ -163,7 +165,9 @@ public class CraftingRegistryGui extends Screen {
 
     @Override
     public void tick() {
-        counter++;
+        if (grid != null) {
+            grid.tick();
+        }
     }
 
     @Override
@@ -225,7 +229,8 @@ public class CraftingRegistryGui extends Screen {
         if (grid != null) {
             pose.pushPose();
             pose.translate(gridX, gridY, 0);
-            grid.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - gridX, pMouseY - gridY);
+            pose.scale(gridFactor, gridFactor, 1);
+            grid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((pMouseX - gridX) / gridFactor), (int) ((pMouseY - gridY) / gridFactor));
             pose.popPose();
         }
     }
@@ -291,7 +296,7 @@ public class CraftingRegistryGui extends Screen {
         List<Element> elements = new TextUtil().parseText(localizedText, width, Minecraft.getInstance().font);
         //elements.add(new CraftingGrid(width, 100, recipe));
         selectedText = TextBlock.fillBlockWithElements(elements, 0, width, 400 * pageHeight / 1261, Minecraft.getInstance().font).getA();
-        grid = new CraftingGrid(width, 100, recipe);
+        grid = new CraftingGrid(width, 100, recipe, item, gridFactor);
     }
 
     private class CraftingEntry extends Element {
@@ -340,15 +345,19 @@ public class CraftingRegistryGui extends Screen {
         }
     }
 
-    private class CraftingGrid extends Element {
+    static class CraftingGrid extends Element {
 
         private final Recipe<?> recipe;
         private final List<ItemStack[]> stacks;
+        private final ItemStack output;
+        private final float scaleFactor;
 
-        protected CraftingGrid(int width, int height, Recipe<?> recipe) {
+        protected CraftingGrid(int width, int height, Recipe<?> recipe, Item result, float scaleFactor) {
             super(width, height);
             this.recipe = recipe;
             stacks = recipe.getIngredients().stream().map(Ingredient::getItems).collect(Collectors.toList());
+            this.output = new ItemStack(result);
+            this.scaleFactor = scaleFactor;
         }
 
         @Override
@@ -356,22 +365,23 @@ public class CraftingRegistryGui extends Screen {
             int side = 0, pX = 0, pY = 0;
             if (recipe instanceof CraftingRecipe) {
                 side = 3;
-                pX = getWidth() / 4 - 31;
+                pX = 0;//getWidth() / 8 - 31;
                 if (pX < 5) {
                     pX = 5;
                 }
+                pY = 10;
                 graphics.blit(GRID3, pX, pY, 63, 63, 0, 0, 63, 63, 63, 63);
             } else if (recipe instanceof GearBenchRecipe) {
                 side = 4;
-                pX = getWidth() / 4 - 41;
+                pX = 0;//getWidth() / 8 - 41;
                 if (pX < 5) {
                     pX = 5;
                 }
                 graphics.blit(GRID4, pX, pY, 83, 83, 0, 0, 83, 83, 83, 83);
             }
             for (int i = 0; i < stacks.size(); i++) {
-                int x = pX + (i % side) * 22 + 10;
-                int y = pY + (i / side) * 22 + 10;
+                int x = pX + (i % side) * 21 + 10;
+                int y = pY + (i / side) * 21 + 10;
                 ItemStack[] itemStacks = stacks.get(i);
                 if (itemStacks.length > 0) {
                     ItemStack itemStack = itemStacks[(counter / 20) % itemStacks.length];
@@ -380,6 +390,23 @@ public class CraftingRegistryGui extends Screen {
                         graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
                     }
                 }
+            }
+            if (output != null) {
+                poseStack.pushPose();
+                int outputX = (int) (getWidth() / scaleFactor);
+                float outputY = pY + side * 21 / 2F;
+                poseStack.translate(outputX, outputY, 0);
+                graphics.renderItem(output, -8, -8);
+                poseStack.popPose();
+                if (relativeMouseX >= outputX - 8 && relativeMouseX <= outputX + 8 && relativeMouseY >= outputY - 8 && relativeMouseY <= outputY + 8) {
+                    graphics.renderTooltip(Minecraft.getInstance().font, output.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), output.getTooltipImage(), relativeMouseX, relativeMouseY);
+                }
+                poseStack.pushPose();
+                int arrowX = (outputX + side * 21) / 2 - 2;
+                float arrowY = pY + side * 21 / 2F;
+                poseStack.translate(arrowX, arrowY, 0);
+                graphics.blit(GRID_ARROW, -11, -7, 22, 15, 0, 0, 22, 15, 22, 15);
+                poseStack.popPose();
             }
         }
 

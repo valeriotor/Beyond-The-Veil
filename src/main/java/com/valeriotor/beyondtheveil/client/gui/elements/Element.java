@@ -7,6 +7,7 @@ public abstract class Element {
 
     private final int width;
     private final int height;
+    protected int counter;
 
     protected Element(int width, int height) {
         this.width = width;
@@ -49,6 +50,10 @@ public abstract class Element {
 
     protected boolean insideBounds(double relativeMouseX, double relativeMouseY) {
         return relativeMouseX >= 0 && relativeMouseX < getWidth() && relativeMouseY >= 0 && relativeMouseY < getHeight();
+    }
+
+    public void tick() {
+        counter++;
     }
 
 }
