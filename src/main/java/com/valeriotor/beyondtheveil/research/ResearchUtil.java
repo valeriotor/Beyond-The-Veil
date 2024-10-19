@@ -97,8 +97,8 @@ public class ResearchUtil {
         Map<String, Research> knownRecipes = new HashMap<>();
         for (ResearchStatus value : researches.values()) {
             if (value.isVisible(p) && value.getStage() >= 0) {
-                for (int i = 0; i < value.res.getStages().length && i < value.getStage(); i++) {
-                    for (String recipe : value.res.getRecipes()) {
+                for (int i = 0; i < value.res.getStages().length && i <= value.getStage(); i++) {
+                    for (String recipe : value.res.getStages()[i].getRecipes()) {
                         if (!knownRecipes.containsKey(recipe)) {
                             knownRecipes.put(recipe, value.res);
                         }
@@ -108,6 +108,24 @@ public class ResearchUtil {
         }
         return knownRecipes;
     }
+
+    public static Map<Memory, Research> getKnownMemories(Player p) {
+        Map<String, ResearchStatus> researches = getResearches(p);
+        Map<Memory, Research> memories = new EnumMap<Memory, Research>(Memory.class);
+
+        for (ResearchStatus value : researches.values()) {
+            if (value.isVisible(p) && value.getStage() >= 0) {
+                for (int i = 0; i < value.res.getStages().length && i <= value.getStage(); i++) {
+                    for (Memory memory : value.res.getStages()[i].getMemories()) {
+                        memories.put(memory, value.res);
+                    }
+                }
+            }
+        }
+        return memories;
+    }
+
+
 
     public static boolean isResearchVisible(Player p, String key) {
         return getResearch(p, key).isVisible(p);

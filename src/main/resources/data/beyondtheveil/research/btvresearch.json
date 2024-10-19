@@ -16,7 +16,7 @@
                   "text": "research.FIRSTDREAMS.stage.1",
                   "required_research": ["metalReminiscence"],
                   "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense", "beyondtheveil:sleep_chamber"],
-                  "memories": ["memMETAL"]
+                  "memories": ["memMETAL", "memCRYSTAL", "memHUMAN"]
                 },
                 {
                   "text": "research.FIRSTDREAMS.stage.2",

@@ -527,7 +527,11 @@ public class ResearchPageGui extends Screen {
         } else {
             if (currentRecipeIndex > 0) {
                 currentRecipeIndex = currentRecipeIndex - 1;
-                makeGrid();
+                if (selectedRecipeType.grid) {
+                    makeGrid();
+                } else {
+                    makeMemory();
+                }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
             }
         }
@@ -542,7 +546,11 @@ public class ResearchPageGui extends Screen {
         } else {
             if (currentRecipeIndex < getRecipeListSize() - 1) {
                 currentRecipeIndex = currentRecipeIndex + 1;
-                makeGrid();
+                if (selectedRecipeType.grid) {
+                    makeGrid();
+                } else {
+                    makeMemory();
+                }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
             }
         }
