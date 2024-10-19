@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
@@ -23,6 +24,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
@@ -56,13 +58,15 @@ public class ResearchPageGui extends Screen {
     private int pageTopY;
     private int pageRightX;
     private int pageBottomY;
-    private List<? extends Recipe<? extends Container>> selectedRecipeGroup;
+    //private List<? extends Recipe<? extends Container>> selectedRecipeGroup;
+    private RecipeType selectedRecipeType;
     private int recipeGroupX, recipeGroup1Y, recipeGroup2Y;
-    private int recipePageX, recipePageY, recipePageWidth, recipePageHeight;
+    private int[] recipeGroupYs = new int[0];
     private int gridX, gridY;//, recipePageWidth, recipePageHeight;
 
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
+    private final ItemStack memorySieve = new ItemStack(Registration.MEMORY_SIEVE.get());
 
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research_background.png");
     private static final ResourceLocation FRAME = new ResourceLocation(References.MODID, "textures/gui/research_frame.png");
@@ -72,15 +76,18 @@ public class ResearchPageGui extends Screen {
     public static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/right_arrow.png");
     private static final ResourceLocation SELECTION1 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_1.png");
     private static final ResourceLocation SELECTION2 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_2.png");
-    private static final ResourceLocation RECIPE_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/research_page_recipe_background.png");
-    public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
+    //private static final ResourceLocation RECIPE_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/research_page_recipe_background.png");
+    //public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
     private int middleSpace;
     private int blackPageHeight;
     private int blackPageWidth;
     private final List<GearBenchRecipe> gearBenchRecipes = new ArrayList<>();
     private final List<CraftingRecipe> craftingRecipes = new ArrayList<>();
+    private final List<Memory> memories = new ArrayList<>();
+    private final List<RecipeType> recipeTypes = new ArrayList<>();
     private CraftingRegistryGui.CraftingGrid currentGrid;
     private int currentRecipeIndex;
+    private ItemStack memoryIngredient;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -137,6 +144,7 @@ public class ResearchPageGui extends Screen {
         }
 
         Button b = Button.builder(Component.translatable("gui.research_page.complete"), button -> {
+            resetRecipe(); // TODO test
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             init();
         }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 100, 120, 20).build();
@@ -153,6 +161,8 @@ public class ResearchPageGui extends Screen {
 
         gearBenchRecipes.clear();
         craftingRecipes.clear();
+        memories.clear();
+
 
         String[] recipes = status.res.getStages()[status.getStage()].getRecipes();
         for (String s : recipes) {
@@ -169,18 +179,38 @@ public class ResearchPageGui extends Screen {
                 }
             }
         }
+        memories.addAll(status.res.getStages()[status.getStage()].getMemories());
 
         craftingRecipes.sort(Comparator.comparing(r -> r.getResultItem(minecraft.level.registryAccess()).getItem().getDescription().getString()));
         gearBenchRecipes.sort(Comparator.comparing(r -> r.getResultItem(minecraft.level.registryAccess()).getItem().getDescription().getString()));
+        memories.sort(Comparator.comparing(m -> m.getTranslationComponent().getString()));
+
+        recipeTypes.clear();
+        if (!craftingRecipes.isEmpty()) {
+            recipeTypes.add(RecipeType.CRAFTING_TABLE);
+        }
+        if (!gearBenchRecipes.isEmpty()) {
+            recipeTypes.add(RecipeType.GEAR_BENCH);
+        }
+        if (!memories.isEmpty()) {
+            recipeTypes.add(RecipeType.MEMORY);
+        }
 
         recipeGroupX = pageLeftX + 1420 * blackPageWidth / 1511;
+
+        recipeGroupYs = new int[recipeTypes.size()];
+
+        for (int i = 0; i < recipeGroupYs.length; i++) {
+            recipeGroupYs[i] = pageTopY + (270 + 95 * i) * blackPageHeight / 1082;
+        }
+
         recipeGroup1Y = pageTopY + 270 * blackPageHeight / 1082;
         recipeGroup2Y = pageTopY + 365 * blackPageHeight / 1082;
 
-        recipePageX = pageLeftX + 130 * blackPageWidth / 1511;
-        recipePageY = pageTopY + 50 * blackPageHeight / 1082;
-        recipePageWidth = 1200 * blackPageWidth / 1511;
-        recipePageHeight = 900 * blackPageHeight / 1082;
+        //recipePageX = pageLeftX + 130 * blackPageWidth / 1511;
+        //recipePageY = pageTopY + 50 * blackPageHeight / 1082;
+        //recipePageWidth = 1200 * blackPageWidth / 1511;
+        //recipePageHeight = 900 * blackPageHeight / 1082;
 
         gridX = pageLeftX + 200 * blackPageWidth / 1511;
         gridY = pageTopY + 230 * blackPageHeight / 1082;
@@ -224,74 +254,16 @@ public class ResearchPageGui extends Screen {
         int frameHeight = (pageBottomY - pageTopY) * 1082 / 992;
         guiGraphics.blit(FRAME, frameLeftX, frameTopY, frameWidth, frameHeight, 0, 0, 1511, 1082, 1511, 1082);
 
-        if (selectedRecipeGroup == null) {
-            int underlineTopY = height / 2 - blackPageHeight * 38 / 100;
-            guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY, width / 2 + titleWidth / 2, underlineTopY + 3, 0x7F344234);
-            guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY + 1, width / 2 + titleWidth / 2, underlineTopY + 2, 0xFF344234);
-
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(UNDERLINING_LEFT, width / 2 - titleWidth / 2 - 20, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
-            guiGraphics.blit(UNDERLINING_RIGHT, width / 2 + titleWidth / 2, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
-        }
-
-        guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), 10, 10, 0xFFFFFFFF);
-
-        if (selectedRecipeGroup == null) {
-            pose.pushPose();
-            int pX = width / 2 - lineWidth - middleSpace;
-            int pY = height / 2 - blackPageHeight * 287 / 1000;
-            pose.translate(pX, pY, 0);
-            pages2.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY);
-            pose.popPose();
-        }
-
-
-        if ((!pages2.isFirstScreen() && selectedRecipeGroup == null) || (selectedRecipeGroup != null && currentRecipeIndex > 0)) {
-            pose.pushPose();
-            pose.translate(width / 2 - arrowXOffset - ARROW_WIDTH / 2, height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
-            if (hoveringLeftArrow(mouseX, mouseY)) {
-                pose.scale(1.5F, 1.5F, 1);
-            }
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(LEFT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
-            pose.popPose();
-        }
-        if ((!pages2.isLastScreen() && selectedRecipeGroup == null) || (selectedRecipeGroup != null && currentRecipeIndex < selectedRecipeGroup.size() - 1)) {
-            pose.pushPose();
-            pose.translate(width / 2 + arrowXOffset + ARROW_WIDTH / 2, height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
-            if (hoveringRightArrow(mouseX, mouseY)) {
-                pose.scale(1.5F, 1.5F, 1);
-            }
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
-            pose.popPose();
-        }
-
-        if (selectedRecipeGroup == null) {
-            pose.pushPose();
-            pose.translate(this.width / 2, this.height / 2 - blackPageHeight * 38 / 100, 0);
-            pose.scale(1.5F, 1.5F, 1);
-            guiGraphics.drawCenteredString(minecraft.font, title, 0, -10, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
-            pose.popPose();
-        }
-
-        if (!progress.visible && selectedRecipeGroup == null) {
-            if (this.reqText != null) {
-                int i = 0;
-                for (String s : this.reqText) {
-                    guiGraphics.drawCenteredString(font, s, width / 2, height / 2 + blackPageHeight * 35 / 100 + (i++) * 15, 0xFFFE9600);
-                }
-            }
-        }
+        renderMainPage(pose, guiGraphics, mouseX, mouseY);
 
         int craftingTableIndex = getCraftingTableIndex();
         int gearBenchIndex = getGearBenchIndex();
 
-        renderSelection(pose, guiGraphics, mouseX, mouseY, craftingTableIndex, 1);
-        renderSelection(pose, guiGraphics, mouseX, mouseY, gearBenchIndex, 2);
+        for (int i = 0; i < recipeTypes.size(); i++) {
+            RecipeType recipeType = recipeTypes.get(i);
+            renderSelection(pose, guiGraphics, mouseX, mouseY, i, recipeType);
+        }
+        //renderSelection(pose, guiGraphics, mouseX, mouseY, gearBenchIndex, 2);
 
         if (currentGrid != null) {
             pose.pushPose();
@@ -300,6 +272,27 @@ public class ResearchPageGui extends Screen {
             float scaleFactor = width1 / 200F;
             pose.scale(scaleFactor, scaleFactor, 1);
             currentGrid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - gridX) / scaleFactor), (int) ((mouseY - gridY) / scaleFactor));
+            pose.popPose();
+        } else if (memoryIngredient != null) {
+            int width1 = 1500 * blackPageWidth / 1511;
+            float scaleFactor = width1 / 200F;
+            pose.pushPose();
+            float fX = frameLeftX + frameWidth / 2F;
+            pose.translate(fX, frameTopY + frameHeight * 0.55F, 0);
+            pose.scale(scaleFactor * 2.75F, scaleFactor * 2.75F, 1);
+            guiGraphics.renderItem(memorySieve, -8, -8);
+            pose.popPose();
+
+            pose.pushPose();
+            pose.translate(fX, frameTopY + frameHeight * 0.37, 0);
+            pose.scale(scaleFactor, scaleFactor, 1);
+            guiGraphics.renderItem(memoryIngredient, -8, -8);
+
+            double relativeMouseX = (mouseX - fX) / scaleFactor;
+            double relativeMouseY = (mouseY - (frameTopY + frameHeight * 0.37)) / scaleFactor;
+            if (relativeMouseX >= -8 && relativeMouseX <= 8 && relativeMouseY >= -8 && relativeMouseY <= 8) {
+                guiGraphics.renderTooltip(Minecraft.getInstance().font, memoryIngredient.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), memoryIngredient.getTooltipImage(), (int) relativeMouseX, (int) relativeMouseY);
+            }
             pose.popPose();
         }
 
@@ -315,45 +308,134 @@ public class ResearchPageGui extends Screen {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
+    private void renderMainPage(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        if (selectedRecipeType == null) {
+            renderTitleUnderline(guiGraphics);
+            renderTitle(pose, guiGraphics);
+            renderPageText(pose, guiGraphics, mouseX, mouseY);
+        }
+
+        //guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), 10, 10, 0xFFFFFFFF);
+
+        if ((!pages2.isFirstScreen() && selectedRecipeType == null) || (selectedRecipeType != null && currentRecipeIndex > 0)) {
+            renderArrow(pose, guiGraphics, mouseX, mouseY, true);
+        }
+        if ((!pages2.isLastScreen() && selectedRecipeType == null) || (selectedRecipeType != null && currentRecipeIndex < getRecipeListSize() - 1)) {
+            renderArrow(pose, guiGraphics, mouseX, mouseY, false);
+        }
+
+
+        if (!progress.visible) {
+            if (this.reqText != null) {
+                int i = 0;
+                for (String s : this.reqText) {
+                    guiGraphics.drawCenteredString(font, s, width / 2, height / 2 + blackPageHeight * 35 / 100 + (i++) * 15, 0xFFFE9600);
+                }
+            }
+        }
+    }
+
+    private void renderArrow(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, boolean left) {
+        pose.pushPose();
+        pose.translate(width / 2 + (- arrowXOffset - ARROW_WIDTH / 2) * (left ? 1 : -1), height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
+        if ((hoveringLeftArrow(mouseX, mouseY) && left) || ((hoveringRightArrow(mouseX, mouseY) && !left))) {
+            pose.scale(1.5F, 1.5F, 1);
+        }
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.blit(left ? LEFT_ARROW : RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+        pose.popPose();
+    }
+
+    private void renderTitle(PoseStack pose, GuiGraphics guiGraphics) {
+        pose.pushPose();
+        pose.translate(this.width / 2, this.height / 2 - blackPageHeight * 38 / 100, 0);
+        pose.scale(1.5F, 1.5F, 1);
+        guiGraphics.drawCenteredString(minecraft.font, title, 0, -10, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
+        pose.popPose();
+    }
+
+    private void renderTitleUnderline(GuiGraphics guiGraphics) {
+        int underlineTopY = height / 2 - blackPageHeight * 38 / 100;
+        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY, width / 2 + titleWidth / 2, underlineTopY + 3, 0x7F344234);
+        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY + 1, width / 2 + titleWidth / 2, underlineTopY + 2, 0xFF344234);
+
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.blit(UNDERLINING_LEFT, width / 2 - titleWidth / 2 - 20, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_RIGHT, width / 2 + titleWidth / 2, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
+    }
+
+    private void renderPageText(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        pose.pushPose();
+        int pX = width / 2 - lineWidth - middleSpace;
+        int pY = height / 2 - blackPageHeight * 287 / 1000;
+        pose.translate(pX, pY, 0);
+        pages2.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY);
+        pose.popPose();
+    }
+
     private int getGearBenchIndex() {
         return gearBenchRecipes.isEmpty() ? -1 : (craftingRecipes.isEmpty() ? 1 : 2);
+    }
+
+    private List<? extends Recipe<? extends Container>> getCraftingList() {
+        return switch (selectedRecipeType) {
+            case CRAFTING_TABLE -> craftingRecipes;
+            case GEAR_BENCH -> gearBenchRecipes;
+            default -> null;
+        };
+    }
+
+    private int getRecipeListSize() {
+        return switch (selectedRecipeType) {
+            case CRAFTING_TABLE -> craftingRecipes.size();
+            case GEAR_BENCH -> gearBenchRecipes.size();
+            case MEMORY -> memories.size();
+        };
+    }
+
+    private ItemStack getRecipeIcon(RecipeType recipeType) {
+        return switch (recipeType) {
+            case CRAFTING_TABLE -> craftingTable;
+            case GEAR_BENCH -> gearBench;
+            case MEMORY -> memorySieve;
+        };
     }
 
     private int getCraftingTableIndex() {
         return craftingRecipes.isEmpty() ? -1 : 1;
     }
 
-    private void renderSelection(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, int i, int type) {
+    private void renderSelection(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, int i, RecipeType recipeType) {
         // bad code today cause im tired
         if (i == -1) {
             return;
         }
-        int y = i == 1 ? recipeGroup1Y : recipeGroup2Y;
         pose.pushPose();
-        pose.translate(recipeGroupX, y, 0);
+        pose.translate(recipeGroupX, recipeGroupYs[i], 0);
         float factor = 2.2F * blackPageWidth / 1511;
         pose.scale(factor, factor, 1);
-        guiGraphics.blit((selectedRecipeGroup == gearBenchRecipes && type == 2) || (selectedRecipeGroup == craftingRecipes && type == 1) ? SELECTION2 : SELECTION1, -16, -16, 0, 0, 32, 32, 32, 32);
-        if (hoveringSelection(mouseX, mouseY, i)) {
-            pose.scale(1.5F, 1.5F, 1);
+        guiGraphics.blit(selectedRecipeType == recipeType ? SELECTION2 : SELECTION1, -16, -16, 0, 0, 32, 32, 32, 32);
+        if (hoveredSelection(mouseX, mouseY) == recipeType) {
+            pose.scale(1.75F, 1.75F, 1);
+        } else {
+            pose.scale(1.25F, 1.25F, 1);
         }
-        guiGraphics.renderItem(type == 1 ? craftingTable : gearBench, -8, -8);
+        guiGraphics.renderItem(getRecipeIcon(recipeType), -8, -8);
         pose.popPose();
     }
 
-    private boolean hoveringSelection(double mouseX, double mouseY, int i) {
-        if (i == 2 && (craftingRecipes.isEmpty() || gearBenchRecipes.isEmpty())) {
-            return false;
+    private RecipeType hoveredSelection(double mouseX, double mouseY) {
+        if (mouseX < recipeGroupX - 16 || mouseX > recipeGroupX + 16) {
+            return null;
         }
-        if (i == 1 && (craftingRecipes.isEmpty() && gearBenchRecipes.isEmpty())) {
-            return false;
+        for (int i = 0; i < recipeTypes.size(); i++) {
+            if (mouseY >= recipeGroupYs[i] - 16 && mouseY <= recipeGroupYs[i] + 16) {
+                return recipeTypes.get(i);
+            }
         }
-        int y = i == 1 ? recipeGroup1Y : recipeGroup2Y;
-        return mouseX >= recipeGroupX - 16 && mouseX <= recipeGroupX + 16 && mouseY >= y - 16 && mouseY <= y + 16;
-    }
-
-    private boolean hoveringRecipeX(double mouseX, double mouseY) {
-        return selectedRecipeGroup != null && mouseX >= recipePageX + 1020 * recipePageWidth / 1200F && mouseX <= recipePageX + 1100 * recipePageWidth / 1200F && mouseY >= recipePageY + 80 * recipePageHeight / 900F && mouseY <= recipePageY + 155 * recipePageHeight / 900F;
+        return null;
     }
 
     //@Override
@@ -365,10 +447,14 @@ public class ResearchPageGui extends Screen {
     //}
 
     private void makeGrid() {
-        Recipe<? extends Container> recipe = selectedRecipeGroup.get(currentRecipeIndex);
+        Recipe<? extends Container> recipe = getCraftingList().get(currentRecipeIndex);
         int width1 = 1500 * blackPageWidth / 1511;
         float scaleFactor = width1 / 125F;
         currentGrid = new CraftingRegistryGui.CraftingGrid(width1, 300, recipe, recipe.getResultItem(minecraft.level.registryAccess()).getItem(), scaleFactor);
+    }
+
+    private void makeMemory() {
+        memoryIngredient = memories.get(currentRecipeIndex).getItem();
     }
 
 
@@ -383,7 +469,29 @@ public class ResearchPageGui extends Screen {
         } else if (hoveringRightArrow(mouseX, mouseY)) {
             rightArrowClick();
             return true;
-        } else if (hoveringSelection(mouseX, mouseY, 1)) {
+        } else {
+            RecipeType recipeType = hoveredSelection(mouseX, mouseY);
+            if (recipeType != null) {
+                if (recipeType != selectedRecipeType) {
+                    selectedRecipeType = recipeType;
+                    currentRecipeIndex = 0;
+                    if (recipeType.grid) {
+                        makeGrid();
+                        memoryIngredient = null;
+                    } else {
+                        currentGrid = null;
+                        makeMemory();
+                    }
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+                } else {
+                    resetRecipe();
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+                }
+            }
+        }
+
+
+        /*else if (hoveringSelection(mouseX, mouseY, 1)) {
             selectedRecipeGroup = getCraftingTableIndex() == 1 ? craftingRecipes : gearBenchRecipes;
             currentRecipeIndex = 0;
             makeGrid();
@@ -396,7 +504,7 @@ public class ResearchPageGui extends Screen {
         } else if (hoveringRecipeX(mouseX, mouseY)) {
             selectedRecipeGroup = null;
             currentGrid = null;
-        }
+        }*/
         return false;
         //} else if(a != -1){
         //    this.shownRecipe = recipes.get(a);
@@ -404,8 +512,14 @@ public class ResearchPageGui extends Screen {
         //    this.shownRecipe = null;
     }
 
+    private void resetRecipe() {
+        selectedRecipeType = null;
+        currentGrid = null;
+        memoryIngredient = null;
+    }
+
     private void leftArrowClick() {
-        if (selectedRecipeGroup == null) {
+        if (selectedRecipeType == null) {
             if (!pages2.isFirstScreen()) {
                 pages2.previousScreen();
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
@@ -420,13 +534,13 @@ public class ResearchPageGui extends Screen {
     }
 
     private void rightArrowClick() {
-        if (selectedRecipeGroup == null) {
+        if (selectedRecipeType == null) {
             if (!pages2.isLastScreen()) {
                 pages2.nextScreen();
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
             }
         } else {
-            if (currentRecipeIndex < selectedRecipeGroup.size() - 1) {
+            if (currentRecipeIndex < getRecipeListSize() - 1) {
                 currentRecipeIndex = currentRecipeIndex + 1;
                 makeGrid();
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
@@ -440,9 +554,8 @@ public class ResearchPageGui extends Screen {
         //if(this.shownRecipe == null)
         InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
         if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
-            if (selectedRecipeGroup != null) {
-                selectedRecipeGroup = null;
-                currentGrid = null;
+            if (selectedRecipeType != null) {
+                resetRecipe();
             } else {
                 minecraft.setScreen(new NecronomiconGui());
             }
@@ -499,5 +612,15 @@ public class ResearchPageGui extends Screen {
     //    if(this.shownRecipe != null)
     //        this.shownRecipe.update();
     //}
+
+    private enum RecipeType {
+        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false);
+
+        private final boolean grid;
+
+        RecipeType(boolean grid) {
+            this.grid = grid;
+        }
+    }
 
 }

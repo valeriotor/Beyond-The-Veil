@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.research;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Research {
 
@@ -97,6 +99,17 @@ public class Research {
         return recipes;
     }
 
+    public List<Memory> getMemories() {
+        List<Memory> memories = new ArrayList<>();
+        for(SubResearch sr : this.getStages()) {
+            memories.addAll(sr.getMemories());
+        }
+        for(SubResearch sr : this.getAddenda()) {
+            memories.addAll(sr.getMemories());
+        }
+        return memories;
+    }
+
     public boolean mustLearn() {
         return learn;
     }
@@ -144,6 +157,7 @@ public class Research {
         String text;
         private String[] required_research;
         String[] recipes;
+        String[] memories;
 
         public boolean meetsRequirements(Player p) {
             return this.meetsRequirements(p.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY));
@@ -172,6 +186,12 @@ public class Research {
             if(this.recipes == null)
                 this.recipes = new String[0];
             return this.recipes;
+        }
+
+        public List<Memory> getMemories() {
+            if(this.memories == null)
+                this.memories = new String[0];
+            return Arrays.stream(this.memories).map(Memory::getMemoryFromDataName).toList();
         }
 
         @Override
