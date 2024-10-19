@@ -28,12 +28,24 @@
           "name": "research.CRAFTING.title",
           "icons": [ "minecraft:crafting_table" ],
           "category": "BEYOND_THE_VEIL", "location": [ 0,-2 ],
-          "parents": [],
           "hiders" : ["FIRSTDREAMS;1"],
           "parents": [ "FIRSTDREAMS;1" ],
           "stages": [
             {
               "text": "research.CRAFTING.stage.0"
+            }
+          ]
+        },
+        {
+          "key": "MEMORIES",
+          "name": "research.MEMORIES.title",
+          "icons": [ "beyondtheveil:memory_phial" ],
+          "category": "BEYOND_THE_VEIL", "location": [ 0, 2 ],
+          "hiders" : ["FIRSTDREAMS;1"],
+          "parents": [ "FIRSTDREAMS;1" ],
+          "stages": [
+            {
+              "text": "research.MEMORIES.stage.0"
             }
           ]
         },
