@@ -161,7 +161,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.dialogue.talk", "Talk");
         add("gui.dialogue.trade", "Trade");
-        add("gui.sleep_chamber.wake", "Wake Up");
+        //add("gui.sleep_chamber.wake", "Wake Up");
 
         add("gui.tablet.inscription0", "There is nothing in the Void.<BR>And yet everything comes from There.<BR>That black portal to Infinity.");
         add("gui.tablet.inscription1", "Knowledge is to be feared,<BR>not sought.<BR>It may bring Power,<BR>but at what cost?");
@@ -1229,10 +1229,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         addResearch();
         addCraftingRegistry();
         addReminiscence();
+        addGuis();
     }
 
     private void addResearch() {
-        add("research.FIRSTDREAMS.title", "Dreams");
+        add("research.FIRSTDREAMS.title", "The Language of Dreams");
         add("research.didDream.text", "I must sleep. I must Dream.");
         add("research.crafted_metal.text", "Create a memory of metal.");
         add("research.reminisced_metal.text", "Find a way to talk to the dream.");
@@ -1250,6 +1251,19 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Once I wake up, I must close my eyes and concentrate, to try and reminisce what the dream saw.");
         add("research.FIRSTDREAMS.stage.3", "It worked. \\nAn outlandish hypothesis, a wild shot in the dark and yet it §ostruck§r something, because there §owas§r something to strike in that gloom escaping our senses.\\nToday I pioneer the Art of Dreaming, so that humankind may see the world in a new light, and elude the limits of our worldly bodies. And I §ovow§r to continue exploring and expanding this field as far as I can, here on the pages of Al Azif.");
 
+        add("research.SLEEP_CHAMBER.title", "Sleep Chamber");
+        add("research.slept_in_chamber.text", "Experiment until you can answer at least the first question.");
+        add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it. My research studies are limited by the frequency at which I can dream — a most frustrating bound.\\n" +
+                "Thankfully, there is a great body of work aimed at replicating the effects of dreaming through various techniques and devices; one must only look at Carter's \"The Gate and the Key\" to find all sorts of examples.\\n" +
+                "The method most easily within reach is through the use of a Sleep Chamber, i.e. a small room relying on water vapours to lull its tenant in a dreamlike state. One must simply open it, step inside and close the door. It is a somewhat complex contraption, and creating it will require a Gear Bench. \\n" +
+                "Once the testbed is built, I may proceed with the evaluation. Building atop of past literature, in this study I aim to answer the following questions:\\n" +
+                "1. Will the dreamlike state induced by the sleep chamber also undergo the effects of a nearby fume spreader?\\1" +
+                "2. If so, how many times will I be able to achieve the effect in a single day (assuming there to be a limit)?\\1" +
+                "3. And if such a limit does indeed exist, after reaching it will I still be able to dream in a normal bed at the end of the same day?");
+        add("research.SLEEP_CHAMBER.stage.1", "The experiment with the fume spreader was successful, and the sleep chamber will likely prove itself an invaluable tool in my research.\\n" +
+                "As soon as I have performed sufficiently many experiments, I may also answer my other questions:\\n" +
+                "Max. uses of Sleep Chamber per day: ___\\1" +
+                "May use bed after reaching Sleep Chamber limit: Yes/No.");
     }
 
     private void addCraftingRegistry() {
@@ -1265,5 +1279,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addReminiscence() {
         add("reminiscence.EMPTY", "The dream was not affected.");
+    }
+
+    private void addGuis() {
+        add("gui.sleep_chamber", "Sleep Chamber");
+        add("gui.sleep_chamber.wake", "Leave chamber");
     }
 }

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -31,24 +32,28 @@ public class GenericToServerPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            switch (type) {
-                case ASK_DATA_SYNC -> {
-                    CapabilityEvents.syncCapabilities(ctx.getSender());
-                }
-                case REMINISCING_START -> {
-                    if (ctx.getSender() != null) {
-                        ServerPlayer sender = ctx.getSender();
+            ServerPlayer player = ctx.getSender();
+            if (player != null) {
+                switch (type) {
+                    case ASK_DATA_SYNC -> {
+                        CapabilityEvents.syncCapabilities(player);
+                    }
+                    case REMINISCING_START -> {
+                        ServerPlayer sender = player;
                         DataUtil.setBoolean(sender, PlayerDataLib.REMINISCING, true, true);
                         EnumMap<Memory, Reminiscence> reminiscences = DataUtil.getReminiscences(sender);
                         for (Memory memory : reminiscences.keySet()) {
                             DataUtil.setBooleanOnServerAndSync(sender, PlayerDataLib.REMINISCED.apply(memory), true, false);
                         }
                     }
+                    case REMINISCING_STOP -> {
+                        DataUtil.setBoolean(player, PlayerDataLib.REMINISCING, false, true);
+                    }
+                    case SLEEP_CHAMBER -> {
+                        DreamHandler.dream(player, false);
+                    }
                 }
-                case REMINISCING_STOP -> {
-                    if(ctx.getSender() != null)
-                        DataUtil.setBoolean(ctx.getSender(), PlayerDataLib.REMINISCING, false, true);
-                }
+
             }
         });
         return true;
@@ -58,7 +63,8 @@ public class GenericToServerPacket {
     public enum MessageType {
         ASK_DATA_SYNC,
         REMINISCING_START,
-        REMINISCING_STOP;
+        REMINISCING_STOP,
+        SLEEP_CHAMBER;
     }
 
 }

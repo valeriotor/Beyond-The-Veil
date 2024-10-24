@@ -102,7 +102,7 @@ public class NecronomiconGui extends Screen {
             }
         }
         this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (ConfigLib.connectionGreen << 8) | ConfigLib.connectionBlue;
-        showBookmarkHint = !data.getBoolean(PlayerDataLib.MADE_BOOKMARK) && map.get("FUMESPREADER").getStage() >= 1; // TODO this should be FUMESPREADER, change if otherwise
+        showBookmarkHint = !data.getBoolean(PlayerDataLib.MADE_BOOKMARK) && map.get("SLEEP_CHAMBER").getStage() >= 1; // TODO this should be SLEEP_CHAMBER, change if otherwise
     }
 
     @Override

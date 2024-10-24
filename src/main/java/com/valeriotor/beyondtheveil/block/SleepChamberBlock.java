@@ -1,10 +1,14 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -18,12 +22,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class SleepChamberBlock extends Block {
 
@@ -113,8 +119,19 @@ public class SleepChamberBlock extends Block {
         level.setBlock(pos, state, 10);
         level.levelEvent(player, state.getValue(OPEN) ? 1006 : 1012, pos, 0);
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+        if (!state.getValue(OPEN) && level.isClientSide && hand == InteractionHand.MAIN_HAND && getPlayerInside(level, pos) == player) {
+            ClientMethods.openSimpleGui(BTVSimpleGuis.SLEEP_CHAMBER);
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
 
+    }
+
+    public Player getPlayerInside(Level w, BlockPos pos) {
+        List<Player> ps = w.getEntitiesOfClass(Player.class, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
+        for(Player p : ps) {
+            return p;
+        }
+        return null;
     }
 
     //@Override

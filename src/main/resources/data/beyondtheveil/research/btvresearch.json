@@ -58,21 +58,21 @@
           ]
         },
         {
-        "key": "FUMESPREADER",
-        "name": "research.FUMESPREADER.title",
-        "icons": [ "beyondtheveil:memory_sieve" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 2,0 ],
+        "key": "SLEEP_CHAMBER",
+        "name": "research.SLEEPCHAMBER.title",
+        "icons": [ "beyondtheveil:sleep_chamber" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,1 ],
         "hiders": ["FIRSTDREAMS"],
         "parents": [ "FIRSTDREAMS" ],
         "stages": [
 				{
-					"text": "research.FUMESPREADER.stage.0",
-					"required_research": ["firstMemory"],
-                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING"]
+					"text": "research.SLEEP_CHAMBER.stage.0",
+					"required_research": ["slept_in_chamber"],
+                    "recipes": ["beyondtheveil:gear","beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
 				},
                 {
-                    "text": "research.FUMESPREADER.stage.1",
-                    "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:memory_phial;memLEARNING", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                    "text": "research.SLEEP_CHAMBER.stage.1",
+                    "recipes": ["beyondtheveil:gear","beyondtheveil:gear_bench", "beyondtheveil:sleep_chamber"]
                 }
             ]
         },
@@ -82,7 +82,7 @@
         "icons": [ "minecraft:iron_ingot" ],
         "category": "BEYOND_THE_VEIL", "location": [ 4, 0 ],
 		"learn": "true",
-        "parents": [ "FUMESPREADER" ],
+        "parents": [ "SLEEP_CHAMBER" ],
         "stages": [
 				{
 					"text": "research.CRYSTALDREAMS.stage.0",

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "beyondtheveil:gear"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "LGL",
+    "LLL"
+  ],
+  "result": {
+    "item": "beyondtheveil:gear_bench"
+  },
+  "show_notification": true
+}

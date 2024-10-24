@@ -418,6 +418,8 @@ public class ResearchPageGui extends Screen {
         if (i == -1) {
             return;
         }
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         pose.pushPose();
         pose.translate(recipeGroupX, recipeGroupYs[i], 0);
         float factor = 2.2F * blackPageWidth / 1511;

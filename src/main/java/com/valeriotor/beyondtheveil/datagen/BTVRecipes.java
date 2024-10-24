@@ -49,6 +49,26 @@ public class BTVRecipes extends RecipeProvider {
                 .unlockedBy("has_fume_spreader", has(Registration.FUME_SPREADER.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.GEAR.get(), 1)
+                .pattern(" S ")
+                .pattern("SGS")
+                .pattern(" S ")
+                .define('G', Items.GOLD_INGOT)
+                .define('S', Items.STICK)
+                .group("Beyond the Veil")
+                .unlockedBy("has_gear", has(Registration.GEAR.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.GEAR_BENCH.get(), 1)
+                .pattern("GGG")
+                .pattern("LGL")
+                .pattern("LLL")
+                .define('G', Registration.GEAR.get())
+                .define('L', ItemTags.LOGS)
+                .group("Beyond the Veil")
+                .unlockedBy("has_gear_bench", has(Registration.GEAR_BENCH.get()))
+                .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ONIRIC_INCENSE.get())
                 .requires(Items.CLAY_BALL)
                 .requires(Items.FLINT)

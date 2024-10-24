@@ -2,10 +2,13 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -47,6 +50,16 @@ public class ClientMethods {
             if (type.getSound() != null) {
                 mc.getSoundManager().play(new SurgerySoundInstance(type, pos));
             }
+        }
+    }
+
+    public static void openSimpleGui(BTVSimpleGuis gui) {
+        Screen s = switch (gui) {
+            case SLEEP_CHAMBER -> new SleepChamberGui();
+            default -> null;
+        };
+        if (s != null) {
+            Minecraft.getInstance().setScreen(s);
         }
     }
 

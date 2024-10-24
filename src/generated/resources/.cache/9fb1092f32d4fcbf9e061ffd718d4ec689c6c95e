@@ -1,9 +1,13 @@
-// 1.20.1	2024-10-13T20:59:18.7542871	Recipes
+// 1.20.1	2024-10-24T22:25:01.7767223	Recipes
 d6978ac13ebf7db590e379fe56c57a5bf1c2fb9a data/beyondtheveil/advancements/recipes/misc/fume_spreader.json
+0b7a88e289760d3709d18c0967a346c65e6ebc9e data/beyondtheveil/advancements/recipes/misc/gear.json
+edc44d004a55fe3cf4e233254d8b9af56390d61d data/beyondtheveil/advancements/recipes/misc/gear_bench.json
 6120142adf5a8badf8c7618ad9912e441de83afa data/beyondtheveil/advancements/recipes/misc/memory_phial.json
 219f75a19b37817d1f6f700b72cc6747805925e1 data/beyondtheveil/advancements/recipes/misc/memory_sieve.json
 6613f0cacd1f4a789a9f19cd4184a1f00f01baf1 data/beyondtheveil/advancements/recipes/misc/oniric_incense.json
 72a41a52ec7a3c5055767ec4f60021591bc4bd38 data/beyondtheveil/recipes/fume_spreader.json
+997a13967c29b8ad0bd3b455e0dcf662252106bb data/beyondtheveil/recipes/gear.json
+8d97a347fe093e39a7863c99210eb0ff1ebb1a41 data/beyondtheveil/recipes/gear_bench.json
 39e747e32d0ce86839209aa9e1727bf79e71b9b6 data/beyondtheveil/recipes/memory_phial.json
 499bc908d982f32f077ce81a802bde6842e96646 data/beyondtheveil/recipes/memory_sieve.json
 9966c06f4d58b9466a1f96e2fd7c32313128fa88 data/beyondtheveil/recipes/oniric_incense.json
