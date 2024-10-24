@@ -82,6 +82,7 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
     protected void render(RenderGuiOverlayEvent event) {
         PoseStack poseStack = event.getGuiGraphics().pose();
         poseStack.pushPose();
+        poseStack.translate(0, 0, 1000);
         Window window = Minecraft.getInstance().getWindow();
         RenderSystem.setShaderColor(1, 1, 1, 1);
         int maxSideLengthForLayer = window.getGuiScaledHeight() * 3 / 4;
