@@ -12,15 +12,22 @@
                     "text": "research.FIRSTDREAMS.stage.0",
 					"required_research": ["didDream"]
                 },
-				{
+                {
                   "text": "research.FIRSTDREAMS.stage.1",
-                  "required_research": ["metalReminiscence"],
-                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense", "beyondtheveil:sleep_chamber"],
-                  "memories": ["memMETAL", "memCRYSTAL", "memHUMAN"]
+                  "required_research": ["crafted_metal"],
+                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial"],
+                  "memories": ["memMETAL"]
                 },
                 {
                   "text": "research.FIRSTDREAMS.stage.2",
-                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"]
+                  "required_research": ["reminisced_metal"],
+                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"],
+                  "memories": ["memMETAL"]
+                },
+                {
+                  "text": "research.FIRSTDREAMS.stage.3",
+                  "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"],
+                  "memories": ["memMETAL"]
                 }
             ]
         },

@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -56,6 +58,7 @@ public class MemorySieveBE extends BlockEntity {
                         newStack.getOrCreateTag().putString("memory", m.getDataName());
                         in.shrink(1);
                         ItemHandlerHelper.giveItemToPlayer(p, newStack);
+                        DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.MADE_MEMORY.apply(m), true, false);
                         this.heldItem = ItemStack.EMPTY;
                         itemEntity = null;
                         setChanged();

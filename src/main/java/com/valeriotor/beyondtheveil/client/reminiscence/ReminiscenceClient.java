@@ -13,7 +13,11 @@ import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -122,6 +126,8 @@ public abstract class ReminiscenceClient {
                 r = new ReminiscenceClientUnderground(ru);
             } else if (e.getValue() instanceof ReminiscenceWaypoint rw) {
                 r = new ReminiscenceClientWaypoint(rw);
+            } else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
+                r = new EmptyReminiscenceClient();
             } else {
                 throw new IllegalArgumentException("Unknown reminiscence " + e.getValue().toString());
             }
@@ -134,6 +140,35 @@ public abstract class ReminiscenceClient {
         }
 
     }
+
+    public static class EmptyReminiscenceClient extends ReminiscenceClient {
+
+        private int counter = 1;
+        @Override
+        protected void render(RenderGuiOverlayEvent event) {
+            String translatable = Component.translatable("reminiscence.EMPTY").getString();
+            String sub = translatable.substring(0, Math.min(counter, translatable.length()));
+            int guiScaledWidth = event.getWindow().getGuiScaledWidth();
+            int guiScaledHeight = event.getWindow().getGuiScaledHeight();
+            GuiGraphics guiGraphics = event.getGuiGraphics();
+            PoseStack pose = guiGraphics.pose();
+            pose.pushPose();
+            pose.translate(guiScaledWidth / 2, guiScaledHeight / 2, 0);
+            float factor = guiScaledWidth / 300F;
+            List<FormattedCharSequence> split = Minecraft.getInstance().font.split(Component.literal(sub), (int) (guiScaledWidth / factor));
+            pose.scale(factor, factor, 1);
+            for (int i = 0; i < split.size(); i++) {
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font, split.get(i), 0, 20 * i - 10 * (split.size() - 1), 0xFFFFFFFF);
+            }
+            pose.popPose();
+        }
+
+        @Override
+        protected void tick() {
+            counter++;
+        }
+    }
+
 
 
 }

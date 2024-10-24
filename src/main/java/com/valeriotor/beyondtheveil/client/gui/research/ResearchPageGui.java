@@ -7,9 +7,11 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -131,7 +133,11 @@ public class ResearchPageGui extends Screen {
         pages.clear();
         //recipes.clear();
         //shownRecipe = null;
-        String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey());
+        Object[] format = getFormatting();
+        String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey(), getFormatting());
+        //if (status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2) {
+        //    localized = localized.formatted(DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.HELD_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.DRANK_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL)) ? "§aV§r" : " ");
+        //}
         //localized = "It feels {natural to dismiss dreams}[caption:test] as a trick of the mind, when such §rdismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself? \\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch. \\nBut what if it hid an ocean?";
         //TextUtil util = new TextUtil();
         //util.parseText2(localized2, lineWidth, Minecraft.getInstance().font);
@@ -587,6 +593,12 @@ public class ResearchPageGui extends Screen {
         int leftX = this.width / 2 + arrowXOffset;
         int topY = this.height / 2 + arrowYOffset;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
+    }
+
+    private Object[] getFormatting() {
+        if(status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2)
+            return new Object[]{DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.HELD_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.DRANK_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL)) ? "§aV§r" : " "};
+        return new Object[0];
     }
 
 

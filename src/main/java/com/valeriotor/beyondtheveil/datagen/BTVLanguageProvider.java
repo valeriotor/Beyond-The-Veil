@@ -1228,16 +1228,27 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         addResearch();
         addCraftingRegistry();
-
+        addReminiscence();
     }
 
     private void addResearch() {
         add("research.FIRSTDREAMS.title", "Dreams");
         add("research.didDream.text", "I must sleep. I must Dream.");
-        add("research.metalReminiscence.text", "Dream of Metal, then reminisce.");
-        add("research.FIRSTDREAMS.stage.0", "It feels natural to dismiss dreams as a trick of the mind, when such dismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something *more*, about the world and about myself?\\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch.\\nBut what if it hid an ocean?");
-        add("research.FIRSTDREAMS.stage.1", "It felt wrong. I woke up shuddering, drenched in sweat. It was like diving into a pool from thousands of man-heights above, head first, eyes closed.\\nYet I can make no conclusions. Was this.. *dream* born from my recent real experiences, or did it have a life of its own?\\nIf the latter is true, then perhaps I can influence the dream, so that it shows me what I want it to. I would do so through my own memories: past literature details the construction and usage of a memory sieve, a simple altar upon which I can place an item that evokes a certain memory, and subsequently store the result in a memory phial. I must then build a fume spreader, place it next to my bed, fill it with oniric incense and then with the phial.\\nI will begin with an iron ingot: an intense memory of metal, of the first time I mined a vein and saw wealth trickle in my hands. There is so much metal underground, could the dream see it?\\nIf so, I must concentrate after waking up, to try and reminisce what the dreams saw.");
-        add("research.FIRSTDREAMS.stage.2", "It worked. \\nAn outlandish hypothesis, a wild shot in the dark and yet it *struck* something, because there *was* something to strike in that gloom escaping our senses.\\nToday I pioneer the Art of Dreaming, so that humankind may see the world in a new light, and elude the limits of our worldly bodies. And I *vow* to continue exploring and expanding this field as far as I can, here on the pages of Al Azif.");
+        add("research.crafted_metal.text", "Create a memory of metal.");
+        add("research.reminisced_metal.text", "Find a way to talk to the dream.");
+        add("research.FIRSTDREAMS.stage.0", "It feels natural to dismiss dreams as a trick of the mind, when such dismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself?\\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch.\\nBut what if it hid an ocean?");
+        add("research.FIRSTDREAMS.stage.1", "It felt wrong. I woke up shuddering, drenched in sweat. It was like diving into a pool from thousands of man-heights above, head first, eyes closed.\\n" +
+                "Yet I can make no conclusions. Was this.. §odream§r a simple reflection of my recent real life experiences, or did it have a life of its own?\\n" +
+                "Oh, what a fascinating prospect! That of a sentient dream, living and breathing as I do. I wonder, then: could I talk to it? And if so, in what tongue?\\n" +
+                "I propose to speak through my own §omemories§r: their effect on our dreams is undeniable. Most importantly, the study of human memories is a well-trodden field of research in academic circles. Past literature details the construction and usage of a memory sieve, a simple altar upon which I can place an item that evokes a certain memory, and subsequently store the result in a memory phial.\\n" +
+                "I will begin with an iron ingot: an intense memory of metal, of the first time I mined a vein and saw wealth trickle in my hands. There is so much metal underground, could the dream see it?");
+        add("research.FIRSTDREAMS.stage.2", "Replicating the steps of my predecessors was no issue. It is now my responsibility to tie it to the study of dreams.\\n" +
+                "The goal is to have my own memory affect my mind while I sleep, and to do so I must experiment. A few different possibilities come to mind:\\n" +
+                "[%s] Hold the phial in my hand while I sleep.\\1" +
+                "[%s] Drink the phial's contents right before sleeping.\\1" +
+                "[%s] (More complex) Build a fume spreader, place it next to my bed, fill it with oniric incense and then with the phial.\\n" +
+                "Once I wake up, I must close my eyes and concentrate, to try and reminisce what the dream saw.");
+        add("research.FIRSTDREAMS.stage.3", "It worked. \\nAn outlandish hypothesis, a wild shot in the dark and yet it §ostruck§r something, because there §owas§r something to strike in that gloom escaping our senses.\\nToday I pioneer the Art of Dreaming, so that humankind may see the world in a new light, and elude the limits of our worldly bodies. And I §ovow§r to continue exploring and expanding this field as far as I can, here on the pages of Al Azif.");
 
     }
 
@@ -1246,8 +1257,13 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add(FUME_SPREADER.get().getDescriptionId() + ".crafting", "Breathing its fumes while asleep will alter the behaviour of my dreams.\\1Must be placed on the ground near a bed or similar object. It must then be filled with {§noniric incense§r}[caption:crafting.oniric_incense] and, finally, with a {§nmemory phial§r}[caption:crafting.memory_phial] containing the desired memory.\\1It can be {§nemptied§r}[caption:Shift + Right Click], but doing so will not return the memory phial.");
         add(ONIRIC_INCENSE.get().getDescriptionId() + ".crafting", "Used on an empty {§nfume spreader§r}[caption:crafting.fume_spreader] to fill it.");
-        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[caption:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[caption:crafting.fume_spreader] to assign it the contained memory.");
+        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[caption:crafting.memory_sieve] to capture a memory.");
+        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting2", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[caption:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[caption:crafting.fume_spreader] to assign it the contained memory.");
         add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[caption:crafting.memory_phial] may be used on it to capture the memory.");
         add(SLEEP_CHAMBER.get().getDescriptionId() + ".crafting", "A complex device known to mimic the dream state induced by sleeping.\\1To use it, I must open its door, walk inside and close it while enclosed within.");
+    }
+
+    private void addReminiscence() {
+        add("reminiscence.EMPTY", "The dream was not affected.");
     }
 }

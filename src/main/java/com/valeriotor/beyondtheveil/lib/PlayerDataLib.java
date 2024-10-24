@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.lib;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Collections;
@@ -69,8 +70,16 @@ public class PlayerDataLib {
     public static final String WAIT = "wait";
     public static final String IDOLFOLLY = "idolfolly";
     public static final String DEATHTELEPORT = "deathtp";
+    public static final String DRANK_ANY_MEMORY = "drankmemory";
+    public static final String DRANK_MEMORY_DREAM = "drank_dream";
+    public static final String HELD_MEMORY_DREAM = "held_dream";
+    public static final String DREAMT_ONCE = "dreamt_once";
     public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
     public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
+    public static final Function<Memory, String> DRANK_MEMORY = m -> String.format("drank_%s", m.name().toLowerCase());
+    public static final Function<Memory, String> REMINISCED = m -> String.format("reminisced_%s", m.name().toLowerCase());
+    public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
+
 
     // Booleans (Temporary)
     public static final String DREAMFOCUS = "dreamfocus";

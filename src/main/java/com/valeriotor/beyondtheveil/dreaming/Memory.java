@@ -26,7 +26,7 @@ public enum Memory {
     //TODO HEARTBREAK(Items.getItemFromBlock(BlockRegistry.BlockHeart), 0xFFAA0000, "memPOWER"),
     HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF, "metalDream"),
     INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
-    LEARNING(Items.GHAST_TEAR, 0xFF998b69),
+    NULL(Items.AIR, 0xFF998b69),
     METAL(Items.IRON_INGOT, 0xFF8c8c8c),
     PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00),
     POWER(Items.BLAZE_POWDER, 0xFFff9300, "metalDream"),
@@ -79,25 +79,25 @@ public enum Memory {
     public void unlock(Player p, boolean sendMessage) {
         if (!this.isUnlocked(p) && this.isUnlockable(p)) {
             String dataName = this.getDataName();
-            DataUtil.setBooleanOnServerAndSync(p, dataName, true, false);
+            DataUtil.unlockMemoryOnServerAndSync(p, this);
             String s = getFurtherData(this);
             if (s != null) {
                 DataUtil.setBooleanOnServerAndSync(p, s, true, false);
             }
-            if (sendMessage) {
-                //TODO BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(GenericMessageKey.MEMORY_ENTRY, getDataName()), (ServerPlayer) p);
-                p.sendSystemMessage(Component.translatable("memory.unlock.message", getTranslationComponent()));
-                for (Entry<String, ResearchStatus> entry : ResearchUtil.getResearches(p).entrySet()) {
-                    for (Research.SubResearch addendum : entry.getValue().res.getAddenda()) {
-                        for (String req : addendum.getRequirements()) {
-                            if (req.equals(dataName)) {
-                                p.sendSystemMessage(Component.translatable("memory.unlock.addenda", Component.translatable(entry.getValue().res.getName())));
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
+            //if (sendMessage) {
+            //    //TODO BTVPacketHandler.INSTANCE.sendTo(new MessageGenericToClient(GenericMessageKey.MEMORY_ENTRY, getDataName()), (ServerPlayer) p);
+            //    p.sendSystemMessage(Component.translatable("memory.unlock.message", getTranslationComponent()));
+            //    for (Entry<String, ResearchStatus> entry : ResearchUtil.getResearches(p).entrySet()) {
+            //        for (Research.SubResearch addendum : entry.getValue().res.getAddenda()) {
+            //            for (String req : addendum.getRequirements()) {
+            //                if (req.equals(dataName)) {
+            //                    p.sendSystemMessage(Component.translatable("memory.unlock.addenda", Component.translatable(entry.getValue().res.getName())));
+            //                    return;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 
@@ -134,7 +134,7 @@ public enum Memory {
             case DEATH -> null;
             case ELDRITCH -> null;
             case HUMAN -> null;
-            case LEARNING -> null;
+            case NULL -> null;
             case METAL -> null;
             case POWER -> "effectDream";
             case REPAIR -> null;

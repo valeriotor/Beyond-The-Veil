@@ -17,6 +17,10 @@ public abstract class Dream {
     public static final Map<Memory, Dream> REGISTRY = new HashMap<>();
     public static final Map<Memory, Supplier<Reminiscence>> REMINISCENCE_REGISTRY = new EnumMap<>(Memory.class);
 
+    static {
+        REMINISCENCE_REGISTRY.put(Memory.NULL, Reminiscence.EmptyReminiscence::new);
+    }
+
 
     public static final Dream WATER = new DreamWater();
     public static final Dream METAL = new DreamUnderground(Memory.METAL, 5, Set.of(Blocks.IRON_ORE, Blocks.GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.DEEPSLATE_COPPER_ORE));

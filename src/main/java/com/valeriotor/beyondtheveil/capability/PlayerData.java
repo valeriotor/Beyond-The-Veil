@@ -23,6 +23,7 @@ public class PlayerData {
     private final Map<String, String> tempStrings = new HashMap<>();
     private final Map<String, CompoundTag> tags = new HashMap<>();
     private final List<Counter> counters = new ArrayList<>();
+    private final Set<Memory> memories = EnumSet.noneOf(Memory.class);
     private final EnumMap<Memory, Reminiscence> reminiscences = new EnumMap<>(Memory.class);
 
     public void setBoolean(String key, boolean value, boolean temporary) {
@@ -169,7 +170,9 @@ public class PlayerData {
         return tags.getOrDefault(key, null);
     }
 
-    /** Creates a new counter, or updates the timer of a previous one if one of the same type already existed
+    /**
+     * Creates a new counter, or updates the timer of a previous one if one of the same type already existed
+     *
      * @return timer of the previously existing counter of the same type, 0 if absent
      */
     public int createCounter(CounterType type, int timer) {
@@ -184,7 +187,8 @@ public class PlayerData {
         return 0;
     }
 
-    /** @return finished CounterTypes
+    /**
+     * @return finished CounterTypes
      */
     public List<CounterType> tickCounters() {
         List<CounterType> finished = new ArrayList<>();
@@ -213,6 +217,18 @@ public class PlayerData {
         return counters;
     }
 
+    public boolean addMemory(Memory memory) {
+        return memories.add(memory);
+    }
+
+    public boolean hasMemory(Memory memory) {
+        return memories.contains(memory);
+    }
+
+    public Set<Memory> getMemories() {
+        return memories;
+    }
+
     public boolean addReminiscence(Memory memory, Reminiscence reminiscence) {
         boolean returnValue = reminiscences.containsKey(memory);
         reminiscences.put(memory, reminiscence);
@@ -233,6 +249,8 @@ public class PlayerData {
         CompoundTag longs = new CompoundTag();
         CompoundTag strings = new CompoundTag();
         CompoundTag counters = new CompoundTag();
+        CompoundTag tags = new CompoundTag();
+        CompoundTag memories = new CompoundTag();
         CompoundTag reminiscences = new CompoundTag();
         for (String s : this.booleans) {
             booleans.putBoolean(s, true);
@@ -246,8 +264,14 @@ public class PlayerData {
         for (Entry<String, String> e : this.strings.entrySet()) {
             strings.putString(e.getKey(), e.getValue());
         }
+        for (Entry<String, CompoundTag> e : this.tags.entrySet()) {
+            tags.put(e.getKey(), e.getValue());
+        }
         for (Counter c : this.counters) {
             counters.putInt(c.type.name(), c.counter);
+        }
+        for (Memory memory : this.memories) {
+            memories.putBoolean(memory.getDataName(), true);
         }
         for (Entry<Memory, Reminiscence> e : this.reminiscences.entrySet()) {
             reminiscences.put(e.getKey().getDataName(), e.getValue().save());
@@ -256,7 +280,9 @@ public class PlayerData {
         compoundTag.put("ints", ints);
         compoundTag.put("longs", longs);
         compoundTag.put("strings", strings);
+        compoundTag.put("tags", tags);
         compoundTag.put("counters", counters);
+        compoundTag.put("memories", memories);
         compoundTag.put("reminiscences", reminiscences);
     }
 
@@ -283,12 +309,27 @@ public class PlayerData {
                 this.strings.put(key, strings.getString(key));
             }
         }
+        if (compoundTag.contains("tags")) {
+            CompoundTag tags = compoundTag.getCompound("tags");
+            for (String key : tags.getAllKeys()) {
+                this.tags.put(key, tags.getCompound(key));
+            }
+        }
         if (compoundTag.contains("counters")) {
             CompoundTag counters = compoundTag.getCompound("counters");
             for (String key : counters.getAllKeys()) {
                 this.counters.add(new Counter(counters.getInt(key), CounterType.fromName(key)));
             }
         }
+        if (compoundTag.contains("memories")) {
+            CompoundTag memories = compoundTag.getCompound("memories");
+            for (String key : memories.getAllKeys()) {
+                Memory memory = Memory.getMemoryFromDataName(key);
+                this.memories.add(memory);
+            }
+
+        }
+
         if (compoundTag.contains("reminiscences")) {
             CompoundTag reminiscences = compoundTag.getCompound("reminiscences");
             for (String key : reminiscences.getAllKeys()) {
@@ -300,7 +341,8 @@ public class PlayerData {
         }
     }
 
-    /** Assumes new store is empty
+    /**
+     * Assumes new store is empty
      */
     public void copyToNewStore(PlayerData newStore) {
         newStore.booleans.addAll(booleans);
@@ -309,28 +351,91 @@ public class PlayerData {
         newStore.strings.putAll(strings);
         newStore.counters.addAll(counters);
         newStore.tags.putAll(tags);
+        newStore.memories.addAll(memories);
+        newStore.reminiscences.putAll(reminiscences);
+
     }
 
     private static class FallBack extends PlayerData {
         // TODO find another way that doesn't require editing for every change to the main class
         // this is so stupid how could you wtf
-        @Override public void setBoolean(String key, boolean value, boolean temporary) {}
-        @Override public boolean getBoolean(String key) {return false;}
-        @Override public boolean getBoolean(String key, boolean temporary) {return false;}
-        @Override public void setInteger(String key, int value, boolean temporary) {}
-        @Override public Integer incrementOrSetInteger(String key, int amount, int valueIfAbsent, boolean temporary) {return valueIfAbsent;}
-        @Override public Integer getOrSetInteger(String key, int valueIfAbsent, boolean temporary) {return valueIfAbsent;}
-        @Override public Integer getInteger(String key) {return null;}
-        @Override public Integer getInteger(String key, boolean temporary) {return null;}
-        @Override public void setLong(String key, long value, boolean temporary) {}
-        @Override public Long getLong(String key) {return null;}
-        @Override public Long getLong(String key, boolean temporary) {return null;}
-        @Override public void setString(String key, String value, boolean temporary) {}
-        @Override public String getString(String key) {return null;}
-        @Override public String getString(String key, boolean temporary) {return null;}
-        @Override public void saveToNBT(CompoundTag compoundTag) {}
-        @Override public void loadFromNBT(CompoundTag compoundTag) {}
-        @Override public void copyToNewStore(PlayerData newStore) {}
+        @Override
+        public void setBoolean(String key, boolean value, boolean temporary) {
+        }
+
+        @Override
+        public boolean getBoolean(String key) {
+            return false;
+        }
+
+        @Override
+        public boolean getBoolean(String key, boolean temporary) {
+            return false;
+        }
+
+        @Override
+        public void setInteger(String key, int value, boolean temporary) {
+        }
+
+        @Override
+        public Integer incrementOrSetInteger(String key, int amount, int valueIfAbsent, boolean temporary) {
+            return valueIfAbsent;
+        }
+
+        @Override
+        public Integer getOrSetInteger(String key, int valueIfAbsent, boolean temporary) {
+            return valueIfAbsent;
+        }
+
+        @Override
+        public Integer getInteger(String key) {
+            return null;
+        }
+
+        @Override
+        public Integer getInteger(String key, boolean temporary) {
+            return null;
+        }
+
+        @Override
+        public void setLong(String key, long value, boolean temporary) {
+        }
+
+        @Override
+        public Long getLong(String key) {
+            return null;
+        }
+
+        @Override
+        public Long getLong(String key, boolean temporary) {
+            return null;
+        }
+
+        @Override
+        public void setString(String key, String value, boolean temporary) {
+        }
+
+        @Override
+        public String getString(String key) {
+            return null;
+        }
+
+        @Override
+        public String getString(String key, boolean temporary) {
+            return null;
+        }
+
+        @Override
+        public void saveToNBT(CompoundTag compoundTag) {
+        }
+
+        @Override
+        public void loadFromNBT(CompoundTag compoundTag) {
+        }
+
+        @Override
+        public void copyToNewStore(PlayerData newStore) {
+        }
     }
 
     public static class Counter {

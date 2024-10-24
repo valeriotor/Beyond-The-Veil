@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.event.ResearchEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
@@ -56,9 +57,10 @@ public class ResearchStatus {
         int maxStage = res.getStages().length - 1;
         if (this.stage < maxStage) {
             this.stage++;
-            //ResearchEvents.progressResearchEvent(p, res.getKey(), this.stage); //TODO put this back!!!!!
-            if (this.stage == maxStage)
+            if (this.stage == maxStage) {
                 this.complete = true;
+            }
+            ResearchEvents.progressResearchEvent(p, this);
         }
 
     }
@@ -71,7 +73,7 @@ public class ResearchStatus {
         for (String key : this.res.getHiders()) {
             String[] split = key.split(";");
             String potentialResearchKey = split[0];
-            if ((!map.containsKey(potentialResearchKey) || (!map.get(potentialResearchKey).complete && split.length == 1) || (map.get(potentialResearchKey).getStage() < Integer.parseInt(split[1]))) && !data.getBoolean(key)) return true;
+            if ((!map.containsKey(potentialResearchKey) || (!map.get(potentialResearchKey).complete && split.length == 1) || (split.length == 2 && map.get(potentialResearchKey).getStage() < Integer.parseInt(split[1]))) && !data.getBoolean(key)) return true;
         }
         return false;
     }
@@ -143,6 +145,9 @@ public class ResearchStatus {
         return this.stage;
     }
 
+    public Research.SubResearch getSubresearch() {
+        return res.getStages()[getStage()];
+    }
     public void unlearn() {
         this.stage = -1;
         this.complete = false;

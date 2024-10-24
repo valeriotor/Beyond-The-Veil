@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.util;
 
+import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -95,6 +96,14 @@ public class DataUtil {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.setLong(key, value, temporary);
             Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setLong(value), (ServerPlayer) p);
+        });
+    }
+
+    public static void unlockMemoryOnServerAndSync(Player p, Memory memory) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.addMemory(memory);
+            CapabilityEvents.syncCapabilities(p, true, false);
+            ResearchUtil.markResearchAsUpdated(p, memory.getDataName());
         });
     }
 

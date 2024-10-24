@@ -7,11 +7,14 @@ import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.TextBlock;
 import com.valeriotor.beyondtheveil.client.gui.elements.TextUtil;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -288,7 +291,11 @@ public class CraftingRegistryGui extends Screen {
 
     private void selectEntry(Item item, Recipe<?> recipe) {
         selectedTitle = item.getDescription();
-        String localizedText = I18n.get(item.getDescriptionId() + ".crafting");
+        String pTranslateKey = item.getDescriptionId() + ".crafting";
+        if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.REMINISCED.apply(Memory.METAL))) {
+            pTranslateKey += "2";
+        }
+        String localizedText = I18n.get(pTranslateKey);
         localizedText += "\\n";
         Research research = knownRecipesByName.get(ForgeRegistries.ITEMS.getKey(item).toString());
         localizedText += I18n.get("research.CRAFTING.introduced", Component.translatable(research.getName()).getString(), research.getKey());

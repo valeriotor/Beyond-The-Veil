@@ -1,11 +1,15 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public class GenericToServerPacket {
@@ -32,8 +36,14 @@ public class GenericToServerPacket {
                     CapabilityEvents.syncCapabilities(ctx.getSender());
                 }
                 case REMINISCING_START -> {
-                    if(ctx.getSender() != null)
-                        DataUtil.setBoolean(ctx.getSender(), PlayerDataLib.REMINISCING, true, true);
+                    if (ctx.getSender() != null) {
+                        ServerPlayer sender = ctx.getSender();
+                        DataUtil.setBoolean(sender, PlayerDataLib.REMINISCING, true, true);
+                        EnumMap<Memory, Reminiscence> reminiscences = DataUtil.getReminiscences(sender);
+                        for (Memory memory : reminiscences.keySet()) {
+                            DataUtil.setBooleanOnServerAndSync(sender, PlayerDataLib.REMINISCED.apply(memory), true, false);
+                        }
+                    }
                 }
                 case REMINISCING_STOP -> {
                     if(ctx.getSender() != null)

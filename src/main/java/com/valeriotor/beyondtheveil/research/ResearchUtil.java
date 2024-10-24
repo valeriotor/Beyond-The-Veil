@@ -110,8 +110,9 @@ public class ResearchUtil {
     }
 
     public static Map<Memory, Research> getKnownMemories(Player p) {
+        // TODO actually this should look at PlayerData capability
         Map<String, ResearchStatus> researches = getResearches(p);
-        Map<Memory, Research> memories = new EnumMap<Memory, Research>(Memory.class);
+        Map<Memory, Research> memories = new EnumMap<>(Memory.class);
 
         for (ResearchStatus value : researches.values()) {
             if (value.isVisible(p) && value.getStage() >= 0) {

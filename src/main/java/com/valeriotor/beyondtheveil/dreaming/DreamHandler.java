@@ -1,11 +1,16 @@
 package com.valeriotor.beyondtheveil.dreaming;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -27,12 +32,31 @@ public class DreamHandler {
             }
         }
 
-        for (FumeSpreaderBE spreader : spreaders) {
-            //TODO long dream
+        for (FumeSpreaderBE spreader : successes) {
             DataUtil.setBooleanOnServerAndSync(p, spreader.getStoredMemory().name() + "Dream", true, false);
             spreader.setStoredMemory(null);
             BlockPos pos = spreader.getBlockPos();
             p.level().setBlock(pos, p.level().getBlockState(pos).setValue(FumeSpreaderBlock.FULL, false), 3);
+        }
+        if (successes.isEmpty()) {
+            boolean emptyReminiscence = false;
+            if (DataUtil.getBoolean(p, PlayerDataLib.DRANK_ANY_MEMORY)) {
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DRANK_ANY_MEMORY, false, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DRANK_MEMORY_DREAM, true, false);
+                emptyReminiscence = true;
+            }
+            ItemStack mainHandItem = p.getMainHandItem();
+            if (mainHandItem.getItem() == Registration.MEMORY_PHIAL.get()) {
+                CompoundTag tag = mainHandItem.getOrCreateTag();
+                Memory m = Memory.getMemoryFromDataName(tag.getString("memory"));
+                if (m != null) {
+                    DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.HELD_MEMORY_DREAM, true, false);
+                    emptyReminiscence = true;
+                }
+            }
+            if (emptyReminiscence) {
+                DataUtil.addReminiscence(p, Memory.NULL, new Reminiscence.EmptyReminiscence());
+            }
         }
         DataUtil.syncReminiscences(p);
     }
