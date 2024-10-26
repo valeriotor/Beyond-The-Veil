@@ -47,6 +47,10 @@ public enum Memory {
         this.reqs = reqs;
     }
 
+    public String getDataName(boolean hasVoid) {
+        return (hasVoid ? "void_" : "") + getDataName();
+    }
+
     public String getDataName() {
         return "mem".concat(this.name());
     }

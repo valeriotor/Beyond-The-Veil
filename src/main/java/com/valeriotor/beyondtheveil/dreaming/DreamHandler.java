@@ -30,14 +30,14 @@ public class DreamHandler {
             if (p.level().getBlockState(p.getOnPos()).getBlock() != Registration.SLEEP_CHAMBER.get()) {
                 return;
             }
-            // TODO maximum per day check
+            //TODO maximum per day check
         }
         DataUtil.clearReminiscences(p);
         List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level(), p.getOnPos(), 1);
         //spreaders.sort(Comparator.comparingInt(be -> Dream.REGISTRY.get(be.getStoredMemory()).getPriority()));
         List<FumeSpreaderBE> successes = new ArrayList<>();
         for (FumeSpreaderBE be : spreaders) {
-            if (Dream.REGISTRY.get(be.getStoredMemory()).activate(p, p.level())) {
+            if (Dream.getDreamFromMemory(be.getStoredMemory(), hasVoid(p)).activate(p, p.level())) {
                 successes.add(be);
             }
         }
@@ -65,7 +65,7 @@ public class DreamHandler {
                 }
             }
             if (emptyReminiscence) {
-                DataUtil.addReminiscence(p, Memory.NULL, new Reminiscence.EmptyReminiscence());
+                DataUtil.addReminiscence(p, "none", new Reminiscence.EmptyReminiscence());
             }
         } else {
             if (!bed) {
@@ -112,6 +112,18 @@ public class DreamHandler {
                 }
             }
         }
+    }
+
+    public static boolean hasVoid(Player player) {
+        return DataUtil.getBoolean(player, PlayerDataLib.VOID);
+    }
+
+    public static boolean consumeVoid(Player player) {
+        if (DataUtil.getBoolean(player, PlayerDataLib.VOID)) {
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.VOID, false, false);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -292,7 +292,7 @@ public class CraftingRegistryGui extends Screen {
     private void selectEntry(Item item, Recipe<?> recipe) {
         selectedTitle = item.getDescription();
         String pTranslateKey = item.getDescriptionId() + ".crafting";
-        if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.REMINISCED.apply(Memory.METAL))) {
+        if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName()))) {
             pTranslateKey += "2";
         }
         String localizedText = I18n.get(pTranslateKey);

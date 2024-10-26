@@ -45,6 +45,7 @@ public abstract class ReminiscenceClient {
             if (reminisceTimePressed > 0) {
                 PoseStack poseStack = event.getGuiGraphics().pose();
                 poseStack.pushPose();
+                poseStack.translate(0, 0, 10);
                 Matrix4f matrix4f = poseStack.last().pose();
                 Window window = Minecraft.getInstance().getWindow();
                 int alpha = reminisceTimePressed >= 20 ? 255 : (int) (Math.pow((reminisceTimePressed - 1 + event.getPartialTick()) / 40, 2) * 255);
@@ -118,9 +119,9 @@ public abstract class ReminiscenceClient {
     /** Should be called everytime reminiscences change, i.e. every time NBT data is loaded or synced
      */
     public static void reloadReminiscences() {
-        EnumMap<Memory, Reminiscence> reminiscenceMap = DataUtil.getReminiscences(DataUtilClient.getPlayer());
+        Map<String, Reminiscence> reminiscenceMap = DataUtil.getReminiscences(DataUtilClient.getPlayer());
         reminiscences.clear();
-        for (Map.Entry<Memory, Reminiscence> e : reminiscenceMap.entrySet().stream().sorted(Comparator.comparingInt(entry -> entry.getKey().ordinal())).toList()) {
+        for (Map.Entry<String, Reminiscence> e : reminiscenceMap.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey)).toList()) {
             ReminiscenceClient r;
             if (e.getValue() instanceof ReminiscenceUnderground ru) {
                 r = new ReminiscenceClientUnderground(ru);

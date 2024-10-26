@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class GenericToServerPacket {
@@ -41,9 +42,9 @@ public class GenericToServerPacket {
                     case REMINISCING_START -> {
                         ServerPlayer sender = player;
                         DataUtil.setBoolean(sender, PlayerDataLib.REMINISCING, true, true);
-                        EnumMap<Memory, Reminiscence> reminiscences = DataUtil.getReminiscences(sender);
-                        for (Memory memory : reminiscences.keySet()) {
-                            DataUtil.setBooleanOnServerAndSync(sender, PlayerDataLib.REMINISCED.apply(memory), true, false);
+                        Map<String, Reminiscence> reminiscences = DataUtil.getReminiscences(sender);
+                        for (String key : reminiscences.keySet()) {
+                            DataUtil.setBooleanOnServerAndSync(sender, PlayerDataLib.REMINISCED.apply(key), true, false);
                         }
                     }
                     case REMINISCING_STOP -> {

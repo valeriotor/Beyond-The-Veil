@@ -77,7 +77,7 @@ public class PlayerDataLib {
     public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
     public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
     public static final Function<Memory, String> DRANK_MEMORY = m -> String.format("drank_%s", m.name().toLowerCase());
-    public static final Function<Memory, String> REMINISCED = m -> String.format("reminisced_%s", m.name().toLowerCase());
+    public static final Function<String, String> REMINISCED = s -> String.format("reminisced_%s", s);
     public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
 
 

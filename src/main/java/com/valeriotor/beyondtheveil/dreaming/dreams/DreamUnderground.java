@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
+import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -47,9 +48,8 @@ public class DreamUnderground extends Dream {
         //    counter.put(b.getRegistryName().toString(), 0);
         //}
         if (p != null) {
-            // TODO if has dreamt of void expand radius from 1 to 4
-            // TODO if a proficient dreamer display blocks as it goes down (otherwise increase counters only)
-            int radius = 2;
+            boolean consumeVoid = DreamHandler.consumeVoid(p);
+            int radius = consumeVoid ? 4 : 2;
             for (int y = pos.getY(); y > l.getMinBuildHeight(); y--) {
                 String[][] layer = new String[radius * 2 + 1][radius * 2 + 1];
                 layers.put(y, layer);
@@ -65,10 +65,11 @@ public class DreamUnderground extends Dream {
                     }
                 }
             }
+            Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b).toString()).collect(Collectors.toSet()));
+            DataUtil.addReminiscence(p, memory.getDataName(consumeVoid), reminiscence);
+            return true;
         }
-        Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b).toString()).collect(Collectors.toSet()));
-        DataUtil.addReminiscence(p, memory, reminiscence);
-        return true;
+        return false;
     }
 
 }

@@ -24,7 +24,7 @@ public class PlayerData {
     private final Map<String, CompoundTag> tags = new HashMap<>();
     private final List<Counter> counters = new ArrayList<>();
     private final Set<Memory> memories = EnumSet.noneOf(Memory.class);
-    private final EnumMap<Memory, Reminiscence> reminiscences = new EnumMap<>(Memory.class);
+    private final Map<String, Reminiscence> reminiscences = new HashMap<>();
 
     public void setBoolean(String key, boolean value, boolean temporary) {
         if (value) {
@@ -229,9 +229,9 @@ public class PlayerData {
         return memories;
     }
 
-    public boolean addReminiscence(Memory memory, Reminiscence reminiscence) {
-        boolean returnValue = reminiscences.containsKey(memory);
-        reminiscences.put(memory, reminiscence);
+    public boolean addReminiscence(String key, Reminiscence reminiscence) {
+        boolean returnValue = reminiscences.containsKey(key);
+        reminiscences.put(key, reminiscence);
         return returnValue;
     }
 
@@ -239,7 +239,7 @@ public class PlayerData {
         reminiscences.clear();
     }
 
-    public EnumMap<Memory, Reminiscence> getReminiscences() {
+    public Map<String, Reminiscence> getReminiscences() {
         return reminiscences;
     }
 
@@ -273,8 +273,8 @@ public class PlayerData {
         for (Memory memory : this.memories) {
             memories.putBoolean(memory.getDataName(), true);
         }
-        for (Entry<Memory, Reminiscence> e : this.reminiscences.entrySet()) {
-            reminiscences.put(e.getKey().getDataName(), e.getValue().save());
+        for (Entry<String, Reminiscence> e : this.reminiscences.entrySet()) {
+            reminiscences.put(e.getKey(), e.getValue().save());
         }
         compoundTag.put("booleans", booleans);
         compoundTag.put("ints", ints);
@@ -327,16 +327,16 @@ public class PlayerData {
                 Memory memory = Memory.getMemoryFromDataName(key);
                 this.memories.add(memory);
             }
-
         }
 
         if (compoundTag.contains("reminiscences")) {
             CompoundTag reminiscences = compoundTag.getCompound("reminiscences");
             for (String key : reminiscences.getAllKeys()) {
-                Memory memory = Memory.getMemoryFromDataName(key);
-                Reminiscence reminiscence = Dream.REMINISCENCE_REGISTRY.get(memory).get();
-                reminiscence.load(reminiscences.getCompound(key));
-                this.reminiscences.put(memory, reminiscence);
+                Reminiscence reminiscence = Dream.getReminiscence(key);
+                if (reminiscence != null) {
+                    reminiscence.load(reminiscences.getCompound(key));
+                    this.reminiscences.put(key, reminiscence);
+                }
             }
         }
     }

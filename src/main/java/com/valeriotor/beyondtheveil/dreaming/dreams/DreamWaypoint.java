@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
+import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -8,10 +9,21 @@ import net.minecraft.tags.StructureTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class DreamWater extends Dream{
+import java.util.function.BiFunction;
 
-    public DreamWater() {
-        super(Memory.WATER, 5, ReminiscenceWaypoint::new);
+public class DreamWaypoint extends Dream{
+
+    private final BiFunction<ServerLevel, BlockPos, BlockPos> function;
+    private final int color;
+
+    public DreamWaypoint(Memory memory, BiFunction<ServerLevel, BlockPos, BlockPos> function, int color) {
+        this(memory, false, function, color);
+    }
+
+    public DreamWaypoint(Memory memory, boolean isVoid, BiFunction<ServerLevel, BlockPos, BlockPos> function, int color) {
+        super(memory, 5, ReminiscenceWaypoint::new, isVoid);
+        this.function = function;
+        this.color = color;
     }
 
     @Override
@@ -26,12 +38,15 @@ public class DreamWater extends Dream{
 
     @Override
     public boolean activatePos(Player p, Level l, BlockPos pos) {
+        if (isVoid) {
+            DreamHandler.consumeVoid(p);
+        }
         ServerLevel sl = (ServerLevel) l;
-        BlockPos blockpos = sl.findNearestMapStructure(StructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false);
+        BlockPos blockpos = function.apply(sl, pos);
         if (blockpos != null) {
             //DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
-            Reminiscence r = new ReminiscenceWaypoint(blockpos, 0x7F16FF);
-            DataUtil.addReminiscence(p, Memory.WATER, r);
+            Reminiscence r = new ReminiscenceWaypoint(blockpos, color);
+            DataUtil.addReminiscence(p, memory.getDataName(isVoid), r);
             return true;
         }
         return false;

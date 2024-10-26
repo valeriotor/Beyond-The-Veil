@@ -51,10 +51,11 @@ public class DataUtilClient {
         if (Minecraft.getInstance().player != null) {
             DataUtil.clearReminiscences(getPlayer());
             for (String key : tag.getAllKeys()) {
-                Memory m = Memory.getMemoryFromDataName(key);
-                Reminiscence r = Dream.REMINISCENCE_REGISTRY.get(m).get();
-                r.load(tag.getCompound(key));
-                DataUtil.addReminiscence(Minecraft.getInstance().player, m, r);
+                Reminiscence r = Dream.getReminiscence(key);
+                if (r != null) {
+                    r.load(tag.getCompound(key));
+                    DataUtil.addReminiscence(Minecraft.getInstance().player, key, r);
+                }
             }
             ReminiscenceClient.reloadReminiscences();
         }

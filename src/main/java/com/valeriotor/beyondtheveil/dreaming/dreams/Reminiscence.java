@@ -23,5 +23,17 @@ public abstract class Reminiscence {
         }
     }
 
+    public static class EmptyReminiscenceVoid extends Reminiscence {
+        @Override
+        public CompoundTag save() {
+            return new CompoundTag();
+        }
+
+        @Override
+        public void load(CompoundTag tag) {
+
+        }
+    }
+
 }
 

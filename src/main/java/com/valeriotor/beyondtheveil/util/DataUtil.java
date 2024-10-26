@@ -27,19 +27,19 @@ public class DataUtil {
     }
 
 
-    public static void addReminiscence(Player p, Memory m, Reminiscence r) {
+    public static void addReminiscence(Player p, String key, Reminiscence r) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-            playerData.addReminiscence(m, r);
+            playerData.addReminiscence(key, r);
         });
     }
 
     public static void syncReminiscences(Player p) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-            Set<Map.Entry<Memory, Reminiscence>> entries = playerData.getReminiscences().entrySet();
+            Set<Map.Entry<String, Reminiscence>> entries = playerData.getReminiscences().entrySet();
             if (!entries.isEmpty()) {
                 CompoundTag reminiscences = new CompoundTag();
-                for (Map.Entry<Memory, Reminiscence> e : entries) {
-                    reminiscences.put(e.getKey().getDataName(), e.getValue().save());
+                for (Map.Entry<String, Reminiscence> e : entries) {
+                    reminiscences.put(e.getKey(), e.getValue().save());
                 }
                 Messages.sendToPlayer(GenericToClientPacket.syncReminiscences(reminiscences), (ServerPlayer) p);
             } else {
@@ -48,7 +48,7 @@ public class DataUtil {
         });
     }
 
-    public static EnumMap<Memory, Reminiscence> getReminiscences(Player p) {
+    public static Map<String, Reminiscence> getReminiscences(Player p) {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getReminiscences();
     }
 
