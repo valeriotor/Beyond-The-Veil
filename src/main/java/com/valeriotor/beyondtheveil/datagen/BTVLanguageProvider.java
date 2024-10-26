@@ -1266,10 +1266,10 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "May use bed after reaching Sleep Chamber limit: Yes/No.");
 
         add("research.SENTIENCE.title", "Sentient Dreams of Sentience");
-        add("research.reminisced_sentience.text", "Dream of Sentience");
+        add("research.reminisced_sentience.text", "Dream of Sentience.");
         add("research.found_sentience.text", "See where the dream leads me.");
         add("research.SENTIENCE.stage.0", "Discovering and acknowledging the intelligence of dreams has marked me with a wild, irrepressible memory, the realization upheaving my view of the world. I spoke to it in the language of thoughts, and it replied in kind as I reminisced.\\n" +
-                "Yet, I am not the only dreamer — indeed, there is hardly a thing more characteristic of sentient creatures than the ability to dream. What could then be happening in their own, weird plane of existence, in however few or many its dimensions and laws? Do dreams talk to one another? And if so, is it a loud and violent cacophony of disparate and disparaging memories or an amiable exchange among all those beings blessed and united by the gift of life?\\n" +
+                "Yet, I am not the only dreamer — indeed, there is hardly a thing more characteristic of sentient creatures than the ability to dream. What could then be happening in their own, weird plane of existence, in however few or many its dimensions and laws? Do dreams talk to one another? And if so, is it a loud and violent cacophony of disparate and disparaging memories or a harmonious exchange among all those beings blessed and united by the gift of life?\\n" +
                 "When I dream of a loved one, is it a gentle caress or forceful poke?\\n" +
                 "I must talk of sentience to the dream, and see if it too knows such a memory.");
         add("research.SENTIENCE.stage.1", "Reminiscing brought me to a village, showing that dreams do indeed know and see each other.\\n" +
@@ -1277,6 +1277,27 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "But what about enemies? Can villains make their dreams hostile, fueled by disdain rather than solidarity?\\n" +
                 "And what if there were dreamers much greater and more skillful than me? Of all shapes, or lack thereof.\\n" +
                 "Perhaps to dream is to put myself at risk. Of my mind being hijacked. And no longer my own.");
+
+        add("research.DARKNESS.title", "Before There Was Light");
+        add("research.reminisced_darkness.text", "Dream of Darkness.");
+        add("research.found_darkness.text", "See where the dream leads me.");
+        add("research.spoke_dweller.text", "Speak to the inhabitants.");
+        add("research.spoke_keeper.text", "Speak to the keeper of the lighthouse.");
+        add("research.DARKNESS.stage.0", "Dreams dance unseen. Escaping all senses, they are destined to be inscrutable — until we shut our eyes. \\n" +
+                "(Can closing one curtain open another?)\\n" +
+                "In reminiscing, my sight was gone, and yet my mind saw clearly: a new memory flared, bright and blinding. \\n" +
+                "A memory of darkness. That nightly veil obscuring the senses. Pitch black, predating light itself (but how could any creature remember so far back in time! Is it instilled in our very being?)\\n" +
+                "I must follow it, but cannot imagine where it will lead me.\\n" +
+                "Will I finally see clear? \\n" +
+                "Or will I be blind for evermore?");
+        add("research.DARKNESS.stage.1", "Saint Adelina described them as \"inhuman, repulsive affronts to nature\", stating that \"not to crusade against such heresy would be our gravest sin\".\\n" +
+                "Her betrothed, Jerome, would be only mildly less vicious, deeming them \"bastard sons of earth and water\".\\n" +
+                "Were they wrong? The people of the fishing village were certainly unwelcoming. Blatant in their scorn for me and for acts I did not commit.\\n" +
+                "Yet, I could hear fear ailing their voice, see it diverting their eyes. \\n" +
+                "In concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.\\n" +
+                "But dreams can go through Him, he said.");
+
+
     }
 
     private void addCraftingRegistry() {
