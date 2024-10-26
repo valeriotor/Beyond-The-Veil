@@ -127,7 +127,7 @@ public class SleepChamberBlock extends Block {
     }
 
     public Player getPlayerInside(Level w, BlockPos pos) {
-        List<Player> ps = w.getEntitiesOfClass(Player.class, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
+        List<Player> ps = w.getEntitiesOfClass(Player.class, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1));
         for(Player p : ps) {
             return p;
         }
