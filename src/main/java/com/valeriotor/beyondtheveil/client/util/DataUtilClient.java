@@ -5,10 +5,8 @@ import com.valeriotor.beyondtheveil.capability.PlayerData.Counter;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
-import com.valeriotor.beyondtheveil.dreaming.Memory;
-import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
-import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -51,7 +49,7 @@ public class DataUtilClient {
         if (Minecraft.getInstance().player != null) {
             DataUtil.clearReminiscences(getPlayer());
             for (String key : tag.getAllKeys()) {
-                Reminiscence r = Dream.getReminiscence(key);
+                Reminiscence r = DreamRegistry.getReminiscence(key);
                 if (r != null) {
                     r.load(tag.getCompound(key));
                     DataUtil.addReminiscence(Minecraft.getInstance().player, key, r);

@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.capability;
 
 import com.valeriotor.beyondtheveil.dreaming.Memory;
-import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
@@ -325,14 +325,16 @@ public class PlayerData {
             CompoundTag memories = compoundTag.getCompound("memories");
             for (String key : memories.getAllKeys()) {
                 Memory memory = Memory.getMemoryFromDataName(key);
-                this.memories.add(memory);
+                if (memory != null) {
+                    this.memories.add(memory);
+                }
             }
         }
 
         if (compoundTag.contains("reminiscences")) {
             CompoundTag reminiscences = compoundTag.getCompound("reminiscences");
             for (String key : reminiscences.getAllKeys()) {
-                Reminiscence reminiscence = Dream.getReminiscence(key);
+                Reminiscence reminiscence = DreamRegistry.getReminiscence(key);
                 if (reminiscence != null) {
                     reminiscence.load(reminiscences.getCompound(key));
                     this.reminiscences.put(key, reminiscence);

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -20,6 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
@@ -48,7 +50,7 @@ public class ResearchPageGui extends Screen {
     private Font textFont;
     private List<List<FormattedCharSequence>> pages = new ArrayList<>();
     private DoubleTextPages pages2;
-    private List<String> reqText;
+    private List<FormattedCharSequence> reqText;
     private Button progress;
     //private List<ResearchRecipe> recipes = new ArrayList<>();
     //private ResearchRecipe shownRecipe;
@@ -158,11 +160,15 @@ public class ResearchPageGui extends Screen {
         if (!status.canProgressStage(minecraft.player)) {
             progress.visible = false;
             String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
-            if (reqs != null)
-                this.reqText = Arrays.stream(reqs)
-                        .map(s -> "research.".concat(s).concat(".text"))
-                        .map(I18n::get)
-                        .collect(Collectors.toList());
+            if (reqs != null) {
+                for (String req : reqs) {
+                    if (!DataUtil.getBoolean(getMinecraft().player, req)) {
+                        MutableComponent requirement = Component.translatable("research." + req + ".text");
+                        this.reqText = minecraft.font.split(requirement, arrowXOffset * 2 - ARROW_WIDTH * 2);
+                        break;
+                    }
+                }
+            }
         }
 
         gearBenchRecipes.clear();
@@ -334,7 +340,7 @@ public class ResearchPageGui extends Screen {
         if (!progress.visible) {
             if (this.reqText != null) {
                 int i = 0;
-                for (String s : this.reqText) {
+                for (FormattedCharSequence s : this.reqText) {
                     guiGraphics.drawCenteredString(font, s, width / 2, height / 2 + blackPageHeight * 35 / 100 + (i++) * 15, 0xFFFE9600);
                 }
             }
@@ -343,7 +349,7 @@ public class ResearchPageGui extends Screen {
 
     private void renderArrow(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, boolean left) {
         pose.pushPose();
-        pose.translate(width / 2 + (- arrowXOffset - ARROW_WIDTH / 2) * (left ? 1 : -1), height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
+        pose.translate(width / 2 + (-arrowXOffset - ARROW_WIDTH / 2) * (left ? 1 : -1), height / 2 + arrowYOffset + ARROW_HEIGHT / 2, 0);
         if ((hoveringLeftArrow(mouseX, mouseY) && left) || ((hoveringRightArrow(mouseX, mouseY) && !left))) {
             pose.scale(1.5F, 1.5F, 1);
         }
@@ -598,7 +604,7 @@ public class ResearchPageGui extends Screen {
     }
 
     private Object[] getFormatting() {
-        if(status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2)
+        if (status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2)
             return new Object[]{DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.HELD_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.DRANK_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName())) ? "§aV§r" : " "};
         return new Object[0];
     }

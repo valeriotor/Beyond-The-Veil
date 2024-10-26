@@ -52,7 +52,7 @@ public enum Memory {
     }
 
     public String getDataName() {
-        return "mem".concat(this.name());
+        return name().toLowerCase();
     }
 
     public String getDreamName() {

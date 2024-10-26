@@ -153,7 +153,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("shoggoth.hasmapalready1", "I should stop trying to command the Shoggoth while it's doing its own thing. It is dangerous.");
         add("shoggoth.hasmapalready2", "Only a fool would try to divert a Shoggoth's attention upon themselves.. and I am no fool, am I??");
         add("shoggoth.hasmapalready3", "Stop.");
-        
+
         add("gui.activebauble.passiveon", "Passive on.");
         add("gui.optionwheel.power.greatdreamer.0", "Summon Deep Ones");
         add("gui.optionwheel.power.greatdreamer.1", "Transform");
@@ -524,9 +524,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("mirror.shivers", "My black mirror is shivering.");
         add("mirror.stopshivers", "My black mirror stopped shivering.");
         add("mirror.endbutton", "(End)");
-        add("mirror.continuebutton", "(Continue)");        
+        add("mirror.continuebutton", "(Continue)");
         add("mirror.nodialogue.first_node.anyone_there", "Is anyone there?");
-        add("mirror.nodialogue.anyone_there.0", "[Y]There is no answer.");     
+        add("mirror.nodialogue.anyone_there.0", "[Y]There is no answer.");
         add("mirror.start.first_node.anyone_there", "Is anyone there?");
         add("mirror.start.anyone_there.0", "[Y]There is no answer.");
         add("mirror.start.second_node.anyone_there2", "IS ANYONE THERE?");
@@ -588,9 +588,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("mirror.start.final.letsgetgoing", "Let's get going then. (End)");
         add("mirror.start.whoareyou2.0", "[Y]A friend. One who had to conceal his own identity for your sake.");
         add("mirror.start.whoareyou2.1", "[Y]Cover's blown. We ride together now.");
-        add("mirror.start.final2.letsgetgoing2", "Let's get going then. (End)");       
+        add("mirror.start.final2.letsgetgoing2", "Let's get going then. (End)");
         add("mirror.afterstart.first.what", "What should I do?");
-        add("mirror.afterstart.what.0", "[Y]Open Al Azif. I'll guide you.");       
+        add("mirror.afterstart.what.0", "[Y]Open Al Azif. I'll guide you.");
         add("mirror.beforearche.first.everbeen", "Have you ever been to Arche yourself?");
         add("mirror.beforearche.everbeen.0", "[Y]Yes, long ago. Though it has changed little since then.");
         add("mirror.beforearche.changedlittle.howdoyouknow", "How do you know that?");
@@ -600,12 +600,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("mirror.beforearche.recording.1", "[Y]It's not something I am willing to explain just yet. Some truths must be spoonfed.");
         add("mirror.beforearche.spoonfed.frodo", "Alright, keep your secrets. (End)");
         add("mirror.beforearche.spoonfed.trust", "You realise secrets undermine trust?");
-        add("mirror.beforearche.trust.0", "[Y]Yes. Which is why I will tell you. When the time is ripe.");     
+        add("mirror.beforearche.trust.0", "[Y]Yes. Which is why I will tell you. When the time is ripe.");
         add("mirror.archepreparation.first.here", "I'm here.");
         add("mirror.archepreparation.here.0", "[Y]Bring a few torches, Al Azif, this Mirror, and preferably little else. Maybe some normal food, in case you find air pockets to transform into a human again.");
         add("mirror.archepreparation.second.veil", "How do we reach the Veil from Arche?");
         add("mirror.archepreparation.veil.0", "[Y]That, I do not know yet. I never got that far myself.");
-        add("mirror.archepreparation.veil.1", "[Y]Perhaps it will reveal itself when we're ready for it."); 
+        add("mirror.archepreparation.veil.1", "[Y]Perhaps it will reveal itself when we're ready for it.");
         add("mirror.archepreparation.veil.2", "[Y]Or perhaps when it is ready for us.");
         add("mirror.archepreparation.veil.3", "[Y]For now, focus on getting familiar with Arche. Its food chain, its inhabitants, its challenges.");
         add("mirror.archepreparation.second.arena", "The duels with the Deep Ones, how do I start them?");
@@ -614,14 +614,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("mirror.archepreparation.ictya.0", "[Y]Unlikely. In the Deep One form you'd count as a medium sized Ictya, so only ones that are larger and somewhat hungry will attack you.");
         add("mirror.archepreparation.ictya.1", "[Y]When available, they'll generally go for smaller prey. Of course, most will retaliate when attacked.");
         add("mirror.archepreparation.second.ready", "I'm ready.");
-        add("mirror.archepreparation.ready.0", "[Y]Then grab the token and enter the Blood Well.");        
+        add("mirror.archepreparation.ready.0", "[Y]Then grab the token and enter the Blood Well.");
         add("mirror.abouttoenter.first.forgot", "How do I enter Arche?");
         add("mirror.abouttoenter.forgot.0", "[Y]Grab the token and enter the Blood Well.");
-        add("mirror.abouttoenter.first.end", "(End)");     
+        add("mirror.abouttoenter.first.end", "(End)");
         add("mirror.bloodhome.first.what", "What is this place?");
         add("mirror.bloodhome.what.0", "[Y]Your very own Blood Home.");
         add("mirror.bloodhome.what.1", "[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.");
-        add("mirror.bloodhome.what.2", "[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.");        
+        add("mirror.bloodhome.what.2", "[Y]Every time you enter this underworld you'll be transported to this structure. Feel free to make it your base.");
         add("mirror.archewater.first.home", "What was that red, blood structure I entered Arche through?");
         add("mirror.archewater.home.0", "[Y]Your very own Blood Home.");
         add("mirror.archewater.home.1", "[Y]There are several such structures in Arche - different visitors to Arche will generally enter different Blood Homes.");
@@ -704,7 +704,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("mirror.archewater.apeiron.4", "[Y]Then, when fire wanted to burn on our planet, the Void created a middle plane between Arche and the Overworld, and through what we now call the Nether even fire is born from water, channeled by quartz.");
         add("mirror.archewater.apeiron.5", "[Y]Likewise flared the stars - to which Dagon is elder, for he was born with Arche, oldest among the living.");
         add("mirror.archewater.apeiron.6", "[Y]So everything comes from the waters of Arche, yet even those waters come from Apeiron.");
-        add("mirror.archewater.first.end", "(End)");       
+        add("mirror.archewater.first.end", "(End)");
         add("mirror.arena.first_branch.0", "[Y]I believe we just found the arena.");
         add("mirror.arena.first_branch.1", "[Y]This is where you can prove your mettle.");
         add("mirror.arena.first.how", "How do I begin the battle?");
@@ -1264,6 +1264,19 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "As soon as I have performed sufficiently many experiments, I may also answer my other questions:\\n" +
                 "Max. uses of Sleep Chamber per day: ___\\1" +
                 "May use bed after reaching Sleep Chamber limit: Yes/No.");
+
+        add("research.SENTIENCE.title", "Sentient Dreams of Sentience");
+        add("research.reminisced_sentience.text", "Dream of Sentience");
+        add("research.found_sentience.text", "See where the dream leads me.");
+        add("research.SENTIENCE.stage.0", "Discovering and acknowledging the intelligence of dreams has marked me with a wild, irrepressible memory, the realization upheaving my view of the world. I spoke to it in the language of thoughts, and it replied in kind as I reminisced.\\n" +
+                "Yet, I am not the only dreamer — indeed, there is hardly a thing more characteristic of sentient creatures than the ability to dream. What could then be happening in their own, weird plane of existence, in however few or many its dimensions and laws? Do dreams talk to one another? And if so, is it a loud and violent cacophony of disparate and disparaging memories or an amiable exchange among all those beings blessed and united by the gift of life?\\n" +
+                "When I dream of a loved one, is it a gentle caress or forceful poke?\\n" +
+                "I must talk of sentience to the dream, and see if it too knows such a memory.");
+        add("research.SENTIENCE.stage.1", "Reminiscing brought me to a village, showing that dreams do indeed know and see each other.\\n" +
+                "This could introduce a fascinating subfield. Think of all the ways we would employ our dreams, making them our envoys and interpreters to speak with all other beings of the world (the universe?). Friends and allies of all miens and shapes, brought together within the realm of thoughts.\\n" +
+                "But what about enemies? Can villains make their dreams hostile, fueled by disdain rather than solidarity?\\n" +
+                "And what if there were dreamers much greater and more skillful than me? Of all shapes, or lack thereof.\\n" +
+                "Perhaps to dream is to put myself at risk. Of my mind being hijacked. And no longer my own.");
     }
 
     private void addCraftingRegistry() {

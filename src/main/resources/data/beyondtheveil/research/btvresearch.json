@@ -16,18 +16,18 @@
                   "text": "research.FIRSTDREAMS.stage.1",
                   "required_research": ["crafted_metal"],
                   "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial"],
-                  "memories": ["memMETAL"]
+                  "memories": ["metal"]
                 },
                 {
                   "text": "research.FIRSTDREAMS.stage.2",
                   "required_research": ["reminisced_metal"],
                   "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"],
-                  "memories": ["memMETAL"]
+                  "memories": ["metal"]
                 },
                 {
                   "text": "research.FIRSTDREAMS.stage.3",
                   "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"],
-                  "memories": ["memMETAL"]
+                  "memories": ["metal"]
                 }
             ]
         },
@@ -76,6 +76,25 @@
                 }
             ]
         },
+      {
+        "key": "SENTIENCE",
+        "name": "research.SENTIENCE.title",
+        "icons": [ "minecraft:lectern" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 2,-1 ],
+        "hiders": ["FIRSTDREAMS"],
+        "parents": [ "FIRSTDREAMS" ],
+        "stages": [
+          {
+            "text": "research.SENTIENCE.stage.0",
+            "required_research": ["reminisced_sentience", "found_sentience"],
+            "memories": ["sentience"]
+          },
+          {
+            "text": "research.SENTIENCE.stage.1",
+            "memories": ["sentience"]
+          }
+        ]
+      },
 		{
         "key": "CRYSTALDREAMS",
         "name": "research.CRYSTALDREAMS.title",

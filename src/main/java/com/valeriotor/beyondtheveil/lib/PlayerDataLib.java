@@ -61,11 +61,8 @@ public class PlayerDataLib {
     public static final String RITUALQUEST = "drowned";
     public static final String DAGONQUEST = "dagon_gold";
     public static final String DAGONQUEST2 = "dagon_elder";
-    public static final String ENDBATH = "endbath";
-    public static final String SEEKSKNOWLEDGE = "seeksKnowledge";
-    public static final String FOUND_HAMLET = "FindHamlet";
-    public static final String TRANSFORMED = "transformed";
-    public static final String OLDTRUTH = "old_truth";
+    public static final String SEEKS_KNOWLEDGE = "seeks_knowledge";
+    public static final String OLD_TRUTH = "old_truth";
     public static final String VOID = "void";
     public static final String WAIT = "wait";
     public static final String IDOLFOLLY = "idolfolly";
@@ -79,6 +76,7 @@ public class PlayerDataLib {
     public static final Function<Memory, String> DRANK_MEMORY = m -> String.format("drank_%s", m.name().toLowerCase());
     public static final Function<String, String> REMINISCED = s -> String.format("reminisced_%s", s);
     public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
+    public static final Function<String, String> FOUND_WAYPOINT = s -> "found_" + s;
 
 
     // Booleans (Temporary)

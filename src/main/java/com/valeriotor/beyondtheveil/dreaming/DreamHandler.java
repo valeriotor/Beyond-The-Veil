@@ -2,7 +2,7 @@ package com.valeriotor.beyondtheveil.dreaming;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
-import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
+import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
@@ -35,9 +35,10 @@ public class DreamHandler {
         DataUtil.clearReminiscences(p);
         List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level(), p.getOnPos(), 1);
         //spreaders.sort(Comparator.comparingInt(be -> Dream.REGISTRY.get(be.getStoredMemory()).getPriority()));
+        //TODO reimplement sorting. First void, then find highest (lowest) priority among all voided versions (if void was used) of other dreams, then sort as normal
         List<FumeSpreaderBE> successes = new ArrayList<>();
         for (FumeSpreaderBE be : spreaders) {
-            if (Dream.getDreamFromMemory(be.getStoredMemory(), hasVoid(p)).activate(p, p.level())) {
+            if (DreamRegistry.getDreamFromMemory(be.getStoredMemory(), hasVoid(p)).activate(p, p.level())) {
                 successes.add(be);
             }
         }
