@@ -7,6 +7,9 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.util.LegacyStructure;
+import com.valeriotor.beyondtheveil.world.region.OverworldRegion;
+import com.valeriotor.beyondtheveil.world.region.TerrablenderSurfaceRules;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +24,8 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import terrablender.api.Regions;
+import terrablender.api.SurfaceRuleManager;
 
 import java.util.stream.Collectors;
 
@@ -51,10 +56,14 @@ public class BeyondTheVeil
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
-        Messages.register();
-        ResearchRegistry.registerResearchesFirst();
-        ResearchRegistry.registerResearchesSecond();
-        LegacyStructure.registerLegacyStructures();
+        event.enqueueWork(() -> {
+            Messages.register();
+            ResearchRegistry.registerResearchesFirst();
+            ResearchRegistry.registerResearchesSecond();
+            //LegacyStructure.registerLegacyStructures();
+            Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 25));
+            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, References.MODID, TerrablenderSurfaceRules.makeRules());
+        });
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

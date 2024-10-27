@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.BTVTags;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.block.Blocks;
 
@@ -16,6 +17,7 @@ public class DreamRegistry {
     public static final Dream VOID = new DreamVoid();
     public static final Dream WATER = new DreamWaypoint(Memory.WATER, (sl, pos) -> sl.findNearestMapStructure(StructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false), 0x7F16FF);
     public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E);
+    public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos) -> sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false), 0xFFFFFF);
     //public static final Dream WATER_TEST = new DreamWaypoint(Memory.WATER, true, (sl, pos) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F16FF);
     public static final Dream METAL = new DreamUnderground(Memory.METAL, 5, Set.of(Blocks.IRON_ORE, Blocks.GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.DEEPSLATE_COPPER_ORE));
     public static final Dream CRYSTAL = new DreamUnderground(Memory.CRYSTAL, 5, Set.of(Blocks.AMETHYST_BLOCK, Blocks.AMETHYST_CLUSTER, Blocks.BUDDING_AMETHYST, Blocks.LARGE_AMETHYST_BUD, Blocks.MEDIUM_AMETHYST_BUD, Blocks.SMALL_AMETHYST_BUD, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.LAPIS_ORE, Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.DEEPSLATE_EMERALD_ORE, Blocks.DEEPSLATE_LAPIS_ORE));

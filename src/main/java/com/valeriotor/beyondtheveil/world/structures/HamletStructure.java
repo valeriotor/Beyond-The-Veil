@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.valeriotor.beyondtheveil.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -40,5 +41,18 @@ public class HamletStructure extends Structure {
     @Override
     public StructureType<?> type() {
         return Registration.HAMLET.get();
+    }
+
+    public Optional<Structure.GenerationStub> findValidGenerationPoint(Structure.GenerationContext pContext) {
+        return this.findGenerationPoint(pContext).filter((p_262911_) -> isValidBiome(p_262911_, pContext));
+    }
+
+    private static boolean isValidBiome(Structure.GenerationStub pStub, Structure.GenerationContext pContext) {
+        BlockPos blockpos = pStub.position();
+        return pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX()), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ()), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 32), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 32), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 32), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 32), pContext.randomState().sampler()));
     }
 }

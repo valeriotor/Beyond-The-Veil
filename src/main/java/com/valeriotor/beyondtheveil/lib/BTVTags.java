@@ -8,6 +8,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 public class BTVTags {
 
     public static TagKey<Structure> DEEP_VEIN = create("deep_vein");
+    public static TagKey<Structure> HAMLET = create("hamlet");
 
     private static TagKey<Structure> create(String pName) {
         return TagKey.create(Registries.STRUCTURE, new ResourceLocation(References.MODID, pName));

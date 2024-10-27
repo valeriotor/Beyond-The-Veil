@@ -1,6 +1,6 @@
 {
   "type": "beyondtheveil:hamlet",
-  "biomes": "minecraft:plains",
+  "biomes": "beyondtheveil:black_shore",
   "spawn_overrides": {},
   "step": "surface_structures"
 }
