@@ -1318,5 +1318,15 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addGuis() {
         add("gui.sleep_chamber", "Sleep Chamber");
         add("gui.sleep_chamber.wake", "Leave chamber");
+
+        add("gui.dialogue.bartender.display_name", "Bartender");
+        add("gui.dialogue.carpenter.display_name", "Carpenter");
+        add("gui.dialogue.clerk.display_name", "Clerk");
+        add("gui.dialogue.drunk.display_name", "Drunk");
+        add("gui.dialogue.fisherman.display_name", "Fisherman");
+        add("gui.dialogue.lighthouse_keeper.display_name", "Lighthouse Keeper");
+        add("gui.dialogue.miner.display_name", "Miner");
+        add("gui.dialogue.scholar.display_name", "Scholar");
+        add("gui.dialogue.smith.display_name", "Smith");
     }
 }

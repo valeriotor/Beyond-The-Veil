@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
+import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanDialogueGui;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
@@ -36,6 +37,7 @@ public class ClientSetup {
     public static void init(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             MenuScreens.register(Registration.GEAR_BENCH_CONTAINER.get(), GearBenchGui::new);
+            MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), ShoremanDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_FILLED_CANOPY.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FISH_BARREL.get(), RenderType.cutout());
@@ -85,6 +87,7 @@ public class ClientSetup {
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
         event.registerLayerDefinition(LivingAmmunitionModel.LAYER_LOCATION, LivingAmmunitionModel::createBodyLayer);
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
+        event.registerLayerDefinition(ShoremanModel.LAYER_LOCATION, ShoremanModel::createBodyLayer);
 
 
 
@@ -105,6 +108,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
         event.registerEntityRenderer(Registration.LIVING_AMMUNITION.get(), LivingAmmunitionRenderer::new);
         event.registerEntityRenderer(Registration.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
+        event.registerEntityRenderer(Registration.SHOREMAN.get(), ShoremanRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

@@ -22,6 +22,7 @@ public class Setup {
         event.put(Registration.WEEPER.get(), WeeperEntity.prepareAttributes().build());
         event.put(Registration.LIVING_AMMUNITION.get(), LivingAmmunitionEntity.prepareAttributes().build());
         event.put(Registration.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
+        event.put(Registration.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 

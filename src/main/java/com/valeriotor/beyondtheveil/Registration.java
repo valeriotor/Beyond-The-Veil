@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
+import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.fluid.SurgicalFluidType;
 import com.valeriotor.beyondtheveil.item.*;
@@ -23,7 +24,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -54,7 +54,7 @@ public class Registration {
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.MODID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.MODID);
-    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
+    private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, References.MODID);
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
@@ -71,7 +71,7 @@ public class Registration {
         FLUIDS.register(bus);
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
-        CONTAINERS.register(bus);
+        MENUS.register(bus);
         ENTITIES.register(bus);
         FEATURES.register(bus);
         STRUCTURE_TYPES.register(bus);
@@ -94,7 +94,8 @@ public class Registration {
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
     public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("weeper"));
     public static final RegistryObject<EntityType<LivingAmmunitionEntity>> LIVING_AMMUNITION = ENTITIES.register("living_ammunition", () -> EntityType.Builder.of(LivingAmmunitionEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("living_ammunition"));
-    public static final RegistryObject<EntityType<BloodCultistEntity>> BLOOD_CULTIST = ENTITIES.register("blood_cultist", () -> EntityType.Builder.of(BloodCultistEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("blood_cultist"));
+    public static final RegistryObject<EntityType<BloodCultistEntity>> BLOOD_CULTIST = ENTITIES.register("blood_cultist", () -> EntityType.Builder.of(BloodCultistEntity::new, MobCategory.CREATURE).sized(0.7F, 2F).clientTrackingRange(32).build("blood_cultist"));
+    public static final RegistryObject<EntityType<ShoremanEntity>> SHOREMAN = ENTITIES.register("shoreman", () -> EntityType.Builder.of(ShoremanEntity::new, MobCategory.CREATURE).sized(0.7F, 2F).clientTrackingRange(32).build("shoreman"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD);
@@ -301,6 +302,8 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_ZOMBIE_EGG = ITEMS.register("blood_zombie", () -> new ForgeSpawnEggItem(BLOOD_ZOMBIE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_WRAITH_EGG = ITEMS.register("blood_wraith", () -> new ForgeSpawnEggItem(BLOOD_WRAITH, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_CULTIST_EGG = ITEMS.register("blood_cultist", () -> new ForgeSpawnEggItem(BLOOD_CULTIST, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> WEEPER_EGG = ITEMS.register("weeper", () -> new ForgeSpawnEggItem(WEEPER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
 
     public static final RegistryObject<BlockEntityType<GearBenchBE>> GEAR_BENCH_BE = BLOCK_ENTITIES.register(GEAR_BENCH.getId().getPath(), () -> BlockEntityType.Builder.of(GearBenchBE::new, GEAR_BENCH.get()).build(null));
@@ -315,7 +318,8 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<SacrificeAltarBE>> SACRIFICE_ALTAR_BE = BLOCK_ENTITIES.register(SACRIFICE_ALTAR.getId().getPath(), () -> BlockEntityType.Builder.of(SacrificeAltarBE::new, SACRIFICE_ALTAR.get()).build(null));
     public static final RegistryObject<BlockEntityType<BloodBasinBE>> BLOOD_BASIN_BE = BLOCK_ENTITIES.register(BLOOD_BASIN.getId().getPath(), () -> BlockEntityType.Builder.of(BloodBasinBE::new, BLOOD_BASIN.get()).build(null));
 
-    public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = CONTAINERS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
+    public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
+    public static final RegistryObject<MenuType<ShoremanDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new ShoremanDialogueMenu(windowId, inv, inv.player)));
 
     public static final RegistryObject<FluidType> SEDATIVE_FLUID_TYPE = FLUID_TYPES.register("sedative_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/sedative_still"), new ResourceLocation(References.MODID, "block/fluids/sedative_flow"), new ResourceLocation(References.MODID, "block/fluids/sedative_overlay"), 0xFFC13719));
     public static final RegistryObject<FluidType> SOFTENER_FLUID_TYPE = FLUID_TYPES.register("softener_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/softener_still"), new ResourceLocation(References.MODID, "block/fluids/softener_flow"), new ResourceLocation(References.MODID, "block/fluids/softener_overlay"), 0xFFF4C42F));
@@ -471,6 +475,8 @@ public class Registration {
                 output.accept(BLOOD_ZOMBIE_EGG.get());
                 output.accept(BLOOD_WRAITH_EGG.get());
                 output.accept(BLOOD_CULTIST_EGG.get());
+                output.accept(WEEPER_EGG.get());
+                output.accept(SHOREMAN_EGG.get());
 
     }).build());
 
