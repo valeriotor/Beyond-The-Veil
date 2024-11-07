@@ -61,7 +61,7 @@ public class BeyondTheVeil
             ResearchRegistry.registerResearchesFirst();
             ResearchRegistry.registerResearchesSecond();
             //LegacyStructure.registerLegacyStructures();
-            Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 25));
+            Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 5));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, References.MODID, TerrablenderSurfaceRules.makeRules());
         });
     }

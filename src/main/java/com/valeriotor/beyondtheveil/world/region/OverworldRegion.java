@@ -31,7 +31,7 @@ public class OverworldRegion extends Region {
                 .humidity(Humidity.FULL_RANGE)
                 .continentalness(Climate.Parameter.span(-0.15F, 0.12F))
                 .erosion(Climate.Parameter.span(0.55F, 1.0F))
-                .depth(Climate.Parameter.span(-0.55F, 0.1F))
+                .depth(Climate.Parameter.span(-0.55F, 0.5F))
                 .weirdness(Weirdness.VALLEY)
                 .build().forEach(point -> builder.add(point, BTVBiomes.BLACK_SHORE));
 

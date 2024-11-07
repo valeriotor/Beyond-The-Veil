@@ -6,8 +6,11 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.StructureTags;
+import net.minecraft.util.thread.BlockableEventLoop;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 
 import java.util.function.BiFunction;
 
@@ -49,6 +52,21 @@ public class DreamWaypoint extends Dream{
             DataUtil.addReminiscence(p, memory.getDataName(isVoid), r);
             return true;
         }
+        /*Runnable runnable = () -> {
+            BlockableEventLoop<?> executor = LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER);
+
+            BlockPos blockpos = function.apply(sl, pos);
+            if (blockpos != null) {
+                if (!executor.isSameThread()) {
+                    //DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
+                    Reminiscence r = new ReminiscenceWaypoint(blockpos, color);
+                    DataUtil.addReminiscence(p, memory.getDataName(isVoid), r);
+                    DataUtil.syncReminiscences(p);
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();*/
         return false;
     }
 }

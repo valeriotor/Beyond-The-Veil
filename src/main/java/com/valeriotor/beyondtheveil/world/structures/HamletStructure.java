@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.valeriotor.beyondtheveil.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -26,7 +27,10 @@ public class HamletStructure extends Structure {
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         Rotation rotation = Rotation.getRandom(context.random());
-        BlockPos blockpos = this.getLowestYIn5by5BoxOffset7Blocks(context, rotation);
+        ChunkPos chunkpos = context.chunkPos();
+        int k = chunkpos.getBlockX(7);
+        int l = chunkpos.getBlockZ(7);
+        BlockPos blockpos = new BlockPos(k, 62, l); // TODO would this break under weird world settings?
         return Optional.of(new GenerationStub(blockpos, (p_227538_) -> {
             this.generatePieces(p_227538_, blockpos, rotation, context);
         }));
