@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,24 +20,20 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.npc.VillagerData;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraft.world.phys.Vec3;
 
-import java.util.OptionalInt;
-import java.util.Random;
+import java.util.*;
 
 public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
 
     private Player talkingPlayer;
+    private Vec3 lighthouseKeeperStand;
+    private Direction lighthouseKeeperDirection;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -60,6 +57,21 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
+    public void addLighthouseKeeperStandCoords(Vec3 vec3, Direction direction) {
+        this.lighthouseKeeperStand = vec3;
+        this.lighthouseKeeperDirection = direction;
+        addLighthouseKeeperStandGoal();
+    }
+
+    private void addLighthouseKeeperStandGoal() {
+        for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
+            if (availableGoal.getGoal() instanceof LighthouseKeeperStandGoal) {
+                return;
+            }
+        }
+        this.goalSelector.addGoal(5, new LighthouseKeeperStandGoal(this, lighthouseKeeperStand, lighthouseKeeperDirection));
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -72,6 +84,20 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     public void setProfession(int value) {
         entityData.set(PROFESSION, value);
+        if (value == ShoremanProfession.LIGHTHOUSE_KEEPER.ordinal()) {
+            List<WrappedGoal> toRemove = new ArrayList<>();
+            for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
+                if (goal.getGoal().getClass() == LookAtPlayerGoal.class || goal.getGoal().getClass() == RandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
+                    toRemove.add(goal);
+                }
+            }
+            for (WrappedGoal wrappedGoal : toRemove) {
+                goalSelector.removeGoal(wrappedGoal.getGoal());
+            }
+        }
+    }
+    public void setProfession(ShoremanProfession profession) {
+        setProfession(profession.ordinal());
     }
 
     @Override
@@ -97,7 +123,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
-        System.out.println(getProfession() + " " + level().isClientSide);
+        //System.out.println(getProfession() + " " + level().isClientSide);
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         if (itemstack.getItem() != Registration.SHOREMAN_EGG.get() && this.isAlive() && !this.isTalking() && !pPlayer.isSecondaryUseActive()) { // && !this.isSleeping() ?
 
@@ -114,6 +140,12 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putString("profession", getProfession().name());
+        if (lighthouseKeeperStand != null) {
+            pCompound.putDouble("lighthouseKeeperStandX", lighthouseKeeperStand.x);
+            pCompound.putDouble("lighthouseKeeperStandY", lighthouseKeeperStand.y);
+            pCompound.putDouble("lighthouseKeeperStandZ", lighthouseKeeperStand.z);
+            pCompound.putInt("lighthouseKeeperDirection", lighthouseKeeperDirection.ordinal());
+        }
     }
 
     @Override
@@ -122,10 +154,52 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         if (!level().isClientSide) {
             ShoremanProfession shoremanProfession = pCompound.contains("profession") ? ShoremanProfession.valueOf(pCompound.getString("profession")) : ShoremanProfession.FISHERMAN;
             setProfession(shoremanProfession.ordinal());
+            if (pCompound.contains("lighthouseKeeperStandX")) {
+                lighthouseKeeperStand = new Vec3(pCompound.getDouble("lighthouseKeeperStandX"), pCompound.getDouble("lighthouseKeeperStandY"), pCompound.getDouble("lighthouseKeeperStandZ"));
+                lighthouseKeeperDirection = Direction.values()[pCompound.getInt("lighthouseKeeperDirection")];
+                addLighthouseKeeperStandGoal();
+            }
         }
     }
 
     public enum ShoremanProfession {
         BARTENDER, CARPENTER, CLERK, DRUNK, FISHERMAN, LIGHTHOUSE_KEEPER, MINER, SCHOLAR, SMITH,
     }
+
+    private static class LighthouseKeeperStandGoal extends Goal {
+
+        private final ShoremanEntity keeper;
+        private final Vec3 vec3;
+        private final Direction direction;
+
+        public LighthouseKeeperStandGoal(ShoremanEntity keeper, Vec3 vec3, Direction direction) {
+            this.keeper = keeper;
+            this.vec3 = vec3;
+            this.direction = direction;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (this.keeper.getRandom().nextFloat() >= 0.02) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void start() {
+            keeper.getNavigation().moveTo(vec3.x(), vec3.y(), vec3.z(), 1);
+            //Direction direction = this.direction.getCounterClockWise();
+            //keeper.getLookControl().setLookAt(direction.getStepX(), keeper.getEyeY(), direction.getStepZ());
+            float direction = this.direction.toYRot();
+            keeper.setYRot(direction);
+            keeper.setYHeadRot(direction);
+            keeper.setYBodyRot(direction);
+            //keeper.setXRot(45F);
+        }
+
+    }
+
+
 }

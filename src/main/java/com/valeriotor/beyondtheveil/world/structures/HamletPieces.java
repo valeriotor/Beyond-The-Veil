@@ -1,8 +1,8 @@
 package com.valeriotor.beyondtheveil.world.structures;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import net.minecraft.core.BlockPos;
@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
@@ -18,9 +17,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -33,7 +30,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
@@ -85,7 +82,47 @@ public class HamletPieces {
 
         @Override
         protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
+            if ("lighthouse_keeper".equals(pName)) {
+                ShoremanEntity shoreman = Registration.SHOREMAN.get().create(pLevel.getLevel());
+                if (shoreman != null) {
+                    shoreman.setProfession(ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER);
+                    Rotation r = getRotation();
+                    double xOffset = switch (r) {
+                        case NONE -> 0.5;
+                        case CLOCKWISE_180 -> 0.5;
+                        case CLOCKWISE_90 -> 0.0;
+                        case COUNTERCLOCKWISE_90 -> 0.0;
+                    };
+                    double zOffset = switch (r) {
+                        case NONE -> 1.0;
+                        case CLOCKWISE_180 -> 0.0;
+                        case CLOCKWISE_90 -> 0.5;
+                        case COUNTERCLOCKWISE_90 -> 0.5;
+                    };
+                    Vec3 spawnPos = new Vec3(pPos.getX() + xOffset, pPos.getY(), pPos.getZ() + zOffset);
+                    shoreman.setPos(spawnPos);
+                    Direction direction = r.rotate(Direction.SOUTH.getClockWise());
+                    float yRot = direction.toYRot();
+                    shoreman.setYRot(yRot);
+                    shoreman.setYBodyRot(yRot);
+                    shoreman.setYHeadRot(yRot);
+                    shoreman.addLighthouseKeeperStandCoords(spawnPos, direction);
+                    pLevel.addFreshEntity(shoreman);
+                }
+            } else {
+                for (ShoremanEntity.ShoremanProfession profession : ShoremanEntity.ShoremanProfession.values()) {
+                    if (profession.name().toLowerCase().equals(pName)) {
+                        ShoremanEntity shoreman = Registration.SHOREMAN.get().create(pLevel.getLevel());
+                        if (shoreman != null) {
+                            shoreman.setProfession(profession);
+                            Vec3 spawnPos = new Vec3(pPos.getX() + 0.5, pPos.getY(), pPos.getZ() + 0.5);
+                            shoreman.setPos(spawnPos);
+                            pLevel.addFreshEntity(shoreman);
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         @Override
