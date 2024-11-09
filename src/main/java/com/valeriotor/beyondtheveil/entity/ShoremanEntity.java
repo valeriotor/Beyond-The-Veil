@@ -2,10 +2,14 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import io.netty.buffer.Unpooled;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.*;
 
@@ -34,10 +39,13 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     private Player talkingPlayer;
     private Vec3 lighthouseKeeperStand;
     private Direction lighthouseKeeperDirection;
+    private BlockPos villageCenter;
+    private BlockPos spawnPoint;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -100,6 +108,11 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         setProfession(profession.ordinal());
     }
 
+    public void setSpawnAndVillageCenter(BlockPos spawnPoint, BlockPos villageCenter) {
+        this.villageCenter = villageCenter;
+        this.spawnPoint = spawnPoint;
+    }
+
     @Override
     public Player getTalkingPlayer() {
         return talkingPlayer;
@@ -112,7 +125,11 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     private void startTalking(ServerPlayer player) {
         setTalkingPlayer(player);
-        OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
+        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
+        byteBuf.writeUtf(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER.name());
+        byteBuf.writeUtf("initial");
+        NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
+        //OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
         //if (optionalint.isPresent()) {
         //    MerchantOffers merchantoffers = this.getOffers();
         //    if (!merchantoffers.isEmpty()) {
@@ -145,6 +162,8 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
             pCompound.putDouble("lighthouseKeeperStandY", lighthouseKeeperStand.y);
             pCompound.putDouble("lighthouseKeeperStandZ", lighthouseKeeperStand.z);
             pCompound.putInt("lighthouseKeeperDirection", lighthouseKeeperDirection.ordinal());
+            pCompound.putLong("villageCenter", villageCenter.asLong());
+            pCompound.putLong("spawnPoint", spawnPoint.asLong());
         }
     }
 
@@ -158,6 +177,10 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
                 lighthouseKeeperStand = new Vec3(pCompound.getDouble("lighthouseKeeperStandX"), pCompound.getDouble("lighthouseKeeperStandY"), pCompound.getDouble("lighthouseKeeperStandZ"));
                 lighthouseKeeperDirection = Direction.values()[pCompound.getInt("lighthouseKeeperDirection")];
                 addLighthouseKeeperStandGoal();
+            }
+            if (pCompound.contains("spawnPoint")) {
+                villageCenter = BlockPos.of(pCompound.getLong("villageCenter"));
+                spawnPoint = BlockPos.of(pCompound.getLong("spawnPoint"));
             }
         }
     }

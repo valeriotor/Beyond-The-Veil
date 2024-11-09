@@ -64,16 +64,21 @@ public class HamletPieces {
     }
 
     public static class HamletBuildingPiece extends TemplateStructurePiece {
-        public HamletBuildingPiece(StructureTemplateManager pStructureTemplateManager, WeightedBuilding building, Rotation rotation, BlockPos templatePosition) {
+
+        private final BlockPos villageCenter;
+        public HamletBuildingPiece(StructureTemplateManager pStructureTemplateManager, WeightedBuilding building, Rotation rotation, BlockPos templatePosition, BlockPos villageCenter) {
             super(Registration.HAMLET_BUILDING_PIECE.get(), 0, pStructureTemplateManager, makeResourceLocation(building.name), building.name, makeSettings(rotation), templatePosition);
+            this.villageCenter = villageCenter;
         }
 
-        public HamletBuildingPiece(StructureTemplateManager pStructureTemplateManager, String name, Rotation rotation, BlockPos templatePosition) {
+        public HamletBuildingPiece(StructureTemplateManager pStructureTemplateManager, String name, Rotation rotation, BlockPos templatePosition, BlockPos villageCenter) {
             super(Registration.HAMLET_BUILDING_PIECE.get(), 0, pStructureTemplateManager, makeResourceLocation(name), name, makeSettings(rotation), templatePosition);
+            this.villageCenter = villageCenter;
         }
 
         public HamletBuildingPiece(StructureTemplateManager pStructureTemplateManager, CompoundTag pTag) {
             super(Registration.HAMLET_BUILDING_PIECE.get(), pTag, pStructureTemplateManager, (p_227512_) -> makeSettings(Rotation.valueOf(pTag.getString("Rot"))));//Rotation.valueOf(pTag.getString("Rot"))));
+            this.villageCenter = BlockPos.of(pTag.getLong("villageCenter"));
         }
 
         public HamletBuildingPiece(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -107,6 +112,7 @@ public class HamletPieces {
                     shoreman.setYBodyRot(yRot);
                     shoreman.setYHeadRot(yRot);
                     shoreman.addLighthouseKeeperStandCoords(spawnPos, direction);
+                    shoreman.setSpawnAndVillageCenter(new BlockPos((int) spawnPos.x, (int) spawnPos.y, (int) spawnPos.z), villageCenter);
                     pLevel.addFreshEntity(shoreman);
                 }
             } else {
@@ -117,6 +123,7 @@ public class HamletPieces {
                             shoreman.setProfession(profession);
                             Vec3 spawnPos = new Vec3(pPos.getX() + 0.5, pPos.getY(), pPos.getZ() + 0.5);
                             shoreman.setPos(spawnPos);
+                            shoreman.setSpawnAndVillageCenter(new BlockPos((int) spawnPos.x, (int) spawnPos.y, (int) spawnPos.z), villageCenter);
                             pLevel.addFreshEntity(shoreman);
                         }
                         break;
@@ -129,6 +136,7 @@ public class HamletPieces {
         protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
             super.addAdditionalSaveData(pContext, pTag);
             pTag.putString("Rot", getRotation().toString());
+            pTag.putLong("villageCenter", villageCenter.asLong());
         }
 
         @Override
@@ -285,7 +293,7 @@ public class HamletPieces {
         HamletBuildingPiece toHamletBuildingPiece(BlockPos centerPos, Rotation rotation) {
             Rotation finalRotation = this.rotation.getRotated(rotation);
             BlockPos finalTemplatePosition = centerPos.offset(templatePosition.rotate(rotation));
-            return new HamletBuildingPiece(pStructureTemplateManager, building, finalRotation, finalTemplatePosition);
+            return new HamletBuildingPiece(pStructureTemplateManager, building, finalRotation, finalTemplatePosition, centerPos);
         }
     }
 
@@ -297,7 +305,7 @@ public class HamletPieces {
             BlockPos offsetCenterPos = centerPos.offset(new BlockPos(0, 0, 0).rotate(rotation));
             layoutQuadrant(pContext, rand, manager, numbersPerType, weightedBuildings, offsetCenterPos, allPieces, rotation);
         }
-        allPieces.add(new HamletBuildingPiece(manager, "idol", Rotation.NONE, centerPos.offset(-4, 0, -4)));
+        allPieces.add(new HamletBuildingPiece(manager, "idol", Rotation.NONE, centerPos.offset(-4, 0, -4), centerPos));
         //return layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, centerPos);
         return allPieces;
     }
@@ -401,7 +409,7 @@ public class HamletPieces {
                     Rotation finalRotation = buildingOnGrid.rotation.getRotated(rotation);
                     BlockPos finalTemplatePosition = centerPos.offset(offset.rotate(rotation));
                     int firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(finalTemplatePosition.getX(), finalTemplatePosition.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-                    returnList.add(new HamletBuildingPiece(manager, buildingOnGrid.type, finalRotation, finalTemplatePosition.atY(firstFreeHeight - 1)));
+                    returnList.add(new HamletBuildingPiece(manager, buildingOnGrid.type, finalRotation, finalTemplatePosition.atY(firstFreeHeight - 1), centerPos));
 
                     for (int dx = 0; dx < buildingOnGrid.width + 1; dx++) {
                         grid[buildingOnGrid.z][buildingOnGrid.x + dx] = 1;

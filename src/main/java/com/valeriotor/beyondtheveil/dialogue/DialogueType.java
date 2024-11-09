@@ -1,0 +1,14 @@
+package com.valeriotor.beyondtheveil.dialogue;
+
+public enum DialogueType {
+    BLACK_MIRROR,
+    BLOOD_CULTIST,
+    SHOREMAN_BARTENDER,
+    SHOREMAN_CARPENTER,
+    SHOREMAN_CLERK,
+    SHOREMAN_DRUNK,
+    SHOREMAN_FISHERMAN,
+    SHOREMAN_LIGHTHOUSE_KEEPER,
+    SHOREMAN_SCHOLAR,
+
+}

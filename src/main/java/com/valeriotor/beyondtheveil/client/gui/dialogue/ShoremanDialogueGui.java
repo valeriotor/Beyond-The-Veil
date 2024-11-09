@@ -7,16 +7,38 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.item.ItemStack;
 
 public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogueMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
+    private int stringCounter;
 
 
     public ShoremanDialogueGui(ShoremanDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
         this.imageWidth = 512;
         this.imageHeight = 166;
+        pMenu.addSlotListener(new ContainerListener() {
+            @Override
+            public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
+
+            }
+
+            @Override
+            public void dataChanged(AbstractContainerMenu pContainerMenu, int pDataSlotIndex, int pValue) {
+                ShoremanDialogueGui.this.stringCounter = 0;
+                ShoremanDialogueGui.this.init();
+            }
+        });
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
     }
 
     @Override
