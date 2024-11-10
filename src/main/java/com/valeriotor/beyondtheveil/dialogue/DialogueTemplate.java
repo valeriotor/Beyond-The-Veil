@@ -52,6 +52,7 @@ public class DialogueTemplate {
         for (DialogueNode value : dialogueNodes.values()) {
             branches.addAll(value.getAllDialogueOptions());
         }
+        branches.add(startingBranch);
         branches.sort(Comparator.comparing(DialogueBranch::getBranchID));
         return branches;
     }

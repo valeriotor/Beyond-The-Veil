@@ -15,7 +15,7 @@ public class DialogueRegistry {
     private static Map<DialogueType, Map<String, DialogueTemplate>> dialogueTemplates = new EnumMap<>(DialogueType.class);
 
     public static void registerDialogues() {
-
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

@@ -1,0 +1,119 @@
+{
+  "id" : "initial",
+  "type": "shoreman_lighthouse_keeper",
+  "startingBranch" : {
+    "id" : "first",
+    "branchLength": 2,
+    "endingNodeID": "start"
+  },
+  "dialogueNodes" : {
+    "start": {
+      "id" : "start",
+      "dialogueOptions" : [
+        {
+          "id" : "mere_chance",
+          "branchLength" : 2,
+          "endingNodeID" : "so_much"
+        },
+        {
+          "id" : "hard_to_believe",
+          "branchLength" : 1,
+          "endingNodeID" : "dream"
+        }
+      ]
+    },
+    "dream": {
+      "id" : "dream",
+      "dialogueOptions" : [
+        {
+          "id" : "darkness",
+          "branchLength" : 2,
+          "endingNodeID" : "precursor"
+        },
+        {
+          "id" : "guess_chance",
+          "branchLength" : 2,
+          "endingNodeID" : "so_much"
+        }
+      ]
+    },
+    "precursor": {
+      "id" : "precursor",
+      "dialogueOptions" : [
+        {
+          "id" : "still_exploring",
+          "branchLength" : 2,
+          "endingNodeID" : "so_much"
+        }
+      ]
+    },
+    "so_much": {
+      "id" : "so_much",
+      "dialogueOptions" : [
+        {
+          "id" : "unique_architecture",
+          "branchLength" : 2,
+          "endingNodeID" : "asunder"
+        },
+        {
+          "id" : "idol",
+          "branchLength" : 2,
+          "endingNodeID" : "him"
+        }
+      ]
+    },
+    "asunder": {
+      "id" : "asunder",
+      "dialogueOptions" : [
+        {
+          "id" : "not_aware",
+          "branchLength" : 2,
+          "endingNodeID" : "just_humans"
+        }
+      ]
+    },
+    "him": {
+      "id" : "him",
+      "dialogueOptions" : [
+        {
+          "id" : "not_aware",
+          "branchLength" : 2,
+          "endingNodeID" : "just_humans"
+        }
+      ]
+    },
+    "just_humans": {
+      "id" : "just_humans",
+      "dialogueOptions" : [
+        {
+          "id" : "not_forefathers",
+          "branchLength" : 1,
+          "endingNodeID" : "beg"
+        }
+      ]
+    },
+    "beg": {
+      "id" : "beg",
+      "dialogueOptions" : [
+        {
+          "id" : "no_fear",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "mankind",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "groundless",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        }
+      ]
+    }
+  }
+}

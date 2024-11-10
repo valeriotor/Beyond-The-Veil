@@ -78,6 +78,12 @@ public class Messages {
                 .consumerNetworkThread(FlaskShelfBlock.BreakFlaskMessage::handle)
                 .add();
 
+        net.messageBuilder(SendDialogueOptionToServerPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SendDialogueOptionToServerPacket::new)
+                .encoder(SendDialogueOptionToServerPacket::toBytes)
+                .consumerNetworkThread(SendDialogueOptionToServerPacket::handle)
+                .add();
+
     }
 
     public static <MSG> void sendToServer(MSG message) {

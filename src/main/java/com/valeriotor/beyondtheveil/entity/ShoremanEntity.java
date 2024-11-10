@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
@@ -125,10 +126,10 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     private void startTalking(ServerPlayer player) {
         setTalkingPlayer(player);
-        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-        byteBuf.writeUtf(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER.name());
-        byteBuf.writeUtf("initial");
-        NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
+        NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial")), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
+            b.writeUtf(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER.name());
+            b.writeUtf("initial");
+        });
         //OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
         //if (optionalint.isPresent()) {
         //    MerchantOffers merchantoffers = this.getOffers();

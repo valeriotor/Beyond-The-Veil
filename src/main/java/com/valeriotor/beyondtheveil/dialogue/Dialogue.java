@@ -31,7 +31,7 @@ public class Dialogue {
                 indexInBranch = 0;
                 currentBranch.getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
             }
-            if (currentBranch.endsDialogue() && indexInBranch == currentBranch.getLength() - 1) {
+            if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength() - 1) {
                 finished = true;
             }
         });

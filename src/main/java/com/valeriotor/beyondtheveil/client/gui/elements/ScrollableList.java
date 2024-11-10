@@ -38,9 +38,13 @@ public class ScrollableList extends Element {
             int y = (i - currentFirstRow) * rowHeight;
             poseStack.pushPose();
             poseStack.translate(0, y, 0);
-            rows.get(i).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+            renderElement(i, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
             poseStack.popPose();
         }
+    }
+
+    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y) {
+        rows.get(element).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
     }
 
     private int getThumbY() {
@@ -51,13 +55,17 @@ public class ScrollableList extends Element {
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
         int hoveredElement = getHoveredElement(relativeMouseX, relativeMouseY);
         if (hoveredElement != -1) {
-            rows.get(hoveredElement).mouseClicked(relativeMouseX, relativeMouseY - (hoveredElement - currentFirstRow) * rowHeight, mouseButton);
+            clickElement(hoveredElement, relativeMouseX, relativeMouseY, mouseButton);
             return true;
         } else if (relativeMouseX > getWidth() - scrollbarWidth && relativeMouseX < getWidth() && relativeMouseY >= getThumbY() && relativeMouseY <= getThumbY() + thumbHeight) {
             draggingThumb = true;
             return true;
         }
         return false;
+    }
+
+    protected void clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
+        rows.get(element).mouseClicked(relativeMouseX, relativeMouseY - (element - currentFirstRow) * rowHeight, mouseButton);
     }
 
     @Override
@@ -87,7 +95,7 @@ public class ScrollableList extends Element {
 
     @Override
     public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
-        if(insideBounds(relativeMouseX, relativeMouseY)) {
+        if (insideBounds(relativeMouseX, relativeMouseY)) {
             int move = (int) Math.signum(-pDelta);
             currentFirstRow = Mth.clamp(currentFirstRow + move, 0, maxFirstRow);
             if (pDelta != 0) {
@@ -107,7 +115,7 @@ public class ScrollableList extends Element {
         poseStack.popPose();
     }
 
-    private int getHoveredElement(double relativeMouseX, double relativeMouseY) {
+    protected int getHoveredElement(double relativeMouseX, double relativeMouseY) {
         if (relativeMouseX >= 0 && relativeMouseX < getWidth() - scrollbarWidth && relativeMouseY >= 0 && relativeMouseY <= getHeight()) {
             int i = (int) (relativeMouseY / rowHeight + currentFirstRow);
             if (i < rows.size()) {
