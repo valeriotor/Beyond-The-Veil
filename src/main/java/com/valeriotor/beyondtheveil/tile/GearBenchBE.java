@@ -5,15 +5,11 @@ import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -55,7 +51,7 @@ public class GearBenchBE extends BlockEntity implements CraftingContainer {
     }
 
     private ItemStackHandler createInputHandler() {
-        return new ItemStackHandler(16){
+        return new ItemStackHandler(16) {
             @Override
             protected void onContentsChanged(int slot) {
                 changeOutput();
@@ -66,7 +62,7 @@ public class GearBenchBE extends BlockEntity implements CraftingContainer {
     }
 
     private ItemStackHandler createOutputHandler() {
-        return new ItemStackHandler(1){
+        return new ItemStackHandler(1) {
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
                 return false;
@@ -74,9 +70,9 @@ public class GearBenchBE extends BlockEntity implements CraftingContainer {
         };
     }
 
-    private void changeOutput(){
+    private void changeOutput() {
 
-        if (!level.isClientSide) {
+        if (level != null && !level.isClientSide) {
             ItemStack itemstack = ItemStack.EMPTY;
             Optional<GearBenchRecipe> optional = level.getServer().getRecipeManager().getRecipeFor(Registration.GEAR_BENCH_RECIPE_TYPE.get(), this, level);
             if (optional.isPresent()) {
