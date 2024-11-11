@@ -1,40 +1,50 @@
 package com.valeriotor.beyondtheveil.client.gui.dialogue;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogueMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
-    private int stringCounter;
+    private static final float TEXT_WIDTH_RATIO = 0.9F;
+    private static final float TEXT_HEIGHT_RATIO = 0.85F;
     private float scaleFactor = 1;
-    private List<FormattedCharSequence> npcLines = new ArrayList<>();
     private DialogueOptions options;
     private int branch;
     private int indexInBranch;
-    private static final float TEXT_WIDTH_RATIO = 0.9F;
-    private static final float TEXT_HEIGHT_RATIO = 0.85F;
+    private double stringProgress;
+    private int lastStringProgressSize, prevLastStringProgressSize;
+    private double speed = 1;
+    private int pauseTicks = 0;
+    private int currentLine = 0;
+    private List<String> localizedNpcLines = new ArrayList<>();
+    private List<String> displayedLines = new ArrayList<>();
+    private Set<Character> storedFormattings = new HashSet<>();
 
 
     public ShoremanDialogueGui(ShoremanDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -74,11 +84,13 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         if (imageHeight * scaleFactor > height / 2F) {
             scaleFactor *= (height / 2F) / (imageHeight * scaleFactor);
         }
-        int textWidth = (int) (imageWidth * scaleFactor * TEXT_WIDTH_RATIO);
+        int textWidth = (int) (imageWidth * TEXT_WIDTH_RATIO);
 
-        this.npcLines.clear();
+        //this.npcLines.clear();
         String npcLine = menu.getNpcLine();
-        this.npcLines.addAll(minecraft.font.split(FormattedText.of(npcLine), (int) (textWidth / scaleFactor)));
+        //npcLine = "In concealing — or eradicating — their existence, the church||| of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.";
+        //npcLine = "Oh. A traveller.||| \nWelcome.";
+        //this.npcLines.addAll(minecraft.font.split(FormattedText.of(npcLine), (int) (textWidth / scaleFactor)));
 
         Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
         if (resolve.isPresent()) {
@@ -87,7 +99,66 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
             Consumer<Integer> optionChosen = i -> {
                 Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
             };
-            this.options = DialogueOptions.makeOptions(dialogueOptions, (int) (textWidth / scaleFactor * 8 / 10), minecraft.font, (int) (textWidth / scaleFactor), 45, (int) (textWidth / scaleFactor * 3 / 100), optionChosen);
+            this.options = DialogueOptions.makeOptions(dialogueOptions, (int) (textWidth * 8 / 10), minecraft.font, (int) (textWidth), 45, (int) (textWidth * 3 / 100), optionChosen);
+        }
+
+        if (displayedLines.isEmpty()) {
+            displayedLines.add("");
+            String[] split = npcLine.split("\n");
+            for (String l : split) {
+                String reducedNpcLine = l.replaceAll("[\\[\\]|]", "");
+                int a = reducedNpcLine.length();
+                minecraft.font.getSplitter().splitLines(l, textWidth, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
+                    int currentIndex = 0, startIndex = 0, endIndex = -1;
+                    for (int i = 0; i < reducedNpcLine.length(); i++) {
+                        if (currentIndex == pCurrentPos) { // pos = 1, w = 5 abcdefg [[abc[
+                            startIndex = i;
+                            break;
+                        }
+                        char c = reducedNpcLine.charAt(i);
+                        if (c != '[' && c != ']') {
+                            currentIndex++;
+                        }
+                    }
+                    for (int i = startIndex; i < reducedNpcLine.length(); i++) {
+                        if (currentIndex - startIndex == pContentWidth - pCurrentPos) { // pos = 1, w = 5 abcdefg [[abc[
+                            endIndex = i;
+                            break;
+                        }
+                        char c = reducedNpcLine.charAt(i);
+                        if (c != '[' && c != ']' && c != '|') {
+                            currentIndex++;
+                        }
+                    }
+                    if (endIndex == -1) {
+                        endIndex = l.length();
+                    }
+                /*if (pCurrentPos == 0 && false) {
+                    startIndex = 0;
+                } else {
+                    boolean flag = false;
+                    for (int i = 0; i < reducedNpcLine.toCharArray().length; i++) {
+                        if (currentIndex == pCurrentPos) { // pos = 1, w = 5 abcdefg [[abc[
+                            startIndex = i;
+                            flag = true;
+                        }
+                        char c = reducedNpcLine.charAt(i);
+                        if (c != '[' && c != ']') {
+                            currentIndex++;
+                        }
+                        if (flag && currentIndex - startIndex > pContentWidth - 1 - pCurrentPos) { // TODO -pCurrentPos?
+                            endIndex = i;
+                            break;
+                        }
+                    }
+                    if (endIndex == 0) {
+                        endIndex++;
+                    }
+                }*/
+                    localizedNpcLines.add(l.substring(startIndex, endIndex));
+                });
+
+            }
         }
 
     }
@@ -97,8 +168,75 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         if (menu.getBranch() != branch || menu.getIndexInBranch() != indexInBranch) {
             branch = menu.getBranch();
             indexInBranch = menu.getIndexInBranch();
-            stringCounter = 0; // TODO
+            stringProgress = 0;
+            prevLastStringProgressSize = 0;
+            lastStringProgressSize = 0;
+            currentLine = 0;
+            localizedNpcLines.clear();
+            displayedLines.clear();
             init();
+        }
+        if (pauseTicks > 0) {
+            pauseTicks--;
+        } else {
+            stringProgress += speed;
+            prevLastStringProgressSize = lastStringProgressSize;
+            lastStringProgressSize = (int) Math.floor(stringProgress);
+            tryAddCharacter();
+        }
+    }
+
+    private void tryAddCharacter() {
+        if (lastStringProgressSize > prevLastStringProgressSize && currentLine < localizedNpcLines.size()) {
+            String line = localizedNpcLines.get(currentLine);
+            boolean skipChar = false;
+            while (stringProgress < line.length()) {
+                int index = (int) Math.floor(stringProgress);
+                char c = line.charAt(index);
+                if (c == '[' || c == ']' || c == '§' || skipChar || c == '|') {
+                    if (skipChar) {
+                        skipChar = false;
+                        if (c == 'r') {
+                            storedFormattings.clear();
+                        } else {
+                            storedFormattings.add(c);
+                        }
+                    }
+                    if (c == '§') {
+                        skipChar = true;
+                    }
+                    if (c == '[') {
+                        speed -= 0.2;
+                    } else if (c == ']') {
+                        speed += 0.2;
+                    } else if (c == '|') {
+                        pauseTicks += 5;
+                    }
+                    stringProgress += 1;
+                } else {
+                    if (c == ',') {
+                        pauseTicks += 4;
+                    } else if (c == '.' || c == '?' || c == '!') {
+                        pauseTicks += 7;
+                    }
+                    break;
+                }
+            }
+            if (stringProgress >= line.length()) {
+                displayedLines.set(currentLine, (localizedNpcLines.get(currentLine).replaceAll("[\\[\\]|]", "")));
+                displayedLines.add("");
+                currentLine++;
+                stringProgress = 0;
+                prevLastStringProgressSize = 0;
+                lastStringProgressSize = 0;
+            }
+        }
+        if (currentLine < localizedNpcLines.size()) {
+            String s = localizedNpcLines.get(currentLine);
+            String sub = s.substring(0, Math.min(s.length(), (int) stringProgress + 1)).replaceAll("[\\[\\]|]", "");
+            displayedLines.set(currentLine, sub);
+            prevLastStringProgressSize = lastStringProgressSize;
+            lastStringProgressSize = (int) Math.floor(stringProgress);
         }
     }
 
@@ -121,8 +259,11 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         //guiGraphics.blit(TEXTURE, (int) (-imageWidth * scaleFactor / 2), (int) (-imageHeight * scaleFactor), 0, 0, this.imageWidth, this.imageHeight);
         guiGraphics.blit(TEXTURE, (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
 
+        lastStringProgressSize = Math.max(lastStringProgressSize, (int) Math.floor(stringProgress + pauseTicks > 0 ? 0 : (pPartialTick * speed)));
+        tryAddCharacter();
+
         int yOffset = 0;
-        for (FormattedCharSequence npcLine : npcLines) {
+        for (String npcLine : displayedLines) {
             guiGraphics.drawString(minecraft.font, npcLine, (int) (-imageWidth * TEXT_WIDTH_RATIO / 2), (int) (-imageHeight * TEXT_HEIGHT_RATIO) + yOffset, 0xFFFFFFFF);
             yOffset += 15;
         }
