@@ -1,0 +1,86 @@
+{
+  "id" : "no_closer",
+  "type": "shoreman_fisherman",
+  "dialogueUnlocks": ["shoreman_fisherman:begone"],
+  "startingBranch" : {
+    "id" : "first",
+    "branchLength": 1,
+    "endingNodeID": "start"
+  },
+  "dialogueNodes" : {
+    "start": {
+      "id" : "start",
+      "dialogueOptions" : [
+        {
+          "id" : "no_harm",
+          "branchLength" : 1,
+          "endingNodeID" : "no_believe"
+        },
+        {
+          "id" : "who_hurt",
+          "branchLength" : 1,
+          "endingNodeID" : "you_did"
+        }
+      ]
+    },
+    "no_believe": {
+      "id" : "no_believe",
+      "dialogueOptions" : [
+        {
+          "id" : "forget",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "farewell",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        }
+      ]
+    },
+    "you_did": {
+      "id" : "you_did",
+      "dialogueOptions" : [
+        {
+          "id" : "never",
+          "branchLength" : 1,
+          "endingNodeID" : "upon_deaths"
+        },
+        {
+          "id" : "trick",
+          "branchLength" : 1,
+          "endingNodeID" : "upon_deaths"
+        },
+        {
+          "id" : "me_or_us",
+          "branchLength" : 1,
+          "endingNodeID" : "upon_deaths"
+        },
+        {
+          "id" : "rubbish",
+          "branchLength" : 1,
+          "endingNodeID" : "upon_deaths"
+        }
+      ]
+    },
+    "upon_deaths": {
+      "id" : "upon_deaths",
+      "dialogueOptions" : [
+        {
+          "id" : "idiot",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "recorded",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        }
+      ]
+    }
+  }
+}

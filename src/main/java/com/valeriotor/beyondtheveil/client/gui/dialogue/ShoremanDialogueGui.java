@@ -88,6 +88,13 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
 
         //this.npcLines.clear();
         String npcLine = menu.getNpcLine();
+        while (npcLine.startsWith("|")) {
+            npcLine = npcLine.substring(1);
+            pauseTicks += 5;
+        }
+        if (npcLine.contains("I said")) {
+            npcLine = "]]" + npcLine;
+        }
         //npcLine = "In concealing — or eradicating — their existence, the church||| of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.";
         //npcLine = "Oh. A traveller.||| \nWelcome.";
         //this.npcLines.addAll(minecraft.font.split(FormattedText.of(npcLine), (int) (textWidth / scaleFactor)));
@@ -172,6 +179,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
             prevLastStringProgressSize = 0;
             lastStringProgressSize = 0;
             currentLine = 0;
+            speed = 1;
             localizedNpcLines.clear();
             displayedLines.clear();
             init();
@@ -189,51 +197,60 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
     private void tryAddCharacter() {
         if (lastStringProgressSize > prevLastStringProgressSize && currentLine < localizedNpcLines.size()) {
             String line = localizedNpcLines.get(currentLine);
-            boolean skipChar = false;
-            while (stringProgress < line.length()) {
-                int index = (int) Math.floor(stringProgress);
-                char c = line.charAt(index);
-                if (c == '[' || c == ']' || c == '§' || skipChar || c == '|') {
-                    if (skipChar) {
-                        skipChar = false;
-                        if (c == 'r') {
-                            storedFormattings.clear();
-                        } else {
-                            storedFormattings.add(c);
-                        }
-                    }
-                    if (c == '§') {
-                        skipChar = true;
-                    }
-                    if (c == '[') {
-                        speed -= 0.2;
-                    } else if (c == ']') {
-                        speed += 0.2;
-                    } else if (c == '|') {
-                        pauseTicks += 5;
-                    }
-                    stringProgress += 1;
-                } else {
-                    if (c == ',') {
-                        pauseTicks += 4;
-                    } else if (c == '.' || c == '?' || c == '!') {
-                        pauseTicks += 7;
-                    }
-                    break;
+            for (int i = prevLastStringProgressSize + 1; i < lastStringProgressSize && i < line.length(); i++) {
+                char c = line.charAt(i);
+                if (c == ',' || c == '.' || c == '?' || c == '!' || c == '|') {
+                    lastStringProgressSize = prevLastStringProgressSize;
+                    stringProgress = lastStringProgressSize;
                 }
             }
-            if (stringProgress >= line.length()) {
-                displayedLines.set(currentLine, (localizedNpcLines.get(currentLine).replaceAll("[\\[\\]|]", "")));
-                displayedLines.add("");
-                currentLine++;
-                stringProgress = 0;
-                prevLastStringProgressSize = 0;
-                lastStringProgressSize = 0;
+            if (lastStringProgressSize > prevLastStringProgressSize) {
+                boolean skipChar = false;
+                while (stringProgress < line.length()) {
+                    int index = (int) Math.floor(stringProgress);
+                    char c = line.charAt(index);
+                    if (c == '[' || c == ']' || c == '§' || skipChar || c == '|') {
+                        if (skipChar) {
+                            skipChar = false;
+                            if (c == 'r') {
+                                storedFormattings.clear();
+                            } else {
+                                storedFormattings.add(c);
+                            }
+                        }
+                        if (c == '§') {
+                            skipChar = true;
+                        }
+                        if (c == '[') {
+                            speed -= 0.2;
+                        } else if (c == ']') {
+                            speed += 0.2;
+                        } else if (c == '|') {
+                            pauseTicks += 5;
+                        }
+                        stringProgress += 1;
+                    } else {
+                        if (c == ',') {
+                            pauseTicks += 4;
+                        } else if (c == '.' || c == '?' || c == '!') {
+                            pauseTicks += 7;
+                        }
+                        break;
+                    }
+                }
+                if (stringProgress >= line.length()) {
+                    displayedLines.set(currentLine, (localizedNpcLines.get(currentLine).replaceAll("[\\[\\]|]", "")));
+                    displayedLines.add("");
+                    currentLine++;
+                    stringProgress = 0;
+                    prevLastStringProgressSize = 0;
+                    lastStringProgressSize = 0;
+                }
             }
         }
         if (currentLine < localizedNpcLines.size()) {
             String s = localizedNpcLines.get(currentLine);
-            String sub = s.substring(0, Math.min(s.length(), (int) stringProgress + 1)).replaceAll("[\\[\\]|]", "");
+            String sub = s.substring(0, Math.min(s.length(), (int) (stringProgress == 0 ? 0 : stringProgress + 1))).replaceAll("[\\[\\]|]", "");
             displayedLines.set(currentLine, sub);
             prevLastStringProgressSize = lastStringProgressSize;
             lastStringProgressSize = (int) Math.floor(stringProgress);

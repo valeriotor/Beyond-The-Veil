@@ -1239,14 +1239,54 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         addShoremanDialogue();
     }
-
     private void addShoremanDialogue() {
+        addShoremanLighthouseKeeperDialogue();
+
+        add("dialogue.shoreman_fisherman.initial.start.0", "Huh? [[Who are you?");
+        add("dialogue.shoreman_fisherman.initial.traveller.option", "A traveller.");
+        add("dialogue.shoreman_fisherman.initial.seeker.option", "A seeker of truth.");
+        add("dialogue.shoreman_fisherman.initial.leave.0", "||Leave.");
+        add("dialogue.shoreman_fisherman.initial.alright.option", "Alright. Farewell.");
+        add("dialogue.shoreman_fisherman.initial.no_way.option", "This is no way to treat a weary traveller!");
+        add("dialogue.shoreman_fisherman.initial.begone.0", "]I said begone![ Your kind are §onot§r welcome here!");
+        add("dialogue.shoreman_fisherman.initial.prejudice.option", "Your prejudice will be your downfall.");
+        add("dialogue.shoreman_fisherman.initial.my_kind.option", "§oMy§r kind?! Different we may look, we are both fellow humans!");
+        add("dialogue.shoreman_fisherman.initial.sundered.0", "We have nothing in common. Whatever bond you may think we share: there is none, and if there had ever been one then it was violently sundered.");
+        add("dialogue.shoreman_fisherman.initial.same_flesh.option", "We are both creatures of flesh and blood. Does that not unite us?");
+        add("dialogue.shoreman_fisherman.initial.lol_no.0", "No.||\nWe are nothing alike.");
+        add("dialogue.shoreman_fisherman.initial.for_the_best.option", "And perhaps for the best.");
+        add("dialogue.shoreman_fisherman.initial.hospitality.option", "So much for hospitality!");
+
+        add("dialogue.shoreman_fisherman.no_closer.start.0", "No, no, no! Don't get close, we suffered too much already!");
+        add("dialogue.shoreman_fisherman.no_closer.no_harm.option", "I swear not to harm you.");
+        add("dialogue.shoreman_fisherman.no_closer.who_hurt.option", "Who made you suffer?");
+        add("dialogue.shoreman_fisherman.no_closer.no_believe.0", "]]I don't believe you! I don't believe you!\nAway! Away!");
+        add("dialogue.shoreman_fisherman.no_closer.forget.option", "Oh, forget it.");
+        add("dialogue.shoreman_fisherman.no_closer.farewell.option", "Farewell.");
+        add("dialogue.shoreman_fisherman.no_closer.you_did.0", "You did. Do you not remember?");
+        add("dialogue.shoreman_fisherman.no_closer.never.option", "I never did. I never §owould§r have.");
+        add("dialogue.shoreman_fisherman.no_closer.trick.option", "Is this a trick?");
+        add("dialogue.shoreman_fisherman.no_closer.me_or_us.option", "'You' as in §ome§r? Or §ous§r?");
+        add("dialogue.shoreman_fisherman.no_closer.rubbish.option", "You talk rubbish.");
+        add("dialogue.shoreman_fisherman.no_closer.upon_deaths.0", "Deaths upon deaths upon deaths. \nAnd now you have forgotten.");
+        add("dialogue.shoreman_fisherman.no_closer.idiot.option", "I get it. You are the village idiot.");
+        add("dialogue.shoreman_fisherman.no_closer.recorded.option", "I do not forget. All my deeds are recorded in §oAl Azif§r.");
+
+        add("dialogue.shoreman_fisherman.begone.start.0", "Begone!");
+        add("dialogue.shoreman_fisherman.begone.farewell.option", "Farewell.");
+        add("dialogue.shoreman_fisherman.begone.tone.option", "Watch. Your. Tone.");
+        add("dialogue.shoreman_fisherman.begone.soon.option", "I will most certainly soon be gone.");
+
+
+    }
+
+    private void addShoremanLighthouseKeeperDialogue() {
         add("dialogue.shoreman_lighthouse_keeper.initial.start.0", "Oh. A traveller. \nWelcome.");
         add("dialogue.shoreman_lighthouse_keeper.initial.start.1", "How did you stumble upon our hamlet, may I ask? Was it chance? Or did you seek us?");
         add("dialogue.shoreman_lighthouse_keeper.initial.mere_chance.option", "Mere chance.");
         add("dialogue.shoreman_lighthouse_keeper.initial.hard_to_believe.option", "As hard as it is to believe, I was guided here by a dream.");
         add("dialogue.shoreman_lighthouse_keeper.initial.dream.0", "A.. dream? A dream of what?");
-        add("dialogue.shoreman_lighthouse_keeper.initial.darkness.option", "Darkness");
+        add("dialogue.shoreman_lighthouse_keeper.initial.darkness.option", "Darkness.");
         add("dialogue.shoreman_lighthouse_keeper.initial.guess_chance.option", "I didn't know it would lead me here, so I guess it was chance.");
         add("dialogue.shoreman_lighthouse_keeper.initial.precursor.0", "The precursor of light. Rising up from the ocean to blind the eyes of man.\nBut no, do not worry. Here, atop the lighthouse, you can see §oeverything§r.");
         add("dialogue.shoreman_lighthouse_keeper.initial.precursor.1", "Tell me then, traveller. What revelations do you hope to uncover?");

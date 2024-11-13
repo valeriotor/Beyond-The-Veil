@@ -1,0 +1,34 @@
+{
+  "id" : "begone",
+  "type": "shoreman_fisherman",
+  "startingBranch" : {
+    "id" : "first",
+    "branchLength": 1,
+    "endingNodeID": "start"
+  },
+  "dialogueNodes" : {
+    "start": {
+      "id" : "start",
+      "dialogueOptions" : [
+        {
+          "id" : "farewell",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "tone",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "soon",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        }
+      ]
+    }
+  }
+}

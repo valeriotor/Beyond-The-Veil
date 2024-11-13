@@ -16,6 +16,10 @@ public class DialogueRegistry {
 
     public static void registerDialogues() {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial");
+
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "initial");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "no_closer");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "begone");
     }
 
     private static void registerDialogue(DialogueType type, String id) {
