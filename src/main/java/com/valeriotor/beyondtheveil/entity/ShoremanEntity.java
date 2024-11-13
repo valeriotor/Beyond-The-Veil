@@ -1,8 +1,10 @@
 package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
@@ -125,11 +127,16 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     }
 
     private void startTalking(ServerPlayer player) {
-        setTalkingPlayer(player);
-        NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial")), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
-            b.writeUtf(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER.name());
-            b.writeUtf("initial");
-        });
+        DialogueType dialogueType = getProfession().toType();
+        DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
+        if (template != null) {
+            setTalkingPlayer(player);
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
+                b.writeUtf(dialogueType.name());
+                b.writeUtf(template.getID());
+            });
+
+        }
         //OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
         //if (optionalint.isPresent()) {
         //    MerchantOffers merchantoffers = this.getOffers();
@@ -187,7 +194,27 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     }
 
     public enum ShoremanProfession {
-        BARTENDER, CARPENTER, CLERK, DRUNK, FISHERMAN, LIGHTHOUSE_KEEPER, MINER, SCHOLAR, SMITH,
+        BARTENDER(DialogueType.SHOREMAN_BARTENDER),
+        CARPENTER(DialogueType.SHOREMAN_CARPENTER),
+        CLERK(DialogueType.SHOREMAN_CLERK),
+        DRUNK(DialogueType.SHOREMAN_DRUNK),
+        FISHERMAN(DialogueType.SHOREMAN_FISHERMAN),
+        LIGHTHOUSE_KEEPER(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER),
+        MINER(null),
+        SCHOLAR(DialogueType.SHOREMAN_SCHOLAR),
+        SMITH(null);
+
+
+        private final DialogueType type;
+
+        ShoremanProfession(DialogueType type) {
+            this.type = type;
+        }
+
+        public DialogueType toType() {
+            return type;
+        }
+
     }
 
     private static class LighthouseKeeperStandGoal extends Goal {

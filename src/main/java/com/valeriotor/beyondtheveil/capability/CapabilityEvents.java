@@ -10,11 +10,8 @@ import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.*;
-import com.valeriotor.beyondtheveil.research.Research;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Pillager;
@@ -28,12 +25,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Optional;
-
+import static com.valeriotor.beyondtheveil.capability.DialogueDataProvider.DIALOGUE_DATA;
 import static com.valeriotor.beyondtheveil.capability.PlayerDataProvider.PLAYER_DATA;
-import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.RESEARCH;
-import static com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider.CROSS_SYNC_DATA;
 import static com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider.TRIGGER_DATA;
+import static com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider.CROSS_SYNC_DATA;
+import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.RESEARCH;
 
 
 @Mod.EventBusSubscriber
@@ -90,6 +86,7 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "player_data"), new PlayerDataProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "research_data"), new ResearchProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "cross_sync_data"), new CrossSyncDataProvider());
+                event.addCapability(new ResourceLocation(References.MODID, "dialogue_data"), new DialogueDataProvider());
             }
             if (event.getObject().level().isClientSide() && ClientSetup.isConnectionPresent()) {
                 GenericToServerPacket message = new GenericToServerPacket(GenericToServerPacket.MessageType.ASK_DATA_SYNC);
@@ -124,6 +121,10 @@ public class CapabilityEvents {
         });
         // TODO we probably will want to do this for crosssync as well
         event.getOriginal().invalidateCaps();
+
+        event.getOriginal().getCapability(DIALOGUE_DATA).ifPresent(oldData -> {
+            event.getEntity().getCapability(DIALOGUE_DATA).ifPresent(oldData::copyToNewStore);
+        });
     }
 
     @SubscribeEvent
@@ -132,6 +133,7 @@ public class CapabilityEvents {
         event.register(ResearchData.class);
         event.register(CrossSyncData.class);
         event.register(TriggerData.class);
+        event.register(DialogueData.class);
     }
 
     @SubscribeEvent

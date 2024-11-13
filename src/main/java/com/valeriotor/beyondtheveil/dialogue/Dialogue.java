@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.dialogue;
 
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -33,6 +34,11 @@ public class Dialogue {
             }
             if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength() - 1) {
                 finished = true;
+                DialogueData capability = DialogueData.for_(player);
+                for (String dialogueUnlock : template.getDialogueUnlocks()) {
+                    String[] split = dialogueUnlock.split(":");
+                    capability.setDialogue(split[0], split[1]);
+                }
             }
         });
     }

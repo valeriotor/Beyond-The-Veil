@@ -9,6 +9,7 @@ public class DialogueTemplate {
     private Map<String, DialogueNode> dialogueNodes = new HashMap<>();
     private String unlocksAtEnd;
     private String type;
+    private List<String> dialogueUnlocks = new ArrayList<>();
 
     public String getID() {
         return this.id;
@@ -57,4 +58,7 @@ public class DialogueTemplate {
         return branches;
     }
 
+    public List<String> getDialogueUnlocks() {
+        return dialogueUnlocks;
+    }
 }
