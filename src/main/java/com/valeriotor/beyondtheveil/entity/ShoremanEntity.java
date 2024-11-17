@@ -3,18 +3,16 @@ package com.valeriotor.beyondtheveil.entity;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
-import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
+import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
-import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -67,6 +65,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
+        this.goalSelector.addGoal(2, new StrollThroughHamletGoal(this, 1.5D));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -129,6 +128,14 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         this.spawnPoint = spawnPoint;
     }
 
+    public BlockPos getVillageCenter() {
+        return villageCenter;
+    }
+
+    public BlockPos getSpawnPoint() {
+        return spawnPoint;
+    }
+
     @Override
     protected BodyRotationControl createBodyControl() {
         return new SuspiciousBodyRotationControl(this);
@@ -188,6 +195,8 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
             pCompound.putDouble("lighthouseKeeperStandY", lighthouseKeeperStand.y);
             pCompound.putDouble("lighthouseKeeperStandZ", lighthouseKeeperStand.z);
             pCompound.putInt("lighthouseKeeperDirection", lighthouseKeeperDirection.ordinal());
+        }
+        if(villageCenter != null) {
             pCompound.putLong("villageCenter", villageCenter.asLong());
             pCompound.putLong("spawnPoint", spawnPoint.asLong());
         }
@@ -212,27 +221,32 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     }
 
     public enum ShoremanProfession {
-        BARTENDER(DialogueType.SHOREMAN_BARTENDER),
-        CARPENTER(DialogueType.SHOREMAN_CARPENTER),
-        CLERK(DialogueType.SHOREMAN_CLERK),
-        DRUNK(DialogueType.SHOREMAN_DRUNK),
-        FISHERMAN(DialogueType.SHOREMAN_FISHERMAN),
-        LIGHTHOUSE_KEEPER(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER),
-        MINER(null),
-        SCHOLAR(DialogueType.SHOREMAN_SCHOLAR),
-        SMITH(null);
+        BARTENDER(DialogueType.SHOREMAN_BARTENDER, false),
+        CARPENTER(DialogueType.SHOREMAN_CARPENTER, true),
+        CLERK(DialogueType.SHOREMAN_CLERK, true),
+        DRUNK(DialogueType.SHOREMAN_DRUNK, false),
+        FISHERMAN(DialogueType.SHOREMAN_FISHERMAN, true),
+        LIGHTHOUSE_KEEPER(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, false),
+        MINER(null, true),
+        SCHOLAR(DialogueType.SHOREMAN_SCHOLAR, false),
+        SMITH(null, true);
 
 
         private final DialogueType type;
+        private final boolean leavesPost;
 
-        ShoremanProfession(DialogueType type) {
+        ShoremanProfession(DialogueType type, boolean leavesPost) {
             this.type = type;
+            this.leavesPost = leavesPost;
         }
 
         public DialogueType toType() {
             return type;
         }
 
+        public boolean isLeavesPost() {
+            return leavesPost;
+        }
     }
 
     private static class LighthouseKeeperStandGoal extends Goal {
