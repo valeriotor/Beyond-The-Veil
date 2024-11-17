@@ -6,7 +6,9 @@ import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +41,7 @@ import java.util.*;
 public class ShoremanEntity extends PathfinderMob implements Talkable{
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
 
     private Player talkingPlayer;
     private Vec3 lighthouseKeeperStand;
@@ -64,7 +68,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
@@ -87,6 +91,15 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(PROFESSION, ShoremanProfession.FISHERMAN.ordinal());
+        this.entityData.define(SUSPICIOUS_LOOK, false);
+    }
+
+    public void setSuspiciousLook(boolean value) {
+        entityData.set(SUSPICIOUS_LOOK, value);
+    }
+
+    public boolean getSuspiciousLook() {
+        return entityData.get(SUSPICIOUS_LOOK);
     }
 
     public ShoremanProfession getProfession() {
@@ -98,7 +111,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
         if (value == ShoremanProfession.LIGHTHOUSE_KEEPER.ordinal()) {
             List<WrappedGoal> toRemove = new ArrayList<>();
             for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
-                if (goal.getGoal().getClass() == LookAtPlayerGoal.class || goal.getGoal().getClass() == RandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
+                if (goal.getGoal().getClass() == SuspiciousLookAtPlayerGoal.class || goal.getGoal().getClass() == RandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
                     toRemove.add(goal);
                 }
             }
@@ -114,6 +127,11 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     public void setSpawnAndVillageCenter(BlockPos spawnPoint, BlockPos villageCenter) {
         this.villageCenter = villageCenter;
         this.spawnPoint = spawnPoint;
+    }
+
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new SuspiciousBodyRotationControl(this);
     }
 
     @Override

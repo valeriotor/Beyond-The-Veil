@@ -41,6 +41,7 @@ public class LookAtTalkingPlayerGoal<T extends PathfinderMob & Talkable> extends
             if (shoreman.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && !this.villager.isTalking()) {
                 earlyStop = true;
             }
+            shoreman.setSuspiciousLook(false);
         }
     }
 }
