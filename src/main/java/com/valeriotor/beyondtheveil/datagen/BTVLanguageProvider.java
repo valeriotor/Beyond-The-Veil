@@ -1278,6 +1278,38 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_fisherman.begone.soon.option", "I will most certainly soon be gone.");
 
 
+        //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
+        //add("dialogue.shoreman_scholar.initial.knowledge.option", "Knowledge.");
+        //add("dialogue.shoreman_scholar.initial.brought.option", "No. I was brought here by a dream.");
+        //add("dialogue.shoreman_scholar.initial.suspicion.option", "Someone who does not view me with the stern eyes of suspicion.");
+        //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
+
+        add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
+        add("dialogue.shoreman_scholar.initial.knowledge.0", "Ah, I understand.\nIndeed, I spy in your eyes that burning flame of curiosity, searing idleness away and leading you into that incessant march of learning.");
+        add("dialogue.shoreman_scholar.initial.knowledge.1", "I can well grasp your struggle. I, too, am a scholar, and oh the wonders I have seen and dreamt of!");
+        add("dialogue.shoreman_scholar.initial.dream.0", "A dream? Of our black shores and dark water?\nI see. Perhaps, then, our dreams met already. Deep down below, at the bottom of the ocean.");
+        add("dialogue.shoreman_scholar.initial.alas.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
+        add("dialogue.shoreman_scholar.initial.prejudice.0", "Prejudice? I.. I...\n..I see. You have given me food for thought, traveller.");
+        add("dialogue.shoreman_scholar.initial.suspicion.0", "I see. Please understand that it is not a mere lack of trust. In view of an outsider, our hearts are gripped with fear. By instinct, almost.\nYet it is not innate. There is much history behind our demeanor.\nMuch fury. Much grief. Much regret.");
+        add("dialogue.shoreman_scholar.initial.just.option", "Just like the others, blinded by prejudice.");
+        add("dialogue.shoreman_scholar.initial.knowledge_.option", "Knowledge.");
+        add("dialogue.shoreman_scholar.initial.no_.option", "No. I was brought here by a dream.");
+        add("dialogue.shoreman_scholar.initial.___.option", "...");
+        add("dialogue.shoreman_scholar.initial.i.option", "I understand.");
+        add("dialogue.shoreman_scholar.initial.continue_.option", "(Continue)");
+        add("dialogue.shoreman_scholar.initial.wait,.option", "Wait, you know about dreams?");
+        add("dialogue.shoreman_scholar.initial.farewell.option", "Farewell.");
+        add("dialogue.shoreman_scholar.initial.continue.option", "(Continue)");
+        add("dialogue.shoreman_scholar.initial.someone.option", "Someone who does not view me with the stern eyes of suspicion.");
+
+
+
+
+
+
+
+
+
     }
 
     private void addShoremanLighthouseKeeperDialogue() {

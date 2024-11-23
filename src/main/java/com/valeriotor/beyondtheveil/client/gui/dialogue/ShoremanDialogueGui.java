@@ -39,7 +39,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
     private int indexInBranch;
     private double stringProgress;
     private int lastStringProgressSize, prevLastStringProgressSize;
-    private double speed = 1;
+    private double speed = 1.4;
     private int pauseTicks = 0;
     private int currentLine = 0;
     private List<String> localizedNpcLines = new ArrayList<>();
@@ -179,7 +179,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
             prevLastStringProgressSize = 0;
             lastStringProgressSize = 0;
             currentLine = 0;
-            speed = 1;
+            speed = 1.4;
             localizedNpcLines.clear();
             displayedLines.clear();
             init();

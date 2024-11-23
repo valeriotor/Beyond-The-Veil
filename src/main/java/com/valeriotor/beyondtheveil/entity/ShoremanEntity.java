@@ -1,15 +1,21 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
-import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -18,9 +24,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -28,15 +37,25 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.Merchant;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ShoremanEntity extends PathfinderMob implements Talkable{
+public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant {
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
@@ -46,6 +65,8 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
     private Direction lighthouseKeeperDirection;
     private BlockPos villageCenter;
     private BlockPos spawnPoint;
+    private Player tradingPlayer;
+    protected MerchantOffers offers;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -200,6 +221,10 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
             pCompound.putLong("villageCenter", villageCenter.asLong());
             pCompound.putLong("spawnPoint", spawnPoint.asLong());
         }
+        MerchantOffers merchantoffers = this.getOffers();
+        if (!merchantoffers.isEmpty()) {
+            pCompound.put("Offers", merchantoffers.createTag());
+        }
     }
 
     @Override
@@ -218,6 +243,99 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
                 spawnPoint = BlockPos.of(pCompound.getLong("spawnPoint"));
             }
         }
+        if (pCompound.contains("Offers", 10)) {
+            this.offers = new MerchantOffers(pCompound.getCompound("Offers"));
+        }
+    }
+
+    @Override
+    public void setTradingPlayer(@Nullable Player player) {
+        this.tradingPlayer = player;
+    }
+
+    @Nullable
+    @Override
+    public Player getTradingPlayer() {
+        return tradingPlayer;
+    }
+
+    @Override
+    public MerchantOffers getOffers() {
+        if (this.offers == null) {
+            this.offers = new MerchantOffers();
+            this.updateTrades();
+        }
+        return this.offers;
+    }
+
+    protected void updateTrades() {
+        Int2ObjectMap<VillagerTrades.ItemListing[]> int2objectmap = TRADES.get(getProfession());
+        if (int2objectmap != null && !int2objectmap.isEmpty()) {
+            VillagerTrades.ItemListing[] avillagertrades$itemlisting = int2objectmap.get(5);
+            if (avillagertrades$itemlisting != null) {
+                MerchantOffers merchantoffers = this.getOffers();
+                this.addOffersFromItemListings(merchantoffers, avillagertrades$itemlisting, 2);
+            }
+        }
+    }
+
+    protected void addOffersFromItemListings(MerchantOffers pGivenMerchantOffers, VillagerTrades.ItemListing[] pNewTrades, int pMaxNumbers) {
+        Set<Integer> set = Sets.newHashSet();
+        if (pNewTrades.length > pMaxNumbers) {
+            while(set.size() < pMaxNumbers) {
+                set.add(this.random.nextInt(pNewTrades.length));
+            }
+        } else {
+            for(int i = 0; i < pNewTrades.length; ++i) {
+                set.add(i);
+            }
+        }
+
+        for(Integer integer : set) {
+            VillagerTrades.ItemListing villagertrades$itemlisting = pNewTrades[integer];
+            MerchantOffer merchantoffer = villagertrades$itemlisting.getOffer(this, this.random);
+            if (merchantoffer != null) {
+                pGivenMerchantOffers.add(merchantoffer);
+            }
+        }
+
+    }
+
+    @Override
+    public void overrideOffers(MerchantOffers pOffers) {
+    }
+
+    @Override
+    public void notifyTrade(MerchantOffer pOffer) {
+    }
+
+    @Override
+    public void notifyTradeUpdated(ItemStack pStack) {
+    }
+
+    @Override
+    public int getVillagerXp() {
+        return 0;
+    }
+
+    @Override
+    public void overrideXp(int pXp) {
+
+    }
+
+    @Override
+    public boolean showProgressBar() {
+        return true;
+    }
+
+    @Override
+    public SoundEvent getNotifyTradeSound() {
+        return null;
+    }
+
+    @Override
+    public boolean isClientSide() {
+        return level().isClientSide();
     }
 
     public enum ShoremanProfession {
@@ -282,6 +400,73 @@ public class ShoremanEntity extends PathfinderMob implements Talkable{
             //keeper.setXRot(45F);
         }
 
+    }
+
+    private static final Map<ShoremanProfession, Int2ObjectMap<VillagerTrades.ItemListing[]>> TRADES = Util.make(Maps.newHashMap(), (p_35633_) -> {
+        p_35633_.put(ShoremanProfession.SCHOLAR, toIntMap(ImmutableMap.of(1, new VillagerTrades.ItemListing[]{new EmeraldForItems(Items.WHEAT, 20, 16, 2), new EmeraldForItems(Items.POTATO, 26, 16, 2), new EmeraldForItems(Items.CARROT, 22, 16, 2), new EmeraldForItems(Items.BEETROOT, 15, 16, 2), new ItemsForEmeralds(Items.BREAD, 1, 6, 16, 1)}, 2, new VillagerTrades.ItemListing[]{new EmeraldForItems(Blocks.PUMPKIN, 6, 12, 10), new ItemsForEmeralds(Items.PUMPKIN_PIE, 1, 4, 5), new ItemsForEmeralds(Items.APPLE, 1, 4, 16, 5)}, 3, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Items.COOKIE, 3, 18, 10), new EmeraldForItems(Blocks.MELON, 4, 12, 20)}, 4, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Blocks.CAKE, 1, 1, 12, 15)}, 5, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Items.GOLDEN_CARROT, 3, 3, 30), new ItemsForEmeralds(Items.GLISTERING_MELON_SLICE, 4, 3, 30)})));
+    });
+
+    static class EmeraldForItems implements VillagerTrades.ItemListing {
+        private final Item item;
+        private final int cost;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public EmeraldForItems(ItemLike pItem, int pCost, int pMaxUses, int pVillagerXp) {
+            this.item = pItem.asItem();
+            this.cost = pCost;
+            this.maxUses = pMaxUses;
+            this.villagerXp = pVillagerXp;
+            this.priceMultiplier = 0.05F;
+        }
+
+        public MerchantOffer getOffer(Entity pTrader, RandomSource pRandom) {
+            ItemStack itemstack = new ItemStack(this.item, this.cost);
+            return new MerchantOffer(itemstack, new ItemStack(Items.EMERALD), this.maxUses, this.villagerXp, this.priceMultiplier);
+        }
+    }
+
+    static class ItemsForEmeralds implements VillagerTrades.ItemListing {
+        private final ItemStack itemStack;
+        private final int emeraldCost;
+        private final int numberOfItems;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public ItemsForEmeralds(Block pBlock, int pEmeraldCost, int pNumberOfItems, int pMaxUses, int pVillagerXp) {
+            this(new ItemStack(pBlock), pEmeraldCost, pNumberOfItems, pMaxUses, pVillagerXp);
+        }
+
+        public ItemsForEmeralds(Item pItem, int pEmeraldCost, int pNumberOfItems, int pVillagerXp) {
+            this(new ItemStack(pItem), pEmeraldCost, pNumberOfItems, 12, pVillagerXp);
+        }
+
+        public ItemsForEmeralds(Item pItem, int pEmeraldCost, int pNumberOfItems, int pMaxUses, int pVillagerXp) {
+            this(new ItemStack(pItem), pEmeraldCost, pNumberOfItems, pMaxUses, pVillagerXp);
+        }
+
+        public ItemsForEmeralds(ItemStack pItemStack, int pEmeraldCost, int pNumberOfItems, int pMaxUses, int pVillagerXp) {
+            this(pItemStack, pEmeraldCost, pNumberOfItems, pMaxUses, pVillagerXp, 0.05F);
+        }
+
+        public ItemsForEmeralds(ItemStack pItemStack, int pEmeraldCost, int pNumberOfItems, int pMaxUses, int pVillagerXp, float pPriceMultiplier) {
+            this.itemStack = pItemStack;
+            this.emeraldCost = pEmeraldCost;
+            this.numberOfItems = pNumberOfItems;
+            this.maxUses = pMaxUses;
+            this.villagerXp = pVillagerXp;
+            this.priceMultiplier = pPriceMultiplier;
+        }
+
+        public MerchantOffer getOffer(Entity pTrader, RandomSource pRandom) {
+            return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
+        }
+    }
+
+    private static Int2ObjectMap<VillagerTrades.ItemListing[]> toIntMap(ImmutableMap<Integer, VillagerTrades.ItemListing[]> pMap) {
+        return new Int2ObjectOpenHashMap<>(pMap);
     }
 
 

@@ -5,14 +5,17 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.util.ClientTalkable;
 import com.valeriotor.beyondtheveil.dialogue.*;
+import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.Merchant;
 
 import java.util.List;
 
@@ -53,6 +56,12 @@ public class ShoremanDialogueMenu extends AbstractContainerMenu {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
             broadcastChanges();
+        } else if (dialogue.isOpenTrade()) {
+            if (npc instanceof ShoremanEntity sh) {
+                sh.setTradingPlayer(player);
+                sh.openTradingScreen(player, Component.translatable("gui.%s.display_name".formatted(sh.getProfession().name().toLowerCase())), 5);
+
+            }
         }
     }
 

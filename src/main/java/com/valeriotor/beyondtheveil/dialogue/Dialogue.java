@@ -13,6 +13,7 @@ public class Dialogue {
     private DialogueBranch currentBranch;
     private int indexInBranch = 0;
     private boolean finished;
+    private boolean openTrade;
 
     public Dialogue(DialogueTemplate template) {
         this.template = template;
@@ -34,6 +35,9 @@ public class Dialogue {
             }
             if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength() - 1) {
                 finished = true;
+                if (currentBranch.getEndingNodeID().equals("trade")) {
+                    openTrade = true;
+                }
                 DialogueData capability = DialogueData.for_(player);
                 for (String dialogueUnlock : template.getDialogueUnlocks()) {
                     String[] split = dialogueUnlock.split(":");
@@ -45,6 +49,10 @@ public class Dialogue {
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public boolean isOpenTrade() {
+        return openTrade;
     }
 
     public DialogueBranch getCurrentBranch() {

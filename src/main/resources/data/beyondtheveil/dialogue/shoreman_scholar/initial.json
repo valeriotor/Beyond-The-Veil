@@ -1,0 +1,136 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "alas": {
+      "id": "alas",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "just",
+          "branchLength": 1,
+          "endingNodeID": "prejudice",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "dream": {
+      "id": "dream",
+      "dialogueOptions": [
+        {
+          "id": "wait,",
+          "branchLength": 1,
+          "endingNodeID": "alas",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "suspicion": {
+      "id": "suspicion",
+      "dialogueOptions": [
+        {
+          "id": "continue_",
+          "branchLength": 1,
+          "endingNodeID": "alas",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "prejudice": {
+      "id": "prejudice",
+      "dialogueOptions": [
+        {
+          "id": "farewell",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "knowledge_",
+          "branchLength": 2,
+          "endingNodeID": "knowledge",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "no_",
+          "branchLength": 1,
+          "endingNodeID": "dream",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "someone",
+          "branchLength": 1,
+          "endingNodeID": "suspicion",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "knowledge": {
+      "id": "knowledge",
+      "dialogueOptions": [
+        {
+          "id": "continue",
+          "branchLength": 1,
+          "endingNodeID": "alas",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "shoreman_scholar",
+  "dialogueUnlocks": []
+}
