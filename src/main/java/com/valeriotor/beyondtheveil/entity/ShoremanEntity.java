@@ -269,13 +269,10 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
     }
 
     protected void updateTrades() {
-        Int2ObjectMap<VillagerTrades.ItemListing[]> int2objectmap = TRADES.get(getProfession());
-        if (int2objectmap != null && !int2objectmap.isEmpty()) {
-            VillagerTrades.ItemListing[] avillagertrades$itemlisting = int2objectmap.get(5);
-            if (avillagertrades$itemlisting != null) {
-                MerchantOffers merchantoffers = this.getOffers();
-                this.addOffersFromItemListings(merchantoffers, avillagertrades$itemlisting, 2);
-            }
+        VillagerTrades.ItemListing[] itemListings = TRADES.get(getProfession());
+        if (itemListings != null) {
+            MerchantOffers merchantoffers = this.getOffers();
+            this.addOffersFromItemListings(merchantoffers, itemListings, 5);
         }
     }
 
@@ -402,8 +399,10 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
 
     }
 
-    private static final Map<ShoremanProfession, Int2ObjectMap<VillagerTrades.ItemListing[]>> TRADES = Util.make(Maps.newHashMap(), (p_35633_) -> {
-        p_35633_.put(ShoremanProfession.SCHOLAR, toIntMap(ImmutableMap.of(1, new VillagerTrades.ItemListing[]{new EmeraldForItems(Items.WHEAT, 20, 16, 2), new EmeraldForItems(Items.POTATO, 26, 16, 2), new EmeraldForItems(Items.CARROT, 22, 16, 2), new EmeraldForItems(Items.BEETROOT, 15, 16, 2), new ItemsForEmeralds(Items.BREAD, 1, 6, 16, 1)}, 2, new VillagerTrades.ItemListing[]{new EmeraldForItems(Blocks.PUMPKIN, 6, 12, 10), new ItemsForEmeralds(Items.PUMPKIN_PIE, 1, 4, 5), new ItemsForEmeralds(Items.APPLE, 1, 4, 16, 5)}, 3, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Items.COOKIE, 3, 18, 10), new EmeraldForItems(Blocks.MELON, 4, 12, 20)}, 4, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Blocks.CAKE, 1, 1, 12, 15)}, 5, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Items.GOLDEN_CARROT, 3, 3, 30), new ItemsForEmeralds(Items.GLISTERING_MELON_SLICE, 4, 3, 30)})));
+    private static final Map<ShoremanProfession, VillagerTrades.ItemListing[]> TRADES = Util.make(Maps.newHashMap(), (p_35633_) -> {
+        p_35633_.put(ShoremanProfession.CLERK, new VillagerTrades.ItemListing[]{new EmeraldForItems(Items.GOLD_INGOT, 8, 16, 2), new EmeraldForItems(Items.DIAMOND, 2, 16, 2), new EmeraldForItems(Items.HONEYCOMB, 22, 16, 2), new EmeraldForItems(Items.COAL, 34, 16, 2), new EmeraldForItems(Items.IRON_INGOT, 24, 16, 2), new ItemsForEmeralds(Items.COD, 1, 6, 16, 1), new ItemsForEmeralds(Items.SALMON, 1, 6, 16, 1), new ItemsForEmeralds(Items.TADPOLE_BUCKET, 1, 1, 16, 1), new ItemsForEmeralds(Items.PUFFERFISH, 1, 3, 16, 1), new ItemsForEmeralds(Items.TROPICAL_FISH, 1, 3, 16, 1), new ItemsForEmeralds(Registration.SLUG.get(), 1, 4, 16, 1)});
+        p_35633_.put(ShoremanProfession.CARPENTER, new VillagerTrades.ItemListing[]{new EmeraldForItems(Blocks.OAK_PLANKS, 64, 16, 2), new EmeraldForItems(Items.BIRCH_PLANKS, 64, 16, 2), new EmeraldForItems(Items.DARK_OAK_PLANKS, 64, 16, 2), new EmeraldForItems(Items.COAL, 34, 16, 2), new ItemsForEmeralds(Items.DARK_OAK_BOAT, 1, 1, 16, 1), new ItemsForEmeralds(Registration.CANOE.get(), 1, 1, 16, 1), new ItemsForEmeralds(Registration.DAMP_WOOD.get(), 1, 12, 16, 1), new ItemsForEmeralds(Registration.DAMP_WOOD_STAIRS.get(), 1, 12, 16, 1), new ItemsForEmeralds(Registration.DAMP_CANOPY.get(), 1, 20, 16, 1), new ItemsForEmeralds(Registration.DAMP_WOOD_FENCE.get(), 1, 12, 16, 1)});
+        p_35633_.put(ShoremanProfession.BARTENDER, new VillagerTrades.ItemListing[]{new ItemsForEmeralds(Registration.VODKA.get(), 1, 4, 16, 1), new ItemsForEmeralds(Registration.RUM.get(), 1, 4, 16, 1), new ItemsForEmeralds(Registration.ALE.get(), 1, 4, 16, 1), new ItemsForEmeralds(Registration.MEAD.get(), 1, 4, 16, 1), new ItemsForEmeralds(Registration.WINE.get(), 1, 4, 16, 1)});
     });
 
     static class EmeraldForItems implements VillagerTrades.ItemListing {

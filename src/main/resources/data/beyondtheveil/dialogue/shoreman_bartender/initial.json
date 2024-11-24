@@ -1,0 +1,39 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "anything",
+          "branchLength": 0,
+          "endingNodeID": "trade",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "thank",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "shoreman_bartender",
+  "dialogueUnlocks": []
+}

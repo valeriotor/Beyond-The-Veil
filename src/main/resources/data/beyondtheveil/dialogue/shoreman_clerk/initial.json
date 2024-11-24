@@ -1,0 +1,195 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "refrain": {
+      "id": "refrain",
+      "dialogueOptions": [
+        {
+          "id": "ehm___",
+          "branchLength": 1,
+          "endingNodeID": "buy",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "and",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "farewell__",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "steal": {
+      "id": "steal",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 1,
+          "endingNodeID": "obvious",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "refrain",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "anyone": {
+      "id": "anyone",
+      "dialogueOptions": [
+        {
+          "id": "thanks_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "(nod)",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "buy": {
+      "id": "buy",
+      "dialogueOptions": [
+        {
+          "id": "let\u0027s",
+          "branchLength": 0,
+          "endingNodeID": "trade",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "not",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "buy_",
+          "branchLength": 1,
+          "endingNodeID": "buy",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "steal_",
+          "branchLength": 2,
+          "endingNodeID": "steal",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "neither_",
+          "branchLength": 1,
+          "endingNodeID": "talk",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "obvious": {
+      "id": "obvious",
+      "dialogueOptions": [
+        {
+          "id": "ehm__",
+          "branchLength": 1,
+          "endingNodeID": "buy",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "farewell_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "talk": {
+      "id": "talk",
+      "dialogueOptions": [
+        {
+          "id": "is",
+          "branchLength": 1,
+          "endingNodeID": "anyone",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "alright_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "shoreman_clerk",
+  "dialogueUnlocks": []
+}

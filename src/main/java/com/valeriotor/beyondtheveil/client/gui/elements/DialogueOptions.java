@@ -1,32 +1,40 @@
 package com.valeriotor.beyondtheveil.client.gui.elements;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class DialogueOptions extends ScrollableList {
 
-    public static DialogueOptions makeOptions(List<String> localizedOptions, int textWidth, Font font, int width, int height, int scrollbarWidth, Consumer<Integer> listener) {
+    public static DialogueOptions makeOptions(List<DialogueBranch.DialogueOption> localizedOptions, int textWidth, Font font, int width, int height, int scrollbarWidth, Consumer<Integer> listener) {
         List<List<TextLine>> lines = new ArrayList<>();
-        for (String localizedOption : localizedOptions) {
-            List<Element> elements = new TextUtil().parseText(localizedOption, textWidth, font);
+        List<DialogueBranch.OptionType> types = new ArrayList<>();
+        for (DialogueBranch.DialogueOption option : localizedOptions) {
+            String localizedOption = option.line();
+            List<Element> elements = new TextUtil().parseText(localizedOption, textWidth - 5, font);
             lines.add(elements.stream().filter(a -> a instanceof TextLine).map(a -> (TextLine) a).toList());
+            types.add(option.type());
         }
-        return new DialogueOptions(width, height, lines, scrollbarWidth, listener);
+        return new DialogueOptions(width, height, lines, types, scrollbarWidth, listener);
     }
 
 
     private final List<Integer> elementIndexToOptionIndex = new ArrayList<>();
+    private final List<DialogueBranch.OptionType> types;
     private final Consumer<Integer> listener;
 
-    private DialogueOptions(int width, int height, List<List<TextLine>> options, int scrollbarWidth, Consumer<Integer> listener) {
+    private DialogueOptions(int width, int height, List<List<TextLine>> options, List<DialogueBranch.OptionType> types, int scrollbarWidth, Consumer<Integer> listener) {
         super(width, height, options.stream().flatMap(Collection::stream).collect(Collectors.toList()), 15, scrollbarWidth);
+        this.types = types;
         this.listener = listener;
         for (int i = 0; i < options.size(); i++) {
             List<TextLine> option = options.get(i);
@@ -42,12 +50,19 @@ public class DialogueOptions extends ScrollableList {
         if (elementIndexToOptionIndex.get(element) == getHoveredOption(relativeMouseX, relativeMouseY)) {
             flag = true;
         }
-        if (flag) {
-            poseStack.pushPose();
-            poseStack.translate(15, 0, 0);
-        }
+        poseStack.pushPose();
+        poseStack.translate(flag ? 20 : 5, 0, 0);
         super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
-        if (flag) {
+        poseStack.popPose();
+        if(element == 0 || !Objects.equals(elementIndexToOptionIndex.get(element - 1), elementIndexToOptionIndex.get(element))) {
+            poseStack.pushPose();
+            poseStack.translate(-2, 0, 0);
+            String c = switch (getType(element)) {
+                case NORMAL -> ">";
+                case TRADE -> "□";
+                case END -> "•";
+            };
+            graphics.drawString(Minecraft.getInstance().font, c, 0, 0, color);
             poseStack.popPose();
         }
     }
@@ -67,5 +82,12 @@ public class DialogueOptions extends ScrollableList {
         }
         return elementIndexToOptionIndex.get(hoveredElement);
     }
+
+    private DialogueBranch.OptionType getType(int element) {
+        return types.get(elementIndexToOptionIndex.get(element));
+    }
+
+
+
 
 }

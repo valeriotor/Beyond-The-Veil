@@ -73,7 +73,7 @@ public class ShoremanDialogueMenu extends AbstractContainerMenu {
         return allBranches.get(branch.get()).getNpcLine(template, indexInBranch.get());
     }
 
-    public List<String> getDialogueOptions(PlayerData data) {
+    public List<DialogueBranch.DialogueOption> getDialogueOptions(PlayerData data) {
         return allBranches.get(branch.get()).getDialogueOptions(data, template, indexInBranch.get());
     }
 

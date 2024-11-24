@@ -1,0 +1,136 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "siblings": {
+      "id": "siblings",
+      "dialogueOptions": [
+        {
+          "id": "but",
+          "branchLength": 1,
+          "endingNodeID": "common",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "common": {
+      "id": "common",
+      "dialogueOptions": [
+        {
+          "id": "water",
+          "branchLength": 1,
+          "endingNodeID": "oldest",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "oldest": {
+      "id": "oldest",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "unknowable",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "unknowable": {
+      "id": "unknowable",
+      "dialogueOptions": [
+        {
+          "id": "whatever",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "yes_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "hmph",
+          "branchLength": 1,
+          "endingNodeID": "hmph",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "why",
+          "branchLength": 1,
+          "endingNodeID": "siblings",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "hmph": {
+      "id": "hmph",
+      "dialogueOptions": [
+        {
+          "id": "very",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "nothing?",
+          "branchLength": 1,
+          "endingNodeID": "common",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "shoreman_carpenter",
+  "dialogueUnlocks": []
+}

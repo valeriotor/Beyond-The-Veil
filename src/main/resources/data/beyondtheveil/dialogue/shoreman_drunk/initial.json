@@ -1,0 +1,122 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "elaborate": {
+      "id": "elaborate",
+      "dialogueOptions": [
+        {
+          "id": "drunkard__",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "i",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "brethren": {
+      "id": "brethren",
+      "dialogueOptions": [
+        {
+          "id": "go",
+          "branchLength": 1,
+          "endingNodeID": "elaborate",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "mean": {
+      "id": "mean",
+      "dialogueOptions": [
+        {
+          "id": "please,",
+          "branchLength": 1,
+          "endingNodeID": "elaborate",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "how",
+          "branchLength": 1,
+          "endingNodeID": "brethren",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "what",
+          "branchLength": 1,
+          "endingNodeID": "mean",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "thanks_",
+          "branchLength": 1,
+          "endingNodeID": "sober",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "sober": {
+      "id": "sober",
+      "dialogueOptions": [
+        {
+          "id": "nevermind_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "nothing_",
+          "branchLength": 1,
+          "endingNodeID": "mean",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "shoreman_drunk",
+  "dialogueUnlocks": []
+}

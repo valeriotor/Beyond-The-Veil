@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -102,7 +103,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
         if (resolve.isPresent()) {
             PlayerData data = resolve.get();
-            List<String> dialogueOptions = menu.getDialogueOptions(data);
+            List<DialogueBranch.DialogueOption> dialogueOptions = menu.getDialogueOptions(data);
             Consumer<Integer> optionChosen = i -> {
                 Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
             };

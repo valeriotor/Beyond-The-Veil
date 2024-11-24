@@ -28,18 +28,18 @@ public class DialogueBranch {
         return I18n.get("dialogue.%s.%s.%s.%d".formatted(template.getType().name().toLowerCase(), template.getID(), key, indexInBranch));
     }
 
-    public List<String> getDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
-        return getDialogueOptionKeys(data, template, indexInBranch).stream().map(I18n::get).toList();
+    public List<DialogueOption> getDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
+        return getDialogueOptionKeys(data, template, indexInBranch).stream().map(o -> new DialogueOption(I18n.get(o.line), o.type)).toList();
     }
 
-    private List<String> getDialogueOptionKeys(PlayerData data, DialogueTemplate template, int indexInBranch) {
+    private List<DialogueOption> getDialogueOptionKeys(PlayerData data, DialogueTemplate template, int indexInBranch) {
         if (indexInBranch >= branchLength - 1) {
             if (endsDialogue) {
-                return List.of("dialogue.end");
+                return List.of(new DialogueOption("dialogue.end", OptionType.END));
             }
-            return template.getNodeByID(endingNodeID).getDialogueOptions(data).stream().map(b -> "dialogue.%s.%s.%s.option".formatted(template.getType().name().toLowerCase(), template.getID(), b.getBranchID())).collect(Collectors.toList());
+            return template.getNodeByID(endingNodeID).getDialogueOptions(data).stream().map(b -> new DialogueOption("dialogue.%s.%s.%s.option".formatted(template.getType().name().toLowerCase(), template.getID(), b.getBranchID()), OptionType.fromBranch(b))).collect(Collectors.toList());
         }
-        return List.of("dialogue.continue");
+        return List.of(new DialogueOption("dialogue.continue", OptionType.NORMAL));
     }
 
     public int getNumberOfDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
@@ -88,5 +88,23 @@ public class DialogueBranch {
 
     public List<String> getMustNotHaveData() {
         return ImmutableList.copyOf(mustNotHaveData);
+    }
+
+    public record DialogueOption(String line, OptionType type) {
+    }
+
+
+    public enum OptionType {
+        NORMAL, TRADE, END;
+
+        private static OptionType fromBranch(DialogueBranch branch) {
+            if ("trade".equals(branch.endingNodeID)) {
+                return TRADE;
+            } else if (branch.endsDialogue) {
+                return END;
+            }
+            return NORMAL;
+        }
+
     }
 }

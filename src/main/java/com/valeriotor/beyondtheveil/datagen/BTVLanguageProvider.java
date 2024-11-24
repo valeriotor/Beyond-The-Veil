@@ -1302,12 +1302,66 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.initial.continue.option", "(Continue)");
         add("dialogue.shoreman_scholar.initial.someone.option", "Someone who does not view me with the stern eyes of suspicion.");
 
+        add("dialogue.shoreman_clerk.initial.talk.0", "What's there to talk about? You and I are too different, only seemingly speaking the same language, yet in truth our words are incomprehensible to one another.");
+        add("dialogue.shoreman_clerk.initial.start.0", "Huh? Are you here to buy or to steal?");
+        add("dialogue.shoreman_clerk.initial.obvious.0", "No.");
+        add("dialogue.shoreman_clerk.initial.steal.0", "Of course, just arrived and yet you already plunder our resources, stealing from our chests and barrels our hard earned goods.\nBecause you just §odo not care§r about ones such as us.");
+        add("dialogue.shoreman_clerk.initial.steal.1", "That's the truth of it. To you, we are irrelevant. Insignificant. And, given the opportunity, you would wipe us all out| — not out of need, but just because you §ocould§r.");
+        add("dialogue.shoreman_clerk.initial.buy.0", "Hmph. Special prices, just for you.");
+        add("dialogue.shoreman_clerk.initial.refrain.0", "I know.\n§oI know.§r");
+        add("dialogue.shoreman_clerk.initial.anyone.0", "Hmm.|\nTry the lighthouse keeper. He sees the clearest, up there in his tower.");
+        add("dialogue.shoreman_clerk.initial.and.option", "And I may do it again.");
+        add("dialogue.shoreman_clerk.initial.farewell__.option", "Farewell.");
+        add("dialogue.shoreman_clerk.initial.i.option", "I was joking! Was it not obvious?!");
+        add("dialogue.shoreman_clerk.initial.ehm___.option", "Ehm.. still up to trade?");
+        add("dialogue.shoreman_clerk.initial.thanks_.option", "Thanks. Farewell.");
+        add("dialogue.shoreman_clerk.initial.alright_.option", "Alright. Farewell.");
+        add("dialogue.shoreman_clerk.initial.let's.option", "Let's see.");
+        add("dialogue.shoreman_clerk.initial.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_clerk.initial.(nod).option", "(Nod)");
+        add("dialogue.shoreman_clerk.initial.ehm__.option", "Ehm.. still up to trade?");
+        add("dialogue.shoreman_clerk.initial.buy_.option", "Buy.");
+        add("dialogue.shoreman_clerk.initial.not.option", "Not now.");
+        add("dialogue.shoreman_clerk.initial.i_.option", "I do not deny that, in the past, I have not refrained from killing.");
+        add("dialogue.shoreman_clerk.initial.neither_.option", "Neither. Just talk.");
+        add("dialogue.shoreman_clerk.initial.is.option", "Is there anyone willing to speak to me?");
+        add("dialogue.shoreman_clerk.initial.steal_.option", "Steal.");
 
+        add("dialogue.shoreman_carpenter.initial.oldest.0", "Father Ocean spawned Daughter Earth, and not the other way around.\nYour beliefs are apocryphal.");
+        add("dialogue.shoreman_carpenter.initial.unknowable.0", "Ah, then you believe in the Unknowable! And so do we, deeper even than the ocean.");
+        add("dialogue.shoreman_carpenter.initial.start.0", "Hmph.");
+        add("dialogue.shoreman_carpenter.initial.common.0", "No. Our closest common ancestor is water, that most ancient of substances that gave birth to all things, predating and fathering blood.");
+        add("dialogue.shoreman_carpenter.initial.hmph.0", "Go. Return whence you came.\nWe have §onothing§r in common.");
+        add("dialogue.shoreman_carpenter.initial.siblings.0", "If you seek your siblings, go back to your people. We are not brethren. Hah! Not even cousins!");
+        add("dialogue.shoreman_carpenter.initial.hmph.option", "Hmph to you too.");
+        add("dialogue.shoreman_carpenter.initial.why.option", "Why are you folks so cold! Are we not all brothers and sisters?");
+        add("dialogue.shoreman_carpenter.initial.i.option", "I do not \"believe\". I §oknow§r.");
+        add("dialogue.shoreman_carpenter.initial.nothing?.option", "Nothing? We are both humans, born of the same blood, the same ancestors!");
+        add("dialogue.shoreman_carpenter.initial.very.option", "Very well. Goodbye.");
+        add("dialogue.shoreman_carpenter.initial.but.option", "But are we not born of the same common ancestor? We both share its blood.");
+        add("dialogue.shoreman_carpenter.initial.yes_.option", "Yes. §oThere§r is something we have in common.");
+        add("dialogue.shoreman_carpenter.initial.water.option", "Water is not the oldest substance. Not even close.");
+        add("dialogue.shoreman_carpenter.initial.i_.option", "I do not \"believe\". I §oknow§r that I §ocannot know§r.");
+        add("dialogue.shoreman_carpenter.initial.whatever.option", "Whatever you say.");
 
+        add("dialogue.shoreman_bartender.initial.start.0", "Hmph., we do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
+        add("dialogue.shoreman_bartender.initial.anything.option", "Anything for sale?");
+        add("dialogue.shoreman_bartender.initial.thank.option", "Thank you.");
 
-
-
-
+        add("dialogue.shoreman_drunk.initial.mean.0", "It's just.. I dunnae like life here no more. Ne'er did, actually.\nBroodin', borin' fishermen. Misbegotten children of earth and water, I tell ya! That's what we be!");
+        add("dialogue.shoreman_drunk.initial.start.0", "A newcomer, eh? We dun't see many outsiders no'adays.\nGood for ya. Being an outsider an' all.");
+        add("dialogue.shoreman_drunk.initial.brethren.0", "You'd talk ill too, had ya seen what I seen.");
+        add("dialogue.shoreman_drunk.initial.elaborate.0", "]]Hmmm.[[\nNah. Cannae talk on a parched throat.");
+        add("dialogue.shoreman_drunk.initial.sober.0", "Huh? Sauber? Wut's that?");
+        add("dialogue.shoreman_drunk.initial.what.option", "What do you mean?");
+        add("dialogue.shoreman_drunk.initial.thanks_.option", "Thanks. You look very far from sober, by the way.");
+        add("dialogue.shoreman_drunk.initial.nothing_.option", "Nothing. I wonder why you'd count me lucky as an outsider?");
+        add("dialogue.shoreman_drunk.initial.please,.option", "Please, do elaborate.");
+        add("dialogue.shoreman_drunk.initial.i.option", "I see. Good day, then.");
+        add("dialogue.shoreman_drunk.initial.drunkard__.option", "Drunkard..");
+        add("dialogue.shoreman_drunk.initial.nevermind_.option", "Nevermind. Farewell.");
+        add("dialogue.shoreman_drunk.initial.go.option", "Go on..");
+        add("dialogue.shoreman_drunk.initial.how.option", "How can you talk so ill of your brethren?");
 
 
     }
