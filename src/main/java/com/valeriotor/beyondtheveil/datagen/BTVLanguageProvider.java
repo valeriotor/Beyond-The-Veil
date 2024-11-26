@@ -1302,6 +1302,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.initial.continue.option", "(Continue)");
         add("dialogue.shoreman_scholar.initial.someone.option", "Someone who does not view me with the stern eyes of suspicion.");
 
+        add("dialogue.shoreman_scholar.initial1.start.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
+        add("dialogue.shoreman_scholar.initial1.i.option", "I understand");
+        add("dialogue.shoreman_scholar.initial1.___.option", "...");
+
+
         add("dialogue.shoreman_clerk.initial.talk.0", "What's there to talk about? You and I are too different, only seemingly speaking the same language, yet in truth our words are incomprehensible to one another.");
         add("dialogue.shoreman_clerk.initial.start.0", "Huh? Are you here to buy or to steal?");
         add("dialogue.shoreman_clerk.initial.obvious.0", "No.");
@@ -1327,6 +1332,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_clerk.initial.is.option", "Is there anyone willing to speak to me?");
         add("dialogue.shoreman_clerk.initial.steal_.option", "Steal.");
 
+        add("dialogue.shoreman_clerk.initial1.start.0", "Hmph. Special prices, just for you.");
+        add("dialogue.shoreman_clerk.initial1.not.option", "Not now.");
+        add("dialogue.shoreman_clerk.initial1.let's.option", "Let's see.");
+
+
+
         add("dialogue.shoreman_carpenter.initial.oldest.0", "Father Ocean spawned Daughter Earth, and not the other way around.\nYour beliefs are apocryphal.");
         add("dialogue.shoreman_carpenter.initial.unknowable.0", "Ah, then you believe in the Unknowable! And so do we, deeper even than the ocean.");
         add("dialogue.shoreman_carpenter.initial.start.0", "Hmph.");
@@ -1344,7 +1355,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_carpenter.initial.i_.option", "I do not \"believe\". I §oknow§r that I §ocannot know§r.");
         add("dialogue.shoreman_carpenter.initial.whatever.option", "Whatever you say.");
 
-        add("dialogue.shoreman_bartender.initial.start.0", "Hmph., we do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
+        add("dialogue.shoreman_carpenter.initial1.start.0", "I am a woodworker, build canoes for the fishermen. But my craft is not for you outsiders.");
+        add("dialogue.shoreman_carpenter.initial1.your.option", "Your woodwork is out and about, what's stopping me from taking it?");
+        add("dialogue.shoreman_carpenter.initial1.i.option", "I have not interest in your damp, creaking lumber.");
+        add("dialogue.shoreman_carpenter.initial1.it.option", "It is a shame. Your art would be highly valued among my people.");
+
+
+
+        add("dialogue.shoreman_bartender.initial.start.0", "Hmph. We do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
         add("dialogue.shoreman_bartender.initial.anything.option", "Anything for sale?");
         add("dialogue.shoreman_bartender.initial.thank.option", "Thank you.");
 
@@ -1362,6 +1380,36 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_drunk.initial.nevermind_.option", "Nevermind. Farewell.");
         add("dialogue.shoreman_drunk.initial.go.option", "Go on..");
         add("dialogue.shoreman_drunk.initial.how.option", "How can you talk so ill of your brethren?");
+
+        add("dialogue.shoreman_drunk.initial1.start.0", "Ach, cannae drink sea water. Ne'er again...");
+        add("dialogue.shoreman_drunk.initial1.can't.option", "Can't get anything out of a thirsty man.");
+        add("dialogue.shoreman_drunk.initial1.might.option", "Might be good if you don't drink for a while..");
+
+        add("dialogue.shoreman_drunk.drunk.secluded.0", "Nono, we ain't secluded. We samply hate y'all, thar's all.\nCause y'all hate us, I guess. Dunno.");
+        add("dialogue.shoreman_drunk.drunk.where.0", "Ain't seen 'im in a while. Swimmin' somewhere. Deep down below.");
+        add("dialogue.shoreman_drunk.drunk.kin.0", "Yah but then why ye gotta kill me ma, an' then ye try an' kill me pa, but then me pa kill yer pa, an' wait where was I goin' with this...");
+        add("dialogue.shoreman_drunk.drunk.enough.0", "Ooof, why can't ya stooop. Ye go on an' on an' on. Yah thar's why we hate ye. Not cause ye killed me ma. Ye just ask too much.");
+        add("dialogue.shoreman_drunk.drunk.saying.0", "Oh yah. What was I sayin'?||\nAh, may'aps somethin' bout us fisherfolk. Yah we a nasty bunch. Pale all over.| Except me nose.");
+        add("dialogue.shoreman_drunk.drunk.pa.0", "Oh betcha he was a good looking fella. Not like mine. Slimy and all.");
+        add("dialogue.shoreman_drunk.drunk.unlike.0", "Oi! It's ye who look weird an' all. Thar's why we hate y'all. Ye just cannae stop hatin' §ous§r.");
+        add("dialogue.shoreman_drunk.drunk.start.0", "Ain't thar the good stuf-|| §o*hic*§r beg pardon.");
+        add("dialogue.shoreman_drunk.drunk.i_.option", "I don't hate you, and I'm sure my kin wouldn't either.");
+        add("dialogue.shoreman_drunk.drunk.i__.option", "I only hate you because you hate §ome§r.");
+        add("dialogue.shoreman_drunk.drunk.i____.option", "I only hate you because you hate §ome§r.");
+        add("dialogue.shoreman_drunk.drunk.why.option", "Why are you folks so secluded?");
+        add("dialogue.shoreman_drunk.drunk.i___.option", "I don't hate you, and I'm sure my kin wouldn't either.");
+        add("dialogue.shoreman_drunk.drunk.i.option", "I don't even know \"me pa\"..");
+        add("dialogue.shoreman_drunk.drunk.not.option", "Not to sound rude, but why do you all look so unlike the.. other humans of the world?");
+        add("dialogue.shoreman_drunk.drunk.you're.option", "You're calling your dad... slimy?");
+        add("dialogue.shoreman_drunk.drunk.deep.option", "Deep down below where??");
+        add("dialogue.shoreman_drunk.drunk.serves.option", "Serves you being a drunkard.");
+        add("dialogue.shoreman_drunk.drunk.where's.option", "Where's your \"pa\" right now?");
+        add("dialogue.shoreman_drunk.drunk.you.option", "You were saying..");
+        add("dialogue.shoreman_drunk.drunk.sorry__.option", "Sorry.. I see you're getting tired.");
+
+        add("dialogue.shoreman_drunk.drunk1.start.0", "]]Ye just go on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' §o*hic*§r on an' on an' on an' on an' on an' on!!");
+        add("dialogue.shoreman_drunk.drunk1.ok__.option", "Ok..");
+
 
 
     }
@@ -1393,6 +1441,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.initial.no_fear.option", "You must not fear me.");
         add("dialogue.shoreman_lighthouse_keeper.initial.mankind.option", "My mission is for all of mankind, and that includes §oyou§r.");
         add("dialogue.shoreman_lighthouse_keeper.initial.groundless.option", "Your accusations are groundless. There are no records of any such \"crusades\". I cannot trust your words.");
+
+        add("dialogue.shoreman_lighthouse_keeper.initial1.start.0", "§oPlease§r.. I beg of you..\n§oLet no further harm come upon my people.§r");
+        add("dialogue.shoreman_lighthouse_keeper.initial1.i.option", "I cannot trust you.");
+        add("dialogue.shoreman_lighthouse_keeper.initial1.do.option", "Do not fear.");
+
+
     }
 
     private void addResearch() {
@@ -1445,7 +1499,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.reminisced_darkness.text", "Dream of Darkness.");
         add("research.found_darkness.text", "See where the dream leads me.");
         add("research.spoke_dweller.text", "Speak to the inhabitants.");
-        add("research.spoke_keeper.text", "Speak to the keeper of the lighthouse.");
+        add("research.unlocked_hamlet.text", "Speak to the keeper of the lighthouse.");
         add("research.DARKNESS.stage.0", "Dreams dance unseen. Escaping all senses, they are destined to be inscrutable — until we shut our eyes. \\n" +
                 "(Can closing one curtain open another?)\\n" +
                 "In reminiscing, my sight was gone, and yet my mind saw clearly: a new memory flared, bright and blinding. \\n" +

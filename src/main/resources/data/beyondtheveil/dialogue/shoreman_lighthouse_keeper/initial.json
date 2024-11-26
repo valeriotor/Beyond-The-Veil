@@ -99,21 +99,26 @@
           "id" : "no_fear",
           "branchLength" : 0,
           "endingNodeID" : "end",
-          "endsDialogue" : true
+          "endsDialogue" : true,
+          "unlockedData": ["spoke_keeper"]
         },
         {
           "id" : "mankind",
           "branchLength" : 0,
           "endingNodeID" : "end",
-          "endsDialogue" : true
+          "endsDialogue" : true,
+          "unlockedData": ["spoke_keeper"]
         },
         {
           "id" : "groundless",
           "branchLength" : 0,
           "endingNodeID" : "end",
-          "endsDialogue" : true
+          "endsDialogue" : true,
+          "unlockedData": ["spoke_keeper"]
         }
       ]
     }
-  }
+  },
+  "dialogueUnlocks": ["shoreman_lighthouse_keeper:initial1"],
+  "dataUnlocks": ["spoke_dweller"]
 }

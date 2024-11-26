@@ -16,15 +16,22 @@ public class DialogueRegistry {
 
     public static void registerDialogues() {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial1");
 
         registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "initial");
         registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "no_closer");
         registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "begone");
         registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial");
+        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial1");
         registerDialogue(DialogueType.SHOREMAN_CLERK, "initial");
+        registerDialogue(DialogueType.SHOREMAN_CLERK, "initial1");
         registerDialogue(DialogueType.SHOREMAN_CARPENTER, "initial");
+        registerDialogue(DialogueType.SHOREMAN_CARPENTER, "initial1");
         registerDialogue(DialogueType.SHOREMAN_BARTENDER, "initial");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "initial");
+        registerDialogue(DialogueType.SHOREMAN_DRUNK, "initial1");
+        registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk");
+        registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk1");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

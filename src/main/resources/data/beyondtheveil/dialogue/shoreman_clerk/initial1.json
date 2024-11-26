@@ -1,5 +1,5 @@
 {
-  "id": "initial",
+  "id": "initial1",
   "startingBranch": {
     "id": "first",
     "branchLength": 1,
@@ -14,7 +14,7 @@
       "id": "start",
       "dialogueOptions": [
         {
-          "id": "anything",
+          "id": "let\u0027s",
           "branchLength": 0,
           "endingNodeID": "trade",
           "unlockedData": [],
@@ -23,7 +23,7 @@
           "endsDialogue": true
         },
         {
-          "id": "thank",
+          "id": "not",
           "branchLength": 0,
           "endingNodeID": "end",
           "unlockedData": [],
@@ -34,7 +34,6 @@
       ]
     }
   },
-  "type": "shoreman_bartender",
-  "dialogueUnlocks": [],
-  "dataUnlocks": ["spoke_dweller"]
+  "type": "shoreman_clerk",
+  "dialogueUnlocks": []
 }

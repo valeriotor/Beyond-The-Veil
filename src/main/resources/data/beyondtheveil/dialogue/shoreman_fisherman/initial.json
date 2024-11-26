@@ -2,6 +2,7 @@
   "id" : "initial",
   "type": "shoreman_fisherman",
   "dialogueUnlocks": ["shoreman_fisherman:no_closer"],
+  "dataUnlocks": ["spoke_dweller"],
   "startingBranch" : {
     "id" : "first",
     "branchLength": 1,

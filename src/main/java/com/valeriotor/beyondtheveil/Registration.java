@@ -244,11 +244,11 @@ public class Registration {
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
     public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> CANOE = ITEMS.register("canoe", () -> new Item(ITEM_PROPERTIES));
-    public static final RegistryObject<Item> RUM = ITEMS.register("drink_rum", () -> new Item(ITEM_PROPERTIES));
-    public static final RegistryObject<Item> WINE = ITEMS.register("drink_wine", () -> new Item(ITEM_PROPERTIES));
-    public static final RegistryObject<Item> ALE = ITEMS.register("drink_ale", () -> new Item(ITEM_PROPERTIES));
-    public static final RegistryObject<Item> VODKA = ITEMS.register("drink_vodka", () -> new Item(ITEM_PROPERTIES));
-    public static final RegistryObject<Item> MEAD = ITEMS.register("drink_mead", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> RUM = ITEMS.register("drink_rum", DrinkItem::new);
+    public static final RegistryObject<Item> WINE = ITEMS.register("drink_wine", DrinkItem::new);
+    public static final RegistryObject<Item> ALE = ITEMS.register("drink_ale", DrinkItem::new);
+    public static final RegistryObject<Item> VODKA = ITEMS.register("drink_vodka", DrinkItem::new);
+    public static final RegistryObject<Item> MEAD = ITEMS.register("drink_mead", DrinkItem::new);
     public static final RegistryObject<Item> CUP = ITEMS.register("drink_empty", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> FLUTE = ITEMS.register("flute", () -> new Item(ITEM_PROPERTIES));
 

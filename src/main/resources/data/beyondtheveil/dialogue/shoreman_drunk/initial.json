@@ -118,5 +118,6 @@
     }
   },
   "type": "shoreman_drunk",
-  "dialogueUnlocks": []
+  "dialogueUnlocks": ["shoreman_drunk:initial1"],
+  "dataUnlocks": ["spoke_dweller"]
 }

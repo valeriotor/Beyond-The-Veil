@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
@@ -13,6 +14,7 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import com.valeriotor.beyondtheveil.item.DrinkItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -87,7 +89,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
         this.goalSelector.addGoal(2, new StrollThroughHamletGoal(this, 1.5D));
-        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
@@ -131,7 +133,17 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
         if (value == ShoremanProfession.LIGHTHOUSE_KEEPER.ordinal()) {
             List<WrappedGoal> toRemove = new ArrayList<>();
             for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
-                if (goal.getGoal().getClass() == SuspiciousLookAtPlayerGoal.class || goal.getGoal().getClass() == RandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
+                if (goal.getGoal().getClass() == SuspiciousLookAtPlayerGoal.class || goal.getGoal().getClass() == WaterAvoidingRandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
+                    toRemove.add(goal);
+                }
+            }
+            for (WrappedGoal wrappedGoal : toRemove) {
+                goalSelector.removeGoal(wrappedGoal.getGoal());
+            }
+        } else if (!ShoremanProfession.values()[value].isLeavesPost()) {
+            List<WrappedGoal> toRemove = new ArrayList<>();
+            for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
+                if (goal.getGoal().getClass() == WaterAvoidingRandomStrollGoal.class) {
                     toRemove.add(goal);
                 }
             }
@@ -199,12 +211,25 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
         if (itemstack.getItem() != Registration.SHOREMAN_EGG.get() && this.isAlive() && !this.isTalking() && !pPlayer.isSecondaryUseActive()) { // && !this.isSleeping() ?
 
             if (!this.level().isClientSide) {
+                if (giveDrinkToDrunk(pPlayer, pHand, itemstack)) {
+                    return InteractionResult.sidedSuccess(this.level().isClientSide);
+                }
                 this.startTalking((ServerPlayer) pPlayer);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
+    }
+
+    private boolean giveDrinkToDrunk(Player player, InteractionHand hand, ItemStack stack) {
+        String dialogueId = DialogueData.for_(player).getDialogue(DialogueType.SHOREMAN_DRUNK).getID();
+        if (getProfession() == ShoremanProfession.DRUNK && stack.getItem() instanceof DrinkItem && (dialogueId.equals("initial") || dialogueId.equals("initial1"))) {
+            stack.shrink(1);
+            DialogueData.for_(player).setDialogue(DialogueType.SHOREMAN_DRUNK, DialogueRegistry.getTemplate(DialogueType.SHOREMAN_DRUNK, "drunk"));
+            return true;
+        }
+        return false;
     }
 
     @Override

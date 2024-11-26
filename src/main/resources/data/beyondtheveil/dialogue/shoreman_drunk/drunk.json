@@ -1,5 +1,5 @@
 {
-  "id": "initial",
+  "id": "drunk",
   "startingBranch": {
     "id": "first",
     "branchLength": 1,
@@ -10,22 +10,22 @@
     "endsDialogue": false
   },
   "dialogueNodes": {
-    "alas": {
-      "id": "alas",
+    "kin": {
+      "id": "kin",
       "dialogueOptions": [
         {
           "id": "i",
-          "branchLength": 0,
-          "endingNodeID": "end",
+          "branchLength": 1,
+          "endingNodeID": "pa",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
-          "endsDialogue": true
+          "endsDialogue": false
         },
         {
-          "id": "just",
+          "id": "where\u0027s",
           "branchLength": 1,
-          "endingNodeID": "prejudice",
+          "endingNodeID": "where",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -33,13 +33,13 @@
         }
       ]
     },
-    "dream": {
-      "id": "dream",
+    "pa": {
+      "id": "pa",
       "dialogueOptions": [
         {
-          "id": "wait,",
+          "id": "you\u0027re",
           "branchLength": 1,
-          "endingNodeID": "alas",
+          "endingNodeID": "enough",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -47,40 +47,26 @@
         }
       ]
     },
-    "suspicion": {
-      "id": "suspicion",
+    "unlike": {
+      "id": "unlike",
       "dialogueOptions": [
         {
-          "id": "continue_",
+          "id": "i___",
           "branchLength": 1,
-          "endingNodeID": "alas",
+          "endingNodeID": "kin",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": false
-        }
-      ]
-    },
-    "prejudice": {
-      "id": "prejudice",
-      "dialogueOptions": [
-        {
-          "id": "farewell",
-          "branchLength": 0,
-          "endingNodeID": "end",
-          "unlockedData": [],
-          "mustHaveData": [],
-          "mustNotHaveData": [],
-          "endsDialogue": true
         },
         {
-          "id": "___",
-          "branchLength": 0,
-          "endingNodeID": "end",
+          "id": "i____",
+          "branchLength": 1,
+          "endingNodeID": "kin",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
-          "endsDialogue": true
+          "endsDialogue": false
         }
       ]
     },
@@ -88,27 +74,9 @@
       "id": "start",
       "dialogueOptions": [
         {
-          "id": "knowledge_",
-          "branchLength": 2,
-          "endingNodeID": "knowledge",
-          "unlockedData": [],
-          "mustHaveData": [],
-          "mustNotHaveData": [],
-          "endsDialogue": false
-        },
-        {
-          "id": "no_",
+          "id": "you",
           "branchLength": 1,
-          "endingNodeID": "dream",
-          "unlockedData": [],
-          "mustHaveData": [],
-          "mustNotHaveData": [],
-          "endsDialogue": false
-        },
-        {
-          "id": "someone",
-          "branchLength": 1,
-          "endingNodeID": "suspicion",
+          "endingNodeID": "saying",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -116,13 +84,82 @@
         }
       ]
     },
-    "knowledge": {
-      "id": "knowledge",
+    "where": {
+      "id": "where",
       "dialogueOptions": [
         {
-          "id": "continue",
+          "id": "deep",
           "branchLength": 1,
-          "endingNodeID": "alas",
+          "endingNodeID": "enough",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "enough": {
+      "id": "enough",
+      "dialogueOptions": [
+        {
+          "id": "sorry__",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "serves",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "saying": {
+      "id": "saying",
+      "dialogueOptions": [
+        {
+          "id": "not",
+          "branchLength": 1,
+          "endingNodeID": "unlike",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "why",
+          "branchLength": 1,
+          "endingNodeID": "secluded",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "secluded": {
+      "id": "secluded",
+      "dialogueOptions": [
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "kin",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "i__",
+          "branchLength": 1,
+          "endingNodeID": "kin",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -131,7 +168,6 @@
       ]
     }
   },
-  "type": "shoreman_scholar",
-  "dialogueUnlocks": ["shoreman_scholar:initial1"],
-  "dataUnlocks": ["spoke_dweller"]
+  "type": "shoreman_drunk",
+  "dialogueUnlocks": ["shoreman_drunk:drunk1"]
 }

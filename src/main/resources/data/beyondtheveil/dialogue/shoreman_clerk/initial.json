@@ -191,5 +191,6 @@
     }
   },
   "type": "shoreman_clerk",
-  "dialogueUnlocks": []
+  "dialogueUnlocks": ["shoreman_clerk:initial1"],
+  "dataUnlocks": ["spoke_dweller"]
 }

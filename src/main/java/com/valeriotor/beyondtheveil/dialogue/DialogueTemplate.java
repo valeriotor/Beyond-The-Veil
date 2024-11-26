@@ -10,6 +10,7 @@ public class DialogueTemplate {
     private String unlocksAtEnd;
     private String type;
     private List<String> dialogueUnlocks = new ArrayList<>();
+    private List<String> dataUnlocks = new ArrayList<>();
 
     public String getID() {
         return this.id;
@@ -60,5 +61,9 @@ public class DialogueTemplate {
 
     public List<String> getDialogueUnlocks() {
         return dialogueUnlocks;
+    }
+
+    public List<String> getDataUnlocks() {
+        return dataUnlocks;
     }
 }

@@ -7,6 +7,8 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
+import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -42,6 +44,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
     private int lastStringProgressSize, prevLastStringProgressSize;
     private double speed = 1.4;
     private int pauseTicks = 0;
+    private int totalTicks = 0;
     private int currentLine = 0;
     private List<String> localizedNpcLines = new ArrayList<>();
     private List<String> displayedLines = new ArrayList<>();
@@ -173,6 +176,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
 
     @Override
     protected void containerTick() {
+        totalTicks++;
         if (menu.getBranch() != branch || menu.getIndexInBranch() != indexInBranch) {
             branch = menu.getBranch();
             indexInBranch = menu.getIndexInBranch();
@@ -210,6 +214,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
                 while (stringProgress < line.length()) {
                     int index = (int) Math.floor(stringProgress);
                     char c = line.charAt(index);
+                    char next = line.length() > index + 1 ? line.charAt(index + 1) : '\0';
                     if (c == '[' || c == ']' || c == '§' || skipChar || c == '|') {
                         if (skipChar) {
                             skipChar = false;
@@ -231,10 +236,12 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
                         }
                         stringProgress += 1;
                     } else {
-                        if (c == ',') {
-                            pauseTicks += 4;
-                        } else if (c == '.' || c == '?' || c == '!') {
-                            pauseTicks += 7;
+                        if(c != next && !(line.length() == index + 1 && currentLine == localizedNpcLines.size() - 1)) {
+                            if (c == ',') {
+                                pauseTicks += 4;
+                            } else if (c == '.' || c == '?' || c == '!') {
+                                pauseTicks += 7;
+                            }
                         }
                         break;
                     }
@@ -286,7 +293,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
             yOffset += 15;
         }
 
-        if (options != null) {
+        if (options != null && shouldShowOptions()) {
             pose.pushPose();
             pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -60, 0);
             options.render(pose, guiGraphics, 0xFFDD0000, (int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor));
@@ -297,9 +304,17 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         guiGraphics.drawString(minecraft.font, "%d, %d".formatted(pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
     }
 
+    private boolean shouldShowOptions() {
+        DialogueTemplate template = menu.getTemplate();
+        if (template.getType() == DialogueType.SHOREMAN_DRUNK && template.getID().equals("drunk1")) {
+            return totalTicks > 60;
+        }
+        return currentLine >= localizedNpcLines.size();
+    }
+
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        if (options != null) {
+        if (options != null && shouldShowOptions()) {
             return options.mouseClicked((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pButton);
         }
         return false;

@@ -105,7 +105,7 @@
         "stages": [
           {
             "text": "research.DARKNESS.stage.0",
-            "required_research": ["reminisced_darkness", "found_darkness", "spoke_dweller", "spoke_keeper"],
+            "required_research": ["reminisced_darkness", "found_darkness", "spoke_dweller", "unlocked_hamlet"],
             "memories": ["darkness"]
           },
           {

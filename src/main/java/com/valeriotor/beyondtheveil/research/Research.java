@@ -166,10 +166,11 @@ public class Research {
         public boolean meetsRequirements(PlayerData data) {
             if(data == null) return false;
             if(required_research == null || required_research.length == 0) return true;
-            for(String s : this.getRequirements()) {
-                if(!data.getBoolean(s)) return false;
+            String[] reqs = getRequirements();
+            if (reqs.length == 0 || data.getBoolean(reqs[reqs.length - 1])) {
+                return true;
             }
-            return true;
+            return false;
         }
 
         public String[] getRequirements() {

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -69,6 +70,9 @@ public class PlayerTickEvents {
                     BlockPos playerPos = player.blockPosition();
                     if (Math.abs(playerPos.getX() - rw.getPos().getX()) < 50 && Math.abs(playerPos.getZ() - rw.getPos().getZ()) < 50) {
                         DataUtil.setBooleanOnServerAndSync(player, foundKey, true, false);
+                        if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.SPOKE_KEEPER)) {
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.UNLOCKED_HAMLET, true, false);
+                        }
                     }
                 }
             }
