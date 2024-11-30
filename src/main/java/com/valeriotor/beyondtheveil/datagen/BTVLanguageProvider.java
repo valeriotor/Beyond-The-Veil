@@ -1508,11 +1508,36 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Will I finally see clear? \\n" +
                 "Or will I be blind for evermore?");
         add("research.DARKNESS.stage.1", "Saint Adelina described them as \"inhuman, repulsive affronts to nature\", stating that \"not to crusade against such heresy would be our gravest sin\".\\n" +
-                "Her betrothed, Jerome, would be only mildly less vicious, deeming them \"bastard sons of earth and water\".\\n" +
+                "Her betrothed, Jerome, would be only mildly less vicious, deeming them \"misbegotten sons of earth and water\".\\n" +
                 "Were they wrong? The people of the fishing village were certainly unwelcoming. Blatant in their scorn for me and for acts I did not commit.\\n" +
                 "Yet, I could hear fear ailing their voice, see it diverting their eyes. \\n" +
                 "In concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.\\n" +
                 "But dreams can go through Him, he said.");
+
+        add("research.EMPTY_DREAMS.title", "Empty Dreams");
+        add("research.reminisced_void_metal.text", "Dream of Void, then Metal.");
+        add("research.EMPTY_DREAMS.stage.0", "A memory of a dream I cannot remember, older yet than darkness, predating reality (or that which we call so). He would then live (exist) down there, deceitful (with or without intent), waiting (outside of time), dreaming.\\n" +
+                "Where lies the lie? Were my eyelids sewn shut at birth, dogmas drawn in their insides to see nothing else? Or am I too quick to dismiss the old adages, their wisdom shown in their persistence, in their supremacy over the heretical folks whom they… they…\\n" +
+                "No. I must be rigorous. An empty dream, one I cannot reminisce, at the tip of my mind but barely outside its grasp. Yet my next dream might, and learn that it must slow down its descent, stay still within the Void, the Veil, the Dreamer.");
+        add("research.EMPTY_DREAMS.stage.1", "It worked.");
+
+        add("research.WATER_DREAMS.title", "Dreams of Water");
+        add("research.reminisced_void_water.text", "Dream of Void, then Water.");
+        add("research.WATER_DREAMS.stage.0", "Our mind stands atop the small, sinking isle of what it sees and feels, besieged on all fronts by the endless waves of the unknown.\\n" +
+                "Now the tide rises, the illusion shatters, and what we thought we knew is submerged once more.\\n" +
+                "Lies. Some perpetrated by thousand year old institutions, busy polishing unearned offerings; others encouraged by our own — perhaps merciful — minds, and the wishful thinking clouding our thoughts.\\n" +
+                "But we know dreams can show us more than meets the eye. Fix our lapses in judgement, grant us a new perspective. Breach our preconceived notions, this veil obscuring the unknown.\\n" +
+                "The shoremen were right. I must dream of Water, a memory so intense I may forget to breathe.\\n" +
+                "But first I must bolster it with Void, to still its descent, and give myself time to… listen.\\n" +
+                "...\\n" +
+                "Merciful Gods, please,\\1" +
+                "don't let me drown.");
+        add("research.WATER_DREAMS.stage.1", "Gracious Gods, do not let my mind crumble as I write this.\\n" +
+                "My dream dived in, my body forgotten atop the shore. The mind knew no longer our material world. \\n" +
+                "I sped down, relentless, unremitting, as I became engulfed in the rumble of water, sweetly scented in the color of nothing. It was the fusion of the senses, a synesthesia of the soul.\\n" +
+                "Then, a voice. It came from the ocean, speaking not to me, but through me, as if it did not notice I was there, in my dream.\\n" +
+                "The voice of the sea. Deafening currents running fast and mindless in the deepest trenches. Life is born this way, the turmoil of waters becoming our blood.\\n" +
+                "I know now what I must do. The keeper was right.");
 
 
     }
@@ -1530,6 +1555,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addReminiscence() {
         add("reminiscence.EMPTY", "The dream was not affected.");
+        add("reminiscence.void", "My next dream will be empowered by void.");
     }
 
     private void addGuis() {

@@ -15,6 +15,7 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> INCISION = registerSound("incision");
     public static final RegistryObject<SoundEvent> HEAD_STRETCH = registerSound("head_stretch");
     public static final RegistryObject<SoundEvent> HEAD_EXPLODE = registerSound("head_explode");
+    public static final RegistryObject<SoundEvent> WATER_DREAM = registerSound("water_dream");
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);

@@ -23,17 +23,56 @@ public abstract class Reminiscence {
         }
     }
 
-    public static class EmptyReminiscenceVoid extends Reminiscence {
+    public static class TextReminiscence extends Reminiscence {
+
+        private String textKey;
+
+        public TextReminiscence(String textKey) {
+            this.textKey = textKey;
+        }
+
         @Override
         public CompoundTag save() {
-            return new CompoundTag();
+            CompoundTag tag = new CompoundTag();
+            tag.putString("textKey", textKey);
+            return tag;
         }
 
         @Override
         public void load(CompoundTag tag) {
+            textKey = tag.getString("textKey");
+        }
 
+        public String getTextKey() {
+            return textKey;
         }
     }
+
+    public static class SoundReminiscence extends Reminiscence {
+
+        private String soundKey;
+
+        public SoundReminiscence(String soundKey) {
+            this.soundKey = soundKey;
+        }
+
+        @Override
+        public CompoundTag save() {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("soundKey", soundKey);
+            return tag;
+        }
+
+        @Override
+        public void load(CompoundTag tag) {
+            soundKey = tag.getString("soundKey");
+        }
+
+        public String getSoundKey() {
+            return soundKey;
+        }
+    }
+
 
 }
 

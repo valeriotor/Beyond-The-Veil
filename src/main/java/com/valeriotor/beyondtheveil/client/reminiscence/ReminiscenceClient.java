@@ -5,23 +5,27 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.KeyBindings;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
-import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceUnderground;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -35,11 +39,24 @@ public abstract class ReminiscenceClient {
     private static final List<ReminiscenceClient> reminiscences = new ArrayList<>();
 
     protected abstract void render(RenderGuiOverlayEvent event);
-    protected void tick() {}
-    protected void reset() {}
-    protected void mouseScroll(InputEvent.MouseScrollingEvent event) {}
 
-    public static void renderReminiscence(RenderGuiOverlayEvent  event) {
+    protected void tick() {
+    }
+
+    protected void reset() {
+    }
+
+    protected void stop() {
+    }
+
+    protected void nextReminiscence() {
+        stop();
+    }
+
+    protected void mouseScroll(InputEvent.MouseScrollingEvent event) {
+    }
+
+    public static void renderReminiscence(RenderGuiOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             if (reminisceTimePressed > 0) {
@@ -87,15 +104,19 @@ public abstract class ReminiscenceClient {
     }
 
     public static void keyInputEvent(InputEvent.Key event) {
-        if(event.getAction() == GLFW.GLFW_PRESS && reminisceTimePressed >= 20) {
+        if (event.getAction() == GLFW.GLFW_PRESS && reminisceTimePressed >= 20) {
             if ((event.getKey() == GLFW.GLFW_KEY_ESCAPE || event.getKey() == Minecraft.getInstance().options.keyInventory.getKey().getValue())) {
                 reminisceTimePressed = 19;
+                if (selectedReminiscence != -1 && selectedReminiscence < reminiscences.size()) {
+                    reminiscences.get(selectedReminiscence).stop();
+                }
                 Minecraft.getInstance().setScreen(null);
                 preventScreenOpen = true;
                 Messages.sendToServer(new GenericToServerPacket(GenericToServerPacket.MessageType.REMINISCING_STOP));
             } else if (event.getKey() == KeyBindings.reminisce.getKey().getValue()) {
                 if (reminiscences.size() > 1) {
                     reminiscences.get(selectedReminiscence).reset();
+                    reminiscences.get(selectedReminiscence).nextReminiscence();
                     selectedReminiscence++;
                     selectedReminiscence %= reminiscences.size();
                 }
@@ -116,7 +137,8 @@ public abstract class ReminiscenceClient {
         }
     }
 
-    /** Should be called everytime reminiscences change, i.e. every time NBT data is loaded or synced
+    /**
+     * Should be called everytime reminiscences change, i.e. every time NBT data is loaded or synced
      */
     public static void reloadReminiscences() {
         Map<String, Reminiscence> reminiscenceMap = DataUtil.getReminiscences(DataUtilClient.getPlayer());
@@ -128,7 +150,11 @@ public abstract class ReminiscenceClient {
             } else if (e.getValue() instanceof ReminiscenceWaypoint rw) {
                 r = new ReminiscenceClientWaypoint(rw);
             } else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
-                r = new EmptyReminiscenceClient();
+                r = new TextReminiscenceClient("reminiscence.EMPTY");
+            } else if (e.getValue() instanceof Reminiscence.TextReminiscence rw) {
+                r = new TextReminiscenceClient(rw);
+            } else if (e.getValue() instanceof Reminiscence.SoundReminiscence rw) {
+                r = new SoundReminiscenceClient(rw);
             } else {
                 throw new IllegalArgumentException("Unknown reminiscence " + e.getValue().toString());
             }
@@ -142,12 +168,22 @@ public abstract class ReminiscenceClient {
 
     }
 
-    public static class EmptyReminiscenceClient extends ReminiscenceClient {
+    public static class TextReminiscenceClient extends ReminiscenceClient {
 
+        private final String textKey;
         private int counter = 1;
+
+        public TextReminiscenceClient(String textKey) {
+            this.textKey = textKey;
+        }
+
+        public TextReminiscenceClient(Reminiscence.TextReminiscence rw) {
+            this(rw.getTextKey());
+        }
+
         @Override
         protected void render(RenderGuiOverlayEvent event) {
-            String translatable = Component.translatable("reminiscence.EMPTY").getString();
+            String translatable = Component.translatable(textKey).getString();
             String sub = translatable.substring(0, Math.min(counter, translatable.length()));
             int guiScaledWidth = event.getWindow().getGuiScaledWidth();
             int guiScaledHeight = event.getWindow().getGuiScaledHeight();
@@ -170,6 +206,44 @@ public abstract class ReminiscenceClient {
         }
     }
 
+    public static class SoundReminiscenceClient extends ReminiscenceClient {
+
+        private final String soundKey;
+        private SoundInstance instance;
+        private int counter = 0;
+
+        public SoundReminiscenceClient(Reminiscence.SoundReminiscence rw) {
+            soundKey = rw.getSoundKey();
+        }
+
+        @Override
+        protected void render(RenderGuiOverlayEvent event) {
+        }
+
+        @Override
+        protected void tick() {
+            counter++;
+            if (counter == 1) {
+                SoundEvent value = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(References.MODID, soundKey));
+                if (value != null) {
+                    instance = SimpleSoundInstance.forUI(value, 1);
+                    Minecraft.getInstance().getSoundManager().play(instance);
+                }
+            }
+        }
+
+        @Override
+        protected void stop() {
+            if (instance != null && Minecraft.getInstance().getSoundManager().isActive(instance)) {
+                Minecraft.getInstance().getSoundManager().stop(instance);
+            }
+        }
+
+        @Override
+        protected void reset() {
+            counter = 0;
+        }
+    }
 
 
 }

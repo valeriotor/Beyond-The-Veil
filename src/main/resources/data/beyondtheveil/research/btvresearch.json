@@ -98,7 +98,7 @@
       {
         "key": "DARKNESS",
         "name": "research.DARKNESS.title",
-        "icons": [ "minecraft:obsidian" ],
+        "icons": [ "minecraft:coal" ],
         "category": "BEYOND_THE_VEIL", "location": [ 4,0 ],
         "hiders": ["SLEEP_CHAMBER", "SENTIENCE"],
         "parents": ["SLEEP_CHAMBER", "SENTIENCE"],
@@ -111,6 +111,44 @@
           {
             "text": "research.DARKNESS.stage.1",
             "memories": ["darkness"]
+          }
+        ]
+      },
+      {
+        "key": "EMPTY_DREAMS",
+        "name": "research.EMPTY_DREAMS.title",
+        "icons": [ "minecraft:air" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,0 ],
+        "hiders": ["DARKNESS"],
+        "parents": ["DARKNESS"],
+        "stages": [
+          {
+            "text": "research.EMPTY_DREAMS.stage.0",
+            "required_research": ["reminisced_void_metal"],
+            "memories": ["void"]
+          },
+          {
+            "text": "research.EMPTY_DREAMS.stage.1",
+            "memories": ["void"]
+          }
+        ]
+      },
+      {
+        "key": "WATER_DREAMS",
+        "name": "research.WATER_DREAMS.title",
+        "icons": [ "minecraft:obsidian" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 8,1 ],
+        "hiders": ["EMPTY_DREAMS"],
+        "parents": ["EMPTY_DREAMS"],
+        "stages": [
+          {
+            "text": "research.WATER_DREAMS.stage.0",
+            "required_research": ["reminisced_void_water"],
+            "memories": ["water"]
+          },
+          {
+            "text": "research.WATER_DREAMS.stage.1",
+            "memories": ["water"]
           }
         ]
       },

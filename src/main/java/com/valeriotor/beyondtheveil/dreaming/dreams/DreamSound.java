@@ -5,22 +5,23 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class DreamVoid extends Dream {
+public class DreamSound extends Dream {
 
-    public DreamVoid() {
-        super(Memory.VOID, 0, () -> new Reminiscence.TextReminiscence("reminiscence.void"));
+    private final String soundKey;
+
+    public DreamSound(Memory memory, SoundEvent event, boolean isVoid) {
+        super(memory, 1, () -> new Reminiscence.SoundReminiscence(event.getLocation().getPath()), isVoid);
+        soundKey = event.getLocation().getPath();
     }
 
     @Override
     public boolean activate(Player p, Level l) {
-        if (DreamHandler.hasVoid(p)) {
-            return false;
-        }
-        DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.VOID, true, false);
-        DataUtil.addReminiscence(p, Memory.VOID.getDataName(false), new Reminiscence.TextReminiscence("reminiscence.void"));
+        DataUtil.addReminiscence(p, memory.getDataName(isVoid), new Reminiscence.SoundReminiscence(soundKey));
         return true;
     }
 

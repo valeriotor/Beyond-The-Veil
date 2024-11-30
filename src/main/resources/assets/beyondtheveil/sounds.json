@@ -10,5 +10,8 @@
   },
   "head_explode": {
     "sounds": [ "beyondtheveil:head_explode" ]
+  },
+  "water_dream": {
+    "sounds": [ "beyondtheveil:water_dream" ]
   }
 }
