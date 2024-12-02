@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
+import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.fluid.SurgicalFluidType;
@@ -284,7 +285,7 @@ public class Registration {
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
-    public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", () -> new Item(ITEM_PROPERTIES)); // new ItemBlackMirror("black_mirror");
+    public static final RegistryObject<Item> BLACK_MIRROR = ITEMS.register("black_mirror", BlackMirrorItem::new); // new ItemBlackMirror("black_mirror");
     public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
     public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", SyringeItem::new);
     public static final RegistryObject<Item> SCALPEL = ITEMS.register("scalpel", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.SCALPEL));
@@ -320,6 +321,7 @@ public class Registration {
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<ShoremanDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new ShoremanDialogueMenu(windowId, inv, inv.player, data)));
+    public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
 
     public static final RegistryObject<FluidType> SEDATIVE_FLUID_TYPE = FLUID_TYPES.register("sedative_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/sedative_still"), new ResourceLocation(References.MODID, "block/fluids/sedative_flow"), new ResourceLocation(References.MODID, "block/fluids/sedative_overlay"), 0xFFC13719));
     public static final RegistryObject<FluidType> SOFTENER_FLUID_TYPE = FLUID_TYPES.register("softener_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/softener_still"), new ResourceLocation(References.MODID, "block/fluids/softener_flow"), new ResourceLocation(References.MODID, "block/fluids/softener_overlay"), 0xFFF4C42F));

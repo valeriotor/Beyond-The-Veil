@@ -32,6 +32,8 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "initial1");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk1");
+
+        registerDialogue(DialogueType.BLACK_MIRROR, "initial");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

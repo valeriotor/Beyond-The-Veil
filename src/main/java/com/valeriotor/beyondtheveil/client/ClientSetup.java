@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
+import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanDialogueGui;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
@@ -13,7 +14,6 @@ import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
-import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -38,6 +38,7 @@ public class ClientSetup {
         event.enqueueWork(() -> {
             MenuScreens.register(Registration.GEAR_BENCH_CONTAINER.get(), GearBenchGui::new);
             MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), ShoremanDialogueGui::new);
+            MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_FILLED_CANOPY.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FISH_BARREL.get(), RenderType.cutout());

@@ -29,6 +29,7 @@ import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogueMenu> {
@@ -107,7 +108,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         if (resolve.isPresent()) {
             PlayerData data = resolve.get();
             List<DialogueBranch.DialogueOption> dialogueOptions = menu.getDialogueOptions(data);
-            Consumer<Integer> optionChosen = i -> {
+            BiConsumer<DialogueOptions, Integer> optionChosen = (o, i) -> {
                 Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
             };
             this.options = DialogueOptions.makeOptions(dialogueOptions, (int) (textWidth * 8 / 10), minecraft.font, (int) (textWidth), 45, (int) (textWidth * 3 / 100), optionChosen);

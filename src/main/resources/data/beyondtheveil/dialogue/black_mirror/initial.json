@@ -1,0 +1,87 @@
+{
+  "id" : "initial",
+  "type": "black_mirror",
+  "dialogueUnlocks": ["shoreman_fisherman:no_closer"],
+  "dataUnlocks": ["spoke_dweller"],
+  "startingBranch" : {
+    "id" : "first",
+    "branchLength": 1,
+    "endingNodeID": "start"
+  },
+  "dialogueNodes" : {
+    "start": {
+      "id" : "start",
+      "dialogueOptions" : [
+        {
+          "id" : "traveller",
+          "branchLength" : 1,
+          "endingNodeID" : "leave"
+        },
+        {
+          "id" : "seeker",
+          "branchLength" : 1,
+          "endingNodeID" : "leave"
+        }
+      ]
+    },
+    "leave": {
+      "id" : "leave",
+      "dialogueOptions" : [
+        {
+          "id" : "alright",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "no_way",
+          "branchLength" : 1,
+          "endingNodeID" : "begone"
+        }
+      ]
+    },
+    "begone": {
+      "id" : "begone",
+      "dialogueOptions" : [
+        {
+          "id" : "prejudice",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "my_kind",
+          "branchLength" : 1,
+          "endingNodeID" : "sundered"
+        }
+      ]
+    },
+    "sundered": {
+      "id" : "sundered",
+      "dialogueOptions" : [
+        {
+          "id" : "same_flesh",
+          "branchLength" : 1,
+          "endingNodeID" : "lol_no"
+        }
+      ]
+    },
+    "lol_no": {
+      "id" : "lol_no",
+      "dialogueOptions" : [
+        {
+          "id" : "for_the_best",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        },
+        {
+          "id" : "hospitality",
+          "branchLength" : 0,
+          "endingNodeID" : "end",
+          "endsDialogue" : true
+        }
+      ]
+    }
+  }
+}

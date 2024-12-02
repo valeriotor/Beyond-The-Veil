@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ScrollableList extends Element {
 
-    private final List<? extends Element> rows;
+    private List<? extends Element> rows;
     private final int rowHeight;
     private final int scrollbarWidth;
     private final int renderedRows;
     private int currentFirstRow = 0;
-    private final int maxFirstRow;
+    private int maxFirstRow;
     private int thumbHeight = 15;
     private boolean draggingThumb = false;
 
@@ -27,14 +27,38 @@ public class ScrollableList extends Element {
         thumbHeight = 40;
     }
 
+    public void changeElements(List<Element> rows) {
+        this.rows = rows;
+        this.maxFirstRow = renderedRows >= rows.size() ? 0 : rows.size() - renderedRows;
+        this.currentFirstRow = Math.min(currentFirstRow, rows.size());
+    }
+
+    public int getMaxFirstRow() {
+        return maxFirstRow;
+    }
+
+    public int getCurrentFirstRow() {
+        return currentFirstRow;
+    }
+
+    public void setCurrentFirstRow(int currentFirstRow) {
+        this.currentFirstRow = Mth.clamp(currentFirstRow, 0, maxFirstRow);
+    }
+
+
     @Override
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
-        graphics.fill(getWidth() - scrollbarWidth, 0, getWidth(), getHeight(), 0x99000000);
+        render(poseStack, graphics, color, relativeMouseX, relativeMouseY, 0);
+    }
+
+
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int startFrom) {
         if (maxFirstRow > 0) {
+            graphics.fill(getWidth() - scrollbarWidth, 0, getWidth(), getHeight(), 0x99000000);
             int thumbY = getThumbY();
             renderThumb(poseStack, graphics, thumbY);
         }
-        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+        for (int i = currentFirstRow + startFrom; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
             int y = (i - currentFirstRow) * rowHeight;
             poseStack.pushPose();
             poseStack.translate(0, y, 0);
