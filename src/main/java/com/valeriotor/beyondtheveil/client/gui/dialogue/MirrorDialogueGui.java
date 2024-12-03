@@ -33,10 +33,10 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     private float scaleFactor = 1;
     private int yOffset = 0;
     private int totalTicks = 0;
-    private int displayedLines = 4;
-    private int waitTicks = -1;
-    private static final int WAIT_TICKS_MAX = 15;
-    private static final int WAIT_TICKS_MOVEMENT = 10;
+    private int displayedLines = 6;
+    private int waitTicks = -2;
+    private static final int WAIT_TICKS_MAX = 35;
+    private static final int WAIT_TICKS_MOVEMENT = 25;
     private int numberOfLinesToAppear = 0;
     private static final float TEXT_TO_IMAGE_RATIO = 2.5F;
     private DialogueOptions options;
@@ -44,8 +44,8 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
 
     public MirrorDialogueGui(MirrorDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-        branch = pMenu.getBranch();
-        indexInBranch = pMenu.getIndexInBranch();
+        //branch = pMenu.getBranch();
+        //indexInBranch = pMenu.getIndexInBranch();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         if (menu.getBranch() != branch || menu.getIndexInBranch() != indexInBranch) {
             branch = menu.getBranch();
             indexInBranch = menu.getIndexInBranch();
-            String line = menu.getMirrorLine();
+            String line = "§e" + menu.getMirrorLine();
             localizedLines.add(line);
             numberOfLinesToAppear = new TextUtil().parseText(line, (int) computeListWidth(), minecraft.font).size();
             optionChosen = false;
@@ -64,6 +64,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             waitTicks--;
             if (waitTicks == -1) {
                 updateList();
+                updateOptions();
             }
         }
     }
@@ -91,20 +92,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         int listWidth = (int) computeListWidth();
         updateList();
 
-        Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
-        if (resolve.isPresent()) {
-            PlayerData data = resolve.get();
-            List<DialogueBranch.DialogueOption> dialogueOptions = menu.getDialogueOptions(data);
-            BiConsumer<DialogueOptions, Integer> optionChosen = (o, i) -> {
-                if (!isOptionChosen()) {
-                    localizedLines.add(o.getLocalizedOption(i));
-                    updateList();
-                }
-                markOptionChosen();
-                Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
-            };
-            this.options = DialogueOptions.makeOptions(dialogueOptions, listWidth * 8 / 10, minecraft.font, listWidth, 60, (int) (listWidth * 3 / 100), optionChosen);
-        }
+        updateOptions();
         //if (imageWidth > width * 4F / 5) {
         //    scaleFactor = width * 4F / 5 / imageWidth;
         //} else if (imageWidth < width * 3.5F / 5) {
@@ -118,14 +106,32 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
 
     }
 
+    private void updateOptions() {
+        int listWidth = (int) computeListWidth();
+        Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
+        if (resolve.isPresent()) {
+            PlayerData data = resolve.get();
+            List<DialogueBranch.DialogueOption> dialogueOptions = menu.getDialogueOptions(data);
+            BiConsumer<DialogueOptions, Integer> optionChosen = (o, i) -> {
+                if (!isOptionChosen() && !o.getOptionType(i).isEndsDialogue()) {
+                    localizedLines.add(o.getLocalizedOption(i));
+                    updateList();
+                }
+                markOptionChosen();
+                Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
+            };
+            this.options = DialogueOptions.makeOptions(dialogueOptions, listWidth * 8 / 10, minecraft.font, listWidth, 60, (int) (listWidth * 3 / 100), optionChosen);
+        }
+    }
+
     private void updateList() {
-        boolean wasMaxRow = list.getCurrentFirstRow() == list.getMaxFirstRow();
+        boolean wasMaxRow = list == null || list.getCurrentFirstRow() == list.getMaxFirstRow();
         int listWidth = (int) computeListWidth();
         List<Element> lines = new ArrayList<>();//new TextUtil().parseText("of a dream I cannot remember, older yet than darkness, predating reality (or that which we call so). He would then live (exist) down there, deceitful (with or without intent), waiting (outside of time), dreaming.", listWidth, minecraft.font);
         for (String localizedLine : localizedLines) {
             lines.addAll(new TextUtil().parseText(localizedLine, listWidth, minecraft.font));
         }
-        list = new ScrollableList(listWidth, 15 * displayedLines, lines, 15, listWidth / 20);
+        list = new ScrollableList(listWidth, 15 * displayedLines, lines, 15, (listWidth * 3 / 100));
         if (wasMaxRow) {
             list.setCurrentFirstRow(list.getMaxFirstRow());
         }
@@ -157,25 +163,66 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         PoseStack pose = guiGraphics.pose();
         if (list != null) {
             pose.pushPose();
-            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, height / 2 - imageHeight / 5, 0);
-            if (waitTicks > 0 && waitTicks <= WAIT_TICKS_MOVEMENT) {
-                pose.translate(0, -15 * (WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear, 0);
+            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, height / 2 + Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
+            if (waitTicks > -1 && waitTicks <= WAIT_TICKS_MOVEMENT) {
+                pose.translate(0, -15 * (WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / WAIT_TICKS_MOVEMENT, 0);
             }
-            int linesToSkip = waitTicks == -1 ? 0 : (int) ((WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) / (WAIT_TICKS_MOVEMENT / numberOfLinesToAppear)) - 1;
+            int linesToSkip = waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT ? 0 : (int) ((WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) / ((float) WAIT_TICKS_MOVEMENT / numberOfLinesToAppear)) - 1 - Math.max(0, displayedLines - list.getNumberOfElements());
             pose.scale(scaleFactor, scaleFactor, 1);
-            list.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((pMouseX - width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2) * scaleFactor), (int) ((pMouseY - height / 2 + imageHeight / 5) * scaleFactor), linesToSkip);
+            list.render(pose, guiGraphics, 0xFFFFFFFF, (int) relativeMouseX(pMouseX), (int) ((pMouseY - height / 2) * scaleFactor), Math.max(0, linesToSkip), waitTicks <= -1);
             pose.popPose();
         }
         if (options != null && optionsEnabled()) {
             pose.pushPose();
             pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, height / 2 + imageHeight / 5, 0);
             pose.scale(scaleFactor, scaleFactor, 1);
-            options.render(pose, guiGraphics, 0xFFDD0000, (int) ((pMouseX - width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2) * scaleFactor), (int) ((pMouseY - height / 2 - imageHeight / 5) * scaleFactor));
+            options.render(pose, guiGraphics, 0xFFDD0000, (int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY));
             pose.popPose();
         }
+    }
+
+    private double relativeMouseX(double pMouseX) {
+        return (pMouseX - width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2) * scaleFactor;
+    }
+
+    private double optionsRelativeMouseY(double pMouseY) {
+        return (pMouseY - height / 2 - imageHeight / 5) * scaleFactor;
     }
 
     private boolean optionsEnabled() {
         return waitTicks == -1;
     }
+
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        if (options != null && optionsEnabled()) {
+            return options.mouseClicked((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+        if (options != null) {
+            return options.mouseDragged((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton, pDragX, pDragY);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (options != null) {
+            return options.mouseScrolled((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pDelta);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        if (options != null) {
+            return options.mouseReleased((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton);
+        }
+        return false;
+    }
+
 }

@@ -27,14 +27,14 @@ public class Dialogue {
             if (index < 0 || index >= numberOfDialogueOptions) {
                 return;
             }
-            if (indexInBranch < currentBranch.getLength() - 1) {
+            if (indexInBranch < currentBranch.getLength() - 1 || (currentBranch.endsDialogue() && indexInBranch < currentBranch.getLength())) {
                 indexInBranch++;
             } else {
                 currentBranch = template.getNodeByID(currentBranch.getEndingNodeID()).getDialogueOptions(data).get(index);
                 indexInBranch = 0;
                 currentBranch.getUnlockedData().forEach(s -> unlockDataFromDialogue(player, s));
             }
-            if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength() - 1) {
+            if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength()) {
                 finished = true;
                 if (currentBranch.getEndingNodeID().equals("trade")) {
                     openTrade = true;

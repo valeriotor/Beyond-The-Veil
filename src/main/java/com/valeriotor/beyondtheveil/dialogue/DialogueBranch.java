@@ -95,12 +95,22 @@ public class DialogueBranch {
 
 
     public enum OptionType {
-        NORMAL, TRADE, END;
+        NORMAL(false), TRADE(true), END(true);
+
+        private final boolean endsDialogue;
+
+        OptionType(boolean endsDialogue) {
+            this.endsDialogue = endsDialogue;
+        }
+
+        public boolean isEndsDialogue() {
+            return endsDialogue;
+        }
 
         private static OptionType fromBranch(DialogueBranch branch) {
-            if ("trade".equals(branch.endingNodeID)) {
+            if ("trade".equals(branch.endingNodeID) && branch.branchLength == 0) {
                 return TRADE;
-            } else if (branch.endsDialogue) {
+            } else if (branch.endsDialogue && branch.branchLength == 0) {
                 return END;
             }
             return NORMAL;

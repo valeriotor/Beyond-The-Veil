@@ -89,7 +89,11 @@ public class DialogueOptions extends ScrollableList {
     }
 
     private DialogueBranch.OptionType getType(int element) {
-        return types.get(elementIndexToOptionIndex.get(element)).type();
+        return getOptionType(elementIndexToOptionIndex.get(element));
+    }
+
+    public DialogueBranch.OptionType getOptionType(int option) {
+        return types.get(option).type();
     }
 
 

@@ -1237,7 +1237,56 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.continue", "(Continue)");
         add("dialogue.end", "(End)");
 
+        addMirrorDialogue();
         addShoremanDialogue();
+    }
+
+    private void addMirrorDialogue() {
+        add("dialogue.black_mirror.initial.must.0", "A tear is born of fear. From the past, present or future. And the shoremen fear what has happened and may happen once again.");
+        add("dialogue.black_mirror.initial.must.1", "The pain they endure is tremendous.. but why me? Why need I atone the sins of my forefathers?");
+        add("dialogue.black_mirror.initial.confirm.0", "Is this it?");
+        add("dialogue.black_mirror.initial.terrible.0", "A terrible thought to hold on to, yet hold on I must.");
+        add("dialogue.black_mirror.initial.terrible.1", "Have I erred? A grief so great — not of a person, but of a *people*. To accept a burden so heavy.. may shatter me.");
+        add("dialogue.black_mirror.initial.terrible.2", "Too late to turn back. My vision blurs, and a tear caresses my cheek. Such a little thing, yet of such incalculable weight.");
+        add("dialogue.black_mirror.initial.start.0", "There is just me, here. The small fortress that is my mind.");
+        add("dialogue.black_mirror.initial.weep.0", "What is it I fear most?");
+        add("dialogue.black_mirror.initial.death_.option", "Death.");
+        add("dialogue.black_mirror.initial.scrutiny.option", "Scrutiny by others.");
+        add("dialogue.black_mirror.initial.boredom_.option", "Boredom.");
+        add("dialogue.black_mirror.initial.the__.option", "The brittleness of life.");
+        add("dialogue.black_mirror.initial.that.option", "That I will never make a difference.");
+        add("dialogue.black_mirror.initial.losing.option", "Losing my family.");
+        add("dialogue.black_mirror.initial.pain_.option", "Pain.");
+        add("dialogue.black_mirror.initial.the_.option", "The ocean.");
+        add("dialogue.black_mirror.initial.the___.option", "The future.");
+        add("dialogue.black_mirror.initial.my.option", "My family.");
+        add("dialogue.black_mirror.initial.wasps_.option", "Wasps.");
+        add("dialogue.black_mirror.initial.sadness,.option", "Sadness, and the inability to explain it.");
+        add("dialogue.black_mirror.initial.open.option", "Open spaces.");
+        add("dialogue.black_mirror.initial.closed.option", "Closed spaces.");
+        add("dialogue.black_mirror.initial.spiders_.option", "Spiders.");
+        add("dialogue.black_mirror.initial.fear.option", "Fear itself.");
+        add("dialogue.black_mirror.initial.that_.option", "That humankind will never make a difference.");
+        add("dialogue.black_mirror.initial.the.option", "The dark.");
+        add("dialogue.black_mirror.initial.humiliation_.option", "Humiliation.");
+        add("dialogue.black_mirror.initial.weep.option", "Weep for the shoremen.");
+        add("dialogue.black_mirror.initial.grief_.option", "Grief.");
+        add("dialogue.black_mirror.initial.the____.option", "The present.");
+        add("dialogue.black_mirror.initial.snakes_.option", "Snakes.");
+        add("dialogue.black_mirror.initial.the_____.option", "The past.");
+        add("dialogue.black_mirror.initial.i.option", "I must weep.");
+        add("dialogue.black_mirror.initial.failure_.option", "Failure.");
+        add("dialogue.black_mirror.initial.germs_.option", "Germs.");
+        add("dialogue.black_mirror.initial.regret_.option", "Regret.");
+        add("dialogue.black_mirror.initial.loneliness_.option", "Loneliness.");
+        add("dialogue.black_mirror.initial.no,.option", "No, something else.");
+        add("dialogue.black_mirror.initial.lightning_.option", "Lightning.");
+        add("dialogue.black_mirror.initial.not.option", "Not now.");
+        add("dialogue.black_mirror.initial.not_.option", "Not being accepted.");
+        add("dialogue.black_mirror.initial.heights_.option", "Heights.");
+        add("dialogue.black_mirror.initial.yes_.option", "Yes.");
+
+
     }
     private void addShoremanDialogue() {
         addShoremanLighthouseKeeperDialogue();

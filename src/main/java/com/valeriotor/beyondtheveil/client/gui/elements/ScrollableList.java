@@ -45,15 +45,19 @@ public class ScrollableList extends Element {
         this.currentFirstRow = Mth.clamp(currentFirstRow, 0, maxFirstRow);
     }
 
-
-    @Override
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
-        render(poseStack, graphics, color, relativeMouseX, relativeMouseY, 0);
+    public int getNumberOfElements() {
+        return rows.size();
     }
 
 
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int startFrom) {
-        if (maxFirstRow > 0) {
+    @Override
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        render(poseStack, graphics, color, relativeMouseX, relativeMouseY, 0, true);
+    }
+
+
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int startFrom, boolean drawScrollbar) {
+        if (maxFirstRow > 0 && drawScrollbar) {
             graphics.fill(getWidth() - scrollbarWidth, 0, getWidth(), getHeight(), 0x99000000);
             int thumbY = getThumbY();
             renderThumb(poseStack, graphics, thumbY);
