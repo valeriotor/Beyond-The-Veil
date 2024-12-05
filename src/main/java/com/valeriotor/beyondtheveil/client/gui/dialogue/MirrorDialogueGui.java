@@ -25,7 +25,7 @@ import java.util.function.BiConsumer;
 
 public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/black_mirror_transparent.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/black_mirror_transparent_wide.png");
     private int branch;
     private int indexInBranch;
     private ScrollableList list;
@@ -35,8 +35,8 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     private int totalTicks = 0;
     private int displayedLines = 6;
     private int waitTicks = -2;
-    private static final int WAIT_TICKS_MAX = 35;
-    private static final int WAIT_TICKS_MOVEMENT = 25;
+    private static final int WAIT_TICKS_MAX = 25;
+    private static final int WAIT_TICKS_MOVEMENT = 15;
     private int numberOfLinesToAppear = 0;
     private static final float TEXT_TO_IMAGE_RATIO = 2.5F;
     private DialogueOptions options;
@@ -88,7 +88,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         } else if (MAX_STRING_WIDTH < imageWidth * 1F / TEXT_TO_IMAGE_RATIO) {
             scaleFactor = imageWidth * 1F / TEXT_TO_IMAGE_RATIO / MAX_STRING_WIDTH;
         }
-        System.out.println(scaleFactor);
+        displayedLines = imageHeight / 3 / 15;
         int listWidth = (int) computeListWidth();
         updateList();
 
@@ -125,7 +125,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     }
 
     private void updateList() {
-        boolean wasMaxRow = list == null || list.getCurrentFirstRow() == list.getMaxFirstRow();
+        boolean wasMaxRow = true;//list == null || list.getCurrentFirstRow() == list.getMaxFirstRow();
         int listWidth = (int) computeListWidth();
         List<Element> lines = new ArrayList<>();//new TextUtil().parseText("of a dream I cannot remember, older yet than darkness, predating reality (or that which we call so). He would then live (exist) down there, deceitful (with or without intent), waiting (outside of time), dreaming.", listWidth, minecraft.font);
         for (String localizedLine : localizedLines) {
@@ -163,18 +163,25 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         PoseStack pose = guiGraphics.pose();
         if (list != null) {
             pose.pushPose();
-            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, height / 2 + Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
+            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3 + Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
             if (waitTicks > -1 && waitTicks <= WAIT_TICKS_MOVEMENT) {
                 pose.translate(0, -15 * (WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / WAIT_TICKS_MOVEMENT, 0);
             }
-            int linesToSkip = waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT ? 0 : (int) ((WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) / ((float) WAIT_TICKS_MOVEMENT / numberOfLinesToAppear)) - 1 - Math.max(0, displayedLines - list.getNumberOfElements());
+            int linesToSkip = waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT ? 0 : (int) Math.ceil((WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / ((float) WAIT_TICKS_MOVEMENT)) - Math.max(0, displayedLines - list.getNumberOfElements());
+            if (linesToSkip > -1 && !(waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT)) {
+                System.out.println(linesToSkip);
+            }
             pose.scale(scaleFactor, scaleFactor, 1);
             list.render(pose, guiGraphics, 0xFFFFFFFF, (int) relativeMouseX(pMouseX), (int) ((pMouseY - height / 2) * scaleFactor), Math.max(0, linesToSkip), waitTicks <= -1);
             pose.popPose();
         }
+        pose.pushPose();
+        pose.translate(0, 0, 100);
+        guiGraphics.fill((int) (width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2), imageHeight / 3, (int) (width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2), imageHeight / 3 + 15, 0xFF000000);
+        pose.popPose();
         if (options != null && optionsEnabled()) {
             pose.pushPose();
-            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, height / 2 + imageHeight / 5, 0);
+            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3 + 15 * displayedLines + 15, 0);
             pose.scale(scaleFactor, scaleFactor, 1);
             options.render(pose, guiGraphics, 0xFFDD0000, (int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY));
             pose.popPose();
@@ -186,7 +193,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     }
 
     private double optionsRelativeMouseY(double pMouseY) {
-        return (pMouseY - height / 2 - imageHeight / 5) * scaleFactor;
+        return (pMouseY - imageHeight / 3 - 15 * displayedLines - 15) * scaleFactor;
     }
 
     private boolean optionsEnabled() {
@@ -212,7 +219,14 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
         if (options != null) {
-            return options.mouseScrolled((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pDelta);
+            if (options.mouseScrolled((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pDelta)) {
+                return true;
+            }
+        }
+        if (list != null) {
+            if (list.mouseScrolled((int) relativeMouseX(pMouseX), ((pMouseY - height / 2) * scaleFactor), pDelta)) {
+                return true;
+            }
         }
         return false;
     }
