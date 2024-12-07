@@ -59,7 +59,7 @@ public class DialogueOptions extends ScrollableList {
             poseStack.pushPose();
             poseStack.translate(-2, 0, 0);
             String c = switch (getType(element)) {
-                case NORMAL -> ">";
+                case NORMAL, CONTINUE -> ">";
                 case TRADE -> "□";
                 case END -> "•";
             };

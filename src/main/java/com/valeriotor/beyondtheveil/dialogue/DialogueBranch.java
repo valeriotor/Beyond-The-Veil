@@ -39,7 +39,7 @@ public class DialogueBranch {
             }
             return template.getNodeByID(endingNodeID).getDialogueOptions(data).stream().map(b -> new DialogueOption("dialogue.%s.%s.%s.option".formatted(template.getType().name().toLowerCase(), template.getID(), b.getBranchID()), OptionType.fromBranch(b))).collect(Collectors.toList());
         }
-        return List.of(new DialogueOption("dialogue.continue", OptionType.NORMAL));
+        return List.of(new DialogueOption("dialogue.continue", OptionType.CONTINUE));
     }
 
     public int getNumberOfDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
@@ -95,7 +95,7 @@ public class DialogueBranch {
 
 
     public enum OptionType {
-        NORMAL(false), TRADE(true), END(true);
+        CONTINUE(false), NORMAL(false), TRADE(true), END(true);
 
         private final boolean endsDialogue;
 

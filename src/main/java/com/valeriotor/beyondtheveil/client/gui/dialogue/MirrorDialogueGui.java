@@ -81,14 +81,14 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             imageHeight = width * 9 / 16;
         }
 
-        final int MIN_STRING_WIDTH = 200;
-        final int MAX_STRING_WIDTH = 450;
-        if (MIN_STRING_WIDTH > imageWidth * 1F / TEXT_TO_IMAGE_RATIO) {
-            scaleFactor = imageWidth * 1F / TEXT_TO_IMAGE_RATIO / MIN_STRING_WIDTH;
-        } else if (MAX_STRING_WIDTH < imageWidth * 1F / TEXT_TO_IMAGE_RATIO) {
-            scaleFactor = imageWidth * 1F / TEXT_TO_IMAGE_RATIO / MAX_STRING_WIDTH;
+        final double MIN_STRING_PROPORTION = 30 / 1440D;
+        final double MAX_STRING_PROPORTION = 60 / 1440D;
+        if (MIN_STRING_PROPORTION > 15D / imageHeight) {
+            scaleFactor = (float) ((MIN_STRING_PROPORTION) / (15D / imageHeight));
+        } else if (MAX_STRING_PROPORTION < 15D / imageHeight) {
+            scaleFactor = (float) ((MAX_STRING_PROPORTION) / (15D / imageHeight));
         }
-        displayedLines = imageHeight / 3 / 15;
+        displayedLines = (int) (imageHeight / 3 / 15 / scaleFactor);
         int listWidth = (int) computeListWidth();
         updateList();
 
@@ -113,7 +113,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             PlayerData data = resolve.get();
             List<DialogueBranch.DialogueOption> dialogueOptions = menu.getDialogueOptions(data);
             BiConsumer<DialogueOptions, Integer> optionChosen = (o, i) -> {
-                if (!isOptionChosen() && !o.getOptionType(i).isEndsDialogue()) {
+                if (!isOptionChosen() && !o.getOptionType(i).isEndsDialogue() && o.getOptionType(i) != DialogueBranch.OptionType.CONTINUE) {
                     localizedLines.add(o.getLocalizedOption(i));
                     updateList();
                 }
@@ -125,16 +125,13 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     }
 
     private void updateList() {
-        boolean wasMaxRow = true;//list == null || list.getCurrentFirstRow() == list.getMaxFirstRow();
         int listWidth = (int) computeListWidth();
         List<Element> lines = new ArrayList<>();//new TextUtil().parseText("of a dream I cannot remember, older yet than darkness, predating reality (or that which we call so). He would then live (exist) down there, deceitful (with or without intent), waiting (outside of time), dreaming.", listWidth, minecraft.font);
         for (String localizedLine : localizedLines) {
-            lines.addAll(new TextUtil().parseText(localizedLine, listWidth, minecraft.font));
+            lines.addAll(new TextUtil().parseText(localizedLine, listWidth * 95 / 100, minecraft.font));
         }
         list = new ScrollableList(listWidth, 15 * displayedLines, lines, 15, (listWidth * 3 / 100));
-        if (wasMaxRow) {
-            list.setCurrentFirstRow(list.getMaxFirstRow());
-        }
+        list.setCurrentFirstRow(list.getMaxFirstRow());
 
     }
 
@@ -159,41 +156,42 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         guiGraphics.blit(TEXTURE, width / 2 - imageWidth / 2, height / 2 - imageHeight / 2, imageWidth, imageHeight, 0, 0, 2560, 1440, 2560, 1440);
         guiGraphics.drawString(minecraft.font, "%d, %d".formatted(pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
-        guiGraphics.drawString(minecraft.font, "%f, %d".formatted((pMouseX - width / 2 + imageWidth * 2 / 5 / 2) * scaleFactor, (pMouseY - height / 2 + imageHeight / 5)), 0, 15, 0xFFFFFFFF);
+        guiGraphics.drawString(minecraft.font, "%f, %d".formatted(relativeMouseX(pMouseX), (pMouseY - height / 2 + imageHeight / 5)), 0, 15, 0xFFFFFFFF);
         PoseStack pose = guiGraphics.pose();
         if (list != null) {
             pose.pushPose();
-            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3 + Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
+            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3.2, 0);
+            int x = imageHeight / 3 + Math.max(0, 15 * (displayedLines - list.getNumberOfElements()));
             if (waitTicks > -1 && waitTicks <= WAIT_TICKS_MOVEMENT) {
-                pose.translate(0, -15 * (WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / WAIT_TICKS_MOVEMENT, 0);
+                pose.translate(0, -15 * (WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / WAIT_TICKS_MOVEMENT * scaleFactor, 0);
             }
             int linesToSkip = waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT ? 0 : (int) Math.ceil((WAIT_TICKS_MOVEMENT - waitTicks - pPartialTick) * numberOfLinesToAppear / ((float) WAIT_TICKS_MOVEMENT)) - Math.max(0, displayedLines - list.getNumberOfElements());
-            if (linesToSkip > -1 && !(waitTicks <= -1 || waitTicks > WAIT_TICKS_MOVEMENT)) {
-                System.out.println(linesToSkip);
-            }
+
             pose.scale(scaleFactor, scaleFactor, 1);
+            pose.translate(0, Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
             list.render(pose, guiGraphics, 0xFFFFFFFF, (int) relativeMouseX(pMouseX), (int) ((pMouseY - height / 2) * scaleFactor), Math.max(0, linesToSkip), waitTicks <= -1);
             pose.popPose();
         }
         pose.pushPose();
         pose.translate(0, 0, 100);
-        guiGraphics.fill((int) (width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2), imageHeight / 3, (int) (width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2), imageHeight / 3 + 15, 0xFF000000);
+        guiGraphics.fill((int) (width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2), (int) (imageHeight / 3.2 - 15), (int) (width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2), (int) (imageHeight / 3.2 + 15), 0xFF000000);
         pose.popPose();
         if (options != null && optionsEnabled()) {
             pose.pushPose();
-            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3 + 15 * displayedLines + 15, 0);
+            pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3, 0);
             pose.scale(scaleFactor, scaleFactor, 1);
+            pose.translate(0, + 15 * displayedLines + 15, 0);
             options.render(pose, guiGraphics, 0xFFDD0000, (int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY));
             pose.popPose();
         }
     }
 
     private double relativeMouseX(double pMouseX) {
-        return (pMouseX - width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2) * scaleFactor;
+        return (pMouseX - width / 2 + imageWidth / TEXT_TO_IMAGE_RATIO / 2) / scaleFactor;
     }
 
     private double optionsRelativeMouseY(double pMouseY) {
-        return (pMouseY - imageHeight / 3 - 15 * displayedLines - 15) * scaleFactor;
+        return (pMouseY - imageHeight / 3) / scaleFactor - 15 * displayedLines - 15;
     }
 
     private boolean optionsEnabled() {
@@ -203,7 +201,14 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (options != null && optionsEnabled()) {
-            return options.mouseClicked((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton);
+            if (options.mouseClicked((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton)) {
+                return true;
+            }
+        }
+        if (list != null) {
+            if (list.mouseClicked((int) relativeMouseX(pMouseX), ((pMouseY - height / 3.2) / scaleFactor), pButton)) {
+                return true;
+            }
         }
         return false;
     }
@@ -211,7 +216,14 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         if (options != null) {
-            return options.mouseDragged((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton, pDragX, pDragY);
+            if (options.mouseDragged((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton, pDragX, pDragY)) {
+                return true;
+            }
+        }
+        if (list != null) {
+            if (list.mouseDragged((int) relativeMouseX(pMouseX), ((pMouseY - height / 3.2) / scaleFactor), pButton, pDragX, pDragY)) {
+                return true;
+            }
         }
         return false;
     }
@@ -224,7 +236,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             }
         }
         if (list != null) {
-            if (list.mouseScrolled((int) relativeMouseX(pMouseX), ((pMouseY - height / 2) * scaleFactor), pDelta)) {
+            if (list.mouseScrolled((int) relativeMouseX(pMouseX), ((pMouseY - height / 3.2) / scaleFactor), pDelta)) {
                 return true;
             }
         }
@@ -234,7 +246,14 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
         if (options != null) {
-            return options.mouseReleased((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton);
+            if (options.mouseReleased((int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pButton)) {
+                return true;
+            }
+        }
+        if (list != null) {
+            if (list.mouseReleased((int) relativeMouseX(pMouseX), ((pMouseY - height / 3.2) / scaleFactor), pButton)) {
+                return true;
+            }
         }
         return false;
     }
