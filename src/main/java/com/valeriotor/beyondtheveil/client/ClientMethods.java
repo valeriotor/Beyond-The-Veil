@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
@@ -13,7 +14,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ClientMethods {
 
@@ -60,6 +64,16 @@ public class ClientMethods {
         };
         if (s != null) {
             Minecraft.getInstance().setScreen(s);
+        }
+    }
+
+    public static void blackScreen(CompoundTag tag) {
+        int duration = tag.getInt("duration");
+        String soundEvent = tag.getString("event");
+        RenderEvents.setBlackScreenDuration(duration);
+        SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(soundEvent));
+        if (sound != null && Minecraft.getInstance().player != null) {
+            Minecraft.getInstance().player.playSound(sound, 1, 1);
         }
     }
 

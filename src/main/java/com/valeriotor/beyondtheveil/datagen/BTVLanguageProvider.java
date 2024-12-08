@@ -1242,49 +1242,54 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addMirrorDialogue() {
-        add("dialogue.black_mirror.initial.must.0", "A tear is born of fear. From the past, present or future. And the shoremen fear what has happened and may happen once again.");
-        add("dialogue.black_mirror.initial.must.1", "The pain they endure is tremendous.. but why me? Why need I atone the sins of my forefathers?");
-        add("dialogue.black_mirror.initial.confirm.0", "Is this it?");
-        add("dialogue.black_mirror.initial.terrible.0", "A terrible thought to hold on to, yet hold on I must.");
-        add("dialogue.black_mirror.initial.terrible.1", "Have I erred? A grief so great — not of a person, but of a *people*. To accept a burden so heavy.. may shatter me.");
-        add("dialogue.black_mirror.initial.terrible.2", "Too late to turn back. My vision blurs, and a tear caresses my cheek. Such a little thing, yet of such incalculable weight.");
-        add("dialogue.black_mirror.initial.start.0", "There is just me, here. The small fortress that is my mind.");
-        add("dialogue.black_mirror.initial.weep.0", "What is it I fear most?");
-        add("dialogue.black_mirror.initial.death_.option", "Death.");
-        add("dialogue.black_mirror.initial.scrutiny.option", "Scrutiny by others.");
-        add("dialogue.black_mirror.initial.boredom_.option", "Boredom.");
-        add("dialogue.black_mirror.initial.the__.option", "The brittleness of life.");
-        add("dialogue.black_mirror.initial.that.option", "That I will never make a difference.");
-        add("dialogue.black_mirror.initial.losing.option", "Losing my family.");
-        add("dialogue.black_mirror.initial.pain_.option", "Pain.");
-        add("dialogue.black_mirror.initial.the_.option", "The ocean.");
-        add("dialogue.black_mirror.initial.the___.option", "The future.");
-        add("dialogue.black_mirror.initial.my.option", "My family.");
-        add("dialogue.black_mirror.initial.wasps_.option", "Wasps.");
-        add("dialogue.black_mirror.initial.sadness,.option", "Sadness, and the inability to explain it.");
-        add("dialogue.black_mirror.initial.open.option", "Open spaces.");
-        add("dialogue.black_mirror.initial.closed.option", "Closed spaces.");
-        add("dialogue.black_mirror.initial.spiders_.option", "Spiders.");
-        add("dialogue.black_mirror.initial.fear.option", "Fear itself.");
-        add("dialogue.black_mirror.initial.that_.option", "That humankind will never make a difference.");
-        add("dialogue.black_mirror.initial.the.option", "The dark.");
-        add("dialogue.black_mirror.initial.humiliation_.option", "Humiliation.");
-        add("dialogue.black_mirror.initial.weep.option", "Weep for the shoremen.");
-        add("dialogue.black_mirror.initial.grief_.option", "Grief.");
-        add("dialogue.black_mirror.initial.the____.option", "The present.");
-        add("dialogue.black_mirror.initial.snakes_.option", "Snakes.");
-        add("dialogue.black_mirror.initial.the_____.option", "The past.");
-        add("dialogue.black_mirror.initial.i.option", "I must weep.");
-        add("dialogue.black_mirror.initial.failure_.option", "Failure.");
-        add("dialogue.black_mirror.initial.germs_.option", "Germs.");
-        add("dialogue.black_mirror.initial.regret_.option", "Regret.");
-        add("dialogue.black_mirror.initial.loneliness_.option", "Loneliness.");
-        add("dialogue.black_mirror.initial.no,.option", "No, something else.");
-        add("dialogue.black_mirror.initial.lightning_.option", "Lightning.");
-        add("dialogue.black_mirror.initial.not.option", "Not now.");
-        add("dialogue.black_mirror.initial.not_.option", "Not being accepted.");
-        add("dialogue.black_mirror.initial.heights_.option", "Heights.");
-        add("dialogue.black_mirror.initial.yes_.option", "Yes.");
+
+        add("dialogue.black_mirror.initial.start.0", "There is nothing here. A mirror so black I cannot even see myself.");
+        add("dialogue.black_mirror.initial.end.option", "(End)");
+
+
+        add("dialogue.black_mirror.initial2.must.0", "A tear is born of fear. From the past, present or future. And the shoremen fear what has happened and may happen once again.");
+        add("dialogue.black_mirror.initial2.must.1", "The pain they endure is tremendous.. but why me? Why need I atone the sins of my forefathers?");
+        add("dialogue.black_mirror.initial2.confirm.0", "Is this it?");
+        add("dialogue.black_mirror.initial2.terrible.0", "A terrible thought to hold on to, yet hold on I must.");
+        add("dialogue.black_mirror.initial2.terrible.1", "Have I erred? A grief so great — not of a person, but of a *people*. To accept a burden so heavy.. may shatter me.");
+        add("dialogue.black_mirror.initial2.terrible.2", "Too late to turn back. My vision blurs, and a tear caresses my cheek. Such a little thing, yet of such incalculable weight.");
+        add("dialogue.black_mirror.initial2.start.0", "There is just me, here. The small fortress that is my mind.");
+        add("dialogue.black_mirror.initial2.weep.0", "What is it I fear most?");
+        add("dialogue.black_mirror.initial2.death_.option", "Death.");
+        add("dialogue.black_mirror.initial2.scrutiny.option", "Scrutiny by others.");
+        add("dialogue.black_mirror.initial2.boredom_.option", "Boredom.");
+        add("dialogue.black_mirror.initial2.the__.option", "The brittleness of life.");
+        add("dialogue.black_mirror.initial2.that.option", "That I will never make a difference.");
+        add("dialogue.black_mirror.initial2.losing.option", "Losing my family.");
+        add("dialogue.black_mirror.initial2.pain_.option", "Pain.");
+        add("dialogue.black_mirror.initial2.the_.option", "The ocean.");
+        add("dialogue.black_mirror.initial2.the___.option", "The future.");
+        add("dialogue.black_mirror.initial2.my.option", "My family.");
+        add("dialogue.black_mirror.initial2.wasps_.option", "Wasps.");
+        add("dialogue.black_mirror.initial2.sadness,.option", "Sadness, and the inability to explain it.");
+        add("dialogue.black_mirror.initial2.open.option", "Open spaces.");
+        add("dialogue.black_mirror.initial2.closed.option", "Closed spaces.");
+        add("dialogue.black_mirror.initial2.spiders_.option", "Spiders.");
+        add("dialogue.black_mirror.initial2.fear.option", "Fear itself.");
+        add("dialogue.black_mirror.initial2.that_.option", "That humankind will never make a difference.");
+        add("dialogue.black_mirror.initial2.the.option", "The dark.");
+        add("dialogue.black_mirror.initial2.humiliation_.option", "Humiliation.");
+        add("dialogue.black_mirror.initial2.weep.option", "Weep for the shoremen.");
+        add("dialogue.black_mirror.initial2.grief_.option", "Grief.");
+        add("dialogue.black_mirror.initial2.the____.option", "The present.");
+        add("dialogue.black_mirror.initial2.snakes_.option", "Snakes.");
+        add("dialogue.black_mirror.initial2.the_____.option", "The past.");
+        add("dialogue.black_mirror.initial2.i.option", "I must weep.");
+        add("dialogue.black_mirror.initial2.failure_.option", "Failure.");
+        add("dialogue.black_mirror.initial2.germs_.option", "Germs.");
+        add("dialogue.black_mirror.initial2.regret_.option", "Regret.");
+        add("dialogue.black_mirror.initial2.loneliness_.option", "Loneliness.");
+        add("dialogue.black_mirror.initial2.no,.option", "No, something else.");
+        add("dialogue.black_mirror.initial2.lightning_.option", "Lightning.");
+        add("dialogue.black_mirror.initial2.not.option", "Not now.");
+        add("dialogue.black_mirror.initial2.not_.option", "Not being accepted.");
+        add("dialogue.black_mirror.initial2.heights_.option", "Heights.");
+        add("dialogue.black_mirror.initial2.yes_.option", "Yes.");
 
 
     }
@@ -1495,6 +1500,30 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.initial1.i.option", "I cannot trust you.");
         add("dialogue.shoreman_lighthouse_keeper.initial1.do.option", "Do not fear.");
 
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.afraid.0", "We are so, so terribly afraid, traveller. Of the past repeating itself. Can you blame us? When staring in the eyes of genocide, how could one respond?");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.afraid.1", "Your ancestors were frightened by our customs, of the black soil that spread beneath our hamlets. They were afraid of our worship and beliefs, terrorized by a deity truer than theirs.\nBut, perhaps, you may yet break the cycle of agony. Were you to learn,| rather than kill. To be curious,| rather than prejudiced.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.unlike.0", "We are frightened, traveller, and we weep, for tears are born of fear.\nWill you weep for us?");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.start.0", "I saw you tonight, traveller. Or rather, in my dream I saw yours. Speeding down below, towards the bottom of the sea.\nIt was a brave, angry dream, seeking an unveiling of truth as if dissatisfied with what you already knew.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.start.1", "When we first met, I spoke of fear,| and of prejudice,| yet chastised you for your heritage. I ask you now to forgive my hypocrisy.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.why.option", "Why did you fear me so?");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.i.option", "I will, because it's right.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.i__.option", "I forgive you.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.a.option", "A bond to reconcile ancient enmities. I shall.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.i_.option", "I will, because I seek Truth.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.to.option", "Embracing all of your grief... I don't know if I can.");
+
+        add("dialogue.shoreman_lighthouse_keeper.did_dream2.start.0", "Will you shed a tear for our sake?");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream2.end.option", "(End)");
+
+        add("dialogue.shoreman_lighthouse_keeper.thank_you.admire.0", "I admire your resolve. You do not flee the Veil, when you dream nor when you weep. You wish to breach it, go beyond the lies you are told and grown into.");
+        add("dialogue.shoreman_lighthouse_keeper.thank_you.admire.1", "Look at the ocean, traveller. The boundless bulwark concealing truth. The Great Dreamer lies beneath it, the last door before the unknown.\nSeek communion, down at the idol in the town center, and adopt our beliefs. Acknowledge the ignorance the human mind is born into| – only then can you overcome it. Farewell, seeker.");
+        add("dialogue.shoreman_lighthouse_keeper.thank_you.start.0", "Thank you, traveller. Yours is a rare gift. To us, and to yourself.");
+        add("dialogue.shoreman_lighthouse_keeper.thank_you.may.option", "May we meet again.");
+        add("dialogue.shoreman_lighthouse_keeper.thank_you.the.option", "The old truths were deceits. How can I dispel the dogmas I grew up believing in?");
+
+        add("dialogue.shoreman_lighthouse_keeper.thank_you2.start.0", "Good luck, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.thank_you2.end.option", "(End)");
+
 
     }
 
@@ -1588,6 +1617,27 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "The voice of the sea. Deafening currents running fast and mindless in the deepest trenches. Life is born this way, the turmoil of waters becoming our blood.\\n" +
                 "I know now what I must do. The keeper was right.");
 
+        add("research.BLACK_MIRROR.title", "Mirror of the Soul");
+        add("research.must_weep.text", "Talk to the lighthouse keeper.");
+        add("research.mirror_wept.text", "Gaze in the mirror.");
+        add("research.BLACK_MIRROR.stage.0", "I must talk to him.");
+        add("research.BLACK_MIRROR.stage.1", "Tears are born of fear, and thus I must ask myself, what is it I fear most?\\n" +
+                "I must dig deep, and look in the uncomfortable places beneath that first veil that is myself.\\n" +
+                "I will build a mirror, but it shall be a dark mirror, black as black can be, giving off no reflection. I will peer into nothing but my own soul.");
+        add("research.BLACK_MIRROR.stage.2", "It is done.");
+
+        add("research.COMMUNION.title", "Communion");
+        add("research.must_commune.text", "Talk to the lighthouse keeper once more.");
+        add("research.communed.text", "Commune with the Idol in the town square.");
+        add("research.COMMUNION.stage.0", "The old falsehoods plague my mind, parasites blinding me inside out.\\nI know that I do not know. Is this what the shoremen profess?");
+        add("research.COMMUNION.stage.1", "I humbly pledge my life to You, Great Dreamer.\\n" +
+                "I disavow all my previous beliefs, any gods I may have previously had faith in.\\n" +
+                "I am insignificant to you. The ocean, Your boundless presence on the Overworld, is symbol of that.\\n" +
+                "You are unknowable to me. The Void, full of emptiness, is Your inscrutable substance.\\n" +
+                "Beyond You lie all things. The Truth, hidden by the Veil.\\n" +
+                "Grant us knowledge, so we may undo all lies.\\n" +
+                "Grant us strength, so we may survive the Truth.\\n" +
+                "Grant us courage... so we may hear Your Holy Voice.");
 
     }
 

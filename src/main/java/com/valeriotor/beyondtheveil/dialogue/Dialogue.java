@@ -45,7 +45,7 @@ public class Dialogue {
                     capability.setDialogue(split[0], split[1]);
                 }
                 for (String dataUnlock : template.getDataUnlocks()) {
-                    DataUtil.setBoolean(player, dataUnlock, true, false);
+                    DataUtil.setBooleanOnServerAndSync(player, dataUnlock, true, false);
                 }
             }
         });

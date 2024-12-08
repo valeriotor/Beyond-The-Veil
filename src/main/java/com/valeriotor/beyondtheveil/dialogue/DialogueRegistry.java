@@ -17,6 +17,10 @@ public class DialogueRegistry {
     public static void registerDialogues() {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial1");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "did_dream");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "did_dream2");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "thank_you");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "thank_you2");
 
         registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "initial");
         registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "no_closer");
@@ -34,6 +38,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk1");
 
         registerDialogue(DialogueType.BLACK_MIRROR, "initial");
+        registerDialogue(DialogueType.BLACK_MIRROR, "initial2");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

@@ -13,5 +13,8 @@
   },
   "water_dream": {
     "sounds": [ "beyondtheveil:water_dream" ]
+  },
+  "water_dream_short": {
+    "sounds": [ "beyondtheveil:water_dream_short" ]
   }
 }

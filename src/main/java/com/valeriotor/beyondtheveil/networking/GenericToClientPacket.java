@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -108,6 +109,13 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.SYNC_ARCHE_DATA, tag);
     }
 
+    public static GenericToClientPacket blackScreen(int duration, SoundEvent event) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("duration", duration);
+        tag.putString("event", event.getLocation().toString());
+        return new GenericToClientPacket(MessageType.BLACK_SCREEN, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -142,6 +150,7 @@ public class GenericToClientPacket {
                     case CROSS_SYNC -> CrossSyncHolder.setCrossSync(tag);
                     case STOP_CROSS_SYNC -> CrossSyncHolder.stopCrossSync(tag);
                     case SYNC_ARCHE_DATA -> ClientData.getInstance().syncArcheData(tag);
+                    case BLACK_SCREEN -> ClientMethods.blackScreen(tag);
                 }
             });
         });
@@ -160,7 +169,8 @@ public class GenericToClientPacket {
         STOP_SURGERY_SOUND,
         CROSS_SYNC,
         STOP_CROSS_SYNC,
-        SYNC_ARCHE_DATA
+        SYNC_ARCHE_DATA,
+        BLACK_SCREEN
     }
 
 }

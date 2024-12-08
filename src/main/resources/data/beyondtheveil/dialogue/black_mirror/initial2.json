@@ -1,0 +1,352 @@
+{
+  "id": "initial2",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "confirm": {
+      "id": "confirm",
+      "dialogueOptions": [
+        {
+          "id": "yes_",
+          "branchLength": 3,
+          "endingNodeID": "terrible",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "no,",
+          "branchLength": 1,
+          "endingNodeID": "weep",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 2,
+          "endingNodeID": "must",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "must": {
+      "id": "must",
+      "dialogueOptions": [
+        {
+          "id": "weep",
+          "branchLength": 1,
+          "endingNodeID": "weep",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "not",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "weep": {
+      "id": "weep",
+      "dialogueOptions": [
+        {
+          "id": "the",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "pain_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "boredom_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "open",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "closed",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "spiders_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "snakes_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "wasps_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "lightning_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "the_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "germs_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "heights_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "fear",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "death_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "the__",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "failure_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "that",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "that_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "sadness,",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "grief_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "loneliness_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "humiliation_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "scrutiny",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "not_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "losing",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "my",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "the___",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "the____",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "the_____",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "regret_",
+          "branchLength": 1,
+          "endingNodeID": "confirm",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "black_mirror",
+  "dialogueUnlocks": ["shoreman_lighthouse_keeper:thank_you"],
+  "dataUnlocks": ["mirror_wept"]
+}

@@ -56,7 +56,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             indexInBranch = menu.getIndexInBranch();
             String line = "§e" + menu.getMirrorLine();
             localizedLines.add(line);
-            numberOfLinesToAppear = new TextUtil().parseText(line, (int) computeListWidth(), minecraft.font).size();
+            numberOfLinesToAppear = new TextUtil().parseText(line, (int) computeListWidth() * 95 / 100, minecraft.font).size();
             optionChosen = false;
             waitTicks = WAIT_TICKS_MAX;
         }

@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " II ",
+    "IOOI",
+    "IOOI",
+    " II "
+  ],
+  "result": {
+    "item": "beyondtheveil:black_mirror"
+  },
+  "show_notification": true
+}

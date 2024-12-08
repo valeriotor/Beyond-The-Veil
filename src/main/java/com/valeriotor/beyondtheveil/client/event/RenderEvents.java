@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.event;
 
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -79,6 +80,7 @@ public class RenderEvents {
     private static final float[] rainSizeY = new float[1024];
     private static final float[] rainSizeZ = new float[1024];
     private static CameraRotator rotator;
+    private static int blackScreenDuration = -1;
 
     static {
         for (int i = 0; i < 32; ++i) {
@@ -90,6 +92,10 @@ public class RenderEvents {
                 rainSizeZ[i << 5 | j] = f / f2;
             }
         }
+    }
+
+    public static void setBlackScreenDuration(int duration) {
+        blackScreenDuration = duration;
     }
 
     public static void startCameraRotation(CameraRotator newRotator) {
@@ -110,6 +116,15 @@ public class RenderEvents {
                 if (done) {
                     rotator = null;
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void tickEvent(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            if (blackScreenDuration >= 0) {
+                blackScreenDuration--;
             }
         }
     }
@@ -420,7 +435,21 @@ public class RenderEvents {
             ReminiscenceClient.renderReminiscence(event);
             renderSyringeContents(event);
             renderSurgeryOverlays(event);
+            renderBlackScreen(event);
         }
+    }
+
+    private static void renderBlackScreen(RenderGuiOverlayEvent event) {
+        if (blackScreenDuration >= 0) {
+            PoseStack poseStack = event.getGuiGraphics().pose();
+            poseStack.pushPose();
+            poseStack.translate(0, 0, 10);
+            Matrix4f matrix4f = poseStack.last().pose();
+            Window window = Minecraft.getInstance().getWindow();
+            RenderEvents.innerFill(matrix4f, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), 0xFF000000);
+            poseStack.popPose();
+        }
+
     }
 
     @SubscribeEvent

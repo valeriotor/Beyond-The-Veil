@@ -152,6 +152,46 @@
           }
         ]
       },
+      {
+        "key": "BLACK_MIRROR",
+        "name": "research.BLACK_MIRROR.title",
+        "icons": [ "beyondtheveil:black_mirror" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 10,2 ],
+        "hiders": ["WATER_DREAMS"],
+        "parents": ["WATER_DREAMS"],
+        "stages": [
+          {
+            "text": "research.BLACK_MIRROR.stage.0",
+            "required_research": ["must_weep"]
+          },
+          {
+            "text": "research.BLACK_MIRROR.stage.1",
+            "recipes": ["beyondtheveil:black_mirror"],
+            "required_research": ["mirror_wept"]
+          },
+          {
+            "text": "research.BLACK_MIRROR.stage.2",
+            "recipes": ["beyondtheveil:black_mirror"]
+          }
+        ]
+      },
+      {
+        "key": "COMMUNION",
+        "name": "research.COMMUNION.title",
+        "icons": [ "beyondtheveil:idol" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,4 ],
+        "hiders": ["BLACK_MIRROR"],
+        "parents": ["BLACK_MIRROR"],
+        "stages": [
+          {
+            "text": "research.COMMUNION.stage.0",
+            "required_research": ["must_commune", "communed"]
+          },
+          {
+            "text": "research.COMMUNION.stage.1"
+          }
+        ]
+      },
 		{
         "key": "CRYSTALDREAMS",
         "name": "research.CRYSTALDREAMS.title",

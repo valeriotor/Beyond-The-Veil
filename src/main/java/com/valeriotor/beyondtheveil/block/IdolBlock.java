@@ -1,14 +1,28 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.capability.PlayerData;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -31,6 +45,24 @@ public class IdolBlock extends Block {
     public IdolBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+
+    }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (DataUtil.getBoolean(pPlayer, PlayerDataLib.MUST_COMMUNE) && !DataUtil.getBoolean(pPlayer, PlayerDataLib.COMMUNED)) {
+            if (pPlayer instanceof ServerPlayer sp) {
+                Messages.sendToPlayer(GenericToClientPacket.blackScreen(180, BTVSounds.WATER_DREAM_SHORT.get()), sp);
+                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.COMMUNED, true, false);
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    }
+
+    @Override
+    public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
+        return false;
     }
 
     @Override

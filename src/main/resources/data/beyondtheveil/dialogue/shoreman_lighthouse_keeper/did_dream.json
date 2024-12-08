@@ -1,0 +1,86 @@
+{
+  "id": "did_dream",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 2,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "afraid": {
+      "id": "afraid",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 1,
+          "endingNodeID": "unlike",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "unlike",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    },
+    "unlike": {
+      "id": "unlike",
+      "dialogueOptions": [
+        {
+          "id": "to",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        },
+        {
+          "id": "a",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "i__",
+          "branchLength": 2,
+          "endingNodeID": "afraid",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        },
+        {
+          "id": "why",
+          "branchLength": 2,
+          "endingNodeID": "afraid",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "shoreman_lighthouse_keeper",
+  "dialogueUnlocks": ["shoreman_lighthouse_keeper:did_dream2"],
+  "dataUnlocks": ["must_weep"]
+}
