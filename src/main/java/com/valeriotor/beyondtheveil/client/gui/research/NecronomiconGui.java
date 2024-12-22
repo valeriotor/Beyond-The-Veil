@@ -421,6 +421,7 @@ public class NecronomiconGui extends Screen {
         return switch (status.res.getKey()) {
             case "CRAFTING" -> new CraftingRegistryGui(status);
             case "MEMORIES" -> new MemoryRegistryGui(status);
+            case "SENTIENCE" -> new JournalGui();
             //case "ICTYARY" -> new GuiIctyary();
             //case "DOSKILLS" -> new GuiDOSkills();
             default -> new ResearchPageGui(status);
