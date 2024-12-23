@@ -77,6 +77,7 @@ public class PlayerDataLib {
     public static final String MIRROR_WEPT = "mirror_wept";
     public static final String MUST_COMMUNE = "must_commune";
     public static final String COMMUNED = "communed";
+    public static final String HAS_ABOMINATIONS = "has_abominations";
     public static final Function<Integer, String> DAGON_DIALOGUE = i -> String.format("dagonDialogue%d", i);
     public static final Function<String, String> ICTYA_BY_TYPE = s -> String.format("ictya-%s", s);
     public static final Function<Memory, String> DRANK_MEMORY = m -> String.format("drank_%s", m.name().toLowerCase());

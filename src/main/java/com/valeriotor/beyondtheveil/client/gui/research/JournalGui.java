@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JournalGui extends Screen {
@@ -28,10 +29,15 @@ public class JournalGui extends Screen {
     private static final int BACKGROUND_BASE_HEIGHT = 505;
     private static final int ENTRY_LIST_BASE_LEFT_X = -BACKGROUND_BASE_WIDTH / 2 + 43;
     private static final int ENTRY_LIST_BASE_TOP_Y = -BACKGROUND_BASE_HEIGHT / 2 + 100;
+    private static final int BOOKMARK_BASE_LEFT_X = -BACKGROUND_BASE_WIDTH / 2 - 21;
+    private static final int BOOKMARK_BASE_TOP_Y = -BACKGROUND_BASE_HEIGHT / 2 + 90;
     private static final int ENTRY_LIST_BASE_WIDTH = 345;
     private static final int ENTRY_LIST_BASE_HEIGHT = 357;
     private static final int ENTRY_BASE_WIDTH = 340;
     private static final int ENTRY_BASE_HEIGHT = 59;
+    private static final int BOOKMARK_BASE_WIDTH = 48;
+    private static final int BOOKMARK_BASE_HEIGHT = 31;
+    private static final int BOOKMARK_SEPARATION = 70;
     //private int entryListLeftX;
     //private int entryListTopY;
     private ScrollableList overview;
@@ -41,10 +47,15 @@ public class JournalGui extends Screen {
     private ScrollableList tools;
     // 1022x1071
     private ScrollableList ingredients;
-    // 1022x171 -> 340x57
+    private List<JournalBookmark> bookmarks = new ArrayList<>();
+    // 1022x177 -> 340x59
     private final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/research/journal_item_entry.png");
     // 2530x1517 -> 843x505
     private final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/journal_background.png");
+    // 144x93 -> 48x31
+    private final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark.png");
+    private final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_deselected.png");
+    private final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_selected.png");
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -72,6 +83,12 @@ public class JournalGui extends Screen {
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         tools = new ScrollableList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
 
+        bookmarks.clear();
+        for (JournalCategory category : JournalCategory.values()) {
+            if (category.isUnlocked(minecraft.player)) {
+                bookmarks.add(new JournalBookmark(category));
+            }
+        }
 
 
         /*if (width > height * 16 / 9) {
@@ -126,6 +143,17 @@ public class JournalGui extends Screen {
             toRender.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY);
             pose.popPose();
         }
+
+        for (int i = 0; i < bookmarks.size(); i++) {
+            JournalBookmark bookmark = bookmarks.get(i);
+            relativeMouseX = bookmarkMouseX(pMouseX);
+            relativeMouseY = bookmarkMouseY(pMouseY, i);
+            pose.pushPose();
+            pose.translate(BOOKMARK_BASE_LEFT_X, BOOKMARK_BASE_TOP_Y + 70 * i, 0);
+            bookmark.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY);
+            pose.popPose();
+        }
+
         pose.popPose();
         //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
         //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", relativeMouseX, relativeMouseY), 0, 15, 0xFFFFFFFF);
@@ -135,6 +163,12 @@ public class JournalGui extends Screen {
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (currentList() != null && currentList().mouseClicked(listMouseX(pMouseX), listMouseY(pMouseY), pButton)) {
             return true;
+        }
+        for (int i = 0; i < bookmarks.size(); i++) {
+            JournalBookmark bookmark = bookmarks.get(i);
+            if (bookmark.mouseClicked(bookmarkMouseX(pMouseX), bookmarkMouseY(pMouseY, i), pButton)) {
+                return true;
+            }
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
@@ -161,6 +195,14 @@ public class JournalGui extends Screen {
             return true;
         }
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
+    }
+
+    private int bookmarkMouseX(double pMouseX) {
+        return (int) ((pMouseX - width / 2 - BOOKMARK_BASE_LEFT_X * scaleFactor) / scaleFactor);
+    }
+
+    private int bookmarkMouseY(double pMouseY, int i) {
+        return (int) ((pMouseY - height / 2 - (BOOKMARK_BASE_TOP_Y + 70 * i) * scaleFactor) / scaleFactor);
     }
 
     private int listMouseX(double pMouseX) {
@@ -254,11 +296,44 @@ public class JournalGui extends Screen {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 // TODO selectEntry(stack.getItem(), recipe);
                 // TODO selectedEntry = this;
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             }
             return false;
         }
     }
+
+    private class JournalBookmark extends Element {
+
+        private final JournalCategory category;
+
+        protected JournalBookmark(JournalCategory category) {
+            super(BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
+            this.category = category;
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+            if (selectedCategory == category) {
+                graphics.blit(BOOKMARK_SELECTED, 0, 0, getWidth(), getHeight(), 0, 0, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
+            } else if (insideBounds(relativeMouseX, relativeMouseY)) {
+                graphics.blit(BOOKMARK, 0, 0, getWidth(), getHeight(), 0, 0, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
+            } else {
+                graphics.blit(BOOKMARK_DESELECTED, 0, 0, getWidth(), getHeight(), 0, 0, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
+            }
+
+        }
+
+        @Override
+        public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+            if (insideBounds(relativeMouseX, relativeMouseY)) {
+                selectedCategory = category;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+                return true;
+            }
+            return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+        }
+    }
+
 
 }
