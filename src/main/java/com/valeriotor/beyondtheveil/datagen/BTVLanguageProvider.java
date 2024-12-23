@@ -1661,6 +1661,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.sleep_chamber", "Sleep Chamber");
         add("gui.sleep_chamber.wake", "Leave chamber");
 
+        add("gui.journal.bookmark.overview", "Overview");
+        add("gui.journal.bookmark.tools", "Tools");
+        add("gui.journal.bookmark.ingredients", "Ingredients");
+        add("gui.journal.bookmark.journal", "Journal");
+        add("gui.journal.bookmark.abominations", "Abominations");
+
         add("gui.dialogue.bartender.display_name", "Bartender");
         add("gui.dialogue.carpenter.display_name", "Carpenter");
         add("gui.dialogue.clerk.display_name", "Clerk");

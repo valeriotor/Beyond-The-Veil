@@ -8,6 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.function.Predicate;
 
 public enum JournalCategory {
+
+
     OVERVIEW, TOOLS, INGREDIENTS, JOURNAL, ABOMINATIONS(p -> DataUtil.getBoolean(p, PlayerDataLib.HAS_ABOMINATIONS));
 
     private final Predicate<Player> isUnlocked;

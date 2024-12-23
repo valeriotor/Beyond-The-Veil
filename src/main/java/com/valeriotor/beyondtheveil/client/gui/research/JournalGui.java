@@ -56,6 +56,11 @@ public class JournalGui extends Screen {
     private final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark.png");
     private final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_deselected.png");
     private final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_selected.png");
+    private final ResourceLocation HOUSE_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_house_icon.png");
+    private final ResourceLocation TOOLS_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_tools_icon.png");
+    private final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_ingredients_icon.png");
+    private final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_journal_icon.png");
+    private final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_abomination_icon.png");
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -71,11 +76,11 @@ public class JournalGui extends Screen {
         //entryListWidth = 343;
         //entryListHeight = 357;
 
-        if (imageHeight > height * 9 / 10) {
-            scaleFactor = height * 9F / 10 / imageHeight;
+        if (imageHeight > height * 99 / 100) {
+            scaleFactor = height * 99F / 100 / imageHeight;
         }
-        if (imageWidth > width * 9 / 10) {
-            scaleFactor = Math.min(width * 9F / 10 / imageWidth, scaleFactor);
+        if (imageWidth > width * 95 / 100) {
+            scaleFactor = Math.min(width * 95F / 100 / imageWidth, scaleFactor);
         }
         //entryListLeftX = pageX() + 42;
         //entryListTopY = pageY() + 80;
@@ -314,6 +319,10 @@ public class JournalGui extends Screen {
 
         @Override
         public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+            if (insideBounds(relativeMouseX, relativeMouseY)) {
+                graphics.renderTooltip(minecraft.font, Component.translatable("gui.journal.bookmark." + category.name().toLowerCase()), relativeMouseX, relativeMouseY);
+                //graphics.renderTooltip(minecraft.font, Component.translatable("Overview"), relativeMouseX, relativeMouseY);
+            }
             if (selectedCategory == category) {
                 graphics.blit(BOOKMARK_SELECTED, 0, 0, getWidth(), getHeight(), 0, 0, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
             } else if (insideBounds(relativeMouseX, relativeMouseY)) {
@@ -321,6 +330,15 @@ public class JournalGui extends Screen {
             } else {
                 graphics.blit(BOOKMARK_DESELECTED, 0, 0, getWidth(), getHeight(), 0, 0, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT, BOOKMARK_BASE_WIDTH, BOOKMARK_BASE_HEIGHT);
             }
+            ResourceLocation icon = switch (category) {
+                case OVERVIEW -> HOUSE_ICON;
+                case TOOLS -> TOOLS_ICON;
+                case INGREDIENTS -> INGREDIENTS_ICON;
+                case JOURNAL -> JOURNAL_ICON;
+                case ABOMINATIONS -> ABOMINATION_ICON;
+            };
+            RenderSystem.enableBlend();
+            graphics.blit(icon, 18, 7, 20, 20, 0, 0, 20, 20, 20, 20);
 
         }
 
