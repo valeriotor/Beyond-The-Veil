@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.gui.elements.DropdownLists;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
@@ -35,14 +36,14 @@ public class JournalGui extends Screen {
     private static final int ENTRY_LIST_BASE_HEIGHT = 357;
     private static final int ENTRY_BASE_WIDTH = 340;
     private static final int ENTRY_BASE_HEIGHT = 59;
+    private static final int DROPDOWN_BASE_HEIGHT = 21;
     private static final int BOOKMARK_BASE_WIDTH = 48;
     private static final int BOOKMARK_BASE_HEIGHT = 31;
     private static final int BOOKMARK_SEPARATION = 70;
     //private int entryListLeftX;
     //private int entryListTopY;
-    private ScrollableList overview;
     private JournalCategory selectedCategory = JournalCategory.TOOLS;
-
+    private ScrollableList overview;
     // 1022x1071
     private ScrollableList tools;
     // 1022x1071
@@ -61,6 +62,10 @@ public class JournalGui extends Screen {
     private final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_ingredients_icon.png");
     private final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_journal_icon.png");
     private final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_abomination_icon.png");
+    private final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/research/journal_dropdown_1.png");
+    private final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/research/journal_dropdown_2.png");
+    private final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/research/journal_plus.png");
+    private final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/research/journal_minus.png");
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -85,6 +90,7 @@ public class JournalGui extends Screen {
         //entryListLeftX = pageX() + 42;
         //entryListTopY = pageY() + 80;
 
+        overview = DropdownLists.makeList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, makeOverviewList(), DROPDOWN_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         tools = new ScrollableList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
 
@@ -114,6 +120,30 @@ public class JournalGui extends Screen {
         //updateList();
     }
 
+    private List<Element> makeOverviewList() {
+        List<Element> list = new ArrayList<>();
+        list.add(new Dropdown1("fundamentals"));
+        list.add(new Dropdown2("patients"));
+        list.add(new Dropdown2("starting"));
+        list.add(new Dropdown2("managing"));
+        list.add(new Dropdown2("concluding"));
+        list.add(new Dropdown2("journal"));
+        list.add(new Dropdown1("ingredients"));
+        list.add(new Dropdown2("fluids"));
+        list.add(new Dropdown2("solids"));
+        list.add(new Dropdown1("types"));
+        list.add(new Dropdown2("extraction"));
+        list.add(new Dropdown2("incision"));
+        list.add(new Dropdown2("injection"));
+        list.add(new Dropdown2("insertion"));
+        list.add(new Dropdown2("stitching"));
+        list.add(new Dropdown1("infrastructure"));
+        list.add(new Dropdown2("distillation"));
+        list.add(new Dropdown2("storage"));
+        list.add(new Dropdown2("holding"));
+        list.add(new Dropdown2("surgery"));
+        return list;
+    }
     private List<Item> getTools() {
         return List.of(Registration.FORCEPS.get(), Registration.SCALPEL.get(), Registration.SEWING_NEEDLE.get(), Registration.SYRINGE.get(), Registration.TONGS.get(), Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get(), Registration.FLASK_SHELF_ITEM.get(), Registration.SURGERY_BED_ITEM.get(), Registration.WATERY_CRADLE_ITEM.get());
     }
@@ -352,6 +382,58 @@ public class JournalGui extends Screen {
             return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
         }
     }
+
+    private class Dropdown1 extends DropdownLists.Dropdown {
+
+        private final String id;
+
+        protected Dropdown1(String id) {
+            super(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
+            this.id = id;
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+            graphics.blit(DROPDOWN_1, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
+            if (insideBounds(relativeMouseX, relativeMouseY)) {
+                graphics.fill(0, 0, getWidth(), getHeight(), 0x4499875A);
+            }
+            ResourceLocation icon = isOpen() ? MINUS : PLUS;
+            graphics.blit(icon, 4, 4, 14, 14, 0, 0, 14, 14, 14, 14);
+
+            graphics.drawString(minecraft.font, Component.translatable(String.format("gui.journal.overview.%s", id)), 24, 7, 0xFFFFFFFF);
+        }
+    }
+
+    private class Dropdown2 extends Element {
+
+        private final String id;
+
+        protected Dropdown2(String id) {
+            super(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
+            this.id = id;
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+            graphics.blit(DROPDOWN_2, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
+            if (insideBounds(relativeMouseX, relativeMouseY)) {
+                graphics.fill(0, 0, getWidth(), getHeight(), 0x4499875A);
+            }
+            graphics.drawString(minecraft.font, Component.translatable(String.format("gui.journal.overview.%s", id)), 36, 7, 0xFFFFFFFF);
+        }
+
+        @Override
+        public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+            if (insideBounds(relativeMouseX, relativeMouseY)) {
+                // TODO
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+                return true;
+            }
+            return false;
+        }
+    }
+
 
 
 }

@@ -30,7 +30,7 @@ public class ScrollableList extends Element {
     public void changeElements(List<Element> rows) {
         this.rows = rows;
         this.maxFirstRow = renderedRows >= rows.size() ? 0 : rows.size() - renderedRows;
-        this.currentFirstRow = Math.min(currentFirstRow, rows.size());
+        this.currentFirstRow = Math.min(currentFirstRow, rows.size()); // TODO wait shouldn't it be maxFirstRow as second arg?
     }
 
     public int getMaxFirstRow() {
@@ -94,6 +94,10 @@ public class ScrollableList extends Element {
 
     protected void clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
         rows.get(element).mouseClicked(relativeMouseX, relativeMouseY - (element - currentFirstRow) * rowHeight, mouseButton);
+    }
+
+    protected List<? extends Element> rows() {
+        return rows;
     }
 
     @Override

@@ -1661,11 +1661,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.sleep_chamber", "Sleep Chamber");
         add("gui.sleep_chamber.wake", "Leave chamber");
 
-        add("gui.journal.bookmark.overview", "Overview");
-        add("gui.journal.bookmark.tools", "Tools");
-        add("gui.journal.bookmark.ingredients", "Ingredients");
-        add("gui.journal.bookmark.journal", "Journal");
-        add("gui.journal.bookmark.abominations", "Abominations");
+        addJournal();
+
 
         add("gui.dialogue.bartender.display_name", "Bartender");
         add("gui.dialogue.carpenter.display_name", "Carpenter");
@@ -1676,5 +1673,34 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.miner.display_name", "Miner");
         add("gui.dialogue.scholar.display_name", "Scholar");
         add("gui.dialogue.smith.display_name", "Smith");
+    }
+
+    private void addJournal() {
+        add("gui.journal.bookmark.overview", "Overview");
+        add("gui.journal.bookmark.tools", "Tools");
+        add("gui.journal.bookmark.ingredients", "Ingredients");
+        add("gui.journal.bookmark.journal", "Journal");
+        add("gui.journal.bookmark.abominations", "Abominations");
+
+        add("gui.journal.overview.fundamentals", "Fundamentals");
+        add("gui.journal.overview.patients", "Obtaining patients");
+        add("gui.journal.overview.starting", "Starting the operation");
+        add("gui.journal.overview.managing", "Managing pain");
+        add("gui.journal.overview.concluding", "Concluding the operation");
+        add("gui.journal.overview.journal", "Journal");
+        add("gui.journal.overview.ingredients", "Ingredients");
+        add("gui.journal.overview.fluids", "Fluids & Serums");
+        add("gui.journal.overview.solids", "Solids");
+        add("gui.journal.overview.types", "Operation types");
+        add("gui.journal.overview.extraction", "Extraction");
+        add("gui.journal.overview.incision", "Incision");
+        add("gui.journal.overview.injection", "Injection");
+        add("gui.journal.overview.insertion", "Insertion");
+        add("gui.journal.overview.stitching", "Stitching");
+        add("gui.journal.overview.infrastructure", "Infrastructure");
+        add("gui.journal.overview.distillation", "Distillation");
+        add("gui.journal.overview.storage", "Storage");
+        add("gui.journal.overview.holding", "Holding patients");
+        add("gui.journal.overview.surgery", "Surgery");
     }
 }
