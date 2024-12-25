@@ -6,9 +6,9 @@ import net.minecraft.util.Mth;
 
 import java.util.List;
 
-public class ScrollableList extends Element {
+public class ScrollableList<T extends Element> extends Element {
 
-    private List<? extends Element> rows;
+    private List<T> rows;
     private final int rowHeight;
     private final int scrollbarWidth;
     private final int renderedRows;
@@ -16,8 +16,9 @@ public class ScrollableList extends Element {
     private int maxFirstRow;
     private int thumbHeight = 15;
     private boolean draggingThumb = false;
+    private boolean variableSize;
 
-    public ScrollableList(int width, int height, List<? extends Element> rows, int rowHeight, int scrollbarWidth) {
+    public ScrollableList(int width, int height, List<T> rows, int rowHeight, int scrollbarWidth) {
         super(width, height);
         this.rows = rows;
         this.rowHeight = rowHeight;
@@ -27,7 +28,11 @@ public class ScrollableList extends Element {
         thumbHeight = 40;
     }
 
-    public void changeElements(List<Element> rows) {
+    public void setVariableSize(boolean variableSize) {
+        this.variableSize = variableSize;
+    }
+
+    public void changeElements(List<T> rows) {
         this.rows = rows;
         this.maxFirstRow = renderedRows >= rows.size() ? 0 : rows.size() - renderedRows;
         this.currentFirstRow = Math.min(currentFirstRow, rows.size()); // TODO wait shouldn't it be maxFirstRow as second arg?
@@ -63,7 +68,7 @@ public class ScrollableList extends Element {
             renderThumb(poseStack, graphics, thumbY);
         }
         for (int i = currentFirstRow + startFrom; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
-            int y = (i - currentFirstRow) * rowHeight;
+            int y = relativeYForElement(i);
             poseStack.pushPose();
             poseStack.translate(0, y, 0);
             renderElement(i, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
@@ -72,7 +77,12 @@ public class ScrollableList extends Element {
     }
 
     protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y) {
-        rows.get(element).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+        T e = rows.get(element);
+        if (e instanceof NumberedListElement ne) {
+            ne.renderIndexed(poseStack, graphics, color, relativeMouseX, relativeMouseY - y, element);
+        } else {
+            e.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+        }
     }
 
     private int getThumbY() {
@@ -82,21 +92,34 @@ public class ScrollableList extends Element {
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
         int hoveredElement = getHoveredElement(relativeMouseX, relativeMouseY);
-        if (hoveredElement != -1) {
+        if (!variableSize && hoveredElement != -1) {
             clickElement(hoveredElement, relativeMouseX, relativeMouseY, mouseButton);
             return true;
-        } else if (relativeMouseX > getWidth() - scrollbarWidth && relativeMouseX < getWidth() && relativeMouseY >= getThumbY() && relativeMouseY <= getThumbY() + thumbHeight) {
-            draggingThumb = true;
-            return true;
+        } else {
+            if(variableSize) {
+                for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+                    if (clickElement(i, relativeMouseX, relativeMouseY, mouseButton)) {
+                        return true;
+                    }
+                }
+            }
+            if (relativeMouseX > getWidth() - scrollbarWidth && relativeMouseX < getWidth() && relativeMouseY >= getThumbY() && relativeMouseY <= getThumbY() + thumbHeight) {
+                draggingThumb = true;
+                return true;
+            }
         }
         return false;
     }
 
-    protected void clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
-        rows.get(element).mouseClicked(relativeMouseX, relativeMouseY - (element - currentFirstRow) * rowHeight, mouseButton);
+    protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
+        return rows.get(element).mouseClicked(relativeMouseX, relativeMouseY - relativeYForElement(element), mouseButton);
     }
 
-    protected List<? extends Element> rows() {
+    protected int relativeYForElement(int element) {
+        return (element - currentFirstRow) * rowHeight;
+    }
+
+    protected List<T> rows() {
         return rows;
     }
 
@@ -156,4 +179,14 @@ public class ScrollableList extends Element {
         }
         return -1;
     }
+
+    public interface NumberedListElement {
+        default void renderIndexed(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int index) {
+            render(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+        }
+
+        void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY);
+
+    }
+
 }

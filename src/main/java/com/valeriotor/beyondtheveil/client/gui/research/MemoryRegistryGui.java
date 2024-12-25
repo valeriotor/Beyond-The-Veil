@@ -44,7 +44,7 @@ public class MemoryRegistryGui extends Screen {
     private int pageHeight;
     private int pageWidth;
     private int entryListWidth, entryListHeight, scrollbarWidth, listLeftX, listLeftY, listBackgroundLeftX, listBackgroundLeftY, listBackgroundWidth, listBackgroundHeight;
-    private ScrollableList memoryList;
+    private ScrollableList<MemoryEntry> memoryList;
 
     private final Map<Memory, Research> knownMemories;
 
@@ -92,7 +92,7 @@ public class MemoryRegistryGui extends Screen {
             entries.add(new MemoryEntry(knownMemory));
         }
         entries.sort(Comparator.comparing(m -> m.memory.getTranslationComponent().getString()));
-        memoryList = new ScrollableList(entryListWidth, entryListHeight, entries, entryListHeight / MEMORIES_PER_PAGE, scrollbarWidth);
+        memoryList = new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / MEMORIES_PER_PAGE, scrollbarWidth);
     }
 
     @Override

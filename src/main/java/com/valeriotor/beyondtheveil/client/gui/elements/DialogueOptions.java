@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class DialogueOptions extends ScrollableList {
+public class DialogueOptions extends ScrollableList<TextLine> {
 
     public static DialogueOptions makeOptions(List<DialogueBranch.DialogueOption> localizedOptions, int textWidth, Font font, int width, int height, int scrollbarWidth, BiConsumer<DialogueOptions, Integer> listener) {
         List<List<TextLine>> lines = new ArrayList<>();
@@ -69,11 +69,13 @@ public class DialogueOptions extends ScrollableList {
     }
 
     @Override
-    protected void clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
-        super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
+    protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
+        boolean flag = super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
         if (listener != null) {
             listener.accept(this, elementIndexToOptionIndex.get(element));
+            return true;
         }
+        return flag;
     }
 
     private int getHoveredOption(double relativeMouseX, double relativeMouseY) {

@@ -4,9 +4,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.elements.DropdownLists;
+import com.valeriotor.beyondtheveil.client.gui.elements.EditableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
+import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,29 +45,29 @@ public class JournalGui extends Screen {
     //private int entryListLeftX;
     //private int entryListTopY;
     private JournalCategory selectedCategory = JournalCategory.TOOLS;
-    private ScrollableList overview;
+    private DropdownLists overview;
     // 1022x1071
-    private ScrollableList tools;
+    private ScrollableList<ItemEntry> tools;
     // 1022x1071
-    private ScrollableList ingredients;
+    private ScrollableList<JournalReportLine> ingredients;
     private List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
-    private final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/research/journal_item_entry.png");
+    private final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
     // 2530x1517 -> 843x505
-    private final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/journal_background.png");
+    private final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/journal/background.png");
     // 144x93 -> 48x31
-    private final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark.png");
-    private final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_deselected.png");
-    private final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/research/journal_bookmark_selected.png");
-    private final ResourceLocation HOUSE_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_house_icon.png");
-    private final ResourceLocation TOOLS_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_tools_icon.png");
-    private final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_ingredients_icon.png");
-    private final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_journal_icon.png");
-    private final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/research/journal_abomination_icon.png");
-    private final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/research/journal_dropdown_1.png");
-    private final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/research/journal_dropdown_2.png");
-    private final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/research/journal_plus.png");
-    private final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/research/journal_minus.png");
+    private final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark.png");
+    private final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_deselected.png");
+    private final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_selected.png");
+    private final ResourceLocation HOUSE_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/house_icon.png");
+    private final ResourceLocation TOOLS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/tools_icon.png");
+    private final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/ingredients_icon.png");
+    private final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/journal_icon.png");
+    private final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/abomination_icon.png");
+    private final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_1.png");
+    private final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_2.png");
+    private final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
+    private final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/journal/minus.png");
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -92,7 +94,9 @@ public class JournalGui extends Screen {
 
         overview = DropdownLists.makeList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, makeOverviewList(), DROPDOWN_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
-        tools = new ScrollableList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+        tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+//        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
+//        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
 
         bookmarks.clear();
         for (JournalCategory category : JournalCategory.values()) {
@@ -164,7 +168,7 @@ public class JournalGui extends Screen {
         pose.scale(scaleFactor, scaleFactor, 1);
         RenderSystem.enableBlend();
         pGuiGraphics.blit(BACKGROUND, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight, 0, 0, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT);
-        ScrollableList toRender = currentList();
+        ScrollableList<? extends Element> toRender = currentList();
         int relativeMouseX = listMouseX(pMouseX);
         int relativeMouseY = listMouseY(pMouseY);
         if (toRender != null) {
@@ -249,7 +253,7 @@ public class JournalGui extends Screen {
     }
 
     @Nullable
-    private ScrollableList currentList() {
+    private ScrollableList<? extends Element> currentList() {
         return switch (selectedCategory) {
             case OVERVIEW -> overview;
             case TOOLS -> tools;

@@ -163,7 +163,7 @@ public class CraftingRegistryGui extends Screen {
             }
         }
         entries.sort(Comparator.comparing(e -> e.stack.getItem().getDescription().getString()));
-        itemList = new ScrollableList(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
+        itemList = new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
     }
 
     @Override

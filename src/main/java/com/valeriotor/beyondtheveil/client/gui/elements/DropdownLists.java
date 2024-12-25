@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DropdownLists extends ScrollableList{
+public class DropdownLists extends ScrollableList<Element>{
 
-    public static DropdownLists makeList(int width, int height, List<? extends Element> rows, int rowHeight, int scrollbarWidth) {
+    public static DropdownLists makeList(int width, int height, List<Element> rows, int rowHeight, int scrollbarWidth) {
         List<Tuple<Dropdown, List<Element>>> grouped = new ArrayList<>();
         for (Element row : rows) {
             if (row instanceof Dropdown dd) {
@@ -24,7 +24,7 @@ public class DropdownLists extends ScrollableList{
     private final boolean[] open;
 
 
-    private DropdownLists(int width, int height, List<Tuple<Dropdown, List<Element>>> grouped, List<? extends Element> rows, int rowHeight, int scrollbarWidth) {
+    private DropdownLists(int width, int height, List<Tuple<Dropdown, List<Element>>> grouped, List<Element> rows, int rowHeight, int scrollbarWidth) {
         //super(width, height, grouped.stream().map(Tuple::getA).toList(), rowHeight, scrollbarWidth);
         super(width, height, rows, rowHeight, scrollbarWidth);
         this.grouped = grouped;
@@ -33,13 +33,15 @@ public class DropdownLists extends ScrollableList{
     }
 
     @Override
-    protected void clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
-        super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
-        if (rows().get(element) instanceof Dropdown dd) {
+    protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
+        boolean flag = super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
+        if (rows().get(element) instanceof Dropdown dd && dd.insideBounds(relativeMouseX, relativeMouseY)) {
             List<Element> elements = newList(element);
             dd.toggleOpen();
             changeElements(elements);
+            return true;
         }
+        return flag;
     }
 
     private List<Element> newList(int element) {

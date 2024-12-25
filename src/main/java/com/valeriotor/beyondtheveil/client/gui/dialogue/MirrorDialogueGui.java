@@ -28,7 +28,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/black_mirror_transparent_wide.png");
     private int branch;
     private int indexInBranch;
-    private ScrollableList list;
+    private ScrollableList<Element> list;
     private final List<String> localizedLines = new ArrayList<>();
     private float scaleFactor = 1;
     private int yOffset = 0;
@@ -130,7 +130,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
         for (String localizedLine : localizedLines) {
             lines.addAll(new TextUtil().parseText(localizedLine, listWidth * 95 / 100, minecraft.font));
         }
-        list = new ScrollableList(listWidth, 15 * displayedLines, lines, 15, (listWidth * 3 / 100));
+        list = new ScrollableList<>(listWidth, 15 * displayedLines, lines, 15, (listWidth * 3 / 100));
         list.setCurrentFirstRow(list.getMaxFirstRow());
 
     }
