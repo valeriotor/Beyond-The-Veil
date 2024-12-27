@@ -46,14 +46,14 @@ public class DialogueOptions extends ScrollableList<TextLine> {
     }
 
     @Override
-    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y) {
+    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y, float pPartialTick) {
         boolean flag = false;
         if (elementIndexToOptionIndex.get(element) == getHoveredOption(relativeMouseX, relativeMouseY)) {
             flag = true;
         }
         poseStack.pushPose();
         poseStack.translate(flag ? 20 : 5, 0, 0);
-        super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
+        super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y, pPartialTick);
         poseStack.popPose();
         if(element == 0 || !Objects.equals(elementIndexToOptionIndex.get(element - 1), elementIndexToOptionIndex.get(element))) {
             poseStack.pushPose();

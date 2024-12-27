@@ -37,17 +37,17 @@ public class DoubleTextPages extends Element {
     }
 
     @Override
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         TextBlock firstBlock = index * 2 >= blocks.size() ? null : blocks.get(index * 2);
         TextBlock secondBlock = index * 2 + 1 >= blocks.size() ? null : blocks.get(index * 2 + 1);
 
         if (firstBlock != null) {
-            firstBlock.render(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+            firstBlock.render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick);
         }
         if (secondBlock != null) {
             poseStack.pushPose();
             poseStack.translate(secondBlockX, 0, 0);
-            secondBlock.render(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+            secondBlock.render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick);
             poseStack.popPose();
         }
     }

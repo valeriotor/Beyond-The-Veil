@@ -182,11 +182,11 @@ public class CraftingRegistryGui extends Screen {
         guiGraphics.blit(BACKGROUND, 0, 0, width, height, 0, 0, 2560, 1440, 2560, 1440);
         guiGraphics.blit(PAGE, pageLeftX, pageTopY, pageWidth, pageHeight, 0, 0, 1577, 1261, 1577, 1261);
 
-        renderSelections(guiGraphics, pMouseX, pMouseY, pose);
+        renderSelections(guiGraphics, pMouseX, pMouseY, pose, pPartialTick);
 
         pose.pushPose();
         pose.translate(listLeftX, listLeftY, 0);
-        itemList.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - listLeftX, pMouseY - listLeftY);
+        itemList.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - listLeftX, pMouseY - listLeftY, pPartialTick);
         pose.popPose();
 
         if (selectedTitle != null) {
@@ -199,14 +199,14 @@ public class CraftingRegistryGui extends Screen {
         if (selectedText != null) {
             pose.pushPose();
             pose.translate(textBlockX, textBlockY, 0);
-            selectedText.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - textBlockX, pMouseY - textBlockY);
+            selectedText.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - textBlockX, pMouseY - textBlockY, pPartialTick);
             pose.popPose();
         }
         //guiGraphics.drawString(font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 10, 10, 0xFFFFFFFF);
 
     }
 
-    private void renderSelections(GuiGraphics guiGraphics, int pMouseX, int pMouseY, PoseStack pose) {
+    private void renderSelections(GuiGraphics guiGraphics, int pMouseX, int pMouseY, PoseStack pose, float pPartialTick) {
         pose.pushPose();
         pose.translate(CTCategoryX, CTCategoryY, 0);
         pose.scale(1.5F, 1.5F, 1);
@@ -233,7 +233,7 @@ public class CraftingRegistryGui extends Screen {
             pose.pushPose();
             pose.translate(gridX, gridY, 0);
             pose.scale(gridFactor, gridFactor, 1);
-            grid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((pMouseX - gridX) / gridFactor), (int) ((pMouseY - gridY) / gridFactor));
+            grid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((pMouseX - gridX) / gridFactor), (int) ((pMouseY - gridY) / gridFactor), pPartialTick);
             pose.popPose();
         }
     }
@@ -320,7 +320,7 @@ public class CraftingRegistryGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(ENTRY, 0, 0, getWidth(), getHeight(), 0, 0, 490, 150, 490, 150);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
@@ -368,7 +368,7 @@ public class CraftingRegistryGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             int side = 0, pX = 0, pY = 0;
             if (recipe instanceof CraftingRecipe) {
                 side = 3;

@@ -266,7 +266,7 @@ public class ResearchPageGui extends Screen {
         int frameHeight = (pageBottomY - pageTopY) * 1082 / 992;
         guiGraphics.blit(FRAME, frameLeftX, frameTopY, frameWidth, frameHeight, 0, 0, 1511, 1082, 1511, 1082);
 
-        renderMainPage(pose, guiGraphics, mouseX, mouseY);
+        renderMainPage(pose, guiGraphics, mouseX, mouseY, partialTicks);
 
         int craftingTableIndex = getCraftingTableIndex();
         int gearBenchIndex = getGearBenchIndex();
@@ -283,7 +283,7 @@ public class ResearchPageGui extends Screen {
             int width1 = 1500 * blackPageWidth / 1511;
             float scaleFactor = width1 / 200F;
             pose.scale(scaleFactor, scaleFactor, 1);
-            currentGrid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - gridX) / scaleFactor), (int) ((mouseY - gridY) / scaleFactor));
+            currentGrid.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - gridX) / scaleFactor), (int) ((mouseY - gridY) / scaleFactor), partialTicks);
             pose.popPose();
         } else if (memoryIngredient != null) {
             int width1 = 1500 * blackPageWidth / 1511;
@@ -320,11 +320,11 @@ public class ResearchPageGui extends Screen {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
-    private void renderMainPage(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    private void renderMainPage(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, float pPartialTick) {
         if (selectedRecipeType == null) {
             renderTitleUnderline(guiGraphics);
             renderTitle(pose, guiGraphics);
-            renderPageText(pose, guiGraphics, mouseX, mouseY);
+            renderPageText(pose, guiGraphics, mouseX, mouseY, pPartialTick);
         }
 
         //guiGraphics.drawString(font, String.format("X: %d, Y: %d", mouseX, mouseY), 10, 10, 0xFFFFFFFF);
@@ -378,12 +378,12 @@ public class ResearchPageGui extends Screen {
         guiGraphics.blit(UNDERLINING_RIGHT, width / 2 + titleWidth / 2, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
     }
 
-    private void renderPageText(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    private void renderPageText(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, float pPartialTick) {
         pose.pushPose();
         int pX = width / 2 - lineWidth - middleSpace;
         int pY = height / 2 - blackPageHeight * 287 / 1000;
         pose.translate(pX, pY, 0);
-        pages2.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY);
+        pages2.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY, pPartialTick);
         pose.popPose();
     }
 

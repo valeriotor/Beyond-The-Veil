@@ -14,7 +14,7 @@ public abstract class Element {
         this.height = height;
     }
 
-    public abstract void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY);
+    public abstract void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick);
 
     public int getWidth() {
         return width;
@@ -33,6 +33,10 @@ public abstract class Element {
     }
 
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        return false;
+    }
+
+    public boolean charTyped(char pCodePoint, int pModifiers) {
         return false;
     }
 

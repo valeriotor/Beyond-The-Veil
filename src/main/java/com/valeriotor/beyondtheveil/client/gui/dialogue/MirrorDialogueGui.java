@@ -169,7 +169,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
 
             pose.scale(scaleFactor, scaleFactor, 1);
             pose.translate(0, Math.max(0, 15 * (displayedLines - list.getNumberOfElements())), 0);
-            list.render(pose, guiGraphics, 0xFFFFFFFF, (int) relativeMouseX(pMouseX), (int) ((pMouseY - height / 2) * scaleFactor), Math.max(0, linesToSkip), waitTicks <= -1);
+            list.render(pose, guiGraphics, 0xFFFFFFFF, (int) relativeMouseX(pMouseX), (int) ((pMouseY - height / 2) * scaleFactor), pPartialTick, Math.max(0, linesToSkip), waitTicks <= -1);
             pose.popPose();
         }
         pose.pushPose();
@@ -181,7 +181,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
             pose.translate(width / 2 - imageWidth / TEXT_TO_IMAGE_RATIO / 2, imageHeight / 3, 0);
             pose.scale(scaleFactor, scaleFactor, 1);
             pose.translate(0, + 15 * displayedLines + 15, 0);
-            options.render(pose, guiGraphics, 0xFFDD0000, (int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY));
+            options.render(pose, guiGraphics, 0xFFDD0000, (int) relativeMouseX(pMouseX), (int) optionsRelativeMouseY(pMouseY), pPartialTick);
             pose.popPose();
         }
     }

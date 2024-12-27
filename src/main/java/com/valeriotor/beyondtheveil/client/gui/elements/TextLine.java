@@ -21,7 +21,7 @@ public class TextLine extends Element{
     }
 
     @Override
-    public void render(PoseStack poseStack, GuiGraphics guiGraphics, int color, int relativeMouseX, int relativeMouseY) {
+    public void render(PoseStack poseStack, GuiGraphics guiGraphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.drawString(mc.font, text, 0, 0, color);
         if (relativeMouseY >= 0 && relativeMouseY < 15) {

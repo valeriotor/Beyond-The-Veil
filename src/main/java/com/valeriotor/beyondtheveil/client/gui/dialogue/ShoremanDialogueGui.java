@@ -297,7 +297,7 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         if (options != null && shouldShowOptions()) {
             pose.pushPose();
             pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -60, 0);
-            options.render(pose, guiGraphics, 0xFFDD0000, (int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor));
+            options.render(pose, guiGraphics, 0xFFDD0000, (int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pPartialTick);
             pose.popPose();
         }
 

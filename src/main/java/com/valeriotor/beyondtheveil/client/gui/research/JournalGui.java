@@ -95,8 +95,9 @@ public class JournalGui extends Screen {
         overview = DropdownLists.makeList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, makeOverviewList(), DROPDOWN_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
-//        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
-//        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
+        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
+        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
+        ingredients.setVariableSize(true);
 
         bookmarks.clear();
         for (JournalCategory category : JournalCategory.values()) {
@@ -179,7 +180,7 @@ public class JournalGui extends Screen {
             pGuiGraphics.fill(-0, ENTRY_LIST_BASE_HEIGHT - 2, ENTRY_LIST_BASE_WIDTH - 2, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
             pGuiGraphics.fill(-4, -3, 0, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
             pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
-            toRender.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY);
+            toRender.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
 
@@ -189,7 +190,7 @@ public class JournalGui extends Screen {
             relativeMouseY = bookmarkMouseY(pMouseY, i);
             pose.pushPose();
             pose.translate(BOOKMARK_BASE_LEFT_X, BOOKMARK_BASE_TOP_Y + 70 * i, 0);
-            bookmark.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY);
+            bookmark.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
 
@@ -234,6 +235,22 @@ public class JournalGui extends Screen {
             return true;
         }
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (currentList() != null && currentList().keyPressed(pKeyCode, pScanCode, pModifiers)) { // TODO not current list but only journal one
+            return true;
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
+
+    @Override
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        if (currentList() != null && currentList().charTyped(pCodePoint, pModifiers)) { // TODO not current list but only journal one
+            return true;
+        }
+        return super.charTyped(pCodePoint, pModifiers);
     }
 
     private int bookmarkMouseX(double pMouseX) {
@@ -310,7 +327,7 @@ public class JournalGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(ITEM_ENTRY, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
@@ -352,7 +369,7 @@ public class JournalGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.renderTooltip(minecraft.font, Component.translatable("gui.journal.bookmark." + category.name().toLowerCase()), relativeMouseX, relativeMouseY);
                 //graphics.renderTooltip(minecraft.font, Component.translatable("Overview"), relativeMouseX, relativeMouseY);
@@ -397,7 +414,7 @@ public class JournalGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(DROPDOWN_1, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x4499875A);
@@ -419,7 +436,7 @@ public class JournalGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(DROPDOWN_2, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT, ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x4499875A);

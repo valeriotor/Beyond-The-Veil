@@ -22,8 +22,8 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
     }
 
     @Override
-    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y) {
-        super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
+    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y, float pPartialTick) {
+        super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y, pPartialTick);
         T e = rows().get(element);
         if (e.insideBounds(relativeMouseX, relativeMouseY - y)) {
             e.renderAdd(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);

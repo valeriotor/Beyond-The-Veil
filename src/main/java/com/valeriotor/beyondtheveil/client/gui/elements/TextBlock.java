@@ -43,12 +43,12 @@ public class TextBlock extends Element{
     }
 
     @Override
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         int yOffset = 0;
         for (int i = 0; i < lines.size(); i++) {
             poseStack.pushPose();
             poseStack.translate(0, yOffset, 0);
-            lines.get(i).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - yOffset);
+            lines.get(i).render(poseStack, graphics, color, relativeMouseX, relativeMouseY - yOffset, pPartialTick);
             yOffset += lines.get(i).getHeight();
             poseStack.popPose();
         }

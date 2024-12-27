@@ -56,12 +56,12 @@ public class ScrollableList<T extends Element> extends Element {
 
 
     @Override
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
-        render(poseStack, graphics, color, relativeMouseX, relativeMouseY, 0, true);
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+        render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick, 0, true);
     }
 
 
-    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int startFrom, boolean drawScrollbar) {
+    public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, int startFrom, boolean drawScrollbar) {
         if (maxFirstRow > 0 && drawScrollbar) {
             graphics.fill(getWidth() - scrollbarWidth, 0, getWidth(), getHeight(), 0x99000000);
             int thumbY = getThumbY();
@@ -71,22 +71,42 @@ public class ScrollableList<T extends Element> extends Element {
             int y = relativeYForElement(i);
             poseStack.pushPose();
             poseStack.translate(0, y, 0);
-            renderElement(i, poseStack, graphics, color, relativeMouseX, relativeMouseY, y);
+            renderElement(i, poseStack, graphics, color, relativeMouseX, relativeMouseY, y, pPartialTick);
             poseStack.popPose();
         }
     }
 
-    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y) {
+    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y, float pPartialTick) {
         T e = rows.get(element);
         if (e instanceof NumberedListElement ne) {
-            ne.renderIndexed(poseStack, graphics, color, relativeMouseX, relativeMouseY - y, element);
+            ne.renderIndexed(poseStack, graphics, color, relativeMouseX, relativeMouseY - y, pPartialTick, element);
         } else {
-            e.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+            e.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - y, pPartialTick);
         }
     }
 
     private int getThumbY() {
         return maxFirstRow == 0 ? 0 : (getHeight() - thumbHeight) * currentFirstRow / maxFirstRow;
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            if (rows.get(i).keyPressed(pKeyCode, pScanCode, pModifiers)) {
+                return true;
+            }
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
+
+    @Override
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            if (rows.get(i).charTyped(pCodePoint, pModifiers)) {
+                return true;
+            }
+        }
+        return super.charTyped(pCodePoint, pModifiers);
     }
 
     @Override
@@ -96,7 +116,7 @@ public class ScrollableList<T extends Element> extends Element {
             clickElement(hoveredElement, relativeMouseX, relativeMouseY, mouseButton);
             return true;
         } else {
-            if(variableSize) {
+            if (variableSize) {
                 for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
                     if (clickElement(i, relativeMouseX, relativeMouseY, mouseButton)) {
                         return true;
@@ -115,6 +135,18 @@ public class ScrollableList<T extends Element> extends Element {
         return rows.get(element).mouseClicked(relativeMouseX, relativeMouseY - relativeYForElement(element), mouseButton);
     }
 
+    protected boolean scrollElement(int element, double relativeMouseX, double relativeMouseY, double pDelta) {
+        return rows.get(element).mouseScrolled(relativeMouseX, relativeMouseY - relativeYForElement(element), pDelta);
+    }
+
+    protected boolean dragElement(int element, double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
+        return rows.get(element).mouseDragged(relativeMouseX, relativeMouseY - relativeYForElement(element), pButton, pDragX, pDragY);
+    }
+
+    protected boolean releaseElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
+        return rows.get(element).mouseReleased(relativeMouseX, relativeMouseY - relativeYForElement(element), mouseButton);
+    }
+
     protected int relativeYForElement(int element) {
         return (element - currentFirstRow) * rowHeight;
     }
@@ -125,6 +157,11 @@ public class ScrollableList<T extends Element> extends Element {
 
     @Override
     public boolean mouseDragged(double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            if (dragElement(i, relativeMouseX, relativeMouseY, pButton, pDragX, pDragY)) {
+                return true;
+            }
+        }
         if (draggingThumb) {
             if (relativeMouseY < 0) {
                 currentFirstRow = 0;
@@ -141,6 +178,11 @@ public class ScrollableList<T extends Element> extends Element {
 
     @Override
     public boolean mouseReleased(double relativeMouseX, double relativeMouseY, int pButton) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            if (releaseElement(i, relativeMouseX, relativeMouseY, pButton)) {
+                return true;
+            }
+        }
         if (draggingThumb) {
             draggingThumb = false;
             return true;
@@ -150,6 +192,11 @@ public class ScrollableList<T extends Element> extends Element {
 
     @Override
     public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            if (scrollElement(i, relativeMouseX, relativeMouseY, pDelta)) {
+                return true;
+            }
+        }
         if (insideBounds(relativeMouseX, relativeMouseY)) {
             int move = (int) Math.signum(-pDelta);
             currentFirstRow = Mth.clamp(currentFirstRow + move, 0, maxFirstRow);
@@ -180,12 +227,17 @@ public class ScrollableList<T extends Element> extends Element {
         return -1;
     }
 
+    @Override
+    public boolean insideBounds(double relativeMouseX, double relativeMouseY) {
+        return super.insideBounds(relativeMouseX, relativeMouseY);
+    }
+
     public interface NumberedListElement {
-        default void renderIndexed(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int index) {
-            render(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+        default void renderIndexed(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, int index) {
+            render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick);
         }
 
-        void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY);
+        void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick);
 
     }
 

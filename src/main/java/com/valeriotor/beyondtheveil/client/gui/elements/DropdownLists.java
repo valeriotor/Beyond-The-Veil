@@ -35,7 +35,7 @@ public class DropdownLists extends ScrollableList<Element>{
     @Override
     protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
         boolean flag = super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
-        if (rows().get(element) instanceof Dropdown dd && dd.insideBounds(relativeMouseX, relativeMouseY)) {
+        if (rows().get(element) instanceof Dropdown dd && dd.insideBounds(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
             List<Element> elements = newList(element);
             dd.toggleOpen();
             changeElements(elements);

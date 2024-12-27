@@ -118,7 +118,7 @@ public class MemoryRegistryGui extends Screen {
 
         pose.pushPose();
         pose.translate(listLeftX, listLeftY, 0);
-        memoryList.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - listLeftX, pMouseY - listLeftY);
+        memoryList.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - listLeftX, pMouseY - listLeftY, pPartialTick);
         pose.popPose();
 
     }
@@ -174,7 +174,7 @@ public class MemoryRegistryGui extends Screen {
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(ENTRY, 0, 0, getWidth(), getHeight(), 0, 0, 400, 104, 400, 104);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
