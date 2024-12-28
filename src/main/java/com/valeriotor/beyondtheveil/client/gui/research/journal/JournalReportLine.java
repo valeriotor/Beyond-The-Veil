@@ -14,17 +14,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class JournalReportLine extends Element implements EditableList.EditableListElement, ScrollableList.NumberedListElement {
 
-    private Type type;
-    private EditBox typeSelector;
-    private ScrollableList<TypeOption> typeSelectorList;
+    private Type type = Type.NONE;
+    private final int typeSelectorWidth;
+    private final EditBox typeSelector;
+    private final ScrollableList<TypeOption> typeSelectorList;
     private static final int SELECTOR_LIST_LEFT_X = 54;
     private static final int SELECTOR_LIST_TOP_Y = 25;
 
@@ -35,11 +36,12 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     protected JournalReportLine(int width, int height) {
         super(width, height);
-        typeSelector = new EditBox(Minecraft.getInstance().font, 54, 2, 75, getHeight()-4, Component.translatable("gui.journal.journal.select"));
+        typeSelectorWidth = Arrays.stream(Type.values()).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 10;
+        typeSelector = new EditBox(Minecraft.getInstance().font, SELECTOR_LIST_LEFT_X, 8, typeSelectorWidth, 15, Component.translatable("gui.journal.journal.type.none"));
         typeSelector.active = false;
-        typeSelector.setValue(Type.NONE.name());
-        //typeSelector.setBordered(false);
-        List<TypeOption> typeLines = Arrays.stream(Type.values()).map(t -> new TypeOption(75, t, Minecraft.getInstance().font)).toList();
+        typeSelector.setValue(Type.NONE.getText().getString());
+        typeSelector.setBordered(false);
+        List<TypeOption> typeLines = Arrays.stream(Type.values()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
         typeSelectorList = new ScrollableList<>(86, 68, typeLines, 17, 10);
     }
 
@@ -49,12 +51,19 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         if (insideBounds(relativeMouseX, relativeMouseY)) {
             graphics.fill(52, 0, getWidth() - 53, getHeight(), 0x4499875A);
         }
+        graphics.fill(SELECTOR_LIST_LEFT_X - 3, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth, getHeight() - 1, 0xFF7D633F);
+        graphics.fill(SELECTOR_LIST_LEFT_X + typeSelectorWidth, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth + 1, getHeight() - 1, 0xFF352E1C);
         //graphics.fill(52, 2, 101, getHeight() - 2, 0x88000000);
         graphics.fill(52, 0, getWidth() - 53, 1, 0xFF352E1C);
         graphics.fill(52, getHeight() - 1, getWidth() - 53, getHeight(), 0xFF352E1C);
         graphics.fill(52, 0, 53, getHeight(), 0xFF352E1C);
         graphics.fill(getWidth() - 53 - 1, 0, getWidth() - 53, getHeight(), 0xFF352E1C);
         typeSelector.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
+        poseStack.pushPose();
+        poseStack.translate(SELECTOR_LIST_LEFT_X + typeSelectorWidth - 7, 0.5, 0);
+        poseStack.scale(2, 2, 1);
+        graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
+        poseStack.popPose();
         if (typeSelector.isActive()) {
             poseStack.pushPose();
             poseStack.translate(SELECTOR_LIST_LEFT_X, SELECTOR_LIST_TOP_Y, 100);
@@ -67,24 +76,6 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     public void renderIndexed(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, int index) {
         ScrollableList.NumberedListElement.super.renderIndexed(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick, index);
         graphics.drawString(Minecraft.getInstance().font, String.format("§l%d.", index + 1), 40, 8, 0xFFE0D5B3);
-        /*String test = switch (index) {
-            case 0 -> "Injection";
-            case 2 -> "Incision";
-            case 1 -> "Insertion";
-            case 3 -> "Status";
-            case 5 -> "Death";
-            default -> "Extraction";
-        };
-        String test2 = switch (index) {
-            case 0 -> "§o75 mB Sedative";
-            case 2 -> "§oComplete";
-            case 1 -> "§oPlucked Eye, Complete";
-            case 3 -> "§oIn pain";
-            case 5 -> "";
-            default -> "§oComplete";
-        };
-        graphics.drawString(Minecraft.getInstance().font, test, 54, 8, 0xFFE0D5B3);
-        graphics.drawString(Minecraft.getInstance().font, test2, 115, 8, 0xFFE0D5B3);*/
     }
 
     @Override
@@ -101,6 +92,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         } else {
             typeSelector.active = false;
             typeSelector.setFocused(false);
+            typeSelector.setValue(type.getText().getString());
         }
         //typeSelector.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
         return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
@@ -114,7 +106,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             if (typeSelector.keyPressed(pKeyCode, pScanCode, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
-                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(t -> t.name().contains(typeSelector.getValue())).map(t -> new TypeOption(75, t, Minecraft.getInstance().font)).toList();
+                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(filterText()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
                     typeSelectorList.changeElements(typeLines);
                     return true;
                 }
@@ -131,13 +123,18 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             if (typeSelector.charTyped(pCodePoint, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
-                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(t -> t.name().toLowerCase().contains(typeSelector.getValue().toLowerCase())).map(t -> new TypeOption(75, t, Minecraft.getInstance().font)).toList();
+                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(filterText()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
                     typeSelectorList.changeElements(typeLines);
                     return true;
                 }
             }
         }
         return super.charTyped(pCodePoint, pModifiers);
+    }
+
+    @NotNull
+    private Predicate<Type> filterText() {
+        return t -> t.getText().getString().toLowerCase().contains(typeSelector.getValue().toLowerCase());
     }
 
     @Override
@@ -188,25 +185,41 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         return super.insideBounds(relativeMouseX, relativeMouseY);
     }
 
-    private void selectType(Type type) {
-        this.type = type;
+    private void selectType(Option type) {
+        if (type instanceof Type t) {
+            this.type = t;
+        }
     }
 
-    private enum Type {
-        NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH
+    private interface Option {
+        Component getText();
     }
 
-    private class TypeOption extends Element {
+
+    private enum Type implements Option {
+        NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH;
+
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.type." + name().toLowerCase());
+        }
+
+    }
+
+    private static class TypeOption extends Element {
 
         private final String line;
-        private final Type type;
+        private final Option type;
         private final Font font;
+        private final EditBox typeSelector;
+        private final Consumer<Option> optionConsumer;
 
-        public TypeOption(int width, Type type, Font font) {
+        public TypeOption(int width, Option type, Font font, EditBox typeSelector, Consumer<Option> optionConsumer) {
             super(width, 17);
-            this.line = type.name();
+            this.line = type.getText().getString();
             this.type = type;
             this.font = font;
+            this.typeSelector = typeSelector;
+            this.optionConsumer = optionConsumer;
         }
 
         @Override
@@ -217,7 +230,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(1, 1, getWidth() - 1, getHeight() - 1, 0xFF554E3C);
             }
-            graphics.drawString(font, line, 0, 1, color);
+            graphics.drawString(font, line, 2, 1, color);
         }
 
         @Override
@@ -225,9 +238,13 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             typeSelector.setValue(line);
             typeSelector.active = false;
             typeSelector.setFocused(false);
-            selectType(type);
+            optionConsumer.accept(type);
             return true;
         }
     }
+
+    private class PositionEntry {
+    }
+
 
 }

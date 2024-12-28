@@ -117,10 +117,14 @@ public class ScrollableList<T extends Element> extends Element {
             return true;
         } else {
             if (variableSize) {
+                boolean flag = false;
                 for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
                     if (clickElement(i, relativeMouseX, relativeMouseY, mouseButton)) {
-                        return true;
+                        flag = true;
                     }
+                }
+                if (flag) {
+                    return true;
                 }
             }
             if (relativeMouseX > getWidth() - scrollbarWidth && relativeMouseX < getWidth() && relativeMouseY >= getThumbY() && relativeMouseY <= getThumbY() + thumbHeight) {

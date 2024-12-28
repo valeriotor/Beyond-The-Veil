@@ -1702,5 +1702,15 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.storage", "Storage");
         add("gui.journal.overview.holding", "Holding patients");
         add("gui.journal.overview.surgery", "Surgery");
+
+        add("gui.journal.journal.type.none", "Select Type");
+        add("gui.journal.journal.type.position", "Position");
+        add("gui.journal.journal.type.extraction", "Extraction");
+        add("gui.journal.journal.type.incision", "Incision");
+        add("gui.journal.journal.type.injection", "Injection");
+        add("gui.journal.journal.type.insertion", "Insertion");
+        add("gui.journal.journal.type.stitching", "Stitching");
+        add("gui.journal.journal.type.pain", "Pain");
+        add("gui.journal.journal.type.death", "Death");
     }
 }
