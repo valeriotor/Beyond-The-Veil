@@ -82,6 +82,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(CRUCIBLE.get(), "Crucible");
         add(BLACK_MIRROR.get(), "Black Mirror");
         add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
+        add(PLUCKED_EYE.get(), "Plucked Eye");
 
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
@@ -1714,5 +1715,6 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.type.death", "Death");
         add("gui.journal.journal.completeness.complete", "Completed");
         add("gui.journal.journal.completeness.incomplete", "Not completed");
+        add("gui.journal.journal.ingredient.none", "Select Ingredient");
     }
 }

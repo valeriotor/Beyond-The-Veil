@@ -8,12 +8,17 @@ import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class JournalReportLine extends Element implements EditableList.EditableListElement, ScrollableList.NumberedListElement {
 
+    private final List<ItemOption> knownSolids;
     private Type type = Type.NONE;
     private final int typeSelectorWidth;
     private final EditableDropdownBox<Type> typeSelector;
@@ -22,12 +27,13 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     private static final int SELECTOR_LIST_TOP_Y = 25;
 
 
-    public static JournalReportLine makeReportLine(int width, int height) {
-        return new JournalReportLine(width, height);
+    public static JournalReportLine makeReportLine(int width, int height, List<Item> knownSolids) {
+        return new JournalReportLine(width, height, knownSolids);
     }
 
-    protected JournalReportLine(int width, int height) {
+    protected JournalReportLine(int width, int height, List<Item> knownSolids) {
         super(width, height);
+        this.knownSolids = Stream.concat(Stream.of(Items.AIR), knownSolids.stream()).map(ItemOption::new).toList();
         typeSelector = EditableDropdownBox.makeBox(Type.values(), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C);
         typeSelector.setOnSelect(this::updateDropdowns);
         typeSelectorWidth = typeSelector.getWidth();
@@ -144,6 +150,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             case INJECTION -> { // TODO
             }
             case INSERTION -> {
+                Box second = new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(knownSolids.toArray(new ItemOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
+                boxes.add(second);
+                boxes.add(new Box(second.x + second.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
             }
         }
     }
@@ -158,6 +167,13 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         return super.insideBounds(relativeMouseX, relativeMouseY);
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        for (Box box : boxes) {
+            box.box.tick();
+        }
+    }
 
     private enum Type implements EditableDropdownBox.Option {
         NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH;
@@ -177,6 +193,24 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             return Component.translatable("gui.journal.journal.completeness." + name().toLowerCase());
         }
     }
+
+    private static class ItemOption implements EditableDropdownBox.Option {
+
+        private final ItemStack item;
+
+        public ItemOption(Item item) {
+            this.item = new ItemStack(item);
+        }
+
+        @Override
+        public Component getText() {
+            if (item.getItem() == Items.AIR) {
+                return Component.translatable("gui.journal.journal.ingredient.none");
+            }
+            return item.getHoverName();
+        }
+    }
+
 
     private record Box(int x, EditableDropdownBox<?> box) {
     }

@@ -163,6 +163,14 @@ public class ScrollableList<T extends Element> extends Element {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            rows.get(i).tick();
+        }
+    }
+
+    @Override
     public boolean mouseDragged(double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
         for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
             if (dragElement(i, relativeMouseX, relativeMouseY, pButton, pDragX, pDragY)) {

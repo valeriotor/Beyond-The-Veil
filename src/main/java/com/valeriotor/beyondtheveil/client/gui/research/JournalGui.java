@@ -9,22 +9,29 @@ import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
+import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementList;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientAdvancements;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalGui extends Screen {
+public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private int imageWidth;
     private int imageHeight;
     private float scaleFactor = 1;
@@ -45,6 +52,7 @@ public class JournalGui extends Screen {
     //private int entryListLeftX;
     //private int entryListTopY;
     private JournalCategory selectedCategory = JournalCategory.TOOLS;
+    private final List<Item> knownIngredients = new ArrayList<>();
     private DropdownLists overview;
     // 1022x1071
     private ScrollableList<ItemEntry> tools;
@@ -72,7 +80,10 @@ public class JournalGui extends Screen {
     //private final ScrollableList overview;
     public JournalGui() {
         super(Component.translatable("gui.journal.title"));
-
+        ClientPacketListener connection = Minecraft.getInstance().getConnection();
+        if (connection != null) {
+            connection.getAdvancements().setListener(this);
+        }
     }
 
 
@@ -93,10 +104,11 @@ public class JournalGui extends Screen {
         //entryListTopY = pageY() + 80;
 
         overview = DropdownLists.makeList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, makeOverviewList(), DROPDOWN_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+        //List<ItemEntry> entries = knownIngredients.stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
-        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
-        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4));
+        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients));
+        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients));
         ingredients.setVariableSize(true);
 
         bookmarks.clear();
@@ -313,6 +325,27 @@ public class JournalGui extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (currentList() != null) {
+            currentList().tick();
+        }
+    }
+    @Override public void onAddAdvancementRoot(Advancement pAdvancement) {}
+    @Override public void onRemoveAdvancementRoot(Advancement pAdvancement) {}
+    @Override public void onAddAdvancementTask(Advancement pAdvancement) {}
+    @Override public void onRemoveAdvancementTask(Advancement pAdvancement) {}
+    @Override public void onAdvancementsCleared() {}
+    @Override public void onSelectedTabChanged(@Nullable Advancement pAdvancement) {}
+    @Override
+    public void onUpdateAdvancementProgress(Advancement pAdvancement, AdvancementProgress pProgress) {
+        String s = pAdvancement.getId().toString();
+        if (s.startsWith(References.MODID + ":ingredients/")) {
+            ForgeRegistries.ITEMS.getHolder(new ResourceLocation(References.MODID, s.substring(s.indexOf('/') + 1))).ifPresent(h -> knownIngredients.add(h.get()));
+        }
     }
 
     private class ItemEntry extends Element {

@@ -27,7 +27,9 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
         T e = rows().get(element);
         if (e.insideBounds(relativeMouseX, relativeMouseY - y)) {
             e.renderAdd(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
-            e.renderDelete(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+            if(rows().size() > 1) {
+                e.renderDelete(poseStack, graphics, color, relativeMouseX, relativeMouseY - y);
+            }
         }
     }
 
@@ -38,7 +40,7 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
             List<T> newList = new ArrayList<>(rows());
             newList.add(element + 1, newElement.get());
             changeElements(newList);
-        } else if (e.hoveringDelete(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
+        } else if (rows().size() > 1 && e.hoveringDelete(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
             List<T> newList = new ArrayList<>(rows());
             newList.remove(element);
             changeElements(newList);

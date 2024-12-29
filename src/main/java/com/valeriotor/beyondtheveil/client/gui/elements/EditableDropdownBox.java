@@ -66,11 +66,11 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             graphics.fill(0, 0, getWidth(), getHeight(), 0x0AFFFFFF);
         }
         if (chosen.getText().getString().equals("Death")) {
-            graphics.fill(0, 0, getWidth(), getHeight(), 0x33FF0000);
+            graphics.fill(-1, 0, getWidth(), getHeight(), 0x33FF0000);
         }
         typeSelector.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
         poseStack.pushPose();
-        poseStack.translate(getWidth() - 7, 0.5, 0);
+        poseStack.translate(getWidth() - 8, 0.5, 0);
         poseStack.scale(2, 2, 1);
         graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
         poseStack.popPose();
@@ -120,7 +120,6 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         if (typeSelector.isActive()) {
             String old = typeSelector.getValue();
-            System.out.println(typeSelector.isFocused());
             if (typeSelector.keyPressed(pKeyCode, pScanCode, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
@@ -136,7 +135,6 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     public boolean charTyped(char pCodePoint, int pModifiers) {
         if (typeSelector.isActive()) {
             String old = typeSelector.getValue();
-            System.out.println(typeSelector.isFocused());
             if (typeSelector.charTyped(pCodePoint, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
