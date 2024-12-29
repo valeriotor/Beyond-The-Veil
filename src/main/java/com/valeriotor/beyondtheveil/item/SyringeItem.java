@@ -2,10 +2,12 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -26,9 +28,13 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SyringeItem extends SurgeryItem {
@@ -44,10 +50,19 @@ public class SyringeItem extends SurgeryItem {
 
     @Override
     protected void interactWithBE(Player p, Level level, BlockPos pos, BlockState lookedAtState, BlockEntity blockEntity, BlockHitResult bhr) {
+        ItemStack itemStack = p.getItemInHand(InteractionHand.MAIN_HAND);
+        if (!level.isClientSide) {
+            Optional<FluidStack> fluidContained = FluidUtil.getFluidContained(itemStack);
+            fluidContained.ifPresent(fluidStack -> {
+                String apply = PlayerDataLib.DISCOVERED_FLUID.apply(fluidStack.getFluid());
+                if (!DataUtil.getBoolean(p, apply)) {
+                    DataUtil.setBooleanOnServerAndSync(p, apply, true, false);
+                }
+            });
+        }
         if (lookedAtState.getBlock() == Registration.FLASK_SHELF.get()) {
             BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
-                ItemStack itemStack = p.getItemInHand(InteractionHand.MAIN_HAND);
                 Item held = itemStack.getItem();
                 be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
             }
@@ -55,6 +70,15 @@ public class SyringeItem extends SurgeryItem {
             flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
         } else {
             super.interactWithBE(p, level, pos, lookedAtState, blockEntity, bhr);
+        }
+        if (!level.isClientSide) {
+            Optional<FluidStack> fluidContained = FluidUtil.getFluidContained(itemStack);
+            fluidContained.ifPresent(fluidStack -> {
+                String apply = PlayerDataLib.DISCOVERED_FLUID.apply(fluidStack.getFluid());
+                if (!DataUtil.getBoolean(p, apply)) {
+                    DataUtil.setBooleanOnServerAndSync(p, apply, true, false);
+                }
+            });
         }
     }
 

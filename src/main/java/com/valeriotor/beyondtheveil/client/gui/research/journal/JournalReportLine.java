@@ -11,6 +11,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,7 @@ import java.util.stream.Stream;
 public class JournalReportLine extends Element implements EditableList.EditableListElement, ScrollableList.NumberedListElement {
 
     private final List<ItemOption> knownSolids;
+    private final List<FluidOption> knownFluids;
     private Type type = Type.NONE;
     private final int typeSelectorWidth;
     private final EditableDropdownBox<Type> typeSelector;
@@ -27,13 +33,14 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     private static final int SELECTOR_LIST_TOP_Y = 25;
 
 
-    public static JournalReportLine makeReportLine(int width, int height, List<Item> knownSolids) {
-        return new JournalReportLine(width, height, knownSolids);
+    public static JournalReportLine makeReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids) {
+        return new JournalReportLine(width, height, knownSolids, knownFluids);
     }
 
-    protected JournalReportLine(int width, int height, List<Item> knownSolids) {
+    protected JournalReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids) {
         super(width, height);
         this.knownSolids = Stream.concat(Stream.of(Items.AIR), knownSolids.stream()).map(ItemOption::new).toList();
+        this.knownFluids = Stream.concat(Stream.of(Fluids.EMPTY), knownFluids.stream()).map(FluidOption::new).toList();
         typeSelector = EditableDropdownBox.makeBox(Type.values(), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C);
         typeSelector.setOnSelect(this::updateDropdowns);
         typeSelectorWidth = typeSelector.getWidth();
@@ -43,8 +50,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     @Override
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         //graphics.drawString(Minecraft.getInstance().font, "§oInjection: 75 mB Sedative", 50, 6, 0xFFE0D5B3);
-        if (insideBounds(relativeMouseX, relativeMouseY)) {
-            graphics.fill(52, 0, getWidth() - 53, getHeight(), 0x4499875A);
+        if (insideBounds(relativeMouseX, relativeMouseY) && boxes.size() > 0) {
+            Box last = boxes.get(boxes.size() - 1);
+            graphics.fill(52, 0, last.x + last.box.getWidth(), getHeight(), 0x4499875A);
         }
         graphics.fill(SELECTOR_LIST_LEFT_X - 3, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth, getHeight() - 1, 0xFF7D633F);
         //graphics.fill(SELECTOR_LIST_LEFT_X + typeSelectorWidth, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth + 1, getHeight() - 1, 0xFF352E1C);
@@ -148,6 +156,8 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             case EXTRACTION, INCISION ->
                     boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
             case INJECTION -> { // TODO
+                Box second = new Box(first.x + first.box.getWidth() + 51, EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
+                boxes.add(second);
             }
             case INSERTION -> {
                 Box second = new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(knownSolids.toArray(new ItemOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
@@ -208,6 +218,28 @@ public class JournalReportLine extends Element implements EditableList.EditableL
                 return Component.translatable("gui.journal.journal.ingredient.none");
             }
             return item.getHoverName();
+        }
+    }
+
+    private static class FluidOption implements EditableDropdownBox.Option {
+
+        private final ItemStack item;
+        private final Fluid fluid;
+        private final String text;
+
+        public FluidOption(Fluid fluid) {
+            this.fluid = fluid;
+            FluidStack fluidStack = new FluidStack(fluid, 1000);
+            this.item = FluidUtil.getFilledBucket(fluidStack);
+            text = fluidStack.getDisplayName().getString();
+        }
+
+        @Override
+        public Component getText() {
+            if (fluid == Fluids.EMPTY) {
+                return Component.translatable("gui.journal.journal.fluid.none");
+            }
+            return Component.literal(text);
         }
     }
 

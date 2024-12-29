@@ -32,6 +32,7 @@ import net.minecraftforge.client.model.data.ModelDataManager;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -175,6 +176,7 @@ public class FlaskShelfBE extends BlockEntity {
                         } else {
                             if (lookedAtFlask.tank.fill(syringe.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
                                 lookedAtFlask.tank.fill(syringe.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                                //lookedAtFlask.tank.fill(new FluidStack(Registration.SOURCE_FLUID_LIQUID_BLAZE_POWDER.get(), 1), IFluidHandler.FluidAction.EXECUTE);
                                 setChanged();
                                 if (level != null) {
                                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);

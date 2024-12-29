@@ -3,16 +3,16 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.DropdownLists;
 import com.valeriotor.beyondtheveil.client.gui.elements.EditableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
-import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementList;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,16 +20,18 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private int imageWidth;
@@ -53,6 +55,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     //private int entryListTopY;
     private JournalCategory selectedCategory = JournalCategory.TOOLS;
     private final List<Item> knownIngredients = new ArrayList<>();
+    private final List<Fluid> knownFluids = new ArrayList<>();
     private DropdownLists overview;
     // 1022x1071
     private ScrollableList<ItemEntry> tools;
@@ -84,6 +87,21 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (connection != null) {
             connection.getAdvancements().setListener(this);
         }
+
+        Set<String> allBooleans = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getAllBooleans();
+        List<Fluid> toSort = new ArrayList<>();
+        for (String b : allBooleans) {
+            if (b.startsWith("fluid_")) {
+                String pPath = b.substring(6) + "_source";
+                Optional<Holder<Fluid>> holder = ForgeRegistries.FLUIDS.getHolder(new ResourceLocation(References.MODID, pPath));
+                holder.ifPresent(fluidHolder -> toSort.add(fluidHolder.get()));
+            }
+        }
+        toSort.sort(Comparator.comparing(f -> new FluidStack(f, 1000).getDisplayName().getString()));
+        knownFluids.add(Registration.SOURCE_FLUID_SEDATIVE.get());
+        knownFluids.add(Registration.SOURCE_FLUID_COAGULANT.get());
+        knownFluids.add(Registration.SOURCE_FLUID_SOFTENER.get());
+        knownFluids.addAll(toSort);
     }
 
 
@@ -107,8 +125,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         //List<ItemEntry> entries = knownIngredients.stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
         tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
-        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients));
-        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients));
+        List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids));
+        ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids));
         ingredients.setVariableSize(true);
 
         bookmarks.clear();

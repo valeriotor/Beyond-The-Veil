@@ -4,6 +4,8 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,6 +86,7 @@ public class PlayerDataLib {
     public static final Function<String, String> REMINISCED = s -> String.format("reminisced_%s", s);
     public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
     public static final Function<String, String> FOUND_WAYPOINT = s -> "found_" + s;
+    public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath();
 
 
     // Booleans (Temporary)

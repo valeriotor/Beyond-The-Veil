@@ -1,9 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.GearBenchBlock;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -83,6 +81,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(BLACK_MIRROR.get(), "Black Mirror");
         add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
         add(PLUCKED_EYE.get(), "Plucked Eye");
+
+        add("fluid_type.beyondtheveil.sedative_fluid", "Sedative");
+        add("fluid_type.beyondtheveil.coagulant_fluid", "Coagulant");
+        add("fluid_type.beyondtheveil.softener_fluid", "Softener");
+        add("fluid_type.beyondtheveil.liquid_blaze_powder_fluid", "Serum X49B8 - Strength");
 
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
@@ -1716,5 +1719,6 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.completeness.complete", "Completed");
         add("gui.journal.journal.completeness.incomplete", "Not completed");
         add("gui.journal.journal.ingredient.none", "Select Ingredient");
+        add("gui.journal.journal.fluid.none", "Select Fluid");
     }
 }

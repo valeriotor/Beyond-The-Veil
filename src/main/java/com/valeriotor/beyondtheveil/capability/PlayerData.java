@@ -39,6 +39,10 @@ public class PlayerData {
         }
     }
 
+    public Set<String> getAllBooleans() {
+        return booleans;
+    }
+
     public boolean getBoolean(String key) {
         return booleans.contains(key) || tempBooleans.contains(key);
     }
