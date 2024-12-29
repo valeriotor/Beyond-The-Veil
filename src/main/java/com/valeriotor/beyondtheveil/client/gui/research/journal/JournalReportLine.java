@@ -1,31 +1,23 @@
 package com.valeriotor.beyondtheveil.client.gui.research.journal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.client.gui.elements.EditableDropdownBox;
 import com.valeriotor.beyondtheveil.client.gui.elements.EditableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
-import com.valeriotor.beyondtheveil.client.gui.elements.TextLine;
-import com.valeriotor.beyondtheveil.client.gui.elements.property.Property;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
-import net.minecraft.util.FormattedCharSequence;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JournalReportLine extends Element implements EditableList.EditableListElement, ScrollableList.NumberedListElement {
 
     private Type type = Type.NONE;
     private final int typeSelectorWidth;
-    private final EditBox typeSelector;
-    private final ScrollableList<TypeOption> typeSelectorList;
+    private final EditableDropdownBox<Type> typeSelector;
+    private final List<Box> boxes = new ArrayList<>();
     private static final int SELECTOR_LIST_LEFT_X = 54;
     private static final int SELECTOR_LIST_TOP_Y = 25;
 
@@ -36,13 +28,10 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     protected JournalReportLine(int width, int height) {
         super(width, height);
-        typeSelectorWidth = Arrays.stream(Type.values()).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 10;
-        typeSelector = new EditBox(Minecraft.getInstance().font, SELECTOR_LIST_LEFT_X, 8, typeSelectorWidth, 15, Component.translatable("gui.journal.journal.type.none"));
-        typeSelector.active = false;
-        typeSelector.setValue(Type.NONE.getText().getString());
-        typeSelector.setBordered(false);
-        List<TypeOption> typeLines = Arrays.stream(Type.values()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
-        typeSelectorList = new ScrollableList<>(86, 68, typeLines, 17, 10);
+        typeSelector = EditableDropdownBox.makeBox(Type.values(), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C);
+        typeSelector.setOnSelect(this::updateDropdowns);
+        typeSelectorWidth = typeSelector.getWidth();
+        boxes.add(new Box(SELECTOR_LIST_LEFT_X, typeSelector));
     }
 
     @Override
@@ -52,22 +41,19 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             graphics.fill(52, 0, getWidth() - 53, getHeight(), 0x4499875A);
         }
         graphics.fill(SELECTOR_LIST_LEFT_X - 3, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth, getHeight() - 1, 0xFF7D633F);
-        graphics.fill(SELECTOR_LIST_LEFT_X + typeSelectorWidth, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth + 1, getHeight() - 1, 0xFF352E1C);
+        //graphics.fill(SELECTOR_LIST_LEFT_X + typeSelectorWidth, 1, SELECTOR_LIST_LEFT_X + typeSelectorWidth + 1, getHeight() - 1, 0xFF352E1C);
         //graphics.fill(52, 2, 101, getHeight() - 2, 0x88000000);
-        graphics.fill(52, 0, getWidth() - 53, 1, 0xFF352E1C);
-        graphics.fill(52, getHeight() - 1, getWidth() - 53, getHeight(), 0xFF352E1C);
+        Box lastBox = boxes.get(boxes.size() - 1);
+        int lastX = lastBox.x + lastBox.box.getWidth() + 1;
+        graphics.fill(52, 0, lastX, 1, 0xFF352E1C);
+        graphics.fill(52, getHeight() - 1, lastX, getHeight(), 0xFF352E1C);
         graphics.fill(52, 0, 53, getHeight(), 0xFF352E1C);
-        graphics.fill(getWidth() - 53 - 1, 0, getWidth() - 53, getHeight(), 0xFF352E1C);
-        typeSelector.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
-        poseStack.pushPose();
-        poseStack.translate(SELECTOR_LIST_LEFT_X + typeSelectorWidth - 7, 0.5, 0);
-        poseStack.scale(2, 2, 1);
-        graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
-        poseStack.popPose();
-        if (typeSelector.isActive()) {
+        //graphics.fill(getWidth() - 53 - 1, 0, lastX, getHeight(), 0xFF352E1C);
+        for (Box box : boxes) {
             poseStack.pushPose();
-            poseStack.translate(SELECTOR_LIST_LEFT_X, SELECTOR_LIST_TOP_Y, 100);
-            typeSelectorList.render(poseStack, graphics, color, (int) typeSelectorListMouseX(relativeMouseX), (int) typeSelectorListMouseY(relativeMouseY), pPartialTick);
+            poseStack.translate(box.x, 1, 0);
+            box.box.render(poseStack, graphics, color, relativeMouseX - box.x, relativeMouseY - 1, pPartialTick);
+            graphics.fill(box.box.getWidth(), 0, box.box.getWidth() + 1, getHeight() - 1, 0xFF352E1C);
             poseStack.popPose();
         }
     }
@@ -80,36 +66,27 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-        double typeSelectorListMouseX = typeSelectorListMouseX(relativeMouseX);
-        double typeSelectorListMouseY = typeSelectorListMouseY(relativeMouseY);
-        if (typeSelector.isMouseOver(relativeMouseX, relativeMouseY)) {
-            typeSelector.active = true;
-            typeSelector.setFocused(true);
-            typeSelector.setValue("");
-            return true;
-        } else if (typeSelector.isActive() && typeSelectorList.insideBounds(typeSelectorListMouseX, typeSelectorListMouseY)) {
-            return typeSelectorList.mouseClicked(typeSelectorListMouseX, typeSelectorListMouseY, mouseButton);
-        } else {
-            typeSelector.active = false;
-            typeSelector.setFocused(false);
-            typeSelector.setValue(type.getText().getString());
+        for (Box box : boxes) {
+            if (box.box.mouseClicked(relativeMouseX - box.x, relativeMouseY - 1, mouseButton)) {
+                return true;
+            }
         }
         //typeSelector.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
         return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
     }
 
     @Override
+    public void defocus(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        for (Box box : boxes) {
+            box.box.defocus(relativeMouseX - box.x, relativeMouseY - 1, mouseButton);
+        }
+    }
+
+    @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        if (typeSelector.isActive()) {
-            String old = typeSelector.getValue();
-            System.out.println(typeSelector.isFocused());
-            if (typeSelector.keyPressed(pKeyCode, pScanCode, pModifiers)) {
-                String newValue = typeSelector.getValue();
-                if (!Objects.equals(old, newValue)) {
-                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(filterText()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
-                    typeSelectorList.changeElements(typeLines);
-                    return true;
-                }
+        for (Box box : boxes) {
+            if (box.box.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+                return true;
             }
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
@@ -117,86 +94,72 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
-        if (typeSelector.isActive()) {
-            String old = typeSelector.getValue();
-            System.out.println(typeSelector.isFocused());
-            if (typeSelector.charTyped(pCodePoint, pModifiers)) {
-                String newValue = typeSelector.getValue();
-                if (!Objects.equals(old, newValue)) {
-                    List<TypeOption> typeLines = Arrays.stream(Type.values()).filter(filterText()).map(t -> new TypeOption(typeSelectorWidth, t, Minecraft.getInstance().font, typeSelector, this::selectType)).toList();
-                    typeSelectorList.changeElements(typeLines);
-                    return true;
-                }
+        for (Box box : boxes) {
+            if (box.box.charTyped(pCodePoint, pModifiers)) {
+                return true;
             }
         }
         return super.charTyped(pCodePoint, pModifiers);
     }
 
-    @NotNull
-    private Predicate<Type> filterText() {
-        return t -> t.getText().getString().toLowerCase().contains(typeSelector.getValue().toLowerCase());
-    }
-
     @Override
     public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
-        double typeSelectorListMouseX = typeSelectorListMouseX(relativeMouseX);
-        double typeSelectorListMouseY = typeSelectorListMouseY(relativeMouseY);
-        if (typeSelector.isActive() && typeSelectorList.insideBounds(typeSelectorListMouseX, typeSelectorListMouseY)) {
-            typeSelectorList.mouseScrolled(typeSelectorListMouseX, typeSelectorListMouseY, pDelta);
+        for (Box box : boxes) {
+            if (box.box.mouseScrolled(relativeMouseX - box.x, relativeMouseY - 1, pDelta)) {
+                return true;
+            }
         }
         return super.mouseScrolled(relativeMouseX, relativeMouseY, pDelta);
     }
 
     @Override
     public boolean mouseDragged(double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
-        double typeSelectorListMouseX = typeSelectorListMouseX(relativeMouseX);
-        double typeSelectorListMouseY = typeSelectorListMouseY(relativeMouseY);
-        if (typeSelector.isActive()) {
-            typeSelectorList.mouseDragged(typeSelectorListMouseX, typeSelectorListMouseY, pButton, pDragX, pDragY);
+        for (Box box : boxes) {
+            if (box.box.mouseDragged(relativeMouseX - box.x, relativeMouseY - 1, pButton, pDragX, pDragY)) {
+                return true;
+            }
         }
         return super.mouseDragged(relativeMouseX, relativeMouseY, pButton, pDragX, pDragY);
     }
 
     @Override
     public boolean mouseReleased(double relativeMouseX, double relativeMouseY, int pButton) {
-        double typeSelectorListMouseX = typeSelectorListMouseX(relativeMouseX);
-        double typeSelectorListMouseY = typeSelectorListMouseY(relativeMouseY);
-        if (typeSelector.isActive()) {
-            typeSelectorList.mouseReleased(typeSelectorListMouseX, typeSelectorListMouseY, pButton);
+        for (Box box : boxes) {
+            if (box.box.mouseReleased(relativeMouseX - box.x, relativeMouseY - 1, pButton)) {
+                return true;
+            }
         }
         return super.mouseReleased(relativeMouseX, relativeMouseY, pButton);
     }
 
-    private double typeSelectorListMouseY(double relativeMouseY) {
-        return relativeMouseY - SELECTOR_LIST_TOP_Y;
-    }
-
-    private double typeSelectorListMouseX(double relativeMouseX) {
-        return relativeMouseX - SELECTOR_LIST_LEFT_X;
+    private void updateDropdowns(Type type) {
+        Box first = boxes.get(0);
+        boxes.clear();
+        boxes.add(first);
+        switch (type) {
+            case POSITION -> {
+            } // TODO locations, but skull may or may not be known
+            case EXTRACTION, INCISION ->
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
+            case INJECTION -> { // TODO
+            }
+            case INSERTION -> {
+            }
+        }
     }
 
     @Override
     protected boolean insideBounds(double relativeMouseX, double relativeMouseY) {
-        double typeSelectorListMouseX = typeSelectorListMouseX(relativeMouseX);
-        double typeSelectorListMouseY = typeSelectorListMouseY(relativeMouseY);
-        if (typeSelector.isActive() && typeSelectorList.insideBounds(typeSelectorListMouseX, typeSelectorListMouseY)) {
-            return true;
+        for (Box box : boxes) {
+            if (box.box.insideBounds(relativeMouseX - box.x, relativeMouseY - 1)) {
+                return true;
+            }
         }
         return super.insideBounds(relativeMouseX, relativeMouseY);
     }
 
-    private void selectType(Option type) {
-        if (type instanceof Type t) {
-            this.type = t;
-        }
-    }
 
-    private interface Option {
-        Component getText();
-    }
-
-
-    private enum Type implements Option {
+    private enum Type implements EditableDropdownBox.Option {
         NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH;
 
         public Component getText() {
@@ -205,46 +168,17 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     }
 
-    private static class TypeOption extends Element {
+    private enum Completeness implements EditableDropdownBox.Option {
 
-        private final String line;
-        private final Option type;
-        private final Font font;
-        private final EditBox typeSelector;
-        private final Consumer<Option> optionConsumer;
-
-        public TypeOption(int width, Option type, Font font, EditBox typeSelector, Consumer<Option> optionConsumer) {
-            super(width, 17);
-            this.line = type.getText().getString();
-            this.type = type;
-            this.font = font;
-            this.typeSelector = typeSelector;
-            this.optionConsumer = optionConsumer;
-        }
+        COMPLETE, INCOMPLETE;
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
-            Minecraft mc = Minecraft.getInstance();
-            graphics.fill(0, 0, getWidth(), getHeight(), 0xFFAAAAAA);
-            graphics.fill(1, 1, getWidth() - 1, getHeight() - 1, 0xFF352E1C);
-            if (insideBounds(relativeMouseX, relativeMouseY)) {
-                graphics.fill(1, 1, getWidth() - 1, getHeight() - 1, 0xFF554E3C);
-            }
-            graphics.drawString(font, line, 2, 1, color);
-        }
-
-        @Override
-        public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-            typeSelector.setValue(line);
-            typeSelector.active = false;
-            typeSelector.setFocused(false);
-            optionConsumer.accept(type);
-            return true;
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.completeness." + name().toLowerCase());
         }
     }
 
-    private class PositionEntry {
+    private record Box(int x, EditableDropdownBox<?> box) {
     }
-
 
 }

@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui.elements;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,15 +25,16 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     private final int listBackgroundColor;
     private final int listBackgroundHighlightColor;
     private final ScrollableList<TypeOption<T>> typeSelectorList;
+    private Consumer<T> onSelect;
 
-    public static <T extends Option> EditableDropdownBox<T> makeBox(T[] options, int height, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
+    public static <T extends Option> EditableDropdownBox<T> makeBox(T[] options, int height, int stringY, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
         int width = Arrays.stream(options).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 13;
-        return new EditableDropdownBox<>(width, height, options, backgroundColor, listFrameColor, listBackgroundColor, listBackgroundHighlightColor);
+        return new EditableDropdownBox<>(width, height, stringY, options, backgroundColor, listFrameColor, listBackgroundColor, listBackgroundHighlightColor);
     }
 
-    private EditableDropdownBox(int width, int height, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
+    private EditableDropdownBox(int width, int height, int stringY, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
         super(width, height);
-        typeSelector = new EditBox(Minecraft.getInstance().font, 3, 8, getWidth(), 15, options[0].getText());
+        typeSelector = new EditBox(Minecraft.getInstance().font, 3, stringY, getWidth(), 15, options[0].getText());
         originalOptions = options;
         this.backgroundColor = backgroundColor;
         this.listFrameColor = listFrameColor;
@@ -42,21 +42,35 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
         this.listBackgroundHighlightColor = listBackgroundHighlightColor;
         typeSelector.active = false;
         typeSelector.setBordered(false);
+        typeSelector.setValue(options[0].getText().getString());
         List<TypeOption<T>> typeLines = Arrays.stream(options).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
-        typeSelectorList = new ScrollableList<>(86, 68, typeLines, 17, 10);
+        typeSelectorList = new ScrollableList<>(width + 10, 68, typeLines, 17, 10);
         chosen = options[0];
     }
 
     private void selectType(T option) {
         chosen = option;
+        if (onSelect != null) {
+            onSelect.accept(chosen);
+        }
+    }
+
+    public void setOnSelect(Consumer<T> onSelect) {
+        this.onSelect = onSelect;
     }
 
     @Override
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         graphics.fill(0, 0, getWidth(), getHeight(), backgroundColor);
+        if (insideBounds(relativeMouseX, relativeMouseY)) {
+            graphics.fill(0, 0, getWidth(), getHeight(), 0x0AFFFFFF);
+        }
+        if (chosen.getText().getString().equals("Death")) {
+            graphics.fill(0, 0, getWidth(), getHeight(), 0x33FF0000);
+        }
         typeSelector.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
         poseStack.pushPose();
-        poseStack.translate(getWidth() - 4, 0.5, 0);
+        poseStack.translate(getWidth() - 7, 0.5, 0);
         poseStack.scale(2, 2, 1);
         graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
         poseStack.popPose();
@@ -71,10 +85,11 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
         double typeSelectorListMouseY = relativeMouseY - getHeight();
-        if (typeSelector.isMouseOver(relativeMouseX, relativeMouseY)) {
+        if (relativeMouseX >= 0 && relativeMouseX < getWidth() && relativeMouseY >= 0 && relativeMouseY < getHeight()) {
             typeSelector.active = true;
             typeSelector.setFocused(true);
             typeSelector.setValue("");
+            updateList();
             return true;
         } else if (typeSelector.isActive() && typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY)) {
             return typeSelectorList.mouseClicked(relativeMouseX, typeSelectorListMouseY, mouseButton);
@@ -87,6 +102,21 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     }
 
     @Override
+    public void defocus(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        double typeSelectorListMouseY = relativeMouseY - getHeight();
+        if((relativeMouseX < 0 || relativeMouseX >= getWidth() || relativeMouseY < 0 || relativeMouseY >= getHeight()) && (!typeSelector.isActive() || !typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY))) {
+            typeSelector.active = false;
+            typeSelector.setFocused(false);
+            typeSelector.setValue(chosen.getText().getString());
+        }
+    }
+
+    private void updateList() {
+        List<TypeOption<T>> typeLines = Arrays.stream(originalOptions).filter(filterText()).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
+        typeSelectorList.changeElements(typeLines);
+    }
+
+    @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         if (typeSelector.isActive()) {
             String old = typeSelector.getValue();
@@ -94,8 +124,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             if (typeSelector.keyPressed(pKeyCode, pScanCode, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
-                    List<TypeOption<T>> typeLines = Arrays.stream(originalOptions).filter(filterText()).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
-                    typeSelectorList.changeElements(typeLines);
+                    updateList();
                     return true;
                 }
             }
@@ -111,8 +140,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             if (typeSelector.charTyped(pCodePoint, pModifiers)) {
                 String newValue = typeSelector.getValue();
                 if (!Objects.equals(old, newValue)) {
-                    List<TypeOption<T>> typeLines = Arrays.stream(originalOptions).filter(filterText()).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
-                    typeSelectorList.changeElements(typeLines);
+                    updateList();
                     return true;
                 }
             }
@@ -153,7 +181,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     }
 
     @Override
-    protected boolean insideBounds(double relativeMouseX, double relativeMouseY) {
+    public boolean insideBounds(double relativeMouseX, double relativeMouseY) {
         double typeSelectorListMouseY = relativeMouseY - getHeight();
         if (typeSelector.isActive() && typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY)) {
             return true;
@@ -202,7 +230,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(1, 1, getWidth() - 1, getHeight() - 1, backgroundHighlightColor);
             }
-            graphics.drawString(font, line, 0, 1, color);
+            graphics.drawString(font, line, 3, 3, color);
         }
 
         @Override

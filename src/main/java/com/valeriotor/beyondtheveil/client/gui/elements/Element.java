@@ -56,6 +56,10 @@ public abstract class Element {
         return relativeMouseX >= 0 && relativeMouseX < getWidth() && relativeMouseY >= 0 && relativeMouseY < getHeight();
     }
 
+    public void defocus(double relativeMouseX, double relativeMouseY, int mouseButton) {
+
+    }
+
     public void tick() {
         counter++;
     }

@@ -645,6 +645,8 @@
   "gui.journal.bookmark.journal": "Journal",
   "gui.journal.bookmark.overview": "Overview",
   "gui.journal.bookmark.tools": "Tools",
+  "gui.journal.journal.completeness.complete": "Completed",
+  "gui.journal.journal.completeness.incomplete": "Not completed",
   "gui.journal.journal.type.death": "Death",
   "gui.journal.journal.type.extraction": "Extraction",
   "gui.journal.journal.type.incision": "Incision",

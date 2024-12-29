@@ -111,20 +111,17 @@ public class ScrollableList<T extends Element> extends Element {
 
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        defocusElements(relativeMouseX, relativeMouseY, mouseButton);
         int hoveredElement = getHoveredElement(relativeMouseX, relativeMouseY);
         if (!variableSize && hoveredElement != -1) {
             clickElement(hoveredElement, relativeMouseX, relativeMouseY, mouseButton);
             return true;
         } else {
             if (variableSize) {
-                boolean flag = false;
                 for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
                     if (clickElement(i, relativeMouseX, relativeMouseY, mouseButton)) {
-                        flag = true;
+                        return true;
                     }
-                }
-                if (flag) {
-                    return true;
                 }
             }
             if (relativeMouseX > getWidth() - scrollbarWidth && relativeMouseX < getWidth() && relativeMouseY >= getThumbY() && relativeMouseY <= getThumbY() + thumbHeight) {
@@ -133,6 +130,12 @@ public class ScrollableList<T extends Element> extends Element {
             }
         }
         return false;
+    }
+
+    protected void defocusElements(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        for (int i = currentFirstRow; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
+            rows.get(i).defocus(relativeMouseX, relativeMouseY - relativeYForElement(i), mouseButton);
+        }
     }
 
     protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
@@ -233,7 +236,7 @@ public class ScrollableList<T extends Element> extends Element {
 
     @Override
     public boolean insideBounds(double relativeMouseX, double relativeMouseY) {
-        return super.insideBounds(relativeMouseX, relativeMouseY);
+        return relativeMouseX >= 0 && relativeMouseX < getWidth() && relativeMouseY >= 0 && relativeMouseY < getHeight() * Math.min(1, rows.size() / (double) renderedRows);
     }
 
     public interface NumberedListElement {

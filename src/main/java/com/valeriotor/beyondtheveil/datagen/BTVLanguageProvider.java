@@ -1712,5 +1712,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.type.stitching", "Stitching");
         add("gui.journal.journal.type.pain", "Pain");
         add("gui.journal.journal.type.death", "Death");
+        add("gui.journal.journal.completeness.complete", "Completed");
+        add("gui.journal.journal.completeness.incomplete", "Not completed");
     }
 }
