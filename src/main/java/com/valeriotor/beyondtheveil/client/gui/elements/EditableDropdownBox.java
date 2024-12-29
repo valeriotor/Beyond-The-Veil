@@ -49,9 +49,11 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     }
 
     private void selectType(T option) {
-        chosen = option;
-        if (onSelect != null) {
-            onSelect.accept(chosen);
+        if(chosen != option) {
+            chosen = option;
+            if (onSelect != null) {
+                onSelect.accept(chosen);
+            }
         }
     }
 

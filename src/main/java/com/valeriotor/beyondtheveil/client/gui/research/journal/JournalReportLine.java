@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,7 @@ import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class JournalReportLine extends Element implements EditableList.EditableListElement, ScrollableList.NumberedListElement {
@@ -28,6 +30,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     private Type type = Type.NONE;
     private final int typeSelectorWidth;
     private final EditableDropdownBox<Type> typeSelector;
+    private EditBox quantityBox;
     private final List<Box> boxes = new ArrayList<>();
     private static final int SELECTOR_LIST_LEFT_X = 54;
     private static final int SELECTOR_LIST_TOP_Y = 25;
@@ -70,6 +73,16 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             graphics.fill(box.box.getWidth(), 0, box.box.getWidth() + 1, getHeight() - 1, 0xFF352E1C);
             poseStack.popPose();
         }
+        if (quantityBox != null) {
+            Box firstBox = boxes.get(0);
+            graphics.fill(firstBox.x + firstBox.box.getWidth() + 1, 1, quantityBox.getX() + quantityBox.getWidth(), getHeight() - 1, 0xFF8D734F);
+            if (relativeMouseX > quantityBox.getX() && relativeMouseX < quantityBox.getX() + quantityBox.getWidth() && relativeMouseY > 0 && relativeMouseY < getHeight()) {
+                graphics.fill(firstBox.x + firstBox.box.getWidth() + 1, 1, quantityBox.getX() + quantityBox.getWidth(), getHeight(), 0x0AFFFFFF);
+            }
+            quantityBox.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
+            graphics.drawString(Minecraft.getInstance().font, "mB", quantityBox.getX() + 30, 8, color);
+            graphics.fill(quantityBox.getX() + quantityBox.getWidth(), 0, quantityBox.getX() + quantityBox.getWidth() + 1, getHeight() - 1, 0xFF352E1C);
+        }
     }
 
     @Override
@@ -80,6 +93,13 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        if (quantityBox != null) {
+            if (relativeMouseX > quantityBox.getX() && relativeMouseX < quantityBox.getX() + quantityBox.getWidth() && relativeMouseY > 0 && relativeMouseY < getHeight()) {
+                quantityBox.active = true;
+                quantityBox.setFocused(true);
+                return true;
+            }
+        }
         for (Box box : boxes) {
             if (box.box.mouseClicked(relativeMouseX - box.x, relativeMouseY - 1, mouseButton)) {
                 return true;
@@ -91,6 +111,15 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public void defocus(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        if (quantityBox != null) {
+            if (!(relativeMouseX > quantityBox.getX()) || !(relativeMouseX < quantityBox.getX() + quantityBox.getWidth()) || !(relativeMouseY > 0) || !(relativeMouseY < getHeight())) {
+                quantityBox.active = false;
+                quantityBox.setFocused(false);
+                if (quantityBox.getValue().isEmpty()) {
+                    quantityBox.setValue("0");
+                }
+            }
+        }
         for (Box box : boxes) {
             box.box.defocus(relativeMouseX - box.x, relativeMouseY - 1, mouseButton);
         }
@@ -98,6 +127,18 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (quantityBox != null && quantityBox.isActive()) {
+            if (pKeyCode == 257) {
+                quantityBox.active = false;
+                quantityBox.setFocused(false);
+                if (quantityBox.getValue().isEmpty()) {
+                    quantityBox.setValue("0");
+                }
+            } else if (quantityBox.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+                removeNonDigits();
+                return true;
+            }
+        }
         for (Box box : boxes) {
             if (box.box.keyPressed(pKeyCode, pScanCode, pModifiers)) {
                 return true;
@@ -108,12 +149,26 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
+        if (quantityBox != null && quantityBox.isActive()) {
+            if (quantityBox.charTyped(pCodePoint, pModifiers)) {
+                removeNonDigits();
+                return true;
+            }
+        }
         for (Box box : boxes) {
             if (box.box.charTyped(pCodePoint, pModifiers)) {
                 return true;
             }
         }
         return super.charTyped(pCodePoint, pModifiers);
+    }
+
+    private void removeNonDigits() {
+        String newValue = quantityBox.getValue().replaceAll("\\D", "");
+        if (newValue.length() > 4) {
+            newValue = newValue.substring(0, 4);
+        }
+        quantityBox.setValue(newValue);
     }
 
     @Override
@@ -147,6 +202,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     }
 
     private void updateDropdowns(Type type) {
+        quantityBox = null;
         Box first = boxes.get(0);
         boxes.clear();
         boxes.add(first);
@@ -155,8 +211,12 @@ public class JournalReportLine extends Element implements EditableList.EditableL
             } // TODO locations, but skull may or may not be known
             case EXTRACTION, INCISION ->
                     boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
-            case INJECTION -> { // TODO
-                Box second = new Box(first.x + first.box.getWidth() + 51, EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
+            case INJECTION -> {
+                int quantityBoxWidth = 50;
+                quantityBox = new EditBox(Minecraft.getInstance().font, first.x + first.box.getWidth() + 10, 8, quantityBoxWidth, 23, Component.literal("0"));
+                quantityBox.setBordered(false);
+                quantityBox.setValue("0");
+                Box second = new Box(quantityBox.getX() + quantityBoxWidth + 1, EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
                 boxes.add(second);
             }
             case INSERTION -> {
@@ -182,6 +242,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         super.tick();
         for (Box box : boxes) {
             box.box.tick();
+        }
+        if (quantityBox != null) {
+            quantityBox.tick();
         }
     }
 
