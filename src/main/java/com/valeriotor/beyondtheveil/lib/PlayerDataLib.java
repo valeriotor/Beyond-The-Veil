@@ -86,7 +86,9 @@ public class PlayerDataLib {
     public static final Function<String, String> REMINISCED = s -> String.format("reminisced_%s", s);
     public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
     public static final Function<String, String> FOUND_WAYPOINT = s -> "found_" + s;
-    public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath();
+    public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + (ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()) == null ? "" : ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath());
+    public static final Function<String, String> JOURNAL_REPORT = name -> "journal_report_" + name;
+    public static final String EDITING_JOURNAL_REPORT = "editing_journal";
 
 
     // Booleans (Temporary)

@@ -158,7 +158,7 @@ public class ScrollableList<T extends Element> extends Element {
         return (element - currentFirstRow) * rowHeight;
     }
 
-    protected List<T> rows() {
+    public List<T> rows() {
         return rows;
     }
 

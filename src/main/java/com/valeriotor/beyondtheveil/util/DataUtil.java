@@ -113,6 +113,12 @@ public class DataUtil {
         });
     }
 
+    public static void removeTag(Player p, String key) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.removeTag(key);
+        });
+    }
+
     public static void setBoolean(Player p, String key, boolean value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.setBoolean(key, value, temporary);

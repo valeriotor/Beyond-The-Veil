@@ -170,8 +170,16 @@ public class PlayerData {
         tags.put(key, tag);
     }
 
+    public void removeTag(String key) {
+        tags.remove(key);
+    }
+
     public CompoundTag getTag(String key) {
         return tags.getOrDefault(key, null);
+    }
+
+    public Set<String> getAllTagKeys() {
+        return tags.keySet();
     }
 
     /**

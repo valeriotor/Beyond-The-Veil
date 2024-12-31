@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends Element {
 
+    private final boolean editable;
     private T chosen;
     private final EditBox typeSelector;
     private final T[] originalOptions;
@@ -27,13 +28,14 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     private final ScrollableList<TypeOption<T>> typeSelectorList;
     private Consumer<T> onSelect;
 
-    public static <T extends Option> EditableDropdownBox<T> makeBox(T[] options, int height, int stringY, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
+    public static <T extends Option> EditableDropdownBox<T> makeBox(T[] options, int height, int stringY, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor, boolean editable) {
         int width = Arrays.stream(options).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 13;
-        return new EditableDropdownBox<>(width, height, stringY, options, backgroundColor, listFrameColor, listBackgroundColor, listBackgroundHighlightColor);
+        return new EditableDropdownBox<>(width, height, stringY, options, backgroundColor, listFrameColor, listBackgroundColor, listBackgroundHighlightColor, editable);
     }
 
-    private EditableDropdownBox(int width, int height, int stringY, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor) {
+    private EditableDropdownBox(int width, int height, int stringY, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor, boolean editable) {
         super(width, height);
+        this.editable = editable;
         typeSelector = new EditBox(Minecraft.getInstance().font, 3, stringY, getWidth(), 15, options[0].getText());
         originalOptions = options;
         this.backgroundColor = backgroundColor;
@@ -43,13 +45,16 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
         typeSelector.active = false;
         typeSelector.setBordered(false);
         typeSelector.setValue(options[0].getText().getString());
-        List<TypeOption<T>> typeLines = Arrays.stream(options).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
+        List<TypeOption<T>> typeLines = Arrays.stream(options).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectChosen, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
         typeSelectorList = new ScrollableList<>(width + 10, 68, typeLines, 17, 10);
         chosen = options[0];
     }
 
-    private void selectType(T option) {
-        if(chosen != option) {
+    public void selectChosen(T option) {
+        typeSelector.setValue(option.getText().getString());
+        typeSelector.active = false;
+        typeSelector.setFocused(false);
+        if (chosen != option) {
             chosen = option;
             if (onSelect != null) {
                 onSelect.accept(chosen);
@@ -71,11 +76,14 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             graphics.fill(-1, 0, getWidth(), getHeight(), 0x33FF0000);
         }
         typeSelector.render(graphics, relativeMouseX, relativeMouseY, pPartialTick);
-        poseStack.pushPose();
-        poseStack.translate(getWidth() - 8, 0.5, 0);
-        poseStack.scale(2, 2, 1);
-        graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
-        poseStack.popPose();
+
+        if (editable) {
+            poseStack.pushPose();
+            poseStack.translate(getWidth() - 8, 0.5, 0);
+            poseStack.scale(2, 2, 1);
+            graphics.drawString(Minecraft.getInstance().font, "⌄", 0, 0, 0xFFFFFFFF);
+            poseStack.popPose();
+        }
         if (typeSelector.isActive()) {
             poseStack.pushPose();
             poseStack.translate(0, getHeight(), 100);
@@ -106,7 +114,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     @Override
     public void defocus(double relativeMouseX, double relativeMouseY, int mouseButton) {
         double typeSelectorListMouseY = relativeMouseY - getHeight();
-        if((relativeMouseX < 0 || relativeMouseX >= getWidth() || relativeMouseY < 0 || relativeMouseY >= getHeight()) && (!typeSelector.isActive() || !typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY))) {
+        if ((relativeMouseX < 0 || relativeMouseX >= getWidth() || relativeMouseY < 0 || relativeMouseY >= getHeight()) && (!typeSelector.isActive() || !typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY))) {
             typeSelector.active = false;
             typeSelector.setFocused(false);
             typeSelector.setValue(chosen.getText().getString());
@@ -114,7 +122,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     }
 
     private void updateList() {
-        List<TypeOption<T>> typeLines = Arrays.stream(originalOptions).filter(filterText()).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectType, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
+        List<TypeOption<T>> typeLines = Arrays.stream(originalOptions).filter(filterText()).map(t -> new TypeOption<>(getWidth(), t, Minecraft.getInstance().font, typeSelector, this::selectChosen, listFrameColor, listBackgroundColor, listBackgroundHighlightColor)).toList();
         typeSelectorList.changeElements(typeLines);
     }
 
@@ -195,8 +203,18 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
         typeSelector.tick();
     }
 
+    public T getChosen() {
+        return chosen;
+    }
+
+    public void setChosen(T chosen) {
+        this.chosen = chosen;
+    }
+
     public interface Option {
         Component getText();
+
+        String getId();
     }
 
     private static class TypeOption<T extends Option> extends Element {
@@ -235,9 +253,6 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
 
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-            typeSelector.setValue(line);
-            typeSelector.active = false;
-            typeSelector.setFocused(false);
             optionConsumer.accept(type);
             return true;
         }

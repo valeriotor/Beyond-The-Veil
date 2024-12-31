@@ -1720,5 +1720,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.completeness.incomplete", "Not completed");
         add("gui.journal.journal.ingredient.none", "Select Ingredient");
         add("gui.journal.journal.fluid.none", "Select Fluid");
+        add("gui.journal.journal.edit", "Edit");
+        add("gui.journal.journal.save", "Save");
+        add("gui.journal.journal.delete", "Delete");
+        add("gui.journal.journal.cancel", "Cancel");
     }
 }

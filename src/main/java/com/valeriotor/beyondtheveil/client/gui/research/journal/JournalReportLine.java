@@ -8,15 +8,17 @@ import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     private final List<ItemOption> knownSolids;
     private final List<FluidOption> knownFluids;
+    private final boolean editable;
     private Type type = Type.NONE;
     private final int typeSelectorWidth;
     private final EditableDropdownBox<Type> typeSelector;
@@ -36,15 +39,16 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     private static final int SELECTOR_LIST_TOP_Y = 25;
 
 
-    public static JournalReportLine makeReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids) {
-        return new JournalReportLine(width, height, knownSolids, knownFluids);
+    public static JournalReportLine makeReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids, boolean editable) {
+        return new JournalReportLine(width, height, knownSolids, knownFluids, editable);
     }
 
-    protected JournalReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids) {
+    protected JournalReportLine(int width, int height, List<Item> knownSolids, List<Fluid> knownFluids, boolean editable) {
         super(width, height);
         this.knownSolids = Stream.concat(Stream.of(Items.AIR), knownSolids.stream()).map(ItemOption::new).toList();
         this.knownFluids = Stream.concat(Stream.of(Fluids.EMPTY), knownFluids.stream()).map(FluidOption::new).toList();
-        typeSelector = EditableDropdownBox.makeBox(Type.values(), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C);
+        this.editable = editable;
+        typeSelector = EditableDropdownBox.makeBox(Type.values(), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
         typeSelector.setOnSelect(this::updateDropdowns);
         typeSelectorWidth = typeSelector.getWidth();
         boxes.add(new Box(SELECTOR_LIST_LEFT_X, typeSelector));
@@ -92,7 +96,24 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     }
 
     @Override
+    public void renderAdd(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        if(editable) {
+            EditableList.EditableListElement.super.renderAdd(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+        }
+    }
+
+    @Override
+    public void renderDelete(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
+        if(editable) {
+            EditableList.EditableListElement.super.renderDelete(poseStack, graphics, color, relativeMouseX, relativeMouseY);
+        }
+    }
+
+    @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        if (!editable) {
+            return false;
+        }
         if (quantityBox != null) {
             if (relativeMouseX > quantityBox.getX() && relativeMouseX < quantityBox.getX() + quantityBox.getWidth() && relativeMouseY > 0 && relativeMouseY < getHeight()) {
                 quantityBox.active = true;
@@ -127,6 +148,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (!editable) {
+            return false;
+        }
         if (quantityBox != null && quantityBox.isActive()) {
             if (pKeyCode == 257) {
                 quantityBox.active = false;
@@ -149,6 +173,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
+        if (!editable) {
+            return false;
+        }
         if (quantityBox != null && quantityBox.isActive()) {
             if (quantityBox.charTyped(pCodePoint, pModifiers)) {
                 removeNonDigits();
@@ -173,6 +200,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
+        if (!editable) {
+            return false;
+        }
         for (Box box : boxes) {
             if (box.box.mouseScrolled(relativeMouseX - box.x, relativeMouseY - 1, pDelta)) {
                 return true;
@@ -183,6 +213,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean mouseDragged(double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
+        if (!editable) {
+            return false;
+        }
         for (Box box : boxes) {
             if (box.box.mouseDragged(relativeMouseX - box.x, relativeMouseY - 1, pButton, pDragX, pDragY)) {
                 return true;
@@ -193,6 +226,9 @@ public class JournalReportLine extends Element implements EditableList.EditableL
 
     @Override
     public boolean mouseReleased(double relativeMouseX, double relativeMouseY, int pButton) {
+        if (!editable) {
+            return false;
+        }
         for (Box box : boxes) {
             if (box.box.mouseReleased(relativeMouseX - box.x, relativeMouseY - 1, pButton)) {
                 return true;
@@ -207,22 +243,22 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         boxes.clear();
         boxes.add(first);
         switch (type) {
-            case POSITION -> {
-            } // TODO locations, but skull may or may not be known
+            case POSITION ->
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Location.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable)));
             case EXTRACTION, INCISION ->
-                    boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable)));
             case INJECTION -> {
                 int quantityBoxWidth = 50;
                 quantityBox = new EditBox(Minecraft.getInstance().font, first.x + first.box.getWidth() + 10, 8, quantityBoxWidth, 23, Component.literal("0"));
                 quantityBox.setBordered(false);
                 quantityBox.setValue("0");
-                Box second = new Box(quantityBox.getX() + quantityBoxWidth + 1, EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
+                Box second = new Box(quantityBox.getX() + quantityBoxWidth + 1, EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable));
                 boxes.add(second);
             }
             case INSERTION -> {
-                Box second = new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(knownSolids.toArray(new ItemOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C));
+                Box second = new Box(first.x + first.box.getWidth() + 1, EditableDropdownBox.makeBox(knownSolids.toArray(new ItemOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable));
                 boxes.add(second);
-                boxes.add(new Box(second.x + second.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C)));
+                boxes.add(new Box(second.x + second.box.getWidth() + 1, EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable)));
             }
         }
     }
@@ -248,13 +284,85 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         }
     }
 
+    public CompoundTag saveToNBT() {
+        CompoundTag tag = new CompoundTag();
+        for (int i = 0; i < boxes.size(); i++) {
+            tag.putString(String.valueOf(i), boxes.get(i).box.getChosen().getId());
+        }
+        if (quantityBox != null) {
+            tag.putString("quantity", quantityBox.getValue());
+        }
+        return tag;
+    }
+
+    public void loadFromNBT(CompoundTag tag) {
+        try {
+            Type type = Type.valueOf(tag.getString("0"));
+            typeSelector.selectChosen(type);
+            quantityBox = null;
+            Box first = boxes.get(0);
+            boxes.clear();
+            boxes.add(first);
+            switch (type) {
+                case POSITION -> {
+                    EditableDropdownBox<Location> box = EditableDropdownBox.makeBox(Location.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
+                    box.selectChosen(Location.valueOf(tag.getString("1")));
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, box));
+                }
+                case EXTRACTION, INCISION -> {
+                    EditableDropdownBox<Completeness> box = EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
+                    box.selectChosen(Completeness.valueOf(tag.getString("1")));
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, box));
+                }
+                case INJECTION -> {
+                    int quantityBoxWidth = 50;
+                    quantityBox = new EditBox(Minecraft.getInstance().font, first.x + first.box.getWidth() + 10, 8, quantityBoxWidth, 23, Component.literal("0"));
+                    quantityBox.setBordered(false);
+                    quantityBox.setValue(tag.getString("quantity"));
+                    EditableDropdownBox<FluidOption> box = EditableDropdownBox.makeBox(knownFluids.toArray(new FluidOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
+                    String firstId = tag.getString("1");
+                    for (FluidOption knownFluid : knownFluids) {
+                        if (Objects.equals(knownFluid.getId(), firstId)) {
+                            box.selectChosen(knownFluid);
+                            break;
+                        }
+                    }
+                    Box second = new Box(quantityBox.getX() + quantityBoxWidth + 1, box);
+                    boxes.add(second);
+                }
+                case INSERTION -> {
+                    EditableDropdownBox<ItemOption> firstDropdown = EditableDropdownBox.makeBox(knownSolids.toArray(new ItemOption[]{}), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
+                    String firstId = tag.getString("1");
+                    for (ItemOption knownSolid : knownSolids) {
+                        if (Objects.equals(knownSolid.getId(), firstId)) {
+                            firstDropdown.selectChosen(knownSolid);
+                            break;
+                        }
+                    }
+                    Box firstBox = new Box(first.x + first.box.getWidth() + 1, firstDropdown);
+                    boxes.add(firstBox);
+                    EditableDropdownBox<Completeness> secondDropdown = EditableDropdownBox.makeBox(Completeness.values(), 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
+                    secondDropdown.selectChosen(Completeness.valueOf(tag.getString("2")));
+                    boxes.add(new Box(firstBox.x + firstBox.box.getWidth() + 1, secondDropdown));
+                }
+            }
+        } catch (Exception e) {
+            typeSelector.selectChosen(Type.NONE);
+        }
+    }
+
     private enum Type implements EditableDropdownBox.Option {
         NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH;
 
+        @Override
         public Component getText() {
             return Component.translatable("gui.journal.journal.type." + name().toLowerCase());
         }
 
+        @Override
+        public String getId() {
+            return name();
+        }
     }
 
     private enum Completeness implements EditableDropdownBox.Option {
@@ -264,6 +372,26 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         @Override
         public Component getText() {
             return Component.translatable("gui.journal.journal.completeness." + name().toLowerCase());
+        }
+
+        @Override
+        public String getId() {
+            return name();
+        }
+    }
+
+    private enum Location implements EditableDropdownBox.Option {
+
+        NONE, BACK, CHEST, SKULL;
+
+        @Override
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.location." + name().toLowerCase());
+        }
+
+        @Override
+        public String getId() {
+            return name();
         }
     }
 
@@ -281,6 +409,11 @@ public class JournalReportLine extends Element implements EditableList.EditableL
                 return Component.translatable("gui.journal.journal.ingredient.none");
             }
             return item.getHoverName();
+        }
+
+        @Override
+        public String getId() {
+            return item.getItem().toString();
         }
     }
 
@@ -303,6 +436,15 @@ public class JournalReportLine extends Element implements EditableList.EditableL
                 return Component.translatable("gui.journal.journal.fluid.none");
             }
             return Component.literal(text);
+        }
+
+        @Override
+        public String getId() {
+            ResourceLocation key = ForgeRegistries.FLUIDS.getKey(fluid);
+            if (key != null) {
+                return key.getPath();
+            }
+            return null;
         }
     }
 
