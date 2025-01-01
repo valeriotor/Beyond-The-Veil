@@ -165,7 +165,9 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
         double typeSelectorListMouseY = relativeMouseY - getHeight();
         if (typeSelector.isActive() && typeSelectorList.insideBounds(relativeMouseX, typeSelectorListMouseY)) {
-            typeSelectorList.mouseScrolled(relativeMouseX, typeSelectorListMouseY, pDelta);
+            if (typeSelectorList.mouseScrolled(relativeMouseX, typeSelectorListMouseY, pDelta)) {
+                return true;
+            }
         }
         return super.mouseScrolled(relativeMouseX, relativeMouseY, pDelta);
     }

@@ -4,10 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
-import com.valeriotor.beyondtheveil.client.gui.elements.DropdownLists;
-import com.valeriotor.beyondtheveil.client.gui.elements.EditableList;
-import com.valeriotor.beyondtheveil.client.gui.elements.Element;
-import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
+import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -75,13 +72,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private ScrollableList<JournalReportLine> report;
     private CompoundTag chosenReportTag;
     private boolean editingReport;
+    private ElementHolder buttonHolder;
     private EditBox reportName;
-    private Button newButton;
-    private Button saveButton;
-    private Button editButton;
-    private Button deleteButton;
-    private Button cancelButton;
-    private List<JournalBookmark> bookmarks = new ArrayList<>();
+    private TexturedButton newButton;
+    private TexturedButton saveButton;
+    private TexturedButton editButton;
+    private TexturedButton deleteButton;
+    private TexturedButton cancelButton;
+    private final List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
     private final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
     private final ResourceLocation REPORT_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/report_entry.png");
@@ -100,6 +98,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_2.png");
     private final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
     private final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/journal/minus.png");
+    private final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/journal/button.png");
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -179,45 +178,32 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (reportName != null) {
             removeWidget(reportName);
         }
-        if (newButton != null) {
-            removeWidget(newButton);
-        }
-        if (editButton != null) {
-            removeWidget(editButton);
-        }
-        if (saveButton != null) {
-            removeWidget(saveButton);
-        }
-        if (deleteButton != null) {
-            removeWidget(deleteButton);
-        }
-        if (cancelButton != null) {
-            removeWidget(cancelButton);
-        }
+
+        buttonHolder = ElementHolder.makeHolder(width, height);
         reportName = addRenderableWidget(new EditBox(minecraft.font, 150, 150, 120, 20, Component.literal("")));
-        newButton = addRenderableWidget(Button.builder(Component.translatable("gui.journal.journal.new"), pButton -> {
+        newButton = buttonHolder.addElement(ENTRY_LIST_BASE_LEFT_X, ENTRY_LIST_BASE_TOP_Y - 25, new TexturedButton(ENTRY_BASE_WIDTH, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.new"), pButton -> {
             editingReport = true;
             chosenReportTag = null;
             selectReportFromNBT(null, true);
-            updateWidgetVisibility();
-        }).bounds(ENTRY_LIST_BASE_LEFT_X, ENTRY_LIST_BASE_TOP_Y - 25, ENTRY_BASE_WIDTH, 20).build());
-        editButton = addRenderableWidget(Button.builder(Component.translatable("gui.journal.journal.edit"), pButton -> {
+            //updateWidgetVisibility();
+        }));
+        editButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.edit"), pButton -> {
             editingReport = true;
             selectReportFromNBT(chosenReportTag, true);
-            updateWidgetVisibility();
-        }).bounds(70, 150, 50, 20).build());
-        saveButton = addRenderableWidget(Button.builder(Component.translatable("gui.journal.journal.save"), pButton -> {
+            //updateWidgetVisibility();
+        }));
+        saveButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.save"), pButton -> {
             editingReport = false;
             CompoundTag report = saveReportToNBT();
             chosenReportTag = report;
             selectReportFromNBT(chosenReportTag, false);
             GenericToServerPacket packet = GenericToServerPacket.syncJournalReport(chosenReportTag, false, false);
             Messages.sendToServer(packet);
-            updateWidgetVisibility();
+            //updateWidgetVisibility();
             DataUtil.setTag(Minecraft.getInstance().player, PlayerDataLib.JOURNAL_REPORT.apply(report.getString("name")), report);
             updateReports();
-        }).bounds(70, 150, 50, 20).build());
-        deleteButton = addRenderableWidget(Button.builder(Component.translatable("gui.journal.journal.delete"), pButton -> {
+        }));
+        deleteButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.delete"), pButton -> {
             if (chosenReportTag != null) {
                 GenericToServerPacket packet = GenericToServerPacket.syncJournalReport(chosenReportTag, false, true);
                 Messages.sendToServer(packet);
@@ -226,17 +212,17 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             chosenReportTag = null;
             report = null;
             updateReports();
-            updateWidgetVisibility();
-        }).bounds(70, 175, 50, 20).build());
-        cancelButton = addRenderableWidget(Button.builder(Component.translatable("gui.journal.journal.cancel"), pButton -> {
+            //updateWidgetVisibility();
+        }));
+        cancelButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.cancel"), pButton -> {
             editingReport = false;
             if (chosenReportTag != null) {
                 selectReportFromNBT(chosenReportTag, false);
             } else {
                 report = null;
             }
-            updateWidgetVisibility();
-        }).bounds(70, 175, 50, 20).build());
+            //updateWidgetVisibility();
+        }));
         updateWidgetVisibility();
 
     }
@@ -285,6 +271,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         RenderSystem.enableBlend();
         pGuiGraphics.blit(BACKGROUND, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight, 0, 0, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT);
         super.render(pGuiGraphics, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
+        buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
         ScrollableList<? extends Element> toRender = currentList();
         int relativeMouseX = listMouseX(pMouseX);
         int relativeMouseY = listMouseY(pMouseY);
@@ -302,13 +289,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (report != null && selectedCategory == JournalCategory.JOURNAL) {
             relativeMouseX = reportMouseX(pMouseX);
             relativeMouseY = reportMouseY(pMouseY);
+            int REPORT_LIST_BASE_HEIGHT = 275;
             pose.pushPose();
             pose.translate(REPORT_BASE_LEFT_X, REPORT_BASE_TOP_Y, 0);
-            pGuiGraphics.fill(-4, -3, ENTRY_LIST_BASE_WIDTH + 2, ENTRY_LIST_BASE_HEIGHT + 2, 0x11111111);
+            pGuiGraphics.fill(-4, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 2, 0x11111111);
             pGuiGraphics.fill(-0, -3, ENTRY_LIST_BASE_WIDTH - 2, 0, 0x44111111);
-            pGuiGraphics.fill(-0, ENTRY_LIST_BASE_HEIGHT - 2, ENTRY_LIST_BASE_WIDTH - 2, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
-            pGuiGraphics.fill(-4, -3, 0, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
-            pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, ENTRY_LIST_BASE_HEIGHT + 2, 0x44111111);
+            pGuiGraphics.fill(-0, REPORT_LIST_BASE_HEIGHT - 2, ENTRY_LIST_BASE_WIDTH - 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
+            pGuiGraphics.fill(-4, -3, 0, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
+            pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
             report.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
@@ -350,6 +338,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 return true;
             }
         }
+        if (buttonHolder.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton)) {
+            updateWidgetVisibility();
+            return true;
+        }
         return super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
     }
 
@@ -388,10 +380,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        if (currentList() != null && currentList().keyPressed(pKeyCode, pScanCode, pModifiers)) { // TODO not current list but only journal one
+        if (currentList() != null && currentList().keyPressed(pKeyCode, pScanCode, pModifiers)) {
             return true;
         }
-        if (report != null && report.keyPressed(pKeyCode, pScanCode, pModifiers)) { // TODO not current list but only journal one
+        if (report != null && report.keyPressed(pKeyCode, pScanCode, pModifiers)) {
             return true;
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
@@ -399,10 +391,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
-        if (currentList() != null && currentList().charTyped(pCodePoint, pModifiers)) { // TODO not current list but only journal one
+        if (currentList() != null && currentList().charTyped(pCodePoint, pModifiers)) {
             return true;
         }
-        if (report != null && report.charTyped(pCodePoint, pModifiers)) { // TODO not current list but only journal one
+        if (report != null && report.charTyped(pCodePoint, pModifiers)) {
             return true;
         }
         return super.charTyped(pCodePoint, pModifiers);
@@ -482,7 +474,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         report.put("saved", saved);
         report.putString("name", reportName.getValue());
         report.putInt("success", 0);
-        // TODO name and successfulness
+        // TODO successfulness
         return report;
     }
 
@@ -501,9 +493,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             lines.add(line);
         }
         chosenReportTag = report;
-        this.report = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
+        this.report = new EditableList<>(ENTRY_LIST_BASE_WIDTH, 275, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
         this.report.setVariableSize(true);
-        updateWidgetVisibility();
+        //updateWidgetVisibility();
     }
 
     @Override
@@ -607,6 +599,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 if (!editingReport) {
                     selectReportFromNBT(report, false);
+                    updateWidgetVisibility();
                 }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
