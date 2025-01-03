@@ -16,11 +16,11 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -69,6 +69,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     // 1022x1071
     private ScrollableList<JournalReportLine> ingredients;
     private ScrollableList<ReportEntry> reportEntries;
+    private Page overviewPage;
     private ScrollableList<JournalReportLine> report;
     private CompoundTag chosenReportTag;
     private boolean editingReport;
@@ -255,10 +256,6 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         return List.of(Registration.FORCEPS.get(), Registration.SCALPEL.get(), Registration.SEWING_NEEDLE.get(), Registration.SYRINGE.get(), Registration.TONGS.get(), Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get(), Registration.FLASK_SHELF_ITEM.get(), Registration.SURGERY_BED_ITEM.get(), Registration.WATERY_CRADLE_ITEM.get());
     }
 
-    private void updateLists() {
-
-    }
-
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
 
@@ -301,6 +298,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
         }
 
+        renderPage(pose, pGuiGraphics, scaledMouseX(pMouseX), scaledMouseY(pMouseY), pPartialTick);
+
         for (int i = 0; i < bookmarks.size(); i++) {
             JournalBookmark bookmark = bookmarks.get(i);
             relativeMouseX = bookmarkMouseX(pMouseX);
@@ -314,6 +313,20 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         pose.popPose();
         //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
         //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", relativeMouseX, relativeMouseY), 0, 15, 0xFFFFFFFF);
+    }
+
+    private void renderPage(PoseStack pose, GuiGraphics graphics, double scaledMouseX, double scaledMouseY, float pPartialTick) {
+        if (selectedCategory == JournalCategory.OVERVIEW && overviewPage != null) {
+            pose.pushPose();
+            pose.translate(200, -200, 0);
+            pose.scale(1.5F, 1.5F, 1);
+            graphics.drawCenteredString(Minecraft.getInstance().font, overviewPage.title, 0, 0, 0xFFC18100);
+            pose.popPose();
+            pose.pushPose();
+            pose.translate(50, -160, 0);
+            overviewPage.page.render(pose, graphics, 0xFFFFFFFF, (int) (scaledMouseX - 50), (int) (scaledMouseY + 160), pPartialTick);
+            pose.popPose();
+        }
     }
 
     private double scaledMouseX(double mouseX) {
@@ -431,6 +444,17 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             case TOOLS -> tools;
             case INGREDIENTS -> ingredients;
             case JOURNAL -> reportEntries;
+            case ABOMINATIONS -> null;
+        };
+    }
+
+    @Nullable
+    private JournalGui.Page currentPage() {
+        return switch (selectedCategory) {
+            case OVERVIEW -> overviewPage;
+            case TOOLS -> null;
+            case INGREDIENTS -> null;
+            case JOURNAL -> null;
             case ABOMINATIONS -> null;
         };
     }
@@ -710,7 +734,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
-                // TODO
+                TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
+                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), textBlock);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             }
@@ -718,6 +743,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
     }
 
+    private record Page(Component title, TextBlock page) {
 
+    }
 
 }

@@ -22,5 +22,9 @@ public abstract class Property {
 
     public abstract void render(GuiGraphics graphics, int relativeMouseX, int relativeMouseY);
 
+    public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        return false;
+    }
+
 
 }

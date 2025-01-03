@@ -36,5 +36,17 @@ public class TextLine extends Element{
         //}
     }
 
-
+    @Override
+    public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        if (relativeMouseY >= 0 && relativeMouseY < 15) {
+            for (Property property : properties) {
+                if (relativeMouseX >= property.getXStart() && relativeMouseX < property.getXEnd()) {
+                    if (property.mouseClicked(relativeMouseX - property.getXStart(), relativeMouseY, mouseButton)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+    }
 }

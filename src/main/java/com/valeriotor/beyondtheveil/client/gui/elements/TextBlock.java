@@ -54,4 +54,16 @@ public class TextBlock extends Element{
         }
     }
 
+    @Override
+    public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+        int yOffset = 0;
+        for (int i = 0; i < lines.size(); i++) {
+            Element line = lines.get(i);
+            if (relativeMouseY - yOffset < line.getHeight()) {
+                return line.mouseClicked(relativeMouseX, relativeMouseY - yOffset, mouseButton);
+            }
+            yOffset += line.getHeight();
+        }
+        return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+    }
 }

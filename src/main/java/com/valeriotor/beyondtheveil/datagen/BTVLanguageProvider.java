@@ -1237,6 +1237,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         addGuis();
     }
 
+    private void addCommonCaptions() {
+        add("caption.right_click", "Right Click");
+        add("caption.shift_right_click", "Sneak + Right Click");
+        add("caption.crafting", "Go to Crafting registry");
+        add("caption.crafting", "Go to Journal entry");
+    }
+
     private void addDialogue() {
         add("dialogue.continue", "(Continue)");
         add("dialogue.end", "(End)");
@@ -1706,6 +1713,34 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.storage", "Storage");
         add("gui.journal.overview.holding", "Holding patients");
         add("gui.journal.overview.surgery", "Surgery");
+        add("gui.journal.overview.patients.text", "The primary resource in a surgeon’s studies is none other than the patients themselves: humans, such as the villagers scattered across the world (though I shall abstain from using shoremen).\\n" +
+                "Understandably, it should not be expected for the patients to join the experiments willingly. They must be coerced and, sadly, this implies the use of force. I can use a {§nblackjack§r}[caption:journal.blackjack] to temporarily knock out a villager. I can then pick up and carry any incapacitated villagers lying on the ground. If necessary, I can set down any villager I’m carrying and it will hopefully get back up soon.");
+        add("gui.journal.overview.starting.text", "Any patient I’m currently carrying may be {§nplaced§r}[caption:right_click] atop a surgery bed.\\n" +
+                "This allows the surgeon to perform operations on either the §lChest§r or the §lBack§r. One may {§nswitch§r}[caption:shift_right_click] the patient’s position to allow for surgeries on either location, though only when there is no currently open incision. \\n" +
+                "All operation types can be performed on the surgery bed.");
+        add("gui.journal.overview.starting_cradle.text", "Any patient I’m currently carrying may be {§nplaced§r}[caption:right_click] atop a surgery bed or within a watery cradle.\\n" +
+                "Operations performed in the watery cradle target the §lSkull§r, and only injections may be executed.\\n" +
+                "The surgery bed, on the other hand, allows the surgeon to perform operations on either the §lChest§r or the §lBack§r. One may {§nswitch§r}[caption:shift_right_click] the patient’s position to allow for surgeries on either location, though only when there is no currently open incision. \\n" +
+                "All operation types can be performed on the surgery bed.");
+        add("gui.journal.overview.managing.text", "Sedation is paramount in any successful surgery. Aside from the ethical concerns, patients in severe pain will indubitably thrash and flail about, virtually ensuring grave injuries and death when using surgery tools upon them.\\n" +
+                "It is thus imperative to inject sufficient quantities of sedative during an operation. Doing so while the patient is already calm will help prevent subsequent pain. For example, injecting sufficient sedative before starting an incision will prevent patients from acting out and injuring themselves with the scalpel.\\n" +
+                "If the patient is in pain, injecting sedative will calm them down. It is wise to stop an operation such as an incision at the first sign of pain to prevent it going awry, and only continuing it after the patient has calmed down and has been sedated enough to prevent further pain.\\n" +
+                "Finally, it should be noted that excessive quantities of sedative pose a high risk, and may result in the patient’s death.");
+        add("gui.journal.overview.concluding.text", "The success of an operation depends on the desired outcome. Although a premature death will most likely make any further operations impossible, it may be tolerated as long as the necessary results (such as an organ’s extraction) have already been obtained. The death of a patient is certainly a loss, but not a tragedy.\\n" +
+                "Of course, there are times when we seek the patient’s survival. In general, most patients will exit the surgery either (i) alive and well, (ii) crippled (potentially for life), or (iii) deceased.");
+        //TODO add("gui.journal.overview.journal.text", ...
+        add("gui.journal.overview.fluids.text", "Liquid ingredients, such as {§nsedative§r}[link:journal.sedative], {§ncoagulant§r}[link:journal.coagulant], and several others, can be injected into patients to achieve various results. This requires a {§nsyringe§r}[link:journal.syringe], and does not require an incision on the patient.\\n" +
+                "Such fluids may be stored in liquid flasks ({§nsmall§r}[link:journal.small_flask], {§nmedium§r}[link:journal.medium_flask] and {§nlarge§r}[link:journal.large_flask]), and are often produced with the help of {§nalembics§r}[link:journal.alembics].");
+        add("gui.journal.overview.solids.text", "Solid ingredients may be inserted in the patient. This requires {§nforceps§r}[link:journal.forceps], and can only be done when the incision is open.\\n" +
+                "Such ingredients are generally stored in appropriate containers, such as {§nitem jars§r}[link:journal.item_jar].");
+        add("gui.journal.overview.extraction.text", "Extractions can be performed either on the back or the chest, and are used to obtain respectively the patient’s spine or heart. They always require an incision to be already present, and will likely cause severe bleeding after the operation. They are generally very painful.\\n" +
+                "Extractions are performed with {§ntongs§r}[link:journal.tongs]. Interrupting one resets progress.");
+        add("gui.journal.overview.incision.text", "Incisions can be performed either on the back or the chest, and are used to open up a wound that may then allow insertions or extractions. A patient cannot be moved (neither removed from the surgery bed nor flipped) while incised. They are generally very painful.\\n" +
+                "Incisions are performed with the {§nscalpel§r}[link:journal.scalpel]. Interrupting one resets progress.");
+        add("gui.journal.overview.injection.text", "Injections can be performed on any surgical location: back, chest and skull. They are carried out with a {§nsyringe§r}[link:journal.syringe] after it has been filled with fluids. Interrupting an injection does not reset progress, as the fluid already resides within the patient’s body.\\n" +
+                "Injections may be painful depending on the fluid type and quantity.");
+        add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
+        add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.sewing_needle]. Stitching is painless and instantaneous.");
 
         add("gui.journal.journal.type.none", "Select Type");
         add("gui.journal.journal.type.position", "Position");
@@ -1720,6 +1755,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.completeness.incomplete", "Not completed");
         add("gui.journal.journal.ingredient.none", "Select Ingredient");
         add("gui.journal.journal.fluid.none", "Select Fluid");
+        add("gui.journal.journal.new", "New Report");
         add("gui.journal.journal.edit", "Edit");
         add("gui.journal.journal.save", "Save");
         add("gui.journal.journal.delete", "Delete");

@@ -76,11 +76,11 @@ public class TextUtil {
                         } else {
                             done = wordBlock.get(currentWord).traverseWord(c);
                         }
-                        if (done || j == array.length - 1) {
+                        if (j == 0 || done || j == array.length - 1) {
                             if (done) {
                                 currentWord++;
                             }
-                            if (currentWord < wordBlock.size() || currentProperty != null) {
+                            if (j == 0 || currentWord < wordBlock.size() || currentProperty != null) {
                                 String newWordProperty = currentWord < wordBlock.size() ? wordBlock.get(currentWord).getProperty() : null;
                                 if (!Objects.equals(newWordProperty, currentProperty) || !done) {
                                     if (currentProperty != null) {
@@ -106,7 +106,7 @@ public class TextUtil {
                                         int propertyWidth = f.width(FormattedText.of(propertyText.toString()));
                                         properties.add(makeProperty(currentProperty, propertyStart, propertyStart + propertyWidth));
                                     }
-                                    if (done) {
+                                    if (done || j == 0) {
                                         currentProperty = newWordProperty;
                                         currentPropertyStart = currentWord;
                                     }

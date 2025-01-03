@@ -15,6 +15,6 @@ public class CaptionProperty extends Property {
 
     @Override
     public void render(GuiGraphics graphics, int relativeMouseX, int relativeMouseY) {
-        graphics.renderTooltip(Minecraft.getInstance().font, Component.literal(caption), relativeMouseX, relativeMouseY);
+        graphics.renderTooltip(Minecraft.getInstance().font, Component.translatable(caption), relativeMouseX, relativeMouseY);
     }
 }
