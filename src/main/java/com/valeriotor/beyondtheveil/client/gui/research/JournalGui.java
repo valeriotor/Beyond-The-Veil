@@ -25,8 +25,11 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -40,6 +43,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private int imageWidth;
     private int imageHeight;
     private float scaleFactor = 1;
+    private final Style style = Style.EMPTY.withFont(new ResourceLocation("minecraft", "uniform"));
     private static final int BACKGROUND_BASE_WIDTH = 843;
     private static final int BACKGROUND_BASE_HEIGHT = 505;
     private static final int ENTRY_LIST_BASE_LEFT_X = -BACKGROUND_BASE_WIDTH / 2 + 43;
@@ -70,6 +74,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private ScrollableList<JournalReportLine> ingredients;
     private ScrollableList<ReportEntry> reportEntries;
     private Page overviewPage;
+    private Page toolPage;
+    private CraftingRegistryGui.CraftingGrid toolGrid;
+    private Page ingredientPage;
     private ScrollableList<JournalReportLine> report;
     private CompoundTag chosenReportTag;
     private boolean editingReport;
@@ -319,8 +326,16 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (selectedCategory == JournalCategory.OVERVIEW && overviewPage != null) {
             pose.pushPose();
             pose.translate(200, -200, 0);
-            pose.scale(1.5F, 1.5F, 1);
-            graphics.drawCenteredString(Minecraft.getInstance().font, overviewPage.title, 0, 0, 0xFFC18100);
+            pose.scale(2.55F, 2.55F, 1);
+            int titleColor = 0xFFD0A030;
+            //graphics.fill(-40, 0, 40, 15, 0xFF000000);
+            if (overviewPage.title instanceof MutableComponent mc) {
+                graphics.drawCenteredString(Minecraft.getInstance().font, mc.withStyle(style), 0, 0, titleColor);
+            }
+            //graphics.drawCenteredString(Minecraft.getInstance().font, FormattedCharSequence.forward(overviewPage.title.getString(), style), 0, 0, titleColor);
+            int titleWidth = minecraft.font.width(overviewPage.title);
+
+            //graphics.fill(-titleWidth / 2, 12, titleWidth / 2, 13, titleColor);
             pose.popPose();
             pose.pushPose();
             pose.translate(50, -160, 0);

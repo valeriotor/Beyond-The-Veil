@@ -42,7 +42,7 @@ public class TexturedButton extends Element{
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), highlightColor);
             }
-            graphics.drawCenteredString(Minecraft.getInstance().font, text, getWidth() / 2, getHeight() / 2 - 2, color);
+            graphics.drawCenteredString(Minecraft.getInstance().font, text, getWidth() / 2, getHeight() / 2 - 3, color);
         }
     }
 
