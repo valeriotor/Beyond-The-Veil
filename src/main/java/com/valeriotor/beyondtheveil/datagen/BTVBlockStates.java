@@ -84,6 +84,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlasks();
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
+        registerSolidAndTranslucentBlock("alembics", mcLoc("block/glass"), ALEMBICS.get());
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {

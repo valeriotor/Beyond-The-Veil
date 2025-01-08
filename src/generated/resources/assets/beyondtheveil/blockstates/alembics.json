@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "beyondtheveil:block/alembics"
+    },
+    "facing=north": {
+      "model": "beyondtheveil:block/alembics"
+    },
+    "facing=south": {
+      "model": "beyondtheveil:block/alembics"
+    },
+    "facing=west": {
+      "model": "beyondtheveil:block/alembics"
+    }
+  }
+}
