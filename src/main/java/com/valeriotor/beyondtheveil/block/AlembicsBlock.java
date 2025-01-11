@@ -1,29 +1,88 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
+import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public class AlembicsBlock extends Block {
+public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     private static final VoxelShape BASE_SHAPE = Shapes.box(0.1875D, 0.0D, 0.1875D, 0.8125D, 0.25D, 0.8125D);
-    private static final VoxelShape[] DIRECTIONAL_SHAPES = new VoxelShape[4];
+    private static final double a = 0.0625;
+    private static final VoxelShape[][] SHAPES = new VoxelShape[3][4];
 
     static {
-        DIRECTIONAL_SHAPES[0] = Shapes.box(0.1875D, 0.0D, 0.1875D, 0.8125D, 0.875D, 0.6875D);
-        DIRECTIONAL_SHAPES[1] = Shapes.box(0.1875D, 0.0D, 0.3125D, 0.8125D, 0.875D, 0.8125D);
-        DIRECTIONAL_SHAPES[2] = Shapes.box(0.1875D, 0.0D, 0.1875D, 0.6875D, 0.875D, 0.8125D);
-        DIRECTIONAL_SHAPES[3] = Shapes.box(0.3125D, 0.0D, 0.1875D, 0.8125D, 0.875D, 0.8125D);
+        VoxelShape[] ALEMBIC1_1 = new VoxelShape[4];
+        VoxelShape[] ALEMBIC1_2 = new VoxelShape[4];
+        VoxelShape[] ALEMBIC1_3 = new VoxelShape[4];
+        VoxelShape[] SOLID_1 = new VoxelShape[4];
+        VoxelShape[] SOLID_2 = new VoxelShape[4];
+        VoxelShape[] SOLID_3 = new VoxelShape[4];
+        VoxelShape[] ALEMBIC2_1 = new VoxelShape[4];
+        VoxelShape[] ALEMBIC2_2 = new VoxelShape[4];
+        VoxelShape[] ALEMBIC2_3 = new VoxelShape[4];
+
+        ALEMBIC1_1[0] = Shapes.box(0.5 - 3 * a, 0, 1 - 8 * a, 0.5 + 3 * a, 1 - a, 1 - 2 * a);
+        ALEMBIC1_1[1] = Shapes.box(2 * a, 0, 0.5 - 3 * a, 8 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC1_1[2] = Shapes.box(0.5 - 3 * a, 0, 2 * a, 0.5 + 3 * a, 1 - a, 8 * a);
+        ALEMBIC1_1[3] = Shapes.box(1 - 8 * a, 0, 0.5 - 3 * a, 1 - 2 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC1_2[0] = Shapes.box(0.5 - 3 * a, 0, 2 - 8 * a, 0.5 + 3 * a, 1 - a, 2 - 2 * a);
+        ALEMBIC1_2[1] = Shapes.box(-1 + 2 * a, 0, 0.5 - 3 * a, -1 + 8 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC1_2[2] = Shapes.box(0.5 - 3 * a, 0, -1 + 2 * a, 0.5 + 3 * a, 1 - a, -1 + 8 * a);
+        ALEMBIC1_2[3] = Shapes.box(2 - 8 * a, 0, 0.5 - 3 * a, 2 - 2 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC1_3[0] = Shapes.box(0.5 - 3 * a, 0, 3 - 8 * a, 0.5 + 3 * a, 1 - a, 3 - 2 * a);
+        ALEMBIC1_3[1] = Shapes.box(-2 + 2 * a, 0, 0.5 - 3 * a, -2 + 8 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC1_3[2] = Shapes.box(0.5 - 3 * a, 0, -2 + 2 * a, 0.5 + 3 * a, 1 - a, -2 + 8 * a);
+        ALEMBIC1_3[3] = Shapes.box(3 - 8 * a, 0, 0.5 - 3 * a, 3 - 2 * a, 1 - a, 0.5 + 3 * a);
+
+        SOLID_1[0] = Shapes.box(0.5 - 3 * a, 0, -5 * a, 0.5 + 3 * a, 10 * a, 1 * a);
+        SOLID_1[1] = Shapes.box(1 - 1 * a, 0, 0.5 - 3 * a, 1 + 5 * a, 10 * a, 0.5 + 3 * a);
+        SOLID_1[2] = Shapes.box(0.5 - 3 * a, 0, 1 - 1 * a, 0.5 + 3 * a, 10 * a, 1 + 5 * a);
+        SOLID_1[3] = Shapes.box(-5 * a, 0, 0.5 - 3 * a, 1 * a, 10 * a, 0.5 + 3 * a);
+        SOLID_2[0] = Shapes.box(0.5 - 3 * a, 0, 1 - 5 * a, 0.5 + 3 * a, 10 * a, 1 + 1 * a);
+        SOLID_2[1] = Shapes.box(-1 * a, 0, 0.5 - 3 * a, 5 * a, 10 * a, 0.5 + 3 * a);
+        SOLID_2[2] = Shapes.box(0.5 - 3 * a, 0, -1 * a, 0.5 + 3 * a, 10 * a, 5 * a);
+        SOLID_2[3] = Shapes.box(1 - 5 * a, 0, 0.5 - 3 * a, 1 + 1 * a, 10 * a, 0.5 + 3 * a);
+        SOLID_3[0] = Shapes.box(0.5 - 3 * a, 0, 2 - 5 * a, 0.5 + 3 * a, 10 * a, 2 + 1 * a);
+        SOLID_3[1] = Shapes.box(-1 - 1 * a, 0, 0.5 - 3 * a, -1 + 5 * a, 10 * a, 0.5 + 3 * a);
+        SOLID_3[2] = Shapes.box(0.5 - 3 * a, 0, -1 - 1 * a, 0.5 + 3 * a, 10 * a, -1 + 5 * a);
+        SOLID_3[3] = Shapes.box(2 - 5 * a, 0, 0.5 - 3 * a, 2 + 1 * a, 10 * a, 0.5 + 3 * a);
+
+        ALEMBIC2_1[0] = Shapes.box(0.5 - 3 * a, 0, -1 - 2 * a, 0.5 + 3 * a, 1 - a, -1 + 4 * a);
+        ALEMBIC2_1[1] = Shapes.box(2 - 4 * a, 0, 0.5 - 3 * a, 2 + 2 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC2_1[2] = Shapes.box(0.5 - 3 * a, 0, 2 - 4 * a, 0.5 + 3 * a, 1 - a, 2 + 2 * a);
+        ALEMBIC2_1[3] = Shapes.box(-1 - 2 * a, 0, 0.5 - 3 * a, -14 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC2_2[0] = Shapes.box(0.5 - 3 * a, 0, -2 * a, 0.5 + 3 * a, 1 - a, 4 * a);
+        ALEMBIC2_2[1] = Shapes.box(1 - 4 * a, 0, 0.5 - 3 * a, 1 + 2 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC2_2[2] = Shapes.box(0.5 - 3 * a, 0, 1 - 4 * a, 0.5 + 3 * a, 1 - a, 1 + 2 * a);
+        ALEMBIC2_2[3] = Shapes.box(-2 * a, 0, 0.5 - 3 * a, 4 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC2_3[0] = Shapes.box(0.5 - 3 * a, 0, 1 - 2 * a, 0.5 + 3 * a, 1 - a, 1 + 4 * a);
+        ALEMBIC2_3[1] = Shapes.box(-4 * a, 0, 0.5 - 3 * a, 2 * a, 1 - a, 0.5 + 3 * a);
+        ALEMBIC2_3[2] = Shapes.box(0.5 - 3 * a, 0, -4 * a, 0.5 + 3 * a, 1 - a, 2 * a);
+        ALEMBIC2_3[3] = Shapes.box(1 - 2 * a, 0, 0.5 - 3 * a, 1 + 4 * a, 1 - a, 0.5 + 3 * a);
+
+        SHAPES[0][0] = Shapes.or(ALEMBIC1_1[0], SOLID_1[0], ALEMBIC2_1[0]);
+        SHAPES[0][1] = Shapes.or(ALEMBIC1_1[1], SOLID_1[1], ALEMBIC2_1[1]);
+        SHAPES[0][2] = Shapes.or(ALEMBIC1_1[2], SOLID_1[2], ALEMBIC2_1[2]);
+        SHAPES[0][3] = Shapes.or(ALEMBIC1_1[3], SOLID_1[3], ALEMBIC2_1[3]);
+
+        SHAPES[1][0] = Shapes.or(ALEMBIC1_2[0], SOLID_2[0], ALEMBIC2_2[0]);
+        SHAPES[1][1] = Shapes.or(ALEMBIC1_2[1], SOLID_2[1], ALEMBIC2_2[1]);
+        SHAPES[1][2] = Shapes.or(ALEMBIC1_2[2], SOLID_2[2], ALEMBIC2_2[2]);
+        SHAPES[1][3] = Shapes.or(ALEMBIC1_2[3], SOLID_2[3], ALEMBIC2_2[3]);
+
+        SHAPES[2][0] = Shapes.or(ALEMBIC1_3[0], SOLID_3[0], ALEMBIC2_3[0]);
+        SHAPES[2][1] = Shapes.or(ALEMBIC1_3[1], SOLID_3[1], ALEMBIC2_3[1]);
+        SHAPES[2][2] = Shapes.or(ALEMBIC1_3[2], SOLID_3[2], ALEMBIC2_3[2]);
+        SHAPES[2][3] = Shapes.or(ALEMBIC1_3[3], SOLID_3[3], ALEMBIC2_3[3]);
 
     }
 
@@ -39,16 +98,12 @@ public class AlembicsBlock extends Block {
 
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter p_60579_, BlockPos p_60580_) {
-        return Shapes.or(BASE_SHAPE, DIRECTIONAL_SHAPES[state.getValue(FACING).getOpposite().ordinal()-2]);
+        return SHAPES[state.getValue(getSideProperty())][(state.getValue(FACING).get2DDataValue() + 1) & 3];
     }
 
+    @Nullable
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new AlembicsBE(pPos, pState);
     }
 }

@@ -2,7 +2,7 @@ package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
-import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -84,7 +87,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlasks();
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
-        registerSolidAndTranslucentBlock("alembics", mcLoc("block/glass"), ALEMBICS.get());
+        registerThinMultiBlock("alembics", "flask_shelf_empty", ALEMBICS.get(), 2);
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -341,21 +344,25 @@ public class BTVBlockStates extends BlockStateProvider {
         });
     }
 
+    private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock block) {
+        registerThinMultiBlock(modelName, emptyModelName, block, 0);
+    }
+
     /**
      * The empty model is necessary for particles
      */
-    private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock3by2 block) {
+    private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock block, int rotationOffset) {
         ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
         ExistingModelFile base = new ExistingModelFile(modLoc("block/" + modelName), models().existingFileHelper);
         getVariantBuilder(block)
                 .forAllStatesExcept(state -> {
-                    ModelFile file = state.getValue(block.getSideProperty()) == block.getHorizontalRadius() && state.getValue(block.getLevelProperty()) == block.getCenterY() ? base : empty;
+                    ModelFile file = state.getValue(block.getSideProperty()) == block.getHorizontalRadius() && (block.getLevelProperty() == null || state.getValue(block.getLevelProperty()) == block.getCenterY()) ? base : empty;
                     if (file == empty) {
 
                     }
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
-                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90 + 90 * rotationOffset) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
     }

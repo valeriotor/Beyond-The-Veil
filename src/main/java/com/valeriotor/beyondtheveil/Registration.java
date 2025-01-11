@@ -99,11 +99,11 @@ public class Registration {
     public static final RegistryObject<EntityType<ShoremanEntity>> SHOREMAN = ENTITIES.register("shoreman", () -> EntityType.Builder.of(ShoremanEntity::new, MobCategory.CREATURE).sized(0.7F, 1.9F).clientTrackingRange(32).build("shoreman"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
-    public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD);
-    public static final BlockBehaviour.Properties DAMP_CANOPY_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).noOcclusion();
-    public static final BlockBehaviour.Properties DARK_SAND_PROPERTIES = BlockBehaviour.Properties.of().strength(3f).sound(SoundType.SAND);
-    public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F);
-    public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F);
+    public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties DAMP_CANOPY_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).noOcclusion().requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties DARK_SAND_PROPERTIES = BlockBehaviour.Properties.of().strength(3f).sound(SoundType.SAND).requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
 
     public static final RegistryObject<Block> DAMP_WOOD = BLOCKS.register("damp_wood", () -> new Block(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> DARK_SAND = BLOCKS.register("dark_sand", () -> new Block(DARK_SAND_PROPERTIES));
@@ -315,6 +315,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskShelfBE>> FLASK_SHELF_BE = BLOCK_ENTITIES.register(FLASK_SHELF.getId().getPath(), () -> BlockEntityType.Builder.of(FlaskShelfBE::new, FLASK_SHELF.get()).build(null));
     public static final RegistryObject<BlockEntityType<SurgeryBedBE>> SURGERY_BED_BE = BLOCK_ENTITIES.register(SURGERY_BED.getId().getPath(), () -> BlockEntityType.Builder.of(SurgeryBedBE::new, SURGERY_BED.get()).build(null));
+    public static final RegistryObject<BlockEntityType<AlembicsBE>> ALEMBICS_BE = BLOCK_ENTITIES.register(ALEMBICS.getId().getPath(), () -> BlockEntityType.Builder.of(AlembicsBE::new, ALEMBICS.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get(), FLASK_ITEM.get()).build(null));
     public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
@@ -338,7 +339,7 @@ public class Registration {
     public static final RegistryObject<FlowingFluid> SOURCE_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.COAGULANT_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.COAGULANT_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.LIQUID_BLAZE_POWDER_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.COAGULANT_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.LIQUID_BLAZE_POWDER_PROPERTIES));
 
     public static final ForgeFlowingFluid.Properties SEDATIVE_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SEDATIVE_FLUID_TYPE, SOURCE_FLUID_SEDATIVE, FLOWING_FLUID_SEDATIVE).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SEDATIVE_BLOCK).bucket(Registration.SEDATIVE_BUCKET);
     public static final ForgeFlowingFluid.Properties SOFTENER_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SOFTENER_FLUID_TYPE, SOURCE_FLUID_SOFTENER, FLOWING_FLUID_SOFTENER).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SOFTENER_BLOCK).bucket(Registration.SOFTENER_BUCKET);
