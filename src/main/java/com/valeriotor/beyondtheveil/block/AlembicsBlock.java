@@ -3,10 +3,16 @@ package com.valeriotor.beyondtheveil.block;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -99,6 +105,41 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter p_60579_, BlockPos p_60580_) {
         return SHAPES[state.getValue(getSideProperty())][(state.getValue(FACING).get2DDataValue() + 1) & 3];
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pLevel.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        BlockPos centerPos = findCenter(pPos, state);
+        Direction facing = state.getValue(FACING);
+        int hit = getHitAlembic(pHit, centerPos, facing);
+        if (pLevel.getBlockEntity(centerPos) instanceof AlembicsBE be) {
+            return be.interactServer(pPlayer, pHand, hit) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        }
+        return super.use(state, pLevel, pPos, pPlayer, pHand, pHit);
+    }
+
+    public static int getHitAlembic(BlockHitResult pHit, BlockPos centerPos, Direction facing) {
+        double distanceFromStart = switch (facing) {
+            case NORTH -> -(pHit.getLocation().x - (centerPos.getX() + 1)) + 1;
+            case SOUTH -> pHit.getLocation().x - centerPos.getX() + 1;
+            case WEST -> pHit.getLocation().z - centerPos.getZ() + 1;
+            case EAST -> -(pHit.getLocation().z - (centerPos.getZ() + 1)) + 1;
+            default -> throw new IllegalStateException("Unexpected value: " + facing);
+        };
+        int hit;
+        if (distanceFromStart < 9 * a) {
+            hit = 0;
+        } else if (distanceFromStart < 1 + 6 * a) {
+            hit = 1;
+        } else if (distanceFromStart < 2 + 3 * a) {
+            hit = 2;
+        } else {
+            hit = 3;
+        }
+        return hit;
     }
 
     @Nullable

@@ -5,7 +5,7 @@
       "y": 180
     },
     "facing=east,side=1": {
-      "model": "beyondtheveil:block/alembics",
+      "model": "beyondtheveil:block/alembics_complete",
       "y": 180
     },
     "facing=east,side=2": {
@@ -17,7 +17,7 @@
       "y": 90
     },
     "facing=north,side=1": {
-      "model": "beyondtheveil:block/alembics",
+      "model": "beyondtheveil:block/alembics_complete",
       "y": 90
     },
     "facing=north,side=2": {
@@ -29,7 +29,7 @@
       "y": 270
     },
     "facing=south,side=1": {
-      "model": "beyondtheveil:block/alembics",
+      "model": "beyondtheveil:block/alembics_complete",
       "y": 270
     },
     "facing=south,side=2": {
@@ -40,7 +40,7 @@
       "model": "beyondtheveil:block/flask_shelf_empty"
     },
     "facing=west,side=1": {
-      "model": "beyondtheveil:block/alembics"
+      "model": "beyondtheveil:block/alembics_complete"
     },
     "facing=west,side=2": {
       "model": "beyondtheveil:block/flask_shelf_empty"

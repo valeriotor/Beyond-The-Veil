@@ -1,9 +1,11 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.AlembicsBlock;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
@@ -65,6 +67,13 @@ public class SyringeItem extends SurgeryItem {
             if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
                 Item held = itemStack.getItem();
                 be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+            }
+        } else if (lookedAtState.getBlock() == Registration.ALEMBICS.get()) {
+            BlockPos centerPos = Registration.ALEMBICS.get().findCenter(pos, lookedAtState);
+            if (level.getBlockEntity(centerPos) instanceof AlembicsBE be) {
+                Item held = itemStack.getItem();
+                int hitAlembic = AlembicsBlock.getHitAlembic(bhr, centerPos, level.getBlockState(centerPos).getValue(AlembicsBlock.FACING));
+                be.interactServer(p, InteractionHand.MAIN_HAND, hitAlembic);
             }
         } else if (lookedAtState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
             flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);

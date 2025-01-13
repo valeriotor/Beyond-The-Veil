@@ -111,7 +111,7 @@ public class FlaskShelfBE extends BlockEntity {
             return false;
         }
         if (!pLevel.isClientSide) {
-            Flask newFlask = new Flask(location.x, location.y, location.z, flaskBlock.size);
+            Flask newFlask = new Flask(location.x, location.y, location.z, stack, flaskBlock);
             flasks.add(newFlask);
             setChanged();
             if (level != null) {
@@ -134,11 +134,7 @@ public class FlaskShelfBE extends BlockEntity {
             }
             computeFlasksShape();
             level.playSound(null, getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
-            ItemStack flask = new ItemStack(FlaskBlock.sizeToBlock.get(f.getSize()));
-            CompoundTag tag = new CompoundTag();
-            f.tank.writeToNBT(tag);
-            tag.put("stack", f.stackHandler.serializeNBT());
-            BlockItem.setBlockEntityData(flask, Registration.FLASK_BE.get(), tag);
+            ItemStack flask = f.toItem();
             ItemEntity itementity = new ItemEntity(level, hitLocation.x() + 0.5D, hitLocation.y() + 0.5D, hitLocation.z() + 0.5D, flask);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -329,7 +325,7 @@ public class FlaskShelfBE extends BlockEntity {
     //}
 
 
-    public class Flask {
+    public static class Flask {
         // flask type
         // fill level
         private final double x, y, z;
@@ -349,7 +345,7 @@ public class FlaskShelfBE extends BlockEntity {
         private final ItemStackHandler stackHandler;
         private final LazyOptional<IItemHandler> stackHolder;
 
-        private Flask(double x, double y, double z, FlaskBlock.FlaskSize size) {
+        Flask(double x, double y, double z, FlaskBlock.FlaskSize size) {
             this.x = x;
             this.y = y;
             this.z = z;
@@ -359,7 +355,24 @@ public class FlaskShelfBE extends BlockEntity {
             stackHolder = LazyOptional.of(() -> stackHandler);
         }
 
-        private Flask(CompoundTag tag) {
+        Flask(double x, double y, double z, ItemStack stack, FlaskBlock flaskBlock) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.size = flaskBlock.size;
+            this.tank = FlaskBE.getTankByFlaskType(size);
+            stackHandler = createStackHandler(size);
+            stackHolder = LazyOptional.of(() -> stackHandler);
+            CompoundTag blockEntityData = BlockItem.getBlockEntityData(stack);
+            if (blockEntityData != null) {
+                tank.readFromNBT(blockEntityData);
+                if (blockEntityData.contains("stack")) {
+                    stackHandler.deserializeNBT(blockEntityData.getCompound("stack"));
+                }
+            }
+        }
+
+        Flask(CompoundTag tag) {
             this.x = tag.getDouble("x");
             this.y = tag.getDouble("y");
             this.z = tag.getDouble("z");
@@ -373,7 +386,7 @@ public class FlaskShelfBE extends BlockEntity {
             }
         }
 
-        private CompoundTag toNBT() {
+        CompoundTag toNBT() {
             CompoundTag tag = new CompoundTag();
             tag.putDouble("x", x);
             tag.putDouble("y", y);
@@ -382,6 +395,15 @@ public class FlaskShelfBE extends BlockEntity {
             tag.put("tank", tank.writeToNBT(new CompoundTag()));
             tag.put("stack", stackHandler.serializeNBT());
             return tag;
+        }
+
+        ItemStack toItem() {
+            ItemStack flask = new ItemStack(FlaskBlock.sizeToBlock.get(getSize()));
+            CompoundTag tag = new CompoundTag();
+            tank.writeToNBT(tag);
+            tag.put("stack", stackHandler.serializeNBT());
+            BlockItem.setBlockEntityData(flask, Registration.FLASK_BE.get(), tag);
+            return flask;
         }
 
         public FlaskBlock.FlaskSize getSize() {

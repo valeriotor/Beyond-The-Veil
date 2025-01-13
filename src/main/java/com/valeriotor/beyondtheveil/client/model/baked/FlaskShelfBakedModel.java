@@ -59,12 +59,16 @@ public class FlaskShelfBakedModel implements IDynamicBakedModel {
         return Collections.emptyList();
     }
 
-    private List<BakedQuad> getQuadsForFlask(BlockState shelfState, FlaskShelfBE.Flask flask, RandomSource rand, BlockPos pos) {
+    static List<BakedQuad> getQuadsForFlask(BlockState shelfState, FlaskShelfBE.Flask flask, RandomSource rand, BlockPos pos) {
+        return getQuadsForFlask(shelfState, flask, rand, flask.getX() - pos.getX() - 0.5, flask.getY() - pos.getY(), flask.getZ() - pos.getZ() - 0.5);
+    }
+
+    static List<BakedQuad> getQuadsForFlask(BlockState shelfState, FlaskShelfBE.Flask flask, RandomSource rand, double x, double y, double z) {
         List<BakedQuad> quads = new ArrayList<>();
         BlockState state = FlaskBlock.sizeToBlock.get(flask.getSize()).defaultBlockState();
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getBlockModel(state);
         //Transformation rotation = modelState.getRotation();
-        Transformation translation = new Transformation(new Matrix4f().translate((float) (flask.getX() - pos.getX() - 0.5), (float) flask.getY() - pos.getY(), (float) (flask.getZ() - pos.getZ() - 0.5)));
+        Transformation translation = new Transformation(new Matrix4f().translate((float) (x), (float) y, (float) (z)));
         IQuadTransformer transformer = QuadTransformers.applying(translation);
         List<BakedQuad> modelQuads = model.getQuads(state, null, rand, ModelData.EMPTY, RenderType.translucent());
         for (BakedQuad quad : modelQuads) {

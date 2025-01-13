@@ -87,7 +87,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlasks();
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
-        registerThinMultiBlock("alembics", "flask_shelf_empty", ALEMBICS.get(), 2);
+        registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -381,6 +381,35 @@ public class BTVBlockStates extends BlockStateProvider {
                             .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                             .build();
                 });
+    }
+
+    private void registerAlembics(String modelName, String emptyModelName, ThinMultiBlock block) {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/" + modelName), models().existingFileHelper);
+        ExistingModelFile loader = new ExistingModelFile(modLoc("block/alembics_to_bake"), models().existingFileHelper);
+        BlockModelBuilder baseBuilder = new BlockModelBuilder(modLoc("block/alembics1"), models().existingFileHelper);
+        baseBuilder.parent(base);
+        baseBuilder.renderType("solid");
+        BlockModelBuilder loaderBuilder = new BlockModelBuilder(modLoc("block/alembics_to_bake1"), models().existingFileHelper);
+        loaderBuilder.parent(loader);
+        loaderBuilder.renderType("translucent");
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/alembics_complete")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/alembics"))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("base", baseBuilder).child("loader", loaderBuilder))
+                .end();
+
+        getVariantBuilder(ALEMBICS.get())
+                .forAllStatesExcept(state -> {
+                    ModelFile file = state.getValue(AlembicsBlock.SIDE) == 1 ? builder : empty;
+                    return ConfiguredModel.builder()
+                            .modelFile(file) // Can show 'modelFile'
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 270) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
+                });
+
     }
 
 }
