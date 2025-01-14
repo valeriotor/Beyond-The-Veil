@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
@@ -44,6 +46,7 @@ public class AlembicsBE extends BlockEntity {
     private FluidTank inputTank2;
     private FluidTank outputTank;
     private FlaskShelfBE.Flask heldFlask;
+    private final VoxelShape[] shapes = new VoxelShape[3];
 
     private final LazyOptional<IFluidHandler> inputTank1Holder = LazyOptional.of(() -> inputTank1);
     private final LazyOptional<IItemHandler> stackHolder = LazyOptional.of(() -> stackHandler);
@@ -69,6 +72,10 @@ public class AlembicsBE extends BlockEntity {
         loadCommonData(tag);
     }
 
+    public FlaskShelfBE.Flask getHeldFlask() {
+        return heldFlask;
+    }
+
     public boolean interactServer(Player player, InteractionHand hand, int hit) {
         ItemStack held = player.getItemInHand(hand);
         if (Block.byItem(held.getItem()) instanceof FlaskBlock flaskBlock && flaskBlock.size.getCapacity() > 0) {
@@ -79,13 +86,15 @@ public class AlembicsBE extends BlockEntity {
                 heldFlask = new FlaskShelfBE.Flask(x, worldPosition.getY(), z, held, flaskBlock);
                 updateClient();
                 held.shrink(1);
+                updateShape();
             }
             return true;
-        } else if (hit == 2 && held.isEmpty() && player.isShiftKeyDown() && heldFlask != null) {
+        } else if (hit == 3 && held.isEmpty() && player.isShiftKeyDown() && heldFlask != null) {
             ItemStack flask = heldFlask.toItem();
             player.setItemInHand(hand, flask);
             heldFlask = null;
             updateClient();
+            updateShape();
         } else if (hit == 1) {
             if (held.isEmpty()) {
                 player.setItemInHand(hand, stackHandler.extractItem(0, 64, false));
@@ -136,6 +145,23 @@ public class AlembicsBE extends BlockEntity {
         return false;
     }
 
+    private void updateShape() {
+        Direction facing = getBlockState().getValue(AlembicsBlock.FACING);
+        for (int i = 0; i < shapes.length; i++) {
+            VoxelShape base = AlembicsBlock.SHAPES[i][(facing.get2DDataValue() + 1) & 3];
+            if (heldFlask != null) {
+                double x = (facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.SOUTH ? 2.125 - i : i - 2));
+                double z = (facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.WEST ? 2.125 - i : i - 2));
+                base = Shapes.or(base, heldFlask.computeShapeWithOffset(x, 0, z));
+            }
+            shapes[i] = base;
+        }
+    }
+
+    public VoxelShape[] getShapes() {
+        return shapes;
+    }
+
     private void updateClient() {
         setChanged();
         if (level != null) {
@@ -157,6 +183,7 @@ public class AlembicsBE extends BlockEntity {
         } else {
             heldFlask = null;
         }
+        updateShape();
     }
 
     @Override

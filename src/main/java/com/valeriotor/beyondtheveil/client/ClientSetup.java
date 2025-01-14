@@ -121,6 +121,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.FLASK_BE.get(), FlaskBER::new);
         event.registerBlockEntityRenderer(Registration.SACRIFICE_ALTAR_BE.get(), SacrificeAltarBER::new);
         event.registerBlockEntityRenderer(Registration.BLOOD_BASIN_BE.get(), BloodBasinBER::new);
+        event.registerBlockEntityRenderer(Registration.ALEMBICS_BE.get(), AlembicsBER::new);
     }
 
     @SubscribeEvent

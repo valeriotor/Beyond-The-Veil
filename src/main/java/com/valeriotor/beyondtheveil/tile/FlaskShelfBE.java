@@ -430,7 +430,7 @@ public class FlaskShelfBE extends BlockEntity {
             return stackHandler;
         }
 
-        private VoxelShape computeShapeWithOffset(double offsetX, double offsetY, double offsetZ) {
+        VoxelShape computeShapeWithOffset(double offsetX, double offsetY, double offsetZ) {
             //double[][] arrays = switch (size) {
             //    case SMALL -> new double[][] {FlaskBlock.SMALL1, FlaskBlock.SMALL2, FlaskBlock.SMALL3, FlaskBlock.SMALL4, FlaskBlock.SMALL5, FlaskBlock.SMALL6};
             //    case MEDIUM -> new double[][] {FlaskBlock.MEDIUM1, FlaskBlock.MEDIUM2, FlaskBlock.MEDIUM3, FlaskBlock.MEDIUM4, FlaskBlock.MEDIUM5, FlaskBlock.MEDIUM6};

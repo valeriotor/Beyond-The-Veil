@@ -23,7 +23,7 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
 
     private static final VoxelShape BASE_SHAPE = Shapes.box(0.1875D, 0.0D, 0.1875D, 0.8125D, 0.25D, 0.8125D);
     private static final double a = 0.0625;
-    private static final VoxelShape[][] SHAPES = new VoxelShape[3][4];
+    public static final VoxelShape[][] SHAPES = new VoxelShape[3][4];
 
     static {
         VoxelShape[] ALEMBIC1_1 = new VoxelShape[4];
@@ -104,6 +104,10 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
 
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter p_60579_, BlockPos p_60580_) {
+        BlockPos centerPos = findCenter(p_60580_, state);
+        if (p_60579_.getBlockEntity(centerPos) instanceof AlembicsBE be) {
+            return be.getShapes()[state.getValue(getSideProperty())];
+        }
         return SHAPES[state.getValue(getSideProperty())][(state.getValue(FACING).get2DDataValue() + 1) & 3];
     }
 
