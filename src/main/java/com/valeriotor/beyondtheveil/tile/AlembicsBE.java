@@ -3,22 +3,28 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.AlembicsBlock;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -27,6 +33,7 @@ import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -46,6 +53,9 @@ public class AlembicsBE extends BlockEntity {
     private FluidTank inputTank2;
     private FluidTank outputTank;
     private FlaskShelfBE.Flask heldFlask;
+    private int counter = 0;
+    private int itemLeft = 0;
+    private ItemStack burningStack;
     private final VoxelShape[] shapes = new VoxelShape[3];
 
     private final LazyOptional<IFluidHandler> inputTank1Holder = LazyOptional.of(() -> inputTank1);
@@ -62,6 +72,7 @@ public class AlembicsBE extends BlockEntity {
         stackHandler = new ItemStackHandler(1);
         inputTank2 = new FluidTank(1000);
         outputTank = new FluidTank(1000);
+        updateShape();
     }
 
     @Override
@@ -70,10 +81,60 @@ public class AlembicsBE extends BlockEntity {
             super.load(tag);
         }
         loadCommonData(tag);
+        if (tag.contains("burningStack")) {
+            burningStack = ItemStack.of(tag.getCompound("burningStack"));
+        }
+        if (tag.contains("itemLeft")) {
+            itemLeft = tag.getInt("itemLeft");
+        }
     }
 
     public FlaskShelfBE.Flask getHeldFlask() {
         return heldFlask;
+    }
+
+    public void tickServer() {
+        if (level instanceof ServerLevel sl) {
+            counter++;
+            if (counter == 5) {
+                if (itemLeft > 0) {
+                    Direction facing = getBlockState().getValue(AlembicsBlock.FACING);
+                    final double a = 0.0625;
+                    double x1 = worldPosition.getX() + (facing.getAxis() == Direction.Axis.X ? 0.5 : (facing == Direction.SOUTH ? -11 * a : 27 * a));
+                    double z1 = worldPosition.getZ() + (facing.getAxis() == Direction.Axis.Z ? 0.5 : (facing == Direction.WEST ? -11 * a : 27 * a));
+                    double x2 = worldPosition.getX() + (facing.getAxis() == Direction.Axis.X ? 0.5 : (facing == Direction.SOUTH ? 3 * a : 13 * a));
+                    double z2 = worldPosition.getZ() + (facing.getAxis() == Direction.Axis.Z ? 0.5 : (facing == Direction.WEST ? 3 * a : 13 * a));
+                    double x3 = worldPosition.getX() + (facing.getAxis() == Direction.Axis.X ? 0.5 : (facing == Direction.SOUTH ? 15 * a : 1 * a));
+                    double z3 = worldPosition.getZ() + (facing.getAxis() == Direction.Axis.Z ? 0.5 : (facing == Direction.WEST ? 15 * a : 1 * a));
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x1, worldPosition.getY() + 0.01 + 1 - a, z1, 1, 0, 0, 0, 0.025);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x2, worldPosition.getY() + 0.01 + 10 * a, z2, 1, 0, 0, 0, 0.025);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x3, worldPosition.getY() + 0.01 + 1 - a, z3, 1, 0, 0, 0, 0.052);
+                }
+                counter = 0;
+                if (itemLeft == 0) {
+                    if (!inputTank1.isEmpty() && !stackHandler.getStackInSlot(0).isEmpty() && !inputTank2.isEmpty() && heldFlask != null) {
+                        Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), stackHandler.getStackInSlot(0), inputTank2.getFluid().getFluid());
+                        if (output != null) {
+                            itemLeft = output.getB();
+                            burningStack = stackHandler.getStackInSlot(0).copy();
+                            stackHandler.extractItem(0, 1, false);
+                        }
+                    }
+                } else if (itemLeft > 0) {
+                    itemLeft--;
+                    if (!inputTank1.isEmpty() && !inputTank2.isEmpty()) {
+                        Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), burningStack, inputTank2.getFluid().getFluid());
+                        if (output != null && heldFlask != null) {
+                            heldFlask.getTank().fill(new FluidStack(output.getA(), 1), IFluidHandler.FluidAction.EXECUTE);
+                            updateClient();
+                        }
+                    }
+                    if (itemLeft == 0) {
+                        burningStack = null;
+                    }
+                }
+            }
+        }
     }
 
     public boolean interactServer(Player player, InteractionHand hand, int hit) {
@@ -150,8 +211,8 @@ public class AlembicsBE extends BlockEntity {
         for (int i = 0; i < shapes.length; i++) {
             VoxelShape base = AlembicsBlock.SHAPES[i][(facing.get2DDataValue() + 1) & 3];
             if (heldFlask != null) {
-                double x = (facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.SOUTH ? 2.125 - i : i - 2));
-                double z = (facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.WEST ? 2.125 - i : i - 2));
+                double x = (facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.SOUTH ? 2.125 - i : i - 2.125));
+                double z = (facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.WEST ? 2.125 - i : i - 2.125));
                 base = Shapes.or(base, heldFlask.computeShapeWithOffset(x, 0, z));
             }
             shapes[i] = base;
@@ -190,6 +251,10 @@ public class AlembicsBE extends BlockEntity {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         saveCommonData(tag);
+        tag.putInt("itemLeft", itemLeft);
+        if (burningStack != null) {
+            tag.put("burningStack", burningStack.save(new CompoundTag()));
+        }
     }
 
     private void saveCommonData(CompoundTag tag) {

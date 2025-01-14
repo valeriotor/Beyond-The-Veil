@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
+import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -11,6 +12,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -150,5 +153,16 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new AlembicsBE(pPos, pState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (!pLevel.isClientSide()) {
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if(pBlockEntity instanceof AlembicsBE be) be.tickServer();
+            };
+        }
+        return null;
     }
 }

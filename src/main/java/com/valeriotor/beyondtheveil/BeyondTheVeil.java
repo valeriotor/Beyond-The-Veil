@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.util.LegacyStructure;
 import com.valeriotor.beyondtheveil.world.region.OverworldRegion;
@@ -65,6 +66,7 @@ public class BeyondTheVeil
             //LegacyStructure.registerLegacyStructures();
             Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 5));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, References.MODID, TerrablenderSurfaceRules.makeRules());
+            AlembicsRecipeRegistry.registerRecipes();
         });
     }
 
