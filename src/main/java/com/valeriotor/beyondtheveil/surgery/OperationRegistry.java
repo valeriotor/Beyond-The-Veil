@@ -132,5 +132,11 @@ public class OperationRegistry {
             .setEraseFluid(true)
             .buildInjectionOperation(Registration.SOURCE_FLUID_COAGULANT.get(), 32);
 
+    private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(0.2)
+            .setDuration(80)
+            .setPersistent(true)
+            .buildInsertionOperation(Registration.PLUCKED_EYE.get());
 
 }

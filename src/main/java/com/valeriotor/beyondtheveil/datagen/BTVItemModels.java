@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
@@ -125,6 +126,12 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(SOFTENER_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SOFTENER_BUCKET.getId().getPath()));
         singleTexture(COAGULANT_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + COAGULANT_BUCKET.getId().getPath()));
 
-
+        //registerForceps();
     }
+
+    private void registerForceps() {
+        getBuilder(modLoc("item/" + FORCEPS.getId().getPath()).toString())
+                .parent(new ModelFile.ExistingModelFile(modLoc("item/forceps_base"), existingFileHelper));
+    }
+
 }

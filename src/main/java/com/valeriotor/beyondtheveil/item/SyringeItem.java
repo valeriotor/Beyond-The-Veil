@@ -8,28 +8,18 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
-import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
@@ -66,7 +56,7 @@ public class SyringeItem extends SurgeryItem {
             BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
                 Item held = itemStack.getItem();
-                be.interactLiquid(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+                be.interact(level, pos, p, InteractionHand.MAIN_HAND, bhr);
             }
         } else if (lookedAtState.getBlock() == Registration.ALEMBICS.get()) {
             BlockPos centerPos = Registration.ALEMBICS.get().findCenter(pos, lookedAtState);

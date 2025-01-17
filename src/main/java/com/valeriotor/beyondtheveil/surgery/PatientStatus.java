@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.material.Fluid;
@@ -117,6 +118,7 @@ public class PatientStatus {
             return false;
         }
         incised = false;
+        setDirty(true);
         return true;
     }
 
@@ -159,13 +161,10 @@ public class PatientStatus {
         return false;
     }
 
-    /**
-     * @return if the operation was performed (and therefore the item was consumed).
-     * ItemStack shrinking logic should be handled upstream.
-     */
-    public boolean insert(Player p, Item heldInForceps, SurgicalBE be) {
-        List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps);
-        if (insertionEntries == null || insertionEntries.isEmpty()) {
+    public boolean insert(Player p, CompoundTag tag, SurgicalBE be) {
+        ItemStack heldInForceps = ItemStack.of(tag.getCompound("contained"));
+        List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps.getItem());
+        if (insertionEntries == null || insertionEntries.isEmpty() || !incised) {
             return false;
         }
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
@@ -180,6 +179,7 @@ public class PatientStatus {
                         boolean success = elaborateOperation(p, operation, be);
                         if (success) {
                             setDirty(true);
+                            tag.remove("contained");
                         }
                     }
                 }

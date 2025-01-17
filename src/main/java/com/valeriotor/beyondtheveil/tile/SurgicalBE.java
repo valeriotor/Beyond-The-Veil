@@ -26,6 +26,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -139,9 +140,8 @@ public abstract class SurgicalBE extends BlockEntity {
         } else if (i == Registration.FORCEPS.get()) {
             CompoundTag forcepTag = in.getOrCreateTag();
             // replace with full compound tag of item?
-            Item contained = forcepTag.contains("contained") ? ForgeRegistries.ITEMS.getValue(new ResourceLocation(forcepTag.getString("contained"))) : null;
-            if (contained != null) {
-                usingItem = patientStatus.insert(p, contained, this);
+            if (forcepTag.contains("contained")) {
+                usingItem = patientStatus.insert(p, forcepTag, this);
             }
         } else if (i == Registration.TONGS.get()) {
             usingItem = patientStatus.extract(p, this);

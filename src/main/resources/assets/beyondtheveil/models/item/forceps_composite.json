@@ -1,0 +1,16 @@
+{
+  "parent": "item/generated",
+  "children": {
+    "base": {
+      "parent": "beyondtheveil:item/forceps_base"
+    },
+    "loader": {
+      "parent": "beyondtheveil:item/forceps_to_bake"
+    }
+  },
+  "item_render_order": [
+    "base",
+    "loader"
+  ],
+  "loader": "forge:composite"
+}

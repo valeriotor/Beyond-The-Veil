@@ -6,7 +6,6 @@ import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -23,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -31,11 +29,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelDataManager;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -45,7 +41,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,10 +108,7 @@ public class FlaskShelfBE extends BlockEntity {
         if (!pLevel.isClientSide) {
             Flask newFlask = new Flask(location.x, location.y, location.z, stack, flaskBlock);
             flasks.add(newFlask);
-            setChanged();
-            if (level != null) {
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-            }
+            updateClient();
             computeFlasksShape();
             if (!pPlayer.isCreative())
                 pPlayer.getItemInHand(pHand).shrink(1);
@@ -128,10 +120,7 @@ public class FlaskShelfBE extends BlockEntity {
         Flask f = getLookedAtFlask(pPlayer.level(), selectedShelfPos, hitLocation);
         if (f != null) {
             flasks.remove(f);
-            setChanged();
-            if (level != null) {
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-            }
+            updateClient();
             computeFlasksShape();
             level.playSound(null, getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
             ItemStack flask = f.toItem();
@@ -152,7 +141,7 @@ public class FlaskShelfBE extends BlockEntity {
         return null;
     }
 
-    public InteractionResult interactLiquid(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult interact(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         if (itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
             if (itemStack.getItem() != Registration.SYRINGE.get()) {
@@ -160,10 +149,7 @@ public class FlaskShelfBE extends BlockEntity {
                     Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                     if (lookedAtFlask != null) {
                         lookedAtFlask.holder.map(handler -> FluidUtil.interactWithFluidHandler(pPlayer, pHand, handler)).orElse(false);
-                        setChanged();
-                        if (level != null) {
-                            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                        }
+                        updateClient();
                     }
                 }
                 return InteractionResult.SUCCESS;
@@ -175,19 +161,13 @@ public class FlaskShelfBE extends BlockEntity {
                         if (!pPlayer.isShiftKeyDown()) {
                             if (syringe.fill(lookedAtFlask.tank.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
                                 syringe.fill(lookedAtFlask.tank.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-                                setChanged();
-                                if (level != null) {
-                                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                                }
+                                updateClient();
                             }
                         } else {
                             if (lookedAtFlask.tank.fill(syringe.drain(1, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE) == 1) {
                                 lookedAtFlask.tank.fill(syringe.drain(1, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
                                 //lookedAtFlask.tank.fill(new FluidStack(Registration.SOURCE_FLUID_LIQUID_BLAZE_POWDER.get(), 1), IFluidHandler.FluidAction.EXECUTE);
-                                setChanged();
-                                if (level != null) {
-                                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                                }
+                                updateClient();
                             }
                         }
                     }
@@ -200,10 +180,7 @@ public class FlaskShelfBE extends BlockEntity {
                 Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                 if (lookedAtFlask != null) {
                     pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.insertItem(0, itemStack, false));
-                    setChanged();
-                    if (level != null) {
-                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                    }
+                    updateClient();
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -213,9 +190,29 @@ public class FlaskShelfBE extends BlockEntity {
                 Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                 if (lookedAtFlask != null) {
                     pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 4, false));
-                    setChanged();
-                    if (level != null) {
-                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    updateClient();
+                    return InteractionResult.SUCCESS;
+                }
+            }
+            return InteractionResult.SUCCESS;
+        } else if (itemStack.getItem() == Registration.FORCEPS.get()) {
+            if (!pLevel.isClientSide) {
+                CompoundTag forcepsTag = itemStack.getOrCreateTag();
+                Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
+                if (lookedAtFlask != null) {
+                    if (!forcepsTag.contains("contained")) {
+                        ItemStack extracted = lookedAtFlask.stackHandler.extractItem(0, 1, true);
+                        if (!extracted.isEmpty()) {
+                            forcepsTag.put("contained", lookedAtFlask.stackHandler.extractItem(0, 1, false).serializeNBT());
+                            updateClient();
+                        }
+                    } else {
+                        ItemStack toInsert = ItemStack.of(forcepsTag.getCompound("contained"));
+                        if (lookedAtFlask.stackHandler.insertItem(0, toInsert, true).isEmpty()) {
+                            lookedAtFlask.stackHandler.insertItem(0, toInsert, false);
+                            forcepsTag.remove("contained");
+                            updateClient();
+                        }
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -223,6 +220,13 @@ public class FlaskShelfBE extends BlockEntity {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
+    }
+
+    private void updateClient() {
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        }
     }
 
     private boolean containsButSlightlyLarger(Vec3 vec3, AABB aabb) {

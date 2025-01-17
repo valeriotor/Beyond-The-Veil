@@ -336,9 +336,9 @@ public class Operation {
             return op;
         }
 
-        public Operation buildInsertionOperation(Map<Item, List<OperationRegistry.InsertionEntry>> registry, Item item) {
+        public Operation buildInsertionOperation(Item item) {
             Operation op = buildOperation();
-            registry.computeIfAbsent(item, k -> new ArrayList<>()).add(new OperationRegistry.InsertionEntry(op, item));
+            OperationRegistry.INSERTION_OPERATIONS.computeIfAbsent(item, k -> new ArrayList<>()).add(new OperationRegistry.InsertionEntry(op, item));
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }

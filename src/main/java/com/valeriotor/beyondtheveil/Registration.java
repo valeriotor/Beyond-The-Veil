@@ -291,7 +291,7 @@ public class Registration {
     public static final RegistryObject<Item> FLESH_CARBON_TOKEN = ITEMS.register("flesh_carbon_token", () -> new Item(ITEM_PROPERTIES)); // new ModItem("fleshcarbontoken");
     public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", SyringeItem::new);
     public static final RegistryObject<Item> SCALPEL = ITEMS.register("scalpel", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.SCALPEL));
-    public static final RegistryObject<Item> FORCEPS = ITEMS.register("forceps", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.FORCEPS));
+    public static final RegistryObject<Item> FORCEPS = ITEMS.register("forceps", ForcepsItem::new);
     public static final RegistryObject<Item> TONGS = ITEMS.register("tongs", () -> new SurgeryItem(SurgeryItem.SurgeryItemType.TONGS));
     public static final RegistryObject<Item> SEWING_NEEDLE = ITEMS.register("sewing_needle", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
