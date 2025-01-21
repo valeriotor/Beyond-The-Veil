@@ -2,7 +2,7 @@
   "parent": "item/generated",
   "children": {
     "base": {
-      "parent": "beyondtheveil:item/forceps_base"
+      "parent": "beyondtheveil:item/forceps_held"
     },
     "loader": {
       "parent": "beyondtheveil:item/forceps_to_bake"

@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/forceps_base"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/forceps_composite"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/forceps_composite"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/forceps_composite"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/forceps_composite"},
+    "head":  {"parent": "beyondtheveil:item/forceps_composite"},
+    "gui": {"parent": "beyondtheveil:item/forceps_base"},
+    "ground":  {"parent": "beyondtheveil:item/forceps_composite"},
+    "fixed": {"parent": "beyondtheveil:item/forceps_composite"}
+  },
+  "loader": "forge:separate_transforms"
+}

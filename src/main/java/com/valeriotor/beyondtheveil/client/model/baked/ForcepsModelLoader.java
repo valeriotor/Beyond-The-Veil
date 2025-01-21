@@ -43,21 +43,15 @@ public class ForcepsModelLoader implements IGeometryLoader<ForcepsModelLoader.Fo
         ItemTransform firstperson_lefthand = new ItemTransform(new Vector3f(0, 90, -25), new Vector3f(1.13F, 3.2F, 1.13F), new Vector3f(0.68F, 0.68F, 0.68F));
 
         private final BlockModel baseForcepsModel = new BlockModel(new ResourceLocation(References.MODID, "item/forceps_base"), new ArrayList<>(), new HashMap<>(), false, null, new ItemTransforms(thirdperson_lefthand, thirdperson_righthand, firstperson_lefthand, firstperson_righthand, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM), new ArrayList<>());
+        private final BlockModel heldForcepsModel = new BlockModel(new ResourceLocation(References.MODID, "item/forceps_held"), new ArrayList<>(), new HashMap<>(), false, null, new ItemTransforms(thirdperson_lefthand, thirdperson_righthand, firstperson_lefthand, firstperson_righthand, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM, ItemTransform.NO_TRANSFORM), new ArrayList<>());
 
 
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BakedModel baseForceps = baseForcepsModel.bake(baker, baseForcepsModel, spriteGetter, modelState, modelLocation, true);
-            Transformation transform = context.getRootTransform();
-            ModelState state = new ModelState() {
-                @NotNull
-                @Override
-                public Transformation getRotation() {
-                    return transform;
-                }
-            };
-            BakedModel bake = baker.bake(new ResourceLocation(References.MODID, "item/forceps_base"), state, spriteGetter);
-            return new ForcepsBakedModel(modelState, spriteGetter, overrides, ItemStack.EMPTY, bake);
+            //BakedModel baseForceps = baseForcepsModel.bake(baker, baseForcepsModel, spriteGetter, modelState, modelLocation, true);
+            BakedModel bakeBase = baker.bake(new ResourceLocation(References.MODID, "item/forceps_base"), modelState, spriteGetter);
+            BakedModel bakeHeld = baker.bake(new ResourceLocation(References.MODID, "item/forceps_held"), modelState, spriteGetter);
+            return new ForcepsBakedModel(modelState, spriteGetter, overrides, ItemStack.EMPTY, bakeBase, bakeHeld);
         }
 
         @Override
