@@ -138,7 +138,7 @@ public class SurgeryItem extends Item {
     }
 
     public enum SurgeryItemType {
-        SCALPEL(BTVSounds.INCISING), FORCEPS(null), TONGS(null), SYRINGE(null);
+        SCALPEL(BTVSounds.INCISING), FORCEPS(BTVSounds.INSERTING), TONGS(null), SYRINGE(null);
 
         private final RegistryObject<SoundEvent> sound;
 

@@ -177,10 +177,10 @@ public class PatientStatus {
                     int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.FORCEPS.name(), 0, true);
                     if (currentDuration >= operation.getDuration()) {
                         boolean success = elaborateOperation(p, operation, be);
-                        if (success) {
-                            setDirty(true);
-                            tag.remove("contained");
-                        }
+                        setDirty(true);
+                        tag.remove("contained");
+                        p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
+
                     }
                 }
                 return true;
@@ -262,13 +262,14 @@ public class PatientStatus {
         //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
         //if (!canPerformOperation) return canPerformOperation;
 
-        boolean success = operation.getRequirementForSuccessfulCompletion().test(this) && !condition.isTerminal();
+        boolean success = operation.getRequirementForSuccessfulCompletion().test(this) && !condition.isTerminal() && operation.getCapacityRequirement() <= leftoverCapacity;
         String completionMessage = operation.getCompletionMessage().apply(this);
         if (completionMessage != null) {
             player.sendSystemMessage(Component.translatable(completionMessage));
         }
         if (success) {
             operation.getStatusChangeOnSuccess().accept(this);
+            leftoverCapacity -= operation.getCapacityRequirement();
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             if (operation.isSuccessParticles()) {
@@ -290,7 +291,7 @@ public class PatientStatus {
     private boolean canPerformOperation(Operation operation) {
         return (!operation.isRequiresIncision() || incised) &&
                 operation.getAllowedLocations().contains(exposedLocation) &&
-                operation.getCapacityRequirement() <= leftoverCapacity &&
+                //operation.getCapacityRequirement() <= leftoverCapacity &&
                 (operation.getMaximumTimesAllowed() < 0 || operation.getMaximumTimesAllowed() > flags.getOrDefault(operation.getName(), 0));
     }
 

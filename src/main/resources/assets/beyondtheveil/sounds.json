@@ -5,6 +5,9 @@
   "incision": {
     "sounds": [ "beyondtheveil:incision" ]
   },
+  "inserting": {
+    "sounds": [ "beyondtheveil:inserting" ]
+  },
   "head_stretch": {
     "sounds": [ "beyondtheveil:head_stretch1", "beyondtheveil:head_stretch2" ]
   },

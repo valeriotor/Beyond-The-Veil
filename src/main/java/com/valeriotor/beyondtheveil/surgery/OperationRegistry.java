@@ -136,7 +136,9 @@ public class OperationRegistry {
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(0.2)
             .setDuration(80)
+            .setCapacityRequirement(3)
             .setPersistent(true)
+            .setProgressParticles(true)
             .buildInsertionOperation(Registration.PLUCKED_EYE.get());
 
 }
