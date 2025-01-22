@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.ForcepsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.AbominationFlesh1Model;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
@@ -89,7 +90,8 @@ public class ClientSetup {
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
-        event.registerLayerDefinition(LivingAmmunitionModel.LAYER_LOCATION, LivingAmmunitionModel::createBodyLayer);
+        event.registerLayerDefinition(Abomination0Model.LAYER_LOCATION, Abomination0Model::createBodyLayer);
+        event.registerLayerDefinition(Abomination1Model.LAYER_LOCATION, Abomination1Model::createBodyLayer);
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
         event.registerLayerDefinition(ShoremanModel.LAYER_LOCATION, ShoremanModel::createBodyLayer);
 
@@ -99,6 +101,7 @@ public class ClientSetup {
         event.registerLayerDefinition(WoundModel.LAYER_LOCATION, WoundModel::createBodyLayer);
         event.registerLayerDefinition(ChestWoundModel.LAYER_LOCATION, ChestWoundModel::createBodyLayer);
         event.registerLayerDefinition(BrokenBodyModel.LAYER_LOCATION, BrokenBodyModel::createBodyLayer);
+        event.registerLayerDefinition(AbominationFlesh1Model.LAYER_LOCATION, AbominationFlesh1Model::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -110,7 +113,8 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
         event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
         event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
-        event.registerEntityRenderer(Registration.LIVING_AMMUNITION.get(), LivingAmmunitionRenderer::new);
+        event.registerEntityRenderer(Registration.ABOMINATION_0.get(), Abomination0Renderer::new);
+        event.registerEntityRenderer(Registration.ABOMINATION_1.get(), Abomination1Renderer::new);
         event.registerEntityRenderer(Registration.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
         event.registerEntityRenderer(Registration.SHOREMAN.get(), ShoremanRenderer::new);
 

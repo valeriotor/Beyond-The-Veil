@@ -6,9 +6,8 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
+import com.valeriotor.beyondtheveil.entity.Abomination0Entity;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -17,10 +16,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 
-public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity> implements HeadedModel, VillagerHeadModel {
+public class Abomination0Model extends AnimatedModel<Abomination0Entity> implements HeadedModel, VillagerHeadModel {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "living_ammunition"), "main");
     private static final String name = "living_ammunition";
@@ -39,7 +36,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
     private final ModelPart leftLowerLeg;
     private final ModelPart arms;
 
-    public LivingAmmunitionModel(ModelPart root) {
+    public Abomination0Model(ModelPart root) {
         super(name);
         this.body = registerAnimatedPart("body", root.getChild("body"));
         this.legs = registerAnimatedPart("legs", root.getChild("legs"));
@@ -94,7 +91,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
     }
 
     @Override
-    public void setupAnim(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Abomination0Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         //body.xRot = - Mth.PI * 45 / 36;
         //legs.xRot += Mth.PI * 5 / 36;
@@ -116,7 +113,7 @@ public class LivingAmmunitionModel extends AnimatedModel<LivingAmmunitionEntity>
     }
 
     @Override
-    public void prepareMobModel(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
+    public void prepareMobModel(Abomination0Entity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
         resetParts();
         float ageInTicks = entity.tickCount + pPartialTick;
         float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (24 * 1.5F)) / 15;

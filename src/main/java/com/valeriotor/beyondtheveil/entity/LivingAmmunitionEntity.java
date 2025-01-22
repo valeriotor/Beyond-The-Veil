@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
+public abstract class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.VILLAGER_DATA);
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.INT);
@@ -202,13 +202,7 @@ public class LivingAmmunitionEntity extends PathfinderMob implements VillagerDat
         }
     }
 
-    @Override
-    public List<GenericToClientPacket> getAnimationPackets() {
-        List<GenericToClientPacket> animationPackets = new ArrayList<>();
-        animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.ammunition_explode, getId(), 0));
-        animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.ammunition_explode_body, getId(), 1));
-        return animationPackets;
-    }
+
 
     @Override
     public void startBurst() {

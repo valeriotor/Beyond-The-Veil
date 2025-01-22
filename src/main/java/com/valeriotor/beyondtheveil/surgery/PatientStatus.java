@@ -43,6 +43,7 @@ public class PatientStatus {
     private static final double[] MISSING_PAIN_THRESHOLDS = new double[]{100, 60, 30};
     private SurgicalLocation exposedLocation = SurgicalLocation.CHEST; // Just to be sure it's never null
     private boolean incised = false;
+    // TODO condition is copied to Convalescent capability
     private PatientCondition condition = PatientCondition.STABLE;
     private int leftoverCapacity;
     private double currentPain;
@@ -52,7 +53,11 @@ public class PatientStatus {
     private boolean didFinalAnimation;
     private int countdownTicks = 0;
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
+    // TODO *persistent* flags are copied to Convalescent capability (new HashSet for persistent flags?)
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
+    // TODO private ArsenalEffect (list?)
+    // TODO private Burst
+    // TODO private DyeColor mutex
     private ServerLevel level;
     private BlockPos pos;
     private final PatientType patientType;
