@@ -66,8 +66,14 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha, true);
+    }
+
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, boolean renderHeart) {
         wound.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        heart.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        if (renderHeart) {
+            heart.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        }
     }
 
 

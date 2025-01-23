@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -31,13 +32,14 @@ public class PatientWoundLayer<T extends LivingEntity & SurgeryPatient, M extend
 
     @Override
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity.isSurgeryPatient() && pLivingEntity.getPatientStatus().isIncised()) {
-            SurgicalLocation exposedLocation = pLivingEntity.getPatientStatus().getExposedLocation();
+        PatientStatus status = pLivingEntity.getPatientStatus();
+        if (pLivingEntity.isSurgeryPatient() && status.isIncised()) {
+            SurgicalLocation exposedLocation = status.getExposedLocation();
             if (exposedLocation == SurgicalLocation.BACK) {
-                woundModel.renderToBuffer(pPoseStack, pBuffer.getBuffer(woundModel.renderType(getTextureLocation(pLivingEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                woundModel.renderToBuffer(pPoseStack, pBuffer.getBuffer(woundModel.renderType(getTextureLocation(pLivingEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F, !status.getFlags().containsKey("extract_spine"));
             } else if (exposedLocation == SurgicalLocation.CHEST) {
                 chestWoundModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
-                chestWoundModel.renderToBuffer(pPoseStack, pBuffer.getBuffer(chestWoundModel.renderType(getTextureLocation(pLivingEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                chestWoundModel.renderToBuffer(pPoseStack, pBuffer.getBuffer(chestWoundModel.renderType(getTextureLocation(pLivingEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F, !status.getFlags().containsKey("extract_heart"));
             }
 
         }

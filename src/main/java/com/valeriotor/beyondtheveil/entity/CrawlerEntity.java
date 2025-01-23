@@ -7,6 +7,8 @@ import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -222,7 +224,27 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 if (crawl && getCrawling() < 1) {
                     startCrawl = tickCount;
                 }
-
+            } else {
+                if (tickCount >= 5) {
+                    if (tickCount >= 300) {
+                        if (getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).isPresent()) {
+                            if (!getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().get().getFlags().containsKey("extract_spine")) {
+                                Villager villager = convertTo(EntityType.VILLAGER, false);
+                                if (villager != null) {
+                                    villager.setVillagerData(getVillagerData());
+                                    //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
+                                    //villager.setTradeOffers(source.getOffers().createTag());
+                                    //villager.setVillagerXp(source.getVillagerXp());
+                                }
+                            }
+                        }
+                    }
+                    getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                        if (c.getCondition().isTerminal()) {
+                            kill();
+                        }
+                    });
+                }
             }
         } else {
             tickCount++;

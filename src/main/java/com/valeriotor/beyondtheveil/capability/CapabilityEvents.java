@@ -6,8 +6,13 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
+import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
+import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.*;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +35,7 @@ import static com.valeriotor.beyondtheveil.capability.PlayerDataProvider.PLAYER_
 import static com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider.TRIGGER_DATA;
 import static com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider.CROSS_SYNC_DATA;
 import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.RESEARCH;
+import static com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider.CONVALESCENT_DATA;
 
 
 @Mod.EventBusSubscriber
@@ -98,6 +104,11 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
             }
         }
+        if (event.getObject() instanceof Villager || event.getObject() instanceof SurgeryPatient) {
+            if (!event.getObject().getCapability(CONVALESCENT_DATA).isPresent()) {
+                event.addCapability(new ResourceLocation(References.MODID, "convalescent_data"), new ConvalescentDataProvider());
+            }
+        }
     }
 
     @SubscribeEvent
@@ -134,6 +145,7 @@ public class CapabilityEvents {
         event.register(CrossSyncData.class);
         event.register(TriggerData.class);
         event.register(DialogueData.class);
+        event.register(ConvalescentData.class);
     }
 
     @SubscribeEvent

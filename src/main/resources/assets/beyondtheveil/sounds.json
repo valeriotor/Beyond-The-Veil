@@ -8,6 +8,9 @@
   "inserting": {
     "sounds": [ "beyondtheveil:inserting" ]
   },
+  "extracting": {
+    "sounds": [ "beyondtheveil:extracting" ]
+  },
   "head_stretch": {
     "sounds": [ "beyondtheveil:head_stretch1", "beyondtheveil:head_stretch2" ]
   },

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.capability.crossync;
 
 import com.valeriotor.beyondtheveil.capability.PlayerData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -25,6 +26,9 @@ public class CrossSync {
         if (heldPatient != null) {
             CompoundTag data = new CompoundTag();
             heldPatient.addAdditionalSaveData(data);
+            heldPatient.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                data.put("convalescent", c.saveToNBT(new CompoundTag()));
+            });
             data.putShort("HurtTime", (short) 0);
             data.putShort("DeathTime", (short) 0);
             setHeldPatient(heldPatient.getPatientType(), data, player);
@@ -55,6 +59,11 @@ public class CrossSync {
             heldPatientEntity = heldPatientType.getMobFunction().apply(level);
             heldPatientEntity.readAdditionalSaveData(heldPatientData);
             ((SurgeryPatient) heldPatientEntity).setHeld(true);
+            heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                if (heldPatientData.contains("convalescent")) {
+                    c.loadFromNBT(heldPatientData.getCompound("convalescent"));
+                }
+            });
         }
         return heldPatientEntity;
     }

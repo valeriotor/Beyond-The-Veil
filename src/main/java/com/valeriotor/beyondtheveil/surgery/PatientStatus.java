@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -70,6 +71,18 @@ public class PatientStatus {
 
     public PatientType getPatientType() {
         return patientType;
+    }
+
+    public Map<String, Integer> getFlags() {
+        return flags;
+    }
+
+    public void fromConvalescentNBT(CompoundTag convalescent) {
+        ConvalescentData data = new ConvalescentData();
+        data.loadFromNBT(convalescent);
+        flags.clear();
+        flags.putAll(data.getFlags());
+        setCondition(data.getCondition());
     }
 
     public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
@@ -150,17 +163,22 @@ public class PatientStatus {
                 perTickActions(p, operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
-                } else {
+                }
+                if(currentPain < operation.getPainForFailure() || condition == PatientCondition.DEAD) {
                     int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true);
-                    if (currentDuration >= operation.getDuration()) {
+                    if (currentDuration >= operation.getDuration() || condition == PatientCondition.DEAD) {
+                        boolean wasAlreadyDead = condition == PatientCondition.DEAD;
                         boolean success = elaborateOperation(p, operation, be);
-                        if (success) {
-                            setDirty(true);
+                        if (success && !wasAlreadyDead) {
                             ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().copy());
+                        } else if (wasAlreadyDead) {
+                            flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
                         }
+                        setDirty(true);
+                        p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                     }
                 }
-                return true;
+                return condition != PatientCondition.DEAD;
             }
         }
         return false;

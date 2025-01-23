@@ -54,7 +54,7 @@ public class OperationRegistry {
             .buildIncisionOperation(SurgicalLocation.CHEST);
 
     private static final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")
-            .setPainPerTick(s -> s.hasString("soft") ? 0.4 : 4)
+            .setPainPerTick(s -> s.hasString("soften") ? 0.4 : 4)
             .setDuration(180)
             .setPainForFailure(50)
             .setRequirementForSuccessfulCompletion(s -> !s.hasString("soften_too_much"))
@@ -63,6 +63,7 @@ public class OperationRegistry {
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
             .setPersistent(true)
             .setRequiresIncision(true)
+            .setProgressParticles(true)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()), s -> !s.hasString("extract_heart"));
 
     private static final Operation EXTRACT_SPINE = new Operation.Builder("extract_spine")
@@ -73,6 +74,7 @@ public class OperationRegistry {
             // TODO .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
             .setPersistent(true)
             .setRequiresIncision(true)
+            .setProgressParticles(true)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()), s -> !s.hasString("extract_spine"));
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")

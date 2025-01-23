@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
@@ -67,7 +68,8 @@ public abstract class SurgicalBE extends BlockEntity {
                 if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
-                    if (crossSync.getHeldPatientData() == null) {
+                    if (crossSync.getHeldPatientData() == null && !patientStatus.isIncised()) {
+                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getFlags()).saveToNBT(new CompoundTag()));
                         crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
                         entityData = null;
                         patientStatus = null;
@@ -91,6 +93,9 @@ public abstract class SurgicalBE extends BlockEntity {
                     entityData = crossSync.getHeldPatientData();
                     patientStatus = new PatientStatus(crossSync.getHeldPatientType());
                     patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+                    if (entityData.contains("convalescent")) {
+                        patientStatus.fromConvalescentNBT(entityData.getCompound("convalescent"));
+                    }
                     // TODO if(itemTag.contains("status")) { BUT DO WE WANT THIS
                     // TODO patientStatus.loadFromNBT(itemTag.getCompound("status"));
                     // TODO }
