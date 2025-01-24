@@ -297,6 +297,7 @@ public class Registration {
     public static final RegistryObject<Item> SEWING_NEEDLE = ITEMS.register("sewing_needle", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
+    public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -474,6 +475,7 @@ public class Registration {
                 output.accept(SEWING_NEEDLE.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
+                output.accept(TINY_SKULL.get());
 
                 output.accept(SEDATIVE_BUCKET.get());
                 output.accept(SOFTENER_BUCKET.get());
