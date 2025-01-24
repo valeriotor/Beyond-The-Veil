@@ -152,7 +152,7 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
                         pPoseStack.mulPose(Axis.YP.rotationDegrees((-direction.get2DDataValue() + 2) * 90));
                         pPoseStack.translate(TRANSFORMS[i][0] - 0.5, TRANSFORMS[i][1], TRANSFORMS[i][2] - 0.5);
                         pPoseStack.translate(0, Mth.sin(ticks / 40) / 60 - 0.025, 0.03);
-                        pPoseStack.scale(0.15F, 0.15F, 0.15F);
+                        pPoseStack.scale(0.25F, 0.25F, 0.25F);
                         pPoseStack.mulPose(Axis.YP.rotationDegrees((float) TRANSFORMS[i][3]));
                         itemRenderer.renderStatic(toRender, ItemDisplayContext.FIXED, pPackedLight, overlay, pPoseStack, buffers, level, (int) pos.asLong());
                         pPoseStack.popPose();
