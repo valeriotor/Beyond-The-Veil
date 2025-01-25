@@ -1,9 +1,8 @@
 package com.valeriotor.beyondtheveil.surgery;
 
-import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -110,19 +109,19 @@ public class OperationRegistry {
             .onConsume(patientStatus -> patientStatus.decreasePain(1))
             .allowAllLocations()
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.ASLEEP_FOREVER))
-            .buildInjectionOperation(Registration.SOURCE_FLUID_SEDATIVE.get(), 217);
+            .buildInjectionOperation(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), 217);
 
     private static final Operation SOFTEN = new Operation.Builder("soften")
             .allowAllLocations()
-            .buildInjectionOperation(Registration.SOURCE_FLUID_SOFTENER.get(), 57);
+            .buildInjectionOperation(BTVFluids.SOURCE_FLUID_SOFTENER.get(), 57);
 
     private static final Operation SOFTEN_TOO_MUCH = new Operation.Builder("soften_too_much")
             .allowAllLocations()
-            .buildInjectionOperation(Registration.SOURCE_FLUID_SOFTENER.get(), 103);
+            .buildInjectionOperation(BTVFluids.SOURCE_FLUID_SOFTENER.get(), 103);
 
     private static final Operation SOFTEN_WAY_TOO_MUCH = new Operation.Builder("soften_way_too_much")
             .allowAllLocations()
-            .buildInjectionOperation(Registration.SOURCE_FLUID_SOFTENER.get(), 125);
+            .buildInjectionOperation(BTVFluids.SOURCE_FLUID_SOFTENER.get(), 125);
 
     private static final Operation COAGULATE = new Operation.Builder("coagulate")
             .allowAllLocations()
@@ -133,7 +132,7 @@ public class OperationRegistry {
                 }
             })
             .setEraseFluid(true)
-            .buildInjectionOperation(Registration.SOURCE_FLUID_COAGULANT.get(), 32);
+            .buildInjectionOperation(BTVFluids.SOURCE_FLUID_COAGULANT.get(), 32);
 
     private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")
             .addAllowedLocation(SurgicalLocation.BACK)

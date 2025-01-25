@@ -1,9 +1,9 @@
 package com.valeriotor.beyondtheveil.surgery;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.surgery.arsenal.*;
@@ -15,15 +15,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
@@ -404,10 +401,10 @@ public class PatientStatus {
         if (patientType == PatientType.WEEPER) {
             return;
         }
-        double sedativeAmount = fluidAmounts.getOrDefault(Registration.SOURCE_FLUID_SEDATIVE.get(), 0D);
+        double sedativeAmount = fluidAmounts.getOrDefault(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), 0D);
         double leftoverSedative = Math.max(0, sedativeAmount - amount);
         amount -= (sedativeAmount - leftoverSedative);
-        fluidAmounts.put(Registration.SOURCE_FLUID_SEDATIVE.get(), leftoverSedative);
+        fluidAmounts.put(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), leftoverSedative);
         if (amount <= 0) {
             return;
         }

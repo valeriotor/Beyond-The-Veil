@@ -125,6 +125,26 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(SEDATIVE_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SEDATIVE_BUCKET.getId().getPath()));
         singleTexture(SOFTENER_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SOFTENER_BUCKET.getId().getPath()));
         singleTexture(COAGULANT_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + COAGULANT_BUCKET.getId().getPath()));
+        singleTexture(MOVEMENT_SPEED_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + MOVEMENT_SPEED_SERUM_BUCKET.getId().getPath()));
+        singleTexture(MOVEMENT_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + MOVEMENT_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(DIG_SPEED_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + DIG_SPEED_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(DIG_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + DIG_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(DAMAGE_BOOST_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + DAMAGE_BOOST_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(HEAL_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + HEAL_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(HARM_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + HARM_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(JUMP_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + JUMP_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(CONFUSION_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + CONFUSION_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(REGENERATION_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + REGENERATION_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(DAMAGE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + DAMAGE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(FIRE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + FIRE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(WATER_BREATHING_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + WATER_BREATHING_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(INVISIBILITY_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + INVISIBILITY_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(BLINDNESS_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + BLINDNESS_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(NIGHT_VISION_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + NIGHT_VISION_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(HUNGER_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + HUNGER_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(WEAKNESS_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + WEAKNESS_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(POISON_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + POISON_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
+        singleTexture(WITHER_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + WITHER_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
 
         //registerForceps();
     }

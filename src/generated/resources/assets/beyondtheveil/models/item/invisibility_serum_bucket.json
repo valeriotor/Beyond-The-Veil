@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "beyondtheveil:item/buckets/invisibility_serum_bucket"
+  }
+}

@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
+import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
@@ -29,7 +30,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -126,9 +126,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             }
         }
         toSort.sort(Comparator.comparing(f -> new FluidStack(f, 1000).getDisplayName().getString()));
-        knownFluids.add(Registration.SOURCE_FLUID_SEDATIVE.get());
-        knownFluids.add(Registration.SOURCE_FLUID_COAGULANT.get());
-        knownFluids.add(Registration.SOURCE_FLUID_SOFTENER.get());
+        knownFluids.add(BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        knownFluids.add(BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        knownFluids.add(BTVFluids.SOURCE_FLUID_SOFTENER.get());
         knownFluids.addAll(toSort);
 
         updateReports();

@@ -1,14 +1,12 @@
 package com.valeriotor.beyondtheveil.recipes;
 
-import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
+import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidType;
 
 import java.util.*;
 
@@ -18,7 +16,7 @@ public class AlembicsRecipeRegistry {
     private static final Map<Fluid, Set<Tuple<AlembicRecipe, List<Item>>>> RECIPES_BY_OUTPUT = new HashMap<>();
 
     public static void registerRecipes() {
-        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 20, Registration.SOURCE_FLUID_SEDATIVE.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
     }
 
     private static void registerRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {

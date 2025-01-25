@@ -5,12 +5,8 @@ import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.entity.*;
-import com.valeriotor.beyondtheveil.fluid.SurgicalFluidType;
 import com.valeriotor.beyondtheveil.item.*;
-import com.valeriotor.beyondtheveil.lib.BTVEffects;
-import com.valeriotor.beyondtheveil.lib.BTVParticles;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
-import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
@@ -33,15 +29,11 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -51,8 +43,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class Registration {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.MODID);
-    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, References.MODID);
-    private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.MODID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
@@ -68,8 +58,6 @@ public class Registration {
     public static void init() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(bus);
-        FLUID_TYPES.register(bus);
-        FLUIDS.register(bus);
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
         MENUS.register(bus);
@@ -82,6 +70,7 @@ public class Registration {
         RECIPE_SERIALIZERS.register(bus);
         CREATIVE_TAB.register(bus);
 
+        BTVFluids.init(bus);
         BTVParticles.init(bus);
         BTVEffects.init(bus);
         BTVSounds.init(bus);
@@ -173,9 +162,9 @@ public class Registration {
     public static final RegistryObject<Block> FLASK_SMALL = BLOCKS.register("flask_small", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.SMALL)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_ITEM = BLOCKS.register("flask_item", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.ITEM)); // TODO GLASS PROPERTIES
 
-    public static final RegistryObject<LiquidBlock> SEDATIVE_BLOCK = BLOCKS.register("sedative_block", () -> new LiquidBlock(Registration.SOURCE_FLUID_SEDATIVE, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> SOFTENER_BLOCK = BLOCKS.register("softener_block", () -> new LiquidBlock(Registration.SOURCE_FLUID_SOFTENER, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> COAGULANT_BLOCK = BLOCKS.register("coagulant_block", () -> new LiquidBlock(Registration.SOURCE_FLUID_COAGULANT, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> SEDATIVE_BLOCK = BLOCKS.register("sedative_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SEDATIVE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> SOFTENER_BLOCK = BLOCKS.register("softener_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SOFTENER, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> COAGULANT_BLOCK = BLOCKS.register("coagulant_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_COAGULANT, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     public static final RegistryObject<Item> DAMP_WOOD_ITEM = fromBlock(DAMP_WOOD);
     public static final RegistryObject<Item> DARK_SAND_ITEM = fromBlock(DARK_SAND);
@@ -299,9 +288,29 @@ public class Registration {
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
 
-    public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryObject<Item> COAGULANT_BUCKET = ITEMS.register("coagulant_bucket", () -> new BucketItem(Registration.SOURCE_FLUID_COAGULANT, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> COAGULANT_BUCKET = ITEMS.register("coagulant_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_COAGULANT, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> MOVEMENT_SPEED_SERUM_BUCKET = ITEMS.register("movement_speed_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> MOVEMENT_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("movement_slowdown_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> DIG_SPEED_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("dig_speed_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_DIG_SPEED_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> DIG_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("dig_slowdown_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> DAMAGE_BOOST_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("damage_boost_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> HEAL_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("heal_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_HEAL_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> HARM_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("harm_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_HARM_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> JUMP_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("jump_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_JUMP_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> CONFUSION_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("confusion_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_CONFUSION_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> REGENERATION_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("regeneration_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_REGENERATION_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> DAMAGE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("damage_resistance_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> FIRE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("fire_resistance_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> WATER_BREATHING_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("water_breathing_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> INVISIBILITY_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("invisibility_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_INVISIBILITY_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> BLINDNESS_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("blindness_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_BLINDNESS_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> NIGHT_VISION_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("night_vision_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> HUNGER_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("hunger_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_HUNGER_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> WEAKNESS_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("weakness_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_WEAKNESS_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> POISON_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("poison_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_POISON_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> WITHER_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("wither_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_WITHER_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -328,26 +337,6 @@ public class Registration {
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<ShoremanDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new ShoremanDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
-
-    public static final RegistryObject<FluidType> SEDATIVE_FLUID_TYPE = FLUID_TYPES.register("sedative_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/sedative_still"), new ResourceLocation(References.MODID, "block/fluids/sedative_flow"), new ResourceLocation(References.MODID, "block/fluids/sedative_overlay"), 0xFFC13719));
-    public static final RegistryObject<FluidType> SOFTENER_FLUID_TYPE = FLUID_TYPES.register("softener_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/softener_still"), new ResourceLocation(References.MODID, "block/fluids/softener_flow"), new ResourceLocation(References.MODID, "block/fluids/softener_overlay"), 0xFFF4C42F));
-    public static final RegistryObject<FluidType> COAGULANT_FLUID_TYPE = FLUID_TYPES.register("coagulant_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/coagulant_still"), new ResourceLocation(References.MODID, "block/fluids/coagulant_flow"), new ResourceLocation(References.MODID, "block/fluids/coagulant_overlay"), 0xFFBA10CD));
-    // TODO rename this into Serum X49B8 - Strength (and all subsequent vanilla effects turned Arsenal effects as well)
-    public static final RegistryObject<FluidType> LIQUID_BLAZE_POWDER_FLUID_TYPE = FLUID_TYPES.register("liquid_blaze_powder_fluid", () -> new SurgicalFluidType(FluidType.Properties.create().lightLevel(2).density(15).viscosity(5), new ResourceLocation(References.MODID, "block/fluids/coagulant_still"), new ResourceLocation(References.MODID, "block/fluids/coagulant_flow"), new ResourceLocation(References.MODID, "block/fluids/coagulant_overlay"), 0xFFBA10CD));
-
-    public static final RegistryObject<FlowingFluid> SOURCE_FLUID_SEDATIVE = FLUIDS.register("sedative_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.SEDATIVE_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_SEDATIVE = FLUIDS.register("sedative_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.SEDATIVE_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> SOURCE_FLUID_SOFTENER = FLUIDS.register("softener_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.SOFTENER_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_SOFTENER = FLUIDS.register("softener_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.SOFTENER_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> SOURCE_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.COAGULANT_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_COAGULANT = FLUIDS.register("coagulant_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.COAGULANT_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> SOURCE_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_source", () -> new ForgeFlowingFluid.Source(Registration.LIQUID_BLAZE_POWDER_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUID_LIQUID_BLAZE_POWDER = FLUIDS.register("liquid_blaze_powder_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(Registration.LIQUID_BLAZE_POWDER_PROPERTIES));
-
-    public static final ForgeFlowingFluid.Properties SEDATIVE_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SEDATIVE_FLUID_TYPE, SOURCE_FLUID_SEDATIVE, FLOWING_FLUID_SEDATIVE).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SEDATIVE_BLOCK).bucket(Registration.SEDATIVE_BUCKET);
-    public static final ForgeFlowingFluid.Properties SOFTENER_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.SOFTENER_FLUID_TYPE, SOURCE_FLUID_SOFTENER, FLOWING_FLUID_SOFTENER).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.SOFTENER_BLOCK).bucket(Registration.SOFTENER_BUCKET);
-    public static final ForgeFlowingFluid.Properties COAGULANT_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.COAGULANT_FLUID_TYPE, SOURCE_FLUID_COAGULANT, FLOWING_FLUID_COAGULANT).slopeFindDistance(2).levelDecreasePerBlock(2).block(Registration.COAGULANT_BLOCK).bucket(Registration.COAGULANT_BUCKET);
-    public static final ForgeFlowingFluid.Properties LIQUID_BLAZE_POWDER_PROPERTIES = new ForgeFlowingFluid.Properties(Registration.LIQUID_BLAZE_POWDER_FLUID_TYPE, SOURCE_FLUID_LIQUID_BLAZE_POWDER, FLOWING_FLUID_LIQUID_BLAZE_POWDER).slopeFindDistance(2).levelDecreasePerBlock(2);
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
 
@@ -480,6 +469,26 @@ public class Registration {
                 output.accept(SEDATIVE_BUCKET.get());
                 output.accept(SOFTENER_BUCKET.get());
                 output.accept(COAGULANT_BUCKET.get());
+                output.accept(MOVEMENT_SPEED_SERUM_BUCKET.get());
+                output.accept(MOVEMENT_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(DIG_SPEED_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(DIG_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(DAMAGE_BOOST_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(HEAL_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(HARM_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(JUMP_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(CONFUSION_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(REGENERATION_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(DAMAGE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(FIRE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(WATER_BREATHING_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(INVISIBILITY_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(BLINDNESS_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(NIGHT_VISION_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(HUNGER_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(WEAKNESS_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(POISON_SERUM_FLUID_SERUM_BUCKET.get());
+                output.accept(WITHER_SERUM_FLUID_SERUM_BUCKET.get());
 
                 output.accept(DEEP_ONE_EGG.get());
                 output.accept(BLOOD_SKELETON_EGG.get());
