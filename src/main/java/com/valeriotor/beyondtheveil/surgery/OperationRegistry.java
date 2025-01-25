@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -138,7 +139,8 @@ public class OperationRegistry {
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(0.2)
             .setDuration(80)
-            .setCapacityRequirement(3)
+            .setCapacityRequirement(2)
+            .setArsenalEffect(ArsenalEffectRegistry.FOLLY)
             .setPersistent(true)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.PLUCKED_EYE.get());

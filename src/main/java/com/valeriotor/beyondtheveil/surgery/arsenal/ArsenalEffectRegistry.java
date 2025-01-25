@@ -27,6 +27,10 @@ public class ArsenalEffectRegistry {
 
     static final Map<String, ArsenalEffectType> REGISTRY = new HashMap<>();
 
+    public static ArsenalEffectType byName(String name) {
+        return REGISTRY.get(name);
+    }
+
     public static final ArsenalEffectType MOVEMENT_SPEED = register(new ArsenalEffectType.ArsenalStatusEffectType("movement_speed", MobEffects.MOVEMENT_SPEED));
     public static final ArsenalEffectType MOVEMENT_SLOWDOWN = register(new ArsenalEffectType.ArsenalStatusEffectType("movement_slowdown", MobEffects.MOVEMENT_SLOWDOWN));
     public static final ArsenalEffectType DIG_SPEED = register(new ArsenalEffectType.ArsenalStatusEffectType("dig_speed", MobEffects.DIG_SPEED));

@@ -1,8 +1,10 @@
 package com.valeriotor.beyondtheveil.surgery;
 
-import com.google.common.collect.Lists;
-import net.minecraft.util.Tuple;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType;
+import com.valeriotor.beyondtheveil.surgery.arsenal.BurstType;
+import com.valeriotor.beyondtheveil.surgery.arsenal.TargetingType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -40,6 +42,14 @@ public class Operation {
     private final boolean successParticles;
     private final boolean failureParticles;
     private final Vec3 particleOffset;
+    private ArsenalEffectType arsenalEffect;
+    private boolean increaseArsenalEffectAmplifier;
+    private boolean increaseArsenalEffectDuration;
+    private BurstType burst;
+    private boolean increaseBurstExtension;
+    private DyeColor mutex;
+    private TargetingType triggerType;
+    private TargetingType targetType;
 
     public Operation(Builder b) {
         this.name = b.name;
@@ -63,6 +73,14 @@ public class Operation {
         this.successParticles = b.successParticles;
         this.failureParticles = b.failureParticles;
         this.particleOffset = b.particleOffset;
+        this.arsenalEffect = b.arsenalEffect;
+        this.increaseArsenalEffectAmplifier = b.increaseArsenalEffectAmplifier;
+        this.increaseArsenalEffectDuration = b.increaseArsenalEffectDuration;
+        this.burst = b.burst;
+        this.increaseBurstExtension = b.increaseBurstExtension;
+        this.mutex = b.mutex;
+        this.triggerType = b.triggerType;
+        this.targetType = b.targetType;
     }
 
     public String getName() {
@@ -149,6 +167,38 @@ public class Operation {
         return particleOffset;
     }
 
+    public ArsenalEffectType getArsenalEffect() {
+        return arsenalEffect;
+    }
+
+    public boolean getIncreaseArsenalEffectAmplifier() {
+        return increaseArsenalEffectAmplifier;
+    }
+
+    public boolean getIncreaseArsenalEffectDuration() {
+        return increaseArsenalEffectDuration;
+    }
+
+    public BurstType getBurst() {
+        return burst;
+    }
+
+    public boolean getIncreaseBurstExtension() {
+        return increaseBurstExtension;
+    }
+
+    public DyeColor getMutex() {
+        return mutex;
+    }
+
+    public TargetingType getTriggerType() {
+        return triggerType;
+    }
+
+    public TargetingType getTargetType() {
+        return targetType;
+    }
+
     public static class Builder {
         private final String name;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
@@ -175,9 +225,57 @@ public class Operation {
         private boolean successParticles = false;
         private boolean failureParticles = false;
         private Vec3 particleOffset = Vec3.ZERO;
+        private ArsenalEffectType arsenalEffect;
+        private boolean increaseArsenalEffectAmplifier;
+        private boolean increaseArsenalEffectDuration;
+        private BurstType burst;
+        private boolean increaseBurstExtension;
+        private DyeColor mutex;
+        private TargetingType triggerType;
+        private TargetingType targetType;
 
         public Builder(String name) {
             this.name = name;
+        }
+
+        public Builder setArsenalEffect(ArsenalEffectType arsenalEffect) {
+            this.arsenalEffect = arsenalEffect;
+            return this;
+        }
+
+        public Builder setIncreaseArsenalEffectAmplifier(boolean increaseArsenalEffectAmplifier) {
+            this.increaseArsenalEffectAmplifier = increaseArsenalEffectAmplifier;
+            return this;
+        }
+
+        public Builder setIncreaseArsenalEffectDuration(boolean increaseArsenalEffectDuration) {
+            this.increaseArsenalEffectDuration = increaseArsenalEffectDuration;
+            return this;
+        }
+
+        public Builder setBurst(BurstType burst) {
+            this.burst = burst;
+            return this;
+        }
+
+        public Builder setIncreaseBurstExtension(boolean increaseBurstExtension) {
+            this.increaseBurstExtension = increaseBurstExtension;
+            return this;
+        }
+
+        public Builder setMutex(DyeColor mutex) {
+            this.mutex = mutex;
+            return this;
+        }
+
+        public Builder setTriggerType(TargetingType triggerType) {
+            this.triggerType = triggerType;
+            return this;
+        }
+
+        public Builder setTargetType(TargetingType targetType) {
+            this.targetType = targetType;
+            return this;
         }
 
         public Builder setDuration(int duration) {

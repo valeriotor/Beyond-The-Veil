@@ -162,7 +162,7 @@ public class TriggerData {
         return effect;
     }
 
-    public void saveToNBT(CompoundTag tag) {
+    public CompoundTag saveToNBT(CompoundTag tag) {
 
         CompoundTag triggerersTag = new CompoundTag();
         CompoundTag targetsTag = new CompoundTag();
@@ -204,10 +204,11 @@ public class TriggerData {
         if (burst != null) {
             tag.put("burst", burst.writeToNBT(new CompoundTag()));
         }
+        return tag;
 
     }
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public void loadFromNBT(CompoundTag tag) {
         restrictedTriggerers.clear();
@@ -246,6 +247,13 @@ public class TriggerData {
 
         triggered = tag.getBoolean("triggered");
         priority = tag.getInt("priority");
+
+        if (tag.contains("effect")) {
+            effect = new ArsenalEffect(tag.getCompound("effect"));
+        }
+        if (tag.contains("burst")) {
+            burst = new Burst(tag.getCompound("burst"));
+        }
 
         if (DEBUG) {
             triggerType = TargetingType.WAS_HIT;

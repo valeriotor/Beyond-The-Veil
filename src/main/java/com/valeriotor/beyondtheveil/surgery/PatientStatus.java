@@ -1,10 +1,12 @@
 package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -17,6 +19,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -56,9 +59,15 @@ public class PatientStatus {
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
     // TODO *persistent* flags are copied to Convalescent capability (new HashSet for persistent flags?)
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
-    // TODO private ArsenalEffect (list?)
-    // TODO private Burst
-    // TODO private DyeColor mutex
+    private Map<String, Integer> persistentFlags = new HashMap<>(); // Integer value is to check how many times we applied the flag
+    private ArsenalEffectType arsenalEffect;
+    private int arsenalEffectAmplifier;
+    private int arsenalEffectDuration;
+    private BurstType burst = BurstRegistry.BASE;
+    private int burstExtension;
+    private DyeColor mutex;
+    private TargetingType triggerType;
+    private TargetingType targetType;
     private ServerLevel level;
     private BlockPos pos;
     private final PatientType patientType;
@@ -73,8 +82,26 @@ public class PatientStatus {
         return patientType;
     }
 
+    public int getLeftoverCapacity() {
+        return leftoverCapacity;
+    }
+
     public Map<String, Integer> getFlags() {
         return flags;
+    }
+
+    public Map<String, Integer> getPersistentFlags() {
+        return persistentFlags;
+    }
+
+    public TriggerData getTriggerData() {
+        TriggerData data = new TriggerData();
+        data.setEffect(new ArsenalEffect(arsenalEffect, arsenalEffectAmplifier, arsenalEffectDuration, true));
+        data.setBurst(new Burst(burst, burstExtension));
+        data.setTriggerType(triggerType);
+        data.setTargetType(targetType);
+        data.setMutex(mutex);
+        return data;
     }
 
     public void fromConvalescentNBT(CompoundTag convalescent) {
@@ -82,7 +109,21 @@ public class PatientStatus {
         data.loadFromNBT(convalescent);
         flags.clear();
         flags.putAll(data.getFlags());
+        persistentFlags.clear();
+        persistentFlags.putAll(data.getFlags());
+        TriggerData triggerData = data.getTriggerData();
+        if (triggerData.getEffect() != null) {
+            arsenalEffect = triggerData.getEffect().getEffectType();
+            arsenalEffectAmplifier = triggerData.getEffect().getAmplifier();
+            arsenalEffectDuration = triggerData.getEffect().getDuration();
+        }
+        if (triggerData.getBurst() != null) {
+            burst = triggerData.getBurst().getBurstType();
+            burstExtension = triggerData.getBurst().getExtension();
+        }
+        mutex = triggerData.getMutex();
         setCondition(data.getCondition());
+        leftoverCapacity = data.getCapacity();
     }
 
     public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
@@ -173,6 +214,9 @@ public class PatientStatus {
                             ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().copy());
                         } else if (wasAlreadyDead) {
                             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
+                            if (operation.isPersistent()) {
+                                persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
+                            }
                         }
                         setDirty(true);
                         p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
@@ -295,6 +339,10 @@ public class PatientStatus {
             leftoverCapacity -= operation.getCapacityRequirement();
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
+            updateTriggerData(operation);
+            if (operation.isPersistent()) {
+                persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
+            }
             if (operation.isSuccessParticles()) {
                 //level().addAlwaysVisibleParticle(BTVParticles.TEARSPILL.get(), getX(), getY() + 1.5, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
 
@@ -308,6 +356,24 @@ public class PatientStatus {
             setCondition(operation.getConditionIfFailed());
             return false;
         }
+    }
+
+    private void updateTriggerData(Operation operation) {
+        if (operation.getArsenalEffect() != null) {
+            this.arsenalEffect = operation.getArsenalEffect();
+        }
+        if (operation.getBurst() != null) {
+            this.burst = operation.getBurst();
+        }
+        if (operation.getTargetType() != null) {
+            this.targetType = operation.getTargetType();
+        }
+        if (operation.getTriggerType() != null) {
+            this.triggerType = operation.getTriggerType();
+        }
+        arsenalEffectAmplifier += operation.getIncreaseArsenalEffectAmplifier() ? 1 : 0;
+        arsenalEffectDuration += operation.getIncreaseArsenalEffectDuration() ? 1 : 0;
+        burstExtension += operation.getIncreaseBurstExtension() ? 1 : 0;
     }
 
     @Nullable
@@ -462,10 +528,15 @@ public class PatientStatus {
         //tag.putInt("absolute_threshold", currentAbsolutePainThreshold);
         tag.putInt("missing_threshold", currentMissingPainThreshold);
         CompoundTag flagTag = new CompoundTag();
+        CompoundTag persistentFlagTag = new CompoundTag();
         for (Map.Entry<String, Integer> entry : flags.entrySet()) {
             flagTag.putInt(entry.getKey(), entry.getValue());
         }
+        for (Map.Entry<String, Integer> entry : persistentFlags.entrySet()) {
+            persistentFlagTag.putInt(entry.getKey(), entry.getValue());
+        }
         tag.put("flags", flagTag);
+        tag.put("persistentFlags", persistentFlagTag);
         CompoundTag fluidTag = new CompoundTag();
         for (Map.Entry<Fluid, Double> entry : fluidAmounts.entrySet()) {
             ResourceLocation fluidKey = ForgeRegistries.FLUIDS.getKey(entry.getKey());
@@ -475,6 +546,26 @@ public class PatientStatus {
         }
         tag.put("fluids", fluidTag);
         tag.putBoolean("didFinalAnimation", didFinalAnimation);
+
+        if (arsenalEffect != null) {
+            tag.putString("arsenalEffect", arsenalEffect.getName());
+        }
+        if (burst != null) {
+            tag.putString("burst", burst.getName());
+        }
+        tag.putInt("arsenalEffectAmplifier", arsenalEffectAmplifier);
+        tag.putInt("arsenalEffectDuration", arsenalEffectDuration);
+        tag.putInt("burstExtension", burstExtension);
+        if (mutex != null) {
+            tag.putInt("mutex", mutex.getId());
+        }
+        if (triggerType != null) {
+            tag.putString("triggerType", triggerType.name());
+        }
+        if (targetType != null) {
+            tag.putString("targetType", targetType.name());
+        }
+
         return tag;
     }
 
@@ -490,10 +581,38 @@ public class PatientStatus {
         for (String key : flagTag.getAllKeys()) {
             flags.put(key, flagTag.getInt(key));
         }
+        CompoundTag persistentFlagTag = tag.getCompound("persistentFlags");
+        for (String key : persistentFlagTag.getAllKeys()) {
+            persistentFlags.put(key, persistentFlagTag.getInt(key));
+        }
         CompoundTag fluidTag = tag.getCompound("fluids");
         for (String key : fluidTag.getAllKeys()) {
             Fluid f = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(key));
             fluidAmounts.put(f, fluidTag.getDouble(key));
+        }
+        if(tag.contains("arsenalEffect")) {
+            arsenalEffect = ArsenalEffectRegistry.byName(tag.getString("arsenalEffect"));
+        }
+        if (tag.contains("arsenalEffectAmplifier")) {
+            arsenalEffectAmplifier = tag.getInt("arsenalEffectAmplifier");
+        }
+        if (tag.contains("arsenalEffectDuration")) {
+            arsenalEffectDuration = tag.getInt("arsenalEffectDuration");
+        }
+        if(tag.contains("burst")) {
+            burst = BurstRegistry.byName(tag.getString("burst"));
+        }
+        if (tag.contains("burstExtension")) {
+            burstExtension = tag.getInt("burstExtension");
+        }
+        if(tag.contains("mutex")) {
+            mutex = DyeColor.byId(tag.getInt("mutex"));
+        }
+        if(tag.contains("triggerType")) {
+            triggerType = TargetingType.valueOf(tag.getString("triggerType"));
+        }
+        if(tag.contains("targetType")) {
+            targetType = TargetingType.valueOf(tag.getString("targetType"));
         }
         didFinalAnimation = tag.getBoolean("didFinalAnimation");
     }

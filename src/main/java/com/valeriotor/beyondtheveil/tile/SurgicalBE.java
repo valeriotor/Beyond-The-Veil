@@ -69,7 +69,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if (crossSync.getHeldPatientData() == null && !patientStatus.isIncised()) {
-                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getFlags()).saveToNBT(new CompoundTag()));
+                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag()));
                         crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
                         entityData = null;
                         patientStatus = null;

@@ -26,7 +26,9 @@ public class ArsenalEffect {
     }
 
     public void process(Mob attacker, LivingEntity target) {
-        effectType.doEffect(attacker, target, duration, amplifier, hideParticles);
+        if (effectType != null) {
+            effectType.doEffect(attacker, target, duration, amplifier, hideParticles);
+        }
     }
 
     public ArsenalEffectType getEffectType() {
@@ -42,7 +44,9 @@ public class ArsenalEffect {
     }
 
     public CompoundTag writeToNBT(CompoundTag tag) {
-        tag.putString("type", effectType.toString());
+        if (effectType != null) {
+            tag.putString("type", effectType.getName());
+        }
         tag.putInt("amplifier", amplifier);
         tag.putInt("duration", duration);
         tag.putBoolean("hideParticles", hideParticles);

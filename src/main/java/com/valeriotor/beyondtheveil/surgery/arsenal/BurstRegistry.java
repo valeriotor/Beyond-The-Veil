@@ -20,6 +20,10 @@ public class BurstRegistry {
 
     static final Map<String, BurstType> REGISTRY = new HashMap<>();
 
+    public static BurstType byName(String name) {
+        return REGISTRY.get(name);
+    }
+
     public static final BurstType BASE = register(new BurstType("base") {
 
         @Override

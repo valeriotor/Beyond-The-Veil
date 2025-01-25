@@ -22,6 +22,10 @@ public class Burst {
         this.extension = extension;
     }
 
+    public BurstType getBurstType() {
+        return burstType;
+    }
+
     public int getExtension() {
         return extension;
     }

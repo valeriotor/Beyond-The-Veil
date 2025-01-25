@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.capability.surgery;
 
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import net.minecraft.nbt.CompoundTag;
@@ -11,16 +12,39 @@ import java.util.UUID;
 
 public class ConvalescentData {
 
-    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags) {
+    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity) {
         ConvalescentData data = new ConvalescentData();
         data.setFlags(flags);
         data.setCondition(condition);
+        data.setTriggerData(triggerData);
+        data.setCapacity(capacity);
         return data;
     }
 
     private PatientCondition condition = PatientCondition.STABLE;
     private final Map<String, Integer> flags = new HashMap<>(); // the int value stands for how many times it was applied in the procedure
     private final Map<String, Integer> counters = new HashMap<>(); // populated lazily. Keys are the flags, values are any integer counter that may be of use
+    private TriggerData triggerData;
+    private int capacity;
+
+    public TriggerData getTriggerData() {
+        if (triggerData != null) {
+            return triggerData;
+        }
+        return new TriggerData();
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setTriggerData(TriggerData triggerData) {
+        this.triggerData = triggerData;
+    }
 
     public void setCondition(PatientCondition condition) {
         this.condition = condition;
@@ -55,6 +79,10 @@ public class ConvalescentData {
         }
         tag.put("subTag", subTag);
         tag.putString("condition", condition.name());
+        if (triggerData != null) {
+            tag.put("triggerData", triggerData.saveToNBT(new CompoundTag()));
+        }
+        tag.putInt("capacity", capacity);
         return tag;
     }
 
@@ -68,7 +96,10 @@ public class ConvalescentData {
             }
         }
         condition = PatientCondition.valueOf(tag.getString("condition"));
-
-
+        if (tag.contains("triggerData")) {
+            triggerData = new TriggerData();
+            triggerData.loadFromNBT(tag.getCompound("triggerData"));
+        }
+        capacity = tag.getInt("capacity");
     }
 }
