@@ -136,7 +136,7 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
             buffer.vertex(model, maxX, maxHeight, minX).color(1, 1, 1, 1F).uv(stillSprite.getU(0), stillSprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(0, 0, -1)/*.lightmap(upLMa, upLMb)*/.endVertex();
 
             pPoseStack.popPose();
-        } else if (size == FlaskBlock.FlaskSize.ITEM) {
+        } else if (size == FlaskBlock.FlaskSize.ITEM && false) {
             if (Minecraft.getInstance().player != null) {
                 float ticks = Minecraft.getInstance().player.tickCount + partialTicks;
                 TRANSFORMS[0][0] = 0.425;

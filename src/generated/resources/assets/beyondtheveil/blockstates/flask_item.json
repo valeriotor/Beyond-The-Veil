@@ -1,7 +1,7 @@
 {
   "variants": {
     "color=0": {
-      "model": "beyondtheveil:block/flask_item"
+      "model": "beyondtheveil:block/item_flask_complete"
     },
     "color=1": {
       "model": "beyondtheveil:block/flask_item_wrong"

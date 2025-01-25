@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanDialogueGui;
 import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.ForcepsModelLoader;
+import com.valeriotor.beyondtheveil.client.model.baked.ItemFlaskModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.AbominationFlesh1Model;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
@@ -154,6 +155,7 @@ public class ClientSetup {
         event.register(FlaskShelfModelLoader.FLASK_SHELF_LOADER.getPath(), new FlaskShelfModelLoader());
         event.register(AlembicsModelLoader.ALEMBICS_LOADER.getPath(), new AlembicsModelLoader());
         event.register(ForcepsModelLoader.FORCEPS_LOADER.getPath(), new ForcepsModelLoader());
+        event.register(ItemFlaskModelLoader.ITEM_FLASK_LOADER.getPath(), new ItemFlaskModelLoader());
         //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
         //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
     }

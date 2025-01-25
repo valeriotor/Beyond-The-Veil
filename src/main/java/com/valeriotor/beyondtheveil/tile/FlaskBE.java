@@ -15,9 +15,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,6 +49,7 @@ public class FlaskBE extends BlockEntity {
 
     private final ItemStackHandler stackHandler;
     private final LazyOptional<IItemHandler> stackHolder;
+    public static final ModelProperty<ItemStackHandler> STACK_PROPERTY = new ModelProperty<>();
 
 
     public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -123,7 +127,7 @@ public class FlaskBE extends BlockEntity {
             return InteractionResult.SUCCESS;
         } else if (itemStack.isEmpty()) {
             if (!pLevel.isClientSide) {
-                pPlayer.setItemInHand(pHand, stackHandler.extractItem(0, 4, false));
+                pPlayer.setItemInHand(pHand, stackHandler.extractItem(0, 16, false));
                 setChanged();
                 if (level != null) {
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
@@ -190,6 +194,16 @@ public class FlaskBE extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         load(pkt.getTag());
+
+        requestModelDataUpdate();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    }
+
+    @Override
+    public @NotNull ModelData getModelData() {
+        return ModelData.builder()
+                .with(STACK_PROPERTY, stackHandler)
+                .build();
     }
 
 

@@ -18,7 +18,7 @@ public class SurgeryIngredient extends Item {
     private static final Set<SurgeryIngredient> SURGERY_INGREDIENTS = new HashSet<>();
 
     public SurgeryIngredient() {
-        super(new Item.Properties().stacksTo(4));
+        super(new Item.Properties().stacksTo(16));
         SURGERY_INGREDIENTS.add(this);
     }
 

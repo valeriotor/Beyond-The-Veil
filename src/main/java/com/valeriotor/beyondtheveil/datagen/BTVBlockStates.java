@@ -304,12 +304,15 @@ public class BTVBlockStates extends BlockStateProvider {
         BlockModelBuilder loaderBuilder = new BlockModelBuilder(modLoc("block/flask_shelf_to_bake1"), models().existingFileHelper);
         loaderBuilder.parent(loader);
         loaderBuilder.renderType("translucent");
+        BlockModelBuilder loaderBuilder2 = new BlockModelBuilder(modLoc("block/flask_shelf_to_bake2"), models().existingFileHelper);
+        loaderBuilder2.parent(loader);
+        loaderBuilder2.renderType("solid");
 
         BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/flask_shelf_complete")
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .texture("particle", modLoc("block/flask_shelf"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .child("base", baseBuilder).child("loader", loaderBuilder))
+                        .child("base", baseBuilder).child("loader", loaderBuilder).child("loader2", loaderBuilder2))
                 .end();
 
         getVariantBuilder(FLASK_SHELF.get())
@@ -326,7 +329,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFlask("large", FLASK_LARGE.get());
         registerFlask("medium", FLASK_MEDIUM.get());
         registerFlask("small", FLASK_SMALL.get());
-        registerFlask("item", FLASK_ITEM.get());
+        registerItemFlask("item", FLASK_ITEM.get());
     }
 
     private void registerFlask(String name, Block block) {
@@ -336,6 +339,36 @@ public class BTVBlockStates extends BlockStateProvider {
         getVariantBuilder(block).forAllStates(state -> {
             ModelFile file = switch (state.getValue(FlaskBlock.COLOR)) {
                 case 0 -> base;
+                case 1 -> wrong;
+                case 2 -> selected;
+                default -> throw new IllegalStateException("Unexpected value: " + state.getValue(FlaskBlock.COLOR));
+            };
+            return ConfiguredModel.builder().modelFile(file).build();
+        });
+    }
+
+    private void registerItemFlask(String name, Block block) {
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_" + name), models().existingFileHelper);
+        BlockModelBuilder baseBuilder = new BlockModelBuilder(modLoc("block/flask_" + name + "1"), models().existingFileHelper);
+        baseBuilder.parent(base);
+        baseBuilder.renderType("translucent");
+
+        ExistingModelFile wrong = new ExistingModelFile(modLoc("block/flask_" + name + "_wrong"), models().existingFileHelper);
+        ExistingModelFile selected = new ExistingModelFile(modLoc("block/flask_" + name + "_selected"), models().existingFileHelper);
+        ExistingModelFile loader = new ExistingModelFile(modLoc("block/item_flask_to_bake"), models().existingFileHelper);
+        BlockModelBuilder loaderBuilder = new BlockModelBuilder(modLoc("block/item_flask_to_bake1"), models().existingFileHelper);
+        loaderBuilder.parent(loader);
+        loaderBuilder.renderType("solid");
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/item_flask_complete")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", modLoc("block/flask"))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("base", baseBuilder).child("loader", loaderBuilder))
+                .end();
+        getVariantBuilder(block).forAllStates(state -> {
+            ModelFile file = switch (state.getValue(FlaskBlock.COLOR)) {
+                case 0 -> builder;
                 case 1 -> wrong;
                 case 2 -> selected;
                 default -> throw new IllegalStateException("Unexpected value: " + state.getValue(FlaskBlock.COLOR));

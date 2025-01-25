@@ -189,7 +189,7 @@ public class FlaskShelfBE extends BlockEntity {
             if (!pLevel.isClientSide) {
                 Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                 if (lookedAtFlask != null) {
-                    pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 4, false));
+                    pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 16, false));
                     updateClient();
                     return InteractionResult.SUCCESS;
                 }
