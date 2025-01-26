@@ -287,6 +287,13 @@ public class Registration {
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
+    public static final RegistryObject<Item> ACID_GLAND = ITEMS.register("acid_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> FERTILIZER_GLAND = ITEMS.register("fertilizer_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> MARROW_GLAND = ITEMS.register("marrow_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SILK_GLAND = ITEMS.register("silk_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> GUNPOWDER_BLADDER = ITEMS.register("gunpowder_bladder", SurgeryIngredient::new);
+    public static final RegistryObject<Item> LIVING_IRON = ITEMS.register("living_iron", SurgeryIngredient::new);
+    public static final RegistryObject<Item> EMPTY_BLADDER = ITEMS.register("empty_bladder", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -465,6 +472,14 @@ public class Registration {
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());
+                output.accept(ACID_GLAND.get());
+                output.accept(FERTILIZER_GLAND.get());
+                output.accept(MARROW_GLAND.get());
+                output.accept(SILK_GLAND.get());
+                output.accept(GUNPOWDER_BLADDER.get());
+                output.accept(LIVING_IRON.get());
+                output.accept(EMPTY_BLADDER.get());
+
 
                 output.accept(SEDATIVE_BUCKET.get());
                 output.accept(SOFTENER_BUCKET.get());
