@@ -1235,6 +1235,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addCraftingRegistry();
         addReminiscence();
         addGuis();
+        addSurgery();
     }
 
     private void addCommonCaptions() {
@@ -1761,4 +1762,16 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.delete", "Delete");
         add("gui.journal.journal.cancel", "Cancel");
     }
+
+    private void addSurgery() {
+        add("surgery.status.status", "Status: ");
+        add("surgery.status.arsenal", "Burst Effect: ");
+        add("surgery.status.arsenal_amplifier", "Effect Amplifier: ");
+        add("surgery.status.arsenal_duration", "Effect Extender: ");
+        add("surgery.status.burst_extension", "Burst Extender: ");
+        add("surgery.status.mutex", "Mutex: ");
+        add("surgery.status.trigger_type", "Trigger: ");
+        add("surgery.status.target_type", "Target: ");
+    }
+
 }

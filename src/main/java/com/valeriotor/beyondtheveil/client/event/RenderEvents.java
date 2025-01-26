@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
@@ -33,6 +34,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -609,13 +611,46 @@ public class RenderEvents {
                     BlockPos center;
                     if (blockState.getBlock() == Registration.SURGERY_BED.get()) {
                         center = Registration.SURGERY_BED.get().findCenter(lookedAtPos, blockState);
+                    } else if (blockState.getBlock() == Registration.WATERY_CRADLE.get()) {
+                        center = Registration.WATERY_CRADLE.get().findCenter(lookedAtPos, blockState);
                     } else {
                         center = lookedAtPos;
                     }
                     if (player.level().getBlockEntity(center) instanceof SurgicalBE surgicalBE && (isSurgicalItem(mainHandItem) || isSurgicalItem(offhandItem))) {
                         PatientStatus patientStatus = surgicalBE.getPatientStatus();
                         if (surgicalBE.getEntity() != null && patientStatus != null) {
-                            gg.drawString(Minecraft.getInstance().font, "Status: " + patientStatus.getCondition().toString(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
+                            int pY = gg.guiHeight() / 2;
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.status") + patientStatus.getCondition().toString(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            pY += 15;
+                            if (patientStatus.getArsenalEffect() != null) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + patientStatus.getArsenalEffect().getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getArsenalEffectAmplifier() > 0) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_amplifier") + patientStatus.getArsenalEffectAmplifier(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getArsenalEffectDuration() > 0) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_duration") + patientStatus.getArsenalEffectDuration(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getBurstExtension() > 0) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.burst_extension") + patientStatus.getBurstExtension(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getMutex() != null) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.mutex") + patientStatus.getMutex().getName(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getTriggerType() != null) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.trigger_type") + I18n.get("target_type." + patientStatus.getTriggerType().name()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+                            if (patientStatus.getTargetType() != null) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.target_type") + I18n.get("target_type." + patientStatus.getTargetType().name()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
+
                         }
                     }
                 }

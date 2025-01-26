@@ -83,6 +83,38 @@ public class PatientStatus {
         return leftoverCapacity;
     }
 
+    public ArsenalEffectType getArsenalEffect() {
+        return arsenalEffect;
+    }
+
+    public int getArsenalEffectAmplifier() {
+        return arsenalEffectAmplifier;
+    }
+
+    public int getArsenalEffectDuration() {
+        return arsenalEffectDuration;
+    }
+
+    public BurstType getBurst() {
+        return burst;
+    }
+
+    public int getBurstExtension() {
+        return burstExtension;
+    }
+
+    public DyeColor getMutex() {
+        return mutex;
+    }
+
+    public TargetingType getTriggerType() {
+        return triggerType;
+    }
+
+    public TargetingType getTargetType() {
+        return targetType;
+    }
+
     public Map<String, Integer> getFlags() {
         return flags;
     }
