@@ -1743,6 +1743,68 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
         add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.sewing_needle]. Stitching is painless and instantaneous.");
 
+        add("gui.journal.tools.forceps.title", "Forceps");
+        add("gui.journal.tools.forceps.text", "A tool necessary for insertions. Can pick up a (single) item when used on a flask containing a solid ingredient.\\nForceps with an item inside may be applied on an incised patient on a surgery bed.");
+
+        add("gui.journal.tools.scalpel.title", "Scalpel");
+        add("gui.journal.tools.scalpel.text", "A tool necessary for incisions. Can be used on the surgery bed.\\nSharp and painful, yet very precise. Killing enemies with such an instrument may allow for some body parts to be salvaged.");
+
+        add("gui.journal.tools.sewing_needle.title", "Sewing Needle");
+        add("gui.journal.tools.sewing_needle.text", "A tool necessary for sewing. Quick and easy to use.");
+
+        add("gui.journal.tools.syringe.title", "Syringe");
+        add("gui.journal.tools.syringe.text", "Syringes can {§ndrain§r}[caption:shift_right_click] and {§nfill§r}[caption:right_click] liquid flasks at the milliBucket granularity. They are necessary for {§ninjections§r}[caption:right_click] on patients.");
+
+        add("gui.journal.tools.tongs.title", "Tongs");
+        add("gui.journal.tools.tongs.text", "A tool necessary for extractions. Needs an open incision first.");
+
+        add("gui.journal.tools.flasks.title", "Fluid flasks");
+        add("gui.journal.tools.flasks.text", "Flasks come in various shapes and sizes. They are used to store fluids of all sorts, and are necessary for syringes to be filled.\\nFlasks may be placed on the ground or, more compactly, on a flask shelf.");
+
+        add("gui.journal.tools.alembics.title", "Alembics");
+        add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\nA given input item may be sufficient for a certain amount of output fluid.");
+
+        add("gui.journal.tools.flask_shelf.title", "Flask Shelf");
+        add("gui.journal.tools.flask_shelf.text", "A set of shelves where fluid and item flasks may be placed in a more compact manner. Any such flasks may then be interacted with normally, as if they were on the ground.");
+
+        add("gui.journal.tools.surgery_bed.title", "Surgery Bed");
+        add("gui.journal.tools.surgery_bed.text", "This is where surgical operations on the chest and back are performed.");
+
+        add("gui.journal.tools.watery_cradle.title", "Watery Cradle");
+        add("gui.journal.tools.watery_cradle.text", "A masterwork of engineering, capable of setting the enclosed patient in a trance and allowing for operations on the brain.\\nOnly injections may be performed in the watery cradle.");
+
+
+        add("gui.journal.ingredients.plucked_eye.title", "Plucked Eye");
+        add("gui.journal.ingredients.plucked_eye.text", "To look at yourself from the inside, escaping all veils of skin and bone – it drives one to madness.\\n§oAdds:§r §lfolly§r.\\n§oRequires:§r 1 capacity.");
+
+        add("gui.journal.ingredients.shell.title", "Shell");
+        add("gui.journal.ingredients.shell.text", "A shell of some crustacean or mollusk. It is a lethal reminder of our lack of any such protection, of our defenselessness.\\n§oAdds:§r §lvulnerability§r.\\n§oRequires:§r 1 capacity.");
+
+        add("gui.journal.ingredients.tiny_skull.title", "Tiny Skull");
+        add("gui.journal.ingredients.tiny_skull.text", "No fight. No flight. Such creatures know only fright.\\n§oAdds:§r §lterror§r.\\n§oRequires:§r 1 capacity.");
+
+        add("gui.journal.ingredients.acid_gland.title", "Acid Gland");
+        add("gui.journal.ingredients.acid_gland.text", "Produces a highly corrosive substance, melting through armor.\\n§oAdds:§r §larmor damage§r.\\n§oRequires:§r 1 capacity.");
+
+        add("gui.journal.ingredients.fertilizer_gland.title", "Fertilizer Gland");
+        add("gui.journal.ingredients.fertilizer_gland.text", "Convalescents possessing this gland will fertilize the soil where they tread.");
+
+        add("gui.journal.ingredients.marrow_gland.title", "Marrow Gland");
+        add("gui.journal.ingredients.marrow_gland.text", "This gland continuously produces marrow, resulting in bone meal being regularly dropped by the convalescent.");
+
+        add("gui.journal.ingredients.silk_gland.title", "Silk Gland");
+        add("gui.journal.ingredients.silk_gland.text", "Spiders and similar creatures use these to build their homes – and snare their targets.\\n§oAdds:§r §lenweb§r.\\n§oRequires:§r 1 capacity.");
+
+        add("gui.journal.ingredients.gunpowder_bladder.title", "Gunpowder Bladder");
+        add("gui.journal.ingredients.gunpowder_bladder.text", "Dropped by creepers and similarly explosive creatures when slain in a precise, surgical manner. Entities possessing this bladder may turn explosive when set on fire.");
+
+        add("gui.journal.ingredients.living_iron.title", "Living Iron");
+        add("gui.journal.ingredients.living_iron.text", "Living Iron");
+
+        add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
+        add("gui.journal.ingredients.empty_bladder.text", "Empty Bladder");
+
+
         add("gui.journal.journal.type.none", "Select Type");
         add("gui.journal.journal.type.position", "Position");
         add("gui.journal.journal.type.extraction", "Extraction");

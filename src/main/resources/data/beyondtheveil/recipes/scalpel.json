@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "   I",
+    "  I ",
+    " I  ",
+    "S   "
+  ],
+  "result": {
+    "item": "beyondtheveil:scalpel"
+  },
+  "show_notification": true
+}

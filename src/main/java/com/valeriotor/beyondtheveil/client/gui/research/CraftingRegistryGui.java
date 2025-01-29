@@ -29,6 +29,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -370,6 +371,7 @@ public class CraftingRegistryGui extends Screen {
         @Override
         public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             int side = 0, pX = 0, pY = 0;
+            int recipeWidth = 0, recipeHeight = 0;
             if (recipe instanceof CraftingRecipe) {
                 side = 3;
                 pX = 0;//getWidth() / 8 - 31;
@@ -378,23 +380,50 @@ public class CraftingRegistryGui extends Screen {
                 }
                 pY = 10;
                 graphics.blit(GRID3, pX, pY, 63, 63, 0, 0, 63, 63, 63, 63);
-            } else if (recipe instanceof GearBenchRecipe) {
+                if (recipe instanceof ShapedRecipe sr) {
+                    recipeWidth = sr.getRecipeWidth();
+                    recipeHeight = sr.getRecipeHeight();
+                } else {
+                    recipeWidth = recipeHeight = 0;
+                }
+            } else if (recipe instanceof GearBenchRecipe gbr) {
                 side = 4;
                 pX = 0;//getWidth() / 8 - 41;
                 if (pX < 5) {
                     pX = 5;
                 }
                 graphics.blit(GRID4, pX, pY, 83, 83, 0, 0, 83, 83, 83, 83);
+                recipeWidth = gbr.getRecipeWidth();
+                recipeHeight = gbr.getRecipeHeight();
             }
-            for (int i = 0; i < stacks.size(); i++) {
-                int x = pX + (i % side) * 21 + 10;
-                int y = pY + (i / side) * 21 + 10;
-                ItemStack[] itemStacks = stacks.get(i);
-                if (itemStacks.length > 0) {
-                    ItemStack itemStack = itemStacks[(counter / 20) % itemStacks.length];
-                    graphics.renderItem(itemStack, x - 8, y - 8);
-                    if (relativeMouseX >= x - 10 && relativeMouseX <= x + 10 && relativeMouseY >= y - 10 && relativeMouseY <= y + 10) {
-                        graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
+            if(recipeWidth > 0) {
+                int i = 0;
+                for (int yIndex = 0; yIndex < recipeHeight; yIndex++) {
+                    for (int xIndex = 0; xIndex < recipeWidth; xIndex++) {
+                        ItemStack[] itemStacks = stacks.get(i);
+                        int x = pX + xIndex * 21 + 10;
+                        int y = pY + yIndex * 21 + 10;
+                        i++;
+                        if (itemStacks.length > 0) {
+                            ItemStack itemStack = itemStacks[(counter / 20) % itemStacks.length];
+                            graphics.renderItem(itemStack, x - 8, y - 8);
+                            if (relativeMouseX >= x - 10 && relativeMouseX <= x + 10 && relativeMouseY >= y - 10 && relativeMouseY <= y + 10) {
+                                graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
+                            }
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < stacks.size(); i++) {
+                    int x = pX + (i % side) * 21 + 10;
+                    int y = pY + (i / side) * 21 + 10;
+                    ItemStack[] itemStacks = stacks.get(i);
+                    if (itemStacks.length > 0) {
+                        ItemStack itemStack = itemStacks[(counter / 20) % itemStacks.length];
+                        graphics.renderItem(itemStack, x - 8, y - 8);
+                        if (relativeMouseX >= x - 10 && relativeMouseX <= x + 10 && relativeMouseY >= y - 10 && relativeMouseY <= y + 10) {
+                            graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
+                        }
                     }
                 }
             }

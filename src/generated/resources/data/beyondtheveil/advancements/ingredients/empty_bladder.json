@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_empty_bladder": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:empty_bladder"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_empty_bladder"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

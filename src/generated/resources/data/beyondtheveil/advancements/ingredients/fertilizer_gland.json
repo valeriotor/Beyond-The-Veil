@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_fertilizer_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:fertilizer_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_fertilizer_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

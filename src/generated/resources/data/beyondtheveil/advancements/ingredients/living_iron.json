@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_living_iron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:living_iron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_living_iron"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
@@ -12,6 +13,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -30,8 +32,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -71,7 +75,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     // 1022x1071
     private ScrollableList<ItemEntry> tools;
     // 1022x1071
-    private ScrollableList<JournalReportLine> ingredients;
+    private ScrollableList<ItemEntry> ingredients;
     private ScrollableList<ReportEntry> reportEntries;
     private Page overviewPage;
     private Page toolPage;
@@ -89,24 +93,28 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private TexturedButton cancelButton;
     private final List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
-    private final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
-    private final ResourceLocation REPORT_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/report_entry.png");
+    private static final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
+    private static final ResourceLocation REPORT_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/report_entry.png");
     // 2530x1517 -> 843x505
-    private final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/journal/background.png");
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/journal/background.png");
     // 144x93 -> 48x31
-    private final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark.png");
-    private final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_deselected.png");
-    private final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_selected.png");
-    private final ResourceLocation HOUSE_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/house_icon.png");
-    private final ResourceLocation TOOLS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/tools_icon.png");
-    private final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/ingredients_icon.png");
-    private final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/journal_icon.png");
-    private final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/abomination_icon.png");
-    private final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_1.png");
-    private final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_2.png");
-    private final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
-    private final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/journal/minus.png");
-    private final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/journal/button.png");
+    private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark.png");
+    private static final ResourceLocation BOOKMARK_DESELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_deselected.png");
+    private static final ResourceLocation BOOKMARK_SELECTED = new ResourceLocation(References.MODID, "textures/gui/journal/bookmark_selected.png");
+    private static final ResourceLocation HOUSE_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/house_icon.png");
+    private static final ResourceLocation TOOLS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/tools_icon.png");
+    private static final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/ingredients_icon.png");
+    private static final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/journal_icon.png");
+    private static final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/abomination_icon.png");
+    private static final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_1.png");
+    private static final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_2.png");
+    private static final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
+    private static final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/journal/minus.png");
+    private static final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/journal/button.png");
+    private static final ResourceLocation LEFT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/left_arrow.png");
+    private static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/right_arrow.png");
+    private final int PAGE_X = 50;
+    private final int PAGE_Y = -200;
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -170,11 +178,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         overview = DropdownLists.makeList(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, makeOverviewList(), DROPDOWN_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
         //List<ItemEntry> entries = knownIngredients.stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
-        List<ItemEntry> entries = getTools().stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
-        tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
-        //List<JournalReportLine> reportLines = List.of(JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids));
-        //ingredients = new EditableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportLines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids));
-        //ingredients.setVariableSize(true);
+        List<ItemEntry> toolEntries = getTools();
+        tools = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, toolEntries, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+        ingredients = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, getIngredients(), ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
 
         bookmarks.clear();
         for (JournalCategory category : JournalCategory.values()) {
@@ -259,8 +265,35 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         list.add(new Dropdown2("surgery"));
         return list;
     }
-    private List<Item> getTools() {
-        return List.of(Registration.FORCEPS.get(), Registration.SCALPEL.get(), Registration.SEWING_NEEDLE.get(), Registration.SYRINGE.get(), Registration.TONGS.get(), Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get(), Registration.FLASK_SHELF_ITEM.get(), Registration.SURGERY_BED_ITEM.get(), Registration.WATERY_CRADLE_ITEM.get());
+    private List<ItemEntry> getTools() {
+        List<ItemEntry> entries = new ArrayList<>();
+        entries.add(new StacksItemEntry(Registration.FORCEPS.get(), "forceps", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.SCALPEL.get(), "scalpel", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.SEWING_NEEDLE.get(), "sewing_needle", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.SYRINGE.get(), "syringe", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.TONGS.get(), "tongs", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(List.of(Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get()), "flasks", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.ALEMBICS_ITEM.get(), "alembics", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.FLASK_SHELF_ITEM.get(), "flask_shelf", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.SURGERY_BED_ITEM.get(), "surgery_bed", JournalCategory.TOOLS));
+        Minecraft.getInstance().player.getCapability(ResearchProvider.RESEARCH).ifPresent(c -> {
+            if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("watery_cradle")) { // TODO check if key contains namespace
+                entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));
+            }
+        });
+        return entries;
+    }
+
+    private List<ItemEntry> getIngredients() {
+        List<ItemEntry> entries = new ArrayList<>();
+        for (Item knownIngredient : knownIngredients) {
+            ResourceLocation key = ForgeRegistries.ITEMS.getKey(knownIngredient);
+            if (key != null) {
+                entries.add(new StacksItemEntry(knownIngredient, key.getPath(), JournalCategory.INGREDIENTS));
+            }
+        }
+//List<ItemEntry> entries = knownIngredients.stream().map((Item item) -> new ItemEntry(new ItemStack(item))).toList();
+        return entries;
     }
 
     @Override
@@ -305,7 +338,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
         }
 
-        renderPage(pose, pGuiGraphics, scaledMouseX(pMouseX), scaledMouseY(pMouseY), pPartialTick);
+        renderPage(pose, pGuiGraphics, pageMouseX(pMouseX), pageMouseY(pMouseY), pPartialTick);
 
         for (int i = 0; i < bookmarks.size(); i++) {
             JournalBookmark bookmark = bookmarks.get(i);
@@ -318,28 +351,15 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
 
         pose.popPose();
-        //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
-        //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", relativeMouseX, relativeMouseY), 0, 15, 0xFFFFFFFF);
+        pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
+        pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pageMouseX(pMouseX), pageMouseY(pMouseY)), 0, 15, 0xFFFFFFFF);
     }
 
     private void renderPage(PoseStack pose, GuiGraphics graphics, double scaledMouseX, double scaledMouseY, float pPartialTick) {
-        if (selectedCategory == JournalCategory.OVERVIEW && overviewPage != null) {
+        if (currentPage() != null) {
             pose.pushPose();
-            pose.translate(200, -200, 0);
-            pose.scale(2.55F, 2.55F, 1);
-            int titleColor = 0xFFD0A030;
-            //graphics.fill(-40, 0, 40, 15, 0xFF000000);
-            if (overviewPage.title instanceof MutableComponent mc) {
-                graphics.drawCenteredString(Minecraft.getInstance().font, mc.withStyle(style), 0, 0, titleColor);
-            }
-            //graphics.drawCenteredString(Minecraft.getInstance().font, FormattedCharSequence.forward(overviewPage.title.getString(), style), 0, 0, titleColor);
-            int titleWidth = minecraft.font.width(overviewPage.title);
-
-            //graphics.fill(-titleWidth / 2, 12, titleWidth / 2, 13, titleColor);
-            pose.popPose();
-            pose.pushPose();
-            pose.translate(50, -160, 0);
-            overviewPage.page.render(pose, graphics, 0xFFFFFFFF, (int) (scaledMouseX - 50), (int) (scaledMouseY + 160), pPartialTick);
+            pose.translate(PAGE_X, PAGE_Y, 0);
+            currentPage().render(pose, graphics, 0xFFFFFFFF, (int) (scaledMouseX), (int) (scaledMouseY), pPartialTick);
             pose.popPose();
         }
     }
@@ -355,6 +375,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (currentList() != null && currentList().mouseClicked(listMouseX(pMouseX), listMouseY(pMouseY), pButton)) {
+            return true;
+        }
+        if (currentPage() != null && currentPage().mouseClicked(pageMouseX(pMouseX), pageMouseY(pMouseY), pButton)) {
             return true;
         }
         if (report != null && report.mouseClicked(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
@@ -444,6 +467,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         return (int) ((pMouseY - height / 2 - ENTRY_LIST_BASE_TOP_Y * scaleFactor) / scaleFactor);
     }
 
+    private int pageMouseX(double pMouseX) {
+        return (int) ((pMouseX - width / 2 - PAGE_X * scaleFactor) / scaleFactor);
+    }
+
+    private int pageMouseY(double pMouseY) {
+        return (int) ((pMouseY - height / 2 - PAGE_Y * scaleFactor) / scaleFactor);
+    }
+
     private int reportMouseX(double pMouseX) {
         return (int) ((pMouseX - width / 2 - REPORT_BASE_LEFT_X * scaleFactor) / scaleFactor);
     }
@@ -467,8 +498,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private JournalGui.Page currentPage() {
         return switch (selectedCategory) {
             case OVERVIEW -> overviewPage;
-            case TOOLS -> null;
-            case INGREDIENTS -> null;
+            case TOOLS -> toolPage;
+            case INGREDIENTS -> ingredientPage;
             case JOURNAL -> null;
             case ABOMINATIONS -> null;
         };
@@ -537,6 +568,13 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         //updateWidgetVisibility();
     }
 
+    private void openItemPage(Page page) {
+        switch (selectedCategory) {
+            case TOOLS -> toolPage = page;
+            case INGREDIENTS -> ingredientPage = page;
+        }
+    }
+
     @Override
     public boolean isPauseScreen() {
         return false;
@@ -563,13 +601,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
     }
 
-    private class ItemEntry extends Element {
+    private abstract class ItemEntry extends Element {
 
-        private final ItemStack stack;
 
-        protected ItemEntry(ItemStack stack) {
+        private final String name;
+
+        protected ItemEntry(String name) {
             super(ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
-            this.stack = stack;
+            this.name = name;
         }
 
         @Override
@@ -582,20 +621,21 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             poseStack.translate(28, 28, 0);
             poseStack.scale(2.2F, 2.2F, 1);
             //poseStack.scale(scaleFactor, scaleFactor, 1);
-            graphics.renderItem(stack, -8, -8);
+            renderIcon(graphics);
             poseStack.popPose();
 
             poseStack.pushPose();
             poseStack.translate(56 + 140, getHeight() / 5F - 4, 0);
             //poseStack.scale(2.5F, 2.5F, 1);
             //poseStack.scale(scaleFactor, scaleFactor, 1);
-            graphics.drawCenteredString(minecraft.font, Component.translatable(stack.getDescriptionId()), 0, 0, 0xFFFFFFFF);
+            renderTitle(graphics);
             poseStack.popPose();
         }
 
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
+                selectEntry();
                 // TODO selectEntry(stack.getItem(), recipe);
                 // TODO selectedEntry = this;
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
@@ -603,7 +643,59 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             }
             return false;
         }
+
+        protected abstract void renderIcon(GuiGraphics graphics);
+        protected abstract void renderTitle(GuiGraphics graphics);
+
+        protected abstract void selectEntry();
+
     }
+
+    private class StacksItemEntry extends ItemEntry {
+        private final ItemStack shown;
+        private final List<Tuple<Item, Recipe<?>>> recipes = new ArrayList<>();
+        private final String titleKey;
+        private final String textKey;
+
+        protected StacksItemEntry(Item item, String name, JournalCategory category) {
+            this(List.of(item), name, category);
+        }
+
+
+        protected StacksItemEntry(List<Item> items, String name, JournalCategory category) {
+            super(name);
+            this.shown = new ItemStack(items.get(0));
+            for (Item item : items) {
+                ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
+                if (key != null) {
+                    Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(key);
+                    recipe.ifPresent(r -> recipes.add(new Tuple<>(item, r)));
+                }
+            }
+            textKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".text";
+            titleKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".title";
+        }
+
+        @Override
+        protected void renderIcon(GuiGraphics graphics) {
+            graphics.renderItem(shown, -8, -8);
+
+        }
+
+        @Override
+        protected void renderTitle(GuiGraphics graphics) {
+            graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
+        }
+
+        @Override
+        protected void selectEntry() {
+            String translateKey = textKey;
+            TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
+            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), textBlock, recipes.stream().map(r -> (Element) new CraftingRegistryGui.CraftingGrid(ENTRY_BASE_WIDTH, 100, r.getB(), r.getA(), 2.25F)).toList());
+            openItemPage(page);
+        }
+    }
+
 
     private class ReportEntry extends Element {
 
@@ -750,7 +842,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
-                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), textBlock);
+                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), textBlock, new ArrayList<>());
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             }
@@ -758,8 +850,96 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
     }
 
-    private record Page(Component title, TextBlock page) {
+    private final class Page extends Element {
+        private final Component title;
+        private final TextBlock page;
+        private final List<Element> grids;
+        private int selectedGrid = 0;
+        private static final int ARROW_Y = 320;
+        private static final int LEFT_ARROW_X = 12;
+        private static final int RIGHT_ARROW_X = 310;
+        private static final int ARROW_WIDTH = 16;
+        private static final int ARROW_HEIGHT = 16;
 
+        private Page(Component title, TextBlock page, List<Element> grids) {
+            super(330, 460);
+            this.title = title;
+            this.page = page;
+            this.grids = grids;
+        }
+
+        @Override
+        public void render(PoseStack pose, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            pose.pushPose();
+            pose.translate(150, 0, 0);
+            pose.scale(2.55F, 2.55F, 1);
+            int titleColor = 0xFFD0A030;
+            //graphics.fill(-40, 0, 40, 15, 0xFF000000);
+            if (title instanceof MutableComponent mc) {
+                graphics.drawCenteredString(Minecraft.getInstance().font, mc.withStyle(style), 0, 0, titleColor);
+            }
+            //graphics.drawCenteredString(Minecraft.getInstance().font, FormattedCharSequence.forward(overviewPage.title.getString(), style), 0, 0, titleColor);
+            int titleWidth = minecraft.font.width(title);
+
+            //graphics.fill(-titleWidth / 2, 12, titleWidth / 2, 13, titleColor);
+            pose.popPose();
+            pose.pushPose();
+            pose.translate(0, 40, 0);
+            page.render(pose, graphics, 0xFFFFFFFF, (int) (relativeMouseX), (int) (relativeMouseY - 40), pPartialTick);
+            pose.popPose();
+            if (grids.size() > 1) {
+                if (counter > 0) {
+                    renderArrow(pose, graphics, relativeMouseX, relativeMouseY, true);
+                }
+                if (counter < grids.size() - 1) {
+                    renderArrow(pose, graphics, relativeMouseX, relativeMouseY, false);
+                }
+            }
+            if (grids.size() > 0) {
+                pose.pushPose();
+                final int gridX = 40;
+                final int gridY = 260;
+                pose.translate(gridX, gridY, 0);
+                float factor = 1.5F;
+                pose.scale(factor, factor, 1);
+                grids.get(counter).render(pose, graphics, color, (int) ((relativeMouseX - gridX) / factor), (int) ((relativeMouseY - gridY) / factor), pPartialTick);
+                pose.popPose();
+            }
+
+        }
+
+        private void renderArrow(PoseStack pose, GuiGraphics graphics, int relativeMouseX, int relativeMouseY, boolean left) {
+            pose.pushPose();
+            pose.translate(left ? LEFT_ARROW_X : RIGHT_ARROW_X, ARROW_Y, 0);
+            pose.scale(1.5F, 1.5F, 1);
+            if ((hoveringLeftArrow(relativeMouseX, relativeMouseY) && left) || ((hoveringRightArrow(relativeMouseX, relativeMouseY) && !left))) {
+                pose.scale((float) 1.5F, 1.5F, 1);
+            }
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            graphics.blit(left ? LEFT_ARROW : RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+            pose.popPose();
+        }
+
+        private boolean hoveringLeftArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > LEFT_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < LEFT_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > ARROW_Y - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < ARROW_Y + 1.5 * ARROW_HEIGHT / 2D;
+        }
+
+        private boolean hoveringRightArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > RIGHT_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < RIGHT_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > ARROW_Y - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < ARROW_Y + 1.5 * ARROW_HEIGHT / 2D;
+        }
+
+        @Override
+        public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
+            if (hoveringLeftArrow(relativeMouseX, relativeMouseY) && counter > 0) {
+                counter--;
+                return true;
+            } else if (hoveringRightArrow(relativeMouseX, relativeMouseY) && counter < grids.size() - 1) {
+                counter++;
+                return true;
+            }
+            return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+        }
     }
 
 }

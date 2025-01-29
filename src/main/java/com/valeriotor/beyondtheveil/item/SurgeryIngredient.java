@@ -17,7 +17,7 @@ public class SurgeryIngredient extends Item {
 
     private static final Set<SurgeryIngredient> SURGERY_INGREDIENTS = new HashSet<>();
 
-    public SurgeryIngredient() {
+    public SurgeryIngredient() { // TODO add here: capacity and any other data required by journal
         super(new Item.Properties().stacksTo(16));
         SURGERY_INGREDIENTS.add(this);
     }

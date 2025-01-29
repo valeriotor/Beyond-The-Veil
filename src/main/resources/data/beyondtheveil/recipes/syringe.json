@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "   I",
+    " GG ",
+    " GG ",
+    "G   "
+  ],
+  "result": {
+    "item": "beyondtheveil:syringe"
+  },
+  "show_notification": true
+}

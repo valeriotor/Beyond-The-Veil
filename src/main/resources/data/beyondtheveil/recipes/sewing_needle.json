@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "minecraft:red_wool"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "   I",
+    " WW ",
+    " WW ",
+    "W   "
+  ],
+  "result": {
+    "item": "beyondtheveil:sewing_needle"
+  },
+  "show_notification": true
+}

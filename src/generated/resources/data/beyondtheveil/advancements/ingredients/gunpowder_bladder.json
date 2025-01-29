@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_gunpowder_bladder": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:gunpowder_bladder"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_gunpowder_bladder"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

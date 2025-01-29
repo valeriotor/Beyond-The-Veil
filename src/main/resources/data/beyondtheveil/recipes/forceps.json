@@ -1,0 +1,20 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "  I ",
+    "  II",
+    " I  ",
+    "I   "
+  ],
+  "result": {
+    "item": "beyondtheveil:forceps"
+  },
+  "show_notification": true
+}

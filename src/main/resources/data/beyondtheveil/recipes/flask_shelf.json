@@ -1,0 +1,20 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "W  W",
+    "WWWW",
+    "W  W",
+    "WWWW"
+  ],
+  "result": {
+    "item": "beyondtheveil:flask_shelf"
+  },
+  "show_notification": true
+}

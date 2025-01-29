@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_tiny_skull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:tiny_skull"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_tiny_skull"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

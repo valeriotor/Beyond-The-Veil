@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_shell": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:shell"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_shell"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

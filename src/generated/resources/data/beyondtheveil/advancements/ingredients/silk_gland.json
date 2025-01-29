@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_silk_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:silk_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_silk_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

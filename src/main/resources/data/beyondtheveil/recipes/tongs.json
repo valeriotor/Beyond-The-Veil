@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "  I ",
+    "  BI",
+    " I  ",
+    "I   "
+  ],
+  "result": {
+    "item": "beyondtheveil:tongs"
+  },
+  "show_notification": true
+}

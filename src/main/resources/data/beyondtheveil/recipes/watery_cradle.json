@@ -1,0 +1,29 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "GGGG",
+    "IWWI",
+    "BWWB",
+    "BBBB"
+  ],
+  "result": {
+    "item": "beyondtheveil:watery_cradle"
+  },
+  "show_notification": true
+}

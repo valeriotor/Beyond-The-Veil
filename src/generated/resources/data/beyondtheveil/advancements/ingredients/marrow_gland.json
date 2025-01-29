@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_marrow_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:marrow_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_marrow_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

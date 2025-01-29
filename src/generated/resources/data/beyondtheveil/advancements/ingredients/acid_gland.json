@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_acid_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:acid_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_acid_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
