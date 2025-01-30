@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
@@ -13,6 +14,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
@@ -23,6 +25,8 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
@@ -37,9 +41,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
+import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
 
 import java.util.*;
 
@@ -106,6 +115,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final ResourceLocation INGREDIENTS_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/ingredients_icon.png");
     private static final ResourceLocation JOURNAL_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/journal_icon.png");
     private static final ResourceLocation ABOMINATION_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/abomination_icon.png");
+    private static final ResourceLocation FLUID_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/fluid_icon.png");
+    private static final ResourceLocation FLUID_FILLING_ICON = new ResourceLocation(References.MODID, "textures/gui/journal/fluid_filling_icon.png");
     private static final ResourceLocation DROPDOWN_1 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_1.png");
     private static final ResourceLocation DROPDOWN_2 = new ResourceLocation(References.MODID, "textures/gui/journal/dropdown_2.png");
     private static final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
@@ -113,6 +124,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/journal/button.png");
     private static final ResourceLocation LEFT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/left_arrow.png");
     private static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/right_arrow.png");
+    private static final ResourceLocation ALEMBICS_PROFILE = new ResourceLocation(References.MODID, "textures/gui/journal/alembics_profile.png");
     private final int PAGE_X = 50;
     private final int PAGE_Y = -200;
 
@@ -162,6 +174,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     @Override
     protected void init() {
+        scaleFactor = 1;
         imageWidth = BACKGROUND_BASE_WIDTH;
         imageHeight = BACKGROUND_BASE_HEIGHT;
         //entryListWidth = 343;
@@ -265,6 +278,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         list.add(new Dropdown2("surgery"));
         return list;
     }
+
     private List<ItemEntry> getTools() {
         List<ItemEntry> entries = new ArrayList<>();
         entries.add(new StacksItemEntry(Registration.FORCEPS.get(), "forceps", JournalCategory.TOOLS));
@@ -286,6 +300,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     private List<ItemEntry> getIngredients() {
         List<ItemEntry> entries = new ArrayList<>();
+        entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), "sedative", JournalCategory.INGREDIENTS));
+        entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_COAGULANT.get(), "coagulant", JournalCategory.INGREDIENTS));
+        entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_SOFTENER.get(), "softener", JournalCategory.INGREDIENTS));
         for (Item knownIngredient : knownIngredients) {
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(knownIngredient);
             if (key != null) {
@@ -587,12 +604,31 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             currentList().tick();
         }
     }
-    @Override public void onAddAdvancementRoot(Advancement pAdvancement) {}
-    @Override public void onRemoveAdvancementRoot(Advancement pAdvancement) {}
-    @Override public void onAddAdvancementTask(Advancement pAdvancement) {}
-    @Override public void onRemoveAdvancementTask(Advancement pAdvancement) {}
-    @Override public void onAdvancementsCleared() {}
-    @Override public void onSelectedTabChanged(@Nullable Advancement pAdvancement) {}
+
+    @Override
+    public void onAddAdvancementRoot(Advancement pAdvancement) {
+    }
+
+    @Override
+    public void onRemoveAdvancementRoot(Advancement pAdvancement) {
+    }
+
+    @Override
+    public void onAddAdvancementTask(Advancement pAdvancement) {
+    }
+
+    @Override
+    public void onRemoveAdvancementTask(Advancement pAdvancement) {
+    }
+
+    @Override
+    public void onAdvancementsCleared() {
+    }
+
+    @Override
+    public void onSelectedTabChanged(@Nullable Advancement pAdvancement) {
+    }
+
     @Override
     public void onUpdateAdvancementProgress(Advancement pAdvancement, AdvancementProgress pProgress) {
         String s = pAdvancement.getId().toString();
@@ -605,10 +641,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
 
         private final String name;
+        private final String titleKey;
+        private final String textKey;
 
-        protected ItemEntry(String name) {
+        protected ItemEntry(String name, JournalCategory category) {
             super(ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
             this.name = name;
+            textKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".text";
+            titleKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".title";
         }
 
         @Override
@@ -645,17 +685,25 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
 
         protected abstract void renderIcon(GuiGraphics graphics);
-        protected abstract void renderTitle(GuiGraphics graphics);
 
-        protected abstract void selectEntry();
+        protected void renderTitle(GuiGraphics graphics) {
+            graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
+        }
+
+        private void selectEntry() {
+            String translateKey = textKey;
+            TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
+            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), textBlock, getGridElements());
+            openItemPage(page);
+        }
+
+        protected abstract List<Element> getGridElements();
 
     }
 
     private class StacksItemEntry extends ItemEntry {
         private final ItemStack shown;
         private final List<Tuple<Item, Recipe<?>>> recipes = new ArrayList<>();
-        private final String titleKey;
-        private final String textKey;
 
         protected StacksItemEntry(Item item, String name, JournalCategory category) {
             this(List.of(item), name, category);
@@ -663,7 +711,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
 
         protected StacksItemEntry(List<Item> items, String name, JournalCategory category) {
-            super(name);
+            super(name, category);
             this.shown = new ItemStack(items.get(0));
             for (Item item : items) {
                 ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
@@ -672,27 +720,136 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                     recipe.ifPresent(r -> recipes.add(new Tuple<>(item, r)));
                 }
             }
-            textKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".text";
-            titleKey = "gui.journal." + (category == JournalCategory.TOOLS ? "tools." : "ingredients.") + name + ".title";
         }
 
         @Override
         protected void renderIcon(GuiGraphics graphics) {
             graphics.renderItem(shown, -8, -8);
-
         }
 
         @Override
-        protected void renderTitle(GuiGraphics graphics) {
-            graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
+        protected List<Element> getGridElements() {
+            return recipes.stream().map(r -> (Element) new CraftingRegistryGui.CraftingGrid(ENTRY_BASE_WIDTH, 100, r.getB(), r.getA(), 2.25F)).toList();
+        }
+    }
+
+    private class FluidItemEntry extends ItemEntry {
+        private final float red;
+        private final float green;
+        private final float blue;
+        private final List<AlembicsRecipeRegistry.AlembicRecipe> recipes = new ArrayList<>();
+
+        protected FluidItemEntry(Fluid fluid, String name, JournalCategory category) {
+            this(List.of(fluid), name, category);
+        }
+
+
+        protected FluidItemEntry(List<Fluid> fluids, String name, JournalCategory category) {
+            super(name, category);
+            int color = IClientFluidTypeExtensions.of(fluids.get(0)).getTintColor();
+            red = ((color >> 16) & 255) / 255F;
+            green = ((color >> 8) & 255) / 255F;
+            blue = (color & 255) / 255F;
+            for (Fluid fluid : fluids) {
+                List<AlembicsRecipeRegistry.AlembicRecipe> alembicRecipes = AlembicsRecipeRegistry.knownRecipes(fluid, knownIngredients);
+                recipes.addAll(alembicRecipes);
+            }
         }
 
         @Override
-        protected void selectEntry() {
-            String translateKey = textKey;
-            TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
-            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), textBlock, recipes.stream().map(r -> (Element) new CraftingRegistryGui.CraftingGrid(ENTRY_BASE_WIDTH, 100, r.getB(), r.getA(), 2.25F)).toList());
-            openItemPage(page);
+        protected void renderIcon(GuiGraphics graphics) {
+            RenderSystem.enableBlend();
+            graphics.blit(FLUID_ICON, -8, -8, 16, 16, 0, 0, 60, 60, 60, 60);
+            RenderSystem.setShaderColor(red, green, blue, 1);
+            graphics.blit(FLUID_FILLING_ICON, -8, -8, 16, 16, 0, 0, 60, 60, 60, 60);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+        }
+
+        @Override
+        protected List<Element> getGridElements() {
+            return recipes.stream().map(r -> (Element) new AlembicRecipeDisplay(ENTRY_BASE_WIDTH, 100, r)).toList();
+        }
+    }
+
+    private class AlembicRecipeDisplay extends Element {
+        private final TextureAtlasSprite input1;
+        private final Component input1Name;
+        private final ItemStack stack;
+        private final Component stackName;
+        private final TextureAtlasSprite input2;
+        private final Component input2Name;
+        private final TextureAtlasSprite output;
+        private final Component outputName;
+        private static final ItemStack ALEMBICS = new ItemStack(Registration.ALEMBICS.get());
+        private static final ItemStack FLASK = new ItemStack(Registration.FLASK_LARGE.get());
+
+        protected AlembicRecipeDisplay(int width, int height, AlembicsRecipeRegistry.AlembicRecipe recipe) {
+            super(width, height);
+            input1 = ForgeHooksClient.getFluidSprites(minecraft.level, minecraft.player.getOnPos(), Fluids.WATER.defaultFluidState())[0];//minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input1()).getStillTexture());
+            input2 = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input2()).getStillTexture());
+            stack = recipe.stack().copy();
+            output = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.output()).getStillTexture());
+            Component s = recipe.input1().getFluidType().getDescription();
+            input1Name = recipe.input1().getFluidType().getDescription();
+            stackName = recipe.stack().getItem().getDescription();
+            input2Name = recipe.input2().getFluidType().getDescription();
+            outputName = recipe.output().getFluidType().getDescription();
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            final int Y_OFFSET = 50;
+            final int CORRECTION = 6;
+            final int X_OFFSET_1 = 4 - CORRECTION;
+            final int X_OFFSET_STACK = 56 - CORRECTION;
+            final int X_OFFSET_2 = 108 - CORRECTION;
+            final int X_OFFSET_OUTPUT = 153 - CORRECTION;
+            final int SIDE = 16;
+            final float FACTOR = 0.335F;
+            poseStack.pushPose();
+            poseStack.translate(-CORRECTION, 1, 0);
+            poseStack.scale(FACTOR, FACTOR, 1);
+            graphics.blit(ALEMBICS_PROFILE, -13, 27, 534, 181, 0, 0, 534, 181, 534, 181);
+            poseStack.popPose();
+            //poseStack.pushPose();
+            //poseStack.translate(-CORRECTION, 5.5, 100);
+            //poseStack.mulPose(Axis.YP.rotation((float) Math.PI / 2));
+            //final float SCALE = 4;
+            //poseStack.scale(SCALE, SCALE, SCALE);
+            //poseStack.translate(0, 0, -128);
+            //graphics.renderItem(ALEMBICS, 0, 0);
+            //poseStack.translate(0, 0, 18);
+            //graphics.renderItem(FLASK, 0, 0);
+            //poseStack.popPose();
+            //poseStack.pushPose();
+            //poseStack.translate(0,0, 100);
+            if (input1 != null) {
+                graphics.blit(X_OFFSET_1, Y_OFFSET, 0, 16, 16, input1);
+            }
+            if (stack != null) {
+                graphics.renderItem(stack, X_OFFSET_STACK, Y_OFFSET - 7);
+            }
+            if (input2 != null) {
+                graphics.blit(X_OFFSET_2, Y_OFFSET, 0, 16, 16, input2);
+            }
+            if (output != null) {
+                graphics.blit(X_OFFSET_OUTPUT, Y_OFFSET, 0, 16, 16, output);
+            }
+            if (relativeMouseY > Y_OFFSET && relativeMouseY <= Y_OFFSET + SIDE) {
+                if (relativeMouseX > X_OFFSET_1 && relativeMouseX <= X_OFFSET_1 + SIDE) {
+                    graphics.renderTooltip(minecraft.font, input1Name, relativeMouseX, relativeMouseY);
+                }
+                if (relativeMouseX > X_OFFSET_2 && relativeMouseX <= X_OFFSET_2 + SIDE) {
+                    graphics.renderTooltip(minecraft.font, input2Name, relativeMouseX, relativeMouseY);
+                }
+                if (relativeMouseX > X_OFFSET_OUTPUT && relativeMouseX <= X_OFFSET_OUTPUT + SIDE) {
+                    graphics.renderTooltip(minecraft.font, outputName, relativeMouseX, relativeMouseY);
+                }
+            }
+            if (relativeMouseX > X_OFFSET_STACK && relativeMouseX <= X_OFFSET_STACK + SIDE && relativeMouseY > Y_OFFSET - 7 && relativeMouseY <= Y_OFFSET - 7 + SIDE) {
+                graphics.renderTooltip(minecraft.font, stackName, relativeMouseX, relativeMouseY);
+            }
+            //poseStack.popPose();
         }
     }
 

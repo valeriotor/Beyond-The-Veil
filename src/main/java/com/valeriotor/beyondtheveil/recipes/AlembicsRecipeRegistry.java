@@ -47,7 +47,7 @@ public class AlembicsRecipeRegistry {
         for (Tuple<AlembicRecipe, List<Item>> tuple : tuples) {
             boolean flag = true;
             for (Item item : tuple.getB()) {
-                if (knownIngredients.contains(item)) {
+                if (!knownIngredients.contains(item)) {
                     flag = false;
                     break;
                 }
@@ -60,7 +60,7 @@ public class AlembicsRecipeRegistry {
     }
 
 
-    private record AlembicRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {
+    public record AlembicRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {
     }
 
 }
