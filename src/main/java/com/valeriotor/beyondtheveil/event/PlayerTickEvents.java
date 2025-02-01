@@ -3,6 +3,8 @@ package com.valeriotor.beyondtheveil.event;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
@@ -57,6 +59,7 @@ public class PlayerTickEvents {
                 }
             });
             checkDiscoveredWaypoint(event);
+            p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
         }
     }
 

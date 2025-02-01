@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
@@ -36,6 +38,7 @@ import static com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvide
 import static com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider.CROSS_SYNC_DATA;
 import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.RESEARCH;
 import static com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider.CONVALESCENT_DATA;
+import static com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider.PLAYER_TIMER_DATA;
 
 
 @Mod.EventBusSubscriber
@@ -93,6 +96,7 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "research_data"), new ResearchProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "cross_sync_data"), new CrossSyncDataProvider());
                 event.addCapability(new ResourceLocation(References.MODID, "dialogue_data"), new DialogueDataProvider());
+                event.addCapability(new ResourceLocation(References.MODID, "player_timer_data"), new PlayerTimerDataProvider());
             }
             if (event.getObject().level().isClientSide() && ClientSetup.isConnectionPresent()) {
                 GenericToServerPacket message = new GenericToServerPacket(GenericToServerPacket.MessageType.ASK_DATA_SYNC);
@@ -131,11 +135,16 @@ public class CapabilityEvents {
             });
         });
         // TODO we probably will want to do this for crosssync as well
-        event.getOriginal().invalidateCaps();
 
         event.getOriginal().getCapability(DIALOGUE_DATA).ifPresent(oldData -> {
             event.getEntity().getCapability(DIALOGUE_DATA).ifPresent(oldData::copyToNewStore);
         });
+
+        event.getOriginal().getCapability(PLAYER_TIMER_DATA).ifPresent(oldData -> {
+            event.getEntity().getCapability(PLAYER_TIMER_DATA).ifPresent(oldData::copyToNewStore);
+        });
+
+        event.getOriginal().invalidateCaps();
     }
 
     @SubscribeEvent
@@ -146,6 +155,7 @@ public class CapabilityEvents {
         event.register(TriggerData.class);
         event.register(DialogueData.class);
         event.register(ConvalescentData.class);
+        event.register(PlayerTimerData.class);
     }
 
     @SubscribeEvent
