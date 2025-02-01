@@ -1,0 +1,58 @@
+package com.valeriotor.beyondtheveil.letters;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+
+public class ExchangeTemplate {
+
+    private String name;
+    private Correspondence correspondence;
+    private boolean playerInitiated;
+    private List<LetterTemplate> letters;
+
+    public boolean isPlayerInitiated() {
+        return playerInitiated;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    int numberOfLetters() {
+        return letters.size();
+    }
+
+    LetterTemplate getTemplate(int index) {
+        return letters.get(index);
+    }
+
+    public static class LetterTemplate {
+        List<List<String>> optionsPerLine;
+        private List<ExchangeItems> itemsRequired;
+        private List<ExchangeItems> itemsRedeemed;
+    }
+
+    public static class ExchangeItems {
+        private String item;
+        private int amount;
+        private String nbt;
+
+        public ItemStack getItem() {
+            Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
+            if (i != null) {
+                ItemStack stack = new ItemStack(i, amount);
+                // TODO either figure out string nbt or set special rules
+                return stack;
+            }
+            return null;
+        }
+
+    }
+
+
+}

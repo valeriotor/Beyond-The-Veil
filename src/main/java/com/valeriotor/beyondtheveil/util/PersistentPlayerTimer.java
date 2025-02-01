@@ -1,31 +1,41 @@
 package com.valeriotor.beyondtheveil.util;
 
+import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public enum PersistentPlayerTimer {
-    LETTER(List.of(), List.of(), List.of(), List.of()),;
+    LETTER((p, t) -> {
+        p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+            c.receiveLetter(t.getAdditionalData("exchange"));
+        });
+    }),;
 
-    private final List<Consumer<Player>> continuousActions;
-    private final List<Consumer<Player>> finalActions;
+    private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
+    private final List<BiConsumer<Player, PlayerTimer>> finalActions;
     private final List<Predicate<Player>> interrupts;
     private final List<Predicate<Player>> earlyFinish;
 
-    PersistentPlayerTimer(List<Consumer<Player>> continuousActions, List<Consumer<Player>> finalActions, List<Predicate<Player>> interrupts, List<Predicate<Player>> earlyFinish) {
+    PersistentPlayerTimer(BiConsumer<Player, PlayerTimer> finalAction) {
+        this(List.of(), List.of(finalAction), List.of(), List.of());
+    }
+
+    PersistentPlayerTimer(List<BiConsumer<Player, PlayerTimer>> continuousActions, List<BiConsumer<Player, PlayerTimer>> finalActions, List<Predicate<Player>> interrupts, List<Predicate<Player>> earlyFinish) {
         this.continuousActions = continuousActions;
         this.finalActions = finalActions;
         this.interrupts = interrupts;
         this.earlyFinish = earlyFinish;
     }
 
-    public List<Consumer<Player>> getContinuousActions() {
+    public List<BiConsumer<Player, PlayerTimer>> getContinuousActions() {
         return continuousActions;
     }
 
-    public List<Consumer<Player>> getFinalActions() {
+    public List<BiConsumer<Player, PlayerTimer>> getFinalActions() {
         return finalActions;
     }
 
