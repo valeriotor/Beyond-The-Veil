@@ -20,6 +20,10 @@ public class Exchange {
         this.template = template;
     }
 
+    public ExchangeTemplate getTemplate() {
+        return template;
+    }
+
     public String getName() {
         return template.getName();
     }
@@ -39,6 +43,10 @@ public class Exchange {
             return letters.size() % 2 == 0;
         }
         return letters.size() % 2 == 1;
+    }
+
+    public boolean isFinished() {
+        return letters.size() >= template.numberOfLetters();
     }
 
     public Letter sendLetter(Player player, List<Integer> chosenOptions) {

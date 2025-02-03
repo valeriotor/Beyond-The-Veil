@@ -14,9 +14,14 @@ public class ExchangeTemplate {
     private Correspondence correspondence;
     private boolean playerInitiated;
     private List<LetterTemplate> letters;
+    private boolean repeatable;
 
     public boolean isPlayerInitiated() {
         return playerInitiated;
+    }
+
+    public boolean isRepeatable() {
+        return repeatable;
     }
 
     public String getName() {

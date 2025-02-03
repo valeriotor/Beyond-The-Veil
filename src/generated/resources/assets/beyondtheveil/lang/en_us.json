@@ -649,7 +649,7 @@
   "gui.journal.bookmark.journal": "Journal",
   "gui.journal.bookmark.overview": "Overview",
   "gui.journal.bookmark.tools": "Tools",
-  "gui.journal.ingredients.acid_gland.text": "Produces a highly corrosive substance, melting through armor.\\n§oAdds:§r §larmor damagey§r.\\n§oRequires:§r 1 capacity.",
+  "gui.journal.ingredients.acid_gland.text": "Produces a highly corrosive substance, melting through armor.\\n§oAdds:§r §larmor damage§r.\\n§oRequires:§r 1 capacity.",
   "gui.journal.ingredients.acid_gland.title": "Acid Gland",
   "gui.journal.ingredients.empty_bladder.text": "Empty Bladder",
   "gui.journal.ingredients.empty_bladder.title": "Empty Bladder",

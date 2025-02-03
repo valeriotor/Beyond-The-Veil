@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-25T01:02:08.2694097	Block States: beyondtheveil
+// 1.20.1	2025-02-03T20:47:58.5962069	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
 bdd3341be1acaa3da82bcfaa457ba7c961e34848 assets/beyondtheveil/blockstates/black_kelp.json
@@ -40,6 +40,7 @@ dd122c3438862dbc3c3178b6dee5ce134f268ac9 assets/beyondtheveil/blockstates/flask_
 c2238efbf7c5349ab7bd1c3b1c1425bb1399395e assets/beyondtheveil/blockstates/heart.json
 bc91f7a38db02ec8adcdd0dff85bafd66e24f8be assets/beyondtheveil/blockstates/idol.json
 56e0d4fe8c85b85ff87151e0d3a2ccb1d96c4384 assets/beyondtheveil/blockstates/lamp.json
+dc51e198f1dd6cb9586babbae8eda45c34890e12 assets/beyondtheveil/blockstates/letter_box.json
 575aecbf7a96123b2eeba0bfd98ad3dbd4e87e14 assets/beyondtheveil/blockstates/memory_sieve.json
 77e6744d6207f1a4b93028c337429206186101c4 assets/beyondtheveil/blockstates/patient_pod.json
 bd48c2227f270f7be8a60fd4f2efc4876b56f001 assets/beyondtheveil/blockstates/sacrifice_altar.json

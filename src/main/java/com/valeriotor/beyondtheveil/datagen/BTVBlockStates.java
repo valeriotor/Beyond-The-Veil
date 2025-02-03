@@ -82,6 +82,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSleepChamber();
         registerWateryCradle();
         registerPatientPod();
+        registerLetterBox();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerFlaskShelf();
         registerFlasks();
@@ -265,6 +266,17 @@ public class BTVBlockStates extends BlockStateProvider {
         getVariantBuilder(PATIENT_POD.get())
                 .forAllStates(state -> ConfiguredModel.builder()
                         .modelFile(state.getValue(PATIENT_POD.get().getLevelProperty()) == 0 ? patientPod : empty)
+                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .build());
+    }
+
+    private void registerLetterBox() {
+        ExistingModelFile letterBoxUpper = new ExistingModelFile(modLoc("block/letter_box_upper"), models().existingFileHelper);
+        ExistingModelFile letterBoxLower = new ExistingModelFile(modLoc("block/letter_box_lower"), models().existingFileHelper);
+
+        getVariantBuilder(LETTER_BOX.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(LETTER_BOX.get().getLevelProperty()) == 0 ? letterBoxLower : letterBoxUpper)
                         .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                         .build());
     }

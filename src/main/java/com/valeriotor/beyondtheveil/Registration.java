@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
@@ -143,6 +144,7 @@ public class Registration {
     //public static final RegistryObject<Block> SACRIFICE_STATUE = BLOCKS.register("sacrifice_statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.SACRIFICE_STATUE, WorshipType.SACRIFICE);
     //public static final RegistryObject<Block> PENITENCE_STATUE = BLOCKS.register("penitence_statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.PENITENCE_STATUE, WorshipType.PENITENCE);
     public static final RegistryObject<Block> MEMORY_SIEVE = BLOCKS.register("memory_sieve", () -> new MemorySieveBlock(BRICK_PROPERTIES)); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
+    public static final RegistryObject<ThinMultiBlock1by2> LETTER_BOX = BLOCKS.register("letter_box", () -> new LetterBoxBlock(BRICK_PROPERTIES)); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     //public static final RegistryObject<Block> DREAM_FOCUS = BLOCKS.register("dream_focus", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocus(BlockNames.DREAMFOCUS);
     //public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
     //public static final RegistryObject<Block> DREAM_FOCUS_VILLAGERS = BLOCKS.register("dream_focus_villagers", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
@@ -216,6 +218,7 @@ public class Registration {
     //public static final RegistryObject<Item> SACRIFICE_STATUE_ITEM = fromBlock(SACRIFICE_STATUE);
     //public static final RegistryObject<Item> PENITENCE_STATUE_ITEM = fromBlock(PENITENCE_STATUE);
     public static final RegistryObject<Item> MEMORY_SIEVE_ITEM = fromBlock(MEMORY_SIEVE);
+    public static final RegistryObject<Item> LETTER_BOX_ITEM = fromBlock(LETTER_BOX);
     //public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
     //public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
     //public static final RegistryObject<Item> DREAM_FOCUS_VILLAGERS_ITEM = fromBlock(DREAM_FOCUS_VILLAGERS);
@@ -368,6 +371,7 @@ public class Registration {
             .displayItems((features, output) -> {
 
                 output.accept(MEMORY_SIEVE.get());
+                output.accept(LETTER_BOX.get());
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());

@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LetterData {
@@ -31,26 +32,36 @@ public class LetterData {
     }
 
     public void receiveLetter(String exchangeName) {
-        for (Exchange exchange : exchanges) {
+        for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext(); ) {
+            Exchange exchange = iterator.next();
             if (exchange.getName().equals(exchangeName)) {
                 Letter received = exchange.receiveLetter();
                 if (received != null) {
                     receivedInOrder.add(received);
                 }
+                terminateExchange(iterator, exchange);
                 break;
             }
         }
     }
 
     public void sendLetter(Player player, String exchangeName, List<Integer> chosenOptions) {
-        for (Exchange exchange : exchanges) {
+        for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext(); ) {
+            Exchange exchange = iterator.next();
             if (exchange.getName().equals(exchangeName)) {
                 Letter sent = exchange.sendLetter(player, chosenOptions);
                 if (sent != null) {
                     sentInOrder.add(sent);
                 }
+                terminateExchange(iterator, exchange);
                 break;
             }
+        }
+    }
+
+    private static void terminateExchange(Iterator<Exchange> iterator, Exchange exchange) {
+        if (exchange.isFinished() && exchange.getTemplate().isRepeatable()) {
+            iterator.remove();
         }
     }
 
