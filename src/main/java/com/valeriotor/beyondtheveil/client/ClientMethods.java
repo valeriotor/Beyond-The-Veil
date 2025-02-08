@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
@@ -74,6 +75,14 @@ public class ClientMethods {
         SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(soundEvent));
         if (sound != null && Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.playSound(sound, 1, 1);
+        }
+    }
+
+    public static void loadLetterData(CompoundTag tag) {
+        if (Minecraft.getInstance().player != null) {
+            Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+                c.loadFromNBT(tag.getCompound("data"));
+            });
         }
     }
 

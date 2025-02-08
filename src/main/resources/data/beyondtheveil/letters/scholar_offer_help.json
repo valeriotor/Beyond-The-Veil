@@ -1,0 +1,17 @@
+{
+  "name": "scholar_offer_help",
+  "correspondence": "SHOREMAN_SCHOLAR",
+  "playerInitiated": false,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["hello"], ["this_is"], ["feel_free"], ["best"]]
+    },
+    {
+      "optionsPerLine": [["hello", "greetings", "dear"], ["dreamer", "ocean"], ["thanks", "see_you"], ["name", "friend", "seeker", "traveller"]]
+    },
+    {
+      "optionsPerLine": [["hello"], ["both"], ["in_person"], ["best"]]
+    }
+  ]
+}

@@ -111,6 +111,7 @@ public class PlayerTimer {
                 finalAction.accept(player, this);
             }
         }
+        timer--;
         return false;
     }
 
@@ -127,7 +128,7 @@ public class PlayerTimer {
     }
 
     public boolean isDone() {
-        return timer <= 0;
+        return timer < 0;
     }
 
     public static class Builder {

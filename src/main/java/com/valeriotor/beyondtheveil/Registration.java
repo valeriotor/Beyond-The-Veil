@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
+import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.entity.*;
@@ -345,6 +346,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<BloodBasinBE>> BLOOD_BASIN_BE = BLOCK_ENTITIES.register(BLOOD_BASIN.getId().getPath(), () -> BlockEntityType.Builder.of(BloodBasinBE::new, BLOOD_BASIN.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
+    public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
     public static final RegistryObject<MenuType<ShoremanDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new ShoremanDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
 

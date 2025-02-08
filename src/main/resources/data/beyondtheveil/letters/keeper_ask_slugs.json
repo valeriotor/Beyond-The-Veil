@@ -1,0 +1,15 @@
+{
+  "name": "keeper_ask_slugs",
+  "correspondence": "SHOREMAN_LIGHTHOUSE_KEEPER",
+  "playerInitiated": true,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["hello", "greetings", "dear"], ["customs", "mission"], ["slugs"], ["name", "friend", "seeker", "traveller"]]
+    },
+    {
+      "optionsPerLine": [["hello"], ["slugs"], ["warning"], ["best"]],
+      "itemsRedeemed": "SLUGS"
+    }
+  ]
+}

@@ -116,6 +116,12 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.BLACK_SCREEN, tag);
     }
 
+    public static GenericToClientPacket syncLetterData(CompoundTag data) {
+        CompoundTag tag = new CompoundTag();
+        tag.put("data", data);
+        return new GenericToClientPacket(MessageType.SYNC_LETTER_DATA, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -151,6 +157,7 @@ public class GenericToClientPacket {
                     case STOP_CROSS_SYNC -> CrossSyncHolder.stopCrossSync(tag);
                     case SYNC_ARCHE_DATA -> ClientData.getInstance().syncArcheData(tag);
                     case BLACK_SCREEN -> ClientMethods.blackScreen(tag);
+                    case SYNC_LETTER_DATA -> ClientMethods.loadLetterData(tag);
                 }
             });
         });
@@ -170,7 +177,8 @@ public class GenericToClientPacket {
         CROSS_SYNC,
         STOP_CROSS_SYNC,
         SYNC_ARCHE_DATA,
-        BLACK_SCREEN
+        BLACK_SCREEN,
+        SYNC_LETTER_DATA
     }
 
 }

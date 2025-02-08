@@ -36,10 +36,32 @@ public class ExchangeTemplate {
         return letters.get(index);
     }
 
+    public void postProcess() {
+        for (int i = 0; i < letters.size(); i++) {
+            LetterTemplate letter = letters.get(i);
+            letter.setParent(this, i);
+        }
+    }
+
     public static class LetterTemplate {
+        private ExchangeTemplate parent;
+        private int index;
         List<List<String>> optionsPerLine;
         private List<ExchangeItems> itemsRequired;
-        private List<ExchangeItems> itemsRedeemed;
+        private RedeemableItems itemsRedeemed;
+
+        public void setParent(ExchangeTemplate parent, int index) {
+            this.parent = parent;
+            this.index = index;
+        }
+
+        public ExchangeTemplate getParent() {
+            return parent;
+        }
+
+        public int getIndex() {
+            return index;
+        }
     }
 
     public static class ExchangeItems {

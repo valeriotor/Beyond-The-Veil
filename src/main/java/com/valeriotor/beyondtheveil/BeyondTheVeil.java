@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mojang.logging.LogUtils;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
@@ -63,6 +64,7 @@ public class BeyondTheVeil
             ResearchRegistry.registerResearchesFirst();
             ResearchRegistry.registerResearchesSecond();
             DialogueRegistry.registerDialogues();
+            ExchangeRegistry.registerExchanges();
             //LegacyStructure.registerLegacyStructures();
             Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 5));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, References.MODID, TerrablenderSurfaceRules.makeRules());
