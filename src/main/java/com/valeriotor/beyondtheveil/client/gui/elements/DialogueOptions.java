@@ -7,14 +7,11 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
-public class DialogueOptions extends ScrollableList<TextLine> {
+public class DialogueOptions extends OptionList<DialogueOptions> {
 
     public static DialogueOptions makeOptions(List<DialogueBranch.DialogueOption> localizedOptions, int textWidth, Font font, int width, int height, int scrollbarWidth, BiConsumer<DialogueOptions, Integer> listener) {
         List<List<TextLine>> lines = new ArrayList<>();
@@ -28,62 +25,25 @@ public class DialogueOptions extends ScrollableList<TextLine> {
         return new DialogueOptions(width, height, lines, localizedOptions, scrollbarWidth, listener);
     }
 
-
-    private final List<Integer> elementIndexToOptionIndex = new ArrayList<>();
     private final List<DialogueBranch.DialogueOption> types;
-    private final BiConsumer<DialogueOptions, Integer> listener;
 
     private DialogueOptions(int width, int height, List<List<TextLine>> options, List<DialogueBranch.DialogueOption> types, int scrollbarWidth, BiConsumer<DialogueOptions, Integer> listener) {
-        super(width, height, options.stream().flatMap(Collection::stream).collect(Collectors.toList()), 15, scrollbarWidth);
+        super(width, height, options, scrollbarWidth, listener);
         this.types = types;
-        this.listener = listener;
-        for (int i = 0; i < options.size(); i++) {
-            List<TextLine> option = options.get(i);
-            for (TextLine textLine : option) {
-                elementIndexToOptionIndex.add(i);
-            }
-        }
     }
 
     @Override
-    protected void renderElement(int element, PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, int y, float pPartialTick) {
-        boolean flag = false;
-        if (elementIndexToOptionIndex.get(element) == getHoveredOption(relativeMouseX, relativeMouseY)) {
-            flag = true;
-        }
-        poseStack.pushPose();
-        poseStack.translate(flag ? 20 : 5, 0, 0);
-        super.renderElement(element, poseStack, graphics, color, relativeMouseX, relativeMouseY, y, pPartialTick);
-        poseStack.popPose();
-        if(element == 0 || !Objects.equals(elementIndexToOptionIndex.get(element - 1), elementIndexToOptionIndex.get(element))) {
-            poseStack.pushPose();
-            poseStack.translate(-2, 0, 0);
-            String c = switch (getType(element)) {
-                case NORMAL, CONTINUE -> ">";
-                case TRADE -> "□";
-                case END -> "•";
-            };
-            graphics.drawString(Minecraft.getInstance().font, c, 0, 0, color);
-            poseStack.popPose();
-        }
+    protected String getStarter(int element) {
+        return switch (getType(element)) {
+            case NORMAL, CONTINUE -> ">";
+            case TRADE -> "□";
+            case END -> "•";
+        };
     }
 
     @Override
-    protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
-        boolean flag = super.clickElement(element, relativeMouseX, relativeMouseY, mouseButton);
-        if (listener != null) {
-            listener.accept(this, elementIndexToOptionIndex.get(element));
-            return true;
-        }
-        return flag;
-    }
-
-    private int getHoveredOption(double relativeMouseX, double relativeMouseY) {
-        int hoveredElement = getHoveredElement(relativeMouseX, relativeMouseY);
-        if (hoveredElement == -1) {
-            return -1;
-        }
-        return elementIndexToOptionIndex.get(hoveredElement);
+    protected void acceptListener(int element) {
+        listener.accept(this, elementIndexToOptionIndex.get(element));
     }
 
     public String getLocalizedOption(int option) {

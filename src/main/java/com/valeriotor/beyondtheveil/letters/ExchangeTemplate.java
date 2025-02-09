@@ -28,6 +28,10 @@ public class ExchangeTemplate {
         return name;
     }
 
+    public Correspondence getCorrespondence() {
+        return correspondence;
+    }
+
     int numberOfLetters() {
         return letters.size();
     }
@@ -61,6 +65,10 @@ public class ExchangeTemplate {
 
         public int getIndex() {
             return index;
+        }
+
+        public List<List<String>> getOptionsPerLine() {
+            return optionsPerLine;
         }
     }
 

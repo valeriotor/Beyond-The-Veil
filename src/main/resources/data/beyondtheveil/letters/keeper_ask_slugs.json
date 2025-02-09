@@ -5,7 +5,7 @@
   "repeatable": false,
   "letters": [
     {
-      "optionsPerLine": [["hello", "greetings", "dear"], ["customs", "mission"], ["slugs"], ["name", "friend", "seeker", "traveller"]]
+      "optionsPerLine": [["hello", "greetings", "dear"], ["customs", "mission"], ["slugs"], ["best", "regards"], ["name", "friend", "seeker", "traveller"]]
     },
     {
       "optionsPerLine": [["hello"], ["slugs"], ["warning"], ["best"]],

@@ -1231,18 +1231,64 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("sleep.parasite", "I don't feel all too well.. I can't sleep.");
 
         addDialogue();
+        addExchanges();
         addResearch();
         addCraftingRegistry();
         addReminiscence();
         addGuis();
         addSurgery();
+        addCommonCaptions();
+    }
+
+    private void addExchanges() {
+        add("correspondence.to", "To: ");
+        add("correspondence.shoreman_lighthouse_keeper", "Lighthouse Keeper");
+        add("correspondence.shoreman_scholar", "The Scholar");
+        add("correspondence.blood_cult", "???");
+        add("correspondence.blood_cult_2", "???");
+        add("correspondence.miskatonic_researchers_blood", "Miskatonic University");
+
+        add("exchange.scholar_offer_help.object", "My knowledge is at your disposal\\n");
+        add("exchange.scholar_offer_help.0.0.hello", "Dear Seeker,\\n");
+        add("exchange.scholar_offer_help.0.1.this_is", "I am the Scholar of the shoremen, reaching you to express not only gratitude, but also great admiration: for your willingness to overcome those inner biases that gnaw at the mind of every human, for your desire to challenge your own beliefs in pursuit of what is true, and for your indomitable tenacity, unperturbed by the metanoia brought forth by communion.\\n");
+        add("exchange.scholar_offer_help.0.2.feel_free", "I thus pledge myself to help in any way I can. I am knowledgeable about several things, related both to our traditions here on the shore, and the wider academic circles I once belonged to. Do not hesitate to write or visit.\\n");
+        add("exchange.scholar_offer_help.0.3.best", "Best,\\1The Scholar.");
+        add("exchange.scholar_offer_help.1.0.hello", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.0.greetings", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.0.dear", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.1.dreamer", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.1.ocean", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.2.thanks", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.2.see_you", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.3.name", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.3.friend", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.3.seeker", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.3.traveller", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.2.0.hello", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.2.1.both", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.2.2.in_person", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.2.3.best", "My knowledge is at your disposal");
+
+        add("exchange.keeper_ask_slugs.object", "A small request");
+        add("exchange.keeper_ask_slugs.0.0.hello", "Hello,\\n");
+        add("exchange.keeper_ask_slugs.0.0.greetings", "Greetings,\\n");
+        add("exchange.keeper_ask_slugs.0.0.dear", "Dear Keeper,\\n");
+        add("exchange.keeper_ask_slugs.0.1.customs", "I wish to become acquainted with the customs of the shoremen.\\n");
+        add("exchange.keeper_ask_slugs.0.1.mission", "In my pursuit of knowledge, I seek to learn more about your kin.\\n");
+        add("exchange.keeper_ask_slugs.0.2.slugs", "I had grown curious from the interest your brethren have towards the white slugs you hoard in your barrels. I would be grateful if you could send me a sample.\\n");
+        add("exchange.keeper_ask_slugs.0.3.best", "Best,\\1");
+        add("exchange.keeper_ask_slugs.0.3.regards", "Kind Regards,\\1");
+        add("exchange.keeper_ask_slugs.0.4.name", "%s");
+        add("exchange.keeper_ask_slugs.0.4.friend", "Your friend");
+        add("exchange.keeper_ask_slugs.0.4.seeker", "The Seeker");
+        add("exchange.keeper_ask_slugs.0.4.traveller", "The Traveller");
     }
 
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
         add("caption.shift_right_click", "Sneak + Right Click");
         add("caption.crafting", "Go to Crafting registry");
-        add("caption.crafting", "Go to Journal entry");
+        add("caption.journal", "Go to Journal entry");
     }
 
     private void addDialogue() {
@@ -1674,6 +1720,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.sleep_chamber.wake", "Leave chamber");
 
         addJournal();
+        addLetterBox();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -1685,6 +1732,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.miner.display_name", "Miner");
         add("gui.dialogue.scholar.display_name", "Scholar");
         add("gui.dialogue.smith.display_name", "Smith");
+    }
+
+    private void addLetterBox() {
+        add("gui.letter_box.received", "Received");
+        add("gui.letter_box.sent", "Sent");
+        add("gui.letter_box.new", "New");
     }
 
     private void addJournal() {

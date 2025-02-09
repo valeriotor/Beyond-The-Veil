@@ -75,6 +75,10 @@ public class LetterData {
         return sentInOrder;
     }
 
+    public List<Exchange> getExchanges() {
+        return exchanges;
+    }
+
     public CompoundTag saveToNBT(CompoundTag compoundTag) {
         CompoundTag receivedLetters = new CompoundTag();
         CompoundTag sentLetters = new CompoundTag();

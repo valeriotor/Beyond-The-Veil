@@ -23,11 +23,15 @@ public class Letter {
     public static Letter sent(ExchangeTemplate.LetterTemplate template, List<Integer> chosen) {
         Letter letter = new Letter(template);
         List<List<String>> optionsPerLine = template.optionsPerLine;
-        for (int i = 0; i < optionsPerLine.size(); i++) {
+        for (int i = 0; i < chosen.size(); i++) {
             List<String> options = optionsPerLine.get(i);
-            letter.chosenOptions.add(options.get(chosen.size() > i ? chosen.get(i) : 0));
+            letter.chosenOptions.add(options.get(chosen.get(i)));
         }
         return letter;
+    }
+
+    public static Letter toWrite(ExchangeTemplate.LetterTemplate template) {
+        return sent(template, new ArrayList<>());
     }
 
     public static Letter fromNBT(CompoundTag tag) {
@@ -47,7 +51,7 @@ public class Letter {
         this.template = template;
     }
 
-    boolean isOpened() {
+    public boolean isOpened() {
         return opened;
     }
 
@@ -57,6 +61,18 @@ public class Letter {
 
     public void setOpened(boolean opened) {
         this.opened = opened;
+    }
+
+    public List<String> getChosenOptions() {
+        return chosenOptions;
+    }
+
+    public void chooseOption(String option) {
+        chosenOptions.add(option);
+    }
+
+    public ExchangeTemplate.LetterTemplate getTemplate() {
+        return template;
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -71,7 +87,6 @@ public class Letter {
         tag.put("options", options);
         return tag;
     }
-
 
 
 }

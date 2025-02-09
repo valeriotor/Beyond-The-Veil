@@ -17,6 +17,7 @@ public class ScrollableList<T extends Element> extends Element {
     private int thumbHeight = 15;
     private boolean draggingThumb = false;
     private boolean variableSize;
+    private boolean alwaysRenderScrollbar;
 
     public ScrollableList(int width, int height, List<T> rows, int rowHeight, int scrollbarWidth) {
         super(width, height);
@@ -26,6 +27,10 @@ public class ScrollableList<T extends Element> extends Element {
         this.renderedRows = height / rowHeight;
         this.maxFirstRow = renderedRows >= rows.size() ? 0 : rows.size() - renderedRows;
         thumbHeight = 40;
+    }
+
+    public void setAlwaysRenderScrollbar(boolean alwaysRenderScrollbar) {
+        this.alwaysRenderScrollbar = alwaysRenderScrollbar;
     }
 
     public void setVariableSize(boolean variableSize) {
@@ -62,10 +67,12 @@ public class ScrollableList<T extends Element> extends Element {
 
 
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, int startFrom, boolean drawScrollbar) {
-        if (maxFirstRow > 0 && drawScrollbar) {
+        if (alwaysRenderScrollbar || (maxFirstRow > 0 && drawScrollbar)) {
             graphics.fill(getWidth() - scrollbarWidth, 0, getWidth(), getHeight(), 0x99000000);
             int thumbY = getThumbY();
-            renderThumb(poseStack, graphics, thumbY);
+            if (maxFirstRow > 0 && drawScrollbar) {
+                renderThumb(poseStack, graphics, thumbY);
+            }
         }
         for (int i = currentFirstRow + startFrom; i < currentFirstRow + renderedRows && i < rows.size(); i++) {
             int y = relativeYForElement(i);

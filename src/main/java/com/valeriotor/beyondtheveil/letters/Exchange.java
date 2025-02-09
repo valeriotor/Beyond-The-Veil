@@ -34,6 +34,13 @@ public class Exchange {
         return template;
     }
 
+    public ExchangeTemplate.LetterTemplate nextLetterTemplate() {
+        if (isFinished()) {
+            return null;
+        }
+        return template.getTemplate(letters.size());
+    }
+
     public String getName() {
         return template.getName();
     }
@@ -44,6 +51,10 @@ public class Exchange {
 
     public boolean canReceiveLetter() {
         return !isNextLetterFromPlayer() && template.numberOfLetters() > letters.size();
+    }
+
+    public boolean noLettersSent() {
+        return letters.isEmpty();
     }
 
     /**
@@ -83,7 +94,7 @@ public class Exchange {
     }
 
     public void scheduleMail(Player player) {
-        int time = player.getRandom().nextInt(1, 100);
+        int time = player.getRandom().nextInt(5000, 10000);
         PlayerTimer timer = new PlayerTimer(time, "letter_" + getName(), PersistentPlayerTimer.LETTER, Map.of("exchange", getName()));
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
     }

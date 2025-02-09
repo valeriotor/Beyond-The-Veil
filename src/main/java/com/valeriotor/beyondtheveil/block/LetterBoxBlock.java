@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -88,8 +89,13 @@ public class LetterBoxBlock extends ThinMultiBlock1by2 {
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (!pLevel.isClientSide && pPlacer instanceof Player p) {
+            if (ResearchUtil.getResearchStage(p, "COMMUNION") == 1) {
+                p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+                    c.addExchange(p, ExchangeRegistry.byName("scholar_offer_help"));
+                });
+            }
             p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
-                c.addExchange(p, ExchangeRegistry.byName("scholar_offer_help"));
+                c.addExchange(p, ExchangeRegistry.byName("keeper_ask_slugs"));
             });
         }
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
