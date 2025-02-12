@@ -70,23 +70,38 @@ public class ExchangeTemplate {
         public List<List<String>> getOptionsPerLine() {
             return optionsPerLine;
         }
+
+        public RedeemableItems getItemsRedeemed() {
+            return itemsRedeemed;
+        }
+
+        public List<ExchangeItems> getItemsRequired() {
+            return itemsRequired;
+        }
     }
 
     public static class ExchangeItems {
         private String item;
         private int amount;
         private String nbt;
+        private ItemStack stack;
 
         public ItemStack getItem() {
+            if (stack != null) {
+                return stack;
+            }
             Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
             if (i != null) {
-                ItemStack stack = new ItemStack(i, amount);
+                stack = new ItemStack(i, amount);
                 // TODO either figure out string nbt or set special rules
                 return stack;
             }
             return null;
         }
 
+        public int getAmount() {
+            return amount;
+        }
     }
 
 

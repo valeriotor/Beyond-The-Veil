@@ -1251,7 +1251,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.scholar_offer_help.object", "My knowledge is at your disposal\\n");
         add("exchange.scholar_offer_help.0.0.hello", "Dear Seeker,\\n");
         add("exchange.scholar_offer_help.0.1.this_is", "I am the Scholar of the shoremen, reaching you to express not only gratitude, but also great admiration: for your willingness to overcome those inner biases that gnaw at the mind of every human, for your desire to challenge your own beliefs in pursuit of what is true, and for your indomitable tenacity, unperturbed by the metanoia brought forth by communion.\\n");
-        add("exchange.scholar_offer_help.0.2.feel_free", "I thus pledge myself to help in any way I can. I am knowledgeable about several things, related both to our traditions here on the shore, and the wider academic circles I once belonged to. Do not hesitate to write or visit.\\n");
+        add("exchange.scholar_offer_help.0.2.feel_free", "I thus pledge myself to help in any way I can. I am knowledgeable about several topics, related both to our traditions here on the shore, and the wider academic circles I once belonged to. Do not hesitate to write or visit.\\n");
         add("exchange.scholar_offer_help.0.3.best", "Best,\\1The Scholar.");
         add("exchange.scholar_offer_help.1.0.hello", "My knowledge is at your disposal");
         add("exchange.scholar_offer_help.1.0.greetings", "My knowledge is at your disposal");
@@ -1738,6 +1738,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.letter_box.received", "Received");
         add("gui.letter_box.sent", "Sent");
         add("gui.letter_box.new", "New");
+        add("gui.letter_box.send", "Send");
+        add("gui.letter_box.reply", "Reply");
+        add("gui.letter_box.redeem", "Redeem");
     }
 
     private void addJournal() {

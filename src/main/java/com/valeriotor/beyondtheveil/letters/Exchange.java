@@ -1,12 +1,14 @@
 package com.valeriotor.beyondtheveil.letters;
 
 import com.google.common.collect.Iterables;
-import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 
 import java.util.*;
 
@@ -45,6 +47,38 @@ public class Exchange {
         return template.getName();
     }
 
+    public boolean hasItems(Player player) {
+        IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+        if(canSendLetter()) {
+            for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
+                int remaining = exchangeItems.getAmount();
+                for (int i = 0; i < inventory.getSlots(); i++) {
+                    remaining -= inventory.extractItem(i, remaining, true).getCount();
+                }
+                if (remaining > 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void takeItems(Player player) {
+        IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+        if(canSendLetter()) {
+            for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
+                int remaining = exchangeItems.getAmount();
+                for (int i = 0; i < inventory.getSlots(); i++) {
+                    remaining -= inventory.extractItem(i, remaining, false).getCount();
+                    if (remaining == 0) {
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
     public boolean canSendLetter() {
         return isNextLetterFromPlayer() && template.numberOfLetters() > letters.size();
     }
@@ -71,9 +105,10 @@ public class Exchange {
         return letters.size() >= template.numberOfLetters();
     }
 
-    public Letter sendLetter(Player player, List<Integer> chosenOptions) {
+    public Letter sendLetter(Player player, List<Integer> chosenOptions, Map<ExchangeTemplate.LetterTemplate, Integer> versions) {
         if (canSendLetter()) {
-            Letter letter = Letter.sent(template.getTemplate(letters.size()), chosenOptions);
+            ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
+            Letter letter = Letter.sent(template1, chosenOptions, versions.getOrDefault(template1, 0));
             letter.setOpened(true);
             letters.add(letter);
             if (canReceiveLetter()) {
@@ -84,19 +119,34 @@ public class Exchange {
         return null;
     }
 
-    public Letter receiveLetter() {
+    public Letter receiveLetter(Map<ExchangeTemplate.LetterTemplate, Integer> versions) {
         if (canReceiveLetter()) {
-            Letter received = Letter.received(template.getTemplate(letters.size()));
+            ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
+            Letter received = Letter.received(template1, versions.getOrDefault(template1, 0));
             letters.add(received);
+            if (canSendLetter()) {
+                received.setCanReply(true);
+            }
             return received;
         }
         return null;
+    }
+
+    public void openLetter() {
+        // let's just open them all instead of finding the right one
+        letters.forEach(Letter::open);
     }
 
     public void scheduleMail(Player player) {
         int time = player.getRandom().nextInt(5000, 10000);
         PlayerTimer timer = new PlayerTimer(time, "letter_" + getName(), PersistentPlayerTimer.LETTER, Map.of("exchange", getName()));
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
+    }
+
+    public void markRedeemed(Player player) {
+        if (!letters.isEmpty() && isNextLetterFromPlayer() && Iterables.getLast(letters).canRedeem()) {
+            Iterables.getLast(letters).redeem(player, null, false);
+        }
     }
 
     public boolean pendingMail() {

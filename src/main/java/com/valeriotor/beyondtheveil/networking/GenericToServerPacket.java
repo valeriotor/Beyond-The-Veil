@@ -1,19 +1,23 @@
 package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
+import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class GenericToServerPacket {
 
@@ -25,6 +29,23 @@ public class GenericToServerPacket {
             tag.putBoolean("delete", true);
         }
         return new GenericToServerPacket(MessageType.SYNC_REPORT, tag);
+    }
+
+    public static GenericToServerPacket sendLetter(String exchangeName, List<Integer> chosenOptions) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("name", exchangeName);
+        for (int i = 0; i < chosenOptions.size(); i++) {
+            tag.putInt(String.valueOf(i), chosenOptions.get(i));
+        }
+        return new GenericToServerPacket(MessageType.SEND_LETTER, tag);
+    }
+
+    public static GenericToServerPacket redeemItems(String exchangeName, int index, int version) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("name", exchangeName);
+        tag.putInt("index", index);
+        tag.putInt("version", version);
+        return new GenericToServerPacket(MessageType.REDEEM_ITEMS, tag);
     }
 
     private final MessageType type;
@@ -60,11 +81,10 @@ public class GenericToServerPacket {
                         CapabilityEvents.syncCapabilities(player);
                     }
                     case REMINISCING_START -> {
-                        ServerPlayer sender = player;
-                        DataUtil.setBoolean(sender, PlayerDataLib.REMINISCING, true, true);
-                        Map<String, Reminiscence> reminiscences = DataUtil.getReminiscences(sender);
+                        DataUtil.setBoolean(player, PlayerDataLib.REMINISCING, true, true);
+                        Map<String, Reminiscence> reminiscences = DataUtil.getReminiscences(player);
                         for (String key : reminiscences.keySet()) {
-                            DataUtil.setBooleanOnServerAndSync(sender, PlayerDataLib.REMINISCED.apply(key), true, false);
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.REMINISCED.apply(key), true, false);
                         }
                     }
                     case REMINISCING_STOP -> {
@@ -82,6 +102,18 @@ public class GenericToServerPacket {
                             DataUtil.setTag(player, PlayerDataLib.JOURNAL_REPORT.apply(tag.getString("name")), tag);
                         }
                     }
+                    case SEND_LETTER -> {
+                        ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
+                        List<Integer> chosenOptions = tag.getAllKeys().stream().filter(StringUtils::isAlphanumeric).sorted(Comparator.comparingInt(Integer::valueOf)).map(tag::getInt).toList();
+                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.sendLetter(player, template, chosenOptions, false));
+                    }
+                    case REDEEM_ITEMS -> {
+                        ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
+                        int index = tag.getInt("index");
+                        int version = tag.getInt("version");
+                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.redeemItems(player, template, index, version, true));
+
+                    }
                 }
 
             }
@@ -95,7 +127,9 @@ public class GenericToServerPacket {
         REMINISCING_START,
         REMINISCING_STOP,
         SLEEP_CHAMBER,
-        SYNC_REPORT
+        SYNC_REPORT,
+        SEND_LETTER,
+        REDEEM_ITEMS
     }
 
 }
