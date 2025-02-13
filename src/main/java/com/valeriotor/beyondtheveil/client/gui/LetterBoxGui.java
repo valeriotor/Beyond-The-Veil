@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.client.gui;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
@@ -19,6 +21,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
 
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/letters/letter_box.png");
     private static final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/letters/letter_box_button.png");
+    private static final ResourceLocation BUTTON_INACTIVE = new ResourceLocation(References.MODID, "textures/gui/letters/letter_box_button_inactive.png");
     private static final ResourceLocation PAGE = new ResourceLocation(References.MODID, "textures/gui/letters/letter_page.png");
     private static final ResourceLocation LETTER_ENTRY = new ResourceLocation(References.MODID, "textures/gui/letters/letter_entry.png");
     private static final ResourceLocation LETTER_OPEN = new ResourceLocation(References.MODID, "textures/gui/letters/letter_open.png");
@@ -87,13 +91,16 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         updateLists();
 
         buttonHolder = ElementHolder.makeHolder(imageWidth, imageHeight);
-        receivedButton = buttonHolder.addElement((int) (7 * 5F / 8), 755 * 5 / 8, new TexturedButton(141 * 5 / 8, 32 * 5 / 8, BUTTON, 0x07FFFFFF, Component.translatable("gui.letter_box.received"), t -> {
+        receivedButton = buttonHolder.addElement((int) (8 * 5F / 8), 755 * 5 / 8, new TexturedButton(141 * 5 / 8, 32 * 5 / 8, BUTTON, BUTTON_INACTIVE, 0x07FFFFFF, Component.translatable("gui.letter_box.received"), t -> {
             showingReceived = true;
+            updateWidgetVisibility();
         }));
-        sentButton = buttonHolder.addElement((int) (148 * 5F / 8), 755 * 5 / 8, new TexturedButton(141 * 5 / 8, 32 * 5 / 8, BUTTON, 0x07FFFFFF, Component.translatable("gui.letter_box.sent"), t -> {
+        showingReceived = true;
+        sentButton = buttonHolder.addElement((int) (148 * 5F / 8), 755 * 5 / 8, new TexturedButton(141 * 5 / 8, 32 * 5 / 8, BUTTON, BUTTON_INACTIVE, 0x07FFFFFF, Component.translatable("gui.letter_box.sent"), t -> {
             showingReceived = false;
+            updateWidgetVisibility();
         }));
-        newLetterButton = buttonHolder.addElement((int) (7 * 5F / 8), 13 * 5 / 8, new TexturedButton(282 * 5 / 8, 32 * 5 / 8, BUTTON, 0x07FFFFFF, Component.translatable("gui.letter_box.new"), t -> {
+        newLetterButton = buttonHolder.addElement((int) (8 * 5F / 8), 13 * 5 / 8, new TexturedButton(282 * 5 / 8, 32 * 5 / 8, BUTTON, BUTTON_INACTIVE, 0x07FFFFFF, Component.translatable("gui.letter_box.new"), t -> {
             Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
                 List<ReceiverEntry> receiverEntries = new ArrayList<>();
                 for (Exchange exchange : c.getExchanges()) {
@@ -126,6 +133,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                             Messages.sendToServer(GenericToServerPacket.sendLetter(exchange.getName(), shownLetter.chosenOptionsInteger));
                             shownLetter = null;
                             updateWidgetVisibility();
+                            updateLists();
                         } else {
                             // TODO show warning
                         }
@@ -148,9 +156,9 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
 
     private void updateLists() {
         Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
-            receivedLetters = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, c.getReceivedInOrder().stream().map(LetterEntry::new).toList(), ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+            receivedLetters = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, Lists.reverse(c.getReceivedInOrder().stream().map(l -> new LetterEntry(l, true)).toList()), ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
             receivedLetters.setAlwaysRenderScrollbar(true);
-            sentLetters = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, c.getSentInOrder().stream().map(LetterEntry::new).toList(), ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+            sentLetters = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, Lists.reverse(c.getSentInOrder().stream().map(l -> new LetterEntry(l, false)).toList()), ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
             sentLetters.setAlwaysRenderScrollbar(true);
         });
     }
@@ -172,7 +180,22 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             sendButton.visible = sendButton.active = true;
             replyButton.visible = replyButton.active = false;
             redeemButton.visible = redeemButton.active = false;
+        } else {
+            sendButton.visible = sendButton.active = false;
+            replyButton.visible = replyButton.active = false;
+            redeemButton.visible = redeemButton.active = false;
         }
+        receivedButton.active = !showingReceived;
+        sentButton.active = showingReceived;
+        Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+            boolean flag = false;
+            for (Exchange exchange : c.getExchanges()) {
+                if (exchange.canSendLetter() && exchange.noLettersSent()) {
+                    flag = true;
+                }
+            }
+            newLetterButton.active = flag;
+        });
     }
 
     @Override
@@ -324,10 +347,34 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
 
     private class LetterEntry extends Element {
         private final Letter letter;
+        private final boolean received;
+        private final String correspondence;
+        private final String object;
+        private final String objectFull;
 
-        protected LetterEntry(Letter letter) {
+        protected LetterEntry(Letter letter, boolean received) {
             super(ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
             this.letter = letter;
+            this.received = received;
+            String correspondence1 = Component.translatable(received ? "correspondence.from" : "correspondence.to").getString() + Component.translatable("correspondence." + letter.getTemplate().getParent().getCorrespondence().name().toLowerCase()).getString();
+            StringBuilder correspondenceBuilder = cutString(correspondence1);
+            correspondence = correspondenceBuilder.toString();
+            objectFull = Component.translatable("exchange." + letter.getTemplate().getParent().getName() + ".object").getString();
+            StringBuilder objectBuilder = cutString(objectFull);
+            object = objectBuilder.toString();
+        }
+
+        @NotNull
+        private StringBuilder cutString(String object1) {
+            StringBuilder objectBuilder = new StringBuilder();
+            for (char c : object1.toCharArray()) {
+                objectBuilder.append(c);
+                if (Minecraft.getInstance().font.width(objectBuilder.toString()) > getWidth() - 62) {
+                    objectBuilder.append("...");
+                    break;
+                }
+            }
+            return objectBuilder;
         }
 
         @Override
@@ -335,6 +382,9 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             graphics.blit(LETTER_ENTRY, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
+                if (object.length() < objectFull.length()) {
+                    graphics.renderTooltip(Minecraft.getInstance().font, Component.literal(objectFull), relativeMouseX, relativeMouseY);
+                }
             }
 
             poseStack.pushPose();
@@ -345,8 +395,13 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             graphics.blit(icon, -11, -11, 16, 16, 0, 0, 60, 60, 60, 60);
             poseStack.popPose();
 
+            if (letter.canRedeem() || letter.canReply()) {
+                graphics.fill(getWidth() - 10, 5, getWidth() - 7, 8, 0xFFFF3333);
+            }
             poseStack.pushPose();
-            poseStack.translate(56 + 140, getHeight() / 5F - 4, 0);
+            poseStack.translate(45, 7, 0);
+            graphics.drawString(Minecraft.getInstance().font, correspondence, 0, 0, 0xFFFFFFFF);
+            graphics.drawString(Minecraft.getInstance().font, object, 0, 15, 0xFFFFFFFF);
             //poseStack.scale(2.5F, 2.5F, 1);
             //poseStack.scale(scaleFactor, scaleFactor, 1);
             //renderTitle(graphics);
@@ -356,6 +411,10 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
+                if (!letter.isOpened()) {
+                    letter.open();
+                    Messages.sendToServer(GenericToServerPacket.openLetter(letter.getTemplate().getParent().getName(), letter.getTemplate().getIndex(), letter.getVersion()));
+                }
                 selectLetter(letter);
                 return true;
             }
@@ -396,7 +455,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
     }
 
 
-    private static class LetterPage extends Element {
+    private class LetterPage extends Element {
 
         private final Letter letter;
         private final List<Integer> chosenOptionsInteger = new ArrayList<>();
@@ -435,6 +494,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                     makeTextAndOptions();
                     if (letter.getChosenOptions().size() == letter.getTemplate().getOptionsPerLine().size()) {
                         readyToSend = true;
+                        updateWidgetVisibility();
                     }
                 };
                 List<String> localizedOptions = letter.getTemplate().getOptionsPerLine().get(letter.getChosenOptions().size()).stream().map(o -> "name".equals(o) ? Minecraft.getInstance().player.getName().getString() : I18n.get(localizationKeyPrefix + o)).toList();

@@ -55,10 +55,18 @@ public class LetterData {
             Exchange exchange = iterator.next();
             if (exchange.getTemplate() == template) {
                 // relies on the fact that only one exchange per template can exist at a given time
-                if(clientSide || exchange.hasItems(player)) {
-                    Letter sent = exchange.sendLetter(player, chosenOptions, versions);
-                    exchange.takeItems(player);
+                if (clientSide || exchange.hasItems(player)) {
+                    Letter sent = exchange.sendLetter(player, chosenOptions, versions, clientSide);
                     if (sent != null) {
+                        if(sent.getTemplate().getIndex() > 0) {
+                            for (Letter received : receivedInOrder) {
+                                if (received.matches(sent.getTemplate().getParent(), sent.getTemplate().getIndex() - 1, sent.getVersion())) {
+                                    received.setCanReply(false);
+                                    break;
+                                }
+                            }
+                        }
+                        exchange.takeItems(player);
                         sentInOrder.add(sent);
                         versions.put(sent.getTemplate(), 1 + versions.getOrDefault(sent.getTemplate(), 0));
                     }
@@ -92,6 +100,16 @@ public class LetterData {
         }
 
     }
+
+    public void openLetter(Player player, ExchangeTemplate template, int index, int version) {
+        for (Letter letter : receivedInOrder) {
+            if (letter.matches(template, index, version)) {
+                letter.setOpened(true);
+                break;
+            }
+        }
+    }
+
 
     private static void terminateExchange(Iterator<Exchange> iterator, Exchange exchange) {
         if (exchange.isFinished() && exchange.getTemplate().isRepeatable()) {

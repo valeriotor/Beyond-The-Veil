@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 public class TexturedButton extends Element{
 
     private final ResourceLocation texture;
+    private final ResourceLocation inactiveTexture;
     private final int highlightColor;
     private Component text;
     private final Consumer<TexturedButton> action;
@@ -18,8 +19,13 @@ public class TexturedButton extends Element{
     public boolean active = true;
 
     public TexturedButton(int width, int height, ResourceLocation texture, int highlightColor, Component text, Consumer<TexturedButton> action) {
+        this(width, height, texture, texture, highlightColor, text, action);
+    }
+
+    public TexturedButton(int width, int height, ResourceLocation texture, ResourceLocation inactiveTexture, int highlightColor, Component text, Consumer<TexturedButton> action) {
         super(width, height);
         this.texture = texture;
+        this.inactiveTexture = inactiveTexture;
         this.highlightColor = highlightColor;
         this.text = text;
         this.action = action;
@@ -36,10 +42,10 @@ public class TexturedButton extends Element{
             //graphics.blit(texture, 0, 0, 0, 0, 20, 20);
 
             //graphics.blitNineSliced(texture, 0, 0, getWidth(), getHeight(), 10, 10, 10, 10, getWidth(), getHeight(), 0, 0);
-            graphics.blit(texture, 0, 0, 5, getHeight(), 0, 0, 5, 20, 200, 20);
-            graphics.blitRepeating(texture, 5, 0, getWidth() - 10, getHeight(), 5, 0, 200, 20, 200, 20);
-            graphics.blit(texture, getWidth() - 5, 0, 5, getHeight(), 195, 0, 5, 20, 200, 20);
-            if (insideBounds(relativeMouseX, relativeMouseY)) {
+            graphics.blit(active ? texture : inactiveTexture, 0, 0, 5, getHeight(), 0, 0, 5, 20, 200, 20);
+            graphics.blitRepeating(active ? texture : inactiveTexture, 5, 0, getWidth() - 10, getHeight(), 5, 0, 200, 20, 200, 20);
+            graphics.blit(active ? texture : inactiveTexture, getWidth() - 5, 0, 5, getHeight(), 195, 0, 5, 20, 200, 20);
+            if (insideBounds(relativeMouseX, relativeMouseY) && active) {
                 graphics.fill(0, 0, getWidth(), getHeight(), highlightColor);
             }
             graphics.drawCenteredString(Minecraft.getInstance().font, text, getWidth() / 2, getHeight() / 2 - 3, color);

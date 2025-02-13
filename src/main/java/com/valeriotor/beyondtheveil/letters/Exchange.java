@@ -49,7 +49,7 @@ public class Exchange {
 
     public boolean hasItems(Player player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-        if(canSendLetter()) {
+        if(canSendLetter() && template.getTemplate(letters.size()).getItemsRequired() != null) {
             for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
                 int remaining = exchangeItems.getAmount();
                 for (int i = 0; i < inventory.getSlots(); i++) {
@@ -105,13 +105,13 @@ public class Exchange {
         return letters.size() >= template.numberOfLetters();
     }
 
-    public Letter sendLetter(Player player, List<Integer> chosenOptions, Map<ExchangeTemplate.LetterTemplate, Integer> versions) {
+    public Letter sendLetter(Player player, List<Integer> chosenOptions, Map<ExchangeTemplate.LetterTemplate, Integer> versions, boolean clientSide) {
         if (canSendLetter()) {
             ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
             Letter letter = Letter.sent(template1, chosenOptions, versions.getOrDefault(template1, 0));
             letter.setOpened(true);
             letters.add(letter);
-            if (canReceiveLetter()) {
+            if (canReceiveLetter() && !clientSide) {
                 scheduleMail(player);
             }
             return letter;
@@ -138,7 +138,7 @@ public class Exchange {
     }
 
     public void scheduleMail(Player player) {
-        int time = player.getRandom().nextInt(5000, 10000);
+        int time = player.getRandom().nextInt(50, 100);
         PlayerTimer timer = new PlayerTimer(time, "letter_" + getName(), PersistentPlayerTimer.LETTER, Map.of("exchange", getName()));
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
     }

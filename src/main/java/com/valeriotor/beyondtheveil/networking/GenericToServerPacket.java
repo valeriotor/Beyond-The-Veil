@@ -48,6 +48,14 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.REDEEM_ITEMS, tag);
     }
 
+    public static GenericToServerPacket openLetter(String exchangeName, int index, int version) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("name", exchangeName);
+        tag.putInt("index", index);
+        tag.putInt("version", version);
+        return new GenericToServerPacket(MessageType.OPEN_LETTER, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -104,7 +112,7 @@ public class GenericToServerPacket {
                     }
                     case SEND_LETTER -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
-                        List<Integer> chosenOptions = tag.getAllKeys().stream().filter(StringUtils::isAlphanumeric).sorted(Comparator.comparingInt(Integer::valueOf)).map(tag::getInt).toList();
+                        List<Integer> chosenOptions = tag.getAllKeys().stream().filter(StringUtils::isNumeric).sorted(Comparator.comparingInt(Integer::valueOf)).map(tag::getInt).toList();
                         player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.sendLetter(player, template, chosenOptions, false));
                     }
                     case REDEEM_ITEMS -> {
@@ -112,7 +120,12 @@ public class GenericToServerPacket {
                         int index = tag.getInt("index");
                         int version = tag.getInt("version");
                         player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.redeemItems(player, template, index, version, true));
-
+                    }
+                    case OPEN_LETTER -> {
+                        ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
+                        int index = tag.getInt("index");
+                        int version = tag.getInt("version");
+                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.openLetter(player, template, index, version));
                     }
                 }
 
@@ -129,7 +142,8 @@ public class GenericToServerPacket {
         SLEEP_CHAMBER,
         SYNC_REPORT,
         SEND_LETTER,
-        REDEEM_ITEMS
+        REDEEM_ITEMS,
+        OPEN_LETTER
     }
 
 }

@@ -84,9 +84,9 @@ public class ExchangeTemplate {
         private String item;
         private int amount;
         private String nbt;
-        private ItemStack stack;
+        //private ItemStack stack;
 
-        public ItemStack getItem() {
+        /*public ItemStack getItem() {
             if (stack != null) {
                 return stack;
             }
@@ -95,6 +95,14 @@ public class ExchangeTemplate {
                 stack = new ItemStack(i, amount);
                 // TODO either figure out string nbt or set special rules
                 return stack;
+            }
+            return null;
+        }*/
+
+        public ItemStack getItem() {
+            Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
+            if (i != null) {
+                return new ItemStack(i, amount);
             }
             return null;
         }

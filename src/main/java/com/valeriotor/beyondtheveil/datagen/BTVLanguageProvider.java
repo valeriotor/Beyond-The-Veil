@@ -1242,6 +1242,9 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addExchanges() {
         add("correspondence.to", "To: ");
+        add("correspondence.from", "From: ");
+        add("correspondence.awaits", "§4Awaits reply");
+        add("correspondence.redeem", "§4Redeem items");
         add("correspondence.shoreman_lighthouse_keeper", "Lighthouse Keeper");
         add("correspondence.shoreman_scholar", "The Scholar");
         add("correspondence.blood_cult", "???");
@@ -1275,7 +1278,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.keeper_ask_slugs.0.0.dear", "Dear Keeper,\\n");
         add("exchange.keeper_ask_slugs.0.1.customs", "I wish to become acquainted with the customs of the shoremen.\\n");
         add("exchange.keeper_ask_slugs.0.1.mission", "In my pursuit of knowledge, I seek to learn more about your kin.\\n");
-        add("exchange.keeper_ask_slugs.0.2.slugs", "I had grown curious from the interest your brethren have towards the white slugs you hoard in your barrels. I would be grateful if you could send me a sample.\\n");
+        add("exchange.keeper_ask_slugs.0.2.slugs", "I had grown curious of the interest your brethren have towards the white slugs you hoard in your barrels. I would be grateful if you could send me a sample.\\n");
         add("exchange.keeper_ask_slugs.0.3.best", "Best,\\1");
         add("exchange.keeper_ask_slugs.0.3.regards", "Kind Regards,\\1");
         add("exchange.keeper_ask_slugs.0.4.name", "%s");
