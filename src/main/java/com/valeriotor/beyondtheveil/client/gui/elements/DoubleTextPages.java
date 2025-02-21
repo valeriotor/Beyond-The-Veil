@@ -17,9 +17,9 @@ public class DoubleTextPages extends Element {
     private int index;
 
     public static DoubleTextPages makePagesAndEpigraph(String epigraph, String epigraphSource, String localized, int width, int height, int blockWidth, Font f) {
-        TextUtil epigraphUtil = new TextUtil();
+        TextUtil epigraphUtil = new TextUtil().offset(10);
         List<Element> elements = epigraphUtil.parseText(epigraph, blockWidth, f);
-        TextUtil epigraphSourceUtil = new TextUtil(true);
+        TextUtil epigraphSourceUtil = new TextUtil().alignRight();
         elements.addAll(epigraphSourceUtil.parseText(epigraphSource, blockWidth, f));
 
         TextUtil textUtil = new TextUtil();

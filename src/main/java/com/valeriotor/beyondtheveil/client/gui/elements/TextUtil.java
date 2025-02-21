@@ -26,14 +26,17 @@ public class TextUtil {
     private ParsingPhase phase = ParsingPhase.NORMAL;
     private boolean backslashEscape = false;
     private boolean formatEscape = false;
-    private final boolean alignRight;
+    private boolean alignRight;
+    private int offset;
 
-    public TextUtil() {
-        this(false);
+    public TextUtil alignRight() {
+        this.alignRight = true;
+        return this;
     }
 
-    public TextUtil(boolean alignRight) {
-        this.alignRight = alignRight;
+    public TextUtil offset(int offset) {
+        this.offset = offset;
+        return this;
     }
 
     public List<Element> parseText(String localized, int width, Font f) {
@@ -124,7 +127,11 @@ public class TextUtil {
                         }
                     }
                 }
-                returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignRight, width));
+                if (alignRight) {
+                    returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignRight, width));
+                } else {
+                    returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, offset));
+                }
             }
             if (i < words.size() - 1) {
                 returnValue.add(breakTypes.get(i).separator.apply(width));

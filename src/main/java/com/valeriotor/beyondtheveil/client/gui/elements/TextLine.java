@@ -20,6 +20,11 @@ public class TextLine extends Element{
         this(text, properties, font, false, font.width(text));
     }
 
+    public TextLine(FormattedCharSequence text, List<Property> properties, Font font, int start) {
+        this(text, properties, font, false, font.width(text));
+        this.start = start;
+    }
+
     public TextLine(FormattedCharSequence text, List<Property> properties, Font font, boolean alignRight, int fullWidth) {
         super(font.width(text), 15);
         this.text = text;
@@ -33,7 +38,7 @@ public class TextLine extends Element{
     @Override
     public void render(PoseStack poseStack, GuiGraphics guiGraphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
-        if (alignRight) {
+        if (start > 0) {
             poseStack.pushPose();
             poseStack.translate(start, 0, 0);
             relativeMouseX -= start;
@@ -46,7 +51,7 @@ public class TextLine extends Element{
                 }
             }
         }
-        if (alignRight) {
+        if (start > 0) {
             poseStack.popPose();
         }
         //for (Property property : properties) {
@@ -56,7 +61,7 @@ public class TextLine extends Element{
 
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-        if (alignRight) {
+        if (start > 0) {
             relativeMouseX -= start;
         }
         if (relativeMouseY >= 0 && relativeMouseY < 15) {

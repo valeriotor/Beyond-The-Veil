@@ -1417,7 +1417,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.HEARTS.stage.0", "Connections are sewn in blood – that thread linking all beings, living and dead. It is the bond holding lives together, within and between, and its vessels run deep through bone and earth until they reach its ancient progenitor: water.\\n" +
                 "Blood is both life and death, as well as the chain betwixt. To deprive a being of its heart is to kill it, and yet no life is lost.\\n" +
                 "The extraction of a heart requires an incised chest on the patient, and is very painful. Injecting a sufficient amount of softener before the extraction is crucial, or the pain will be too intense for the organ to be successfully extracted. Either way, the patient will not survive.");
-        add("research.HEARTS.stage.1", "The heart still beats. When placed on the ground, the sound will attract close by undead (is it some sort of nostalgia that drives them towards life?)\\n" +
+        add("research.HEARTS.stage.1", "The heart still beats. When placed on the ground, the sound will attract nearby undead (is it some sort of nostalgia that drives them towards life?)\\n" +
                 "The organ itself, however, may also be used for other purposes. The practice of blood rituals has been celebrated my many peoples throughout history, and has been extensively documented by academia. There is much more to be done here.");
 
         add("research.SPINES.title", "Willpower resides in the spine");
