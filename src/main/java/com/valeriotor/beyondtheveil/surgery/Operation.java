@@ -42,6 +42,7 @@ public class Operation {
     private final boolean successParticles;
     private final boolean failureParticles;
     private final Vec3 particleOffset;
+    private final List<String> playerData;
     private ArsenalEffectType arsenalEffect;
     private boolean increaseArsenalEffectAmplifier;
     private boolean increaseArsenalEffectDuration;
@@ -81,6 +82,7 @@ public class Operation {
         this.mutex = b.mutex;
         this.triggerType = b.triggerType;
         this.targetType = b.targetType;
+        this.playerData = b.playerData;
     }
 
     public String getName() {
@@ -199,6 +201,10 @@ public class Operation {
         return targetType;
     }
 
+    public List<String> getPlayerData() {
+        return playerData;
+    }
+
     public static class Builder {
         private final String name;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
@@ -233,6 +239,7 @@ public class Operation {
         private DyeColor mutex;
         private TargetingType triggerType;
         private TargetingType targetType;
+        private List<String> playerData = new ArrayList<>();
 
         public Builder(String name) {
             this.name = name;
@@ -403,6 +410,11 @@ public class Operation {
 
         public Builder setParticleOffset(Vec3 particleOffset) {
             this.particleOffset = particleOffset;
+            return this;
+        }
+
+        public Builder addPlayerData(String data) {
+            playerData.add(data);
             return this;
         }
 

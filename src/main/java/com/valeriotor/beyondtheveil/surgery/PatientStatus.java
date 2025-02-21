@@ -369,6 +369,9 @@ public class PatientStatus {
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             updateTriggerData(operation);
+            for (String playerDatum : operation.getPlayerData()) {
+                DataUtil.setBooleanOnServerAndSync(player, playerDatum, true, false);
+            }
             if (operation.isPersistent()) {
                 persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
             }

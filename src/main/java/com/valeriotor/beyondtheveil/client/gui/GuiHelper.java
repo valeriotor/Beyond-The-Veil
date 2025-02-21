@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui;
 
+import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
 import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,7 +28,8 @@ public class GuiHelper {
     }
 
     public enum GuiType {
-        NECRONOMICON(() -> new NecronomiconGui());
+        NECRONOMICON(() -> new NecronomiconGui()),
+        JOURNAL(() -> new JournalGui());
 
         private Supplier<Screen> supplier;
 

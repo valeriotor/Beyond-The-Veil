@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,6 +43,7 @@ public class OperationRegistry {
             .setPainForFailure(40)
             .setSuccessParticles(true)
             .setProgressParticles(true)
+            .addPlayerData(PlayerDataLib.INCISED)
             .buildIncisionOperation(SurgicalLocation.BACK);
 
     private static final Operation INCISE_CHEST = new Operation.Builder("incise_chest")
@@ -51,6 +53,7 @@ public class OperationRegistry {
             .setSuccessParticles(true)
             .setProgressParticles(true)
             .setParticleOffset(new Vec3(-0.1, 0, 0.15))
+            .addPlayerData(PlayerDataLib.INCISED)
             .buildIncisionOperation(SurgicalLocation.CHEST);
 
     private static final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")
@@ -64,6 +67,7 @@ public class OperationRegistry {
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
+            .addPlayerData(PlayerDataLib.EXTRACTED_HEART)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()), s -> !s.hasString("extract_heart"));
 
     private static final Operation EXTRACT_SPINE = new Operation.Builder("extract_spine")
@@ -75,6 +79,7 @@ public class OperationRegistry {
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
+            .addPlayerData(PlayerDataLib.EXTRACTED_SPINE)
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()), s -> !s.hasString("extract_spine"));
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")

@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -239,7 +240,7 @@ public class Registration {
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
-    public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new SlugItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build())));
     public static final RegistryObject<Item> CANOE = ITEMS.register("canoe", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> RUM = ITEMS.register("drink_rum", DrinkItem::new);
     public static final RegistryObject<Item> WINE = ITEMS.register("drink_wine", DrinkItem::new);
@@ -278,6 +279,7 @@ public class Registration {
     public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", () -> new Item(ITEM_PROPERTIES)); // new ItemSacrificialKnife("sacrificial_knife");
     public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", MemoryPhialItem::new); // new ItemMemoryPhial("memory_phial");
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
+    public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
@@ -465,6 +467,7 @@ public class Registration {
                 output.accept(SACRIFICIAL_KNIFE.get());
                 output.accept(MEMORY_PHIAL.get());
                 output.accept(NECRONOMICON.get());
+                output.accept(JOURNAL.get());
                 output.accept(GEAR.get());
                 output.accept(SURGEON_SUMMONS.get());
                 output.accept(CRUCIBLE.get());

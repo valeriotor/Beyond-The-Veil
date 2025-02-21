@@ -112,6 +112,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(SACRIFICIAL_KNIFE.getId().getPath(),  mcLoc("item/generated"), "layer0", modLoc("item/" + SACRIFICIAL_KNIFE.getId().getPath()));
         singleTexture(MEMORY_PHIAL.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + MEMORY_PHIAL.getId().getPath()));
         singleTexture(NECRONOMICON.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + NECRONOMICON.getId().getPath()));
+        singleTexture(JOURNAL.getId().getPath(),            mcLoc("item/generated"), "layer0", modLoc("item/" + JOURNAL.getId().getPath()));
         singleTexture(GEAR.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + GEAR.getId().getPath()));
         singleTexture(SURGEON_SUMMONS.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/" + SURGEON_SUMMONS.getId().getPath()));
         singleTexture(CRUCIBLE.getId().getPath(),           mcLoc("item/generated"), "layer0", modLoc("item/" + CRUCIBLE.getId().getPath()));

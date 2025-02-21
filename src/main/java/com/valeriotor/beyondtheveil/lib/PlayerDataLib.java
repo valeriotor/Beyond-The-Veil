@@ -89,6 +89,11 @@ public class PlayerDataLib {
     public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + (ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()) == null ? "" : ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath());
     public static final Function<String, String> JOURNAL_REPORT = name -> "journal_report_" + name;
     public static final String EDITING_JOURNAL_REPORT = "editing_journal";
+    public static final String RATIONALIZED = "rationalized";
+    public static final String INCISED = "incised";
+    public static final String EXTRACTED_HEART = "extracted_heart";
+    public static final String EXTRACTED_SPINE = "extracted_spine";
+    public static final String ATE_SLUG = "ate_slug";
 
 
     // Booleans (Temporary)
@@ -100,6 +105,7 @@ public class PlayerDataLib {
     public static final String LASTDREAMTINWORLD = "lastdreamworld";
     public static final String SACRIFICE_ALTAR = "sacrifice_altar";
     public static final String WAYPOINT_OCEAN = "waypoint_ocean";
+
 
     // Strings (Non-temporary)
     public static final Function<Integer, String> BOOKMARK = i -> String.format("bookmark%d", i);

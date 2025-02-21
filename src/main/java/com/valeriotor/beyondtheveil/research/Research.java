@@ -154,6 +154,7 @@ public class Research {
 
 
     public static class SubResearch {
+        String epigraph;
         String text;
         private String[] required_research;
         String[] recipes;
@@ -181,6 +182,10 @@ public class Research {
 
         public String getTextKey() {
             return this.text;
+        }
+
+        public String getEpigraphKey() {
+            return epigraph;
         }
 
         public String[] getRecipes() {

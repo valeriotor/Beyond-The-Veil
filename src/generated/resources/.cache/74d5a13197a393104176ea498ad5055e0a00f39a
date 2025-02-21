@@ -1,4 +1,4 @@
-// 1.20.1	2025-02-03T20:50:48.107504	Item Models: beyondtheveil
+// 1.20.1	2025-02-21T22:45:06.5696856	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
@@ -80,6 +80,7 @@ d4024841f5a5ba9197d74bd0b95185762ec414b4 assets/beyondtheveil/models/item/heart.
 139638dc3b71fc5813391f678636d5db1a973200 assets/beyondtheveil/models/item/hunger_serum_bucket.json
 30528b4e24bf5a89118af32812576ad5885974a7 assets/beyondtheveil/models/item/idol.json
 7d922e40d41bd104db4aede19a245b9144454a1c assets/beyondtheveil/models/item/invisibility_serum_bucket.json
+1d76d2bb53f2a661c275a6dd2e0960144c228bf2 assets/beyondtheveil/models/item/journal.json
 5213581ebe69337e6464c19ec77863744d0d2ee1 assets/beyondtheveil/models/item/jump_serum_bucket.json
 98b88ebcedb1a9273afe16a1af64513bafe7fe42 assets/beyondtheveil/models/item/lamp.json
 dace1b7f17be45d4271adc00f6b2e50b24f1d7b7 assets/beyondtheveil/models/item/memory_phial.json

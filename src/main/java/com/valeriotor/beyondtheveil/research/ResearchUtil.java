@@ -233,7 +233,7 @@ public class ResearchUtil {
         }
     }
 
-    private static final ResearchStatus DUMMY_STATUS = new ResearchStatus(ResearchRegistry.researches.get("CRYSTALDREAMS")) {
+    private static final ResearchStatus DUMMY_STATUS = new ResearchStatus(ResearchRegistry.researches.get("COMMUNION")) {
         @Override
         public boolean isComplete() {
             return false;

@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "T": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "pattern": [
+    " LL ",
+    "PPTP",
+    "PPPP",
+    " LL "
+  ],
+  "result": {
+    "item": "beyondtheveil:journal"
+  },
+  "show_notification": true
+}

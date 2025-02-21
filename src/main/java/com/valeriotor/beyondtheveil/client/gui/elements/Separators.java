@@ -8,6 +8,10 @@ public class Separators {
     public static Separator smallSeparator(int width) {
         return new SmallSeparator(width);
     }
+
+    public static Separator tinySeparator(int width) {
+        return new TinySeparator(width);
+    }
     public static Separator paragraphSeparator(int width) {
         return new ParagraphSeparator(width);
     }
@@ -32,7 +36,14 @@ public class Separators {
         }
     }
 
+    private static class TinySeparator extends Separator {
+        private TinySeparator(int width) {
+            super(width, 1);
+        }
+
+    }
     private static class SmallSeparator extends Separator {
+
         private SmallSeparator(int width) {
             super(width, 5);
         }

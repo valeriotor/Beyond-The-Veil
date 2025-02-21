@@ -16,6 +16,25 @@ public class DoubleTextPages extends Element {
     private final int secondBlockX;
     private int index;
 
+    public static DoubleTextPages makePagesAndEpigraph(String epigraph, String epigraphSource, String localized, int width, int height, int blockWidth, Font f) {
+        TextUtil epigraphUtil = new TextUtil();
+        List<Element> elements = epigraphUtil.parseText(epigraph, blockWidth, f);
+        TextUtil epigraphSourceUtil = new TextUtil(true);
+        elements.addAll(epigraphSourceUtil.parseText(epigraphSource, blockWidth, f));
+
+        TextUtil textUtil = new TextUtil();
+        elements.addAll(textUtil.parseText(localized, blockWidth, f));
+        List<TextBlock> blocks = new ArrayList<>();
+        int index = 0;
+        while (index < elements.size()) {
+            Tuple<TextBlock, Integer> tuple = TextBlock.fillBlockWithElements(elements, index, blockWidth, height, f);
+            blocks.add(tuple.getA());
+            index = tuple.getB();
+        }
+        return new DoubleTextPages(blocks, width, height, blockWidth);
+    }
+
+
     public static DoubleTextPages makePages(String localized, int width, int height, int blockWidth, Font f) {
         TextUtil textUtil = new TextUtil();
         List<Element> elements = textUtil.parseText(localized, blockWidth, f);

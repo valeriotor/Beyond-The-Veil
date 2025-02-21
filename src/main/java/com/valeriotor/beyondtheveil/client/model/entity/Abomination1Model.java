@@ -23,7 +23,7 @@ public class Abomination1Model extends AnimatedModel<Abomination1Entity> impleme
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "abomination_1"), "main");
     private static final String name = "abomination_1";
     private final ModelPart body;
-    private final ModelPart arms;
+    //private final ModelPart arms;
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
 
@@ -31,7 +31,7 @@ public class Abomination1Model extends AnimatedModel<Abomination1Entity> impleme
         super(name);
         this.body = registerAnimatedPart("body", root.getChild("body"));
 
-        this.arms = registerAnimatedPart("arms", this.body.getChild("arms"));
+        //this.arms = registerAnimatedPart("arms", this.body.getChild("arms"));
         this.RightLeg = registerAnimatedPart("RightLeg", this.body.getChild("RightLeg"));
         this.LeftLeg = registerAnimatedPart("LeftLeg", this.body.getChild("LeftLeg"));
     }
@@ -43,9 +43,9 @@ public class Abomination1Model extends AnimatedModel<Abomination1Entity> impleme
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 12.0F, 6.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 38).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 20.0F, 6.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition arms = body.addOrReplaceChild("arms", CubeListBuilder.create().texOffs(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(44, 22).mirror().addBox(4.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -18.0F, 0.0F, -0.7854F, 0.0F, 0.0F));
+        //PartDefinition arms = body.addOrReplaceChild("arms", CubeListBuilder.create().texOffs(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.0F))
+                //.texOffs(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F))
+                //.texOffs(44, 22).mirror().addBox(4.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -18.0F, 0.0F, -0.7854F, 0.0F, 0.0F));
 
         PartDefinition RightLeg = body.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -12.0F, 0.0F));
 

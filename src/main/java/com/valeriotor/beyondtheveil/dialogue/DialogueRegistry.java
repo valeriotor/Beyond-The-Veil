@@ -39,6 +39,7 @@ public class DialogueRegistry {
 
         registerDialogue(DialogueType.BLACK_MIRROR, "initial");
         registerDialogue(DialogueType.BLACK_MIRROR, "initial2");
+        registerDialogue(DialogueType.BLACK_MIRROR, "rationalize");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

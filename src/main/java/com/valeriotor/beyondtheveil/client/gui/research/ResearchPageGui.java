@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
+import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
@@ -136,7 +137,10 @@ public class ResearchPageGui extends Screen {
         //recipes.clear();
         //shownRecipe = null;
         Object[] format = getFormatting();
-        String localized = I18n.get(this.status.res.getStages()[this.status.getStage()].getTextKey(), getFormatting());
+        Research.SubResearch stage = this.status.res.getStages()[this.status.getStage()];
+        String epigraph = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey(), getFormatting()) : null;
+        String epigraphSource = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey() + ".source", getFormatting()) : null;
+        String localized = I18n.get(stage.getTextKey(), getFormatting());
         //if (status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2) {
         //    localized = localized.formatted(DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.HELD_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.DRANK_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL)) ? "§aV§r" : " ");
         //}
@@ -144,7 +148,11 @@ public class ResearchPageGui extends Screen {
         //TextUtil util = new TextUtil();
         //util.parseText2(localized2, lineWidth, Minecraft.getInstance().font);
 
-        pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+        if (epigraph != null) {
+            pages2 = DoubleTextPages.makePagesAndEpigraph(epigraph, epigraphSource, localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+        } else {
+            pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+        }
         // TODO ADDENDA
         //int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || minecraft.gameSettings.guiScale == 0 ? 90 : 130) - 5;
         if (progress != null) {

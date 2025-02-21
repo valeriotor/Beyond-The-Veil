@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " II ",
+    " BI ",
+    " I  ",
+    "IIII"
+  ],
+  "result": {
+    "item": "beyondtheveil:letter_box"
+  },
+  "show_notification": true
+}

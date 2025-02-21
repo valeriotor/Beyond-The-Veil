@@ -26,6 +26,15 @@ public class TextUtil {
     private ParsingPhase phase = ParsingPhase.NORMAL;
     private boolean backslashEscape = false;
     private boolean formatEscape = false;
+    private final boolean alignRight;
+
+    public TextUtil() {
+        this(false);
+    }
+
+    public TextUtil(boolean alignRight) {
+        this.alignRight = alignRight;
+    }
 
     public List<Element> parseText(String localized, int width, Font f) {
         words.add(currentWords);
@@ -115,7 +124,7 @@ public class TextUtil {
                         }
                     }
                 }
-                returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f));
+                returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignRight, width));
             }
             if (i < words.size() - 1) {
                 returnValue.add(breakTypes.get(i).separator.apply(width));
@@ -224,7 +233,7 @@ public class TextUtil {
     private enum BreakType {
 
 
-        SMALL('1', Separators::smallSeparator), PARAGRAPH('n', Separators::paragraphSeparator), PAGE('p', Separators::pageSeparator);
+        TINY('0', Separators::tinySeparator), SMALL('1', Separators::smallSeparator), PARAGRAPH('n', Separators::paragraphSeparator), PAGE('p', Separators::pageSeparator);
         private final char breakCharacter;
         private final IntFunction<Element> separator;
 
