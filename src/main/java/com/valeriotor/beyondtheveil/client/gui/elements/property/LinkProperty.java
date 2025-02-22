@@ -1,5 +1,10 @@
 package com.valeriotor.beyondtheveil.client.gui.elements.property;
 
+import com.valeriotor.beyondtheveil.client.gui.research.CraftingRegistryGui;
+import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
+import com.valeriotor.beyondtheveil.client.gui.research.ResearchPageGui;
+import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -20,6 +25,8 @@ public class LinkProperty extends Property {
             return Component.translatable("caption.crafting");
         } else if (link.startsWith("journal")) {
             return Component.translatable("caption.journal");
+        } else if (link.startsWith("research")) {
+            return Component.translatable("caption.research");
         }
         return Component.translatable("link." + link);
     }
@@ -31,7 +38,31 @@ public class LinkProperty extends Property {
 
     @Override
     public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-        // TODO
+        if (link.startsWith("journal")) {
+            if (!(Minecraft.getInstance().screen instanceof JournalGui)) {
+                JournalGui pGuiScreen = new JournalGui();
+                Minecraft.getInstance().setScreen(pGuiScreen);
+            }
+            if (Minecraft.getInstance().screen instanceof JournalGui jg) {
+                jg.selectEntry(link.substring("journal.".length()));
+            }
+        } else if (link.startsWith("crafting")) {
+            if (!(Minecraft.getInstance().screen instanceof CraftingRegistryGui)) {
+                CraftingRegistryGui pGuiScreen = new CraftingRegistryGui(ResearchUtil.getResearch(Minecraft.getInstance().player, "CRAFTING"));
+                Minecraft.getInstance().setScreen(pGuiScreen);
+            }
+            if (Minecraft.getInstance().screen instanceof CraftingRegistryGui cr) {
+                cr.selectEntry(link.substring("crafting.".length()));
+            }
+        } else if (link.startsWith("research")) {
+            String researchName = link.substring("research.".length());
+            ResearchStatus status = ResearchUtil.getResearch(Minecraft.getInstance().player, researchName);
+            if (status.getStage() == -2) {
+                return false;
+            }
+            ResearchPageGui pGuiScreen = new ResearchPageGui(status);
+            Minecraft.getInstance().setScreen(pGuiScreen);
+        }
         return true;
     }
 }

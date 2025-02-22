@@ -76,7 +76,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final int BOOKMARK_SEPARATION = 70;
     //private int entryListLeftX;
     //private int entryListTopY;
-    private JournalCategory selectedCategory = JournalCategory.TOOLS;
+    private JournalCategory selectedCategory = JournalCategory.OVERVIEW;
     private final List<Item> knownIngredients = new ArrayList<>();
     private final List<Fluid> knownFluids = new ArrayList<>();
     private final Map<String, CompoundTag> reports = new HashMap<>();
@@ -287,6 +287,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new StacksItemEntry(Registration.SYRINGE.get(), "syringe", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.TONGS.get(), "tongs", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(List.of(Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get()), "flasks", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.FLASK_ITEM_ITEM.get(), "item_flask", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.ALEMBICS_ITEM.get(), "alembics", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.FLASK_SHELF_ITEM.get(), "flask_shelf", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SURGERY_BED_ITEM.get(), "surgery_bed", JournalCategory.TOOLS));
@@ -522,6 +523,28 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         };
     }
 
+    public void selectEntry(String entry) {
+        if (entry.startsWith("tools")) {
+            selectedCategory = JournalCategory.TOOLS;
+            String name = entry.substring("tools.".length());
+            for (ItemEntry row : tools.rows()) {
+                if (Objects.equals(row.name, name)) {
+                    row.selectEntry();
+                    break;
+                }
+            }
+        } else {
+            selectedCategory = JournalCategory.INGREDIENTS;
+            String name = entry.substring("ingredients.".length());
+            for (ItemEntry row : ingredients.rows()) {
+                if (Objects.equals(row.name, name)) {
+                    row.selectEntry();
+                    break;
+                }
+            }
+        }
+        updateWidgetVisibility();
+    }
 
     private int pageX() {
         return (int) ((width / 2) - (imageWidth / 2) * scaleFactor);
@@ -1093,6 +1116,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 return true;
             } else if (hoveringRightArrow(relativeMouseX, relativeMouseY) && counter < grids.size() - 1) {
                 counter++;
+                return true;
+            } else if (page.mouseClicked(relativeMouseX, relativeMouseY - 40, mouseButton)) {
                 return true;
             }
             return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);

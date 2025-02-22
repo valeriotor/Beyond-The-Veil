@@ -941,8 +941,9 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
         add("caption.shift_right_click", "Sneak + Right Click");
-        add("caption.crafting", "Go to Crafting registry");
-        add("caption.journal", "Go to Journal entry");
+        add("caption.crafting", "Go to crafting entry");
+        add("caption.journal", "Go to journal entry");
+        add("caption.research", "Go to research entry");
     }
 
     private void addDialogue() {
@@ -1442,13 +1443,13 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addCraftingRegistry() {
-        add("research.CRAFTING.introduced", "First introduced in: {§2%1$s§r}[caption:%2$s].");
+        add("research.CRAFTING.introduced", "First introduced in: {§2%1$s§r}[link:research.%2$s].");
 
-        add(FUME_SPREADER.get().getDescriptionId() + ".crafting", "Breathing its fumes while asleep will alter the behaviour of my dreams.\\1Must be placed on the ground near a bed or similar object. It must then be filled with {§noniric incense§r}[caption:crafting.oniric_incense] and, finally, with a {§nmemory phial§r}[caption:crafting.memory_phial] containing the desired memory.\\1It can be {§nemptied§r}[caption:Shift + Right Click], but doing so will not return the memory phial.");
-        add(ONIRIC_INCENSE.get().getDescriptionId() + ".crafting", "Used on an empty {§nfume spreader§r}[caption:crafting.fume_spreader] to fill it.");
-        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[caption:crafting.memory_sieve] to capture a memory.");
-        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting2", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[caption:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[caption:crafting.fume_spreader] to assign it the contained memory.");
-        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[caption:crafting.memory_phial] may be used on it to capture the memory.");
+        add(FUME_SPREADER.get().getDescriptionId() + ".crafting", "Breathing its fumes while asleep will alter the behaviour of my dreams.\\1Must be placed on the ground near a bed or similar object. It must then be filled with {§noniric incense§r}[link:crafting.oniric_incense] and, finally, with a {§nmemory phial§r}[link:crafting.memory_phial] containing the desired memory.\\1It can be {§nemptied§r}[caption:Shift + Right Click], but doing so will not return the memory phial.");
+        add(ONIRIC_INCENSE.get().getDescriptionId() + ".crafting", "Used on an empty {§nfume spreader§r}[link:crafting.fume_spreader] to fill it.");
+        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[link:crafting.memory_sieve] to capture a memory.");
+        add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting2", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[link:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[link:crafting.fume_spreader] to assign it the contained memory.");
+        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.");
         add(SLEEP_CHAMBER.get().getDescriptionId() + ".crafting", "A complex device known to mimic the dream state induced by sleeping.\\1To use it, I must open its door, walk inside and close it while enclosed within.");
     }
 
@@ -1528,18 +1529,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.concluding.text", "The success of an operation depends on the desired outcome. Although a premature death will most likely make any further operations impossible, it may be tolerated as long as the necessary results (such as an organ’s extraction) have already been obtained. The death of a patient is certainly a loss, but not a tragedy.\\n" +
                 "Of course, there are times when we seek the patient’s survival. In general, most patients will exit the surgery either (i) alive and well, (ii) crippled (potentially for life), or (iii) deceased.");
         //TODO add("gui.journal.overview.journal.text", ...
-        add("gui.journal.overview.fluids.text", "Liquid ingredients, such as {§nsedative§r}[link:journal.sedative], {§ncoagulant§r}[link:journal.coagulant], and several others, can be injected into patients to achieve various results. This requires a {§nsyringe§r}[link:journal.syringe], and does not require an incision on the patient.\\n" +
-                "Such fluids may be stored in liquid flasks ({§nsmall§r}[link:journal.small_flask], {§nmedium§r}[link:journal.medium_flask] and {§nlarge§r}[link:journal.large_flask]), and are often produced with the help of {§nalembics§r}[link:journal.alembics].");
-        add("gui.journal.overview.solids.text", "Solid ingredients may be inserted in the patient. This requires {§nforceps§r}[link:journal.forceps], and can only be done when the incision is open.\\n" +
-                "Such ingredients are generally stored in appropriate containers, such as {§nitem jars§r}[link:journal.item_jar].");
+        add("gui.journal.overview.fluids.text", "Liquid ingredients, such as {§nsedative§r}[link:journal.ingredients.sedative], {§ncoagulant§r}[link:journal.ingredients.coagulant], and several others, can be injected into patients to achieve various results. This requires a {§nsyringe§r}[link:journal.tools.syringe], and does not require an incision on the patient.\\n" +
+                "Such fluids may be stored in liquid flasks ({§nsmall§r}[link:journal.tools.flasks], {§nmedium§r}[link:journal.tools.flasks] and {§nlarge§r}[link:journal.tools.flasks]), and are often produced with the help of {§nalembics§r}[link:journal.tools.alembics].");
+        add("gui.journal.overview.solids.text", "Solid ingredients may be inserted in the patient. This requires {§nforceps§r}[link:journal.tools.forceps], and can only be done when the incision is open.\\n" +
+                "Such ingredients are generally stored in appropriate containers, such as {§nitem jars§r}[link:journal.tools.item_flask].");
         add("gui.journal.overview.extraction.text", "Extractions can be performed either on the back or the chest, and are used to obtain respectively the patient’s spine or heart. They always require an incision to be already present, and will likely cause severe bleeding after the operation. They are generally very painful.\\n" +
-                "Extractions are performed with {§ntongs§r}[link:journal.tongs]. Interrupting one resets progress.");
+                "Extractions are performed with {§ntongs§r}[link:journal.tools.tongs]. Interrupting one resets progress.");
         add("gui.journal.overview.incision.text", "Incisions can be performed either on the back or the chest, and are used to open up a wound that may then allow insertions or extractions. A patient cannot be moved (neither removed from the surgery bed nor flipped) while incised. They are generally very painful.\\n" +
-                "Incisions are performed with the {§nscalpel§r}[link:journal.scalpel]. Interrupting one resets progress.");
-        add("gui.journal.overview.injection.text", "Injections can be performed on any surgical location: back, chest and skull. They are carried out with a {§nsyringe§r}[link:journal.syringe] after it has been filled with fluids. Interrupting an injection does not reset progress, as the fluid already resides within the patient’s body.\\n" +
+                "Incisions are performed with the {§nscalpel§r}[link:journal.tools.scalpel]. Interrupting one resets progress.");
+        add("gui.journal.overview.injection.text", "Injections can be performed on any surgical location: back, chest and skull. They are carried out with a {§nsyringe§r}[link:journal.tools.syringe] after it has been filled with fluids. Interrupting an injection does not reset progress, as the fluid already resides within the patient’s body.\\n" +
                 "Injections may be painful depending on the fluid type and quantity.");
-        add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
-        add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.sewing_needle]. Stitching is painless and instantaneous.");
+        add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.tools.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
+        add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.tools.sewing_needle]. Stitching is painless and instantaneous.");
 
         add("gui.journal.tools.forceps.title", "Forceps");
         add("gui.journal.tools.forceps.text", "A tool necessary for insertions. Can pick up a (single) item when used on a flask containing a solid ingredient.\\nForceps with an item inside may be applied on an incised patient on a surgery bed.");

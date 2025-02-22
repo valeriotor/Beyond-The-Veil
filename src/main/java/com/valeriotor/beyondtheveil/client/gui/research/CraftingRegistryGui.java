@@ -57,7 +57,8 @@ public class CraftingRegistryGui extends Screen {
     private int entryListHeight;
     private int entryListStart;
     private int scrollbarWidth;
-    private Element itemList;
+    private ScrollableList<CraftingEntry> itemList;
+    private ScrollableList<CraftingEntry> fullList;
     private int listLeftX, listLeftY;
     private int titleX, titleY;
     private int textBlockX, textBlockY;
@@ -124,7 +125,8 @@ public class CraftingRegistryGui extends Screen {
         listLeftX = pageLeftX + 44 * pageWidth / 1577;
         listLeftY = pageTopY + 381 * pageHeight / 1261;
 
-        initList();
+        itemList = initList();
+        fullList = initList(true);
 
         if (gearBenchRecipes.isEmpty()) {
             CTCategoryX = pageLeftX + 290 * pageWidth / 1577;
@@ -151,7 +153,11 @@ public class CraftingRegistryGui extends Screen {
 
     }
 
-    private void initList() {
+    private ScrollableList<CraftingEntry> initList() {
+        return initList(false);
+    }
+
+    private ScrollableList<CraftingEntry> initList(boolean full) {
         List<CraftingEntry> entries = new ArrayList<>();
         if (CTCategory) {
             for (CraftingRecipe craftingTableRecipe : craftingTableRecipes) {
@@ -164,7 +170,7 @@ public class CraftingRegistryGui extends Screen {
             }
         }
         entries.sort(Comparator.comparing(e -> e.stack.getItem().getDescription().getString()));
-        itemList = new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
+        return new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
     }
 
     @Override
@@ -247,6 +253,23 @@ public class CraftingRegistryGui extends Screen {
         return !gearBenchRecipes.isEmpty() && mouseX >= GBCategoryX - 16 && mouseX <= GBCategoryX + 16 && mouseY >= GBCategoryY - 16 && mouseY <= GBCategoryY + 16;
     }
 
+    public void selectEntry(String name) {
+        for (CraftingEntry row : fullList.rows()) {
+            if (Objects.equals(ForgeRegistries.ITEMS.getKey(row.stack.getItem()).getPath(), name)) {
+                selectEntry(row.stack.getItem(), row.recipe);
+                selectedEntry = row;
+                if (row.recipe instanceof GearBenchRecipe) {
+                    GBCategory = true;
+                    itemList = initList();
+                } else if (row.recipe instanceof CraftingRecipe) {
+                    CTCategory = true;
+                    itemList = initList();
+                }
+                break;
+            }
+        }
+    }
+
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
@@ -263,11 +286,15 @@ public class CraftingRegistryGui extends Screen {
         } else if (hoveringCTSelection((int) pMouseX, (int) pMouseY)) {
             CTCategory = !CTCategory;
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
-            initList();
+            itemList = initList();
+            return true;
         } else if (hoveringGBSelection((int) pMouseX, (int) pMouseY)) {
             GBCategory = !GBCategory;
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
-            initList();
+            itemList = initList();
+            return true;
+        } else if (selectedText.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
+            return true;
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
