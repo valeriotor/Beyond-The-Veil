@@ -27,6 +27,8 @@ public class ResearchEvents {
                 addDialogue(d, DialogueType.BLACK_MIRROR, "initial2");
             } else if ("SURGERY".equals(status.res.getKey()) && status.getStage() == 0) {
                 addDialogue(d, DialogueType.BLACK_MIRROR, "rationalize");
+            } else if ("SURGERY".equals(status.res.getKey()) && status.getStage() == 1) {
+                addDialogue(d, DialogueType.BLACK_MIRROR, "idle");
             }
         });
     }

@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.event.PlayerEvents;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
@@ -75,6 +76,7 @@ public class DataUtil {
             if (value) {
                 ResearchUtil.markResearchAsUpdated(p, key);
             }
+            PlayerEvents.setBooleanEvent(p, key, value);
         });
     }
 

@@ -26,7 +26,7 @@
           "id": "in",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": [],
+          "unlockedData": ["rationalized"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": true
@@ -136,7 +136,7 @@
           "id": "in___",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": [],
+          "unlockedData": ["rationalized"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": true
@@ -173,7 +173,7 @@
           "id": "in_",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": [],
+          "unlockedData": ["rationalized"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": true
@@ -196,7 +196,7 @@
           "id": "in____",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": [],
+          "unlockedData": ["rationalized"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": true
@@ -242,7 +242,7 @@
           "id": "in__",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": [],
+          "unlockedData": ["rationalized"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "endsDialogue": true
@@ -288,6 +288,6 @@
     }
   },
   "type": "black_mirror",
-  "dialogueUnlocks": [],
-  "dataUnlocks": ["rationalized"]
+  "dialogueUnlocks": ["black_mirror:rationalize2"],
+  "dataUnlocks": []
 }

@@ -40,6 +40,10 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLACK_MIRROR, "initial");
         registerDialogue(DialogueType.BLACK_MIRROR, "initial2");
         registerDialogue(DialogueType.BLACK_MIRROR, "rationalize");
+        registerDialogue(DialogueType.BLACK_MIRROR, "rationalize2");
+        registerDialogue(DialogueType.BLACK_MIRROR, "rationalize3");
+        registerDialogue(DialogueType.BLACK_MIRROR, "after_weep");
+        registerDialogue(DialogueType.BLACK_MIRROR, "idle");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

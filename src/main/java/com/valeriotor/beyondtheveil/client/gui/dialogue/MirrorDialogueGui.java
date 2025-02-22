@@ -44,6 +44,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
 
     public MirrorDialogueGui(MirrorDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        indexInBranch = -1;
         //branch = pMenu.getBranch();
         //indexInBranch = pMenu.getIndexInBranch();
     }

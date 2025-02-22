@@ -1041,8 +1041,35 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.rationalize.i.option", "I must still think about this. (End)");
         add("dialogue.black_mirror.rationalize.but_.option", "But how can one live with hands stained in blood?");
 
+        add("dialogue.black_mirror.rationalize2.start.0", "So?");
+        add("dialogue.black_mirror.rationalize2.i.option", "I must still think about this.");
+        add("dialogue.black_mirror.rationalize2.in.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history.");
 
+        add("dialogue.black_mirror.rationalize3.start.0", "The decision is made.");
+        add("dialogue.black_mirror.rationalize3.and.option", "And there's no coming back.");
 
+        add("dialogue.black_mirror.after_weep.waste.0", "Why so? When quiet introspection can teach so much, what need is there to talk to others?");
+        add("dialogue.black_mirror.after_weep.start.0", "There is just me here. The small fortress that is my mind.");
+        add("dialogue.black_mirror.after_weep.others.0", "Yes. Of course. The plight of the shoremen should not remain unheard, and so too my story shall one day be told. Humanity is built on the sharing of thought.");
+        add("dialogue.black_mirror.after_weep.others.1", "Only... it is exhausting. I should not forget to retreat into my own mental abode from time to time.");
+        add("dialogue.black_mirror.after_weep.easy.0", "Easy answer. I must choose.");
+        add("dialogue.black_mirror.after_weep.self.0", "Ah, of course! Rise then, oh socially inept! Our time has come!");
+        add("dialogue.black_mirror.after_weep.self.1", "(But has it really? Will it ever?)");
+        add("dialogue.black_mirror.after_weep.of.option", "Of course it has. The greatest thinkers worked alone.");
+        add("dialogue.black_mirror.after_weep.am.option", "Am I wasting time, here, talking to myself?");
+        add("dialogue.black_mirror.after_weep.nothing.option", "Nothing to do here");
+        add("dialogue.black_mirror.after_weep.no_.option", "No. Nobody should claim to have all the answers: only by learning from others can we understand the full breadth of humanity.");
+        add("dialogue.black_mirror.after_weep.as.option", "As is common, truth lies in the middle. A balance is needed.");
+        add("dialogue.black_mirror.after_weep.absolutely_.option", "Absolutely. The peace and quiet of one's own thoughts is the truest bliss.");
+        add("dialogue.black_mirror.after_weep.no__.option", "No. Civilization is built on unity – we cannot retreat into our own thoughts forever.");
+        add("dialogue.black_mirror.after_weep.but.option", "But not too often, lest I really start talking to myself.");
+        add("dialogue.black_mirror.after_weep.it.option", "It won't matter. Deep down, we cannot change who we are.");
+        add("dialogue.black_mirror.after_weep.no___.option", "No. Nobody should claim to have all the answers: only by learning from others can we understand the full breadth of humanity.");
+        add("dialogue.black_mirror.after_weep.indeed!.option", "Indeed! Only by reflecting on one's own self can one begin to understand what makes us who we are.");
+        add("dialogue.black_mirror.after_weep.indeed!_.option", "Indeed! Only by reflecting on one's own self can one begin to understand what makes us who we are.");
+
+        add("dialogue.black_mirror.idle.start.0", "There is just me here. The small fortress that is my mind.");
+        add("dialogue.black_mirror.idle.my.option", "My cozy stronghold.");
 
     }
     private void addShoremanDialogue() {

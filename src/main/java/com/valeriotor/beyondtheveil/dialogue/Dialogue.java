@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Objects;
+
 public class Dialogue {
 
     private final DialogueTemplate template;
@@ -40,9 +42,11 @@ public class Dialogue {
                     openTrade = true;
                 }
                 DialogueData capability = DialogueData.for_(player);
-                for (String dialogueUnlock : template.getDialogueUnlocks()) {
-                    String[] split = dialogueUnlock.split(":");
-                    capability.setDialogue(split[0], split[1]);
+                if(!currentBranch.stopsDialogueUnlock()) {
+                    for (String dialogueUnlock : template.getDialogueUnlocks()) {
+                        String[] split = dialogueUnlock.split(":");
+                        capability.setDialogue(split[0], split[1]);
+                    }
                 }
                 for (String dataUnlock : template.getDataUnlocks()) {
                     DataUtil.setBooleanOnServerAndSync(player, dataUnlock, true, false);
@@ -55,6 +59,9 @@ public class Dialogue {
         DataUtil.setBooleanOnServerAndSync(player, s, true, false);
         if ("spoke_keeper".equals(s) && DataUtil.getBoolean(player, "reminisced_darkness")) {
             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.UNLOCKED_HAMLET, true, false);
+        }
+        if (Objects.equals(s, PlayerDataLib.RATIONALIZED)) {
+            DialogueData.for_(player).setDialogue(DialogueType.BLACK_MIRROR, DialogueRegistry.getTemplate(DialogueType.BLACK_MIRROR, "rationalize3"));
         }
     }
 

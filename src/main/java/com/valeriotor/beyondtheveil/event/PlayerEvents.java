@@ -125,5 +125,9 @@ public class PlayerEvents {
         return heldPatient;
     }
 
+    public static void setBooleanEvent(Player player, String key, boolean value) {
+
+    }
+
 
 }

@@ -1,0 +1,31 @@
+{
+  "id": "idle",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "my",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "black_mirror",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}
