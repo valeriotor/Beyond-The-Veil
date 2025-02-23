@@ -263,7 +263,7 @@ public class Registration {
     public static final RegistryObject<Item> HELD_FLETUM = ITEMS.register("held_fletum", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldFletum("held_fletum");
     public static final RegistryObject<Item> HELD_SHOGGOTH = ITEMS.register("held_shoggoth", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldShoggoth("held_shoggoth");
     public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
-    public static final RegistryObject<Item> BONE_TIARA = ITEMS.register("bone_tiara", () -> new Item(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
+    public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
     public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
     public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", () -> new Item(ITEM_PROPERTIES)); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);

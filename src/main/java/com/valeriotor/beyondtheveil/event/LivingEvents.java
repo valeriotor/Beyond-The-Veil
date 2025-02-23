@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -8,6 +9,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,13 +20,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingEvents {
@@ -108,6 +114,61 @@ public class LivingEvents {
         if (entity.hasEffect(BTVEffects.SINK.get())) {
             MobEffectInstance effect = entity.getEffect(BTVEffects.SINK.get());
             event.setDamageMultiplier((effect.getAmplifier() + 1) * 2);
+        }
+    }
+
+    @SubscribeEvent
+    public static void canApplyEffect(MobEffectEvent.Applicable event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        if (event.getEntity() instanceof Player player) {
+            CuriosApi.getCuriosInventory(player).ifPresent(inv -> {
+                inv.getStacksHandler("head").ifPresent(slot -> {
+                    ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                    if (stackInSlot.getItem() == Registration.BONE_TIARA.get()) {
+                        if (Registration.BONE_TIARA.get().EFFECTS.contains(event.getEffectInstance().getEffect())) {
+                            event.setResult(Event.Result.DENY);
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    @SubscribeEvent
+    public static void tickEvent(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        if (event.getEntity() instanceof Player player) {
+            CuriosApi.getCuriosInventory(player).ifPresent(inv -> {
+                inv.getStacksHandler("head").ifPresent(slot -> {
+                    ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                    if (stackInSlot.getItem() == Registration.BONE_TIARA.get()) {
+                        for (MobEffect effect : Registration.BONE_TIARA.get().EFFECTS) {
+                            player.removeEffect(effect);
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    @SubscribeEvent
+    public static void knockbackEvent(LivingKnockBackEvent event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        if (event.getEntity() instanceof Player player) {
+            CuriosApi.getCuriosInventory(player).ifPresent(inv -> {
+                inv.getStacksHandler("head").ifPresent(slot -> {
+                    ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                    if (stackInSlot.getItem() == Registration.BONE_TIARA.get()) {
+                        event.setCanceled(true);
+                    }
+                });
+            });
         }
     }
 

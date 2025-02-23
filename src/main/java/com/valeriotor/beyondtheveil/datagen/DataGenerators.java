@@ -20,7 +20,10 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), (DataProvider.Factory<BTVRecipes>) BTVRecipes::new);
         //generator.addProvider(new BTVLootTables(generator));
         DataProvider.Factory<BTVBlockTags> blockTags = output -> new BTVBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper());
-        generator.addProvider(event.includeServer(), blockTags);
+        BTVBlockTags blockTagsProvider = blockTags.create(event.getGenerator().getPackOutput());
+        DataProvider.Factory<BTVItemTags> itemTags = output -> new BTVItemTags(output, event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), blockTagsProvider);
+        //generator.addProvider(event.includeServer(), itemTags);
         DataProvider.Factory<BTVWorldGen> btvWorldGenFactory = output -> new BTVWorldGen(output, event.getLookupProvider(), Set.of(References.MODID));
         generator.addProvider(event.includeServer(), btvWorldGenFactory);
         generator.addProvider(event.includeServer(), (DataProvider.Factory<ForgeAdvancementProvider>) output -> new ForgeAdvancementProvider(output, event.getLookupProvider(), event.getExistingFileHelper(), List.of(new BTVAdvancements())));

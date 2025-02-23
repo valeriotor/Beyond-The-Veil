@@ -12,15 +12,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class BTVItemTags extends ItemTagsProvider {
 
-    public BTVItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider, ExistingFileHelper helper) {
-        super(output, pLookupProvider, blockTagProvider, References.MODID, helper);
+    public BTVItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> pBlockTags, @org.jetbrains.annotations.Nullable net.minecraftforge.common.data.ExistingFileHelper helper) {
+        super(output, lookupProvider, pBlockTags, References.MODID, helper);
     }
 
-    //TODO @Override
-    protected void addTags() {
-        //tag(Tags.Items.STONE)
-        //        .add(Registration.DAMP_STONE_ITEM.get());
-    }
+
 
     @Override
     public String getName() {
