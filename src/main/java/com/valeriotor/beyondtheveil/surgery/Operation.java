@@ -22,9 +22,10 @@ public class Operation {
     // create extraction operation: location, item, additional requirements to be considered
     // create insertion operation: location, item
     private final String name;
-    private final Predicate<PatientStatus> requirementForSuccessfulCompletion;
+    private Predicate<PatientStatus> requirementForSuccessfulCompletion;
+    private Predicate<PatientStatus> requirementForSuccessfulStart;
     private final Function<PatientStatus, String> completionMessage;
-    private final Consumer<PatientStatus> statusChangeOnSuccess;
+    private Consumer<PatientStatus> statusChangeOnSuccess;
     private final PatientCondition conditionIfFailed;
     private final Function<PatientStatus, LivingEntity> entityChange;
     private final Set<SurgicalLocation> allowedLocations;
@@ -55,6 +56,7 @@ public class Operation {
     public Operation(Builder b) {
         this.name = b.name;
         this.requirementForSuccessfulCompletion = b.requirementForSuccessfulCompletion;
+        this.requirementForSuccessfulStart = b.requirementForSuccessfulStart;
         this.completionMessage = b.completionMessage;
         this.statusChangeOnSuccess = b.statusChangeOnSuccess;
         this.conditionIfFailed = b.conditionIfFailed;
@@ -83,6 +85,12 @@ public class Operation {
         this.triggerType = b.triggerType;
         this.targetType = b.targetType;
         this.playerData = b.playerData;
+        if (b.needsSpine) {
+            requirementForSuccessfulStart = requirementForSuccessfulStart.and(s -> !s.hasString(OperationRegistry.SPINELESS));
+        }
+        if (b.makeSpineless) {
+            statusChangeOnSuccess = statusChangeOnSuccess.andThen(s -> s.addString(OperationRegistry.SPINELESS, true));
+        }
     }
 
     public String getName() {
@@ -91,6 +99,10 @@ public class Operation {
 
     public Predicate<PatientStatus> getRequirementForSuccessfulCompletion() {
         return requirementForSuccessfulCompletion;
+    }
+
+    public Predicate<PatientStatus> getRequirementForSuccessfulStart() {
+        return requirementForSuccessfulStart;
     }
 
     public Function<PatientStatus, String> getCompletionMessage() {
@@ -208,6 +220,7 @@ public class Operation {
     public static class Builder {
         private final String name;
         private Predicate<PatientStatus> requirementForSuccessfulCompletion = s -> true; // e.g. too much softener made the heart unusable
+        private Predicate<PatientStatus> requirementForSuccessfulStart = s -> true;
         private Function<PatientStatus, String> completionMessage = s -> null; // translation key
         private Consumer<PatientStatus> statusChangeOnSuccess = s -> {
         }; // Any particular effects, e.g. removing a spine turns the PatientCondition into BLEEDING
@@ -236,6 +249,8 @@ public class Operation {
         private boolean increaseArsenalEffectDuration;
         private BurstType burst;
         private boolean increaseBurstExtension;
+        private boolean needsSpine;
+        private boolean makeSpineless;
         private DyeColor mutex;
         private TargetingType triggerType;
         private TargetingType targetType;
@@ -243,6 +258,16 @@ public class Operation {
 
         public Builder(String name) {
             this.name = name;
+        }
+
+        public Builder needsSpine() {
+            needsSpine = true;
+            return this;
+        }
+
+        public Builder makeSpineless() {
+            makeSpineless = true;
+            return this;
         }
 
         public Builder setArsenalEffect(ArsenalEffectType arsenalEffect) {
@@ -326,6 +351,11 @@ public class Operation {
 
         public Builder setRequirementForSuccessfulCompletion(Predicate<PatientStatus> requirementForSuccessfulCompletion) {
             this.requirementForSuccessfulCompletion = requirementForSuccessfulCompletion;
+            return this;
+        }
+
+        public Builder setRequirementForSuccessfulStart(Predicate<PatientStatus> requirementForSuccessfulStart) {
+            this.requirementForSuccessfulStart = requirementForSuccessfulStart;
             return this;
         }
 
@@ -440,8 +470,15 @@ public class Operation {
         }
 
         public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements) {
+            return buildExtractionOperation(registry, stack, additionalRequirements, false);
+        }
+        public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements, boolean highPriority) {
             Operation op = buildOperation();
-            registry.add(new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+            if (highPriority) {
+                registry.add(0, new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+            } else {
+                registry.add(new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+            }
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
         }

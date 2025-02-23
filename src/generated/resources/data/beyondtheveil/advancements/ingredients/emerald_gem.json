@@ -1,0 +1,13 @@
+{
+  "criteria": {
+    "has_emerald_gem": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "has_emerald_gem"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

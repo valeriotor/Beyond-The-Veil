@@ -1455,6 +1455,14 @@ public class BTVLanguageProvider extends LanguageProvider {
                         "A spine extraction is a painful operation that requires an incision to be present.");
         add("research.SPINES.stage.1", "The convalescent can no longer walk, though this does not prove much. I sadly do not have a proper way – especially with a patient so crippled – to verify their lack or presence of willpower. Not yet, at least. However, the knowledge of how to extract a spine may prove a valuable resource, along with the spines themselves.");
 
+        add("research.BONE_TIARA.title", "Bone Tiara");
+        add("research.extracted_bone_tiara.text", "Craft a bone tiara.");
+        add("research.BONE_TIARA.stage.0", "I picture a crown of bones, resting atop my head. A frightening sight: if I were to turn into the monster, would that make me fearless?\\n" +
+                "Fortunately, I shall be turned in no true horror. The crown is simply a tiara, forged from the spine of a human. It is a back operation, requiring an incision and the insertion of three emerald gems. However – and very importantly – a dose of softener is needed before each insertion, due to the sharp edges of the gems. \\n" +
+                "If all is done correctly, an extraction will produce the bone tiara.");
+        add("research.BONE_TIARA.stage.1", "The tiara fills me with grit and certainty: as long as I wear it, I shall not back down.\\n" +
+                "It turns me immune to various effects, including terror, mining fatigue, weakness, slowness, and more. Even knockback from attacks is now inconsequential to me.");
+
         add("research.CUSTOMS.title", "Customs of the Shoremen");
         add("research.ate_slug.text", "Eat a slug.");
         add("research.CUSTOMS.epigraph", "§o\\[...\\] and like two grains of sand, swept across dunes, never to meet again.\\0" +
@@ -1466,6 +1474,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "I wish to learn of and embrace the many customs of the shoremen, and those white, slimy slugs, which seem to play such a major role in their way of life, would be a great starting point. I can talk or send a letter to the lighthouse keeper if I need a sample.");
         add("research.CUSTOMS.stage.1", "§o...bleah.§r\\n" +
                 "Some veils are better left closed.");
+
 
     }
 

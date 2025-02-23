@@ -1,0 +1,24 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "    ",
+    " GE ",
+    " EG ",
+    "    "
+  ],
+  "result": {
+    "count": 3,
+    "item": "beyondtheveil:emerald_gem"
+  },
+  "show_notification": true
+}

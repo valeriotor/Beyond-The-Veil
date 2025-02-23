@@ -37,6 +37,8 @@ public class OperationRegistry {
     static final Map<Item, List<InsertionEntry>> INSERTION_OPERATIONS = new HashMap<>();
     static final Map<SurgicalLocation, OperationRegistry.IncisionEntry> INCISION_OPERATIONS = new HashMap<>();
 
+    public static final String SPINELESS = "spineless";
+
     private static final Operation INCISE_BACK = new Operation.Builder("incise_back")
             .setPainPerTick(0.54)
             .setDuration(200)
@@ -79,8 +81,24 @@ public class OperationRegistry {
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
+            .needsSpine()
+            .makeSpineless()
             .addPlayerData(PlayerDataLib.EXTRACTED_SPINE)
-            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()), s -> !s.hasString("extract_spine"));
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()));
+
+    private static final Operation EXTRACT_BONE_TIARA = new Operation.Builder("extract_bone_tiara")
+            .setPainPerTick(0.4)
+            .setDuration(180)
+            .setPainForFailure(50)
+            .addAllowedLocation(SurgicalLocation.BACK)
+            // TODO .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
+            .setPersistent(true)
+            .setRequiresIncision(true)
+            .setProgressParticles(true)
+            .needsSpine()
+            .makeSpineless()
+            .addPlayerData(PlayerDataLib.EXTRACTED_BONE_TIARA)
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.BONE_TIARA.get()), s -> s.getString("insert_emerald_gem") == 3, true);
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
@@ -143,10 +161,25 @@ public class OperationRegistry {
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(0.2)
             .setDuration(80)
+            .setPainForFailure(150)
             .setCapacityRequirement(2)
             .setArsenalEffect(ArsenalEffectRegistry.FOLLY)
             .setPersistent(true)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.PLUCKED_EYE.get());
+
+    private static final Operation INSERT_EMERALD_GEM = new Operation.Builder("insert_emerald_gem")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(s -> s.hasString("soften") ? 0.4 : 4)
+            .setDuration(80)
+            .setPainForFailure(150)
+            .setStatusChangeOnSuccess(s -> {
+                s.setFluidAmount(BTVFluids.SOURCE_FLUID_SOFTENER.get(), s.getFluidAmount(BTVFluids.SOURCE_FLUID_SOFTENER.get()) - 57);
+                s.removeString("soften");
+            })
+            .setPersistent(true)
+            .setMaximumTimesAllowed(3)
+            .setProgressParticles(true)
+            .buildInsertionOperation(Registration.EMERALD_GEM.get());
 
 }

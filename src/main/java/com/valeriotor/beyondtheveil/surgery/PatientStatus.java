@@ -182,7 +182,7 @@ public class PatientStatus {
             return false;
         }
         OperationRegistry.IncisionEntry op = OperationRegistry.INCISION_OPERATIONS.get(this.exposedLocation);
-        if (op != null && !condition.isTerminal()) {
+        if (op != null && !condition.isTerminal() && op.operation().getRequirementForSuccessfulStart().test(this)) {
             Operation operation = op.operation();
             perTickActions(p, operation, be);
             if (currentPain >= operation.getPainForFailure()) {
@@ -229,7 +229,7 @@ public class PatientStatus {
     public boolean extract(Player p, SurgicalBE be) {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
-            if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation)) {
+            if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation) ) {
                 perTickActions(p, operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
@@ -413,7 +413,8 @@ public class PatientStatus {
         return (!operation.isRequiresIncision() || incised) &&
                 operation.getAllowedLocations().contains(exposedLocation) &&
                 //operation.getCapacityRequirement() <= leftoverCapacity &&
-                (operation.getMaximumTimesAllowed() < 0 || operation.getMaximumTimesAllowed() > flags.getOrDefault(operation.getName(), 0));
+                (operation.getMaximumTimesAllowed() < 0 || operation.getMaximumTimesAllowed() > flags.getOrDefault(operation.getName(), 0)) &&
+                operation.getRequirementForSuccessfulStart().test(this);
     }
 
     private void perTickActions(Player player, Operation operation, SurgicalBE be) {
@@ -517,6 +518,22 @@ public class PatientStatus {
         return flags.containsKey(s);
     }
 
+    int getString(String s) {
+        return flags.getOrDefault(s, 0);
+    }
+
+    void addString(String s, boolean persistent) {
+        flags.put(s, flags.getOrDefault(s, 0) + 1);
+        if (persistent) {
+            persistentFlags.put(s, persistentFlags.getOrDefault(s, 0) + 1);
+        }
+    }
+
+    void removeString(String s) {
+        flags.remove(s);
+        persistentFlags.remove(s);
+    }
+
     public void setCondition(PatientCondition condition) {
         if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
             countdownTicks = 5;
@@ -537,6 +554,14 @@ public class PatientStatus {
 
     void setCurrentPain(double value) {
         this.currentPain = value;
+    }
+
+    double getFluidAmount(Fluid fluid) {
+        return fluidAmounts.getOrDefault(fluid, 0D);
+    }
+
+    void setFluidAmount(Fluid fluid, double amount) {
+        fluidAmounts.put(fluid, Math.max(amount, 0));
     }
 
     public double getCurrentPain() {

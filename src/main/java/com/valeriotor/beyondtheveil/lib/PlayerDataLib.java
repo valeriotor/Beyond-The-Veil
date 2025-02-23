@@ -93,6 +93,7 @@ public class PlayerDataLib {
     public static final String INCISED = "incised";
     public static final String EXTRACTED_HEART = "extracted_heart";
     public static final String EXTRACTED_SPINE = "extracted_spine";
+    public static final String EXTRACTED_BONE_TIARA = "extracted_bone_tiara";
     public static final String ATE_SLUG = "ate_slug";
 
 

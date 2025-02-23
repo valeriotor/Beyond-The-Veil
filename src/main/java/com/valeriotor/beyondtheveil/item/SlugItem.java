@@ -1,9 +1,13 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.datagen.BTVAdvancements;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.VanillaUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -11,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class SlugItem extends Item {
 
@@ -28,6 +33,7 @@ public class SlugItem extends Item {
                 sp.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10));
                 sp.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 10, 1));
             }
+            VanillaUtils.awardAdvancement(sp, new ResourceLocation(References.MODID, "ingredients/emerald_gem"));
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
     }

@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -228,7 +229,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 if (tickCount >= 5) {
                     if (tickCount >= 300) {
                         if (getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).isPresent()) {
-                            if (!getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().get().getFlags().containsKey("extract_spine")) {
+                            if (!getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().get().getFlags().containsKey(OperationRegistry.SPINELESS)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);
                                 if (villager != null) {
                                     villager.setVillagerData(getVillagerData());

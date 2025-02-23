@@ -266,6 +266,25 @@
         ]
       },
       {
+        "key": "BONE_TIARA",
+        "name": "research.BONE_TIARA.title",
+        "icons": [ "beyondtheveil:bone_tiara" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,10 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["SPINES"],
+        "stages": [
+          {
+            "text": "research.BONE_TIARA.stage.0",
+            "required_research": ["extracted_bone_tiara"],
+            "recipes": ["beyondtheveil:emerald_gem"]
+          },
+          {
+            "text": "research.BONE_TIARA.stage.1",
+            "recipes": ["beyondtheveil:emerald_gem"]
+          }
+        ]
+      },
+      {
         "key": "CUSTOMS",
         "name": "research.CUSTOMS.title",
         "icons": [ "beyondtheveil:slug" ],

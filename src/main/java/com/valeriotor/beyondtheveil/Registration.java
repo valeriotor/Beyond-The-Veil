@@ -300,6 +300,7 @@ public class Registration {
     public static final RegistryObject<Item> GUNPOWDER_BLADDER = ITEMS.register("gunpowder_bladder", SurgeryIngredient::new);
     public static final RegistryObject<Item> LIVING_IRON = ITEMS.register("living_iron", SurgeryIngredient::new);
     public static final RegistryObject<Item> EMPTY_BLADDER = ITEMS.register("empty_bladder", SurgeryIngredient::new);
+    public static final RegistryObject<Item> EMERALD_GEM = ITEMS.register("emerald_gem", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -488,6 +489,7 @@ public class Registration {
                 output.accept(GUNPOWDER_BLADDER.get());
                 output.accept(LIVING_IRON.get());
                 output.accept(EMPTY_BLADDER.get());
+                output.accept(EMERALD_GEM.get());
 
 
                 output.accept(SEDATIVE_BUCKET.get());
