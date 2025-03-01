@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-01T13:23:10.1953556	Item Models: beyondtheveil
+// 1.20.1	2025-03-01T19:32:41.9227287	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
@@ -90,7 +90,9 @@ abfcc384873b0b3feea19c1626831b13257cea67 assets/beyondtheveil/models/item/memory
 f540e435c4263d81195f65cb89fa85fbd82a8cec assets/beyondtheveil/models/item/movement_speed_serum_bucket.json
 9291ea805c9946fcba6f457af67b2c6b874bf612 assets/beyondtheveil/models/item/necronomicon.json
 369ffe4eda4f8b384774f5466bf42349dd9fee09 assets/beyondtheveil/models/item/night_vision_serum_bucket.json
+eb673116171dcaddd447e4446a78fb72c7cec19c assets/beyondtheveil/models/item/obedience_hormones_bucket.json
 ddc62887706a7471a412f64d15c7d914b58c2a6a assets/beyondtheveil/models/item/oniric_incense.json
+65b4ec5eceb38bd9317baa6fd8ebe0737ae17454 assets/beyondtheveil/models/item/parental_hormones_bucket.json
 6b02101e3d1b954a6a99b573d2be32cfda2b5fb9 assets/beyondtheveil/models/item/patient_pod.json
 ede31eabe5683c8a5227cae1246b3a4cbf96daba assets/beyondtheveil/models/item/poison_serum_bucket.json
 94ce6fca09854e80fa502ed726428248847aada2 assets/beyondtheveil/models/item/redstone_weed_seeds.json

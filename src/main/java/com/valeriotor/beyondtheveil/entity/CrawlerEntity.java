@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -64,6 +65,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
         this.moveControl = new CrawlerMoveControl(this);
+        setPersistenceRequired();
     }
 
 
@@ -81,6 +83,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new PanicGoal(this, 1.0D));
         this.goalSelector.addGoal(0, new ConvalescentPickUpItemGoal<>(this));
+        this.goalSelector.addGoal(0, new ConvalescentBreedAnimalsGoal<>(this));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {

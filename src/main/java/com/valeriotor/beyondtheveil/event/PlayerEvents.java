@@ -87,7 +87,7 @@ public class PlayerEvents {
                 CrossSync crossSync = csData.getCrossSync();
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
                 heldPatientEntity = transformHeldPatient(heldPatientEntity, sl);
-                if (level.getBlockEntity(event.getPos()).getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+                if (level.getBlockEntity(event.getPos()) != null && level.getBlockEntity(event.getPos()).getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
                     heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> c.setChestPos(event.getPos()));
                 }
                 if (heldPatientEntity != null) {

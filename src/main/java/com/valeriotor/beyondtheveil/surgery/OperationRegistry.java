@@ -162,7 +162,7 @@ public class OperationRegistry {
 
     private static final Operation MEMORY_HORMONES = new Operation.Builder("memory_hormones")
             .addAllowedLocation(SurgicalLocation.SKULL)
-            .setPainPerTick(0.6)
+            .setPainPerTick(1.2)
             .setPersistent(true)
             .setPainForFailure(75)
             .setSuccessParticles(true)
@@ -172,6 +172,29 @@ public class OperationRegistry {
             .setSuccessParticleCount(5)
             .buildInjectionOperation(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), 45);
 
+    private static final Operation OBEDIENCE_HORMONES = new Operation.Builder("obedience_hormones")
+            .addAllowedLocation(SurgicalLocation.SKULL)
+            .setPainPerTick(2.1)
+            .setPersistent(true)
+            .setPainForFailure(75)
+            .setSuccessParticles(true)
+            .setParticleOffset(new Vec3(0, 0, 1))
+            .setSuccessParticleType(ParticleTypes.CRIT)
+            .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
+            .setSuccessParticleCount(5)
+            .buildInjectionOperation(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), 35);
+
+    private static final Operation PARENTAL_HORMONES = new Operation.Builder("parental_hormones")
+            .addAllowedLocation(SurgicalLocation.SKULL)
+            .setPainPerTick(0.9)
+            .setPersistent(true)
+            .setPainForFailure(50)
+            .setSuccessParticles(true)
+            .setParticleOffset(new Vec3(0, 0, 1))
+            .setSuccessParticleType(ParticleTypes.CRIT)
+            .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
+            .setSuccessParticleCount(5)
+            .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
 
     private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")
             .addAllowedLocation(SurgicalLocation.BACK)

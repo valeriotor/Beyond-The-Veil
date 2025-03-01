@@ -326,6 +326,8 @@ public class Registration {
     public static final RegistryObject<Item> POISON_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("poison_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_POISON_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> WITHER_SERUM_FLUID_SERUM_BUCKET = ITEMS.register("wither_serum_bucket", () -> new BucketItem(BTVFluids.FLUID_WITHER_SERUM.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> MEMORY_HORMONES_FLUID_BUCKET = ITEMS.register("memory_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_MEMORY_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> OBEDIENCE_HORMONES_FLUID_BUCKET = ITEMS.register("obedience_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> PARENTAL_HORMONES_FLUID_BUCKET = ITEMS.register("parental_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_PARENTAL_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -517,6 +519,8 @@ public class Registration {
                 output.accept(POISON_SERUM_FLUID_SERUM_BUCKET.get());
                 output.accept(WITHER_SERUM_FLUID_SERUM_BUCKET.get());
                 output.accept(MEMORY_HORMONES_FLUID_BUCKET.get());
+                output.accept(OBEDIENCE_HORMONES_FLUID_BUCKET.get());
+                output.accept(PARENTAL_HORMONES_FLUID_BUCKET.get());
 
                 output.accept(DEEP_ONE_EGG.get());
                 output.accept(BLOOD_SKELETON_EGG.get());

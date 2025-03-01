@@ -31,7 +31,7 @@ public class ConvalescentPickUpItemGoal<T extends Mob & SurgeryPatient> extends 
         LazyOptional<ConvalescentData> cap = entity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
         if (cap.isPresent()) {
             ConvalescentData data = cap.resolve().get();
-            if (data.getFlags().getOrDefault("memory_hormones", 0) > 0 && data.getChestPos() != null) {
+            if (data.getFlags().getOrDefault("obedience_hormones", 0) > 0 && data.getChestPos() != null) {
                 return true;
             }
         }

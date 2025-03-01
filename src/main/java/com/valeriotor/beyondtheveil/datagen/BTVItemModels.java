@@ -148,6 +148,8 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(POISON_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + POISON_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
         singleTexture(WITHER_SERUM_FLUID_SERUM_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + WITHER_SERUM_FLUID_SERUM_BUCKET.getId().getPath()));
         singleTexture(MEMORY_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + MEMORY_HORMONES_FLUID_BUCKET.getId().getPath()));
+        singleTexture(OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath()));
+        singleTexture(PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath()));
 
         //registerForceps();
     }
