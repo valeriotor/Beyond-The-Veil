@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "beyondtheveil:block/large_cube",
   "children": {
     "block/patient_pod_solid1": {
       "parent": "beyondtheveil:block/patient_pod_solid",

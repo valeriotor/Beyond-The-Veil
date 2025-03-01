@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "beyondtheveil:block/large_cube",
   "children": {
     "base": {
       "parent": "beyondtheveil:block/alembics",

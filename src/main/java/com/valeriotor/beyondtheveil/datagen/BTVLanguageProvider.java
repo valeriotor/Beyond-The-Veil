@@ -1463,6 +1463,17 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BONE_TIARA.stage.1", "The tiara fills me with grit and certainty: as long as I wear it, I shall not back down.\\n" +
                 "It turns me immune to various effects, including terror, mining fatigue, weakness, slowness, and more. Even knockback from attacks is now inconsequential to me.");
 
+        add("research.WATERY_CRADLE.title", "The Watery Cradle");
+        add("research.crafted_watery_cradle.text", "Craft a watery cradle.");
+        add("research.first_skull_operation.text", "Inject either of the two hormones above in a patient..");
+        add("research.WATERY_CRADLE.stage.0", "The mind lies deepest among the veils obscuring humanity from itself: that impenetrable mystery that, despite all miracles of modern science, has not yet been breached. My exploration of human anatomy should not stop at the worldly body, and must instead seek to explain the processes behind our very thoughts.\\n" +
+                "The surgery bed is not appropriate for such operations: the patient must be lulled into a dreamlike state, unable to conceive or realise what is happening – and, once again, water is the key. I shall build a specialised chamber for this purpose, a \"watery cradle\" of sorts, to enable injections in the skull.");
+        add("research.WATERY_CRADLE.stage.1", "The cradle is built, but requires testing. This is perhaps an opportunity to prove the lack of willpower in those without a spine.\\n" +
+                "I will inject hormones in the patients' skulls. Of course, such substances are already known to alter the personality of an individual – perhaps busting that myth of free will, and so forth – yet the question remains on how intense their effects can become.\\n" +
+                "I shall begin either with: (i) order hormones, making the patient obsessively aware of its surroundings and any items lying out and about; or (ii) parental hormones, intensifying the patient's motherly instincts and pushing it into breeding nearby animals. I will add further information in my journal.");
+        add("research.WATERY_CRADLE.stage.2", "The successful operation proves – again – the fragility of the human mind. The watery cradle will become yet another tool in my research.");
+
+
         add("research.CUSTOMS.title", "Customs of the Shoremen");
         add("research.ate_slug.text", "Eat a slug.");
         add("research.CUSTOMS.epigraph", "§o\\[...\\] and like two grains of sand, swept across dunes, never to meet again.\\0" +
@@ -1638,6 +1649,12 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
         add("gui.journal.ingredients.empty_bladder.text", "Empty Bladder");
+
+        add("gui.journal.ingredients.parental_hormones.title", "Parental Hormones");
+        add("gui.journal.ingredients.parental_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then try to breed any nearby eligible pair of animals using items from the container, if available (e.g. wheat for cows, seeds for chickens).");
+
+        add("gui.journal.ingredients.obedience_hormones.title", "Order Hormones");
+        add("gui.journal.ingredients.obedience_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then pick up any items within a certain range and put them in the container it was assigned to.");
 
 
         add("gui.journal.journal.type.none", "Select Type");

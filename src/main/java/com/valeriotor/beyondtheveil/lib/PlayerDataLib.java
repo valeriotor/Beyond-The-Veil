@@ -95,6 +95,7 @@ public class PlayerDataLib {
     public static final String EXTRACTED_SPINE = "extracted_spine";
     public static final String EXTRACTED_BONE_TIARA = "extracted_bone_tiara";
     public static final String ATE_SLUG = "ate_slug";
+    public static final String FIRST_SKULL_OPERATION = "first_skull_operation";
 
 
     // Booleans (Temporary)

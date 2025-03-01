@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.container;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.event.ResearchEvents;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import net.minecraft.core.BlockPos;
@@ -157,7 +158,9 @@ public class GearBenchContainer extends AbstractContainerMenu {
                         cap.insertItem(i, new ItemStack(Items.BUCKET), false);
                     }
                 }
-                //TODO research event
+                if (pPlayer instanceof ServerPlayer) {
+                    ResearchEvents.gearBenchCraftEvent(pPlayer, pStack);
+                }
             }
             super.onTake(pPlayer, pStack);
         }

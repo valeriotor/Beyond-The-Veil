@@ -292,7 +292,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new StacksItemEntry(Registration.FLASK_SHELF_ITEM.get(), "flask_shelf", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SURGERY_BED_ITEM.get(), "surgery_bed", JournalCategory.TOOLS));
         Minecraft.getInstance().player.getCapability(ResearchProvider.RESEARCH).ifPresent(c -> {
-            if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("watery_cradle")) { // TODO check if key contains namespace
+            if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
                 entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));
             }
         });
@@ -304,6 +304,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), "sedative", JournalCategory.INGREDIENTS));
         entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_COAGULANT.get(), "coagulant", JournalCategory.INGREDIENTS));
         entries.add(new FluidItemEntry(BTVFluids.SOURCE_FLUID_SOFTENER.get(), "softener", JournalCategory.INGREDIENTS));
+        if (ResearchUtil.getResearchStage(Minecraft.getInstance().player, "WATERY_CRADLE") >= 1) {
+            entries.add(new FluidItemEntry(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), "obedience_hormones", JournalCategory.INGREDIENTS));
+            entries.add(new FluidItemEntry(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), "parental_hormones", JournalCategory.INGREDIENTS));
+        }
         for (Item knownIngredient : knownIngredients) {
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(knownIngredient);
             if (key != null) {

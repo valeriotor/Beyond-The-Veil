@@ -285,6 +285,30 @@
         ]
       },
       {
+        "key": "WATERY_CRADLE",
+        "name": "research.WATERY_CRADLE.title",
+        "icons": [ "beyondtheveil:watery_cradle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,10 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["SPINES", "HEARTS"],
+        "stages": [
+          {
+            "text": "research.WATERY_CRADLE.stage.0",
+            "required_research": ["crafted_watery_cradle"],
+            "recipes": ["beyondtheveil:watery_cradle"]
+          },
+          {
+            "text": "research.WATERY_CRADLE.stage.1",
+            "required_research": ["first_skull_operation"],
+            "recipes": ["beyondtheveil:watery_cradle"]
+          },
+          {
+            "text": "research.WATERY_CRADLE.stage.2",
+            "recipes": ["beyondtheveil:watery_cradle"]
+          }
+        ]
+      },
+      {
         "key": "CUSTOMS",
         "name": "research.CUSTOMS.title",
         "icons": [ "beyondtheveil:slug" ],

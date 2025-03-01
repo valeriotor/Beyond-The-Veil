@@ -182,6 +182,7 @@ public class OperationRegistry {
             .setSuccessParticleType(ParticleTypes.CRIT)
             .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
             .setSuccessParticleCount(5)
+            .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
             .buildInjectionOperation(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), 35);
 
     private static final Operation PARENTAL_HORMONES = new Operation.Builder("parental_hormones")
@@ -194,6 +195,7 @@ public class OperationRegistry {
             .setSuccessParticleType(ParticleTypes.CRIT)
             .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
             .setSuccessParticleCount(5)
+            .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
             .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
 
     private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")

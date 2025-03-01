@@ -1,4 +1,4 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "beyondtheveil:block/large_cube",
   "loader": "beyondtheveil:alembics_loader"
 }

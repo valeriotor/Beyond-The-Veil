@@ -229,7 +229,7 @@ public class BTVBlockStates extends BlockStateProvider {
         translucent_parent.renderType("translucent");
 
         BlockModelBuilder wateryCradle = models().getBuilder("beyondtheveil:block/watery_cradle")
-                .parent(models().getExistingFile(mcLoc("cube")))
+                .parent(models().getExistingFile(modLoc("large_cube")))
                 .texture("particle", modLoc("block/watery_cradle"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .child("block/watery_cradle_solid1", parent))
@@ -256,7 +256,7 @@ public class BTVBlockStates extends BlockStateProvider {
         translucent_parent.renderType("translucent");
 
         BlockModelBuilder patientPod = models().getBuilder("beyondtheveil:block/patient_pod")
-                .parent(models().getExistingFile(mcLoc("cube")))
+                .parent(models().getExistingFile(modLoc("large_cube")))
                 .texture("particle", modLoc("block/patient_pod"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .child("block/patient_pod_solid1", parent))
@@ -440,7 +440,7 @@ public class BTVBlockStates extends BlockStateProvider {
         loaderBuilder.renderType("translucent");
 
         BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/alembics_complete")
-                .parent(models().getExistingFile(mcLoc("cube")))
+                .parent(models().getExistingFile(modLoc("large_cube")))
                 .texture("particle", modLoc("block/alembics"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
                         .child("base", baseBuilder).child("loader", loaderBuilder))
