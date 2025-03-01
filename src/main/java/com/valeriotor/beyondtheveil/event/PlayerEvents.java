@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -86,6 +87,9 @@ public class PlayerEvents {
                 CrossSync crossSync = csData.getCrossSync();
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
                 heldPatientEntity = transformHeldPatient(heldPatientEntity, sl);
+                if (level.getBlockEntity(event.getPos()).getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+                    heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> c.setChestPos(event.getPos()));
+                }
                 if (heldPatientEntity != null) {
                     heldPatientEntity.setPos(event.getHitVec().getLocation());
                     //TODO wait why did I comment this? ((SurgeryPatient) heldPatientEntity).setHeld(false);

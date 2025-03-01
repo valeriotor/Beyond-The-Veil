@@ -4,6 +4,9 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -118,13 +121,13 @@ public class OperationRegistry {
             .buildInjectionOperation(Fluids.WATER, 490);
 
     //private static final Operation SEDATE = new Operation.Builder("sedate") // TODO transform in SEDATE_PAIN?
-            //.setPainLevel(PainLevel.NEGLIGIBLE)
-            //.allowAllLocations()
-            //.setMaximumTimesAllowed(-1)
-            //.setStatusChangeOnSuccess(s -> {
-                //s.setCurrentPain(0);
-            //})
-            //.buildInjectionOperation(INJECTION_OPERATIONS, Registration.SOURCE_FLUID_SEDATIVE.get(), 72);
+    //.setPainLevel(PainLevel.NEGLIGIBLE)
+    //.allowAllLocations()
+    //.setMaximumTimesAllowed(-1)
+    //.setStatusChangeOnSuccess(s -> {
+    //s.setCurrentPain(0);
+    //})
+    //.buildInjectionOperation(INJECTION_OPERATIONS, Registration.SOURCE_FLUID_SEDATIVE.get(), 72);
 
     private static final Operation SEDATE = new Operation.Builder("sedate_too_much")
             //.setPainLevel(PainLevel.NEGLIGIBLE)
@@ -156,6 +159,19 @@ public class OperationRegistry {
             })
             .setEraseFluid(true)
             .buildInjectionOperation(BTVFluids.SOURCE_FLUID_COAGULANT.get(), 32);
+
+    private static final Operation MEMORY_HORMONES = new Operation.Builder("memory_hormones")
+            .addAllowedLocation(SurgicalLocation.SKULL)
+            .setPainPerTick(0.6)
+            .setPersistent(true)
+            .setPainForFailure(75)
+            .setSuccessParticles(true)
+            .setParticleOffset(new Vec3(0, 0, 1))
+            .setSuccessParticleType(ParticleTypes.CRIT)
+            .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
+            .setSuccessParticleCount(5)
+            .buildInjectionOperation(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), 45);
+
 
     private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")
             .addAllowedLocation(SurgicalLocation.BACK)

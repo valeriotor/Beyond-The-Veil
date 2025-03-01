@@ -1,8 +1,13 @@
 package com.valeriotor.beyondtheveil.surgery;
 
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType;
 import com.valeriotor.beyondtheveil.surgery.arsenal.BurstType;
 import com.valeriotor.beyondtheveil.surgery.arsenal.TargetingType;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -43,6 +48,9 @@ public class Operation {
     private final boolean successParticles;
     private final boolean failureParticles;
     private final Vec3 particleOffset;
+    private final ParticleOptions successParticleType;
+    private final int successParticleCount;
+    private final SoundEvent successSound;
     private final List<String> playerData;
     private ArsenalEffectType arsenalEffect;
     private boolean increaseArsenalEffectAmplifier;
@@ -76,6 +84,9 @@ public class Operation {
         this.successParticles = b.successParticles;
         this.failureParticles = b.failureParticles;
         this.particleOffset = b.particleOffset;
+        this.successParticleType = b.successParticleType;
+        this.successParticleCount = b.successParticleCount;
+        this.successSound = b.successSound;
         this.arsenalEffect = b.arsenalEffect;
         this.increaseArsenalEffectAmplifier = b.increaseArsenalEffectAmplifier;
         this.increaseArsenalEffectDuration = b.increaseArsenalEffectDuration;
@@ -181,6 +192,18 @@ public class Operation {
         return particleOffset;
     }
 
+    public ParticleOptions getSuccessParticleType() {
+        return successParticleType;
+    }
+
+    public int getSuccessParticleCount() {
+        return successParticleCount;
+    }
+
+    public SoundEvent getSuccessSound() {
+        return successSound;
+    }
+
     public ArsenalEffectType getArsenalEffect() {
         return arsenalEffect;
     }
@@ -244,6 +267,9 @@ public class Operation {
         private boolean successParticles = false;
         private boolean failureParticles = false;
         private Vec3 particleOffset = Vec3.ZERO;
+        private ParticleOptions successParticleType = BTVParticles.BLOODSPILL.get();
+        private int successParticleCount = 50;
+        private SoundEvent successSound = null;
         private ArsenalEffectType arsenalEffect;
         private boolean increaseArsenalEffectAmplifier;
         private boolean increaseArsenalEffectDuration;
@@ -438,6 +464,21 @@ public class Operation {
             return this;
         }
 
+        public Builder setSuccessParticleType(ParticleOptions successParticleType) {
+            this.successParticleType = successParticleType;
+            return this;
+        }
+
+        public Builder setSuccessParticleCount(int successParticleCount) {
+            this.successParticleCount = successParticleCount;
+            return this;
+        }
+
+        public Builder setSuccessSound(SoundEvent successSound) {
+            this.successSound = successSound;
+            return this;
+        }
+
         public Builder setParticleOffset(Vec3 particleOffset) {
             this.particleOffset = particleOffset;
             return this;
@@ -449,8 +490,8 @@ public class Operation {
         }
 
         //public Builder setFailureParticles(boolean failureParticles) {
-            //this.failureParticles = failureParticles;
-            //return this;
+        //this.failureParticles = failureParticles;
+        //return this;
         //}
 
         private Operation buildOperation() {
@@ -472,6 +513,7 @@ public class Operation {
         public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements) {
             return buildExtractionOperation(registry, stack, additionalRequirements, false);
         }
+
         public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements, boolean highPriority) {
             Operation op = buildOperation();
             if (highPriority) {

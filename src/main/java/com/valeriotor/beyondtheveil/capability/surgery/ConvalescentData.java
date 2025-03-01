@@ -3,8 +3,10 @@ package com.valeriotor.beyondtheveil.capability.surgery;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import com.valeriotor.beyondtheveil.surgery.arsenal.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +28,9 @@ public class ConvalescentData {
     private final Map<String, Integer> counters = new HashMap<>(); // populated lazily. Keys are the flags, values are any integer counter that may be of use
     private TriggerData triggerData;
     private int capacity;
+    private int collectedXP = 0;
+    private BlockPos chestPos;
+    private ItemStack heldStack = ItemStack.EMPTY;
 
     public TriggerData getTriggerData() {
         if (triggerData != null) {
@@ -63,8 +68,50 @@ public class ConvalescentData {
         return counters;
     }
 
+    public int getCounter(String key) {
+        return counters.getOrDefault(key, 0);
+    }
+
+    public void setCounter(String key, int value) {
+        counters.put(key, value);
+    }
+
     public Map<String, Integer> getFlags() {
         return flags;
+    }
+
+    public int getCollectedXP() {
+        return collectedXP;
+    }
+
+    public void addXP(int amount) {
+        collectedXP += amount;
+    }
+
+    public int takeXP() {
+        int taken = Math.min(1000, collectedXP);
+        collectedXP -= taken;
+        return taken;
+    }
+
+    public void setChestPos(BlockPos chestPos) {
+        this.chestPos = chestPos;
+    }
+
+    public BlockPos getChestPos() {
+        return chestPos;
+    }
+
+    public void setHeldStack(ItemStack heldStack) {
+        this.heldStack = heldStack;
+    }
+
+    public ItemStack getHeldStack() {
+        return heldStack;
+    }
+
+    public void tickCounters() {
+        counters.replaceAll((k, v) -> Math.max(0, v - 1));
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -83,6 +130,10 @@ public class ConvalescentData {
             tag.put("triggerData", triggerData.saveToNBT(new CompoundTag()));
         }
         tag.putInt("capacity", capacity);
+        if (chestPos != null) {
+            tag.putLong("chestPos", chestPos.asLong());
+        }
+        tag.put("heldStack", heldStack.save(new CompoundTag()));
         return tag;
     }
 
@@ -101,5 +152,11 @@ public class ConvalescentData {
             triggerData.loadFromNBT(tag.getCompound("triggerData"));
         }
         capacity = tag.getInt("capacity");
+        if (tag.contains("chestPos")) {
+            chestPos = BlockPos.of(tag.getLong("chestPos"));
+        }
+        if (tag.contains("heldStack")) {
+            heldStack = ItemStack.of(tag.getCompound("heldStack"));
+        }
     }
 }

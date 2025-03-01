@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -79,6 +80,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new PanicGoal(this, 1.0D));
+        this.goalSelector.addGoal(0, new ConvalescentPickUpItemGoal<>(this));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -228,17 +230,20 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             } else {
                 if (tickCount >= 5) {
                     if (tickCount >= 300) {
-                        if (getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).isPresent()) {
-                            if (!getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().get().getFlags().containsKey(OperationRegistry.SPINELESS)) {
+                        getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                            if (!c.getFlags().containsKey(OperationRegistry.SPINELESS)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);
                                 if (villager != null) {
                                     villager.setVillagerData(getVillagerData());
+                                    villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c1 -> {
+                                        c1.loadFromNBT(c.saveToNBT(new CompoundTag()));
+                                    });
                                     //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
                                     //villager.setTradeOffers(source.getOffers().createTag());
                                     //villager.setVillagerXp(source.getVillagerXp());
                                 }
                             }
-                        }
+                        });
                     }
                     getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                         if (c.getCondition().isTerminal()) {

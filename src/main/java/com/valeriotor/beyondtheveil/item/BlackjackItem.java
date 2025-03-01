@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.BTVTags;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -13,6 +14,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -46,6 +48,11 @@ public class BlackjackItem extends Item {
                 CrawlerEntity crawler = villager.convertTo(Registration.CRAWLER.get(), false);
                 if (crawler != null) {
                     crawler.setData(villager);
+                    crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {
+                        villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(villagerCap -> {
+                            crawlerCap.loadFromNBT(villagerCap.saveToNBT(new CompoundTag()));
+                        });
+                    });
                     return InteractionResult.SUCCESS;
                 }
             }

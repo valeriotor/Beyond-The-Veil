@@ -365,6 +365,9 @@ public class PatientStatus {
         }
         if (success) {
             operation.getStatusChangeOnSuccess().accept(this);
+            if (operation.getSuccessSound() != null) {
+                player.level().playSound(null, player.blockPosition(), operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
+            }
             leftoverCapacity -= operation.getCapacityRequirement();
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
@@ -381,7 +384,7 @@ public class PatientStatus {
                 BlockPos blockPos = be.getBlockPos();
                 Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
                 Vec3 offset = operation.getParticleOffset().yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
-                ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 50, 0, 0, 0, 1);
+                ((ServerLevel) player.level()).sendParticles(operation.getSuccessParticleType(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, operation.getSuccessParticleCount(), 0, 0, 0, 1);
             }
             return true;
         } else {
