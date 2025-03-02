@@ -20,6 +20,7 @@ public class Setup {
         event.put(Registration.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
         event.put(Registration.CRAWLER.get(), CrawlerEntity.prepareAttributes().build());
         event.put(Registration.WEEPER.get(), WeeperEntity.prepareAttributes().build());
+        event.put(Registration.FLETUM.get(), FletumEntity.prepareAttributes().build());
         event.put(Registration.ABOMINATION_0.get(), Abomination0Entity.prepareAttributes().build());
         event.put(Registration.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());
         event.put(Registration.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());

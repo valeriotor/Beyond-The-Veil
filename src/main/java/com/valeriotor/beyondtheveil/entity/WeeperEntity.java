@@ -1,22 +1,33 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -26,25 +37,31 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity, SurgeryPatient {
+public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity, PlayerMinion, SurgeryPatient, Weeping {
 
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.BOOLEAN);
     private Animation explodingAnimation;
+    private Animation standUpAnimation;
     private boolean wasBleeding = false;
     private int attackTimer = -1;
     private int deathTimer = -1;
     private boolean surgeryPatient;
     private PatientStatus patientStatus;
     private boolean held;
+    private BlockPos lacrymatoryPos;
+    private UUID master;
+    private int ticksToFletum = -1;
 
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
@@ -55,9 +72,15 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     protected void registerGoals() {
         //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && lacrymatoryPos == null && tickCount > 60;
+            }
+        });
         this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
+        this.goalSelector.addGoal(3, new WeepGoal<>(this, 1));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -96,6 +119,8 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         if (channel == 0) {
             explodingAnimation = new Animation(animationTemplate);
+        } else if (channel == 1) {
+            standUpAnimation = new Animation(animationTemplate);
         }
     }
 
@@ -103,12 +128,38 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
         return explodingAnimation;
     }
 
+    public Animation getStandUpAnimation() {
+        return standUpAnimation;
+    }
+
+    public void standUp() {
+        LazyOptional<ConvalescentData> capability = getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
+        boolean becomesFletum = capability.isPresent() && capability.resolve().get().getFlags().containsKey(OperationRegistry.SPINELESS);
+        AnimationTemplate template = becomesFletum ? AnimationRegistry.weeper_get_up_spineless : AnimationRegistry.weeper_get_up;
+        Messages.sendToTracking(GenericToClientPacket.startAnimation(template, getId(), 1), this);
+        if (becomesFletum) {
+            ticksToFletum = 94;
+            goalSelector.removeAllGoals(t -> true);
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            if (explodingAnimation != null && !explodingAnimation.isDone()) {
-                explodingAnimation.update();
+            if (explodingAnimation != null) {
+                if (!explodingAnimation.isDone()) {
+                    explodingAnimation.update();
+                } else {
+                    explodingAnimation = null;
+                }
+            }
+            if (standUpAnimation != null) {
+                if (!standUpAnimation.isDone()) {
+                    standUpAnimation.update();
+                } else {
+                    standUpAnimation = null;
+                }
             }
             int bleeding = entityData.get(DATA_BLEEDING);
             if (bleeding >= 0) {
@@ -133,6 +184,21 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
             }
 
         } else {
+            if (ticksToFletum > 0) {
+                ticksToFletum--;
+                if (ticksToFletum == 0) {
+                    for (int i = 0; i < 10; i++) {
+                        ((ServerLevel) level()).sendParticles(BTVParticles.TEARSPILL.get(), getX(), getY() - 1 + 0.12 * i, getZ(), 5, 0, 0, 0, 1);
+                    }
+                    FletumEntity fletum = new FletumEntity(Registration.FLETUM.get(), level());
+                    fletum.setPos(position().add(0, 1.5, 0));
+                    level().addFreshEntity(fletum);
+                    fletum.setMasterID(master);
+                    discard();
+                    level().playSound(null, getX(), getY(), getZ(), BTVSounds.HEAD_EXPLODE.get(), SoundSource.NEUTRAL, 1, 1);
+                    return;
+                }
+            }
             if (getTarget() == null) {
                 entityData.set(DATA_TARGETING, false);
             } else if(getNavigation().isInProgress()){
@@ -227,6 +293,13 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putBoolean("held", held);
+        if (lacrymatoryPos != null) {
+            pCompound.putLong("lacrymatory", lacrymatoryPos.asLong());
+        }
+        if (master != null) {
+            pCompound.putString("master", master.toString());
+        }
+        pCompound.putInt("ticksToFletum", ticksToFletum);
     }
 
     @Override
@@ -235,17 +308,63 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
         if (pCompound.contains("held")) {
             held = pCompound.getBoolean("held");
         }
+        if (pCompound.contains("lacrymatory")) {
+            lacrymatoryPos = BlockPos.of(pCompound.getLong("lacrymatory"));
+        }
+        if (pCompound.contains("master")) {
+            master = UUID.fromString(pCompound.getString("master"));
+        }
+        if (pCompound.contains("ticksToFletum")) {
+            ticksToFletum = pCompound.getInt("ticksToFletum");
+        }
     }
 
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
-        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND) {
+        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND && pPlayer.getUUID().equals(master)) {
             if (!level().isClientSide) {
+                setLacrymatoryPos(null);
                 pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> data.getCrossSync().setHeldPatient(this, pPlayer));
                 discard();
             }
             return InteractionResult.SUCCESS;
         }
         return super.interactAt(pPlayer, pVec, pHand);
+    }
+
+    @Override
+    public BlockPos getLacrymatoryPos() {
+        return lacrymatoryPos;
+    }
+
+    @Override
+    public void setLacrymatoryPos(BlockPos pos) {
+        lacrymatoryPos = pos;
+    }
+
+    @Override
+    public int mbWept() {
+        return 15;
+    }
+
+    @Override
+    public UUID getMasterID() {
+        return master;
+    }
+
+    @Override
+    public void setMasterID(UUID uuid) {
+        this.master = uuid;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return BTVSounds.WEEPING.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 140;
     }
 }

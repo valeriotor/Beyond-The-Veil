@@ -93,6 +93,7 @@ public class ClientSetup {
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
+        event.registerLayerDefinition(FletumModel.LAYER_LOCATION, FletumModel::createBodyLayer);
         event.registerLayerDefinition(Abomination0Model.LAYER_LOCATION, Abomination0Model::createBodyLayer);
         event.registerLayerDefinition(Abomination1Model.LAYER_LOCATION, Abomination1Model::createBodyLayer);
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
@@ -116,6 +117,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
         event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
         event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
+        event.registerEntityRenderer(Registration.FLETUM.get(), FletumRenderer::new);
         event.registerEntityRenderer(Registration.ABOMINATION_0.get(), Abomination0Renderer::new);
         event.registerEntityRenderer(Registration.ABOMINATION_1.get(), Abomination1Renderer::new);
         event.registerEntityRenderer(Registration.BLOOD_CULTIST.get(), BloodCultistRenderer::new);

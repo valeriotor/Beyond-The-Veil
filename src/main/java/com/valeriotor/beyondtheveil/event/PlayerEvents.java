@@ -1,10 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.block.FlaskBlock;
-import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
-import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
-import com.valeriotor.beyondtheveil.block.WateryCradleBlock;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
@@ -12,12 +8,15 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
-import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
+import com.valeriotor.beyondtheveil.entity.WeeperEntity;
+import com.valeriotor.beyondtheveil.entity.Weeping;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -93,10 +92,19 @@ public class PlayerEvents {
                     } else {
                         heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> c.setChestPos(null));
                     }
+                    if (heldPatientEntity instanceof Weeping weeping && level.getBlockEntity(event.getPos()) instanceof LacrymatoryBE) {
+                        weeping.setLacrymatoryPos(event.getPos());
+                    }
                     heldPatientEntity.setPos(event.getHitVec().getLocation());
                     //TODO wait why did I comment this? ((SurgeryPatient) heldPatientEntity).setHeld(false);
                     level.addFreshEntity(heldPatientEntity);
                     crossSync.setHeldPatient(null, player);
+                    if (heldPatientEntity instanceof WeeperEntity weeper) {
+                        weeper.standUp();
+                    }
+                    if (heldPatientEntity instanceof PlayerMinion minion) {
+                        minion.setMaster(player);
+                    }
                 }
             }
         }

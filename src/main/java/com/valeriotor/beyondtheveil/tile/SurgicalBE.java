@@ -292,8 +292,10 @@ public abstract class SurgicalBE extends BlockEntity {
         if (patientStatus != null) {
             if (patientStatus.isDirty()) {
                 if (patientStatus.isExploded()) {
+                    CompoundTag tag = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag());
                     patientStatus = new PatientStatus(PatientType.WEEPER);
                     patientStatus.setExposedLocation(defaultLocation);
+                    patientStatus.fromConvalescentNBT(tag);
                 }
                 setChanged();
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);

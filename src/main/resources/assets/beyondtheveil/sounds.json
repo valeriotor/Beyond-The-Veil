@@ -22,5 +22,11 @@
   },
   "water_dream_short": {
     "sounds": [ "beyondtheveil:water_dream_short" ]
+  },
+  "weeping": {
+    "sounds": [ "beyondtheveil:weeping0", "beyondtheveil:weeping1", "beyondtheveil:weeping2" ]
+  },
+  "fletum_weeping": {
+    "sounds": [ "beyondtheveil:fletum_weeping0", "beyondtheveil:fletum_weeping1", "beyondtheveil:fletum_weeping2" ]
   }
 }

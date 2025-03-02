@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -57,6 +58,14 @@ public class LacrymatoryBE extends BlockEntity {
 
     public int getFluidAmount() {
         return tank.getFluidAmount();
+    }
+
+    public void addTears(int amount) {
+        tank.fill(new FluidStack(BTVFluids.FLUID_TEARS.getA().get(), amount), IFluidHandler.FluidAction.EXECUTE);
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        }
     }
 
     @Override

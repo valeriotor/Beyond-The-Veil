@@ -1,0 +1,95 @@
+model: weeper
+length: 94
+start: 0: 5
+    rotx: body: 0.8: immediate: absolute
+    rotx: upper_body_1: 0.5: immediate: absolute
+    rotx: left_arm1: -1.5: immediate: absolute
+    rotx: right_arm1: -1.5: immediate: absolute
+    rotx: head1: 0.8: immediate: absolute
+    rotx: legs: 0.5: immediate: absolute
+    rotx: left_leg2: 1.2: immediate: absolute
+    rotx: right_leg2: 1.2: immediate: absolute
+    tray: body: 14: immediate: absolute
+    tray: legs: 16: immediate: absolute
+    traz: body: 5: immediate: absolute
+    traz: legs: 3.5: immediate: absolute
+start: 6: 25
+    rotx: body: 0.8: linear: absolute
+    rotx: upper_body_1: -0.1: linear: absolute
+    rotx: left_arm1: -0.7: linear: absolute
+    rotx: right_arm1: -0.7: linear: absolute
+    rotx: head1: 0.2: linear: absolute
+    rotx: legs: 0.5: linear: absolute
+    rotx: left_leg2: 1.2: linear: absolute
+    rotx: right_leg2: 1.F: linear: absolute
+    tray: body: 14: linear: absolute
+    tray: legs: 16: linear: absolute
+    traz: body: 5: linear: absolute
+    traz: legs: 3.5: linear: absolute
+start: 26: 38
+    rotx: body: 0.8: linear: absolute
+    rotx: upper_body_1: -0.1: linear: absolute
+    rotx: left_arm1: -0.7: linear: absolute
+    rotx: right_arm1: -0.7: linear: absolute
+    rotx: head1: 0.2: linear: absolute
+    rotx: legs: 0.5: linear: absolute
+    rotx: left_leg2: 1.2: linear: absolute
+    rotx: right_leg2: 1.2: linear: absolute
+    rotx: right_leg1: -1.7: linear: absolute
+    tray: body: 14: linear: absolute
+    tray: legs: 15: linear: absolute
+    traz: body: 5: linear: absolute
+    traz: legs: 3: linear: absolute
+start: 39: 55
+    rotx: body: 0.2: linear: absolute
+    rotx: upper_body_1: -0.1: linear: absolute
+    rotx: left_arm1: -0.7: linear: absolute
+    rotx: right_arm1: -0.7: linear: absolute
+    rotx: head1: 0.2: linear: absolute
+    rotx: legs: 0.5: linear: absolute
+    rotx: left_leg2: 0.2: linear: absolute
+    rotx: right_leg2: 1.2: linear: absolute
+    rotx: right_leg1: -1.7: linear: absolute
+    tray: body: 12: linear: absolute
+    tray: legs: 13: linear: absolute
+    traz: body: 5: linear: absolute
+    traz: legs: 3: linear: absolute
+start: 56: 64
+    rotx: left_arm1: -1.0: linear: absolute
+    rotx: right_arm1: -0.5: linear: absolute
+start: 65: 72
+    rotx: left_arm1: -0.4: linear: absolute
+    rotx: right_arm1: -1.2: linear: absolute
+start: 73: 79
+    rotx: left_arm1: -1.5: linear: absolute
+    rotx: right_arm1: -0.3: linear: absolute
+start: 80: 85
+    rotx: left_arm1: -0.3: linear: absolute
+    rotx: right_arm1: -1.5: linear: absolute
+start: 86: 90
+    rotx: left_arm1: -1.5: linear: absolute
+    rotx: right_arm1: -0.3: linear: absolute
+start: 90: 94
+    rotx: left_arm1: -0.3: linear: absolute
+    rotx: right_arm1: -1.5: linear: absolute
+start: 56: 85
+    rotx: body: 0.2: quadratic: absolute
+    rotx: upper_body_1: -0.1: quadratic: absolute
+    rotx: upper_body_2: -0.5: quadratic: absolute
+    rotx: head1: -0.9: quadratic: absolute
+    rotx: legs: 0.5: quadratic: absolute
+    rotx: left_leg2: 0.2: quadratic: absolute
+    rotx: right_leg2: 1.2: quadratic: absolute
+    rotx: right_leg1: -1.7: quadratic: absolute
+    tray: body: 12: quadratic: absolute
+    tray: legs: 13: quadratic: absolute
+    traz: body: 5: quadratic: absolute
+    traz: legs: 3: quadratic: absolute
+start: 86: 94
+    rotx: body: -0.3: quadratic: absolute
+    rotx: upper_body_1: -0.3: quadratic: absolute
+    rotx: upper_body_2: -0.8: quadratic: absolute
+    rotx: head1: -1.1: quadratic: absolute
+
+
+

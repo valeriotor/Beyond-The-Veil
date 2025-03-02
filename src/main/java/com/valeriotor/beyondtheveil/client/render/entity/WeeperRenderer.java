@@ -19,7 +19,7 @@ public class WeeperRenderer extends LivingEntityRenderer<WeeperEntity, WeeperMod
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/weeper.png");
 
     public WeeperRenderer(EntityRendererProvider.Context context) {
-        super(context, new WeeperModel(context.bakeLayer(WeeperModel.LAYER_LOCATION)), 1F);
+        super(context, new WeeperModel(context.bakeLayer(WeeperModel.LAYER_LOCATION)), 0.5F);
     }
 
     @Override
