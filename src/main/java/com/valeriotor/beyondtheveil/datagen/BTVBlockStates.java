@@ -67,10 +67,12 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(DARK_GLASS.get());
         simpleBlock(ARENA.get());
         simpleBlock(DEEP_CHEST.get(), new ExistingModelFile(modLoc("block/deep_chest"), models().existingFileHelper));
+        simpleBlock(LACRYMATORY.get(), new ExistingModelFile(modLoc("block/lacrymatory"), models().existingFileHelper));
 
         simpleBlock(SEDATIVE_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
         simpleBlock(SOFTENER_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
         simpleBlock(COAGULANT_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
+        simpleBlock(TEARS_BLOCK.get(), new ExistingModelFile(mcLoc("block/water"), models().existingFileHelper));
         //simpleBlock(FLASK_LARGE.get(), new ExistingModelFile(modLoc("block/flask_large"), models().existingFileHelper));
         //simpleBlock(FLASK_MEDIUM.get(), new ExistingModelFile(modLoc("block/flask_medium"), models().existingFileHelper));
         //simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));

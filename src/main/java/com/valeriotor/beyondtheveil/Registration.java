@@ -121,7 +121,7 @@ public class Registration {
     public static final RegistryObject<FlaskShelfBlock> FLASK_SHELF = BLOCKS.register("flask_shelf", () -> new FlaskShelfBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<SurgeryBedBlock> SURGERY_BED = BLOCKS.register("surgery_bed", () -> new SurgeryBedBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<AlembicsBlock> ALEMBICS = BLOCKS.register("alembics", () -> new AlembicsBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
-    //public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new Block(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
+    public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new LacrymatoryBlock(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
     //public static final RegistryObject<Block> CITY_MAPPER = BLOCKS.register("city_mapper", () -> new Block(BRICK_PROPERTIES)); // new BlockCityMapper(BlockNames.CITYMAPPER);
     public static final RegistryObject<Block> ELDER_STONE_BRICK = BLOCKS.register("elder_stone_brick", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK).setHardness(10).setResistance(3000);
     public static final RegistryObject<Block> ELDER_STONE_BRICK_CHISELED = BLOCKS.register("elder_stone_brick_chiseled", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.ELDER_STONE_BRICK_CHISEL).setHardness(10).setResistance(3000);
@@ -169,6 +169,7 @@ public class Registration {
     public static final RegistryObject<LiquidBlock> SEDATIVE_BLOCK = BLOCKS.register("sedative_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SEDATIVE, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> SOFTENER_BLOCK = BLOCKS.register("softener_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SOFTENER, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> COAGULANT_BLOCK = BLOCKS.register("coagulant_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_COAGULANT, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> TEARS_BLOCK = BLOCKS.register("tears_block", () -> new LiquidBlock(BTVFluids.FLUID_TEARS.getA(), BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     public static final RegistryObject<Item> DAMP_WOOD_ITEM = fromBlock(DAMP_WOOD);
     public static final RegistryObject<Item> DARK_SAND_ITEM = fromBlock(DARK_SAND);
@@ -193,7 +194,7 @@ public class Registration {
     public static final RegistryObject<Item> FLASK_SHELF_ITEM = fromBlock(FLASK_SHELF);
     public static final RegistryObject<Item> SURGERY_BED_ITEM = fromBlock(SURGERY_BED);
     public static final RegistryObject<Item> ALEMBICS_ITEM = fromBlock(ALEMBICS);
-    //public static final RegistryObject<Item> LACRYMATORY_ITEM = fromBlock(LACRYMATORY);
+    public static final RegistryObject<Item> LACRYMATORY_ITEM = fromBlock(LACRYMATORY);
     //public static final RegistryObject<Item> CITY_MAPPER_ITEM = fromBlock(CITY_MAPPER);
     public static final RegistryObject<Item> ELDER_STONE_BRICK_ITEM = fromBlock(ELDER_STONE_BRICK);
     public static final RegistryObject<Item> ELDER_STONE_BRICK_SLAB_ITEM = fromBlock(ELDER_STONE_BRICK_SLAB);
@@ -328,6 +329,7 @@ public class Registration {
     public static final RegistryObject<Item> MEMORY_HORMONES_FLUID_BUCKET = ITEMS.register("memory_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_MEMORY_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> OBEDIENCE_HORMONES_FLUID_BUCKET = ITEMS.register("obedience_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> PARENTAL_HORMONES_FLUID_BUCKET = ITEMS.register("parental_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_PARENTAL_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> TEARS_FLUID_BUCKET = ITEMS.register("tears_bucket", () -> new BucketItem(BTVFluids.FLUID_TEARS.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -350,6 +352,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<SacrificeAltarBE>> SACRIFICE_ALTAR_BE = BLOCK_ENTITIES.register(SACRIFICE_ALTAR.getId().getPath(), () -> BlockEntityType.Builder.of(SacrificeAltarBE::new, SACRIFICE_ALTAR.get()).build(null));
     public static final RegistryObject<BlockEntityType<BloodBasinBE>> BLOOD_BASIN_BE = BLOCK_ENTITIES.register(BLOOD_BASIN.getId().getPath(), () -> BlockEntityType.Builder.of(BloodBasinBE::new, BLOOD_BASIN.get()).build(null));
+    public static final RegistryObject<BlockEntityType<LacrymatoryBE>> LACRYMATORY_BE = BLOCK_ENTITIES.register(LACRYMATORY.getId().getPath(), () -> BlockEntityType.Builder.of(LacrymatoryBE::new, LACRYMATORY.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
@@ -407,6 +410,7 @@ public class Registration {
                 output.accept(FLASK_SHELF.get());
                 output.accept(SURGERY_BED.get());
                 output.accept(ALEMBICS.get());
+                output.accept(LACRYMATORY.get());
                 output.accept(ELDER_STONE_BRICK.get());
                 output.accept(ELDER_STONE_BRICK_CHISELED.get());
                 output.accept(ELDER_STONE_BRICK_SLAB.get());
@@ -521,6 +525,7 @@ public class Registration {
                 output.accept(MEMORY_HORMONES_FLUID_BUCKET.get());
                 output.accept(OBEDIENCE_HORMONES_FLUID_BUCKET.get());
                 output.accept(PARENTAL_HORMONES_FLUID_BUCKET.get());
+                output.accept(TEARS_FLUID_BUCKET.get());
 
                 output.accept(DEEP_ONE_EGG.get());
                 output.accept(BLOOD_SKELETON_EGG.get());

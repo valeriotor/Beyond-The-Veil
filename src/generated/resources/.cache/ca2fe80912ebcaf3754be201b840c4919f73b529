@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-01T21:35:02.4662494	Block States: beyondtheveil
+// 1.20.1	2025-03-02T13:26:56.3582709	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
 bdd3341be1acaa3da82bcfaa457ba7c961e34848 assets/beyondtheveil/blockstates/black_kelp.json
@@ -39,6 +39,7 @@ dd122c3438862dbc3c3178b6dee5ce134f268ac9 assets/beyondtheveil/blockstates/flask_
 83172ccced02b6d3e0ce389c45bf659943996250 assets/beyondtheveil/blockstates/gear_bench.json
 c2238efbf7c5349ab7bd1c3b1c1425bb1399395e assets/beyondtheveil/blockstates/heart.json
 bc91f7a38db02ec8adcdd0dff85bafd66e24f8be assets/beyondtheveil/blockstates/idol.json
+e3c785406c8156e70ecaac6d82b409ea0d5a886e assets/beyondtheveil/blockstates/lacrymatory.json
 56e0d4fe8c85b85ff87151e0d3a2ccb1d96c4384 assets/beyondtheveil/blockstates/lamp.json
 dc51e198f1dd6cb9586babbae8eda45c34890e12 assets/beyondtheveil/blockstates/letter_box.json
 575aecbf7a96123b2eeba0bfd98ad3dbd4e87e14 assets/beyondtheveil/blockstates/memory_sieve.json
@@ -49,6 +50,7 @@ e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/sedati
 89f6693fd7572d2b522e4f893747d98ba55cecb4 assets/beyondtheveil/blockstates/slug_bait.json
 e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/softener_block.json
 107853f6631fc4bceaed5b5dabb076befc156356 assets/beyondtheveil/blockstates/surgery_bed.json
+e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/tears_block.json
 6302817c00a9661a693a8ec97cb49969427bfa60 assets/beyondtheveil/blockstates/vein_stone.json
 af24ecd90a1432939259f48315e355c3ed29782c assets/beyondtheveil/blockstates/watery_cradle.json
 37fd2541a7e2fc64d86c6bca62eeab9d101876ef assets/beyondtheveil/blockstates/worn_bricks.json

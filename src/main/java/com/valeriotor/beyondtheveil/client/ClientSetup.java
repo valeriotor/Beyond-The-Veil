@@ -130,6 +130,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(Registration.SACRIFICE_ALTAR_BE.get(), SacrificeAltarBER::new);
         event.registerBlockEntityRenderer(Registration.BLOOD_BASIN_BE.get(), BloodBasinBER::new);
         event.registerBlockEntityRenderer(Registration.ALEMBICS_BE.get(), AlembicsBER::new);
+        event.registerBlockEntityRenderer(Registration.LACRYMATORY_BE.get(), LacrymatoryBER::new);
     }
 
     @SubscribeEvent

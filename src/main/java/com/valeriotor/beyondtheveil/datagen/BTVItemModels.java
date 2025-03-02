@@ -61,6 +61,7 @@ public class BTVItemModels extends ItemModelProvider {
         //withExistingParent(LETTER_BOX_ITEM.getId().getPath(), modLoc("block/letter_box_upper"));
         withExistingParent(SURGERY_BED_ITEM.getId().getPath(), modLoc("block/surgery_bed"));
         withExistingParent(ALEMBICS_ITEM.getId().getPath(), modLoc("block/alembics"));
+        withExistingParent(LACRYMATORY_ITEM.getId().getPath(), modLoc("block/lacrymatory"));
         withExistingParent(BLACK_KELP_ITEM.getId().getPath(), mcLoc("block/kelp"));
         withExistingParent(DARK_GLASS_ITEM.getId().getPath(), modLoc("block/dark_glass"));
         withExistingParent(ARENA_ITEM.getId().getPath(), modLoc("block/arena"));
@@ -150,6 +151,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(MEMORY_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + MEMORY_HORMONES_FLUID_BUCKET.getId().getPath()));
         singleTexture(OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath()));
         singleTexture(PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath()));
+        singleTexture(TEARS_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + TEARS_FLUID_BUCKET.getId().getPath()));
 
         //registerForceps();
     }
