@@ -15,11 +15,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.trading.Merchant;
 
 import java.util.List;
 
-public class ShoremanDialogueMenu extends AbstractContainerMenu {
+public class EntityDialogueMenu extends AbstractContainerMenu {
 
     private final Talkable npc;
     private final DialogueTemplate template;
@@ -28,11 +27,11 @@ public class ShoremanDialogueMenu extends AbstractContainerMenu {
     private final Dialogue dialogue;
     private final List<DialogueBranch> allBranches;
 
-    public ShoremanDialogueMenu(int pContainerId, Inventory playerInventory, Player player, FriendlyByteBuf byteBuf) {
+    public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, FriendlyByteBuf byteBuf) {
         this(pContainerId, playerInventory, player, new ClientTalkable(player), DialogueRegistry.getTemplate(DialogueType.valueOf(byteBuf.readUtf()), byteBuf.readUtf()));
     }
 
-    public ShoremanDialogueMenu(int pContainerId, Inventory playerInventory, Player player, Talkable talkable, DialogueTemplate template) {
+    public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, Talkable talkable, DialogueTemplate template) {
         super(Registration.SHOREMAN_DIALOGUE_MENU.get(), pContainerId);
         this.npc = talkable;
         this.template = template;

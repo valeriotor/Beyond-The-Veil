@@ -44,6 +44,8 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLACK_MIRROR, "rationalize3");
         registerDialogue(DialogueType.BLACK_MIRROR, "after_weep");
         registerDialogue(DialogueType.BLACK_MIRROR, "idle");
+
+        registerDialogue(DialogueType.BLOOD_CULTIST, "initial");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

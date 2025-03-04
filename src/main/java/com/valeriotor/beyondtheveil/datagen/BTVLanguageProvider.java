@@ -952,6 +952,25 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         addMirrorDialogue();
         addShoremanDialogue();
+        addBloodCultistDialogue();
+    }
+
+    private void addBloodCultistDialogue() {
+        add("dialogue.blood_cultist.initial.killed.0", "What worth is mercy when in the way of progress? Nothing – and the curiosity of ones like you – and us – is what drives the world forward.\nWe will meet once you have something to offer to – and something from demand from – our humble association.");
+        add("dialogue.blood_cultist.initial.due_course.0", "All in due course.");
+        add("dialogue.blood_cultist.initial.respawn.0", "Shhh, do not tell – we know already!  We must wait, and play the act anew – once you have something to demand from – and something to offer to – our humble association.");
+        add("dialogue.blood_cultist.initial.start.0", "The chains binding us lie yet unseen – but worry not: all is linked, all is connected, and new life is born from each death – and you know death all too well, do you not?");
+        add("dialogue.blood_cultist.initial.___.option", "...");
+        add("dialogue.blood_cultist.initial.i_.option", "I resurrect from every death, if that is what you are asking.");
+        add("dialogue.blood_cultist.initial.no,.option", "No, and I want nothing to do with you.");
+        add("dialogue.blood_cultist.initial.i.option", "I have killed many, yes.");
+        add("dialogue.blood_cultist.initial.psychopath___.option", "Psychopath...");
+        add("dialogue.blood_cultist.initial.farewell,_.option", "Farewell, then.");
+        add("dialogue.blood_cultist.initial.____.option", "...");
+        add("dialogue.blood_cultist.initial.farewell,.option", "Farewell, then.");
+        add("dialogue.blood_cultist.initial.farewell,__.option", "Farewell, then.");
+
+
     }
 
     private void addMirrorDialogue() {

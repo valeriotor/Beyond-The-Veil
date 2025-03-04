@@ -3,7 +3,6 @@ package com.valeriotor.beyondtheveil.block;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
-import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;

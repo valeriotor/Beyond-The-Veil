@@ -42,7 +42,7 @@ public class DialogueTemplate {
 
     public DialogueType getType() {
         for (DialogueType dialogueType : DialogueType.values()) {
-            if (type != null && dialogueType.name().toLowerCase().equals(type.toLowerCase())) {
+            if (dialogueType.name().equalsIgnoreCase(type)) {
                 return dialogueType;
             }
         }

@@ -1,40 +1,32 @@
 package com.valeriotor.beyondtheveil.client.gui.dialogue;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
-import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
+import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerListener;
-import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogueMenu> {
+public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
+    private static final ResourceLocation SHOREMAN_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
+    private static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
     private static final float TEXT_WIDTH_RATIO = 0.9F;
     private static final float TEXT_HEIGHT_RATIO = 0.85F;
     private float scaleFactor = 1;
@@ -50,14 +42,19 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
     private List<String> localizedNpcLines = new ArrayList<>();
     private List<String> displayedLines = new ArrayList<>();
     private Set<Character> storedFormattings = new HashSet<>();
+    private final ResourceLocation texture;
 
 
-    public ShoremanDialogueGui(ShoremanDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public EntityDialogueGui(EntityDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
         this.imageWidth = 512;
         this.imageHeight = 166;
         branch = pMenu.getBranch();
         indexInBranch = pMenu.getIndexInBranch();
+        texture = switch (pMenu.getTemplate().getType()) {
+            case BLOOD_CULTIST -> BLOOD_CULTIST_TEXTURE;
+            default -> SHOREMAN_TEXTURE;
+        };
         /*pMenu.addSlotListener(new ContainerListener() {
             @Override
             public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
@@ -242,6 +239,8 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
                                 pauseTicks += 4;
                             } else if (c == '.' || c == '?' || c == '!') {
                                 pauseTicks += 7;
+                            } else if (c == '–') {
+                                pauseTicks += 6;
                             }
                         }
                         break;
@@ -283,8 +282,9 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
         pose.translate(width / 2F, height, 0);
         pose.scale(scaleFactor, scaleFactor, 1);
         //guiGraphics.blit(TEXTURE, (int) (-imageWidth * scaleFactor / 2), (int) (-imageHeight * scaleFactor), 0, 0, this.imageWidth, this.imageHeight);
-        guiGraphics.blit(TEXTURE, (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
-
+        RenderSystem.enableBlend();
+        guiGraphics.blit(getTexture(), (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
+        RenderSystem.disableBlend();
         lastStringProgressSize = Math.max(lastStringProgressSize, (int) Math.floor(stringProgress + pauseTicks > 0 ? 0 : (pPartialTick * speed)));
         tryAddCharacter();
 
@@ -303,6 +303,11 @@ public class ShoremanDialogueGui extends AbstractContainerScreen<ShoremanDialogu
 
         pose.popPose();
         guiGraphics.drawString(minecraft.font, "%d, %d".formatted(pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
+    }
+
+    @NotNull
+    private ResourceLocation getTexture() {
+        return texture;
     }
 
     private boolean shouldShowOptions() {

@@ -1,14 +1,11 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.capability.DialogueData;
-import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
-import com.valeriotor.beyondtheveil.container.dialogue.ShoremanDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;

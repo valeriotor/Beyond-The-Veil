@@ -5,7 +5,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
-import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanDialogueGui;
+import com.valeriotor.beyondtheveil.client.gui.dialogue.EntityDialogueGui;
 import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.ForcepsModelLoader;
@@ -43,7 +43,7 @@ public class ClientSetup {
         event.enqueueWork(() -> {
             MenuScreens.register(Registration.GEAR_BENCH_CONTAINER.get(), GearBenchGui::new);
             MenuScreens.register(Registration.LETTER_BOX_CONTAINER.get(), LetterBoxGui::new);
-            MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), ShoremanDialogueGui::new);
+            MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), EntityDialogueGui::new);
             MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_FILLED_CANOPY.get(), RenderType.translucent());

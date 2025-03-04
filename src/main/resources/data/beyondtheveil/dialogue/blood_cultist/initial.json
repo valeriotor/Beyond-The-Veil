@@ -1,0 +1,128 @@
+{
+  "id": "initial",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "respawn": {
+      "id": "respawn",
+      "dialogueOptions": [
+        {
+          "id": "farewell,__",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "____",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "due_course": {
+      "id": "due_course",
+      "dialogueOptions": [
+        {
+          "id": "farewell,",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "psychopath___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 1,
+          "endingNodeID": "killed",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "respawn",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "no,",
+          "branchLength": 1,
+          "endingNodeID": "due_course",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "killed": {
+      "id": "killed",
+      "dialogueOptions": [
+        {
+          "id": "farewell,_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "blood_cultist",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}
