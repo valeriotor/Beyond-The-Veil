@@ -62,6 +62,8 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(SURGERY_BED_ITEM.getId().getPath(), modLoc("block/surgery_bed"));
         withExistingParent(ALEMBICS_ITEM.getId().getPath(), modLoc("block/alembics"));
         withExistingParent(LACRYMATORY_ITEM.getId().getPath(), modLoc("block/lacrymatory"));
+        withExistingParent(DEMAND_PILLAR_ITEM.getId().getPath(), modLoc("block/demand_pillar"));
+        withExistingParent(OFFER_PILLAR_ITEM.getId().getPath(), modLoc("block/offer_pillar"));
         withExistingParent(BLACK_KELP_ITEM.getId().getPath(), mcLoc("block/kelp"));
         withExistingParent(DARK_GLASS_ITEM.getId().getPath(), modLoc("block/dark_glass"));
         withExistingParent(ARENA_ITEM.getId().getPath(), modLoc("block/arena"));

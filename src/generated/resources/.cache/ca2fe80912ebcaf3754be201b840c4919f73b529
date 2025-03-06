@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-02T13:26:56.3582709	Block States: beyondtheveil
+// 1.20.1	2025-03-06T20:46:38.993681	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
 bdd3341be1acaa3da82bcfaa457ba7c961e34848 assets/beyondtheveil/blockstates/black_kelp.json
@@ -20,6 +20,7 @@ ff08e7c92a9b3f4d41c1261c8a94bf2960f9a1a0 assets/beyondtheveil/blockstates/damp_w
 5b65067863122cdb0c3e8870b83ed642fc873e82 assets/beyondtheveil/blockstates/dark_glass.json
 28d44d7251b6660d331717c142e54f13392c11e7 assets/beyondtheveil/blockstates/dark_sand.json
 7397c86a4520b25978aab0f9d38eda02fe94766e assets/beyondtheveil/blockstates/deep_chest.json
+8fd02314c50d8e708feabca30b79ce48ea2f03aa assets/beyondtheveil/blockstates/demand_pillar.json
 38970edc57d7c87d9b1b6bc7eb821a71b0551893 assets/beyondtheveil/blockstates/elder_brick.json
 116e4213a62f1be74325adb9a0e95efa4693ff32 assets/beyondtheveil/blockstates/elder_brick_slab.json
 d6e671b7602eefe6f1fba7581fc660981bfabcf5 assets/beyondtheveil/blockstates/elder_brick_stairs.json
@@ -43,6 +44,7 @@ e3c785406c8156e70ecaac6d82b409ea0d5a886e assets/beyondtheveil/blockstates/lacrym
 56e0d4fe8c85b85ff87151e0d3a2ccb1d96c4384 assets/beyondtheveil/blockstates/lamp.json
 dc51e198f1dd6cb9586babbae8eda45c34890e12 assets/beyondtheveil/blockstates/letter_box.json
 575aecbf7a96123b2eeba0bfd98ad3dbd4e87e14 assets/beyondtheveil/blockstates/memory_sieve.json
+cdf0645ae4f66a90a0c7c3517da11e99c6e077c4 assets/beyondtheveil/blockstates/offer_pillar.json
 77e6744d6207f1a4b93028c337429206186101c4 assets/beyondtheveil/blockstates/patient_pod.json
 bd48c2227f270f7be8a60fd4f2efc4876b56f001 assets/beyondtheveil/blockstates/sacrifice_altar.json
 e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/sedative_block.json

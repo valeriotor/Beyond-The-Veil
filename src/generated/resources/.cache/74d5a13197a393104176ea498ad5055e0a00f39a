@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-02T18:33:52.597682	Item Models: beyondtheveil
+// 1.20.1	2025-03-06T20:46:38.9916804	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
@@ -39,6 +39,7 @@ feb0d16e525df1960f4f292ac16d8a089b016ba0 assets/beyondtheveil/models/item/damp_w
 ce03b66c65988dad3ce2de96d5130c07aef1be20 assets/beyondtheveil/models/item/dark_sand.json
 c9a5a0db11dc2de4c054144a352510d7981c4e76 assets/beyondtheveil/models/item/deep_chest.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/deep_one.json
+f28908195af75136fb87b0d04364ba11484cadd9 assets/beyondtheveil/models/item/demand_pillar.json
 38e2752a12f212fb2efcc7bad6b5b14e8e568528 assets/beyondtheveil/models/item/dig_slowdown_serum_bucket.json
 43faa7b9a5d1145e976f7031cc16ee2c257efa48 assets/beyondtheveil/models/item/dig_speed_serum_bucket.json
 d975ca696a098842e78f732633f34013a2f62cbd assets/beyondtheveil/models/item/dream_bottle.json
@@ -93,6 +94,7 @@ f540e435c4263d81195f65cb89fa85fbd82a8cec assets/beyondtheveil/models/item/moveme
 9291ea805c9946fcba6f457af67b2c6b874bf612 assets/beyondtheveil/models/item/necronomicon.json
 369ffe4eda4f8b384774f5466bf42349dd9fee09 assets/beyondtheveil/models/item/night_vision_serum_bucket.json
 eb673116171dcaddd447e4446a78fb72c7cec19c assets/beyondtheveil/models/item/obedience_hormones_bucket.json
+7057844a032dc6cbe96ccca8044e6ce92e2e8591 assets/beyondtheveil/models/item/offer_pillar.json
 ddc62887706a7471a412f64d15c7d914b58c2a6a assets/beyondtheveil/models/item/oniric_incense.json
 65b4ec5eceb38bd9317baa6fd8ebe0737ae17454 assets/beyondtheveil/models/item/parental_hormones_bucket.json
 6b02101e3d1b954a6a99b573d2be32cfda2b5fb9 assets/beyondtheveil/models/item/patient_pod.json
