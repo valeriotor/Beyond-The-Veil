@@ -3,11 +3,14 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +33,9 @@ public class DataGenerators {
         //DataProvider.Factory<BTVItemTags> itemTags = output -> new BTVItemTags(output, event.getLookupProvider(), blockTags, event.getExistingFileHelper());
         //generator.addProvider(event.includeServer(), itemTags);
         //TODO create ConfiguredStructureTagsProvider
+
+        generator.addProvider(event.includeServer(), new LootTableProvider(generator.getPackOutput(), Collections.emptySet(),
+                List.of(new LootTableProvider.SubProviderEntry(BTVLootTables::new, LootContextParamSets.BLOCK))));
 
 
         generator.addProvider(event.includeClient(), (DataProvider.Factory<BTVBlockStates>) output -> new BTVBlockStates(output, event.getExistingFileHelper()));
