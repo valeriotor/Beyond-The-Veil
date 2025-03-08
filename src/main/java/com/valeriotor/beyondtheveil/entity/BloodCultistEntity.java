@@ -1,12 +1,19 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,6 +27,8 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.npc.VillagerData;
+import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -28,6 +37,9 @@ import net.minecraftforge.network.NetworkHooks;
 public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     private Player talkingPlayer;
+    private CrawlerEntity heldVillager;
+    private static final EntityDataAccessor<String> HELD_VILLAGER_TYPE = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.STRING);
+
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -72,6 +84,24 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide) {
+            if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
+                heldVillager = new CrawlerEntity(Registration.CRAWLER.get(), level());
+                heldVillager.setHolderType(PatientHolderType.CULTIST);
+                heldVillager.setHeld(true);
+            } else if (heldVillager != null && entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
+                heldVillager = null;
+            }
+        }
+    }
+
+    public CrawlerEntity getHeldVillager() {
+        return heldVillager;
+    }
+
+    @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         //System.out.println(getProfession() + " " + level().isClientSide);
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
@@ -79,6 +109,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
             if (!this.level().isClientSide) {
                 this.startTalking((ServerPlayer) pPlayer);
+                setHeldVillagerType(VillagerType.PLAINS);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
@@ -94,5 +125,37 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     @Override
     public void setTalkingPlayer(Player player) {
         talkingPlayer = player;
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset();
+    }
+
+    public void setHeldVillagerType(VillagerType type) {
+        if (type == null) {
+            entityData.set(HELD_VILLAGER_TYPE, "null");
+        } else {
+            entityData.set(HELD_VILLAGER_TYPE, type.toString());
+        }
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(HELD_VILLAGER_TYPE, "null");
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        String heldVillager = entityData.get(HELD_VILLAGER_TYPE);
+        pCompound.putString("held", heldVillager);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        entityData.set(HELD_VILLAGER_TYPE, pCompound.contains("held") ? pCompound.getString("held") : "null");
     }
 }

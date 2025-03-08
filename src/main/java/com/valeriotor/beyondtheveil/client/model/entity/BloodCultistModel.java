@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
@@ -21,6 +22,8 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "blood_cultist"), "main");
     private static final String name = "blood_cultist";
     private final ModelPart legs;
+    private final ModelPart right_leg;
+    private final ModelPart left_leg;
     private final ModelPart body;
     private final ModelPart upper_body;
     private final ModelPart head;
@@ -31,14 +34,16 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
 
     public BloodCultistModel(ModelPart root) {
         super(name);
-        this.legs = root.getChild("legs");
-        this.body = root.getChild("body");
-        this.upper_body = body.getChild("upper_body");
-        this.head = upper_body.getChild("head");
-        this.left_arm = upper_body.getChild("left_arm");
-        this.left_lower_arm = left_arm.getChild("left_lower_arm");
-        this.right_arm = upper_body.getChild("right_arm");
-        this.right_lower_arm = right_arm.getChild("right_lower_arm");
+        this.legs = registerAnimatedPart("legs", root.getChild("legs"));
+        this.right_leg = registerAnimatedPart("right_leg", legs.getChild("right_leg"));
+        this.left_leg = registerAnimatedPart("left_leg", legs.getChild("left_leg"));
+        this.body = registerAnimatedPart("body", root.getChild("body"));
+        this.upper_body = registerAnimatedPart("upper_body", body.getChild("upper_body"));
+        this.head = registerAnimatedPart("head", upper_body.getChild("head"));
+        this.left_arm = registerAnimatedPart("left_arm", upper_body.getChild("left_arm"));
+        this.left_lower_arm = registerAnimatedPart("left_lower_arm", left_arm.getChild("left_lower_arm"));
+        this.right_arm = registerAnimatedPart("right_arm", upper_body.getChild("right_arm"));
+        this.right_lower_arm = registerAnimatedPart("right_lower_arm", right_arm.getChild("right_lower_arm"));
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -47,6 +52,10 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
 
         PartDefinition legs = partdefinition.addOrReplaceChild("legs", CubeListBuilder.create().texOffs(46, 0).addBox(-7.0F, -12.0F, -2.5F, 4.0F, 12.0F, 5.0F, new CubeDeformation(0.0F))
                 .texOffs(28, 0).addBox(-3.0F, -12.0F, -2.5F, 4.0F, 12.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, 24.0F, 0.0F));
+
+        PartDefinition right_leg = legs.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(48, 1).addBox(-1.0F, 0.0F, -2.0F, 3.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, -12.0F, 0.0F));
+
+        PartDefinition left_leg = legs.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(29, 1).addBox(-2.0F, 0.0F, -1.0F, 3.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, -12.0F, -1.0F));
 
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 34).addBox(-3.99F, -2.5F, -2.0F, 8.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 12.0F, 0.0F));
 
@@ -78,7 +87,27 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
 
     @Override
     public void setupAnim(BloodCultistEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        float MAX = 0.5F;
+        this.right_leg.xRot = Mth.clamp(Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / 0.9F, -MAX, MAX);
+        this.left_leg.xRot = Mth.clamp(Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / 0.9F, -MAX, MAX);
+    }
 
+    @Override
+    public void prepareMobModel(BloodCultistEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        resetParts();
+        super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
+        if (pEntity.getHeldVillager() != null) {
+            left_arm.xRot = -0.5F;
+            left_arm.yRot = 0.5F;
+            left_lower_arm.zRot = 2F;
+            left_lower_arm.xRot = -1F;
+            left_lower_arm.yRot = 4.11F;
+            right_arm.xRot = -0.5F;
+            right_arm.yRot = -0.5F;
+            right_lower_arm.zRot = -2F;
+            right_lower_arm.xRot = -1F;
+            right_lower_arm.yRot = -4.11F;
+        }
     }
 
     @Override

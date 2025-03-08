@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
@@ -60,6 +61,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private Animation painAnimation;
     private Animation deathAnimation;
     private boolean held;
+    private PatientHolderType holderType;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -346,6 +348,14 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public void onAddedToWorld() {
         super.onAddedToWorld();
         setHeld(false);
+    }
+
+    public void setHolderType(PatientHolderType type) {
+        this.holderType = type;
+    }
+
+    public PatientHolderType getHolderType() {
+        return holderType == null ? PatientHolderType.PLAYER : holderType;
     }
 
     public Animation getPainAnimation() {
