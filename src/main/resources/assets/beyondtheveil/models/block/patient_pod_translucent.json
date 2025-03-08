@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"render_type": "minecraft:translucent",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "beyondtheveil:block/patient_pod",
@@ -7,9 +8,9 @@
 	},
 	"elements": [
 		{
-			"from": [2.25, 22, 1.25],
-			"to": [13.75, 32, 2.25],
-			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 22, 1.25]},
+			"from": [2.25, 6, 1.25],
+			"to": [13.75, 16, 2.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 6, 1.25]},
 			"faces": {
 				"north": {"uv": [0, 7.75, 2.875, 10.25], "texture": "#0"},
 				"east": {"uv": [0, 7.75, 0.25, 10.25], "texture": "#0"},
@@ -20,9 +21,9 @@
 			}
 		},
 		{
-			"from": [2.25, 31, 2.25],
-			"to": [13.75, 32, 14],
-			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 22, 2.25]},
+			"from": [2.25, 15, 2.25],
+			"to": [13.75, 16, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 6, 2.25]},
 			"faces": {
 				"north": {"uv": [0, 7.5, 2.875, 7.75], "texture": "#0"},
 				"east": {"uv": [0, 7.5, 2.9375, 7.75], "texture": "#0"},
@@ -33,9 +34,9 @@
 			}
 		},
 		{
-			"from": [1.25, 22, 1.25],
-			"to": [2.25, 32, 14.25],
-			"rotation": {"angle": 0, "axis": "y", "origin": [1, 22, 1.25]},
+			"from": [1.25, 6, 1.25],
+			"to": [2.25, 16, 14.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 6, 1.25]},
 			"faces": {
 				"north": {"uv": [0, 7.5, 0.25, 10], "texture": "#0"},
 				"east": {"uv": [0, 7.5, 3.25, 10], "texture": "#0"},
@@ -46,9 +47,9 @@
 			}
 		},
 		{
-			"from": [13.75, 22, 1.25],
-			"to": [14.75, 32, 14.25],
-			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 22, 1.25]},
+			"from": [13.75, 6, 1.25],
+			"to": [14.75, 16, 14.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13.75, 6, 1.25]},
 			"faces": {
 				"north": {"uv": [0, 7.5, 0.25, 10], "texture": "#0"},
 				"east": {"uv": [0, 7.5, 3.25, 10], "texture": "#0"},

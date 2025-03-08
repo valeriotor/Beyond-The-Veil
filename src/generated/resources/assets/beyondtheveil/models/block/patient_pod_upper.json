@@ -2,7 +2,7 @@
   "parent": "beyondtheveil:block/large_cube",
   "children": {
     "block/patient_pod_solid1": {
-      "parent": "beyondtheveil:block/patient_pod_solid",
+      "parent": "beyondtheveil:block/patient_pod_upper_solid",
       "render_type": "minecraft:solid"
     },
     "block/patient_pod_translucent1": {

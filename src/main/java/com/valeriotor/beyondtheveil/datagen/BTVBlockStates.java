@@ -249,17 +249,18 @@ public class BTVBlockStates extends BlockStateProvider {
 
     private void registerPatientPod() {
         ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + "flask_shelf_empty"), models().existingFileHelper);
-        ExistingModelFile patientPod_solid = new ExistingModelFile(modLoc("block/patient_pod_solid"), models().existingFileHelper);
-        ExistingModelFile patientPod_translucent = new ExistingModelFile(modLoc("block/patient_pod_translucent"), models().existingFileHelper);
+        ExistingModelFile patientPodSolidLower = new ExistingModelFile(modLoc("block/patient_pod_lower_solid"), models().existingFileHelper);
+        ExistingModelFile patientPodSolidUpper = new ExistingModelFile(modLoc("block/patient_pod_upper_solid"), models().existingFileHelper);
+        ExistingModelFile patientPodTranslucent = new ExistingModelFile(modLoc("block/patient_pod_translucent"), models().existingFileHelper);
 
-        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/patient_pod_solid1"), models().existingFileHelper);
-        parent.parent(patientPod_solid);
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/patient_pod_upper_solid1"), models().existingFileHelper);
+        parent.parent(patientPodSolidUpper);
         parent.renderType("solid");
         BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/patient_pod_translucent1"), models().existingFileHelper);
-        translucent_parent.parent(patientPod_translucent);
+        translucent_parent.parent(patientPodTranslucent);
         translucent_parent.renderType("translucent");
 
-        BlockModelBuilder patientPod = models().getBuilder("beyondtheveil:block/patient_pod")
+        BlockModelBuilder patientPodUpper = models().getBuilder("beyondtheveil:block/patient_pod_upper")
                 .parent(models().getExistingFile(modLoc("large_cube")))
                 .texture("particle", modLoc("block/patient_pod"))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
@@ -269,8 +270,8 @@ public class BTVBlockStates extends BlockStateProvider {
 
         getVariantBuilder(PATIENT_POD.get())
                 .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(state.getValue(PATIENT_POD.get().getLevelProperty()) == 0 ? patientPod : empty)
-                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .modelFile(state.getValue(PATIENT_POD.get().getLevelProperty()) == 0 ? patientPodSolidLower : patientPodUpper)
+                        .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                         .build());
     }
 

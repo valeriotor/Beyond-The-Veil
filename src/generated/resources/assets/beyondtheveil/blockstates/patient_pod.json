@@ -1,34 +1,34 @@
 {
   "variants": {
     "facing=east,level=0": {
-      "model": "beyondtheveil:block/patient_pod",
-      "y": 270
+      "model": "beyondtheveil:block/patient_pod_lower_solid",
+      "y": 90
     },
     "facing=east,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
-      "y": 270
+      "model": "beyondtheveil:block/patient_pod_upper",
+      "y": 90
     },
     "facing=north,level=0": {
-      "model": "beyondtheveil:block/patient_pod",
-      "y": 180
+      "model": "beyondtheveil:block/patient_pod_lower_solid"
     },
     "facing=north,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
-      "y": 180
+      "model": "beyondtheveil:block/patient_pod_upper"
     },
     "facing=south,level=0": {
-      "model": "beyondtheveil:block/patient_pod"
+      "model": "beyondtheveil:block/patient_pod_lower_solid",
+      "y": 180
     },
     "facing=south,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty"
+      "model": "beyondtheveil:block/patient_pod_upper",
+      "y": 180
     },
     "facing=west,level=0": {
-      "model": "beyondtheveil:block/patient_pod",
-      "y": 90
+      "model": "beyondtheveil:block/patient_pod_lower_solid",
+      "y": 270
     },
     "facing=west,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
-      "y": 90
+      "model": "beyondtheveil:block/patient_pod_upper",
+      "y": 270
     }
   }
 }
