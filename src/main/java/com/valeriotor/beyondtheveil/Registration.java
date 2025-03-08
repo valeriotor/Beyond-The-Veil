@@ -361,6 +361,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<LacrymatoryBE>> LACRYMATORY_BE = BLOCK_ENTITIES.register(LACRYMATORY.getId().getPath(), () -> BlockEntityType.Builder.of(LacrymatoryBE::new, LACRYMATORY.get()).build(null));
     public static final RegistryObject<BlockEntityType<PillarBE>> DEMAND_PILLAR_BE = BLOCK_ENTITIES.register(DEMAND_PILLAR.getId().getPath(), () -> BlockEntityType.Builder.of((i, o) -> new PillarBE(Registration.DEMAND_PILLAR_BE.get(), i, o), DEMAND_PILLAR.get()).build(null));
     public static final RegistryObject<BlockEntityType<PillarBE>> OFFER_PILLAR_BE = BLOCK_ENTITIES.register(OFFER_PILLAR.getId().getPath(), () -> BlockEntityType.Builder.of((i, o) -> new PillarBE(Registration.OFFER_PILLAR_BE.get(), i, o), OFFER_PILLAR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PatientPodBE>> PATIENT_POD_BE = BLOCK_ENTITIES.register(PATIENT_POD.getId().getPath(), () -> BlockEntityType.Builder.of(PatientPodBE::new, PATIENT_POD.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));

@@ -25,6 +25,10 @@ public class PillarBE extends BlockEntity {
         offer = pType == Registration.OFFER_PILLAR_BE.get();
     }
 
+    public boolean isOffer() {
+        return offer;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);

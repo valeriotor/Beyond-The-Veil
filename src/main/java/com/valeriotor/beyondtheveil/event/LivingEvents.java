@@ -1,15 +1,21 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.tile.PillarBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -27,9 +33,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingEvents {
@@ -180,6 +184,31 @@ public class LivingEvents {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void babyEntitySpawnEvent(BabyEntitySpawnEvent event) {
+        AgeableMob child = event.getChild();
+        if (child != null && child.level() instanceof ServerLevel sl) {
+            BlockPos pos = event.getParentA().getOnPos();
+            LifeEconomyData instance = LifeEconomyData.getInstance(sl);
+            List<LifeEconomyData.PillarData> activePillarsInChunk = instance.getActivePillarsInChunk(pos);
+            Optional<LifeEconomyData.PillarData> min = activePillarsInChunk.stream()
+                    .filter(data -> data.getLinkPos() != null && sl.isLoaded(data.getCurrentPos())) // we need the offer pillar to be loaded (but not the demand one)
+                    .filter(data -> sl.getBlockEntity(data.getCurrentPos()) instanceof PillarBE be && be.isOffer())
+                    .min(Comparator.comparing(data -> data.getCurrentPos().distSqr(pos)));
+            min.ifPresent(data -> {
+                BlockPos linkPos = data.getLinkPos();
+                LifeEconomyData.PodData podData = instance.findClosestPod(pos, 2, 50);
+                if (podData != null) {
+                    podData.setPatientAndSync(PatientType.VILLAGER, new CompoundTag(), sl);
+                }
+                //BloodCultistEntity entity = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
+                //entity.setPos(linkPos.getCenter());
+                //sl.addFreshEntity(entity);
+                child.discard();
+            });
         }
     }
 

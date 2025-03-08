@@ -286,6 +286,11 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
             // if null target
             body.zRot = Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 3.5F;
 
+            if (entity.isInPod()) {
+                right_arm1.zRot = 0.25F;
+                left_arm1.zRot = -0.25F;
+            }
+
             Animation explodingAnimation = entity.getExplodingAnimation();
             if (explodingAnimation != null) {
                 explodingAnimation.apply(pa);
@@ -385,61 +390,6 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
                 }
             }
         }
-
-        /*body.xRot = (float) 0.8;
-        upper_body_1.xRot = (float) 0.5;
-        left_arm1.xRot = (float) -1.5;
-        right_arm1.xRot = (float) -1.5;
-        head1.xRot = (float) 0.8;
-        legs.xRot = (float) 0.5;
-        body.y = 14;
-        legs.y = 16;
-        body.z = 5;
-        legs.z = 5;
-        left_leg2.xRot = 1.2F;
-        right_leg2.xRot = 1.2F;
-
-        body.xRot = (float) 0.8;
-        upper_body_1.xRot = (float) -0.1;
-        left_arm1.xRot = (float) -0.7;
-        right_arm1.xRot = (float) -0.7;
-        head1.xRot = (float) 0.2;
-        legs.xRot = (float) 0.5;
-        body.y = 14;
-        legs.y = 16;
-        body.z = 5;
-        legs.z = 5;
-        left_leg2.xRot = 1.2F;
-        right_leg2.xRot = 1.2F;
-
-        body.xRot = (float) 0.2;
-        upper_body_1.xRot = (float) -0.1;
-        left_arm1.xRot = (float) -0.7;
-        right_arm1.xRot = (float) -0.7;
-        head1.xRot = (float) 0.2;
-        legs.xRot = (float) 0.5;
-        body.y = 12;
-        legs.y = 13;
-        body.z = 5;
-        legs.z = 3;
-        left_leg2.xRot = 0.2F;
-        right_leg2.xRot = 1.2F;
-        right_leg1.xRot = -1.7F;
-
-        body.xRot = (float) 0.2;
-        upper_body_1.xRot = (float) -0.1;
-        upper_body_2.xRot = (float) -0.5;
-        left_arm1.xRot = (float) -1.5;
-        right_arm1.xRot = (float) -0.3;
-        head1.xRot = (float) -0.9;
-        legs.xRot = (float) 0.5;
-        body.y = 12;
-        legs.y = 13;
-        body.z = 5;
-        legs.z = 3;
-        left_leg2.xRot = 0.2F;
-        right_leg2.xRot = 1.2F;
-        right_leg1.xRot = -1.7F;*/
 
     }
 

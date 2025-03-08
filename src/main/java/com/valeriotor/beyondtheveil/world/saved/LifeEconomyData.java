@@ -1,7 +1,10 @@
 package com.valeriotor.beyondtheveil.world.saved;
 
+import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.tile.PatientPodBE;
 import com.valeriotor.beyondtheveil.tile.PillarBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -15,6 +18,8 @@ public class LifeEconomyData extends SavedData {
 
     private final Map<BlockPos, PillarData> pillars = new HashMap<>();
     private final Map<ChunkPos, List<PillarData>> pillarsByChunk = new HashMap<>();
+    private final Map<BlockPos, PodData> patientPods = new HashMap<>();
+    private final Map<ChunkPos, List<PodData>> patientPodsByChunk = new HashMap<>();
 
 
     public static LifeEconomyData getInstance(ServerLevel sl) {
@@ -26,8 +31,13 @@ public class LifeEconomyData extends SavedData {
         if (tag.contains("pillarTag")) {
             CompoundTag pillarTag = tag.getCompound("pillarTag");
             for (String key : pillarTag.getAllKeys()) {
-                PillarData pillarData = new PillarData(pillarTag.getCompound(key));
-                data.pillars.put(pillarData.currentPos, pillarData);
+                data.addPillar(pillarTag.getCompound(key));
+            }
+        }
+        if (tag.contains("podTag")) {
+            CompoundTag podTag = tag.getCompound("podTag");
+            for (String key : podTag.getAllKeys()) {
+                data.addPod(podTag.getCompound(key));
             }
         }
         return data;
@@ -41,6 +51,7 @@ public class LifeEconomyData extends SavedData {
     @Override
     public CompoundTag save(CompoundTag pCompoundTag) {
         CompoundTag compoundTag = new CompoundTag();
+
         CompoundTag pillarTag = new CompoundTag();
         compoundTag.put("pillarTag", pillarTag);
         int i = 0;
@@ -48,20 +59,100 @@ public class LifeEconomyData extends SavedData {
             pillarTag.put(String.valueOf(i), entry.getValue().save(new CompoundTag()));
             i++;
         }
+
+        CompoundTag podTag = new CompoundTag();
+        compoundTag.put("podTag", podTag);
+        i = 0;
+        for (Map.Entry<BlockPos, PodData> entry : patientPods.entrySet()) {
+            podTag.put(String.valueOf(i), entry.getValue().save(new CompoundTag()));
+            i++;
+        }
         return compoundTag;
     }
 
+    public void addEmptyPod(BlockPos pos) {
+        PodData data = new PodData(pos);
+        addPod(data);
+    }
+
+    private void addPod(CompoundTag tag) {
+        addPod(new PodData(tag));
+    }
+
+    private void addPod(PodData value) {
+        patientPods.put(value.currentPos, value);
+        for (ChunkPos chunkPos : getChunkPoses(value.currentPos, 1)) {
+            patientPodsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()).add(value);
+        }
+        setDirty();
+    }
+
+    public void removePod(BlockPos pos) {
+        patientPods.remove(pos);
+        for (ChunkPos chunkPos : getChunkPoses(pos, 1)) {
+            patientPodsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()).removeIf(p -> Objects.equals(pos, p.currentPos));
+        }
+        setDirty();
+    }
+
+    public PodData findClosestPod(BlockPos pos, int chunkRadius, double maxDist) {
+        List<PodData> pods = new ArrayList<>();
+        for (ChunkPos chunkPos : getChunkPoses(pos, chunkRadius)) {
+            pods.addAll(patientPodsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()));
+        }
+        List<PodData> podData = pods.stream().filter(p -> p.getPatient() == null && p.currentPos.distSqr(pos) < maxDist * maxDist).sorted(Comparator.comparing(p -> p.currentPos.distSqr(pos))).toList();
+        if (!podData.isEmpty()) {
+            return podData.get(0);
+        }
+        return null;
+    }
+
+    public PodData getPodData(BlockPos pos) {
+        return patientPods.get(pos);
+    }
+
+
 
     public void addPillar(BlockPos pos, BlockPos link, UUID connection) {
-        pillars.put(pos, new PillarData(pos, connection, link));
+        addPillar(new PillarData(pos, connection, link));
+    }
+
+    private void addPillar(CompoundTag tag) {
+        addPillar(new PillarData(tag));
+    }
+
+    private void addPillar(PillarData value) {
+        pillars.put(value.currentPos, value);
+        for (ChunkPos chunkPos : getChunkPoses(value.currentPos, 1)) {
+            pillarsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()).add(value);
+        }
+        setDirty();
     }
 
     public void removePillar(BlockPos pos) {
         pillars.remove(pos);
+        for (ChunkPos chunkPos : getChunkPoses(pos, 1)) {
+            pillarsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()).removeIf(p -> Objects.equals(pos, p.currentPos));
+        }
+        setDirty();
+    }
+
+    private List<ChunkPos> getChunkPoses(BlockPos center, int chunkRadius) {
+        List<ChunkPos> poses = new ArrayList<>();
+        for (int i = -chunkRadius; i <= chunkRadius; i++) {
+            for (int j = -1; j <= 1; j++) {
+                poses.add(new ChunkPos(SectionPos.blockToSectionCoord(center.getX()) + i, SectionPos.blockToSectionCoord(center.getZ()) + j));
+            }
+        }
+        return poses;
     }
 
     public PillarData getPillarData(BlockPos pos) {
         return pillars.get(pos);
+    }
+
+    public List<PillarData> getActivePillarsInChunk(BlockPos pos) {
+        return pillarsByChunk.getOrDefault(new ChunkPos(pos), new ArrayList<>());
     }
 
     public boolean checkPillarConnection(BlockPos pillarPos, UUID connection) {
@@ -106,7 +197,7 @@ public class LifeEconomyData extends SavedData {
         return true;
     }
 
-    public static class PillarData {
+    public class PillarData {
         private BlockPos currentPos;
         private UUID connection;
         private BlockPos linkPos;
@@ -139,6 +230,10 @@ public class LifeEconomyData extends SavedData {
             return tag;
         }
 
+        public BlockPos getCurrentPos() {
+            return currentPos;
+        }
+
         public UUID getConnection() {
             return connection;
         }
@@ -146,6 +241,57 @@ public class LifeEconomyData extends SavedData {
         public BlockPos getLinkPos() {
             return linkPos;
         }
+    }
+
+    public class PodData {
+        private final BlockPos currentPos;
+        private PatientType patient;
+        private CompoundTag entity;
+
+        public PodData(BlockPos currentPos) {
+            this.currentPos = currentPos;
+        }
+
+        public PodData(CompoundTag tag) {
+            currentPos = BlockPos.of(tag.getLong("currentPos"));
+            if (tag.contains("type")) {
+                this.patient = PatientType.valueOf(tag.getString("type"));
+                this.entity = tag.getCompound("entity");
+            }
+        }
+
+        public CompoundTag save(CompoundTag tag) {
+            tag.putLong("currentPos", currentPos.asLong());
+            if (patient != null) {
+                tag.putString("type", patient.name());
+                tag.put("entity", entity);
+            }
+            return tag;
+        }
+
+        public PatientType getPatient() {
+            return patient;
+        }
+
+        public CompoundTag getEntity() {
+            return entity;
+        }
+
+        public void setPatient(PatientType type, CompoundTag data) {
+            this.patient = type;
+            this.entity = data;
+            setDirty();
+        }
+
+        public void setPatientAndSync(PatientType type, CompoundTag data, ServerLevel sl) {
+            this.patient = type;
+            this.entity = data;
+            setDirty();
+            if (sl.isLoaded(currentPos) && sl.getBlockEntity(currentPos) instanceof PatientPodBE be) {
+                be.sync();
+            }
+        }
+
     }
 
 }

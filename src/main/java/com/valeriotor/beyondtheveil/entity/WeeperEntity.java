@@ -62,6 +62,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     private BlockPos lacrymatoryPos;
     private UUID master;
     private int ticksToFletum = -1;
+    private boolean inPod;
 
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
@@ -248,6 +249,14 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
         return entityData.get(DATA_TARGETING);
     }
 
+    public void setInPod(boolean inPod) {
+        this.inPod = inPod;
+    }
+
+    public boolean isInPod() {
+        return inPod;
+    }
+
     @Override
     public void markAsPatient() {
         surgeryPatient = true;
@@ -321,7 +330,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
 
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
-        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND && pPlayer.getUUID().equals(master)) {
+        if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND && (pPlayer.getUUID().equals(master) || pPlayer.isCreative())) {
             if (!level().isClientSide) {
                 setLacrymatoryPos(null);
                 pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> data.getCrossSync().setHeldPatient(this, pPlayer));
