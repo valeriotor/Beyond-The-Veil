@@ -15,9 +15,11 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ClientMethods {
@@ -84,6 +86,20 @@ public class ClientMethods {
                 c.loadFromNBT(tag.getCompound("data"));
             });
         }
+    }
+
+    private static int hideOverlayMessageTicks = 0;
+    public static void hideOverlayMessage() {
+        hideOverlayMessageTicks = 20;
+        Minecraft.getInstance().gui.setOverlayMessage(Component.empty(), false);
+    }
+
+    public static void tick(TickEvent.ClientTickEvent event) {
+        if (hideOverlayMessageTicks > 0) {
+            Minecraft.getInstance().gui.setOverlayMessage(Component.empty(), false);
+            hideOverlayMessageTicks--;
+        }
+
     }
 
 }

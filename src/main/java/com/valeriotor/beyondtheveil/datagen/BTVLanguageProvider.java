@@ -1527,6 +1527,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addGuis() {
         add("gui.sleep_chamber", "Sleep Chamber");
         add("gui.sleep_chamber.wake", "Leave chamber");
+        add("gui.killed_by_cultist.respawn", "Respawn, right here, §oright now.");
 
         addJournal();
         addLetterBox();

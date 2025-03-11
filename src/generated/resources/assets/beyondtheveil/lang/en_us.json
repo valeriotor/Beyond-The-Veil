@@ -865,6 +865,7 @@
   "gui.journal.tools.tongs.title": "Tongs",
   "gui.journal.tools.watery_cradle.text": "A masterwork of engineering, capable of setting the enclosed patient in a trance and allowing for operations on the brain.\\nOnly injections may be performed in the watery cradle.",
   "gui.journal.tools.watery_cradle.title": "Watery Cradle",
+  "gui.killed_by_cultist.respawn": "Respawn, right here, §oright now.",
   "gui.letter_box.new": "New",
   "gui.letter_box.received": "Received",
   "gui.letter_box.redeem": "Redeem",

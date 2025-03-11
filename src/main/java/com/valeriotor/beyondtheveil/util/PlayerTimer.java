@@ -127,6 +127,10 @@ public class PlayerTimer {
         return tag;
     }
 
+    public int getRemainingTime() {
+        return timer;
+    }
+
     public boolean isDone() {
         return timer < 0;
     }

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.event;
 
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -30,6 +31,7 @@ public class InputEvents {
                 ClientData.getInstance().archeSavedData.tick(false);
             }
         }
+        ClientMethods.tick(event);
     }
 
     @SubscribeEvent

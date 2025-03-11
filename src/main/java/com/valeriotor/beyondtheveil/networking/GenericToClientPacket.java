@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
+import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
@@ -122,6 +123,16 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.SYNC_LETTER_DATA, tag);
     }
 
+    public static GenericToClientPacket hideOverlayMessage() {
+        return new GenericToClientPacket(MessageType.HIDE_OVERLAY_MESSAGE, new CompoundTag());
+    }
+
+    public static GenericToClientPacket openGui(GuiHelper.GuiType type) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("id", type.ordinal());
+        return new GenericToClientPacket(MessageType.OPEN_GUI, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -158,6 +169,8 @@ public class GenericToClientPacket {
                     case SYNC_ARCHE_DATA -> ClientData.getInstance().syncArcheData(tag);
                     case BLACK_SCREEN -> ClientMethods.blackScreen(tag);
                     case SYNC_LETTER_DATA -> ClientMethods.loadLetterData(tag);
+                    case HIDE_OVERLAY_MESSAGE -> ClientMethods.hideOverlayMessage();
+                    case OPEN_GUI -> GuiHelper.openClientSideGui(tag);
                 }
             });
         });
@@ -178,7 +191,9 @@ public class GenericToClientPacket {
         STOP_CROSS_SYNC,
         SYNC_ARCHE_DATA,
         BLACK_SCREEN,
-        SYNC_LETTER_DATA
+        SYNC_LETTER_DATA,
+        HIDE_OVERLAY_MESSAGE,
+        OPEN_GUI
     }
 
 }

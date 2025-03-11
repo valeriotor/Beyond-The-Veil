@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookEditScreen;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -13,6 +14,13 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class GuiHelper {
+
+    public static void openClientSideGui(CompoundTag tag) {
+        int id = tag.getInt("id");
+        if (id >= 0 && id < GuiType.values().length) {
+            openClientSideGui(GuiType.values()[id]);
+        }
+    }
 
     public static void openClientSideGui(GuiType type) {
         Minecraft.getInstance().setScreen(type.supplier.get());
@@ -29,7 +37,8 @@ public class GuiHelper {
 
     public enum GuiType {
         NECRONOMICON(() -> new NecronomiconGui()),
-        JOURNAL(() -> new JournalGui());
+        JOURNAL(() -> new JournalGui()),
+        KILLED_BY_CULTIST(() -> new KilledByCultistGui());
 
         private Supplier<Screen> supplier;
 

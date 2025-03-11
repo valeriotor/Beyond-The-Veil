@@ -1,9 +1,25 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
+import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -20,6 +36,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -89,4 +106,36 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                 if (pBlockEntity instanceof HeartBE) ((HeartBE) pBlockEntity).tickServer();
             };
     }
+
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
+        if (pLevel instanceof ServerLevel sl && pPlacer instanceof ServerPlayer sp) {
+            if (MathHelperBTV.checkForRing(this, sl, pPos, 4)) {
+                BloodCultistEntity cultist = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
+                Vec3 lookAngle = sp.getLookAngle();
+                Vec3 cultistPos = sp.position().add(lookAngle.normalize().reverse().multiply(1.1, 0, 1.1));
+                cultist.setPos(cultistPos);
+                cultist.lookAt(sp, 360, 360);
+                cultist.setKillingEntity(sp);
+                sl.addFreshEntity(cultist);
+                //sp.startRiding(cultist, true);
+                Messages.sendToPlayer(GenericToClientPacket.hideOverlayMessage(), sp);
+                PlayerTimer timer = new PlayerTimer.Builder("killedByCultist", 20)
+                        .addContinuousAction((p, c) -> {
+                            p.setHealth(Mth.clamp(c.getRemainingTime(), 1, Math.max(1, p.getHealth())));
+                            p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);
+                        })
+                        .addFinalActions((p,c) -> {
+                            Messages.sendToPlayer(GenericToClientPacket.openGui(GuiHelper.GuiType.KILLED_BY_CULTIST), (ServerPlayer) p);
+                            p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_DEATH, SoundSource.PLAYERS, 1, 1);
+                        }) // TODO this might not work on dedicated servers, test
+                        .toTimer();
+                sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
+            }
+        }
+    }
+
+
+
 }
