@@ -29,9 +29,9 @@ public class KilledByCultistGui extends Screen {
         this.delayTicker = 0;
         this.exitButtons.clear();
         Component component = Component.translatable("gui.killed_by_cultist.respawn");
-        this.exitButtons.add(this.addRenderableWidget(Button.builder(component, (p_280794_) -> {
-            this.minecraft.player.respawn();
-            p_280794_.active = false;
+        this.exitButtons.add(this.addRenderableWidget(Button.builder(component, b -> {
+            onClose();
+            b.active = false;
         }).bounds(this.width / 2 - 100, this.height / 4 + 72, 200, 20).build()));
         this.setButtonsActive(false);
         this.deathScore = Component.translatable("deathScreen.score").append(": ").append(Component.literal(Integer.toString(this.minecraft.player.getScore())).withStyle(ChatFormatting.YELLOW));

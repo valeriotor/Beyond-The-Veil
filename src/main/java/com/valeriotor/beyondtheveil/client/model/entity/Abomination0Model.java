@@ -42,7 +42,7 @@ public class Abomination0Model extends AnimatedModel<Abomination0Entity> impleme
         this.legs = registerAnimatedPart("legs", root.getChild("legs"));
         this.cloth = registerAnimatedPart("cloth", body.getChild("cloth"));
         this.main = registerAnimatedPart("main", body.getChild("main"));
-        this.head = registerAnimatedPart("head", body.getChild("head"));
+        this.head = registerAnimatedPart("head", body.getChild("head"), false);
         this.helmet = registerAnimatedPart("helmet", head.getChild("helmet"));
         this.brim = registerAnimatedPart("brim", head.getChild("brim"));
         this.nose = registerAnimatedPart("nose", head.getChild("nose"));

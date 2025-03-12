@@ -24,6 +24,7 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
     private final ModelPart upper;
     private final ModelPart upper_visible;
     private final ModelPart head;
+    private final ModelPart nose;
 
     public BrokenBodyModel(ModelPart root) {
         super(name);
@@ -31,6 +32,7 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
         this.upper = registerAnimatedPart("upper", root.getChild("upper"), false);
         this.upper_visible = registerAnimatedPart("upper_visible", root.getChild("upper_visible"), true);
         this.head = registerAnimatedPart("head", upper_visible.getChild("head"), true);
+        this.nose = registerAnimatedPart("nose", head.getChild("nose"), true);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -43,11 +45,19 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
 
         PartDefinition upper_visible = partdefinition.addOrReplaceChild("upper_visible", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition head = upper_visible.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -4.5F, -4.25F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(1.0F, -4.5F, -4.25F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -24.0F, 0.0F, 0.0F, 0.0F, 0.5236F));
+        PartDefinition head = upper_visible.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -24.0F, 0.0F, 0.0F, 0.0F, 0.5236F));
 
-        return LayerDefinition.create(meshdefinition, 64, 64);
-    }
+        PartDefinition head_r1 = head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(32, 53).addBox(0.0F, -4.0F, 0.0F, 4.0F, 4.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -6.0F, -4.0F, -0.48F, 0.0F, 0.0873F));
+
+        PartDefinition head_r2 = head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(40, 6).addBox(0.0F, -6.0F, -4.0F, 4.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0873F));
+
+        PartDefinition head_r3 = head.addOrReplaceChild("head_r3", CubeListBuilder.create().texOffs(32, 53).mirror().addBox(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 7.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-0.5F, -6.0F, -4.0F, -0.48F, 0.0F, -0.0873F));
+
+        PartDefinition head_r4 = head.addOrReplaceChild("head_r4", CubeListBuilder.create().texOffs(0, 6).addBox(-4.0F, -6.0F, -4.0F, 4.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.0873F));
+
+        PartDefinition nose = head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

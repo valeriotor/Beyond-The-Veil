@@ -31,6 +31,7 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
     private final ModelPart left_lower_arm;
     private final ModelPart right_arm;
     private final ModelPart right_lower_arm;
+    private final ModelPart knife;
 
     public BloodCultistModel(ModelPart root) {
         super(name);
@@ -44,6 +45,7 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
         this.left_lower_arm = registerAnimatedPart("left_lower_arm", left_arm.getChild("left_lower_arm"));
         this.right_arm = registerAnimatedPart("right_arm", upper_body.getChild("right_arm"));
         this.right_lower_arm = registerAnimatedPart("right_lower_arm", right_arm.getChild("right_lower_arm"));
+        this.knife = registerAnimatedPart("knife", right_lower_arm.getChild("knife"), false);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -81,6 +83,10 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
         PartDefinition right_arm = upper_body.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(36, 17).addBox(-2.0F, -2.0F, -2.0F, 3.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-6.0F, -9.0F, 0.0F, -1.1345F, 0.0F, 0.0F));
 
         PartDefinition right_lower_arm = right_arm.addOrReplaceChild("right_lower_arm", CubeListBuilder.create().texOffs(0, 41).addBox(-0.95F, -2.0F, -1.5F, 8.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 6.0F, 0.0F));
+
+        PartDefinition knife = right_lower_arm.addOrReplaceChild("knife", CubeListBuilder.create().texOffs(16, 23).addBox(1.0F, -1.0F, -1.75F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+                .texOffs(12, 20).addBox(0.0F, -1.0F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(12, 20).addBox(1.99F, -1.0F, -0.75F, 6.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(6.5F, 0.0F, 0.5F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
