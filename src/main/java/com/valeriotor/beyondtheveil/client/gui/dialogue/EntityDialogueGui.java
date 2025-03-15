@@ -202,7 +202,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             String line = localizedNpcLines.get(currentLine);
             for (int i = prevLastStringProgressSize + 1; i < lastStringProgressSize && i < line.length(); i++) {
                 char c = line.charAt(i);
-                if (c == ',' || c == '.' || c == '?' || c == '!' || c == '|') {
+                if (c == ',' || c == '.' || c == '?' || c == '!' || c == '|' || c == '–' || c == ':') {
                     lastStringProgressSize = prevLastStringProgressSize;
                     stringProgress = lastStringProgressSize;
                 }
@@ -237,7 +237,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
                         if(c != next && !(line.length() == index + 1 && currentLine == localizedNpcLines.size() - 1)) {
                             if (c == ',') {
                                 pauseTicks += 4;
-                            } else if (c == '.' || c == '?' || c == '!') {
+                            } else if (c == '.' || c == '?' || c == '!' || c == ':') {
                                 pauseTicks += 7;
                             } else if (c == '–') {
                                 pauseTicks += 6;

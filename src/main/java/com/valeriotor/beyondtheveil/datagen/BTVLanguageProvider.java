@@ -970,6 +970,45 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.initial.farewell,.option", "Farewell, then.");
         add("dialogue.blood_cultist.initial.farewell,__.option", "Farewell, then.");
 
+        add("dialogue.blood_cultist.immortal.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
+        add("dialogue.blood_cultist.immortal.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
+        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who was said to have lived a thousand lives – she was immortal, just like you.");
+        add("dialogue.blood_cultist.immortal.start.0", "Extraordinary – you are immortal.");
+        add("dialogue.blood_cultist.immortal.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
+        add("dialogue.blood_cultist.immortal.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods, that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
+        add("dialogue.blood_cultist.immortal.answer.0", "In our letter we spoke of a partnership – we share a mutual interest – and though we seldom make offers to those outside our aggregation – for safety, of course – you have caught our attention like no one before – bar, perhaps, a single exception.");
+        add("dialogue.blood_cultist.immortal.embrace.0", "I shall embrace death – just as I did life.\nNevertheless, know that – on behalf of my brothers and sisters – I come in peace, and with an offer.");
+        add("dialogue.blood_cultist.immortal.horrible.0", "You are now playing in the economy of lives, dear – just like we are – and for the betterment of all humanity, it must continue.\nIf you wish to proceed, simply build the two pillars. We will be there to celebrate the beginning of our partnership.");
+        add("dialogue.blood_cultist.immortal.study.0", "You have struck us, yes – undying as you are – like no one has ever done before – bar, perhaps, a single exception.");
+        add("dialogue.blood_cultist.immortal.offer.0", "We are an aggregation of scholars – and merchants – bound by a common fascination of the links chaining us all – brother and sister – man and beast – life and death.");
+        add("dialogue.blood_cultist.immortal.offer.1", "We wish to understand these relations – they are born and manifested in blood – and have devoted ourselves to studying – just as you have – so that we may understand that insurmountable threshold that is death.");
+        add("dialogue.blood_cultist.immortal.offer.2", "§o* The cultist's voice changes slightly at every pause *");
+        add("dialogue.blood_cultist.immortal.deceiver.0", "A worthy sacrifice – that did not come to pass – and in so daring, we proved your true nature – the blood coursing through your veins.");
+        add("dialogue.blood_cultist.immortal.demand.0", "We are fascinated by the relation between life and death, between birth and passing – and what we ask in return is a §onewborn§r.\nIt does not have to be a human – any animal, from cat to horse, will do fine. Build two pillars: any baby born near to the first will signal us to bring a human near to the second.");
+        add("dialogue.blood_cultist.immortal.demand.1", "That, then, is our trade. A newly born life in exchange for one soon to expire – at your hands, if you choose to.");
+        add("dialogue.blood_cultist.immortal.hm-hm__.option", "Hm-hm. Alright, tell me what you want.");
+        add("dialogue.blood_cultist.immortal.and_.option", "And I am quite certain you are not.");
+        add("dialogue.blood_cultist.immortal.thanks,.option", "Thanks, I guess, but please tell me what you want.");
+        add("dialogue.blood_cultist.immortal.then.option", "Then tell me, what do you demand in return?");
+        add("dialogue.blood_cultist.immortal.§odeceiver!§r.option", "§oDeceiver!§r Your experiment could have costed a life!");
+        add("dialogue.blood_cultist.immortal.tell.option", "Tell me why you have come here.");
+        add("dialogue.blood_cultist.immortal.this.option", "This is all so horrible.");
+        add("dialogue.blood_cultist.immortal.who's_.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal.§oyou.option", "§oYou just killed me!§r");
+        add("dialogue.blood_cultist.immortal.and__.option", "And what do you demand in return?");
+        add("dialogue.blood_cultist.immortal.§omadman_§r.option", "§oMadman.§r It will be your blood staining the ground.");
+        add("dialogue.blood_cultist.immortal.i'm.option", "I'm not \"undying\". I just come back after death.");
+        add("dialogue.blood_cultist.immortal.hm-hm____.option", "Hm-hm. Alright, tell me what you want.");
+        add("dialogue.blood_cultist.immortal.i.option", "I hope it's worth the blood you just spilled.");
+        add("dialogue.blood_cultist.immortal.who's.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal.and.option", "And you wish to study §ome§r?");
+        add("dialogue.blood_cultist.immortal.§othat's§r.option", "§oThat's§r your trade? It is horrifying.");
+        add("dialogue.blood_cultist.immortal.no.option", "No way.");
+        add("dialogue.blood_cultist.immortal.alas,.option", "Alas, I'm forgetful. But you are right, I also wish I could.");
+        add("dialogue.blood_cultist.immortal.you.option", "You have not answered my question.");
+        add("dialogue.blood_cultist.immortal.i'll.option", "I'll think about it.");
+        add("dialogue.blood_cultist.immortal.hm-hm_.option", "Hm-hm. Alright, tell me.");
+        add("dialogue.blood_cultist.immortal.hm-hm___.option", "Hm-hm. Alright, tell me what you want.");
 
     }
 

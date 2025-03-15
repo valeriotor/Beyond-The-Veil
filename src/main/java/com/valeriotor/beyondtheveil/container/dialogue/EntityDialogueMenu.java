@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.util.ClientTalkable;
 import com.valeriotor.beyondtheveil.dialogue.*;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import net.minecraft.network.FriendlyByteBuf;
@@ -55,12 +56,21 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
             broadcastChanges();
-        } else if (dialogue.isOpenTrade()) {
-            if (npc instanceof ShoremanEntity sh) {
-                sh.setTradingPlayer(player);
-                sh.openTradingScreen(player, Component.translatable("gui.%s.display_name".formatted(sh.getProfession().name().toLowerCase())), 5);
+        } else {
+            if (dialogue.isOpenTrade()) {
+                if (npc instanceof ShoremanEntity sh) {
+                    sh.setTradingPlayer(player);
+                    sh.openTradingScreen(player, Component.translatable("gui.%s.display_name".formatted(sh.getProfession().name().toLowerCase())), 5);
 
+                }
             }
+            additionalEndEffects();
+        }
+    }
+
+    private void additionalEndEffects() {
+        if (this.npc instanceof BloodCultistEntity bc && template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal")) {
+            bc.bowAndLeave();
         }
     }
 

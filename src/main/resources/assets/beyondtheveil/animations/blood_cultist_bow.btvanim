@@ -1,0 +1,6 @@
+model: blood_cultist
+length: 45
+start: 0: 30
+    roty: right_arm: 1.5: linear: absolute
+    rotz: right_lower_arm: 1.5: linear: absolute
+    rotx: body: 1: linear: absolute

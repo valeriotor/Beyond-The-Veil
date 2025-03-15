@@ -116,6 +116,8 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
             right_lower_arm.yRot = -4.11F;
         } else if (pEntity.getBackStabAnimation() != null) {
             pEntity.getBackStabAnimation().apply(pPartialTick);
+        } else if (pEntity.getBowingAnimation() != null) {
+            pEntity.getBowingAnimation().apply(pPartialTick);
         }
     }
 

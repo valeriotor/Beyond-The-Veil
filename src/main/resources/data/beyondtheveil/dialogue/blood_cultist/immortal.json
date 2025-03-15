@@ -1,0 +1,313 @@
+{
+  "id": "immortal",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "exception": {
+      "id": "exception",
+      "dialogueOptions": [
+        {
+          "id": "hm-hm__",
+          "branchLength": 1,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "study": {
+      "id": "study",
+      "dialogueOptions": [
+        {
+          "id": "i\u0027m",
+          "branchLength": 1,
+          "endingNodeID": "undying",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "who\u0027s_",
+          "branchLength": 1,
+          "endingNodeID": "exception",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "hm-hm___",
+          "branchLength": 1,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "embrace": {
+      "id": "embrace",
+      "dialogueOptions": [
+        {
+          "id": "§oyou",
+          "branchLength": 1,
+          "endingNodeID": "deceiver",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i",
+          "branchLength": 3,
+          "endingNodeID": "offer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "forgetful": {
+      "id": "forgetful",
+      "dialogueOptions": [
+        {
+          "id": "thanks,",
+          "branchLength": 1,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "deceiver": {
+      "id": "deceiver",
+      "dialogueOptions": [
+        {
+          "id": "tell",
+          "branchLength": 3,
+          "endingNodeID": "offer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "§omadman_§r",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "tell": {
+      "id": "tell",
+      "dialogueOptions": [
+        {
+          "id": "§othat\u0027s§r",
+          "branchLength": 1,
+          "endingNodeID": "hypocrisy",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "and__",
+          "branchLength": 2,
+          "endingNodeID": "demand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "and_",
+          "branchLength": 1,
+          "endingNodeID": "embrace",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "§odeceiver!§r",
+          "branchLength": 1,
+          "endingNodeID": "deceiver",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "demand": {
+      "id": "demand",
+      "dialogueOptions": [
+        {
+          "id": "this",
+          "branchLength": 1,
+          "endingNodeID": "horrible",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "offer": {
+      "id": "offer",
+      "dialogueOptions": [
+        {
+          "id": "and",
+          "branchLength": 1,
+          "endingNodeID": "study",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you",
+          "branchLength": 1,
+          "endingNodeID": "answer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "undying": {
+      "id": "undying",
+      "dialogueOptions": [
+        {
+          "id": "alas,",
+          "branchLength": 1,
+          "endingNodeID": "forgetful",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "hm-hm____",
+          "branchLength": 1,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "answer": {
+      "id": "answer",
+      "dialogueOptions": [
+        {
+          "id": "who\u0027s",
+          "branchLength": 1,
+          "endingNodeID": "exception",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "hm-hm_",
+          "branchLength": 1,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "horrible": {
+      "id": "horrible",
+      "dialogueOptions": [
+        {
+          "id": "i\u0027ll",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": ["cultist_killed"],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "no",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": ["cultist_killed"],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "hypocrisy": {
+      "id": "hypocrisy",
+      "dialogueOptions": [
+        {
+          "id": "then",
+          "branchLength": 2,
+          "endingNodeID": "demand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "blood_cultist",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}

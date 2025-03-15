@@ -11,12 +11,14 @@ import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.CultistKillGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -47,8 +49,12 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     private CrawlerEntity heldVillager;
     private static final EntityDataAccessor<String> HELD_VILLAGER_TYPE = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> KILLING_ENTITY_ID = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> BOWING = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.BOOLEAN);
     private Animation backStabAnimation;
+    private Animation bowingAnimation;
     private boolean didBackStabAnimation;
+    private boolean startedBowing;
+    private int bowing;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -94,6 +100,11 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         //}
     }
 
+    public void bowAndLeave() {
+        entityData.set(BOWING, true);
+        bowing = 40;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -117,6 +128,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                     }
                 }
             }
+            if (entityData.get(BOWING) && !startedBowing) {
+                startedBowing = true;
+                bowingAnimation = new Animation(AnimationRegistry.blood_cultist_bow);
+            }
 
             if (backStabAnimation != null) {
                 backStabAnimation.update();
@@ -124,11 +139,37 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                     backStabAnimation = null;
                 }
             }
+            if (bowingAnimation != null) {
+                bowingAnimation.update();
+                if (bowingAnimation.isDone()) {
+                    bowingAnimation = null;
+                }
+            }
+        } else {
+            if (bowing > 0) {
+                bowing--;
+                if (bowing == 0) {
+                    if (level() instanceof ServerLevel sl) {
+                        for (int x = -1; x <= 1; x++) {
+                            for (int z = -1; z <= 1; z++) {
+                                for (int y = 0; y < 7; y++) {
+                                    sl.sendParticles(BTVParticles.BLOODSPILL.get(), getX() + x * 0.3, getY() + y * 0.2, getZ() + z * 0.3, 3, 0, 0, 0, 0.1);
+                                }
+                            }
+                        }
+                    }
+                    discard();
+                }
+            }
         }
     }
 
     public Animation getBackStabAnimation() {
         return backStabAnimation;
+    }
+
+    public Animation getBowingAnimation() {
+        return bowingAnimation;
     }
 
     public CrawlerEntity getHeldVillager() {
@@ -197,6 +238,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         super.defineSynchedData();
         this.entityData.define(HELD_VILLAGER_TYPE, "null");
         this.entityData.define(KILLING_ENTITY_ID, -1);
+        this.entityData.define(BOWING, false);
     }
 
     @Override

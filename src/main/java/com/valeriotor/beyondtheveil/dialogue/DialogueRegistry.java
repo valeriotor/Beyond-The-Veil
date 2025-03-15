@@ -46,6 +46,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLACK_MIRROR, "idle");
 
         registerDialogue(DialogueType.BLOOD_CULTIST, "initial");
+        registerDialogue(DialogueType.BLOOD_CULTIST, "immortal");
     }
 
     private static void registerDialogue(DialogueType type, String id) {
