@@ -1,0 +1,22 @@
+model: blood_cultist
+length: 35
+start: 0: 7
+    rotx: right_arm: -1.5: linear: absolute
+    roty: right_arm: 1.5: linear: absolute
+    rotz: right_lower_arm: 1.5: linear: absolute
+    visi: knife: 1: immediate: absolute
+start: 8: 10
+    roty: right_arm: 0: linear: absolute
+    rotz: knife: -1.5: linear: absolute
+    tray: knife: 1: linear: absolute
+start: 11: 28
+    roty: right_arm: 0.5: linear: absolute
+    tray: knife: 0: linear: absolute
+start: 25: 30
+    rotz: knife: 0: linear: absolute
+start: 29: 34
+    rotx: right_arm: -1.1345F: linear: absolute
+    roty: right_arm: 0: linear: absolute
+    rotz: right_lower_arm: 0: linear: absolute
+start: 34: 35
+    visi: knife: 0: immediate: absolute

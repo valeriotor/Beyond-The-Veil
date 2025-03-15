@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.client.gui;
 
 import com.google.common.collect.Lists;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -31,6 +33,7 @@ public class KilledByCultistGui extends Screen {
         Component component = Component.translatable("gui.killed_by_cultist.respawn");
         this.exitButtons.add(this.addRenderableWidget(Button.builder(component, b -> {
             onClose();
+            Messages.sendToServer(GenericToServerPacket.respawnNow());
             b.active = false;
         }).bounds(this.width / 2 - 100, this.height / 4 + 72, 200, 20).build()));
         this.setButtonsActive(false);

@@ -8,9 +8,20 @@ import net.minecraft.world.entity.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerTimerData {
     private final List<PlayerTimer> playerTimers = new ArrayList<>();
+
+
+    public boolean hasTimer(String name) {
+        for (PlayerTimer playerTimer : playerTimers) {
+            if (Objects.equals(playerTimer.getId(), name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean addTimer(PlayerTimer playerTimer) {
         if (playerTimers.contains(playerTimer)) {

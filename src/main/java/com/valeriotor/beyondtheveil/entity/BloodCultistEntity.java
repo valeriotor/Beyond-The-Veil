@@ -1,7 +1,9 @@
 package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
@@ -45,6 +47,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     private CrawlerEntity heldVillager;
     private static final EntityDataAccessor<String> HELD_VILLAGER_TYPE = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> KILLING_ENTITY_ID = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.INT);
+    private Animation backStabAnimation;
+    private boolean didBackStabAnimation;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -65,12 +69,12 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         this.goalSelector.addGoal(0, new CultistKillGoal(this));
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        //this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));
+        //this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
-    private void startTalking(ServerPlayer player) {
+    public void startTalking(ServerPlayer player) {
         DialogueType dialogueType = DialogueType.BLOOD_CULTIST;
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
@@ -107,9 +111,24 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                 if (entity != null) {
                     lookAt(entity, 360, 360);
                     yBodyRot = getYRot();
+                    if (!didBackStabAnimation) {
+                        backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab);
+                        didBackStabAnimation = true;
+                    }
+                }
+            }
+
+            if (backStabAnimation != null) {
+                backStabAnimation.update();
+                if (backStabAnimation.isDone()) {
+                    backStabAnimation = null;
                 }
             }
         }
+    }
+
+    public Animation getBackStabAnimation() {
+        return backStabAnimation;
     }
 
     public CrawlerEntity getHeldVillager() {
@@ -124,7 +143,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
             if (!this.level().isClientSide) {
                 this.startTalking((ServerPlayer) pPlayer);
-                setHeldVillagerType(VillagerType.PLAINS);
+                // DEBUG setHeldVillagerType(VillagerType.PLAINS);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
@@ -147,8 +166,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         if (this.hasPassenger(pPassenger)) {
             float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
 
-            Vec3 vec3 = (new Vec3((double)-0.25, -0.5D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
-            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + (double)f1 + 0.85, this.getZ() + vec3.z);
+            Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
+            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
             /*pPassenger.setYRot(pPassenger.getYRot() + this.deltaRotation);
             pPassenger.setYHeadRot(pPassenger.getYHeadRot() + this.deltaRotation);
             this.clampRotation(pPassenger);
@@ -158,6 +177,11 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                 pPassenger.setYHeadRot(pPassenger.getYHeadRot() + (float)j);
             }*/
         }
+    }
+
+    @Override
+    public boolean shouldRiderSit() {
+        return false;
     }
 
     public void setHeldVillagerType(VillagerType type) {

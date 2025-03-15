@@ -132,6 +132,10 @@ public class RenderEvents {
     }
 
     @SubscribeEvent
+    public static void renderArmEvent(RenderArmEvent event) {
+    }
+
+    @SubscribeEvent
     public static void computeCameraAngles(ViewportEvent.ComputeCameraAngles event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null && rotator != null) {

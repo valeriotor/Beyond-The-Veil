@@ -127,6 +127,10 @@ public class PlayerTimer {
         return tag;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public int getRemainingTime() {
         return timer;
     }

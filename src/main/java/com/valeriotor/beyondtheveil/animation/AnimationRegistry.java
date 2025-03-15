@@ -11,6 +11,7 @@ public class AnimationRegistry {
 
     private static List<AnimationTemplate> animations = new ArrayList<>();
     private static Map<AnimationTemplate, Integer> animationToId = new HashMap<>();
+    public static AnimationTemplate blood_cultist_backstab;
     public static AnimationTemplate blood_skeleton_swing;
     public static AnimationTemplate crawler_back_pain_low;
     public static AnimationTemplate crawler_back_pain_medium;
@@ -34,6 +35,7 @@ public class AnimationRegistry {
         animations.clear();
         animationToId.clear();
         int i = 0;
+        blood_cultist_backstab = registerAnimation("blood_cultist_backstab", client, i++);
         blood_skeleton_swing = registerAnimation("blood_skeleton_swing", client, i++);
         crawler_back_pain_low = registerAnimation("crawler_back_pain_low", client, i++);
         crawler_back_pain_medium = registerAnimation("crawler_back_pain_medium", client, i++);

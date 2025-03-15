@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
@@ -54,6 +55,10 @@ public class GenericToServerPacket {
         tag.putInt("index", index);
         tag.putInt("version", version);
         return new GenericToServerPacket(MessageType.OPEN_LETTER, tag);
+    }
+
+    public static GenericToServerPacket respawnNow() {
+        return new GenericToServerPacket(MessageType.RESPAWN_NOW, new CompoundTag());
     }
 
     private final MessageType type;
@@ -127,6 +132,7 @@ public class GenericToServerPacket {
                         int version = tag.getInt("version");
                         player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.openLetter(player, template, index, version));
                     }
+                    case RESPAWN_NOW -> HeartBlock.respawnNow(player);
                 }
 
             }
@@ -143,7 +149,8 @@ public class GenericToServerPacket {
         SYNC_REPORT,
         SEND_LETTER,
         REDEEM_ITEMS,
-        OPEN_LETTER
+        OPEN_LETTER,
+        RESPAWN_NOW
     }
 
 }

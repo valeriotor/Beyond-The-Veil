@@ -7,6 +7,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -113,6 +114,8 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
             right_lower_arm.zRot = -2F;
             right_lower_arm.xRot = -1F;
             right_lower_arm.yRot = -4.11F;
+        } else if (pEntity.getBackStabAnimation() != null) {
+            pEntity.getBackStabAnimation().apply(pPartialTick);
         }
     }
 
