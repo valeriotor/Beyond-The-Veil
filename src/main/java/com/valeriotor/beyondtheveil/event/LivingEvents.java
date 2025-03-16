@@ -9,6 +9,8 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.PillarBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.MathHelperBTV;
+import com.valeriotor.beyondtheveil.util.VanillaUtils;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -203,9 +206,41 @@ public class LivingEvents {
                     .min(Comparator.comparing(data -> data.getCurrentPos().distSqr(pos)));
             min.ifPresent(data -> {
                 BlockPos linkPos = data.getLinkPos();
-                LifeEconomyData.PodData podData = instance.findClosestPod(pos, 2, 50);
-                if (podData != null) {
-                    podData.setPatientAndSync(PatientType.VILLAGER, new CompoundTag(), sl);
+                if (!sl.isLoaded(linkPos)) {
+                    LifeEconomyData.PodData podData = instance.findClosestEmptyPod(linkPos, 2, 50);
+                    if (podData != null) {
+                        podData.setPatientAndSync(PatientType.VILLAGER, new CompoundTag(), sl);
+                    }
+                } else {
+                    List<LifeEconomyData.PodData> closestEmptyPods = instance.findClosestEmptyPods(linkPos, 2, 50);
+                    for (LifeEconomyData.PodData closestEmptyPod : closestEmptyPods) {
+                        if (!instance.isReserved(closestEmptyPod)) {
+                            BloodCultistEntity entity = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
+                            BlockPos podPos = closestEmptyPod.getCurrentPos();
+                            BlockPos toTeleport = null;
+                            for(int i = 0; i < 30; ++i) {
+                                int j = MathHelperBTV.randomIntInclusive(-5, 5, entity.getRandom());
+                                int k = MathHelperBTV.randomIntInclusive(-1, 1, entity.getRandom());
+                                int l = MathHelperBTV.randomIntInclusive(-5, 5, entity.getRandom());
+                                BlockPos candidate = new BlockPos(podPos.getX() + j, podPos.getY() + k, podPos.getZ() + l);
+                                boolean flag = VanillaUtils.canTeleportTo(entity, candidate, sl, false);
+                                if (flag) {
+                                    toTeleport = candidate;
+                                    break;
+                                }
+                            }
+                            if (toTeleport == null) {
+                                toTeleport = linkPos;
+                            }
+                            entity.setPos(toTeleport.getCenter());
+                            entity.setPodPos(closestEmptyPod.getCurrentPos());
+                            VillagerType[] types = new VillagerType[]{VillagerType.DESERT, VillagerType.JUNGLE, VillagerType.PLAINS, VillagerType.SAVANNA, VillagerType.SNOW, VillagerType.SWAMP, VillagerType.TAIGA};
+                            entity.setHeldVillagerType(types[entity.getRandom().nextInt(types.length)]);
+                            sl.addFreshEntity(entity);
+                            instance.reserve(closestEmptyPod, entity.getId());
+                            break;
+                        }
+                    }
                 }
                 //BloodCultistEntity entity = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
                 //entity.setPos(linkPos.getCenter());

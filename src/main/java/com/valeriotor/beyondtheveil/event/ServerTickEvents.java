@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +35,9 @@ public class ServerTickEvents {
                     Messages.sendToDimension(GenericToClientPacket.syncArcheData(arche), BTVDimensions.ARCHE_LEVEL);
                 }
             }
+        }
+        if (event.level instanceof ServerLevel sl) {
+            LifeEconomyData.getInstance(sl).tick();
         }
     }
 

@@ -9,15 +9,19 @@ import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.CultistKillGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.CultistPodGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -42,6 +46,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import java.util.Arrays;
+
 public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     private LivingEntity killingEntity;
@@ -55,6 +61,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     private boolean didBackStabAnimation;
     private boolean startedBowing;
     private int bowing;
+    private BlockPos podPos;
+    private int leaving;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -71,13 +79,14 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(0, new CultistPodGoal(this, 1D));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(0, new CultistKillGoal(this));
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
-        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        //this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));
-        //this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     public void startTalking(ServerPlayer player) {
@@ -112,6 +121,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
             if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
                 heldVillager = new CrawlerEntity(Registration.CRAWLER.get(), level());
                 heldVillager.setHolderType(PatientHolderType.CULTIST);
+                VillagerType villagerType = BuiltInRegistries.VILLAGER_TYPE.get(new ResourceLocation(entityData.get(HELD_VILLAGER_TYPE)));
+                heldVillager.setVillagerData(heldVillager.getVillagerData().setType(villagerType));
                 heldVillager.setHeld(true);
             } else if (heldVillager != null && entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
                 heldVillager = null;
@@ -149,16 +160,27 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
             if (bowing > 0) {
                 bowing--;
                 if (bowing == 0) {
-                    if (level() instanceof ServerLevel sl) {
-                        for (int x = -1; x <= 1; x++) {
-                            for (int z = -1; z <= 1; z++) {
-                                for (int y = 0; y < 7; y++) {
-                                    sl.sendParticles(BTVParticles.BLOODSPILL.get(), getX() + x * 0.3, getY() + y * 0.2, getZ() + z * 0.3, 3, 0, 0, 0, 0.1);
-                                }
-                            }
-                        }
-                    }
+                    doParticles();
                     discard();
+                }
+            }
+            if (leaving > 0) {
+                leaving--;
+                if (leaving == 0) {
+                    doParticles();
+                    discard();
+                }
+            }
+        }
+    }
+
+    private void doParticles() {
+        if (level() instanceof ServerLevel sl) {
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    for (int y = 0; y < 7; y++) {
+                        sl.sendParticles(BTVParticles.BLOODSPILL.get(), getX() + x * 0.3, getY() + y * 0.2, getZ() + z * 0.3, 3, 0, 0, 0, 0.1);
+                    }
                 }
             }
         }
@@ -246,12 +268,18 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         super.addAdditionalSaveData(pCompound);
         String heldVillager = entityData.get(HELD_VILLAGER_TYPE);
         pCompound.putString("held", heldVillager);
+        if (podPos != null) {
+            pCompound.putLong("podPos", podPos.asLong());
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         entityData.set(HELD_VILLAGER_TYPE, pCompound.contains("held") ? pCompound.getString("held") : "null");
+        if (pCompound.contains("podPos")) {
+            podPos = BlockPos.of(pCompound.getLong("podPos"));
+        }
     }
 
     public void setKillingEntity(LivingEntity killingEntity) {
@@ -265,5 +293,17 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     public LivingEntity getKillingEntity() {
         return killingEntity;
+    }
+
+    public BlockPos getPodPos() {
+        return podPos;
+    }
+
+    public void setPodPos(BlockPos podPos) {
+        this.podPos = podPos;
+    }
+
+    public void setLeaving(int leaving) {
+        this.leaving = leaving;
     }
 }

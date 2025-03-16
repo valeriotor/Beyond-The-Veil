@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -20,6 +21,7 @@ public class LifeEconomyData extends SavedData {
     private final Map<ChunkPos, List<PillarData>> pillarsByChunk = new HashMap<>();
     private final Map<BlockPos, PodData> patientPods = new HashMap<>();
     private final Map<ChunkPos, List<PodData>> patientPodsByChunk = new HashMap<>();
+    private final Map<PodData, Tuple<Integer, Integer>> patientPodReservations = new HashMap<>();
 
 
     public static LifeEconomyData getInstance(ServerLevel sl) {
@@ -95,7 +97,7 @@ public class LifeEconomyData extends SavedData {
         setDirty();
     }
 
-    public PodData findClosestPod(BlockPos pos, int chunkRadius, double maxDist) {
+    public PodData findClosestEmptyPod(BlockPos pos, int chunkRadius, double maxDist) {
         List<PodData> pods = new ArrayList<>();
         for (ChunkPos chunkPos : getChunkPoses(pos, chunkRadius)) {
             pods.addAll(patientPodsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()));
@@ -107,11 +109,25 @@ public class LifeEconomyData extends SavedData {
         return null;
     }
 
+    public List<PodData> findClosestEmptyPods(BlockPos pos, int chunkRadius, double maxDist) {
+        List<PodData> pods = new ArrayList<>();
+        for (ChunkPos chunkPos : getChunkPoses(pos, chunkRadius)) {
+            pods.addAll(patientPodsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()));
+        }
+        return pods.stream().filter(p -> p.getPatient() == null && p.currentPos.distSqr(pos) < maxDist * maxDist).sorted(Comparator.comparing(p -> p.currentPos.distSqr(pos))).toList();
+    }
+
     public PodData getPodData(BlockPos pos) {
         return patientPods.get(pos);
     }
 
+    public boolean isReserved(PodData data) {
+        return patientPodReservations.containsKey(data);
+    }
 
+    public void reserve(PodData data, int cultistId) {
+        patientPodReservations.put(data, new Tuple<>(cultistId, 150));
+    }
 
     public void addPillar(BlockPos pos, BlockPos link, UUID connection) {
         addPillar(new PillarData(pos, connection, link));
@@ -197,6 +213,11 @@ public class LifeEconomyData extends SavedData {
         return true;
     }
 
+    public void tick() {
+        patientPodReservations.forEach((p, t) -> t.setB(t.getB() - 1));
+        patientPodReservations.entrySet().removeIf(e -> e.getValue().getB() < 0);
+    }
+
     public class PillarData {
         private BlockPos currentPos;
         private UUID connection;
@@ -275,6 +296,10 @@ public class LifeEconomyData extends SavedData {
 
         public CompoundTag getEntity() {
             return entity;
+        }
+
+        public BlockPos getCurrentPos() {
+            return currentPos;
         }
 
         public void setPatient(PatientType type, CompoundTag data) {

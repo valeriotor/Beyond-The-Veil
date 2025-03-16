@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -28,6 +30,10 @@ public class MathHelperBTV {
 
     public static long clamp(long min, long max, long val) {
         return val < min ? min : (val > max ? max : val);
+    }
+
+    public static int randomIntInclusive(int pMin, int pMax, RandomSource random) {
+        return random.nextInt(pMax - pMin + 1) + pMin;
     }
 
     public static double angleBetween(Entity source, Entity target) {
