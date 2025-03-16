@@ -127,6 +127,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final ResourceLocation ALEMBICS_PROFILE = new ResourceLocation(References.MODID, "textures/gui/journal/alembics_profile.png");
     private final int PAGE_X = 50;
     private final int PAGE_Y = -200;
+    private Component mainTitle;
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -251,6 +252,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             //updateWidgetVisibility();
         }));
         updateWidgetVisibility();
+        setCategory(selectedCategory);
 
     }
 
@@ -330,6 +332,13 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         RenderSystem.enableBlend();
         pGuiGraphics.blit(BACKGROUND, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight, 0, 0, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT);
         super.render(pGuiGraphics, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
+        if (mainTitle instanceof MutableComponent mc) {
+            pose.pushPose();
+            pose.translate(-210, -205, 0);
+            pose.scale(3.05F, 3.05F, 1);
+            pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, mc.withStyle(style), 0, 0, 0xFFF0B929);
+            pose.popPose();
+        }
         buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
         ScrollableList<? extends Element> toRender = currentList();
         int relativeMouseX = listMouseX(pMouseX);
@@ -529,7 +538,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     public void selectEntry(String entry) {
         if (entry.startsWith("tools")) {
-            selectedCategory = JournalCategory.TOOLS;
+            setCategory(JournalCategory.TOOLS);
             String name = entry.substring("tools.".length());
             for (ItemEntry row : tools.rows()) {
                 if (Objects.equals(row.name, name)) {
@@ -538,7 +547,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 }
             }
         } else {
-            selectedCategory = JournalCategory.INGREDIENTS;
+            setCategory(JournalCategory.INGREDIENTS);
             String name = entry.substring("ingredients.".length());
             for (ItemEntry row : ingredients.rows()) {
                 if (Objects.equals(row.name, name)) {
@@ -970,6 +979,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     private void setCategory(JournalCategory category) {
         selectedCategory = category;
+        mainTitle = Component.literal("§l" + Component.translatable("gui.journal.bookmark." + selectedCategory.name().toLowerCase()).getString());
         updateWidgetVisibility();
     }
 
