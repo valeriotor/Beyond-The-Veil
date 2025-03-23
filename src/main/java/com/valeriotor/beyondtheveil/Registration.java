@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
+import com.valeriotor.beyondtheveil.container.DreamBottleContainer;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -271,7 +272,7 @@ public class Registration {
     public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
     public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
     public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
-    public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", () -> new Item(ITEM_PROPERTIES)); // new ItemDreamBottle("dream_bottle");
+    public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", () -> new DreamBottleItem()); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_COVENANT = ITEMS.register("blood_covenant", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
     public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
@@ -365,6 +366,7 @@ public class Registration {
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
+    public static final RegistryObject<MenuType<DreamBottleContainer>> DREAM_BOTTLE_CONTAINER = MENUS.register(DREAM_BOTTLE.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new DreamBottleContainer(windowId, inv, inv.player)));
     public static final RegistryObject<MenuType<EntityDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new EntityDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
 

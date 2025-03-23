@@ -123,8 +123,8 @@ public class SurgeryItem extends Item {
     }
 
     protected void resetCounterAndStopSound(Player p) {
-        int prev = DataUtil.getOrSetInteger(p, type.name(), 0, true);
-        if (prev > 0) {
+        Integer prev = DataUtil.getOrSetInteger(p, type.name(), 0, true);
+        if (prev != null && prev > 0) {
             //System.out.println(type.name() + " " +  prev);
             DataUtil.setInt(p, type.name(), 0, true);
             long pos = DataUtil.getLong(p, type.name() + "_pos");
