@@ -60,6 +60,7 @@ public class PlayerTickEvents {
             });
             checkDiscoveredWaypoint(event);
             p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
+            resetTimesDreamt(event);
         }
     }
 
@@ -80,6 +81,17 @@ public class PlayerTickEvents {
                 }
             }
         }
+    }
 
+    /** Safety check in case something related to the playertimer (defined in DreamHandler.markEvent) goes haywire
+     */
+    private static void resetTimesDreamt(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        if (!player.level().isClientSide && player.level().getDayTime() <= 10) {
+            player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
+                c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 0, false);
+                c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false);
+            });
+        }
     }
 }

@@ -74,6 +74,15 @@ public class MemoryPhialItem extends Item {
         return stack;
     }
 
+    public static Memory fromStack(ItemStack stack) {
+        if (stack.getItem() == Registration.MEMORY_PHIAL.get()) {
+            CompoundTag tag = stack.getOrCreateTag();
+            return Memory.getMemoryFromDataName(tag.getString("memory"));
+
+        }
+        return null;
+    }
+
     public int getUseDuration(ItemStack pStack) {
         return 32;
     }

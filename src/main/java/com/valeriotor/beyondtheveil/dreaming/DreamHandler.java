@@ -2,22 +2,26 @@ package com.valeriotor.beyondtheveil.dreaming;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DreamHandler {
 
@@ -30,7 +34,9 @@ public class DreamHandler {
             if (p.level().getBlockState(p.getOnPos()).getBlock() != Registration.SLEEP_CHAMBER.get()) {
                 return;
             }
-            //TODO maximum per day check
+            if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 0, false) >= 2) {
+                return;
+            }
         }
         DataUtil.clearReminiscences(p);
         List<FumeSpreaderBE> spreaders = findFumeSpreader(p, p.level(), p.getOnPos(), 1);
@@ -71,9 +77,53 @@ public class DreamHandler {
         } else {
             if (!bed) {
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.SLEPT_IN_CHAMBER, true, false);
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 1, 1, false);
+                markTimesDreamt(p, "sleep_chamber");
             }
         }
         DataUtil.syncReminiscences(p);
+    }
+
+    public static void dreamBottle(Player p, ItemStack stack) {
+        if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1) {
+            return;
+        }
+        stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
+            List<Tuple<Memory, Integer>> memories = new ArrayList<>();
+            for (int i = 0; i < c.getSlots(); i++) {
+                ItemStack stackInSlot = c.getStackInSlot(i);
+                Memory memory = MemoryPhialItem.fromStack(stackInSlot);
+                if (memory != null) {
+                    memories.add(new Tuple<>(memory, i));
+                }
+            }
+            List<Integer> successes = new ArrayList<>();
+            // TODO sort? actually no
+            for (Tuple<Memory, Integer> memory : memories) {
+                if (DreamRegistry.getDreamFromMemory(memory.getA(), hasVoid(p)).activate(p, p.level())) {
+                    successes.add(memory.getB());
+                    DataUtil.setBooleanOnServerAndSync(p, memory.getA().name() + "Dream", true, false);
+                }
+            }
+            if (!successes.isEmpty()) {
+                for (Integer success : successes) {
+                    c.extractItem(success, 1, false);
+                }
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
+                markTimesDreamt(p, "dream_bottle");
+            }
+            DataUtil.syncReminiscences(p);
+
+        });
+    }
+
+    private static void markTimesDreamt(Player player, String type) {
+        player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+            if (!c.hasTimer(type)) {
+                PlayerTimer timer = new PlayerTimer(24000, type, PersistentPlayerTimer.DREAMT, Map.of("time", String.valueOf(player.level().getDayTime())));
+                c.addTimer(timer);
+            }
+        });
     }
 
     private static final int[][] MULTIPLIERS = {{1, 1}, {-1, -1}, {1, -1}, {-1, 1}};

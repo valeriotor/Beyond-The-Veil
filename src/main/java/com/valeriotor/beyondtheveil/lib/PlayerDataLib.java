@@ -19,7 +19,7 @@ public class PlayerDataLib {
     public static final String VEIN_POS = "vein_pos";
 
     // Ints (Non-temporary)
-    public static final String TIMESDREAMT = "timesDreamt";
+    public static final Function<String, String> TIMES_DREAMT = s -> "times_dreamt_" + s;
     public static final String SLUGS = "slugs";
     public static final String FISH_CANOE = "canoe_fish";
     public static final String DEATH_X = "deathX";

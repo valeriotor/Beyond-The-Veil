@@ -2,8 +2,10 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.container.DreamBottleContainer;
+import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,9 +13,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -25,6 +30,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,8 +51,29 @@ public class DreamBottleItem extends Item {
                 NetworkHooks.openScreen(sp, new SimpleMenuProvider(DreamBottleContainer::new, Component.translatable("gui.dream_bottle.title")));
             }
 
+        } else {
+            return ItemUtils.startUsingInstantly(pLevel, pPlayer, pUsedHand);
         }
         return super.use(pLevel, pPlayer, pUsedHand);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack pStack) {
+        return 32;
+    }
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack pStack) {
+        return UseAnim.DRINK;
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level pLevel, LivingEntity pLivingEntity) {
+        if (pLivingEntity instanceof ServerPlayer sp) {
+            DreamHandler.dreamBottle(sp, stack);
+            return stack;
+        }
+        return super.finishUsingItem(stack, pLevel, pLivingEntity);
     }
 
     @Override
@@ -57,7 +84,7 @@ public class DreamBottleItem extends Item {
                 return stack.getFluid() == BTVFluids.FLUID_TEARS.getA().get();
             }
         };
-        DreamBottleStackHandler itemStackHandler = new DreamBottleStackHandler(4);
+        DreamBottleStackHandler itemStackHandler = new DreamBottleStackHandler(stack, 4);
         return new ICapabilityProvider() {
 
             @Override
@@ -69,8 +96,12 @@ public class DreamBottleItem extends Item {
 
     private static class DreamBottleStackHandler extends ItemStackHandler implements ICapabilityProvider {
 
-        public DreamBottleStackHandler(int size) {
+        private final ItemStack container;
+
+        public DreamBottleStackHandler(ItemStack container, int size) {
             super(size);
+            this.container = container;
+            initStacks();
         }
 
         private final LazyOptional<IItemHandler> holder = LazyOptional.of(() -> this);
@@ -83,6 +114,31 @@ public class DreamBottleItem extends Item {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return stack.getItem() == Registration.MEMORY_PHIAL.get();
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            CompoundTag tag = container.getOrCreateTag();
+            if (!tag.contains("contents")) {
+                tag.put("contents", new CompoundTag());
+            }
+            tag.getCompound("contents").put(String.valueOf(slot), stacks.get(slot).save(new CompoundTag()));
+        }
+
+        private void initStacks() {
+            CompoundTag tag = container.getOrCreateTag();
+            if (!tag.contains("contents")) {
+                tag.put("contents", new CompoundTag());
+            }
+            CompoundTag contents1 = tag.getCompound("contents");
+            for (String contents : contents1.getAllKeys()) {
+                if (StringUtils.isNumeric(contents)) {
+                    int index = Integer.parseInt(contents);
+                    if (index >= 0 && index < stacks.size()) {
+                        stacks.set(index, ItemStack.of(contents1.getCompound(contents)));
+                    }
+                }
+            }
         }
     }
 

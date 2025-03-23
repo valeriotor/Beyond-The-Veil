@@ -1,14 +1,18 @@
 package com.valeriotor.beyondtheveil.util;
 
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -20,18 +24,30 @@ public enum PersistentPlayerTimer {
             c.receiveLetter(t.getAdditionalData("exchange"));
             p.getCapability(LETTER_DATA).ifPresent(data -> Messages.sendToPlayer(GenericToClientPacket.syncLetterData(data.saveToNBT(new CompoundTag())), (ServerPlayer) p));
         });
-    });
+    }),
+    DREAMT(List.of(), List.of((p, t) -> {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
+            c.setInteger(PlayerDataLib.TIMES_DREAMT.apply(t.getId()), 0, false);
+        });
+    }), List.of(), List.of((p, t) -> {
+        String time = t.getAdditionalData("time");
+        if (StringUtils.isNumeric(time)) {
+            int firstTime = Integer.parseInt(time);
+            return p.level().getDayTime() < firstTime;
+        }
+        return false;
+    }));
 
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;
-    private final List<Predicate<Player>> interrupts;
-    private final List<Predicate<Player>> earlyFinish;
+    private final List<BiPredicate<Player, PlayerTimer>> interrupts;
+    private final List<BiPredicate<Player, PlayerTimer>> earlyFinish;
 
     PersistentPlayerTimer(BiConsumer<Player, PlayerTimer> finalAction) {
         this(List.of(), List.of(finalAction), List.of(), List.of());
     }
 
-    PersistentPlayerTimer(List<BiConsumer<Player, PlayerTimer>> continuousActions, List<BiConsumer<Player, PlayerTimer>> finalActions, List<Predicate<Player>> interrupts, List<Predicate<Player>> earlyFinish) {
+    PersistentPlayerTimer(List<BiConsumer<Player, PlayerTimer>> continuousActions, List<BiConsumer<Player, PlayerTimer>> finalActions, List<BiPredicate<Player, PlayerTimer>> interrupts, List<BiPredicate<Player, PlayerTimer>> earlyFinish) {
         this.continuousActions = continuousActions;
         this.finalActions = finalActions;
         this.interrupts = interrupts;
@@ -46,11 +62,11 @@ public enum PersistentPlayerTimer {
         return finalActions;
     }
 
-    public List<Predicate<Player>> getInterrupts() {
+    public List<BiPredicate<Player, PlayerTimer>> getInterrupts() {
         return interrupts;
     }
 
-    public List<Predicate<Player>> getEarlyFinish() {
+    public List<BiPredicate<Player, PlayerTimer>> getEarlyFinish() {
         return earlyFinish;
     }
 }

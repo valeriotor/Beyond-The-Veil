@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -17,8 +18,8 @@ public class PlayerTimer {
     private int timer;
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;
-    private final List<Predicate<Player>> interrupts;
-    private final List<Predicate<Player>> earlyFinish;
+    private final List<BiPredicate<Player, PlayerTimer>> interrupts;
+    private final List<BiPredicate<Player, PlayerTimer>> earlyFinish;
     private final PersistentPlayerTimer persistence;
     private final Map<String, String> additionalData;
 
@@ -87,8 +88,8 @@ public class PlayerTimer {
         if (isDone()) {
             return true;
         }
-        for (Predicate<Player> finish : earlyFinish) {
-            if (finish.test(player)) {
+        for (BiPredicate<Player, PlayerTimer> finish : earlyFinish) {
+            if (finish.test(player, this)) {
                 for (BiConsumer<Player, PlayerTimer> finalAction : finalActions) {
                     finalAction.accept(player, this);
                 }
@@ -96,8 +97,8 @@ public class PlayerTimer {
                 return true;
             }
         }
-        for (Predicate<Player> interrupt : interrupts) {
-            if (interrupt.test(player)) {
+        for (BiPredicate<Player, PlayerTimer> interrupt : interrupts) {
+            if (interrupt.test(player, this)) {
                 timer = 0;
                 return true;
             }
@@ -144,8 +145,8 @@ public class PlayerTimer {
         private final int timer;
         private final List<BiConsumer<Player, PlayerTimer>> continuousActions = new ArrayList<>();
         private final List<BiConsumer<Player, PlayerTimer>> finalActions = new ArrayList<>();
-        private final List<Predicate<Player>> interrupts = new ArrayList<>();
-        private final List<Predicate<Player>> earlyFinish = new ArrayList<>();
+        private final List<BiPredicate<Player, PlayerTimer>> interrupts = new ArrayList<>();
+        private final List<BiPredicate<Player, PlayerTimer>> earlyFinish = new ArrayList<>();
         private final Map<String, String> additionalData = new HashMap<>();
 
         public Builder(String id, int timer) {
@@ -163,12 +164,12 @@ public class PlayerTimer {
             return this;
         }
 
-        public Builder addInterrupts(Predicate<Player> predicate) {
+        public Builder addInterrupts(BiPredicate<Player, PlayerTimer> predicate) {
             interrupts.add(predicate);
             return this;
         }
 
-        public Builder addEarlyFinish(Predicate<Player> predicate) {
+        public Builder addEarlyFinish(BiPredicate<Player, PlayerTimer> predicate) {
             earlyFinish.add(predicate);
             return this;
         }

@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -20,6 +21,7 @@ public class DreamBottleContainer extends AbstractContainerMenu {
     private Player playerEntity;
     private IItemHandler playerInventory;
     private IItemHandler bottleInventory;
+    private IFluidHandlerItem fluidHandler;
 
     public DreamBottleContainer(int pContainerId, Inventory playerInventory, Player player) {
         super(Registration.DREAM_BOTTLE_CONTAINER.get(), pContainerId);
@@ -36,6 +38,9 @@ public class DreamBottleContainer extends AbstractContainerMenu {
             for (int i = 0; i < c.getSlots(); i++) {
                 addSlot(new SlotItemHandler(this.bottleInventory, i,  BOTTLE_INVENTORY_X + SLOT_X_SPACING * (i % 2), BOTTLE_INVENTORY_Y + SLOT_Y_SPACING * (i / 2)));
             }
+        });
+        bottle.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(c -> {
+            fluidHandler = c;
         });
         this.playerInventory = new InvWrapper(playerInventory);
 
@@ -97,5 +102,9 @@ public class DreamBottleContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return bottleInventory != null;
+    }
+
+    public IFluidHandlerItem getFluidHandler() {
+        return fluidHandler;
     }
 }
