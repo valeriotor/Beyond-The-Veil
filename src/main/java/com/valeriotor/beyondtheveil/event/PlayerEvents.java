@@ -9,10 +9,12 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
+import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
+import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
@@ -22,7 +24,13 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -32,6 +40,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
@@ -141,6 +150,21 @@ public class PlayerEvents {
 
     public static void setBooleanEvent(Player player, String key, boolean value) {
 
+    }
+
+    @SubscribeEvent
+    public static void onApplyEffectEvent(MobEffectEvent.Added event) {
+        MobEffect effect = event.getEffectInstance().getEffect();
+        if (event.getEntity() instanceof ServerPlayer sp && ImmunityEffect.CURABLE.contains(effect) && !sp.hasEffect(BTVEffects.IMMUNITY.get())) {
+            for (ItemStack item : sp.getInventory().items) {
+                if (item.getItem() == Registration.ANTIDOTE_CAPSULE.get()) {
+                    item.shrink(1);
+                    sp.addEffect(new MobEffectInstance(BTVEffects.IMMUNITY.get(), 40 * 20));
+                    sp.level().playSound(null, sp.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
+                    break;
+                }
+            }
+        }
     }
 
 

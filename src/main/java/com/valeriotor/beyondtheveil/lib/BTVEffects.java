@@ -24,6 +24,7 @@ public class BTVEffects {
     public static final RegistryObject<MobEffect> FEARSOME = MOB_EFFECTS.register("fearsome", () -> new FearsomeEffect(MobEffectCategory.BENEFICIAL, 0x01094));
     public static final RegistryObject<MobEffect> SINK = MOB_EFFECTS.register("sink", () -> new SinkEffect(MobEffectCategory.HARMFUL, 0x01094));
     public static final RegistryObject<MobEffect> CAMOUFLAGE = MOB_EFFECTS.register("camouflage", () -> new GenericEffect(MobEffectCategory.BENEFICIAL, 0x01094));
+    public static final RegistryObject<MobEffect> IMMUNITY = MOB_EFFECTS.register("immunity", () -> new ImmunityEffect(MobEffectCategory.BENEFICIAL, 0x01094));
 
 
 
