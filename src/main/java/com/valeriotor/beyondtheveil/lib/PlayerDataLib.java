@@ -98,6 +98,7 @@ public class PlayerDataLib {
     public static final String ATE_SLUG = "ate_slug";
     public static final String FIRST_SKULL_OPERATION = "first_skull_operation";
     public static final String CULTIST_KILLED = "cultist_killed";
+    public static final String RECEIVED_FISH = "received_fish";
 
 
     // Booleans (Temporary)

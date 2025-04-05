@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.entity;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -11,6 +10,7 @@ import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -191,7 +191,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     for (int i = 0; i < 10; i++) {
                         ((ServerLevel) level()).sendParticles(BTVParticles.TEARSPILL.get(), getX(), getY() - 1 + 0.12 * i, getZ(), 5, 0, 0, 0, 1);
                     }
-                    FletumEntity fletum = new FletumEntity(Registration.FLETUM.get(), level());
+                    FletumEntity fletum = new FletumEntity(BTVEntities.FLETUM.get(), level());
                     fletum.setPos(position().add(0, 1.5, 0));
                     level().addFreshEntity(fletum);
                     fletum.setMasterID(master);

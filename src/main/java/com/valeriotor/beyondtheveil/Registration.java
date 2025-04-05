@@ -7,7 +7,6 @@ import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
-import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
@@ -18,8 +17,6 @@ import com.valeriotor.beyondtheveil.world.structures.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
@@ -50,7 +47,6 @@ public class Registration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
-    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, References.MODID);
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
     private static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, References.MODID);
@@ -65,7 +61,6 @@ public class Registration {
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
         MENUS.register(bus);
-        ENTITIES.register(bus);
         FEATURES.register(bus);
         STRUCTURE_TYPES.register(bus);
         STRUCTURE_PIECE_TYPES.register(bus);
@@ -78,20 +73,8 @@ public class Registration {
         BTVParticles.init(bus);
         BTVEffects.init(bus);
         BTVSounds.init(bus);
+        BTVEntities.init(bus);
     }
-
-    public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 2.1F).clientTrackingRange(32).build("deep_one"));
-    public static final RegistryObject<EntityType<BloodSkeletonEntity>> BLOOD_SKELETON = ENTITIES.register("blood_skeleton", () -> EntityType.Builder.of(BloodSkeletonEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_skeleton"));
-    public static final RegistryObject<EntityType<BloodZombieEntity>> BLOOD_ZOMBIE = ENTITIES.register("blood_zombie", () -> EntityType.Builder.of(BloodZombieEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_zombie"));
-    public static final RegistryObject<EntityType<BloodWraithEntity>> BLOOD_WRAITH = ENTITIES.register("blood_wraith", () -> EntityType.Builder.of(BloodWraithEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_wraith"));
-    public static final RegistryObject<EntityType<NautilusEntity>> NAUTILUS = ENTITIES.register("nautilus", () -> EntityType.Builder.of(NautilusEntity::new, MobCategory.MISC).sized(5.6F, 5F).clientTrackingRange(32).build("nautilus"));
-    public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
-    public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("weeper"));
-    public static final RegistryObject<EntityType<FletumEntity>> FLETUM = ENTITIES.register("fletum", () -> EntityType.Builder.of(FletumEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("fletum"));
-    public static final RegistryObject<EntityType<Abomination0Entity>> ABOMINATION_0 = ENTITIES.register("abomination_0", () -> EntityType.Builder.of(Abomination0Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_0"));
-    public static final RegistryObject<EntityType<Abomination1Entity>> ABOMINATION_1 = ENTITIES.register("abomination_1", () -> EntityType.Builder.of(Abomination1Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_1"));
-    public static final RegistryObject<EntityType<BloodCultistEntity>> BLOOD_CULTIST = ENTITIES.register("blood_cultist", () -> EntityType.Builder.of(BloodCultistEntity::new, MobCategory.CREATURE).sized(0.7F, 2F).clientTrackingRange(32).build("blood_cultist"));
-    public static final RegistryObject<EntityType<ShoremanEntity>> SHOREMAN = ENTITIES.register("shoreman", () -> EntityType.Builder.of(ShoremanEntity::new, MobCategory.CREATURE).sized(0.7F, 1.9F).clientTrackingRange(32).build("shoreman"));
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
     public static final BlockBehaviour.Properties DAMP_WOOD_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).requiresCorrectToolForDrops();
@@ -248,7 +231,7 @@ public class Registration {
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
     public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new SlugItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build())));
-    public static final RegistryObject<Item> CANOE = ITEMS.register("canoe", () -> new Item(ITEM_PROPERTIES));
+    public static final RegistryObject<Item> CANOE = ITEMS.register("canoe", () -> new CanoeItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> RUM = ITEMS.register("drink_rum", DrinkItem::new);
     public static final RegistryObject<Item> WINE = ITEMS.register("drink_wine", DrinkItem::new);
     public static final RegistryObject<Item> ALE = ITEMS.register("drink_ale", DrinkItem::new);
@@ -339,14 +322,14 @@ public class Registration {
     public static final RegistryObject<Item> PARENTAL_HORMONES_FLUID_BUCKET = ITEMS.register("parental_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_PARENTAL_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> TEARS_FLUID_BUCKET = ITEMS.register("tears_bucket", () -> new BucketItem(BTVFluids.FLUID_TEARS.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
-    public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> BLOOD_ZOMBIE_EGG = ITEMS.register("blood_zombie", () -> new ForgeSpawnEggItem(BLOOD_ZOMBIE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> BLOOD_WRAITH_EGG = ITEMS.register("blood_wraith", () -> new ForgeSpawnEggItem(BLOOD_WRAITH, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> BLOOD_CULTIST_EGG = ITEMS.register("blood_cultist", () -> new ForgeSpawnEggItem(BLOOD_CULTIST, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> WEEPER_EGG = ITEMS.register("weeper", () -> new ForgeSpawnEggItem(WEEPER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> FLETUM_EGG = ITEMS.register("fletum", () -> new ForgeSpawnEggItem(FLETUM, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
-    public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(BTVEntities.DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BLOOD_SKELETON_EGG = ITEMS.register("blood_skeleton", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_SKELETON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BLOOD_ZOMBIE_EGG = ITEMS.register("blood_zombie", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_ZOMBIE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BLOOD_WRAITH_EGG = ITEMS.register("blood_wraith", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_WRAITH, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BLOOD_CULTIST_EGG = ITEMS.register("blood_cultist", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_CULTIST, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> WEEPER_EGG = ITEMS.register("weeper", () -> new ForgeSpawnEggItem(BTVEntities.WEEPER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> FLETUM_EGG = ITEMS.register("fletum", () -> new ForgeSpawnEggItem(BTVEntities.FLETUM, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(BTVEntities.SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
 
     public static final RegistryObject<BlockEntityType<GearBenchBE>> GEAR_BENCH_BE = BLOCK_ENTITIES.register(GEAR_BENCH.getId().getPath(), () -> BlockEntityType.Builder.of(GearBenchBE::new, GEAR_BENCH.get()).build(null));

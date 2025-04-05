@@ -21,6 +21,7 @@ import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.Minecraft;
@@ -93,6 +94,7 @@ public class ClientSetup {
         event.registerLayerDefinition(BloodZombieModel.LAYER_LOCATION, BloodZombieModel::createBodyLayer);
         event.registerLayerDefinition(BloodWraithModel.LAYER_LOCATION, BloodWraithModel::createBodyLayer);
         event.registerLayerDefinition(TestNautilus.LAYER_LOCATION, TestNautilus::createBodyLayer);
+        event.registerLayerDefinition(CanoeModel.LAYER_LOCATION, CanoeModel::createBodyLayer);
         event.registerLayerDefinition(CrawlerModel.LAYER_LOCATION, CrawlerModel::createBodyLayer);
         event.registerLayerDefinition(WeeperModel.LAYER_LOCATION, WeeperModel::createBodyLayer);
         event.registerLayerDefinition(FletumModel.LAYER_LOCATION, FletumModel::createBodyLayer);
@@ -112,18 +114,19 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(Registration.DEEP_ONE.get(), DeepOneRenderer::new);
-        event.registerEntityRenderer(Registration.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
-        event.registerEntityRenderer(Registration.BLOOD_ZOMBIE.get(), BloodZombieRenderer::new);
-        event.registerEntityRenderer(Registration.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
-        event.registerEntityRenderer(Registration.NAUTILUS.get(), NautilusRenderer::new);
-        event.registerEntityRenderer(Registration.CRAWLER.get(), CrawlerRenderer::new);
-        event.registerEntityRenderer(Registration.WEEPER.get(), WeeperRenderer::new);
-        event.registerEntityRenderer(Registration.FLETUM.get(), FletumRenderer::new);
-        event.registerEntityRenderer(Registration.ABOMINATION_0.get(), Abomination0Renderer::new);
-        event.registerEntityRenderer(Registration.ABOMINATION_1.get(), Abomination1Renderer::new);
-        event.registerEntityRenderer(Registration.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
-        event.registerEntityRenderer(Registration.SHOREMAN.get(), ShoremanRenderer::new);
+        event.registerEntityRenderer(BTVEntities.DEEP_ONE.get(), DeepOneRenderer::new);
+        event.registerEntityRenderer(BTVEntities.BLOOD_SKELETON.get(), BloodSkeletonRenderer::new);
+        event.registerEntityRenderer(BTVEntities.BLOOD_ZOMBIE.get(), BloodZombieRenderer::new);
+        event.registerEntityRenderer(BTVEntities.BLOOD_WRAITH.get(), BloodWraithRenderer::new);
+        event.registerEntityRenderer(BTVEntities.NAUTILUS.get(), NautilusRenderer::new);
+        event.registerEntityRenderer(BTVEntities.CANOE.get(), CanoeRenderer::new);
+        event.registerEntityRenderer(BTVEntities.CRAWLER.get(), CrawlerRenderer::new);
+        event.registerEntityRenderer(BTVEntities.WEEPER.get(), WeeperRenderer::new);
+        event.registerEntityRenderer(BTVEntities.FLETUM.get(), FletumRenderer::new);
+        event.registerEntityRenderer(BTVEntities.ABOMINATION_0.get(), Abomination0Renderer::new);
+        event.registerEntityRenderer(BTVEntities.ABOMINATION_1.get(), Abomination1Renderer::new);
+        event.registerEntityRenderer(BTVEntities.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SHOREMAN.get(), ShoremanRenderer::new);
 
         event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

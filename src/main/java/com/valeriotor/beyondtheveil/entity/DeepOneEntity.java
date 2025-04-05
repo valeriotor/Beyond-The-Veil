@@ -35,6 +35,7 @@ public class DeepOneEntity extends Monster {
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.waterNavigation = null;//new WaterBoundPathNavigation(this, world);
         this.groundNavigation = null;//new GroundPathNavigation(this, world);
+        noCulling = true;
     }
 
     @Override

@@ -1,26 +1,11 @@
 package com.valeriotor.beyondtheveil.item;
 
-import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
-import com.valeriotor.beyondtheveil.lib.BTVTags;
-import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
-import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.util.LegacyStructure;
-import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -28,10 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.util.ITeleporter;
-
-import java.util.function.Function;
 
 public class BlackjackItem extends Item {
 
@@ -45,7 +26,7 @@ public class BlackjackItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
             if (pInteractionTarget instanceof Villager villager) {
                 Level l = pInteractionTarget.level();
-                CrawlerEntity crawler = villager.convertTo(Registration.CRAWLER.get(), false);
+                CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);
                 if (crawler != null) {
                     crawler.setData(villager);
                     crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {

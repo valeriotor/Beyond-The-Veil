@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.block;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -8,13 +7,12 @@ import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
-import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
@@ -130,7 +128,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                 boolean isAlreadyBeingBackstabbed = sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).resolve().get().hasTimer("killedByCultist");
                 if (!alreadyDone && !isAlreadyBeingBackstabbed && MathHelperBTV.checkForRing(this, sl, pPos, 4)) {
                     DialogueData.for_(sp).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal"));
-                    BloodCultistEntity cultist = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
+                    BloodCultistEntity cultist = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), sl);
                     Vec3 lookAngle = sp.getLookAngle();
                     Vec3 cultistPos = sp.position().add(lookAngle.normalize().reverse().multiply(1.1, 0, 1.1));
                     cultist.setPos(cultistPos);

@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.entity;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
@@ -12,9 +11,9 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.CultistKillGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.CultistPodGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -37,16 +36,12 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
-
-import java.util.Arrays;
 
 public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
@@ -119,7 +114,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         super.tick();
         if (level().isClientSide) {
             if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
-                heldVillager = new CrawlerEntity(Registration.CRAWLER.get(), level());
+                heldVillager = new CrawlerEntity(BTVEntities.CRAWLER.get(), level());
                 heldVillager.setHolderType(PatientHolderType.CULTIST);
                 VillagerType villagerType = BuiltInRegistries.VILLAGER_TYPE.get(new ResourceLocation(entityData.get(HELD_VILLAGER_TYPE)));
                 heldVillager.setVillagerData(heldVillager.getVillagerData().setType(villagerType));

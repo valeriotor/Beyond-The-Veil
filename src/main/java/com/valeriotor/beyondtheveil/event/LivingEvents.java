@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -215,7 +216,7 @@ public class LivingEvents {
                     List<LifeEconomyData.PodData> closestEmptyPods = instance.findClosestEmptyPods(linkPos, 2, 50);
                     for (LifeEconomyData.PodData closestEmptyPod : closestEmptyPods) {
                         if (!instance.isReserved(closestEmptyPod)) {
-                            BloodCultistEntity entity = new BloodCultistEntity(Registration.BLOOD_CULTIST.get(), sl);
+                            BloodCultistEntity entity = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), sl);
                             BlockPos podPos = closestEmptyPod.getCurrentPos();
                             BlockPos toTeleport = null;
                             for(int i = 0; i < 30; ++i) {

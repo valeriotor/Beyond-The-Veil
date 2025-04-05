@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entity.*;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,17 +15,17 @@ public class Setup {
 
     @SubscribeEvent
     public static void onAttributeCreate(EntityAttributeCreationEvent event) {
-        event.put(Registration.DEEP_ONE.get(), DeepOneEntity.prepareAttributes().build());
-        event.put(Registration.BLOOD_SKELETON.get(), BloodSkeletonEntity.prepareAttributes().build());
-        event.put(Registration.BLOOD_ZOMBIE.get(), BloodZombieEntity.prepareAttributes().build());
-        event.put(Registration.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
-        event.put(Registration.CRAWLER.get(), CrawlerEntity.prepareAttributes().build());
-        event.put(Registration.WEEPER.get(), WeeperEntity.prepareAttributes().build());
-        event.put(Registration.FLETUM.get(), FletumEntity.prepareAttributes().build());
-        event.put(Registration.ABOMINATION_0.get(), Abomination0Entity.prepareAttributes().build());
-        event.put(Registration.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());
-        event.put(Registration.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
-        event.put(Registration.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
+        event.put(BTVEntities.DEEP_ONE.get(), DeepOneEntity.prepareAttributes().build());
+        event.put(BTVEntities.BLOOD_SKELETON.get(), BloodSkeletonEntity.prepareAttributes().build());
+        event.put(BTVEntities.BLOOD_ZOMBIE.get(), BloodZombieEntity.prepareAttributes().build());
+        event.put(BTVEntities.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
+        event.put(BTVEntities.CRAWLER.get(), CrawlerEntity.prepareAttributes().build());
+        event.put(BTVEntities.WEEPER.get(), WeeperEntity.prepareAttributes().build());
+        event.put(BTVEntities.FLETUM.get(), FletumEntity.prepareAttributes().build());
+        event.put(BTVEntities.ABOMINATION_0.get(), Abomination0Entity.prepareAttributes().build());
+        event.put(BTVEntities.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());
+        event.put(BTVEntities.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
+        event.put(BTVEntities.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 

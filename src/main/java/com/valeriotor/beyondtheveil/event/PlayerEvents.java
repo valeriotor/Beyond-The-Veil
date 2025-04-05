@@ -15,6 +15,7 @@ import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
@@ -126,11 +127,11 @@ public class PlayerEvents {
                 TriggerData triggerData = data.getTriggerData();
                 if (triggerData != null) {
                     EntityType<?> type = switch (data.getCapacity()) {
-                        case 1 -> Registration.ABOMINATION_0.get();
-                        case 2 -> Registration.ABOMINATION_1.get();
-                        default -> Registration.CRAWLER.get();
+                        case 1 -> BTVEntities.ABOMINATION_0.get();
+                        case 2 -> BTVEntities.ABOMINATION_1.get();
+                        default -> BTVEntities.CRAWLER.get();
                     };
-                    if (type == Registration.CRAWLER.get()) {
+                    if (type == BTVEntities.CRAWLER.get()) {
                         return heldPatient;
                     } else {
                         Entity o = type.create(sl);

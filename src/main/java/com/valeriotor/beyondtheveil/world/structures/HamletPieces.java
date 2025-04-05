@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.world.structures;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import net.minecraft.core.BlockPos;
@@ -88,7 +89,7 @@ public class HamletPieces {
         @Override
         protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
             if ("lighthouse_keeper".equals(pName)) {
-                ShoremanEntity shoreman = Registration.SHOREMAN.get().create(pLevel.getLevel());
+                ShoremanEntity shoreman = BTVEntities.SHOREMAN.get().create(pLevel.getLevel());
                 if (shoreman != null) {
                     shoreman.setProfession(ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER);
                     Rotation r = getRotation();
@@ -118,7 +119,7 @@ public class HamletPieces {
             } else {
                 for (ShoremanEntity.ShoremanProfession profession : ShoremanEntity.ShoremanProfession.values()) {
                     if (profession.name().toLowerCase().equals(pName)) {
-                        ShoremanEntity shoreman = Registration.SHOREMAN.get().create(pLevel.getLevel());
+                        ShoremanEntity shoreman = BTVEntities.SHOREMAN.get().create(pLevel.getLevel());
                         if (shoreman != null) {
                             shoreman.setProfession(profession);
                             Vec3 spawnPos = new Vec3(pPos.getX() + 0.5, pPos.getY(), pPos.getZ() + 0.5);

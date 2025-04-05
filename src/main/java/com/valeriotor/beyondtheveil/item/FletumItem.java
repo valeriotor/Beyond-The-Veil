@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.item;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.FletumEntity;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +25,7 @@ public class FletumItem extends Item {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-        FletumEntity fletum = new FletumEntity(Registration.FLETUM.get(), level);
+        FletumEntity fletum = new FletumEntity(BTVEntities.FLETUM.get(), level);
         BlockPos clickedPos = context.getClickedPos();
         Vec3 center = clickedPos.relative(context.getClickedFace()).getCenter().add(0, -0.5, 0);
         fletum.setPos(center);
