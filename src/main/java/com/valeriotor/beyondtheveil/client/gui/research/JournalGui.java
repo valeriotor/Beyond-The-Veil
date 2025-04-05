@@ -396,11 +396,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     }
 
     private double scaledMouseX(double mouseX) {
-        return (mouseX - width / 2D) * scaleFactor;
+        return (mouseX - width / 2D) / scaleFactor;
     }
 
     private double scaledMouseY(double mouseY) {
-        return (mouseY - height / 2D) * scaleFactor;
+        return (mouseY - height / 2D) / scaleFactor;
     }
 
     @Override
