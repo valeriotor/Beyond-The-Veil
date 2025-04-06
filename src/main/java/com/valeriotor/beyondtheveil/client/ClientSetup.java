@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.gui.DreamBottleGui;
+import com.valeriotor.beyondtheveil.client.gui.DrownedGui;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
@@ -46,6 +47,7 @@ public class ClientSetup {
             MenuScreens.register(Registration.GEAR_BENCH_CONTAINER.get(), GearBenchGui::new);
             MenuScreens.register(Registration.LETTER_BOX_CONTAINER.get(), LetterBoxGui::new);
             MenuScreens.register(Registration.DREAM_BOTTLE_CONTAINER.get(), DreamBottleGui::new);
+            MenuScreens.register(Registration.DROWNED_CONTAINER.get(), DrownedGui::new);
             MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), EntityDialogueGui::new);
             MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());

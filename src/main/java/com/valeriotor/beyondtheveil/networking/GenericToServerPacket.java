@@ -2,7 +2,9 @@ package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -10,6 +12,8 @@ import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -59,6 +63,12 @@ public class GenericToServerPacket {
 
     public static GenericToServerPacket respawnNow() {
         return new GenericToServerPacket(MessageType.RESPAWN_NOW, new CompoundTag());
+    }
+
+    public static GenericToServerPacket chooseBaptismOption(int chosen) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("chosen", chosen);
+        return new GenericToServerPacket(MessageType.CHOOSE_BAPTISM_OPTION, tag);
     }
 
     private final MessageType type;
@@ -133,6 +143,14 @@ public class GenericToServerPacket {
                         player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.openLetter(player, template, index, version));
                     }
                     case RESPAWN_NOW -> HeartBlock.respawnNow(player);
+                    case CHOOSE_BAPTISM_OPTION -> {
+                        player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+                            PlayerTimer baptism = c.getTimer("baptism");
+                            if (baptism instanceof BaptismTimer bt) {
+                                bt.chooseOption(player, tag.getInt("chosen"));
+                            }
+                        });
+                    }
                 }
 
             }
@@ -150,7 +168,8 @@ public class GenericToServerPacket {
         SEND_LETTER,
         REDEEM_ITEMS,
         OPEN_LETTER,
-        RESPAWN_NOW
+        RESPAWN_NOW,
+        CHOOSE_BAPTISM_OPTION
     }
 
 }

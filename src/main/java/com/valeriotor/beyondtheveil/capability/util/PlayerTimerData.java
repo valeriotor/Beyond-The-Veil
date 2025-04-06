@@ -13,6 +13,14 @@ import java.util.Objects;
 public class PlayerTimerData {
     private final List<PlayerTimer> playerTimers = new ArrayList<>();
 
+    public PlayerTimer getTimer(String name) {
+        for (PlayerTimer playerTimer : playerTimers) {
+            if (Objects.equals(playerTimer.getId(), name)) {
+                return playerTimer;
+            }
+        }
+        return null;
+    }
 
     public boolean hasTimer(String name) {
         for (PlayerTimer playerTimer : playerTimers) {
@@ -53,7 +61,7 @@ public class PlayerTimerData {
 
     public void loadFromNBT(CompoundTag compoundTag) {
         for (String key : compoundTag.getAllKeys()) {
-            playerTimers.add(new PlayerTimer(compoundTag.getCompound(key)));
+            playerTimers.add(PlayerTimer.fromNBT(compoundTag.getCompound(key)));
         }
     }
 

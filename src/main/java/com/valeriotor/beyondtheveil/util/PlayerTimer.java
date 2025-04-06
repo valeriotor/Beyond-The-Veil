@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.util;
 
+import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
@@ -23,6 +24,15 @@ public class PlayerTimer {
     private final PersistentPlayerTimer persistence;
     private final Map<String, String> additionalData;
 
+    public static PlayerTimer fromNBT(CompoundTag tag) {
+        return switch (tag.getString("id")) {
+            //case "baptism" ->
+                    //new BaptismTimer(tag);
+            default ->
+                    new PlayerTimer(tag.getInt("timer"), tag.getString("id"), PersistentPlayerTimer.valueOf(tag.getString("persistence")), mapFromNBT(tag.getCompound("additionalData")));
+        };
+    }
+
     public PlayerTimer(Builder builder) {
         this.id = builder.id;
         this.timer = builder.timer;
@@ -45,11 +55,7 @@ public class PlayerTimer {
         this.additionalData = additionalData;
     }
 
-    public PlayerTimer(CompoundTag tag) {
-        this(tag.getInt("timer"), tag.getString("id"), PersistentPlayerTimer.valueOf(tag.getString("persistence")), mapFromNBT(tag.getCompound("additionalData")));
-    }
-
-    private static Map<String, String> mapFromNBT(CompoundTag tag) {
+    protected static Map<String, String> mapFromNBT(CompoundTag tag) {
         Map<String, String> map = new HashMap<>();
         for (String key : tag.getAllKeys()) {
             map.put(key, tag.getString(key));
