@@ -2,12 +2,15 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,6 +25,13 @@ public class AttackEvents {
         if (entity.hasEffect(BTVEffects.VULNERABILITY.get())) {
             MobEffectInstance effect = entity.getEffect(BTVEffects.VULNERABILITY.get());
             event.setAmount(event.getAmount() * (2 + effect.getAmplifier()));
+        }
+        if (entity instanceof ServerPlayer player) {
+            player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+                if (c.hasTimer("baptism")) {
+                    event.setCanceled(true);
+                }
+            });
         }
     }
 

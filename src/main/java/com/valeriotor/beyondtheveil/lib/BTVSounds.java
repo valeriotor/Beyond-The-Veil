@@ -19,6 +19,8 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> HEAD_EXPLODE = registerSound("head_explode");
     public static final RegistryObject<SoundEvent> WATER_DREAM = registerSound("water_dream");
     public static final RegistryObject<SoundEvent> WATER_DREAM_SHORT = registerSound("water_dream_short");
+    public static final RegistryObject<SoundEvent> TENSION = registerSound("tension");
+    public static final RegistryObject<SoundEvent> BAPTISM_GS = registerSound("baptism_gs");
     public static final RegistryObject<SoundEvent> WEEPING = registerSound("weeping");
     public static final RegistryObject<SoundEvent> FLETUM_WEEPING = registerSound("fletum_weeping");
 

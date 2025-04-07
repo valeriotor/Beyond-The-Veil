@@ -28,5 +28,11 @@
   },
   "fletum_weeping": {
     "sounds": [ "beyondtheveil:fletum_weeping0", "beyondtheveil:fletum_weeping1", "beyondtheveil:fletum_weeping2" ]
+  },
+  "tension": {
+    "sounds": [ "beyondtheveil:tension" ]
+  },
+  "baptism_gs": {
+    "sounds": [ "beyondtheveil:baptism_gs" ]
   }
 }

@@ -217,20 +217,6 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.city_mapper.reloadmap", "Reload Map");
         add("gui.city_mapper.incsize", "TIP: It is recommended to increase GUI size for the purpose of this task.");
 
-        add("gui.drowned.youdrowned", "You Drowned");
-        add("gui.drowned.greatdreamer", "Believe in the Great Dreamer");
-        add("gui.drowned.ancientgods", "Believe in the gods of your ancestors");
-        add("gui.drowned.yourself", "Believe in Yourself");
-        add("gui.drowned.believe", "Believe");
-        add("gui.drowned.know", "Know");
-        add("gui.drowned.youare", "YOU ARE");
-        add("gui.drowned.nothing", "NOTHING");
-        add("gui.drowned.insignificant", "INSIGNIFICANT");
-        add("gui.drowned.worthless", "WORTHLESS");
-        add("gui.drowned.gnawing", "I am the Gnawing Sensation at the back of your mind");
-        add("gui.drowned.nogd", "The Great Dreamer won't listen to you.");
-        add("gui.drowned.noac", "The gods of your ancestors do not exist.");
-
         add("gui.necronomicon", "Al Azif");
         add("gui.necronomicon.bookmarkmade", "Bookmark created");
         add("gui.research_page.complete", "Progress");
@@ -1570,6 +1556,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         addJournal();
         addLetterBox();
+        addBaptism();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -1581,6 +1568,32 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.miner.display_name", "Miner");
         add("gui.dialogue.scholar.display_name", "Scholar");
         add("gui.dialogue.smith.display_name", "Smith");
+    }
+
+    private void addBaptism() {
+        add("gui.drowned.option_0_0", "Summon what strength is left and leave this hole.");
+        add("gui.drowned.option_0_1", "Let go.");
+        add("gui.drowned.option_1_0", "The world is gone. There is nothing outside this hole.");
+        add("gui.drowned.option_1_1", "Pray to The Great Dreamer.");
+        add("gui.drowned.option_1_2", "Let go.");
+        add("gui.drowned.option_2_0", "The world is gone. There is nothing outside this hole.");
+        add("gui.drowned.option_2_1", "The Great Dreamer is not listening.");
+        add("gui.drowned.option_2_2", "Then who is listening?");
+        add("gui.drowned.option_2_3", "It is so easy to let go.");
+        add("gui.drowned.option_3_0", "Talk to the Gnawing Sensation.");
+        add("gui.drowned.option_3_1", "Talk to the Ocean.");
+        add("gui.drowned.option_3_2", "Talk to yourself.");
+        add("gui.drowned.option_3_3", "Just let go.");
+
+        add("gui.drowned.gnawing", "I am the gnawing sensation at the back of your mind.");
+        add("gui.drowned.gnawing2", "(and I am always listening)");
+        add("gui.drowned.insignificant", "Insignificant");
+        add("gui.drowned.worthless", "Worthless");
+        add("gui.drowned.ocean", "I am the ocean, now still and tranquil.");
+        add("gui.drowned.ocean2", "Let us talk, just the two of us.");
+        add("gui.drowned.you", "I am You.....");
+        add("gui.drowned.you2", "but no, no no...");
+        add("gui.drowned.you3", "You weren't supposed to know yet!");
     }
 
     private void addLetterBox() {

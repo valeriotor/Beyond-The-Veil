@@ -16,6 +16,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.Iterator;
 
@@ -36,7 +38,12 @@ public class SlugItem extends Item {
                 sp.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 10, 1));
             }
             if (checkBaptism(sp)) {
-                sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(new BaptismTimer()));
+                pLevel.setBlock(sp.blockPosition().above(2), Blocks.ICE.defaultBlockState(), 3);
+                sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+                    if (!c.hasTimer("baptism")) {
+                        c.addTimer(new BaptismTimer());
+                    }
+                });
             }
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
@@ -50,7 +57,8 @@ public class SlugItem extends Item {
             return false;
         }
         for (int i = 0; i < 3; i++) {
-            if (sp.level().getBlockState(sp.blockPosition().above(i)).getBlock() != Blocks.WATER) {
+            FluidState fluidState = sp.level().getFluidState(sp.blockPosition().above(i));
+            if (fluidState != Fluids.WATER.getSource(false)) {
                 return false;
             }
             Iterator<Direction> iterator = Direction.Plane.HORIZONTAL.iterator();

@@ -47,10 +47,10 @@ public class PlayerTimer {
     public PlayerTimer(int timer, String id, PersistentPlayerTimer persistence, Map<String, String> additionalData) {
         this.timer = timer;
         this.id = id;
-        this.continuousActions = persistence.getContinuousActions();
-        this.finalActions = persistence.getFinalActions();
-        this.interrupts = persistence.getInterrupts();
-        this.earlyFinish = persistence.getEarlyFinish();
+        this.continuousActions = persistence != null ? persistence.getContinuousActions() : List.of();
+        this.finalActions = persistence != null ? persistence.getFinalActions() : List.of();
+        this.interrupts = persistence != null ? persistence.getInterrupts() : List.of();
+        this.earlyFinish = persistence != null ? persistence.getEarlyFinish() : List.of();
         this.persistence = persistence;
         this.additionalData = additionalData;
     }

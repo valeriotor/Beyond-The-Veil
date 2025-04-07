@@ -36,8 +36,7 @@ public enum PersistentPlayerTimer {
             return p.level().getDayTime() < firstTime;
         }
         return false;
-    })),
-    BAPTISM(List.of(), List.of(), List.of(), List.of());
+    }));
 
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;

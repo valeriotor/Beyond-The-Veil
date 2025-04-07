@@ -25,7 +25,7 @@ import java.util.function.BiConsumer;
 
 public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/black_mirror_transparent_wide.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/black_mirror_transparent_wide.png");
     private int branch;
     private int indexInBranch;
     private ScrollableList<Element> list;

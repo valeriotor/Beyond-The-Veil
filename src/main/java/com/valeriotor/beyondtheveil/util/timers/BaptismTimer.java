@@ -10,27 +10,32 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class BaptismTimer extends PlayerTimer {
 
     private Phase phase;
     private int health;
     private int oxygen;
+    private boolean startedDamage = false;
     private boolean done = false;
     private int time;
     private boolean toKill;
 
     public BaptismTimer() {
-        super(Integer.MAX_VALUE, "baptism", PersistentPlayerTimer.BAPTISM, new HashMap<>());
+        super(Integer.MAX_VALUE, "baptism", null, new HashMap<>());
         health = 20;
-        oxygen = 20;
+        oxygen = 200;
         time = 0;
         toKill = false;
+        phase = Phase.SUMMON;
     }
 
     //public BaptismTimer(CompoundTag tag) {
@@ -41,15 +46,22 @@ public class BaptismTimer extends PlayerTimer {
     @Override
     public boolean update(Player player) {
         player.setAirSupply(oxygen);
-        if (oxygen > 1) {
-            oxygen--;
+        player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 120, false, true));
+        if (oxygen > 20 && !startedDamage) {
+            oxygen-= 20;
+            if (oxygen <= 20) {
+                startedDamage = true;
+            }
             return false;
+        } else {
+            oxygen = 20;
+
         }
         time++;
         if (!(player.containerMenu instanceof DrownedContainer)) {
-            if ((health > 0 || toKill) && time % 10 == 0 && player instanceof ServerPlayer sp) {
+            if ((health > 0 || toKill) && time % 4 == 0 && player instanceof ServerPlayer sp) {
                 health--;
-                player.setHealth(health);
+                player.setHealth(Math.min(player.getHealth(), health));
                 player.level().playSound(null, player.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);
                 if (health == 1) {
                     NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DrownedContainer(pContainerId, player, phase.ordinal()), Component.translatable("gui.drowned.title")), b -> {
@@ -79,7 +91,8 @@ public class BaptismTimer extends PlayerTimer {
         } else if(phase != Phase.TALK2){
             phase = Phase.values()[phase.ordinal() + 1];
             player.closeContainer();
-            health = 3;
+            health = 10;
+            player.setHealth(10);
         }
     }
 
@@ -95,16 +108,26 @@ public class BaptismTimer extends PlayerTimer {
     //}
 
     public enum Phase {
-        SUMMON(2), PRAY(2), WHO_LISTENS(3), TALK(3), TALK2(3);
+        SUMMON(2), PRAY(3, Set.of(0)), WHO_LISTENS(4, Set.of(0, 1)), TALK(4), TALK2(4);
 
         private final int options;
+        private final Set<Integer> ignored;
 
         Phase(int options) {
+            this(options, Set.of());
+        }
+
+        Phase(int options, Set<Integer> ignored) {
             this.options = options;
+            this.ignored = ignored;
         }
 
         public int getOptions() {
             return options;
+        }
+
+        public Set<Integer> getIgnored() {
+            return ignored;
         }
     }
 }
