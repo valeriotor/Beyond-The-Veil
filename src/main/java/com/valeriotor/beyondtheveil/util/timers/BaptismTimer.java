@@ -1,15 +1,11 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
-import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
-import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
-import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -18,10 +14,11 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class BaptismTimer extends PlayerTimer {
@@ -34,9 +31,9 @@ public class BaptismTimer extends PlayerTimer {
     private int time;
     private boolean toKill;
 
-    public BaptismTimer() {
+    public BaptismTimer(float health) {
         super(Integer.MAX_VALUE, "baptism", null, new HashMap<>());
-        health = 20;
+        this.health = Math.min(20, (int) health);
         oxygen = 200;
         time = 0;
         toKill = false;
@@ -51,7 +48,7 @@ public class BaptismTimer extends PlayerTimer {
     @Override
     public boolean update(Player player) {
         player.setAirSupply(oxygen);
-        player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 120, false, true));
+        player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 120, false, false));
         if (oxygen > 20 && !startedDamage) {
             oxygen -= 20;
             if (oxygen <= 20) {
@@ -114,6 +111,17 @@ public class BaptismTimer extends PlayerTimer {
                 b.writeUtf(chosen);
             });
 
+        }
+    }
+
+    public void complete(ServerPlayer player) {
+        done = true;
+        player.setHealth(player.getMaxHealth());
+        for (int i = 1; i < 4; i++) {
+            Block block = player.level().getBlockState(player.getOnPos().above(i)).getBlock();
+            if (block == Blocks.ICE) {
+                player.level().setBlock(player.getOnPos().above(i), Blocks.WATER.defaultBlockState(), 3);
+            }
         }
     }
 

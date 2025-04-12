@@ -948,17 +948,44 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.drowned.gnawing.start.0", "For the first time, I notice it: something crawling at the back of my head.");
         add("dialogue.drowned.gnawing.start.1", "It is like a pain grown over several weeks or months, until you realize it's not normal and should not be there.");
         add("dialogue.drowned.gnawing.start.2", "Except... this one has been with me my whole life, in my mind and everyone else's. It is the chaos that crawls within all living beings.");
-        add("dialogue.drowned.gnawing.start.3", "I shall not speak to it today.");
+        add("dialogue.drowned.gnawing.i.option", "I shall not speak to it today.");
 
         add("dialogue.drowned.you.start.0", "There is complete silence.");
+        add("dialogue.drowned.you.(end).option", "(End)");
 
-        add("dialogue.drowned.ocean.child.0", "Ok.");
-        add("dialogue.drowned.ocean.father.0", "Yes.");
+        add("dialogue.drowned.ocean.human.0", "And so it is to be hateful.\nThe shoremen were punished for their devotion to the Great Dreamer, by your kin.");
         add("dialogue.drowned.ocean.start.0", "Hello, child.");
+        add("dialogue.drowned.ocean.waterless.0", "I lie beneath all worlds, strewn across the stars.");
+        add("dialogue.drowned.ocean.veil.0", "Delve into my depths, far below the earthly crust I bear atop of me.\nAnd let us speak again there.");
+        add("dialogue.drowned.ocean.veil.1", "Be forewarned, however: I am now calm and placid, but I am multifaceted.\nAnd the next time we meet, I shall be tempestuous.");
+        add("dialogue.drowned.ocean.child.0", "All life is born from me.");
+        add("dialogue.drowned.ocean.who.0", "I am the Ocean, eldest in time.");
+        add("dialogue.drowned.ocean.who.1", "I have also been called Arche, the First Principle, and Dagon, the Archpriest.");
+        add("dialogue.drowned.ocean.depths.0", "Travel far from land, sailing on a canoe of the shoremen, holding a gift.\nMy oldest children will recognize you, and whisper secrets in your mind.");
+        add("dialogue.drowned.ocean.last.0", "There was a convergence of thoughts.\nYou too are multifaceted, though you do not yet know, and your mind is fractured, irreparably.");
+        add("dialogue.drowned.ocean.last.1", "And, of course, that Chaos that Crawls within all living beings, that Messenger who is the Message itself, spoke aloud, for the first time in your life.");
+        add("dialogue.drowned.ocean.father.0", "The shoremen's dreams travelled through me, before leaving the world.\nAnd they dreamt grateful visions of you, of your compassion.");
+        add("dialogue.drowned.ocean.dreamer.0", "No. I am His child.\nAnd through the Great Dreamer – the Veil itself – infinity is filtered into water, and from water all is born.");
+        add("dialogue.drowned.ocean.are___.option", "Are you the Veil?");
+        add("dialogue.drowned.ocean.how_.option", "How do I reach your depths?.");
+        add("dialogue.drowned.ocean.it.option", "It is only human to be compassionate.");
+        add("dialogue.drowned.ocean.are__.option", "Are you the Great Dreamer?");
+        add("dialogue.drowned.ocean.one.option", "One last thing: who else entered my mind during my baptism?");
+        add("dialogue.drowned.ocean.thank_.option", "Thank you, Father Ocean.");
+        add("dialogue.drowned.ocean.how.option", "How do I reach the veil?");
+        add("dialogue.drowned.ocean.are_.option", "Are you the Veil?");
+        add("dialogue.drowned.ocean.are_______.option", "Are you the Veil?");
+        add("dialogue.drowned.ocean.are_________.option", "Are you the Veil?");
+        add("dialogue.drowned.ocean.are____.option", "Are you the Great Dreamer?");
+        add("dialogue.drowned.ocean.thank.option", "Thank you, Father Ocean.");
+        add("dialogue.drowned.ocean.are______.option", "Are you the Great Dreamer?");
+        add("dialogue.drowned.ocean.who.option", "Who are you?");
         add("dialogue.drowned.ocean.hello,.option", "Hello, Father Ocean.");
+        add("dialogue.drowned.ocean.but.option", "But what about other worlds? Ones without water?");
         add("dialogue.drowned.ocean.am.option", "Am I your child?");
-        add("dialogue.drowned.ocean.end_.option", "End");
-        add("dialogue.drowned.ocean.end.option", "End");
+        add("dialogue.drowned.ocean.are_____.option", "Are you the Veil?");
+        add("dialogue.drowned.ocean.are.option", "Are you the Great Dreamer?");
+        add("dialogue.drowned.ocean.are________.option", "Are you the Great Dreamer?");
 
 
     }

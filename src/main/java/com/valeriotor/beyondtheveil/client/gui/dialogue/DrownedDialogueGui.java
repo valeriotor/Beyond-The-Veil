@@ -48,8 +48,8 @@ public class DrownedDialogueGui extends AbstractContainerScreen<DrownedDialogueM
         }
         scaleFactor = 1;
 
-        final double MIN_STRING_PROPORTION = 30 / 1440D;
-        final double MAX_STRING_PROPORTION = 60 / 1440D;
+        final double MIN_STRING_PROPORTION = 70 / 1440D;
+        final double MAX_STRING_PROPORTION = 100 / 1440D;
         if (MIN_STRING_PROPORTION > 15D / imageHeight) {
             scaleFactor = (float) ((MIN_STRING_PROPORTION) / (15D / imageHeight));
         } else if (MAX_STRING_PROPORTION < 15D / imageHeight) {
@@ -121,7 +121,7 @@ public class DrownedDialogueGui extends AbstractContainerScreen<DrownedDialogueM
                 alpha = 16;
             }
             int pColor = (alpha << 24) | 0xFFFFFF;
-            List<FormattedCharSequence> split = minecraft.font.split(Component.literal(line), (int) getListWidth());
+            List<FormattedCharSequence> split = minecraft.font.split(Component.literal(line), (int) (width * 2 / 3 / scaleFactor));
             pose.pushPose();
             pose.translate(width / 2D, height / 2D - 15 * split.size() / 2D, 0);
             pose.scale(scaleFactor, scaleFactor, 1);

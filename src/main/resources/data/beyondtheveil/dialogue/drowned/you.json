@@ -13,7 +13,18 @@
   "dialogueNodes": {
     "start": {
       "id": "start",
-      "dialogueOptions": []
+      "dialogueOptions": [
+        {
+          "id": "(end)",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
     }
   },
   "type": "drowned",

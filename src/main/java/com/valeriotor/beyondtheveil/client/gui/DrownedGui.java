@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -52,7 +53,6 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
         this.delayTicker = 0;
         this.exitButtons.clear();
         BaptismTimer.Phase value = BaptismTimer.Phase.values()[phase];
-        PlayerData data = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY);
         int numberOfOptions = value.getOptions();
         for (int i = 0; i < numberOfOptions; i++) {
             int number = i;
@@ -65,9 +65,9 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
                 button.active = false;
             }
             if (value == BaptismTimer.Phase.TALK2) {
-                if(i == 0 && data.getBoolean(PlayerDataLib.SPOKE_GNAWING)) button.active = false;
+                if(i == 0 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.SPOKE_GNAWING)) button.active = false;
                 //if(i == 1 && data.getBoolean(PlayerDataLib.SPOKE_OCEAN)) button.active = false;
-                if(i == 2 && data.getBoolean(PlayerDataLib.SPOKE_YOU)) button.active = false;
+                if(i == 2 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.SPOKE_YOU)) button.active = false;
             }
         }
         this.setButtonsActive(false);

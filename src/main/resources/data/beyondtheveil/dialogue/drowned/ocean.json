@@ -11,11 +11,26 @@
     "endsDialogue": false
   },
   "dialogueNodes": {
-    "father": {
-      "id": "father",
+    "dreamer": {
+      "id": "dreamer",
       "dialogueOptions": [
         {
-          "id": "end_",
+          "id": "how",
+          "branchLength": 2,
+          "endingNodeID": "veil",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "last": {
+      "id": "last",
+      "dialogueOptions": [
+        {
+          "id": "thank_",
           "branchLength": 0,
           "endingNodeID": "end",
           "unlockedData": [],
@@ -26,6 +41,106 @@
         }
       ]
     },
+    "veil": {
+      "id": "veil",
+      "dialogueOptions": [
+        {
+          "id": "how_",
+          "branchLength": 1,
+          "endingNodeID": "depths",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "father": {
+      "id": "father",
+      "dialogueOptions": [
+        {
+          "id": "are__",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "are___",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "it",
+          "branchLength": 1,
+          "endingNodeID": "human",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "waterless": {
+      "id": "waterless",
+      "dialogueOptions": [
+        {
+          "id": "are______",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "are_______",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "depths": {
+      "id": "depths",
+      "dialogueOptions": [
+        {
+          "id": "thank",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "one",
+          "branchLength": 2,
+          "endingNodeID": "last",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
     "start": {
       "id": "start",
       "dialogueOptions": [
@@ -33,6 +148,16 @@
           "id": "hello,",
           "branchLength": 1,
           "endingNodeID": "father",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "who",
+          "branchLength": 2,
+          "endingNodeID": "who",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -51,18 +176,88 @@
         }
       ]
     },
-    "child": {
-      "id": "child",
+    "human": {
+      "id": "human",
       "dialogueOptions": [
         {
-          "id": "end",
-          "branchLength": 0,
-          "endingNodeID": "end",
+          "id": "are____",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
-          "endsDialogue": true
+          "endsDialogue": false
+        },
+        {
+          "id": "are_____",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "child": {
+      "id": "child",
+      "dialogueOptions": [
+        {
+          "id": "are",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "are_",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "but",
+          "branchLength": 1,
+          "endingNodeID": "waterless",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "who": {
+      "id": "who",
+      "dialogueOptions": [
+        {
+          "id": "are________",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "are_________",
+          "branchLength": 1,
+          "endingNodeID": "dreamer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
         }
       ]
     }

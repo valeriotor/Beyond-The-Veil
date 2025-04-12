@@ -1,10 +1,12 @@
 package com.valeriotor.beyondtheveil.container.dialogue;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -27,8 +29,17 @@ public class DrownedDialogueMenu  extends AloneDialogueMenu {
     @Override
     protected void onDialogueFinish(ServerPlayer sp) {
         int ordinal = BaptismTimer.Phase.TALK2.ordinal();
-        NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DrownedContainer(pContainerId, sp, ordinal), Component.translatable("gui.drowned.title")), b -> {
-            b.writeInt(ordinal);
-        });
+        if (!getTemplate().getID().equals("ocean")) {
+            NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DrownedContainer(pContainerId, sp, ordinal), Component.translatable("gui.drowned.title")), b -> {
+                b.writeInt(ordinal);
+            });
+        } else {
+            sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+                PlayerTimer baptism = c.getTimer("baptism");
+                if (baptism instanceof BaptismTimer bt) {
+                    bt.complete(sp);
+                }
+            });
+        }
     }
 }

@@ -41,7 +41,7 @@ public class SlugItem extends Item {
                 pLevel.setBlock(sp.blockPosition().above(2), Blocks.ICE.defaultBlockState(), 3);
                 sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
                     if (!c.hasTimer("baptism")) {
-                        c.addTimer(new BaptismTimer());
+                        c.addTimer(new BaptismTimer(sp.getHealth()));
                     }
                 });
             }

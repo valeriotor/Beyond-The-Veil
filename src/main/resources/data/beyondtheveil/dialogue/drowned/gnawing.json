@@ -2,7 +2,7 @@
   "id": "gnawing",
   "startingBranch": {
     "id": "first",
-    "branchLength": 4,
+    "branchLength": 3,
     "endingNodeID": "start",
     "unlockedData": [],
     "mustHaveData": [],
@@ -13,10 +13,21 @@
   "dialogueNodes": {
     "start": {
       "id": "start",
-      "dialogueOptions": []
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
     }
   },
   "type": "drowned",
   "dialogueUnlocks": [],
-  "dataUnlocks": ["spoke_gnawing"]
+  "dataUnlocks": []
 }
