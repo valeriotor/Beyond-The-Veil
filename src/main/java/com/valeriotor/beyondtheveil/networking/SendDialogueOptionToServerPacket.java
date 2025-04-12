@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.container.dialogue.AloneDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,7 +34,7 @@ public class SendDialogueOptionToServerPacket {
                 AbstractContainerMenu abstractContainerMenu = player.containerMenu;
                 if (abstractContainerMenu instanceof EntityDialogueMenu menu) { // TODO not only shoreman? Make superclass
                     menu.chooseOptionOnServer(player, optionIndex);
-                } else if (abstractContainerMenu instanceof MirrorDialogueMenu menu) {
+                } else if (abstractContainerMenu instanceof AloneDialogueMenu menu) {
                     menu.chooseOptionOnServer(player, optionIndex);
                 }
             }

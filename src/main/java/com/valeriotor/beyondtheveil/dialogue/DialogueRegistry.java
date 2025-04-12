@@ -47,6 +47,10 @@ public class DialogueRegistry {
 
         registerDialogue(DialogueType.BLOOD_CULTIST, "initial");
         registerDialogue(DialogueType.BLOOD_CULTIST, "immortal");
+
+        registerDialogue(DialogueType.DROWNED, "gnawing");
+        registerDialogue(DialogueType.DROWNED, "ocean");
+        registerDialogue(DialogueType.DROWNED, "you");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

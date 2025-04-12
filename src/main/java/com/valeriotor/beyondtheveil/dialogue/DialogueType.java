@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.dialogue;
 public enum DialogueType {
     BLACK_MIRROR,
     BLOOD_CULTIST,
+    DROWNED,
     SHOREMAN_BARTENDER,
     SHOREMAN_CARPENTER,
     SHOREMAN_CLERK,

@@ -43,7 +43,13 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
             broadcastChanges();
+        } else {
+            onDialogueFinish(player);
         }
+    }
+
+    protected void onDialogueFinish(ServerPlayer player) {
+
     }
 
     public DialogueTemplate getTemplate() {

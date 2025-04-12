@@ -1,0 +1,22 @@
+{
+  "id": "gnawing",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 4,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": []
+    }
+  },
+  "type": "drowned",
+  "dialogueUnlocks": [],
+  "dataUnlocks": ["spoke_gnawing"]
+}

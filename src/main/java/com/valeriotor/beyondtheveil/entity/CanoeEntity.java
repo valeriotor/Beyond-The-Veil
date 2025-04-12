@@ -80,9 +80,6 @@ public class CanoeEntity extends Boat {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide && (tickCount & 15) == 0) {
-            System.out.println(getDeltaMovement());
-        }
         if (!level().isClientSide && !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof ServerPlayer player && isInWater()) {
             if (false && player.getRandom().nextInt(200) == 0) {
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
@@ -99,9 +96,6 @@ public class CanoeEntity extends Boat {
             double d0 = Mth.clamp(pX, -3.0E7D, 3.0E7D);
             double d1 = Mth.clamp(pZ, -3.0E7D, 3.0E7D);
             double v = Math.pow(xo - d0, 2) + Math.pow(zo - d1, 2);
-            if (!level().isClientSide && (tickCount & 15) == 0) {
-                System.out.println(v);
-            }
             if (v > 0.05 && player.getRandom().nextInt(70) == 0) {
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
                 if (!DataUtil.getBoolean(player, PlayerDataLib.RECEIVED_FISH) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry

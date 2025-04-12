@@ -1,7 +1,12 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
+import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +53,7 @@ public class BaptismTimer extends PlayerTimer {
         player.setAirSupply(oxygen);
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 120, false, true));
         if (oxygen > 20 && !startedDamage) {
-            oxygen-= 20;
+            oxygen -= 20;
             if (oxygen <= 20) {
                 startedDamage = true;
             }
@@ -58,7 +63,7 @@ public class BaptismTimer extends PlayerTimer {
 
         }
         time++;
-        if (!(player.containerMenu instanceof DrownedContainer)) {
+        if (!(player.containerMenu instanceof DrownedContainer) && !(player.containerMenu instanceof DrownedDialogueMenu)) {
             if ((health > 0 || toKill) && time % 4 == 0 && player instanceof ServerPlayer sp) {
                 health--;
                 player.setHealth(Math.min(player.getHealth(), health));
@@ -83,16 +88,32 @@ public class BaptismTimer extends PlayerTimer {
         return done;
     }
 
-    public void chooseOption(Player player, int option) {
+    public void chooseOption(ServerPlayer player, int option) {
         if (option == phase.options - 1) {
             resetTime();
             player.closeContainer();
             toKill = true;
-        } else if(phase != Phase.TALK2){
+        } else if (phase != Phase.TALK && phase != Phase.TALK2) {
             phase = Phase.values()[phase.ordinal() + 1];
             player.closeContainer();
             health = 10;
             player.setHealth(10);
+        } else {
+            if (phase == Phase.TALK) {
+                phase = Phase.values()[phase.ordinal() + 1];
+                player.closeContainer();
+            }
+            String chosen = switch (option) {
+                case 0 -> "gnawing";
+                case 1 -> "ocean";
+                case 2 -> "you";
+                default -> "ocean";
+            };
+            DialogueTemplate template = DialogueRegistry.getTemplate(DialogueType.DROWNED, chosen);
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DrownedDialogueMenu(pContainerId, pPlayerInventory, player, template), Component.translatable("gui.dialogue.drowned.display_name")), b -> {
+                b.writeUtf(chosen);
+            });
+
         }
     }
 

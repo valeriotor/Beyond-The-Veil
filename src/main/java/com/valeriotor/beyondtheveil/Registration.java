@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.container.DreamBottleContainer;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.container.GearBenchContainer;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
+import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.item.*;
@@ -356,6 +357,7 @@ public class Registration {
     public static final RegistryObject<MenuType<DrownedContainer>> DROWNED_CONTAINER = MENUS.register("drowned", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedContainer(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<EntityDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new EntityDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
+    public static final RegistryObject<MenuType<DrownedDialogueMenu>> DROWNED_DIALOGUE_MENU = MENUS.register("drowned_dialogue_menu", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedDialogueMenu(windowId, inv, inv.player, data)));
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
 

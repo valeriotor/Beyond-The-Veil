@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.gui.DreamBottleGui;
 import com.valeriotor.beyondtheveil.client.gui.DrownedGui;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
 import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
+import com.valeriotor.beyondtheveil.client.gui.dialogue.DrownedDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.EntityDialogueGui;
 import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
@@ -50,6 +51,7 @@ public class ClientSetup {
             MenuScreens.register(Registration.DROWNED_CONTAINER.get(), DrownedGui::new);
             MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), EntityDialogueGui::new);
             MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
+            MenuScreens.register(Registration.DROWNED_DIALOGUE_MENU.get(), DrownedDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_FILLED_CANOPY.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FISH_BARREL.get(), RenderType.cutout());

@@ -100,6 +100,9 @@ public class PlayerDataLib {
     public static final String CULTIST_KILLED = "cultist_killed";
     public static final String RECEIVED_FISH = "received_fish";
     public static final String BAPTIZED = "baptized";
+    public static final String SPOKE_GNAWING = "spoke_gnawing";
+    public static final String SPOKE_OCEAN = "spoke_ocean";
+    public static final String SPOKE_YOU = "spoke_you";
 
 
     // Booleans (Temporary)

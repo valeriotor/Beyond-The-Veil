@@ -2,9 +2,12 @@ package com.valeriotor.beyondtheveil.client.gui;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.capability.PlayerData;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
@@ -49,6 +52,7 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
         this.delayTicker = 0;
         this.exitButtons.clear();
         BaptismTimer.Phase value = BaptismTimer.Phase.values()[phase];
+        PlayerData data = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY);
         int numberOfOptions = value.getOptions();
         for (int i = 0; i < numberOfOptions; i++) {
             int number = i;
@@ -59,6 +63,11 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
             this.exitButtons.add(this.addRenderableWidget(button));
             if (value.getIgnored().contains(Integer.valueOf(i))) {
                 button.active = false;
+            }
+            if (value == BaptismTimer.Phase.TALK2) {
+                if(i == 0 && data.getBoolean(PlayerDataLib.SPOKE_GNAWING)) button.active = false;
+                //if(i == 1 && data.getBoolean(PlayerDataLib.SPOKE_OCEAN)) button.active = false;
+                if(i == 2 && data.getBoolean(PlayerDataLib.SPOKE_YOU)) button.active = false;
             }
         }
         this.setButtonsActive(false);
@@ -90,7 +99,7 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
         } else if (whoIsListeningTimer > 2 * TIME_PER_TALK) {
             gg.fillGradient(0, 0, this.width, this.height, 1615855616, -1602211792);
             int ticks = 3 * TIME_PER_TALK - whoIsListeningTimer;
-            for (int i = 0; i < height * 2; i += 30) {
+            for (int i = 0; i < height * 2 && false; i += 30) {
                 int pY = ((int) (i - (ticks + pPartialTick) * 2));
                 if(pY > 0 && pY < height + 30) {
                     gg.drawCenteredString(minecraft.font, i % 60 == 0 ? insignificant : worthless, width / 8, pY, 0xFFFFFFFF);

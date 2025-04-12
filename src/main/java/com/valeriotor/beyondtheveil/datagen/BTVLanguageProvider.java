@@ -936,12 +936,36 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.continue", "(Continue)");
         add("dialogue.end", "(End)");
 
+        addDrownedDialogue();
         addMirrorDialogue();
         addShoremanDialogue();
         addBloodCultistDialogue();
     }
 
+    private void addDrownedDialogue() {
+        add("gui.dialogue.drowned.display_name", "Convergence");
+
+        add("dialogue.drowned.gnawing.start.0", "For the first time, I notice it: something crawling at the back of my head.");
+        add("dialogue.drowned.gnawing.start.1", "It is like a pain grown over several weeks or months, until you realize it's not normal and should not be there.");
+        add("dialogue.drowned.gnawing.start.2", "Except... this one has been with me my whole life, in my mind and everyone else's. It is the chaos that crawls within all living beings.");
+        add("dialogue.drowned.gnawing.start.3", "I shall not speak to it today.");
+
+        add("dialogue.drowned.you.start.0", "There is complete silence.");
+
+        add("dialogue.drowned.ocean.child.0", "Ok.");
+        add("dialogue.drowned.ocean.father.0", "Yes.");
+        add("dialogue.drowned.ocean.start.0", "Hello, child.");
+        add("dialogue.drowned.ocean.hello,.option", "Hello, Father Ocean.");
+        add("dialogue.drowned.ocean.am.option", "Am I your child?");
+        add("dialogue.drowned.ocean.end_.option", "End");
+        add("dialogue.drowned.ocean.end.option", "End");
+
+
+    }
+
     private void addBloodCultistDialogue() {
+        add("gui.dialogue.blood_cultist.display_name", "Blood Cultist");
+
         add("dialogue.blood_cultist.initial.killed.0", "What worth is mercy when in the way of progress? Nothing – and the curiosity of ones like you – and us – is what drives the world forward.\nWe will meet once you have something to offer to – and something from demand from – our humble association.");
         add("dialogue.blood_cultist.initial.due_course.0", "All in due course.");
         add("dialogue.blood_cultist.initial.respawn.0", "Shhh, do not tell – we know already!  We must wait, and play the act anew – once you have something to demand from – and something to offer to – our humble association.");
@@ -1584,6 +1608,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.drowned.option_3_1", "Talk to the Ocean.");
         add("gui.drowned.option_3_2", "Talk to yourself.");
         add("gui.drowned.option_3_3", "Just let go.");
+        add("gui.drowned.option_4_0", "Talk to the Gnawing Sensation.");
+        add("gui.drowned.option_4_1", "Talk to the Ocean.");
+        add("gui.drowned.option_4_2", "Talk to yourself.");
+        add("gui.drowned.option_4_3", "Just let go.");
 
         add("gui.drowned.gnawing", "I am the gnawing sensation at the back of your mind.");
         add("gui.drowned.gnawing2", "(and I am always listening)");
