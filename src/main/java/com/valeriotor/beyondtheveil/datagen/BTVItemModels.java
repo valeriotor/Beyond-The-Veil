@@ -79,6 +79,9 @@ public class BTVItemModels extends ItemModelProvider {
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(),     mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
         singleTexture(SLUG.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG.getId().getPath()));
+        singleTexture(SEAWEED_STEW.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + SEAWEED_STEW.getId().getPath()));
+        singleTexture(KELP_COD_BUNDLE.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + KELP_COD_BUNDLE.getId().getPath()));
+        singleTexture(TROPICAL_DELIGHT.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + TROPICAL_DELIGHT.getId().getPath()));
         singleTexture(CANOE.getId().getPath(),              mcLoc("item/generated"), "layer0", modLoc("item/" + CANOE.getId().getPath()));
         singleTexture(RUM.getId().getPath(),                mcLoc("item/generated"), "layer0", modLoc("item/beverages/" + RUM.getId().getPath()));
         singleTexture(WINE.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/beverages/" + WINE.getId().getPath()));

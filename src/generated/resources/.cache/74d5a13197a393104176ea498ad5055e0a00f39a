@@ -1,4 +1,4 @@
-// 1.20.1	2025-04-03T00:31:58.0204402	Item Models: beyondtheveil
+// 1.20.1	2025-04-13T17:52:45.0688321	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
@@ -85,6 +85,7 @@ d4024841f5a5ba9197d74bd0b95185762ec414b4 assets/beyondtheveil/models/item/heart.
 7d922e40d41bd104db4aede19a245b9144454a1c assets/beyondtheveil/models/item/invisibility_serum_bucket.json
 1d76d2bb53f2a661c275a6dd2e0960144c228bf2 assets/beyondtheveil/models/item/journal.json
 5213581ebe69337e6464c19ec77863744d0d2ee1 assets/beyondtheveil/models/item/jump_serum_bucket.json
+1d6ae608927b265881bfa4d88a87abca9bcc273a assets/beyondtheveil/models/item/kelp_cod_bundle.json
 138316e106a85aa2174b28d0b91c9907caecbcaa assets/beyondtheveil/models/item/lacrymatory.json
 98b88ebcedb1a9273afe16a1af64513bafe7fe42 assets/beyondtheveil/models/item/lamp.json
 ea16a452d68cb56fb0644cc1a4560b1a72505c16 assets/beyondtheveil/models/item/memory_hormones_bucket.json
@@ -105,6 +106,7 @@ df0283fabdc13496409d7c67bdfacf73282c7e0f assets/beyondtheveil/models/item/regene
 4595d5f709e65efe33d2c4f7ffe8b7c1d4617c40 assets/beyondtheveil/models/item/revelation_ring.json
 690ea1f3132694138569531da72660612fa51f55 assets/beyondtheveil/models/item/sacrifice_altar.json
 3b91ab14247232d6ab7625a9753a38e5638bd194 assets/beyondtheveil/models/item/sacrificial_knife.json
+7256416779291b06305f29f251554f9086e32696 assets/beyondtheveil/models/item/seaweed_stew.json
 de3a9251229d896b13d5cbea687f93278a311966 assets/beyondtheveil/models/item/sedative_bucket.json
 f83a853a709d85315339dc9da547a17a7797b1f7 assets/beyondtheveil/models/item/sewing_needle.json
 e28db6717dc9cb19e42cc3795f1c7d3d3d104e3e assets/beyondtheveil/models/item/shoggoth_map.json
@@ -124,6 +126,7 @@ f5559c752aca39809a377b09d517ed5bcdc635b3 assets/beyondtheveil/models/item/surger
 c293a59f72019d4d3687fafa3d82d0f56640f785 assets/beyondtheveil/models/item/tablet.json
 b088b4c481c87ac877a2e6c26a41994b6f42f983 assets/beyondtheveil/models/item/tears_bucket.json
 1ef95dc919aa83d684e4594859b46ae997d870c6 assets/beyondtheveil/models/item/tongs.json
+ec628dfabce89c6c634572a9935eac35a4c896e1 assets/beyondtheveil/models/item/tropical_delight.json
 1ae74006754a206b30b97d8e838d021b90966f60 assets/beyondtheveil/models/item/vanilla_weed_seeds.json
 14e9c309c0664d10efc343541e82f6c0474e2408 assets/beyondtheveil/models/item/vein_miner.json
 c6e7ab35f0e7f4cd7a7e9600b5feca59502453de assets/beyondtheveil/models/item/vein_stone.json
