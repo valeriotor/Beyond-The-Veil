@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "C": {
+      "item": "beyondtheveil:damp_canopy"
+    },
+    "W": {
+      "item": "beyondtheveil:damp_wood"
+    }
+  },
+  "pattern": [
+    "C  ",
+    "W  ",
+    "   "
+  ],
+  "result": {
+    "item": "beyondtheveil:damp_filled_canopy"
+  },
+  "show_notification": true
+}

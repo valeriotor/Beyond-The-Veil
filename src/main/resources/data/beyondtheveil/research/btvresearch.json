@@ -59,7 +59,7 @@
         },
         {
         "key": "SLEEP_CHAMBER",
-        "name": "research.SLEEPCHAMBER.title",
+        "name": "research.SLEEP_CHAMBER.title",
         "icons": [ "beyondtheveil:sleep_chamber" ],
         "category": "BEYOND_THE_VEIL", "location": [ 2,1 ],
         "hiders": ["FIRSTDREAMS"],
@@ -312,7 +312,7 @@
         "key": "CUSTOMS",
         "name": "research.CUSTOMS.title",
         "icons": [ "beyondtheveil:slug" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 14,6 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,6 ],
         "hiders": ["COMMUNION"],
         "parents": ["COMMUNION"],
         "stages": [
@@ -323,6 +323,142 @@
           },
           {
             "text": "research.CUSTOMS.stage.1"
+          }
+        ]
+      },
+      {
+        "key": "FARMING_TECHNIQUES",
+        "name": "research.FARMING_TECHNIQUES.title",
+        "icons": [ "minecraft:carrot" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,6 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.FARMING_TECHNIQUES.stage.0",
+            "required_research": ["used_farming_technique"]
+          },
+          {
+            "text": "research.FARMING_TECHNIQUES.stage.1"
+          }
+        ]
+      },
+      {
+        "key": "DELICACIES",
+        "name": "research.DELICACIES.title",
+        "icons": [ "beyondtheveil:tropical_delight" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,8 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.DELICACIES.stage.0",
+            "required_research": ["ate_delicacy"],
+            "recipes": ["beyondtheveil:seaweed_stew", "beyondtheveil:kelp_cod_bundle", "beyondtheveil:tropical_delight"]
+          },
+          {
+            "text": "research.DELICACIES.stage.1",
+            "recipes": ["beyondtheveil:seaweed_stew", "beyondtheveil:kelp_cod_bundle", "beyondtheveil:tropical_delight"]
+          }
+        ]
+      },
+      {
+        "key": "CARPENTRY",
+        "name": "research.CARPENTRY.title",
+        "icons": [ "beyondtheveil:slug" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.CARPENTRY.stage.0",
+            "required_research": ["received_fish"],
+            "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy", "beyondtheveil:damp_filled_canopy"]
+          },
+          {
+            "text": "research.CARPENTRY.stage.1",
+            "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy", "beyondtheveil:damp_filled_canopy"]
+          }
+        ]
+      },
+      {
+        "key": "GRASPING_WATER",
+        "name": "research.GRASPING_WATER.title",
+        "icons": [ "minecraft:water_bucket" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,6 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.GRASPING_WATER.stage.0",
+            "required_research": ["grasped_water"]
+          },
+          {
+            "text": "research.GRASPING_WATER.stage.1"
+          }
+        ]
+      },
+      {
+        "key": "BAPTISM",
+        "name": "research.BAPTISM.title",
+        "icons": [ "beyondtheveil:dark_sand" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,8 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.BAPTISM.stage.0",
+            "required_research": ["ready_for_baptism"]
+          },
+          {
+            "text": "research.BAPTISM.stage.1",
+            "required_research": ["baptized"]
+          },
+          {
+            "text": "research.BAPTISM.stage.2"
+          }
+        ]
+      },
+      {
+        "key": "DREAM_BOTTLE",
+        "name": "research.DREAM_BOTTLE.title",
+        "icons": [ "beyondtheveil:dream_bottle" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 18,4 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.DREAM_BOTTLE.stage.0",
+            "required_research": ["used_bottle"],
+            "recipes": ["beyondtheveil:dream_bottle"]
+          },
+          {
+            "text": "research.DREAM_BOTTLE.stage.1",
+            "required_research": ["filled_bottle"],
+            "recipes": ["beyondtheveil:dream_bottle"]
+          },
+          {
+            "text": "research.DREAM_BOTTLE.stage.2",
+            "recipes": ["beyondtheveil:dream_bottle"]
+          }
+        ]
+      },
+      {
+        "key": "LOCAL_MEDICINE",
+        "name": "research.LOCAL_MEDICINE.title",
+        "icons": [ "beyondtheveil:antidote_capsule" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,4 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["CUSTOMS"],
+        "stages": [
+          {
+            "text": "research.LOCAL_MEDICINE.stage.0",
+            "required_research": ["used_antidote"],
+            "recipes": ["beyondtheveil:antidote_capsule"]
+          },
+          {
+            "text": "research.LOCAL_MEDICINE.stage.1",
+            "recipes": ["beyondtheveil:antidote_capsule"]
           }
         ]
       }

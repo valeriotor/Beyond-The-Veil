@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_antidote_capsule": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:antidote_capsule"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beyondtheveil:antidote_capsule2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_antidote_capsule",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beyondtheveil:antidote_capsule2"
+    ]
+  },
+  "sends_telemetry_event": false
+}

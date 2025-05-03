@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "beyondtheveil:damp_wood"
+    }
+  },
+  "pattern": [
+    "   ",
+    "W W",
+    "WWW"
+  ],
+  "result": {
+    "item": "beyondtheveil:canoe"
+  },
+  "show_notification": true
+}

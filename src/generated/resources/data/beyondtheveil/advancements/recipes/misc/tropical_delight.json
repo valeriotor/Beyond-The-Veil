@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beyondtheveil:tropical_delight"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tropical_delight": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:tropical_delight"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_tropical_delight",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beyondtheveil:tropical_delight"
+    ]
+  },
+  "sends_telemetry_event": false
+}

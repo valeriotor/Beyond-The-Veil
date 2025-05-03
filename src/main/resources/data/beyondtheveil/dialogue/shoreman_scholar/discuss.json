@@ -1,0 +1,1933 @@
+{
+  "id": "discuss",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "snippet": {
+      "id": "snippet",
+      "dialogueOptions": [
+        {
+          "id": "but____",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "noreply": {
+      "id": "noreply",
+      "dialogueOptions": [
+        {
+          "id": "thank___",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "dagon\u0027s",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "chains": {
+      "id": "chains",
+      "dialogueOptions": [
+        {
+          "id": "thank_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "reach": {
+      "id": "reach",
+      "dialogueOptions": [
+        {
+          "id": "i__________________________",
+          "branchLength": 1,
+          "endingNodeID": "life",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "but___",
+          "branchLength": 2,
+          "endingNodeID": "chains",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "yelling": {
+      "id": "yelling",
+      "dialogueOptions": [
+        {
+          "id": "i_______________________________________",
+          "branchLength": 1,
+          "endingNodeID": "understand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "immortal": {
+      "id": "immortal",
+      "dialogueOptions": [
+        {
+          "id": "who?",
+          "branchLength": 1,
+          "endingNodeID": "adelina",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you_",
+          "branchLength": 1,
+          "endingNodeID": "neverfear",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "cannotknow": {
+      "id": "cannotknow",
+      "dialogueOptions": [
+        {
+          "id": "i_______",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "then",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "listen": {
+      "id": "listen",
+      "dialogueOptions": [
+        {
+          "id": "then___",
+          "branchLength": 2,
+          "endingNodeID": "pray",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "pray": {
+      "id": "pray",
+      "dialogueOptions": [
+        {
+          "id": "i_________________________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what__",
+          "branchLength": 2,
+          "endingNodeID": "ocean",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "deadkeeper": {
+      "id": "deadkeeper",
+      "dialogueOptions": [
+        {
+          "id": "i_________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "it__",
+          "branchLength": 1,
+          "endingNodeID": "noitdidnt",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "neverfear": {
+      "id": "neverfear",
+      "dialogueOptions": [
+        {
+          "id": "let_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "twomore": {
+      "id": "twomore",
+      "dialogueOptions": [
+        {
+          "id": "one",
+          "branchLength": 1,
+          "endingNodeID": "convergence",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_________________________________",
+          "branchLength": 1,
+          "endingNodeID": "noremember",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "late": {
+      "id": "late",
+      "dialogueOptions": [
+        {
+          "id": "always_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "inperson": {
+      "id": "inperson",
+      "dialogueOptions": [
+        {
+          "id": "you__",
+          "branchLength": 1,
+          "endingNodeID": "cannotknow",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i___________________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "then__",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "there",
+          "branchLength": 1,
+          "endingNodeID": "surgery",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "disappeared": {
+      "id": "disappeared",
+      "dialogueOptions": [
+        {
+          "id": "i__________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "perhaps___",
+          "branchLength": 1,
+          "endingNodeID": "grieving",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "greater": {
+      "id": "greater",
+      "dialogueOptions": [
+        {
+          "id": "i______________",
+          "branchLength": 1,
+          "endingNodeID": "badthing",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "science",
+          "branchLength": 1,
+          "endingNodeID": "science",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "you": {
+      "id": "you",
+      "dialogueOptions": [
+        {
+          "id": "i________________________________________",
+          "branchLength": 1,
+          "endingNodeID": "understand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "conceit": {
+      "id": "conceit",
+      "dialogueOptions": [
+        {
+          "id": "who\u0027s",
+          "branchLength": 1,
+          "endingNodeID": "sentience",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "thankyou": {
+      "id": "thankyou",
+      "dialogueOptions": [
+        {
+          "id": "let\u0027s",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "already": {
+      "id": "already",
+      "dialogueOptions": [
+        {
+          "id": "yes_",
+          "branchLength": 1,
+          "endingNodeID": "repliedalone",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "yes,",
+          "branchLength": 1,
+          "endingNodeID": "repliednotalone",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "no_",
+          "branchLength": 1,
+          "endingNodeID": "noreply",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "veil": {
+      "id": "veil",
+      "dialogueOptions": [
+        {
+          "id": "and__",
+          "branchLength": 3,
+          "endingNodeID": "veil2",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "old": {
+      "id": "old",
+      "dialogueOptions": [
+        {
+          "id": "then_____",
+          "branchLength": 1,
+          "endingNodeID": "sorry",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "keeper": {
+      "id": "keeper",
+      "dialogueOptions": [
+        {
+          "id": "indeed",
+          "branchLength": 1,
+          "endingNodeID": "accept",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "he",
+          "branchLength": 1,
+          "endingNodeID": "old",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "tendril": {
+      "id": "tendril",
+      "dialogueOptions": [
+        {
+          "id": "nowhere,",
+          "branchLength": 3,
+          "endingNodeID": "nowhere",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "understand": {
+      "id": "understand",
+      "dialogueOptions": [
+        {
+          "id": "thank______",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i__________________________________",
+          "branchLength": 1,
+          "endingNodeID": "frightened",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "baptism": {
+      "id": "baptism",
+      "dialogueOptions": [
+        {
+          "id": "thank",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i______",
+          "branchLength": 1,
+          "endingNodeID": "already",
+          "unlockedData": [],
+          "mustHaveData": ["baptized"],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "onnecronomicon": {
+      "id": "onnecronomicon",
+      "dialogueOptions": [
+        {
+          "id": "changed",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "history": {
+      "id": "history",
+      "dialogueOptions": [
+        {
+          "id": "but__",
+          "branchLength": 1,
+          "endingNodeID": "groundtruth",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "scholar": {
+      "id": "scholar",
+      "dialogueOptions": [
+        {
+          "id": "is",
+          "branchLength": 1,
+          "endingNodeID": "late",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i___________________________",
+          "branchLength": 1,
+          "endingNodeID": "sorry",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "alright": {
+      "id": "alright",
+      "dialogueOptions": [
+        {
+          "id": "to",
+          "branchLength": 1,
+          "endingNodeID": "whom",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "these",
+          "branchLength": 1,
+          "endingNodeID": "foryou",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "badthing": {
+      "id": "badthing",
+      "dialogueOptions": [
+        {
+          "id": "indeed_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_____",
+          "branchLength": 1,
+          "endingNodeID": "discomfit",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "but",
+          "branchLength": 1,
+          "endingNodeID": "ourselves",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "accept": {
+      "id": "accept",
+      "dialogueOptions": [
+        {
+          "id": "love",
+          "branchLength": 1,
+          "endingNodeID": "sorry",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "slugs": {
+      "id": "slugs",
+      "dialogueOptions": [
+        {
+          "id": "what_____",
+          "branchLength": 2,
+          "endingNodeID": "ocean",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "eye": {
+      "id": "eye",
+      "dialogueOptions": [
+        {
+          "id": "i___________",
+          "branchLength": 1,
+          "endingNodeID": "onalazif",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": ["renamed_necronomicon"],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i____________",
+          "branchLength": 1,
+          "endingNodeID": "onnecronomicon",
+          "unlockedData": [],
+          "mustHaveData": ["renamed_necronomicon"],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "forgive",
+          "branchLength": 1,
+          "endingNodeID": "notsay",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "adelina": {
+      "id": "adelina",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 1,
+          "endingNodeID": "neverfear",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "immortal___",
+          "branchLength": 1,
+          "endingNodeID": "disappeared",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "never": {
+      "id": "never",
+      "dialogueOptions": [
+        {
+          "id": "i_____________________",
+          "branchLength": 1,
+          "endingNodeID": "understand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "whatelse": {
+      "id": "whatelse",
+      "dialogueOptions": [
+        {
+          "id": "i___________________________________",
+          "branchLength": 1,
+          "endingNodeID": "gods",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i____________________________________",
+          "branchLength": 1,
+          "endingNodeID": "symbols",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_____________________________________",
+          "branchLength": 1,
+          "endingNodeID": "shoremen",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how___",
+          "branchLength": 1,
+          "endingNodeID": "trust",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "let___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "ocean": {
+      "id": "ocean",
+      "dialogueOptions": [
+        {
+          "id": "how",
+          "branchLength": 1,
+          "endingNodeID": "reach",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "can",
+          "branchLength": 1,
+          "endingNodeID": "speak",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "anyone": {
+      "id": "anyone",
+      "dialogueOptions": [
+        {
+          "id": "for",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "hadyoubeenthere": {
+      "id": "hadyoubeenthere",
+      "dialogueOptions": [
+        {
+          "id": "i________________",
+          "branchLength": 1,
+          "endingNodeID": "against",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_________________",
+          "branchLength": 1,
+          "endingNodeID": "afraid",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i__________________",
+          "branchLength": 1,
+          "endingNodeID": "true",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "repliedalone": {
+      "id": "repliedalone",
+      "dialogueOptions": [
+        {
+          "id": "thank_____",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "dagon\u0027s_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "science": {
+      "id": "science",
+      "dialogueOptions": [
+        {
+          "id": "you_______",
+          "branchLength": 1,
+          "endingNodeID": "maths",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "then______",
+          "branchLength": 1,
+          "endingNodeID": "preconceived",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "blame": {
+      "id": "blame",
+      "dialogueOptions": [
+        {
+          "id": "no:",
+          "branchLength": 1,
+          "endingNodeID": "snippet",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "it_",
+          "branchLength": 1,
+          "endingNodeID": "anyone",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "true": {
+      "id": "true",
+      "dialogueOptions": [
+        {
+          "id": "hah!_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "acquainted": {
+      "id": "acquainted",
+      "dialogueOptions": [
+        {
+          "id": "wait___",
+          "branchLength": 1,
+          "endingNodeID": "alazifwhat",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i___",
+          "branchLength": 1,
+          "endingNodeID": "alazifwhat",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "inhabited": {
+      "id": "inhabited",
+      "dialogueOptions": [
+        {
+          "id": "what?",
+          "branchLength": 1,
+          "endingNodeID": "alright",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "alazifwhat": {
+      "id": "alazifwhat",
+      "dialogueOptions": [
+        {
+          "id": "i__",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i____",
+          "branchLength": 1,
+          "endingNodeID": "necronomicon",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "discomfit": {
+      "id": "discomfit",
+      "dialogueOptions": [
+        {
+          "id": "indeed__",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "but_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "groundtruth": {
+      "id": "groundtruth",
+      "dialogueOptions": [
+        {
+          "id": "then_",
+          "branchLength": 1,
+          "endingNodeID": "greater",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "apples": {
+      "id": "apples",
+      "dialogueOptions": [
+        {
+          "id": "just",
+          "branchLength": 1,
+          "endingNodeID": "blame",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "blissfully",
+          "branchLength": 1,
+          "endingNodeID": "hadyoubeenthere",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "frightened": {
+      "id": "frightened",
+      "dialogueOptions": [
+        {
+          "id": "let",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "notsay": {
+      "id": "notsay",
+      "dialogueOptions": [
+        {
+          "id": "thanks_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "trust": {
+      "id": "trust",
+      "dialogueOptions": [
+        {
+          "id": "if",
+          "branchLength": 1,
+          "endingNodeID": "history",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you__________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "stubborn": {
+      "id": "stubborn",
+      "dialogueOptions": [
+        {
+          "id": "so",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "death": {
+      "id": "death",
+      "dialogueOptions": [
+        {
+          "id": "you___",
+          "branchLength": 1,
+          "endingNodeID": "immortal",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "perhaps",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "noitdidnt": {
+      "id": "noitdidnt",
+      "dialogueOptions": [
+        {
+          "id": "___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "convergence": {
+      "id": "convergence",
+      "dialogueOptions": [
+        {
+          "id": "no__",
+          "branchLength": 1,
+          "endingNodeID": "never",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i________",
+          "branchLength": 1,
+          "endingNodeID": "you",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "why",
+          "branchLength": 1,
+          "endingNodeID": "yelling",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "against": {
+      "id": "against",
+      "dialogueOptions": [
+        {
+          "id": "what",
+          "branchLength": 1,
+          "endingNodeID": "change",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "maths": {
+      "id": "maths",
+      "dialogueOptions": [
+        {
+          "id": "this",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i____________________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "that_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "necronomicon": {
+      "id": "necronomicon",
+      "dialogueOptions": [
+        {
+          "id": "then____",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "shoremen": {
+      "id": "shoremen",
+      "dialogueOptions": [
+        {
+          "id": "i____________________________",
+          "branchLength": 2,
+          "endingNodeID": "plight",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "and",
+          "branchLength": 2,
+          "endingNodeID": "scholar",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what___",
+          "branchLength": 1,
+          "endingNodeID": "keeper",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": ["killed_keeper"],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what____",
+          "branchLength": 1,
+          "endingNodeID": "deadkeeper",
+          "unlockedData": [],
+          "mustHaveData": ["killed_keeper"],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "gods": {
+      "id": "gods",
+      "dialogueOptions": [
+        {
+          "id": "do",
+          "branchLength": 1,
+          "endingNodeID": "conceit",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "are",
+          "branchLength": 1,
+          "endingNodeID": "veil",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what_",
+          "branchLength": 2,
+          "endingNodeID": "ocean",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "ourselves": {
+      "id": "ourselves",
+      "dialogueOptions": [
+        {
+          "id": "i________________________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "life": {
+      "id": "life",
+      "dialogueOptions": [
+        {
+          "id": "arche",
+          "branchLength": 1,
+          "endingNodeID": "inhabited",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "symbols": {
+      "id": "symbols",
+      "dialogueOptions": [
+        {
+          "id": "what________",
+          "branchLength": 2,
+          "endingNodeID": "eye",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what_________",
+          "branchLength": 1,
+          "endingNodeID": "tendril",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what__________",
+          "branchLength": 1,
+          "endingNodeID": "slugs",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "veil2": {
+      "id": "veil2",
+      "dialogueOptions": [
+        {
+          "id": "it___",
+          "branchLength": 1,
+          "endingNodeID": "throughdreams",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "can_",
+          "branchLength": 1,
+          "endingNodeID": "inperson",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "nowhere": {
+      "id": "nowhere",
+      "dialogueOptions": [
+        {
+          "id": "thank____",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_______________________",
+          "branchLength": 1,
+          "endingNodeID": "death",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "onalazif": {
+      "id": "onalazif",
+      "dialogueOptions": [
+        {
+          "id": "you____",
+          "branchLength": 1,
+          "endingNodeID": "acquainted",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "sorry": {
+      "id": "sorry",
+      "dialogueOptions": [
+        {
+          "id": "i_____________________________",
+          "branchLength": 2,
+          "endingNodeID": "plight",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "and_",
+          "branchLength": 2,
+          "endingNodeID": "scholar",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what______",
+          "branchLength": 1,
+          "endingNodeID": "keeper",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": ["killed_keeper"],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what_______",
+          "branchLength": 1,
+          "endingNodeID": "deadkeeper",
+          "unlockedData": [],
+          "mustHaveData": ["killed_keeper"],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "foryou": {
+      "id": "foryou",
+      "dialogueOptions": [
+        {
+          "id": "i_____________",
+          "branchLength": 1,
+          "endingNodeID": "thankyou",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "noremember": {
+      "id": "noremember",
+      "dialogueOptions": [
+        {
+          "id": "thank__",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i______________________",
+          "branchLength": 1,
+          "endingNodeID": "frightened",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "whom": {
+      "id": "whom",
+      "dialogueOptions": [
+        {
+          "id": "i______________________________________",
+          "branchLength": 1,
+          "endingNodeID": "thankyou",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "speak": {
+      "id": "speak",
+      "dialogueOptions": [
+        {
+          "id": "how_",
+          "branchLength": 1,
+          "endingNodeID": "baptism",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how__",
+          "branchLength": 1,
+          "endingNodeID": "reach",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "grieving": {
+      "id": "grieving",
+      "dialogueOptions": [
+        {
+          "id": "that",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_______________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "change": {
+      "id": "change",
+      "dialogueOptions": [
+        {
+          "id": "you",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "hah!",
+          "branchLength": 1,
+          "endingNodeID": "stubborn",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "plight": {
+      "id": "plight",
+      "dialogueOptions": [
+        {
+          "id": "you_____",
+          "branchLength": 1,
+          "endingNodeID": "blame",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you______",
+          "branchLength": 1,
+          "endingNodeID": "apples",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "i______________________________",
+          "branchLength": 1,
+          "endingNodeID": "gods",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_______________________________",
+          "branchLength": 1,
+          "endingNodeID": "symbols",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i________________________________",
+          "branchLength": 1,
+          "endingNodeID": "shoremen",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "let__",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "throughdreams": {
+      "id": "throughdreams",
+      "dialogueOptions": [
+        {
+          "id": "you_________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "repliednotalone": {
+      "id": "repliednotalone",
+      "dialogueOptions": [
+        {
+          "id": "two",
+          "branchLength": 1,
+          "endingNodeID": "twomore",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "preconceived": {
+      "id": "preconceived",
+      "dialogueOptions": [
+        {
+          "id": "perhaps_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "this_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "afraid": {
+      "id": "afraid",
+      "dialogueOptions": [
+        {
+          "id": "it",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "i_",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "sentience": {
+      "id": "sentience",
+      "dialogueOptions": [
+        {
+          "id": "does",
+          "branchLength": 1,
+          "endingNodeID": "listen",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "surgery": {
+      "id": "surgery",
+      "dialogueOptions": [
+        {
+          "id": "you________",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "only",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "shoreman_scholar",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}

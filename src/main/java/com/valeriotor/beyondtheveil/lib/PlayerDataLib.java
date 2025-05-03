@@ -100,9 +100,20 @@ public class PlayerDataLib {
     public static final String CULTIST_KILLED = "cultist_killed";
     public static final String RECEIVED_FISH = "received_fish";
     public static final String BAPTIZED = "baptized";
+    public static final String HAD_CONTACT = "had_contact";
     public static final String SPOKE_GNAWING = "spoke_gnawing";
     public static final String SPOKE_OCEAN = "spoke_ocean";
     public static final String SPOKE_YOU = "spoke_you";
+    public static final String RENAMED_NECRONOMICON = "renamed_necronomicon";
+    public static final String KILLED_KEEPER = "killed_keeper";
+    public static final String READY_FOR_BAPTISM = "ready_for_baptism";
+    public static final String EMBRACED_CUSTOMS = "embraced_customs";
+    public static final String USED_ANTIDOTE = "used_antidote";
+    public static final String USED_BOTTLE = "used_bottle";
+    public static final String FILLED_BOTTLE = "filled_bottle";
+    public static final String GRASPED_WATER = "grasped_water";
+    public static final String ATE_DELICACY = "ate_delicacy";
+    public static final String USED_FARMING_TECHNIQUE = "used_farming_technique";
 
 
     // Booleans (Temporary)

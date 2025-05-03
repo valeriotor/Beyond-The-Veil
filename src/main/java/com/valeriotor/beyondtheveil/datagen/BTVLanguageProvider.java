@@ -875,6 +875,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         addGuis();
         addSurgery();
         addCommonCaptions();
+        addContact();
+    }
+
+    private void addContact() {
+        add("contact.error.night", "I must wait for the darkest hours of night to make contact.");
+        add("contact.error.players", "I must be alone to make contact.");
+
     }
 
     private void addExchanges() {
@@ -888,26 +895,26 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("correspondence.blood_cult_2", "???");
         add("correspondence.miskatonic_researchers_blood", "Miskatonic University");
 
-        add("exchange.scholar_offer_help.object", "My knowledge is at your disposal\\n");
+        add("exchange.scholar_offer_help.object", "My knowledge is at your disposal");
         add("exchange.scholar_offer_help.0.0.hello", "Dear Seeker,\\n");
         add("exchange.scholar_offer_help.0.1.this_is", "I am the Scholar of the shoremen, reaching you to express not only gratitude, but also great admiration: for your willingness to overcome those inner biases that gnaw at the mind of every human, for your desire to challenge your own beliefs in pursuit of what is true, and for your indomitable tenacity, unperturbed by the metanoia brought forth by communion.\\n");
         add("exchange.scholar_offer_help.0.2.feel_free", "I thus pledge myself to help in any way I can. I am knowledgeable about several topics, related both to our traditions here on the shore, and the wider academic circles I once belonged to. Do not hesitate to write or visit.\\n");
         add("exchange.scholar_offer_help.0.3.best", "Best,\\1The Scholar.");
-        add("exchange.scholar_offer_help.1.0.hello", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.0.greetings", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.0.dear", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.1.dreamer", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.1.ocean", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.2.thanks", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.2.see_you", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.3.name", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.3.friend", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.3.seeker", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.1.3.traveller", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.2.0.hello", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.2.1.both", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.2.2.in_person", "My knowledge is at your disposal");
-        add("exchange.scholar_offer_help.2.3.best", "My knowledge is at your disposal");
+        add("exchange.scholar_offer_help.1.0.hello", "Hello,\\n");
+        add("exchange.scholar_offer_help.1.0.greetings", "Greetings,\\n");
+        add("exchange.scholar_offer_help.1.0.dear", "Dear Scholar,\\n");
+        add("exchange.scholar_offer_help.1.1.dreamer", "Knowing of the Great Dreamer has upended my perception of the world, and yet there is so much more I wish to learn of Him. What is your relationship with your deity, and how do you display your faith?\\n");
+        add("exchange.scholar_offer_help.1.1.ocean", "I am intrigued by the fascination your kin holds towards the Ocean, and thus I wonder: what does it represent to you? Is Father Ocean a living creature, or simply a medium for dreams?\\n");
+        add("exchange.scholar_offer_help.1.2.thanks", "I thank you for the opportunity.\\n");
+        add("exchange.scholar_offer_help.1.2.see_you", "I hope to see you soon.\\n");
+        add("exchange.scholar_offer_help.1.3.name", "%s");
+        add("exchange.scholar_offer_help.1.3.friend", "Your friend");
+        add("exchange.scholar_offer_help.1.3.seeker", "The Seeker");
+        add("exchange.scholar_offer_help.1.3.traveller", "The Traveller");
+        add("exchange.scholar_offer_help.2.0.hello", "Dear Seeker,\\n");
+        add("exchange.scholar_offer_help.2.1.both", "Oh my! Such a compelling question, and with such complex answer(s). In short, understand that our belief is two-fold: the Great Dreamer is the central figure in our religion, whom we view as Creator and to whom we dedicate our prayers; the Ocean is closer to us, as He is our medium to the Dreamer – an Archpriest of sorts, whom we also call Arche, or Dagon.\\n");
+        add("exchange.scholar_offer_help.2.2.in_person", "I am afraid, however, that there is simply too much to say on the subject. I propose that we meet to discuss in person, whenever you have time. I am available on most days (ah, the joys of retirement!)\\n");
+        add("exchange.scholar_offer_help.2.3.best", "Best,\\1The Scholar.");
 
         add("exchange.keeper_ask_slugs.object", "A small request");
         add("exchange.keeper_ask_slugs.0.0.hello", "Hello,\\n");
@@ -922,11 +929,38 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.keeper_ask_slugs.0.4.friend", "Your friend");
         add("exchange.keeper_ask_slugs.0.4.seeker", "The Seeker");
         add("exchange.keeper_ask_slugs.0.4.traveller", "The Traveller");
+        add("exchange.keeper_ask_slugs.1.0.hello", "Dearest friend,\\n");
+        add("exchange.keeper_ask_slugs.1.1.slugs", "It is my pleasure to satisfy your request. Indeed, it is touching to see someone so willing to embrace our culture.\\n");
+        add("exchange.keeper_ask_slugs.1.2.warning", "Only, a small warning: they are an acquired taste.\\n");
+        add("exchange.keeper_ask_slugs.1.3.best", "Warmly,\\1The Keeper.");
+
+        add("exchange.keeper_baptism.object", "Baptism");
+        add("exchange.keeper_baptism.0.0.friend", "Dear Friend,\\n");
+        add("exchange.keeper_baptism.0.0.keeper", "Dear Keeper,\\n");
+        add("exchange.keeper_baptism.0.1.baptism", "I wish to undergo the ritual you call \"Baptism\".\\n");
+        add("exchange.keeper_baptism.0.1.ocean", "I wish to speak to the Ocean.\\n");
+        add("exchange.keeper_baptism.0.2.common", "Knowing this to be a common practice among your kin, I would be glad if you could describe the steps needed to accomplish it.\\n");
+        add("exchange.keeper_baptism.0.3.dreamer", "Just as I have communed with The Great Dreamer before, so too am I now not afraid to experience this new rite.\\n");
+        add("exchange.keeper_baptism.0.3.embrace", "I wish to embrace your culture to the fullest, such is the fascination that I hold towards it.\\n");
+        add("exchange.keeper_baptism.0.4.best", "Best,\\1");
+        add("exchange.keeper_baptism.0.4.regards", "Kind Regards,\\1");
+        add("exchange.keeper_baptism.0.5.name", "%s");
+        add("exchange.keeper_baptism.0.5.friend", "Your friend");
+        add("exchange.keeper_baptism.0.5.seeker", "The Seeker");
+        add("exchange.keeper_baptism.0.5.traveller", "The Traveller");
+        add("exchange.keeper_baptism.1.0.hello", "Dearest friend,\\n");
+        add("exchange.keeper_baptism.1.1.ocean", "To speak with Father Ocean during baptism is a sacred act we perform when young. No outsider has ever attempted it before, because no outsider would survive it.\\n");
+        add("exchange.keeper_baptism.1.2.rite", "The rite consists of consuming a white slug while submerged in water in a small hole surrounded by our dark sand.\\n");
+        add("exchange.keeper_baptism.1.3.drown", "And, having done so, §oyou drown§r.\\n");
+        add("exchange.keeper_baptism.1.4.death", "Though I know you are not afraid of death, perhaps, for once, you should be.\\n");
+        add("exchange.keeper_baptism.1.5.luck", "I wish you good luck, friend.\\n");
+        add("exchange.keeper_baptism.1.6.bye", "Faithfully,\\1The Keeper.");
     }
 
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
         add("caption.shift_right_click", "Sneak + Right Click");
+        add("caption.reminisce", "Hold %s");
         add("caption.crafting", "Go to crafting entry");
         add("caption.journal", "Go to journal entry");
         add("caption.research", "Go to research entry");
@@ -972,7 +1006,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.drowned.ocean.are__.option", "Are you the Great Dreamer?");
         add("dialogue.drowned.ocean.one.option", "One last thing: who else entered my mind during my baptism?");
         add("dialogue.drowned.ocean.thank_.option", "Thank you, Father Ocean.");
-        add("dialogue.drowned.ocean.how.option", "How do I reach the veil?");
+        add("dialogue.drowned.ocean.how.option", "How do I reach the Veil?");
         add("dialogue.drowned.ocean.are_.option", "Are you the Veil?");
         add("dialogue.drowned.ocean.are_______.option", "Are you the Veil?");
         add("dialogue.drowned.ocean.are_________.option", "Are you the Veil?");
@@ -1169,6 +1203,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
     private void addShoremanDialogue() {
         addShoremanLighthouseKeeperDialogue();
+        addShoremanScholarDialogue();
 
         add("dialogue.shoreman_fisherman.initial.start.0", "Huh? [[Who are you?");
         add("dialogue.shoreman_fisherman.initial.traveller.option", "A traveller.");
@@ -1205,35 +1240,23 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_fisherman.begone.tone.option", "Watch. Your. Tone.");
         add("dialogue.shoreman_fisherman.begone.soon.option", "I will most certainly soon be gone.");
 
+        add("dialogue.shoreman_fisherman.communed1.start.0", "You... are born from water, just like us!\nYes, we all are! And that is the common ancestor that truly matters!");
+        add("dialogue.shoreman_fisherman.communed1.i.option", "I hope you can see me as a friend from now on.");
+        add("dialogue.shoreman_fisherman.communed1.through.option", "Through the Great Dreamer I see the world in a new light. I thank you for the revelation.");
+
+        add("dialogue.shoreman_fisherman.communed2.jerome.0", "Heh, maybe. For all his misdeeds, he had a great mind.\nBut you, friend, have both that and kindness.");
+        add("dialogue.shoreman_fisherman.communed2.start.0", "Bless! Bless! A blessing upon thee!");
+        add("dialogue.shoreman_fisherman.communed2.citing.option", "Citing Jerome?");
+        add("dialogue.shoreman_fisherman.communed2.thank.option", "Thank you. A blessing upon thee as well.");
+        add("dialogue.shoreman_fisherman.communed2.bless.option", "Bless you as well.");
+        add("dialogue.shoreman_fisherman.communed2.his.option", "His spouse, Adelina, was the truly vicious one.");
+
 
         //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
         //add("dialogue.shoreman_scholar.initial.knowledge.option", "Knowledge.");
         //add("dialogue.shoreman_scholar.initial.brought.option", "No. I was brought here by a dream.");
         //add("dialogue.shoreman_scholar.initial.suspicion.option", "Someone who does not view me with the stern eyes of suspicion.");
         //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
-
-        add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
-        add("dialogue.shoreman_scholar.initial.knowledge.0", "Ah, I understand.\nIndeed, I spy in your eyes that burning flame of curiosity, searing idleness away and leading you into that incessant march of learning.");
-        add("dialogue.shoreman_scholar.initial.knowledge.1", "I can well grasp your struggle. I, too, am a scholar, and oh the wonders I have seen and dreamt of!");
-        add("dialogue.shoreman_scholar.initial.dream.0", "A dream? Of our black shores and dark water?\nI see. Perhaps, then, our dreams met already. Deep down below, at the bottom of the ocean.");
-        add("dialogue.shoreman_scholar.initial.alas.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
-        add("dialogue.shoreman_scholar.initial.prejudice.0", "Prejudice? I.. I...\n..I see. You have given me food for thought, traveller.");
-        add("dialogue.shoreman_scholar.initial.suspicion.0", "I see. Please understand that it is not a mere lack of trust. In view of an outsider, our hearts are gripped with fear. By instinct, almost.\nYet it is not innate. There is much history behind our demeanor.\nMuch fury. Much grief. Much regret.");
-        add("dialogue.shoreman_scholar.initial.just.option", "Just like the others, blinded by prejudice.");
-        add("dialogue.shoreman_scholar.initial.knowledge_.option", "Knowledge.");
-        add("dialogue.shoreman_scholar.initial.no_.option", "No. I was brought here by a dream.");
-        add("dialogue.shoreman_scholar.initial.___.option", "...");
-        add("dialogue.shoreman_scholar.initial.i.option", "I understand.");
-        add("dialogue.shoreman_scholar.initial.continue_.option", "(Continue)");
-        add("dialogue.shoreman_scholar.initial.wait,.option", "Wait, you know about dreams?");
-        add("dialogue.shoreman_scholar.initial.farewell.option", "Farewell.");
-        add("dialogue.shoreman_scholar.initial.continue.option", "(Continue)");
-        add("dialogue.shoreman_scholar.initial.someone.option", "Someone who does not view me with the stern eyes of suspicion.");
-
-        add("dialogue.shoreman_scholar.initial1.start.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
-        add("dialogue.shoreman_scholar.initial1.i.option", "I understand");
-        add("dialogue.shoreman_scholar.initial1.___.option", "...");
-
 
         add("dialogue.shoreman_clerk.initial.talk.0", "What's there to talk about? You and I are too different, only seemingly speaking the same language, yet in truth our words are incomprehensible to one another.");
         add("dialogue.shoreman_clerk.initial.start.0", "Huh? Are you here to buy or to steal?");
@@ -1264,6 +1287,27 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_clerk.initial1.not.option", "Not now.");
         add("dialogue.shoreman_clerk.initial1.let's.option", "Let's see.");
 
+        add("dialogue.shoreman_clerk.communed1.start.0", "Hmph. Perhaps I was wrong about you.\nThen again, perhaps not. Perhaps you will betray us, and the good keeper who now so trusts you.");
+        add("dialogue.shoreman_clerk.communed1.whatever.0", "Whatever you say.");
+        add("dialogue.shoreman_clerk.communed1.lay.0", "I... I...\n...");
+        add("dialogue.shoreman_clerk.communed1.what.0", "...\nNothing. Just... memories.");
+        add("dialogue.shoreman_clerk.communed1.outside.0", "Yes, of course. Just do what the book tells you to do, and if we are in the way, so be it. We are irrelevant to you – just like you, perhaps, are irrelevant to someone else.");
+        add("dialogue.shoreman_clerk.communed1.whatever2.0", "Whatever you say.");
+        add("dialogue.shoreman_clerk.communed1.let's_.option", "Let's just trade.");
+        add("dialogue.shoreman_clerk.communed1.yes_.option", "Yes. What *I* say.");
+        add("dialogue.shoreman_clerk.communed1.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_clerk.communed1.what?.option", "What?");
+        add("dialogue.shoreman_clerk.communed1.i_.option", "I would not dare breach your trust, nor lay a hand on any of you.");
+        add("dialogue.shoreman_clerk.communed1.i.option", "I am not irrelevant. I am immortal.");
+        add("dialogue.shoreman_clerk.communed1.___.option", "...");
+        add("dialogue.shoreman_clerk.communed1.the.option", "The book doesn't tell me what to do. I tell *it* what I do.");
+        add("dialogue.shoreman_clerk.communed1.let's.option", "Let's just trade.");
+        add("dialogue.shoreman_clerk.communed1.let's__.option", "Let's just trade.");
+        add("dialogue.shoreman_clerk.communed1.i__.option", "I can make no promises – it is outside of my control.");
+
+        add("dialogue.shoreman_clerk.communed2.start.0", "Hello, traveller.");
+        add("dialogue.shoreman_clerk.communed2.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_clerk.communed2.let's.option", "Let's trade.");
 
 
         add("dialogue.shoreman_carpenter.initial.oldest.0", "Father Ocean spawned Daughter Earth, and not the other way around.\nYour beliefs are apocryphal.");
@@ -1288,11 +1332,42 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_carpenter.initial1.i.option", "I have not interest in your damp, creaking lumber.");
         add("dialogue.shoreman_carpenter.initial1.it.option", "It is a shame. Your art would be highly valued among my people.");
 
+        add("dialogue.shoreman_carpenter.communed1.start.0", "Hmm. The Ocean spoke to you.\nAnd if you need to reply, you must sail it. Our canoes engender kindness from the sea: I shall share with you our woodwork.");
+        add("dialogue.shoreman_carpenter.communed1.thank.option", "Thank you. I would be happy to see it.");
+        add("dialogue.shoreman_carpenter.communed1.thank_.option", "Thank you. I may need it soon.");
+
+        add("dialogue.shoreman_carpenter.communed2.start.0", "Carpentry's a hard job. Not like fishing – the Ocean brings me no gifts.");
+        add("dialogue.shoreman_carpenter.communed2.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_carpenter.communed2.let's.option", "Let's trade.");
+
+        add("dialogue.shoreman_carpenter.communed3.start.0", "Greetings.");
+        add("dialogue.shoreman_carpenter.communed3.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_carpenter.communed3.let's.option", "Let's trade.");
+
 
 
         add("dialogue.shoreman_bartender.initial.start.0", "Hmph. We do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
         add("dialogue.shoreman_bartender.initial.anything.option", "Anything for sale?");
         add("dialogue.shoreman_bartender.initial.thank.option", "Thank you.");
+
+        add("dialogue.shoreman_bartender.communed1.dreamer.0", "I... cannot pretend that I know for sure. It is a belief we are taught from youth, but what is a belief standing only on faith?");
+        add("dialogue.shoreman_bartender.communed1.dreamer.1", "Many of my brethren now disagree that the Dreamer is aware of us at all – it is a matter of opinion – but we §oknow§r he exists, as sure as the nightly fog, the ignorance of man, and the starry sky dividing us from infinity!");
+        add("dialogue.shoreman_bartender.communed1.start.0", "Aha! You heard it too, they say! Father Ocean's rumble and grumble and, through Him, the Great Dreamer's gaze! Only one outsider before has ever had such honour, so you're making history!");
+        add("dialogue.shoreman_bartender.communed1.outsider.0", "A desert man, but he... he was not kind.\nI hope for our friendship to be stronger.");
+        add("dialogue.shoreman_bartender.communed1.it.option", "It shall be.");
+        add("dialogue.shoreman_bartender.communed1.it_.option", "It is an honour indeed. Cheers to that!");
+        add("dialogue.shoreman_bartender.communed1.so.option", "So the Dreamer was really aware of me?.");
+        add("dialogue.shoreman_bartender.communed1.even.option", "Even within such a small community, you still have and accept a divide of thought. Surprising, yet beautiful.");
+        add("dialogue.shoreman_bartender.communed1.i_.option", "I hope so too.");
+        add("dialogue.shoreman_bartender.communed1.yes,.option", "Yes, he does listen. If he didn't, would that not make us irrelevant?");
+        add("dialogue.shoreman_bartender.communed1.who.option", "Who was this outsider?");
+        add("dialogue.shoreman_bartender.communed1.i.option", "I see. At least the Ocean listens.");
+        add("dialogue.shoreman_bartender.communed1.of.option", "Of course, and let's drink to that!");
+
+        add("dialogue.shoreman_bartender.communed2.start.0", "Welcome back, traveller.");
+        add("dialogue.shoreman_bartender.communed2.farewell_.option", "Farewell.");
+        add("dialogue.shoreman_bartender.communed2.show.option", "Show me your drinks.");
+
 
         add("dialogue.shoreman_drunk.initial.mean.0", "It's just.. I dunnae like life here no more. Ne'er did, actually.\nBroodin', borin' fishermen. Misbegotten children of earth and water, I tell ya! That's what we be!");
         add("dialogue.shoreman_drunk.initial.start.0", "A newcomer, eh? We dun't see many outsiders no'adays.\nGood for ya. Being an outsider an' all.");
@@ -1338,6 +1413,294 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_drunk.drunk1.start.0", "]]Ye just go on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' §o*hic*§r on an' on an' on an' on an' on an' on!!");
         add("dialogue.shoreman_drunk.drunk1.ok__.option", "Ok..");
 
+        add("dialogue.shoreman_drunk.communed1.loq.0", "Less what-cious?");
+        add("dialogue.shoreman_drunk.communed1.ocean.0", "Ach, sea water, thar's ye problem! Away!");
+        add("dialogue.shoreman_drunk.communed1.start.0", "Hmm. Smell diffe'ent.");
+        add("dialogue.shoreman_drunk.communed1.some.option", "Some water would do you well.");
+        add("dialogue.shoreman_drunk.communed1.was.option", "Was touched by the Ocean, it seems.");
+        add("dialogue.shoreman_drunk.communed1.you.option", "You are less loquacious than last time.");
+        add("dialogue.shoreman_drunk.communed1.clearly.option", "Clearly reaching a breaking point with the booze...");
+
+        add("dialogue.shoreman_drunk.communed2.water.0", "Aiii!");
+        add("dialogue.shoreman_drunk.communed2.start.0", "*beurk*");
+        add("dialogue.shoreman_drunk.communed2.can.option", "Can I offer you some water?");
+        add("dialogue.shoreman_drunk.communed2.your.option", "Your only weakness...");
+        add("dialogue.shoreman_drunk.communed2.*beurk*.option", "*beurk* indeed.");
+
+    }
+
+    private void addShoremanScholarDialogue() {
+
+        add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
+        add("dialogue.shoreman_scholar.initial.knowledge.0", "Ah, I understand.\nIndeed, I spy in your eyes that burning flame of curiosity, searing idleness away and leading you into that incessant march of learning.");
+        add("dialogue.shoreman_scholar.initial.knowledge.1", "I can well grasp your struggle. I, too, am a scholar, and oh the wonders I have seen and dreamt of!");
+        add("dialogue.shoreman_scholar.initial.dream.0", "A dream? Of our black shores and dark water?\nI see. Perhaps, then, our dreams met already. Deep down below, at the bottom of the ocean.");
+        add("dialogue.shoreman_scholar.initial.alas.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
+        add("dialogue.shoreman_scholar.initial.prejudice.0", "Prejudice? I.. I...\n..I see. You have given me food for thought, traveller.");
+        add("dialogue.shoreman_scholar.initial.suspicion.0", "I see. Please understand that it is not a mere lack of trust. In view of an outsider, our hearts are gripped with fear. By instinct, almost.\nYet it is not innate. There is much history behind our demeanor.\nMuch fury. Much grief. Much regret.");
+        add("dialogue.shoreman_scholar.initial.just.option", "Just like the others, blinded by prejudice.");
+        add("dialogue.shoreman_scholar.initial.knowledge_.option", "Knowledge.");
+        add("dialogue.shoreman_scholar.initial.no_.option", "No. I was brought here by a dream.");
+        add("dialogue.shoreman_scholar.initial.___.option", "...");
+        add("dialogue.shoreman_scholar.initial.i.option", "I understand.");
+        add("dialogue.shoreman_scholar.initial.continue_.option", "(Continue)");
+        add("dialogue.shoreman_scholar.initial.wait,.option", "Wait, you know about dreams?");
+        add("dialogue.shoreman_scholar.initial.farewell.option", "Farewell.");
+        add("dialogue.shoreman_scholar.initial.continue.option", "(Continue)");
+        add("dialogue.shoreman_scholar.initial.someone.option", "Someone who does not view me with the stern eyes of suspicion.");
+
+        add("dialogue.shoreman_scholar.initial1.start.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
+        add("dialogue.shoreman_scholar.initial1.i.option", "I understand");
+        add("dialogue.shoreman_scholar.initial1.___.option", "...");
+
+        add("dialogue.shoreman_scholar.communed1.start.0", "Traveller... you have my gratitude.\nAnd not just that: I feel an innate admiration towards you, and your willingness to overcome those inner biases that gnaw at the mind of every human.");
+        add("dialogue.shoreman_scholar.communed1.start.1", "You challenged your own beliefs in pursuit of what is true. That takes tenacity, as few humans would remain unperturbed by the sudden upheaving of their view of the world.");
+        add("dialogue.shoreman_scholar.communed1.start.2", "Please, let me help you in any way I can. I am knowledgeable – perhaps my only asset in this world, and my only role in this quest of yours.\nCome back to me if you wish to discuss esoteric topics – such as those studied by the academia of the occult, but of which the outside world is blissfully unaware; or the beliefs to which my kin so tightly held even in the face of tragedy.");
+        add("dialogue.shoreman_scholar.communed1.thank.option", "Thank you. I will come back.");
+
+        add("dialogue.shoreman_scholar.discuss.grieving.0", "Or regretting her crimes.");
+        add("dialogue.shoreman_scholar.discuss.baptism.0", "Each dialogue with the Ocean is a sacred act for us of the Shore, and for the first such occurrence we undergo a secret ritual: a baptism, biting into a slug while in water... until we drown.\nIt is not something we readily share with outsiders, yet, perhaps, as you embrace more and more of our customs, we will reveal it.");
+        add("dialogue.shoreman_scholar.discuss.whom.0", "Our friends.");
+        add("dialogue.shoreman_scholar.discuss.inhabited.0", "And how! All manners of creatures, thinking and not, some of which even rose to the surface and... er...");
+        add("dialogue.shoreman_scholar.discuss.scholar.0", "I did my time in academia, long ago. My research lay at the intersection between cultural studies and theology: I investigated the interactions between radically different communities, particularly my own with all others, and put a special focus in the role of faith in such contrasts.");
+        add("dialogue.shoreman_scholar.discuss.scholar.1", "I even held a professorship at the Miskatonic for a time, though I was denied tenure. Eventually I no longer felt welcome, and the ethics department started branding my research as \"unethical\". Before I reached my thirty-fifth year of age, the inquisitions began, and all was lost.");
+        add("dialogue.shoreman_scholar.discuss.deadkeeper.0", "Do not speak of him.");
+        add("dialogue.shoreman_scholar.discuss.disappeared.0", "Yes, and from there comes my warning: be afraid of death. You never know when it might be your last.");
+        add("dialogue.shoreman_scholar.discuss.onnecronomicon.0", "Ah, right. You mentioned it.");
+        add("dialogue.shoreman_scholar.discuss.blame.0", "Thank you. You, alone, have shown compassion. We cannot be grateful enough.");
+        add("dialogue.shoreman_scholar.discuss.change.0", "Nothing. Just that... people change, over the course of long lives.");
+        add("dialogue.shoreman_scholar.discuss.preconceived.0", "Yes. Perhaps one day we shall find a race from another world, and we shall compare our sciences, and we shall learn whether there is one true, objective science, or if even that is unreachable.");
+        add("dialogue.shoreman_scholar.discuss.badthing.0", "Perhaps not indeed, and as you come to terms with the impossibility of it all, you may find yourself comforted in the knowledge that it does not truly matter, and that what is most important is your own perspective.");
+        add("dialogue.shoreman_scholar.discuss.discomfit.0", "I can see that too, and how it could prove... frightening. This is the Veil after all, and to know that there is something out there, but that we cannot know what... it is what drives people mad.");
+        add("dialogue.shoreman_scholar.discuss.listen.0", "Whether He listens or not, I cannot say – nor do I know what \"listening\" would even entail for something such as Him – but as for responding... no. He does not.\nAfter all, why would he? To Him we are naught but dust. He is... indifferent.");
+        add("dialogue.shoreman_scholar.discuss.against.0", "Yet, what if you had been different back then?");
+        add("dialogue.shoreman_scholar.discuss.gods.0", "Ah, but already we diverge: we believe in a god, not in gods.\nAnd, even then, I would hold qualms with referring to the Great Dreamer as a \"god\" – correlating Him to the mythical deities pervading your culture fails to capture the intricacies of our faith: we worship the ideal the Veil encapsulates, and the personification in our central square serves only to give the fishermen a feeling of tangibility, for something that is inherently intangible.");
+        add("dialogue.shoreman_scholar.discuss.late.0", "I am afraid so. I am afraid §oto§r.\nBut, with you at my side, I can yet share my knowledge, and that comforts me enough.");
+        add("dialogue.shoreman_scholar.discuss.death.0", "I know – for one such as you it would be easy to dismiss it.\nBut you should fear it nonetheless.");
+        add("dialogue.shoreman_scholar.discuss.trust.0", "What do you mean \"is true\"?! How would I know if it is true or not!");
+        add("dialogue.shoreman_scholar.discuss.veil2.0", "The Veil is all things that conceal a truth, of any sort.\nThe Veil is the curtain of a theatre, divorcing stage from audience.\nThe Veil is prejudice, and mankind's unwillingness to peek beyond it.");
+        add("dialogue.shoreman_scholar.discuss.veil2.1", "The Veil is language, and the words we speak, unable to capture the true essence of things.\nThe Veil is your skin, your face, your persona, and everything concealing your true self.\nThe Veil is death, that final threshold through which we cannot see.");
+        add("dialogue.shoreman_scholar.discuss.veil2.2", "The Veil is a great many things, and it resides deep down below, at the bottom of the sea. It is the great bulwark concealing infinity, the truth to all answers.\nWe call Him the Great Dreamer, for only dreams may pass through Him.");
+        add("dialogue.shoreman_scholar.discuss.nowhere.0", "You keep surprising me – all these things, coming to your mind, as if from nowhere.\nThis symbol, however, is a terrible one: whereas the Eye of Knowledge symbolises mankind's freedom to seek their path to knowledge, this, the §oTendril of Knowledge§r, reflects a much bleaker philosophy.");
+        add("dialogue.shoreman_scholar.discuss.nowhere.1", "It was adopted by a fringe movement among occult researchers – a sect within a sect – who dispute the notion of free will as applied to us Seekers of Truth, proclaiming instead that our journey towards knowledge is guided by some external force, as if snatched by a tendril against our consent.");
+        add("dialogue.shoreman_scholar.discuss.nowhere.2", "I advise you not to draw that symbol. The movement was deemed heretic long ago, and even now the debate over its legitimacy remains heated. Blood was shed, and I would not want to lose you.");
+        add("dialogue.shoreman_scholar.discuss.snippet.0", "A snippet of truth, and so the Veil tears a little.");
+        add("dialogue.shoreman_scholar.discuss.life.0", "Er... yes. Except the life inhabiting those very depths, of course. They predate blood.");
+        add("dialogue.shoreman_scholar.discuss.shoremen.0", "I see. We have a short but vivid history, one we wish the outside world would learn.");
+        add("dialogue.shoreman_scholar.discuss.maths.0", "Indeed. And I hope that it never crumbles, and that we never find two axioms to simply... contradict each other.");
+        add("dialogue.shoreman_scholar.discuss.repliednotalone.0", "Hah, that's wonderf-...\n...what?");
+        add("dialogue.shoreman_scholar.discuss.frightened.0", "That is the nature of dealing with all things involving the Veil, and as we uncover more truths, so too do we understand how little we know.");
+        add("dialogue.shoreman_scholar.discuss.alright.0", "Yes, yes... it's just that...\n...\nWell, know this: your ancestors travelled to those depths, to §ofight§r.");
+        add("dialogue.shoreman_scholar.discuss.noitdidnt.0", "...");
+        add("dialogue.shoreman_scholar.discuss.acquainted.0", "But... but I §oam§r acquainted with Al Azif! Though virtually unknown outside of occult academia, it is widely celebrated within our inner circles as the Madman of the Desert's magnum opus, a treasure trove of his arcane findings.");
+        add("dialogue.shoreman_scholar.discuss.already.0", "Oh! Oh that is wonderful!\nAnd... and He replied?");
+        add("dialogue.shoreman_scholar.discuss.stubborn.0", "Haha! Then perhaps stubbornness has become a virtue!");
+        add("dialogue.shoreman_scholar.discuss.throughdreams.0", "Then perhaps our dreams embraced each other, dancing unseen in their own little world.");
+        add("dialogue.shoreman_scholar.discuss.true.0", "This is the only true answer: one cannot judge how they would have acted when in a different state of mind, and like the sleepy man should not cancel plans for the next day, so too should the safe man not guess his actions in a perilous situation.");
+        add("dialogue.shoreman_scholar.discuss.speak.0", "Yes, and, perhaps, He may even answer. However, be forewarned: the Ocean is multifaceted, and though He may appear calm and placid on one occasion, He may well be raging and thunderous on the next – do not seek to understand Him; He is beyond us.");
+        add("dialogue.shoreman_scholar.discuss.anyone.0", "We are no longer that optimistic.");
+        add("dialogue.shoreman_scholar.discuss.onalazif.0", "You drew it... on §oAl Azif§r?");
+        add("dialogue.shoreman_scholar.discuss.yelling.0", "I'm sorry! I'm sorry, sorry, sorry! It's that... oh, what have you gotten yourself into...");
+        add("dialogue.shoreman_scholar.discuss.twomore.0", "This... this is unprecedented. I truly do not know what to say...\n...but what did §othey§r say? When they spoke to you? Who were they??");
+        add("dialogue.shoreman_scholar.discuss.afraid.0", "I do not blame you. Fear is the strongest emotion of mankind, and we know it all too well.");
+        add("dialogue.shoreman_scholar.discuss.hadyoubeenthere.0", "I see. And do you know what you would have done, had you been there?");
+        add("dialogue.shoreman_scholar.discuss.notsay.0", "Do not worry – I understand any reticence in sharing. I understand it very well.");
+        add("dialogue.shoreman_scholar.discuss.reach.0", "You must descend the vessels of the world, the very veins bringing detritus down below – for the chain tying life and water is that red fluid you call blood.");
+        add("dialogue.shoreman_scholar.discuss.ocean.0", "The Ocean is our medium: a Veil before the Veil, this immense bulwark concealing the void. It is through water that our dreams travel down, and so the Ocean forwards our prayers to the Dreamer.\nHe is, thus, our Archpriest, whom we also call Dagon, and who rules the depths for He §ois§r the depths.");
+        add("dialogue.shoreman_scholar.discuss.ocean.1", "He is also our Father, senior to the stars and eldest in the universe, who spawned all life from water. Academia refers to Him as Arche, that is, the §oFirst Principle§r, whose turmoils originated the world.\nAnd so he has been an object of study in all of mankind's history: first, by philosophers; then, by warlocks; now, even by scientists.");
+        add("dialogue.shoreman_scholar.discuss.you.0", "Yes, that too is astonishing... oh, what have you gotten yourself into...");
+        add("dialogue.shoreman_scholar.discuss.convergence.0", "This is not good.\nThe Gnawing Sensation? The Chaos that Crawls? Had you ever heard those names before the baptism?! Answer me!");
+        add("dialogue.shoreman_scholar.discuss.greater.0", "But then, even discounting the infeasibility of it all, and the intractable effort of amassing all such knowledge, and then absorbing it, even so, would it not still be marred by that final, inescapable bias that is your own, as you read and learn through your own lens, link it to your own events, and react to it as your temperament dictates? Even now as I speak.\nObjectivity is unattainable, and all knowledge is inherently subjective.");
+        add("dialogue.shoreman_scholar.discuss.eye.0", "The Eye of Knowledge. It succinctly encapsulates the birth of life: from the outermost unknown, to the void, to water, to blood, to you, the pupil in the middle, usually depicted askew to symbolise the degree of freedom that you have, however small, to study what surrounds you.");
+        add("dialogue.shoreman_scholar.discuss.eye.1", "That is, of course, only my interpretation, from one pupil to another.\nI wonder, if I may ask, where did you first encounter this symbol?");
+        add("dialogue.shoreman_scholar.discuss.plight.0", "Deleted from the annals, oh the shame on those who wrote them!\nYes, our people were slain by yours, and some of us are old enough to remember it. Crusades, inquisitions, persecutions, witch hunts – whatever you want to call them, we were the monsters they hunted. We... normal men.");
+        add("dialogue.shoreman_scholar.discuss.plight.1", "So how can one blame us when we mistrust outsiders? Were a whole people to come and take your family, how could you not be suspicious of anyone from that same population!");
+        add("dialogue.shoreman_scholar.discuss.sentience.0", "\"We\" is all living creatures, so confident in our role as kings of the universe that we believe to have exclusive claim on sentience. The Great Dreamer is sentient, that is certain – but he does not §olive§r. He is more than that.");
+        add("dialogue.shoreman_scholar.discuss.sorry.0", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.immortal.0", "We saw it in our dreams. We knew that, had you not come in peace, we would have had no escape – even if we killed you.\nAnd we remember, for we had faced one such as you before.");
+        add("dialogue.shoreman_scholar.discuss.chains.0", "Blood rituals are a staple practice among many peoples of the world, often involving sacrifice of mortal men and women to obtain boons. It has also been studied by academia, though not extensively, and always at a safe distance.");
+        add("dialogue.shoreman_scholar.discuss.chains.1", "These rituals are now viewed by researchers as rigidly scientific processes, yet dressed in mysticism and the beliefs of those who practice them. I do not know – nor wish to know – the details – but, if you do, I suggest you contact the responsible department at the Miskatonic.");
+        add("dialogue.shoreman_scholar.discuss.history.0", "Ohh, I wish it were that straightforward, and that one could simply prove things false or true, yet the real world teems with discrepancies and truths untold, and everything you can learn will brim chock-full with details that are not known, and that shall never be known, to be left inconsistent, incoherent, contradictory, for the history of the world is written not in prose, but in poetry.");
+        add("dialogue.shoreman_scholar.discuss.neverfear.0", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.noreply.0", "I see, but do not worry! You do indeed seem changed, and if you survived the ritual, then, certainly, it must have worked.\nI thus welcome thee among us once more, dear traveller; and let the Ocean's blessing be upon thee.");
+        add("dialogue.shoreman_scholar.discuss.alazifwhat.0", "Hah, for a moment I thought you had scribbled your findings on the original!\nThough, yes, if you ever seek to publish it, I suggest you change its name.");
+        add("dialogue.shoreman_scholar.discuss.science.0", "Hmm, perhaps you are right. At least within the frame of our world, and even despite the flaws of academia – of which, I assure you, there are several – science has the greatest prospect of being \"true\". Though it may depend on the science.\nYou know, I have always had a fascination towards mathematics: queen among sciences, boldly confident in the truth of its theorems and corollaries.");
+        add("dialogue.shoreman_scholar.discuss.thankyou.0", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.keeper.0", "At the top of the lighthouse, he can see everything.\nHe is the town elder, wisest among us, and the only one who still remembers the old ways. Everyone seeks his counsel.");
+        add("dialogue.shoreman_scholar.discuss.foryou.0", "Yes.");
+        add("dialogue.shoreman_scholar.discuss.whatelse.0", "Is there anything else you wish to speak about?");
+        add("dialogue.shoreman_scholar.discuss.surgery.0", "...then you would find blood and guts. Do not go on that terrible path, I beg of you.");
+        add("dialogue.shoreman_scholar.discuss.cannotknow.0", "I know that I cannot know – and that very fact proves my statement.");
+        add("dialogue.shoreman_scholar.discuss.old.0", "However long Father Ocean lets him.");
+        add("dialogue.shoreman_scholar.discuss.necronomicon.0", "That is... a morbid title, yet strangely alluring.");
+        add("dialogue.shoreman_scholar.discuss.apples.0", "Ah, the good ones! And where were these good apples when the others came for us?!");
+        add("dialogue.shoreman_scholar.discuss.noremember.0", "Like a dream. I understand.\nI shall enquire into any similar occurrences, among the shoremen and the world at large, and shall let you know of any findings. You did well to tell me.");
+        add("dialogue.shoreman_scholar.discuss.conceit.0", "It is a matter of opinion, but, yes, I think it is. Indeed, I find it our greatest conceit that we insist on giving ones such as Him shape and form. On what grounds can we reduce Him to our stature?");
+        add("dialogue.shoreman_scholar.discuss.never.0", "Then it was really... really Him... oh, what have you gotten yourself into...");
+        add("dialogue.shoreman_scholar.discuss.start.0", "Esteemed friend, shall we meet and debate the state of humankind? Please, let me share all that I know.");
+        add("dialogue.shoreman_scholar.discuss.symbols.0", "Symbols and emblems are widespread among researchers of the occult, often identifying one's affiliation and school of thought. Are there any you are interested in discussing?");
+        add("dialogue.shoreman_scholar.discuss.tendril.0", "Huh? Where did you see this?");
+        add("dialogue.shoreman_scholar.discuss.pray.0", "I guess... I guess we do it for ourselves. Like all worldly religions, in truth. To strengthen our belief in the only thing we know: that we cannot know.\nIt is a comforting feeling, that of recognizing our limits, the small island that is the human mind.");
+        add("dialogue.shoreman_scholar.discuss.pray.1", "And, of course, though the Veil remains silent, the Ocean does not – and to Him, and to His children, we do speak.");
+        add("dialogue.shoreman_scholar.discuss.accept.0", "I am not surprised. He still holds a lot of love in his heart, despite all he's gone through.");
+        add("dialogue.shoreman_scholar.discuss.groundtruth.0", "Does there have to be? How can you seek a single truth when every living thing has its own perspective of the universe? There are as many truths as there are beating hearts, else the world would not be so divided.");
+        add("dialogue.shoreman_scholar.discuss.adelina.0", "Adelina, who had lived a thousand lives. Deemed a \"Saint\" like her betrothed, yet ruthless, cold-blooded – after all, a single life meant so little to her.");
+        add("dialogue.shoreman_scholar.discuss.understand.0", "Neither do I. I shall enquire into any similar occurrences, among the shoremen and the world at large, and shall let you know of any findings. You did well to tell me.");
+        add("dialogue.shoreman_scholar.discuss.veil.0", "One could start pondering the ways in which a given nomenclature alters the frame through which we envision things, and how referring to a \"Dreamer\" may make the object more human and sympathetic than an abstract \"Veil\" – but yes, essentially they are one and the same.");
+        add("dialogue.shoreman_scholar.discuss.slugs.0", "Slugs are little reminders of what life is like at the bottom of the sea; amorphous, inchoate, mirroring the turmoils of currents in those depths.\nThey are our means of communion, through which we speak to the ocean.");
+        add("dialogue.shoreman_scholar.discuss.inperson.0", "I do not know of anyone who has, though I am sure some must have tried.\nBut then again, to what end? Nothing but dreams can breach it, and, even if you did venture into the deepest abyss, you would gaze disappointedly towards that last door, with no key in hand.");
+        add("dialogue.shoreman_scholar.discuss.repliedalone.0", "Then you too heard His voice, soothing, consoling, the crashing of waves upon your mind, as you drowned... and then breathed.\nI thus welcome thee among us once more, dear traveller; and let the Ocean's blessing be upon thee.");
+        add("dialogue.shoreman_scholar.discuss.ourselves.0", "Hah, good question, as proven by the fact that I do not know the answer. But that is a question for someone wiser than me, for knowing one's self is within the scope of wisdom, and not erudition.");
+        add("dialogue.shoreman_scholar.discuss.i____________.option", "I drew it myself on the pages of the Necronomicon. I don't recall seeing it previously.");
+        add("dialogue.shoreman_scholar.discuss.that.option", "That too.");
+        add("dialogue.shoreman_scholar.discuss.i_.option", "I am sorry.");
+        add("dialogue.shoreman_scholar.discuss.forgive.option", "Forgive me, but I'd rather not say.");
+        add("dialogue.shoreman_scholar.discuss.you.option", "You are right. I cannot say.");
+        add("dialogue.shoreman_scholar.discuss.what____.option", "What role did the lighthouse keeper have?");
+        add("dialogue.shoreman_scholar.discuss.what_______.option", "What role did the lighthouse keeper have?");
+        add("dialogue.shoreman_scholar.discuss.who's.option", "Who's \"we\"?");
+        add("dialogue.shoreman_scholar.discuss.let___.option", "Let us talk another time.");
+        add("dialogue.shoreman_scholar.discuss.always_.option", "Always.");
+        add("dialogue.shoreman_scholar.discuss.i_____________________________.option", "I understand you have suffered much, but your plight is never mentioned in our history books. What can you tell me about it?");
+        add("dialogue.shoreman_scholar.discuss.i_________________________________.option", "I do not remember.");
+        add("dialogue.shoreman_scholar.discuss.no:.option", "No: I am the one who should be grateful to you, for opening my mind beyond the dogmas I used to believe in.");
+        add("dialogue.shoreman_scholar.discuss.i_____________________________________.option", "I wish to talk about you shoremen.");
+        add("dialogue.shoreman_scholar.discuss.but____.option", "But just a little.");
+        add("dialogue.shoreman_scholar.discuss.this.option", "This was enlightening. Thank you.");
+        add("dialogue.shoreman_scholar.discuss.hah!_.option", "Hah! Of course.");
+        add("dialogue.shoreman_scholar.discuss.then_.option", "Then each such truth is part of one greater truth, and were each being to describe its own view, its own history, the course of its life, then we would finally see it all as a whole, unmarred by bias: all sides of a war, all angles of an event, all joy and all pain.");
+        add("dialogue.shoreman_scholar.discuss.thanks_.option", "Thanks.");
+        add("dialogue.shoreman_scholar.discuss.yes,.option", "Yes, but He wasn't alone.");
+        add("dialogue.shoreman_scholar.discuss.does.option", "Does this mean He responds to your prayers? That He listens to us?");
+        add("dialogue.shoreman_scholar.discuss.wait___.option", "Wait... what??");
+        add("dialogue.shoreman_scholar.discuss.blissfully.option", "Blissfully unaware, is what I have been! Only recently did I see through the old dogmas.");
+        add("dialogue.shoreman_scholar.discuss.then.option", "Then I shall reach it through dreams.");
+        add("dialogue.shoreman_scholar.discuss.indeed_.option", "Indeed. Thank you for the enlightening conversation.");
+        add("dialogue.shoreman_scholar.discuss.it_.option", "It is what anyone should have done.");
+        add("dialogue.shoreman_scholar.discuss.dagon's_.option", "Dagon's blessing upon you as well.");
+        add("dialogue.shoreman_scholar.discuss.it.option", "It should not have happened. None of it.");
+        add("dialogue.shoreman_scholar.discuss.i______________________.option", "I... am frightened.");
+        add("dialogue.shoreman_scholar.discuss.i_______.option", "I shall try nonetheless.");
+        add("dialogue.shoreman_scholar.discuss.there.option", "There is a Veil within each and every one of us, as you said, and if I were to dig deep into our own bodies...");
+        add("dialogue.shoreman_scholar.discuss.what__.option", "What is the Ocean to you?");
+        add("dialogue.shoreman_scholar.discuss.can.option", "Can I speak to Him?");
+        add("dialogue.shoreman_scholar.discuss.you____.option", "You couldn't be acquainted with it: it is the diary and journal upon which I note down my findings.");
+        add("dialogue.shoreman_scholar.discuss.to.option", "To fight whom?");
+        add("dialogue.shoreman_scholar.discuss.you__________.option", "You are right. The real truth is impenetrable.");
+        add("dialogue.shoreman_scholar.discuss.i___________________________________.option", "I wish to talk about gods.");
+        add("dialogue.shoreman_scholar.discuss.love.option", "Love is the hallmark of a good leader. You are fortunate.");
+        add("dialogue.shoreman_scholar.discuss.indeed__.option", "Indeed.");
+        add("dialogue.shoreman_scholar.discuss.what_________.option", "What does this tentacle represent?");
+        add("dialogue.shoreman_scholar.discuss.i________________________________.option", "I wish to talk about you shoremen.");
+        add("dialogue.shoreman_scholar.discuss.he.option", "He is old. How long can he still live?");
+        add("dialogue.shoreman_scholar.discuss.if.option", "If I seek to learn the history of the world, I want my sources to be reliable. Would you read a book that was proven false?");
+        add("dialogue.shoreman_scholar.discuss.for.option", "For good reasons.");
+        add("dialogue.shoreman_scholar.discuss.and_.option", "And I wish to ask about you in particular. How do you know so much?");
+        add("dialogue.shoreman_scholar.discuss.i__________________.option", "I... do not know.");
+        add("dialogue.shoreman_scholar.discuss.i_______________________________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.let__.option", "Let us talk another time.");
+        add("dialogue.shoreman_scholar.discuss.perhaps.option", "Perhaps I should.");
+        add("dialogue.shoreman_scholar.discuss.so.option", "So it has.");
+        add("dialogue.shoreman_scholar.discuss.indeed.option", "Indeed he was the first to accept me.");
+        add("dialogue.shoreman_scholar.discuss.thank______.option", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.only.option", "Only if I have to.");
+        add("dialogue.shoreman_scholar.discuss.i____________________.option", "I hope so too.");
+        add("dialogue.shoreman_scholar.discuss.and__.option", "And what is this Veil, then?");
+        add("dialogue.shoreman_scholar.discuss.no__.option", "No. Never.");
+        add("dialogue.shoreman_scholar.discuss.how_.option", "How do I talk to Him?");
+        add("dialogue.shoreman_scholar.discuss.then______.option", "Then again, even science is founded upon our preconceived notions of the world.");
+        add("dialogue.shoreman_scholar.discuss.you_______.option", "You are right. Maths is beautiful.");
+        add("dialogue.shoreman_scholar.discuss.i___________________________.option", "I am sorry to hear.");
+        add("dialogue.shoreman_scholar.discuss.nowhere,.option", "Nowhere, actually. It came to me right now.");
+        add("dialogue.shoreman_scholar.discuss.i________________.option", "I would have fought against them.");
+        add("dialogue.shoreman_scholar.discuss.what.option", "What do you mean?");
+        add("dialogue.shoreman_scholar.discuss.that_.option", "That could never happen.");
+        add("dialogue.shoreman_scholar.discuss.i___.option", "I... I must have heard the title somewhere and forgot, then.");
+        add("dialogue.shoreman_scholar.discuss.do.option", "Do you find it wrong to personify Him?");
+        add("dialogue.shoreman_scholar.discuss.but_.option", "But we may yet breach it.");
+        add("dialogue.shoreman_scholar.discuss.i__.option", "I think I'll keep it for the time being.");
+        add("dialogue.shoreman_scholar.discuss.you_________.option", "You paint a lovely picture.");
+        add("dialogue.shoreman_scholar.discuss.immortal___.option", "Immortal... and still she disappeared.");
+        add("dialogue.shoreman_scholar.discuss.it___.option", "It was indeed through dreams that I was brought to you.");
+        add("dialogue.shoreman_scholar.discuss.i_________________.option", "I would have been too afraid, I admit.");
+        add("dialogue.shoreman_scholar.discuss.i_____________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.it__.option", "It had to be done.");
+        add("dialogue.shoreman_scholar.discuss.thank__.option", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.let_.option", "Let us change subject.");
+        add("dialogue.shoreman_scholar.discuss.i________________________.option", "I see.");
+        add("dialogue.shoreman_scholar.discuss.thank____.option", "Thank you. I shall remain cautious.");
+        add("dialogue.shoreman_scholar.discuss.i_________.option", "I am sorry...");
+        add("dialogue.shoreman_scholar.discuss.just.option", "Just standing by. I understand.");
+        add("dialogue.shoreman_scholar.discuss.science.option", "Science is objective. All (respectable) scientific knowledge is proven, by logic or experiment.");
+        add("dialogue.shoreman_scholar.discuss.how__.option", "How do I reach His depths?");
+        add("dialogue.shoreman_scholar.discuss.why.option", "Why are you yelling?!");
+        add("dialogue.shoreman_scholar.discuss.i_______________________________.option", "I wish to talk about symbols.");
+        add("dialogue.shoreman_scholar.discuss.perhaps___.option", "Perhaps... but she was never found. She may still be alive, grieving her beloved.");
+        add("dialogue.shoreman_scholar.discuss.i____.option", "I think I'll rename it... §oNecronomicon§r.");
+        add("dialogue.shoreman_scholar.discuss.who?.option", "Who?");
+        add("dialogue.shoreman_scholar.discuss.i________.option", "I find this \"Gnawing Sensation\" to be not as relevant as a literal voice telling me it was... §omyself§r.");
+        add("dialogue.shoreman_scholar.discuss.i___________.option", "I drew it myself on the pages of Al Azif. I don't recall seeing it previously.");
+        add("dialogue.shoreman_scholar.discuss.i.option", "I shall not commit the same mistakes.");
+        add("dialogue.shoreman_scholar.discuss.but.option", "But even then, there is a veil. Do we truly know ourselves?");
+        add("dialogue.shoreman_scholar.discuss.i_______________.option", "I do not think her capable of regret.");
+        add("dialogue.shoreman_scholar.discuss.i_____________.option", "I understand.");
+        add("dialogue.shoreman_scholar.discuss.changed.option", "Changed the title, as you advised.");
+        add("dialogue.shoreman_scholar.discuss.you_____.option", "You are right. I cannot blame you.");
+        add("dialogue.shoreman_scholar.discuss.i______________.option", "I see; but, perhaps, that is not a bad thing.");
+        add("dialogue.shoreman_scholar.discuss.then____.option", "Then it adequately mirrors its content.");
+        add("dialogue.shoreman_scholar.discuss.i__________________________________.option", "I... am frightened.");
+        add("dialogue.shoreman_scholar.discuss.two.option", "Two more voices in my head, but I did not talk back.");
+        add("dialogue.shoreman_scholar.discuss.___.option", "...");
+        add("dialogue.shoreman_scholar.discuss.i_____.option", "I find it discomfiting, frankly.");
+        add("dialogue.shoreman_scholar.discuss.you_.option", "You will never have to fear me.");
+        add("dialogue.shoreman_scholar.discuss.hah!.option", "Hah! I am quite the stubborn individual – I do not change easily.");
+        add("dialogue.shoreman_scholar.discuss.i____________________________________.option", "I wish to talk about symbols.");
+        add("dialogue.shoreman_scholar.discuss.what__________.option", "What do the slugs mean to you shoremen?");
+        add("dialogue.shoreman_scholar.discuss.what?.option", "What? Are you alright?");
+        add("dialogue.shoreman_scholar.discuss.what_____.option", "What is the Ocean to you?");
+        add("dialogue.shoreman_scholar.discuss.one.option", "One claimed to be the Gnawing Sensation at the back of my mind. The other claimed to be... me?");
+        add("dialogue.shoreman_scholar.discuss.i________________________________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.you___.option", "You... know I am immortal?");
+        add("dialogue.shoreman_scholar.discuss.i___________________.option", "I shall try nonetheless.");
+        add("dialogue.shoreman_scholar.discuss.arche.option", "Arche is inhabited?");
+        add("dialogue.shoreman_scholar.discuss.i____________________________.option", "I understand you have suffered much, but your plight is never mentioned in our history books. What can you tell me about it?");
+        add("dialogue.shoreman_scholar.discuss.i______.option", "I have already gone through it.");
+        add("dialogue.shoreman_scholar.discuss.thank___.option", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.i_______________________.option", "I do not fear death.");
+        add("dialogue.shoreman_scholar.discuss.what___.option", "What role does the lighthouse keeper have?");
+        add("dialogue.shoreman_scholar.discuss.let.option", "Let us change subject.");
+        add("dialogue.shoreman_scholar.discuss.thank_.option", "Thank you. Maybe I shall.");
+        add("dialogue.shoreman_scholar.discuss.but__.option", "But there has to be a \"ground truth\" at the bottom of it all! Something we can deconstruct, to map all facts and events as they happened.");
+        add("dialogue.shoreman_scholar.discuss.let's.option", "Let's talk of something else.");
+        add("dialogue.shoreman_scholar.discuss.no_.option", "No.");
+        add("dialogue.shoreman_scholar.discuss.what________.option", "What do these concentric circles represent?");
+        add("dialogue.shoreman_scholar.discuss.and.option", "And I wish to ask about you in particular. How do you know so much?");
+        add("dialogue.shoreman_scholar.discuss.then_____.option", "Then let us hope for His blessing.");
+        add("dialogue.shoreman_scholar.discuss.you__.option", "You cannot know that.");
+        add("dialogue.shoreman_scholar.discuss.i_________________________.option", "I understand. Thank you.");
+        add("dialogue.shoreman_scholar.discuss.you______.option", "You can never generalize from the actions of a few. There is conflict within every population, and just as many may have been for it as against.");
+        add("dialogue.shoreman_scholar.discuss.these.option", "These §odeep creatures§r you refer to... did they fight for you?");
+        add("dialogue.shoreman_scholar.discuss.yes_.option", "Yes.");
+        add("dialogue.shoreman_scholar.discuss.i__________.option", "I... never thought it possible. I shall heed your warning. Thank you.");
+        add("dialogue.shoreman_scholar.discuss.then___.option", "Then why pray at all?");
+        add("dialogue.shoreman_scholar.discuss.thank_____.option", "Thank you.");
+        add("dialogue.shoreman_scholar.discuss.this_.option", "This was enlightening. Thank you.");
+        add("dialogue.shoreman_scholar.discuss.dagon's.option", "Dagon's blessing upon you as well.");
+        add("dialogue.shoreman_scholar.discuss.you________.option", "You have nothing to fear.");
+        add("dialogue.shoreman_scholar.discuss.i__________________________.option", "I see. That substance common to all life.");
+        add("dialogue.shoreman_scholar.discuss.i______________________________.option", "I wish to talk about gods.");
+        add("dialogue.shoreman_scholar.discuss.how___.option", "How can I trust that what you say is true?");
+        add("dialogue.shoreman_scholar.discuss.is.option", "Is it too late to go back?");
+        add("dialogue.shoreman_scholar.discuss.can_.option", "Can I reach the Veil, in person? Has anyone ever done it?");
+        add("dialogue.shoreman_scholar.discuss.perhaps_.option", "Perhaps that day shall come sooner rather than later.");
+        add("dialogue.shoreman_scholar.discuss.thank.option", "Thank you. I look forward to it.");
+        add("dialogue.shoreman_scholar.discuss.what_.option", "What is the Ocean to you?");
+        add("dialogue.shoreman_scholar.discuss.then__.option", "Then I shall reach it through dreams.");
+        add("dialogue.shoreman_scholar.discuss.are.option", "Are the Great Dreamer and the Veil one and the same?");
+        add("dialogue.shoreman_scholar.discuss.i______________________________________.option", "I understand.");
+        add("dialogue.shoreman_scholar.discuss.what______.option", "What role does the lighthouse keeper have?");
+        add("dialogue.shoreman_scholar.discuss.how.option", "How do I reach Him?");
+        add("dialogue.shoreman_scholar.discuss.but___.option", "But how? Where can I find these chains?");
 
 
     }
@@ -1398,6 +1761,92 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.thank_you2.start.0", "Good luck, friend.");
         add("dialogue.shoreman_lighthouse_keeper.thank_you2.end.option", "(End)");
 
+        add("dialogue.shoreman_lighthouse_keeper.communed1.start.0", "Once the mind relinquishes its preconceptions, so too does the journey towards truth become lighter.\nDo not tarry, Seeker! You have so many wonders yet ahead of you.");
+        add("dialogue.shoreman_lighthouse_keeper.communed1.fear.option", "Fear not. I have all the time I need.");
+        add("dialogue.shoreman_lighthouse_keeper.communed1.thank.option", "Thank you... for opening my mind.");
+
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.old.0", "I am old, and do not have long left to live.\nBut I am not afraid, and in passing I know Father Ocean shall embrace my remains.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.start.0", "Welcome back, dear friend.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.slugs.0", "Oh, that is a joy to hear! They are, indeed, sacred to us.\nOnly, a warning: they are an acquired taste.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.survive.0", "Well... I hope so.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.variety.option", "Variety is the spice of life.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.___.option", "...");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.i.option", "I believe so too.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.i_.option", "I will survive.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.i__.option", "I would be glad to try one of your white slugs.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.and.option", "And I wish to embrace your culture. I would be glad to try one of your white slugs.");
+        add("dialogue.shoreman_lighthouse_keeper.wantslug.just.option", "Just wanted to make sure you are doing well.");
+
+        add("dialogue.shoreman_lighthouse_keeper.afterslug.old.0", "I am old, and do not have long left to live.\nBut I am not afraid, and in passing I know Father Ocean shall embrace my remains.");
+        add("dialogue.shoreman_lighthouse_keeper.afterslug.start.0", "Welcome back, dear friend.");
+        add("dialogue.shoreman_lighthouse_keeper.afterslug.i.option", "I believe so too.");
+        add("dialogue.shoreman_lighthouse_keeper.afterslug.just.option", "Just wanted to make sure you are doing well.");
+
+        add("dialogue.shoreman_lighthouse_keeper.baptism.outsider.0", "Indeed, and for precisely this reason I think you can make it.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.old.0", "I am old, and do not have long left to live.\nBut I am not afraid, and in passing I know Father Ocean shall embrace my remains.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.then.0", "And then you drown.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.different.0", "That...\nI do not know. Perhaps our attunement with water, or the strength of our faith. Things you now share.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.start.0", "Welcome back, dear friend.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.ocean.0", "Ah, I was afraid you would, eventually.\nBaptism is a sacred rite we undergo when young, to enter the next stage of our lives.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.ocean.1", "Yet, it is dangerous.\nListen: no outsider has ever attempted this, and if they did, they would not survive it.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.remember.0", "I was terribly, terribly afraid, and when I was put in the water, knowing only that I should not let go, I realized I could not breathe and that my life was running out and I knew for certain that they had lied to me because I could not breathe no matter how hard I tried and I was going to die and be forgotten and all my life had led to nothing and was worthless and then I hear Him and I BREATHE.\nIn, and out. In. And out. Again. And again.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.then2.0", "Hopefully, it will not all end there.\nYet, sometimes it does, and some of my brethren just let go, so that we never again heard their voice.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.tell.0", "Slugs are our means of communion. You must consume one, while submerged in water in a small hole surrounded by our dark sand.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.you.0", "Yes, as we all did.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.breathe.0", "Yes. And so will you, I hope.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.certainty.0", "§oListen,§r Seeker.\nWe are human, just like all of you – but like any two humans, we also differ, and there are things we cannot do that others can, and viceversa.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.voice.0", "Calm and placid.\nBut, be forewarned: he is not always so.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i___.option", "I believe so too.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.what?!.option", "What?!");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.then_.option", "Then tell me. Please.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.just.option", "Just wanted to make sure you are doing well.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.intriguing___.option", "Intriguing...");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.you.option", "You do not know? Then why proclaim with such certainty that an outsider would die, when none even attempted?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i_____.option", "I understand. Thank you.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i__.option", "I thought I was no longer an outsider to you.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.do.option", "Do you remember how it was?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.have.option", "Have you gone through the ritual too?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i______.option", "I will keep that in mind. Thank you.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.what.option", "What makes you different from outsiders?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.then.option", "Then tell me. Please.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i____.option", "I wish to speak to the Ocean.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.how.option", "How was His voice?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i_.option", "I understand. Then please tell me how to perform the ritual, so that I may see whether we are more alike than not.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.and.option", "And then?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.you_.option", "You breathed in water?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i.option", "I hope so too. Thank you.");
+
+        add("dialogue.shoreman_lighthouse_keeper.baptism2.start.0", "Welcome back, dear friend.\nI wish you the best for your baptism.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism2.thank.option", "Thank you.");
+
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.her.0", "Yes. But one day she vanished all the same.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.voices.0", "What?! That has never happened before! No, no, it cannot be!");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.ocean.0", "And blessed be Dagon, then! Embracing you like you embraced us.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.awakened.0", "I do not know either. Perhaps nobody does.\nSearch texts, ask luminaries, see if anyone went through the same.\nI pray for you, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.start.0", "You live! Oh, blessings, bless, bless you!");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.adelina.0", "\"Saint\" Adelina. But one day she vanished all the same.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.children.0", "Oh... well, you are ready now.\nAnd I know your bravery, and that you will do so unafraid... but be prudent. Do not offend them.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.know.0", "We saw it in a dream, afraid that the past would repeat itself.\nIf you had not come in peace, how could we have stopped you? Just like we did not stop §oher§r.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.deepones.0", "They are our... friends. And allies.\nBut... no, words will not do them justice. You must see them yourself. They are wondrous, made in the shape of Father Dagon.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.immortal.0", "I know that you cannot truly die, Seeker. But you are not the first, and you will not be the last.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i_____.option", "I spoke with the Ocean.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i____.option", "I see. Thank you.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.then_.option", "Then I shall be prudent.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.adelina?.option", "Adelina?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i___.option", "I shall be courteous, then.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i______.option", "I heard three voices.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i________.option", "I still spoke to the Ocean, though. He told me to meet his oldest children.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.thank.option", "Thank you.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i__.option", "I shall be courteous, then.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i_______.option", "I am also shaken. I do not know what I awakened.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.can.option", "Can you tell me what to expect?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i_.option", "I do not think anyone could have gone through the same. I am... unique.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.he.option", "He was not alone. I heard three voices.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.then.option", "Then I shall be prudent.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.how.option", "How did you know?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.he_.option", "He told me to meet his oldest children, sailing out on a canoe.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.who.option", "Who else was like me?");
+        add("dialogue.shoreman_lighthouse_keeper.baptism3.i.option", "I see. Thank you.");
 
     }
 
@@ -1417,8 +1866,11 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "[%s] Hold the phial in my hand while I sleep.\\1" +
                 "[%s] Drink the phial's contents right before sleeping.\\1" +
                 "[%s] (More complex) Build a fume spreader, place it next to my bed, fill it with oniric incense and then with the phial.\\n" +
-                "Once I wake up, I must close my eyes and concentrate, to try and reminisce what the dream saw.");
+                "Once I wake up, I {§nmust close my eyes and concentrate§r}[caption:reminisce], to try and reminisce what the dream saw.");
         add("research.FIRSTDREAMS.stage.3", "It worked. \\nAn outlandish hypothesis, a wild shot in the dark and yet it §ostruck§r something, because there §owas§r something to strike in that gloom escaping our senses.\\nToday I pioneer the Art of Dreaming, so that humankind may see the world in a new light, and elude the limits of our worldly bodies. And I §ovow§r to continue exploring and expanding this field as far as I can, here on the pages of Al Azif.");
+
+        add("research.CRAFTING.title", "Crafting Registry");
+        add("research.MEMORIES.title", "Memories");
 
         add("research.SLEEP_CHAMBER.title", "Sleep Chamber");
         add("research.slept_in_chamber.text", "Experiment until you can answer at least the first question.");
@@ -1581,6 +2033,61 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.CUSTOMS.stage.1", "§o...bleah.§r\\n" +
                 "Some veils are better left closed.");
 
+        add("research.FARMING_TECHNIQUES.title", "Farming Techniques");
+        add("research.used_farming_technique.text", "Test the technique.");
+        add("research.FARMING_TECHNIQUES.stage.0", "Despite being a primarily maritime people, the shoremen also sporadically engage (or, at least, used to) in farming activities, particularly in those involving natural fibers critical to the production of rope and twine.\\n" +
+                "Detached from other cultures using bone meal as fertilizer, the shoremen found their own technique to speed up crop growth, using a game of weights and balance. One must be wearing boots of diamond and leggings of gold, and hold dirt in their main hand. Then, one must jump on tilled soil; in so doing, the soil won’t be ruined, but, instead, the crop growing on it will be fertilized.");
+        add("research.FARMING_TECHNIQUES.stage.1", "The technique worked – surprisingly, might I add, as I would have expected the armor’s added weight to be a drawback rather than a boon. It seems, however, that such weight, combined to my own, is just enough for the footprints left in the soil to be beneficial, rather than not.");
+
+        add("research.DELICACIES.title", "Delicacies of the Shore");
+        add("research.ate_delicacy.text", "Try a local dish.");
+        add("research.DELICACIES.stage.0", "Although much of their food culture revolves around slugs, this seafood-centric cuisine of the shoremen has much more to offer, and through the mixing of various ingredients they can conjure tastes and textures that are much more palatable to outsiders. I have catalogued various recipes of theirs in these pages.");
+        add("research.DELICACIES.stage.1", "These dishes may be quite unorthodox in their look and making, but, I must say, such uniqueness only adds to their exotic charm. Besides, they don’t taste half bad, and though they may not restore much hunger in the immediate, they tend to be relatively saturating in the long term.");
+
+        add("research.CARPENTRY.title", "Carpentry");
+        add("research.received_fish.text", "Sail for a while in a canoe.");
+        add("research.CARPENTRY.stage.0", "The creaking wood and the damp textures of the Shoremen's dwellings belie the artistry involved in their construction. This is a folk who mastered the craft of building on water, and did so wholly for the sake of their religious beliefs.\\n" +
+                "Though I don't expect to replicate their results, I may still be willing to imitate their style. Most of their building materials can be easily obtained.\\n" +
+                "Perhaps more importantly, I wish to sail in one of their canoes, which they claim to be \"closer to the Ocean\".");
+        add("research.CARPENTRY.stage.1", "Fish just started... jumping inside. They do not see the canoe or its rider as a threat, but rather a friend, an ally. \\n" +
+                "It is as if Father Ocean himself was making me a gift.");
+
+        add("research.GRASPING_WATER.title", "Grasping Water");
+        add("research.grasped_water.text", "Take and place water in this manner.");
+        add("research.GRASPING_WATER.stage.0", "The seafaring lifestyle of the shoremen led to them becoming proficient in handling water. Some of their techniques, however, appear otherworldly in nature, at least to us outsiders.\\n" +
+                "The shoremen would close their eyes before trying to fill an empty bucket with water. In doing so, the water is removed from the ground, but the bucket remains empty.\\n" +
+                "More importantly, any water taken in this manner may later be placed anywhere using an empty bucket, again with eyes closed.");
+        add("research.GRASPING_WATER.stage.1", "The technique worked, yet I cannot grasp the trick. What happens in the world when I close my eyes?");
+
+        add("research.BAPTISM.title", "Baptism");
+        add("research.ready_for_baptism.text", "Learn at least three of the shoremen customs, then speak to the keeper.");
+        add("research.baptized.text", "Perform the ritual.");
+        add("research.BAPTISM.stage.0", "After having reached a certain stage of their life, shoremen appear to undergo a secret rite to speak with the Ocean. They are still tightlipped about its details, but as I embrace more and more of their customs they may become willing to reveal them.");
+        add("research.BAPTISM.stage.1", "The keeper’s words were ominous, but I must proceed, just as I did for communion.\\n" +
+                "I must dig a hole three blocks deep, but only one wide, open at the top and surrounded in dark sand elsewhere. I must fill it completely with §ostill§r water, for each of its three empty blocks.\\n" +
+                "Then, I must sink to its bottom and devour a slug… and wait for what comes next.\\n" +
+                "Merciful God, please,\\1" +
+                "don’t let me drown.");
+        add("research.BAPTISM.stage.2", "His voice was calm, placid, yet assertive, authoritative. His instructions were clear: I must make contact with His children, and so I shall.\\n" +
+                "But… what else did I awaken? There was a convergence of thoughts, centered upon me.\\n" +
+                "Oh, what did I do?");
+
+        add("research.DREAM_BOTTLE.title", "Dream Bottle");
+        add("research.used_bottle.text", "Use the dream bottle with some memories.");
+        add("research.filled_bottle.text", ""); // this is secret
+        add("research.DREAM_BOTTLE.stage.0", "Dreams hold great relevance among the shoremen, and it is unsurprising that some of their customs overlap with my own research. Of great interest is their \"Dream Bottle\", a sort of flask that would induce in them a dreamlike state – perhaps not dissimilar from that of my Sleep Chamber?\\n" +
+                "If so, I could try to replicate the effects already observed in my studies by filling the bottle with memory phials before drinking its contents.\\n" +
+                "Remarkably, the bottle itself is... unremarkable. Aside from a single diamond, its crafting involves only some clay, before filling it with water. Interestingly, the shoremen claim that, in the past, they would fill it with their own tears, for they had so much grief in them. Now their tears are spent, and I could never weep so much myself.");
+        add("research.DREAM_BOTTLE.stage.1", "It works, and the bottle becomes yet another way for me to dream. It is easily portable and can allow me to utilize four memory pials at once. However, it can only be used once per day.");
+        add("research.DREAM_BOTTLE.stage.2", "It works, and the bottle becomes yet another way for me to dream. It is easily portable and can allow me to utilize four memory phials at once.\\n" +
+                "Normally, it can only be used once per day. However, filling it with tears overcomes this flaw, allowing me to use it as many times as I want as long as there is sufficient liquid.");
+
+        add("research.LOCAL_MEDICINE.title", "Local Medicine");
+        add("research.used_antidote.text", "Test a capsule.");
+        add("research.LOCAL_MEDICINE.stage.0", "The shoremen show no shame for their belief in miracles – and, with all I’ve recently learned, who am I to judge?\\n" +
+                "Nonetheless, miracles are hard to come by when time shows no quarter, and in light of emergencies such as bites from deep sea fauna, the shoremen have endeavoured to find solutions through natural ingredients.\\n" +
+                "Their antidote capsules are now widespread in their communities, and are used to treat poison or wither effects. These remedies can either be used manually or set to trigger on infection. In so doing, they cure the negative effect and, most importantly, grant immunity for roughly a minute.");
+        add("research.LOCAL_MEDICINE.stage.1", "The capsules work as expected. It’s tempting to see local medicine as backwards – and it so very often is – but one must not forget these antidotes came from lengthy, vicious trial and error. In a way, the process was rigidly scientific.");
 
     }
 
@@ -1593,6 +2100,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting2", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[link:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[link:crafting.fume_spreader] to assign it the contained memory.");
         add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.");
         add(SLEEP_CHAMBER.get().getDescriptionId() + ".crafting", "A complex device known to mimic the dream state induced by sleeping.\\1To use it, I must open its door, walk inside and close it while enclosed within.");
+        add(SEAWEED_STEW.get().getDescriptionId() + ".crafting", "A simple but honest recipe; it can be served both hot and cold. Seaweed itself is a staple of Shore cuisine.");
+        add(KELP_COD_BUNDLE.get().getDescriptionId() + ".crafting", "Bread is not widespread in Shore cuisine, but these sorts of bundles are a common “food on the go” alternative. The different textures match better than expected.");
+        add(TROPICAL_DELIGHT.get().getDescriptionId() + ".crafting", "Its festive look and hefty portions often accompany celebrations in Shore culture, making for a sophisticated recipe for special occasions. It is a very filling dish, prepared with exotic fish coupled with various herbs and spices.");
+        add(ANTIDOTE_CAPSULE.get().getDescriptionId() + ".crafting", "Used to treat or prevent poison and wither effects. When affected by either ailment, the capsule will be applied automatically if held in the hotbar. It can also be used manually. Doing so will grant immunity for a certain length of time.");
     }
 
     private void addReminiscence() {
@@ -1641,10 +2152,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.drowned.option_4_3", "Just let go.");
 
         add("gui.drowned.gnawing", "I am the gnawing sensation at the back of your mind.");
-        add("gui.drowned.gnawing2", "(and I am always listening)");
+        add("gui.drowned.gnawing2", "You are not immortal.");
         add("gui.drowned.insignificant", "Insignificant");
         add("gui.drowned.worthless", "Worthless");
-        add("gui.drowned.ocean", "I am the ocean, now still and tranquil.");
+        add("gui.drowned.ocean", "I am the Ocean, now still and tranquil.");
         add("gui.drowned.ocean2", "Let us talk, just the two of us.");
         add("gui.drowned.you", "I am You.....");
         add("gui.drowned.you2", "but no, no no...");

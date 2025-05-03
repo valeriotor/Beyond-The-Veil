@@ -96,10 +96,6 @@ public class LetterBoxBlock extends ThinMultiBlock1by2 {
                     c.addExchange(p, ExchangeRegistry.byName("scholar_offer_help"));
                 });
             }
-            p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
-                c.addExchange(p, ExchangeRegistry.byName("keeper_ask_slugs"));
-                Messages.sendToPlayer(GenericToClientPacket.syncLetterData(c.saveToNBT(new CompoundTag())), p);
-            });
         }
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
     }

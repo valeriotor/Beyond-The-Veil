@@ -47,10 +47,13 @@ public class ClosedEyesEvents {
                 } else {
                     Direction direction = bhr.getDirection();
                     BlockPos pos = canBlockContainWater(level, prePos, preState) ? prePos : prePos.relative(direction);
-                    if (placeStoredWater(event.getEntity(), level, pos, bhr)) {
+                    if (DataUtil.getOrSetInteger(event.getEntity(), PlayerDataLib.STORED_WATER, 0, false) > 0 && placeStoredWater(event.getEntity(), level, pos, bhr)) {
                         DataUtil.incrementOrSetInteger(event.getEntity(), PlayerDataLib.STORED_WATER, -1, 0, false);
                         event.setFilledBucket(event.getEmptyBucket().copy());
                         event.setResult(Event.Result.ALLOW);
+                        if (!DataUtil.getBoolean(sp, PlayerDataLib.GRASPED_WATER)) {
+                            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.GRASPED_WATER, true, false);
+                        }
                     }
                 }
             }

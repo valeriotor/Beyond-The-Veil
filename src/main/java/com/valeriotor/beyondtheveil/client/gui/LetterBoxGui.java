@@ -515,7 +515,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             if (options != null) {
                 poseStack.pushPose();
                 poseStack.translate(LETTER_WIDTH * 5F / 100, LETTER_HEIGHT * 85F / 100, 0);
-                options.render(poseStack, graphics, color, relativeMouseX - LETTER_WIDTH * 5 / 100, relativeMouseY - LETTER_HEIGHT * 85 / 100, pPartialTick);
+                options.render(poseStack, graphics, 0xFFFFFF77, relativeMouseX - LETTER_WIDTH * 5 / 100, relativeMouseY - LETTER_HEIGHT * 85 / 100, pPartialTick);
                 poseStack.popPose();
             }
         }

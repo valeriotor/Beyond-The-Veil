@@ -4,6 +4,8 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.container.DreamBottleContainer;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -48,13 +50,17 @@ public class DreamBottleItem extends Item {
         }
         if (pPlayer.isShiftKeyDown()) {
             if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer sp) {
+                inHand.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(c -> {
+                    if (c.getFluidInTank(0).getAmount() > 0) {
+                        DataUtil.setBooleanOnServerAndSyncIfDifferent(sp, PlayerDataLib.FILLED_BOTTLE, true, false);
+                    }
+                });
                 NetworkHooks.openScreen(sp, new SimpleMenuProvider(DreamBottleContainer::new, Component.translatable("gui.dream_bottle.title")));
             }
-
+            return super.use(pLevel, pPlayer, pUsedHand);
         } else {
             return ItemUtils.startUsingInstantly(pLevel, pPlayer, pUsedHand);
         }
-        return super.use(pLevel, pPlayer, pUsedHand);
     }
 
     @Override

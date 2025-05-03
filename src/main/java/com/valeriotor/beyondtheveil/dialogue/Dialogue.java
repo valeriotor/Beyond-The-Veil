@@ -1,12 +1,20 @@
 package com.valeriotor.beyondtheveil.dialogue;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.LetterData;
+import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Objects;
 
@@ -35,6 +43,7 @@ public class Dialogue {
                 currentBranch = template.getNodeByID(currentBranch.getEndingNodeID()).getDialogueOptions(data).get(index);
                 indexInBranch = 0;
                 currentBranch.getUnlockedData().forEach(s -> unlockDataFromDialogue(player, s));
+                otherDialogueEffects(player);
             }
             if (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength()) {
                 finished = true;
@@ -63,6 +72,17 @@ public class Dialogue {
         if (Objects.equals(s, PlayerDataLib.RATIONALIZED)) {
             DialogueData.for_(player).setDialogue(DialogueType.BLACK_MIRROR, DialogueRegistry.getTemplate(DialogueType.BLACK_MIRROR, "rationalize3"));
         }
+    }
+
+    private void otherDialogueEffects(ServerPlayer player) {
+        LetterData letterData = LetterData.for_(player);
+        if (template.getType() == DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER && "wantslug".equals(template.getID()) && ("variety".equals(currentBranch.getBranchID()) || "___".equals(currentBranch.getBranchID()))) {
+            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.SLUG.get()));
+            letterData.removeUnstartedExchange(player, "keeper_ask_slugs");
+        } else if (template.getType() == DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER && "baptism2".equals(template.getID()) && (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength())) {
+            letterData.removeUnstartedExchange(player, "keeper_baptism");
+        }
+        Messages.sendToPlayer(GenericToClientPacket.syncLetterData(letterData.saveToNBT(new CompoundTag())), player);
     }
 
     public boolean isFinished() {

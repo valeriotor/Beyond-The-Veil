@@ -66,7 +66,7 @@ public class DoubleTextPages extends Element {
         if (secondBlock != null) {
             poseStack.pushPose();
             poseStack.translate(secondBlockX, 0, 0);
-            secondBlock.render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick);
+            secondBlock.render(poseStack, graphics, color, relativeMouseX - secondBlockX, relativeMouseY, pPartialTick);
             poseStack.popPose();
         }
     }

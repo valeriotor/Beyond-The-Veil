@@ -1,0 +1,14 @@
+{
+  "name": "keeper_baptism",
+  "correspondence": "SHOREMAN_LIGHTHOUSE_KEEPER",
+  "playerInitiated": true,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["friend", "keeper"], ["baptism", "ocean"], ["common"], ["dreamer", "embrace"], ["best", "regards"], ["name", "friend", "seeker", "traveller"]]
+    },
+    {
+      "optionsPerLine": [["hello"], ["ocean"], ["rite"], ["drown"], ["death"], ["luck"], ["bye"]]
+    }
+  ]
+}

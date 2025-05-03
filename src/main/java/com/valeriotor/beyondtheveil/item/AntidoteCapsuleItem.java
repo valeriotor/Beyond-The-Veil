@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,12 +25,19 @@ public class AntidoteCapsuleItem extends Item {
         if (pPlayer instanceof ServerPlayer sp && !pPlayer.hasEffect(BTVEffects.IMMUNITY.get())) {
             ItemStack stack = sp.getItemInHand(pUsedHand);
             if (stack.getItem() == this) {
-                stack.shrink(1);
-                sp.addEffect(new MobEffectInstance(BTVEffects.IMMUNITY.get(), 40 * 20));
-                sp.level().playSound(null, sp.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
+                applyCapsule(sp, stack);
                 return InteractionResultHolder.consume(stack);
             }
         }
         return super.use(pLevel, pPlayer, pUsedHand);
+    }
+
+    public static void applyCapsule(ServerPlayer sp, ItemStack stack) {
+        stack.shrink(1);
+        sp.addEffect(new MobEffectInstance(BTVEffects.IMMUNITY.get(), 40 * 20));
+        sp.level().playSound(null, sp.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
+        if (!DataUtil.getBoolean(sp, PlayerDataLib.USED_ANTIDOTE)) {
+            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.USED_ANTIDOTE, true, false);
+        }
     }
 }

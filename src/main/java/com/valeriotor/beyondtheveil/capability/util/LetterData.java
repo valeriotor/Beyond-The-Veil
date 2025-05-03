@@ -1,5 +1,8 @@
 package com.valeriotor.beyondtheveil.capability.util;
 
+import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.capability.DialogueDataProvider;
+import com.valeriotor.beyondtheveil.event.ResearchEvents;
 import com.valeriotor.beyondtheveil.letters.Exchange;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.letters.Letter;
@@ -10,7 +13,11 @@ import java.util.*;
 
 public class LetterData {
     // IMPORTANT: THERE MUST ALWAYS BE AT MOST ONE EXCHANGE PER TEMPLATE
+    public static LetterData for_(Player player) {
+        return player.getCapability(LetterDataProvider.LETTER_DATA).orElse(DUMMY);
+    }
 
+    private static final LetterData DUMMY = new Dummy();
     private final List<Exchange> exchanges = new ArrayList<>();
     private final List<Letter> receivedInOrder = new ArrayList<>();
     private final List<Letter> sentInOrder = new ArrayList<>();
@@ -32,6 +39,19 @@ public class LetterData {
         }
         exchanges.add(exchange);
         return true;
+    }
+
+    public void removeUnstartedExchange(Player player, String templateName) {
+        Iterator<Exchange> iterator = exchanges.iterator();
+        while (iterator.hasNext()) {
+            Exchange exchange = iterator.next();
+            if (Objects.equals(exchange.getName(), templateName)) {
+                if (exchange.canSendLetter() && exchange.noLettersSent()) {
+                    iterator.remove();
+                    return;
+                }
+            }
+        }
     }
 
     public void receiveLetter(String exchangeName) {
@@ -69,6 +89,7 @@ public class LetterData {
                         exchange.takeItems(player);
                         sentInOrder.add(sent);
                         versions.put(sent.getTemplate(), 1 + versions.getOrDefault(sent.getTemplate(), 0));
+                        ResearchEvents.sendLetterEvents(player, exchange);
                     }
                     terminateExchange(iterator, exchange);
                 }
@@ -177,6 +198,18 @@ public class LetterData {
         newStore.receivedInOrder.addAll(receivedInOrder);
         newStore.sentInOrder.addAll(sentInOrder);
         newStore.exchanges.addAll(exchanges);
+    }
+
+    private static class Dummy extends LetterData {
+        @Override public boolean addExchange(Player player, ExchangeTemplate template) {return false;}
+
+        @Override public void sendLetter(Player player, ExchangeTemplate template, List<Integer> chosenOptions, boolean clientSide) {}
+
+        @Override public void receiveLetter(String exchangeName) {}
+
+        @Override public void redeemItems(Player player, ExchangeTemplate template, int index, int version, boolean giveItems) {}
+
+        @Override public void openLetter(Player player, ExchangeTemplate template, int index, int version) {}
     }
 
 }

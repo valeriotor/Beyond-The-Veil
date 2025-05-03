@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "B": {
+      "item": "minecraft:beetroot"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "S": {
+      "item": "minecraft:sweet_berries"
+    },
+    "T": {
+      "item": "minecraft:tropical_fish"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "SCB",
+    "   "
+  ],
+  "result": {
+    "item": "beyondtheveil:tropical_delight"
+  },
+  "show_notification": true
+}

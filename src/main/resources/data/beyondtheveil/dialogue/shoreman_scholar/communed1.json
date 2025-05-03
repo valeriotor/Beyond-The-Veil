@@ -1,0 +1,33 @@
+{
+  "id": "communed1",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 3,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "thank",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "shoreman_scholar",
+  "dialogueUnlocks": ["shoreman_scholar:discuss"],
+  "dataUnlocks": []
+}

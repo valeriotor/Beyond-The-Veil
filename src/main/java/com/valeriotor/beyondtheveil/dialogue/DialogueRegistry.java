@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class DialogueRegistry {
 
-    private static Map<DialogueType, Map<String, DialogueTemplate>> dialogueTemplates = new EnumMap<>(DialogueType.class);
+    private static final Map<DialogueType, Map<String, DialogueTemplate>> dialogueTemplates = new EnumMap<>(DialogueType.class);
 
     public static void registerDialogues() {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "initial");
@@ -21,21 +21,45 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "did_dream2");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "thank_you");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "thank_you2");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "wantslug");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "afterslug");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism2");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3");
 
-        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "initial");
-        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "no_closer");
-        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "begone");
-        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial");
-        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial1");
-        registerDialogue(DialogueType.SHOREMAN_CLERK, "initial");
-        registerDialogue(DialogueType.SHOREMAN_CLERK, "initial1");
+        registerDialogue(DialogueType.SHOREMAN_BARTENDER, "initial");
+        registerDialogue(DialogueType.SHOREMAN_BARTENDER, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_BARTENDER, "communed2");
+
         registerDialogue(DialogueType.SHOREMAN_CARPENTER, "initial");
         registerDialogue(DialogueType.SHOREMAN_CARPENTER, "initial1");
-        registerDialogue(DialogueType.SHOREMAN_BARTENDER, "initial");
+        registerDialogue(DialogueType.SHOREMAN_CARPENTER, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_CARPENTER, "communed2");
+        registerDialogue(DialogueType.SHOREMAN_CARPENTER, "communed3");
+
+        registerDialogue(DialogueType.SHOREMAN_CLERK, "initial");
+        registerDialogue(DialogueType.SHOREMAN_CLERK, "initial1");
+        registerDialogue(DialogueType.SHOREMAN_CLERK, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_CLERK, "communed2");
+
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "initial");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "initial1");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk");
         registerDialogue(DialogueType.SHOREMAN_DRUNK, "drunk1");
+        registerDialogue(DialogueType.SHOREMAN_DRUNK, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_DRUNK, "communed2");
+
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "initial");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "no_closer");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "begone");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_FISHERMAN, "communed2");
+
+        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial");
+        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "initial1");
+        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "communed1");
+        registerDialogue(DialogueType.SHOREMAN_SCHOLAR, "discuss");
 
         registerDialogue(DialogueType.BLACK_MIRROR, "initial");
         registerDialogue(DialogueType.BLACK_MIRROR, "initial2");

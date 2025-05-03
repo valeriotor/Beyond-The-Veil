@@ -163,6 +163,9 @@ public class Exchange {
         return tag;
     }
 
+    public int size() {
+        return letters.size();
+    }
     // TODO for safety make a method to check that a given player still has the player timer they're waiting for
     // TODO could be combined with a method that checks if the player has the required data to receive a certain letter
 

@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    " CC ",
+    "CDRC",
+    "CRDC",
+    "CCCC"
+  ],
+  "result": {
+    "item": "beyondtheveil:dream_bottle"
+  },
+  "show_notification": true
+}

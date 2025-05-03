@@ -189,6 +189,9 @@ public class LivingEvents {
                     } else {
                         pants.setDamageValue(pants.getDamageValue() + 1);
                     }
+                    if (le instanceof ServerPlayer sp && !DataUtil.getBoolean(sp, PlayerDataLib.USED_FARMING_TECHNIQUE)) {
+                        DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.USED_FARMING_TECHNIQUE, true, false);
+                    }
                 }
             }
         }

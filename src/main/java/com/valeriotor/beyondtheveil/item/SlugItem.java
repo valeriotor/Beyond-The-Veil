@@ -2,22 +2,29 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.Tags;
 
 import java.util.Iterator;
 
@@ -33,7 +40,8 @@ public class SlugItem extends Item {
             if (ResearchUtil.getResearchStage(sp, "CUSTOMS") == 0) {
                 DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ATE_SLUG, true, false);
             }
-            if (true) { // TODO
+            boolean baptized = DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED);
+            if (!baptized) {
                 sp.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10));
                 sp.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 10, 1));
             }
@@ -50,7 +58,7 @@ public class SlugItem extends Item {
     }
 
     private static boolean checkBaptism(ServerPlayer sp) {
-        if (ResearchUtil.getResearchStage(sp, "CUSTOMS") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED)) { // TODO change customs to baptism
+        if (ResearchUtil.getResearchStage(sp, "BAPTISM") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED)) { // TODO change customs to baptism
             return false;
         }
         if (sp.level().getBlockState(sp.getOnPos()).canBeReplaced()) {
@@ -71,4 +79,47 @@ public class SlugItem extends Item {
         }
         return true;
     }
+
+    private static boolean checkContact(ServerPlayer sp) {
+        if (ResearchUtil.getResearchStage(sp, "CUSTOMS") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.HAD_CONTACT)) { // TODO change customs to first contact
+            return false;
+        }
+        Level l = sp.level();
+        if (!l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN)) {
+            return false;
+        }
+        if (l.getDayTime() < 16000 || l.getDayTime() > 20000) {
+            sp.sendSystemMessage(Component.translatable("contact.error.night"));
+            return false;
+        }
+        if (!l.getEntities(sp, AABB.ofSize(sp.position(), 30, 30, 30), e -> e instanceof Player).isEmpty()) {
+            sp.sendSystemMessage(Component.translatable("contact.error.players"));
+            return false;
+        }
+        if (sp.getVehicle() instanceof CanoeEntity canoe) {
+            for (int x = -8; x <= 8; x++) {
+                for (int z = -8; z <= 8; z++) {
+                    BlockPos offset = canoe.getOnPos().offset(x, 0, z);
+                    if (l.getBlockState(offset).getBlock() != Blocks.WATER && l.getBlockState(offset.below()).getBlock() != Blocks.WATER) {
+                        return false;
+                    }
+                    if (l.getBlockState(offset.below(2)).getBlock() != Blocks.WATER) {
+                        return false;
+                    }
+                }
+            }
+            for (int x = -3; x <= 3; x++) {
+                for (int z = -3; z <= 3; z++) {
+                    for (int y = -3; y < 0; y++) {
+                        if (l.getBlockState(canoe.getOnPos().offset(x, y, z)).getBlock() != Blocks.WATER) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

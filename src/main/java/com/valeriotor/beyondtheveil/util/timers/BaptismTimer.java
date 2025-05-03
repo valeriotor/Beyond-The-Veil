@@ -5,6 +5,8 @@ import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -123,6 +125,7 @@ public class BaptismTimer extends PlayerTimer {
                 player.level().setBlock(player.getOnPos().above(i), Blocks.WATER.defaultBlockState(), 3);
             }
         }
+        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.BAPTIZED, true, false);
     }
 
     private void resetTime() {

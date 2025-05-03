@@ -3,9 +3,11 @@ package com.valeriotor.beyondtheveil.util;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.event.PlayerEvents;
+import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
@@ -53,6 +55,12 @@ public class DataUtil {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getReminiscences();
     }
 
+    public static void addExchange(ServerPlayer p, String exchangeName) {
+        p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+            c.addExchange(p, ExchangeRegistry.byName(exchangeName));
+            Messages.sendToPlayer(GenericToClientPacket.syncLetterData(c.saveToNBT(new CompoundTag())), p);
+        });
+    }
 
     public static void createWaypoint(Player p, WaypointType type, int time, BlockPos pos) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
@@ -77,6 +85,19 @@ public class DataUtil {
                 ResearchUtil.markResearchAsUpdated(p, key);
             }
             PlayerEvents.setBooleanEvent(p, key, value);
+        });
+    }
+
+    public static void setBooleanOnServerAndSyncIfDifferent(Player p, String key, boolean value, boolean temporary) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            if(playerData.getBoolean(key) != value) {
+                playerData.setBoolean(key, value, temporary);
+                Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setBoolean(value), (ServerPlayer) p);
+                if (value) {
+                    ResearchUtil.markResearchAsUpdated(p, key);
+                }
+                PlayerEvents.setBooleanEvent(p, key, value);
+            }
         });
     }
 

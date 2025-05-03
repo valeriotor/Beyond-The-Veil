@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
+import com.valeriotor.beyondtheveil.item.AntidoteCapsuleItem;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -158,9 +159,7 @@ public class PlayerEvents {
         if (event.getEntity() instanceof ServerPlayer sp && ImmunityEffect.CURABLE.contains(effect) && !sp.hasEffect(BTVEffects.IMMUNITY.get())) {
             for (ItemStack item : sp.getInventory().items) {
                 if (item.getItem() == Registration.ANTIDOTE_CAPSULE.get()) {
-                    item.shrink(1);
-                    sp.addEffect(new MobEffectInstance(BTVEffects.IMMUNITY.get(), 40 * 20));
-                    sp.level().playSound(null, sp.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
+                    AntidoteCapsuleItem.applyCapsule(sp, item);
                     break;
                 }
             }

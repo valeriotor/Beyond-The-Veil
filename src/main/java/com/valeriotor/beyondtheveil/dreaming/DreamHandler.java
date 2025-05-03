@@ -88,6 +88,7 @@ public class DreamHandler {
         if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1) {
             return;
         }
+        DataUtil.clearReminiscences(p);
         stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
             List<Tuple<Memory, Integer>> memories = new ArrayList<>();
             for (int i = 0; i < c.getSlots(); i++) {
@@ -111,6 +112,7 @@ public class DreamHandler {
                 }
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
                 markTimesDreamt(p, "dream_bottle");
+                DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.USED_BOTTLE, true, false);
             }
             DataUtil.syncReminiscences(p);
 

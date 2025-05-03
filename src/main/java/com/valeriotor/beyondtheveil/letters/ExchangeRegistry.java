@@ -17,6 +17,7 @@ public class ExchangeRegistry {
     public static void registerExchanges() {
         registerExchange("scholar_offer_help");
         registerExchange("keeper_ask_slugs");
+        registerExchange("keeper_baptism");
     }
 
     private static void registerExchange(String name) {
