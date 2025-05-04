@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
@@ -18,9 +19,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ClientMethods {
 
@@ -100,6 +107,21 @@ public class ClientMethods {
             hideOverlayMessageTicks--;
         }
 
+    }
+
+    // Just hardcoding exceptions (items with multiple recipes). Should not be an issue
+    public static List<Optional<? extends Recipe<?>>> recipesForModItem(String key) {
+        List<Optional<? extends Recipe<?>>> recipes = new ArrayList<>();
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
+        if (item != null) {
+            if (item == Registration.ANTIDOTE_CAPSULE.get()) {
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key + "2")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key + "1")));
+            } else {
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key)));
+            }
+        }
+        return recipes;
     }
 
 }

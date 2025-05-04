@@ -1,12 +1,11 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.client.gui.elements.Element;
-import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
-import com.valeriotor.beyondtheveil.client.gui.elements.TextBlock;
-import com.valeriotor.beyondtheveil.client.gui.elements.TextUtil;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -68,13 +67,21 @@ public class CraftingRegistryGui extends Screen {
     private boolean CTCategory = true, GBCategory;
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
-    private final List<CraftingRecipe> craftingTableRecipes;
-    private final List<GearBenchRecipe> gearBenchRecipes;
+    private final List<List<CraftingRecipe>> craftingTableRecipes;
+    private final List<List<GearBenchRecipe>> gearBenchRecipes;
     private final Map<String, Research> knownRecipesByName;
     private Component selectedTitle;
     private TextBlock selectedText;
     private CraftingGrid grid;
     private CraftingEntry selectedEntry;
+    private List<? extends Recipe<?>> currentSelectionRecipes = new ArrayList<>();
+    private int arrowXOffset;
+    private int arrowYOffset;
+    private final int ARROW_WIDTH = 16;
+    private final int ARROW_HEIGHT = 16;
+    private int gridIndex;
+    private Item currentSelectionItem;
+    private int craftingGridWidth;
 
 
     public CraftingRegistryGui(ResearchStatus status) {
@@ -84,14 +91,23 @@ public class CraftingRegistryGui extends Screen {
         gearBenchRecipes = new ArrayList<>();
         for (String s : knownRecipesByName.keySet()) {
             String key = s.split(";")[0];
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
-            if (item != null) {
-                Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key));
-                if (recipe.isPresent()) {
-                    if (recipe.get() instanceof CraftingRecipe cr) {
-                        craftingTableRecipes.add(cr);
-                    } else if (recipe.get() instanceof GearBenchRecipe gbr) {
-                        gearBenchRecipes.add(gbr);
+            List<? extends Recipe<?>> optionals = ClientMethods.recipesForModItem(key).stream().filter(Optional::isPresent).map(Optional::get).toList();
+            if (!optionals.isEmpty()) {
+                boolean flag1 = false, flag2 = false;
+                for (Recipe<?> recipe : optionals) {
+                    if (recipe instanceof CraftingRecipe cr && !flag1) {
+                        craftingTableRecipes.add(new ArrayList<>());
+                        flag1 = true;
+                    } else if (recipe instanceof GearBenchRecipe gbr && !flag2) {
+                        gearBenchRecipes.add(new ArrayList<>());
+                        flag2 = true;
+                    }
+                }
+                for (Recipe<?> recipe : optionals) {
+                    if (recipe instanceof CraftingRecipe cr) {
+                        craftingTableRecipes.get(craftingTableRecipes.size() - 1).add(cr);
+                    } else if (recipe instanceof GearBenchRecipe gbr) {
+                        gearBenchRecipes.get(gearBenchRecipes.size() - 1).add(gbr);
                     }
                 }
             }
@@ -148,9 +164,12 @@ public class CraftingRegistryGui extends Screen {
         gridFactor = gridWidth / 200F;
 
         if (selectedEntry != null) {
-            selectEntry(selectedEntry.stack.getItem(), selectedEntry.recipe);
+            selectEntry(selectedEntry.stack.getItem(), selectedEntry.recipes);
         }
 
+        arrowXOffset = (gridX + gridWidth / 2);
+        arrowYOffset = 1150 * pageWidth / 1577;
+        craftingGridWidth = 800 * pageWidth / 1577;
     }
 
     private ScrollableList<CraftingEntry> initList() {
@@ -159,15 +178,25 @@ public class CraftingRegistryGui extends Screen {
 
     private ScrollableList<CraftingEntry> initList(boolean full) {
         List<CraftingEntry> entries = new ArrayList<>();
+        Map<Item, List<Recipe<?>>> map = new HashMap<>();
         if (CTCategory) {
-            for (CraftingRecipe craftingTableRecipe : craftingTableRecipes) {
-                entries.add(new CraftingEntry(craftingTableRecipe.getResultItem(minecraft.level.registryAccess()).getItem(), craftingTableRecipe));
+            for (List<CraftingRecipe> craftingTableRecipes1 : this.craftingTableRecipes) {
+                if (!craftingTableRecipes1.isEmpty()) {
+                    Item result = craftingTableRecipes1.get(0).getResultItem(minecraft.level.registryAccess()).getItem();
+                    map.computeIfAbsent(result, i -> new ArrayList<>()).addAll(craftingTableRecipes1);
+                }
             }
         }
         if (GBCategory) {
-            for (GearBenchRecipe gearBenchRecipe : gearBenchRecipes) {
-                entries.add(new CraftingEntry(gearBenchRecipe.getResultItem(minecraft.level.registryAccess()).getItem(), gearBenchRecipe));
+            for (List<GearBenchRecipe> gearBenchRecipes1 : this.gearBenchRecipes) {
+                if (!gearBenchRecipes1.isEmpty()) {
+                    Item result = gearBenchRecipes1.get(0).getResultItem(minecraft.level.registryAccess()).getItem();
+                    map.computeIfAbsent(result, i -> new ArrayList<>()).addAll(gearBenchRecipes1);
+                }
             }
+        }
+        for (Map.Entry<Item, List<Recipe<?>>> itemListEntry : map.entrySet()) {
+            entries.add(new CraftingEntry(itemListEntry.getKey(), itemListEntry.getValue()));
         }
         entries.sort(Comparator.comparing(e -> e.stack.getItem().getDescription().getString()));
         return new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
@@ -210,6 +239,12 @@ public class CraftingRegistryGui extends Screen {
             pose.popPose();
         }
         //guiGraphics.drawString(font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 10, 10, 0xFFFFFFFF);
+        if (currentSelectionRecipes.size() > gridIndex + 1) {
+            renderArrow(pose, guiGraphics, pMouseX, pMouseY, false);
+        }
+        if (gridIndex > 0) {
+            renderArrow(pose, guiGraphics, pMouseX, pMouseY, true);
+        }
 
     }
 
@@ -245,6 +280,30 @@ public class CraftingRegistryGui extends Screen {
         }
     }
 
+    private void renderArrow(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, boolean left) {
+        pose.pushPose();
+        pose.translate(arrowXOffset + (left ? -1 : 1) * ARROW_WIDTH * (left ? 4 : 3), arrowYOffset, 0);
+        if ((hoveringLeftArrow(mouseX, mouseY) && left) || ((hoveringRightArrow(mouseX, mouseY) && !left))) {
+            pose.scale(1.5F, 1.5F, 1);
+        }
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.blit(left ? ResearchPageGui.LEFT_ARROW : ResearchPageGui.RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+        pose.popPose();
+    }
+
+    private boolean hoveringLeftArrow(double mouseX, double mouseY) {
+        int leftX = arrowXOffset - 9 * ARROW_WIDTH / 2;
+        int topY = arrowYOffset - ARROW_HEIGHT / 2;
+        return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY < topY + ARROW_HEIGHT;
+    }
+
+    private boolean hoveringRightArrow(double mouseX, double mouseY) {
+        int leftX = arrowXOffset + 5 * ARROW_WIDTH / 2;
+        int topY = arrowYOffset - ARROW_HEIGHT / 2;
+        return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
+    }
+
     private boolean hoveringCTSelection(int mouseX, int mouseY) {
         return mouseX >= CTCategoryX - 16 && mouseX <= CTCategoryX + 16 && mouseY >= CTCategoryY - 16 && mouseY <= CTCategoryY + 16;
     }
@@ -256,12 +315,12 @@ public class CraftingRegistryGui extends Screen {
     public void selectEntry(String name) {
         for (CraftingEntry row : fullList.rows()) {
             if (Objects.equals(ForgeRegistries.ITEMS.getKey(row.stack.getItem()).getPath(), name)) {
-                selectEntry(row.stack.getItem(), row.recipe);
+                selectEntry(row.stack.getItem(), row.recipes);
                 selectedEntry = row;
-                if (row.recipe instanceof GearBenchRecipe) {
+                if (row.recipes instanceof GearBenchRecipe) {
                     GBCategory = true;
                     itemList = initList();
-                } else if (row.recipe instanceof CraftingRecipe) {
+                } else if (row.recipes instanceof CraftingRecipe) {
                     CTCategory = true;
                     itemList = initList();
                 }
@@ -293,6 +352,18 @@ public class CraftingRegistryGui extends Screen {
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
             itemList = initList();
             return true;
+        } else if (hoveringLeftArrow(pMouseX, pMouseY)) {
+            gridIndex = Math.max(gridIndex - 1, 0);
+            if (gridIndex < currentSelectionRecipes.size()) {
+                grid = new CraftingGrid(craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+            }
+        } else if (hoveringRightArrow(pMouseX, pMouseY)) {
+            gridIndex = Math.min(gridIndex + 1, currentSelectionRecipes.size() - 1);
+            if (gridIndex < currentSelectionRecipes.size()) {
+                grid = new CraftingGrid(craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+            }
         } else if (selectedText.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
             return true;
         }
@@ -317,7 +388,12 @@ public class CraftingRegistryGui extends Screen {
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
 
-    private void selectEntry(Item item, Recipe<?> recipe) {
+    private void selectEntry(Item item, List<? extends Recipe<?>> recipes) {
+        if (recipes.isEmpty()) {
+            return;
+        }
+        currentSelectionRecipes = recipes;
+        currentSelectionItem = item;
         selectedTitle = item.getDescription();
         String pTranslateKey = item.getDescriptionId() + ".crafting";
         if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName()))) {
@@ -331,19 +407,20 @@ public class CraftingRegistryGui extends Screen {
         List<Element> elements = new TextUtil().parseText(localizedText, width, Minecraft.getInstance().font);
         //elements.add(new CraftingGrid(width, 100, recipe));
         selectedText = TextBlock.fillBlockWithElements(elements, 0, width, 400 * pageHeight / 1261, Minecraft.getInstance().font).getA();
-        grid = new CraftingGrid(width, 100, recipe, item, gridFactor);
+        grid = new CraftingGrid(craftingGridWidth, 100, recipes.get(0), item, gridFactor);
+        gridIndex = 0;
     }
 
     private class CraftingEntry extends Element {
 
         private final ItemStack stack;
-        private final Recipe<?> recipe;
+        private final List<? extends Recipe<?>> recipes;
         private final float scaleFactor;
 
-        protected CraftingEntry(Item result, Recipe<?> recipe) {
+        protected CraftingEntry(Item result, List<? extends Recipe<?>> recipes) {
             super(entryListWidth - scrollbarWidth, entryListHeight / 6);
             stack = new ItemStack(result);
-            this.recipe = recipe;
+            this.recipes = recipes;
             scaleFactor = Math.min(1, getHeight() / 40F);
         }
 
@@ -371,7 +448,7 @@ public class CraftingRegistryGui extends Screen {
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
-                selectEntry(stack.getItem(), recipe);
+                selectEntry(stack.getItem(), recipes);
                 selectedEntry = this;
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 return true;
@@ -423,7 +500,7 @@ public class CraftingRegistryGui extends Screen {
                 recipeWidth = gbr.getRecipeWidth();
                 recipeHeight = gbr.getRecipeHeight();
             }
-            if(recipeWidth > 0) {
+            if (recipeWidth > 0) {
                 int i = 0;
                 for (int yIndex = 0; yIndex < recipeHeight; yIndex++) {
                     for (int xIndex = 0; xIndex < recipeWidth; xIndex++) {
@@ -478,7 +555,6 @@ public class CraftingRegistryGui extends Screen {
             return true;
         }
     }
-
 
 
 }

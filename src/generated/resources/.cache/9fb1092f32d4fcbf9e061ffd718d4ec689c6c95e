@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-03T21:23:24.283792	Recipes
+// 1.20.1	2025-05-04T21:02:47.2738708	Recipes
 46c323e13cda6c57e5ddd86a63a8050674b227e3 data/beyondtheveil/advancements/recipes/misc/antidote_capsule1.json
 86ede2ca81814be8f266b9430bd8ca691a4f603b data/beyondtheveil/advancements/recipes/misc/antidote_capsule2.json
 3328abc9c853d90f6533b60dbec15544c7affdb1 data/beyondtheveil/advancements/recipes/misc/canoe.json
@@ -17,7 +17,7 @@ e96617aa2aab2b11653509f5ecd8f2248976950c data/beyondtheveil/advancements/recipes
 c3f6b0beb27b3a47efb83f36350ed9f5826c869d data/beyondtheveil/advancements/recipes/misc/seaweed_stew.json
 9c5b5a5506f1901bc0e2294971bfa80b03c3dc37 data/beyondtheveil/advancements/recipes/misc/tropical_delight.json
 c2f0e604c541f12eaf39724263610447010cd902 data/beyondtheveil/recipes/antidote_capsule1.json
-24e42969424095da53095b7f10c0f46a8d624760 data/beyondtheveil/recipes/antidote_capsule2.json
+8f1dbb6b9b80b0dd59a4cc6127e92a5b2b103115 data/beyondtheveil/recipes/antidote_capsule2.json
 e5c517b2eb0f87c72a723b28a9b00fd8101d925f data/beyondtheveil/recipes/canoe.json
 2223781cd455fee12804e4b2895ae2d2d1e4e8eb data/beyondtheveil/recipes/damp_canopy.json
 17a4e98d08709848df0dc1ad13b22661a345a38a data/beyondtheveil/recipes/damp_filled_canopy.json

@@ -139,7 +139,7 @@ public class BTVRecipes extends RecipeProvider {
                 .unlockedBy("has_antidote_capsule", has(Registration.ANTIDOTE_CAPSULE.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.ANTIDOTE_CAPSULE.get().asItem()) + "1");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ONIRIC_INCENSE.get(), 2)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ANTIDOTE_CAPSULE.get(), 2)
                 .requires(Registration.ANTIDOTE_CAPSULE.get())
                 .requires(Items.INK_SAC)
                 .group("Beyond the Veil")

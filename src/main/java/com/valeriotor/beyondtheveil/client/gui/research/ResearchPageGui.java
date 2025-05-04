@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
@@ -187,9 +188,8 @@ public class ResearchPageGui extends Screen {
         String[] recipes = status.res.getStages()[status.getStage()].getRecipes();
         for (String s : recipes) {
             String key = s.split(";")[0];
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
-            if (item != null) {
-                Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key));
+            List<Optional<? extends Recipe<?>>> optionals = ClientMethods.recipesForModItem(key);
+            for (Optional<? extends Recipe<?>> recipe : optionals) {
                 if (recipe.isPresent()) {
                     if (recipe.get() instanceof CraftingRecipe cr) {
                         craftingRecipes.add(cr);
@@ -197,6 +197,7 @@ public class ResearchPageGui extends Screen {
                         gearBenchRecipes.add(gbr);
                     }
                 }
+
             }
         }
         memories.addAll(status.res.getStages()[status.getStage()].getMemories());
