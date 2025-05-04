@@ -133,6 +133,10 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.OPEN_GUI, tag);
     }
 
+    public static GenericToClientPacket renewContact() {
+        return new GenericToClientPacket(MessageType.RENEW_CONTACT, new CompoundTag());
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -171,6 +175,7 @@ public class GenericToClientPacket {
                     case SYNC_LETTER_DATA -> ClientMethods.loadLetterData(tag);
                     case HIDE_OVERLAY_MESSAGE -> ClientMethods.hideOverlayMessage();
                     case OPEN_GUI -> GuiHelper.openClientSideGui(tag);
+                    case RENEW_CONTACT -> ClientData.getInstance().renewContact();
                 }
             });
         });
@@ -193,7 +198,8 @@ public class GenericToClientPacket {
         BLACK_SCREEN,
         SYNC_LETTER_DATA,
         HIDE_OVERLAY_MESSAGE,
-        OPEN_GUI
+        OPEN_GUI,
+        RENEW_CONTACT
     }
 
 }

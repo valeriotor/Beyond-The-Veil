@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,8 +11,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -27,9 +27,11 @@ public class DeepOneEntity extends Monster {
     private boolean searchingForLand;
     protected final WaterBoundPathNavigation waterNavigation;
     protected final GroundPathNavigation groundNavigation;
+    private ContactType contactType;
+    private Player contactPlayer;
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
-        super(type, world);
+        super(BTVEntities.DEEP_ONE.get(), world);
         this.setMaxUpStep(1.0F);
         this.moveControl = new DeepOneMoveControl(this);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
@@ -40,6 +42,7 @@ public class DeepOneEntity extends Monster {
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
         //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
@@ -113,23 +116,23 @@ public class DeepOneEntity extends Monster {
     }
 
     static class DeepOneMoveControl2 extends SmoothSwimmingMoveControl {
+
         public DeepOneMoveControl2(Mob pMob) {
             super(pMob, 85, 10, 0.1F, 0.5F, false);
             ;
         }
-
         @Override
         public void tick() {
             super.tick();
         }
-    }
 
+    }
 
     static class DeepOneMoveControl extends MoveControl {
 
         private final DeepOneEntity deepOne;
-        private int wasInWater;
 
+        private int wasInWater;
         public DeepOneMoveControl(DeepOneEntity deepOne) {
             super(deepOne);
             this.deepOne = deepOne;
@@ -178,6 +181,36 @@ public class DeepOneEntity extends Monster {
                 super.tick();
             }
 
+        }
+
+    }
+    public void setContact(ContactType contactType, Player contactPlayer) {
+        this.contactType = contactType;
+        this.contactPlayer = contactPlayer;
+    }
+
+    public ContactType getContactType() {
+        return contactType;
+    }
+
+
+    public enum ContactType {
+        MOVE1(3, 40), MOVE2(1.5F, 0), MOVE3(2.5F, 70);
+
+        private final float factor;
+        private final int startOffset;
+
+        ContactType(float factor, int startOffset) {
+            this.factor = factor;
+            this.startOffset = startOffset;
+        }
+
+        public float getFactor() {
+            return factor;
+        }
+
+        public int getStartOffset() {
+            return startOffset;
         }
     }
 

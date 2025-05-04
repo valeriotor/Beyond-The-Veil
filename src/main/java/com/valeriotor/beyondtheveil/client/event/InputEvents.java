@@ -32,6 +32,7 @@ public class InputEvents {
             }
         }
         ClientMethods.tick(event);
+        ClientData.getInstance().tick();
     }
 
     @SubscribeEvent

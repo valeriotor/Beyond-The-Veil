@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.event;
 
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -380,7 +381,10 @@ public class RenderEvents {
             event.setFarPlaneDistance(300);
             //event.setNearPlaneDistance(-100);
             event.setCanceled(true);
-
+        } else if(ClientData.getInstance().getContactFogLevel() > 0){
+            event.setFarPlaneDistance(256 - ClientData.getInstance().getContactFogLevel() * 4);
+            event.setNearPlaneDistance(0);
+            event.setCanceled(true);
         }
     }
 
@@ -388,6 +392,10 @@ public class RenderEvents {
     public static void fogColorEvent(ViewportEvent.ComputeFogColor event) {
         LocalPlayer p = Minecraft.getInstance().player;
         if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            event.setRed(0);
+            event.setGreen(0);
+            event.setBlue(0);
+        } else if(ClientData.getInstance().getContactFogLevel() > 0){
             event.setRed(0);
             event.setGreen(0);
             event.setBlue(0);

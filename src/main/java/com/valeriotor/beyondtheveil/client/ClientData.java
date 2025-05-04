@@ -9,8 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
@@ -36,6 +34,8 @@ public class ClientData {
 
     public final List<Waypoint> waypoints = new ArrayList<>();
     public ArcheSavedData archeSavedData = new ArcheSavedData();
+    private int contactTimer = 0;
+    private int contactFogLevel = 0;
 
     public void addWaypoint(CompoundTag tag) {
         WaypointType type = WaypointType.valueOf(tag.getString("type"));
@@ -71,6 +71,24 @@ public class ClientData {
         archeSavedData = new ArcheSavedData(tag.getCompound("data"));
     }
 
+    public void tick() {
+        if (contactTimer > 0) {
+            if (contactFogLevel < 50) {
+                contactFogLevel++;
+            }
+            contactTimer--;
+        } else if (contactFogLevel > 0) {
+            contactFogLevel--;
+        }
+    }
+
+    public void renewContact() {
+        contactTimer = 50;
+    }
+
+    public int getContactFogLevel() {
+        return contactFogLevel;
+    }
 
     public static class Waypoint {
         private WaypointType type;

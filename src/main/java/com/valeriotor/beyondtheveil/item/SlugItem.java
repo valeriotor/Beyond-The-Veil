@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
+import com.valeriotor.beyondtheveil.util.timers.ContactTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -52,13 +53,19 @@ public class SlugItem extends Item {
                         c.addTimer(new BaptismTimer(sp.getHealth()));
                     }
                 });
+            } else if (checkContact(sp)) {
+                sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+                    if (!c.hasTimer("contact")) {
+                        c.addTimer(new ContactTimer());
+                    }
+                });
             }
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
     }
 
     private static boolean checkBaptism(ServerPlayer sp) {
-        if (ResearchUtil.getResearchStage(sp, "BAPTISM") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED)) { // TODO change customs to baptism
+        if (ResearchUtil.getResearchStage(sp, "BAPTISM") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED)) {
             return false;
         }
         if (sp.level().getBlockState(sp.getOnPos()).canBeReplaced()) {
