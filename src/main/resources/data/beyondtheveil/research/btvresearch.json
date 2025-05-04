@@ -365,7 +365,7 @@
       {
         "key": "CARPENTRY",
         "name": "research.CARPENTRY.title",
-        "icons": [ "beyondtheveil:slug" ],
+        "icons": [ "beyondtheveil:canoe" ],
         "category": "BEYOND_THE_VEIL", "location": [ 16,8 ],
         "hiders": ["COMMUNION"],
         "parents": ["CUSTOMS"],
