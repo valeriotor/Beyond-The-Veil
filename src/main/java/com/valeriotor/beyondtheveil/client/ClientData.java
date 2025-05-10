@@ -73,7 +73,7 @@ public class ClientData {
 
     public void tick() {
         if (contactTimer > 0) {
-            if (contactFogLevel < 50) {
+            if (contactFogLevel < 200) {
                 contactFogLevel++;
             }
             contactTimer--;

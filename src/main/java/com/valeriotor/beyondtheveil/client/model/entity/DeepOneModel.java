@@ -16,9 +16,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class DeepOneModel extends EntityModel<LivingEntity> {
+public class DeepOneModel extends AnimatedModel<LivingEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "deep_one"), "main");
+    private static final String name = "deep_one";
     private final ModelPart main_body;
     private final ModelPart neck;
     private final ModelPart head;
@@ -44,40 +45,41 @@ public class DeepOneModel extends EntityModel<LivingEntity> {
     private final ModelPart left_leg2;
     private final ModelPart left_foot;
     private final ModelPart left_foot_base;
+    private float swimAmount;
+
 
     public DeepOneModel(ModelPart root) {
-        this.main_body = root.getChild("main_body");
-        this.neck = main_body.getChild("neck");
-        this.head = neck.getChild("head");
-        this.right_ear_fin1 = head.getChild("right_ear_fin1");
-        this.left_ear_fin1 = head.getChild("left_ear_fin1");
-        this.left_ear_fin2 = head.getChild("left_ear_fin2");
-        this.right_ear_fin2 = head.getChild("right_ear_fin2");
-        this.forehead = head.getChild("forehead");
-        this.forehead2 = forehead.getChild("forehead2");
-        this.forehead3 = forehead2.getChild("forehead3");
-        this.lower_jaw = head.getChild("lower_jaw");
-        this.right_arm = main_body.getChild("right_arm");
-        this.right_arm2 = right_arm.getChild("right_arm2");
-        this.right_hand = null;//right_arm2.getChild("right_hand");
+        super(name);
+        this.main_body = registerAnimatedPart(root, "main_body");
+        this.neck = registerAnimatedPart(main_body, "neck");
+        this.head = registerAnimatedPart(neck, "head");
+        this.right_ear_fin1 = registerAnimatedPart(head, "right_ear_fin1");
+        this.left_ear_fin1 = registerAnimatedPart(head, "left_ear_fin1");
+        this.left_ear_fin2 = registerAnimatedPart(head, "left_ear_fin2");
+        this.right_ear_fin2 = registerAnimatedPart(head, "right_ear_fin2");
+        this.forehead = registerAnimatedPart(head, "forehead");
+        this.forehead2 = registerAnimatedPart(forehead, "forehead2");
+        this.forehead3 = registerAnimatedPart(forehead2, "forehead3");
+        this.lower_jaw = registerAnimatedPart(head, "lower_jaw");
+        this.right_arm = registerAnimatedPart(main_body, "right_arm");
+        this.right_arm2 = registerAnimatedPart(right_arm, "right_arm2");
         //right_hand.visible = false;
-        this.left_arm = main_body.getChild("left_arm");
-        this.left_arm2 = left_arm.getChild("left_arm2");
-        this.left_hand = null;//left_arm2.getChild("left_hand");
+        this.left_arm = registerAnimatedPart(main_body, "left_arm");
+        this.left_arm2 = registerAnimatedPart(left_arm, "left_arm2");
         //left_hand.visible = false;
-        this.right_leg = root.getChild("right_leg");
-        this.right_leg2 = right_leg.getChild("right_leg2");
-        this.right_foot = right_leg2.getChild("right_foot");
-        this.right_foot_base = right_foot.getChild("right_foot_base");
-        this.left_leg = root.getChild("left_leg");
-        this.left_leg2 = left_leg.getChild("left_leg2");
-        this.left_foot = left_leg2.getChild("left_foot");
-        this.left_foot_base = left_foot.getChild("left_foot_base");
+        this.right_leg = registerAnimatedPart(root, "right_leg");
+        this.right_leg2 = registerAnimatedPart(right_leg, "right_leg2");
+        this.right_foot = registerAnimatedPart(right_leg2, "right_foot");
+        this.right_foot_base = registerAnimatedPart(right_foot, "right_foot_base");
+        this.left_leg = registerAnimatedPart(root, "left_leg");
+        this.left_leg2 = registerAnimatedPart(left_leg, "left_leg2");
+        this.left_foot = registerAnimatedPart(left_leg2, "left_foot");
+        this.left_foot_base = registerAnimatedPart(left_foot, "left_foot_base");
+        this.right_hand = null;//right_arm2.getChild("right_hand");
+        this.left_hand = null;//left_arm2.getChild("left_hand");
     }
 
     public static LayerDefinition createBodyLayer() {
-
-
 
 
         MeshDefinition meshdefinition = new MeshDefinition();
@@ -212,7 +214,23 @@ public class DeepOneModel extends EntityModel<LivingEntity> {
 
     @Override
     public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        resetParts();
+        if (swimAmount > 0.0F) {
+            if (entity.isVisuallySwimming()) {
+                this.neck.xRot = this.rotlerpRad(this.swimAmount, this.neck.xRot, (-(float) Math.PI / 3F));
+            } else {
+                this.neck.xRot = this.rotlerpRad(this.swimAmount, this.neck.xRot, headPitch * ((float) Math.PI / 180F));
+            }
 
+        } else {
+            this.neck.xRot = headPitch * ((float) Math.PI / 180F);
+        }
+
+    }
+
+    @Override
+    public void prepareMobModel(LivingEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        swimAmount = pEntity.getSwimAmount(pPartialTick);
     }
 
     @Override
@@ -221,4 +239,18 @@ public class DeepOneModel extends EntityModel<LivingEntity> {
         right_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         left_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
+
+    protected float rotlerpRad(float pAngle, float pMaxAngle, float pMul) {
+        float f = (pMul - pMaxAngle) % ((float) Math.PI * 2F);
+        if (f < -(float) Math.PI) {
+            f += ((float) Math.PI * 2F);
+        }
+
+        if (f >= (float) Math.PI) {
+            f -= ((float) Math.PI * 2F);
+        }
+
+        return pMaxAngle + pAngle * f;
+    }
+
 }

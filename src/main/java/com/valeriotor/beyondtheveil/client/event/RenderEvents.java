@@ -382,7 +382,7 @@ public class RenderEvents {
             //event.setNearPlaneDistance(-100);
             event.setCanceled(true);
         } else if(ClientData.getInstance().getContactFogLevel() > 0){
-            event.setFarPlaneDistance(256 - ClientData.getInstance().getContactFogLevel() * 4);
+            event.setFarPlaneDistance(256 - ClientData.getInstance().getContactFogLevel());
             event.setNearPlaneDistance(0);
             event.setCanceled(true);
         }

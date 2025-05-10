@@ -106,6 +106,10 @@ public class AnimationTemplate {
         }
     }
 
+    public void markDirty() {
+        model.markDirty();
+    }
+
     record Period(int start, int end) {
     }
 

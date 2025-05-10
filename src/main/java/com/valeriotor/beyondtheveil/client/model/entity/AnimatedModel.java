@@ -13,6 +13,7 @@ import java.util.Map;
 public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<T> {
 
     private static final Map<String, AnimatedModel<? extends LivingEntity>> REGISTRY = new HashMap<>();
+    private boolean dirty;
 
     public static AnimatedModel<? extends LivingEntity> getModel(String name) {
         return REGISTRY.get(name);
@@ -28,8 +29,13 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
     public ModelPart getPart(String name) {
         return animatedParts.get(name);
     }
+
     protected ModelPart registerAnimatedPart(String name, ModelPart part) {
         return registerAnimatedPart(name, part, true);
+    }
+
+    protected ModelPart registerAnimatedPart(ModelPart parent, String name) {
+        return registerAnimatedPart(name, parent.getChild(name), true);
     }
 
     protected ModelPart registerAnimatedPart(String name, ModelPart part, boolean visible) {
@@ -39,17 +45,24 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
         return part;
     }
 
+    public void markDirty() {
+        dirty = true;
+    }
+
     protected void resetParts() {
-        for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
-            defaultPartPose.part().loadPose(defaultPartPose.pose());
-            defaultPartPose.part.visible = defaultPartPose.visible;
-            defaultPartPose.part.xScale = defaultPartPose.xScale;
-            defaultPartPose.part.yScale = defaultPartPose.yScale;
-            defaultPartPose.part.zScale = defaultPartPose.zScale;
+        if (dirty) {
+            for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
+                defaultPartPose.part().loadPose(defaultPartPose.pose());
+                defaultPartPose.part.visible = defaultPartPose.visible;
+                defaultPartPose.part.xScale = defaultPartPose.xScale;
+                defaultPartPose.part.yScale = defaultPartPose.yScale;
+                defaultPartPose.part.zScale = defaultPartPose.zScale;
+            }
         }
     }
 
-    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose, float xScale, float yScale, float zScale, boolean visible) {
+    public record ModelPartAndDefaultPose(ModelPart part, PartPose pose, float xScale, float yScale, float zScale,
+                                          boolean visible) {
     }
 
 

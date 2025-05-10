@@ -2,6 +2,9 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +14,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -29,6 +37,8 @@ public class DeepOneEntity extends Monster {
     protected final GroundPathNavigation groundNavigation;
     private ContactType contactType;
     private Player contactPlayer;
+    private static final EntityDataAccessor<Boolean> CONTACT_MOVE = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.BOOLEAN);
+
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
         super(BTVEntities.DEEP_ONE.get(), world);
@@ -38,17 +48,18 @@ public class DeepOneEntity extends Monster {
         this.waterNavigation = null;//new WaterBoundPathNavigation(this, world);
         this.groundNavigation = null;//new GroundPathNavigation(this, world);
         noCulling = true;
+        //contactType = ContactType.MOVE3;
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
-        //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
-        ////this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
+        //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
         //this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
-        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -98,12 +109,12 @@ public class DeepOneEntity extends Monster {
     }
 
     public void updateSwimming() {
-        if (!this.level().isClientSide && false) {
-            if (this.isEffectiveAi() && this.isUnderWater() && this.wantsToSwim()) {
-                this.navigation = this.waterNavigation;
+        if (!this.level().isClientSide) {
+            if ((this.isEffectiveAi() && this.isUnderWater() && this.wantsToSwim()) || contactType != null) {
+                //this.navigation = this.waterNavigation;
                 this.setSwimming(true);
             } else {
-                this.navigation = this.groundNavigation;
+                //this.navigation = this.groundNavigation;
                 this.setSwimming(false);
             }
         }
@@ -115,12 +126,19 @@ public class DeepOneEntity extends Monster {
         return this.isSwimming();
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CONTACT_MOVE, false);
+    }
+
     static class DeepOneMoveControl2 extends SmoothSwimmingMoveControl {
 
         public DeepOneMoveControl2(Mob pMob) {
             super(pMob, 85, 10, 0.1F, 0.5F, false);
             ;
         }
+
         @Override
         public void tick() {
             super.tick();
@@ -133,6 +151,7 @@ public class DeepOneEntity extends Monster {
         private final DeepOneEntity deepOne;
 
         private int wasInWater;
+
         public DeepOneMoveControl(DeepOneEntity deepOne) {
             super(deepOne);
             this.deepOne = deepOne;
@@ -184,9 +203,11 @@ public class DeepOneEntity extends Monster {
         }
 
     }
+
     public void setContact(ContactType contactType, Player contactPlayer) {
         this.contactType = contactType;
         this.contactPlayer = contactPlayer;
+        entityData.set(CONTACT_MOVE, true);
     }
 
     public ContactType getContactType() {

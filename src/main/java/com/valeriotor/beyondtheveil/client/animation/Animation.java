@@ -34,6 +34,7 @@ public class Animation {
     }
 
     public void apply(float partialTicks) {
+        template.markDirty();
         for (int i = 0; i < currentOperators.length; i++) {
             if (currentOperators[i] == null) {
                 continue;

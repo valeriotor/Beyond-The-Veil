@@ -91,19 +91,19 @@ public class SlugItem extends Item {
         if (ResearchUtil.getResearchStage(sp, "CUSTOMS") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.HAD_CONTACT)) { // TODO change customs to first contact
             return false;
         }
-        Level l = sp.level();
-        if (!l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN)) {
-            return false;
-        }
-        if (l.getDayTime() < 16000 || l.getDayTime() > 20000) {
-            sp.sendSystemMessage(Component.translatable("contact.error.night"));
-            return false;
-        }
-        if (!l.getEntities(sp, AABB.ofSize(sp.position(), 30, 30, 30), e -> e instanceof Player).isEmpty()) {
-            sp.sendSystemMessage(Component.translatable("contact.error.players"));
-            return false;
-        }
         if (sp.getVehicle() instanceof CanoeEntity canoe) {
+            Level l = sp.level();
+            if (!l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN)) {
+                return false;
+            }
+            if (l.getDayTime() < 16000 || l.getDayTime() > 20000) {
+                sp.sendSystemMessage(Component.translatable("contact.error.night"));
+                return false;
+            }
+            if (!l.getEntities(sp, AABB.ofSize(sp.position(), 30, 30, 30), e -> e instanceof Player).isEmpty()) {
+                sp.sendSystemMessage(Component.translatable("contact.error.players"));
+                return false;
+            }
             for (int x = -8; x <= 8; x++) {
                 for (int z = -8; z <= 8; z++) {
                     BlockPos offset = canoe.getOnPos().offset(x, 0, z);
