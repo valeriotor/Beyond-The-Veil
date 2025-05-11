@@ -72,13 +72,15 @@ public class ClientData {
     }
 
     public void tick() {
-        if (contactTimer > 0) {
-            if (contactFogLevel < 200) {
-                contactFogLevel++;
+        if(!Minecraft.getInstance().isPaused()) {
+            if (contactTimer > 0) {
+                if (contactFogLevel < 200) {
+                    contactFogLevel++;
+                }
+                contactTimer--;
+            } else if (contactFogLevel > 0) {
+                contactFogLevel--;
             }
-            contactTimer--;
-        } else if (contactFogLevel > 0) {
-            contactFogLevel--;
         }
     }
 

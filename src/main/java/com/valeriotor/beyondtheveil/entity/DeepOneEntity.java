@@ -37,7 +37,7 @@ public class DeepOneEntity extends Monster {
     protected final GroundPathNavigation groundNavigation;
     private ContactType contactType;
     private Player contactPlayer;
-    private static final EntityDataAccessor<Boolean> CONTACT_MOVE = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> CONTACT_MOVE = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.INT);
 
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
@@ -56,9 +56,9 @@ public class DeepOneEntity extends Monster {
         this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
         //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
-        //this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
     }
 
@@ -129,7 +129,7 @@ public class DeepOneEntity extends Monster {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(CONTACT_MOVE, false);
+        this.entityData.define(CONTACT_MOVE, 0);
     }
 
     static class DeepOneMoveControl2 extends SmoothSwimmingMoveControl {
@@ -207,13 +207,16 @@ public class DeepOneEntity extends Monster {
     public void setContact(ContactType contactType, Player contactPlayer) {
         this.contactType = contactType;
         this.contactPlayer = contactPlayer;
-        entityData.set(CONTACT_MOVE, true);
+        entityData.set(CONTACT_MOVE, contactType.ordinal() + 1);
     }
 
     public ContactType getContactType() {
         return contactType;
     }
 
+    public int getContactMove() {
+        return entityData.get(CONTACT_MOVE);
+    }
 
     public enum ContactType {
         MOVE1(3, 40), MOVE2(1.5F, 0), MOVE3(2.5F, 70);

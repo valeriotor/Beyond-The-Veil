@@ -30,7 +30,7 @@ public class ContactTimer extends PlayerTimer {
             double radius = 55D / contactType.getFactor() / 2;
             double x = player.getX() + Math.sin(contactType.getStartOffset() * Math.PI / 50) * radius;
             double z = player.getZ() + -Math.cos(contactType.getStartOffset() * Math.PI / 50) * radius;
-            deepOne.setPos(x, player.getY() - 0.9, z);
+            deepOne.setPos(x, player.getY() - 1.9, z);
             player.level().addFreshEntity(deepOne);
         }
         if (time % 20 == 0) {

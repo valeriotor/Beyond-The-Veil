@@ -22,6 +22,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
@@ -107,18 +110,19 @@ public class SlugItem extends Item {
             for (int x = -8; x <= 8; x++) {
                 for (int z = -8; z <= 8; z++) {
                     BlockPos offset = canoe.getOnPos().offset(x, 0, z);
-                    if (l.getBlockState(offset).getBlock() != Blocks.WATER && l.getBlockState(offset.below()).getBlock() != Blocks.WATER) {
-                        return false;
-                    }
-                    if (l.getBlockState(offset.below(2)).getBlock() != Blocks.WATER) {
-                        return false;
+                    for (int i = 0; i < 2; i++) {
+                        BlockState state = l.getBlockState(offset.below(i));
+                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer)) {
+                            return false;
+                        }
                     }
                 }
             }
             for (int x = -3; x <= 3; x++) {
                 for (int z = -3; z <= 3; z++) {
                     for (int y = -3; y < 0; y++) {
-                        if (l.getBlockState(canoe.getOnPos().offset(x, y, z)).getBlock() != Blocks.WATER) {
+                        BlockState state = l.getBlockState(canoe.getOnPos().offset(x, y, z));
+                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer)) {
                             return false;
                         }
                     }
