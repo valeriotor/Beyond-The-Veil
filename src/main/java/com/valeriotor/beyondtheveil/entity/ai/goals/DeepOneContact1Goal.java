@@ -23,7 +23,7 @@ public class DeepOneContact1Goal extends Goal {
 
     @Override
     public void start() {
-        counter = deepOne.getContactType().getStartOffset();
+        counter = deepOne.getContactType().getStartOffset() + deepOne.getExtraCounterOffset();
     }
 
     @Override

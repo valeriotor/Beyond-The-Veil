@@ -26,10 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -81,6 +78,7 @@ public class RenderEvents {
     private static final float[] rainSizeY = new float[1024];
     private static final float[] rainSizeZ = new float[1024];
     private static CameraRotator rotator;
+    private static int shakeDuration;
     private static int blackScreenDuration = -1;
 
     static {
@@ -103,20 +101,29 @@ public class RenderEvents {
         rotator = newRotator;
     }
 
+    public static void shakeCamera(int duration) {
+        shakeDuration = duration;
+    }
+
     @SubscribeEvent
     public static void renderTickEvent(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
-            if (rotator != null) {
-                boolean done = rotator.update();
-                LocalPlayer player = Minecraft.getInstance().player;
-                if (player != null) {
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player != null) {
+                if (rotator != null) {
+                    boolean done = rotator.update();
                     player.setYHeadRot((float) rotator.computeYaw(0));
                     player.setYRot((float) rotator.computeYaw(0));
                     player.setXRot((float) rotator.computePitch(0));
+                    if (done) {
+                        rotator = null;
+                    }
+                } else if (shakeDuration > 0) {
+                    shakeDuration--;
+                    boolean phase = (shakeDuration / 10) % 2 == 0;
+                    player.setYHeadRot(player.getYHeadRot() + 4 * (phase ? 1 : -1));
                 }
-                if (done) {
-                    rotator = null;
-                }
+
             }
         }
     }

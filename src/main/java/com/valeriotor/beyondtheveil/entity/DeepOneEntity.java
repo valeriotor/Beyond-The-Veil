@@ -42,6 +42,8 @@ public class DeepOneEntity extends Monster {
     private double constantY;
     private boolean startedTrade = false; // CLIENT ONLY
     private Animation mainAnimation;
+    private int extraCounterOffset;
+    public static final int MAX_CONTACT_MOVE_LIFETIME = 250;
 
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
@@ -84,6 +86,11 @@ public class DeepOneEntity extends Monster {
                 setDeltaMovement(0, 0, 0);
                 if (getFirstPassenger() instanceof CanoeEntity canoe) {
                     setYRot(canoe.getYRot() - 90);
+                }
+            }
+            if (contactType != null && contactType.isMove()) {
+                if (tickCount > MAX_CONTACT_MOVE_LIFETIME) {
+                    discard();
                 }
             }
         } else {
@@ -189,6 +196,14 @@ public class DeepOneEntity extends Monster {
         }
     }
 
+    public void setExtraCounterOffset(int extraCounterOffset) {
+        this.extraCounterOffset = extraCounterOffset;
+    }
+
+    public int getExtraCounterOffset() {
+        return extraCounterOffset;
+    }
+
     public ContactType getContactType() {
         return contactType;
     }
@@ -201,7 +216,7 @@ public class DeepOneEntity extends Monster {
     }
 
     public int getCanoeAskew() {
-        return Mth.clamp((tickCount - 9) * 10 / 2, 0, 10);
+        return Mth.clamp((tickCount - 9) * 13 / 2, 0, 13);
     }
 
     public Animation getMainAnimation() {

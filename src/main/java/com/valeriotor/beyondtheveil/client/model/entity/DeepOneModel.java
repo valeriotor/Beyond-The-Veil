@@ -53,6 +53,7 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     private float swimAmount;
     private int contactMove;
     private float pPartialTick;
+    private int ticksExisted;
 
 
     public DeepOneModel(ModelPart root) {
@@ -299,8 +300,8 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
             main_body.xRot = -(float) Math.toRadians(92.5);
             left_leg.xRot = -1.963F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
             right_leg.xRot = -1.963F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
-            left_leg2.xRot = 1.7453F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.4F;
-            right_leg2.xRot = 1.7453F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.4F;
+            left_leg2.xRot = 1.7453F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.6F;
+            right_leg2.xRot = 1.7453F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.6F;
             neck.xRot = 0.7F;
             head.yRot = -0.4F;
             left_arm.xRot = 0;
@@ -335,12 +336,16 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
         } else {
             contactMove = -1;
         }
+        ticksExisted = pEntity.tickCount;
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         if (contactMove != -1 && DeepOneEntity.ContactType.values()[contactMove].isMove()) {
-            alpha = 0.252F;
+            alpha = Math.min(0.252F, ticksExisted * 0.252F / 25);
+            if (ticksExisted > DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) {
+                alpha = Math.max(0, (DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) * 0.252F / 25);
+            }
         }
         main_body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         right_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

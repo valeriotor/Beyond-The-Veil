@@ -3,7 +3,9 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.util.TeleportUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +26,12 @@ public class BlackjackItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
+            if (false) {
+                if (pPlayer instanceof ServerPlayer sp) {
+                    TeleportUtil.teleportToArche(sp, sp.level());
+                }
+                return InteractionResult.SUCCESS;
+            }
             if (pInteractionTarget instanceof Villager villager) {
                 Level l = pInteractionTarget.level();
                 CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);

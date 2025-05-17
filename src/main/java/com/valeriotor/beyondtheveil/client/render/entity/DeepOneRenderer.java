@@ -38,9 +38,11 @@ public class DeepOneRenderer extends LivingEntityRenderer<LivingEntity, DeepOneM
     protected void setupRotations(LivingEntity pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
         if (pEntityLiving instanceof DeepOneEntity deepOne && deepOne.getContactMove() == DeepOneEntity.ContactType.TRADE.ordinal()) {
             pRotationYaw = deepOne.getContactTradeRot() - 90;
-            pPoseStack.translate(0.9, 0.2, 0);
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - pRotationYaw));
+            pPoseStack.translate(0.3, 0.2, -0.95);
+        } else {
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - pRotationYaw));
         }
-        pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - pRotationYaw));
 
         if (pEntityLiving.deathTime > 0) {
             float f = ((float)pEntityLiving.deathTime + pPartialTicks - 1.0F) / 20.0F * 1.6F;
