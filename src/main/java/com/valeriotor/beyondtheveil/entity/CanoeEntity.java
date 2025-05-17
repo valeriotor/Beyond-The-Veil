@@ -5,6 +5,9 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -31,6 +34,8 @@ import java.util.List;
 
 public class CanoeEntity extends Boat {
 
+    private static final EntityDataAccessor<Boolean> DEEP_ONE_BELOW = SynchedEntityData.defineId(CanoeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> ASKEW = SynchedEntityData.defineId(CanoeEntity.class, EntityDataSerializers.INT);
     public CanoeEntity(Level pLevel) {
         super(BTVEntities.CANOE.get(), pLevel);
         noCulling = true;
@@ -42,6 +47,13 @@ public class CanoeEntity extends Boat {
         this.xo = pX;
         this.yo = pY;
         this.zo = pZ;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DEEP_ONE_BELOW, false);
+        this.entityData.define(ASKEW, 0);
     }
 
     @Override
@@ -80,14 +92,28 @@ public class CanoeEntity extends Boat {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide && !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof ServerPlayer player && isInWater()) {
-            if (false && player.getRandom().nextInt(200) == 0) {
-                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
-                if (!DataUtil.getBoolean(player, PlayerDataLib.RECEIVED_FISH) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
-                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.RECEIVED_FISH, true, false);
+        if (!level().isClientSide) {
+            if (getVehicle() instanceof DeepOneEntity deepOne) {
+                entityData.set(DEEP_ONE_BELOW, true);
+                entityData.set(ASKEW, deepOne.getCanoeAskew());
+            } else {
+                entityData.set(DEEP_ONE_BELOW, false);
+                entityData.set(ASKEW, 0);
+            }
+            if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof ServerPlayer player && isInWater()) {
+                if (false && player.getRandom().nextInt(200) == 0) {
+                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
+                    if (!DataUtil.getBoolean(player, PlayerDataLib.RECEIVED_FISH) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.RECEIVED_FISH, true, false);
+                    }
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isControlledByLocalInstance() {
+        return super.isControlledByLocalInstance() && !entityData.get(DEEP_ONE_BELOW);
     }
 
     @Override
@@ -110,5 +136,9 @@ public class CanoeEntity extends Boat {
     @Override
     protected SoundEvent getPaddleSound() {
         return super.getPaddleSound();
+    }
+
+    public int getAskew() {
+        return entityData.get(ASKEW);
     }
 }

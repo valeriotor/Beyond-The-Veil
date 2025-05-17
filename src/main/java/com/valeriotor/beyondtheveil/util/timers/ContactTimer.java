@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
+import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -23,20 +24,32 @@ public class ContactTimer extends PlayerTimer {
     @Override
     public boolean update(Player player) {
         time++;
-        DeepOneEntity.ContactType contactType = SPAWN_TIMERS.get(time);
-        if (contactType != null) {
-            DeepOneEntity deepOne = new DeepOneEntity(BTVEntities.DEEP_ONE.get(), player.level());
-            deepOne.setContact(contactType, player);
-            double radius = 55D / contactType.getFactor() / 2;
-            double x = player.getX() + Math.sin(contactType.getStartOffset() * Math.PI / 50) * radius;
-            double z = player.getZ() + -Math.cos(contactType.getStartOffset() * Math.PI / 50) * radius;
-            deepOne.setPos(x, player.getY() - 1.9, z);
-            player.level().addFreshEntity(deepOne);
+        if(player.getVehicle() instanceof CanoeEntity canoe) {
+            DeepOneEntity.ContactType contactType = SPAWN_TIMERS.get(time);
+            if (contactType != null) {
+                DeepOneEntity deepOne = new DeepOneEntity(BTVEntities.DEEP_ONE.get(), player.level());
+                deepOne.setContact(contactType, player);
+                double radius = 55D / contactType.getFactor() / 2;
+                double x = player.getX() + Math.sin(contactType.getStartOffset() * Math.PI / 50) * radius;
+                double z = player.getZ() + -Math.cos(contactType.getStartOffset() * Math.PI / 50) * radius;
+                deepOne.setPos(x, player.getY() - 1.9, z);
+                player.level().addFreshEntity(deepOne);
+            }
+            if (time % 20 == 0) {
+                Messages.sendToPlayer(GenericToClientPacket.renewContact(), (ServerPlayer) player);
+            }
+            if (time == 200) {
+                DeepOneEntity deepOne = new DeepOneEntity(BTVEntities.DEEP_ONE.get(), player.level());
+                double x = player.getX();// + Math.sin(contactType.getStartOffset() * Math.PI / 50) * radius;
+                double z = player.getZ();// + -Math.cos(contactType.getStartOffset() * Math.PI / 50) * radius;
+                deepOne.setPos(x, player.getY() - 1.2, z);
+                player.level().addFreshEntity(deepOne);
+                Messages.sendToPlayer(GenericToClientPacket.rotateCamera(player.getYHeadRot() + 1, player.getXRot(), 2), (ServerPlayer) player);
+                canoe.startRiding(deepOne);
+                deepOne.setContact(DeepOneEntity.ContactType.TRADE, player);
+            }
         }
-        if (time % 20 == 0) {
-            Messages.sendToPlayer(GenericToClientPacket.renewContact(), (ServerPlayer) player);
-        }
-        if (time > 200) {
+        if (time > 400) {
             done = true;
         }
         return super.update(player);

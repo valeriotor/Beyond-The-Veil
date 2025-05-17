@@ -40,6 +40,7 @@ public class CanoeRenderer extends EntityRenderer<CanoeEntity> {
         pMatrixStack.pushPose();
         pMatrixStack.translate(0.0D, 1.576D, 0.0D);
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(- pEntityYaw));
+        pMatrixStack.mulPose(Axis.ZP.rotationDegrees(pEntity.getAskew())); // oh who cares about partial ticks
 
 
         pMatrixStack.scale(-1.0F, -1.0F, 1.0F);

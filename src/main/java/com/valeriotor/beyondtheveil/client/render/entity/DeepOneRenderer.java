@@ -9,9 +9,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import org.jetbrains.annotations.Nullable;
 
 public class DeepOneRenderer extends LivingEntityRenderer<LivingEntity, DeepOneModel> {
@@ -34,10 +36,34 @@ public class DeepOneRenderer extends LivingEntityRenderer<LivingEntity, DeepOneM
 
     @Override
     protected void setupRotations(LivingEntity pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
-        super.setupRotations(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
+        if (pEntityLiving instanceof DeepOneEntity deepOne && deepOne.getContactMove() == DeepOneEntity.ContactType.TRADE.ordinal()) {
+            pRotationYaw = deepOne.getContactTradeRot() - 90;
+            pPoseStack.translate(0.9, 0.2, 0);
+        }
+        pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - pRotationYaw));
+
+        if (pEntityLiving.deathTime > 0) {
+            float f = ((float)pEntityLiving.deathTime + pPartialTicks - 1.0F) / 20.0F * 1.6F;
+            f = Mth.sqrt(f);
+            if (f > 1.0F) {
+                f = 1.0F;
+            }
+
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(pEntityLiving)));
+        } else if (pEntityLiving.isAutoSpinAttack()) {
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(-90.0F - pEntityLiving.getXRot()));
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(((float)pEntityLiving.tickCount + pPartialTicks) * -75.0F));
+        } else if (isEntityUpsideDown(pEntityLiving)) {
+            pPoseStack.translate(0.0F, pEntityLiving.getBbHeight() + 0.1F, 0.0F);
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        }
+
         float f = pEntityLiving.getSwimAmount(pPartialTicks);
         if (f >= 0.0) {
             float f3 = pEntityLiving.isInWater() || pEntityLiving.isInFluidType((fluidType, height) -> pEntityLiving.canSwimInFluidType(fluidType)) ? -70.0F - pEntityLiving.getXRot() : -70.0F;
+            if (pEntityLiving instanceof DeepOneEntity deepOne && deepOne.getContactMove() == DeepOneEntity.ContactType.TRADE.ordinal()) {
+                f3 = 0;
+            }
             float f4 = Mth.lerp(f, 0.1F, f3);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(f4));
             if (pEntityLiving.isVisuallySwimming()) {
@@ -48,14 +74,16 @@ public class DeepOneRenderer extends LivingEntityRenderer<LivingEntity, DeepOneM
 
     @Override
     public void render(LivingEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
-        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+        if (pEntity.tickCount > 2) {
+            super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+        }
     }
 
     @Nullable
     @Override
     protected RenderType getRenderType(LivingEntity pLivingEntity, boolean pBodyVisible, boolean pTranslucent, boolean pGlowing) {
         if (pLivingEntity instanceof DeepOneEntity deepOne) {
-            if (deepOne.getContactMove() != 0) {
+            if (deepOne.getContactMove() != -1) {
                 return RenderType.entityTranslucent(getTextureLocation(deepOne));
             }
         }

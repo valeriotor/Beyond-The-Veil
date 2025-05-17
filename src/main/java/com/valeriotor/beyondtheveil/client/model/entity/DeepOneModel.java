@@ -6,6 +6,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.EntityModel;
@@ -51,6 +52,7 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     private final ModelPart dorsal_fin_3;
     private float swimAmount;
     private int contactMove;
+    private float pPartialTick;
 
 
     public DeepOneModel(ModelPart root) {
@@ -83,8 +85,8 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
         this.dorsal_fin_1 = registerAnimatedPart(main_body, "dorsal_fin_1");
         this.dorsal_fin_2 = registerAnimatedPart(neck, "dorsal_fin_2");
         this.dorsal_fin_3 = registerAnimatedPart(head, "dorsal_fin_3");
-        this.right_hand = null;//right_arm2.getChild("right_hand");
-        this.left_hand = null;//left_arm2.getChild("left_hand");
+        this.right_hand = registerAnimatedPart(right_arm2, "right_hand");
+        this.left_hand = registerAnimatedPart(left_arm2, "left_hand");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -268,6 +270,7 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
 
     @Override
     public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        //markDirty();
         resetParts();
         if (swimAmount >= 0.0F) {
             if (entity.isVisuallySwimming()) {
@@ -283,36 +286,66 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                 left_arm2.xRot = -0.5F;
                 left_leg.xRot = -1 + Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 1.45F;
                 right_leg.xRot = -1 - Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 1.45F;
-
             } else {
                 this.neck.xRot = this.rotlerpRad(this.swimAmount, this.neck.xRot, headPitch * ((float) Math.PI / 180F));
             }
+            markDirty();
 
         } else {
             this.neck.xRot = headPitch * ((float) Math.PI / 180F);
         }
+        boolean trade = contactMove == DeepOneEntity.ContactType.TRADE.ordinal();
+        if (trade) {
+            main_body.xRot = -(float) Math.toRadians(92.5);
+            left_leg.xRot = -1.963F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
+            right_leg.xRot = -1.963F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
+            left_leg2.xRot = 1.7453F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.4F;
+            right_leg2.xRot = 1.7453F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.4F;
+            neck.xRot = 0.7F;
+            head.yRot = -0.4F;
+            left_arm.xRot = 0;
+            right_arm.xRot = 4.75F;
+            right_arm.yRot = 0.19F;
+            right_arm.zRot = -0.3F;
+            right_arm2.xRot = 0.3F;
+            right_arm2.yRot = 0;
+            right_arm2.zRot = 0;
+            right_hand.xRot = 1.21F;
+            right_hand.yRot = -0.0F;
+            right_arm.z = -0.5F;
 
+        }
+        if (entity instanceof DeepOneEntity deepOne) {
+            Animation mainAnimation = deepOne.getMainAnimation();
+            if (mainAnimation != null) {
+                mainAnimation.apply(pPartialTick);
+            }
+        }
+        //right_arm.xRot = 4.9F;
+        //right_arm.yRot = 0.19F;
+        //right_arm.zRot = -0.3F;
     }
 
     @Override
     public void prepareMobModel(LivingEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
         swimAmount = pEntity.getSwimAmount(pPartialTick);
+        this.pPartialTick = pPartialTick;
         if (pEntity instanceof DeepOneEntity deepOne) {
             contactMove = deepOne.getContactMove();
         } else {
-            contactMove = 0;
+            contactMove = -1;
         }
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        if (contactMove != 0) {
-            alpha = 0.152F;
+        if (contactMove != -1 && DeepOneEntity.ContactType.values()[contactMove].isMove()) {
+            alpha = 0.252F;
         }
         main_body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         right_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         left_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        if (contactMove != 0 && false) {
+        if (contactMove != -1 && DeepOneEntity.ContactType.values()[contactMove].isMove() && false) {
             alpha = 1;
             dorsal_fin_1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
             dorsal_fin_2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

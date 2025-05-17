@@ -1,15 +1,15 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -38,6 +38,10 @@ public class DeepOneEntity extends Monster {
     private ContactType contactType;
     private Player contactPlayer;
     private static final EntityDataAccessor<Integer> CONTACT_MOVE = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> CONTACT_TRADE_ROT = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.FLOAT);
+    private double constantY;
+    private boolean startedTrade = false; // CLIENT ONLY
+    private Animation mainAnimation;
 
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
@@ -70,6 +74,46 @@ public class DeepOneEntity extends Monster {
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ATTACK_DAMAGE, 18.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 5);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!level().isClientSide) {
+            if (contactType == ContactType.TRADE) {
+                setDeltaMovement(0, 0, 0);
+                if (getFirstPassenger() instanceof CanoeEntity canoe) {
+                    setYRot(canoe.getYRot() - 90);
+                }
+            }
+        } else {
+            int contactType = entityData.get(CONTACT_MOVE);
+            if (mainAnimation != null) {
+                mainAnimation.update();
+                if (mainAnimation.isDone()) {
+                    mainAnimation = null;
+                }
+            }
+            if (contactType == ContactType.TRADE.ordinal() && !startedTrade) {
+                mainAnimation = new Animation(AnimationRegistry.deep_one_trade);
+                startedTrade = true;
+                yBodyRot = 0;
+                yRotO = 0;
+                yHeadRot = 0;
+                yHeadRotO = 0;
+                //mainAnimation = new Animation(AnimationRegistry.deep_one_trade_1);
+            }
+        }
+    }
+
+    @Override
+    protected void positionRider(Entity pPassenger, MoveFunction pCallback) {
+        if (pPassenger instanceof CanoeEntity canoe) {
+            double d0 = this.getY() + this.getPassengersRidingOffset() + pPassenger.getMyRidingOffset() - 0.8;
+            pCallback.accept(pPassenger, this.getX(), d0, this.getZ());
+        } else {
+            super.positionRider(pPassenger, pCallback);
+        }
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -129,21 +173,39 @@ public class DeepOneEntity extends Monster {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(CONTACT_MOVE, 0);
+        this.entityData.define(CONTACT_MOVE, -1);
+        this.entityData.define(CONTACT_TRADE_ROT, 0F);
     }
 
-    static class DeepOneMoveControl2 extends SmoothSwimmingMoveControl {
-
-        public DeepOneMoveControl2(Mob pMob) {
-            super(pMob, 85, 10, 0.1F, 0.5F, false);
-            ;
+    public void setContact(ContactType contactType, Player contactPlayer) {
+        this.contactType = contactType;
+        this.contactPlayer = contactPlayer;
+        entityData.set(CONTACT_MOVE, contactType.ordinal());
+        if (contactType == ContactType.TRADE) {
+            constantY = getY();
+            if (getFirstPassenger() instanceof CanoeEntity canoe) {
+                entityData.set(CONTACT_TRADE_ROT, canoe.getYRot());
+            }
         }
+    }
 
-        @Override
-        public void tick() {
-            super.tick();
-        }
+    public ContactType getContactType() {
+        return contactType;
+    }
 
+    public int getContactMove() {
+        return entityData.get(CONTACT_MOVE);
+    }
+    public float getContactTradeRot() {
+        return entityData.get(CONTACT_TRADE_ROT);
+    }
+
+    public int getCanoeAskew() {
+        return Mth.clamp((tickCount - 9) * 10 / 2, 0, 10);
+    }
+
+    public Animation getMainAnimation() {
+        return mainAnimation;
     }
 
     static class DeepOneMoveControl extends MoveControl {
@@ -204,29 +266,21 @@ public class DeepOneEntity extends Monster {
 
     }
 
-    public void setContact(ContactType contactType, Player contactPlayer) {
-        this.contactType = contactType;
-        this.contactPlayer = contactPlayer;
-        entityData.set(CONTACT_MOVE, contactType.ordinal() + 1);
-    }
-
-    public ContactType getContactType() {
-        return contactType;
-    }
-
-    public int getContactMove() {
-        return entityData.get(CONTACT_MOVE);
-    }
-
     public enum ContactType {
-        MOVE1(3, 40), MOVE2(1.5F, 0), MOVE3(2.5F, 70);
+        MOVE1(3, 40), MOVE2(1.5F, 0), MOVE3(2.5F, 70), TRADE(1, 1, false);
 
         private final float factor;
         private final int startOffset;
+        private final boolean move;
 
         ContactType(float factor, int startOffset) {
+            this(factor, startOffset, true);
+        }
+
+        ContactType(float factor, int startOffset, boolean move) {
             this.factor = factor;
             this.startOffset = startOffset;
+            this.move = move;
         }
 
         public float getFactor() {
@@ -235,6 +289,10 @@ public class DeepOneEntity extends Monster {
 
         public int getStartOffset() {
             return startOffset;
+        }
+
+        public boolean isMove() {
+            return move;
         }
     }
 

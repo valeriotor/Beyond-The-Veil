@@ -18,7 +18,7 @@ public class DeepOneContact1Goal extends Goal {
 
     @Override
     public boolean canUse() {
-        return deepOne.getContactType() != null;
+        return deepOne.getContactType() != null && deepOne.getContactType().isMove();
     }
 
     @Override
