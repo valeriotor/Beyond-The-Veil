@@ -43,7 +43,7 @@ public class BTVDimensions {
                 256,
                 256,
                 BlockTags.INFINIBURN_OVERWORLD,
-                BuiltinDimensionTypes.END_EFFECTS,
+                BuiltinDimensionTypes.NETHER_EFFECTS,
                 0.0F,
                 new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 7), 3)));
     }
