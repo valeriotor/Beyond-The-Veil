@@ -1,0 +1,14 @@
+model: deep_one
+length: 40
+start: 0: 1
+    rotx: main_body: -1.6144: immediate: absolute
+    rotx: left_arm: 0: immediate: absolute
+    roty: left_arm: -0.782: immediate: absolute
+start: 0: 5:
+    rotz: left_arm: -2: linear: absolute
+start: 5: 32
+    rotx: left_arm: -1.2: linear: absolute
+    roty: left_arm: 0.0772: linear: absolute
+    roty: left_hand: -2.9109: linear: absolute
+start: 5: 39
+    rotz: left_arm: -0.5672: linear: absolute

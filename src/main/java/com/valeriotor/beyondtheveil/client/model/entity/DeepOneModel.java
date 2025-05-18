@@ -290,7 +290,6 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
             } else {
                 this.neck.xRot = this.rotlerpRad(this.swimAmount, this.neck.xRot, headPitch * ((float) Math.PI / 180F));
             }
-            markDirty();
 
         } else {
             this.neck.xRot = headPitch * ((float) Math.PI / 180F);
@@ -314,6 +313,17 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
             right_hand.xRot = 1.21F;
             right_hand.yRot = -0.0F;
             right_arm.z = -0.5F;
+            if(entity.tickCount > 75) {
+                left_arm.xRot = -1.2F;
+                left_arm.zRot = -0.5672F;
+                left_arm.yRot = 0.0772F;
+                left_hand.yRot = -2.9109F;
+            }
+            if (entity.tickCount > 110) {
+                left_arm.xRot = -1.2F + Mth.sin((entity.tickCount + pPartialTick - 110) * 2 * Mth.PI / 90) * 0.0125F;
+                left_arm2.xRot = -0.5F;
+                //left_hand.xRot = 0.5F;
+            }
 
         }
         if (entity instanceof DeepOneEntity deepOne) {

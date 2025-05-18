@@ -44,6 +44,7 @@ public class DeepOneEntity extends Monster {
     private Animation mainAnimation;
     private int extraCounterOffset;
     public static final int MAX_CONTACT_MOVE_LIFETIME = 250;
+    private boolean toRemove;
 
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
@@ -82,6 +83,10 @@ public class DeepOneEntity extends Monster {
     public void tick() {
         super.tick();
         if (!level().isClientSide) {
+            if (toRemove) {
+                discard();
+                return;
+            }
             if (contactType == ContactType.TRADE) {
                 setDeltaMovement(0, 0, 0);
                 if (getFirstPassenger() instanceof CanoeEntity canoe) {
@@ -101,15 +106,24 @@ public class DeepOneEntity extends Monster {
                     mainAnimation = null;
                 }
             }
-            if (contactType == ContactType.TRADE.ordinal() && !startedTrade) {
-                mainAnimation = new Animation(AnimationRegistry.deep_one_trade);
-                startedTrade = true;
-                yBodyRot = 0;
-                yRotO = 0;
-                yHeadRot = 0;
-                yHeadRotO = 0;
-                //mainAnimation = new Animation(AnimationRegistry.deep_one_trade_1);
+            if (contactType == ContactType.TRADE.ordinal()) {
+                if (!startedTrade) {
+                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade);
+                    startedTrade = true;
+                    yBodyRot = 0;
+                    yRotO = 0;
+                    yHeadRot = 0;
+                    yHeadRotO = 0;
+                    //mainAnimation = new Animation(AnimationRegistry.deep_one_trade_1);
+                }
+                if (tickCount == 60) {
+                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade2);
+                }
+                if (tickCount >= 110 && (tickCount - 110) % 120 == 0) {
+                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade3);
+                }
             }
+
         }
     }
 
@@ -221,6 +235,20 @@ public class DeepOneEntity extends Monster {
 
     public Animation getMainAnimation() {
         return mainAnimation;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        if (contactType != null) {
+            pCompound.putBoolean("toRemove", true);
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        toRemove = pCompound.contains("toRemove");
     }
 
     static class DeepOneMoveControl extends MoveControl {
