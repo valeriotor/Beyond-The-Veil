@@ -82,6 +82,7 @@ public class CraftingRegistryGui extends Screen {
     private int gridIndex;
     private Item currentSelectionItem;
     private int craftingGridWidth;
+    private static final float ARROW_DISCOLOR = 0.35F;
 
 
     public CraftingRegistryGui(ResearchStatus status) {
@@ -239,11 +240,17 @@ public class CraftingRegistryGui extends Screen {
             pose.popPose();
         }
         //guiGraphics.drawString(font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 10, 10, 0xFFFFFFFF);
-        if (currentSelectionRecipes.size() > gridIndex + 1) {
+        if (currentSelectionRecipes.size() > 1) {
+            if (currentSelectionRecipes.size() == gridIndex + 1) {
+                RenderSystem.setShaderColor(ARROW_DISCOLOR,ARROW_DISCOLOR,ARROW_DISCOLOR,1);
+            }
             renderArrow(pose, guiGraphics, pMouseX, pMouseY, false);
-        }
-        if (gridIndex > 0) {
+            RenderSystem.setShaderColor(1,1,1,1);
+            if (gridIndex == 0) {
+                RenderSystem.setShaderColor(ARROW_DISCOLOR,ARROW_DISCOLOR,ARROW_DISCOLOR,1);
+            }
             renderArrow(pose, guiGraphics, pMouseX, pMouseY, true);
+            RenderSystem.setShaderColor(1,1,1,1);
         }
 
     }
@@ -282,7 +289,7 @@ public class CraftingRegistryGui extends Screen {
 
     private void renderArrow(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, boolean left) {
         pose.pushPose();
-        pose.translate(arrowXOffset + (left ? -1 : 1) * ARROW_WIDTH * (left ? 4 : 3), arrowYOffset, 0);
+        pose.translate(arrowXOffset + (left ? -1 : 1) * ARROW_WIDTH * (left ? 3 : 2), arrowYOffset, 0);
         if ((hoveringLeftArrow(mouseX, mouseY) && left) || ((hoveringRightArrow(mouseX, mouseY) && !left))) {
             pose.scale(1.5F, 1.5F, 1);
         }
@@ -293,13 +300,13 @@ public class CraftingRegistryGui extends Screen {
     }
 
     private boolean hoveringLeftArrow(double mouseX, double mouseY) {
-        int leftX = arrowXOffset - 9 * ARROW_WIDTH / 2;
+        int leftX = arrowXOffset - 7 * ARROW_WIDTH / 2;
         int topY = arrowYOffset - ARROW_HEIGHT / 2;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY < topY + ARROW_HEIGHT;
     }
 
     private boolean hoveringRightArrow(double mouseX, double mouseY) {
-        int leftX = arrowXOffset + 5 * ARROW_WIDTH / 2;
+        int leftX = arrowXOffset + 3 * ARROW_WIDTH / 2;
         int topY = arrowYOffset - ARROW_HEIGHT / 2;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
     }
