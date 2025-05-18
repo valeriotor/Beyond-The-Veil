@@ -95,6 +95,7 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 
 	@Override
 	public void prepareMobModel(CrawlerEntity entity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+		markDirty();
 		resetParts();
 		LocalPlayer p = Minecraft.getInstance().player;
 		float ageInTicks = entity.isHeld() || entity.isSurgeryPatient() ? (p != null ? p.tickCount + pPartialTick : 0) : entity.tickCount + pPartialTick;
