@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
@@ -10,6 +11,8 @@ import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -96,6 +99,7 @@ public class ClientMethods {
     }
 
     private static int hideOverlayMessageTicks = 0;
+
     public static void hideOverlayMessage() {
         hideOverlayMessageTicks = 20;
         Minecraft.getInstance().gui.setOverlayMessage(Component.empty(), false);
@@ -122,6 +126,14 @@ public class ClientMethods {
             }
         }
         return recipes;
+    }
+
+    public static String necronomiconDescriptionId() {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (DataUtil.getBoolean(p, PlayerDataLib.RENAMED_NECRONOMICON)) {
+            return "item.beyondtheveil.necronomicon2";
+        }
+        return "item.beyondtheveil.necronomicon";
     }
 
 }
