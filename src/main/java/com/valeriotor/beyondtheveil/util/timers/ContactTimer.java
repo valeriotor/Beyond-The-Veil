@@ -54,8 +54,7 @@ public class ContactTimer extends PlayerTimer {
                 player.level().playSound(null, player.getOnPos(), SoundEvents.ZOMBIE_ATTACK_WOODEN_DOOR, SoundSource.NEUTRAL, 1, 1);
                 Messages.sendToPlayer(GenericToClientPacket.shakeCamera(), (ServerPlayer) player);
             }
-        }
-        if (time > 400) {
+        } else {
             done = true;
         }
         return super.update(player);

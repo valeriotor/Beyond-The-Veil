@@ -295,7 +295,7 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
             this.neck.xRot = headPitch * ((float) Math.PI / 180F);
         }
         boolean trade = contactMove == DeepOneEntity.ContactType.TRADE.ordinal();
-        if (trade) {
+        if (entity instanceof DeepOneEntity deepOne && trade) {
             main_body.xRot = -(float) Math.toRadians(92.5);
             left_leg.xRot = -1.963F + Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
             right_leg.xRot = -1.963F - Mth.sin((entity.tickCount + pPartialTick) * 2 * Mth.PI / 90) * 0.3F;
@@ -323,6 +323,11 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                 left_arm.xRot = -1.2F + Mth.sin((entity.tickCount + pPartialTick - 110) * 2 * Mth.PI / 90) * 0.0125F;
                 left_arm2.xRot = -0.5F;
                 //left_hand.xRot = 0.5F;
+            }
+            if (deepOne.isFinishedTradeClient()) {
+                main_body.xRot = -2.6144F;
+                right_arm.xRot = 1.7F;
+                right_arm.yRot = 0;
             }
 
         }
@@ -352,9 +357,10 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         if (contactMove != -1 && DeepOneEntity.ContactType.values()[contactMove].isMove()) {
-            alpha = Math.min(0.252F, ticksExisted * 0.252F / 25);
+            float a = 0.352F;
+            alpha = Math.min(a, ticksExisted * a / 25);
             if (ticksExisted > DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) {
-                alpha = Math.max(0, (DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) * 0.252F / 25);
+                alpha = Math.max(0, (DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) * a / 25);
             }
         }
         main_body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

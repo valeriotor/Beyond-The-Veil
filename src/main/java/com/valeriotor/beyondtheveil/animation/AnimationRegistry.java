@@ -31,6 +31,7 @@ public class AnimationRegistry {
     public static AnimationTemplate deep_one_trade;
     public static AnimationTemplate deep_one_trade2;
     public static AnimationTemplate deep_one_trade3;
+    public static AnimationTemplate deep_one_trade4;
     public static AnimationTemplate weeper_explode;
     public static AnimationTemplate weeper_get_up;
     public static AnimationTemplate weeper_get_up_spineless;
@@ -59,6 +60,7 @@ public class AnimationRegistry {
         deep_one_trade = registerAnimation("deep_one_trade", client, i++);
         deep_one_trade2 = registerAnimation("deep_one_trade2", client, i++);
         deep_one_trade3 = registerAnimation("deep_one_trade3", client, i++);
+        deep_one_trade4 = registerAnimation("deep_one_trade4", client, i++);
         weeper_explode = registerAnimation("weeper_explode", client, i++);
         weeper_get_up = registerAnimation("weeper_get_up", client, i++);
         weeper_get_up_spineless = registerAnimation("weeper_get_up_spineless", client, i++);

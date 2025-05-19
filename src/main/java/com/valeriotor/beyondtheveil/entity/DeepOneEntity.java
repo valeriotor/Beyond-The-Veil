@@ -2,8 +2,11 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -30,7 +33,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
 
-public class DeepOneEntity extends Monster {
+public class DeepOneEntity extends Monster implements AnimatedEntity {
 
     private boolean searchingForLand;
     protected final WaterBoundPathNavigation waterNavigation;
@@ -45,6 +48,8 @@ public class DeepOneEntity extends Monster {
     private int extraCounterOffset;
     public static final int MAX_CONTACT_MOVE_LIFETIME = 250;
     private boolean toRemove;
+    private int ticksBeforeSwimDown = -1;
+    private boolean finishedTradeClient;
 
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
@@ -87,15 +92,34 @@ public class DeepOneEntity extends Monster {
                 discard();
                 return;
             }
+            if (ticksBeforeSwimDown > 0) {
+                ticksBeforeSwimDown--;
+                if (ticksBeforeSwimDown == 9) {
+                    ejectPassengers();
+                } else if (ticksBeforeSwimDown == 8) {
+                    setDeltaMovement(0, -1, 0);
+
+                } else if (ticksBeforeSwimDown == 0) {
+                    discard();
+                    return;
+                }
+            }
             if (contactType == ContactType.TRADE) {
                 setDeltaMovement(0, 0, 0);
                 if (getFirstPassenger() instanceof CanoeEntity canoe) {
                     setYRot(canoe.getYRot() - 90);
+                    if (!(canoe.getFirstPassenger() instanceof Player player) && ticksBeforeSwimDown < 0) {
+                        terminateTrade();
+                    }
+                } else if(ticksBeforeSwimDown < 0){
+                    terminateTrade();
                 }
+
             }
             if (contactType != null && contactType.isMove()) {
                 if (tickCount > MAX_CONTACT_MOVE_LIFETIME) {
                     discard();
+                    return;
                 }
             }
         } else {
@@ -125,6 +149,20 @@ public class DeepOneEntity extends Monster {
             }
 
         }
+    }
+
+    @Override
+    public boolean startRiding(Entity pVehicle) {
+        if (pVehicle instanceof CanoeEntity) {
+            return false;
+        }
+        return super.startRiding(pVehicle);
+    }
+
+    public void terminateTrade() {
+        // do animation, unmount canoe, start to move and disappear
+        Messages.sendToTracking(GenericToClientPacket.startAnimation(AnimationRegistry.deep_one_trade4, getId(), 0), this);
+        ticksBeforeSwimDown = 16;
     }
 
     @Override
@@ -225,11 +263,15 @@ public class DeepOneEntity extends Monster {
     public int getContactMove() {
         return entityData.get(CONTACT_MOVE);
     }
+
     public float getContactTradeRot() {
         return entityData.get(CONTACT_TRADE_ROT);
     }
 
     public int getCanoeAskew() {
+        if (ticksBeforeSwimDown > 0) {
+            return Mth.clamp(ticksBeforeSwimDown - 5, 0, 13);
+        }
         return Mth.clamp((tickCount - 9) * 13 / 2, 0, 13);
     }
 
@@ -249,6 +291,20 @@ public class DeepOneEntity extends Monster {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         toRemove = pCompound.contains("toRemove");
+    }
+
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        switch (channel) {
+            case 0 -> mainAnimation = new Animation(animationTemplate);
+        }
+        if (animationTemplate == AnimationRegistry.deep_one_trade4) {
+            finishedTradeClient = true;
+        }
+    }
+
+    public boolean isFinishedTradeClient() {
+        return finishedTradeClient;
     }
 
     static class DeepOneMoveControl extends MoveControl {
