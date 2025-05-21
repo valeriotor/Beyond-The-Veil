@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
@@ -35,10 +37,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -162,6 +168,27 @@ public class PlayerEvents {
                     AntidoteCapsuleItem.applyCapsule(sp, item);
                     break;
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void loggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+        addBaptismAttributes(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void cloneEvent(PlayerEvent.Clone event) {
+        addBaptismAttributes(event.getEntity());
+    }
+
+    public static void addBaptismAttributes(Player p) {
+        if (!p.level().isClientSide) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
+                Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+                map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
+                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
+                p.getAttributes().addTransientAttributeModifiers(map);
             }
         }
     }

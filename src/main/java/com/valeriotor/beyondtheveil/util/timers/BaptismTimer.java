@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.event.PlayerEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -126,6 +127,7 @@ public class BaptismTimer extends PlayerTimer {
             }
         }
         DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.BAPTIZED, true, false);
+        PlayerEvents.addBaptismAttributes(player);
     }
 
     private void resetTime() {
