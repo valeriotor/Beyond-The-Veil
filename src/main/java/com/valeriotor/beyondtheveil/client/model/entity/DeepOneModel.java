@@ -357,7 +357,7 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         if (contactMove != -1 && DeepOneEntity.ContactType.values()[contactMove].isMove()) {
-            float a = 0.352F;
+            float a = contactMove == 1 ? 0.8F : 0.452F;
             alpha = Math.min(a, ticksExisted * a / 25);
             if (ticksExisted > DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) {
                 alpha = Math.max(0, (DeepOneEntity.MAX_CONTACT_MOVE_LIFETIME - 25) * a / 25);

@@ -46,7 +46,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
     private boolean startedTrade = false; // CLIENT ONLY
     private Animation mainAnimation;
     private int extraCounterOffset;
-    public static final int MAX_CONTACT_MOVE_LIFETIME = 250;
+    public static final int MAX_CONTACT_MOVE_LIFETIME = 350;
     private boolean toRemove;
     private int ticksBeforeSwimDown = -1;
     private boolean finishedTradeClient;
@@ -245,6 +245,8 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
             if (getFirstPassenger() instanceof CanoeEntity canoe) {
                 entityData.set(CONTACT_TRADE_ROT, canoe.getYRot());
             }
+            removeAllGoals(g -> true);
+            targetSelector.removeAllGoals(g -> true);
         }
     }
 

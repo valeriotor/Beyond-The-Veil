@@ -6,6 +6,10 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -37,11 +41,17 @@ public class ContactTimer extends PlayerTimer {
                 deepOne.setPos(x, player.getY() - 2.2, z);
                 deepOne.setExtraCounterOffset((int) (canoe.getYRot() * 50 / Math.PI));
                 player.level().addFreshEntity(deepOne);
+                ((ServerLevel) player.level()).sendParticles(ParticleTypes.DRIPPING_WATER, x, player.getY() - 1, z, 25, 0, 0.1, 0, 1);
+                ((ServerLevel) player.level()).sendParticles(ParticleTypes.UNDERWATER, x, player.getY() - 1, z, 25, 0, 0.1, 0, 1);
+                player.level().playSound(null, new BlockPos((int) x, (int) (player.getY() - 1), (int) z), SoundEvents.HOSTILE_SPLASH, SoundSource.NEUTRAL, 1, 1);
             }
             if (time % 20 == 0) {
                 Messages.sendToPlayer(GenericToClientPacket.renewContact(), (ServerPlayer) player);
             }
-            if (time == 290) {
+            if (Set.of(78, 168, 237).contains(time)) {
+                player.level().playSound(null, new BlockPos((int) (player.getX() + player.getRandom().nextInt(24) - 12), (int) (player.getY() - 1), (int) (player.getZ() + player.getRandom().nextInt(24) - 12)), SoundEvents.PLAYER_SPLASH, SoundSource.NEUTRAL, 1, 1);
+            }
+            if (time == 370) {
                 DeepOneEntity deepOne = new DeepOneEntity(BTVEntities.DEEP_ONE.get(), player.level());
                 double x = player.getX();// + Math.sin(contactType.getStartOffset() * Math.PI / 50) * radius;
                 double z = player.getZ();// + -Math.cos(contactType.getStartOffset() * Math.PI / 50) * radius;
@@ -50,7 +60,7 @@ public class ContactTimer extends PlayerTimer {
                 canoe.startRiding(deepOne);
                 deepOne.setContact(DeepOneEntity.ContactType.TRADE, player);
             }
-            if (time == 299) {
+            if (time == 379) {
                 player.level().playSound(null, player.getOnPos(), SoundEvents.ZOMBIE_ATTACK_WOODEN_DOOR, SoundSource.NEUTRAL, 1, 1);
                 Messages.sendToPlayer(GenericToClientPacket.shakeCamera(), (ServerPlayer) player);
             }
