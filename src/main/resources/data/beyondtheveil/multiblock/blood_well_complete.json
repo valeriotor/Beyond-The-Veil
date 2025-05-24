@@ -1,0 +1,42 @@
+{
+  "strings" : [
+    [
+      "   BBB   ",
+      "  BBBBB  ",
+      " BBBBBBB ",
+      "BBBBBBBBB",
+      "BBBBBBBBB",
+      "BBBBBBBBB",
+      " BBBBBBB ",
+      "  BBBBB  ",
+      "   BBB   "
+    ],
+    [
+      "   SSS   ",
+      "  SS SS  ",
+      " SS   SS ",
+      "SS  S  SS",
+      "S  SWS  S",
+      "SS  S  SS",
+      " SS   SS ",
+      "  SS SS  ",
+      "   SSS   "
+    ],
+    [
+      "         ",
+      "         ",
+      "         ",
+      "    S    ",
+      "   SBS   ",
+      "    S    ",
+      "         ",
+      "         ",
+      "         "
+    ]
+  ],
+  "map" : {
+    "B" : "beyondtheveil:blood_brick",
+    "S" : "beyondtheveil:blood_brick_stairs",
+    "W" : "beyondtheveil:blood_well"
+  }
+}

@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -55,7 +56,7 @@ public class FlaskShelfBE extends BlockEntity {
 
 
     public FlaskShelfBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.FLASK_SHELF_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.FLASK_SHELF_BE.get(), pWorldPosition, pBlockState);
         for (int i = 0; i < shapes.length; i++) {
             for (int j = 0; j < shapes[i].length; j++) {
                 shapes[i][j] = Shapes.empty();
@@ -406,7 +407,7 @@ public class FlaskShelfBE extends BlockEntity {
             CompoundTag tag = new CompoundTag();
             tank.writeToNBT(tag);
             tag.put("stack", stackHandler.serializeNBT());
-            BlockItem.setBlockEntityData(flask, Registration.FLASK_BE.get(), tag);
+            BlockItem.setBlockEntityData(flask, BTVBlockEntities.FLASK_BE.get(), tag);
             return flask;
         }
 

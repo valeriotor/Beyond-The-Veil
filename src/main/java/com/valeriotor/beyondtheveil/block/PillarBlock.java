@@ -1,8 +1,8 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.tile.PillarBE;
-import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +59,7 @@ public class PillarBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new PillarBE(offer ? Registration.OFFER_PILLAR_BE.get() : Registration.DEMAND_PILLAR_BE.get(), pPos, pState);
+        return new PillarBE(offer ? BTVBlockEntities.OFFER_PILLAR_BE.get() : BTVBlockEntities.DEMAND_PILLAR_BE.get(), pPos, pState);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class PillarBlock extends Block implements EntityBlock {
             linkTag.putLong("link", pos.asLong());
             linkTag.putBoolean("fromItem", true);
             linkTag.putString("connection", connection.toString());
-            BlockItem.setBlockEntityData(stack, offer ? Registration.DEMAND_PILLAR_BE.get() : Registration.OFFER_PILLAR_BE.get(), linkTag);
+            BlockItem.setBlockEntityData(stack, offer ? BTVBlockEntities.DEMAND_PILLAR_BE.get() : BTVBlockEntities.OFFER_PILLAR_BE.get(), linkTag);
             be.setLink(null);
             be.setConnection(connection);
             LifeEconomyData.getInstance(sl).setPillarConnectionToBe(sl, pos, connection);

@@ -1,40 +1,29 @@
 package com.valeriotor.beyondtheveil.block;
 
-import com.google.common.collect.Sets;
-import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class FlaskBlock extends Block implements EntityBlock {
 
@@ -137,7 +126,7 @@ public class FlaskBlock extends Block implements EntityBlock {
     public @NotNull ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
         if(true) return super.getCloneItemStack(pLevel, pPos, pState);
         ItemStack itemstack = super.getCloneItemStack(pLevel, pPos, pState);
-        pLevel.getBlockEntity(pPos, Registration.FLASK_BE.get()).ifPresent((p_187446_) -> {
+        pLevel.getBlockEntity(pPos, BTVBlockEntities.FLASK_BE.get()).ifPresent((p_187446_) -> {
             p_187446_.saveToItem(itemstack);
         });
         return itemstack;

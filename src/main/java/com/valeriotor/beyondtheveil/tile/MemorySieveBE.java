@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -10,15 +11,11 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import org.jetbrains.annotations.Nullable;
@@ -29,7 +26,7 @@ public class MemorySieveBE extends BlockEntity {
     private ItemEntity itemEntity;
 
     public MemorySieveBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.MEMORY_SIEVE_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.MEMORY_SIEVE_BE.get(), pWorldPosition, pBlockState);
     }
 
     public boolean getOrAddItem(Player p, ItemStack in) {

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.BloodWellBE;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -67,30 +68,31 @@ public class CoralStaffItem extends Item {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
 
-        if (context.getHand() == InteractionHand.MAIN_HAND) {
+        if (context.getHand() == InteractionHand.MAIN_HAND && context.getPlayer() != null) {
             BlockPos pos = context.getClickedPos();
             BlockEntity be = context.getLevel().getBlockEntity(pos);
-            if (be instanceof HeartBE heart) {
-                if (context.getPlayer().isShiftKeyDown()) {
+            if (context.getPlayer().isShiftKeyDown()) {
+                if (be instanceof HeartBE heart) {
                     heart.setLink(null);
-                } else {
-                    CompoundTag tag = stack.getOrCreateTag();
-                    boolean success = true;
-                    if (tag.contains("heart")) {
-                        BlockPos oldPos = BlockPos.of(tag.getLong("heart"));
-                        if(oldPos.distSqr(pos) > 32*32) success = false;
-                        if(success) {
-                            BlockEntity oldBe = context.getLevel().getBlockEntity(oldPos);
-                            if (oldBe instanceof HeartBE oldHeart) {
-                                oldHeart.setLink(pos);
-                            }
+
+                }
+            } else if(be instanceof HeartBE || be instanceof BloodWellBE){
+                CompoundTag tag = stack.getOrCreateTag();
+                boolean success = be instanceof HeartBE;
+                if (tag.contains("heart")) {
+                    BlockPos oldPos = BlockPos.of(tag.getLong("heart"));
+                    if(oldPos.distSqr(pos) > 32*32) success = false;
+                    if(success) {
+                        BlockEntity oldBe = context.getLevel().getBlockEntity(oldPos);
+                        if (oldBe instanceof HeartBE oldHeart) {
+                            oldHeart.setLink(pos);
                         }
                     }
-                    if(success)
-                        tag.putLong("heart", pos.asLong());
                 }
-                return InteractionResult.SUCCESS;
+                if(success)
+                    tag.putLong("heart", pos.asLong());
             }
+            return InteractionResult.SUCCESS;
         }
         return super.onItemUseFirst(stack, context);
     }

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -9,6 +10,7 @@ import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -35,6 +37,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -163,8 +166,9 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                 }
 
             }
-            if (MultiblockRegistry.getMultiblock(MultiblockRegistry.BLOOD_WELL).checksOutBottomCenter(sl, pPos.below(3))) {
-                sp.sendSystemMessage(Component.literal("WORKED!"));
+            if (MultiblockRegistry.BLOOD_WELL.checksOutBottomCenter(sl, pPos.below(3))) {
+                sl.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
+                sl.setBlock(pPos.below(2), Registration.BLOOD_WELL.get().defaultBlockState(), 3);
             }
 
         }

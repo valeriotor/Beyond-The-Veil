@@ -25,7 +25,9 @@ import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.BloodWellBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
@@ -62,6 +64,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.SLEEP_CHAMBER.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.GEAR_BENCH.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.HEART.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.BLOOD_WELL.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.WATERY_CRADLE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.PATIENT_POD.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.MEMORY_SIEVE.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
@@ -132,17 +135,18 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
         event.registerEntityRenderer(BTVEntities.SHOREMAN.get(), ShoremanRenderer::new);
 
-        event.registerBlockEntityRenderer(Registration.HEART_BE.get(), HeartBER::new);
-        event.registerBlockEntityRenderer(Registration.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
-        event.registerBlockEntityRenderer(Registration.WATERY_CRADLE_BE.get(), WateryCradleBER::new);
-        event.registerBlockEntityRenderer(Registration.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
-        event.registerBlockEntityRenderer(Registration.SURGERY_BED_BE.get(), SurgeryBedBER::new);
-        event.registerBlockEntityRenderer(Registration.FLASK_BE.get(), FlaskBER::new);
-        event.registerBlockEntityRenderer(Registration.SACRIFICE_ALTAR_BE.get(), SacrificeAltarBER::new);
-        event.registerBlockEntityRenderer(Registration.BLOOD_BASIN_BE.get(), BloodBasinBER::new);
-        event.registerBlockEntityRenderer(Registration.ALEMBICS_BE.get(), AlembicsBER::new);
-        event.registerBlockEntityRenderer(Registration.LACRYMATORY_BE.get(), LacrymatoryBER::new);
-        event.registerBlockEntityRenderer(Registration.PATIENT_POD_BE.get(), PatientPodBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.WATERY_CRADLE_BE.get(), WateryCradleBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.FLASK_SHELF_BE.get(), FlaskShelfBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.SURGERY_BED_BE.get(), SurgeryBedBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.FLASK_BE.get(), FlaskBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.SACRIFICE_ALTAR_BE.get(), SacrificeAltarBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.BLOOD_BASIN_BE.get(), BloodBasinBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.ALEMBICS_BE.get(), AlembicsBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.LACRYMATORY_BE.get(), LacrymatoryBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.PATIENT_POD_BE.get(), PatientPodBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.BLOOD_WELL_BE.get(), BloodWellBER::new);
     }
 
     @SubscribeEvent

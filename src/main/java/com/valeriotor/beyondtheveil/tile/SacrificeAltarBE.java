@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.rituals.RitualStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
@@ -51,7 +52,7 @@ public class SacrificeAltarBE extends BlockEntity {
     private int counter;
 
     public SacrificeAltarBE(BlockPos pPos, BlockState pBlockState) {
-        super(Registration.SACRIFICE_ALTAR_BE.get(), pPos, pBlockState);
+        super(BTVBlockEntities.SACRIFICE_ALTAR_BE.get(), pPos, pBlockState);
     }
 
     public boolean interact(Player p, ItemStack in, InteractionHand hand) {

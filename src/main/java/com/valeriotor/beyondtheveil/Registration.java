@@ -12,20 +12,17 @@ import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
-import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import com.valeriotor.beyondtheveil.world.structures.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -47,7 +44,6 @@ public class Registration {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.MODID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.MODID);
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.MODID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.MODID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, References.MODID);
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, References.MODID);
@@ -61,7 +57,6 @@ public class Registration {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(bus);
         ITEMS.register(bus);
-        BLOCK_ENTITIES.register(bus);
         MENUS.register(bus);
         FEATURES.register(bus);
         STRUCTURE_TYPES.register(bus);
@@ -76,6 +71,7 @@ public class Registration {
         BTVEffects.init(bus);
         BTVSounds.init(bus);
         BTVEntities.init(bus);
+        BTVBlockEntities.init(bus);
     }
 
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
@@ -128,7 +124,7 @@ public class Registration {
     public static final RegistryObject<Block> BLOOD_SMOOTH_STONE = BLOCKS.register("blood_smooth_stone", () -> new Block(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
     public static final RegistryObject<SlabBlock> BLOOD_SMOOTH_STONE_SLAB = BLOCKS.register("blood_smooth_stone_slab", () -> new SlabBlock(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB_DOUBLE, Material.ROCK, true).setHardness(10).setResistance(3000);
     public static final RegistryObject<Block> HEART = BLOCKS.register("heart", () -> new HeartBlock(BlockBehaviour.Properties.of().strength(0.5F))); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
-    //public static final RegistryObject<Block> BLOOD_WELL = BLOCKS.register("blood_well", () -> new Block(BRICK_PROPERTIES)); // new BlockBloodWell(Material.PORTAL, BlockNames.BLOOD_WELL);
+    public static final RegistryObject<Block> BLOOD_WELL = BLOCKS.register("blood_well", () -> new BloodWellBlock(BRICK_PROPERTIES)); // new BlockBloodWell(Material.PORTAL, BlockNames.BLOOD_WELL);
     //public static final RegistryObject<Block> STATUE = BLOCKS.register("statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.STATUE, WorshipType.DEFAULT);
     //public static final RegistryObject<Block> SACRIFICE_STATUE = BLOCKS.register("sacrifice_statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.SACRIFICE_STATUE, WorshipType.SACRIFICE);
     //public static final RegistryObject<Block> PENITENCE_STATUE = BLOCKS.register("penitence_statue", () -> new Block(BRICK_PROPERTIES)); // new BlockStatue(Material.ROCK, BlockNames.PENITENCE_STATUE, WorshipType.PENITENCE);
@@ -204,6 +200,7 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_SMOOTH_STONE_ITEM = fromBlock(BLOOD_SMOOTH_STONE);
     public static final RegistryObject<Item> BLOOD_SMOOTH_STONE_SLAB_ITEM = fromBlock(BLOOD_SMOOTH_STONE_SLAB);
     public static final RegistryObject<Item> HEART_ITEM = fromBlock(HEART);
+    public static final RegistryObject<Item> BLOOD_WELL_ITEM = fromBlock(BLOOD_WELL);
 
     //public static final RegistryObject<Item> BLOOD_WELL_ITEM = fromBlock(BLOOD_WELL);
     //public static final RegistryObject<Item> STATUE_ITEM = fromBlock(STATUE);
@@ -336,23 +333,6 @@ public class Registration {
     public static final RegistryObject<Item> FLETUM_EGG = ITEMS.register("fletum", () -> new ForgeSpawnEggItem(BTVEntities.FLETUM, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(BTVEntities.SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
-
-    public static final RegistryObject<BlockEntityType<GearBenchBE>> GEAR_BENCH_BE = BLOCK_ENTITIES.register(GEAR_BENCH.getId().getPath(), () -> BlockEntityType.Builder.of(GearBenchBE::new, GEAR_BENCH.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SlugBaitBE>> SLUG_BAIT_BE = BLOCK_ENTITIES.register(SLUG_BAIT.getId().getPath(), () -> BlockEntityType.Builder.of(SlugBaitBE::new, SLUG_BAIT.get()).build(null));
-    public static final RegistryObject<BlockEntityType<HeartBE>> HEART_BE = BLOCK_ENTITIES.register(HEART.getId().getPath(), () -> BlockEntityType.Builder.of(HeartBE::new, HEART.get()).build(null));
-    public static final RegistryObject<BlockEntityType<FumeSpreaderBE>> FUME_SPREADER_BE = BLOCK_ENTITIES.register(FUME_SPREADER.getId().getPath(), () -> BlockEntityType.Builder.of(FumeSpreaderBE::new, FUME_SPREADER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<FlaskShelfBE>> FLASK_SHELF_BE = BLOCK_ENTITIES.register(FLASK_SHELF.getId().getPath(), () -> BlockEntityType.Builder.of(FlaskShelfBE::new, FLASK_SHELF.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SurgeryBedBE>> SURGERY_BED_BE = BLOCK_ENTITIES.register(SURGERY_BED.getId().getPath(), () -> BlockEntityType.Builder.of(SurgeryBedBE::new, SURGERY_BED.get()).build(null));
-    public static final RegistryObject<BlockEntityType<AlembicsBE>> ALEMBICS_BE = BLOCK_ENTITIES.register(ALEMBICS.getId().getPath(), () -> BlockEntityType.Builder.of(AlembicsBE::new, ALEMBICS.get()).build(null));
-    public static final RegistryObject<BlockEntityType<FlaskBE>> FLASK_BE = BLOCK_ENTITIES.register(new ResourceLocation(References.MODID, "flask").getPath(), () -> BlockEntityType.Builder.of(FlaskBE::new, FLASK_LARGE.get(), FLASK_MEDIUM.get(), FLASK_SMALL.get(), FLASK_ITEM.get()).build(null));
-    public static final RegistryObject<BlockEntityType<MemorySieveBE>> MEMORY_SIEVE_BE = BLOCK_ENTITIES.register(MEMORY_SIEVE.getId().getPath(), () -> BlockEntityType.Builder.of(MemorySieveBE::new, MEMORY_SIEVE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<WateryCradleBE>> WATERY_CRADLE_BE = BLOCK_ENTITIES.register(WATERY_CRADLE.getId().getPath(), () -> BlockEntityType.Builder.of(WateryCradleBE::new, WATERY_CRADLE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SacrificeAltarBE>> SACRIFICE_ALTAR_BE = BLOCK_ENTITIES.register(SACRIFICE_ALTAR.getId().getPath(), () -> BlockEntityType.Builder.of(SacrificeAltarBE::new, SACRIFICE_ALTAR.get()).build(null));
-    public static final RegistryObject<BlockEntityType<BloodBasinBE>> BLOOD_BASIN_BE = BLOCK_ENTITIES.register(BLOOD_BASIN.getId().getPath(), () -> BlockEntityType.Builder.of(BloodBasinBE::new, BLOOD_BASIN.get()).build(null));
-    public static final RegistryObject<BlockEntityType<LacrymatoryBE>> LACRYMATORY_BE = BLOCK_ENTITIES.register(LACRYMATORY.getId().getPath(), () -> BlockEntityType.Builder.of(LacrymatoryBE::new, LACRYMATORY.get()).build(null));
-    public static final RegistryObject<BlockEntityType<PillarBE>> DEMAND_PILLAR_BE = BLOCK_ENTITIES.register(DEMAND_PILLAR.getId().getPath(), () -> BlockEntityType.Builder.of((i, o) -> new PillarBE(Registration.DEMAND_PILLAR_BE.get(), i, o), DEMAND_PILLAR.get()).build(null));
-    public static final RegistryObject<BlockEntityType<PillarBE>> OFFER_PILLAR_BE = BLOCK_ENTITIES.register(OFFER_PILLAR.getId().getPath(), () -> BlockEntityType.Builder.of((i, o) -> new PillarBE(Registration.OFFER_PILLAR_BE.get(), i, o), OFFER_PILLAR.get()).build(null));
-    public static final RegistryObject<BlockEntityType<PatientPodBE>> PATIENT_POD_BE = BLOCK_ENTITIES.register(PATIENT_POD.getId().getPath(), () -> BlockEntityType.Builder.of(PatientPodBE::new, PATIENT_POD.get()).build(null));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));

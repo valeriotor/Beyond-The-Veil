@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.nbt.CompoundTag;
@@ -78,6 +79,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.BLOOD_SMOOTH_STONE.get());
         dropSelf(Registration.BLOOD_SMOOTH_STONE_SLAB.get());
         dropSelf(Registration.HEART.get());
+        add(Registration.BLOOD_WELL.get(), noDrop());
         dropSelf(Registration.MEMORY_SIEVE.get());
         dropSelf(Registration.LETTER_BOX.get());
         dropSelf(Registration.DARK_GLASS.get());
@@ -92,8 +94,8 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.FLASK_MEDIUM.get());
         dropSelf(Registration.FLASK_SMALL.get());
         dropSelf(Registration.FLASK_ITEM.get());
-        pillarTable(Registration.DEMAND_PILLAR.get(), Registration.DEMAND_PILLAR_BE.get(), "link");
-        pillarTable(Registration.OFFER_PILLAR.get(), Registration.OFFER_PILLAR_BE.get(), "link");
+        pillarTable(Registration.DEMAND_PILLAR.get(), BTVBlockEntities.DEMAND_PILLAR_BE.get(), "link");
+        pillarTable(Registration.OFFER_PILLAR.get(), BTVBlockEntities.OFFER_PILLAR_BE.get(), "link");
     }
 
     @Override

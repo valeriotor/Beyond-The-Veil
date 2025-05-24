@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -45,7 +46,7 @@ public class BloodBasinBE extends BlockEntity {
 
 
     public BloodBasinBE(BlockPos pPos, BlockState pBlockState) {
-        super(Registration.BLOOD_BASIN_BE.get(), pPos, pBlockState);
+        super(BTVBlockEntities.BLOOD_BASIN_BE.get(), pPos, pBlockState);
     }
 
     public void interact(Player player, InteractionHand hand, ItemStack stack) {

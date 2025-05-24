@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,7 +34,7 @@ public class LacrymatoryBE extends BlockEntity {
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
     public LacrymatoryBE(BlockPos pPos, BlockState pBlockState) {
-        super(Registration.LACRYMATORY_BE.get(), pPos, pBlockState);
+        super(BTVBlockEntities.LACRYMATORY_BE.get(), pPos, pBlockState);
         tank = new FluidTank(5000);
         tank.setValidator(f -> f.getFluid() == BTVFluids.FLUID_TEARS.getA().get());
     }

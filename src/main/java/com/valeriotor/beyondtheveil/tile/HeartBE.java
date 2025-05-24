@@ -2,9 +2,9 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -36,13 +36,13 @@ public class HeartBE extends BlockEntity {
     private static Map<Level, Map<Integer, BlockPos>> damned = new HashMap<>();
 
     public HeartBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.HEART_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.HEART_BE.get(), pWorldPosition, pBlockState);
     }
 
     public void tickServer() {
         counter++;
         if ((counter & 7) == 0) {
-            if (link != null && !(level.getBlockEntity(link) instanceof HeartBE)) {
+            if (link != null && !(level.getBlockEntity(link) instanceof HeartBE) && !(level.getBlockEntity(link) instanceof BloodWellBE)) {
                 setLink(null);
             }
             if(counter > Integer.MAX_VALUE/2) counter = 0;

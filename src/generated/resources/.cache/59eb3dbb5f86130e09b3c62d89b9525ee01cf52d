@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-06T22:38:28.6658498	Loot Tables
+// 1.20.1	2025-05-24T22:33:25.2089963	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
 326f66af7c810752260514b476c79724d58201d1 data/beyondtheveil/loot_tables/blocks/black_kelp.json
@@ -9,6 +9,7 @@ b901bf1159ff19a6082593371cbb6fe2858f029d data/beyondtheveil/loot_tables/blocks/b
 d13742f77785125a9cd760878eb4109e3e329eb2 data/beyondtheveil/loot_tables/blocks/blood_brick_stairs.json
 a93bd839894878be65be63e8ab63529641017ee0 data/beyondtheveil/loot_tables/blocks/blood_smooth_stone.json
 a61254a8b261a1781c4689de61fa72dd03913186 data/beyondtheveil/loot_tables/blocks/blood_smooth_stone_slab.json
+0ac8290fad537b0f1f6f255dc1a57f63ba237e00 data/beyondtheveil/loot_tables/blocks/blood_well.json
 ffadf82e41bd9d5e85ff623a9187d855293bcc5d data/beyondtheveil/loot_tables/blocks/blue_bricks.json
 f352910a014341056347ec9c163053a4135984c8 data/beyondtheveil/loot_tables/blocks/damp_canopy.json
 046b2538aef685c14850df7c44fd0700f01c5671 data/beyondtheveil/loot_tables/blocks/damp_filled_canopy.json

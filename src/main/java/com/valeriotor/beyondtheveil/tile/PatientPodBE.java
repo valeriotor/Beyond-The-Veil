@@ -1,10 +1,10 @@
 package com.valeriotor.beyondtheveil.tile;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
@@ -15,13 +15,11 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,7 +27,7 @@ public class PatientPodBE extends BlockEntity {
     private LivingEntity toRender;
 
     public PatientPodBE(BlockPos pPos, BlockState pBlockState) {
-        super(Registration.PATIENT_POD_BE.get(), pPos, pBlockState);
+        super(BTVBlockEntities.PATIENT_POD_BE.get(), pPos, pBlockState);
     }
 
     public boolean interact(Player p, ItemStack in, InteractionHand hand) {

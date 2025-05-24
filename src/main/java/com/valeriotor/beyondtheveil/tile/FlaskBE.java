@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -53,7 +54,7 @@ public class FlaskBE extends BlockEntity {
 
 
     public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.FLASK_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.FLASK_BE.get(), pWorldPosition, pBlockState);
         FlaskBlock.FlaskSize size = ((FlaskBlock) pBlockState.getBlock()).size;
         tank = getTankByFlaskType(size);
         stackHandler = createStackHandler(size);

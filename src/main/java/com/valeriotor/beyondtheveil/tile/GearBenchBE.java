@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +34,7 @@ public class GearBenchBE extends BlockEntity implements CraftingContainer {
 
 
     public GearBenchBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.GEAR_BENCH_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.GEAR_BENCH_BE.get(), pWorldPosition, pBlockState);
     }
 
     public ItemStack getCraftItem(int slot) {

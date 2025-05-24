@@ -1,6 +1,6 @@
 package com.valeriotor.beyondtheveil.tile;
 
-import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,7 +21,7 @@ public class SlugBaitBE extends BlockEntity {
     private double offsetZ = 0;
 
     public SlugBaitBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.SLUG_BAIT_BE.get(), pWorldPosition, pBlockState);
+        super(BTVBlockEntities.SLUG_BAIT_BE.get(), pWorldPosition, pBlockState);
     }
 
     public void addMinerals() {

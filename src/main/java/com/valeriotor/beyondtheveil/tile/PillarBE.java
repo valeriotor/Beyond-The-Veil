@@ -1,6 +1,6 @@
 package com.valeriotor.beyondtheveil.tile;
 
-import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +22,7 @@ public class PillarBE extends BlockEntity {
 
     public PillarBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
-        offer = pType == Registration.OFFER_PILLAR_BE.get();
+        offer = pType == BTVBlockEntities.OFFER_PILLAR_BE.get();
     }
 
     public boolean isOffer() {

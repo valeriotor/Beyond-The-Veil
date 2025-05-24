@@ -1,20 +1,18 @@
 package com.valeriotor.beyondtheveil.tile;
 
-import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 public class SurgeryBedBE extends SurgicalBE {
     public SurgeryBedBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Registration.SURGERY_BED_BE.get(), pWorldPosition, pBlockState, SurgicalLocation.BACK);
+        super(BTVBlockEntities.SURGERY_BED_BE.get(), pWorldPosition, pBlockState, SurgicalLocation.BACK);
     }
 
     @Override

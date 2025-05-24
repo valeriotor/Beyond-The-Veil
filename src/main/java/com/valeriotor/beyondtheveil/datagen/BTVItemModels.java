@@ -43,6 +43,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(ELDER_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone"));
         withExistingParent(ELDER_SMOOTH_STONE_SLAB_ITEM.getId().getPath(), modLoc("block/elder_smooth_stone_slab"));
         withExistingParent(BLOOD_BRICK_ITEM.getId().getPath(), modLoc("block/blood_brick"));
+        withExistingParent(BLOOD_WELL_ITEM.getId().getPath(), modLoc("block/blood_brick"));
         withExistingParent(VEIN_STONE_ITEM.getId().getPath(), modLoc("block/vein_stone1"));
         withExistingParent(BLOOD_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/blood_brick_slab"));
         withExistingParent(BLOOD_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/blood_brick_stairs"));
@@ -79,9 +80,9 @@ public class BTVItemModels extends ItemModelProvider {
 
         singleTexture(ONIRIC_INCENSE.getId().getPath(),     mcLoc("item/generated"), "layer0", modLoc("item/" + ONIRIC_INCENSE.getId().getPath()));
         singleTexture(SLUG.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + SLUG.getId().getPath()));
-        singleTexture(SEAWEED_STEW.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + SEAWEED_STEW.getId().getPath()));
-        singleTexture(KELP_COD_BUNDLE.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + KELP_COD_BUNDLE.getId().getPath()));
-        singleTexture(TROPICAL_DELIGHT.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + TROPICAL_DELIGHT.getId().getPath()));
+        singleTexture(SEAWEED_STEW.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + SEAWEED_STEW.getId().getPath()));
+        singleTexture(KELP_COD_BUNDLE.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/" + KELP_COD_BUNDLE.getId().getPath()));
+        singleTexture(TROPICAL_DELIGHT.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/" + TROPICAL_DELIGHT.getId().getPath()));
         singleTexture(CANOE.getId().getPath(),              mcLoc("item/generated"), "layer0", modLoc("item/" + CANOE.getId().getPath()));
         singleTexture(RUM.getId().getPath(),                mcLoc("item/generated"), "layer0", modLoc("item/beverages/" + RUM.getId().getPath()));
         singleTexture(WINE.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/beverages/" + WINE.getId().getPath()));

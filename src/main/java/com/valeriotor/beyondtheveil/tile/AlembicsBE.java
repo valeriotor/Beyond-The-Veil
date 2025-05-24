@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.AlembicsBlock;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,17 +16,12 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelData;
@@ -39,12 +35,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class AlembicsBE extends BlockEntity {
 
@@ -67,7 +60,7 @@ public class AlembicsBE extends BlockEntity {
     public static final ModelProperty<BlockPos> POS_PROPERTY = new ModelProperty<>();
 
     public AlembicsBE(BlockPos pPos, BlockState pBlockState) {
-        super(Registration.ALEMBICS_BE.get(), pPos, pBlockState);
+        super(BTVBlockEntities.ALEMBICS_BE.get(), pPos, pBlockState);
         inputTank1 = new FluidTank(2000);
         stackHandler = new ItemStackHandler(1);
         inputTank2 = new FluidTank(1000);
