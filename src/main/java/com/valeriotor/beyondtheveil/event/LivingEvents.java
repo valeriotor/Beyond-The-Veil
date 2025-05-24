@@ -45,16 +45,6 @@ import java.util.*;
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingEvents {
 
-    @SubscribeEvent
-    public static void endermanAngerEvent(EnderManAngerEvent event) {
-        Player p = event.getPlayer();
-        if (p != null) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.REMINISCING)) {
-                event.setCanceled(true);
-            }
-        }
-    }
-
     private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     @SubscribeEvent

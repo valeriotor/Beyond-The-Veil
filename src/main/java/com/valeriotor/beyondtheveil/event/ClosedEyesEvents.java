@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.event.entity.living.EnderManAngerEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -96,4 +97,13 @@ public class ClosedEyesEvents {
         return blockstate.getBlock() instanceof LiquidBlockContainer lbc && lbc.canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
     }
 
+    @SubscribeEvent
+    public static void endermanAngerEvent(EnderManAngerEvent event) {
+        Player p = event.getPlayer();
+        if (p != null) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.REMINISCING)) {
+                event.setCanceled(true);
+            }
+        }
+    }
 }
