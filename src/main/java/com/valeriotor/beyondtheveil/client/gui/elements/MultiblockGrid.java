@@ -4,8 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockSchematic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 public class MultiblockGrid extends Element{
 
@@ -14,7 +17,7 @@ public class MultiblockGrid extends Element{
     private Component layerComponent;
     private int layerIndex;
     private int layerComponentWidth;
-    private static final int CHARACTER_WIDTH = 7;
+    private static final int CHARACTER_WIDTH = 11;
 
     public MultiblockGrid(int width, int height, MultiblockSchematic schematic) {
         super(width, height);
@@ -31,29 +34,43 @@ public class MultiblockGrid extends Element{
     @Override
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
         poseStack.pushPose();
-        poseStack.translate(0, 0, 0);
+        poseStack.translate(getWidth() / 2D, 0, 0);
         poseStack.scale(1.5F, 1.5F, 1);
         graphics.drawCenteredString(Minecraft.getInstance().font, translationComponent, 0, 0, 0xFFFFFFFF);
         poseStack.popPose();
 
-        graphics.drawCenteredString(Minecraft.getInstance().font, layerComponent, getWidth() / 2, 0, 0xFFFFFFFF);
+        graphics.drawCenteredString(Minecraft.getInstance().font, layerComponent, getWidth() / 2, 32, 0xFFFFFFFF);
 
         if (layerIndex >= 0 && layerIndex < schematic.getSchematic().length) {
             ItemStack[][] layer = schematic.getSchematic()[this.layerIndex];
             for (int i = 0; i < schematic.getSideSize(); i++) {
                 for (int j = 0; j < schematic.getSideSize(); j++) {
-                    graphics.renderItem(layer[i][j], i * 21, j * 21);
+                    int x = (int) (getWidth() / 2 + 21 * (i - schematic.getSideSize() / 2D));
+                    int y = (int) (j * 21 + 50);
+                    ItemStack itemStack = layer[i][j];
+                    if (!itemStack.isEmpty()) {
+                        graphics.renderItem(itemStack, x, y);
+                        if (relativeMouseX >= x && relativeMouseX <= x + 21 && relativeMouseY >= y && relativeMouseY <= y + 21) {
+                            graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
+                        }
+                    }
                 }
             }
         }
         renderPlusOrMinus(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick, true);
         renderPlusOrMinus(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick, false);
+        //if (insideBounds(relativeMouseX, relativeMouseY)) {
+        //    graphics.drawString(Minecraft.getInstance().font, String.format("X: %d, Y: %d", relativeMouseX, relativeMouseY), 0, 100, 0xFFFFFFFF);
+        //}
     }
 
     private void renderPlusOrMinus(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, boolean plus) {
+        if ((plus && layerIndex == schematic.getSchematic().length - 1) || (!plus && layerIndex == 0)) {
+            return;
+        }
         poseStack.pushPose();
         double pX = getXForPlusOrMinus(plus);
-        int pY = 30;
+        int pY = 32;
         poseStack.translate(pX, pY, 0);
         if (hoveringPlusOrMinus(plus, relativeMouseX, relativeMouseY)) {
             poseStack.scale(1.5F, 1.5F, 1);
@@ -69,7 +86,7 @@ public class MultiblockGrid extends Element{
     }
 
     private double getXForPlusOrMinus(boolean plus) {
-        return getWidth() / 2D + (plus ? 1 : -1) * layerComponentWidth * 2 / 3D;
+        return getWidth() / 2D + (plus ? 1 : -1) * layerComponentWidth * 3.1D / 3D;
     }
 
     @Override
@@ -100,12 +117,20 @@ public class MultiblockGrid extends Element{
     }
 
     private void increaseLayer() {
-        layerIndex = Math.min(schematic.getSchematic().length - 1, layerIndex + 1);
+        int newIndex = Math.min(schematic.getSchematic().length - 1, layerIndex + 1);
+        if (layerIndex != newIndex) {
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+        }
+        layerIndex = newIndex;
         setLayerComponent();
     }
 
     private void decreaseLayer() {
-        layerIndex = Math.max(0, layerIndex - 1);
+        int newIndex = Math.max(0, layerIndex - 1);
+        if (layerIndex != newIndex) {
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+        }
+        layerIndex = newIndex;
         setLayerComponent();
     }
 

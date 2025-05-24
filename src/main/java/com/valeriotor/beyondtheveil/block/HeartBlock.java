@@ -15,8 +15,10 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetCarriedItemPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -160,6 +162,9 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                     sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
                 }
 
+            }
+            if (MultiblockRegistry.getMultiblock(MultiblockRegistry.BLOOD_WELL).checksOutBottomCenter(sl, pPos.below(3))) {
+                sp.sendSystemMessage(Component.literal("WORKED!"));
             }
 
         }

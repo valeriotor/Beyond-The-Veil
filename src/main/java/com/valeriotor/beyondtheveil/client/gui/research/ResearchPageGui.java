@@ -70,7 +70,7 @@ public class ResearchPageGui extends Screen {
     private RecipeType selectedRecipeType;
     private int recipeGroupX;
     private int[] recipeGroupYs = new int[0];
-    private int gridX, gridY;//, recipePageWidth, recipePageHeight;
+    private int gridX, gridY, gridY2;//, recipePageWidth, recipePageHeight;
 
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
@@ -256,6 +256,7 @@ public class ResearchPageGui extends Screen {
 
         gridX = pageLeftX + 200 * blackPageWidth / 1511;
         gridY = pageTopY + 230 * blackPageHeight / 1082;
+        gridY2 = pageTopY + 100 * blackPageHeight / 1082;
 
     }
 
@@ -339,12 +340,14 @@ public class ResearchPageGui extends Screen {
         } else if (currentMultiblock != null) {
             int side = currentMultiblock.getSchematic().getSideSize();
             pose.pushPose();
-            int posX = gridX;
-            pose.translate(posX, gridY, 0);
+            int posX = width / 2 - currentMultiblock.getWidth() / 2;
+            pose.translate(width / 2D, gridY2, 0);
+            pose.scale(scaleFactor, scaleFactor, 1);
+            pose.translate(-currentMultiblock.getWidth() / 2D, 0, 0);
             int width1 = 1500 * blackPageWidth / 1511;
             //float scaleFactor = width1 / 200F;
             //pose.scale(scaleFactor, scaleFactor, 1);
-            currentMultiblock.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - posX, mouseY - gridY, partialTicks);
+            currentMultiblock.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - width / 2) / scaleFactor) + currentMultiblock.getWidth() / 2, (int) ((mouseY - gridY2) / scaleFactor), partialTicks);
             pose.popPose();
         }
 
@@ -521,8 +524,9 @@ public class ResearchPageGui extends Screen {
     }
 
     private void makeMultiblock() {
-        int width1 = 1500 * blackPageWidth / 1511;
-        currentMultiblock = new MultiblockGrid(width1, 300, multiblocks.get(currentRecipeIndex));
+        MultiblockSchematic schematic = multiblocks.get(currentRecipeIndex);
+        int width1 = (int) (21 * schematic.getSideSize() * 3 * scaleFactor);
+        currentMultiblock = new MultiblockGrid(width1, 300, schematic);
     }
 
 
@@ -537,7 +541,7 @@ public class ResearchPageGui extends Screen {
         } else if (hoveringRightArrow(mouseX, mouseY)) {
             rightArrowClick();
             return true;
-        } else if (currentMultiblock != null && currentMultiblock.mouseClicked(mouseX - gridX, mouseY - gridY, mouseButton)) {
+        } else if (currentMultiblock != null && currentMultiblock.mouseClicked((int) ((mouseX - width / 2) / scaleFactor) + currentMultiblock.getWidth() / 2D, mouseY - gridY2, mouseButton)) {
             return true;
         } else {
             RecipeType recipeType = hoveredSelection(mouseX, mouseY);
