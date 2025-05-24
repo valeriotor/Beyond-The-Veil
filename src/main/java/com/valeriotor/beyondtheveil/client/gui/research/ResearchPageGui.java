@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
+import com.valeriotor.beyondtheveil.client.gui.elements.MultiblockGrid;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -15,6 +16,7 @@ import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockSchematic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -66,13 +68,14 @@ public class ResearchPageGui extends Screen {
     private int pageBottomY;
     //private List<? extends Recipe<? extends Container>> selectedRecipeGroup;
     private RecipeType selectedRecipeType;
-    private int recipeGroupX, recipeGroup1Y, recipeGroup2Y;
+    private int recipeGroupX;
     private int[] recipeGroupYs = new int[0];
     private int gridX, gridY;//, recipePageWidth, recipePageHeight;
 
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
     private final ItemStack memorySieve = new ItemStack(Registration.MEMORY_SIEVE.get());
+    private final ItemStack bricks = new ItemStack(Blocks.BRICKS);
 
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research_background.png");
     private static final ResourceLocation FRAME = new ResourceLocation(References.MODID, "textures/gui/research_frame.png");
@@ -90,10 +93,12 @@ public class ResearchPageGui extends Screen {
     private final List<GearBenchRecipe> gearBenchRecipes = new ArrayList<>();
     private final List<CraftingRecipe> craftingRecipes = new ArrayList<>();
     private final List<Memory> memories = new ArrayList<>();
+    private final List<MultiblockSchematic> multiblocks = new ArrayList<>();
     private final List<RecipeType> recipeTypes = new ArrayList<>();
     private CraftingRegistryGui.CraftingGrid currentGrid;
     private int currentRecipeIndex;
     private ItemStack memoryIngredient;
+    private MultiblockGrid currentMultiblock;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -201,10 +206,12 @@ public class ResearchPageGui extends Screen {
             }
         }
         memories.addAll(status.res.getStages()[status.getStage()].getMemories());
+        multiblocks.addAll(status.res.getStages()[status.getStage()].getMultiblocks());
 
         craftingRecipes.sort(Comparator.comparing(r -> r.getResultItem(minecraft.level.registryAccess()).getItem().getDescription().getString()));
         gearBenchRecipes.sort(Comparator.comparing(r -> r.getResultItem(minecraft.level.registryAccess()).getItem().getDescription().getString()));
         memories.sort(Comparator.comparing(m -> m.getTranslationComponent().getString()));
+        multiblocks.sort(Comparator.comparing(m -> m.getTranslationComponent().getString()));
 
         recipeTypes.clear();
         if (!craftingRecipes.isEmpty()) {
@@ -216,6 +223,9 @@ public class ResearchPageGui extends Screen {
         if (!memories.isEmpty()) {
             recipeTypes.add(RecipeType.MEMORY);
         }
+        if (!multiblocks.isEmpty()) {
+            recipeTypes.add(RecipeType.MULTIBLOCK);
+        }
 
         recipeGroupX = pageLeftX + 1420 * blackPageWidth / 1511;
 
@@ -224,9 +234,6 @@ public class ResearchPageGui extends Screen {
         for (int i = 0; i < recipeGroupYs.length; i++) {
             recipeGroupYs[i] = pageTopY + (270 + 95 * i) * blackPageHeight / 1082;
         }
-
-        recipeGroup1Y = pageTopY + 270 * blackPageHeight / 1082;
-        recipeGroup2Y = pageTopY + 365 * blackPageHeight / 1082;
 
         //recipePageX = pageLeftX + 130 * blackPageWidth / 1511;
         //recipePageY = pageTopY + 50 * blackPageHeight / 1082;
@@ -314,6 +321,16 @@ public class ResearchPageGui extends Screen {
             if (relativeMouseX >= -8 && relativeMouseX <= 8 && relativeMouseY >= -8 && relativeMouseY <= 8) {
                 guiGraphics.renderTooltip(Minecraft.getInstance().font, memoryIngredient.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), memoryIngredient.getTooltipImage(), (int) relativeMouseX, (int) relativeMouseY);
             }
+            pose.popPose();
+        } else if (currentMultiblock != null) {
+            int side = currentMultiblock.getSchematic().getSideSize();
+            pose.pushPose();
+            int posX = gridX;
+            pose.translate(posX, gridY, 0);
+            int width1 = 1500 * blackPageWidth / 1511;
+            //float scaleFactor = width1 / 200F;
+            //pose.scale(scaleFactor, scaleFactor, 1);
+            currentMultiblock.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - posX, mouseY - gridY, partialTicks);
             pose.popPose();
         }
 
@@ -413,6 +430,7 @@ public class ResearchPageGui extends Screen {
             case CRAFTING_TABLE -> craftingRecipes.size();
             case GEAR_BENCH -> gearBenchRecipes.size();
             case MEMORY -> memories.size();
+            case MULTIBLOCK -> multiblocks.size();
         };
     }
 
@@ -421,6 +439,7 @@ public class ResearchPageGui extends Screen {
             case CRAFTING_TABLE -> craftingTable;
             case GEAR_BENCH -> gearBench;
             case MEMORY -> memorySieve;
+            case MULTIBLOCK -> bricks;
         };
     }
 
@@ -480,6 +499,11 @@ public class ResearchPageGui extends Screen {
         memoryIngredient = memories.get(currentRecipeIndex).getItem();
     }
 
+    private void makeMultiblock() {
+        int width1 = 1500 * blackPageWidth / 1511;
+        currentMultiblock = new MultiblockGrid(width1, 300, multiblocks.get(currentRecipeIndex));
+    }
+
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
@@ -492,18 +516,23 @@ public class ResearchPageGui extends Screen {
         } else if (hoveringRightArrow(mouseX, mouseY)) {
             rightArrowClick();
             return true;
+        } else if (currentMultiblock != null && currentMultiblock.mouseClicked(mouseX - gridX, mouseY - gridY, mouseButton)) {
+            return true;
         } else {
             RecipeType recipeType = hoveredSelection(mouseX, mouseY);
             if (recipeType != null) {
                 if (recipeType != selectedRecipeType) {
                     selectedRecipeType = recipeType;
                     currentRecipeIndex = 0;
+                    memoryIngredient = null;
+                    currentGrid = null;
+                    currentMultiblock = null;
                     if (recipeType.grid) {
                         makeGrid();
-                        memoryIngredient = null;
-                    } else {
-                        currentGrid = null;
+                    } else if (recipeType == RecipeType.MEMORY) {
                         makeMemory();
+                    } else {
+                        makeMultiblock();
                     }
                     Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 } else {
@@ -539,6 +568,7 @@ public class ResearchPageGui extends Screen {
         selectedRecipeType = null;
         currentGrid = null;
         memoryIngredient = null;
+        currentMultiblock = null;
     }
 
     private void leftArrowClick() {
@@ -651,7 +681,7 @@ public class ResearchPageGui extends Screen {
     //}
 
     private enum RecipeType {
-        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false);
+        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false);
 
         private final boolean grid;
 

@@ -2130,6 +2130,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.miner.display_name", "Miner");
         add("gui.dialogue.scholar.display_name", "Scholar");
         add("gui.dialogue.smith.display_name", "Smith");
+
+        add("gui.multiblock.layer", "Layer %d");
     }
 
     private void addBaptism() {

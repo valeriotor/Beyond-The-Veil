@@ -1387,6 +1387,7 @@
   "gui.letter_box.reply": "Reply",
   "gui.letter_box.send": "Send",
   "gui.letter_box.sent": "Sent",
+  "gui.multiblock.layer": "Layer %d",
   "gui.necronomicon": "Al Azif",
   "gui.necronomicon.bookmarkmade": "Bookmark created",
   "gui.optionwheel.power.greatdreamer.0": "Summon Deep Ones",

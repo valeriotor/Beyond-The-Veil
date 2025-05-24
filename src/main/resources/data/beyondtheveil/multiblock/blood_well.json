@@ -1,0 +1,36 @@
+{
+  "strings" : [
+    [
+      "BBBBB",
+      "BBBBB",
+      "BBBBB",
+      "BBBBB",
+      "BBBBB"
+    ],
+    [
+      "BBBBB",
+      "B   B",
+      "B H B",
+      "B   B",
+      "BBBBB"
+    ],
+    [
+      "B   B",
+      "     ",
+      "     ",
+      "     ",
+      "B   B"
+    ],
+    [
+      "B   B",
+      "     ",
+      "     ",
+      "     ",
+      "B   B"
+    ]
+  ],
+  "map" : {
+    "B" : "beyondtheveil:blood_brick",
+    "H" : "beyondtheveil:heart"
+  }
+}

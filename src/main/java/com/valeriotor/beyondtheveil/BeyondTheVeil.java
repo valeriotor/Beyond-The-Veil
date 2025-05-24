@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.util.LegacyStructure;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
 import com.valeriotor.beyondtheveil.world.region.OverworldRegion;
 import com.valeriotor.beyondtheveil.world.region.TerrablenderSurfaceRules;
 import net.minecraft.resources.ResourceLocation;
@@ -69,6 +70,7 @@ public class BeyondTheVeil
             Regions.register(new OverworldRegion(new ResourceLocation(References.MODID, "overworld"), 5));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, References.MODID, TerrablenderSurfaceRules.makeRules());
             AlembicsRecipeRegistry.registerRecipes();
+            MultiblockRegistry.registerMultiblocks();
         });
     }
 

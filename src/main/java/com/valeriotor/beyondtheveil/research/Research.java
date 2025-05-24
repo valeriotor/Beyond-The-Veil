@@ -3,17 +3,17 @@ package com.valeriotor.beyondtheveil.research;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockSchematic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Research {
 
@@ -40,7 +40,7 @@ public class Research {
         this.stages = res.stages == null ? new SubResearch[0] : res.stages;
         this.addenda = res.addenda == null ? new SubResearch[0] : res.addenda;
         List<ItemStack> stacks = new ArrayList<>();
-        for(String icon : icons) {
+        for (String icon : icons) {
             String[] split = icon.split(";");
             int amount = split.length > 1 ? Integer.parseInt(split[1]) : 1;
             int meta = split.length > 2 ? Integer.parseInt(split[2]) : 0;
@@ -51,7 +51,7 @@ public class Research {
             });
         }
         iconsTex = new ItemStack[stacks.size()];
-        for(int i = 0; i < stacks.size(); i++) {
+        for (int i = 0; i < stacks.size(); i++) {
             iconsTex[i] = stacks.get(i);
         }
     }
@@ -90,10 +90,10 @@ public class Research {
 
     public List<String> getRecipes() {
         List<String> recipes = new ArrayList<>();
-        for(SubResearch sr : this.getStages()) {
+        for (SubResearch sr : this.getStages()) {
             recipes.addAll(Arrays.asList(sr.getRecipes()));
         }
-        for(SubResearch sr : this.getAddenda()) {
+        for (SubResearch sr : this.getAddenda()) {
             recipes.addAll(Arrays.asList(sr.getRecipes()));
         }
         return recipes;
@@ -101,10 +101,10 @@ public class Research {
 
     public List<Memory> getMemories() {
         List<Memory> memories = new ArrayList<>();
-        for(SubResearch sr : this.getStages()) {
+        for (SubResearch sr : this.getStages()) {
             memories.addAll(sr.getMemories());
         }
-        for(SubResearch sr : this.getAddenda()) {
+        for (SubResearch sr : this.getAddenda()) {
             memories.addAll(sr.getMemories());
         }
         return memories;
@@ -130,23 +130,23 @@ public class Research {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(key).append("\n").append(name).append("\nIcons: ");
-        for(String s : icons) {
+        for (String s : icons) {
             sb.append(s).append("; ");
         }
         sb.append("\n");
         sb.append("Location: ").append(location[0]).append(" ").append(location[1]).append("\nParents: ");
-        if(parents != null)
-            for(String s : parents) {
+        if (parents != null)
+            for (String s : parents) {
                 sb.append(s).append("; ");
             }
         sb.append("\nHiders: ");
-        if(hiders != null)
-            for(String s : hiders) {
+        if (hiders != null)
+            for (String s : hiders) {
                 sb.append(s).append("; ");
             }
-        if(stages != null)
+        if (stages != null)
             sb.append("\nStages: ");
-        for(SubResearch stage : stages) {
+        for (SubResearch stage : stages) {
             sb.append(stage.toString());
         }
         return sb.toString();
@@ -159,14 +159,15 @@ public class Research {
         private String[] required_research;
         String[] recipes;
         String[] memories;
+        String[] multiblocks;
 
         public boolean meetsRequirements(Player p) {
             return this.meetsRequirements(p.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY));
         }
 
         public boolean meetsRequirements(PlayerData data) {
-            if(data == null) return false;
-            if(required_research == null || required_research.length == 0) return true;
+            if (data == null) return false;
+            if (required_research == null || required_research.length == 0) return true;
             String[] reqs = getRequirements();
             if (reqs.length == 0 || data.getBoolean(reqs[reqs.length - 1])) {
                 return true;
@@ -175,7 +176,7 @@ public class Research {
         }
 
         public String[] getRequirements() {
-            if(this.required_research == null)
+            if (this.required_research == null)
                 this.required_research = new String[0];
             return this.required_research;
         }
@@ -189,23 +190,30 @@ public class Research {
         }
 
         public String[] getRecipes() {
-            if(this.recipes == null)
+            if (this.recipes == null)
                 this.recipes = new String[0];
             return this.recipes;
         }
 
         public List<Memory> getMemories() {
-            if(this.memories == null)
+            if (this.memories == null)
                 this.memories = new String[0];
             return Arrays.stream(this.memories).map(Memory::getMemoryFromDataName).toList();
+        }
+
+        public List<MultiblockSchematic> getMultiblocks() {
+            if (multiblocks == null) {
+                this.multiblocks = new String[0];
+            }
+            return Arrays.stream(this.multiblocks).map(MultiblockRegistry::getMultiblock).toList();
         }
 
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("\n").append(" " + text).append("\n").append(" Required Research: ");
-            if(required_research != null)
-                for(String s : required_research) {
+            if (required_research != null)
+                for (String s : required_research) {
                     sb.append(s + "; ");
                 }
             return sb.toString();
