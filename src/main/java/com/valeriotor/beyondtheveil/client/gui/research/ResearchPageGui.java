@@ -99,6 +99,9 @@ public class ResearchPageGui extends Screen {
     private int currentRecipeIndex;
     private ItemStack memoryIngredient;
     private MultiblockGrid currentMultiblock;
+    private float scaleFactor;
+    private int imageWidth;
+    private int imageHeight;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -109,7 +112,18 @@ public class ResearchPageGui extends Screen {
 
     @Override
     public void init() {
+        scaleFactor = 1;
 
+        imageWidth = width;
+        imageHeight = height;
+
+        final double MIN_STRING_PROPORTION = 30 / 1440D;
+        final double MAX_STRING_PROPORTION = 60 / 1440D;
+        if (MIN_STRING_PROPORTION > 15D / imageHeight) {
+            scaleFactor = (float) ((MIN_STRING_PROPORTION) / (15D / imageHeight));
+        } else if (MAX_STRING_PROPORTION < 15D / imageHeight) {
+            scaleFactor = (float) ((MAX_STRING_PROPORTION) / (15D / imageHeight));
+        }
         int blackPageMargin = Math.min(200 * width / 1400 + 75, 300);
         pageTopY = height * blackPageMargin / 1440;
         pageBottomY = (height * (1440 - blackPageMargin)) / 1440;
@@ -155,9 +169,9 @@ public class ResearchPageGui extends Screen {
         //util.parseText2(localized2, lineWidth, Minecraft.getInstance().font);
 
         if (epigraph != null) {
-            pages2 = DoubleTextPages.makePagesAndEpigraph(epigraph, epigraphSource, localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+            pages2 = DoubleTextPages.makePagesAndEpigraph(epigraph, epigraphSource, localized, (int) ((lineWidth * 2 + middleSpace * 2) / scaleFactor), (int) (pageHeight / scaleFactor), (int) (lineWidth / scaleFactor), Minecraft.getInstance().font);
         } else {
-            pages2 = DoubleTextPages.makePages(localized, lineWidth * 2 + middleSpace * 2, pageHeight, lineWidth, Minecraft.getInstance().font);
+            pages2 = DoubleTextPages.makePages(localized, (int) ((lineWidth * 2 + middleSpace * 2) / scaleFactor), (int) (pageHeight / scaleFactor), (int) (lineWidth / scaleFactor), Minecraft.getInstance().font);
         }
         // TODO ADDENDA
         //int bHeight = this.height / 2 + (mc.gameSettings.guiScale == 3 || minecraft.gameSettings.guiScale == 0 ? 90 : 130) - 5;
@@ -387,21 +401,27 @@ public class ResearchPageGui extends Screen {
 
     private void renderTitle(PoseStack pose, GuiGraphics guiGraphics) {
         pose.pushPose();
-        pose.translate(this.width / 2, this.height / 2 - blackPageHeight * 38 / 100, 0);
+        pose.translate(width / 2, this.height / 2 - blackPageHeight * 38 / 100, 0);
         pose.scale(1.5F, 1.5F, 1);
+        pose.scale(scaleFactor, scaleFactor, 1);
         guiGraphics.drawCenteredString(minecraft.font, title, 0, -10, 0xFFAAFFAA); // 10/54 to make it in proportion to the image size, 2/3 due to the scaling
         pose.popPose();
     }
 
     private void renderTitleUnderline(GuiGraphics guiGraphics) {
+        PoseStack pose = guiGraphics.pose();
+        pose.pushPose();
         int underlineTopY = height / 2 - blackPageHeight * 38 / 100;
-        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY, width / 2 + titleWidth / 2, underlineTopY + 3, 0x7F344234);
-        guiGraphics.fill(width / 2 - titleWidth / 2, underlineTopY + 1, width / 2 + titleWidth / 2, underlineTopY + 2, 0xFF344234);
+        pose.translate(width / 2D, underlineTopY, 0);
+        pose.scale(scaleFactor, scaleFactor, 1);
+        guiGraphics.fill(- titleWidth / 2, 0, titleWidth / 2, 0 + 3, 0x7F344234);
+        guiGraphics.fill(- titleWidth / 2, 0 + 1, titleWidth / 2, 0 + 2, 0xFF344234);
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        guiGraphics.blit(UNDERLINING_LEFT, width / 2 - titleWidth / 2 - 20, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
-        guiGraphics.blit(UNDERLINING_RIGHT, width / 2 + titleWidth / 2, underlineTopY, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_LEFT, - titleWidth / 2 - 20, 0, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_RIGHT, + titleWidth / 2, 0, 20, 16, 0, 0, 20, 16, 20, 16);
+        pose.popPose();
     }
 
     private void renderPageText(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, float pPartialTick) {
@@ -409,7 +429,8 @@ public class ResearchPageGui extends Screen {
         int pX = width / 2 - lineWidth - middleSpace;
         int pY = height / 2 - blackPageHeight * 287 / 1000;
         pose.translate(pX, pY, 0);
-        pages2.render(pose, guiGraphics, 0xFFFFFFFF, mouseX - pX, mouseY - pY, pPartialTick);
+        pose.scale(scaleFactor, scaleFactor, 1);
+        pages2.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - pX) / scaleFactor), (int) ((mouseY - pY) / scaleFactor), pPartialTick);
         pose.popPose();
     }
 
@@ -631,13 +652,13 @@ public class ResearchPageGui extends Screen {
     }
 
     private boolean hoveringLeftArrow(double mouseX, double mouseY) {
-        int rightX = this.width / 2 - arrowXOffset;
+        int rightX = width / 2 - arrowXOffset;
         int topY = this.height / 2 + arrowYOffset;
         return mouseX >= rightX - ARROW_WIDTH && mouseX <= rightX && mouseY >= topY && mouseY < topY + ARROW_HEIGHT;
     }
 
     private boolean hoveringRightArrow(double mouseX, double mouseY) {
-        int leftX = this.width / 2 + arrowXOffset;
+        int leftX = width / 2 + arrowXOffset;
         int topY = this.height / 2 + arrowYOffset;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
     }
