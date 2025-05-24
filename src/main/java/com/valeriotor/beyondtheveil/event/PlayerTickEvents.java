@@ -8,6 +8,8 @@ import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
+import com.valeriotor.beyondtheveil.entity.CanoeEntity;
+import com.valeriotor.beyondtheveil.item.SlugItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -16,8 +18,11 @@ import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -61,6 +66,7 @@ public class PlayerTickEvents {
             checkDiscoveredWaypoint(event);
             p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
             resetTimesDreamt(event);
+            rainBeforeContact(event);
         }
     }
 
@@ -92,6 +98,17 @@ public class PlayerTickEvents {
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 0, false);
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false);
             });
+        }
+    }
+
+    private static void rainBeforeContact(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        Level l = player.level();
+        if (!l.isClientSide && player instanceof ServerPlayer sp && SlugItem.hasResearchForContact(sp) && sp.getVehicle() instanceof CanoeEntity) {
+            long t = l.getDayTime();
+            if (t >= 16000 && t < 20000 && l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN) && !l.isRaining()) {
+                ((ServerLevel) l).setWeatherParameters(0, 3000, true, true);
+            }
         }
     }
 }

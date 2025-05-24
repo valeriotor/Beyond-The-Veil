@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.capability.util;
 
-import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerTimerData {
+
+    public static PlayerTimerData for_(Player player) {
+        return player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).orElse(DUMMY);
+    }
     private final List<PlayerTimer> playerTimers = new ArrayList<>();
+    private static final PlayerTimerData DUMMY = new Dummy();
 
     public PlayerTimer getTimer(String name) {
         for (PlayerTimer playerTimer : playerTimers) {
@@ -68,6 +72,20 @@ public class PlayerTimerData {
     public void copyToNewStore(PlayerTimerData newStore) {
         newStore.playerTimers.clear();
         newStore.playerTimers.addAll(playerTimers);
+    }
+
+    private static class Dummy extends PlayerTimerData {
+        @Override public PlayerTimer getTimer(String name) {return null;}
+
+        @Override public boolean hasTimer(String name) {return false;}
+
+        @Override public boolean addTimer(PlayerTimer playerTimer) {return false;}
+
+        @Override public void tick(Player player) {}
+
+        @Override public void saveToNBT(CompoundTag compoundTag) {}
+
+        @Override public void loadFromNBT(CompoundTag compoundTag) {}
     }
 
 }

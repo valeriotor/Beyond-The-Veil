@@ -22,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BubbleColumnBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -91,7 +92,7 @@ public class SlugItem extends Item {
     }
 
     private static boolean checkContact(ServerPlayer sp) {
-        if (ResearchUtil.getResearchStage(sp, "CUSTOMS") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.HAD_CONTACT)) { // TODO change customs to first contact
+        if (!hasResearchForContact(sp)) {
             return false;
         }
         if (sp.getVehicle() instanceof CanoeEntity canoe) {
@@ -112,7 +113,7 @@ public class SlugItem extends Item {
                     BlockPos offset = canoe.getOnPos().offset(x, 0, z);
                     for (int i = 0; i < 2; i++) {
                         BlockState state = l.getBlockState(offset.below(i));
-                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer)) {
+                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer) && !(state.getBlock() instanceof BubbleColumnBlock)) {
                             return false;
                         }
                     }
@@ -122,7 +123,7 @@ public class SlugItem extends Item {
                 for (int z = -3; z <= 3; z++) {
                     for (int y = -3; y < 0; y++) {
                         BlockState state = l.getBlockState(canoe.getOnPos().offset(x, y, z));
-                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer)) {
+                        if (state.getBlock() != Blocks.WATER && !(state.getBlock() instanceof LiquidBlockContainer) && !(state.getBlock() instanceof BubbleColumnBlock)) {
                             return false;
                         }
                     }
@@ -131,6 +132,10 @@ public class SlugItem extends Item {
             return true;
         }
         return false;
+    }
+
+    public static boolean hasResearchForContact(ServerPlayer sp) {
+        return ResearchUtil.getResearchStage(sp, "CUSTOMS") >= 1 && !DataUtil.getBoolean(sp, PlayerDataLib.HAD_CONTACT); // TODO change customs to first contact
     }
 
 }

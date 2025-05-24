@@ -1,10 +1,13 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -13,7 +16,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.*;
 
@@ -63,6 +72,17 @@ public class ContactTimer extends PlayerTimer {
             if (time == 379) {
                 player.level().playSound(null, player.getOnPos(), SoundEvents.ZOMBIE_ATTACK_WOODEN_DOOR, SoundSource.NEUTRAL, 1, 1);
                 Messages.sendToPlayer(GenericToClientPacket.shakeCamera(), (ServerPlayer) player);
+            }
+            if (time > 379) {
+                List<ItemEntity> tears = player.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(player.position(), 3, 3, 3), e -> e.getItem().getItem() == Items.GHAST_TEAR);
+                for (ItemEntity tear : tears) {
+                    done = true;
+                    tear.discard();
+                    player.level().playSound(null, player.getOnPos(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL);
+                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.SHELL.get()));
+                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.HAD_CONTACT, true, false);
+                    break;
+                }
             }
         } else {
             done = true;

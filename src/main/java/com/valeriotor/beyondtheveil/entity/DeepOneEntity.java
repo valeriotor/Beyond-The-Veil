@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
@@ -108,8 +110,14 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
                 setDeltaMovement(0, 0, 0);
                 if (getFirstPassenger() instanceof CanoeEntity canoe) {
                     setYRot(canoe.getYRot() - 90);
-                    if (!(canoe.getFirstPassenger() instanceof Player player) && ticksBeforeSwimDown < 0) {
-                        terminateTrade();
+                    if (ticksBeforeSwimDown < 0) {
+                        if (canoe.getFirstPassenger() instanceof Player player) {
+                            if (!PlayerTimerData.for_(player).hasTimer("contact")) {
+                                terminateTrade();
+                            }
+                        } else {
+                            terminateTrade();
+                        }
                     }
                 } else if(ticksBeforeSwimDown < 0){
                     terminateTrade();
