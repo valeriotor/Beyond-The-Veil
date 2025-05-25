@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "beyondtheveil:item/black_kelp"
+    "layer0": "beyondtheveil:item/black_seagrass"
   }
 }

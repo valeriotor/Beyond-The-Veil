@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import static net.minecraft.data.worldgen.features.FeatureUtils.createKey;
@@ -18,13 +19,16 @@ import static net.minecraft.data.worldgen.features.FeatureUtils.createKey;
 public class BTVFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLACK_KELP = ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(References.MODID, "black_kelp"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BLACK_SEAGRASS = ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(References.MODID, "black_seagrass"));
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placedFeatureGetter = context.lookup(Registries.PLACED_FEATURE);
 
         final Holder<PlacedFeature> HOLDER = placedFeatureGetter.getOrThrow(BTVPlacements.BLACK_KELP);
+        //final Holder<PlacedFeature> HOLDER_SEAGRASS = placedFeatureGetter.getOrThrow(BTVPlacements.BLACK_SEAGRASS);
 
         context.register(BLACK_KELP, new ConfiguredFeature<>(Registration.BLACK_KELP_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
+        context.register(BLACK_SEAGRASS, new ConfiguredFeature<>(Registration.BLACK_SEAGRASS_FEATURE.get(), new ProbabilityFeatureConfiguration(0.4F)));
     }
 
 }

@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
+import com.valeriotor.beyondtheveil.world.feature.arche.BlackSeagrassFeature;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import com.valeriotor.beyondtheveil.world.structures.*;
 import net.minecraft.core.registries.Registries;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -145,6 +147,8 @@ public class Registration {
     public static final RegistryObject<Block> DEEP_CHEST = BLOCKS.register("deep_chest", () -> new Block(BRICK_PROPERTIES)); // new BlockDeepChest(BlockNames.DEEP_CHEST);
     public static final RegistryObject<GrowingPlantHeadBlock> BLACK_KELP = BLOCKS.register("black_kelp", () -> new BlackKelpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<GrowingPlantBodyBlock> BLACK_KELP_PLANT = BLOCKS.register("black_kelp_plant", () -> new BlackKelpPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
+    public static final RegistryObject<BlackSeagrassBlock> BLACK_SEAGRASS = BLOCKS.register("black_seagrass", () -> new BlackSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
+    public static final RegistryObject<BlackTallSeagrassBlock> BLACK_TALL_SEAGRASS = BLOCKS.register("black_tall_seagrass", () -> new BlackTallSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
 
     public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.LARGE)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.MEDIUM)); // TODO GLASS PROPERTIES
@@ -226,6 +230,7 @@ public class Registration {
     public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
     public static final RegistryObject<Item> FLASK_ITEM_ITEM = fromBlock(FLASK_ITEM);
     public static final RegistryObject<Item> BLACK_KELP_ITEM = fromBlock(BLACK_KELP);
+    public static final RegistryObject<Item> BLACK_SEAGRASS_ITEM = fromBlock(BLACK_SEAGRASS);
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
@@ -343,6 +348,7 @@ public class Registration {
     public static final RegistryObject<MenuType<DrownedDialogueMenu>> DROWNED_DIALOGUE_MENU = MENUS.register("drowned_dialogue_menu", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedDialogueMenu(windowId, inv, inv.player, data)));
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<ProbabilityFeatureConfiguration>> BLACK_SEAGRASS_FEATURE = FEATURES.register("black_seagrass", () -> new BlackSeagrassFeature(ProbabilityFeatureConfiguration.CODEC));
 
     public static final RegistryObject<StructureType<DeepCityStructure>> DEEP_CITY = STRUCTURE_TYPES.register("deep_city", () -> () -> DeepCityStructure.CODEC);
     public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
@@ -415,6 +421,7 @@ public class Registration {
                 output.accept(BLOOD_SMOOTH_STONE_SLAB.get());
                 output.accept(HEART.get());
                 output.accept(BLACK_KELP.get());
+                output.accept(BLACK_SEAGRASS.get());
                 output.accept(DARK_GLASS.get());
                 output.accept(ARENA.get());
                 output.accept(DEEP_CHEST.get());

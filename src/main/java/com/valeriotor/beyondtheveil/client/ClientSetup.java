@@ -76,6 +76,8 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SHELF.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP_PLANT.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_SEAGRASS.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_TALL_SEAGRASS.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DARK_GLASS.get(), RenderType.translucent());
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();

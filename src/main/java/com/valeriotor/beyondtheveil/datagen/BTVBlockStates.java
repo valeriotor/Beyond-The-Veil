@@ -65,6 +65,7 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(BLOOD_BASIN.get(), new ExistingModelFile(modLoc("block/blood_basin"), models().existingFileHelper));
         simpleBlock(BLACK_KELP.get(), new ExistingModelFile(modLoc("block/black_kelp"), models().existingFileHelper));
         simpleBlock(BLACK_KELP_PLANT.get(), new ExistingModelFile(modLoc("block/black_kelp_plant"), models().existingFileHelper));
+        simpleBlock(BLACK_SEAGRASS.get(), new ExistingModelFile(modLoc("block/black_seagrass"), models().existingFileHelper));
         simpleBlock(DARK_GLASS.get());
         simpleBlock(ARENA.get());
         simpleBlock(DEEP_CHEST.get(), new ExistingModelFile(modLoc("block/deep_chest"), models().existingFileHelper));
@@ -94,6 +95,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
+        registerBlackTallSeagrass();
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -461,6 +463,14 @@ public class BTVBlockStates extends BlockStateProvider {
                             .build();
                 });
 
+    }
+
+    private void registerBlackTallSeagrass() {
+        ExistingModelFile bottom = new ExistingModelFile(modLoc("block/black_tall_seagrass_bottom"), models().existingFileHelper);
+        ExistingModelFile top = new ExistingModelFile(modLoc("block/black_tall_seagrass_top"), models().existingFileHelper);
+        getVariantBuilder(BLACK_TALL_SEAGRASS.get()).forAllStates(state -> {
+            return ConfiguredModel.builder().modelFile(state.getValue(BlackTallSeagrassBlock.HALF) == DoubleBlockHalf.LOWER ? bottom : top).build();
+        });
     }
 
 }

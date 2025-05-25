@@ -1,8 +1,10 @@
-// 1.20.1	2025-05-24T22:33:25.2089963	Loot Tables
+// 1.20.1	2025-05-25T19:37:20.425754	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
 326f66af7c810752260514b476c79724d58201d1 data/beyondtheveil/loot_tables/blocks/black_kelp.json
-b901bf1159ff19a6082593371cbb6fe2858f029d data/beyondtheveil/loot_tables/blocks/black_kelp_plant.json
+d1c255bbbfc828b2418cd4f92a122b2cf3d9c896 data/beyondtheveil/loot_tables/blocks/black_kelp_plant.json
+23556342dd3c0393759b99c3d2e79e48ab45eb4e data/beyondtheveil/loot_tables/blocks/black_seagrass.json
+27a2cd977f67689599614f81f44d68a608454f62 data/beyondtheveil/loot_tables/blocks/black_tall_seagrass.json
 34530818c22fca5d27711a725db361a6789846eb data/beyondtheveil/loot_tables/blocks/blood_basin.json
 09f9ae7f3cdc9d72dcf093038f04fc0fa6983930 data/beyondtheveil/loot_tables/blocks/blood_brick.json
 3a5e7c444847bede3c23b23eabaabd1b5ec8cc91 data/beyondtheveil/loot_tables/blocks/blood_brick_slab.json

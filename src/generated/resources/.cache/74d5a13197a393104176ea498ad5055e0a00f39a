@@ -1,11 +1,12 @@
-// 1.20.1	2025-05-24T22:33:25.2059956	Item Models: beyondtheveil
+// 1.20.1	2025-05-25T19:41:45.7814277	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
-714c2fc61979be0e6994fdda5632b4002fe13931 assets/beyondtheveil/models/item/black_kelp.json
+35cfe44b3ddb34895d9f3087eeab165d799c128f assets/beyondtheveil/models/item/black_kelp.json
 540649a72e51acc85ca94b97512d8d225aa6db6b assets/beyondtheveil/models/item/black_mirror.json
+ed6f8ed075e9f905c619f40d5ed8ad770e448ee4 assets/beyondtheveil/models/item/black_seagrass.json
 04e0c65aaac0f650de1bd371a776c2970bc61867 assets/beyondtheveil/models/item/bleeding_belt.json
 31517d6249a9717ff44c8cf1b7a1026b523edd8f assets/beyondtheveil/models/item/blindness_serum_bucket.json
 3d813a3044f7c04f4353ecbb99162b30710249a2 assets/beyondtheveil/models/item/blood_basin.json

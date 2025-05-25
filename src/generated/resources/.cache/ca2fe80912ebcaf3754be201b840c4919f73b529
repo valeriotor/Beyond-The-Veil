@@ -1,8 +1,10 @@
-// 1.20.1	2025-05-24T22:33:25.209997	Block States: beyondtheveil
+// 1.20.1	2025-05-25T19:37:20.4267541	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
 bdd3341be1acaa3da82bcfaa457ba7c961e34848 assets/beyondtheveil/blockstates/black_kelp.json
 b44951772ae404bf314c38552d2c8217d6246ca3 assets/beyondtheveil/blockstates/black_kelp_plant.json
+3306ec2958900b9f07696914e07ab081ebc301da assets/beyondtheveil/blockstates/black_seagrass.json
+032bdcc6fbfdea95851a8b8641914ff507d3c047 assets/beyondtheveil/blockstates/black_tall_seagrass.json
 bdfc44180a69e0b1c7392b7211016ce18c380f6e assets/beyondtheveil/blockstates/blood_basin.json
 cfd2320c85c8cbd741f1406651d473cd79e3bee8 assets/beyondtheveil/blockstates/blood_brick.json
 d732142a729c485aef844c05860d88c28da370ea assets/beyondtheveil/blockstates/blood_brick_slab.json

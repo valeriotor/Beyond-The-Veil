@@ -23,13 +23,16 @@ import java.util.List;
 public class BTVPlacements {
 
     public static final ResourceKey<PlacedFeature> BLACK_KELP = ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(References.MODID, "black_kelp"));
+    public static final ResourceKey<PlacedFeature> BLACK_SEAGRASS = ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(References.MODID, "black_seagrass"));
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
         final Holder<ConfiguredFeature<?, ?>> BLACK_KELP_CONFIG = configuredFeatureGetter.getOrThrow(BTVFeatures.BLACK_KELP);
+        final Holder<ConfiguredFeature<?, ?>> BLACK_SEAGRASS_CONFIG = configuredFeatureGetter.getOrThrow(BTVFeatures.BLACK_SEAGRASS);
 
         context.register(BLACK_KELP, new PlacedFeature(BLACK_KELP_CONFIG, List.of(NoiseBasedCountPlacement.of(40, 150.0D, 0.0D), CountOnEveryLayerPlacement.of(1), BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(Direction.DOWN.getNormal(), Registration.DARK_SAND.get())), BiomeFilter.biome())));
+        context.register(BLACK_SEAGRASS, new PlacedFeature(BLACK_SEAGRASS_CONFIG, List.of(InSquarePlacement.spread(), CountOnEveryLayerPlacement.of(10), CountPlacement.of(80), BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(Direction.DOWN.getNormal(), Registration.DARK_SAND.get())), BiomeFilter.biome())));
 
     }
 

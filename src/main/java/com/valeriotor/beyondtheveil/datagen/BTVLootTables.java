@@ -10,6 +10,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -86,7 +87,9 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.ARENA.get());
         dropSelf(Registration.DEEP_CHEST.get());
         dropSelf(Registration.BLACK_KELP.get());
-        dropSelf(Registration.BLACK_KELP_PLANT.get());
+        dropOther(Registration.BLACK_KELP_PLANT.get(), Registration.BLACK_KELP.get());
+        add(Registration.BLACK_SEAGRASS.get(), BlockLootSubProvider::createShearsOnlyDrop);
+        add(Registration.BLACK_TALL_SEAGRASS.get(), createDoublePlantShearsDrop(Registration.BLACK_SEAGRASS.get()));
 
         dropSelf(Registration.IDOL.get());
         dropSelf(Registration.FISH_BARREL.get());

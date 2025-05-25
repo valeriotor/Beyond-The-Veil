@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "beyondtheveil:block/black_tall_seagrass_bottom"
+    },
+    "half=upper": {
+      "model": "beyondtheveil:block/black_tall_seagrass_top"
+    }
+  }
+}

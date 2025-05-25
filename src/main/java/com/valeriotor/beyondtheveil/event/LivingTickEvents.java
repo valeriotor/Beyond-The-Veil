@@ -105,7 +105,7 @@ public class LivingTickEvents {
                         damage = -breath / 40F;
                     }
                 }
-                if (p.isCreative()) {
+                if (p.isCreative() || p.isSpectator()) {
                     damage = 0;
                 }
             }
