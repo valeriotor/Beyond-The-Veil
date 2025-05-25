@@ -8,21 +8,18 @@ import com.valeriotor.beyondtheveil.capability.research.ResearchData;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
-import com.valeriotor.beyondtheveil.capability.util.LetterData;
-import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
-import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
-import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.*;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
-import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
-import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +39,7 @@ import static com.valeriotor.beyondtheveil.capability.research.ResearchProvider.
 import static com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider.CONVALESCENT_DATA;
 import static com.valeriotor.beyondtheveil.capability.util.LetterDataProvider.LETTER_DATA;
 import static com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider.PLAYER_TIMER_DATA;
+import static com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider.PROCESSION_DATA;
 
 
 @Mod.EventBusSubscriber
@@ -118,6 +116,11 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "convalescent_data"), new ConvalescentDataProvider());
             }
         }
+        if (event.getObject() instanceof Mob mob && mob.getMobType() == MobType.UNDEAD) {
+            if (!event.getObject().getCapability(PROCESSION_DATA).isPresent()) {
+                event.addCapability(new ResourceLocation(References.MODID, "procession_data"), new ProcessionDataProvider());
+            }
+        }
     }
 
     @SubscribeEvent
@@ -166,6 +169,7 @@ public class CapabilityEvents {
         event.register(ConvalescentData.class);
         event.register(PlayerTimerData.class);
         event.register(LetterData.class);
+        event.register(ProcessionData.class);
     }
 
     @SubscribeEvent

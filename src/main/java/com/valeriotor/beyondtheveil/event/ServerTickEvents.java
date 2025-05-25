@@ -21,7 +21,7 @@ public class ServerTickEvents {
     public static void tickEvent(TickEvent.ServerTickEvent event) {
         counter++;
         if ((counter & 255) == 0) {
-            HeartBE.cleanDamned();
+            //HeartBE.cleanDamned();
         }
     }
 

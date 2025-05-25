@@ -3,7 +3,9 @@ package com.valeriotor.beyondtheveil.event;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -43,6 +45,7 @@ public class LivingTickEvents {
         }
         pickupXP(event);
         convalescentCounters(event);
+        doProcession(event);
 
     }
 
@@ -64,6 +67,17 @@ public class LivingTickEvents {
                         c.addXP(value * count);
                         orb.discard();
                     }
+                }
+            });
+        }
+    }
+
+    private static void doProcession(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Mob mob && (mob.tickCount & 7) == 0) {
+            mob.getCapability(ProcessionDataProvider.PROCESSION_DATA).ifPresent(c -> {
+                BlockPos destination = c.getDestination();
+                if (destination != null) {
+                    mob.getNavigation().moveTo(destination.getX() + 0.5, destination.getY(), destination.getZ() + 0.5, 1);
                 }
             });
         }

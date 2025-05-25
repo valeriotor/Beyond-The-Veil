@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
@@ -105,6 +106,12 @@ public class LivingEvents {
         LivingEntity entity = event.getEntity();
         if (entity.hasEffect(BTVEffects.FOLLY.get())) {
             event.setNewTarget(null);
+        } else {
+            entity.getCapability(ProcessionDataProvider.PROCESSION_DATA).ifPresent(c -> {
+                if (c.getDestination() != null) {
+                    event.setNewTarget(null);
+                }
+            });
         }
     }
 
