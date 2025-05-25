@@ -26,12 +26,6 @@ public class BlackjackItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
-            if (false) {
-                if (pPlayer instanceof ServerPlayer sp) {
-                    TeleportUtil.teleportToArche(sp, sp.level());
-                }
-                return InteractionResult.SUCCESS;
-            }
             if (pInteractionTarget instanceof Villager villager) {
                 Level l = pInteractionTarget.level();
                 CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);

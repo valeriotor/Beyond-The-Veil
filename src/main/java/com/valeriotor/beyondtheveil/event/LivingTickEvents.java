@@ -4,9 +4,13 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -17,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -46,6 +51,7 @@ public class LivingTickEvents {
         pickupXP(event);
         convalescentCounters(event);
         doProcession(event);
+        doArcheDamage(event);
 
     }
 
@@ -80,6 +86,32 @@ public class LivingTickEvents {
                     mob.getNavigation().moveTo(destination.getX() + 0.5, destination.getY(), destination.getZ() + 0.5, 1);
                 }
             });
+        }
+    }
+
+    private static void doArcheDamage(LivingEvent.LivingTickEvent event) {
+        LivingEntity e = event.getEntity();
+        if (e.isDeadOrDying()) {
+            return;
+        }
+        if (e.tickCount % 20 == 0 && e.level().dimension() == BTVDimensions.ARCHE_LEVEL && e.isUnderWater()) {
+            float damage = e.getMaxHealth() / 3F;
+            if (e instanceof Player p) {
+                if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
+                    Integer breath = DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, PlayerTickEvents.TOTAL_ARCHE_BREATH, false);
+                    if (breath == null || breath >= 0) {
+                        damage = 0;
+                    } else {
+                        damage = -breath / 40F;
+                    }
+                }
+                if (p.isCreative()) {
+                    damage = 0;
+                }
+            }
+            if (damage > 0) {
+                e.hurt(e.damageSources().fellOutOfWorld(), damage);
+            }
         }
     }
 }

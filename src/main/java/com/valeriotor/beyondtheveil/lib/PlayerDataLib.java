@@ -50,6 +50,7 @@ public class PlayerDataLib {
     public static final Function<String, String> ARENA_BOSSES_USED_BY_NAME = s -> String.format("arena-used-%s", s);
     public static final String ARENA_ADVICE = "arenaadvicereceived";
     public static final String STORED_WATER = "stored_water";
+    public static final String ARCHE_BREATH = "arche_breath";
 
     // Ints (Temporary)
     public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler

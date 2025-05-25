@@ -1,9 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
-import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
-import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -18,12 +15,11 @@ import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
-import net.minecraft.client.multiplayer.ClientLevel;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
@@ -37,6 +33,8 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerTickEvents {
+
+    public static final int TOTAL_ARCHE_BREATH = 30 * 20;
 
     @SubscribeEvent
     public static void tickEvent(TickEvent.PlayerTickEvent event) {
@@ -67,6 +65,7 @@ public class PlayerTickEvents {
             p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
             resetTimesDreamt(event);
             rainBeforeContact(event);
+            decrementArcheBreath(event);
         }
     }
 
@@ -108,6 +107,25 @@ public class PlayerTickEvents {
             long t = l.getDayTime();
             if (t >= 16000 && t < 20000 && l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN) && !l.isRaining()) {
                 ((ServerLevel) l).setWeatherParameters(0, 3000, true, true);
+            }
+        }
+    }
+
+    private static void decrementArcheBreath(TickEvent.PlayerTickEvent event) {
+        Player p = event.player;
+        if (p.isDeadOrDying()) {
+            return;
+        }
+        if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater()) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, -1, TOTAL_ARCHE_BREATH, false);
+            }
+        } else {
+            if (DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, TOTAL_ARCHE_BREATH, false) < 0) {
+                DataUtil.setInt(p, PlayerDataLib.ARCHE_BREATH, 0, false);
+            }
+            if (DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, TOTAL_ARCHE_BREATH, false) < TOTAL_ARCHE_BREATH) {
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, 1, TOTAL_ARCHE_BREATH, false);
             }
         }
     }
