@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,8 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
@@ -57,6 +60,11 @@ public class HeartBE extends BlockEntity {
                         c.setDestination(worldPosition, worldPosition);
                     }
                 });
+            }
+        }
+        if (counter % 30 == 0) {
+            if (level instanceof ServerLevel sl) {
+                sl.playSound(null, worldPosition, BTVSounds.HEARTBEAT.get(), SoundSource.BLOCKS, 1, 1);
             }
         }
 

@@ -169,6 +169,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
             if (MultiblockRegistry.BLOOD_WELL.checksOutBottomCenter(sl, pPos.below(3))) {
                 sl.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                 sl.setBlock(pPos.below(2), Registration.BLOOD_WELL.get().defaultBlockState(), 3);
+                sl.playSound(null, pPos, BTVSounds.HEART_RIP.get(), SoundSource.BLOCKS, 1, 1);
             }
 
         }

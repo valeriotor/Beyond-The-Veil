@@ -23,6 +23,9 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> BAPTISM_GS = registerSound("baptism_gs");
     public static final RegistryObject<SoundEvent> WEEPING = registerSound("weeping");
     public static final RegistryObject<SoundEvent> FLETUM_WEEPING = registerSound("fletum_weeping");
+    public static final RegistryObject<SoundEvent> HEARTBEAT = registerSound("heartbeat");
+    public static final RegistryObject<SoundEvent> HEART_RIP = registerSound("heart_rip");
+    public static final RegistryObject<SoundEvent> SPINE_RIP = registerSound("spine_rip");
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);

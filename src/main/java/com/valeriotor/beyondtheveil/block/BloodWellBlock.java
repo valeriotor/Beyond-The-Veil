@@ -32,7 +32,10 @@ public class BloodWellBlock  extends Block implements EntityBlock {
             return (pLevel1, pPos, pState1, pBlockEntity) -> {
                 if (pBlockEntity instanceof BloodWellBE be) be.tickServer();
             };
+        } else {
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if (pBlockEntity instanceof BloodWellBE be) be.tickClient();
+            };
         }
-        return null;
     }
 }

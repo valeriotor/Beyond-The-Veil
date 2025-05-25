@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
 import net.minecraft.core.particles.ParticleType;
@@ -68,6 +69,7 @@ public class OperationRegistry {
             .setRequirementForSuccessfulCompletion(s -> !s.hasString("soften_too_much"))
             .setCompletionMessage(s -> s.hasString("soften_too_much") ? "surgery.extract_heart.too_soft" : null)
             .addAllowedLocation(SurgicalLocation.CHEST)
+            .setSuccessSound(BTVSounds.HEART_RIP.get())
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
             .setPersistent(true)
             .setRequiresIncision(true)
@@ -81,6 +83,7 @@ public class OperationRegistry {
             .setPainForFailure(50)
             .addAllowedLocation(SurgicalLocation.BACK)
             // TODO .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
+            .setSuccessSound(BTVSounds.SPINE_RIP.get())
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)

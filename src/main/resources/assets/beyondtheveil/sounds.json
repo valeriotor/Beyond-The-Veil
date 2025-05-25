@@ -34,5 +34,14 @@
   },
   "baptism_gs": {
     "sounds": [ "beyondtheveil:baptism_gs" ]
+  },
+  "heartbeat": {
+    "sounds": [ "beyondtheveil:heartbeat" ]
+  },
+  "heart_rip": {
+    "sounds": [ "beyondtheveil:heart_rip" ]
+  },
+  "spine_rip": {
+    "sounds": [ "beyondtheveil:spine_rip" ]
   }
 }
