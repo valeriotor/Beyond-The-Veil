@@ -3,6 +3,9 @@ package com.valeriotor.beyondtheveil.entity;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import net.minecraft.BlockUtil;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.WaterlilyBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
@@ -1002,6 +1005,40 @@ public class NautilusEntity extends Entity {
 
     public ItemStack getPickResult() {
         return new ItemStack(this.getDropItem());
+    }
+
+    @Override
+    protected void checkInsideBlocks() {
+        AABB aabb = this.getBoundingBox();
+        BlockPos blockpos = BlockPos.containing(aabb.minX + 1.0E-7D, aabb.minY + 1.0E-7D, aabb.minZ + 1.0E-7D);
+        BlockPos blockpos1 = BlockPos.containing(aabb.maxX - 1.0E-7D, aabb.maxY - 1.0E-7D, aabb.maxZ - 1.0E-7D);
+        if (this.level().hasChunksAt(blockpos, blockpos1)) {
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+            for(int i = blockpos.getX(); i <= blockpos1.getX(); ++i) {
+                for(int j = blockpos.getY(); j <= blockpos1.getY(); ++j) {
+                    for(int k = blockpos.getZ(); k <= blockpos1.getZ(); ++k) {
+                        blockpos$mutableblockpos.set(i, j, k);
+                        BlockState blockstate = this.level().getBlockState(blockpos$mutableblockpos);
+                        Block block = blockstate.getBlock();
+
+                        if (block instanceof BushBlock || block instanceof GrowingPlantBlock) {
+                            level().destroyBlock(blockpos$mutableblockpos, false);
+                            for (int l = 1; l < 10; l++) {
+                                blockpos$mutableblockpos.set(i, j + l, k);
+                                BlockState blockStateAbove = level().getBlockState(blockpos$mutableblockpos);
+                                if (blockStateAbove.getBlock() == block) {
+                                    level().setBlock(blockpos$mutableblockpos, blockStateAbove.getFluidState().createLegacyBlock(), 3);
+                                } else {
+                                    break;
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static enum Status {
