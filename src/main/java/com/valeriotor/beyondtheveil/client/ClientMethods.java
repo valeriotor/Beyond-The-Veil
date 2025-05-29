@@ -2,30 +2,35 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
+import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -134,6 +139,17 @@ public class ClientMethods {
             return "item.beyondtheveil.necronomicon2";
         }
         return "item.beyondtheveil.necronomicon";
+    }
+
+    public static void doArcheEffects(LivingEvent.LivingTickEvent event) {
+        ArcheSavedData data = ClientData.getInstance().archeSavedData;
+        long ticks = data.ticksInCycle();
+        if (ticks > 20 * 20) {
+            LivingTickEvents.doArcheMovement(data.getCurrentIntensity(), Minecraft.getInstance().player);
+        }
+        if (ticks == 0) {
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(BTVSounds.CURRENTS.get(), 1, 1));
+        }
     }
 
 }

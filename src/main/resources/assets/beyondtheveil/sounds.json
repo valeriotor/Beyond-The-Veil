@@ -43,5 +43,8 @@
   },
   "spine_rip": {
     "sounds": [ "beyondtheveil:spine_rip" ]
+  },
+  "currents": {
+    "sounds": [ "beyondtheveil:currents" ]
   }
 }

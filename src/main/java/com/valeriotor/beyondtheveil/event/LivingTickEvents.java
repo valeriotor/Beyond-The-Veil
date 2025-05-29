@@ -4,24 +4,25 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.TickEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +34,7 @@ import java.util.List;
 public class LivingTickEvents {
     @SubscribeEvent
     public static void tickEvent(LivingEvent.LivingTickEvent event) {
+        doArcheCurrent(event);
         if (event.getEntity().level().isClientSide) {
             return;
         }
@@ -51,7 +53,7 @@ public class LivingTickEvents {
         pickupXP(event);
         convalescentCounters(event);
         doProcession(event);
-        doArcheDamage(event);
+        doArcheDrownDamage(event);
 
     }
 
@@ -89,7 +91,7 @@ public class LivingTickEvents {
         }
     }
 
-    private static void doArcheDamage(LivingEvent.LivingTickEvent event) {
+    private static void doArcheDrownDamage(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
         if (e.isDeadOrDying()) {
             return;
@@ -112,6 +114,82 @@ public class LivingTickEvents {
             if (damage > 0) {
                 e.hurt(e.damageSources().fellOutOfWorld(), damage);
             }
+        }
+    }
+
+    private static void doArcheCurrent(LivingEvent.LivingTickEvent event) {
+        LivingEntity e = event.getEntity();
+        if (e.isDeadOrDying()) {
+            return;
+        }
+        if (e.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            if (e.level() instanceof ServerLevel sl) {
+                ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+                long ticks = arche.ticksInCycle();
+                if (ticks < 20 * 10) {
+                    return;
+                }
+                float currentIntensity = arche.getCurrentIntensity();
+
+                doArcheMovement(currentIntensity, e);
+                if (ticks % 20 == 0) {
+                    if (e instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
+                        //nautilus.setDamage(nautilus.getDamage() + NautilusEntity.TOTAL_HEALTH * currentIntensity / 20);
+                        nautilus.hurt(e.damageSources().fellOutOfWorld(), NautilusEntity.TOTAL_HEALTH / 80F * currentIntensity);
+                    } else if (e instanceof Player p) {
+                        if (!p.isCreative() && !p.isSpectator()) {
+                            e.hurt(e.damageSources().fellOutOfWorld(), e.getMaxHealth() / 2 * currentIntensity);
+                        }
+                    } else {
+                        e.hurt(e.damageSources().fellOutOfWorld(), e.getMaxHealth() / 2 * currentIntensity);
+                    }
+                }
+            } else if (e.level().isClientSide) { // Client side stuff
+                ClientMethods.doArcheEffects(event);
+            }
+        }
+    }
+
+    public static void doArcheMovement(float intensity, LivingEntity entity) {
+        if (!entity.isUnderWater()) {
+            return;
+        }
+        boolean flag = false;
+        BlockPos.MutableBlockPos blockPos = entity.blockPosition().mutable();
+        int xo = blockPos.getX();
+        int consecutiveWaterBlocks = 0;
+        final int REQUIRED = 7;
+        for (int x = 0; x < REQUIRED; x++) {
+            blockPos.setX(xo + x);
+            if (entity.level().getBlockState(blockPos).getBlock() != Blocks.WATER) {
+                break;
+            }
+            consecutiveWaterBlocks++;
+        }
+        for (int x = -1; x > -REQUIRED; x--) {
+            blockPos.setX(xo + x);
+            if (entity.level().getBlockState(blockPos).getBlock() != Blocks.WATER) {
+                break;
+            }
+            consecutiveWaterBlocks++;
+            if (consecutiveWaterBlocks >= REQUIRED) {
+                flag = true;
+            }
+        }
+        if (!flag) {
+            return;
+        }
+        if (entity instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
+            //intensity = (float) Math.log(intensity);
+            double y = intensity > 0.5 && nautilus.tickCount % 2 == 0 ? (entity.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
+            nautilus.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
+            return;
+        }
+        Vec3 currentMovement = entity.getDeltaMovement();
+        if (currentMovement.x > -10) {
+            double y = intensity > 0.5 && entity.tickCount % 2 == 0 ? (entity.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
+            entity.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
+//            entity.setDeltaMovement(currentMovement.x - intensity * 0.08F, currentMovement.y, currentMovement.z);
         }
     }
 }

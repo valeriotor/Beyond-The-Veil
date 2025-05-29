@@ -26,6 +26,7 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> HEARTBEAT = registerSound("heartbeat");
     public static final RegistryObject<SoundEvent> HEART_RIP = registerSound("heart_rip");
     public static final RegistryObject<SoundEvent> SPINE_RIP = registerSound("spine_rip");
+    public static final RegistryObject<SoundEvent> CURRENTS = registerSound("currents");
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);

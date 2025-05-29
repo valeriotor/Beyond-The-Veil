@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.BlockUtil;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
@@ -49,7 +51,7 @@ import java.util.List;
 
 public class NautilusEntity extends Entity {
 
-
+    public static final int TOTAL_HEALTH = 400;
     private float steer;
     private float upLever;
     private float downLever;
@@ -79,8 +81,8 @@ public class NautilusEntity extends Entity {
     public static final int PADDLE_LEFT = 0;
     public static final int PADDLE_RIGHT = 1;
     private static final int TIME_TO_EJECT = 60;
-    private static final float PADDLE_SPEED = ((float)Math.PI / 8F);
-    public static final double PADDLE_SOUND_TIME = (double)((float)Math.PI / 4F);
+    private static final float PADDLE_SPEED = ((float) Math.PI / 8F);
+    public static final double PADDLE_SOUND_TIME = (double) ((float) Math.PI / 4F);
     public static final int BUBBLE_TIME = 60;
     private final float[] paddlePositions = new float[2];
     private float invFriction;
@@ -166,13 +168,13 @@ public class NautilusEntity extends Entity {
         if (this.isInvulnerableTo(pSource)) {
             return false;
         } else if (!this.level().isClientSide && !this.isRemoved()) {
-            this.setHurtDir(-this.getHurtDir());
+            //this.setHurtDir(-this.getHurtDir());
             this.setHurtTime(10);
-            this.setDamage(this.getDamage() + pAmount * 10.0F);
-            this.markHurt();
+            this.setDamage(this.getDamage() + pAmount);
+            //this.markHurt();
             this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
-            boolean flag = pSource.getEntity() instanceof Player && ((Player)pSource.getEntity()).getAbilities().instabuild;
-            if (flag || this.getDamage() > 40.0F) {
+            boolean flag = pSource.getEntity() instanceof Player && ((Player) pSource.getEntity()).getAbilities().instabuild;
+            if (flag || this.getDamage() > TOTAL_HEALTH) {
                 if (!flag && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                     this.destroy(pSource);
                 }
@@ -199,7 +201,7 @@ public class NautilusEntity extends Entity {
             }
         }
 
-        this.level().addParticle(ParticleTypes.SPLASH, this.getX() + (double)this.random.nextFloat(), this.getY() + 0.7D, this.getZ() + (double)this.random.nextFloat(), 0.0D, 0.0D, 0.0D);
+        this.level().addParticle(ParticleTypes.SPLASH, this.getX() + (double) this.random.nextFloat(), this.getY() + 0.7D, this.getZ() + (double) this.random.nextFloat(), 0.0D, 0.0D, 0.0D);
         if (this.random.nextInt(20) == 0) {
             this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), this.getSwimSplashSound(), this.getSoundSource(), 1.0F, 0.8F + 0.4F * this.random.nextFloat(), false);
             this.gameEvent(GameEvent.SPLASH, this.getControllingPassenger());
@@ -247,8 +249,8 @@ public class NautilusEntity extends Entity {
         this.lerpX = pX;
         this.lerpY = pY;
         this.lerpZ = pZ;
-        this.lerpYRot = (double)pYaw;
-        this.lerpXRot = (double)pPitch;
+        this.lerpYRot = (double) pYaw;
+        this.lerpXRot = (double) pPitch;
         this.lerpSteps = 10;
     }
 
@@ -269,13 +271,22 @@ public class NautilusEntity extends Entity {
         tickSteering();
         tickLevers();
 
+        if (level().dimension() == BTVDimensions.ARCHE_LEVEL && level().isClientSide) {
+            float currentIntensity = ClientData.getInstance().archeSavedData.getCurrentIntensity();
+            if (currentIntensity > 0) {
+                double y = currentIntensity > 0.5 && tickCount % 10 == 0 ? (random.nextFloat() - 0.5) * (currentIntensity - 0.5) * 2 : 0;
+                //this.move(MoverType.SELF, new Vec3(-2 * Mth.square(currentIntensity), y, 0));
+            }
+        }
+        //this.move(MoverType.SELF, new Vec3(-1* Mth.square(1), 0, 0));
+
 
         if (this.getHurtTime() > 0) {
             this.setHurtTime(this.getHurtTime() - 1);
         }
 
         if (this.getDamage() > 0.0F) {
-            this.setDamage(this.getDamage() - 1.0F);
+            //this.setDamage(this.getDamage() - 1.0F);
         }
 
         super.tick();
@@ -298,30 +309,30 @@ public class NautilusEntity extends Entity {
 
         this.tickBubbleColumn();
 
-        for(int i = 0; i <= 1; ++i) {
+        for (int i = 0; i <= 1; ++i) {
             if (this.getPaddleState(i)) {
-                if (!this.isSilent() && (double)(this.paddlePositions[i] % ((float)Math.PI * 2F)) <= (double)((float)Math.PI / 4F) && (double)((this.paddlePositions[i] + ((float)Math.PI / 8F)) % ((float)Math.PI * 2F)) >= (double)((float)Math.PI / 4F)) {
+                if (!this.isSilent() && (double) (this.paddlePositions[i] % ((float) Math.PI * 2F)) <= (double) ((float) Math.PI / 4F) && (double) ((this.paddlePositions[i] + ((float) Math.PI / 8F)) % ((float) Math.PI * 2F)) >= (double) ((float) Math.PI / 4F)) {
                     SoundEvent soundevent = this.getPaddleSound();
                     if (soundevent != null) {
                         Vec3 vec3 = this.getViewVector(1.0F);
                         double d0 = i == 1 ? -vec3.z : vec3.z;
                         double d1 = i == 1 ? vec3.x : -vec3.x;
-                        this.level().playSound((Player)null, this.getX() + d0, this.getY(), this.getZ() + d1, soundevent, this.getSoundSource(), 1.0F, 0.8F + 0.4F * this.random.nextFloat());
+                        this.level().playSound((Player) null, this.getX() + d0, this.getY(), this.getZ() + d1, soundevent, this.getSoundSource(), 1.0F, 0.8F + 0.4F * this.random.nextFloat());
                     }
                 }
 
-                this.paddlePositions[i] += ((float)Math.PI / 8F);
+                this.paddlePositions[i] += ((float) Math.PI / 8F);
             } else {
                 this.paddlePositions[i] = 0.0F;
             }
         }
 
         this.checkInsideBlocks();
-        List<Entity> list = this.level().getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
+        List<Entity> list = this.level().getEntities(this, this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
             boolean flag = !this.level().isClientSide && !(this.getControllingPassenger() instanceof Player);
 
-            for(int j = 0; j < list.size(); ++j) {
+            for (int j = 0; j < list.size(); ++j) {
                 Entity entity = list.get(j);
                 if (!entity.hasPassenger(this)) {
                     if (flag && this.getPassengers().size() < this.getMaxPassengers() && !entity.isPassenger() && this.hasEnoughSpaceFor(entity) && entity instanceof LivingEntity && !(entity instanceof WaterAnimal) && !(entity instanceof Player)) {
@@ -355,9 +366,9 @@ public class NautilusEntity extends Entity {
     public float getLever(int leverID, float partialTicks) {
         int vertical = this.entityData.get(DATA_ID_VERTICAL_DIRECTION);
         if (leverID == 0) {
-            return Mth.clamp(upLever + 3*(vertical == 1 ? partialTicks : -partialTicks), 0, 20);
+            return Mth.clamp(upLever + 3 * (vertical == 1 ? partialTicks : -partialTicks), 0, 20);
         } else {
-            return Mth.clamp(downLever + 3*(vertical == -1 ? partialTicks : -partialTicks), 0, 20);
+            return Mth.clamp(downLever + 3 * (vertical == -1 ? partialTicks : -partialTicks), 0, 20);
         }
     }
 
@@ -427,7 +438,7 @@ public class NautilusEntity extends Entity {
 
             this.bubbleMultiplier = Mth.clamp(this.bubbleMultiplier, 0.0F, 1.0F);
             this.bubbleAngleO = this.bubbleAngle;
-            this.bubbleAngle = 10.0F * (float)Math.sin((double)(0.5F * (float)this.level().getGameTime())) * this.bubbleMultiplier;
+            this.bubbleAngle = 10.0F * (float) Math.sin((double) (0.5F * (float) this.level().getGameTime())) * this.bubbleMultiplier;
         } else {
             if (!this.isAboveBubbleColumn) {
                 this.setBubbleTime(0);
@@ -479,12 +490,12 @@ public class NautilusEntity extends Entity {
         }
 
         if (this.lerpSteps > 0) {
-            double d0 = this.getX() + (this.lerpX - this.getX()) / (double)this.lerpSteps;
-            double d1 = this.getY() + (this.lerpY - this.getY()) / (double)this.lerpSteps;
-            double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double)this.lerpSteps;
-            double d3 = Mth.wrapDegrees(this.lerpYRot - (double)this.getYRot());
-            this.setYRot(this.getYRot() + (float)d3 / (float)this.lerpSteps);
-            this.setXRot(this.getXRot() + (float)(this.lerpXRot - (double)this.getXRot()) / (float)this.lerpSteps);
+            double d0 = this.getX() + (this.lerpX - this.getX()) / (double) this.lerpSteps;
+            double d1 = this.getY() + (this.lerpY - this.getY()) / (double) this.lerpSteps;
+            double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double) this.lerpSteps;
+            double d3 = Mth.wrapDegrees(this.lerpYRot - (double) this.getYRot());
+            this.setYRot(this.getYRot() + (float) d3 / (float) this.lerpSteps);
+            this.setXRot(this.getXRot() + (float) (this.lerpXRot - (double) this.getXRot()) / (float) this.lerpSteps);
             --this.lerpSteps;
             this.setPos(d0, d1, d2);
             this.setRot(this.getYRot(), this.getXRot());
@@ -505,7 +516,7 @@ public class NautilusEntity extends Entity {
     }
 
     public float getRowingTime(int pSide, float pLimbSwing) {
-        return this.getPaddleState(pSide) ? Mth.clampedLerp(this.paddlePositions[pSide] - ((float)Math.PI / 8F), this.paddlePositions[pSide], pLimbSwing) : 0.0F;
+        return this.getPaddleState(pSide) ? Mth.clampedLerp(this.paddlePositions[pSide] - ((float) Math.PI / 8F), this.paddlePositions[pSide], pLimbSwing) : 0.0F;
     }
 
     /**
@@ -540,11 +551,11 @@ public class NautilusEntity extends Entity {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
         label39:
-        for(int k1 = k; k1 < l; ++k1) {
+        for (int k1 = k; k1 < l; ++k1) {
             float f = 0.0F;
 
-            for(int l1 = i; l1 < j; ++l1) {
-                for(int i2 = i1; i2 < j1; ++i2) {
+            for (int l1 = i; l1 < j; ++l1) {
+                for (int i2 = i1; i2 < j1; ++i2) {
                     blockpos$mutableblockpos.set(l1, k1, i2);
                     FluidState fluidstate = this.level().getFluidState(blockpos$mutableblockpos);
                     if (this.canBoatInFluid(fluidstate)) {
@@ -558,11 +569,11 @@ public class NautilusEntity extends Entity {
             }
 
             if (f < 1.0F) {
-                return (float)blockpos$mutableblockpos.getY() + f;
+                return (float) blockpos$mutableblockpos.getY() + f;
             }
         }
 
-        return (float)(l + 1);
+        return (float) (l + 1);
     }
 
     /**
@@ -582,15 +593,15 @@ public class NautilusEntity extends Entity {
         int k1 = 0;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for(int l1 = i; l1 < j; ++l1) {
-            for(int i2 = i1; i2 < j1; ++i2) {
+        for (int l1 = i; l1 < j; ++l1) {
+            for (int i2 = i1; i2 < j1; ++i2) {
                 int j2 = (l1 != i && l1 != j - 1 ? 0 : 1) + (i2 != i1 && i2 != j1 - 1 ? 0 : 1);
                 if (j2 != 2) {
-                    for(int k2 = k; k2 < l; ++k2) {
+                    for (int k2 = k; k2 < l; ++k2) {
                         if (j2 <= 0 || k2 != k && k2 != l - 1) {
                             blockpos$mutableblockpos.set(l1, k2, i2);
                             BlockState blockstate = this.level().getBlockState(blockpos$mutableblockpos);
-                            if (!(blockstate.getBlock() instanceof WaterlilyBlock) && Shapes.joinIsNotEmpty(blockstate.getCollisionShape(this.level(), blockpos$mutableblockpos).move((double)l1, (double)k2, (double)i2), voxelshape, BooleanOp.AND)) {
+                            if (!(blockstate.getBlock() instanceof WaterlilyBlock) && Shapes.joinIsNotEmpty(blockstate.getCollisionShape(this.level(), blockpos$mutableblockpos).move((double) l1, (double) k2, (double) i2), voxelshape, BooleanOp.AND)) {
                                 f += blockstate.getFriction(this.level(), blockpos$mutableblockpos, this);
                                 ++k1;
                             }
@@ -600,7 +611,7 @@ public class NautilusEntity extends Entity {
             }
         }
 
-        return f / (float)k1;
+        return f / (float) k1;
     }
 
     private boolean checkInWater() {
@@ -615,15 +626,15 @@ public class NautilusEntity extends Entity {
         this.waterLevel = -Double.MAX_VALUE;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for(int k1 = i; k1 < j; ++k1) {
-            for(int l1 = k; l1 < l; ++l1) {
-                for(int i2 = i1; i2 < j1; ++i2) {
+        for (int k1 = i; k1 < j; ++k1) {
+            for (int l1 = k; l1 < l; ++l1) {
+                for (int i2 = i1; i2 < j1; ++i2) {
                     blockpos$mutableblockpos.set(k1, l1, i2);
                     FluidState fluidstate = this.level().getFluidState(blockpos$mutableblockpos);
                     if (this.canBoatInFluid(fluidstate)) {
-                        float f = (float)l1 + fluidstate.getHeight(this.level(), blockpos$mutableblockpos);
-                        this.waterLevel = Math.max((double)f, this.waterLevel);
-                        flag |= aabb.minY < (double)f;
+                        float f = (float) l1 + fluidstate.getHeight(this.level(), blockpos$mutableblockpos);
+                        this.waterLevel = Math.max((double) f, this.waterLevel);
+                        flag |= aabb.minY < (double) f;
                     }
                 }
             }
@@ -648,12 +659,12 @@ public class NautilusEntity extends Entity {
         boolean flag = false;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for(int k1 = i; k1 < j; ++k1) {
-            for(int l1 = k; l1 < l; ++l1) {
-                for(int i2 = i1; i2 < j1; ++i2) {
+        for (int k1 = i; k1 < j; ++k1) {
+            for (int l1 = k; l1 < l; ++l1) {
+                for (int i2 = i1; i2 < j1; ++i2) {
                     blockpos$mutableblockpos.set(k1, l1, i2);
                     FluidState fluidstate = this.level().getFluidState(blockpos$mutableblockpos);
-                    if (this.canBoatInFluid(fluidstate) && d0 < (double)((float)blockpos$mutableblockpos.getY() + fluidstate.getHeight(this.level(), blockpos$mutableblockpos))) {
+                    if (this.canBoatInFluid(fluidstate) && d0 < (double) ((float) blockpos$mutableblockpos.getY() + fluidstate.getHeight(this.level(), blockpos$mutableblockpos))) {
                         if (!fluidstate.isSource()) {
                             return NautilusEntity.Status.UNDER_FLOWING_WATER;
                         }
@@ -671,25 +682,25 @@ public class NautilusEntity extends Entity {
      * Update the boat's speed, based on momentum.
      */
     private void floatBoat() {
-        double d0 = (double)-0.04F;
-        double d1 = this.isNoGravity() || this.status == NautilusEntity.Status.UNDER_WATER || this.status == NautilusEntity.Status.UNDER_FLOWING_WATER ? 0.0D : (double)-0.04F;
+        double d0 = (double) -0.04F;
+        double d1 = this.isNoGravity() || this.status == NautilusEntity.Status.UNDER_WATER || this.status == NautilusEntity.Status.UNDER_FLOWING_WATER ? 0.0D : (double) -0.04F;
         double d2 = 0.0D;
         this.invFriction = 0.05F;
         if (this.oldStatus == NautilusEntity.Status.IN_AIR && this.status != NautilusEntity.Status.IN_AIR && this.status != NautilusEntity.Status.ON_LAND) {
             this.waterLevel = this.getY(1.0D);
-            this.setPos(this.getX(), (double)(this.getWaterLevelAbove() - this.getBbHeight()) + 0.101D, this.getZ());
+            this.setPos(this.getX(), (double) (this.getWaterLevelAbove() - this.getBbHeight()) + 0.101D, this.getZ());
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D));
             this.lastYd = 0.0D;
             this.status = NautilusEntity.Status.IN_WATER;
         } else {
             if (this.status == NautilusEntity.Status.IN_WATER || this.status == NautilusEntity.Status.UNDER_WATER || this.status == NautilusEntity.Status.UNDER_FLOWING_WATER) {
-                d2 = (this.waterLevel - this.getY()) / (double)this.getBbHeight();
+                d2 = (this.waterLevel - this.getY()) / (double) this.getBbHeight();
                 this.invFriction = 0.9F;
             } else if (this.status == NautilusEntity.Status.UNDER_FLOWING_WATER) {
                 d1 = -7.0E-4D;
                 this.invFriction = 0.9F;
             } else if (this.status == NautilusEntity.Status.UNDER_WATER) {
-                d2 = (double)0.01F;
+                d2 = (double) 0.01F;
                 this.invFriction = 0.45F;
             } else if (this.status == NautilusEntity.Status.IN_AIR) {
                 this.invFriction = 0.9F;
@@ -701,7 +712,7 @@ public class NautilusEntity extends Entity {
             }
 
             Vec3 vec3 = this.getDeltaMovement();
-            this.setDeltaMovement(vec3.x * (double)this.invFriction, vec3.y * (double)this.invFriction + d1, vec3.z * (double)this.invFriction);
+            this.setDeltaMovement(vec3.x * (double) this.invFriction, vec3.y * (double) this.invFriction + d1, vec3.z * (double) this.invFriction);
             this.deltaRotation *= this.invFriction;
             //if (d2 > 0.0D) {
             //    Vec3 vec31 = this.getDeltaMovement();
@@ -715,11 +726,11 @@ public class NautilusEntity extends Entity {
         if (this.isVehicle()) {
             float f = 0.0F;
             if (this.inputLeft) {
-                this.deltaRotation-=0.5;
+                this.deltaRotation -= 0.5;
             }
 
             if (this.inputRight) {
-                this.deltaRotation+=0.5;
+                this.deltaRotation += 0.5;
             }
 
             if (this.inputRight != this.inputLeft && !this.inputUp && !this.inputDown) {
@@ -742,7 +753,7 @@ public class NautilusEntity extends Entity {
                 y = -0.06F;
             }
 
-            this.setDeltaMovement(this.getDeltaMovement().add((double)(Mth.sin(-this.getYRot() * ((float)Math.PI / 180F)) * f), y, (double)(Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * f)));
+            this.setDeltaMovement(this.getDeltaMovement().add((double) (Mth.sin(-this.getYRot() * ((float) Math.PI / 180F)) * f), y, (double) (Mth.cos(this.getYRot() * ((float) Math.PI / 180F)) * f)));
             this.setPaddleState(this.inputRight && !this.inputLeft || this.inputUp, this.inputLeft && !this.inputRight || this.inputUp);
             this.setSteerDirection(this.inputRight && !this.inputLeft, this.inputLeft && !this.inputRight);
             this.setVertical(this.jumping, this.sprinting);
@@ -760,7 +771,7 @@ public class NautilusEntity extends Entity {
     protected void positionRider(Entity pPassenger, Entity.MoveFunction pCallback) {
         if (this.hasPassenger(pPassenger)) {
             float f = this.getSinglePassengerXOffset();
-            float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
+            float f1 = (float) ((this.isRemoved() ? (double) 0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
             if (this.getPassengers().size() > 1) {
                 int i = this.getPassengers().indexOf(pPassenger);
                 if (i == 0) {
@@ -774,21 +785,21 @@ public class NautilusEntity extends Entity {
                 }
             }
 
-            Vec3 vec3 = (new Vec3((double)f-0.25, -0.5D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
-            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + (double)f1 + 0.85, this.getZ() + vec3.z);
+            Vec3 vec3 = (new Vec3((double) f - 0.25, -0.5D, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + (double) f1 + 0.85, this.getZ() + vec3.z);
             pPassenger.setYRot(pPassenger.getYRot() + this.deltaRotation);
             pPassenger.setYHeadRot(pPassenger.getYHeadRot() + this.deltaRotation);
             this.clampRotation(pPassenger);
             if (pPassenger instanceof Animal && this.getPassengers().size() == this.getMaxPassengers()) {
                 int j = pPassenger.getId() % 2 == 0 ? 90 : 270;
-                pPassenger.setYBodyRot(((Animal)pPassenger).yBodyRot + (float)j);
-                pPassenger.setYHeadRot(pPassenger.getYHeadRot() + (float)j);
+                pPassenger.setYBodyRot(((Animal) pPassenger).yBodyRot + (float) j);
+                pPassenger.setYHeadRot(pPassenger.getYHeadRot() + (float) j);
             }
         }
     }
 
     public Vec3 getDismountLocationForPassenger(LivingEntity pLivingEntity) {
-        Vec3 vec3 = getCollisionHorizontalEscapeVector((double)(this.getBbWidth() * Mth.SQRT_OF_TWO), (double)pLivingEntity.getBbWidth(), pLivingEntity.getYRot());
+        Vec3 vec3 = getCollisionHorizontalEscapeVector((double) (this.getBbWidth() * Mth.SQRT_OF_TWO), (double) pLivingEntity.getBbWidth(), pLivingEntity.getYRot());
         double d0 = this.getX() + vec3.x;
         double d1 = this.getZ() + vec3.z;
         BlockPos blockpos = BlockPos.containing(d0, this.getBoundingBox().maxY, d1);
@@ -797,16 +808,16 @@ public class NautilusEntity extends Entity {
             List<Vec3> list = Lists.newArrayList();
             double d2 = this.level().getBlockFloorHeight(blockpos);
             if (DismountHelper.isBlockFloorValid(d2)) {
-                list.add(new Vec3(d0, (double)blockpos.getY() + d2, d1));
+                list.add(new Vec3(d0, (double) blockpos.getY() + d2, d1));
             }
 
             double d3 = this.level().getBlockFloorHeight(blockpos1);
             if (DismountHelper.isBlockFloorValid(d3)) {
-                list.add(new Vec3(d0, (double)blockpos1.getY() + d3, d1));
+                list.add(new Vec3(d0, (double) blockpos1.getY() + d3, d1));
             }
 
-            for(Pose pose : pLivingEntity.getDismountPoses()) {
-                for(Vec3 vec31 : list) {
+            for (Pose pose : pLivingEntity.getDismountPoses()) {
+                for (Vec3 vec31 : list) {
                     if (DismountHelper.canDismountTo(this.level(), vec31, pLivingEntity, pose)) {
                         pLivingEntity.setPose(pose);
                         return vec31;
@@ -876,11 +887,11 @@ public class NautilusEntity extends Entity {
                     if (!this.level().isClientSide && !this.isRemoved()) {
                         this.kill();
                         if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                            for(int i = 0; i < 3; ++i) {
+                            for (int i = 0; i < 3; ++i) {
                                 // TODO replace this with something this.spawnAtLocation(this.getVariant().getPlanks());
                             }
 
-                            for(int j = 0; j < 2; ++j) {
+                            for (int j = 0; j < 2; ++j) {
                                 this.spawnAtLocation(Items.STICK);
                             }
                         }
@@ -889,7 +900,7 @@ public class NautilusEntity extends Entity {
 
                 this.resetFallDistance();
             } else if (!this.canBoatInFluid(this.level().getFluidState(this.blockPosition().below())) && pY < 0.0D) {
-                this.fallDistance -= (float)pY;
+                this.fallDistance -= (float) pY;
             }
 
         }
@@ -999,7 +1010,7 @@ public class NautilusEntity extends Entity {
         super.addPassenger(passenger);
         if (this.isControlledByLocalInstance() && this.lerpSteps > 0) {
             this.lerpSteps = 0;
-            this.absMoveTo(this.lerpX, this.lerpY, this.lerpZ, (float)this.lerpYRot, (float)this.lerpXRot);
+            this.absMoveTo(this.lerpX, this.lerpY, this.lerpZ, (float) this.lerpYRot, (float) this.lerpXRot);
         }
     }
 
@@ -1015,9 +1026,9 @@ public class NautilusEntity extends Entity {
         if (this.level().hasChunksAt(blockpos, blockpos1)) {
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-            for(int i = blockpos.getX(); i <= blockpos1.getX(); ++i) {
-                for(int j = blockpos.getY(); j <= blockpos1.getY(); ++j) {
-                    for(int k = blockpos.getZ(); k <= blockpos1.getZ(); ++k) {
+            for (int i = blockpos.getX(); i <= blockpos1.getX(); ++i) {
+                for (int j = blockpos.getY(); j <= blockpos1.getY(); ++j) {
+                    for (int k = blockpos.getZ(); k <= blockpos1.getZ(); ++k) {
                         blockpos$mutableblockpos.set(i, j, k);
                         BlockState blockstate = this.level().getBlockState(blockpos$mutableblockpos);
                         Block block = blockstate.getBlock();
@@ -1048,8 +1059,6 @@ public class NautilusEntity extends Entity {
         ON_LAND,
         IN_AIR;
     }
-
-
 
 
 }

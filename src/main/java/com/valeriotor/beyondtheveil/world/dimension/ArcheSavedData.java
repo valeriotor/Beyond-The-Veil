@@ -1,11 +1,17 @@
 package com.valeriotor.beyondtheveil.world.dimension;
 
+import com.valeriotor.beyondtheveil.client.ClientData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.saveddata.SavedData;
 
 public class ArcheSavedData extends SavedData {
 
+    public static final long TICKS_PER_CYCLE = 16383;
+    public static final long CURRENT_DURATION = 20 * 178;
+    public static final long CURRENT_START = TICKS_PER_CYCLE - CURRENT_DURATION;
+    public static final int CURRENT_PEAK = 110 * 20;
     private long cycle = 0;
+
 
     public ArcheSavedData() {
     }
@@ -29,5 +35,23 @@ public class ArcheSavedData extends SavedData {
 
     public long getCycle() {
         return cycle;
+    }
+
+    public long ticksInCycle() {
+        long ticks = cycle; //mc.levelRenderer.getTicks();
+
+        ticks &= TICKS_PER_CYCLE;
+        if (ticks < CURRENT_START) {
+            return -1;
+        }
+        return ticks - CURRENT_START;
+    }
+
+    public float getCurrentIntensity() {
+        long ticks = ticksInCycle();
+        if (ticks <= 0) {
+            return 0;
+        }
+        return ticks <= CURRENT_PEAK - 1 ? (ticks % (CURRENT_PEAK)) / (float) (CURRENT_PEAK) : (CURRENT_DURATION - ticks) / (float) (CURRENT_DURATION - CURRENT_PEAK);
     }
 }

@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,7 @@ import org.joml.Matrix4f;
 
 import java.awt.*;
 
+import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.*;
 import static net.minecraft.client.renderer.LevelRenderer.getLightColor;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -237,16 +239,10 @@ public class RenderEvents {
         if (mc.level == null || mc.level.dimension() != BTVDimensions.ARCHE_LEVEL) {
             return;
         }
-        long ticks = ClientData.getInstance().archeSavedData.getCycle(); //mc.levelRenderer.getTicks();
-        final long TICKS_PER_CYCLE = 16383;
-        final long CURRENT_DURATION = 20 * 178;
-        final long CURRENT_START = TICKS_PER_CYCLE - CURRENT_DURATION;
-        final int CURRENT_PEAK = 110 * 20;
-        ticks &= TICKS_PER_CYCLE;
-        if (ticks < CURRENT_START) {
+        long ticks = ClientData.getInstance().archeSavedData.ticksInCycle();
+        if (ticks < 0) {
             return;
         }
-        ticks -= CURRENT_START;
 
         float pPartialTick = event.getPartialTick();
         Camera camera = event.getCamera();
