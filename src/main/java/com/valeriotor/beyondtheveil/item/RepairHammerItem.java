@@ -53,6 +53,7 @@ public class RepairHammerItem extends TieredItem {
                 float v = player.getAttackStrengthScale(0.5F);
                 nautilus.setDamage(Math.max(0, nautilus.getDamage() - NautilusEntity.TOTAL_HEALTH * 2 / 100F * v * v));
                 player.level().playSound(null, player.getOnPos(), SoundEvents.CHAIN_HIT, SoundSource.PLAYERS);
+                stack.hurtAndBreak(1, player, (p_41007_) -> {p_41007_.broadcastBreakEvent(EquipmentSlot.MAINHAND);});
             }
             return true;
         }
@@ -67,7 +68,7 @@ public class RepairHammerItem extends TieredItem {
     private static class RepairHammerTier implements Tier {
         @Override
         public int getUses() {
-            return 240;
+            return 300;
         }
 
         @Override
