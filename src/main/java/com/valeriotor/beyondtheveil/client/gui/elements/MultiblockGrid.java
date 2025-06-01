@@ -1,12 +1,16 @@
 package com.valeriotor.beyondtheveil.client.gui.elements;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockSchematic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -49,7 +53,13 @@ public class MultiblockGrid extends Element{
                     int y = (int) (j * 21 + 50);
                     ItemStack itemStack = layer[i][j];
                     if (!itemStack.isEmpty()) {
-                        graphics.renderItem(itemStack, x, y);
+                        poseStack.pushPose();
+                        poseStack.translate(x + 8, y + 8, 0);
+                        if (schematic == MultiblockRegistry.BLOOD_WELL && layerIndex == 2 && itemStack.getItem() == Registration.BLOOD_BRICK_STAIRS_ITEM.get()) {
+                            poseStack.mulPose(Axis.ZP.rotation(3.0F));
+                        }
+                        graphics.renderItem(itemStack, -8, -8);
+                        poseStack.popPose();
                         if (relativeMouseX >= x && relativeMouseX <= x + 21 && relativeMouseY >= y && relativeMouseY <= y + 21) {
                             graphics.renderTooltip(Minecraft.getInstance().font, itemStack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), itemStack.getTooltipImage(), relativeMouseX, relativeMouseY);
                         }
