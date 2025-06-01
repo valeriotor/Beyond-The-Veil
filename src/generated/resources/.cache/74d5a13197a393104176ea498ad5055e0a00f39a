@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-01T13:30:06.7513317	Item Models: beyondtheveil
+// 1.20.1	2025-06-01T19:13:14.6994077	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
@@ -95,6 +95,7 @@ dace1b7f17be45d4271adc00f6b2e50b24f1d7b7 assets/beyondtheveil/models/item/memory
 abfcc384873b0b3feea19c1626831b13257cea67 assets/beyondtheveil/models/item/memory_sieve.json
 04b9ae0b512641be6799a6f4f056768695b9f42e assets/beyondtheveil/models/item/movement_slowdown_serum_bucket.json
 f540e435c4263d81195f65cb89fa85fbd82a8cec assets/beyondtheveil/models/item/movement_speed_serum_bucket.json
+014c9896914f128cc748af953bc3486fbf7432b2 assets/beyondtheveil/models/item/nautilus.json
 9291ea805c9946fcba6f457af67b2c6b874bf612 assets/beyondtheveil/models/item/necronomicon.json
 369ffe4eda4f8b384774f5466bf42349dd9fee09 assets/beyondtheveil/models/item/night_vision_serum_bucket.json
 eb673116171dcaddd447e4446a78fb72c7cec19c assets/beyondtheveil/models/item/obedience_hormones_bucket.json

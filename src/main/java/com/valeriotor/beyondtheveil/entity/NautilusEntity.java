@@ -48,6 +48,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -242,9 +243,7 @@ public class NautilusEntity extends Entity {
     }
 
     public Item getDropItem() {
-        Item item = Registration.ALE.get(); // TODO change this..
-
-        return item;
+        return Registration.NAUTILUS.get();
     }
 
     public void animateHurt(float pYaw) {
@@ -891,6 +890,14 @@ public class NautilusEntity extends Entity {
             return InteractionResult.PASS;
         } else if (this.outOfControlTicks < 60.0F) {
             if (!this.level().isClientSide) {
+                Item item = pPlayer.getItemInHand(pHand).getItem();
+                if (item == Registration.REPAIR_HAMMER.get() && pPlayer.getVehicle() != this) {
+                    discard();
+                    ItemStack stack = new ItemStack(Registration.NAUTILUS.get());
+                    stack.getOrCreateTag().putFloat("nautilus_damage", getDamage());
+                    ItemHandlerHelper.giveItemToPlayer(pPlayer, stack);
+                    return InteractionResult.CONSUME;
+                }
                 return pPlayer.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
             } else {
                 return InteractionResult.SUCCESS;
