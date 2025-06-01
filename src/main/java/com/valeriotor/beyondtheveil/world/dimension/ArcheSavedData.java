@@ -27,6 +27,7 @@ public class ArcheSavedData extends SavedData {
     }
 
     public void tick(boolean dirty) {
+        //cycle = CURRENT_START - 200;
         cycle++;
         if (dirty) {
             setDirty();

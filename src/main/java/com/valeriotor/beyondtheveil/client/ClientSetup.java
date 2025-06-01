@@ -14,10 +14,7 @@ import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.ForcepsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.ItemFlaskModelLoader;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
-import com.valeriotor.beyondtheveil.client.model.entity.layer.AbominationFlesh1Model;
-import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
-import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
-import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.*;
 import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
@@ -119,6 +116,7 @@ public class ClientSetup {
         event.registerLayerDefinition(ChestWoundModel.LAYER_LOCATION, ChestWoundModel::createBodyLayer);
         event.registerLayerDefinition(BrokenBodyModel.LAYER_LOCATION, BrokenBodyModel::createBodyLayer);
         event.registerLayerDefinition(AbominationFlesh1Model.LAYER_LOCATION, AbominationFlesh1Model::createBodyLayer);
+        event.registerLayerDefinition(NautilusCreakModel.LAYER_LOCATION, NautilusCreakModel::createBodyLayer);
     }
 
     @SubscribeEvent

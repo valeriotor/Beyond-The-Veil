@@ -135,7 +135,7 @@ public class LivingTickEvents {
                 if (ticks % 20 == 0) {
                     if (e instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
                         //nautilus.setDamage(nautilus.getDamage() + NautilusEntity.TOTAL_HEALTH * currentIntensity / 20);
-                        nautilus.hurt(e.damageSources().fellOutOfWorld(), NautilusEntity.TOTAL_HEALTH / 80F * currentIntensity);
+                        nautilus.hurt(e.damageSources().fellOutOfWorld(), NautilusEntity.TOTAL_HEALTH / 45F * currentIntensity);
                     } else if (e instanceof Player p) {
                         if (!p.isCreative() && !p.isSpectator()) {
                             e.hurt(e.damageSources().fellOutOfWorld(), e.getMaxHealth() / 2 * currentIntensity);

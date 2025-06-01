@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.item.SlugItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -116,7 +117,7 @@ public class PlayerTickEvents {
         if (p.isDeadOrDying()) {
             return;
         }
-        if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater()) {
+        if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
             if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, -1, TOTAL_ARCHE_BREATH, false);
             }

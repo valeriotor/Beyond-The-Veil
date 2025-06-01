@@ -1,26 +1,35 @@
 package com.valeriotor.beyondtheveil.client.render.entity;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.client.model.entity.TestNautilus;
+import com.valeriotor.beyondtheveil.client.render.entity.layer.NautilusCreakLayer;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
-public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
+import java.util.List;
+
+public class NautilusRenderer extends EntityRenderer<NautilusEntity> implements RenderLayerParent<NautilusEntity, TestNautilus<NautilusEntity>> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/nautilus.png");
     private final TestNautilus<NautilusEntity> model;
+    protected final List<RenderLayer<NautilusEntity, TestNautilus<NautilusEntity>>> layers = Lists.newArrayList();
 
     public NautilusRenderer(EntityRendererProvider.Context context) {
         super(context);
         model = new TestNautilus<>(context.bakeLayer(TestNautilus.LAYER_LOCATION));
+        layers.add(new NautilusCreakLayer(this, context.getModelSet()));
     }
 
     @Override
@@ -29,12 +38,17 @@ public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
     }
 
     @Override
+    public TestNautilus<NautilusEntity> getModel() {
+        return model;
+    }
+
+    @Override
     public ResourceLocation getTextureLocation(NautilusEntity pEntity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(NautilusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(@NotNull NautilusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
         pMatrixStack.pushPose();
         pMatrixStack.translate(0.0D, 1.376D, 0.0D);
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(180.0F - pEntityYaw));
@@ -46,6 +60,10 @@ public class NautilusRenderer extends EntityRenderer<NautilusEntity> {
         model.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
         model.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
+        for(var renderlayer : this.layers) {
+            renderlayer.render(pMatrixStack, pBuffer, pPackedLight, pEntity, 0, 0, pPartialTicks, pEntity.tickCount + pPartialTicks, 0, 0);
+        }
 
         pMatrixStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);

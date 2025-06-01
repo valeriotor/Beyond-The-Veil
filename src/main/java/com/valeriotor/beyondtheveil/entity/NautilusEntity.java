@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entity;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.BlockUtil;
 import net.minecraft.CrashReport;
@@ -16,8 +17,10 @@ import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -170,12 +173,27 @@ public class NautilusEntity extends Entity {
         } else if (!this.level().isClientSide && !this.isRemoved()) {
             //this.setHurtDir(-this.getHurtDir());
             this.setHurtTime(10);
-            this.setDamage(this.getDamage() + pAmount);
+            float before = getDamage();
+            float after = before + pAmount;
+            this.setDamage(after);
+            for (int i = TOTAL_HEALTH - 81; i <= TOTAL_HEALTH - 27; i += 27) {
+                if (before < i && after >= i) {
+                    level().playSound(null, this.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL);
+                }
+            }
             //this.markHurt();
             this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
             boolean flag = pSource.getEntity() instanceof Player && ((Player) pSource.getEntity()).getAbilities().instabuild;
             if (flag || this.getDamage() > TOTAL_HEALTH) {
                 if (!flag && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                    if (pSource == damageSources().fellOutOfWorld()) {
+                        if (level() instanceof ServerLevel sl) {
+                            Vec3 pos = position().add(getLookAngle().multiply(3, 3, 3));
+                            sl.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 50, 3, 3, 3, 0);
+                            sl.playSound(null, this.getOnPos(), BTVSounds.SUBMARINE_CRASH.get(), SoundSource.NEUTRAL);
+                            getPassengers().forEach(Entity::kill);
+                        }
+                    }
                     this.destroy(pSource);
                 }
 
@@ -276,6 +294,13 @@ public class NautilusEntity extends Entity {
             if (currentIntensity > 0) {
                 double y = currentIntensity > 0.5 && tickCount % 10 == 0 ? (random.nextFloat() - 0.5) * (currentIntensity - 0.5) * 2 : 0;
                 //this.move(MoverType.SELF, new Vec3(-2 * Mth.square(currentIntensity), y, 0));
+            }
+        }
+        if (level() instanceof ServerLevel sl && false) {
+            if (tickCount % 32 == 0) {
+                Vec3 pos = position().add(getLookAngle().multiply(3, 3, 3));
+                sl.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y + 2, pos.z, 50, 3, 3, 3, 0);
+
             }
         }
         //this.move(MoverType.SELF, new Vec3(-1* Mth.square(1), 0, 0));
