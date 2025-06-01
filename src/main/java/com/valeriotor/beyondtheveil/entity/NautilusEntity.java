@@ -874,14 +874,16 @@ public class NautilusEntity extends Entity {
     }
 
     protected void addAdditionalSaveData(CompoundTag pCompound) {
-
+        pCompound.putFloat("damage", getDamage());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     protected void readAdditionalSaveData(CompoundTag pCompound) {
-
+        if (pCompound.contains("damage")) {
+            setDamage(pCompound.getFloat("damage"));
+        }
     }
 
     public InteractionResult interact(Player pPlayer, InteractionHand pHand) {

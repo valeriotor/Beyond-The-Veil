@@ -2119,6 +2119,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addJournal();
         addLetterBox();
         addBaptism();
+        addOverlays();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -2132,6 +2133,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.smith.display_name", "Smith");
 
         add("gui.multiblock.layer", "Layer %d");
+    }
+
+    private void addOverlays() {
+        add("overlay.repair_hammer.submarine", "Integrity: %.2f%%");
     }
 
     private void addBaptism() {

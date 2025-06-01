@@ -135,6 +135,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(SEWING_NEEDLE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SEWING_NEEDLE.getId().getPath()));
         singleTexture(ANTIDOTE_CAPSULE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + ANTIDOTE_CAPSULE.getId().getPath()));
         singleTexture(VEIN_MINER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + VEIN_MINER.getId().getPath()));
+        singleTexture(REPAIR_HAMMER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + REPAIR_HAMMER.getId().getPath()));
         singleTexture(SEDATIVE_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SEDATIVE_BUCKET.getId().getPath()));
         singleTexture(SOFTENER_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SOFTENER_BUCKET.getId().getPath()));
         singleTexture(COAGULANT_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + COAGULANT_BUCKET.getId().getPath()));

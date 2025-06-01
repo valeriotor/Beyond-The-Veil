@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -54,6 +55,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -384,7 +386,7 @@ public class RenderEvents {
             event.setFarPlaneDistance(300);
             //event.setNearPlaneDistance(-100);
             event.setCanceled(true);
-        } else if(ClientData.getInstance().getContactFogLevel() > 0){
+        } else if (ClientData.getInstance().getContactFogLevel() > 0) {
             event.setFarPlaneDistance(256 - ClientData.getInstance().getContactFogLevel());
             event.setNearPlaneDistance(0);
             event.setCanceled(true);
@@ -398,7 +400,7 @@ public class RenderEvents {
             event.setRed(0);
             event.setGreen(0);
             event.setBlue(0);
-        } else if(ClientData.getInstance().getContactFogLevel() > 0){
+        } else if (ClientData.getInstance().getContactFogLevel() > 0) {
             event.setRed(0);
             event.setGreen(0);
             event.setBlue(0);
@@ -451,6 +453,7 @@ public class RenderEvents {
             renderSyringeContents(event);
             renderSurgeryOverlays(event);
             renderBlackScreen(event);
+            renderRepairHammerOverlay(event);
         }
     }
 
@@ -677,6 +680,25 @@ public class RenderEvents {
                 || item == Registration.SEWING_NEEDLE.get()
                 || item == Registration.TONGS.get()
                 || item == Registration.FORCEPS.get();
+    }
+
+    private static void renderRepairHammerOverlay(RenderGuiOverlayEvent event) {
+
+        LocalPlayer player = Minecraft.getInstance().player;
+        GuiGraphics gg = event.getGuiGraphics();
+        if (player == null || !(event instanceof RenderGuiOverlayEvent.Pre)) {
+            return;
+        }
+        Item mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
+        final int X_OFFSET = gg.guiWidth() / 2 + 10;
+        HitResult hitResult = Minecraft.getInstance().hitResult;
+        if (mainHandItem == Registration.REPAIR_HAMMER.get() && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
+            if (hitResult instanceof EntityHitResult ehr && ehr.getEntity() instanceof NautilusEntity nautilus) {
+                int pY = gg.guiHeight() / 2;
+                //gg.drawString(Minecraft.getInstance().font, Component.literal(String.format("Integrity: %.2f%%", 100 - 100 * nautilus.getDamage() / NautilusEntity.TOTAL_HEALTH)), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                gg.drawString(Minecraft.getInstance().font, Component.translatable("overlay.repair_hammer.submarine", 100 - 100 * nautilus.getDamage() / NautilusEntity.TOTAL_HEALTH), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+            }
+        }
     }
 
 }

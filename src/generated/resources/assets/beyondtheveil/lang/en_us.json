@@ -1754,6 +1754,7 @@
   "multiblock.sacrifice_altar": "Sacrificial Altar",
   "multiblock.sacrifice_altar.checksout": "This Sacrifice Altar has been built correctly.",
   "multiblock.sacrifice_altar.noaltar": "This is not a Sacrifice Altar.",
+  "overlay.repair_hammer.submarine": "Integrity: %.2f%%",
   "power.cooldown": "The Power requires %1$s more seconds of cooldown.",
   "reminiscence.EMPTY": "The dream was not affected.",
   "reminiscence.void": "My next dream will be empowered by void.",
