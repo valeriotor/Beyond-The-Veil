@@ -34,6 +34,7 @@ public class BTVBlockStates extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(DAMP_WOOD.get());
         simpleBlock(DARK_SAND.get());
+        simpleBlock(ALGAE_BLOCK.get());
         stairsBlock(DAMP_WOOD_STAIRS.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
         fenceBlock(DAMP_WOOD_FENCE.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
         logBlock(DAMP_LOG.get());

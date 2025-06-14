@@ -16,7 +16,10 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:matching_blocks",
-        "blocks": "beyondtheveil:dark_sand",
+        "blocks": [
+          "beyondtheveil:dark_sand",
+          "beyondtheveil:algae_block"
+        ],
         "offset": [
           0,
           -1,

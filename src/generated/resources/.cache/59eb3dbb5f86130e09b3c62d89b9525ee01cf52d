@@ -1,5 +1,6 @@
-// 1.20.1	2025-05-25T19:37:20.425754	Loot Tables
+// 1.20.1	2025-06-14T13:49:52.4933587	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
+ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
 326f66af7c810752260514b476c79724d58201d1 data/beyondtheveil/loot_tables/blocks/black_kelp.json
 d1c255bbbfc828b2418cd4f92a122b2cf3d9c896 data/beyondtheveil/loot_tables/blocks/black_kelp_plant.json

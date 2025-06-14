@@ -185,6 +185,9 @@ public class LivingTickEvents {
             nautilus.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
             return;
         }
+        if (entity instanceof Player p && p.isSpectator()) {
+            return;
+        }
         Vec3 currentMovement = entity.getDeltaMovement();
         if (currentMovement.x > -10) {
             double y = intensity > 0.5 && entity.tickCount % 2 == 0 ? (entity.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;

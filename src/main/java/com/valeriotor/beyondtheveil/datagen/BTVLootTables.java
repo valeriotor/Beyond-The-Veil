@@ -43,6 +43,7 @@ public class BTVLootTables extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(Registration.DAMP_WOOD.get());
         dropSelf(Registration.DARK_SAND.get());
+        dropSelf(Registration.ALGAE_BLOCK.get());
         dropSelf(Registration.DAMP_LOG.get());
         dropSelf(Registration.DAMP_WOOD_STAIRS.get());
         dropSelf(Registration.DAMP_CANOPY.get());
