@@ -150,7 +150,7 @@ public class LivingTickEvents {
         }
     }
 
-    public static void doArcheMovement(float intensity, LivingEntity entity) {
+    public static void doArcheMovement(float intensity, Entity entity) {
         if (!entity.isUnderWater()) {
             return;
         }
@@ -181,7 +181,7 @@ public class LivingTickEvents {
         }
         if (entity instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
             //intensity = (float) Math.log(intensity);
-            double y = intensity > 0.5 && nautilus.tickCount % 2 == 0 ? (entity.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
+            double y = intensity > 0.5 && nautilus.tickCount % 2 == 0 ? (p.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
             nautilus.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
             return;
         }
@@ -190,7 +190,7 @@ public class LivingTickEvents {
         }
         Vec3 currentMovement = entity.getDeltaMovement();
         if (currentMovement.x > -10) {
-            double y = intensity > 0.5 && entity.tickCount % 2 == 0 ? (entity.getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
+            double y = intensity > 0.5 && entity.tickCount % 2 == 0 ? (entity.level().getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
             entity.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
 //            entity.setDeltaMovement(currentMovement.x - intensity * 0.08F, currentMovement.y, currentMovement.z);
         }

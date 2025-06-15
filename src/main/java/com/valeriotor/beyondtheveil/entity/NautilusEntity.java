@@ -3,7 +3,9 @@ package com.valeriotor.beyondtheveil.entity;
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.BlockUtil;
 import net.minecraft.CrashReport;
@@ -295,12 +297,18 @@ public class NautilusEntity extends Entity {
                 //this.move(MoverType.SELF, new Vec3(-2 * Mth.square(currentIntensity), y, 0));
             }
         }
-        if (level() instanceof ServerLevel sl && false) {
-            if (tickCount % 32 == 0) {
-                Vec3 pos = position().add(getLookAngle().multiply(3, 3, 3));
-                sl.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y + 2, pos.z, 50, 3, 3, 3, 0);
-
+        if (level() instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL && !(getFirstPassenger() instanceof Player)) {
+            ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+            long ticks = arche.ticksInCycle();
+            if (ticks >= 20 * 10) {
+                float currentIntensity = arche.getCurrentIntensity();
+                LivingTickEvents.doArcheMovement(currentIntensity, this);
+                if (ticks % 20 == 0) {
+                    this.hurt(this.damageSources().fellOutOfWorld(), NautilusEntity.TOTAL_HEALTH / 45F * currentIntensity);
+                }
             }
+
+
         }
         //this.move(MoverType.SELF, new Vec3(-1* Mth.square(1), 0, 0));
 
