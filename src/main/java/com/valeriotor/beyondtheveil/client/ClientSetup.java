@@ -25,12 +25,20 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.BloodWellBE;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
@@ -39,6 +47,10 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.jetbrains.annotations.Nullable;
+
+import static com.valeriotor.beyondtheveil.Registration.ARCHE_DIAL;
+
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
 
@@ -82,6 +94,22 @@ public class ClientSetup {
             blockColors.register((pState, pLevel, pPos, pTintIndex) -> 0x287082, Registration.MEMORY_SIEVE.get());
             ItemColors itemColors = Minecraft.getInstance().getItemColors();
             itemColors.register(new MemoryPhialItem.MemoryPhialColor(), Registration.MEMORY_PHIAL.get());
+
+            ItemProperties.register(ARCHE_DIAL.get(), new ResourceLocation("time"), new ClampedItemPropertyFunction() {
+                @Override
+                public float unclampedCall(ItemStack pStack, @Nullable ClientLevel pLevel, @Nullable LivingEntity pEntity, int pSeed) {
+                    if (pLevel != null && pLevel.dimension() == BTVDimensions.ARCHE_LEVEL) {
+                        ArcheSavedData data = ClientData.getInstance().archeSavedData;
+                        if (data.getCurrentIntensity() > 0) {
+                            return 0.9F;
+                        }
+                        float moduloTicks = data.getModuloTicks();
+                        float l = moduloTicks / ((ArcheSavedData.CURRENT_START));
+                        return l * 9 / 10;
+                    }
+                    return 0;
+                }
+            });
         });
 
     }

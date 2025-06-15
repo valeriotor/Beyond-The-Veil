@@ -293,6 +293,7 @@ public class Registration {
     public static final RegistryObject<Item> VEIN_MINER = ITEMS.register("vein_miner", () -> new VeinMinerItem(1, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> REPAIR_HAMMER = ITEMS.register("repair_hammer", () -> new RepairHammerItem(1, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> NAUTILUS = ITEMS.register("nautilus", () -> new NautilusItem(new Item.Properties()));
+    public static final RegistryObject<Item> ARCHE_DIAL = ITEMS.register("arche_dial", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
@@ -492,6 +493,7 @@ public class Registration {
                 output.accept(VEIN_MINER.get());
                 output.accept(REPAIR_HAMMER.get());
                 output.accept(NAUTILUS.get());
+                output.accept(ARCHE_DIAL.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());

@@ -1,10 +1,21 @@
 package com.valeriotor.beyondtheveil.datagen;
 
+import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 
@@ -167,6 +178,11 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(TEARS_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + TEARS_FLUID_BUCKET.getId().getPath()));
 
         //registerForceps();
+
+        for (int i = 0; i < 10; i++) {
+            singleTexture(ARCHE_DIAL.getId().getPath() + i, mcLoc("item/generated"), "layer0", modLoc("item/" + ARCHE_DIAL.getId().getPath() + i));
+        }
+
     }
 
     private void registerForceps() {

@@ -1,7 +1,17 @@
-// 1.20.1	2025-06-14T13:49:52.4902609	Item Models: beyondtheveil
+// 1.20.1	2025-06-15T13:51:57.5921182	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
+3acda658259ec91993439faf29a10866e02aecb0 assets/beyondtheveil/models/item/arche_dial0.json
+88e09b6f2f80b465e04847355b96106cfa442312 assets/beyondtheveil/models/item/arche_dial1.json
+7246d7ba92504668a34c5b6a242c9d3cea0c02bf assets/beyondtheveil/models/item/arche_dial2.json
+64519adf6347169dc01b08c069ec176627da4cbc assets/beyondtheveil/models/item/arche_dial3.json
+5339b66acbbc12c60cb74a9a504a15d838c3ec73 assets/beyondtheveil/models/item/arche_dial4.json
+115cdd0e941f18a68e661d823f21c0f7fe29e3e4 assets/beyondtheveil/models/item/arche_dial5.json
+eccf371773f17a97a46cd841009153272f92ed26 assets/beyondtheveil/models/item/arche_dial6.json
+8760a59676a60617550c7920d9d51e9c51b6684f assets/beyondtheveil/models/item/arche_dial7.json
+69420ae42d4fe3d147b484e77ffea1f177e8ffa9 assets/beyondtheveil/models/item/arche_dial8.json
+5b930126197dd239d9bcc6b164b9ec528fb23aa7 assets/beyondtheveil/models/item/arche_dial9.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
 57d7e6dac8ec4c3aa5ef0e6a25a6f9d861ae7ef3 assets/beyondtheveil/models/item/azacno_charm.json
 aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json

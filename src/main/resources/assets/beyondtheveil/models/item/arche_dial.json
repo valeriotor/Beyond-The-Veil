@@ -1,0 +1,18 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/arche_dial0"
+  },
+  "overrides": [
+    { "predicate": { "time": 0.0 }, "model": "beyondtheveil:item/arche_dial0" },
+    { "predicate": { "time": 0.1 }, "model": "beyondtheveil:item/arche_dial1" },
+    { "predicate": { "time": 0.2 }, "model": "beyondtheveil:item/arche_dial2" },
+    { "predicate": { "time": 0.3 }, "model": "beyondtheveil:item/arche_dial3" },
+    { "predicate": { "time": 0.4 }, "model": "beyondtheveil:item/arche_dial4" },
+    { "predicate": { "time": 0.5 }, "model": "beyondtheveil:item/arche_dial5" },
+    { "predicate": { "time": 0.6 }, "model": "beyondtheveil:item/arche_dial6" },
+    { "predicate": { "time": 0.7 }, "model": "beyondtheveil:item/arche_dial7" },
+    { "predicate": { "time": 0.8 }, "model": "beyondtheveil:item/arche_dial8" },
+    { "predicate": { "time": 0.9 }, "model": "beyondtheveil:item/arche_dial9" }
+  ]
+}

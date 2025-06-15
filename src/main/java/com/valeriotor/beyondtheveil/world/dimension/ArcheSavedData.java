@@ -38,6 +38,10 @@ public class ArcheSavedData extends SavedData {
         return cycle;
     }
 
+    public long getModuloTicks() {
+        return cycle &= TICKS_PER_CYCLE;
+    }
+
     public long ticksInCycle() {
         long ticks = cycle; //mc.levelRenderer.getTicks();
 
