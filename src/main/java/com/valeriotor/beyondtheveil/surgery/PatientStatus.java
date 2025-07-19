@@ -421,7 +421,7 @@ public class PatientStatus {
     }
 
     private void perTickActions(Player player, Operation operation, SurgicalBE be) {
-        increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this), operation.getPainForFailure());
+        increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this), operation.getPainForFailure(), be);
         if (operation.isProgressParticles()) {
             BlockPos blockPos = be.getBlockPos();
             Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
@@ -431,7 +431,7 @@ public class PatientStatus {
         }
     }
 
-    private void increaseCurrentPain(double amount, double amountForFailure) {
+    private void increaseCurrentPain(double amount, double amountForFailure, SurgicalBE be) {
         // TODO maybe the amount of pain just added should also affect the animation type
         // TODO or the ticks remaining until death at this rate
         //  or maximum(ticksRemaining, currentPain)
@@ -440,6 +440,10 @@ public class PatientStatus {
         if (patientType == PatientType.WEEPER) {
             return;
         }
+        if (be.hasFlebo()) {
+            amount = amount * 7 / 10;
+        }
+
         double sedativeAmount = fluidAmounts.getOrDefault(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), 0D);
         double leftoverSedative = Math.max(0, sedativeAmount - amount);
         amount -= (sedativeAmount - leftoverSedative);

@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-14T13:49:52.4933587	Loot Tables
+// 1.20.1	2025-07-19T20:40:24.2619476	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -39,6 +39,7 @@ c0d84d9b7c47beb4fbe39a4aaecbcbfe3307e1eb data/beyondtheveil/loot_tables/blocks/f
 b143a64a38a0ccf8a2d4acc09524a2673c70adfa data/beyondtheveil/loot_tables/blocks/flask_medium.json
 adcc96a33a085d8224464cd1eca58c0b9c52b7cf data/beyondtheveil/loot_tables/blocks/flask_shelf.json
 f6bdf6ffd0688edac635e66feaeee935aa735dc2 data/beyondtheveil/loot_tables/blocks/flask_small.json
+1e5b9ed6489cdf8238e4ec810aff4bcc4ad4bc69 data/beyondtheveil/loot_tables/blocks/flebo.json
 c02c9973efb981ceee82bb9bccca4add85ab750b data/beyondtheveil/loot_tables/blocks/fume_spreader.json
 f642da10eefbc3f4ef7d9fb5ddbd4762d911050a data/beyondtheveil/loot_tables/blocks/gear_bench.json
 a6c220a48d38dfe713353cfbfd1c147977af23f5 data/beyondtheveil/loot_tables/blocks/heart.json

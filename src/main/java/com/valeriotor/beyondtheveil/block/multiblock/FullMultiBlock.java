@@ -109,6 +109,23 @@ public abstract class FullMultiBlock extends Block{
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
     }
 
+    /** NOT PROPERLY TESTED
+     */
+    public BlockPos posForValues(Level l, BlockPos start, int side, int level, int depth) {
+        BlockState startState = l.getBlockState(start);
+        Direction facing = startState.getValue(FACING);
+        int i = getSideProperty() != null ? -startState.getValue(getSideProperty()) : 0;
+        int j = getDepthProperty() != null ? -startState.getValue(getDepthProperty()) : 0;
+        int x = facing.getAxis() == Direction.Axis.X ? (facing == Direction.EAST ? -j : j) : (facing == Direction.NORTH ? -i : i);
+        int z = facing.getAxis() == Direction.Axis.Z ? (facing == Direction.SOUTH ? -j : j) : (facing == Direction.EAST ? -i : i);
+
+        BlockPos zeroPos = start.offset(x, getLevelProperty() != null ? -startState.getValue(getLevelProperty()) : 0, z);
+        int x2 = facing.getAxis() == Direction.Axis.X ? (facing == Direction.EAST ? -depth : depth) : (facing == Direction.NORTH ? -side : side);
+        int z2 = facing.getAxis() == Direction.Axis.Z ? (facing == Direction.SOUTH ? -depth : depth) : (facing == Direction.EAST ? -side : side);
+        return zeroPos.offset(x2, level, z2);
+
+    }
+
     public BlockPos findCenter(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(FACING);
         int i = getSideProperty() != null ? -pState.getValue(getSideProperty()) + horizontalRadius : 0;

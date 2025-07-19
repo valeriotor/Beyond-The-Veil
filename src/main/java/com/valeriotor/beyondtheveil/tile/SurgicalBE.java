@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -12,8 +13,10 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -46,6 +49,7 @@ public abstract class SurgicalBE extends BlockEntity {
     private PatientStatus patientStatus;
     private Mob entity; // Exists only client side. TODO will probably have to convert this to an interface or abstract class extended by other entity types
     private CompoundTag entityData; // Exists only server side
+    private boolean hasFlebo;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -285,6 +289,8 @@ public abstract class SurgicalBE extends BlockEntity {
         }
     }
 
+    private int counter = 0;
+
     public void tickServer() {
         if (patientStatus != null) {
             patientStatus.tick(false);
@@ -303,6 +309,29 @@ public abstract class SurgicalBE extends BlockEntity {
             }
             patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
         }
+
+        counter++;
+        if (counter % 20 == 0) {
+            hasFlebo = false; // TODO this must become more complex to consider colors
+            BlockState state = level.getBlockState(worldPosition);
+            // just assume it's the center of a thin 3x? multiblock
+            if (state.getBlock() instanceof ThinMultiBlock mb) {
+                for (int i = 0; i < 3 && !hasFlebo; i++) {
+                    BlockPos pos = mb.posForValues(level, worldPosition, i, 0, 0);
+                    for (Direction direction : Direction.Plane.HORIZONTAL) {
+                        BlockPos relative = pos.relative(direction);
+                        if (level.getBlockState(relative).getBlock() == Registration.FLEBO.get()) {
+                            hasFlebo = true;
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
+    public boolean hasFlebo() {
+        return hasFlebo;
+    }
 }

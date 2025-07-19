@@ -60,6 +60,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.WATERY_CRADLE.get());
         dropSelf(Registration.PATIENT_POD.get());
         dropSelf(Registration.FLASK_SHELF.get());
+        dropSelf(Registration.FLEBO.get());
         dropSelf(Registration.SURGERY_BED.get());
         dropSelf(Registration.ALEMBICS.get());
         dropSelf(Registration.LACRYMATORY.get());

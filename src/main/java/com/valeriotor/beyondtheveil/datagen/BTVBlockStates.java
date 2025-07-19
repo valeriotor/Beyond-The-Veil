@@ -97,6 +97,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
         registerBlackTallSeagrass();
+        registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -417,6 +418,37 @@ public class BTVBlockStates extends BlockStateProvider {
                     return ConfiguredModel.builder()
                             .modelFile(file) // Can show 'modelFile'
                             .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90 + 90 * rotationOffset) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                            .build();
+                });
+    }
+
+    private void registerSolidAndTranslucentMultiBlock(String modelName, String emptyModelName, ResourceLocation particleTexture, FullMultiBlock block, int rotationOffset) {
+        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
+
+        ExistingModelFile solid = new ExistingModelFile(modLoc("block/" + modelName + "_solid"), models().existingFileHelper);
+        ExistingModelFile translucent = new ExistingModelFile(modLoc("block/" + modelName + "_translucent"), models().existingFileHelper);
+
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + modelName + "_solid1"), models().existingFileHelper);
+        parent.parent(solid);
+        parent.renderType("solid");
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + modelName + "_translucent1"), models().existingFileHelper);
+        translucent_parent.parent(translucent);
+        translucent_parent.renderType("translucent");
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + modelName)
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", particleTexture)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/" + modelName + "_solid1", parent))
+                .child("block/" + modelName + "_translucent1", translucent_parent)
+                .end();
+
+        getVariantBuilder(block)
+                .forAllStatesExcept(state -> {
+                    ModelFile file = block.isCenter(state) ? builder : empty;
+                    return ConfiguredModel.builder()
+                            .modelFile(file)
+                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90 + 90 * rotationOffset) % 360))
                             .build();
                 });
     }

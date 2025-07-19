@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-15T13:51:57.5921182	Item Models: beyondtheveil
+// 1.20.1	2025-07-19T20:40:24.2619476	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
@@ -79,6 +79,7 @@ a7dc805976449f6d0b5dd0372c354b68f8c4ddc5 assets/beyondtheveil/models/item/flask_
 9a5f55d7ba3cd8ae4bfd9c9c2aa38070a276f5bc assets/beyondtheveil/models/item/flask_medium.json
 c5043432f11b092f7984a105e0e5bec1663c721a assets/beyondtheveil/models/item/flask_shelf.json
 fb95177b382d7684fb91b2a9f8eb00881df4f906 assets/beyondtheveil/models/item/flask_small.json
+8d4fcc330675eba15cf0d8b6ae900dfed5b5992c assets/beyondtheveil/models/item/flebo.json
 9837523ea87e5eb494fe79a7bc8ff6937bdc824a assets/beyondtheveil/models/item/flesh_carbon_token.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/fletum.json
 fefb78ef0675b982fe81d9a5129dc5f9260697e7 assets/beyondtheveil/models/item/flute.json

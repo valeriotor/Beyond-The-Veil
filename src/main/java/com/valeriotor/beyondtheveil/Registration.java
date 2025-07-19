@@ -105,6 +105,7 @@ public class Registration {
     public static final RegistryObject<WateryCradleBlock> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new WateryCradleBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<PatientPodBlock> PATIENT_POD = BLOCKS.register("patient_pod", () -> new PatientPodBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<FlaskShelfBlock> FLASK_SHELF = BLOCKS.register("flask_shelf", () -> new FlaskShelfBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
+    public static final RegistryObject<FleboBlock> FLEBO = BLOCKS.register("flebo", () -> new FleboBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<SurgeryBedBlock> SURGERY_BED = BLOCKS.register("surgery_bed", () -> new SurgeryBedBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<AlembicsBlock> ALEMBICS = BLOCKS.register("alembics", () -> new AlembicsBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new LacrymatoryBlock(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
@@ -183,6 +184,7 @@ public class Registration {
     public static final RegistryObject<Item> PATIENT_POD_ITEM = fromBlock(PATIENT_POD);
 
     public static final RegistryObject<Item> FLASK_SHELF_ITEM = fromBlock(FLASK_SHELF);
+    public static final RegistryObject<Item> FLEBO_ITEM = fromBlock(FLEBO);
     public static final RegistryObject<Item> SURGERY_BED_ITEM = fromBlock(SURGERY_BED);
     public static final RegistryObject<Item> ALEMBICS_ITEM = fromBlock(ALEMBICS);
     public static final RegistryObject<Item> LACRYMATORY_ITEM = fromBlock(LACRYMATORY);
@@ -407,6 +409,7 @@ public class Registration {
                 output.accept(WATERY_CRADLE.get());
                 output.accept(PATIENT_POD.get());
                 output.accept(FLASK_SHELF.get());
+                output.accept(FLEBO.get());
                 output.accept(SURGERY_BED.get());
                 output.accept(ALEMBICS.get());
                 output.accept(LACRYMATORY.get());
