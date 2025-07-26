@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-19T20:53:26.3101035	Block States: beyondtheveil
+// 1.20.1	2025-07-26T17:17:05.4202079	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
@@ -18,6 +18,7 @@ e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/coagul
 89b17e1f64943bba05684ad7c8d852db1fce996e assets/beyondtheveil/blockstates/damp_canopy.json
 71bc5ca4ac10c6ff140338a5d693ee91243f1299 assets/beyondtheveil/blockstates/damp_filled_canopy.json
 40f3f9c6d1eec060b56d04216cb4548936e4f440 assets/beyondtheveil/blockstates/damp_log.json
+4e2e9c2ad2003698b9b2340f39b2d95dcff4d563 assets/beyondtheveil/blockstates/damp_stone.json
 aebabb2f388fa82c6fc15d1f063c8d902ae9633a assets/beyondtheveil/blockstates/damp_wood.json
 28753f61209d7072cb524d3b55f65b90a4cbe900 assets/beyondtheveil/blockstates/damp_wood_fence.json
 ff08e7c92a9b3f4d41c1261c8a94bf2960f9a1a0 assets/beyondtheveil/blockstates/damp_wood_stairs.json
@@ -78,6 +79,7 @@ bb944f275dc6bdebf827795ff474ae46e2206a65 assets/beyondtheveil/models/block/blood
 e5b9d1e37162c83ee320fa59722238135b90b387 assets/beyondtheveil/models/block/blue_bricks.json
 d1352747650999429620c51f6c91324e124010f1 assets/beyondtheveil/models/block/damp_log.json
 9134a5d8268e6bbc931fbcd3857c6dbad6bce7d9 assets/beyondtheveil/models/block/damp_log_horizontal.json
+c758da6870e49b6a4ec8ed408f222cfc91b0874c assets/beyondtheveil/models/block/damp_stone.json
 7104868a65d686d73c35b6e047449da4ec88a95e assets/beyondtheveil/models/block/damp_wood.json
 d4e71ee3f08dcef67fee5d43d7d687e81d69478d assets/beyondtheveil/models/block/damp_wood_fence_post.json
 2609d88ef05363d7b5d1a5d0bb84c455c5c96ab6 assets/beyondtheveil/models/block/damp_wood_fence_side.json

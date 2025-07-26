@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-19T20:40:24.2619476	Item Models: beyondtheveil
+// 1.20.1	2025-07-26T17:17:05.4169049	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
@@ -46,6 +46,7 @@ c2153d166779ef51c23d84c505aa52ad471c1659 assets/beyondtheveil/models/item/confus
 64cde50a504da3d05f68258f5cf9c23ca495862e assets/beyondtheveil/models/item/damp_canopy.json
 71daa56a36422da78b68d6ed08fe32a0cf7400c8 assets/beyondtheveil/models/item/damp_filled_canopy.json
 051d4ffd70c6c4853965846c43c1e3960e929720 assets/beyondtheveil/models/item/damp_log.json
+c04080a8695e7a10a62e8c7f2db66488805e3fa5 assets/beyondtheveil/models/item/damp_stone.json
 71a171a37e0dff3a96289349a9c38fe4a45c2fa7 assets/beyondtheveil/models/item/damp_wood.json
 a524405ae8a54976a681432840ada52da85f71cc assets/beyondtheveil/models/item/damp_wood_fence.json
 feb0d16e525df1960f4f292ac16d8a089b016ba0 assets/beyondtheveil/models/item/damp_wood_stairs.json

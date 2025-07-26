@@ -83,6 +83,7 @@ public class Registration {
     public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
     public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
 
+    public static final RegistryObject<Block> DAMP_STONE = BLOCKS.register("damp_stone", () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> DAMP_WOOD = BLOCKS.register("damp_wood", () -> new Block(DAMP_WOOD_PROPERTIES));
     public static final RegistryObject<Block> DARK_SAND = BLOCKS.register("dark_sand", () -> new Block(DARK_SAND_PROPERTIES));
     public static final RegistryObject<Block> ALGAE_BLOCK = BLOCKS.register("algae_block", () -> new Block(BlockBehaviour.Properties.of().strength(3f).sound(SoundType.MOSS)));
@@ -162,6 +163,7 @@ public class Registration {
     public static final RegistryObject<LiquidBlock> COAGULANT_BLOCK = BLOCKS.register("coagulant_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_COAGULANT, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> TEARS_BLOCK = BLOCKS.register("tears_block", () -> new LiquidBlock(BTVFluids.FLUID_TEARS.getA(), BlockBehaviour.Properties.copy(Blocks.WATER)));
 
+    public static final RegistryObject<Item> DAMP_STONE_ITEM = fromBlock(DAMP_STONE);
     public static final RegistryObject<Item> DAMP_WOOD_ITEM = fromBlock(DAMP_WOOD);
     public static final RegistryObject<Item> DARK_SAND_ITEM = fromBlock(DARK_SAND);
     public static final RegistryObject<Item> ALGAE_BLOCK_ITEM = fromBlock(ALGAE_BLOCK);
@@ -361,11 +363,13 @@ public class Registration {
     public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
     public static final RegistryObject<StructureType<DeepVeinStructure>> DEEP_VEIN = STRUCTURE_TYPES.register("deep_vein", () -> () -> DeepVeinStructure.CODEC);
     public static final RegistryObject<StructureType<HangingAlgaeStructure>> HANGING_ALGAE = STRUCTURE_TYPES.register("hanging_algae", () -> () -> HangingAlgaeStructure.CODEC);
+    public static final RegistryObject<StructureType<BloodCoralStructure>> BLOOD_CORAL = STRUCTURE_TYPES.register("blood_coral", () -> () -> BloodCoralStructure.CODEC);
     public static final RegistryObject<StructurePieceType> DEEP_CITY_PIECE = STRUCTURE_PIECE_TYPES.register("deep_city_piece", () -> DeepCityPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_BUILDING_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_building_piece", () -> HamletPieces.HamletBuildingPiece::new);
     public static final RegistryObject<StructurePieceType> HAMLET_STREET_PIECE = STRUCTURE_PIECE_TYPES.register("hamlet_street_piece", () -> HamletPieces.StreetPiece::new);
     public static final RegistryObject<StructurePieceType> DEEP_VEIN_PIECE = STRUCTURE_PIECE_TYPES.register("deep_vein_piece", () -> DeepVeinStructure.DeepVeinPiece::new);
     public static final RegistryObject<StructurePieceType> HANGING_ALGAE_PIECE = STRUCTURE_PIECE_TYPES.register("hanging_algae_piece", () -> HangingAlgaeStructure.HangingAlgaePiece::new);
+    public static final RegistryObject<StructurePieceType> BLOOD_CORAL_PIECE = STRUCTURE_PIECE_TYPES.register("blood_coral_piece", () -> BloodCoralStructure.BloodCoralPiece::new); // TODO
     public static final RegistryObject<StructureProcessorType<HamletBuildingsProcessor>> HAMLET_BUILDINGS_PROCESSOR = STRUCTURE_PROCESSORS.register("hamlet_buildings_processor", () -> () -> HamletBuildingsProcessor.CODEC);
 
     public static final RegistryObject<RecipeType<GearBenchRecipe>> GEAR_BENCH_RECIPE_TYPE = RECIPE_TYPES.register("gear_bench_recipe_type", () -> new RecipeType<>() {
@@ -388,6 +392,7 @@ public class Registration {
                 output.accept(FLASK_SMALL.get());
                 output.accept(FLASK_ITEM.get());
 
+                output.accept(DAMP_STONE.get());
                 output.accept(DAMP_WOOD.get());
                 output.accept(DARK_SAND.get());
                 output.accept(ALGAE_BLOCK.get());

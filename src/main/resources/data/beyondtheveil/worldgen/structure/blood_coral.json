@@ -1,0 +1,6 @@
+{
+  "type": "beyondtheveil:blood_coral",
+  "biomes": "#beyondtheveil:has_structure/blood_coral",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

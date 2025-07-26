@@ -27,6 +27,7 @@ public class BTVItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        withExistingParent(DAMP_STONE_ITEM.getId().getPath(), modLoc("block/damp_stone"));
         withExistingParent(DAMP_WOOD_ITEM.getId().getPath(), modLoc("block/damp_wood"));
         withExistingParent(DARK_SAND_ITEM.getId().getPath(), modLoc("block/dark_sand"));
         withExistingParent(ALGAE_BLOCK_ITEM.getId().getPath(), modLoc("block/algae_block"));

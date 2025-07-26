@@ -32,6 +32,7 @@ public class BTVBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        simpleBlock(DAMP_STONE.get());
         simpleBlock(DAMP_WOOD.get());
         simpleBlock(DARK_SAND.get());
         simpleBlock(ALGAE_BLOCK.get());
