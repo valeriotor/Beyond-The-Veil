@@ -1,0 +1,6 @@
+{
+  "type": "beyondtheveil:stalagmite",
+  "biomes": "#beyondtheveil:has_structure/stalagmite",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

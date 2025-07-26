@@ -42,6 +42,7 @@ public class BTVLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(Registration.DAMP_STONE.get());
+        dropSelf(Registration.DAMP_MOSSY_STONE.get());
         dropSelf(Registration.DAMP_WOOD.get());
         dropSelf(Registration.DARK_SAND.get());
         dropSelf(Registration.ALGAE_BLOCK.get());

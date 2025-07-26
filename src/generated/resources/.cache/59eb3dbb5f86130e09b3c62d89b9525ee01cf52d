@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-26T17:17:05.4189099	Loot Tables
+// 1.20.1	2025-07-26T19:36:33.2641262	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -17,6 +17,7 @@ ffadf82e41bd9d5e85ff623a9187d855293bcc5d data/beyondtheveil/loot_tables/blocks/b
 f352910a014341056347ec9c163053a4135984c8 data/beyondtheveil/loot_tables/blocks/damp_canopy.json
 046b2538aef685c14850df7c44fd0700f01c5671 data/beyondtheveil/loot_tables/blocks/damp_filled_canopy.json
 5d892165180debd01445ead5d7167f949241ce06 data/beyondtheveil/loot_tables/blocks/damp_log.json
+259c44b334f198e8eb11175008b6fac61386634e data/beyondtheveil/loot_tables/blocks/damp_mossy_stone.json
 57d843ec7f1e9b30542aab09ac6e8a6dc12452b8 data/beyondtheveil/loot_tables/blocks/damp_stone.json
 d4c15610c90c3c18078c26ad2cea3ec46d1d91dc data/beyondtheveil/loot_tables/blocks/damp_wood.json
 c14c2eb0c984852c87be35d7b7a6d4fac35d1ea1 data/beyondtheveil/loot_tables/blocks/damp_wood_fence.json

@@ -1,0 +1,6 @@
+{
+  "type": "beyondtheveil:algae_shroom",
+  "biomes": "#beyondtheveil:has_structure/algae_structure",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

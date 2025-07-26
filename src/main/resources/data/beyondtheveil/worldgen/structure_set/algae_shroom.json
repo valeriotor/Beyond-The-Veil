@@ -1,13 +1,13 @@
 {
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 15181547,
+    "salt": 14311547,
     "separation": 8,
     "spacing": 24
   },
   "structures": [
     {
-      "structure": "beyondtheveil:blood_coral",
+      "structure": "beyondtheveil:algae_shroom",
       "weight": 1
     }
   ]
