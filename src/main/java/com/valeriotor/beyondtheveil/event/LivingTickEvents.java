@@ -5,7 +5,9 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
+import com.valeriotor.beyondtheveil.entity.ictya.IctyaEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -93,7 +95,7 @@ public class LivingTickEvents {
 
     private static void doArcheDrownDamage(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
-        if (e.isDeadOrDying()) {
+        if (e.isDeadOrDying() || e instanceof IctyaEntity || e instanceof DeepOneEntity) {
             return;
         }
         if (e.tickCount % 20 == 0 && e.level().dimension() == BTVDimensions.ARCHE_LEVEL && e.isUnderWater()) {

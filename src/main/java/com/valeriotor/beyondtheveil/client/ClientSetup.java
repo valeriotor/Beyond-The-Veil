@@ -136,6 +136,7 @@ public class ClientSetup {
         event.registerLayerDefinition(Abomination1Model.LAYER_LOCATION, Abomination1Model::createBodyLayer);
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
         event.registerLayerDefinition(ShoremanModel.LAYER_LOCATION, ShoremanModel::createBodyLayer);
+        event.registerLayerDefinition(CephalopodianModel.LAYER_LOCATION, CephalopodianModel::createBodyLayer);
 
 
 
@@ -162,6 +163,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.ABOMINATION_1.get(), Abomination1Renderer::new);
         event.registerEntityRenderer(BTVEntities.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
         event.registerEntityRenderer(BTVEntities.SHOREMAN.get(), ShoremanRenderer::new);
+        event.registerEntityRenderer(BTVEntities.CEPHALOPODIAN.get(), CephalopodianRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

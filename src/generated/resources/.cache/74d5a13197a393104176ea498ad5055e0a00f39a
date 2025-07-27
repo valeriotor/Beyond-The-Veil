@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-26T19:36:33.2620801	Item Models: beyondtheveil
+// 1.20.1	2025-07-27T19:18:07.5735721	Item Models: beyondtheveil
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
 236da0c98ea85915f31073fee21cf3e061ac9ff9 assets/beyondtheveil/models/item/antidote_capsule.json
@@ -37,6 +37,7 @@ c434b9cfca825ff17f87e5f2c3745a600d69a15b assets/beyondtheveil/models/item/blood_
 fcf59a6fee0094df1f0e33beebf5c5f7de0d3561 assets/beyondtheveil/models/item/bone_tiara.json
 e184cc6fec8ef94ea9dda5167cdcbdb6145b44aa assets/beyondtheveil/models/item/bronze_sphere.json
 4825394776dfd0ddc223aa0019ff71367143f521 assets/beyondtheveil/models/item/canoe.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/cephalopodian.json
 ac99cf2d7f6c3f7c56901fe6461ca06068df16f0 assets/beyondtheveil/models/item/coagulant_bucket.json
 c2153d166779ef51c23d84c505aa52ad471c1659 assets/beyondtheveil/models/item/confusion_serum_bucket.json
 3f686ab6e84a3cba9d52614e4de61f08b8eb31f7 assets/beyondtheveil/models/item/coral_staff.json

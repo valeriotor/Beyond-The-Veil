@@ -1,0 +1,49 @@
+model: cephalopodian
+length: 12
+start: 0: 3
+    rotx: tent11: 3.491
+    rotx: tent21: 3.491
+    rotx: tent31: 3.491
+    rotx: tent41: 3.491
+    rotx: tent1: -0.2
+    rotx: tent2: -0.2
+    rotx: tent3: -0.2
+    rotx: tent4: -0.2
+    roty: tent1: +0.2
+    roty: tent2: +0.2
+    roty: tent3: +0.2
+    roty: tent4: +0.2
+start: 5: 7
+    roty: tent11: -0.8
+    roty: tent21: -0.8
+    roty: tent31: -0.8
+    roty: tent41: -0.8
+    rotx: tent11: -3.419
+    rotx: tent21: -3.419
+    rotx: tent31: -3.419
+    rotx: tent41: -3.419
+    rotx: tent1: 0.6
+    rotx: tent2: 0.6
+    rotx: tent3: 0.6
+    rotx: tent4: 0.6
+    roty: tent1: -0.6
+    roty: tent2: -0.6
+    roty: tent3: -0.6
+    roty: tent4: -0.6
+start: 8: 12
+    roty: tent11: 0.8
+    roty: tent21: 0.8
+    roty: tent31: 0.8
+    roty: tent41: 0.8
+    rotx: tent11: -0.3491
+    rotx: tent21: -0.3491
+    rotx: tent31: -0.3491
+    rotx: tent41: -0.3491
+    rotx: tent1: -0.4
+    rotx: tent2: -0.4
+    rotx: tent3: -0.4
+    rotx: tent4: -0.4
+    roty: tent1: 0.4
+    roty: tent2: 0.4
+    roty: tent3: 0.4
+    roty: tent4: 0.4

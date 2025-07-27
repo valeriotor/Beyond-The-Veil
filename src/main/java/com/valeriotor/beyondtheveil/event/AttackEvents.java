@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.event;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.entity.DamageCapper;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -51,6 +52,11 @@ public class AttackEvents {
                 } else if (player.isInWaterOrRain()) {
                     event.setAmount(event.getAmount() * 1.3F);
                 }
+            }
+        }
+        if (entity instanceof DamageCapper dc) {
+            if (event.getAmount() > dc.getDamageCap()) {
+                event.setAmount(dc.getDamageCap());
             }
         }
     }

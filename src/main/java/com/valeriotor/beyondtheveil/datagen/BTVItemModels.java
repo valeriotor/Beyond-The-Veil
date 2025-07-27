@@ -91,6 +91,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(WEEPER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(FLETUM_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(SHOREMAN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(CEPHALOPODIAN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         singleTexture(BLACK_KELP_ITEM.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/" + BLACK_KELP.getId().getPath()));
         singleTexture(BLACK_SEAGRASS_ITEM.getId().getPath(),mcLoc("item/generated"), "layer0", modLoc("item/" + BLACK_SEAGRASS.getId().getPath()));

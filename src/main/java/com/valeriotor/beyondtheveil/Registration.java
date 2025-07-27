@@ -348,6 +348,7 @@ public class Registration {
     public static final RegistryObject<Item> WEEPER_EGG = ITEMS.register("weeper", () -> new ForgeSpawnEggItem(BTVEntities.WEEPER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> FLETUM_EGG = ITEMS.register("fletum", () -> new ForgeSpawnEggItem(BTVEntities.FLETUM, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(BTVEntities.SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> CEPHALOPODIAN_EGG = ITEMS.register("cephalopodian", () -> new ForgeSpawnEggItem(BTVEntities.CEPHALOPODIAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
@@ -558,6 +559,7 @@ public class Registration {
                 output.accept(WEEPER_EGG.get());
                 output.accept(FLETUM_EGG.get());
                 output.accept(SHOREMAN_EGG.get());
+                output.accept(CEPHALOPODIAN_EGG.get());
 
     }).build());
 

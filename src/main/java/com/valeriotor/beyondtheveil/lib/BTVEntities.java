@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.lib;
 
 import com.valeriotor.beyondtheveil.entity.*;
+import com.valeriotor.beyondtheveil.entity.ictya.CephalopodianEntity;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +32,7 @@ public class BTVEntities {
     public static final RegistryObject<EntityType<BloodZombieEntity>> BLOOD_ZOMBIE = ENTITIES.register("blood_zombie", () -> EntityType.Builder.of(BloodZombieEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_zombie"));
     public static final RegistryObject<EntityType<BloodSkeletonEntity>> BLOOD_SKELETON = ENTITIES.register("blood_skeleton", () -> EntityType.Builder.of(BloodSkeletonEntity::new, MobCategory.MONSTER).sized(0.7F, 5F).clientTrackingRange(32).build("blood_skeleton"));
     public static final RegistryObject<EntityType<DeepOneEntity>> DEEP_ONE = ENTITIES.register("deep_one", () -> EntityType.Builder.of(DeepOneEntity::new, MobCategory.MONSTER).sized(0.6F, 3F).clientTrackingRange(32).build("deep_one"));
+    public static final RegistryObject<EntityType<CephalopodianEntity>> CEPHALOPODIAN = ENTITIES.register("cephalopodian", () -> EntityType.Builder.of(CephalopodianEntity::new, MobCategory.MONSTER).sized(5.6F, 3F).clientTrackingRange(32).build("cephalopodian"));
     public static final RegistryObject<EntityType<CanoeEntity>> CANOE = ENTITIES.register("canoe", () -> EntityType.Builder.of((EntityType<CanoeEntity> pEntityType, Level pLevel) -> new CanoeEntity(pLevel), MobCategory.MISC).sized(1.5F, 0.5F).clientTrackingRange(32).build("canoe"));
 
     public static void init(IEventBus bus) {

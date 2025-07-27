@@ -2,9 +2,11 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entity.*;
+import com.valeriotor.beyondtheveil.entity.ictya.CephalopodianEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
@@ -26,7 +28,13 @@ public class Setup {
         event.put(BTVEntities.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());
         event.put(BTVEntities.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
         event.put(BTVEntities.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
+        event.put(BTVEntities.CEPHALOPODIAN.get(), CephalopodianEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
+    }
+
+    @SubscribeEvent
+    public static void spawnPlacementRegisterEvent(SpawnPlacementRegisterEvent event) {
+        //event.register();
     }
 
     @SubscribeEvent

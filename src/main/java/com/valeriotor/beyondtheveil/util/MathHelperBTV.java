@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -119,6 +120,23 @@ public class MathHelperBTV {
             current = update.apply(current);
         }
         return false;
+    }
+
+    public static boolean isEntityWithinAngleOfEntity(LivingEntity source, Entity target, double initialRotation, double degreesToTheLeft, double degreesToTheRight) {
+        double rotation = angleBetween(source, target);
+        double lowerBound = initialRotation - degreesToTheLeft;
+        double upperBound = initialRotation + degreesToTheRight;
+        return wrapAngle(rotation, lowerBound, upperBound);
+    }
+
+    public static boolean wrapAngle(double rotation, double lowerBound, double upperBound) {
+        if (lowerBound < -180) {
+            return rotation < upperBound || rotation > lowerBound + 360;
+        } else if (upperBound > 180) {
+            return rotation < upperBound - 360 || rotation > lowerBound;
+        } else {
+            return rotation < upperBound && rotation > lowerBound;
+        }
     }
 
 }

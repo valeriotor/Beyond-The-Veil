@@ -1,0 +1,49 @@
+model: cephalopodian
+length: 25
+start: 0: 7
+	rotx: leftupperspike: 3.14
+	rotz: leftupperspike: 3.14
+	rotx: leftlowerspike: 3.14
+	rotz: leftlowerspike: 3.14
+	rotx: rightupperspike: 3.14
+	rotz: rightupperspike: 3.14
+	rotx: rightlowerspike: 3.14
+	rotz: rightlowerspike: 3.14
+	rotx: leftupperpad: 0.45
+	roty: leftupperpad: 0.45
+	rotx: leftlowerpad: -0.45
+	roty: leftlowerpad: 0.45
+	rotx: rightupperpad: -0.45
+	roty: rightupperpad: 0.45
+	rotx: rightlowerpad: 0.45
+	roty: rightlowerpad: 0.45
+start: 8: 11
+	rotx: leftupperpad: 0.45: quadratic
+	roty: leftupperpad: 0.45: quadratic
+	rotx: leftlowerpad: -0.45: quadratic
+	roty: leftlowerpad: 0.45: quadratic
+	rotx: rightupperpad: -0.45: quadratic
+	roty: rightupperpad: 0.45: quadratic
+	rotx: rightlowerpad: 0.45: quadratic
+	roty: rightlowerpad: 0.45: quadratic
+	roty: leftpad: 1.8: quadratic
+	roty: rightpad: 1.8: quadratic
+start: 13: 24
+	rotx: leftupperspike: -3.14
+	rotz: leftupperspike: -3.14
+	rotx: leftlowerspike: -3.14
+	rotz: leftlowerspike: -3.14
+	rotx: rightupperspike: -3.14
+	rotz: rightupperspike: -3.14
+	rotx: rightlowerspike: -3.14
+	rotz: rightlowerspike: -3.14
+	rotx: leftupperpad: -0.9
+	roty: leftupperpad: -0.9
+	rotx: leftlowerpad: 0.9
+	roty: leftlowerpad: -0.9
+	rotx: rightupperpad: 0.9
+	roty: rightupperpad: -0.9
+	rotx: rightlowerpad: -0.9
+	roty: rightlowerpad: -0.9
+	roty: leftpad: -1.8
+	roty: rightpad: -1.8
