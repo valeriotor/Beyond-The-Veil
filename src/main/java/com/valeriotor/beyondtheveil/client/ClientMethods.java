@@ -142,6 +142,9 @@ public class ClientMethods {
     }
 
     public static void doArcheEffects(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() != Minecraft.getInstance().player) {
+            return;
+        }
         ArcheSavedData data = ClientData.getInstance().archeSavedData;
         long ticks = data.ticksInCycle();
         if (ticks > 20 * 20) {
