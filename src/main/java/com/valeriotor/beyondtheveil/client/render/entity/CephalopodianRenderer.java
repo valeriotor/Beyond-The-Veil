@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class CephalopodianRenderer extends LivingEntityRenderer<CephalopodianEntity, CephalopodianModel> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/cephalopodian.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/ictya/cephalopodian.png");
 
     public CephalopodianRenderer(EntityRendererProvider.Context context) {
         super(context, new CephalopodianModel(context.bakeLayer(CephalopodianModel.LAYER_LOCATION)), 0.6F);

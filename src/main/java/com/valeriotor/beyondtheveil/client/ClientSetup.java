@@ -137,6 +137,8 @@ public class ClientSetup {
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
         event.registerLayerDefinition(ShoremanModel.LAYER_LOCATION, ShoremanModel::createBodyLayer);
         event.registerLayerDefinition(CephalopodianModel.LAYER_LOCATION, CephalopodianModel::createBodyLayer);
+        event.registerLayerDefinition(AnglerModel.LAYER_LOCATION, AnglerModel::createBodyLayer);
+        event.registerLayerDefinition(SeaSnakeModel.LAYER_LOCATION, SeaSnakeModel::createBodyLayer);
 
 
 
@@ -164,6 +166,8 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
         event.registerEntityRenderer(BTVEntities.SHOREMAN.get(), ShoremanRenderer::new);
         event.registerEntityRenderer(BTVEntities.CEPHALOPODIAN.get(), CephalopodianRenderer::new);
+        event.registerEntityRenderer(BTVEntities.ANGLER.get(), AnglerRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SEA_SNAKE.get(), SeaSnakeRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

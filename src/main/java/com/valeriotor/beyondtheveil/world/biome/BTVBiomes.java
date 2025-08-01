@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.world.biome;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.world.placement.BTVPlacements;
 import net.minecraft.core.registries.Registries;
@@ -36,6 +37,8 @@ public class BTVBiomes {
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_SEAGRASS);
 
         MobSpawnSettings.Builder mobspawnsettings$builder = new MobSpawnSettings.Builder();
+        commonArcheSpawns(mobspawnsettings$builder);
+        mobspawnsettings$builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.SEA_SNAKE.get(), 10, 1, 3));
         return (new Biome.BiomeBuilder()).hasPrecipitation(false).temperature(0.5F).downfall(0.5F).specialEffects((new BiomeSpecialEffects.Builder()).waterColor(0).waterFogColor(0).fogColor(0).skyColor(0).ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()).mobSpawnSettings(mobspawnsettings$builder.build()).generationSettings(biomegenerationsettings$builder.build()).build();
 
     }
@@ -46,9 +49,15 @@ public class BTVBiomes {
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_KELP);
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_SEAGRASS);
         MobSpawnSettings.Builder mobspawnsettings$builder = new MobSpawnSettings.Builder();
-        BiomeDefaultFeatures.oceanSpawns(mobspawnsettings$builder, 8, 4, 8);
+        commonArcheSpawns(mobspawnsettings$builder);
+        //BiomeDefaultFeatures.oceanSpawns(mobspawnsettings$builder, 8, 4, 8);
         return (new Biome.BiomeBuilder()).hasPrecipitation(false).temperature(0.5F).downfall(0.5F).specialEffects((new BiomeSpecialEffects.Builder()).waterColor(0).waterFogColor(0).fogColor(0).skyColor(0).ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()).mobSpawnSettings(mobspawnsettings$builder.build()).generationSettings(biomegenerationsettings$builder.build()).build();
 
+    }
+
+    private static void commonArcheSpawns(MobSpawnSettings.Builder builder) {
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.CEPHALOPODIAN.get(), 1, 1, 2));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.ANGLER.get(), 10, 1, 3));
     }
 
     public static Biome blackShore(BootstapContext<Biome> context) {

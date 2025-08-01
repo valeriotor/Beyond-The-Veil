@@ -2,9 +2,14 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.entity.*;
+import com.valeriotor.beyondtheveil.entity.ictya.AnglerEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.CephalopodianEntity;
+import com.valeriotor.beyondtheveil.entity.ictya.IctyaEntity;
+import com.valeriotor.beyondtheveil.entity.ictya.SeaSnakeEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,12 +34,17 @@ public class Setup {
         event.put(BTVEntities.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
         event.put(BTVEntities.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
         event.put(BTVEntities.CEPHALOPODIAN.get(), CephalopodianEntity.prepareAttributes().build());
+        event.put(BTVEntities.ANGLER.get(), AnglerEntity.prepareAttributes().build());
+        event.put(BTVEntities.SEA_SNAKE.get(), SeaSnakeEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 
     @SubscribeEvent
     public static void spawnPlacementRegisterEvent(SpawnPlacementRegisterEvent event) {
         //event.register();
+        event.register(BTVEntities.CEPHALOPODIAN.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.ANGLER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.SEA_SNAKE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
