@@ -58,6 +58,7 @@ public class BTVBiomes {
     private static void commonArcheSpawns(MobSpawnSettings.Builder builder) {
         builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.CEPHALOPODIAN.get(), 1, 1, 2));
         builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.ANGLER.get(), 10, 1, 3));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.SEPIID.get(), 30, 5, 12));
     }
 
     public static Biome blackShore(BootstapContext<Biome> context) {

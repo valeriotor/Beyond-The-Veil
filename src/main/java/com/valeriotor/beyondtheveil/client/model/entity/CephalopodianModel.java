@@ -315,6 +315,8 @@ public class CephalopodianModel extends AnimatedModel<CephalopodianEntity> {
         if (attackAnimation != null) {
             attackAnimation.apply(pPartialTick);
         }
+        this.body.xRot = headPitch * ((float)Math.PI / 180F);
+
     }
 
     @Override

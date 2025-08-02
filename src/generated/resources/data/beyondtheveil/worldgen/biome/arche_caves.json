@@ -49,6 +49,12 @@
         "weight": 10
       },
       {
+        "type": "beyondtheveil:sepiid",
+        "maxCount": 12,
+        "minCount": 5,
+        "weight": 30
+      },
+      {
         "type": "beyondtheveil:sea_snake",
         "maxCount": 3,
         "minCount": 1,

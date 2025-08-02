@@ -47,6 +47,12 @@
         "maxCount": 3,
         "minCount": 1,
         "weight": 10
+      },
+      {
+        "type": "beyondtheveil:sepiid",
+        "maxCount": 12,
+        "minCount": 5,
+        "weight": 30
       }
     ],
     "underground_water_creature": [],

@@ -40,7 +40,7 @@ public abstract class IctyaEntity extends Monster implements AnimatedEntity, Dam
     protected IctyaEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.7F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.7F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -50,6 +50,7 @@ public abstract class IctyaEntity extends Monster implements AnimatedEntity, Dam
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, IctyaEntity.class, 6.0F, 1.2F, 1.2F, this::shouldFlee));
         //this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this) {
@@ -118,6 +119,23 @@ public abstract class IctyaEntity extends Monster implements AnimatedEntity, Dam
                 hurt(damageSources().starve(), 3);
             }
         }
+    }
+
+    @Override
+    public boolean isVisuallySwimming() {
+        return this.isSwimming();
+    }
+
+    @Override
+    public void updateSwimming() {
+        if (!this.level().isClientSide) {
+            if ((this.isEffectiveAi() && this.isUnderWater())) {
+                this.setSwimming(true);
+            } else {
+                this.setSwimming(false);
+            }
+        }
+
     }
 
     @Override

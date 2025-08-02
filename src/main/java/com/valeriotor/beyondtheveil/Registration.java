@@ -352,6 +352,7 @@ public class Registration {
     public static final RegistryObject<Item> ANGLER_EGG = ITEMS.register("angler", () -> new ForgeSpawnEggItem(BTVEntities.ANGLER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> SEA_SNAKE_EGG = ITEMS.register("sea_snake", () -> new ForgeSpawnEggItem(BTVEntities.SEA_SNAKE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
+    public static final RegistryObject<Item> SEPIID_EGG = ITEMS.register("sepiid", () -> new ForgeSpawnEggItem(BTVEntities.SEPIID, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
@@ -562,6 +563,9 @@ public class Registration {
                 output.accept(FLETUM_EGG.get());
                 output.accept(SHOREMAN_EGG.get());
                 output.accept(CEPHALOPODIAN_EGG.get());
+                output.accept(ANGLER_EGG.get());
+                output.accept(SEA_SNAKE_EGG.get());
+                output.accept(SEPIID_EGG.get());
 
     }).build());
 

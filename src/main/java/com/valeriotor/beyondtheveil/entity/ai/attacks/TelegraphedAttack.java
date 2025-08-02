@@ -25,7 +25,7 @@ public class TelegraphedAttack<T extends Mob & AnimatedEntity> {
     private int counter = 0;
     private ResourceKey<DamageType> damageType;
 
-    public TelegraphedAttack(TelegraphedAttackTemplate template, T attacker, double initialRotation, int animationChannel) {
+    public TelegraphedAttack(TelegraphedAttackTemplate template, T attacker, double initialRotation, int animationChannel) { // TODO divide in initialYaw and initialPitch
         this.template = template;
         this.attacker = attacker;
         this.initialRotation = initialRotation;
@@ -39,7 +39,7 @@ public class TelegraphedAttack<T extends Mob & AnimatedEntity> {
     public void update() {
         counter++;
         Vec3 posToLookAt = attacker.position().add(Vec3.directionFromRotation(0, (float) initialRotation));
-        attacker.getLookControl().setLookAt(posToLookAt.x, posToLookAt.y, posToLookAt.z, 50, 30);
+        attacker.getLookControl().setLookAt(posToLookAt.x, posToLookAt.y + attacker.getEyeHeight(), posToLookAt.z, 50, 30);
         if(template.isDamageTime(counter)) {
             List<LivingEntity> victims = template.getAttackArea().getVictims(attacker, initialRotation);
             damageType = DamageTypes.MOB_ATTACK;

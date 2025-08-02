@@ -139,6 +139,7 @@ public class ClientSetup {
         event.registerLayerDefinition(CephalopodianModel.LAYER_LOCATION, CephalopodianModel::createBodyLayer);
         event.registerLayerDefinition(AnglerModel.LAYER_LOCATION, AnglerModel::createBodyLayer);
         event.registerLayerDefinition(SeaSnakeModel.LAYER_LOCATION, SeaSnakeModel::createBodyLayer);
+        event.registerLayerDefinition(SepiidModel.LAYER_LOCATION, SepiidModel::createBodyLayer);
 
 
 
@@ -168,6 +169,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.CEPHALOPODIAN.get(), CephalopodianRenderer::new);
         event.registerEntityRenderer(BTVEntities.ANGLER.get(), AnglerRenderer::new);
         event.registerEntityRenderer(BTVEntities.SEA_SNAKE.get(), SeaSnakeRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SEPIID.get(), SepiidRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

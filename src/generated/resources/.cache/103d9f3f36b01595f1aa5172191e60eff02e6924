@@ -1,7 +1,7 @@
-// 1.20.1	2025-08-01T18:55:16.9095065	Registries
+// 1.20.1	2025-08-02T20:14:41.1417964	Registries
 ea8ccff43fdedfb04dd738826d503f9e702b3bf4 data/beyondtheveil/dimension_type/arche_type.json
-1d198162f9eceaa80e42a3116ca41aeff46aec8b data/beyondtheveil/worldgen/biome/arche_caves.json
-fb16d39c300bf0e43822ce2d307950a9924786ee data/beyondtheveil/worldgen/biome/arche_plains.json
+87b3c926d93cbc481bb76d335586c22baaba7596 data/beyondtheveil/worldgen/biome/arche_caves.json
+d6e049e0e18058e9630fccd92e0311aca2c33d9b data/beyondtheveil/worldgen/biome/arche_plains.json
 780269d02fced8874c28f0e3436e6bf8e861cb4c data/beyondtheveil/worldgen/biome/black_shore.json
 383f87a819ecea7217bf45b9aec9624c547cc1b3 data/beyondtheveil/worldgen/configured_feature/black_kelp.json
 0556635102335a135888b4ed7fed5e98395d2ea0 data/beyondtheveil/worldgen/configured_feature/black_seagrass.json

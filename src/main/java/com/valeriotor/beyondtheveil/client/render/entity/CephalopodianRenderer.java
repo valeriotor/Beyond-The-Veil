@@ -9,21 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class CephalopodianRenderer extends LivingEntityRenderer<CephalopodianEntity, CephalopodianModel> {
+public class CephalopodianRenderer extends IctyaRenderer<CephalopodianEntity> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/ictya/cephalopodian.png");
 
     public CephalopodianRenderer(EntityRendererProvider.Context context) {
-        super(context, new CephalopodianModel(context.bakeLayer(CephalopodianModel.LAYER_LOCATION)), 0.6F);
-    }
-
-    @Override
-    protected boolean shouldShowName(CephalopodianEntity pEntity) {
-        return super.shouldShowName(pEntity) && (pEntity.shouldShowName() || pEntity.hasCustomName() && pEntity == this.entityRenderDispatcher.crosshairPickEntity);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(CephalopodianEntity pEntity) {
-        return TEXTURE;
+        super(context, new CephalopodianModel(context.bakeLayer(CephalopodianModel.LAYER_LOCATION)), 0.6F, TEXTURE);
     }
 }

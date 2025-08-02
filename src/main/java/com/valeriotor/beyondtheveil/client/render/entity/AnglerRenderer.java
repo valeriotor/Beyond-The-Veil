@@ -9,21 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class AnglerRenderer extends LivingEntityRenderer<AnglerEntity, AnglerModel> {
+public class AnglerRenderer extends IctyaRenderer<AnglerEntity> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/ictya/angler.png");
 
     public AnglerRenderer(EntityRendererProvider.Context context) {
-        super(context, new AnglerModel(context.bakeLayer(AnglerModel.LAYER_LOCATION)), 0.6F);
-    }
-
-    @Override
-    protected boolean shouldShowName(AnglerEntity pEntity) {
-        return super.shouldShowName(pEntity) && (pEntity.shouldShowName() || pEntity.hasCustomName() && pEntity == this.entityRenderDispatcher.crosshairPickEntity);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(AnglerEntity pEntity) {
-        return TEXTURE;
+        super(context, new AnglerModel(context.bakeLayer(AnglerModel.LAYER_LOCATION)), 0.6F, TEXTURE);
     }
 }

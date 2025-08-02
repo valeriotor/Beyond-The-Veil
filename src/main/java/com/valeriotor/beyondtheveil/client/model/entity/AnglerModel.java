@@ -102,7 +102,7 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
 
     @Override
     public void setupAnim(AnglerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        Body.xRot = headPitch * ((float)Math.PI / 180F);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
         offset += Mth.cos(limbSwing * 0.3F) * limbSwingAmount / 7;
         Tail.yRot = offset * 3;
         Tail2.yRot = offset * 3;
+
     }
 
     @Override

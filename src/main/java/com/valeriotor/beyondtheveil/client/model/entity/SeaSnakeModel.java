@@ -92,6 +92,8 @@ public class SeaSnakeModel extends AnimatedModel<SeaSnakeEntity> {
         this.Tail5.yRot = (float) Math.atan(Mth.cos(time + (float) (2 * 4 * Math.PI / 7))) * (limbSwingAmount / 3 + 0.15F);
         this.Tail6.yRot = (float) Math.atan(Mth.cos(time + (float) (2 * 5 * Math.PI / 7))) * (limbSwingAmount / 3 + 0.15F);
         this.Tail7.yRot = (float) Math.atan(Mth.cos(time + (float) (2 * 6 * Math.PI / 7))) * (limbSwingAmount / 3 + 0.15F);
+        //Head.xRot = headPitch * ((float)Math.PI / 180F);
+        //Tail.xRot = headPitch * ((float)Math.PI / 180F);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class AnglerEntity extends IctyaEntity {
 
     @Override
     public double getFoodPer32Ticks() {
-        return 1;
+        return getCurrentFoodRatio() < 0.5 ? 0.5 : 1;
     }
 
     @Override
@@ -73,8 +73,8 @@ public class AnglerEntity extends IctyaEntity {
 
         private void lure() {
             LivingEntity target = mob.getTarget();
-            if (target instanceof IctyaEntity i && i.getSize().ordinal() <= IctyaSize.SMALL.ordinal() && mob.tickCount % 20 == 0) {
-                i.getNavigation().moveTo(mob, i.getSpeed());
+            if (target instanceof IctyaEntity i && i.getSize().ordinal() <= IctyaSize.SMALL.ordinal()) {
+                i.getNavigation().moveTo(mob, 0.5);
             }
         }
 
