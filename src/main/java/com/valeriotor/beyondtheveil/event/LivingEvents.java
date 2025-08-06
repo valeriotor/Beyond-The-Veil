@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.entity.ictya.AdelineEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -112,6 +113,9 @@ public class LivingEvents {
                     event.setNewTarget(null);
                 }
             });
+            if (event.getNewTarget() instanceof AdelineEntity adeline && adeline.distanceToSqr(entity) > 100) {
+                event.setNewTarget(null);
+            }
         }
     }
 

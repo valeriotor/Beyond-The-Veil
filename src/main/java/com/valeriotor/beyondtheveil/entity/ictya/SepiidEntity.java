@@ -50,11 +50,6 @@ public class SepiidEntity extends IctyaEntity {
     }
 
     @Override
-    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
-
-    }
-
-    @Override
     public IctyaSize getSize() {
         return IctyaSize.TINY;
     }

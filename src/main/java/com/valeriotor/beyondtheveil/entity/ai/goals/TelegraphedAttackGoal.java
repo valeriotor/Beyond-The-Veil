@@ -20,7 +20,7 @@ import java.util.Optional;
 public class TelegraphedAttackGoal<T extends PathfinderMob & AnimatedEntity> extends Goal {
 
     private final AttackList attacks;
-    private final T mob;
+    protected final T mob;
     private TelegraphedAttack<T> attack;
     private final int animationChannel;
 
@@ -43,6 +43,7 @@ public class TelegraphedAttackGoal<T extends PathfinderMob & AnimatedEntity> ext
         this.followingTargetEvenIfNotSeen = followingTargetEvenIfNotSeen;
         this.attacks = attacks;
         this.animationChannel = animationChannel;
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     /**

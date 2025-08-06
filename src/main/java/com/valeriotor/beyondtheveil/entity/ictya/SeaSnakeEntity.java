@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class SeaSnakeEntity extends IctyaEntity{
+public class SeaSnakeEntity extends IctyaEntity implements AnimatedEntity {
 
     public SeaSnakeEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

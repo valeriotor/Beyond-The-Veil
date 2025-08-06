@@ -34,6 +34,12 @@ public class Setup {
         event.put(BTVEntities.ANGLER.get(), AnglerEntity.prepareAttributes().build());
         event.put(BTVEntities.SEA_SNAKE.get(), SeaSnakeEntity.prepareAttributes().build());
         event.put(BTVEntities.SEPIID.get(), SepiidEntity.prepareAttributes().build());
+        event.put(BTVEntities.ADELINE.get(), AdelineEntity.prepareAttributes().build());
+        event.put(BTVEntities.BONECAGE.get(), BonecageEntity.prepareAttributes().build());
+        event.put(BTVEntities.MAN_O_WAR.get(), ManOWarEntity.prepareAttributes().build());
+        event.put(BTVEntities.OCTID.get(), OctidEntity.prepareAttributes().build());
+        event.put(BTVEntities.UMANCALA.get(), UmancalaEntity.prepareAttributes().build());
+        event.put(BTVEntities.JELLY.get(), JellyEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 
@@ -44,6 +50,11 @@ public class Setup {
         event.register(BTVEntities.ANGLER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.SEA_SNAKE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.SEPIID.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.ADELINE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.BONECAGE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.MAN_O_WAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.OCTID.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.UMANCALA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent

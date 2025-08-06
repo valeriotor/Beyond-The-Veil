@@ -1,0 +1,46 @@
+model: bonecage
+length: 34
+start: 0: 15
+    rotx: spikeUp1: -1.4
+    rotx: spikeUpLeft1: -1.4
+    rotx: spikeUpRight1: -1.4
+    rotx: spikeDown1: -1.4
+    rotx: spikeDownLeft1: -1.4
+    rotx: spikeDownRight1: -1.4
+    rotx: spikeLeft1: -1.4
+    rotx: spikeRight1: -1.4
+    rotx: spikeUp: 0
+    rotx: spikeUpLeft: 0
+    rotx: spikeUpRight: 0
+    rotx: spikeDown: 0
+    rotx: spikeDownLeft: 0
+    rotx: spikeDownRight: 0
+    rotx: spikeLeft: 0
+    rotx: spikeRight: 0
+start: 16: 20
+	rotx: spikeUp: 2.2: quadratic
+    rotx: spikeUpLeft: 2.2: quadratic
+    rotx: spikeUpRight: 2.2: quadratic
+    rotx: spikeDown: 2.2: quadratic
+    rotx: spikeDownLeft: 2.2: quadratic
+    rotx: spikeDownRight: 2.2: quadratic
+    rotx: spikeLeft: 2.2: quadratic
+    rotx: spikeRight: 2.2: quadratic
+start: 21: 28
+    rotx: spikeUp1: 1.4
+    rotx: spikeUpLeft1: 1.4
+    rotx: spikeUpRight1: 1.4
+    rotx: spikeDown1: 1.4
+    rotx: spikeDownLeft1: 1.4
+    rotx: spikeDownRight1: 1.4
+    rotx: spikeLeft1: 1.4
+    rotx: spikeRight1: 1.4
+start: 25: 33
+    rotx: spikeUp: -2.2
+    rotx: spikeUpLeft: -2.2
+    rotx: spikeUpRight: -2.2
+    rotx: spikeDown: -2.2
+    rotx: spikeDownLeft: -2.2
+    rotx: spikeDownRight: -2.2
+    rotx: spikeLeft: -2.2
+    rotx: spikeRight: -2.2

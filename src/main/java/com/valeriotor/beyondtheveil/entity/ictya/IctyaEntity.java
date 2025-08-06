@@ -34,7 +34,7 @@ import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class IctyaEntity extends Monster implements AnimatedEntity, DamageCapper {
+public abstract class IctyaEntity extends Monster implements DamageCapper {
     protected double currentFood = getMaxFood() * 3 / 4;
 
     protected IctyaEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -98,6 +98,18 @@ public abstract class IctyaEntity extends Monster implements AnimatedEntity, Dam
 
     public double getCurrentFoodRatio() {
         return currentFood / getMaxFood();
+    }
+
+    @Override
+    public boolean killedEntity(ServerLevel pLevel, LivingEntity pEntity) {
+        boolean flag = super.killedEntity(pLevel, pEntity);
+        if (pEntity instanceof IctyaEntity ictya) {
+            currentFood = Math.min(getMaxFood(), currentFood + ictya.getFoodValue());
+        }
+        if (pEntity instanceof Player) {
+            currentFood = Math.min(getMaxFood(), currentFood + 100);
+        }
+        return flag;
     }
 
     @Override
@@ -223,7 +235,7 @@ public abstract class IctyaEntity extends Monster implements AnimatedEntity, Dam
             }
 
         }
-        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER) && pLevel.getBlockState(pPos.above()).is(Blocks.WATER) ;
+        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER) && pLevel.getBlockState(pPos.above()).is(Blocks.WATER);
     }
 
 }

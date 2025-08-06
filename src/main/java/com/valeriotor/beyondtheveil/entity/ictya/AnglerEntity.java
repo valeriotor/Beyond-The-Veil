@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TelegraphedAttackGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class AnglerEntity extends IctyaEntity {
+public class AnglerEntity extends IctyaEntity implements AnimatedEntity {
 
     public AnglerEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

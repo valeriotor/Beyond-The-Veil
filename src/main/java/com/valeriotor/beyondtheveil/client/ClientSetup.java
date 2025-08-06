@@ -34,6 +34,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -140,6 +141,12 @@ public class ClientSetup {
         event.registerLayerDefinition(AnglerModel.LAYER_LOCATION, AnglerModel::createBodyLayer);
         event.registerLayerDefinition(SeaSnakeModel.LAYER_LOCATION, SeaSnakeModel::createBodyLayer);
         event.registerLayerDefinition(SepiidModel.LAYER_LOCATION, SepiidModel::createBodyLayer);
+        event.registerLayerDefinition(AdelineModel.LAYER_LOCATION, AdelineModel::createBodyLayer);
+        event.registerLayerDefinition(BonecageModel.LAYER_LOCATION, BonecageModel::createBodyLayer);
+        event.registerLayerDefinition(ManOWarModel.LAYER_LOCATION, ManOWarModel::createBodyLayer);
+        event.registerLayerDefinition(OctidModel.LAYER_LOCATION, OctidModel::createBodyLayer);
+        event.registerLayerDefinition(UmancalaModel.LAYER_LOCATION, UmancalaModel::createBodyLayer);
+        event.registerLayerDefinition(JellyModel.LAYER_LOCATION, JellyModel::createBodyLayer);
 
 
 
@@ -170,6 +177,13 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.ANGLER.get(), AnglerRenderer::new);
         event.registerEntityRenderer(BTVEntities.SEA_SNAKE.get(), SeaSnakeRenderer::new);
         event.registerEntityRenderer(BTVEntities.SEPIID.get(), SepiidRenderer::new);
+        event.registerEntityRenderer(BTVEntities.ADELINE.get(), AdelineRenderer::new);
+        event.registerEntityRenderer(BTVEntities.BONECAGE.get(), BonecageRenderer::new);
+        event.registerEntityRenderer(BTVEntities.MAN_O_WAR.get(), ManOWarRenderer::new);
+        event.registerEntityRenderer(BTVEntities.OCTID.get(), OctidRenderer::new);
+        event.registerEntityRenderer(BTVEntities.UMANCALA.get(), UmancalaRenderer::new);
+        event.registerEntityRenderer(BTVEntities.JELLY.get(), JellyRenderer::new);
+        event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), (p_174060_) -> new ThrownItemRenderer<>(p_174060_, 0.75F, true));
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

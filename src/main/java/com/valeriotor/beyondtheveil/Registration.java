@@ -353,6 +353,11 @@ public class Registration {
     public static final RegistryObject<Item> SEA_SNAKE_EGG = ITEMS.register("sea_snake", () -> new ForgeSpawnEggItem(BTVEntities.SEA_SNAKE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
     public static final RegistryObject<Item> SEPIID_EGG = ITEMS.register("sepiid", () -> new ForgeSpawnEggItem(BTVEntities.SEPIID, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> ADELINE_EGG = ITEMS.register("adeline", () -> new ForgeSpawnEggItem(BTVEntities.ADELINE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> BONECAGE_EGG = ITEMS.register("bonecage", () -> new ForgeSpawnEggItem(BTVEntities.BONECAGE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> MAN_O_WAR_EGG = ITEMS.register("man_o_war", () -> new ForgeSpawnEggItem(BTVEntities.MAN_O_WAR, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> OCTID_EGG = ITEMS.register("octid", () -> new ForgeSpawnEggItem(BTVEntities.OCTID, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> UMANCALA_EGG = ITEMS.register("umancala", () -> new ForgeSpawnEggItem(BTVEntities.UMANCALA, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
@@ -566,6 +571,11 @@ public class Registration {
                 output.accept(ANGLER_EGG.get());
                 output.accept(SEA_SNAKE_EGG.get());
                 output.accept(SEPIID_EGG.get());
+                output.accept(ADELINE_EGG.get());
+                output.accept(BONECAGE_EGG.get());
+                output.accept(MAN_O_WAR_EGG.get());
+                output.accept(OCTID_EGG.get());
+                output.accept(UMANCALA_EGG.get());
 
     }).build());
 
