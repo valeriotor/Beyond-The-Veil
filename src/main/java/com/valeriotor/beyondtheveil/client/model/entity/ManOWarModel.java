@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class ManOWarModel extends EntityModel<ManOWarEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "man_o_war"), "main");
@@ -32,9 +33,12 @@ public class ManOWarModel extends EntityModel<ManOWarEntity> {
     private final ModelPart MiniTentacle21;
     private final ModelPart MiniTentacle22;
     private final ModelPart DorsalFin;
+    private final ModelPart full;
+    private float partialTicks;
 
     public ManOWarModel(ModelPart root) {
-        this.Head = root.getChild("Head");
+        this.full = root.getChild("full");
+        this.Head = full.getChild("Head");
         this.Body = this.Head.getChild("Body");
         this.Tentacle11 = this.Body.getChild("Tentacle11");
         this.Tentacle12 = this.Tentacle11.getChild("Tentacle12");
@@ -59,14 +63,16 @@ public class ManOWarModel extends EntityModel<ManOWarEntity> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 11).addBox(-6.0F, -0.5F, -11.0F, 12.0F, 1.0F, 17.0F, new CubeDeformation(0.0F))
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 23.5F, -2.0F));
+
+        PartDefinition Head = full.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 11).addBox(-6.0F, -0.5F, -11.0F, 12.0F, 1.0F, 17.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(-7.0F, 0.0F, 6.0F, 14.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(26, 22).addBox(-7.0F, 0.0F, -12.0F, 14.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(28, 0).addBox(6.0F, 0.0F, -11.0F, 1.0F, 5.0F, 17.0F, new CubeDeformation(0.0F))
                 .texOffs(28, 8).addBox(-7.0F, 0.0F, -11.0F, 1.0F, 5.0F, 17.0F, new CubeDeformation(0.0F))
                 .texOffs(34, 11).addBox(6.0F, 5.0F, -11.0F, 1.0F, 3.0F, 11.0F, new CubeDeformation(0.0F))
                 .texOffs(8, 13).addBox(-7.0F, 5.0F, -11.0F, 1.0F, 3.0F, 11.0F, new CubeDeformation(0.0F))
-                .texOffs(38, 23).addBox(-6.0F, 5.0F, -11.0F, 12.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -20.5F, -15.0F));
+                .texOffs(38, 23).addBox(-6.0F, 5.0F, -11.0F, 12.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -14.0F, -8.0F));
 
         PartDefinition Body = Head.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 46).addBox(-6.0F, 1.0F, -2.0F, 12.0F, 8.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -128,9 +134,44 @@ public class ManOWarModel extends EntityModel<ManOWarEntity> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    @Override
-    public void setupAnim(ManOWarEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
+    @Override
+    public void setupAnim(ManOWarEntity e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        float animTicks = (e.tickCount % 200) + partialTicks;
+        float offset = Mth.sin(animTicks % 40 / 6.366F) / 5 * (limbSwingAmount / 3 + 0.15F);
+        Tentacle11.xRot = 0.1F + offset;
+        Tentacle13.xRot = 0.3491F - offset * 3;
+        Tentacle21.xRot = 0.1F + offset / 2;
+        Tentacle23.xRot = 0.3491F + offset * 3;
+        Tentacle31.xRot = 0.1F - offset;
+        Tentacle33.xRot = 0.3491F - offset * 3;
+        Tentacle41.xRot = 0.1F - offset / 2;
+        Tentacle43.xRot = 0.3491F + offset * 3;
+        Tentacle11.zRot = +offset;
+        Tentacle13.zRot = -offset * 3;
+        Tentacle21.zRot = +offset / 2;
+        Tentacle23.zRot = +offset * 3;
+        Tentacle31.zRot = -offset;
+        Tentacle33.zRot = -offset * 3;
+        Tentacle41.zRot = -offset / 2;
+        Tentacle43.zRot = +offset * 3;
+        MiniTentacle11.xRot = -offset;
+        MiniTentacle22.xRot = -offset;
+        Body.y = offset;
+        offset = Mth.sin(animTicks % 50 / 7.95F) / 16;
+        Tentacle12.xRot = 0.3491F + offset;
+        Tentacle22.xRot = 0.3491F - offset;
+        Tentacle32.xRot = 0.3491F - offset / 2;
+        Tentacle42.xRot = 0.3491F + offset / 2;
+        MiniTentacle21.xRot = -offset;
+        MiniTentacle12.xRot = offset;
+        Head.y = -offset;
+    }
+
+    @Override
+    public void prepareMobModel(ManOWarEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
+        partialTicks = pPartialTick;
     }
 
     @Override

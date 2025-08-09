@@ -30,7 +30,7 @@ public class UmancalaEntity extends IctyaEntity{
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 60.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.115D)
+                .add(Attributes.MOVEMENT_SPEED, 1.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ATTACK_DAMAGE, 6.0D)
@@ -98,6 +98,7 @@ public class UmancalaEntity extends IctyaEntity{
                     ++this.lastSeen;
                 }
 
+                umancala.getNavigation().moveTo(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 0.7D);
                 double d0 = this.umancala.distanceToSqr(livingentity);
                 if (d0 < 4.0D) {
                     if (!flag) {
@@ -109,7 +110,7 @@ public class UmancalaEntity extends IctyaEntity{
                         this.umancala.doHurtTarget(livingentity);
                     }
 
-                    this.umancala.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
+                    //this.umancala.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
                 } else if (d0 < this.getFollowDistance() * this.getFollowDistance() && flag) {
                     double d1 = livingentity.getX() - this.umancala.getX();
                     double d2 = livingentity.getY(0.5D) - this.umancala.getY(0.5D);
@@ -117,11 +118,11 @@ public class UmancalaEntity extends IctyaEntity{
                     if (this.attackTime <= 0) {
                         ++this.attackStep;
                         if (this.attackStep == 1) {
-                            this.attackTime = 60;
+                            this.attackTime = 30;
                         } else if (this.attackStep <= 4) {
                             this.attackTime = 6;
                         } else {
-                            this.attackTime = 80;
+                            this.attackTime = 30;
                             this.attackStep = 0;
                         }
 
@@ -141,7 +142,7 @@ public class UmancalaEntity extends IctyaEntity{
 
                     this.umancala.getLookControl().setLookAt(livingentity, 10.0F, 10.0F);
                 } else if (this.lastSeen < 5) {
-                    this.umancala.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
+                    //this.umancala.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
                 }
 
                 super.tick();

@@ -54,11 +54,13 @@ public class BonecageModel extends AnimatedModel<BonecageEntity> {
     private final ModelPart spikeUpRight;
     private final ModelPart spikeUpRight1;
     private final ModelPart[] toRotate;
+    private final ModelPart full;
     private float pPartialTick;
 
     public BonecageModel(ModelPart root) {
         super(name);
-        this.head = registerAnimatedPart(root, "head");
+        this.full = registerAnimatedPart(root, "full");
+        this.head = registerAnimatedPart(full, "head");
         this.tail1 = registerAnimatedPart(head, "tail1");
         this.tail2 = registerAnimatedPart(tail1, "tail2");
         this.tail3 = registerAnimatedPart(tail2, "tail3");
@@ -98,10 +100,13 @@ public class BonecageModel extends AnimatedModel<BonecageEntity> {
     }
 
     public static LayerDefinition createBodyLayer() {
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 9.0F, -51.0F));
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 18.0F, 0.0F));
+
+        PartDefinition head = full.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -51.0F));
 
         PartDefinition tail1 = head.addOrReplaceChild("tail1", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -8.0F, -0.5F, 16.0F, 16.0F, 25.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.5F, -0.5F));
 
@@ -179,6 +184,7 @@ public class BonecageModel extends AnimatedModel<BonecageEntity> {
     @Override
     public void setupAnim(BonecageEntity e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         resetParts();
+        full.xRot = headPitch * ((float)Math.PI / 180F);
         float frequency = 0.5F;
         float time = (float) (2 * Math.PI * (e.tickCount + pPartialTick) / 20 * frequency);
         for (int i = 0; i < toRotate.length; i++) {
@@ -201,7 +207,7 @@ public class BonecageModel extends AnimatedModel<BonecageEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
 }

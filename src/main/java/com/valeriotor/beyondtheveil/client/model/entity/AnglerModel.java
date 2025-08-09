@@ -32,9 +32,11 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
     private final ModelPart LeftFin;
     private final ModelPart RightFin;
     private final ModelPart DorsalFin;
+    private final ModelPart full;
 
     public AnglerModel(ModelPart root) {
-        this.Body = root.getChild("Body");
+        this.full = root.getChild("full");
+        this.Body = full.getChild("Body");
         this.Head = this.Body.getChild("Head");
         this.LowerJaw = this.Head.getChild("LowerJaw");
         this.ToothLL = this.LowerJaw.getChild("ToothLL");
@@ -54,10 +56,13 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
     }
 
     public static LayerDefinition createBodyLayer() {
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -16.0F, -6.0F, 8.0F, 9.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 20.0F, 0.0F));
+
+        PartDefinition Body = full.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -16.0F, -6.0F, 8.0F, 9.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 11.0F, 0.0F));
 
         PartDefinition Head = Body.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(36, 17).addBox(-3.0F, -16.25F, -13.0F, 6.0F, 6.0F, 8.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 31).addBox(3.0F, -15.0F, -12.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
@@ -90,8 +95,8 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
         PartDefinition LeftFin = Body.addOrReplaceChild("LeftFin", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(31, 60).mirror().addBox(1.75F, -2.0F, 0.0F, 4.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(3.5F, -10.5F, -3.5F, 0.0F, -0.4363F, 0.0F));
 
-        PartDefinition RightFin = Body.addOrReplaceChild("RightFin", CubeListBuilder.create().texOffs(0, 0).addBox(0.1558F, -1.5F, -0.4583F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(31, 60).mirror().addBox(2.4058F, -2.0F, 0.0417F, 4.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-3.5F, -10.5F, -3.5F, 0.0F, -2.7053F, 0.0F));
+        PartDefinition RightFin = Body.addOrReplaceChild("RightFin", CubeListBuilder.create().texOffs(0, 0).addBox(0.1559F, -1.5F, -0.4583F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(31, 60).mirror().addBox(2.4059F, -2.0F, 0.0417F, 4.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-3.5F, -10.5F, -3.5F, 0.0F, -2.7053F, 0.0F));
 
         PartDefinition DorsalFin = Body.addOrReplaceChild("DorsalFin", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -16.0F, 1.5F, 0.2618F, 0.0F, 0.0F));
 
@@ -102,7 +107,7 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
 
     @Override
     public void setupAnim(AnglerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        Body.xRot = headPitch * ((float)Math.PI / 180F);
+        full.xRot = headPitch * ((float)Math.PI / 180F);
     }
 
     @Override
@@ -117,7 +122,7 @@ public class AnglerModel extends EntityModel<AnglerEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        Body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
 }

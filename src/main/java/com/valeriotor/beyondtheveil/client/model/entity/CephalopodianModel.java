@@ -69,11 +69,13 @@ public class CephalopodianModel extends AnimatedModel<CephalopodianEntity> {
     private final ModelPart tent8;
     private final ModelPart tent81;
     private final ModelPart tent82;
+    private final ModelPart full;
     private float pPartialTick;
 
     public CephalopodianModel(ModelPart root) {
         super(name);
-        this.body = registerAnimatedPart(root, "body");
+        this.full = registerAnimatedPart(root, "full");
+        this.body = registerAnimatedPart(full, "body");
         this.front = registerAnimatedPart(body, "front");
         this.leftpad = registerAnimatedPart(front, "leftpad");
         this.leftupperpad = registerAnimatedPart(leftpad, "leftupperpad");
@@ -129,10 +131,13 @@ public class CephalopodianModel extends AnimatedModel<CephalopodianEntity> {
     }
 
     public static LayerDefinition createBodyLayer() {
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -8.0F, -22.75F, 12.0F, 12.0F, 23.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -33.25F));
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 10.0F, 0.0F));
+
+        PartDefinition body = full.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -8.0F, -22.75F, 12.0F, 12.0F, 23.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -33.25F));
 
         PartDefinition front = body.addOrReplaceChild("front", CubeListBuilder.create().texOffs(0, 0).addBox(-11.0F, -12.0F, -7.5F, 25.0F, 24.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -2.0F, -22.25F, 0.0873F, 0.0F, 0.0F));
 
@@ -315,7 +320,7 @@ public class CephalopodianModel extends AnimatedModel<CephalopodianEntity> {
         if (attackAnimation != null) {
             attackAnimation.apply(pPartialTick);
         }
-        this.body.xRot = headPitch * ((float)Math.PI / 180F);
+        full.xRot = headPitch * ((float)Math.PI / 180F);
 
     }
 
@@ -328,6 +333,6 @@ public class CephalopodianModel extends AnimatedModel<CephalopodianEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

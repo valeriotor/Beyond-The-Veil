@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class JellyModel extends EntityModel<JellyEntity> {
 
@@ -48,7 +49,10 @@ public class JellyModel extends EntityModel<JellyEntity> {
 
     @Override
     public void setupAnim(JellyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        T1.xRot = 0.3491F + Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        T3.xRot = -0.3491F - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        T4.xRot = 0.3491F + Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        T2.xRot = -0.3491F - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
     @Override

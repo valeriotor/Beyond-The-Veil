@@ -40,7 +40,7 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
     protected IctyaEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.7F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -180,6 +180,7 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
 
     protected boolean shouldAttack(LivingEntity attacked) {
         if (getSize() == IctyaSize.TINY) return false;
+        if (attacked instanceof Player player && player.isCreative()) return false;
         int diff = this.compareSizeTo(attacked);
         if (diff == 3) {
             return getCurrentFoodRatio() < 0.4;

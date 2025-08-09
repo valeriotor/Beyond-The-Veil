@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class AdelineModel extends EntityModel<AdelineEntity> {
 
@@ -26,9 +27,13 @@ public class AdelineModel extends EntityModel<AdelineEntity> {
     private final ModelPart spikeDown1;
     private final ModelPart spikeLeft;
     private final ModelPart spikeLeft1;
+    private final ModelPart[] toRotate;
+    private final ModelPart full;
+    private float pPartialTick;
 
     public AdelineModel(ModelPart root) {
-        this.body = root.getChild("body");
+        this.full = root.getChild("full");
+        this.body = full.getChild("body");
         this.body1 = this.body.getChild("body1");
         this.body2 = this.body1.getChild("body2");
         this.head1 = this.body.getChild("head1");
@@ -40,13 +45,18 @@ public class AdelineModel extends EntityModel<AdelineEntity> {
         this.spikeDown1 = this.spikeDown.getChild("spikeDown1");
         this.spikeLeft = this.head1.getChild("spikeLeft");
         this.spikeLeft1 = this.spikeLeft.getChild("spikeLeft1");
+        toRotate = new ModelPart[]{body, body1, body2};
+
     }
 
     public static LayerDefinition createBodyLayer() {
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-10.0F, -10.0F, -12.5F, 20.0F, 20.0F, 25.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 8.0F, -0.5F));
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 15.0F, 0.0F));
+
+        PartDefinition body = full.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-10.0F, -10.0F, -12.5F, 20.0F, 20.0F, 25.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, -0.5F));
 
         PartDefinition body1 = body.addOrReplaceChild("body1", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -8.0F, 0.0F, 16.0F, 16.0F, 18.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 12.0F));
 
@@ -74,13 +84,25 @@ public class AdelineModel extends EntityModel<AdelineEntity> {
     }
 
     @Override
-    public void setupAnim(AdelineEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(AdelineEntity e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        full.xRot = headPitch * ((float)Math.PI / 180F);
+        float time = (float) (0.08 * Math.PI * (e.tickCount + pPartialTick));
 
+        for (int i = 0; i < toRotate.length; i++) {
+            ModelPart part = toRotate[i];
+            part.xRot = Mth.cos(time + (float) (2 * (i + 1) * Math.PI / 7)) * (limbSwingAmount / 6 + 0.025F);
+        }
+    }
+
+    @Override
+    public void prepareMobModel(AdelineEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
+        this.pPartialTick = pPartialTick;
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
 }

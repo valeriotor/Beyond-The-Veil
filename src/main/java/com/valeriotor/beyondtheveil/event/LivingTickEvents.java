@@ -96,7 +96,7 @@ public class LivingTickEvents {
 
     private static void doArcheDrownDamage(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
-        if (e.isDeadOrDying() || e instanceof IctyaEntity || e instanceof DeepOneEntity || e instanceof JellyEntity) {
+        if (e.isDeadOrDying() || e instanceof IctyaEntity || e instanceof DeepOneEntity || e instanceof JellyEntity || true) {
             return;
         }
         if (e.tickCount % 20 == 0 && e.level().dimension() == BTVDimensions.ARCHE_LEVEL && e.isUnderWater()) {

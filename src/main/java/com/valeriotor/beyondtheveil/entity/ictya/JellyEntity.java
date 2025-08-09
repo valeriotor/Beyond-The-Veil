@@ -33,7 +33,7 @@ public class JellyEntity extends Monster {
     public JellyEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.7F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.04F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -46,7 +46,7 @@ public class JellyEntity extends Monster {
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.165D)
+                .add(Attributes.MOVEMENT_SPEED, 1.5D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ATTACK_DAMAGE, 7.0D)

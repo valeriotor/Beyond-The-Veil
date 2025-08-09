@@ -26,15 +26,17 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
     private final ModelPart eye3;
     private final ModelPart eye4;
     private final ModelPart eye5;
+    private final ModelPart full;
     private float partialTick;
 
     public SepiidModel(ModelPart root) {
-        this.left = root.getChild("left");
-        this.right = root.getChild("right");
-        this.tail1 = root.getChild("tail1");
+        this.full = root.getChild("full");
+        this.left = full.getChild("left");
+        this.right = full.getChild("right");
+        this.tail1 = full.getChild("tail1");
         this.tail2 = this.tail1.getChild("tail2");
         this.tail3 = this.tail2.getChild("tail3");
-        this.head = root.getChild("head");
+        this.head = full.getChild("head");
         this.eye1 = this.head.getChild("eye1");
         this.eye2 = this.head.getChild("eye2");
         this.eye3 = this.head.getChild("eye3");
@@ -43,25 +45,28 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
     }
 
     public static LayerDefinition createBodyLayer() {
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition left = partdefinition.addOrReplaceChild("left", CubeListBuilder.create().texOffs(0, 23).addBox(0.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
+
+        PartDefinition left = full.addOrReplaceChild("left", CubeListBuilder.create().texOffs(0, 23).addBox(0.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(1, 1).addBox(1.25F, -1.1F, 2.0F, 5.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(-5, 27).addBox(2.0F, -0.6F, 4.0F, 4.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 16.75F, -7.0F, 0.0F, -0.3491F, 0.0F));
+                .texOffs(-5, 27).addBox(2.0F, -0.6F, 4.0F, 4.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.75F, -7.0F, 0.0F, -0.3491F, 0.0F));
 
-        PartDefinition right = partdefinition.addOrReplaceChild("right", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+        PartDefinition right = full.addOrReplaceChild("right", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(1, 1).addBox(-6.25F, -1.1F, 2.0F, 5.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(3, 27).addBox(-6.0F, -0.6F, 4.0F, 4.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 16.75F, -7.0F, 0.0F, 0.3491F, 0.0F));
+                .texOffs(3, 27).addBox(-6.0F, -0.6F, 4.0F, 4.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.75F, -7.0F, 0.0F, 0.3491F, 0.0F));
 
-        PartDefinition tail1 = partdefinition.addOrReplaceChild("tail1", CubeListBuilder.create().texOffs(18, 0).addBox(-0.5F, -2.0F, 0.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, -5.0F));
+        PartDefinition tail1 = full.addOrReplaceChild("tail1", CubeListBuilder.create().texOffs(18, 0).addBox(-0.5F, -2.0F, 0.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, -5.0F));
 
         PartDefinition tail2 = tail1.addOrReplaceChild("tail2", CubeListBuilder.create().texOffs(18, 9).addBox(-0.53F, -1.0F, 5.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition tail3 = tail2.addOrReplaceChild("tail3", CubeListBuilder.create().texOffs(20, 17).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
                 .texOffs(24, 24).addBox(-1.0F, -0.75F, 4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 10.5F));
 
-        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(4, 0).addBox(-1.0F, -3.25F, -1.0F, 3.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, 17.25F, -7.0F));
+        PartDefinition head = full.addOrReplaceChild("head", CubeListBuilder.create().texOffs(4, 0).addBox(-1.0F, -3.25F, -1.0F, 3.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, 1.25F, -7.0F));
 
         PartDefinition eye1 = head.addOrReplaceChild("eye1", CubeListBuilder.create().texOffs(28, 30).addBox(-0.5F, -0.75F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(1.5F, -3.0F, -0.25F));
 
@@ -78,6 +83,7 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
 
     @Override
     public void setupAnim(SepiidEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        full.xRot = headPitch * ((float)Math.PI / 180F);
         eye1.xScale = eye1.yScale = eye1.zScale = 0.5F;
         eye2.xScale = eye2.yScale = eye2.zScale = 0.5F;
         eye3.xScale = eye3.yScale = eye3.zScale = 0.5F;

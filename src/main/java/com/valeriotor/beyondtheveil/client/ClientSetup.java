@@ -183,7 +183,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.OCTID.get(), OctidRenderer::new);
         event.registerEntityRenderer(BTVEntities.UMANCALA.get(), UmancalaRenderer::new);
         event.registerEntityRenderer(BTVEntities.JELLY.get(), JellyRenderer::new);
-        event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), (p_174060_) -> new ThrownItemRenderer<>(p_174060_, 0.75F, true));
+        event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), UmancalaFireballRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

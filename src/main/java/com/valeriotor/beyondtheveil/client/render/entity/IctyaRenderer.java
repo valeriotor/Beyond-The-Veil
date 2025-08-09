@@ -28,7 +28,7 @@ public class IctyaRenderer<T extends IctyaEntity> extends LivingEntityRenderer<T
         if (f >= 10.0) {
             float f3 = pEntityLiving.isInWater() || pEntityLiving.isInFluidType((fluidType, height) -> pEntityLiving.canSwimInFluidType(fluidType)) ? -pEntityLiving.getXRot() : -0;
             float f4 = Mth.lerp(f, 0.1F, f3);
-            //pPoseStack.mulPose(Axis.XP.rotationDegrees(f4));
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(f4));
             if (pEntityLiving.isVisuallySwimming()) {
                 pPoseStack.translate(0.0F, -1.0F, 0.3F);
             }
