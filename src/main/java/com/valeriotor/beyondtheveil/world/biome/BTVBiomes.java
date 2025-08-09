@@ -50,6 +50,7 @@ public class BTVBiomes {
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_SEAGRASS);
         MobSpawnSettings.Builder mobspawnsettings$builder = new MobSpawnSettings.Builder();
         commonArcheSpawns(mobspawnsettings$builder);
+        mobspawnsettings$builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.SANDFLATTER.get(), 4, 1, 1));
         //BiomeDefaultFeatures.oceanSpawns(mobspawnsettings$builder, 8, 4, 8);
         return (new Biome.BiomeBuilder()).hasPrecipitation(false).temperature(0.5F).downfall(0.5F).specialEffects((new BiomeSpecialEffects.Builder()).waterColor(0).waterFogColor(0).fogColor(0).skyColor(0).ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()).mobSpawnSettings(mobspawnsettings$builder.build()).generationSettings(biomegenerationsettings$builder.build()).build();
 
@@ -59,6 +60,11 @@ public class BTVBiomes {
         builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.CEPHALOPODIAN.get(), 1, 1, 2));
         builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.ANGLER.get(), 10, 1, 3));
         builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.SEPIID.get(), 30, 5, 12));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.ADELINE.get(), 4, 1, 3));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.BONECAGE.get(), 1, 1, 2));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.MAN_O_WAR.get(), 5, 1, 3));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.OCTID.get(), 20, 1, 6));
+        builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.UMANCALA.get(), 2, 1, 3));
     }
 
     public static Biome blackShore(BootstapContext<Biome> context) {

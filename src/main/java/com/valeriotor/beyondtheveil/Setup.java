@@ -39,6 +39,7 @@ public class Setup {
         event.put(BTVEntities.MAN_O_WAR.get(), ManOWarEntity.prepareAttributes().build());
         event.put(BTVEntities.OCTID.get(), OctidEntity.prepareAttributes().build());
         event.put(BTVEntities.UMANCALA.get(), UmancalaEntity.prepareAttributes().build());
+        event.put(BTVEntities.SANDFLATTER.get(), SandflatterEntity.prepareAttributes().build());
         event.put(BTVEntities.JELLY.get(), JellyEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
@@ -55,6 +56,7 @@ public class Setup {
         event.register(BTVEntities.MAN_O_WAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.OCTID.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.UMANCALA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.SANDFLATTER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent

@@ -1,0 +1,86 @@
+model: sandflatter
+length: 29
+start: 0: 1
+	rotz: leftConn1:  0.6982: immediate
+    rotz: leftConn2:  0.6982: immediate
+    rotz: leftConn3:  0.6982: immediate
+    rotz: leftConn4:  0.6982: immediate
+    rotz: rightConn1:  0.6982: immediate
+    rotz: rightConn2:  0.6982: immediate
+    rotz: rightConn3:  0.6982: immediate
+    rotz: rightConn4:  0.6982: immediate
+    rotz: leftConn11:  0.3491: immediate
+    rotz: leftConn21:  0.3491: immediate
+    rotz: leftConn31:  0.3491: immediate
+    rotz: leftConn41:  0.3491: immediate
+    rotz: rightConn11:  0.3491: immediate
+    rotz: rightConn21:  0.3491: immediate
+    rotz: rightConn31:  0.3491: immediate
+    rotz: rightConn41:  0.3491: immediate
+    rotz: leftArm1:  -0.2491: immediate
+    rotz: leftArm2:  -0.2491: immediate
+    rotz: leftArm3:  -0.2491: immediate
+    rotz: leftArm4:  -0.2491: immediate
+    rotz: rightArm1:  0.2491: immediate
+    rotz: rightArm2:  0.2491: immediate
+    rotz: rightArm3:  0.2491: immediate
+    rotz: rightArm4:  0.2491: immediate
+start: 2: 12
+    rotz: leftArm1: -0.4
+    rotz: leftArm2: -0.4
+    rotz: leftArm3: -0.4
+    rotz: leftArm4: -0.4
+    rotz: rightArm1: 0.4
+    rotz: rightArm2: 0.4
+    rotz: rightArm3: 0.4
+    rotz: rightArm4: 0.4
+start: 13: 15
+    rotz: leftArm1: -1.2491
+    rotz: leftArm2: -1.2491
+    rotz: leftArm3: -1.2491
+    rotz: leftArm4: -1.2491
+    rotz: rightArm1: 1.2491
+    rotz: rightArm2: 1.2491
+    rotz: rightArm3: 1.2491
+    rotz: rightArm4: 1.2491
+    rotz: leftConn1: 0.3
+    rotz: leftConn2: 0.3
+    rotz: leftConn3: 0.3
+    rotz: leftConn4: 0.3
+    rotz: rightConn1: 0.3
+    rotz: rightConn2: 0.3
+    rotz: rightConn3: 0.3
+    rotz: rightConn4: 0.3
+    rotz: leftConn11:  0.3491
+    rotz: leftConn21:  0.3491
+    rotz: leftConn31:  0.3491
+    rotz: leftConn41:  0.3491
+    rotz: rightConn11:  0.3491
+    rotz: rightConn21:  0.3491
+    rotz: rightConn31:  0.3491
+    rotz: rightConn41:  0.3491
+start: 22: 28
+    rotz: leftArm1: 1.6491
+    rotz: leftArm2: 1.6491
+    rotz: leftArm3: 1.6491
+    rotz: leftArm4: 1.6491
+    rotz: rightArm1: -1.6491
+    rotz: rightArm2: -1.6491
+    rotz: rightArm3: -1.6491
+    rotz: rightArm4: -1.6491
+    rotz: leftConn1: -0.3
+    rotz: leftConn2: -0.3
+    rotz: leftConn3: -0.3
+    rotz: leftConn4: -0.3
+    rotz: rightConn1: -0.3
+    rotz: rightConn2: -0.3
+    rotz: rightConn3: -0.3
+    rotz: rightConn4: -0.3
+    rotz: leftConn11:  -0.6982
+    rotz: leftConn21:  -0.6982
+    rotz: leftConn31:  -0.6982
+    rotz: leftConn41:  -0.6982
+    rotz: rightConn11:  -0.6982
+    rotz: rightConn21:  -0.6982
+    rotz: rightConn31:  -0.6982
+    rotz: rightConn41:  -0.6982

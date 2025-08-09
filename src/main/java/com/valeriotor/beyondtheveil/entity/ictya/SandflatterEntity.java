@@ -17,19 +17,30 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
 
     private static final EntityDataAccessor<Boolean> AMBUSHING = SynchedEntityData.defineId(SandflatterEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> HAS_REPOSITIONED = SynchedEntityData.defineId(SandflatterEntity.class, EntityDataSerializers.BOOLEAN);
     private Animation attackAnimation;
     private boolean mustBeRemoved;
+    private boolean mustReposition = true;
 
     public SandflatterEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -37,9 +48,18 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
+        //super.registerGoals();
 
-        this.goalSelector.addGoal(0, new SandflatterAttackGoal(this, 1.8D, true, initAttackList(), 0));
+        //this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, IctyaEntity.class, 6.0F, 1.2F, 1.2F, this::shouldFlee));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this) {
+            @Override
+            protected boolean canAttack(@Nullable LivingEntity pPotentialTarget, @NotNull TargetingConditions pTargetPredicate) {
+                return super.canAttack(pPotentialTarget, pTargetPredicate) && shouldDefend(pPotentialTarget);
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, this::shouldAttack));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IctyaEntity.class, 10, false, false, this::shouldAttack));
+        this.goalSelector.addGoal(0, new SandflatterAttackGoal(this, 2.8D, true, initAttackList(), 0));
         this.goalSelector.addGoal(2, new TelegraphedAttackGoal<>(this, 1.8D, true, initAttackList(), 0));
 
     }
@@ -48,6 +68,7 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(AMBUSHING, true);
+        this.entityData.define(HAS_REPOSITIONED, false);
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -58,6 +79,35 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ATTACK_DAMAGE, 18.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 5);
+    }
+
+    @Override
+    protected boolean shouldAttack(LivingEntity attacked) {
+        if (attacked instanceof Player) {
+            return true;
+        }
+        return super.shouldAttack(attacked) && !isAmbushing();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide) {
+            if (attackAnimation != null) {
+                attackAnimation.update();
+                if (attackAnimation.isDone()) {
+                    attackAnimation = null;
+                }
+            }
+        } else {
+            if (!hasRepositioned() && tickCount > 5) {
+                entityData.set(HAS_REPOSITIONED, true);
+            }
+        }
+    }
+
+    public boolean hasRepositioned() {
+        return entityData.get(HAS_REPOSITIONED);
     }
 
     @Override
@@ -85,20 +135,24 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
         attackAnimation = new Animation(animationTemplate);
     }
 
+    public Animation getAttackAnimation() {
+        return attackAnimation;
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putBoolean("ambushing", entityData.get(AMBUSHING));
+        pCompound.putBoolean("has_repositioned", entityData.get(HAS_REPOSITIONED));
+        pCompound.putBoolean("mustReposition", mustReposition);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("ambushing") && pCompound.getBoolean("ambushing")) {
-            entityData.set(AMBUSHING, true);
-        } else {
-            entityData.set(AMBUSHING, false);
-        }
+        entityData.set(AMBUSHING, pCompound.contains("ambushing") && pCompound.getBoolean("ambushing"));
+        entityData.set(HAS_REPOSITIONED, pCompound.contains("has_repositioned") && pCompound.getBoolean("has_repositioned"));
+        mustReposition = pCompound.contains("mustReposition") && pCompound.getBoolean("mustReposition");
     }
 
     public boolean isAmbushing() {
@@ -114,7 +168,8 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
         /* TODO is onAddedToWorld also called on reload? We might want a onInitialSpawn
          */
         super.onAddedToWorld();
-        if (level().dimension() == BTVDimensions.ARCHE_LEVEL && !level().isClientSide) {
+        if (level().dimension() == BTVDimensions.ARCHE_LEVEL && !level().isClientSide && mustReposition) {
+            mustReposition = false;
             boolean success = false;
             int posX = getBlockX();
             int posY = getBlockY();
@@ -126,7 +181,8 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
                         for (int k = -3; k <= 3; k++) {
                             Block block1 = level().getBlockState(new BlockPos(posX + j, posY - i, posZ + k)).getBlock();
                             Block block2 = level().getBlockState(new BlockPos(posX + j, posY - i + 1, posZ + k)).getBlock();
-                            if (block1 != Registration.DARK_SAND.get() || (block2 != Blocks.WATER) && Math.abs(j) <= 1 && Math.abs(k) <= 1) {
+                            boolean blockUp = block2 != Blocks.WATER && block2 != Registration.BLACK_KELP.get() && block2 != Registration.ALGAE_BLOCK.get();
+                            if (block1 != Registration.DARK_SAND.get() || blockUp && Math.abs(j) <= 1 && Math.abs(k) <= 1) {
                                 goodSpot = false;
                                 break;
                             }
@@ -153,9 +209,9 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
     private AttackList initAttackList() {
         AttackList attacks = new AttackList();
         AttackArea ambushArea = AttackArea.getBoundingBoxAttack(-4, 0, -4, 4, 4.75, 4);
-        AttackArea clawArea = AttackArea.getConeAttack(5, 30, 30);
+        AttackArea clawArea = AttackArea.getConeAttack(6, 40, 40);
 
-        /*TelegraphedAttackTemplate ambushAttack = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.sandflatter_ambush, 29, 14, 40, ambushArea, 3)
+        TelegraphedAttackTemplate ambushAttack = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.sandflatter_ambush, 29, 14, 40, ambushArea, 3)
                 .setPredicate((sandflatter, unused) -> ((SandflatterEntity) sandflatter).isAmbushing())
                 .addPostAttackEffect(sandflatter -> ((SandflatterEntity) sandflatter).stopAmbushing())
                 //.addPostHitEffect((unused, target) -> target.addEffect(new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 30, 3))) //TODO maybe use setHealth?
@@ -167,7 +223,7 @@ public class SandflatterEntity extends IctyaEntity implements AnimatedEntity {
 
 
         attacks.addAttack(ambushAttack, 10);
-        attacks.addAttack(clawAttack, 10);*/
+        attacks.addAttack(clawAttack, 10);
 
         return AttackList.immutableAttackListOf(attacks);
     }

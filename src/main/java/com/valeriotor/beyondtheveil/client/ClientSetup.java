@@ -146,6 +146,7 @@ public class ClientSetup {
         event.registerLayerDefinition(ManOWarModel.LAYER_LOCATION, ManOWarModel::createBodyLayer);
         event.registerLayerDefinition(OctidModel.LAYER_LOCATION, OctidModel::createBodyLayer);
         event.registerLayerDefinition(UmancalaModel.LAYER_LOCATION, UmancalaModel::createBodyLayer);
+        event.registerLayerDefinition(SandflatterModel.LAYER_LOCATION, SandflatterModel::createBodyLayer);
         event.registerLayerDefinition(JellyModel.LAYER_LOCATION, JellyModel::createBodyLayer);
 
 
@@ -182,6 +183,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.MAN_O_WAR.get(), ManOWarRenderer::new);
         event.registerEntityRenderer(BTVEntities.OCTID.get(), OctidRenderer::new);
         event.registerEntityRenderer(BTVEntities.UMANCALA.get(), UmancalaRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SANDFLATTER.get(), SandflatterRenderer::new);
         event.registerEntityRenderer(BTVEntities.JELLY.get(), JellyRenderer::new);
         event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), UmancalaFireballRenderer::new);
 

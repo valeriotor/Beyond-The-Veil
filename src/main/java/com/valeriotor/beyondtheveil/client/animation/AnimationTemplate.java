@@ -22,6 +22,7 @@ public class AnimationTemplate {
     private int length;
     private AnimatedModel model;
     public List<Transformer> transformers;
+    private static final boolean DEBUG = false;
 
 
     public AnimationTemplate(String name, boolean client) {
@@ -38,7 +39,12 @@ public class AnimationTemplate {
             Map<ModelPart, EnumMap<TransformationType, List<FloatBinaryOperatorWithInterval>>> modelsToTransformations = new HashMap<>();
             for (String line : lines) {
                 period = processLine(line, period, modelsToTransformations);
+                if (DEBUG && modelsToTransformations.containsKey(null)) {
+                    System.out.println("ModelPart is null when processing line:");
+                    System.out.println(line);
+                }
             }
+
             List<Transformer> tempTransformers = new ArrayList<>();
             for (Map.Entry<ModelPart, EnumMap<TransformationType, List<FloatBinaryOperatorWithInterval>>> entry : modelsToTransformations.entrySet()) {
                 for (Map.Entry<TransformationType, List<FloatBinaryOperatorWithInterval>> entry2 : entry.getValue().entrySet()) {

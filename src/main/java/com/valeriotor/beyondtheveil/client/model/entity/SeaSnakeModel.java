@@ -86,8 +86,9 @@ public class SeaSnakeModel extends AnimatedModel<SeaSnakeEntity> {
     @Override
     public void setupAnim(SeaSnakeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         resetParts();
-        //if(((EntityMuray)ent).isAttacking())
-        //setOpenMouth();
+        if (entity.isAggressive()) {
+            //setOpenMouth();
+        }
 
         full.xRot = headPitch * ((float)Math.PI / 180F);
         float time = (float) (0.08 * Math.PI * (entity.tickCount + partialTick));
@@ -111,6 +112,14 @@ public class SeaSnakeModel extends AnimatedModel<SeaSnakeEntity> {
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    private void setOpenMouth() {
+        RightMouth.yRot = 0.4F;
+        LeftMouth.yRot = -0.4F;
+        RightMouth.xRot = 0.4F;
+        LeftMouth.xRot = 0.4F;
+        LowerMouth.xRot = 0.8F;
     }
 
 }

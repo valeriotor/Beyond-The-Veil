@@ -53,6 +53,42 @@
         "maxCount": 12,
         "minCount": 5,
         "weight": 30
+      },
+      {
+        "type": "beyondtheveil:adeline",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      },
+      {
+        "type": "beyondtheveil:bonecage",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "beyondtheveil:man_o_war",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 5
+      },
+      {
+        "type": "beyondtheveil:octid",
+        "maxCount": 6,
+        "minCount": 1,
+        "weight": 20
+      },
+      {
+        "type": "beyondtheveil:umancala",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 2
+      },
+      {
+        "type": "beyondtheveil:sandflatter",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 4
       }
     ],
     "underground_water_creature": [],

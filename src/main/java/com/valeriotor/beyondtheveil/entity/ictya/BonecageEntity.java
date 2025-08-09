@@ -85,9 +85,9 @@ public class BonecageEntity extends IctyaEntity implements AnimatedEntity {
 
     private AttackList initAttackList() {
         AttackList attacks = new AttackList();
-        AttackArea crunchArea = AttackArea.getConeAttack(8.5, 70, 70);
+        AttackArea crunchArea = AttackArea.getConeAttack(8.5, 50, 50);
 
-        TelegraphedAttackTemplate crunchAttack = TelegraphedAttackTemplate.of(AnimationRegistry.bonecage_crunch, 25, 10, 30, crunchArea, 9, 2);
+        TelegraphedAttackTemplate crunchAttack = TelegraphedAttackTemplate.of(AnimationRegistry.bonecage_crunch, 25, 18, 30, crunchArea, 9, 2);
 
         attacks.addAttack(crunchAttack, 5);
 

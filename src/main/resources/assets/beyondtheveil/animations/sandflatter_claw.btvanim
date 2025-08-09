@@ -1,0 +1,41 @@
+model: sandflatter
+length: 12
+start: 0: 4
+    roty: leftPincerArm: -0.6
+	roty: leftPincerForeArm: 0.8
+    rotz: leftPincerUp: -0.4
+    roty: leftPincerLeft: -0.4
+    rotx: leftPincerLeft: 0.4
+    roty: leftPincerRight: 0.4
+    roty: rightPincerArm: -0.6
+    roty: rightPincerForeArm: 0.8
+    rotz: rightPincerUp: -0.4
+    roty: rightPincerLeft: -0.4
+    rotx: rightPincerLeft: 0.4
+    roty: rightPincerRight: 0.4
+start: 5: 7
+    roty: leftPincerArm: 1.8
+    roty: leftPincerForeArm: -1.6
+    rotz: leftPincerUp: 1.2
+    roty: leftPincerLeft: 0.75
+    rotx: leftPincerLeft: -0.75
+    roty: leftPincerRight: -0.75
+    roty: rightPincerArm: 1.8
+    roty: rightPincerForeArm: -1.6
+    rotz: rightPincerUp: 1.2
+    roty: rightPincerLeft: 0.75
+    rotx: rightPincerLeft: -0.75
+    roty: rightPincerRight: -0.75
+start: 8: 11
+    roty: leftPincerArm: -1.2
+    roty: leftPincerForeArm: 0.8
+    rotz: leftPincerUp: -0.8
+    roty: leftPincerLeft: -0.35
+    rotx: leftPincerLeft: 0.35
+    roty: leftPincerRight: 0.35
+    roty: rightPincerArm: -1.2
+    roty: rightPincerForeArm: 0.8
+    rotz: rightPincerUp: -0.8
+    roty: rightPincerLeft: -0.35
+    rotx: rightPincerLeft: 0.35
+    roty: rightPincerRight: 0.35
