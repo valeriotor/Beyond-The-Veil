@@ -59,6 +59,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSmoothStoneSlab(ELDER_SMOOTH_STONE_SLAB.get(), modLoc("block/" + ELDER_SMOOTH_STONE_SLAB.getId().getPath() + "_side"), modLoc("block/" + ELDER_SMOOTH_STONE.getId().getPath()));
         simpleBlock(BLOOD_BRICK.get());
         registerVeinStoneVariants();
+        simpleBlock(VEIN_STONE_VESSEL.get());
         slabBlock(BLOOD_BRICK_SLAB.get(), getModelLocation(BLOOD_BRICK.get()), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
         stairsBlock(BLOOD_BRICK_STAIRS.get(), modLoc("block/" + BLOOD_BRICK.getId().getPath()));
         simpleBlock(BLOOD_SMOOTH_STONE.get());

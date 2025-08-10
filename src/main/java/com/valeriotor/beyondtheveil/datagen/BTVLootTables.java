@@ -77,6 +77,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.ELDER_SMOOTH_STONE_SLAB.get());
         dropSelf(Registration.BLOOD_BRICK.get());
         dropSelf(Registration.VEIN_STONE.get());
+        dropOther(Registration.VEIN_STONE_VESSEL.get(), Registration.VESSEL_STONE.get());
         dropSelf(Registration.SACRIFICE_ALTAR.get());
         dropSelf(Registration.BLOOD_BASIN.get());
         dropSelf(Registration.BLOOD_BRICK_SLAB.get());

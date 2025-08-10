@@ -123,6 +123,7 @@ public class Registration {
     public static final RegistryObject<SlabBlock> ELDER_SMOOTH_STONE_SLAB = BLOCKS.register("elder_smooth_stone_slab", () -> new SlabBlock(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<Block> BLOOD_BRICK = BLOCKS.register("blood_brick", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
+    public static final RegistryObject<Block> VEIN_STONE_VESSEL = BLOCKS.register("vein_stone_vessel", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<SacrificeAltarBlock> SACRIFICE_ALTAR = BLOCKS.register("sacrifice_altar", () -> new SacrificeAltarBlock(BRICK_PROPERTIES)); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
     public static final RegistryObject<BloodBasinBlock> BLOOD_BASIN = BLOCKS.register("blood_basin", () -> new BloodBasinBlock(BRICK_PROPERTIES)); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
     public static final RegistryObject<SlabBlock> BLOOD_BRICK_SLAB = BLOCKS.register("blood_brick_slab", () -> new SlabBlock(BRICK_PROPERTIES)); // (ModSlab) new ModSlab(BlockNames.BLOOD_BRICKS_SLAB, Material.ROCK, false).setHardness(10).setResistance(3000);
@@ -207,6 +208,7 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_BASIN_ITEM = fromBlock(BLOOD_BASIN);
     public static final RegistryObject<Item> BLOOD_BRICK_ITEM = fromBlock(BLOOD_BRICK);
     public static final RegistryObject<Item> VEIN_STONE_ITEM = fromBlock(VEIN_STONE);
+    public static final RegistryObject<Item> VEIN_STONE_VESSEL_ITEM = fromBlock(VEIN_STONE_VESSEL);
     public static final RegistryObject<Item> BLOOD_BRICK_SLAB_ITEM = fromBlock(BLOOD_BRICK_SLAB);
     public static final RegistryObject<Item> BLOOD_BRICK_STAIRS_ITEM = fromBlock(BLOOD_BRICK_STAIRS);
     public static final RegistryObject<Item> BLOOD_SMOOTH_STONE_ITEM = fromBlock(BLOOD_SMOOTH_STONE);
@@ -300,6 +302,7 @@ public class Registration {
     public static final RegistryObject<Item> REPAIR_HAMMER = ITEMS.register("repair_hammer", () -> new RepairHammerItem(1, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> NAUTILUS = ITEMS.register("nautilus", () -> new NautilusItem(new Item.Properties()));
     public static final RegistryObject<Item> ARCHE_DIAL = ITEMS.register("arche_dial", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> VESSEL_STONE = ITEMS.register("vessel_stone", () -> new VesselStoneItem(new Item.Properties().stacksTo(1).durability(5)));
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
@@ -446,6 +449,7 @@ public class Registration {
                 output.accept(ELDER_SMOOTH_STONE_SLAB.get());
                 output.accept(BLOOD_BRICK.get());
                 output.accept(VEIN_STONE.get());
+                output.accept(VEIN_STONE_VESSEL.get());
                 output.accept(SACRIFICE_ALTAR.get());
                 output.accept(BLOOD_BASIN.get());
                 output.accept(BLOOD_BRICK_SLAB.get());
@@ -519,6 +523,7 @@ public class Registration {
                 output.accept(REPAIR_HAMMER.get());
                 output.accept(NAUTILUS.get());
                 output.accept(ARCHE_DIAL.get());
+                output.accept(VESSEL_STONE.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());

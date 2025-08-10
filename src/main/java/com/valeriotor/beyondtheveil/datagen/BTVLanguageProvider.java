@@ -876,6 +876,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         addSurgery();
         addCommonCaptions();
         addContact();
+        addItems();
+    }
+
+    private void addItems() {
+        add("message.vessel_stone.not_in_arche", "The vessel stone must be used while in Arche.");
+        add("message.vessel_stone.in_water", "The vessel stone may not be used while in water.");
     }
 
     private void addContact() {

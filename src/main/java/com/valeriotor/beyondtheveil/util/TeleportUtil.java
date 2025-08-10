@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 
 import java.util.function.Function;
@@ -49,5 +50,22 @@ public class TeleportUtil {
 //
         }
     }
+
+    public static class Teleporter implements ITeleporter {
+
+        private final Vec3 pos;
+
+        public Teleporter(Vec3 pos) {
+            this.pos = pos;
+        }
+
+        @Override
+        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+            Entity entity1 = repositionEntity.apply(false);
+            entity.teleportTo(pos.x, pos.y, pos.z);
+            return entity;
+        }
+    }
+
 
 }

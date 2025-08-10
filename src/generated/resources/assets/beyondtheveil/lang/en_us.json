@@ -1556,6 +1556,8 @@
   "memory.unlock.message": "A Memory of %1$s sticks to my mind. I will not forget it.",
   "memory.void.name": "Void",
   "memory.water.name": "Water",
+  "message.vessel_stone.in_water": "The vessel stone may not be used while in water.",
+  "message.vessel_stone.not_in_arche": "The vessel stone must be used while in Arche.",
   "mirror.abouttoenter.first.end": "(End)",
   "mirror.abouttoenter.first.forgot": "How do I enter Arche?",
   "mirror.abouttoenter.forgot.0": "[Y]Grab the token and enter the Blood Well.",

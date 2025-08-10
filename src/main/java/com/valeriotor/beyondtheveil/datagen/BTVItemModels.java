@@ -59,6 +59,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(BLOOD_BRICK_ITEM.getId().getPath(), modLoc("block/blood_brick"));
         withExistingParent(BLOOD_WELL_ITEM.getId().getPath(), modLoc("block/blood_brick"));
         withExistingParent(VEIN_STONE_ITEM.getId().getPath(), modLoc("block/vein_stone1"));
+        withExistingParent(VEIN_STONE_VESSEL_ITEM.getId().getPath(), modLoc("block/vein_stone_vessel"));
         withExistingParent(BLOOD_BRICK_SLAB_ITEM.getId().getPath(), modLoc("block/blood_brick_slab"));
         withExistingParent(BLOOD_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/blood_brick_stairs"));
         withExistingParent(BLOOD_SMOOTH_STONE_ITEM.getId().getPath(), modLoc("block/blood_smooth_stone"));
@@ -162,6 +163,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(VEIN_MINER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + VEIN_MINER.getId().getPath()));
         singleTexture(REPAIR_HAMMER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + REPAIR_HAMMER.getId().getPath()));
         singleTexture(NAUTILUS.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + NAUTILUS.getId().getPath()));
+        singleTexture(VESSEL_STONE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + VESSEL_STONE.getId().getPath()));
         singleTexture(SEDATIVE_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SEDATIVE_BUCKET.getId().getPath()));
         singleTexture(SOFTENER_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SOFTENER_BUCKET.getId().getPath()));
         singleTexture(COAGULANT_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + COAGULANT_BUCKET.getId().getPath()));
