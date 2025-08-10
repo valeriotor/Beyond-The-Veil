@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entity.ictya;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.entity.DamageCapper;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.entity.ai.control.SmoothSwimmingNoFloatMoveControl;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
@@ -166,6 +167,9 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
     }
 
     public int compareSizeTo(LivingEntity entity) {
+        if (entity instanceof Player player && player.getVehicle() instanceof NautilusEntity) {
+            return getSizeInt() - IctyaSize.LARGE.ordinal();
+        }
         if (entity instanceof Player || entity instanceof DeepOneEntity)
             return getSizeInt() - IctyaSize.MEDIUM.ordinal();
         else if (entity instanceof IctyaEntity other)
@@ -181,9 +185,6 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
 
     protected boolean shouldAttack(LivingEntity attacked) {
         if (getSize() == IctyaSize.TINY) return false;
-        if (true) {
-            return true;
-        }
         if (attacked instanceof Player player && player.isCreative()) return false;
         int diff = this.compareSizeTo(attacked);
         if (diff == 3) {

@@ -175,6 +175,9 @@ public class NautilusEntity extends Entity {
             return false;
         } else if (!this.level().isClientSide && !this.isRemoved()) {
             //this.setHurtDir(-this.getHurtDir());
+            if (pSource.getEntity() instanceof Player player && player.getVehicle() == this) {
+                return false;
+            }
             this.setHurtTime(10);
             float before = getDamage();
             float after = before + pAmount;
@@ -185,15 +188,21 @@ public class NautilusEntity extends Entity {
                 }
             }
             //this.markHurt();
+            if (pSource.getEntity() instanceof LivingEntity && level() instanceof ServerLevel sl) {
+                sl.playSound(null, this.getOnPos(), SoundEvents.IRON_GOLEM_DAMAGE, SoundSource.NEUTRAL);
+                for (Entity passenger : getPassengers()) {
+                    passenger.hurt(damageSources().generic(), 40);
+                }
+            }
             this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
             boolean flag = pSource.getEntity() instanceof Player && ((Player) pSource.getEntity()).getAbilities().instabuild;
             if (flag || this.getDamage() > TOTAL_HEALTH) {
                 if (!flag && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                    if (pSource == damageSources().fellOutOfWorld()) {
-                        if (level() instanceof ServerLevel sl) {
+                    if (level() instanceof ServerLevel sl) {
+                        sl.playSound(null, this.getOnPos(), BTVSounds.SUBMARINE_CRASH.get(), SoundSource.NEUTRAL);
+                        if (pSource == damageSources().fellOutOfWorld()) {
                             Vec3 pos = position().add(getLookAngle().multiply(3, 3, 3));
                             sl.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 50, 3, 3, 3, 0);
-                            sl.playSound(null, this.getOnPos(), BTVSounds.SUBMARINE_CRASH.get(), SoundSource.NEUTRAL);
                             getPassengers().forEach(Entity::kill);
                         }
                     }
@@ -210,7 +219,9 @@ public class NautilusEntity extends Entity {
     }
 
     protected void destroy(DamageSource pDamageSource) {
-        this.spawnAtLocation(this.getDropItem());
+        if (pDamageSource.getEntity() instanceof Player) {
+            this.spawnAtLocation(this.getDropItem());
+        }
     }
 
     public void onAboveBubbleCol(boolean pDownwards) {
@@ -1008,7 +1019,7 @@ public class NautilusEntity extends Entity {
 
 
     protected boolean canAddPassenger(Entity pPassenger) {
-        return this.getPassengers().size() < this.getMaxPassengers();
+        return this.getPassengers().size() < this.getMaxPassengers() && pPassenger instanceof Player;
     }
 
     protected int getMaxPassengers() {

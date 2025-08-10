@@ -36,8 +36,8 @@ public class SepiidEntity extends IctyaEntity {
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new FollowFlockLeaderGoal(this));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 8.0F, 0.6D, 0.4D, EntitySelector.NO_SPECTATORS::test));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, IctyaEntity.class, 12.0F, 1.2F, 1.2F, this::shouldFlee));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.8D, 1.8D, EntitySelector.NO_SPECTATORS::test));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, IctyaEntity.class, 12.0F, 1.4F, 1.4F, this::shouldFlee));
 
     }
 

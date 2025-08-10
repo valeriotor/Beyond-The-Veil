@@ -86,7 +86,7 @@ public class CephalopodianEntity extends IctyaEntity implements AnimatedEntity {
 
     private AttackList initAttackList() {
         AttackList attacks = new AttackList();
-        AttackArea crunchArea = AttackArea.getConeAttack(7.5, 60, 60);
+        AttackArea crunchArea = AttackArea.getConeAttack(8.5, 60, 60);
         AttackArea tentacleArea = AttackArea.getCircleAttack(5.5);
 
         TelegraphedAttackTemplate crunchAttack = TelegraphedAttackTemplate.of(AnimationRegistry.cephalopodian_crunch, 25, 10, 30, crunchArea, 9, 2);

@@ -49,10 +49,10 @@ public class JellyModel extends EntityModel<JellyEntity> {
 
     @Override
     public void setupAnim(JellyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        T1.xRot = 0.3491F + Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        T3.xRot = -0.3491F - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        T4.xRot = 0.3491F + Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        T2.xRot = -0.3491F - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        T1.xRot = 0.3491F + Mth.cos(limbSwing * 0.0662F) * 0.7F * limbSwingAmount;
+        T3.xRot = -0.3491F - Mth.cos(limbSwing * 0.0662F) * 0.7F * limbSwingAmount;
+        T4.xRot = 0.3491F + Mth.cos(limbSwing * 0.0662F) * 0.7F * limbSwingAmount;
+        T2.xRot = -0.3491F - Mth.cos(limbSwing * 0.0662F) * 0.7F * limbSwingAmount;
     }
 
     @Override

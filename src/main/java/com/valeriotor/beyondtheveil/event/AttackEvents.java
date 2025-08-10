@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.DamageCapper;
+import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -32,18 +33,7 @@ public class AttackEvents {
             event.setAmount(event.getAmount() * (2 + effect.getAmplifier()));
         }
         if (entity instanceof ServerPlayer player) {
-            player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
-                if (c.hasTimer("baptism")) {
-                    event.setCanceled(true);
-                }
-            });
-            if (DataUtil.getBoolean(player, PlayerDataLib.BAPTIZED)) {
-                if (player.isInWater()) {
-                    event.setAmount(event.getAmount() * 0.7F);
-                } else if (player.isInWaterOrRain()) {
-                    event.setAmount(event.getAmount() * 0.9F);
-                }
-            }
+            playerDamageEvent(event, player);
         }
         if (source instanceof Player player) {
             if (DataUtil.getBoolean(player, PlayerDataLib.BAPTIZED)) {
@@ -61,6 +51,21 @@ public class AttackEvents {
         }
     }
 
+    private static void playerDamageEvent(LivingDamageEvent event, ServerPlayer player) {
+        player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
+            if (c.hasTimer("baptism")) {
+                event.setCanceled(true);
+            }
+        });
+        if (DataUtil.getBoolean(player, PlayerDataLib.BAPTIZED)) {
+            if (player.isInWater()) {
+                event.setAmount(event.getAmount() * 0.7F);
+            } else if (player.isInWaterOrRain()) {
+                event.setAmount(event.getAmount() * 0.9F);
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void livingAttackEvent(LivingAttackEvent event) {
         if (event.getEntity().level() instanceof ServerLevel sl) {
@@ -69,6 +74,13 @@ public class AttackEvents {
                 int taken = c.takeXP();
                 ExperienceOrb.award(sl, event.getEntity().position(), taken);
             });
+        }
+        if (event.getEntity() instanceof Player player && player.getVehicle() instanceof NautilusEntity nautilus) {
+            event.setCanceled(true);
+            nautilus.hurt(event.getSource(), event.getAmount());
+        }
+        if (event.getSource().getEntity() instanceof Player player && player.getVehicle() instanceof NautilusEntity) {
+            event.setCanceled(true);
         }
 
     }

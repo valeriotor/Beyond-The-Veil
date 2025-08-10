@@ -96,12 +96,15 @@ public class LivingTickEvents {
 
     private static void doArcheDrownDamage(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
-        if (e.isDeadOrDying() || e instanceof IctyaEntity || e instanceof DeepOneEntity || e instanceof JellyEntity || true) {
+        if (e.isDeadOrDying() || e instanceof IctyaEntity || e instanceof DeepOneEntity || e instanceof JellyEntity) {
             return;
         }
         if (e.tickCount % 20 == 0 && e.level().dimension() == BTVDimensions.ARCHE_LEVEL && e.isUnderWater()) {
             float damage = e.getMaxHealth() / 3F;
             if (e instanceof Player p) {
+                if (p.getVehicle() instanceof NautilusEntity) {
+                    return;
+                }
                 if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
                     Integer breath = DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, PlayerTickEvents.TOTAL_ARCHE_BREATH, false);
                     if (breath == null || breath >= 0) {

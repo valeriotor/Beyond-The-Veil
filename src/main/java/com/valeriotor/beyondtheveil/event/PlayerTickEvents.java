@@ -114,7 +114,7 @@ public class PlayerTickEvents {
 
     private static void decrementArcheBreath(TickEvent.PlayerTickEvent event) {
         Player p = event.player;
-        if (p.isDeadOrDying()) {
+        if (p.isDeadOrDying() || p.getVehicle() instanceof NautilusEntity) {
             return;
         }
         if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
