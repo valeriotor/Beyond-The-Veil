@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.dreaming.dreams;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.BTVTags;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.block.Blocks;
 
@@ -16,7 +17,7 @@ public class DreamRegistry {
     static final Map<String, Supplier<Reminiscence>> REMINISCENCE_REGISTRY = new HashMap<>();
 
     public static final Dream VOID = new DreamVoid();
-    public static final Dream WATER = new DreamWaypoint(Memory.WATER, (sl, pos) -> sl.findNearestMapStructure(StructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false), 0x7F16FF);
+    public static final Dream WATER = new DreamWaypoint(Memory.WATER, (sl, pos) -> sl.dimension() == BTVDimensions.ARCHE_LEVEL ? sl.findNearestMapStructure(BTVTags.DEEP_CITY, pos, 100, false) : sl.findNearestMapStructure(StructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false), 0x7F16FF);
     public static final Dream ELDRITCH = new DreamSound(Memory.WATER, BTVSounds.WATER_DREAM.get(), true);
     public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E);
     public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos) -> sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false), 0xFFFFFF);

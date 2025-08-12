@@ -10,8 +10,6 @@ import java.util.function.Supplier;
 public abstract class Dream {
 
 
-
-
     private final int priority;
     protected final Memory memory;
     protected final boolean isVoid;
@@ -40,7 +38,9 @@ public abstract class Dream {
     }
 
     public abstract boolean activate(Player p, Level l);
+
     public abstract boolean activatePlayer(Player caster, Player target, Level l);
+
     public abstract boolean activatePos(Player p, Level l, BlockPos pos);
 
 }

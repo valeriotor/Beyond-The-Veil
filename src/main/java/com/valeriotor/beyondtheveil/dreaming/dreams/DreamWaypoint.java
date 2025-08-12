@@ -14,7 +14,7 @@ import net.minecraftforge.fml.LogicalSide;
 
 import java.util.function.BiFunction;
 
-public class DreamWaypoint extends Dream{
+public class DreamWaypoint extends Dream {
 
     private final BiFunction<ServerLevel, BlockPos, BlockPos> function;
     private final int color;
@@ -48,7 +48,7 @@ public class DreamWaypoint extends Dream{
         BlockPos blockpos = function.apply(sl, pos);
         if (blockpos != null) {
             //DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
-            Reminiscence r = new ReminiscenceWaypoint(blockpos, color);
+            Reminiscence r = new ReminiscenceWaypoint(blockpos, color, sl.dimension());
             DataUtil.addReminiscence(p, memory.getDataName(isVoid), r);
             return true;
         }
