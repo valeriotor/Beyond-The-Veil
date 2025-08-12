@@ -49,5 +49,8 @@
   },
   "submarine_crash": {
     "sounds": [ "beyondtheveil:submarine_crash" ]
+  },
+  "propeller": {
+    "sounds": [ "beyondtheveil:propeller" ]
   }
 }

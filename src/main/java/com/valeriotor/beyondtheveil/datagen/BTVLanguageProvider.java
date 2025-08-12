@@ -2115,7 +2115,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addReminiscence() {
         add("reminiscence.EMPTY", "The dream was not affected.");
         add("reminiscence.void", "My next dream will be empowered by void.");
-        add("reminiscence.waypoint_other_dimension", "My next dream will be empowered by void.");
+        add("reminiscence.waypoint_other_dimension", "The destination lies in another dimension.");
     }
 
     private void addGuis() {
