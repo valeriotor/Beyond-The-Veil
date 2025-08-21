@@ -38,6 +38,10 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
         return registerAnimatedPart(name, parent.getChild(name), true);
     }
 
+    protected ModelPart registerAnimatedPart(ModelPart parent, String name, boolean visible) {
+        return registerAnimatedPart(name, parent.getChild(name), visible);
+    }
+
     protected ModelPart registerAnimatedPart(String name, ModelPart part, boolean visible) {
         part.visible = visible;
         animatedParts.put(name, part);

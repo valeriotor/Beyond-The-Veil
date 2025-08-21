@@ -114,6 +114,7 @@ public class Abomination0Model extends AnimatedModel<Abomination0Entity> impleme
 
     @Override
     public void prepareMobModel(Abomination0Entity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
+        markDirty();
         resetParts();
         float ageInTicks = entity.tickCount + pPartialTick;
         float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (24 * 1.5F)) / 15;
