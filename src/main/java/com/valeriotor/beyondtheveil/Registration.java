@@ -287,6 +287,7 @@ public class Registration {
     public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", MemoryPhialItem::new); // new ItemMemoryPhial("memory_phial");
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");
+    public static final RegistryObject<Item> BLOOD_ORB = ITEMS.register("blood_orb", BloodOrbItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
@@ -508,6 +509,7 @@ public class Registration {
                 output.accept(MEMORY_PHIAL.get());
                 output.accept(NECRONOMICON.get());
                 output.accept(JOURNAL.get());
+                output.accept(BLOOD_ORB.get());
                 output.accept(GEAR.get());
                 output.accept(SURGEON_SUMMONS.get());
                 output.accept(CRUCIBLE.get());
