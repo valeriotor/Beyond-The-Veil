@@ -113,7 +113,7 @@ public class BloodZombieModel extends EntityModel<LivingEntity> {
 
 	@Override
 	public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		//body.getChild("torso").getChild("head").getChild("jaw").xRot = 1.25F;
 	}
 
 	@Override

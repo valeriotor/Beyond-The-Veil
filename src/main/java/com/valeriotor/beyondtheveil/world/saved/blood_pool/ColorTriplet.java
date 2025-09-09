@@ -5,6 +5,16 @@ import net.minecraft.world.item.DyeColor;
 
 public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) {
 
+    public DyeColor index(int i) {
+        if (i == 0) {
+            return first;
+        } else if (i == 1) {
+            return second;
+        } else {
+            return third;
+        }
+    }
+
     public CompoundTag saveToTag(CompoundTag tag) {
         if (first != null) {
             tag.putString("first", first.name());

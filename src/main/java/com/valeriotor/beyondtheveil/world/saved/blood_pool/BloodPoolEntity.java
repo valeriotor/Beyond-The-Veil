@@ -23,6 +23,10 @@ public class BloodPoolEntity {
         entityData = tag.getCompound("entityData");
     }
 
+    public BloodPoolEntityType getType() {
+        return type;
+    }
+
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
         tag.putString("type", type.name());
