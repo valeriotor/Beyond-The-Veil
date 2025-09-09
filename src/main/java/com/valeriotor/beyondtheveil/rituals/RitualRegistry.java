@@ -1,42 +1,123 @@
 package com.valeriotor.beyondtheveil.rituals;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Streams;
 import com.valeriotor.beyondtheveil.Registration;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
+import com.valeriotor.beyondtheveil.tile.FleboBE;
+import com.valeriotor.beyondtheveil.util.ItemSet;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class RitualRegistry {
 
-    private static final Map<Item, Map<List<Item>, RitualTemplate>> DICTIONARY = new HashMap<>();
+    private static final List<RitualTemplate> TEMPLATES = new ArrayList<>();
     private static final Map<String, RitualTemplate> BY_NAME = new HashMap<>();
 
-
-    public static final RitualTemplate BLOOD_BRICKS_1 = new RitualTemplate.RitualTemplateBuilder("blood_bricks_1", 0, 0, 0)
-            .setIngredients(Lists.newArrayList(Registration.BLOOD_BRICK_ITEM.get()))
-            .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 1)))
-            .toTemplate(DICTIONARY, BY_NAME);
-
-    public static final RitualTemplate BLOOD_BRICKS_2 = new RitualTemplate.RitualTemplateBuilder("blood_bricks_2", 0, 0, 0)
-            .setIngredients(Lists.newArrayList(Registration.BLOOD_BRICK_ITEM.get(), Registration.BLOOD_BRICK_ITEM.get()))
-            .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 2)))
-            .toTemplate(DICTIONARY, BY_NAME);
-
-    public static final RitualTemplate BLOOD_BRICKS_3 = new RitualTemplate.RitualTemplateBuilder("blood_bricks_3", 0, 0, 0)
-            .setIngredients(Lists.newArrayList(Registration.BLOOD_BRICK_ITEM.get(), Registration.BLOOD_BRICK_ITEM.get(), Registration.BLOOD_BRICK_ITEM.get()))
+    public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 0, 0, 0)
+            .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
             .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 3)))
-            .toTemplate(DICTIONARY, BY_NAME);
+            .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 0, 0)
-            .setIngredients(Lists.newArrayList(Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
+            .setMatch(input -> exact(input, Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
             .setOutputs(List.of(new ItemStack(Registration.CORAL_STAFF.get())))
-            .toTemplate(DICTIONARY, BY_NAME);
+            .toTemplate(TEMPLATES, BY_NAME);
 
+    public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 0, 0, 0)
+            .setMatch(input -> {
+                input = skipModifiers(input);
+                if (input.size() != 4) {
+                    return false;
+                }
+                List<Item> allowed = Streams.concat(Arrays.stream(DyeColor.values()).map(pColor -> (Item) DyeItem.byColor(pColor)), Stream.of(Items.CLAY_BALL)).toList();
+                for (int i = 0; i < 3; i++) {
+                    if (!allowed.contains(input.get(i))) {
+                        return false;
+                    }
+                }
+                return input.get(3) == Registration.FLEBO_ITEM.get();
+            })
+            .setOutputs((stacks, player) -> {
+                if (stacks.size() == 4) {
+                    ItemStack flebo = new ItemStack(Registration.FLEBO_ITEM.get());
+                    ArrayList<DyeColor> dyes = new ArrayList<>();
+                    for (int i = 0; i < 3; i++) {
+                        Item burnedItem = stacks.get(i).getItem();
+                        if (burnedItem instanceof DyeItem dye) {
+                            dyes.add(dye.getDyeColor());
+                        } else if (burnedItem == Items.CLAY_BALL) {
+                            dyes.add(null);
+                        } else {
+                            return List.of();
+                        }
+                    }
+                    ColorTriplet colorTriplet = new ColorTriplet(dyes.get(0), dyes.get(1), dyes.get(2));
+                    CompoundTag tag = new CompoundTag();
+                    tag.putBoolean("pool", true);
+                    BlockItem.setBlockEntityData(flebo, BTVBlockEntities.FLEBO_BE.get(), colorTriplet.saveToTag(tag));
+                    return List.of(flebo);
+                }
+                return List.of();
+            })
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    private static boolean oneOrMore(List<Item> input, List<Item> prefix, ItemSet repeatable, int maxLength) { // TODO add startIndex to match when some are already burned... or maybe just feed again the burned items...?
+        input = skipModifiers(input);
+        if (input.isEmpty() || input.size() > maxLength) {
+            return false;
+        }
+        int reached = 0;
+        for (Item item : prefix) {
+            if (!Objects.equals(item, input.get(reached))) {
+                return false;
+            }
+            reached++;
+            if (input.size() <= reached) {
+                return false;
+            }
+        }
+
+        for (int i = reached; i < input.size(); i++) {
+            if (!repeatable.match(input.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean exact(List<Item> input, Item... ingredients) {
+        input = skipModifiers(input);
+        if (input.size() != ingredients.length) {
+            return false;
+        }
+        for (int i = 0; i < input.size(); i++) {
+            Item item = input.get(i);
+            Item ingredient = ingredients[i];
+            if (item != ingredient) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @NotNull
+    private static List<Item> skipModifiers(List<Item> input) {
+        for (int i = 0; i < input.size(); i++) {
+            if (!RitualModifierRegistry.isModifier(input.get(i))) {
+                input = input.subList(i, input.size());
+                break;
+            } else if (i == input.size() - 1) {
+                return List.of();
+            }
+        }
+        return input;
+    }
 
     private static List<ItemStack> byNumber(List<ItemStack> input, Item outputItem, int max) {
         List<ItemStack> output = new ArrayList<>();
@@ -47,8 +128,16 @@ public class RitualRegistry {
         return output;
     }
 
-    public static RitualTemplate longestMatch(List<Item> items) {
-        // we accept list of itemstacks for now, but it could just be list of items..
+    public static RitualTemplate findMatch(List<Item> nonModifierItems) {
+        for (RitualTemplate template : TEMPLATES) {
+            if (template.matches(nonModifierItems)) {
+                return template;
+            }
+        }
+        return null;
+    }
+
+    /*public static RitualTemplate longestMatch(List<Item> items) {
         if (items.isEmpty()) {
             return null;
         }
@@ -66,7 +155,7 @@ public class RitualRegistry {
             }
         }
         return bestMatch;
-    }
+    }*/
 
     private static boolean matches(List<Item> template, List<Item> provided) {
         if (provided.size() < template.size()) {

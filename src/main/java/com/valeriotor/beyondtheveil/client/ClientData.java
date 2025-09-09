@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -34,6 +35,7 @@ public class ClientData {
 
     public final List<Waypoint> waypoints = new ArrayList<>();
     public ArcheSavedData archeSavedData = new ArcheSavedData();
+    private BloodPoolData bloodPoolData = new BloodPoolData();
     private int contactTimer = 0;
     private int contactFogLevel = 0;
 
@@ -90,6 +92,18 @@ public class ClientData {
 
     public int getContactFogLevel() {
         return contactFogLevel;
+    }
+
+    public void syncPoolData(CompoundTag tag) {
+        bloodPoolData = BloodPoolData.load(tag);
+    }
+
+    public BloodPoolData getBloodPoolData() {
+        return bloodPoolData;
+    }
+
+    public void modifyPoolData(CompoundTag tag) {
+        bloodPoolData.modifyPool(Minecraft.getInstance().level, tag);
     }
 
     public static class Waypoint {

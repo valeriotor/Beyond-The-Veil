@@ -2,7 +2,9 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class RitualStatus {
 
     public static final double STEP_SIZE = 0.025; // per tick
+    private int numberOfModifiers;
 
     private int primaryInstability;
     private int secondaryInstability;
@@ -33,6 +36,7 @@ public class RitualStatus {
     private final List<ItemStack> burnedIngredients = new ArrayList<>();
     private int itemBurnCounter = -1;
     private final UUID initiator;
+    private List<Item> startItems = new ArrayList<>();
 
     public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars) {
         List<Item> items = new ArrayList<>();
@@ -46,18 +50,37 @@ public class RitualStatus {
                 return null;
             }
         }
-        RitualTemplate template = RitualRegistry.longestMatch(items);
+        List<Item> nonModifierItems = new ArrayList<>();
+        boolean flag = false;
+        for (Item item : items) {
+            if (!RitualModifierRegistry.isModifier(item)) {
+                flag = true;
+            }
+            if (flag) {
+                nonModifierItems.add(item);
+            }
+        }
+        RitualTemplate template = RitualRegistry.findMatch(nonModifierItems);
         if (template == null) {
             return null;
         }
-        return new RitualStatus(template, startPos, altars, initiator);
+        return new RitualStatus(template, startPos, altars, initiator, items);
     }
 
-    private RitualStatus(RitualTemplate template, BlockPos startPos, List<BlockPos> altars, UUID initiator) {
+    private RitualStatus(RitualTemplate template, BlockPos startPos, List<BlockPos> altars, UUID initiator, List<Item> startItems) {
         this.template = template;
         this.startPos = startPos;
         this.altars = new ArrayList<>(altars);
         this.initiator = initiator;
+        this.startItems = startItems;
+        numberOfModifiers = 0;
+        for (Item startItem : startItems) {
+            if (RitualModifierRegistry.isModifier(startItem)) {
+                numberOfModifiers++;
+            } else {
+                break;
+            }
+        }
 
         distances = new double[altars.size() + 1];
         computeDistances(startPos, altars);
@@ -83,8 +106,12 @@ public class RitualStatus {
         for (int i = 0; i < burnedIngredients.size(); i++) {
             this.burnedIngredients.add(ItemStack.of(burnedIngredients.getCompound(i)));
         }
+        ListTag startItems = tag.getList("startItems", Tag.TAG_STRING);
+        for (int i = 0; i < startItems.size(); i++) {
+            this.startItems.add(BuiltInRegistries.ITEM.get(new ResourceLocation(startItems.getString(i))));
+        }
 
-
+        numberOfModifiers = tag.getInt("numberOfModifiers");
         currentHop = tag.getInt("currentHop");
         progressUntilNextHop = tag.getDouble("progressUntilNextHop");
         itemBurnCounter = tag.getInt("itemBurnCounter");
@@ -137,24 +164,25 @@ public class RitualStatus {
             if (progressUntilNextHop > distances[currentHop]) {
                 // TODO wait for a bit, process instability
                 boolean success = true;
-                if (currentHop < distances.length - 1 && currentHop > numberOfModifiers() - 1) {
-                    BloodBasinBE bloodBasin = (BloodBasinBE) level.getBlockEntity(altars.get(currentHop));
-                    ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                    if (heldItem.getItem() != template.getIngredients().get(currentHop - numberOfModifiers())) {
-                        success = false;
-                        primaryInstability += template.getPrimaryInstabilityRate();
-                        secondaryInstability += template.getSecondaryInstabilityRate();
-                    }
-                    if (success) {
-                        if (itemBurnCounter == -1) {
-                            itemBurnCounter = 100; // TODO make this template dependent?
-                        }
-                        itemBurnCounter--;
-                        if (itemBurnCounter != -1) {
+                if (currentHop < distances.length - 1 && currentHop > numberOfModifiers - 1) {
+                    if(level.getBlockEntity(altars.get(currentHop)) instanceof BloodBasinBE bloodBasin) {
+                        ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
+                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers)) { // change to template.match(burnedItems + leftItems)? but we just want that one item... so no. Just tell the player that is has to be either the same item or an identical one
                             success = false;
-                            bloodBasin.createParticles(true);
-                        } else {
-                            bloodBasin.createParticles(false);
+                            primaryInstability += template.getPrimaryInstabilityRate();
+                            secondaryInstability += template.getSecondaryInstabilityRate();
+                        }
+                        if (success) {
+                            if (itemBurnCounter == -1) {
+                                itemBurnCounter = 100; // TODO make this template dependent?
+                            }
+                            itemBurnCounter--;
+                            if (itemBurnCounter != -1) {
+                                success = false;
+                                bloodBasin.createParticles(true);
+                            } else {
+                                bloodBasin.createParticles(false);
+                            }
                         }
                     }
                 }
@@ -163,11 +191,12 @@ public class RitualStatus {
                     if (currentHop >= distances.length) {
                         return true;
                     } else {
-                        BloodBasinBE bloodBasin = (BloodBasinBE) level.getBlockEntity(altars.get(currentHop - 1));
-                        if (currentHop - 1 > numberOfModifiers() - 1) {
-                            burnedIngredients.add(bloodBasin.removeItem());
-                        } else {
-                            burnedModifiers.add(bloodBasin.removeItem());
+                        if (level.getBlockEntity(altars.get(currentHop - 1)) instanceof BloodBasinBE bloodBasin) {
+                            if (currentHop - 1 > numberOfModifiers - 1) {
+                                burnedIngredients.add(bloodBasin.removeItem());
+                            } else {
+                                burnedModifiers.add(bloodBasin.removeItem());
+                            }
                         }
                     }
                     progressUntilNextHop = 0;
@@ -179,9 +208,6 @@ public class RitualStatus {
         return false;
     }
 
-    private int numberOfModifiers() {
-        return distances.length - 1 - template.getIngredients().size();
-    }
 
     public boolean isEarlyStop() {
         return earlyStop;
@@ -218,6 +244,14 @@ public class RitualStatus {
         }
         tag.put("burnedIngredients", burnedIngredients);
 
+        ListTag startItems = new ListTag();
+        for (int i = 0; i < this.startItems.size(); i++) {
+            Item startItem = this.startItems.get(i);
+            startItems.add(i, StringTag.valueOf(BuiltInRegistries.ITEM.getKey(startItem).toString()));
+        }
+        tag.put("startItems", startItems);
+
+        tag.putInt("numberOfModifiers", numberOfModifiers);
         tag.putInt("itemBurnCounter", itemBurnCounter);
         tag.putString("initiator", initiator.toString());
 

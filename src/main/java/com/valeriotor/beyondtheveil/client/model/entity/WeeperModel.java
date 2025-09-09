@@ -189,6 +189,7 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 
     @Override
     public void prepareMobModel(WeeperEntity entity, float limbSwing, float limbSwingAmount, float pa) {
+        markDirty();
         resetParts();
         //right_arm2.xRot = -1.2727F;
         //left_arm2.xRot = -1.2727F;

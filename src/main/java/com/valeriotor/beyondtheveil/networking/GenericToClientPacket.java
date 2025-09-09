@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -141,6 +142,18 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.SHAKE_CAMERA, new CompoundTag());
     }
 
+    public static GenericToClientPacket syncBloodPool(Player sender, BloodPoolData data) {
+        CompoundTag compoundTag = new CompoundTag();
+        data.forPlayer(sender.getUUID(), compoundTag);
+        CompoundTag poolTag = new CompoundTag();
+        poolTag.put("pool", compoundTag);
+        return new GenericToClientPacket(MessageType.SYNC_BLOOD_POOL, poolTag);
+    }
+
+    public static GenericToClientPacket modifyBloodPool(CompoundTag modification) {
+        return new GenericToClientPacket(MessageType.MODIFY_BLOOD_POOL, modification);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -181,6 +194,8 @@ public class GenericToClientPacket {
                     case OPEN_GUI -> GuiHelper.openClientSideGui(tag);
                     case RENEW_CONTACT -> ClientData.getInstance().renewContact();
                     case SHAKE_CAMERA -> RenderEvents.shakeCamera(30);
+                    case SYNC_BLOOD_POOL -> ClientData.getInstance().syncPoolData(tag.getCompound("pool"));
+                    case MODIFY_BLOOD_POOL -> ClientData.getInstance().modifyPoolData(tag);
                 }
             });
         });
@@ -205,7 +220,9 @@ public class GenericToClientPacket {
         HIDE_OVERLAY_MESSAGE,
         OPEN_GUI,
         RENEW_CONTACT,
-        SHAKE_CAMERA
+        SHAKE_CAMERA,
+        SYNC_BLOOD_POOL,
+        MODIFY_BLOOD_POOL
     }
 
 }

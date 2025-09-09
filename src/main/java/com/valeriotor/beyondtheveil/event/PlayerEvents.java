@@ -21,10 +21,13 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -175,6 +178,9 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void loggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         addBaptismAttributes(event.getEntity());
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            syncBloodPool(sp);
+        }
     }
 
     @SubscribeEvent
@@ -191,6 +197,10 @@ public class PlayerEvents {
                 p.getAttributes().addTransientAttributeModifiers(map);
             }
         }
+    }
+
+    public static void syncBloodPool(ServerPlayer player) {
+        Messages.sendToPlayer(GenericToClientPacket.syncBloodPool(player, BloodPoolData.getInstance(player.serverLevel())), player);
     }
 
 }

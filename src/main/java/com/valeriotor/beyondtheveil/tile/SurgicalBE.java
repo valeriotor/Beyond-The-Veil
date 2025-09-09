@@ -13,6 +13,9 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,6 +27,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -50,6 +54,7 @@ public abstract class SurgicalBE extends BlockEntity {
     private Mob entity; // Exists only client side. TODO will probably have to convert this to an interface or abstract class extended by other entity types
     private CompoundTag entityData; // Exists only server side
     private boolean hasFlebo;
+    private ColorTriplet color;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -72,9 +77,16 @@ public abstract class SurgicalBE extends BlockEntity {
                 if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
-                    if (crossSync.getHeldPatientData() == null && !patientStatus.isIncised()) {
+                    if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised()) {
                         entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag()));
-                        crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
+                        if (color != null) {
+                            if (p instanceof ServerPlayer sp) {
+                                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.serverLevel());
+                                bloodPoolData.addEntity(p.getUUID(), color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData), sp.serverLevel());
+                            }
+                        } else {
+                            crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
+                        }
                         entityData = null;
                         patientStatus = null;
                         setChanged();
@@ -312,7 +324,8 @@ public abstract class SurgicalBE extends BlockEntity {
 
         counter++;
         if (counter % 20 == 0) {
-            hasFlebo = false; // TODO this must become more complex to consider colors
+            hasFlebo = false;
+            color = null;
             BlockState state = level.getBlockState(worldPosition);
             // just assume it's the center of a thin 3x? multiblock
             if (state.getBlock() instanceof ThinMultiBlock mb) {
@@ -322,6 +335,10 @@ public abstract class SurgicalBE extends BlockEntity {
                         BlockPos relative = pos.relative(direction);
                         if (level.getBlockState(relative).getBlock() == Registration.FLEBO.get()) {
                             hasFlebo = true;
+                            FleboBE be = level.getBlockEntity(relative) instanceof FleboBE ? (FleboBE) level.getBlockEntity(relative) : (level.getBlockEntity(relative.below()) instanceof FleboBE ? (FleboBE) level.getBlockEntity(relative.below()) : null);
+                            if (be != null && be.isPool()) {
+                                color = be.getColor();
+                            }
                             break;
                         }
                     }

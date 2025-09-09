@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
@@ -67,6 +68,7 @@ public class SacrificeAltarBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if (crossSync.getHeldPatientData() == null) {
+                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag()));
                         crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
                         entityData = null;
                         patientStatus = null;

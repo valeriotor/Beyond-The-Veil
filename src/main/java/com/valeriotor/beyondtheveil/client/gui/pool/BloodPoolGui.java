@@ -2,9 +2,13 @@ package com.valeriotor.beyondtheveil.client.gui.pool;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -12,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BloodPoolGui extends Screen {
 
@@ -57,7 +62,8 @@ public class BloodPoolGui extends Screen {
         }
 
         List<RowEntry> entryList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        Map<ColorTriplet, List<BloodPoolEntity>> entitiesByTriplet = ClientData.getInstance().getBloodPoolData().getEntitiesByTriplet(Minecraft.getInstance().player.getUUID());
+        for (Map.Entry<ColorTriplet, List<BloodPoolEntity>> entry : entitiesByTriplet.entrySet()) {
             entryList.add(new RowEntry());
         }
 

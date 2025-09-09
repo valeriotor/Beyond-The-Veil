@@ -1,15 +1,19 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
+import com.valeriotor.beyondtheveil.tile.FleboBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public class FleboBlock extends ThinMultiBlock1by2 {
+public class FleboBlock extends ThinMultiBlock1by2 implements EntityBlock {
     protected static final VoxelShape SHAPE_STICK_DOWN;
     protected static final VoxelShape SHAPE_UP_X;
     protected static final VoxelShape SHAPE_UP_Z;
@@ -41,5 +45,11 @@ public class FleboBlock extends ThinMultiBlock1by2 {
         if (pState.getValue(getLevelProperty()) == 0)
             return SHAPE_STICK_DOWN;
         return pState.getValue(FACING).getAxis() == Direction.Axis.Z ? SHAPE_UP_X : SHAPE_UP_Z;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return pState.getValue(getLevelProperty()) == 0 ? new FleboBE(pPos, pState) : null;
     }
 }

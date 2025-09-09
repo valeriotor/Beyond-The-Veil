@@ -51,8 +51,7 @@ public class LifeEconomyData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag pCompoundTag) {
-        CompoundTag compoundTag = new CompoundTag();
+    public CompoundTag save(CompoundTag compoundTag) {
 
         CompoundTag pillarTag = new CompoundTag();
         compoundTag.put("pillarTag", pillarTag);
