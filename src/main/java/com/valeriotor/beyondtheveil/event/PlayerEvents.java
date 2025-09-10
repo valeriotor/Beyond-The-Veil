@@ -136,11 +136,17 @@ public class PlayerEvents {
                 ConvalescentData data = c.resolve().get();
                 TriggerData triggerData = data.getTriggerData();
                 if (triggerData != null) {
-                    EntityType<?> type = switch (data.getCapacity()) {
-                        case 1 -> BTVEntities.ABOMINATION_0.get();
-                        case 2 -> BTVEntities.ABOMINATION_1.get();
-                        default -> BTVEntities.CRAWLER.get();
-                    };
+                    EntityType<?> type;
+                    if (data.getUsedCapacity() == 0) {
+                        type = BTVEntities.CRAWLER.get();
+                    } else if (data.getUsedCapacity() <= 10) {
+                        type = BTVEntities.ABOMINATION_0.get();
+                    } else if (data.getUsedCapacity() <= 20) {
+                        type = BTVEntities.ABOMINATION_1.get();
+                    } else {
+                        type = BTVEntities.ABOMINATION_1.get();
+                    }
+
                     if (type == BTVEntities.CRAWLER.get()) {
                         return heldPatient;
                     } else {

@@ -227,12 +227,14 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                 if (attackTimer == 0) {
                     TriggerData data = getTriggerData();
                     Burst burst = data.getBurst();
-                    ArsenalEffect effect = data.getEffect();
+                    List<ArsenalEffect> effects = data.getEffects();
                     if (burst != null) {
                         List<LivingEntity> hitEntities = burst.getHitEntities(this);
                         for (LivingEntity hitEntity : hitEntities) {
-                            if (hitEntity != this && effect != null) {
-                                effect.process(this, hitEntity);
+                            if (hitEntity != this) {
+                                for (ArsenalEffect arsenalEffect : effects) {
+                                    arsenalEffect.process(this, hitEntity);
+                                }
                             }
                         }
                         entityData.set(DATA_BLEEDING, burst.getExtension());

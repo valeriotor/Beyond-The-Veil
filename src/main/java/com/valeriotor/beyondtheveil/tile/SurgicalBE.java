@@ -78,7 +78,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised()) {
-                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag()));
+                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity()).saveToNBT(new CompoundTag()));
                         if (color != null) {
                             if (p instanceof ServerPlayer sp) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.serverLevel());
@@ -310,7 +310,7 @@ public abstract class SurgicalBE extends BlockEntity {
         if (patientStatus != null) {
             if (patientStatus.isDirty()) {
                 if (patientStatus.isExploded()) {
-                    CompoundTag tag = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity()).saveToNBT(new CompoundTag());
+                    CompoundTag tag = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity()).saveToNBT(new CompoundTag());
                     patientStatus = new PatientStatus(PatientType.WEEPER);
                     patientStatus.setExposedLocation(defaultLocation);
                     patientStatus.fromConvalescentNBT(tag);

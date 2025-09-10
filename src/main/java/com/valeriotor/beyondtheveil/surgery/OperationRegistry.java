@@ -5,7 +5,7 @@ import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
-import net.minecraft.core.particles.ParticleType;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
@@ -201,6 +201,38 @@ public class OperationRegistry {
             .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
             .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
 
+    private static final Operation INJECT_MOVEMENT_SPEED_SERUM_FLUID = makeArsenalInjection("inject_movement_speed_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SPEED).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 60);
+    private static final Operation INJECT_MOVEMENT_SLOWDOWN_SERUM_FLUID = makeArsenalInjection("inject_movement_slowdown_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 80);
+    private static final Operation INJECT_DIG_SPEED_SERUM_FLUID = makeArsenalInjection("inject_dig_speed_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.DIG_SPEED).buildInjectionOperation(BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get(), 80);
+    private static final Operation INJECT_DIG_SLOWDOWN_SERUM_FLUID = makeArsenalInjection("inject_dig_slowdown_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.DIG_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get(), 80);
+    private static final Operation INJECT_DAMAGE_BOOST_SERUM_FLUID = makeArsenalInjection("inject_damage_boost_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.DAMAGE_BOOST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get(), 80);
+    private static final Operation INJECT_HEAL_SERUM_FLUID = makeArsenalInjection("inject_heal_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.HEAL).buildInjectionOperation(BTVFluids.FLUID_HEAL_SERUM.getA().get(), 80);
+    private static final Operation INJECT_HARM_SERUM_FLUID = makeArsenalInjection("inject_harm_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.HARM).buildInjectionOperation(BTVFluids.FLUID_HARM_SERUM.getA().get(), 80);
+    private static final Operation INJECT_JUMP_SERUM_FLUID = makeArsenalInjection("inject_jump_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.JUMP).buildInjectionOperation(BTVFluids.FLUID_JUMP_SERUM.getA().get(), 80);
+    private static final Operation INJECT_CONFUSION_SERUM_FLUID = makeArsenalInjection("inject_confusion_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.CONFUSION).buildInjectionOperation(BTVFluids.FLUID_CONFUSION_SERUM.getA().get(), 80);
+    private static final Operation INJECT_REGENERATION_SERUM_FLUID = makeArsenalInjection("inject_regeneration_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.REGENERATION).buildInjectionOperation(BTVFluids.FLUID_REGENERATION_SERUM.getA().get(), 80);
+    private static final Operation INJECT_DAMAGE_RESISTANCE_SERUM_FLUID = makeArsenalInjection("inject_damage_resistance_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.DAMAGE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get(), 80);
+    private static final Operation INJECT_FIRE_RESISTANCE_SERUM_FLUID = makeArsenalInjection("inject_fire_resistance_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.FIRE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get(), 80);
+    private static final Operation INJECT_WATER_BREATHING_SERUM_FLUID = makeArsenalInjection("inject_water_breathing_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.WATER_BREATHING).buildInjectionOperation(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get(), 80);
+    private static final Operation INJECT_INVISIBILITY_SERUM_FLUID = makeArsenalInjection("inject_invisibility_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.INVISIBILITY).buildInjectionOperation(BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get(), 80);
+    private static final Operation INJECT_BLINDNESS_SERUM_FLUID = makeArsenalInjection("inject_blindness_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.BLINDNESS).buildInjectionOperation(BTVFluids.FLUID_BLINDNESS_SERUM.getA().get(), 80);
+    private static final Operation INJECT_NIGHT_VISION_SERUM_FLUID = makeArsenalInjection("inject_night_vision_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.NIGHT_VISION).buildInjectionOperation(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get(), 80);
+    private static final Operation INJECT_HUNGER_SERUM_FLUID = makeArsenalInjection("inject_hunger_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.HUNGER).buildInjectionOperation(BTVFluids.FLUID_HUNGER_SERUM.getA().get(), 80);
+    private static final Operation INJECT_WEAKNESS_SERUM_FLUID = makeArsenalInjection("inject_weakness_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.WEAKNESS).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 80);
+    private static final Operation INJECT_POISON_SERUM_FLUID = makeArsenalInjection("inject_poison_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.POISON).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 80);
+    private static final Operation INJECT_WITHER_SERUM_FLUID = makeArsenalInjection("inject_wither_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.WITHER).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 80);
+
+    private static final Operation INSERT_EMPTY_BLADDER = new Operation.Builder("insert_empty_bladder")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(1.2)
+            .setDuration(80)
+            .setPainForFailure(50)
+            .setCapacityRequirement(-10)
+            .setPersistent(true)
+            .setProgressParticles(true)
+            .buildInsertionOperation(Registration.EMPTY_BLADDER.get());
+
+
     private static final Operation INSERT_EYE = new Operation.Builder("insert_eye")
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(0.2)
@@ -211,6 +243,11 @@ public class OperationRegistry {
             .setPersistent(true)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.PLUCKED_EYE.get());
+
+    private static final Operation INSERT_SHELL = makeArsenalInsertion("insert_shell", 90, 2.5, 55, 16, ArsenalEffectRegistry.VULNERABILITY).buildInsertionOperation(Registration.SHELL.get());
+    private static final Operation INSERT_TINY_SKULL = makeArsenalInsertion("insert_tiny_skull", 110, 0.9, 65, 7, ArsenalEffectRegistry.TERROR).buildInsertionOperation(Registration.TINY_SKULL.get());
+    private static final Operation INSERT_ACID_GLAND = makeArsenalInsertion("insert_acid_gland", 60, 0.9, 80, 12, ArsenalEffectRegistry.DAMAGE_ARMOR).buildInsertionOperation(Registration.ACID_GLAND.get());
+    private static final Operation INSERT_SILK_GLAND = makeArsenalInsertion("insert_silk_gland", 60, 0.9, 120, 4, ArsenalEffectRegistry.ENWEB).buildInsertionOperation(Registration.SILK_GLAND.get());
 
     private static final Operation INSERT_EMERALD_GEM = new Operation.Builder("insert_emerald_gem")
             .addAllowedLocation(SurgicalLocation.BACK)
@@ -225,5 +262,32 @@ public class OperationRegistry {
             .setMaximumTimesAllowed(3)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.EMERALD_GEM.get());
+
+    private static Operation.Builder makeArsenalInsertion(String name, int duration, double pain, double painForFailure, int capacity, ArsenalEffectType effect) {
+        return new Operation.Builder(name)
+                .addAllowedLocation(SurgicalLocation.BACK)
+                .setDuration(duration)
+                .setPainPerTick(pain)
+                .setPainForFailure(painForFailure)
+                .setCapacityRequirement(capacity)
+                .setArsenalEffect(effect)
+                .setPersistent(true)
+                .setProgressParticles(true);
+    }
+
+    private static Operation.Builder makeArsenalInjection(String name, double pain, double painForFailure, int capacity, ArsenalEffectType effect) {
+        return new Operation.Builder(name)
+                .addAllowedLocation(SurgicalLocation.BACK)
+                .setPainPerTick(pain)
+                .setPersistent(true)
+                .setPainForFailure(painForFailure)
+                .setSuccessParticles(true)
+                .setParticleOffset(new Vec3(0, 0, 1))
+                .setSuccessParticleType(ParticleTypes.CRIT)
+                .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
+                .setSuccessParticleCount(5)
+                .setCapacityRequirement(capacity)
+                .setArsenalEffect(effect);
+    }
 
 }

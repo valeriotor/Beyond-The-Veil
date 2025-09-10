@@ -12,6 +12,9 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -31,9 +34,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PatientStatus {
 
@@ -47,6 +48,7 @@ public class PatientStatus {
     // TODO condition is copied to Convalescent capability
     private PatientCondition condition = PatientCondition.STABLE;
     private int leftoverCapacity;
+    private int usedCapacity;
     private double currentPain;
     private int currentAbsolutePainThreshold; // from 0 to ABSOLUTE_PAIN_THRESHOLDS.length
     private int currentMissingPainThreshold; // from 0 to MISSING_PAIN_THRESHOLDS.length
@@ -57,9 +59,9 @@ public class PatientStatus {
     // TODO *persistent* flags are copied to Convalescent capability (new HashSet for persistent flags?)
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
     private Map<String, Integer> persistentFlags = new HashMap<>(); // Integer value is to check how many times we applied the flag
-    private ArsenalEffectType arsenalEffect;
-    private int arsenalEffectAmplifier;
-    private int arsenalEffectDuration;
+    private List<ArsenalEffectType> arsenalEffects = new ArrayList<>();
+    private Map<String, Integer> arsenalEffectAmplifiers = new HashMap<>();
+    private Map<String, Integer> arsenalEffectDurations = new HashMap<>();
     private BurstType burst = BurstRegistry.BASE;
     private int burstExtension;
     private DyeColor mutex;
@@ -83,16 +85,20 @@ public class PatientStatus {
         return leftoverCapacity;
     }
 
-    public ArsenalEffectType getArsenalEffect() {
-        return arsenalEffect;
+    public int getUsedCapacity() {
+        return usedCapacity;
     }
 
-    public int getArsenalEffectAmplifier() {
-        return arsenalEffectAmplifier;
+    public List<ArsenalEffectType> getArsenalEffects() {
+        return arsenalEffects;
     }
 
-    public int getArsenalEffectDuration() {
-        return arsenalEffectDuration;
+    public Map<String, Integer> getArsenalEffectAmplifiers() {
+        return arsenalEffectAmplifiers;
+    }
+
+    public Map<String, Integer> getArsenalEffectDurations() {
+        return arsenalEffectDurations;
     }
 
     public BurstType getBurst() {
@@ -125,7 +131,32 @@ public class PatientStatus {
 
     public TriggerData getTriggerData() {
         TriggerData data = new TriggerData();
-        data.setEffect(new ArsenalEffect(arsenalEffect, arsenalEffectAmplifier, arsenalEffectDuration, true));
+        HashMap<String, Integer> amplifiersCopy = new HashMap<>(arsenalEffectAmplifiers);
+        HashMap<String, Integer> durationsCopy = new HashMap<>(arsenalEffectDurations);
+        for (ArsenalEffectType arsenalEffect : arsenalEffects) {
+            Set<String> chosenAmplifiers = new HashSet<>();
+            Set<String> chosenDurations = new HashSet<>();
+            for (Map.Entry<String, Integer> entry : amplifiersCopy.entrySet()) {
+                chosenAmplifiers.add(entry.getKey());
+            }
+            for (Map.Entry<String, Integer> entry : durationsCopy.entrySet()) {
+                chosenDurations.add(entry.getKey());
+            }
+            for (String chosenAmplifier : chosenAmplifiers) {
+                amplifiersCopy.put(chosenAmplifier, amplifiersCopy.get(chosenAmplifier) - 1);
+                if (amplifiersCopy.get(chosenAmplifier) == 0) {
+                    amplifiersCopy.remove(chosenAmplifier);
+                }
+            }
+            for (String chosenDuration : chosenDurations) {
+                durationsCopy.put(chosenDuration, durationsCopy.get(chosenDuration) - 1);
+                if (durationsCopy.get(chosenDuration) == 0) {
+                    durationsCopy.remove(chosenDuration);
+                }
+            }
+            data.addEffect(new ArsenalEffect(arsenalEffect, chosenAmplifiers, chosenDurations, true));
+        }
+//        data.setEffects(new ArsenalEffect(arsenalEffects, arsenalEffectAmplifiers, arsenalEffectDurations, true));
         data.setBurst(new Burst(burst, burstExtension));
         data.setTriggerType(triggerType);
         data.setTargetType(targetType);
@@ -141,10 +172,10 @@ public class PatientStatus {
         persistentFlags.clear();
         persistentFlags.putAll(data.getFlags());
         TriggerData triggerData = data.getTriggerData();
-        if (triggerData.getEffect() != null) {
-            arsenalEffect = triggerData.getEffect().getEffectType();
-            arsenalEffectAmplifier = triggerData.getEffect().getAmplifier();
-            arsenalEffectDuration = triggerData.getEffect().getDuration();
+        for (ArsenalEffect effect : triggerData.getEffects()) {
+            arsenalEffects.add(effect.getEffectType());
+            effect.getAmplifiers().forEach(s -> arsenalEffectAmplifiers.put(s, arsenalEffectAmplifiers.getOrDefault(s, 0) + 1));
+            effect.getDurations().forEach(s -> arsenalEffectDurations.put(s, arsenalEffectDurations.getOrDefault(s, 0) + 1));
         }
         if (triggerData.getBurst() != null) {
             burst = triggerData.getBurst().getBurstType();
@@ -153,6 +184,7 @@ public class PatientStatus {
         mutex = triggerData.getMutex();
         setCondition(data.getCondition());
         leftoverCapacity = data.getCapacity();
+        usedCapacity = data.getUsedCapacity();
     }
 
     public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
@@ -369,6 +401,10 @@ public class PatientStatus {
                 player.level().playSound(null, player.blockPosition(), operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
             }
             leftoverCapacity -= operation.getCapacityRequirement();
+            if (operation.getCapacityRequirement() > 0) {
+                usedCapacity += operation.getCapacityRequirement();
+            }
+
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             updateTriggerData(operation);
@@ -395,7 +431,7 @@ public class PatientStatus {
 
     private void updateTriggerData(Operation operation) {
         if (operation.getArsenalEffect() != null) {
-            this.arsenalEffect = operation.getArsenalEffect();
+            this.arsenalEffects.add(operation.getArsenalEffect());
         }
         if (operation.getBurst() != null) {
             this.burst = operation.getBurst();
@@ -406,8 +442,12 @@ public class PatientStatus {
         if (operation.getTriggerType() != null) {
             this.triggerType = operation.getTriggerType();
         }
-        arsenalEffectAmplifier += operation.getIncreaseArsenalEffectAmplifier() ? 1 : 0;
-        arsenalEffectDuration += operation.getIncreaseArsenalEffectDuration() ? 1 : 0;
+        if (operation.getIncreaseArsenalEffectAmplifier()) {
+            arsenalEffectAmplifiers.put(operation.getName(), arsenalEffectAmplifiers.getOrDefault(operation.getName(), 0) + 1);
+        }
+        if (operation.getIncreaseArsenalEffectDuration()) {
+            arsenalEffectDurations.put(operation.getName(), arsenalEffectDurations.getOrDefault(operation.getName(), 0) + 1);
+        }
         burstExtension += operation.getIncreaseBurstExtension() ? 1 : 0;
     }
 
@@ -493,10 +533,6 @@ public class PatientStatus {
             currentAbsolutePainThreshold = absolute;
             setDirty(true);
         }
-    }
-
-    void increaseLeftoverCapacity(int amount) {
-        leftoverCapacity += amount;
     }
 
     void explode() {
@@ -587,6 +623,7 @@ public class PatientStatus {
         tag.putString("condition", condition.name());
         tag.putDouble("current_pain", currentPain);
         tag.putInt("leftover_capacity", leftoverCapacity);
+        tag.putInt("usedCapacity", usedCapacity);
         tag.putString("exposed_location", exposedLocation.name());
         tag.putBoolean("incised", incised);
         //tag.putInt("absolute_threshold", currentAbsolutePainThreshold);
@@ -611,14 +648,24 @@ public class PatientStatus {
         tag.put("fluids", fluidTag);
         tag.putBoolean("didFinalAnimation", didFinalAnimation);
 
-        if (arsenalEffect != null) {
-            tag.putString("arsenalEffect", arsenalEffect.getName());
+        ListTag arsenalEffectsTag = new ListTag();
+        tag.put("arsenalEffects", arsenalEffectsTag);
+        for (ArsenalEffectType arsenalEffect : arsenalEffects) {
+            arsenalEffectsTag.add(StringTag.valueOf(arsenalEffect.getName()));
         }
+
         if (burst != null) {
             tag.putString("burst", burst.getName());
         }
-        tag.putInt("arsenalEffectAmplifier", arsenalEffectAmplifier);
-        tag.putInt("arsenalEffectDuration", arsenalEffectDuration);
+
+        CompoundTag amplifiersTag = new CompoundTag();
+        tag.put("amplifiers", amplifiersTag);
+        arsenalEffectAmplifiers.forEach(tag::putInt);
+
+        CompoundTag durationsTag = new CompoundTag();
+        tag.put("durations", durationsTag);
+        arsenalEffectDurations.forEach(tag::putInt);
+
         tag.putInt("burstExtension", burstExtension);
         if (mutex != null) {
             tag.putInt("mutex", mutex.getId());
@@ -637,6 +684,7 @@ public class PatientStatus {
         condition = PatientCondition.valueOf(tag.getString("condition"));
         currentPain = tag.getDouble("current_pain");
         leftoverCapacity = tag.getInt("leftover_capacity");
+        usedCapacity = tag.getInt("usedCapacity");
         exposedLocation = SurgicalLocation.valueOf(tag.getString("exposed_location"));
         incised = tag.getBoolean("incised");
         currentMissingPainThreshold = tag.getInt("missing_threshold"); // needs to be synced to client, even if we don't care about persistence
@@ -654,14 +702,27 @@ public class PatientStatus {
             Fluid f = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(key));
             fluidAmounts.put(f, fluidTag.getDouble(key));
         }
-        if(tag.contains("arsenalEffect")) {
-            arsenalEffect = ArsenalEffectRegistry.byName(tag.getString("arsenalEffect"));
+        arsenalEffects.clear();
+        if (tag.contains("arsenalEffects")) {
+            ListTag arsenalEffectsTag = tag.getList("arsenalEffects", Tag.TAG_STRING);
+            for (int i = 0; i < arsenalEffectsTag.size(); i++) {
+                arsenalEffects.add(ArsenalEffectRegistry.byName(arsenalEffectsTag.getString(i)));
+            }
+
         }
-        if (tag.contains("arsenalEffectAmplifier")) {
-            arsenalEffectAmplifier = tag.getInt("arsenalEffectAmplifier");
+        arsenalEffectAmplifiers.clear();
+        arsenalEffectDurations.clear();
+        if (tag.contains("amplifiers")) {
+            CompoundTag amplifiersTag = tag.getCompound("amplifiers");
+            for (String name : amplifiersTag.getAllKeys()) {
+                arsenalEffectAmplifiers.put(name, amplifiersTag.getInt(name));
+            }
         }
-        if (tag.contains("arsenalEffectDuration")) {
-            arsenalEffectDuration = tag.getInt("arsenalEffectDuration");
+        if (tag.contains("durations")) {
+            CompoundTag durationsTag = tag.getCompound("durations");
+            for (String name : durationsTag.getAllKeys()) {
+                arsenalEffectDurations.put(name, durationsTag.getInt(name));
+            }
         }
         if(tag.contains("burst")) {
             burst = BurstRegistry.byName(tag.getString("burst"));

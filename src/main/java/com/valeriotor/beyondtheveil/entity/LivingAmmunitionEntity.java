@@ -3,14 +3,11 @@ package com.valeriotor.beyondtheveil.entity;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
-import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
-import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
-import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
@@ -162,12 +158,14 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
                 if (attackTimer == 0) {
                     TriggerData data = getTriggerData();
                     Burst burst = data.getBurst();
-                    ArsenalEffect effect = data.getEffect();
+                    List<ArsenalEffect> effects = data.getEffects();
                     if (burst != null) {
                         List<LivingEntity> hitEntities = burst.getHitEntities(this);
                         for (LivingEntity hitEntity : hitEntities) {
-                            if (hitEntity != this && effect != null) {
-                                effect.process(this, hitEntity);
+                            if (hitEntity != this) {
+                                for (ArsenalEffect arsenalEffect : effects) {
+                                    arsenalEffect.process(this, hitEntity);
+                                }
                             }
                         }
                         entityData.set(DATA_BLEEDING, burst.getExtension());

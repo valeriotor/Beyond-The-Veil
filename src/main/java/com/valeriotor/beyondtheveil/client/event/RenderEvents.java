@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.client.event;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -18,10 +17,10 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -638,18 +637,26 @@ public class RenderEvents {
                             int pY = gg.guiHeight() / 2;
                             gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.status") + patientStatus.getCondition().toString(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                             pY += 15;
-                            if (patientStatus.getArsenalEffect() != null) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + patientStatus.getArsenalEffect().getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            if (patientStatus.getLeftoverCapacity() > 0) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.capacity") + patientStatus.getLeftoverCapacity(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
-                            if (patientStatus.getArsenalEffectAmplifier() > 0) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_amplifier") + patientStatus.getArsenalEffectAmplifier(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            for (ArsenalEffectType arsenalEffect : patientStatus.getArsenalEffects()) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + arsenalEffect.getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
-                            if (patientStatus.getArsenalEffectDuration() > 0) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_duration") + patientStatus.getArsenalEffectDuration(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
-                            }
+                            //if (patientStatus.getArsenalEffects() != null) {
+                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + patientStatus.getArsenalEffects().getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                //pY += 15;
+                            //}
+                            //if (patientStatus.getArsenalEffectAmplifier() > 0) {
+                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_amplifier") + patientStatus.getArsenalEffectAmplifier(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                //pY += 15;
+                            //}
+                            //if (patientStatus.getArsenalEffectDuration() > 0) {
+                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_duration") + patientStatus.getArsenalEffectDuration(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                //pY += 15;
+                            //}
                             if (patientStatus.getBurstExtension() > 0) {
                                 gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.burst_extension") + patientStatus.getBurstExtension(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;

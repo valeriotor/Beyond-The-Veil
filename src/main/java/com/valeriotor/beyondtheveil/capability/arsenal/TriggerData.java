@@ -2,17 +2,14 @@ package com.valeriotor.beyondtheveil.capability.arsenal;
 
 import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.Level;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TriggerData {
     private TargetingType triggerType;
@@ -20,7 +17,7 @@ public class TriggerData {
     private List<UUID> restrictedTriggerers = new ArrayList<>();
     private List<UUID> restrictedTargets = new ArrayList<>();
     private List<UUID> ignoredPlayers = new ArrayList<>();
-    private ArsenalEffect effect;
+    private List<ArsenalEffect> effects = new ArrayList<>();
     private Burst burst;
     private UUID master = null;
     private int seeingDistance = 32;
@@ -150,16 +147,16 @@ public class TriggerData {
         this.burst = burst;
     }
 
-    public void setEffect(ArsenalEffect effect) {
-        this.effect = effect;
+    public void addEffect(ArsenalEffect effect) {
+        this.effects.add(effect);
     }
 
     public Burst getBurst() {
         return burst;
     }
 
-    public ArsenalEffect getEffect() {
-        return effect;
+    public List<ArsenalEffect> getEffects() {
+        return effects;
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -197,8 +194,10 @@ public class TriggerData {
         tag.putBoolean("triggered", triggered);
         tag.putInt("priority", priority);
 
-        if (effect != null) {
-            tag.put("effect", effect.writeToNBT(new CompoundTag()));
+        ListTag effectsListTag = new ListTag();
+        tag.put("effects", effectsListTag);
+        for (ArsenalEffect effect : effects) {
+            effectsListTag.add(effect.writeToNBT(new CompoundTag()));
         }
 
         if (burst != null) {
@@ -248,8 +247,11 @@ public class TriggerData {
         triggered = tag.getBoolean("triggered");
         priority = tag.getInt("priority");
 
-        if (tag.contains("effect")) {
-            effect = new ArsenalEffect(tag.getCompound("effect"));
+        if (tag.contains("effects")) {
+            ListTag effectsListTag = tag.getList("effects", Tag.TAG_COMPOUND);
+            for (int i = 0; i < effectsListTag.size(); i++) {
+                effects.add(new ArsenalEffect(effectsListTag.getCompound(i)));
+            }
         }
         if (tag.contains("burst")) {
             burst = new Burst(tag.getCompound("burst"));
@@ -259,7 +261,7 @@ public class TriggerData {
             triggerType = TargetingType.WAS_HIT;
             targetType = TargetingType.HOSTILE_NEARBY;
             mutex = DyeColor.BLACK;
-            effect = new ArsenalEffect(ArsenalEffectRegistry.CAMOUFLAGE, 3, 1, true);
+            effects.add(new ArsenalEffect(ArsenalEffectRegistry.CAMOUFLAGE, Set.of("test"), Set.of("test"), true));
             burst = new Burst(BurstRegistry.BASE, 0);
         }
 

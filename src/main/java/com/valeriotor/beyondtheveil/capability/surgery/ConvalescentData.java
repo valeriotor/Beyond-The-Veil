@@ -14,12 +14,13 @@ import java.util.UUID;
 
 public class ConvalescentData {
 
-    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity) {
+    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity, int usedCapacity) {
         ConvalescentData data = new ConvalescentData();
         data.setFlags(flags);
         data.setCondition(condition);
         data.setTriggerData(triggerData);
         data.setCapacity(capacity);
+        data.setUsedCapacity(usedCapacity);
         return data;
     }
 
@@ -28,6 +29,7 @@ public class ConvalescentData {
     private final Map<String, Integer> counters = new HashMap<>(); // populated lazily. Keys are the flags, values are any integer counter that may be of use
     private TriggerData triggerData;
     private int capacity;
+    private int usedCapacity;
     private int collectedXP = 0;
     private BlockPos chestPos;
     private ItemStack heldStack = ItemStack.EMPTY;
@@ -45,6 +47,14 @@ public class ConvalescentData {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public void setUsedCapacity(int usedCapacity) {
+        this.usedCapacity = usedCapacity;
+    }
+
+    public int getUsedCapacity() {
+        return usedCapacity;
     }
 
     public void setTriggerData(TriggerData triggerData) {
@@ -130,6 +140,7 @@ public class ConvalescentData {
             tag.put("triggerData", triggerData.saveToNBT(new CompoundTag()));
         }
         tag.putInt("capacity", capacity);
+        tag.putInt("usedCapacity", usedCapacity);
         if (chestPos != null) {
             tag.putLong("chestPos", chestPos.asLong());
         }
@@ -152,6 +163,7 @@ public class ConvalescentData {
             triggerData.loadFromNBT(tag.getCompound("triggerData"));
         }
         capacity = tag.getInt("capacity");
+        usedCapacity = tag.getInt("usedCapacity");
         if (tag.contains("chestPos")) {
             chestPos = BlockPos.of(tag.getLong("chestPos"));
         }
