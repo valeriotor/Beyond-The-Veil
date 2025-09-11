@@ -32,12 +32,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class PatientStatus {
 
+    private TriggerData triggerDataCache = null;
     private boolean dirty;
 
     private static final double[] ABSOLUTE_PAIN_THRESHOLDS = new double[]{10, 30, 50};
@@ -130,9 +132,28 @@ public class PatientStatus {
     }
 
     public TriggerData getTriggerData() {
+        if (triggerDataCache != null) {
+            return triggerDataCache;
+        }
         TriggerData data = new TriggerData();
+        List<ArsenalEffect> effects = makeEffects();
+        for (ArsenalEffect effect : effects) {
+            data.addEffect(effect);
+        }
+//        data.setEffects(new ArsenalEffect(arsenalEffects, arsenalEffectAmplifiers, arsenalEffectDurations, true));
+        data.setBurst(new Burst(burst, burstExtension));
+        data.setTriggerType(triggerType);
+        data.setTargetType(targetType);
+        data.setMutex(mutex);
+        triggerDataCache = data;
+        return data;
+    }
+
+    @NotNull
+    private List<ArsenalEffect> makeEffects() {
         HashMap<String, Integer> amplifiersCopy = new HashMap<>(arsenalEffectAmplifiers);
         HashMap<String, Integer> durationsCopy = new HashMap<>(arsenalEffectDurations);
+        List<ArsenalEffect> effects = new ArrayList<>();
         for (ArsenalEffectType arsenalEffect : arsenalEffects) {
             Set<String> chosenAmplifiers = new HashSet<>();
             Set<String> chosenDurations = new HashSet<>();
@@ -154,14 +175,9 @@ public class PatientStatus {
                     durationsCopy.remove(chosenDuration);
                 }
             }
-            data.addEffect(new ArsenalEffect(arsenalEffect, chosenAmplifiers, chosenDurations, true));
+            effects.add(new ArsenalEffect(arsenalEffect, chosenAmplifiers, chosenDurations, true));
         }
-//        data.setEffects(new ArsenalEffect(arsenalEffects, arsenalEffectAmplifiers, arsenalEffectDurations, true));
-        data.setBurst(new Burst(burst, burstExtension));
-        data.setTriggerType(triggerType);
-        data.setTargetType(targetType);
-        data.setMutex(mutex);
-        return data;
+        return effects;
     }
 
     public void fromConvalescentNBT(CompoundTag convalescent) {
@@ -185,6 +201,7 @@ public class PatientStatus {
         setCondition(data.getCondition());
         leftoverCapacity = data.getCapacity();
         usedCapacity = data.getUsedCapacity();
+        this.triggerDataCache = null;
     }
 
     public void setLevelAndCoords(ServerLevel level, BlockPos pos) {
@@ -449,6 +466,7 @@ public class PatientStatus {
             arsenalEffectDurations.put(operation.getName(), arsenalEffectDurations.getOrDefault(operation.getName(), 0) + 1);
         }
         burstExtension += operation.getIncreaseBurstExtension() ? 1 : 0;
+        this.triggerDataCache = null;
     }
 
     @Nullable
@@ -740,6 +758,7 @@ public class PatientStatus {
             targetType = TargetingType.valueOf(tag.getString("targetType"));
         }
         didFinalAnimation = tag.getBoolean("didFinalAnimation");
+        this.triggerDataCache = null;
     }
 
     public void setDirty(boolean dirty) {

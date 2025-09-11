@@ -78,11 +78,12 @@ public abstract class SurgicalBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised()) {
-                        entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity()).saveToNBT(new CompoundTag()));
-                        if (color != null) {
+                        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+                        entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
+                        if (color != null && !patientStatus.getCondition().isTerminal()) {
                             if (p instanceof ServerPlayer sp) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.serverLevel());
-                                bloodPoolData.addEntity(p.getUUID(), color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData), sp.serverLevel());
+                                bloodPoolData.addEntity(p.getUUID(), color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), sp.serverLevel());
                             }
                         } else {
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.surgery.arsenal;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -18,6 +19,10 @@ public abstract class ArsenalEffectType {
         return name;
     }
 
+    public Component getDisplayName() {
+        return Component.translatable("arsenal." + name);
+    }
+
     public abstract void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles);
 
     public static class ArsenalStatusEffectType extends ArsenalEffectType {
@@ -34,6 +39,11 @@ public abstract class ArsenalEffectType {
             super(name);
             this.effect = effect;
             this.durationArray = durationArray;
+        }
+
+        @Override
+        public Component getDisplayName() {
+            return effect.getDisplayName();
         }
 
         @Override

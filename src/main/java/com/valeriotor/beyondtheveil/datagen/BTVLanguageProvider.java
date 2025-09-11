@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.block.GearBenchBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
@@ -877,6 +878,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addCommonCaptions();
         addContact();
         addItems();
+        addArsenal();
     }
 
     private void addItems() {
@@ -2127,6 +2129,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addLetterBox();
         addBaptism();
         addOverlays();
+        addBloodPool();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -2140,6 +2143,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.smith.display_name", "Smith");
 
         add("gui.multiblock.layer", "Layer %d");
+    }
+
+    private void addBloodPool() {
+        add("gui.blood_pool.health", "Health: ");
     }
 
     private void addOverlays() {
@@ -2331,13 +2338,24 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addSurgery() {
         add("surgery.status.status", "Status: ");
+        add("surgery.status.capacity", "Capacity: ");
         add("surgery.status.arsenal", "Burst Effect: ");
-        add("surgery.status.arsenal_amplifier", "Effect Amplifier: ");
-        add("surgery.status.arsenal_duration", "Effect Extender: ");
+        add("surgery.status.arsenal_amplifier", "Amplifier: ");
+        add("surgery.status.arsenal_duration", "Extender: ");
         add("surgery.status.burst_extension", "Burst Extender: ");
         add("surgery.status.mutex", "Mutex: ");
         add("surgery.status.trigger_type", "Trigger: ");
         add("surgery.status.target_type", "Target: ");
+    }
+
+    private void addArsenal() {
+        add("arsenal.harm_undead", "Harm Undead");
+        add("arsenal.harm_arthropods", "Harm Arthropods");
+        add("arsenal.enweb", "Enweb");
+        add("arsenal.damage_armor", "Damage Armor");
+        add("arsenal.knock_upwards", "Knock Upwards");
+        add("arsenal.create_slime", "Create Slime");
+        add("arsenal.everyone_target", "Attract Attackers");
     }
 
 }

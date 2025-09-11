@@ -238,7 +238,7 @@ public class OperationRegistry {
             .setPainPerTick(0.2)
             .setDuration(80)
             .setPainForFailure(150)
-            .setCapacityRequirement(2)
+            .setCapacityRequirement(15)
             .setArsenalEffect(ArsenalEffectRegistry.FOLLY)
             .setPersistent(true)
             .setProgressParticles(true)

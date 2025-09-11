@@ -1,11 +1,15 @@
 package com.valeriotor.beyondtheveil.lib;
 
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.entity.ictya.*;
 import com.valeriotor.beyondtheveil.entity.projectile.UmancalaFireball;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -71,6 +75,21 @@ public class BTVEntities {
                 scared.setDeltaMovement(new Vec3(xDist / dist, 0, zDist / dist));
             }
         }
+    }
+
+    public static Tuple<EntityType<?>, BloodPoolEntityType> getTriggerEntity(ConvalescentData data, TriggerData triggerData) {
+        if (triggerData != null) {
+            if (data.getUsedCapacity() == 0) {
+                return new Tuple<>(BTVEntities.CRAWLER.get(), BloodPoolEntityType.VILLAGER);
+            } else if (data.getUsedCapacity() <= 10) {
+                return new Tuple<>(BTVEntities.ABOMINATION_0.get(), BloodPoolEntityType.ABOMINATION0);
+            } else if (data.getUsedCapacity() <= 20) {
+                return new Tuple<>(BTVEntities.ABOMINATION_1.get(), BloodPoolEntityType.ABOMINATION1);
+            } else {
+                return new Tuple<>(BTVEntities.ABOMINATION_1.get(), BloodPoolEntityType.ABOMINATION1);
+            }
+        }
+        return null;
     }
 
     public enum BTVFlags {

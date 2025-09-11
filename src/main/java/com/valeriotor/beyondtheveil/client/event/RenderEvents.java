@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
@@ -17,7 +18,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
-import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectType;
+import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
@@ -27,7 +28,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -67,11 +71,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.*;
+import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_DURATION;
+import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_PEAK;
 import static net.minecraft.client.renderer.LevelRenderer.getLightColor;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -641,36 +649,8 @@ public class RenderEvents {
                                 gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.capacity") + patientStatus.getLeftoverCapacity(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
-                            for (ArsenalEffectType arsenalEffect : patientStatus.getArsenalEffects()) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + arsenalEffect.getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
-                            }
-                            //if (patientStatus.getArsenalEffects() != null) {
-                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal") + I18n.get("arsenal." + patientStatus.getArsenalEffects().getName()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                //pY += 15;
-                            //}
-                            //if (patientStatus.getArsenalEffectAmplifier() > 0) {
-                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_amplifier") + patientStatus.getArsenalEffectAmplifier(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                //pY += 15;
-                            //}
-                            //if (patientStatus.getArsenalEffectDuration() > 0) {
-                                //gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.arsenal_duration") + patientStatus.getArsenalEffectDuration(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                //pY += 15;
-                            //}
-                            if (patientStatus.getBurstExtension() > 0) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.burst_extension") + patientStatus.getBurstExtension(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
-                            }
-                            if (patientStatus.getMutex() != null) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.mutex") + patientStatus.getMutex().getName(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
-                            }
-                            if (patientStatus.getTriggerType() != null) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.trigger_type") + I18n.get("target_type." + patientStatus.getTriggerType().name()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
-                            }
-                            if (patientStatus.getTargetType() != null) {
-                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.target_type") + I18n.get("target_type." + patientStatus.getTargetType().name()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            for (String s : triggerDataDescription(patientStatus.getTriggerData())) {
+                                gg.drawString(Minecraft.getInstance().font, s, X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
 
@@ -679,6 +659,28 @@ public class RenderEvents {
                 }
             }
         }
+    }
+
+    public static List<String> triggerDataDescription(@NotNull TriggerData data) {
+        List<String> lines = new ArrayList<>();
+        for (ArsenalEffect arsenalEffect : data.getEffects()) {
+            lines.add(arsenalEffect.getEffectType().getDisplayName().getString());
+            lines.add("-   " + I18n.get("surgery.status.arsenal_amplifier") + arsenalEffect.getAmplifier());
+            lines.add("-   " + I18n.get("surgery.status.arsenal_amplifier") + arsenalEffect.getAmplifier());
+        }
+        if (data.getBurst() != null && data.getBurst().getExtension() > 0) {
+            lines.add(I18n.get("surgery.status.burst_extension") + data.getBurst().getExtension());
+        }
+        if (data.getMutex() != null) {
+            lines.add(I18n.get("surgery.status.mutex") + data.getMutex().getName());
+        }
+        if (data.getTriggerType() != null) {
+            lines.add(I18n.get("surgery.status.trigger_type") + I18n.get("target_type." + data.getTriggerType().name()));
+        }
+        if (data.getTargetType() != null) {
+            lines.add(I18n.get("surgery.status.target_type") + I18n.get("target_type." + data.getTargetType().name()));
+        }
+        return lines;
     }
 
     private static boolean isSurgicalItem(Item item) {
