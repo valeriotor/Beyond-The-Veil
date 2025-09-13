@@ -2,11 +2,9 @@ package com.valeriotor.beyondtheveil.networking;
 
 import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
-import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
-import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
@@ -14,6 +12,8 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class GenericToServerPacket {
 
@@ -69,6 +68,13 @@ public class GenericToServerPacket {
         CompoundTag tag = new CompoundTag();
         tag.putInt("chosen", chosen);
         return new GenericToServerPacket(MessageType.CHOOSE_BAPTISM_OPTION, tag);
+    }
+
+    public static GenericToServerPacket spawnBloodPoolEntity(ColorTriplet colorTriplet, UUID entityUUID) {
+        CompoundTag tag = new CompoundTag();
+        tag.put("triplet", colorTriplet.saveToTag(new CompoundTag()));
+        tag.putUUID("entityUUID", entityUUID);
+        return new GenericToServerPacket(MessageType.SPAWN_BLOOD_POOL_ENTITY, tag);
     }
 
     private final MessageType type;
@@ -151,6 +157,11 @@ public class GenericToServerPacket {
                             }
                         });
                     }
+                    case SPAWN_BLOOD_POOL_ENTITY -> {
+                        if (player.getServer() != null) {
+                            BloodPoolData.getInstance(player.getServer()).spawnEntity(player, player.getUUID(), ColorTriplet.fromTag(tag.getCompound("triplet")), tag.getUUID("entityUUID"));
+                        }
+                    }
                 }
 
             }
@@ -169,7 +180,8 @@ public class GenericToServerPacket {
         REDEEM_ITEMS,
         OPEN_LETTER,
         RESPAWN_NOW,
-        CHOOSE_BAPTISM_OPTION
+        CHOOSE_BAPTISM_OPTION,
+        SPAWN_BLOOD_POOL_ENTITY
     }
 
 }

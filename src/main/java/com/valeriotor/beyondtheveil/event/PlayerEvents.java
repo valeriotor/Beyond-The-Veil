@@ -197,7 +197,9 @@ public class PlayerEvents {
     }
 
     public static void syncBloodPool(ServerPlayer player) {
-        Messages.sendToPlayer(GenericToClientPacket.syncBloodPool(player, BloodPoolData.getInstance(player.serverLevel())), player);
+        if (player.getServer() != null) {
+            Messages.sendToPlayer(GenericToClientPacket.syncBloodPool(player, BloodPoolData.getInstance(player.getServer())), player);
+        }
     }
 
 }

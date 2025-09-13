@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client;
 
+import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
@@ -104,6 +105,9 @@ public class ClientData {
 
     public void modifyPoolData(CompoundTag tag) {
         bloodPoolData.modifyPool(Minecraft.getInstance().level, tag);
+        if (Minecraft.getInstance().screen instanceof BloodPoolGui gui) {
+            gui.updateEntities();
+        }
     }
 
     public static class Waypoint {

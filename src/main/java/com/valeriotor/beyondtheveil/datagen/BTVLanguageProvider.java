@@ -2147,6 +2147,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addBloodPool() {
         add("gui.blood_pool.health", "Health: ");
+        add("gui.blood_pool.spawn", "Spawn");
     }
 
     private void addOverlays() {

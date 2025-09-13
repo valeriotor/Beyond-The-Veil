@@ -3,10 +3,10 @@ package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,11 @@ public class BloodPoolData extends SavedData {
     private static final int MAX_ENTITIES_PER_ROW = 1000;
 
     public static BloodPoolData getInstance(ServerLevel sl) {
-        return sl.getDataStorage().computeIfAbsent(BloodPoolData::load, BloodPoolData::create, "bloodPoolData");
+        return sl.getServer().overworld().getDataStorage().computeIfAbsent(BloodPoolData::load, BloodPoolData::create, "bloodPoolData");
+    }
+
+    public static BloodPoolData getInstance(MinecraftServer server) {
+        return server.overworld().getDataStorage().computeIfAbsent(BloodPoolData::load, BloodPoolData::create, "bloodPoolData");
     }
 
     public static BloodPoolData load(CompoundTag tag) {
@@ -129,11 +133,42 @@ public class BloodPoolData extends SavedData {
             addEntity(uuid, color, entity, level);
         } else if (poolModification == PoolModification.TAKE_FIRST) {
             takeFirst(uuid, color, level);
+        } else if (poolModification == PoolModification.TAKE_UUID) {
+            UUID entityUUID = tag.getUUID("entityUUID");
+            takeUuid(uuid, color, level, entityUUID);
         }
     }
 
+    private Optional<BloodPoolEntity> takeUuid(UUID playerId, ColorTriplet triplet, Level level, UUID entityUUID) {
+        List<BloodPoolEntity> entitiesInRow = pools.getOrDefault(playerId, new HashMap<>()).getOrDefault(triplet, new LinkedList<>());
+        if (entitiesInRow.isEmpty()) {
+            return Optional.empty();
+        }
+        for (Iterator<BloodPoolEntity> iterator = entitiesInRow.iterator(); iterator.hasNext(); ) {
+            BloodPoolEntity bloodPoolEntity = iterator.next();
+            if (bloodPoolEntity.getUuid().equals(entityUUID)) {
+                iterator.remove();
+                if (level instanceof ServerLevel sl && sl.getPlayerByUUID(playerId) instanceof ServerPlayer sp) {
+                    CompoundTag tag = new CompoundTag();
+                    tag.putString("UUID", playerId.toString());
+                    tag.putString("modification", PoolModification.TAKE_UUID.name());
+                    tag.put("color", triplet.saveToTag(new CompoundTag()));
+                    tag.putUUID("entityUUID", entityUUID);
+                    Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
+                }
+                return Optional.of(bloodPoolEntity);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void spawnEntity(ServerPlayer player, UUID playerUUID, ColorTriplet triplet, UUID entityUUID) {
+        Optional<BloodPoolEntity> bloodPoolEntity = takeUuid(playerUUID, triplet, player.level(), entityUUID);
+        bloodPoolEntity.ifPresent(e -> e.spawn(player));
+    }
+
     public enum PoolModification {
-        ADD, TAKE_FIRST
+        ADD, TAKE_FIRST, TAKE_UUID
     }
 
 

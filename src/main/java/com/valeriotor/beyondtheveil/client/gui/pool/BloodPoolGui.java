@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
@@ -20,10 +22,8 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static com.valeriotor.beyondtheveil.client.gui.research.ResearchPageGui.LEFT_ARROW;
 import static com.valeriotor.beyondtheveil.client.gui.research.ResearchPageGui.RIGHT_ARROW;
@@ -32,17 +32,12 @@ public class BloodPoolGui extends Screen {
 
     private static final int RIGHT_PAGE_HEIGHT = 519;
     private static final int RIGHT_PAGE_WIDTH = 240;
-    private int imageWidth;
-    private int imageHeight;
-    private float scaleFactor = 1;
-    private ScrollableList<RowEntry> rows;
-    private RightPage rightPage;
     private static final int BACKGROUND_BASE_WIDTH = 1034;
     private static final int BACKGROUND_BASE_HEIGHT = 634;
     private static final int ENTRY_LIST_BASE_LEFT_X = -BACKGROUND_BASE_WIDTH / 2 + 55;
     private static final int ENTRY_LIST_BASE_TOP_Y = -BACKGROUND_BASE_HEIGHT / 2 + 60;
     private static final int RIGHT_PAGE_LEFT_X = 225;
-    private static final int RIGHT_PAGE_TOP_Y = -BACKGROUND_BASE_HEIGHT / 2 + 60;
+    private static final int RIGHT_PAGE_TOP_Y = -BACKGROUND_BASE_HEIGHT / 2 + 20;
     private static final int ENTRY_LIST_BASE_WIDTH = 628;
     private static final int ENTRY_LIST_BASE_HEIGHT = 520;
     private static final int ENTRY_BASE_WIDTH = 615;
@@ -51,6 +46,7 @@ public class BloodPoolGui extends Screen {
     private static final ResourceLocation ROW = new ResourceLocation(References.MODID, "textures/gui/blood_pool/row.png");
     private static final ResourceLocation TEXT_BLOCK_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/blood_pool/text_block_background.png");
     private static final ResourceLocation ICON_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/blood_pool/icon_background.png");
+    private static final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/blood_pool/button.png");
     private static final Map<BloodPoolEntityType, ResourceLocation> ICONS = new HashMap<>();
 
     static {
@@ -58,6 +54,14 @@ public class BloodPoolGui extends Screen {
             ICONS.put(value, new ResourceLocation(References.MODID, "textures/gui/blood_pool/" + value.name().toLowerCase() + ".png"));
         }
     }
+
+    private int imageWidth;
+    private int imageHeight;
+    private float scaleFactor = 1;
+    private ScrollableList<RowEntry> rows;
+    private RightPage rightPage;
+    private ElementHolder buttonHolder;
+    private TexturedButton spawnButton;
 
     public BloodPoolGui() {
         super(Component.translatable("gui.blood_pool.title"));
@@ -85,11 +89,28 @@ public class BloodPoolGui extends Screen {
             scaleFactor = Math.min(width * widthRatio / 100 / imageWidth, scaleFactor);
         }
 
+        updateEntities();
+
+        buttonHolder = ElementHolder.makeHolder(width, height);
+        int buttonWidth = 150;
+        spawnButton = buttonHolder.addElement((RIGHT_PAGE_LEFT_X + RIGHT_PAGE_WIDTH / 2) * 10 / 15  - buttonWidth / 2, (RIGHT_PAGE_TOP_Y + RIGHT_PAGE_HEIGHT * 101 / 100) * 10 / 15, new TexturedButton(buttonWidth, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.blood_pool.spawn"), texturedButton -> {
+            if (rightPage != null) {
+                GenericToServerPacket packet = GenericToServerPacket.spawnBloodPoolEntity(rightPage.triplet, rightPage.entity.getUuid());
+                Messages.sendToServer(packet);
+                rightPage = null;
+                spawnButton.active = spawnButton.visible = false;
+            }
+        }));
+        spawnButton.visible = spawnButton.active = rightPage != null;
+    }
+
+    public void updateEntities() {
         List<RowEntry> entryList = new ArrayList<>();
         Map<ColorTriplet, List<BloodPoolEntity>> entitiesByTriplet = ClientData.getInstance().getBloodPoolData().getEntitiesByTriplet(Minecraft.getInstance().player.getUUID());
         for (Map.Entry<ColorTriplet, List<BloodPoolEntity>> entry : entitiesByTriplet.entrySet()) {
             entryList.add(new RowEntry(entry.getKey(), new ArrayList<>(entry.getValue())));
         }
+        entryList.sort(Comparator.comparing(RowEntry::getTriplet));
 
         rows = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, entryList, ENTRY_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
     }
@@ -128,7 +149,20 @@ public class BloodPoolGui extends Screen {
             pose.popPose();
         }
 
+        pose.pushPose();
+        pose.scale(1.5F, 1.5F, 1);
+        buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
         pose.popPose();
+
+        pose.popPose();
+    }
+
+    private double scaledMouseX(double mouseX) {
+        return (mouseX - width / 2D) / scaleFactor / 1.5;
+    }
+
+    private double scaledMouseY(double mouseY) {
+        return (mouseY - height / 2D) / scaleFactor / 1.5;
     }
 
     private int listMouseX(double pMouseX) {
@@ -152,6 +186,8 @@ public class BloodPoolGui extends Screen {
         if (rows.mouseClicked(listMouseX(pMouseX), listMouseY(pMouseY), pButton)) {
             return true;
         } else if (rightPage != null && rightPage.mouseClicked(pageMouseX(pMouseX), pageMouseY(pMouseY), pButton)) {
+            return true;
+        } else if (buttonHolder.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton)) {
             return true;
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
@@ -192,6 +228,10 @@ public class BloodPoolGui extends Screen {
             for (int i = 0; i < 3; i++) {
                 dyeItems[i] = triplet.index(i) != null ? new ItemStack(DyeItem.byColor(triplet.index(i))) : null;
             }
+        }
+
+        public ColorTriplet getTriplet() {
+            return triplet;
         }
 
         @Override
@@ -249,11 +289,11 @@ public class BloodPoolGui extends Screen {
 
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
-            if (hoveringLeftArrow(relativeMouseX, relativeMouseY)) {
+            if (hoveringLeftArrow(relativeMouseX, relativeMouseY) && offset > 0) {
                 offset = Math.max(0, offset - 1);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 return true;
-            } else if (hoveringRightArrow(relativeMouseX, relativeMouseY)) {
+            } else if (hoveringRightArrow(relativeMouseX, relativeMouseY) && offset < entities.size() - 1) {
                 offset = Math.min(entities.size() - 1, offset + 1);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 return true;
@@ -262,7 +302,8 @@ public class BloodPoolGui extends Screen {
                     int x = 87 + 100 * i;
                     int y = 11;
                     if (entities.size() > i + offset && relativeMouseX > x && relativeMouseX < x + 82 && relativeMouseY > y && relativeMouseY < y + 82) {
-                        rightPage = new RightPage(entities.get(i + offset));
+                        rightPage = new RightPage(entities.get(i + offset), triplet, i + offset);
+                        spawnButton.visible = spawnButton.active = true;
                         return true;
                     }
                 }
@@ -286,12 +327,16 @@ public class BloodPoolGui extends Screen {
         private static final int TEXT_BLOCK_WIDTH = RIGHT_PAGE_WIDTH * 9 / 10;
         private static final int TEXT_BLOCK_HEIGHT = RIGHT_PAGE_HEIGHT * 5 / 10;
         private final BloodPoolEntity entity;
+        private final ColorTriplet triplet;
+        private final int index;
         private final ScrollableList<Element> lines;
         private final float SCALE = 1.5F;
 
-        protected RightPage(BloodPoolEntity entity) {
+        protected RightPage(BloodPoolEntity entity, ColorTriplet triplet, int index) {
             super(RIGHT_PAGE_WIDTH, RIGHT_PAGE_HEIGHT);
             this.entity = entity;
+            this.triplet = triplet;
+            this.index = index;
             String description = entity.textDescription();
             List<Element> lines = new TextUtil().parseText(description, (int) ((TEXT_BLOCK_WIDTH - 15) * 92 / 100 / SCALE), Minecraft.getInstance().font);
             lines.removeIf(e -> e instanceof Separators.Separator);

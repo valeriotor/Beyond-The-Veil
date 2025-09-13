@@ -2,8 +2,9 @@ package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
+import org.jetbrains.annotations.NotNull;
 
-public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) {
+public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) implements Comparable<ColorTriplet> {
 
     public DyeColor index(int i) {
         if (i == 0) {
@@ -42,5 +43,22 @@ public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) {
         sb.append(second == null ? "null|" : (second.name() + "|"));
         sb.append(third == null ? "null" : (third.name()));
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(@NotNull ColorTriplet o) {
+        for (int i = 0; i < 3; i++) {
+            if (index(i) == null && o.index(i) != null) {
+                return -1;
+            } else if (index(i) != null && o.index(i) == null) {
+                return 1;
+            } else if (index(i) != null && o.index(i) != null) {
+                int compareDye = index(i).compareTo(o.index(i));
+                if (compareDye != 0) {
+                    return compareDye;
+                }
+            }
+        }
+        return 0;
     }
 }

@@ -81,8 +81,8 @@ public abstract class SurgicalBE extends BlockEntity {
                         ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
                         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
                         if (color != null && !patientStatus.getCondition().isTerminal()) {
-                            if (p instanceof ServerPlayer sp) {
-                                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.serverLevel());
+                            if (p instanceof ServerPlayer sp && sp.getServer() != null) {
+                                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
                                 bloodPoolData.addEntity(p.getUUID(), color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), sp.serverLevel());
                             }
                         } else {
