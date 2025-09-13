@@ -60,6 +60,7 @@ public class RitualRegistry {
                     ColorTriplet colorTriplet = new ColorTriplet(dyes.get(0), dyes.get(1), dyes.get(2));
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("pool", true);
+                    tag.putUUID("owner", player.getUUID());
                     BlockItem.setBlockEntityData(flebo, BTVBlockEntities.FLEBO_BE.get(), colorTriplet.saveToTag(tag));
                     return List.of(flebo);
                 }

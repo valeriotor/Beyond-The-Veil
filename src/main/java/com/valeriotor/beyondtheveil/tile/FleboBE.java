@@ -6,13 +6,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.UUID;
 
 public class FleboBE extends BlockEntity {
 
-    private boolean pool = false;
     private ColorTriplet poolTriplet = new ColorTriplet(null, null, null);
+    private UUID owner;
 
     public FleboBE(BlockPos pPos, BlockState pBlockState) {
         super(BTVBlockEntities.FLEBO_BE.get(), pPos, pBlockState);
@@ -26,21 +27,23 @@ public class FleboBE extends BlockEntity {
         return poolTriplet;
     }
 
-    public boolean isPool() {
-        return pool;
+    public UUID getOwner() {
+        return owner;
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
-        pTag.putBoolean("pool", pool);
         poolTriplet.saveToTag(pTag);
+        if (owner != null) {
+            pTag.putUUID("owner", owner);
+        }
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        pool = pTag.getBoolean("pool");
         poolTriplet = ColorTriplet.fromTag(pTag);
+        owner = pTag.contains("owner") ? pTag.getUUID("owner") : null;
     }
 }

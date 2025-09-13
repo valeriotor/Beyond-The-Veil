@@ -47,6 +47,8 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public abstract class SurgicalBE extends BlockEntity {
 
     private final SurgicalLocation defaultLocation;
@@ -55,6 +57,7 @@ public abstract class SurgicalBE extends BlockEntity {
     private CompoundTag entityData; // Exists only server side
     private boolean hasFlebo;
     private ColorTriplet color;
+    private UUID fleboOwner;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -83,7 +86,7 @@ public abstract class SurgicalBE extends BlockEntity {
                         if (color != null && !patientStatus.getCondition().isTerminal()) {
                             if (p instanceof ServerPlayer sp && sp.getServer() != null) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
-                                bloodPoolData.addEntity(p.getUUID(), color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), sp.serverLevel());
+                                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), sp.serverLevel());
                             }
                         } else {
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
@@ -337,8 +340,9 @@ public abstract class SurgicalBE extends BlockEntity {
                         if (level.getBlockState(relative).getBlock() == Registration.FLEBO.get()) {
                             hasFlebo = true;
                             FleboBE be = level.getBlockEntity(relative) instanceof FleboBE ? (FleboBE) level.getBlockEntity(relative) : (level.getBlockEntity(relative.below()) instanceof FleboBE ? (FleboBE) level.getBlockEntity(relative.below()) : null);
-                            if (be != null && be.isPool()) {
+                            if (be != null && be.getOwner() != null) {
                                 color = be.getColor();
+                                fleboOwner = be.getOwner();
                             }
                             break;
                         }
