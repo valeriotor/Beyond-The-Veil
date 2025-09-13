@@ -9,14 +9,18 @@ import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -194,8 +198,17 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             prevLastStringProgressSize = lastStringProgressSize;
             lastStringProgressSize = (int) Math.floor(stringProgress);
             tryAddCharacter();
+            charactersAddedCounter++;
+            if (currentLine < localizedNpcLines.size() && charactersAddedCounter % 3 == 0) {
+                SoundEvent sound = menu.getTemplate().getType().getSound();
+                if (sound != null) {
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 1));
+                }
+            }
         }
     }
+
+    private int charactersAddedCounter = 0;
 
     private void tryAddCharacter() {
         if (lastStringProgressSize > prevLastStringProgressSize && currentLine < localizedNpcLines.size()) {
