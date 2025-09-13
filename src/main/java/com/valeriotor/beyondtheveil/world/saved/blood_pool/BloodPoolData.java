@@ -167,6 +167,11 @@ public class BloodPoolData extends SavedData {
         bloodPoolEntity.ifPresent(e -> e.spawn(player));
     }
 
+    public void spawnFirst(ServerPlayer player, UUID playerUUID, ColorTriplet triplet) {
+        Optional<BloodPoolEntity> bloodPoolEntity = takeFirst(playerUUID, triplet, player.level());
+        bloodPoolEntity.ifPresent(e -> e.spawn(player));
+    }
+
     public enum PoolModification {
         ADD, TAKE_FIRST, TAKE_UUID
     }

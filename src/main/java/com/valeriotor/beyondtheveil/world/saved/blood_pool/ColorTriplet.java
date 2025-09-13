@@ -2,9 +2,34 @@ package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) implements Comparable<ColorTriplet> {
+
+    public static ColorTriplet fromTag(CompoundTag tag) {
+        DyeColor first = tag.contains("first") ? DyeColor.valueOf(tag.getString("first")) : null;
+        DyeColor second = tag.contains("second") ? DyeColor.valueOf(tag.getString("second")) : null;
+        DyeColor third = tag.contains("third") ? DyeColor.valueOf(tag.getString("third")) : null;
+        return new ColorTriplet(first, second, third);
+    }
+
+    public static ColorTriplet fromItems(Item item0, Item item1, Item item2) {
+        DyeColor dyeColor0 = null;
+        DyeColor dyeColor1 = null;
+        DyeColor dyeColor2 = null;
+        if (item0 instanceof DyeItem dye) {
+            dyeColor0 = dye.getDyeColor();
+        }
+        if (item1 instanceof DyeItem dye) {
+            dyeColor1 = dye.getDyeColor();
+        }
+        if (item2 instanceof DyeItem dye) {
+            dyeColor2 = dye.getDyeColor();
+        }
+        return new ColorTriplet(dyeColor0, dyeColor1, dyeColor2);
+    }
 
     public DyeColor index(int i) {
         if (i == 0) {
@@ -27,13 +52,6 @@ public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) impl
             tag.putString("third", third.name());
         }
         return tag;
-    }
-
-    public static ColorTriplet fromTag(CompoundTag tag) {
-        DyeColor first = tag.contains("first") ? DyeColor.valueOf(tag.getString("first")) : null;
-        DyeColor second = tag.contains("second") ? DyeColor.valueOf(tag.getString("second")) : null;
-        DyeColor third = tag.contains("third") ? DyeColor.valueOf(tag.getString("third")) : null;
-        return new ColorTriplet(first, second, third);
     }
 
     @Override

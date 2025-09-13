@@ -49,9 +49,9 @@ public class GearBenchContainer extends AbstractContainerMenu {
                     addSlot(new SlotItemHandler(h, i, 8 + 18 * (i % 4), -2 + 18 * (i / 4)));
                 }
             });
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(h ->
+                    addSlot(new GearBenchOutputSlot(h, 0, 138, 24, blockEntity)));
         }
-        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(h ->
-                addSlot(new GearBenchOutputSlot(h, 0, 138, 24, blockEntity)));
 
         final int PLAYER_INVENTORY_XPOS = 8;
         final int PLAYER_INVENTORY_YPOS = 89;

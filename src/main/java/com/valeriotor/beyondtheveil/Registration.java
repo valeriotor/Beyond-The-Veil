@@ -2,10 +2,8 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
-import com.valeriotor.beyondtheveil.container.DreamBottleContainer;
-import com.valeriotor.beyondtheveil.container.DrownedContainer;
-import com.valeriotor.beyondtheveil.container.GearBenchContainer;
-import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
+import com.valeriotor.beyondtheveil.client.gui.pool.BloodGemGui;
+import com.valeriotor.beyondtheveil.container.*;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
@@ -272,7 +270,8 @@ public class Registration {
     public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
     public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
     public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
-    public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", () -> new DreamBottleItem()); // new ItemDreamBottle("dream_bottle");
+    public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", DreamBottleItem::new); // new ItemDreamBottle("dream_bottle");
+    public static final RegistryObject<Item> BLOOD_GEM = ITEMS.register("blood_gem", BloodGemItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_COVENANT = ITEMS.register("blood_covenant", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
     public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
@@ -365,6 +364,7 @@ public class Registration {
     public static final RegistryObject<Item> SANDFLATTER_EGG = ITEMS.register("sandflatter", () -> new ForgeSpawnEggItem(BTVEntities.SANDFLATTER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
 
     public static final RegistryObject<MenuType<GearBenchContainer>> GEAR_BENCH_CONTAINER = MENUS.register(GEAR_BENCH.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new GearBenchContainer(windowId, data.readBlockPos(), inv, inv.player)));
+    public static final RegistryObject<MenuType<BloodGemContainer>> BLOOD_GEM_CONTAINER = MENUS.register(BLOOD_GEM.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new BloodGemContainer(windowId, inv, inv.player)));
     public static final RegistryObject<MenuType<LetterBoxContainer>> LETTER_BOX_CONTAINER = MENUS.register(LETTER_BOX.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new LetterBoxContainer(windowId, data.readBlockPos(), inv.player)));
     public static final RegistryObject<MenuType<DreamBottleContainer>> DREAM_BOTTLE_CONTAINER = MENUS.register(DREAM_BOTTLE.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new DreamBottleContainer(windowId, inv, inv.player)));
     public static final RegistryObject<MenuType<DrownedContainer>> DROWNED_CONTAINER = MENUS.register("drowned", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedContainer(windowId, inv, inv.player, data)));
@@ -495,6 +495,7 @@ public class Registration {
                 output.accept(BONE_TIARA.get());
                 output.accept(BLEEDING_BELT.get());
                 output.accept(DREAM_BOTTLE.get());
+                output.accept(BLOOD_GEM.get());
                 output.accept(SHOGGOTH_MAP.get());
                 output.accept(BLOOD_COVENANT.get());
                 output.accept(REVELATION_RING.get());

@@ -63,6 +63,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(BONE_TIARA.get(), "Bone Tiara");
         add(BLEEDING_BELT.get(), "Bleeding Belt");
         add(DREAM_BOTTLE.get(), "Dream Bottle");
+        add(BLOOD_GEM.get(), "Blood Gem");
         add(SHOGGOTH_MAP.get(), "Shoggoth Map");
         add(BLOOD_COVENANT.get(), "Blood Covenant");
         add(REVELATION_RING.get(), "Ring of Revelation");
@@ -2124,6 +2125,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.sleep_chamber", "Sleep Chamber");
         add("gui.sleep_chamber.wake", "Leave chamber");
         add("gui.killed_by_cultist.respawn", "Respawn, right here, §oright now.");
+        add("gui.dream_bottle.title", "Dream Bottle");
+        add("gui.blood_gem.title", "Blood Gem");
 
         addJournal();
         addLetterBox();
