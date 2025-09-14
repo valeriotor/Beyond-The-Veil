@@ -159,6 +159,7 @@ public class BloodPoolData extends SavedData {
                 return Optional.of(bloodPoolEntity);
             }
         }
+        setDirty();
         return Optional.empty();
     }
 

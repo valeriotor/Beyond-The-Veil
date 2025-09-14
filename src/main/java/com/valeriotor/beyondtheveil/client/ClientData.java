@@ -26,7 +26,10 @@ public class ClientData {
     }
 
     public static void newInstance() {
+        ClientData old = instance;
         instance = new ClientData();
+        // any data that should survive after recreating player
+        instance.bloodPoolData = old.bloodPoolData;
     }
 
     //@SubscribeEvent
