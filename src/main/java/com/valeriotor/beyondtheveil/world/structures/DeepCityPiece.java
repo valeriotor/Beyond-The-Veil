@@ -89,7 +89,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
     private static StructurePlaceSettings makeSettings(Rotation pRotation) {
         //BlockIgnoreProcessor blockignoreprocessor = pOverwrite ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
-        return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).setRotation(pRotation);
+        return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).setRotation(pRotation).setKeepLiquids(false);
     }
 
     @Override
@@ -235,6 +235,8 @@ public class DeepCityPiece extends TemplateStructurePiece {
         private int index = 0;
         private int branchLevel = 0;
         private Point currentPoint;
+        private boolean madeAltar = false;
+        private DeepCityPiece altarTop;
 
         public DeepCityLayout(RandomSource rand, BlockPos center, StructureTemplateManager manager) {
             this.rand = rand;
@@ -273,8 +275,15 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
             if (map.containsKey(newPoint)) return;
             BlockPos newPos = center.offset(newPoint.x * (INDIVIDUAL_WIDTH), 0, newPoint.y * (INDIVIDUAL_WIDTH));
-            WeightedBuilding weightedBuilding = buildingTypes.getRandom(rand).get();
-            DeepCityPiece piece = new DeepCityPiece(manager, weightedBuilding.name, Rotation.NONE, newPos, weightedBuilding.radius, weightedBuilding.doorRadius);
+            DeepCityPiece piece;
+            if (!madeAltar && Math.abs(newPoint.x) + Math.abs(newPoint.y) == 3) {
+                piece = new DeepCityPiece(manager, "altar", Rotation.NONE, newPos, 16, 15);
+                altarTop = new DeepCityPiece(manager, "altar_top", Rotation.NONE, newPos.above(38), 16, 15);
+                madeAltar = true;
+            } else {
+                WeightedBuilding weightedBuilding = buildingTypes.getRandom(rand).get();
+                piece = new DeepCityPiece(manager, weightedBuilding.name, Rotation.NONE, newPos, weightedBuilding.radius, weightedBuilding.doorRadius);
+            }
             map.put(newPoint, piece);
 
             Point oldPoint = currentPoint;
@@ -338,9 +347,10 @@ public class DeepCityPiece extends TemplateStructurePiece {
                 for (int x = -4; x <= 4; x++) {
                     Point p = new Point(x, y);
                     if (map.containsKey(p)) {
-                        sb.append(switch (map.get(p).radius) {
-                            case 6 -> 'H';
-                            case 9 -> 'B';
+                        sb.append(switch (map.get(p).templateName) {
+                            case "home1" -> 'H';
+                            case "beacon" -> 'B';
+                            case "altar" -> 'T';
                             default -> 'A';
                         });
                     } else
@@ -373,7 +383,23 @@ public class DeepCityPiece extends TemplateStructurePiece {
         }
 
         public List<DeepCityPiece> getAsList() {
-            return new LinkedList<>(this.map.values());
+            if (altarTop == null) {
+                Point toReplace = null;
+                for (Point point : map.keySet()) {
+                    if (Math.abs(point.x) + Math.abs(point.y) == 2) {
+                        toReplace = point;
+                        break;
+                    }
+                }
+                if (toReplace != null) {
+                    BlockPos newPos = center.offset(toReplace.x * (INDIVIDUAL_WIDTH), 0, toReplace.y * (INDIVIDUAL_WIDTH));
+                    map.put(toReplace, new DeepCityPiece(manager, "altar", Rotation.NONE, newPos, 16, 15));
+                    altarTop = new DeepCityPiece(manager, "altar_top", Rotation.NONE, newPos.above(38), 16, 15);
+                }
+            }
+            LinkedList<DeepCityPiece> deepCityPieces = new LinkedList<>(this.map.values());
+            deepCityPieces.add(this.altarTop);
+            return deepCityPieces;
         }
 
         private static class Connection {
