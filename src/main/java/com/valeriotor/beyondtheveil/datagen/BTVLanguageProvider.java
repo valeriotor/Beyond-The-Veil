@@ -2146,6 +2146,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.smith.display_name", "Smith");
 
         add("gui.multiblock.layer", "Layer %d");
+
+        add("container.deep_chest", "Deep Chest");
     }
 
     private void addBloodPool() {

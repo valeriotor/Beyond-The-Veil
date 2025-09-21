@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.world.structures;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.DeepChestBE;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 import java.awt.Point;
 import java.util.*;
@@ -65,14 +67,14 @@ public class DeepCityPiece extends TemplateStructurePiece {
         this.centerPos = centerPos;
         this.radius = radius;
         this.doorRadius = doorRadius;
-        this.boundingBox = new BoundingBox(centerPos.getX()-((INDIVIDUAL_WIDTH-1)/2), boundingBox.minY(), centerPos.getZ()-((INDIVIDUAL_WIDTH-1)/2), centerPos.getX()+((INDIVIDUAL_WIDTH-1)/2), boundingBox.maxY(), centerPos.getZ()+((INDIVIDUAL_WIDTH-1)/2));
+        this.boundingBox = new BoundingBox(centerPos.getX() - ((INDIVIDUAL_WIDTH - 1) / 2), boundingBox.minY(), centerPos.getZ() - ((INDIVIDUAL_WIDTH - 1) / 2), centerPos.getX() + ((INDIVIDUAL_WIDTH - 1) / 2), boundingBox.maxY(), centerPos.getZ() + ((INDIVIDUAL_WIDTH - 1) / 2));
     }
 
     public DeepCityPiece(StructureTemplateManager pStructureTemplateManager, CompoundTag pTag) {
         super(Registration.DEEP_CITY_PIECE.get(), pTag, pStructureTemplateManager, (p_227512_) -> makeSettings(Rotation.valueOf(pTag.getString("Rot"))));
         this.radius = pTag.getInt("radius");
         this.centerPos = templatePosition.offset(this.radius, 0, this.radius);
-        this.boundingBox = new BoundingBox(centerPos.getX()-((INDIVIDUAL_WIDTH-1)/2), boundingBox.minY(), centerPos.getZ()-((INDIVIDUAL_WIDTH-1)/2), centerPos.getX()+((INDIVIDUAL_WIDTH-1)/2), boundingBox.maxY(), centerPos.getZ()+((INDIVIDUAL_WIDTH-1)/2));
+        this.boundingBox = new BoundingBox(centerPos.getX() - ((INDIVIDUAL_WIDTH - 1) / 2), boundingBox.minY(), centerPos.getZ() - ((INDIVIDUAL_WIDTH - 1) / 2), centerPos.getX() + ((INDIVIDUAL_WIDTH - 1) / 2), boundingBox.maxY(), centerPos.getZ() + ((INDIVIDUAL_WIDTH - 1) / 2));
         if (pTag.contains("corridor0")) {
             for (int i = 0; i < 4; i++) {
                 corridors[i] = pTag.getBoolean("corridor" + i);
@@ -114,7 +116,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         this.placeSettings.setBoundingBox(pBox);
         //this.boundingBox = this.template.getBoundingBox(this.placeSettings, this.templatePosition);
         if (this.template.placeInWorld(pLevel, this.templatePosition, pPos, this.placeSettings, pRandom, 2)) {
-            for(StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.STRUCTURE_BLOCK)) {
+            for (StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.STRUCTURE_BLOCK)) {
                 if (structuretemplate$structureblockinfo.nbt() != null) {
                     StructureMode structuremode = StructureMode.valueOf(structuretemplate$structureblockinfo.nbt().getString("mode"));
                     if (structuremode == StructureMode.DATA) {
@@ -123,7 +125,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
                 }
             }
 
-            for(StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo1 : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.JIGSAW)) {
+            for (StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo1 : this.template.filterBlocks(this.templatePosition, this.placeSettings, Blocks.JIGSAW)) {
                 if (structuretemplate$structureblockinfo1.nbt() != null) {
                     String s = structuretemplate$structureblockinfo1.nbt().getString("final_state");
                     BlockState blockstate = Blocks.AIR.defaultBlockState();
@@ -135,6 +137,13 @@ public class DeepCityPiece extends TemplateStructurePiece {
                     }
 
                     pLevel.setBlock(structuretemplate$structureblockinfo1.pos(), blockstate, 3);
+                }
+            }
+            if (Objects.equals(templateName, "altar")) {
+                for (int i = 0; i < 5; i++) {
+                    if (pLevel.getBlockEntity(this.getWorldPos(22 + i, 17, 7)) instanceof DeepChestBE be) {
+                        be.setLootTable(new ResourceLocation(References.MODID, "deep_city_altar"), pRandom.nextLong());
+                    }
                 }
             }
         }
@@ -153,7 +162,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         direction = direction.getOpposite();
         int distance = INDIVIDUAL_WIDTH / 2 + 1 - doorRadius - 1;
         pos = pos.relative(direction, doorRadius + 1);
-        pos = pos.offset(centerPos.offset(-((INDIVIDUAL_WIDTH-1)/2), 0, -((INDIVIDUAL_WIDTH-1)/2)).multiply(-1));
+        pos = pos.offset(centerPos.offset(-((INDIVIDUAL_WIDTH - 1) / 2), 0, -((INDIVIDUAL_WIDTH - 1) / 2)).multiply(-1));
         //BlockPos from = new BlockPos(box.minX(), box.minY(), box.minZ()).offset(centerPos.multiply(-1));
         //BlockPos to = new BlockPos(box.maxX(), box.maxY(), box.maxZ()).offset(centerPos.multiply(-1));
         //generateBox(level, box, from.getX(), from.getY(), from.getZ(), to.getX(), to.getY(), to.getZ(), Blocks.AMETHYST_BLOCK.defaultBlockState(), Blocks.AMETHYST_BLOCK.defaultBlockState(), false);

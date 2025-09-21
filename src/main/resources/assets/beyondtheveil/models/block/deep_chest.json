@@ -1,5 +1,6 @@
 {
   "credit": "Made with Blockbench",
+  "parent": "block/block",
   "textures": {
     "0": "beyondtheveil:block/deep_chest",
     "particle": "beyondtheveil:block/deep_chest"

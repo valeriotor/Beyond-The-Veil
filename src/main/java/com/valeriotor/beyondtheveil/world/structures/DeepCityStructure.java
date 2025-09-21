@@ -45,7 +45,6 @@ public class DeepCityStructure extends Structure {
         list.addAll(layout.getAsList());
         list.add(new DeepCityPiece(pContext.structureTemplateManager(), "arena_top", Rotation.NONE, pStartPos.offset(0, 48, 0), 19, 5));
         list.forEach(pBuilder::addPiece);
-        System.out.println(list.size());
         pBuilder.moveInsideHeights(pContext.random(), 20, 50);
     } // 1031 -489 --- 1069 -451  // 990 -530 --- 1002 -518
 

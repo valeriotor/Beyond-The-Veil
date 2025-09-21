@@ -1,4 +1,4 @@
-// 1.20.1	2025-08-10T22:36:05.2563954	Loot Tables
+// 1.20.1	2025-09-21T19:19:19.3203345	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -61,3 +61,4 @@ b7c63f9e4d4185807bd44acff9acece6c893e461 data/beyondtheveil/loot_tables/blocks/v
 09e694c46092fb3fbea45b12e2d76dadb428d4d5 data/beyondtheveil/loot_tables/blocks/watery_cradle.json
 b7bdd4602b6a5d3d86a11124c16d66bd346a1edd data/beyondtheveil/loot_tables/blocks/worn_bricks.json
 44abe2da680857c5b63ce6cd5c43a0ebb312790f data/beyondtheveil/loot_tables/blocks/worn_brick_stairs.json
+afc407e2df321da94c27e182496c462a611bcea0 data/beyondtheveil/loot_tables/deep_city_altar.json

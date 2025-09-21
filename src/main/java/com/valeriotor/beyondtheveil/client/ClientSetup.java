@@ -67,6 +67,7 @@ public class ClientSetup {
             MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
             MenuScreens.register(Registration.DROWNED_DIALOGUE_MENU.get(), DrownedDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());
+            //ItemBlockRenderTypes.setRenderLayer(Registration.DEEP_CHEST.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_FILLED_CANOPY.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FISH_BARREL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.IDOL.get(), RenderType.cutout());
