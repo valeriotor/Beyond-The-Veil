@@ -159,7 +159,7 @@ public class BTVItemModels extends ItemModelProvider {
         //singleTexture(SYRINGE.getId().getPath(),            mcLoc("item/handheld"), "layer0", modLoc("item/" + SYRINGE.getId().getPath()));
         //singleTexture(SCALPEL.getId().getPath(),            mcLoc("item/handheld"), "layer0", modLoc("item/" + SCALPEL.getId().getPath()));
         //singleTexture(FORCEPS.getId().getPath(),            mcLoc("item/handheld"), "layer0", modLoc("item/" + FORCEPS.getId().getPath()));
-        singleTexture(TONGS.getId().getPath(),              mcLoc("item/handheld"), "layer0", modLoc("item/" + TONGS.getId().getPath()));
+        //singleTexture(TONGS.getId().getPath(),              mcLoc("item/handheld"), "layer0", modLoc("item/" + TONGS.getId().getPath()));
         singleTexture(SEWING_NEEDLE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SEWING_NEEDLE.getId().getPath()));
         singleTexture(ANTIDOTE_CAPSULE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + ANTIDOTE_CAPSULE.getId().getPath()));
         singleTexture(VEIN_MINER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + VEIN_MINER.getId().getPath()));

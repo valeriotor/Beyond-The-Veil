@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/tongs_base"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/tongs_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/tongs_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/tongs_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/tongs_held"},
+    "head":  {"parent": "beyondtheveil:item/tongs_held"},
+    "gui": {"parent": "beyondtheveil:item/tongs_base"},
+    "ground":  {"parent": "beyondtheveil:item/tongs_held"},
+    "fixed": {"parent": "beyondtheveil:item/tongs_held"}
+  },
+  "loader": "forge:separate_transforms"
+}
