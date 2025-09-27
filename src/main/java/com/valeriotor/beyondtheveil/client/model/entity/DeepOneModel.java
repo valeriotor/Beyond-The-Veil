@@ -93,8 +93,6 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     public static LayerDefinition createBodyLayer() {
 
 
-
-
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
@@ -344,56 +342,13 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                     this.left_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f;
                     this.left_arm.xRot += Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 2;
                     this.right_arm.xRot += Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f / 2;
-                } else if (false && !deepOne.isTargeting()) {
-                    main_body.xRot = 57.5F * Mth.PI / 180;
-                    neck.xRot = -57.5F * Mth.PI / 180;
-                    this.left_leg.y = 0.7719F;
-                    this.right_leg.y = 0.7719F;
-                    this.right_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.7662F) * 1F * limbSwingAmount / f;
-                    this.left_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.7662F + 1.5F) * 1F * limbSwingAmount / f;
-                    this.left_arm.xRot = -1.5F + Mth.cos(limbSwing * 0.4662F) * 1F * limbSwingAmount / f * 1.5F;
-                    this.right_arm.xRot = -1.5F + Mth.cos(limbSwing * 0.4662F) * 1F * limbSwingAmount / f * 1.5F;
-                    this.right_arm.xRot = -57.5F * Mth.PI / 180;
-                    this.right_arm.yRot = 4.79F * Mth.PI / 180;
-                    this.right_arm.zRot = 10 * Mth.PI / 180;
-                    this.right_arm2.xRot = -30 * Mth.PI / 180;
-                    this.right_hand.xRot = -30 * Mth.PI / 180;
-                    this.left_arm.yRot = -0.4F;
-                    this.left_arm.zRot = -0.4F;
-                } else if (false) {
-                    main_body.xRot = 82.5F * Mth.PI / 180;
-                    neck.xRot = -85.5F * Mth.PI / 180;
-                    this.right_arm.xRot = -66.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount;
-                    this.right_arm.xRot = -150.5F * Mth.PI / 180;
-                    this.right_arm.yRot = 30.79F * Mth.PI / 180;
-                    this.right_arm.zRot = 31 * Mth.PI / 180;
-                    //this.right_arm.xRot = -149.5F * Mth.PI / 180;
-                    //this.right_arm.yRot = 30.79F * Mth.PI / 180;
-                    //this.right_arm.zRot = -8 * Mth.PI / 180;
-                    this.left_arm.xRot = -66.5F * Mth.PI / 180 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount;
-                    this.left_arm.yRot = -30.79F * Mth.PI / 180;
-                    this.left_arm.zRot = -31 * Mth.PI / 180;
-                    //this.left_arm2.xRot = -30 * Mth.PI / 180;
                 } else {
-                    main_body.xRot = 82.5F * Mth.PI / 180  + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
-                    neck.xRot = -82.5F * Mth.PI / 180  + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
-                    this.right_arm.xRot = -66.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount;
-                    this.right_arm.xRot = -150.5F * Mth.PI / 180;
-                    this.right_arm.yRot = 30.79F * Mth.PI / 180;
-                    this.right_arm.zRot = -8 * Mth.PI / 180;
-                    //this.right_arm.xRot = -149.5F * Mth.PI / 180;
-                    //this.right_arm.yRot = 30.79F * Mth.PI / 180;
-                    //this.right_arm.zRot = -8 * Mth.PI / 180;
-                    this.left_arm.xRot = -66 * Mth.PI / 180 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount;
-                    this.left_arm.yRot = -30.79F * Mth.PI / 180;
-                    this.left_arm.zRot = -31 * Mth.PI / 180;
-                    //this.left_arm2.xRot = -30 * Mth.PI / 180;
-                    this.left_leg.xRot = -25 * Mth.PI / 180; // -0.436
-                    this.left_leg2.xRot = 122.5F * Mth.PI / 180; // 2.13
+                    main_body.xRot = 82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
+                    neck.xRot = -82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
                     lower_jaw.xRot = 85F * Mth.PI / 180;
-                    this.left_leg.xRot = (-1.0036F - 0.436F) / 2  + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
+                    this.left_leg.xRot = (-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
                     this.left_leg2.xRot = (1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F;
-                    this.right_leg.xRot = (-1.0036F - 0.436F) / 2  + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
+                    this.right_leg.xRot = (-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
                     this.right_leg2.xRot = (1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F;
 
                     this.left_arm.xRot = (-120 - 0) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-120 + 0) * Mth.PI / 180 / 2;
@@ -404,21 +359,15 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                     this.right_arm.yRot = 30.79F * Mth.PI / 180;
                     this.right_arm.zRot = -(-8 - 31) * Mth.PI / 180 / 2 - Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2;
                     this.main_body.zRot = Mth.cos(limbSwing * 0.7662F + Mth.PI) * limbSwingAmount * 0.25F;
-                    //this.left_arm.xRot = 0 * Mth.PI / 180;
-                    //this.left_arm.yRot = -23 * Mth.PI / 180;
-                    //this.left_arm.zRot = -25 * Mth.PI / 180;
-                    //this.left_arm2.xRot = -1.0908F;
                     this.head.zRot = 0.25F;
                 }
             }
-            Animation mainAnimation = deepOne.getMainAnimation();
-            if (mainAnimation != null) {
-                mainAnimation.apply(pPartialTick);
+            if (deepOne.getMainAnimation() != null) {
+                deepOne.getMainAnimation().apply(pPartialTick);
+            } else if (deepOne.getAttackAnimation() != null) {
+                deepOne.getAttackAnimation().apply(pPartialTick);
             }
         }
-        //right_arm.xRot = 4.9F;
-        //right_arm.yRot = 0.19F;
-        //right_arm.zRot = -0.3F;
     }
 
     @Override

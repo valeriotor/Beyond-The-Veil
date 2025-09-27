@@ -11,6 +11,8 @@ public class Animation {
     private final AnimationTemplate template;
     private OperatorWithStartAmount[] currentOperators;
     private List<Iterator<OperatorWithStartAmount>> iterators;
+    private boolean dynamicStart = false;
+    private boolean started = false;
     private int ticks = 0;
 
     public Animation(AnimationTemplate template) {
@@ -21,8 +23,24 @@ public class Animation {
         for (int i = 0; i < template.transformers.size(); i++) {
             Transformer t = template.transformers.get(i);
             iterators.add(t.newIterator());
-            currentOperators[i] = iterators.get(i).next();
+            if (t.getDynamicStartOperator() == null) {
+                currentOperators[i] = iterators.get(i).next();
+            } else {
+                dynamicStart = true;
+            }
         }
+    }
+
+    private boolean dynamicStart() {
+        boolean flag = false;
+        for (int i = 0; i < template.transformers.size(); i++) {
+            Transformer t = template.transformers.get(i);
+            if (t.getDynamicStartOperator() != null) {
+                currentOperators[i] = new OperatorWithStartAmount(t.getDynamicStartOperator(), t.getType().amountFromPart.apply(t.getPart()));
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     public boolean isDone() {
@@ -35,6 +53,10 @@ public class Animation {
 
     public void apply(float partialTicks) {
         template.markDirty();
+        if (dynamicStart && !started) {
+            dynamicStart();
+        }
+        started = true;
         for (int i = 0; i < currentOperators.length; i++) {
             if (currentOperators[i] == null) {
                 continue;

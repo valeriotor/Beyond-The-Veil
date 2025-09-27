@@ -1,0 +1,53 @@
+model: deep_one
+length: 17
+start: 0: 8
+    rotx: main_body: 1.0036: linear: dynamic
+    rotx: neck: -0.74: linear: dynamic
+    rotx: left_arm: -2.514: linear: dynamic
+    roty: left_arm: -0.2476: linear: dynamic
+    rotz: left_arm: 1.9731: linear: dynamic
+    rotx: left_arm2: 1.1679: linear: dynamic
+    roty: left_arm2: 0.0318: linear: dynamic
+    rotz: left_arm2: 0.6262: linear: dynamic
+    rotx: right_arm: -3.42: linear: dynamic
+    roty: right_arm: 0.4698: quadratic: dynamic
+    rotz: right_arm: -1.4066: quadratic: dynamic
+    rotx: right_arm2: -0.2727: linear: dynamic
+    roty: right_arm2: -0.1393: linear: dynamic
+    rotz: right_arm2: -0.4608: linear: dynamic
+start: 9: 12
+    roty: main_body: -0.272: linear: absolute
+    rotz: main_body: -0.452: linear: absolute
+    roty: neck: 0.2236: linear: absolute
+    rotz: neck: -0.2099: linear: absolute
+    rotx: left_arm: -3.17: linear: absolute
+    roty: left_arm: -0.2476: linear: absolute
+    rotz: left_arm: 1.9731: linear: absolute
+    rotx: left_arm2: 1.1679: linear: absolute
+    roty: left_arm2: 0.0318: linear: absolute
+    rotz: left_arm2: 0.6262: linear: absolute
+    rotx: right_arm: -1.4696F: linear: absolute
+    roty: right_arm: -0.1246: linear: absolute
+    rotz: right_arm: -0.3212: linear: absolute
+    rotx: right_arm2: -0.2727F: linear: absolute
+    roty: right_arm2: -0.1393: linear: absolute
+    rotz: right_arm2: -0.4608: linear: absolute
+start: 13: 16
+    rotx: main_body: 1.439: linear: absolute
+    roty: main_body: 0: linear: absolute
+    rotz: main_body: 0: linear: absolute
+    rotx: neck: -1.439: linear: absolute
+    roty: neck: 0: linear: absolute
+    rotz: neck: -0: linear: absolute
+    rotx: left_arm: -1.045: linear: absolute
+    roty: left_arm: -0.537: linear: absolute
+    rotz: left_arm: -0.34: linear: absolute
+    rotx: left_arm2: -1.0908: linear: absolute
+    roty: left_arm2: -0.61: linear: absolute
+    rotz: left_arm2: 0: linear: absolute
+    rotx: right_arm: -1.045: linear: absolute
+    roty: right_arm: 0.537: linear: absolute
+    rotz: right_arm: 0.34: linear: absolute
+    rotx: right_arm2: -1.0908: linear: absolute
+    roty: right_arm2: 0.61: linear: absolute
+    rotz: right_arm2: 0: linear: absolute

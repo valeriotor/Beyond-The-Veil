@@ -31,6 +31,7 @@ public class TelegraphedAttackTemplate {
     private final List<BiConsumer<LivingEntity, LivingEntity>> postHitEffects;
     private final List<Consumer<LivingEntity>> postAttackEffects;
     private final AnimationTemplate animationTemplate;
+    private final boolean canContinueMoving;
 
     public static TelegraphedAttackTemplate of(AnimationTemplate animation, int duration, int damageTime, float damage, AttackArea attackArea, double triggerDistance, double knockback) {
         return new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(animation, duration, damageTime, damage, attackArea, triggerDistance).setKnockback(knockback).build();
@@ -53,6 +54,7 @@ public class TelegraphedAttackTemplate {
         this.predicate = builder.predicate;
         this.postHitEffects = ImmutableList.copyOf(builder.postHitEffects);
         this.postAttackEffects = ImmutableList.copyOf(builder.postAttackEffects);
+        this.canContinueMoving = builder.canContinueMoving;
     }
 
     public <T extends Mob & AnimatedEntity> void startAnimation(T attacker, int channel) {
@@ -121,7 +123,12 @@ public class TelegraphedAttackTemplate {
         postAttackEffects.forEach(e -> e.accept(attacker));
     }
 
+    public boolean canContinueMoving() {
+        return canContinueMoving;
+    }
+
     public static class TelegraphedAttackTemplateBuilder {
+        public boolean canContinueMoving;
         private AnimationTemplate animation;
         private int duration;
         private int damageTime;
@@ -245,6 +252,11 @@ public class TelegraphedAttackTemplate {
 
         public TelegraphedAttackTemplateBuilder addPostAttackEffect(Consumer<LivingEntity> postAttackEffect) {
             postAttackEffects.add(postAttackEffect);
+            return this;
+        }
+
+        public TelegraphedAttackTemplateBuilder setCanContinueMoving(boolean canContinueMoving) {
+            this.canContinueMoving = canContinueMoving;
             return this;
         }
 

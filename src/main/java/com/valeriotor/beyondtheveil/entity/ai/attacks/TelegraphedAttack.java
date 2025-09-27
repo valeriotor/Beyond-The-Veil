@@ -62,6 +62,10 @@ public class TelegraphedAttack<T extends Mob & AnimatedEntity> {
         }
     }
 
+    public boolean canContinueMoving() {
+        return template.canContinueMoving();
+    }
+
     public boolean isDone() {
         return template.isDone(counter);
     }

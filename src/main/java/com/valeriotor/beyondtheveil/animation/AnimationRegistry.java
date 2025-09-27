@@ -31,6 +31,9 @@ public class AnimationRegistry {
     public static AnimationTemplate crawler_skull_pain_high;
     public static AnimationTemplate crawler_skull_pain_low;
     public static AnimationTemplate crawler_skull_pain_medium;
+    public static AnimationTemplate deep_one_left_attack;
+    public static AnimationTemplate deep_one_open_arm_attack;
+    public static AnimationTemplate deep_one_right_attack;
     public static AnimationTemplate deep_one_trade;
     public static AnimationTemplate deep_one_trade2;
     public static AnimationTemplate deep_one_trade3;
@@ -65,6 +68,9 @@ public class AnimationRegistry {
         crawler_skull_pain_high = registerAnimation("crawler_skull_pain_high", client, i++);
         crawler_skull_pain_low = registerAnimation("crawler_skull_pain_low", client, i++);
         crawler_skull_pain_medium = registerAnimation("crawler_skull_pain_medium", client, i++);
+        deep_one_left_attack = registerAnimation("deep_one_left_attack", client, i++);
+        deep_one_open_arm_attack = registerAnimation("deep_one_open_arm_attack", client, i++);
+        deep_one_right_attack = registerAnimation("deep_one_right_attack", client, i++);
         deep_one_trade = registerAnimation("deep_one_trade", client, i++);
         deep_one_trade2 = registerAnimation("deep_one_trade2", client, i++);
         deep_one_trade3 = registerAnimation("deep_one_trade3", client, i++);

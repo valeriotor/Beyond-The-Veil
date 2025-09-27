@@ -5,7 +5,11 @@ import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackArea;
+import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackList;
+import com.valeriotor.beyondtheveil.entity.ai.attacks.TelegraphedAttackTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.TelegraphedAttackGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -23,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -35,7 +40,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
 
-public class DeepOneEntity extends Monster implements AnimatedEntity {
+public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapper {
 
     private boolean searchingForLand;
     protected final WaterBoundPathNavigation waterNavigation;
@@ -48,6 +53,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
     private double constantY;
     private boolean startedTrade = false; // CLIENT ONLY
     private Animation mainAnimation;
+    private Animation attackAnimation;
     private int extraCounterOffset;
     public static final int MAX_CONTACT_MOVE_LIFETIME = 350;
     private boolean toRemove;
@@ -66,24 +72,22 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
         //contactType = ContactType.MOVE3;
     }
 
-    private static final boolean DEBUG = true;
 
     @Override
     protected void registerGoals() {
-        if(DEBUG) {
-            this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
-            this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-            this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-            this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
-            //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
-            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
-            this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
-        }
+        this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+        this.goalSelector.addGoal(2, new TelegraphedAttackGoal<>(this, 1.8D, false, initAttackList(), 1));
+        //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
+        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 50.0D)
+                .add(Attributes.MAX_HEALTH, 75.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
@@ -101,7 +105,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
             }
             if (getTarget() == null) {
                 entityData.set(DATA_TARGETING, false);
-            } else if(getNavigation().isInProgress()){
+            } else if (getNavigation().isInProgress()) {
                 entityData.set(DATA_TARGETING, true);
             }
             if (ticksBeforeSwimDown > 0) {
@@ -129,7 +133,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
                             terminateTrade();
                         }
                     }
-                } else if(ticksBeforeSwimDown < 0){
+                } else if (ticksBeforeSwimDown < 0) {
                     terminateTrade();
                 }
 
@@ -146,6 +150,12 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
                 mainAnimation.update();
                 if (mainAnimation.isDone()) {
                     mainAnimation = null;
+                }
+            }
+            if (attackAnimation != null) {
+                attackAnimation.update();
+                if (attackAnimation.isDone()) {
+                    attackAnimation = null;
                 }
             }
             if (contactType == ContactType.TRADE.ordinal()) {
@@ -303,6 +313,10 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
         return mainAnimation;
     }
 
+    public Animation getAttackAnimation() {
+        return attackAnimation;
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
@@ -321,14 +335,60 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         switch (channel) {
             case 0 -> mainAnimation = new Animation(animationTemplate);
+            case 1 -> attackAnimation = new Animation(animationTemplate);
         }
         if (animationTemplate == AnimationRegistry.deep_one_trade4) {
             finishedTradeClient = true;
         }
     }
 
+    private AttackList initAttackList() {
+        AttackList attacks = new AttackList();
+        AttackArea openArmArea = AttackArea.getCircleAttack(4.5);
+        AttackArea armArea = AttackArea.getConeAttack(3.15, 80, 80);
+
+        TelegraphedAttackTemplate openArmAttack = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_open_arm_attack, 50, 32, 45, openArmArea, 3.85)
+                .setPredicate((attacker, target) -> {
+                    if (attacker instanceof DeepOneEntity deepOne) {
+                        return !deepOne.isInWater() && deepOne.isTargeting();
+                    }
+                    return false;
+                })
+                .setCanContinueMoving(true)
+                .build();
+        TelegraphedAttackTemplate rightArmAttack = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_right_attack, 18, 10, 20, armArea, 3.85)
+                .setPredicate((attacker, target) -> {
+                    if (attacker instanceof DeepOneEntity deepOne) {
+                        return !deepOne.isInWater() && deepOne.isTargeting();
+                    }
+                    return false;
+                })
+                .setCanContinueMoving(true)
+                .build();
+        TelegraphedAttackTemplate leftArmAttack = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_left_attack, 18, 10, 20, armArea, 3.85)
+                .setPredicate((attacker, target) -> {
+                    if (attacker instanceof DeepOneEntity deepOne) {
+                        return !deepOne.isInWater() && deepOne.isTargeting();
+                    }
+                    return false;
+                })
+                .setCanContinueMoving(true)
+                .build();
+
+        attacks.addAttack(openArmAttack, 5);
+        attacks.addAttack(rightArmAttack, 25);
+        attacks.addAttack(leftArmAttack, 25);
+
+        return AttackList.immutableAttackListOf(attacks);
+    }
+
     public boolean isFinishedTradeClient() {
         return finishedTradeClient;
+    }
+
+    @Override
+    public float getDamageCap() {
+        return 12;
     }
 
     static class DeepOneMoveControl extends MoveControl {

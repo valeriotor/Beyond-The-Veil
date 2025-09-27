@@ -1,0 +1,47 @@
+model: deep_one
+length: 49
+start: 0: 28
+    rotx: main_body: 0: linear: dynamic
+    rotx: neck: 0: linear: dynamic
+    rotx: left_arm: -3.65: linear: dynamic
+    roty: left_arm: -0.61: quadratic: dynamic
+    rotz: left_arm: 1.78: quadratic: dynamic
+    rotx: left_arm2: 0.4742: linear: dynamic
+    roty: left_arm2: 0.2496: linear: dynamic
+    rotz: left_arm2: 0.35: linear: dynamic
+    rotx: right_arm: -3.65: linear: dynamic
+    roty: right_arm: 0.61: quadratic: dynamic
+    rotz: right_arm: -1.78: quadratic: dynamic
+    rotx: right_arm2: 0.4742: linear: dynamic
+    roty: right_arm2: -0.2496: linear: dynamic
+    rotz: right_arm2: -0.35: linear: dynamic
+start: 28: 34
+    rotx: main_body: 1.0036: linear: absolute
+    rotx: neck: -0.7418: linear: absolute
+    rotx: left_arm: -1.4032: linear: absolute
+    roty: left_arm: 0.1792: linear: absolute
+    rotz: left_arm: 1.416: linear: absolute
+    rotx: left_arm2: 1.1679: linear: absolute
+    roty: left_arm2: 0.0318: linear: absolute
+    rotz: left_arm2: 0.6262: linear: absolute
+    rotx: right_arm: -1.6693: linear: absolute
+    roty: right_arm: 0.1547: linear: absolute
+    rotz: right_arm: 0.1375: linear: absolute
+    rotx: right_arm2: -0.0411: linear: absolute
+    roty: right_arm2: -0.3027: linear: absolute
+    rotz: right_arm2: -1.4336: linear: absolute
+start: 42: 48
+    rotx: main_body: 1.439: linear: absolute
+    rotx: neck: -1.439: linear: absolute
+    rotx: left_arm: -1.045: linear: absolute
+    roty: left_arm: -0.537: linear: absolute
+    rotz: left_arm: -0.34: linear: absolute
+    rotx: left_arm2: -1.0908: linear: absolute
+    roty: left_arm2: -0.61: linear: absolute
+    rotz: left_arm2: 0: linear: absolute
+    rotx: right_arm: -1.045: linear: absolute
+    roty: right_arm: 0.537: linear: absolute
+    rotz: right_arm: 0.34: linear: absolute
+    rotx: right_arm2: -1.0908: linear: absolute
+    roty: right_arm2: 0.61: linear: absolute
+    rotz: right_arm2: 0: linear: absolute

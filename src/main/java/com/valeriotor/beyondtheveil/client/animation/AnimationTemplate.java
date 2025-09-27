@@ -4,18 +4,13 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
-import com.valeriotor.beyondtheveil.lib.References;
 import it.unimi.dsi.fastutil.floats.FloatBinaryOperator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.util.function.Function;
 
 public class AnimationTemplate {
     private final String name;
@@ -76,14 +71,17 @@ public class AnimationTemplate {
             default:
                 if(model == null) return period;
                 ModelPart part = model.getPart(split[1]);
-                TransformationType type = TransformationType.getType(split[0]);
+                TransformationType type = TransformationType.valueOf(split[0].toUpperCase());
                 String func = split.length >= 4 ? split[3] : "linear"; // linear is default value, if line stops at third parameter or if field is left blank
                 if (func.isEmpty()) func = "linear";
-                boolean absolute = split.length >= 5 && split[4].equals("absolute"); // default is relative
+                Relativity relativity = split.length >= 5 ? Relativity.valueOf(split[4].toUpperCase()) : Relativity.RELATIVE;
 
                 float amount = Float.parseFloat(split[2]);
-                FloatBinaryOperator operator = getOperator(func, period.start, period.end, amount, absolute);
-                FloatBinaryOperatorWithInterval finalOperator = new FloatBinaryOperatorWithInterval(absolute, period, amount, operator);
+                if (amount > Mth.PI) {
+                    amount = (amount + Mth.PI) % (2 * Mth.PI) - Mth.PI;
+                }
+                FloatBinaryOperator operator = getOperator(func, period.start, period.end, amount, relativity.isAbsolute);
+                FloatBinaryOperatorWithInterval finalOperator = new FloatBinaryOperatorWithInterval(relativity, period, amount, operator);
                 EnumMap<TransformationType, List<FloatBinaryOperatorWithInterval>> transformToOperators = modelsToTransformations.computeIfAbsent(part, k -> new EnumMap<>(TransformationType.class));
                 List<FloatBinaryOperatorWithInterval> operatorList = transformToOperators.computeIfAbsent(type, k -> new ArrayList<>());
                 operatorList.add(finalOperator);
@@ -120,26 +118,44 @@ public class AnimationTemplate {
     }
 
     enum TransformationType {
-        ROTX, ROTY, ROTZ, TRAX, TRAY, TRAZ, RESX, RESY, RESZ, VISI;
+        ROTX(part -> part.storePose().xRot),
+        ROTY(part -> part.storePose().yRot),
+        ROTZ(part -> part.storePose().zRot),
+        TRAX(part -> part.storePose().x),
+        TRAY(part -> part.storePose().y),
+        TRAZ(part -> part.storePose().z),
+        RESX(part -> part.xScale),
+        RESY(part -> part.yScale),
+        RESZ(part -> part.zScale),
+        VISI(part -> part.visible ? 1F : -1F);
 
-        static TransformationType getType(String name) {
-            for (TransformationType type : TransformationType.values()) {
-                if (type.name().equalsIgnoreCase(name)) {
-                    return type;
-                }
-            }
-            return null;
+        public final Function<ModelPart, Float> amountFromPart;
+
+        TransformationType(Function<ModelPart, Float> amountFromPart) {
+            this.amountFromPart = amountFromPart;
+        }
+    }
+
+    enum Relativity {
+        RELATIVE(false),
+        ABSOLUTE(true),
+        DYNAMIC(true); // MUST have start 0 in btvanim file
+
+        final boolean isAbsolute;
+
+        Relativity(boolean isAbsolute) {
+            this.isAbsolute = isAbsolute;
         }
     }
 
     static class FloatBinaryOperatorWithInterval {
-        boolean absolute;
+        Relativity relativity;
         Period period;
         float amount;
         FloatBinaryOperator operator;
 
-        public FloatBinaryOperatorWithInterval(boolean absolute, Period period, float amount, FloatBinaryOperator operator) {
-            this.absolute = absolute;
+        public FloatBinaryOperatorWithInterval(Relativity relativity, Period period, float amount, FloatBinaryOperator operator) {
+            this.relativity = relativity;
             this.period = period;
             this.amount = amount;
             this.operator = operator;

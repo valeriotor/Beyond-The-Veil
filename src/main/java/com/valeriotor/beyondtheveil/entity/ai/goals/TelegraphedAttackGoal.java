@@ -40,7 +40,7 @@ public class TelegraphedAttackGoal<T extends PathfinderMob & AnimatedEntity> ext
     public TelegraphedAttackGoal(T attacker, double speedModifier, boolean followingTargetEvenIfNotSeen, AttackList attacks, int animationChannel) {
         this.mob = attacker;
         this.speedModifier = speedModifier;
-        this.followingTargetEvenIfNotSeen = followingTargetEvenIfNotSeen;
+        this.followingTargetEvenIfNotSeen = true;
         this.attacks = attacks;
         this.animationChannel = animationChannel;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -172,13 +172,15 @@ public class TelegraphedAttackGoal<T extends PathfinderMob & AnimatedEntity> ext
         if (attack == null) {
             LivingEntity target = mob.getTarget();
             if (target == null) return;
-            if ((mob.tickCount & 7) == 0) {
+            if ((mob.tickCount & 7) == 0 || true) {
                 double distance = mob.distanceTo(target);
                 Optional<TelegraphedAttackTemplate> attack = attacks.getRandomAttack(mob.getRandom(), distance, mob, target);
                 attack.ifPresent(template -> this.attack = new TelegraphedAttack<T>(template, mob, MathHelperBTV.angleBetween(mob, target), animationChannel));
             }
         } else {
-            mob.getNavigation().stop();
+            if (!attack.canContinueMoving()) {
+                mob.getNavigation().stop();
+            }
             attack.update();
             if (attack.isDone()) {
                 attack.applyPostAttackEffects();
