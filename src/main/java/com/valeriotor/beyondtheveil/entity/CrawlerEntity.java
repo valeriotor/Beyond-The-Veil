@@ -4,10 +4,8 @@ import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
-import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
@@ -17,7 +15,6 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
-import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -36,7 +33,6 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -60,6 +56,8 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private PatientStatus patientStatus;
     private Animation painAnimation;
     private Animation deathAnimation;
+    private Animation ritualAnimation;
+    private boolean startedRitualAnimation;
     private boolean held;
     private PatientHolderType holderType;
 
@@ -259,7 +257,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             }
         } else {
             tickCount++;
-            if (painAnimation == null && !patientStatus.isDead()) {
+            if (painAnimation == null && !patientStatus.isDead() && !patientStatus.isInRitual()) {
                 int currentAbsolutePainThreshold = patientStatus.getCurrentAbsolutePainThreshold();
                 int currentMissingPainThreshold = patientStatus.getCurrentMissingPainThreshold();
                 if (currentMissingPainThreshold >= 3 || currentAbsolutePainThreshold >= 3) {
@@ -304,9 +302,25 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                         deathAnimation.update();
                     }
                 }
+                if (ritualAnimation == null) {
+                    if (patientStatus.isInRitual() && !startedRitualAnimation) {
+                        ritualAnimation = new Animation(AnimationRegistry.crawler_ritual);
+                        startedRitualAnimation = true;
+                    }
+                } else {
+                    if (ritualAnimation.isDone()) {
+                        ritualAnimation = null;
+                    } else {
+                        ritualAnimation.update();
+                    }
+                }
             }
             // TODO do pain animations
         }
+    }
+
+    public boolean isStartedRitualAnimation() {
+        return startedRitualAnimation;
     }
 
     @Override
@@ -364,6 +378,10 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
     public Animation getDeathAnimation() {
         return deathAnimation;
+    }
+
+    public Animation getRitualAnimation() {
+        return ritualAnimation;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

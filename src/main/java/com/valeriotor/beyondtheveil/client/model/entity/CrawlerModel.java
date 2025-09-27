@@ -118,6 +118,13 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 					head.yRot = 0.9F;
 					leftLeg.yRot = 0.5F;
 					rightLeg.yRot = -0.5F;
+				} else if (entity.getPatientStatus().isInRitual() && entity.isStartedRitualAnimation()) {
+					head.xRot = -0.95F;
+					head.yRot = 0.19F + Mth.cos(ageInTicks * 2 * Mth.PI / 20) / 10;
+					arms.xRot = -2.3998F;
+					body.y = 28.15F + Mth.cos(ageInTicks * 2 * Mth.PI / 40) / 20;
+					leftLeg.xRot = 0.8F + Mth.cos(ageInTicks * 2 * Mth.PI / 70) / 40;
+					rightLeg.xRot = 0.8F + Mth.cos(ageInTicks * 2 * Mth.PI / 70 + Mth.PI) / 40;
 				}
 			} else if (exposedLocation == SurgicalLocation.SKULL) {
 				head.xRot = -0.54104F;
@@ -141,10 +148,13 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 			}
 			Animation painAnimation = entity.getPainAnimation();
 			Animation deathAnimation = entity.getDeathAnimation();
+			Animation ritualAnimation = entity.getRitualAnimation();
 			if (painAnimation != null && !entity.getPatientStatus().isDead()) {
 				painAnimation.apply(pPartialTick);
 			} else if (deathAnimation != null) {
 				deathAnimation.apply(pPartialTick);
+			} else if (ritualAnimation != null) {
+				ritualAnimation.apply(pPartialTick);
 			}
 		}
 

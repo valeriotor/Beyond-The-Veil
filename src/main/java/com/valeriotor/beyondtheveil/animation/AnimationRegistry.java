@@ -27,6 +27,7 @@ public class AnimationRegistry {
     public static AnimationTemplate crawler_chest_pain_high;
     public static AnimationTemplate crawler_chest_pain_low;
     public static AnimationTemplate crawler_chest_pain_medium;
+    public static AnimationTemplate crawler_ritual;
     public static AnimationTemplate crawler_skull_death;
     public static AnimationTemplate crawler_skull_pain_high;
     public static AnimationTemplate crawler_skull_pain_low;
@@ -64,6 +65,7 @@ public class AnimationRegistry {
         crawler_chest_pain_high = registerAnimation("crawler_chest_pain_high", client, i++);
         crawler_chest_pain_low = registerAnimation("crawler_chest_pain_low", client, i++);
         crawler_chest_pain_medium = registerAnimation("crawler_chest_pain_medium", client, i++);
+        crawler_ritual = registerAnimation("crawler_ritual", client, i++);
         crawler_skull_death = registerAnimation("crawler_skull_death", client, i++);
         crawler_skull_pain_high = registerAnimation("crawler_skull_pain_high", client, i++);
         crawler_skull_pain_low = registerAnimation("crawler_skull_pain_low", client, i++);

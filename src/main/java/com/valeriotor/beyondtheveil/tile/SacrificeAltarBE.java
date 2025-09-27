@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.rituals.RitualStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
@@ -28,6 +29,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -64,7 +66,7 @@ public class SacrificeAltarBE extends BlockEntity {
         if (level.isClientSide)
             return true;
         if (entityData != null) {
-            if (in.isEmpty() && !p.isShiftKeyDown()) {
+            if (in.isEmpty() && !p.isShiftKeyDown() && ritualStatus == null && playerInitiating == null) {
                 if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
@@ -77,7 +79,7 @@ public class SacrificeAltarBE extends BlockEntity {
                         return true;
                     }
                 }
-            } else if (in.getItem() == Registration.SACRIFICIAL_KNIFE.get() && !patientStatus.isDead()) {
+            } else if (in.getItem() == Registration.SACRIFICIAL_KNIFE.get() && !patientStatus.isDead() && ritualStatus == null) {
                 executeChain(p);
             }
         } else {
@@ -89,6 +91,9 @@ public class SacrificeAltarBE extends BlockEntity {
                     entityData = crossSync.getHeldPatientData();
                     patientStatus = new PatientStatus(crossSync.getHeldPatientType());
                     patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+                    if (entityData.contains("convalescent")) {
+                        patientStatus.fromConvalescentNBT(entityData.getCompound("convalescent"));
+                    }
                     patientStatus.setExposedLocation(SurgicalLocation.CHEST);
                     crossSync.setHeldPatient(null, p);
                     updateClient();
@@ -103,14 +108,21 @@ public class SacrificeAltarBE extends BlockEntity {
         Optional<PlayerData> playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
         if (playerInitiating == null) {
             if (playerData.isPresent() && ritualStatus == null) {
+                if (level != null) {
+                    level.playSound(null, worldPosition, BTVSounds.INCISION.get(), SoundSource.PLAYERS);
+                }
                 basinsToBeUsed.clear();
                 playerInitiating = player.getUUID();
+                patientStatus.setInRitual(true);
                 updateClient();
                 playerData.get().setLong(PlayerDataLib.SACRIFICE_ALTAR, getBlockPos().asLong(), false);
             }
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
                 ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed);
+                if (ritualStatus == null) {
+                    killVictim();
+                }
                 playerInitiating = null;
                 basinsToBeUsed.clear();
                 updateClient();
@@ -269,7 +281,9 @@ public class SacrificeAltarBE extends BlockEntity {
                 for (int i = 0; i < 3; i++) {
                     level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
                 }
-                ClientMethods.playRitualSound(getBlockPos());
+                if (ritualStatus != null || true) {
+                    ClientMethods.playRitualSound(getBlockPos());
+                }
             }
             if (counter % 4 == 0) {
                 int rescaledCounter = counter / 4;
@@ -284,7 +298,7 @@ public class SacrificeAltarBE extends BlockEntity {
     private Vec3 getCenterPos() {
         Direction facing = getBlockState().getValue(FullMultiBlock.FACING);
         Vec3 prev = getBlockPos().getCenter();
-        prev = prev.add(-facing.getStepX() * 0.6 -facing.getStepZ() * 0.2, 0.5, -facing.getStepZ() * 0.6 + facing.getStepX() * 0.2);
+        prev = prev.add(-facing.getStepX() * 0.6 -facing.getStepZ() * 0.2, 1.5, -facing.getStepZ() * 0.6 + facing.getStepX() * 0.2);
         return prev;
     }
 

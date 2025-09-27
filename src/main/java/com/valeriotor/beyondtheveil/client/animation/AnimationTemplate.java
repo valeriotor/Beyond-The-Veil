@@ -77,9 +77,6 @@ public class AnimationTemplate {
                 Relativity relativity = split.length >= 5 ? Relativity.valueOf(split[4].toUpperCase()) : Relativity.RELATIVE;
 
                 float amount = Float.parseFloat(split[2]);
-                if (amount > Mth.PI) {
-                    amount = (amount + Mth.PI) % (2 * Mth.PI) - Mth.PI;
-                }
                 FloatBinaryOperator operator = getOperator(func, period.start, period.end, amount, relativity.isAbsolute);
                 FloatBinaryOperatorWithInterval finalOperator = new FloatBinaryOperatorWithInterval(relativity, period, amount, operator);
                 EnumMap<TransformationType, List<FloatBinaryOperatorWithInterval>> transformToOperators = modelsToTransformations.computeIfAbsent(part, k -> new EnumMap<>(TransformationType.class));

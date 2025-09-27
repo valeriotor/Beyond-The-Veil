@@ -74,6 +74,7 @@ public class PatientStatus {
     private final PatientType patientType;
     private boolean exploded;
     private int ticksSinceLastInjection; // To slow down weeper creation
+    private boolean inRitual;
 
     public PatientStatus(PatientType patientType) {
         this.patientType = patientType;
@@ -639,6 +640,7 @@ public class PatientStatus {
 
     public CompoundTag saveToNBT(CompoundTag tag) {
         tag.putString("condition", condition.name());
+        tag.putBoolean("inRitual", inRitual);
         tag.putDouble("current_pain", currentPain);
         tag.putInt("leftover_capacity", leftoverCapacity);
         tag.putInt("usedCapacity", usedCapacity);
@@ -700,6 +702,7 @@ public class PatientStatus {
 
     public void loadFromNBT(CompoundTag tag) {
         condition = PatientCondition.valueOf(tag.getString("condition"));
+        inRitual = tag.getBoolean("inRitual");
         currentPain = tag.getDouble("current_pain");
         leftoverCapacity = tag.getInt("leftover_capacity");
         usedCapacity = tag.getInt("usedCapacity");
@@ -771,6 +774,14 @@ public class PatientStatus {
 
     public boolean isDead() {
         return condition == PatientCondition.DEAD;
+    }
+
+    public void setInRitual(boolean inRitual) {
+        this.inRitual = inRitual;
+    }
+
+    public boolean isInRitual() {
+        return inRitual;
     }
 
     public boolean didFinalAnimation() {
