@@ -55,5 +55,8 @@
   },
   "shoreman_dialogue": {
     "sounds": [ "beyondtheveil:shoreman_dialogue_0", "beyondtheveil:shoreman_dialogue_1", "beyondtheveil:shoreman_dialogue_2" ]
+  },
+  "blood_ritual": {
+    "sounds": [ "beyondtheveil:blood_ritual" ]
   }
 }

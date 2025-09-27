@@ -20,12 +20,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.phys.Vec3;
@@ -38,6 +39,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientMethods {
+
+    private static SoundInstance bloodRitualSoundInstance;
+    private static int bloodRitualSoundTicks;
+    private static int hideOverlayMessageTicks = 0;
 
     public static void startEntityAnimation(CompoundTag tag) {
         AnimationTemplate template = AnimationRegistry.animationFromId(tag.getInt("anim"));
@@ -103,11 +108,21 @@ public class ClientMethods {
         }
     }
 
-    private static int hideOverlayMessageTicks = 0;
-
     public static void hideOverlayMessage() {
         hideOverlayMessageTicks = 20;
         Minecraft.getInstance().gui.setOverlayMessage(Component.empty(), false);
+    }
+
+    public static void playRitualSound(BlockPos pos) {
+        if (Minecraft.getInstance().player != null) {
+            if(Minecraft.getInstance().player.distanceToSqr(pos.getCenter()) < 900) {
+                if (bloodRitualSoundInstance == null) {
+                    bloodRitualSoundInstance = new SimpleSoundInstance(BTVSounds.BLOOD_RITUAL.get().getLocation(), SoundSource.BLOCKS, 1, 1, Minecraft.getInstance().player.getRandom(), true, 0, SoundInstance.Attenuation.LINEAR, pos.getX(), pos.getY(), pos.getZ(), false);
+                    Minecraft.getInstance().getSoundManager().play(bloodRitualSoundInstance);
+                }
+                bloodRitualSoundTicks = 50;
+            }
+        }
     }
 
     public static void tick(TickEvent.ClientTickEvent event) {
@@ -115,7 +130,21 @@ public class ClientMethods {
             Minecraft.getInstance().gui.setOverlayMessage(Component.empty(), false);
             hideOverlayMessageTicks--;
         }
+        if (bloodRitualSoundTicks > 0 && !Minecraft.getInstance().isPaused()) {
+            bloodRitualSoundTicks--;
+            if (bloodRitualSoundTicks == 0) {
+                stopRitual();
+            }
+        }
 
+    }
+
+    private static void stopRitual() {
+        if (bloodRitualSoundInstance != null) {
+            Minecraft.getInstance().getSoundManager().stop(bloodRitualSoundInstance);
+        }
+        bloodRitualSoundInstance = null;
+        bloodRitualSoundTicks = 0;
     }
 
     // Just hardcoding exceptions (items with multiple recipes). Should not be an issue
@@ -154,5 +183,6 @@ public class ClientMethods {
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(BTVSounds.CURRENTS.get(), 1, 1));
         }
     }
+
 
 }

@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
@@ -268,6 +269,7 @@ public class SacrificeAltarBE extends BlockEntity {
                 for (int i = 0; i < 3; i++) {
                     level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
                 }
+                ClientMethods.playRitualSound(getBlockPos());
             }
             if (counter % 4 == 0) {
                 int rescaledCounter = counter / 4;
