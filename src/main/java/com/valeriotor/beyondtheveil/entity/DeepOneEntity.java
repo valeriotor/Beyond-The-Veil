@@ -44,6 +44,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
     private Player contactPlayer;
     private static final EntityDataAccessor<Integer> CONTACT_MOVE = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> CONTACT_TRADE_ROT = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(DeepOneEntity.class, EntityDataSerializers.BOOLEAN);
     private double constantY;
     private boolean startedTrade = false; // CLIENT ONLY
     private Animation mainAnimation;
@@ -65,15 +66,19 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
         //contactType = ContactType.MOVE3;
     }
 
+    private static final boolean DEBUG = true;
+
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
-        //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
+        if(DEBUG) {
+            this.goalSelector.addGoal(0, new DeepOneContact1Goal(this));
+            this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+            this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
+            this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+            //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
+            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+            this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
+        }
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -93,6 +98,11 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
             if (toRemove) {
                 discard();
                 return;
+            }
+            if (getTarget() == null) {
+                entityData.set(DATA_TARGETING, false);
+            } else if(getNavigation().isInProgress()){
+                entityData.set(DATA_TARGETING, true);
             }
             if (ticksBeforeSwimDown > 0) {
                 ticksBeforeSwimDown--;
@@ -232,6 +242,9 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
 
     }
 
+    public boolean isTargeting() {
+        return entityData.get(DATA_TARGETING);
+    }
 
     public boolean isVisuallySwimming() {
         return this.isSwimming();
@@ -242,6 +255,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity {
         super.defineSynchedData();
         this.entityData.define(CONTACT_MOVE, -1);
         this.entityData.define(CONTACT_TRADE_ROT, 0F);
+        this.entityData.define(DATA_TARGETING, false);
     }
 
     public void setContact(ContactType contactType, Player contactPlayer) {
