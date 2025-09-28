@@ -42,6 +42,12 @@ public class SurgeryItem extends Item {
         REGISTRY.add(this);
     }
 
+    public SurgeryItem(SurgeryItemType type, Item.Properties properties) {
+        super(properties);
+        this.type = type;
+        REGISTRY.add(this);
+    }
+
     @Override
     public int getUseDuration(ItemStack pStack) {
         return 72000;
