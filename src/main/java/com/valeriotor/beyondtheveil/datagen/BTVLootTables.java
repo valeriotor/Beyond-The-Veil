@@ -102,8 +102,9 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.FLASK_MEDIUM.get());
         dropSelf(Registration.FLASK_SMALL.get());
         dropSelf(Registration.FLASK_ITEM.get());
-        pillarTable(Registration.DEMAND_PILLAR.get(), BTVBlockEntities.DEMAND_PILLAR_BE.get(), "link");
-        pillarTable(Registration.OFFER_PILLAR.get(), BTVBlockEntities.OFFER_PILLAR_BE.get(), "link");
+        dropSelf(Registration.DEMAND_PILLAR.get());
+        dropSelf(Registration.OFFER_PILLAR.get());
+
     }
 
     @Override

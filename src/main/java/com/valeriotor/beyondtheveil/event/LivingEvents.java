@@ -10,7 +10,6 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
-import com.valeriotor.beyondtheveil.tile.PillarBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.VanillaUtils;
@@ -19,8 +18,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -40,6 +41,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.*;
@@ -206,11 +208,10 @@ public class LivingEvents {
             LifeEconomyData instance = LifeEconomyData.getInstance(sl);
             List<LifeEconomyData.PillarData> activePillarsInChunk = instance.getActivePillarsInChunk(pos);
             Optional<LifeEconomyData.PillarData> min = activePillarsInChunk.stream()
-                    .filter(data -> data.getLinkPos() != null && sl.isLoaded(data.getCurrentPos())) // we need the offer pillar to be loaded (but not the demand one)
-                    .filter(data -> sl.getBlockEntity(data.getCurrentPos()) instanceof PillarBE be && be.isOffer())
+                    .filter(data -> instance.getLink(data) != null && sl.isLoaded(data.getCurrentPos()) && data.isOffer()) // we need the offer pillar to be loaded (but not the demand one)
                     .min(Comparator.comparing(data -> data.getCurrentPos().distSqr(pos)));
             min.ifPresent(data -> {
-                BlockPos linkPos = data.getLinkPos();
+                BlockPos linkPos = instance.getLink(data);
                 if (!sl.isLoaded(linkPos)) {
                     LifeEconomyData.PodData podData = instance.findClosestEmptyPod(linkPos, 2, 50);
                     if (podData != null) {
@@ -263,6 +264,26 @@ public class LivingEvents {
                     event.setCanceled(true);
                 }
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void livingDeathEvent(LivingDeathEvent event) {
+        if (event.getSource().getEntity() instanceof ServerPlayer player) {
+            ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            if (stack.getItem() == Registration.SACRIFICIAL_KNIFE.get()) {
+                String type = stack.getOrCreateTag().getString("type");
+                ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+                if (key != null) {
+                    String path = key.getPath();
+                    if (type.equals(path)) {
+                        stack.getOrCreateTag().putInt("killed", Math.min(30, stack.getTag().getInt("killed") + 1));
+                    } else {
+                        stack.getTag().putString("type", path);
+                        stack.getTag().putInt("killed", 1);
+                    }
+                }
+            }
         }
     }
 

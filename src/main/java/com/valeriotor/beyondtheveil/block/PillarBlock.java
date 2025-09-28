@@ -1,35 +1,31 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
-import com.valeriotor.beyondtheveil.tile.PillarBE;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
-public class PillarBlock extends Block implements EntityBlock {
+public class PillarBlock extends Block {
 
     private final boolean offer;
     private static final double a = 0.0625;
@@ -55,17 +51,12 @@ public class PillarBlock extends Block implements EntityBlock {
         this.offer = offer;
     }
 
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new PillarBE(offer ? BTVBlockEntities.OFFER_PILLAR_BE.get() : BTVBlockEntities.DEMAND_PILLAR_BE.get(), pPos, pState);
-    }
-
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return !offer ? OFFER_BOX : DEMAND_BOX;
     }
+
+    private static final boolean DEBUG = true;
 
     @Override
     public InteractionResult use(BlockState pState, Level l, BlockPos pos, Player p, InteractionHand pHand, BlockHitResult pHit) {
@@ -74,38 +65,35 @@ public class PillarBlock extends Block implements EntityBlock {
         if (l.isClientSide) {
             return holdingOpposite ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         }
-        if (holdingOpposite && l.getBlockEntity(pos) instanceof PillarBE be && l instanceof ServerLevel sl) {
+        if (holdingOpposite && l instanceof ServerLevel sl) {
             UUID connection = UUID.randomUUID();
-            CompoundTag linkTag = new CompoundTag();
-            linkTag.putLong("link", pos.asLong());
-            linkTag.putBoolean("fromItem", true);
-            linkTag.putString("connection", connection.toString());
-            BlockItem.setBlockEntityData(stack, offer ? BTVBlockEntities.DEMAND_PILLAR_BE.get() : BTVBlockEntities.OFFER_PILLAR_BE.get(), linkTag);
-            be.setLink(null);
-            be.setConnection(connection);
-            LifeEconomyData.getInstance(sl).setPillarConnectionToBe(sl, pos, connection);
+            CompoundTag tag = stack.getOrCreateTag();
+            tag.putLong("linkPos", pos.asLong());
+            tag.putUUID("connection", connection);
+            LifeEconomyData.getInstance(sl).createdPillarConnection(connection, pos, offer);
             return InteractionResult.SUCCESS;
         }
-        if (p.getItemInHand(pHand).isEmpty() && l.getBlockEntity(pos) instanceof PillarBE be) {
-            BlockPos link = be.getLink();
-            if (link != null) {
-                p.teleportTo(link.getX(), link.getY(), link.getZ());
+        if (p.getItemInHand(pHand).isEmpty() && l instanceof ServerLevel sl && DEBUG) {
+            LifeEconomyData instance = LifeEconomyData.getInstance(sl);
+            LifeEconomyData.PillarData data = instance.getPillarData(pos);
+            if (data != null) {
+                BlockPos link = instance.getLink(data);
+                if (link != null) {
+                    p.teleportTo(link.getX(), link.getY(), link.getZ());
+                }
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
         }
 
         return super.use(pState, l, pos, p, pHand, pHit);
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (l.isClientSide) {
-            return null;
+    public void setPlacedBy(Level level, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        super.setPlacedBy(level, pPos, pState, pPlacer, pStack);
+        if (level instanceof ServerLevel sl) {
+            LifeEconomyData.getInstance(sl).addPillarFromItem(pPos, pStack);
         }
-        return (pLevel1, pPos, pState1, pBlockEntity) -> {
-            if(pBlockEntity instanceof PillarBE be) be.tickServer();
-        };
     }
 
     @Override
@@ -119,5 +107,10 @@ public class PillarBlock extends Block implements EntityBlock {
     @Override
     public @Nullable PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.DESTROY;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState pState, LootParams.Builder pParams) {
+        return super.getDrops(pState, pParams);
     }
 }

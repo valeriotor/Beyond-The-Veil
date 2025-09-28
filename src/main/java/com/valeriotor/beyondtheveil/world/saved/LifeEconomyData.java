@@ -1,23 +1,30 @@
 package com.valeriotor.beyondtheveil.world.saved;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.PatientPodBE;
-import com.valeriotor.beyondtheveil.tile.PillarBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import oshi.util.tuples.Pair;
 
 import java.util.*;
 
 public class LifeEconomyData extends SavedData {
 
     private final Map<BlockPos, PillarData> pillars = new HashMap<>();
+    private final Map<UUID, Pair<PillarData, PillarData>> pillarsByConnection = new HashMap<>();
     private final Map<ChunkPos, List<PillarData>> pillarsByChunk = new HashMap<>();
     private final Map<BlockPos, PodData> patientPods = new HashMap<>();
     private final Map<ChunkPos, List<PodData>> patientPodsByChunk = new HashMap<>();
@@ -33,7 +40,7 @@ public class LifeEconomyData extends SavedData {
         if (tag.contains("pillarTag")) {
             CompoundTag pillarTag = tag.getCompound("pillarTag");
             for (String key : pillarTag.getAllKeys()) {
-                data.addPillar(pillarTag.getCompound(key));
+                data.addPillarFromTag(pillarTag.getCompound(key));
             }
         }
         if (tag.contains("podTag")) {
@@ -128,14 +135,91 @@ public class LifeEconomyData extends SavedData {
         patientPodReservations.put(data, new Tuple<>(cultistId, 150));
     }
 
-    public void addPillar(BlockPos pos, BlockPos link, UUID connection) {
-        addPillar(new PillarData(pos, connection, link));
+    public void createdPillarConnection(UUID connectionId, BlockPos oldPillar, boolean isOldPillarOffer) {
+        if (!pillars.containsKey(oldPillar)) { // this shouldn't happen
+            addPillar(isOldPillarOffer, oldPillar, connectionId);
+        } else {
+            PillarData pillarData = pillars.get(oldPillar);
+            UUID oldConnection = pillarData.connection; // destroy any previous connection the old pillar may have been involved in
+            removeConnection(oldConnection);
+            pillarData.connection = connectionId; // and replace with new one
+        }
+        PillarData pillarData = pillars.get(oldPillar);
+        pillarsByConnection.put(connectionId, new Pair<>(isOldPillarOffer ? pillarData : null, !isOldPillarOffer ? pillarData : null));
+        setDirty();
     }
 
-    private void addPillar(CompoundTag tag) {
-        addPillar(new PillarData(tag));
+    private void removeConnection(UUID oldConnection) {
+        if (pillarsByConnection.containsKey(oldConnection)) {
+            Pair<PillarData, PillarData> pair = pillarsByConnection.get(oldConnection);
+            if (pair.getA() != null) {
+                pair.getA().connection = null;
+            }
+            if (pair.getB() != null) {
+                pair.getB().connection = null;
+            }
+            pillarsByConnection.remove(oldConnection);
+        }
     }
 
+    public void addPillarFromItem(BlockPos pos, ItemStack stack) {
+        // three possibilities: either has no connection, or the old connection is alive and well, or the old connection was replaced and we need to remove this from the new data
+        CompoundTag tag = stack.getOrCreateTag().copy();
+        tag.putLong("currentPos", pos.asLong());
+        boolean isOffer = stack.getItem() == Registration.OFFER_PILLAR_ITEM.get();
+        tag.putBoolean("isOffer", isOffer);
+        PillarData data = null;
+        if (tag.contains("connection")) {
+            UUID connection = tag.getUUID("connection");
+            Pair<PillarData, PillarData> pair = pillarsByConnection.get(connection);
+            if (pair == null) {
+                tag.remove("connection");
+            } else {
+                PillarData other = isOffer ? pair.getB() : pair.getA();
+                if (other == null) {
+                    tag.remove("connection");
+                } else {
+                    data = new PillarData(tag);
+                    pillarsByConnection.put(connection, isOffer ? new Pair<>(data, pair.getB()) : new Pair<>(pair.getA(), data));
+                }
+            }
+        }
+        if (data == null) {
+            data = new PillarData(tag);
+        }
+        addPillar(data);
+    }
+
+    public void addPillar(boolean isOffer, BlockPos pos, UUID connection) {
+        addPillar(new PillarData(isOffer, pos, connection, null, 0, 0));
+    }
+
+    private void addPillarFromTag(CompoundTag tag) {
+        PillarData data = new PillarData(tag);
+        if (tag.contains("connection")) {
+            UUID connection = tag.getUUID("connection");
+            boolean isOffer = tag.getBoolean("isOffer");
+            Pair<PillarData, PillarData> pair = pillarsByConnection.get(connection);
+            if (pair != null) {
+                if (isOffer) {
+                    pillarsByConnection.put(connection, new Pair<>(data, pair.getB()));
+                } else {
+                    pillarsByConnection.put(connection, new Pair<>(pair.getA(), data));
+                }
+            } else {
+                if (isOffer) {
+                    pillarsByConnection.put(connection, new Pair<>(data, null));
+                } else {
+                    pillarsByConnection.put(connection, new Pair<>(null, data));
+                }
+            }
+        }
+        addPillar(data);
+    }
+
+    /**
+     * Does NOT hadle adding to pillarsByConnection (must be done upstream)
+     */
     private void addPillar(PillarData value) {
         pillars.put(value.currentPos, value);
         for (ChunkPos chunkPos : getChunkPoses(value.currentPos, 1)) {
@@ -145,9 +229,30 @@ public class LifeEconomyData extends SavedData {
     }
 
     public void removePillar(BlockPos pos) {
-        pillars.remove(pos);
+        PillarData remove = pillars.remove(pos);
         for (ChunkPos chunkPos : getChunkPoses(pos, 1)) {
             pillarsByChunk.computeIfAbsent(chunkPos, c -> new ArrayList<>()).removeIf(p -> Objects.equals(pos, p.currentPos));
+        }
+        if (remove != null && remove.connection != null) {
+            removeConnection(remove.connection);
+        }
+        if (remove != null && false) {
+            Pair<PillarData, PillarData> pair = pillarsByConnection.get(remove.connection);
+            if (pair != null) {
+                if (remove.isOffer) {
+                    if (pair.getB() != null) {
+                        pillarsByConnection.put(remove.connection, new Pair<>(null, pair.getB()));
+                    } else {
+                        pillarsByConnection.remove(remove.connection);
+                    }
+                } else {
+                    if (pair.getA() != null) {
+                        pillarsByConnection.put(remove.connection, new Pair<>(pair.getA(), null));
+                    } else {
+                        pillarsByConnection.remove(remove.connection);
+                    }
+                }
+            }
         }
         setDirty();
     }
@@ -170,46 +275,18 @@ public class LifeEconomyData extends SavedData {
         return pillarsByChunk.getOrDefault(new ChunkPos(pos), new ArrayList<>());
     }
 
-    public boolean checkPillarConnection(BlockPos pillarPos, UUID connection) {
-        if (pillars.containsKey(pillarPos) && Objects.equals(pillars.get(pillarPos).connection, connection)) {
-            return true;
-        }
-        return false;
-    }
-
-    public void setPillarConnectionToBe(ServerLevel sl, BlockPos pillarPos, UUID connection) {
-        if (!pillars.containsKey(pillarPos)) {
-            addPillar(pillarPos, null, connection);
-        } else {
-            PillarData pillarData = pillars.get(pillarPos);
-            pillarData.linkPos = null;
-            pillarData.connection = connection;
-        }
-        if (sl.isLoaded(pillarPos)) {
-            if (sl.getBlockEntity(pillarPos) instanceof PillarBE be) {
-                be.setLink(null);
-                be.setConnection(connection);
+    public BlockPos getLink(PillarData data) {
+        if (data != null) {
+            Pair<PillarData, PillarData> pair = pillarsByConnection.get(data.getConnection());
+            if (pair != null) {
+                if (data.isOffer && pair.getB() != null) {
+                    return pair.getB().getCurrentPos();
+                } else if (!data.isOffer && pair.getA() != null) {
+                    return pair.getA().getCurrentPos();
+                }
             }
         }
-        setDirty();
-    }
-
-    public boolean setPillarLink(Level level, BlockPos pillarPos, UUID connection, BlockPos link) {
-        if (!pillars.containsKey(pillarPos)) {
-            return false;
-        }
-        PillarData pillarData = pillars.get(pillarPos);
-        if (!Objects.equals(pillarData.connection, connection)) {
-            return false;
-        }
-        pillarData.linkPos = link;
-        if (level.isLoaded(pillarPos)) {
-            if (level.getBlockEntity(pillarPos) instanceof PillarBE be) {
-                be.setLink(link);
-            }
-        }
-        setDirty();
-        return true;
+        return null;
     }
 
     public void tick() {
@@ -220,33 +297,56 @@ public class LifeEconomyData extends SavedData {
     public class PillarData {
         private BlockPos currentPos;
         private UUID connection;
-        private BlockPos linkPos;
+        private EntityType<?> boundEntity;
+        private int entityProgressNeeded;
+        private int entityProgressAchieved;
+        private final boolean isOffer;
 
-        public PillarData(BlockPos currentPos, UUID connection, BlockPos linkPos) {
+        public PillarData(boolean isOffer, BlockPos currentPos, UUID connection, EntityType<?> boundEntity, int entityProgressNeeded, int entityProgressAchieved) {
+            this.isOffer = isOffer;
             this.currentPos = currentPos;
             this.connection = connection;
-            this.linkPos = linkPos;
+            this.boundEntity = boundEntity;
+            this.entityProgressNeeded = entityProgressNeeded;
+            this.entityProgressAchieved = entityProgressAchieved;
         }
 
         public PillarData(CompoundTag tag) {
-            tag.contains("currentPos");
-            currentPos = BlockPos.of(tag.getLong("currentPos"));
-            if(tag.contains("connection")){
-                connection = UUID.fromString(tag.getString("connection"));
+            this.isOffer = tag.getBoolean("isOffer");
+            if (tag.contains("currentPos")) {
+                currentPos = BlockPos.of(tag.getLong("currentPos"));
+            } else {
+                currentPos = BlockPos.ZERO;
             }
-            if(tag.contains("linkPos")){
-                linkPos = BlockPos.of(tag.getLong("linkPos"));
+            if (tag.contains("connection")) {
+                connection = tag.getUUID("connection");
             }
+            if (tag.contains("boundEntity")) {
+                boundEntity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(tag.getString("boundEntity")));
+                if (tag.contains("entityProgressNeeded")) {
+                    entityProgressNeeded = tag.getInt("entityProgressNeeded");
+                } else if (boundEntity != null) {
+                    double health = ForgeHooks.getAttributesView().get(boundEntity).getValue(Attributes.MAX_HEALTH);
+                    entityProgressNeeded = (int) Math.max(Math.pow(health, 0.8), 4);
+                }
+            }
+            entityProgressAchieved = tag.getInt("entityProgressAchieved");
         }
 
         CompoundTag save(CompoundTag tag) {
+            tag.putBoolean("isOffer", isOffer);
             tag.putLong("currentPos", currentPos.asLong());
             if (connection != null) {
-                tag.putString("connection", connection.toString());
+                tag.putUUID("connection", connection);
             }
-            if (linkPos != null) {
-                tag.putLong("linkPos", linkPos.asLong());
+            if (boundEntity != null) {
+                ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(boundEntity);
+                if (key != null) {
+                    tag.putString("boundEntity", key.getPath());
+                }
             }
+            tag.putInt("entityProgressAchieved", entityProgressAchieved);
+            tag.putInt("entityProgressNeeded", entityProgressNeeded);
             return tag;
         }
 
@@ -258,8 +358,8 @@ public class LifeEconomyData extends SavedData {
             return connection;
         }
 
-        public BlockPos getLinkPos() {
-            return linkPos;
+        public boolean isOffer() {
+            return isOffer;
         }
     }
 

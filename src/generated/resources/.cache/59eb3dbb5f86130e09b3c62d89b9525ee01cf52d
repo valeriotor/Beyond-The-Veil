@@ -1,4 +1,4 @@
-// 1.20.1	2025-09-21T19:19:19.3203345	Loot Tables
+// 1.20.1	2025-09-28T20:43:49.4782381	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -25,7 +25,7 @@ bf80f6456e9f92085375467c43062807c015f595 data/beyondtheveil/loot_tables/blocks/d
 5b04ce3487629d6f039a56522036168801ea0152 data/beyondtheveil/loot_tables/blocks/dark_glass.json
 35831b693a6b01a5a3bc80d661102fc8fab51c72 data/beyondtheveil/loot_tables/blocks/dark_sand.json
 c941ce032f908fa4ab0f6fc014ecfb2db563fa45 data/beyondtheveil/loot_tables/blocks/deep_chest.json
-7c59ab4d4340f9a711f3f74aed8fcc32a7d2c23e data/beyondtheveil/loot_tables/blocks/demand_pillar.json
+a1192ff7ac47fbb6ce108b6ac2444ba076ec81bc data/beyondtheveil/loot_tables/blocks/demand_pillar.json
 489efed5ab4543e85081a286640f6c4f9cc2a72e data/beyondtheveil/loot_tables/blocks/elder_brick.json
 01b079e5938bd46171f587e344cb27803bbcc723 data/beyondtheveil/loot_tables/blocks/elder_brick_slab.json
 dc3f3218acf3b8a1b041d63ec5db200631716114 data/beyondtheveil/loot_tables/blocks/elder_brick_stairs.json
@@ -50,7 +50,7 @@ b278089cdc6954c6df765158dddf5ab24ca8d340 data/beyondtheveil/loot_tables/blocks/l
 2c54c3c75db6c1480c2dc6fc3787d547fcb1b17d data/beyondtheveil/loot_tables/blocks/lamp.json
 b65bd581bf8f0e50a899f93121df7d61a2012b3f data/beyondtheveil/loot_tables/blocks/letter_box.json
 7291bf55b5646990818d32d7e3807a4517a4b410 data/beyondtheveil/loot_tables/blocks/memory_sieve.json
-1fc0176f751d9c3de3616234805ee2fd26208bfc data/beyondtheveil/loot_tables/blocks/offer_pillar.json
+670e780d90dc28ab2b208a678c9735693c1a52bb data/beyondtheveil/loot_tables/blocks/offer_pillar.json
 ff17b12edddc174ced130de2d50678d9ed95eca8 data/beyondtheveil/loot_tables/blocks/patient_pod.json
 c431cde79772ae0252ee37e1d90a634ed8b7a54b data/beyondtheveil/loot_tables/blocks/sacrifice_altar.json
 fef3f62bd204f94d7f14fe96d15d286dc35df8a2 data/beyondtheveil/loot_tables/blocks/sleep_chamber.json
@@ -61,4 +61,4 @@ b7c63f9e4d4185807bd44acff9acece6c893e461 data/beyondtheveil/loot_tables/blocks/v
 09e694c46092fb3fbea45b12e2d76dadb428d4d5 data/beyondtheveil/loot_tables/blocks/watery_cradle.json
 b7bdd4602b6a5d3d86a11124c16d66bd346a1edd data/beyondtheveil/loot_tables/blocks/worn_bricks.json
 44abe2da680857c5b63ce6cd5c43a0ebb312790f data/beyondtheveil/loot_tables/blocks/worn_brick_stairs.json
-afc407e2df321da94c27e182496c462a611bcea0 data/beyondtheveil/loot_tables/deep_city_altar.json
+d372039b236902383a67b91a1d52926b445fb354 data/beyondtheveil/loot_tables/deep_city_altar.json
