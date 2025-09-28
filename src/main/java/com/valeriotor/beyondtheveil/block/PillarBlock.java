@@ -4,12 +4,16 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -112,5 +117,22 @@ public class PillarBlock extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState pState, LootParams.Builder pParams) {
         return super.getDrops(pState, pParams);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> components, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, components, pFlag);
+        CompoundTag tag = pStack.getTag();
+        if (tag != null) {
+            if (tag.contains("connection")) {
+                components.add(Component.translatable("tooltip.pillar.connected"));
+            }
+            String type = tag.getString("boundEntity");
+            EntityType<?> value = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(type));
+            if (value != null && tag.contains("boundEntity")) {
+                Component description = value.getDescription();
+                components.add(Component.literal(Component.translatable("tooltip.pillar.bound").getString() + description.getString()));
+            }
+        }
     }
 }

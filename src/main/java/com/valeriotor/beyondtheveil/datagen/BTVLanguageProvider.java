@@ -95,6 +95,8 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("tooltip.memory_phial.stored", "This phial stores %1$s.");
         add("tooltip.memory_phial.empty", "This phial is empty.");
+        add("tooltip.pillar.bound", "Bound entity: ");
+        add("tooltip.pillar.connected", "Connected");
 
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");

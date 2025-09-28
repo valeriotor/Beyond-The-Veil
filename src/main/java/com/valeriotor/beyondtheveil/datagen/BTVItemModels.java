@@ -126,6 +126,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(VANILLA_WEED_SEEDS.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + VANILLA_WEED_SEEDS.getId().getPath()));
         singleTexture(BLACKJACK.getId().getPath(),          mcLoc("item/generated"), "layer0", modLoc("item/" + BLACKJACK.getId().getPath()));
         singleTexture(SPINE.getId().getPath(),              mcLoc("item/generated"), "layer0", modLoc("item/" + SPINE.getId().getPath()));
+        singleTexture(BLOOD_SHARD.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + BLOOD_SHARD.getId().getPath()));
         singleTexture(HELD_VILLAGER.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + HELD_VILLAGER.getId().getPath()));
         singleTexture(HELD_WEEPER.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + HELD_WEEPER.getId().getPath()));
         singleTexture(HELD_FLETUM.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + HELD_FLETUM.getId().getPath()));

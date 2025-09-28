@@ -79,9 +79,9 @@ public class SacrificialKnifeItem extends Item {
         if (tag != null) {
             String type = tag.getString("type");
             EntityType<?> value = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(type));
-            if (value != null) {
+            if (value != null && tag.contains("type")) {
                 Component description = value.getDescription();
-                pTooltipComponents.add(description);
+                pTooltipComponents.add(Component.literal(Component.translatable("tooltip.pillar.bound").getString() + description.getString()));
                 pTooltipComponents.add(Component.literal(String.format("%d / 30", tag.getInt("killed"))));
             }
         }

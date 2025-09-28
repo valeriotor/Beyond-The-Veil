@@ -8,7 +8,10 @@ import com.valeriotor.beyondtheveil.tile.FleboBE;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -28,6 +31,29 @@ public class RitualRegistry {
             .setMatch(input -> exact(input, Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
             .setOutputs(List.of(new ItemStack(Registration.CORAL_STAFF.get())))
             .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 0, 1, 1)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Registration.OFFER_PILLAR_ITEM.get(), Registration.BLOOD_SHARD.get()))
+            .setOutputs((stacks, player) -> {
+                ItemStack stack = new ItemStack(Registration.OFFER_PILLAR.get());
+                if (stacks.size() == 3) {
+                    stack.setTag(stacks.get(1).getOrCreateTag());
+                    ItemStack knife = stacks.get(2);
+                    if (knife.getItem() == Registration.BLOOD_SHARD.get()) {
+                        CompoundTag tag = knife.getTag();
+                        if (tag != null) {
+                            String type = tag.getString("type");
+                            if (type.length() > 0) {
+                                EntityType<?> value = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(type));
+                                if (value != null) {
+                                    stack.getOrCreateTag().putString("boundEntity", type);
+                                }
+                            }
+                        }
+                    }
+                }
+                return List.of(stack);
+            }).toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 0, 3, 0)
             .setMatch(input -> {

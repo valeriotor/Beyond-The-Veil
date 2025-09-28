@@ -10,7 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -326,7 +328,7 @@ public class LifeEconomyData extends SavedData {
                 if (tag.contains("entityProgressNeeded")) {
                     entityProgressNeeded = tag.getInt("entityProgressNeeded");
                 } else if (boundEntity != null) {
-                    double health = ForgeHooks.getAttributesView().get(boundEntity).getValue(Attributes.MAX_HEALTH);
+                    double health = DefaultAttributes.getSupplier((EntityType<? extends LivingEntity>) boundEntity).getValue(Attributes.MAX_HEALTH);
                     entityProgressNeeded = (int) Math.max(Math.pow(health, 0.8), 4);
                 }
             }
@@ -360,6 +362,20 @@ public class LifeEconomyData extends SavedData {
 
         public boolean isOffer() {
             return isOffer;
+        }
+
+        public EntityType<?> getBoundEntity() {
+            return boundEntity;
+        }
+
+        public boolean incrementProgress() {
+            setDirty();
+            entityProgressAchieved++;
+            if (entityProgressAchieved >= entityProgressNeeded) {
+                entityProgressAchieved = 0;
+                return true;
+            }
+            return false;
         }
     }
 

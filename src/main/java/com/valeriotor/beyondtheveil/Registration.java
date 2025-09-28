@@ -263,6 +263,7 @@ public class Registration {
     public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
     public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", BlackjackItem::new); // new ItemBlackjack("blackjack");
     public static final RegistryObject<Item> SPINE = ITEMS.register("spine", () -> new Item(ITEM_PROPERTIES)); // new ModItem("spine");
+    public static final RegistryObject<BloodShardItem> BLOOD_SHARD = ITEMS.register("blood_shard", BloodShardItem::new); // new ItemHeldVillager("held_villager");
     public static final RegistryObject<HeldVillagerItem> HELD_VILLAGER = ITEMS.register("held_villager", HeldVillagerItem::new); // new ItemHeldVillager("held_villager");
     public static final RegistryObject<Item> HELD_WEEPER = ITEMS.register("held_weeper", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldWeeper("held_weeper");
     public static final RegistryObject<Item> HELD_FLETUM = ITEMS.register("held_fletum", FletumItem::new); // new ItemHeldFletum("held_fletum");
@@ -487,6 +488,7 @@ public class Registration {
                 output.accept(VANILLA_WEED_SEEDS.get());
                 output.accept(BLACKJACK.get());
                 output.accept(SPINE.get());
+                output.accept(BLOOD_SHARD.get());
                 output.accept(HELD_VILLAGER.get());
                 output.accept(HELD_WEEPER.get());
                 output.accept(HELD_FLETUM.get());
