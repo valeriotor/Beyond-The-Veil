@@ -372,6 +372,14 @@ public class SacrificeAltarBE extends BlockEntity {
                     killVictim();
                     ritualStatus = null;
                     updateClient();
+                } else if (ritualStatus.isEarlyStop()) {
+                    killVictim();
+                    if (ritualStatus.isDeleteVictim()) {
+                        entityData = null;
+                        patientStatus = null;
+                    }
+                    ritualStatus = null;
+                    updateClient();
                 }
             }
 

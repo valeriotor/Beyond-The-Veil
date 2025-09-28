@@ -24,12 +24,12 @@ public class RitualRegistry {
             .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 3)))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 0, 0)
+    public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 7, 5)
             .setMatch(input -> exact(input, Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
             .setOutputs(List.of(new ItemStack(Registration.CORAL_STAFF.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 0, 0, 0)
+    public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 0, 3, 0)
             .setMatch(input -> {
                 input = skipModifiers(input);
                 if (input.size() != 4) {
