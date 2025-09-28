@@ -304,6 +304,7 @@ public class BloodPoolGui extends Screen {
                     if (entities.size() > i + offset && relativeMouseX > x && relativeMouseX < x + 82 && relativeMouseY > y && relativeMouseY < y + 82) {
                         rightPage = new RightPage(entities.get(i + offset), triplet, i + offset);
                         spawnButton.visible = spawnButton.active = true;
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.MUD_PLACE, 1));
                         return true;
                     }
                 }
