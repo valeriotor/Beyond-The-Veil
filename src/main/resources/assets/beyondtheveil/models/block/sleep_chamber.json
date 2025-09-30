@@ -11,8 +11,8 @@
 	"display": {
 		"gui": {
 			"rotation": [ 30, 135, 0 ],
-			"translation": [ 0, 0, 0],
-			"scale":[ 0.625, 0.625, 0.625 ]
+			"translation": [ 0, -2.5, 0],
+			"scale":[ 0.425, 0.425, 0.425 ]
 		},
 		"head": {
 			"rotation": [ 0, -90, 0 ],

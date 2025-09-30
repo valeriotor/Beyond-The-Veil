@@ -17,5 +17,12 @@
   "loader": "forge:composite",
   "textures": {
     "particle": "beyondtheveil:block/flebo"
+  },
+  "display": {
+    "gui": {
+      "rotation": [ 30, 135, 0 ],
+      "translation": [ 0, -2.5, 0],
+      "scale":[ 0.54125, 0.54125, 0.54125 ]
+    }
   }
 }

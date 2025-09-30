@@ -6,6 +6,13 @@
 		"0": "beyondtheveil:block/letter_box",
 		"particle": "beyondtheveil:block/letter_box"
 	},
+	"display": {
+		"gui": {
+			"rotation": [ 30, 135, 0 ],
+			"translation": [ 0, -3, 0],
+			"scale":[ 0.45125, 0.45125, 0.45125 ]
+		}
+	},
 	"elements": [
 		{
 			"from": [3, 0, 4],
