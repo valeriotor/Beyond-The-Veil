@@ -1,0 +1,10 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "beyondtheveil:ttf/cmunss.ttf",
+      "oversample": 10,
+      "size": 15
+    }
+  ]
+}

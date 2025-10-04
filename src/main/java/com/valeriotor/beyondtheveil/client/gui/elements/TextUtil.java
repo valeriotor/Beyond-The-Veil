@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.FormattedCharSequence;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -27,6 +28,7 @@ public class TextUtil {
     private boolean backslashEscape = false;
     private boolean formatEscape = false;
     private Alignment alignment = Alignment.LEFT;
+    private Style style = Style.EMPTY;
     private int offset;
 
     public TextUtil alignRight() {
@@ -41,6 +43,11 @@ public class TextUtil {
 
     public TextUtil offset(int offset) {
         this.offset = offset;
+        return this;
+    }
+
+    public TextUtil setStyle(Style style) {
+        this.style = style;
         return this;
     }
 
@@ -67,7 +74,7 @@ public class TextUtil {
                 }
                 text.append(w.toFormattedString(true, nextWord));
             }
-            f.getSplitter().splitLines(text.toString(), width, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
+            f.getSplitter().splitLines(text.toString(), width, style, true, (pStyle, pCurrentPos, pContentWidth) -> {
                 lines.add(text.substring(pCurrentPos, pContentWidth));
             });
 
@@ -119,8 +126,8 @@ public class TextUtil {
                                             }
                                             propertyText.append(w.toFormattedString(true, nextWord));
                                         }
-                                        int propertyStart = f.width(FormattedText.of(precedingText.toString()));
-                                        int propertyWidth = f.width(FormattedText.of(propertyText.toString()));
+                                        int propertyStart = f.width(FormattedCharSequence.forward(precedingText.toString(), style));
+                                        int propertyWidth = f.width(FormattedCharSequence.forward(propertyText.toString(), style));
                                         properties.add(makeProperty(currentProperty, propertyStart, propertyStart + propertyWidth));
                                     }
                                     if (done || j == 0) {
@@ -132,7 +139,11 @@ public class TextUtil {
                         }
                     }
                 }
-                returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignment, width));
+                if (style == Style.EMPTY) {
+                    returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignment, width));
+                } else {
+                    returnValue.add(new TextLine(FormattedCharSequence.forward(line, style), properties, f, alignment, width));
+                }
             }
             if (i < words.size() - 1) {
                 returnValue.add(breakTypes.get(i).separator.apply(width));

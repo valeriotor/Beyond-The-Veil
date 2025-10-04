@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.valeriotor.beyondtheveil.client.Fonts;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.lib.References;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -23,7 +25,7 @@ public class BloodThesisGui extends Screen {
     private static final int PAGE_HEIGHT = 800 * 3 / 5;
     private static final int BACKGROUND_BASE_WIDTH = 1210 * 3 / 5;
     private static final int BACKGROUND_BASE_HEIGHT = 800 * 3 / 5;
-    private static final int TEXT_BLOCK_WIDTH = 540 * 3 / 5;
+    private static final int TEXT_BLOCK_WIDTH = 550 * 3 / 5;
     private static final int TEXT_BLOCK_HEIGHT = 600 * 3 / 5;
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/blood_thesis.png");
 
@@ -166,12 +168,19 @@ public class BloodThesisGui extends Screen {
     private static class AbstractPage extends Element {
 
         private final MutableComponent title;
-        private final List<Element> elements;
+        private final List<Component> lines = new ArrayList<>();
+        private final TextBlock text;
 
         protected AbstractPage() {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
-            title = Component.translatable("research.thesis.abstract.title");
-            elements = new TextUtil().alignCenter().parseText(I18n.get("research.thesis.abstract"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            title = Component.translatable("research.thesis.abstract.title").withStyle(Fonts.ACADEMIC_STYLE);
+            String text = I18n.get("research.thesis.abstract");
+            List<Element> elements = new TextUtil().setStyle(Fonts.ACADEMIC_STYLE).alignCenter().parseText(text, TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
+            //Minecraft.getInstance().font.getSplitter().splitLines(text, TEXT_BLOCK_WIDTH, Fonts.ACADEMIC_STYLE, false, (pStyle, pCurrentPos, pContentWidth) -> {
+            //    lines.add(Component.literal(text.substring(pCurrentPos, pContentWidth)).withStyle(pStyle));
+            //});
+
         }
 
         @Override
@@ -179,18 +188,16 @@ public class BloodThesisGui extends Screen {
             final int startY = 100;
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, startY, 0);
-            poseStack.scale(1.25F, 1.25F, 1);
+            poseStack.scale(1.45F, 1.45F, 1);
             graphics.drawCenteredString(Minecraft.getInstance().font, title, 0, 0, color);
             poseStack.popPose();
             poseStack.pushPose();
             int newY = startY + 30;
             poseStack.translate(0, newY, 0);
-            for (int i = 0; i < elements.size(); i++) {
-                poseStack.pushPose();
-                poseStack.translate(0, 15 * i, 0);
-                elements.get(i).render(poseStack, graphics, color, relativeMouseX - (PAGE_WIDTH - TEXT_BLOCK_WIDTH) / 2, relativeMouseY - newY - 15 * i, pPartialTick);
-                poseStack.popPose();
-            }
+            text.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - newY, pPartialTick);
+            //for (int i = 0; i < lines.size(); i++) {
+            //    graphics.drawCenteredString(Minecraft.getInstance().font, lines.get(i), TEXT_BLOCK_WIDTH / 2, 15 * i, color);
+            //}
             poseStack.popPose();
         }
     }
