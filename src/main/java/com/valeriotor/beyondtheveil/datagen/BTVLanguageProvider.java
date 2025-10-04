@@ -2155,6 +2155,12 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addBloodThesis() {
+        add("research.thesis.title.title1", "Sanguis");
+        add("research.thesis.title.title2", "Inter Vitam et Mortem");
+        add("research.thesis.title.thesis", "Master Thesis");
+        add("research.thesis.title.author", "Georg Ferdinand Mauer");
+        add("research.thesis.title.supervisor", "Supervisor: Henry Armitage");
+
         add("research.thesis.abstract.title", "Abstract");
         add("research.thesis.abstract", "Blood, as is known, makes for powerful bindings. \"Brothers in blood\", \"Pact of blood\", and so forth: one must not look far into popular customs among the many folks of this world to find such examples. The phenomenon has a scientific basis: blood binds all life, all things that live. A network of flesh, a web of souls, and its fulcrum is the deep sea Arche from which all things are born.\\n" +
                 "Within this treatise, we shall focus on what stands perhaps as the most important of the bindings that blood can forge: that between life and death. We explore the fluid's role in this endeavor from a historical perspective, study its potential in breaching this veil, and conjecture possibilities for further advancements in the art.");

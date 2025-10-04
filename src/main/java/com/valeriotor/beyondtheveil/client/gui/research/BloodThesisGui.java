@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.Fonts;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
@@ -28,6 +29,7 @@ public class BloodThesisGui extends Screen {
     private static final int TEXT_BLOCK_WIDTH = 550 * 3 / 5;
     private static final int TEXT_BLOCK_HEIGHT = 600 * 3 / 5;
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/blood_thesis.png");
+    private static final ResourceLocation LOGO = new ResourceLocation(References.MODID, "textures/gui/miskatonic_logo.png");
 
     private int imageWidth;
     private int imageHeight;
@@ -155,13 +157,74 @@ public class BloodThesisGui extends Screen {
 
     private static class TitlePage extends Element {
 
+        private final Component title1;
+        private final Component title2;
+        private final Component thesis;
+        private final Component author;
+        private final Component supervisor;
+
         protected TitlePage() {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
+            title1 = Component.translatable("research.thesis.title.title1").withStyle(Fonts.ACADEMIC_STYLE);
+            title2 = Component.translatable("research.thesis.title.title2").withStyle(Fonts.ACADEMIC_STYLE);
+            thesis = Component.translatable("research.thesis.title.thesis").withStyle(Fonts.ACADEMIC_STYLE);
+            author = Component.translatable("research.thesis.title.author").withStyle(Fonts.ACADEMIC_STYLE);
+            supervisor = Component.translatable("research.thesis.title.supervisor").withStyle(Fonts.ACADEMIC_STYLE);
         }
 
         @Override
-        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            poseStack.pushPose();
+            poseStack.translate(0, 7, 100);
+            RenderSystem.enableBlend();
+            graphics.blit(LOGO, -5, 0, 70, 70, 0, 0, 200, 200, 200, 200);
+            poseStack.popPose();
 
+            Font f = Minecraft.getInstance().font;
+            poseStack.pushPose();
+            poseStack.translate(TEXT_BLOCK_WIDTH - 109, 31, 0);
+            graphics.drawString(f, Component.literal("Institute of").withStyle(Fonts.ACADEMIC_STYLE), 0, 0, color);
+            graphics.drawString(f, Component.literal("Anthropological Studies").withStyle(Fonts.ACADEMIC_STYLE), 0, 15, color);
+            poseStack.popPose();
+
+            int y = 127;
+            poseStack.pushPose();
+            poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
+            poseStack.scale(2, 2, 1);
+            graphics.drawCenteredString(f, title1, 0, 0, color);
+            poseStack.popPose();
+
+            y += 30;
+            poseStack.pushPose();
+            poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
+            poseStack.scale(1.75F, 1.75F, 1);
+            graphics.drawCenteredString(f, title2, 0, 0, color);
+            poseStack.popPose();
+
+
+            y += 70;
+            poseStack.pushPose();
+            poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
+            poseStack.scale(1.35F, 1.35F, 1);
+            graphics.drawCenteredString(f, thesis, 0, 0, color);
+            graphics.drawCenteredString(f, author, 0, 50, color);
+            poseStack.popPose();
+
+
+            y += 90;
+            poseStack.pushPose();
+            poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
+            poseStack.scale(1F, 1F, 1);
+            graphics.drawCenteredString(f, supervisor, 0, 0, color);
+            poseStack.popPose();
+
+
+            //y += 90;
+            //poseStack.pushPose();
+            //poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 100);
+            //RenderSystem.enableBlend();
+            //graphics.blit(LOGO, -35, 0, 70, 70, 0, 0, 200, 200, 200, 200);
+            //poseStack.popPose();
         }
     }
 
