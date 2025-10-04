@@ -64,6 +64,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(BLEEDING_BELT.get(), "Bleeding Belt");
         add(DREAM_BOTTLE.get(), "Dream Bottle");
         add(BLOOD_GEM.get(), "Blood Gem");
+        add(BLOOD_THESIS.get(), "Sanguis: inter vitam et mortem");
         add(SHOGGOTH_MAP.get(), "Shoggoth Map");
         add(BLOOD_COVENANT.get(), "Blood Covenant");
         add(REVELATION_RING.get(), "Ring of Revelation");
@@ -2135,6 +2136,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addBaptism();
         addOverlays();
         addBloodPool();
+        addBloodThesis();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -2150,6 +2152,17 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.multiblock.layer", "Layer %d");
 
         add("container.deep_chest", "Deep Chest");
+    }
+
+    private void addBloodThesis() {
+        add("research.thesis.abstract.title", "Abstract");
+        add("research.thesis.abstract", "Blood, as is known, makes for powerful bindings. \"Brothers in blood\", \"Pact of blood\", and so forth: one must not look far into popular customs among the many folks of this world to find such examples. The phenomenon has a scientific basis: blood binds all life, all things that live. A network of flesh, a web of souls, and its fulcrum is the deep sea Arche from which all things are born.\\n" +
+                "Within this treatise, we shall focus on what stands perhaps as the most important of the bindings that blood can forge: that between life and death. We explore the fluid's role in this endeavor from a historical perspective, study its potential in breaching this veil and conjecture possibilities for further advancements in the art.");
+        add("research.thesis.background.title", "Background");
+        add("research.thesis.background.text", "Testing the text");
+        add("research.thesis.ritual.title", "Performing the ritual");
+        add("research.thesis.risks.title", "Risks");
+        add("research.thesis.modifier.title", "Modifiers");
     }
 
     private void addBloodPool() {

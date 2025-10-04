@@ -273,6 +273,7 @@ public class Registration {
     public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
     public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", DreamBottleItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> BLOOD_GEM = ITEMS.register("blood_gem", BloodGemItem::new); // new ItemDreamBottle("dream_bottle");
+    public static final RegistryObject<Item> BLOOD_THESIS = ITEMS.register("blood_thesis", BloodThesisItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_COVENANT = ITEMS.register("blood_covenant", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
     public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
@@ -498,6 +499,7 @@ public class Registration {
                 output.accept(BLEEDING_BELT.get());
                 output.accept(DREAM_BOTTLE.get());
                 output.accept(BLOOD_GEM.get());
+                output.accept(BLOOD_THESIS.get());
                 output.accept(SHOGGOTH_MAP.get());
                 output.accept(BLOOD_COVENANT.get());
                 output.accept(REVELATION_RING.get());

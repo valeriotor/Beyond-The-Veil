@@ -26,11 +26,16 @@ public class TextUtil {
     private ParsingPhase phase = ParsingPhase.NORMAL;
     private boolean backslashEscape = false;
     private boolean formatEscape = false;
-    private boolean alignRight;
+    private Alignment alignment = Alignment.LEFT;
     private int offset;
 
     public TextUtil alignRight() {
-        this.alignRight = true;
+        this.alignment = Alignment.RIGHT;
+        return this;
+    }
+
+    public TextUtil alignCenter() {
+        this.alignment = Alignment.CENTER;
         return this;
     }
 
@@ -127,11 +132,7 @@ public class TextUtil {
                         }
                     }
                 }
-                if (alignRight) {
-                    returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignRight, width));
-                } else {
-                    returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, offset));
-                }
+                returnValue.add(new TextLine(Language.getInstance().getVisualOrder(FormattedText.of(line)), properties, f, alignment, width));
             }
             if (i < words.size() - 1) {
                 returnValue.add(breakTypes.get(i).separator.apply(width));

@@ -13,25 +13,28 @@ public class TextLine extends Element{
 
     private final FormattedCharSequence text;
     private final List<Property> properties;
-    private final boolean alignRight;
+    private final Alignment alignRight;
     private int start;
 
     public TextLine(FormattedCharSequence text, List<Property> properties, Font font) {
-        this(text, properties, font, false, font.width(text));
+        this(text, properties, font, Alignment.LEFT, font.width(text));
     }
 
     public TextLine(FormattedCharSequence text, List<Property> properties, Font font, int start) {
-        this(text, properties, font, false, font.width(text));
+        this(text, properties, font, Alignment.LEFT, font.width(text));
         this.start = start;
     }
 
-    public TextLine(FormattedCharSequence text, List<Property> properties, Font font, boolean alignRight, int fullWidth) {
+    public TextLine(FormattedCharSequence text, List<Property> properties, Font font, Alignment alignment, int fullWidth) {
         super(font.width(text), 15);
         this.text = text;
         this.properties = properties;
-        this.alignRight = alignRight;
-        if (alignRight) {
+        this.alignRight = alignment;
+        if (alignment == Alignment.RIGHT) {
             start = fullWidth - getWidth();
+        } else if (alignment == Alignment.CENTER) {
+            start = (fullWidth - getWidth()) / 2;
+
         }
     }
 

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.gui;
 
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
+import com.valeriotor.beyondtheveil.client.gui.research.BloodThesisGui;
 import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
 import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import net.minecraft.client.Minecraft;
@@ -40,7 +41,8 @@ public class GuiHelper {
         NECRONOMICON(() -> new NecronomiconGui()),
         JOURNAL(() -> new JournalGui()),
         BLOOD_POOL(() -> new BloodPoolGui()),
-        KILLED_BY_CULTIST(() -> new KilledByCultistGui());
+        KILLED_BY_CULTIST(() -> new KilledByCultistGui()),
+        BLOOD_THESIS(() -> new BloodThesisGui());
 
         private Supplier<Screen> supplier;
 
