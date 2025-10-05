@@ -2,7 +2,7 @@
   "providers": [
     {
       "type": "ttf",
-      "file": "beyondtheveil:ttf/cmunss.ttf",
+      "file": "beyondtheveil:ttf/garamond.ttf",
       "oversample": 10,
       "size": 15
     }
