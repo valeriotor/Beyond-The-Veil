@@ -7,10 +7,13 @@ import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.tile.FleboBE;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -93,6 +96,20 @@ public class RitualRegistry {
                 return List.of();
             })
             .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate SUMMON_WITHER = new RitualTemplate.RitualTemplateBuilder("summon_wither", 100, 11, 5)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.SOUL_SAND, Items.WITHER_SKELETON_SKULL))
+            .setOtherEffects((player, level, vec3) -> {
+                if (level != null) {
+                    WitherBoss witherboss = EntityType.WITHER.create(level);
+                    if (witherboss != null) {
+                        witherboss.moveTo(vec3.add(0, 3, 0));
+                        witherboss.makeInvulnerable();
+                        level.addFreshEntity(witherboss);
+                    }
+                }
+            }).toTemplate(TEMPLATES, BY_NAME);
+
 
     private static boolean oneOrMore(List<Item> input, List<Item> prefix, ItemSet repeatable, int maxLength) { // TODO add startIndex to match when some are already burned... or maybe just feed again the burned items...?
         input = skipModifiers(input);

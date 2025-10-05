@@ -2155,6 +2155,8 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addBloodThesis() {
+        add("research.thesis.title.institute1", "Institute of");
+        add("research.thesis.title.institute2", "Anthropological Studies");
         add("research.thesis.title.title1", "Sanguis");
         add("research.thesis.title.title2", "Inter Vitam et Mortem");
         add("research.thesis.title.thesis", "Master Thesis");

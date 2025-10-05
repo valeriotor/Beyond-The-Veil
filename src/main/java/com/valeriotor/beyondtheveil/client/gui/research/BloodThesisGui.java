@@ -157,6 +157,8 @@ public class BloodThesisGui extends Screen {
 
     private static class TitlePage extends Element {
 
+        private final Component institute1;
+        private final Component institute2;
         private final Component title1;
         private final Component title2;
         private final Component thesis;
@@ -165,6 +167,8 @@ public class BloodThesisGui extends Screen {
 
         protected TitlePage() {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
+            institute1 = Component.translatable("research.thesis.title.institute1").withStyle(Fonts.ACADEMIC_STYLE);
+            institute2 = Component.translatable("research.thesis.title.institute2").withStyle(Fonts.ACADEMIC_STYLE);
             title1 = Component.translatable("research.thesis.title.title1").withStyle(Fonts.ACADEMIC_STYLE);
             title2 = Component.translatable("research.thesis.title.title2").withStyle(Fonts.ACADEMIC_STYLE);
             thesis = Component.translatable("research.thesis.title.thesis").withStyle(Fonts.ACADEMIC_STYLE);
@@ -183,8 +187,8 @@ public class BloodThesisGui extends Screen {
             Font f = Minecraft.getInstance().font;
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH - 109, 31, 0);
-            graphics.drawString(f, Component.literal("Institute of").withStyle(Fonts.ACADEMIC_STYLE), 0, 0, color);
-            graphics.drawString(f, Component.literal("Anthropological Studies").withStyle(Fonts.ACADEMIC_STYLE), 0, 15, color);
+            graphics.drawString(f, institute1, 0, 0, color);
+            graphics.drawString(f, institute2, 0, 15, color);
             poseStack.popPose();
 
             int y = 127;

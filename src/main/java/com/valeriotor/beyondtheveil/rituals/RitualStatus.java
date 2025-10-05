@@ -384,6 +384,7 @@ public class RitualStatus {
             ItemEntity item = new ItemEntity(level, altar.x, altar.y, altar.z, outputStack);
             level.addFreshEntity(item);
         }
+        template.getOtherEffects().apply(player, level, altar);
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {

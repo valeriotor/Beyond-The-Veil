@@ -2,11 +2,14 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.google.common.collect.Lists;
 import com.valeriotor.beyondtheveil.util.ItemSet;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -18,7 +21,7 @@ public class RitualTemplate {
     private final int primaryInstabilityRate;
     private final int secondaryInstabilityRate;
     private final BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs;
-    private final Consumer<Player> otherEffects;
+    private final AdditionalRitualEffect otherEffects;
     private final Predicate<List<Item>> match;
 
     private RitualTemplate(RitualTemplateBuilder builder) {
@@ -37,6 +40,10 @@ public class RitualTemplate {
 
     public BiFunction<List<ItemStack>, Player, List<ItemStack>> getOutputs() {
         return outputs;
+    }
+
+    public AdditionalRitualEffect getOtherEffects() {
+        return otherEffects;
     }
 
     public int getStartingPrimaryInstability() {
@@ -62,7 +69,7 @@ public class RitualTemplate {
         private final int primaryInstabilityRate;
         private final int secondaryInstabilityRate;
         private BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
-        private Consumer<Player> otherEffects;
+        private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
         private Predicate<List<Item>> match;
 
         public RitualTemplateBuilder(String name, int startingPrimaryInstability, int primaryInstabilityRate, int secondaryInstabilityRate) {
@@ -87,7 +94,7 @@ public class RitualTemplate {
             return this;
         }
 
-        public RitualTemplateBuilder setOtherEffects(Consumer<Player> otherEffects) {
+        public RitualTemplateBuilder setOtherEffects(AdditionalRitualEffect otherEffects) {
             this.otherEffects = otherEffects;
             return this;
         }
@@ -99,6 +106,11 @@ public class RitualTemplate {
             return template;
         }
 
+    }
+
+    @FunctionalInterface
+    interface AdditionalRitualEffect {
+        void apply(Player player, ServerLevel level, Vec3 altarPos);
     }
 
 
