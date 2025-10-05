@@ -41,6 +41,7 @@ public class Setup {
         event.put(BTVEntities.UMANCALA.get(), UmancalaEntity.prepareAttributes().build());
         event.put(BTVEntities.SANDFLATTER.get(), SandflatterEntity.prepareAttributes().build());
         event.put(BTVEntities.JELLY.get(), JellyEntity.prepareAttributes().build());
+        event.put(BTVEntities.LIVING_PORTAL.get(), LivingPortalEntity.prepareAttributes().build());
         //event.put(Registration.NAUTILUS.get(), NautilusEntity.prepareAttributes().build());
     }
 

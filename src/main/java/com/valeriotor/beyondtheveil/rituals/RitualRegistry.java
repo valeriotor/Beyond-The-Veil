@@ -3,13 +3,20 @@ package com.valeriotor.beyondtheveil.rituals;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Streams;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.entity.LivingPortalEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.tile.FleboBE;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.*;
@@ -106,6 +113,19 @@ public class RitualRegistry {
                         witherboss.moveTo(vec3.add(0, 3, 0));
                         witherboss.makeInvulnerable();
                         level.addFreshEntity(witherboss);
+                    }
+                }
+            }).toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate SUMMON_LIVING_PORTAL = new RitualTemplate.RitualTemplateBuilder("summon_living_portal", 100, 11, 5)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.NETHER_STAR, Items.BLAZE_ROD, Items.GHAST_TEAR))
+            .setOtherEffects((player, level, vec3) -> {
+                if (level != null) {
+                    LivingPortalEntity livingPortal = BTVEntities.LIVING_PORTAL.get().create(level);
+                    if (livingPortal != null) {
+                        livingPortal.moveTo(vec3.add(0, 2, 0));
+                        level.addFreshEntity(livingPortal);
+                        level.playSound(null, new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z), SoundEvents.WITHER_SPAWN, SoundSource.NEUTRAL);
                     }
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
