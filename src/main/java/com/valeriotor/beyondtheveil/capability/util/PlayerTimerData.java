@@ -43,6 +43,10 @@ public class PlayerTimerData {
         return true;
     }
 
+    public boolean removeTimer(String id) {
+        return playerTimers.removeIf(t -> Objects.equals(t.getId(), id));
+    }
+
     public void tick(Player player) {
         Iterator<PlayerTimer> iterator = playerTimers.iterator();
         while (iterator.hasNext()) {

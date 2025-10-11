@@ -2122,6 +2122,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("reminiscence.EMPTY", "The dream was not affected.");
         add("reminiscence.void", "My next dream will be empowered by void.");
         add("reminiscence.waypoint_other_dimension", "The destination lies in another dimension.");
+        add("reminiscence.power.0", "%1$s of my effects became stronger.");
+        add("reminiscence.power.1", "%1$s of the target's effects became stronger.");
+        add("reminiscence.power.2", "Of the creatures near the target area, %1$s had their effects become stronger.");
+        add("reminiscence.stillness.0", "%1$s of my effects became longer.");
+        add("reminiscence.stillness.1", "%1$s of the target's effects became longer.");
+        add("reminiscence.stillness.2", "Of the creatures near the target area, %1$s had their effects become longer.");
     }
 
     private void addGuis() {

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 
 public abstract class Reminiscence {
 
@@ -27,6 +28,10 @@ public abstract class Reminiscence {
 
         private String textKey;
 
+        public TextReminiscence() {
+
+        }
+
         public TextReminiscence(String textKey) {
             this.textKey = textKey;
         }
@@ -45,6 +50,10 @@ public abstract class Reminiscence {
 
         public String getTextKey() {
             return textKey;
+        }
+
+        public Component getText() {
+            return Component.translatable(textKey);
         }
     }
 

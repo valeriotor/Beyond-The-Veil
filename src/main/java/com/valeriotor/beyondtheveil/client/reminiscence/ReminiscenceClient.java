@@ -150,7 +150,7 @@ public abstract class ReminiscenceClient {
             } else if (e.getValue() instanceof ReminiscenceWaypoint rw) {
                 r = new ReminiscenceClientWaypoint(rw);
             } else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
-                r = new TextReminiscenceClient("reminiscence.EMPTY");
+                r = new TextReminiscenceClient(Component.translatable("reminiscence.EMPTY"));
             } else if (e.getValue() instanceof Reminiscence.TextReminiscence rw) {
                 r = new TextReminiscenceClient(rw);
             } else if (e.getValue() instanceof Reminiscence.SoundReminiscence rw) {
@@ -170,20 +170,20 @@ public abstract class ReminiscenceClient {
 
     public static class TextReminiscenceClient extends ReminiscenceClient {
 
-        private final String textKey;
+        private final Component translated;
         private int counter = 1;
 
-        public TextReminiscenceClient(String textKey) {
-            this.textKey = textKey;
+        public TextReminiscenceClient(Component translated) {
+            this.translated = translated;
         }
 
         public TextReminiscenceClient(Reminiscence.TextReminiscence rw) {
-            this(rw.getTextKey());
+            this(rw.getText());
         }
 
         @Override
         protected void render(RenderGuiOverlayEvent event) {
-            String translatable = Component.translatable(textKey).getString();
+            String translatable = translated.getString();
             String sub = translatable.substring(0, Math.min(counter, translatable.length()));
             int guiScaledWidth = event.getWindow().getGuiScaledWidth();
             int guiScaledHeight = event.getWindow().getGuiScaledHeight();

@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import org.joml.Quaternionf;
@@ -20,7 +21,7 @@ public class ReminiscenceClientWaypoint extends ReminiscenceClient.TextReminisce
     private final ReminiscenceWaypoint reminiscenceWaypoint;
 
     public ReminiscenceClientWaypoint(ReminiscenceWaypoint reminiscenceWaypoint) {
-        super("reminiscence.waypoint_other_dimension");
+        super(Component.translatable("reminiscence.waypoint_other_dimension"));
         this.reminiscenceWaypoint = reminiscenceWaypoint;
     }
 

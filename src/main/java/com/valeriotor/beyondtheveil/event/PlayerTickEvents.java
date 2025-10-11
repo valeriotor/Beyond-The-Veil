@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -13,9 +14,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
-import com.valeriotor.beyondtheveil.util.CounterType;
-import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.util.WaypointType;
+import com.valeriotor.beyondtheveil.util.*;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -98,6 +97,8 @@ public class PlayerTickEvents {
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 0, false);
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false);
             });
+            PlayerTimerData.for_(player).removeTimer("sleep_chamber");
+            PlayerTimerData.for_(player).removeTimer("dream_bottle");
         }
     }
 
