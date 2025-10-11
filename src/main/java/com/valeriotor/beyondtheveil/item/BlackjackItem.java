@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.item;
 
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LazyOptional;
 
 public class BlackjackItem extends Item {
 
@@ -28,13 +30,15 @@ public class BlackjackItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
             if (pInteractionTarget instanceof Villager villager) {
                 Level l = pInteractionTarget.level();
+                LazyOptional<ConvalescentData> villagerCapability = villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
+                CompoundTag convalescentData = villagerCapability.isPresent() ? villagerCapability.resolve().get().saveToNBT(new CompoundTag()) : null;
                 CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);
                 if (crawler != null) {
                     crawler.setData(villager);
                     crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {
-                        villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(villagerCap -> {
-                            crawlerCap.loadFromNBT(villagerCap.saveToNBT(new CompoundTag()));
-                        });
+                        if (convalescentData != null) {
+                            crawlerCap.loadFromNBT(convalescentData);
+                        }
                     });
                     return InteractionResult.SUCCESS;
                 }

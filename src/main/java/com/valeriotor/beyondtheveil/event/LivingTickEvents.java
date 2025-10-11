@@ -61,7 +61,7 @@ public class LivingTickEvents {
     }
 
     private static void convalescentCounters(LivingEvent.LivingTickEvent event) {
-        event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(ConvalescentData::tickCounters);
+        event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(convalescentData -> convalescentData.tick(event.getEntity()));
     }
 
     private static void pickupXP(LivingEvent.LivingTickEvent event) {

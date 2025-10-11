@@ -37,6 +37,7 @@ public class PatientWoundLayer<T extends LivingEntity & SurgeryPatient, M extend
         if (pLivingEntity.isSurgeryPatient() && status.isIncised()) {
             SurgicalLocation exposedLocation = status.getExposedLocation();
             if (exposedLocation == SurgicalLocation.BACK) {
+                woundModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
                 woundModel.renderToBuffer(pPoseStack, pBuffer.getBuffer(woundModel.renderType(getTextureLocation(pLivingEntity))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F, !status.getFlags().containsKey(OperationRegistry.SPINELESS));
             } else if (exposedLocation == SurgicalLocation.CHEST) {
                 chestWoundModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);

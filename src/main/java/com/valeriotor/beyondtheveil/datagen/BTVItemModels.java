@@ -152,6 +152,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(NECRONOMICON.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + NECRONOMICON.getId().getPath()));
         singleTexture(JOURNAL.getId().getPath(),            mcLoc("item/generated"), "layer0", modLoc("item/" + JOURNAL.getId().getPath()));
         singleTexture(BLOOD_ORB.getId().getPath(),          mcLoc("item/generated"), "layer0", modLoc("item/" + BLOOD_ORB.getId().getPath()));
+        singleTexture(GREAT_HEART.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + GREAT_HEART.getId().getPath()));
         singleTexture(GEAR.getId().getPath(),               mcLoc("item/generated"), "layer0", modLoc("item/" + GEAR.getId().getPath()));
         singleTexture(SURGEON_SUMMONS.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/" + SURGEON_SUMMONS.getId().getPath()));
         singleTexture(CRUCIBLE.getId().getPath(),           mcLoc("item/generated"), "layer0", modLoc("item/" + CRUCIBLE.getId().getPath()));
@@ -194,6 +195,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(MEMORY_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + MEMORY_HORMONES_FLUID_BUCKET.getId().getPath()));
         singleTexture(OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + OBEDIENCE_HORMONES_FLUID_BUCKET.getId().getPath()));
         singleTexture(PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath()));
+        singleTexture(GROWTH_STIMULANT_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + GROWTH_STIMULANT_FLUID_BUCKET.getId().getPath()));
         singleTexture(TEARS_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + TEARS_FLUID_BUCKET.getId().getPath()));
 
         //registerForceps();

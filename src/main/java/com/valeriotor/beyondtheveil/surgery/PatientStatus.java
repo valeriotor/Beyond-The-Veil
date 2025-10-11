@@ -55,6 +55,7 @@ public class PatientStatus {
     private int currentAbsolutePainThreshold; // from 0 to ABSOLUTE_PAIN_THRESHOLDS.length
     private int currentMissingPainThreshold; // from 0 to MISSING_PAIN_THRESHOLDS.length
     private int ticksSinceLastAddedPain;
+    private int counter;
     private boolean didFinalAnimation;
     private int countdownTicks = 0;
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
@@ -262,6 +263,7 @@ public class PatientStatus {
 
     // TODO maybe a patient in pain left alone for too long should start bleeding or dying
     public void tick(boolean clientSide) {
+        counter++;
         if (!clientSide) {
             ticksSinceLastAddedPain = Math.max(0, ticksSinceLastAddedPain - 1);
             if (currentMissingPainThreshold > 0 && ticksSinceLastAddedPain == 0) {
@@ -272,6 +274,11 @@ public class PatientStatus {
             if (!didFinalAnimation && countdownTicks == 1) {
                 didFinalAnimation = true;
                 setDirty(true);
+            }
+            if (exposedLocation == SurgicalLocation.CHEST && incised && !flags.containsKey("extract_heart")) {
+                if ((!flags.containsKey("great_heart") && (counter & 31) == 0) || (counter & 63) == 0) {
+                    level.playSound(null, pos, BTVSounds.HEARTBEAT.get(), SoundSource.BLOCKS, 1, 1);
+                }
             }
         }
     }
@@ -290,7 +297,7 @@ public class PatientStatus {
                         boolean wasAlreadyDead = condition == PatientCondition.DEAD;
                         boolean success = elaborateOperation(p, operation, be);
                         if (success && !wasAlreadyDead) {
-                            ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().copy());
+                            ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().apply(this));
                         } else if (wasAlreadyDead) {
                             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
                             if (operation.isPersistent()) {

@@ -46,6 +46,14 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (entity.getPatientStatus().getFlags().containsKey("great_heart")) {
+            heart.xScale = heart.yScale = heart.zScale = 1.5F;
+            heart.x = -0.5F;
+            ageInTicks /= 2;
+        } else {
+            heart.x = 0;
+            heart.xScale = heart.yScale = heart.zScale = 1F;
+        }
         int modulus = (Mth.floor(ageInTicks)) & 31;
         float floatingModulus = modulus + (ageInTicks - Mth.floor(ageInTicks));
         float offset;

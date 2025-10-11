@@ -289,6 +289,7 @@ public class Registration {
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> BLOOD_ORB = ITEMS.register("blood_orb", BloodOrbItem::new); // new ItemNecronomicon("necronomicon");
+    public static final RegistryObject<Item> GREAT_HEART = ITEMS.register("great_heart", GreatHeartItem::new); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
@@ -343,6 +344,7 @@ public class Registration {
     public static final RegistryObject<Item> MEMORY_HORMONES_FLUID_BUCKET = ITEMS.register("memory_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_MEMORY_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> OBEDIENCE_HORMONES_FLUID_BUCKET = ITEMS.register("obedience_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> PARENTAL_HORMONES_FLUID_BUCKET = ITEMS.register("parental_hormones_bucket", () -> new BucketItem(BTVFluids.FLUID_PARENTAL_HORMONES.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> GROWTH_STIMULANT_FLUID_BUCKET = ITEMS.register("growth_stimulant_bucket", () -> new BucketItem(BTVFluids.FLUID_GROWTH_STIMULANT.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> TEARS_FLUID_BUCKET = ITEMS.register("tears_bucket", () -> new BucketItem(BTVFluids.FLUID_TEARS.getA(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> DEEP_ONE_EGG = ITEMS.register("deep_one", () -> new ForgeSpawnEggItem(BTVEntities.DEEP_ONE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -515,6 +517,7 @@ public class Registration {
                 output.accept(NECRONOMICON.get());
                 output.accept(JOURNAL.get());
                 output.accept(BLOOD_ORB.get());
+                output.accept(GREAT_HEART.get());
                 output.accept(GEAR.get());
                 output.accept(SURGEON_SUMMONS.get());
                 output.accept(CRUCIBLE.get());
@@ -570,6 +573,7 @@ public class Registration {
                 output.accept(MEMORY_HORMONES_FLUID_BUCKET.get());
                 output.accept(OBEDIENCE_HORMONES_FLUID_BUCKET.get());
                 output.accept(PARENTAL_HORMONES_FLUID_BUCKET.get());
+                output.accept(GROWTH_STIMULANT_FLUID_BUCKET.get());
                 output.accept(TEARS_FLUID_BUCKET.get());
 
                 output.accept(DEEP_ONE_EGG.get());

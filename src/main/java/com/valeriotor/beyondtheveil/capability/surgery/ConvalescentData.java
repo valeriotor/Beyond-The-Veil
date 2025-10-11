@@ -2,15 +2,16 @@ package com.valeriotor.beyondtheveil.capability.surgery;
 
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
-import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.DyeColor;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class ConvalescentData {
 
@@ -120,8 +121,13 @@ public class ConvalescentData {
         return heldStack;
     }
 
-    public void tickCounters() {
+    public void tick(LivingEntity entity) {
         counters.replaceAll((k, v) -> Math.max(0, v - 1));
+        if (flags.containsKey("great_heart")) {
+            if (entity.tickCount % 40 == 0) {
+                entity.heal(1);
+            }
+        }
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {

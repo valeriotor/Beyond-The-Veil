@@ -7,7 +7,9 @@ package com.valeriotor.beyondtheveil.client.model.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -17,7 +19,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
-public class WoundModel<T extends Entity> extends EntityModel<T> {
+public class WoundModel<T extends Entity & SurgeryPatient> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "wound"), "main");
 	private final ModelPart bb_main;
@@ -47,7 +49,15 @@ public class WoundModel<T extends Entity> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		if (entity.getPatientStatus().getFlags().containsKey("great_spine")) {
+			spine.xScale = spine.yScale = spine.zScale = 1.25F;
+			spine.y = 25;
+			spine.z = 1;
+		} else {
+			spine.xScale = spine.yScale = spine.zScale = 1F;
+			spine.y = 24;
+			spine.z = 0;
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffectRegistry;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class OperationRegistry {
@@ -25,7 +27,7 @@ public class OperationRegistry {
     public record InjectionEntry(Operation operation, Fluid fluid, int amount) {
     }
 
-    public record ExtractionEntry(Operation operation, ItemStack stack,
+    public record ExtractionEntry(Operation operation, Function<PatientStatus, ItemStack> stack,
                                   Predicate<PatientStatus> additionalRequirements) {
     }
 
@@ -75,7 +77,13 @@ public class OperationRegistry {
             .setRequiresIncision(true)
             .setProgressParticles(true)
             .addPlayerData(PlayerDataLib.EXTRACTED_HEART)
-            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.HEART.get()), s -> !s.hasString("extract_heart"));
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, status -> {
+                if (status.getFlags().containsKey("great_heart")) {
+                    return new ItemStack(Registration.GREAT_HEART.get());
+                } else {
+                    return new ItemStack(Registration.HEART.get());
+                }
+            }, s -> !s.hasString("extract_heart"), false);
 
     private static final Operation EXTRACT_SPINE = new Operation.Builder("extract_spine")
             .setPainPerTick(0.4)
@@ -104,7 +112,7 @@ public class OperationRegistry {
             .needsSpine()
             .makeSpineless()
             .addPlayerData(PlayerDataLib.EXTRACTED_BONE_TIARA)
-            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.BONE_TIARA.get()), s -> s.getString("insert_emerald_gem") == 3, true);
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> new ItemStack(Registration.BONE_TIARA.get()), s -> s.getString("insert_emerald_gem") == 3, true);
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
@@ -200,6 +208,30 @@ public class OperationRegistry {
             .setSuccessParticleCount(5)
             .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
             .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
+
+    private static final Operation GREAT_HEART = new Operation.Builder("great_heart")
+            .addAllowedLocation(SurgicalLocation.CHEST)
+            .setPainPerTick(2.5)
+            .setPersistent(true)
+            .setSuccessParticles(true)
+            .setSuccessParticleType(BTVParticles.BLOODSPILL.get())
+            .setSuccessParticleCount(5)
+            .setParticleOffset(new Vec3(-0.1, 0, 0.15))
+            .setSuccessSound(BTVSounds.HEART_RIP.get())
+            .buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 70);
+
+    private static final Operation GREAT_SPINE = new Operation.Builder("great_spine")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(2.5)
+            .setPersistent(true)
+            .setSuccessParticles(true)
+            .setSuccessParticleType(BTVParticles.BLOODSPILL.get())
+            .setSuccessParticleCount(5)
+            .setParticleOffset(new Vec3(-0.1, 0, 0.15))
+            .setSuccessSound(BTVSounds.HEART_RIP.get())
+            .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
+            .buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
+
 
     private static final Operation INJECT_MOVEMENT_SPEED_SERUM_FLUID = makeArsenalInjection("inject_movement_speed_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SPEED).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 60);
     private static final Operation INJECT_MOVEMENT_SLOWDOWN_SERUM_FLUID = makeArsenalInjection("inject_movement_slowdown_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 80);

@@ -511,15 +511,15 @@ public class Operation {
         }
 
         public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements) {
-            return buildExtractionOperation(registry, stack, additionalRequirements, false);
+            return buildExtractionOperation(registry, s -> stack, additionalRequirements, false);
         }
 
-        public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, ItemStack stack, Predicate<PatientStatus> additionalRequirements, boolean highPriority) {
+        public Operation buildExtractionOperation(List<OperationRegistry.ExtractionEntry> registry, Function<PatientStatus, ItemStack> itemFunction, Predicate<PatientStatus> additionalRequirements, boolean highPriority) {
             Operation op = buildOperation();
             if (highPriority) {
-                registry.add(0, new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+                registry.add(0, new OperationRegistry.ExtractionEntry(op, itemFunction, additionalRequirements));
             } else {
-                registry.add(new OperationRegistry.ExtractionEntry(op, stack.copy(), additionalRequirements));
+                registry.add(new OperationRegistry.ExtractionEntry(op, itemFunction, additionalRequirements));
             }
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
             return op;
