@@ -76,18 +76,30 @@ public class AttackEvents {
                 event.setAmount(event.getAmount() * 0.9F);
             }
         }
-        Inventory inv = player.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack stack = inv.getItem(i);
-            // TODO requires multiplayer testing
-            if (stack.getTag() != null && stack.getTag().contains("bind_item_damage") && event.getSource().getEntity() instanceof ServerPlayer sl && Objects.equals(sl.getUUID(), stack.getTag().getUUID("bind_item_damage"))) {
-                if (event.getAmount() > 4) {
-                    player.hurt(player.damageSources().fellOutOfWorld(), event.getAmount() / 4);
+        if(event.getSource().getEntity() instanceof ServerPlayer sl) {
+            Inventory inv = player.getInventory();
+            for (int i = 0; i < inv.getContainerSize(); i++) {
+                ItemStack stack = inv.getItem(i);
+                // TODO requires multiplayer testing
+                if (stack.getTag() != null && stack.getTag().contains("bind_item_damage") && Objects.equals(sl.getUUID(), stack.getTag().getUUID("bind_item_damage"))) {
+                    if (event.getAmount() > 4) {
+                        player.hurt(player.damageSources().fellOutOfWorld(), event.getAmount() / 4);
+                    }
+                    event.setAmount(event.getAmount() * 1.5F);
+                    break;
                 }
-                event.setAmount(event.getAmount() * 1.5F);
             }
-
+            inv = sl.getInventory();
+            for (int i = 0; i < inv.getContainerSize(); i++) {
+                ItemStack stack = inv.getItem(i);
+                // TODO requires multiplayer testing
+                if (stack.getTag() != null && stack.getTag().contains("bind_item_weakness") && Objects.equals(player.getUUID(), stack.getTag().getUUID("bind_item_weakness"))) {
+                    event.setAmount(event.getAmount() * 0.35F);
+                    break;
+                }
+            }
         }
+
     }
 
     private static void bleedingBeltEvent(LivingDamageEvent event, ServerPlayer player) {

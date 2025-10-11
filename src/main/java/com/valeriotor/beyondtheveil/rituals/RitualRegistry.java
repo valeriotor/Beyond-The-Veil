@@ -59,6 +59,17 @@ public class RitualRegistry {
                 return List.of();
             }).toTemplate(TEMPLATES, BY_NAME);
 
+    public static final RitualTemplate BIND_ITEM_WEAKNESS = new RitualTemplate.RitualTemplateBuilder("bind_item_weakness", 100, 12, 9)
+            .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.ANVIL, Registration.SPINE.get()))
+            .setOutputs((stacks, player) -> {
+                if (stacks.size() == 4) {
+                    ItemStack stack = stacks.get(1);
+                    stack.getOrCreateTag().putUUID("bind_item_weakness", player);
+                    return List.of(stack);
+                }
+                return List.of();
+            }).toTemplate(TEMPLATES, BY_NAME);
+
     public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 0, 1, 1)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Registration.OFFER_PILLAR_ITEM.get(), Registration.BLOOD_SHARD.get()))
             .setOutputs((stacks, player) -> {
