@@ -270,7 +270,7 @@ public class Registration {
     public static final RegistryObject<Item> HELD_SHOGGOTH = ITEMS.register("held_shoggoth", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldShoggoth("held_shoggoth");
     public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
     public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
-    public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", () -> new Item(ITEM_PROPERTIES)); // new ItemBleedingBelt("bleeding_belt");
+    public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", BleedingBeltItem::new); // new ItemBleedingBelt("bleeding_belt");
     public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", DreamBottleItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> BLOOD_GEM = ITEMS.register("blood_gem", BloodGemItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> BLOOD_THESIS = ITEMS.register("blood_thesis", BloodThesisItem::new); // new ItemDreamBottle("dream_bottle");

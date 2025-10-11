@@ -31,6 +31,7 @@ public class RitualRegistry {
 
     private static final List<RitualTemplate> TEMPLATES = new ArrayList<>();
     private static final Map<String, RitualTemplate> BY_NAME = new HashMap<>();
+    public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS);
 
     public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 0, 0, 0)
             .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
@@ -40,6 +41,11 @@ public class RitualRegistry {
     public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 7, 5)
             .setMatch(input -> exact(input, Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
             .setOutputs(List.of(new ItemStack(Registration.CORAL_STAFF.get())))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BLEEDING_BELT = new RitualTemplate.RitualTemplateBuilder("bleeding_belt", 10, 10, 9)
+            .setMatch(input -> exact(input, Items.CHAIN, Registration.GREAT_HEART.get(), Registration.GREAT_HEART.get(), Items.CACTUS))
+            .setOutputs(List.of(new ItemStack(Registration.BLEEDING_BELT.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 0, 1, 1)

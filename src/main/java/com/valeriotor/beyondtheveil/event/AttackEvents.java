@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -16,10 +17,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttackEvents {
@@ -49,6 +53,10 @@ public class AttackEvents {
                 event.setAmount(dc.getDamageCap());
             }
         }
+        if (entity instanceof ServerPlayer player) {
+            bleedingBeltEvent(event, player);
+        }
+
     }
 
     private static void playerDamageEvent(LivingDamageEvent event, ServerPlayer player) {
@@ -64,6 +72,24 @@ public class AttackEvents {
                 event.setAmount(event.getAmount() * 0.9F);
             }
         }
+    }
+
+    private static void bleedingBeltEvent(LivingDamageEvent event, ServerPlayer player) {
+        CuriosApi.getCuriosInventory(player).ifPresent(inv -> {
+            inv.getStacksHandler("belt").ifPresent(slot -> {
+                ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                if (stackInSlot.getItem() == Registration.BLEEDING_BELT.get()) {
+                    float hungerDamage = Math.min(event.getAmount(), player.getFoodData().getFoodLevel());
+                    hungerDamage = Math.min(hungerDamage, stackInSlot.getMaxDamage() - stackInSlot.getDamageValue() - 1);
+                    float remainingDamage = Math.max(0, event.getAmount() - hungerDamage);
+                    if (hungerDamage > 0) {
+                        player.getFoodData().setFoodLevel((int) (player.getFoodData().getFoodLevel() - hungerDamage));
+                        stackInSlot.setDamageValue((int) (stackInSlot.getDamageValue() + hungerDamage));
+                    }
+                    event.setAmount(remainingDamage);
+                }
+            });
+        });
     }
 
     @SubscribeEvent

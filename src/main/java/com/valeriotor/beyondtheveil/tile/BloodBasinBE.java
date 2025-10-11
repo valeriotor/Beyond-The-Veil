@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.rituals.RitualRegistry;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,6 +41,15 @@ public class BloodBasinBE extends BlockEntity {
                 itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stacks.get(0));
             }
         }
+
+        @Override
+        protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+            int limit = super.getStackLimit(slot, stack);
+            if (!RitualRegistry.MULTIPLE_ALLOWED.contains(stack.getItem())) {
+                return Math.min(1, limit);
+            }
+            return limit;
+        }
     };
 
     private final LazyOptional<IItemHandler> stackHolder = LazyOptional.of(() -> stackHandler);
@@ -52,8 +62,12 @@ public class BloodBasinBE extends BlockEntity {
     public void interact(Player player, InteractionHand hand, ItemStack stack) {
         if (!stack.isEmpty()) {
             if (stack.getItem() != Registration.SACRIFICIAL_KNIFE.get()) {
-                ItemStack left = stackHandler.insertItem(0, stack, false);
-                player.setItemInHand(hand, left);
+                if (stack.getItem() == stackHandler.getStackInSlot(0).getItem()) {
+                    ItemHandlerHelper.giveItemToPlayer(player, stackHandler.extractItem(0, 64, false));
+                } else {
+                    ItemStack left = stackHandler.insertItem(0, stack, false);
+                    player.setItemInHand(hand, left);
+                }
                 updateClient();
             } else {
                 Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
