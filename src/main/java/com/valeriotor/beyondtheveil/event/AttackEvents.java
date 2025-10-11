@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -23,7 +24,10 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttackEvents {
@@ -71,6 +75,18 @@ public class AttackEvents {
             } else if (player.isInWaterOrRain()) {
                 event.setAmount(event.getAmount() * 0.9F);
             }
+        }
+        Inventory inv = player.getInventory();
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            ItemStack stack = inv.getItem(i);
+            // TODO requires multiplayer testing
+            if (stack.getTag() != null && stack.getTag().contains("bind_item_damage") && event.getSource().getEntity() instanceof ServerPlayer sl && Objects.equals(sl.getUUID(), stack.getTag().getUUID("bind_item_damage"))) {
+                if (event.getAmount() > 4) {
+                    player.hurt(player.damageSources().fellOutOfWorld(), event.getAmount() / 4);
+                }
+                event.setAmount(event.getAmount() * 1.5F);
+            }
+
         }
     }
 

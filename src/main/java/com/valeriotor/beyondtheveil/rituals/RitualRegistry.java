@@ -48,6 +48,17 @@ public class RitualRegistry {
             .setOutputs(List.of(new ItemStack(Registration.BLEEDING_BELT.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
+    public static final RitualTemplate BIND_ITEM_DAMAGE = new RitualTemplate.RitualTemplateBuilder("bind_item_damage", 100, 12, 9)
+            .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.DIAMOND_SWORD, Registration.SCALPEL.get()))
+            .setOutputs((stacks, player) -> {
+                if (stacks.size() == 4) {
+                    ItemStack stack = stacks.get(1);
+                    stack.getOrCreateTag().putUUID("bind_item_damage", player);
+                    return List.of(stack);
+                }
+                return List.of();
+            }).toTemplate(TEMPLATES, BY_NAME);
+
     public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 0, 1, 1)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Registration.OFFER_PILLAR_ITEM.get(), Registration.BLOOD_SHARD.get()))
             .setOutputs((stacks, player) -> {
@@ -102,7 +113,7 @@ public class RitualRegistry {
                     ColorTriplet colorTriplet = new ColorTriplet(dyes.get(0), dyes.get(1), dyes.get(2));
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("pool", true);
-                    tag.putUUID("owner", player.getUUID());
+                    tag.putUUID("owner", player);
                     BlockItem.setBlockEntityData(flebo, BTVBlockEntities.FLEBO_BE.get(), colorTriplet.saveToTag(tag));
                     return List.of(flebo);
                 }
@@ -167,6 +178,24 @@ public class RitualRegistry {
             return false;
         }
         for (int i = 0; i < input.size(); i++) {
+            Item item = input.get(i);
+            Item ingredient = ingredients[i];
+            if (item != ingredient) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean exactWithWildcard(List<Item> input, int wildcardIndex, Item... ingredients) {
+        input = skipModifiers(input);
+        if (input.size() != ingredients.length) {
+            return false;
+        }
+        for (int i = 0; i < input.size(); i++) {
+            if (i == wildcardIndex && input.get(i) != Items.AIR) {
+                continue;
+            }
             Item item = input.get(i);
             Item ingredient = ingredients[i];
             if (item != ingredient) {

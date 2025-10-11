@@ -20,7 +20,7 @@ public class RitualTemplate {
     private final int startingPrimaryInstability;
     private final int primaryInstabilityRate;
     private final int secondaryInstabilityRate;
-    private final BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs;
+    private final BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs;
     private final AdditionalRitualEffect otherEffects;
     private final Predicate<List<Item>> match;
 
@@ -38,7 +38,7 @@ public class RitualTemplate {
         return name;
     }
 
-    public BiFunction<List<ItemStack>, Player, List<ItemStack>> getOutputs() {
+    public BiFunction<List<ItemStack>, UUID, List<ItemStack>> getOutputs() {
         return outputs;
     }
 
@@ -68,7 +68,7 @@ public class RitualTemplate {
         private final int startingPrimaryInstability;
         private final int primaryInstabilityRate;
         private final int secondaryInstabilityRate;
-        private BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
+        private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
         private Predicate<List<Item>> match;
 
@@ -89,7 +89,7 @@ public class RitualTemplate {
             return this;
         }
 
-        public RitualTemplateBuilder setOutputs(BiFunction<List<ItemStack>, Player, List<ItemStack>> outputs) {
+        public RitualTemplateBuilder setOutputs(BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs) {
             this.outputs = outputs;
             return this;
         }
@@ -110,7 +110,7 @@ public class RitualTemplate {
 
     @FunctionalInterface
     interface AdditionalRitualEffect {
-        void apply(Player player, ServerLevel level, Vec3 altarPos);
+        void apply(UUID player, ServerLevel level, Vec3 altarPos);
     }
 
 

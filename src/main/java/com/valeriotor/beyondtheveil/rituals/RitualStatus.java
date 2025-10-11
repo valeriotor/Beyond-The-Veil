@@ -309,7 +309,9 @@ public class RitualStatus {
             }
         }
 
-        secondaryInstability -= effect.minimum / 2;
+        if (secondaryInstability > 1000) {
+            secondaryInstability -= effect.reduction;
+        }
         respitePeriod += 15;
         if (effect != SecondaryInstabilityEffect.NONE) {
             primaryInstability += 100;
@@ -357,7 +359,9 @@ public class RitualStatus {
             case NONE -> {
             }
         }
-        primaryInstability -= effect.minimum;
+        if (primaryInstability > 1000) {
+            primaryInstability -= effect.reduction;
+        }
     }
 
     private BlockPos randomUpcomingAltarPos(RandomSource randomSource) {
@@ -378,13 +382,12 @@ public class RitualStatus {
     }
 
     public void terminationEffects(ServerLevel level, Vec3 altar) {
-        Player player = level.getPlayerByUUID(initiator);
-        List<ItemStack> outputStacks = template.getOutputs().apply(burnedIngredients, player);
+        List<ItemStack> outputStacks = template.getOutputs().apply(burnedIngredients, initiator);
         for (ItemStack outputStack : outputStacks) {
             ItemEntity item = new ItemEntity(level, altar.x, altar.y, altar.z, outputStack);
             level.addFreshEntity(item);
         }
-        template.getOtherEffects().apply(player, level, altar);
+        template.getOtherEffects().apply(initiator, level, altar);
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -426,14 +429,20 @@ public class RitualStatus {
     private enum PrimaryInstabilityEffect {
         PUSH_ITEM(1000, 6), // sfx and small explosion particles
         BURN_ITEM(2000, 15), // fire
-        NONE(0, 50);
+        NONE(0, 1000, 600);
 
         private final int minimum;
         private final int weight;
+        private final int reduction;
 
         PrimaryInstabilityEffect(int minimum, int weight) {
+            this(minimum, weight, minimum / 2);
+        }
+
+        PrimaryInstabilityEffect(int minimum, int weight, int reduction) {
             this.minimum = minimum;
             this.weight = weight;
+            this.reduction = reduction;
         }
     }
 
@@ -443,14 +452,20 @@ public class RitualStatus {
         BLOOD_ZOMBIE(4500, 15),
         EXPLOSION(2000, 4),
         LIGHTNING(1500, 2),
-        NONE(0, 200);
+        NONE(1200, 200, 100);
 
         private final int minimum;
         private final int weight;
+        private final int reduction;
 
         SecondaryInstabilityEffect(int minimum, int weight) {
+            this(minimum, weight, minimum / 2);
+        }
+
+        SecondaryInstabilityEffect(int minimum, int weight, int reduction) {
             this.minimum = minimum;
             this.weight = weight;
+            this.reduction = reduction;
         }
     }
 
