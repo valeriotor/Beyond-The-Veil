@@ -20,6 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.*;
 
@@ -110,8 +112,15 @@ public class DreamHandler {
                 for (Integer success : successes) {
                     c.extractItem(success, 1, false);
                 }
-                DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
-                markTimesDreamt(p, "dream_bottle");
+                stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(fluidCap -> {
+                    FluidStack fluid = fluidCap.getFluidInTank(0);
+                    if (fluid.getAmount() > successes.size() * 100) {
+                        fluidCap.drain(successes.size() * 100, IFluidHandler.FluidAction.EXECUTE);
+                    } else {
+                        DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
+                        markTimesDreamt(p, "dream_bottle");
+                    }
+                });
                 DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.USED_BOTTLE, true, false);
             }
             DataUtil.syncReminiscences(p);
