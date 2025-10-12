@@ -183,6 +183,7 @@ public class DreamHandler {
     public static boolean consumeVoid(Player player) {
         if (DataUtil.getBoolean(player, PlayerDataLib.VOID)) {
             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.VOID, false, false);
+            DataUtil.removeReminiscence(player, Memory.VOID.getDataName(false));
             return true;
         }
         return false;

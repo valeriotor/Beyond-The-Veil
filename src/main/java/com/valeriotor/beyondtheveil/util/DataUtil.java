@@ -36,6 +36,12 @@ public class DataUtil {
         });
     }
 
+    public static void removeReminiscence(Player p, String key) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.removeReminiscence(key);
+        });
+    }
+
     public static void syncReminiscences(Player p) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             Set<Map.Entry<String, Reminiscence>> entries = playerData.getReminiscences().entrySet();

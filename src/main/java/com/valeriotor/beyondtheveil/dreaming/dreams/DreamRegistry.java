@@ -26,6 +26,7 @@ public class DreamRegistry {
     public static final Dream CRYSTAL = new DreamUnderground(Memory.CRYSTAL, 5, Set.of(Blocks.AMETHYST_BLOCK, Blocks.AMETHYST_CLUSTER, Blocks.BUDDING_AMETHYST, Blocks.LARGE_AMETHYST_BUD, Blocks.MEDIUM_AMETHYST_BUD, Blocks.SMALL_AMETHYST_BUD, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.LAPIS_ORE, Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.DEEPSLATE_EMERALD_ORE, Blocks.DEEPSLATE_LAPIS_ORE));
     public static final Dream POWER = new DreamEffect(Memory.POWER);
     public static final Dream STILLNESS = new DreamEffect(Memory.STILLNESS);
+    public static final Dream CHANGE = new DreamEffect(Memory.CHANGE);
 
     static {
         DreamRegistry.REMINISCENCE_REGISTRY.put("none", Reminiscence.EmptyReminiscence::new);

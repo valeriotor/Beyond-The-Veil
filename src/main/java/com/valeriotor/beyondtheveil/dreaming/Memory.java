@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 public enum Memory {
     ANIMAL(Items.LEATHER, 0xFF401b00),
     BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333),
-    CHANGE(Items.WHEAT_SEEDS, 0xFF4dff00, "metalDream"),
+    CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, "metalDream"),
     CRYSTAL(Items.GLASS, 0xFFe6d8d8),
     DARKNESS(Items.COAL, 0xFF002233),
     DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c),

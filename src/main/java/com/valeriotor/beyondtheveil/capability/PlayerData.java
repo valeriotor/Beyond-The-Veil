@@ -247,6 +247,10 @@ public class PlayerData {
         return returnValue;
     }
 
+    public Reminiscence removeReminiscence(String key) {
+        return reminiscences.remove(key);
+    }
+
     public void clearReminiscences() {
         reminiscences.clear();
     }

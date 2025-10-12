@@ -2128,6 +2128,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("reminiscence.stillness.0", "%1$s of my effects became longer.");
         add("reminiscence.stillness.1", "%1$s of the target's effects became longer.");
         add("reminiscence.stillness.2", "Of the creatures near the target area, %1$s had their effects become longer.");
+        add("reminiscence.change.0", "%1$s of my effects changed.");
+        add("reminiscence.change.1", "%1$s of the target's effects changed.");
+        add("reminiscence.change.2", "Of the creatures near the target area, %1$s had their effects changed.");
     }
 
     private void addGuis() {
