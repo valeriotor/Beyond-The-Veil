@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.dreaming;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.research.Research;
@@ -16,7 +17,7 @@ import net.minecraft.world.item.Items;
 import java.util.Map.Entry;
 
 public enum Memory {
-    ANIMAL(Items.LEATHER, 0xFF401b00),
+    ANIMAL(Registration.HEART_ITEM.get(), 0xFF401b00),
     BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333),
     CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, "metalDream"),
     CRYSTAL(Items.GLASS, 0xFFe6d8d8),

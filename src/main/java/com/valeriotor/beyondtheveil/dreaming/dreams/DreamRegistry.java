@@ -27,6 +27,7 @@ public class DreamRegistry {
     public static final Dream POWER = new DreamEffect(Memory.POWER);
     public static final Dream STILLNESS = new DreamEffect(Memory.STILLNESS);
     public static final Dream CHANGE = new DreamEffect(Memory.CHANGE);
+    public static final Dream ANIMAL = new DreamAnimal();
 
     static {
         DreamRegistry.REMINISCENCE_REGISTRY.put("none", Reminiscence.EmptyReminiscence::new);

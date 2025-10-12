@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.KeyBindings;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceAnimal;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceUnderground;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -149,7 +150,9 @@ public abstract class ReminiscenceClient {
                 r = new ReminiscenceClientUnderground(ru);
             } else if (e.getValue() instanceof ReminiscenceWaypoint rw) {
                 r = new ReminiscenceClientWaypoint(rw);
-            } else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
+            } else if (e.getValue() instanceof ReminiscenceAnimal ra) {
+                r = new ReminiscenceClientAnimal(ra);
+            }else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
                 r = new TextReminiscenceClient(Component.translatable("reminiscence.EMPTY"));
             } else if (e.getValue() instanceof Reminiscence.TextReminiscence rw) {
                 r = new TextReminiscenceClient(rw);
