@@ -182,6 +182,13 @@ public class PlayerEvents {
     }
 
     @SubscribeEvent
+    public static void respawnEvent(PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp && sp.getServer() != null) {
+            PlayerSavedData.getInstance(sp.getServer().overworld()).respawn(sp);
+        }
+    }
+
+    @SubscribeEvent
     public static void loggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         addBaptismAttributes(event.getEntity());
         if (event.getEntity() instanceof ServerPlayer sp) {

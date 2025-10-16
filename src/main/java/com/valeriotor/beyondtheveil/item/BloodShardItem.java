@@ -23,7 +23,7 @@ public class BloodShardItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         CompoundTag tag = pStack.getTag();
-        if (tag != null) {
+        if (tag != null && tag.contains("type")) {
             String type = tag.getString("type");
             EntityType<?> value = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(type));
             if (value != null && tag.contains("type")) {

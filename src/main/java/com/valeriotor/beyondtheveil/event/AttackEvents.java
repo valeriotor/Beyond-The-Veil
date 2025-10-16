@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -96,6 +97,15 @@ public class AttackEvents {
                 if (stack.getTag() != null && stack.getTag().contains("bind_item_weakness") && Objects.equals(player.getUUID(), stack.getTag().getUUID("bind_item_weakness"))) {
                     event.setAmount(event.getAmount() * 0.35F);
                     break;
+                }
+            }
+            ItemStack offHand = sl.getItemInHand(InteractionHand.OFF_HAND);
+            if (offHand.getItem() == Registration.SIGIL_PLAYER.get() && (offHand.getTag() == null || !offHand.getTag().contains("player"))) {
+                float health = player.getHealth();
+                float probability = (10 - health);
+                if (player.getRandom().nextDouble() * 5 < probability) {
+                    offHand.getOrCreateTag().putUUID("player", player.getUUID());
+                    offHand.getTag().putString("username", player.getGameProfile().getName());
                 }
             }
         }

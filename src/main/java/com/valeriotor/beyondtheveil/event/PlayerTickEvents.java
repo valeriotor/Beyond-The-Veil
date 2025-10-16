@@ -30,6 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -77,9 +78,10 @@ public class PlayerTickEvents {
         if (event.player instanceof ServerPlayer sp && sp.tickCount % 20 == 0 && sp.getServer() != null) {
             if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get()  || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get()) {
                 PlayerSavedData data = PlayerSavedData.getInstance(sp.getServer().overworld());
-                BlockPos blockPos = data.closestDeathExcluding(sp);
-                if (blockPos != null && blockPos.distSqr(sp.blockPosition()) < 1600) {
-                    Messages.sendToPlayer(GenericToClientPacket.addClosestDeath(blockPos), sp);
+                List<BlockPos> poss = new ArrayList<>(data.deathsInRange(sp, 40));
+                poss.addAll(data.respawnsInRange(sp, 40));
+                Messages.sendToPlayer(GenericToClientPacket.addClosestDeath(poss), sp);
+                if (!poss.isEmpty()) {
                 }
             }
         }

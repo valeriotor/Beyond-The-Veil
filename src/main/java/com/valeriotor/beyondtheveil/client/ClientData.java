@@ -48,7 +48,7 @@ public class ClientData {
     private BloodPoolData bloodPoolData = new BloodPoolData();
     private int contactTimer = 0;
     private int contactFogLevel = 0;
-    private BlockPos closestDeath;
+    private List<BlockPos> closeDeaths = new ArrayList<>();
     private int closestDeathTimer;
 
     public void addWaypoint(CompoundTag tag) {
@@ -100,10 +100,12 @@ public class ClientData {
             } else {
                 LocalPlayer player = Minecraft.getInstance().player;
                 ClientLevel l = Minecraft.getInstance().level;
-                if (l != null && closestDeath != null && player != null && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get())) {
-                    RandomSource r = player.getRandom();
-                    for (int i = 0; i < 20; i++) {
-                        l.addParticle(BTVParticles.BLOODSPILL.get(), closestDeath.getX() + r.nextDouble(), closestDeath.getY() + i / 10D, closestDeath.getZ() + r.nextDouble(), r.nextDouble() - 0.5, r.nextDouble() - 0.5, r.nextDouble() - 0.5);
+                if (l != null && player != null && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get())) {
+                    for (BlockPos closeDeath : closeDeaths) {
+                        RandomSource r = player.getRandom();
+                        for (int i = 0; i < 20; i++) {
+                            l.addParticle(BTVParticles.BLOODSPILL.get(), closeDeath.getX() + r.nextDouble(), closeDeath.getY() + i / 10D, closeDeath.getZ() + r.nextDouble(), r.nextDouble() - 0.5, r.nextDouble() - 0.5, r.nextDouble() - 0.5);
+                        }
                     }
                 }
             }
@@ -133,8 +135,9 @@ public class ClientData {
         }
     }
 
-    public void setClosestDeath(BlockPos closestDeath) {
-        this.closestDeath = closestDeath;
+    public void setClosestDeath(List<BlockPos> closeDeaths) {
+        this.closeDeaths.clear();
+        this.closeDeaths.addAll(closeDeaths);
         closestDeathTimer = 30;
     }
 

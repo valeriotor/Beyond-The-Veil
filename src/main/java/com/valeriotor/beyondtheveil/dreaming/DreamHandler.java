@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FumeSpreaderBlock;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
@@ -14,7 +15,12 @@ import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Interaction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -86,8 +92,28 @@ public class DreamHandler {
         DataUtil.syncReminiscences(p);
     }
 
-    public static void dreamBottle(Player p, ItemStack stack) {
+    public static void dreamBottle(ServerPlayer p, ItemStack stack) {
         if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1) {
+            return;
+        }
+        UUID target = null;
+        BlockPos targetPos = null;
+        ResourceKey<Level> targetDimension = null;
+        ItemStack mainHandItem = p.getItemInHand(InteractionHand.MAIN_HAND);
+        ItemStack offHandItem = p.getItemInHand(InteractionHand.OFF_HAND);
+        InteractionHand toRemove;
+        if (mainHandItem.getItem() == Registration.SIGIL_PLAYER.get() && mainHandItem.getTag() != null && mainHandItem.getTag().contains("player")) { // TODO needs testing
+            target = mainHandItem.getTag().getUUID("player");
+            toRemove = InteractionHand.MAIN_HAND;
+        } else if (offHandItem.getItem() == Registration.SIGIL_PLAYER.get() && offHandItem.getTag() != null && offHandItem.getTag().contains("player")) {
+            target = offHandItem.getTag().getUUID("player");
+            toRemove = InteractionHand.OFF_HAND;
+        } else {
+            toRemove = null;
+        }
+        ServerPlayer targetPlayer = target != null && p.getServer() != null ? p.getServer().getPlayerList().getPlayer(target) : null;
+        if (targetPlayer == null && target != null) {
+            p.sendSystemMessage(Component.translatable("message.dream_bottle.player_not_found"));
             return;
         }
         DataUtil.clearReminiscences(p);
@@ -103,7 +129,12 @@ public class DreamHandler {
             List<Integer> successes = new ArrayList<>();
             // TODO sort? actually no
             for (Tuple<Memory, Integer> memory : memories) {
-                if (DreamRegistry.getDreamFromMemory(memory.getA(), hasVoid(p)).activate(p, p.level())) {
+                Dream dream = DreamRegistry.getDreamFromMemory(memory.getA(), hasVoid(p));
+                boolean success = targetPlayer != null ? dream.activatePlayer(p, targetPlayer, p.level()) : (targetPos != null ? dream.activatePos(p, p.level(), targetPos) : dream.activate(p, p.level()));
+                if (success) {
+                    if(toRemove != null) {
+                        p.getItemInHand(toRemove).shrink(1);
+                    }
                     successes.add(memory.getB());
                     DataUtil.setBooleanOnServerAndSync(p, memory.getA().name() + "Dream", true, false);
                 }

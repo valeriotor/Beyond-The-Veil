@@ -1944,6 +1944,7 @@
   "tooltip.memory_phial.stored": "This phial stores %1$s.",
   "tooltip.pillar.bound": "Bound entity: ",
   "tooltip.pillar.connected": "Connected",
+  "tooltip.sigil.player": "Bound to %1$s.",
   "weeper.dialogue.0": "§5§oWhen I gaze at the horrors before me, all I have left is to weep.",
   "weeper.dialogue.1": "§5§oYou are lucky, master, in your ignorance of what lies Beyond.",
   "weeper.dialogue.2": "§5§oMaster, the water you put in my brain.. it's agonizing, yet the pain is not of physical nature.",

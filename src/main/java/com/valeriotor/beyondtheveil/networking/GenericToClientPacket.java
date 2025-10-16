@@ -24,6 +24,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class GenericToClientPacket {
@@ -154,9 +155,11 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.MODIFY_BLOOD_POOL, modification);
     }
 
-    public static GenericToClientPacket addClosestDeath(BlockPos closestDeath) {
+    public static GenericToClientPacket addClosestDeath(List<BlockPos> deaths) {
         CompoundTag tag = new CompoundTag();
-        tag.putLong("closestDeath", closestDeath.asLong());
+        for (int i = 0; i < deaths.size(); i++) {
+            tag.putLong("death" + i, deaths.get(i).asLong());
+        }
         return new GenericToClientPacket(MessageType.CLOSEST_DEATH, tag);
     }
 
@@ -202,7 +205,7 @@ public class GenericToClientPacket {
                     case SHAKE_CAMERA -> RenderEvents.shakeCamera(30);
                     case SYNC_BLOOD_POOL -> ClientData.getInstance().syncPoolData(tag.getCompound("pool"));
                     case MODIFY_BLOOD_POOL -> ClientData.getInstance().modifyPoolData(tag);
-                    case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(BlockPos.of(tag.getLong("closestDeath")));
+                    case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(tag.getAllKeys().stream().map(tag::getLong).map(BlockPos::of).toList());
                 }
             });
         });
