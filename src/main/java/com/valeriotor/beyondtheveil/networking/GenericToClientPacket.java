@@ -154,6 +154,12 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.MODIFY_BLOOD_POOL, modification);
     }
 
+    public static GenericToClientPacket addClosestDeath(BlockPos closestDeath) {
+        CompoundTag tag = new CompoundTag();
+        tag.putLong("closestDeath", closestDeath.asLong());
+        return new GenericToClientPacket(MessageType.CLOSEST_DEATH, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -196,6 +202,7 @@ public class GenericToClientPacket {
                     case SHAKE_CAMERA -> RenderEvents.shakeCamera(30);
                     case SYNC_BLOOD_POOL -> ClientData.getInstance().syncPoolData(tag.getCompound("pool"));
                     case MODIFY_BLOOD_POOL -> ClientData.getInstance().modifyPoolData(tag);
+                    case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(BlockPos.of(tag.getLong("closestDeath")));
                 }
             });
         });
@@ -222,7 +229,8 @@ public class GenericToClientPacket {
         RENEW_CONTACT,
         SHAKE_CAMERA,
         SYNC_BLOOD_POOL,
-        MODIFY_BLOOD_POOL
+        MODIFY_BLOOD_POOL,
+        CLOSEST_DEATH
     }
 
 }

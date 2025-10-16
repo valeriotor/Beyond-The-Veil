@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -16,10 +17,12 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.*;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
@@ -66,6 +69,19 @@ public class PlayerTickEvents {
             resetTimesDreamt(event);
             rainBeforeContact(event);
             decrementArcheBreath(event);
+            sendOtherPlayerDeathCoords(event);
+        }
+    }
+
+    private static void sendOtherPlayerDeathCoords(TickEvent.PlayerTickEvent event) {
+        if (event.player instanceof ServerPlayer sp && sp.tickCount % 20 == 0 && sp.getServer() != null) {
+            if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get()  || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get()) {
+                PlayerSavedData data = PlayerSavedData.getInstance(sp.getServer().overworld());
+                BlockPos blockPos = data.closestDeathExcluding(sp);
+                if (blockPos != null && blockPos.distSqr(sp.blockPosition()) < 1600) {
+                    Messages.sendToPlayer(GenericToClientPacket.addClosestDeath(blockPos), sp);
+                }
+            }
         }
     }
 

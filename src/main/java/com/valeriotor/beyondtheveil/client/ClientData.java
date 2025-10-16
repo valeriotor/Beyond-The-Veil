@@ -1,14 +1,20 @@
 package com.valeriotor.beyondtheveil.client;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +48,8 @@ public class ClientData {
     private BloodPoolData bloodPoolData = new BloodPoolData();
     private int contactTimer = 0;
     private int contactFogLevel = 0;
+    private BlockPos closestDeath;
+    private int closestDeathTimer;
 
     public void addWaypoint(CompoundTag tag) {
         WaypointType type = WaypointType.valueOf(tag.getString("type"));
@@ -87,6 +95,18 @@ public class ClientData {
             } else if (contactFogLevel > 0) {
                 contactFogLevel--;
             }
+            if (closestDeathTimer > 0) {
+                closestDeathTimer--;
+            } else {
+                LocalPlayer player = Minecraft.getInstance().player;
+                ClientLevel l = Minecraft.getInstance().level;
+                if (l != null && closestDeath != null && player != null && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get())) {
+                    RandomSource r = player.getRandom();
+                    for (int i = 0; i < 20; i++) {
+                        l.addParticle(BTVParticles.BLOODSPILL.get(), closestDeath.getX() + r.nextDouble(), closestDeath.getY() + i / 10D, closestDeath.getZ() + r.nextDouble(), r.nextDouble() - 0.5, r.nextDouble() - 0.5, r.nextDouble() - 0.5);
+                    }
+                }
+            }
         }
     }
 
@@ -111,6 +131,11 @@ public class ClientData {
         if (Minecraft.getInstance().screen instanceof BloodPoolGui gui) {
             gui.updateEntities();
         }
+    }
+
+    public void setClosestDeath(BlockPos closestDeath) {
+        this.closestDeath = closestDeath;
+        closestDeathTimer = 30;
     }
 
     public static class Waypoint {

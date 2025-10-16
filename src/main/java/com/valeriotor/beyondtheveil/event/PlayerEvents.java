@@ -27,6 +27,7 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -50,6 +51,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -169,6 +171,13 @@ public class PlayerEvents {
                     break;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void deathEvent(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp && sp.getServer() != null) {
+            PlayerSavedData.getInstance(sp.getServer().overworld()).death(sp);
         }
     }
 
