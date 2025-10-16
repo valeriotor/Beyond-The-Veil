@@ -14,9 +14,11 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -97,7 +99,7 @@ public class DreamHandler {
             return;
         }
         UUID target = null;
-        BlockPos targetPos = null;
+        BlockPos targetPos0 = null;
         ResourceKey<Level> targetDimension = null;
         ItemStack mainHandItem = p.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack offHandItem = p.getItemInHand(InteractionHand.OFF_HAND);
@@ -108,6 +110,14 @@ public class DreamHandler {
         } else if (offHandItem.getItem() == Registration.SIGIL_PLAYER.get() && offHandItem.getTag() != null && offHandItem.getTag().contains("player")) {
             target = offHandItem.getTag().getUUID("player");
             toRemove = InteractionHand.OFF_HAND;
+        } else if (mainHandItem.getItem() == Registration.SIGIL_PATHWAY.get() && mainHandItem.getTag() != null && mainHandItem.getTag().contains("area")) { // TODO needs testing
+            targetPos0 = BlockPos.of(mainHandItem.getTag().getLong("area"));
+            targetDimension = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(mainHandItem.getTag().getString("dimension")));
+            toRemove = InteractionHand.MAIN_HAND;
+        } else if (offHandItem.getItem() == Registration.SIGIL_PATHWAY.get() && offHandItem.getTag() != null && offHandItem.getTag().contains("area")) {
+            targetPos0 = BlockPos.of(offHandItem.getTag().getLong("area"));
+            targetDimension = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(offHandItem.getTag().getString("dimension")));
+            toRemove = InteractionHand.OFF_HAND;
         } else {
             toRemove = null;
         }
@@ -116,7 +126,12 @@ public class DreamHandler {
             p.sendSystemMessage(Component.translatable("message.dream_bottle.player_not_found"));
             return;
         }
+        if (targetDimension != null && !targetDimension.equals(p.level().dimension())) {
+            p.sendSystemMessage(Component.translatable("message.dream_bottle.other_dimension"));
+            return;
+        }
         DataUtil.clearReminiscences(p);
+        BlockPos targetPos = targetPos0;
         stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
             List<Tuple<Memory, Integer>> memories = new ArrayList<>();
             for (int i = 0; i < c.getSlots(); i++) {

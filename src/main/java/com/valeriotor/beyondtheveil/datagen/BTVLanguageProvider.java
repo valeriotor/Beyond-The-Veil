@@ -99,6 +99,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.pillar.bound", "Bound entity: ");
         add("tooltip.pillar.connected", "Connected");
         add("tooltip.sigil.player", "Bound to %1$s.");
+        add("tooltip.sigil.area", "Bound to x: %1$s, y: %2$s, z: %3$s.");
 
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");
@@ -889,6 +890,8 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addItems() {
         add("message.vessel_stone.not_in_arche", "The vessel stone must be used while in Arche.");
         add("message.vessel_stone.in_water", "The vessel stone may not be used while in water.");
+        add("message.dream_bottle.player_not_found", "Target not found.");
+        add("message.dream_bottle.other_dimension", "The target area is in another dimension.");
     }
 
     private void addContact() {
