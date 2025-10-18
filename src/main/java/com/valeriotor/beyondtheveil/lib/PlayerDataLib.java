@@ -51,6 +51,9 @@ public class PlayerDataLib {
     public static final String ARENA_ADVICE = "arenaadvicereceived";
     public static final String STORED_WATER = "stored_water";
     public static final String ARCHE_BREATH = "arche_breath";
+    public static final String CHANGE_MEMORY_PROGRESS = "change_memory_progress";
+    public static final String REPAIR_MEMORY_PROGRESS = "repair_memory_progress";
+    public static final String STILLNESS_MEMORY_PROGRESS = "stillness_memory_progress";
 
     // Ints (Temporary)
     public static final String TALK_COUNT = "tc%s"; // Not used as a key by itself, but only with a Dweller profession added to the end e.g. tcstockpiler

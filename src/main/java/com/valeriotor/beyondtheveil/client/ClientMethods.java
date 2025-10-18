@@ -7,6 +7,8 @@ import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
+import com.valeriotor.beyondtheveil.client.toasts.MemoryToast;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
@@ -184,5 +186,8 @@ public class ClientMethods {
         }
     }
 
+    public static void unlockMemoryToast(Memory memory) {
+        Minecraft.getInstance().getToasts().addToast(new MemoryToast(memory));
+    }
 
 }

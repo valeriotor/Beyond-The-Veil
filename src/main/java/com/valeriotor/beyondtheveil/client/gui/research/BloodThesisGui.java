@@ -119,21 +119,24 @@ public class BloodThesisGui extends Screen {
             pose.pushPose();
             pose.translate(-BACKGROUND_BASE_WIDTH / 2F, -BACKGROUND_BASE_HEIGHT / 2F, 0);
             pGuiGraphics.blit(BACKGROUND, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
-            pose.translate((PAGE_WIDTH - TEXT_BLOCK_WIDTH) / 2F, 40, -0.01);
+            pose.translate((PAGE_WIDTH - TEXT_BLOCK_WIDTH) / 2F, 40, 0);
             IntIntPair leftPageMouse = leftPageMouse(pMouseX, pMouseY);
             leftElement.render(pose, pGuiGraphics, 0xFF000000, leftPageMouse.firstInt(), leftPageMouse.secondInt(), pPartialTick);
             pose.popPose();
+            pGuiGraphics.blit(BACKGROUND, -BACKGROUND_BASE_WIDTH / 2, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
         }
         if (rightElement != null) {
+            pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
             pose.pushPose();
             pose.translate(BACKGROUND_BASE_WIDTH / 2F - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2F, 0);
-            pGuiGraphics.blit(BACKGROUND, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
+            //pGuiGraphics.blit(BACKGROUND, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
             pose.translate((PAGE_WIDTH - TEXT_BLOCK_WIDTH) / 2F, 40, 0);
             IntIntPair rightPageMouse = rightPageMouse(pMouseX, pMouseY);
+            RenderSystem.enableBlend();
             rightElement.render(pose, pGuiGraphics, 0xFF000000, rightPageMouse.firstInt(), rightPageMouse.secondInt(), pPartialTick);
             pose.popPose();
+            pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
         }
-        pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
         pose.popPose();
     }
 
@@ -202,6 +205,7 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(0, 7, 100);
             RenderSystem.enableBlend();
+            RenderSystem.enableDepthTest();
             graphics.blit(LOGO, -5, 0, 70, 70, 0, 0, 200, 200, 200, 200);
             poseStack.popPose();
 

@@ -34,9 +34,9 @@ public class ResearchEvents {
 
     private static final Map<String, Integer> SHOREMEN_CUSTOMS_RESEARCHES = Map.of("FARMING_TECHNIQUES", 1, "DELICACIES", 1, "CARPENTRY", 1, "GRASPING_WATER", 1, "DREAM_BOTTLE", 1, "LOCAL_MEDICINE", 1);
     public static void progressResearchEvent(Player p, ResearchStatus status) {
-        if (!p.level().isClientSide) {
-            status.getSubresearch().getMemories().forEach(m -> m.unlock(p));
-            unlockData((ServerPlayer) p, status);
+        if (!p.level().isClientSide && p instanceof ServerPlayer sp) {
+            status.getSubresearch().getMemories().forEach(m -> m.unlock(sp));
+            unlockData(sp, status);
         }
     }
 

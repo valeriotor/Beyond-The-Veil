@@ -246,6 +246,10 @@ public class DataUtil {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getLong(key) != null;
     }
 
+    public static boolean hasMemory(Player p, Memory memory) {
+        return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).hasMemory(memory);
+    }
+
 
     public static void removeString(Player p, String key) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {

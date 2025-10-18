@@ -3,12 +3,15 @@ package com.valeriotor.beyondtheveil.dreaming;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -74,15 +77,16 @@ public enum Memory {
     }
 
     public boolean isUnlocked(Player p) {
-        return DataUtil.getBoolean(p, getDataName());
+        return DataUtil.hasMemory(p, this);
     }
 
-    public void unlock(Player p) {
+    public void unlock(ServerPlayer p) {
         this.unlock(p, true);
     }
 
-    public void unlock(Player p, boolean sendMessage) {
+    public void unlock(ServerPlayer p, boolean sendMessage) {
         if (!this.isUnlocked(p) && this.isUnlockable(p)) {
+            Messages.sendToPlayer(GenericToClientPacket.addMemoryToast(this), p);
             String dataName = this.getDataName();
             DataUtil.unlockMemoryOnServerAndSync(p, this);
             String s = getFurtherData(this);
@@ -120,6 +124,10 @@ public enum Memory {
 
     public MutableComponent getTranslationComponent() {
         return Component.translatable(getLocalizationKey());
+    }
+
+    public MutableComponent getTranslationComponentWithPrefix() {
+        return Component.translatable("memory.prefix", getTranslationComponent().getString());
     }
 
     public static Memory getMemoryFromDataName(String key) {

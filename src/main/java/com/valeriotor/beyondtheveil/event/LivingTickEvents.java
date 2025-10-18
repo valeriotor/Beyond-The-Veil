@@ -17,6 +17,7 @@ import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
@@ -138,6 +139,9 @@ public class LivingTickEvents {
                 float currentIntensity = arche.getCurrentIntensity();
 
                 doArcheMovement(currentIntensity, e);
+                if (e instanceof ServerPlayer sp) {
+                    MemoryUnlockEvents.archeCurrentEvent(sp, ticks);
+                }
                 if (ticks % 20 == 0) {
                     if (e instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
                         //nautilus.setDamage(nautilus.getDamage() + NautilusEntity.TOTAL_HEALTH * currentIntensity / 20);

@@ -3,7 +3,6 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.block.GearBenchBlock;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
@@ -717,26 +716,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.unlock.message", "A Memory of %1$s sticks to my mind. I will not forget it.");
         add("memory.unlock.addenda", "This Memory will be found in the \"%1$s\" research in Al Azif.");
 
-        add("memory.animal.name", "Animal");
-        add("memory.beheading.name", "Beheading");
-        add("memory.change.name", "Change");
-        add("memory.crystal.name", "Crystal");
-        add("memory.darkness.name", "Darkness");
-        add("memory.death.name", "Death");
-        add("memory.eldritch.name", "Eldritch");
-        add("memory.heartbreak.name", "Heartbreak");
-        add("memory.human.name", "Human");
-        add("memory.introspection.name", "Introspection");
-        add("memory.learning.name", "Learning");
-        add("memory.metal.name", "Metal");
-        add("memory.plant.name", "Flora");
-        add("memory.power.name", "Power");
-        add("memory.repair.name", "Mending");
-        add("memory.sentience.name", "Sentience");
-        add("memory.stillness.name", "Stillness");
-        add("memory.tool.name", "Tools");
-        add("memory.void.name", "Void");
-        add("memory.water.name", "Water");
+
 
         add("dreams.timesdreamt", "I have Dreamt %1$s/%2$s times today.");
         add("dreams.maybeinthefuture", "No effect came from this dream, and yet I still felt a tingling. Maybe it'll work in the future, under different circumstances.");
@@ -885,6 +865,76 @@ public class BTVLanguageProvider extends LanguageProvider {
         addContact();
         addItems();
         addArsenal();
+        addMemories();
+    }
+
+    private void addMemories() {
+        add("memory.toast.title", "New Memory Gained.");
+        add("memory.prefix", "Memory of %1$s");
+
+        add("memory.animal.name", "Animal");
+        add("memory.animal.brief", "Obtained after witnessing the miracle of birth. Used to call forth beasts and critters.");
+        add("memory.beheading.name", "Beheading");
+        add("memory.beheading.brief", "Beheading");
+
+        add("memory.change.name", "Change");
+        add("memory.change.brief", "Change");
+
+        add("memory.crystal.name", "Crystal");
+        add("memory.crystal.brief", "The shining gleam of precious gems. Uses to probe the ground below for similar treasures.");
+        add("memory.crystal.effect", "Like Metal, this dream reveals to me the presence of ores in the ground below me: this time, it is gems such as diamonds or emeralds.");
+        add("memory.crystal.void", "Increases the search radius.");
+        add("memory.crystal.path", "Starts the search at the target area.");
+        add("memory.crystal.immortal", "Starts the search below the target human.");
+
+        add("memory.darkness.name", "Darkness");
+        add("memory.darkness.brief", "Darkness");
+
+        add("memory.death.name", "Death");
+        add("memory.death.brief", "Death");
+
+        add("memory.eldritch.name", "Eldritch");
+        add("memory.eldritch.brief", "Eldritch");
+
+        add("memory.heartbreak.name", "Heartbreak");
+        add("memory.heartbreak.brief", "Heartbreak");
+
+        add("memory.human.name", "Human");
+        add("memory.human.brief", "Human");
+
+        add("memory.introspection.name", "Introspection");
+        add("memory.introspection.brief", "Introspection");
+
+        add("memory.learning.name", "Learning");
+        add("memory.learning.brief", "Learning");
+
+        add("memory.metal.name", "Metal");
+        add("memory.metal.brief", "Metal");
+
+        add("memory.plant.name", "Flora");
+        add("memory.plant.brief", "Flora");
+
+        add("memory.power.name", "Power");
+        add("memory.power.brief", "Power");
+
+        add("memory.repair.name", "Mending");
+        add("memory.repair.brief", "Mending");
+
+        add("memory.sentience.name", "Sentience");
+        add("memory.sentience.brief", "Sentience");
+
+        add("memory.stillness.name", "Stillness");
+        add("memory.stillness.brief", "Stillness");
+
+        add("memory.tool.name", "Tools");
+        add("memory.tool.brief", "Tools");
+
+        add("memory.void.name", "Void");
+        add("memory.void.brief", "Void");
+
+        add("memory.water.name", "Water");
+        add("memory.water.brief", "Water");
+
     }
 
     private void addItems() {

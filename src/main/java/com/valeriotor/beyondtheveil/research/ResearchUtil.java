@@ -42,7 +42,7 @@ public class ResearchUtil {
     /**
      * Server-side only
      */
-    public static boolean learn(Player p) {
+    public static boolean learn(ServerPlayer p) {
         if (p.level().isClientSide) return false;
         Optional<ResearchData> capability = p.getCapability(ResearchProvider.RESEARCH, null).resolve();
         if (capability.isPresent()) {
@@ -109,18 +109,13 @@ public class ResearchUtil {
         return knownRecipes;
     }
 
-    public static Map<Memory, Research> getKnownMemories(Player p) {
+    public static List<Memory> getKnownMemories(Player p) {
         // TODO actually this should look at PlayerData capability
-        Map<String, ResearchStatus> researches = getResearches(p);
-        Map<Memory, Research> memories = new EnumMap<>(Memory.class);
 
-        for (ResearchStatus value : researches.values()) {
-            if (value.isVisible(p) && value.getStage() >= 0) {
-                for (int i = 0; i < value.res.getStages().length && i <= value.getStage(); i++) {
-                    for (Memory memory : value.res.getStages()[i].getMemories()) {
-                        memories.put(memory, value.res);
-                    }
-                }
+        List<Memory> memories = new ArrayList<>();
+        for (Memory value : Memory.values()) {
+            if (value.isUnlocked(p)) {
+                memories.add(value);
             }
         }
         return memories;

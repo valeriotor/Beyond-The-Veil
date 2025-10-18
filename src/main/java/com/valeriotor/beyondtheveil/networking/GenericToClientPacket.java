@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
@@ -163,6 +164,12 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.CLOSEST_DEATH, tag);
     }
 
+    public static GenericToClientPacket addMemoryToast(Memory memory) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("memory", memory.getDataName());
+        return new GenericToClientPacket(MessageType.ADD_MEMORY_TOAST, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -206,6 +213,7 @@ public class GenericToClientPacket {
                     case SYNC_BLOOD_POOL -> ClientData.getInstance().syncPoolData(tag.getCompound("pool"));
                     case MODIFY_BLOOD_POOL -> ClientData.getInstance().modifyPoolData(tag);
                     case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(tag.getAllKeys().stream().map(tag::getLong).map(BlockPos::of).toList());
+                    case ADD_MEMORY_TOAST -> ClientMethods.unlockMemoryToast(Memory.getMemoryFromDataName(tag.getString("memory")));
                 }
             });
         });
@@ -233,7 +241,8 @@ public class GenericToClientPacket {
         SHAKE_CAMERA,
         SYNC_BLOOD_POOL,
         MODIFY_BLOOD_POOL,
-        CLOSEST_DEATH
+        CLOSEST_DEATH,
+        ADD_MEMORY_TOAST
     }
 
 }

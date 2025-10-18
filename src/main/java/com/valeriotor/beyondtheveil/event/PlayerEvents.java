@@ -65,8 +65,8 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void wakeUpEvent(PlayerWakeUpEvent event) {
-        Player p = event.getEntity();
-        if (p != null && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
+        Player p1 = event.getEntity();
+        if (p1 instanceof ServerPlayer p && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
             DreamHandler.dream(p);
             if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0)
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DIDDREAM, true, false);

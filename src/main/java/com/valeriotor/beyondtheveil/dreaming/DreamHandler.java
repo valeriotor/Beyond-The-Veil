@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Dream;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.event.MemoryUnlockEvents;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
@@ -35,11 +36,11 @@ import java.util.*;
 
 public class DreamHandler {
 
-    public static void dream(Player p) {
+    public static void dream(ServerPlayer p) {
         dream(p, true);
     }
 
-    public static void dream(Player p, boolean bed) {
+    public static void dream(ServerPlayer p, boolean bed) {
         if (!bed) {
             if (p.level().getBlockState(p.getOnPos()).getBlock() != Registration.SLEEP_CHAMBER.get()) {
                 return;
@@ -90,6 +91,7 @@ public class DreamHandler {
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 1, 1, false);
                 markTimesDreamt(p, "sleep_chamber");
             }
+            MemoryUnlockEvents.dreamEvent(p);
         }
         DataUtil.syncReminiscences(p);
     }
