@@ -129,6 +129,14 @@ public class PlayerSavedData extends SavedData {
         return null;
     }
 
+    public BlockPos lastRespawnFor(Player p) {
+        BloodPoint respawnPoint = respawns.get(p.getUUID());
+        if (respawnPoint != null) {
+            return new BlockPos(respawnPoint.x, respawnPoint.y, respawnPoint.z);
+        }
+        return null;
+    }
+
 
     private record BloodPoint(int x, int y, int z, ResourceKey<Level> dimension) {
 

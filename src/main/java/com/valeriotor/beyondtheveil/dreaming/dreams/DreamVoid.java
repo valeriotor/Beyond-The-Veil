@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -26,7 +27,13 @@ public class DreamVoid extends Dream {
 
     @Override
     public boolean activatePlayer(Player caster, Player target, Level l) {
-        return activate(caster, l);
+        if (DreamHandler.hasVoid(target)) {
+            return false;
+        }
+        DataUtil.setBooleanOnServerAndSync(target, PlayerDataLib.VOID, true, false);
+        DataUtil.addReminiscence(target, Memory.VOID.getDataName(false), new Reminiscence.TextReminiscence("reminiscence.void"));
+        DataUtil.syncReminiscences(target);
+        return true;
     }
 
     @Override

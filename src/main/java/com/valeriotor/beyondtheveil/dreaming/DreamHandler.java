@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import java.util.*;
 
@@ -55,8 +56,11 @@ public class DreamHandler {
         //TODO reimplement sorting. First void, then find highest (lowest) priority among all voided versions (if void was used) of other dreams, then sort as normal
         List<FumeSpreaderBE> successes = new ArrayList<>();
         for (FumeSpreaderBE be : spreaders) {
-            if (DreamRegistry.getDreamFromMemory(be.getStoredMemory(), hasVoid(p)).activate(p, p.level())) {
+            Memory memory = be.getStoredMemory();
+            boolean hasVoid = hasVoid(p);
+            if (DreamRegistry.getDreamFromMemory(memory, hasVoid(p)).activate(p, p.level())) {
                 successes.add(be);
+                DataUtil.getMemoryStatus(p, memory).increaseTo(1, Memory.Target.BASE, !hasVoid(p) && hasVoid);
             }
         }
 
@@ -94,10 +98,17 @@ public class DreamHandler {
             MemoryUnlockEvents.dreamEvent(p);
         }
         DataUtil.syncReminiscences(p);
+        DataUtil.syncMemories(p);
     }
 
     public static void dreamBottle(ServerPlayer p, ItemStack stack) {
-        if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1) {
+        if (!stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+            return;
+        }
+        IFluidHandlerItem fluid = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().get();
+        boolean isRunningOnFluid = fluid.getFluidInTank(0).getAmount() < 100;
+        if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() ||
+                (p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1 && isRunningOnFluid)) {
             return;
         }
         UUID target = null;
@@ -147,32 +158,34 @@ public class DreamHandler {
             // TODO sort? actually no
             for (Tuple<Memory, Integer> memory : memories) {
                 Dream dream = DreamRegistry.getDreamFromMemory(memory.getA(), hasVoid(p));
+                if (isRunningOnFluid && fluid.getFluidInTank(0).getAmount() < 100) {
+                    break;
+                }
+                boolean hasVoid = hasVoid(p);
                 boolean success = targetPlayer != null ? dream.activatePlayer(p, targetPlayer, p.level()) : (targetPos != null ? dream.activatePos(p, p.level(), targetPos) : dream.activate(p, p.level()));
                 if (success) {
-                    if(toRemove != null) {
+                    if (toRemove != null) {
                         p.getItemInHand(toRemove).shrink(1);
                     }
                     successes.add(memory.getB());
                     DataUtil.setBooleanOnServerAndSync(p, memory.getA().name() + "Dream", true, false);
+                    DataUtil.getMemoryStatus(p, memory.getA()).increaseTo(1, targetPlayer != null ? Memory.Target.PLAYER : (targetPos != null ? Memory.Target.PATH : Memory.Target.BASE), !hasVoid(p) && hasVoid);
+                    fluid.drain(100, IFluidHandler.FluidAction.EXECUTE);
                 }
             }
             if (!successes.isEmpty()) {
                 for (Integer success : successes) {
                     c.extractItem(success, 1, false);
                 }
-                stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(fluidCap -> {
-                    FluidStack fluid = fluidCap.getFluidInTank(0);
-                    if (fluid.getAmount() > successes.size() * 100) {
-                        fluidCap.drain(successes.size() * 100, IFluidHandler.FluidAction.EXECUTE);
-                    } else {
-                        DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
-                        markTimesDreamt(p, "dream_bottle");
-                    }
-                });
+                if (!isRunningOnFluid) {
+                    DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 1, 1, false);
+                    markTimesDreamt(p, "dream_bottle");
+                }
+                
                 DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.USED_BOTTLE, true, false);
             }
             DataUtil.syncReminiscences(p);
-
+            DataUtil.syncMemories(p);
         });
     }
 

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
@@ -190,4 +191,12 @@ public class ClientMethods {
         Minecraft.getInstance().getToasts().addToast(new MemoryToast(memory));
     }
 
+    public static void loadMemories(CompoundTag tag) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
+                c.loadMemories(tag);
+            });
+        }
+    }
 }

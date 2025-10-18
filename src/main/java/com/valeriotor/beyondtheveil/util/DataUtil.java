@@ -12,13 +12,11 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -54,6 +52,13 @@ public class DataUtil {
             } else {
                 Messages.sendToPlayer(GenericToClientPacket.syncReminiscences(new CompoundTag()), (ServerPlayer) p);
             }
+        });
+    }
+
+    public static void syncMemories(ServerPlayer p) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            CompoundTag tag = playerData.saveMemories();
+            Messages.sendToPlayer(GenericToClientPacket.syncMemories(tag), p);
         });
     }
 
@@ -250,10 +255,15 @@ public class DataUtil {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).hasMemory(memory);
     }
 
+    public static PlayerData.MemoryStatus getMemoryStatus(Player p, Memory memory) {
+        return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getStatusOrAddIfAbsent(memory);
+    }
+
 
     public static void removeString(Player p, String key) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.removeString(key);
         });
     }
+
 }

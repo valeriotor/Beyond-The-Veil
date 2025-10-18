@@ -61,6 +61,9 @@ public class DreamBottleGui extends AbstractContainerScreen<DreamBottleContainer
             ClientUtil.blit(TEXTURE_CHARGES, relX + 140, relY + 35, 34, 46, 0, 0, 17, 23, 32, 32, pose);
             float ratio = fluidInTank.getAmount() / 4000F;
             ClientUtil.blit(TEXTURE_CHARGES, relX + 142, relY + 35 + 42 - 2 * 20 * ratio, 28, 2 * 20 * ratio, 17, 21 - 20 * ratio, 15, 20 * ratio, 32, 32, pose);
+            if (pMouseX > relX + 140 && pMouseX < relX + 174 && pMouseY > relY + 35 && pMouseY < relY + 35 + 46) {
+                guiGraphics.renderTooltip(Minecraft.getInstance().font, Component.literal(String.format("%d / 4000 mB", fluidInTank.getAmount())), pMouseX, pMouseY);
+            }
 
         }
         RenderSystem.disableBlend();

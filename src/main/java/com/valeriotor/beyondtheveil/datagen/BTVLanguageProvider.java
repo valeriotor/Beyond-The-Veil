@@ -874,48 +874,60 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("memory.animal.name", "Animal");
         add("memory.animal.brief", "Obtained after witnessing the miracle of birth. Used to call forth beasts and critters.");
+        add("memory.animal.0.1", "An animal will find its way right next to me. What sort? That depends on what I am holding in my hand: any item associated with a given animal is likely to summon that kind of creature. For example, eggs are going to call forth chickens; leather, on the other hand, may be more ambiguous.");
+        add("memory.animal.2.1", "§oPath Sigil§r: The animal is called forth at the target area instead.");
+        add("memory.animal.4.1", "§oImmortal Sigil§r: The animal is called forth next to the target human instead.");
+
         add("memory.beheading.name", "Beheading");
         add("memory.beheading.brief", "Beheading");
 
         add("memory.change.name", "Change");
         add("memory.change.brief", "Change");
+        add("memory.change.0.1", "All the negative status effects ailing me are either converted to their beneficial counterpart (e.g. poison becoming regeneration), or removed.");
+        add("memory.change.1.1", "↳ §lVoid§r: It is positive effects being turned into negative ones instead.");
+        add("memory.change.2.1", "§oPath Sigil§r: Affects all non-human creatures within a certain range of the target area instead.");
+        add("memory.change.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.crystal.name", "Crystal");
         add("memory.crystal.brief", "The shining gleam of precious gems. Uses to probe the ground below for similar treasures.");
-        add("memory.crystal.effect", "Like Metal, this dream reveals to me the presence of ores in the ground below me: this time, it is gems such as diamonds or emeralds.");
-        add("memory.crystal.void", "Increases the search radius.");
-        add("memory.crystal.path", "Starts the search at the target area.");
-        add("memory.crystal.immortal", "Starts the search below the target human.");
+        add("memory.crystal.0.1", "Like Metal, this dream reveals to me the presence of ores in the ground below me: this time, it is gems such as diamonds or emeralds.");
+        add("memory.crystal.1.1", "↳ §lVoid§r: Increases the search radius.");
+        add("memory.crystal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
+        add("memory.crystal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
 
         add("memory.darkness.name", "Darkness");
         add("memory.darkness.brief", "Darkness");
 
         add("memory.death.name", "Death");
         add("memory.death.brief", "Death");
-
-        add("memory.eldritch.name", "Eldritch");
-        add("memory.eldritch.brief", "Eldritch");
+        add("memory.death.0.1", "By reminiscing, I am shown the point where I last died.");
+        add("memory.death.1.1", "↳ §lVoid§r: Instead, I am shown the point where I last respawned. Life and death, intrinsically tied.");
+        add("memory.death.2.1", "§oPath Sigil§r: No effect, as far as I can tell.");
+        add("memory.death.4.1", "§oImmortal Sigil§r: I am shown the target's last death instead of my own.");
+        add("memory.death.5.1", "↳ §lVoid§r: Instead, I am shown the point where the target last respawned.");
 
         add("memory.heartbreak.name", "Heartbreak");
         add("memory.heartbreak.brief", "Heartbreak");
 
-        add("memory.human.name", "Human");
-        add("memory.human.brief", "Human");
-
         add("memory.introspection.name", "Introspection");
         add("memory.introspection.brief", "Introspection");
 
-        add("memory.learning.name", "Learning");
-        add("memory.learning.brief", "Learning");
-
         add("memory.metal.name", "Metal");
         add("memory.metal.brief", "Metal");
+        add("memory.metal.0.1", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can scroll through the various layers that have been probed.");
+        add("memory.metal.1.1", "↳ §lVoid§r: Increases the search radius.");
+        add("memory.metal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
+        add("memory.metal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
 
         add("memory.plant.name", "Flora");
         add("memory.plant.brief", "Flora");
 
         add("memory.power.name", "Power");
         add("memory.power.brief", "Power");
+        add("memory.power.0.1", "Increases the power of my status effects.");
+        add("memory.power.1.1", "↳ §lVoid§r: Further increases their power.");
+        add("memory.power.2.1", "§oPath Sigil§r: Affects all non-human creatures within a certain range of the target area instead.");
+        add("memory.power.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.repair.name", "Mending");
         add("memory.repair.brief", "Mending");
@@ -2175,6 +2187,9 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addReminiscence() {
         add("reminiscence.EMPTY", "The dream was not affected.");
         add("reminiscence.void", "My next dream will be empowered by void.");
+        add("reminiscence.repair", "%1$s of my items were repaired.");
+        add("reminiscence.blinded", "The target was blinded.");
+        add("reminiscence.ice", "The target was encased in ice.");
         add("reminiscence.waypoint_other_dimension", "The destination lies in another dimension.");
         add("reminiscence.power.0", "%1$s of my effects became stronger.");
         add("reminiscence.power.1", "%1$s of the target's effects became stronger.");

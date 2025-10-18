@@ -1,13 +1,8 @@
 package com.valeriotor.beyondtheveil.dreaming;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
-import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
-import com.valeriotor.beyondtheveil.research.Research;
-import com.valeriotor.beyondtheveil.research.ResearchStatus;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,38 +12,37 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import java.util.Map.Entry;
-
 public enum Memory {
-    ANIMAL(Registration.HEART_ITEM.get(), 0xFF401b00),
-    BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333),
-    CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, "metalDream"),
-    CRYSTAL(Items.GLASS, 0xFFe6d8d8),
-    DARKNESS(Items.COAL, 0xFF002233),
-    DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c),
-    ELDRITCH(Items.ENDER_EYE, 0xFF400021),
+    ANIMAL(Registration.HEART_ITEM.get(), 0xFF401b00, new int[]{1, 0, 1, 0, 1, 0}),
+    BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333, new int[]{1, 0, 0, 0, 1, 0}),
+    CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, new int[]{1, 1, 1, 0, 1, 0}),
+    CRYSTAL(Items.GLASS, 0xFFe6d8d8, new int[]{1, 1, 1, 0, 1, 0}),
+    DARKNESS(Items.COAL, 0xFF002233, new int[]{1, 0, 1, 0, 1, 1}),
+    DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c, new int[]{1, 1, 1, 0, 1, 1}),
+    //ELDRITCH(Items.ENDER_EYE, 0xFF400021),
     //TODO HEARTBREAK(Items.getItemFromBlock(BlockRegistry.BlockHeart), 0xFFAA0000, "memPOWER"),
-    HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF, "metalDream"),
-    INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
-    NULL(Items.AIR, 0xFF998b69),
-    METAL(Items.IRON_INGOT, 0xFF8c8c8c),
-    PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00),
-    POWER(Items.BLAZE_POWDER, 0xFFff9300, "metalDream"),
-    REPAIR(Items.ANVIL, 0xFF99f19d),
-    SENTIENCE(Items.BOOK, 0xFFd87474, "metalDream"),
-    STILLNESS(Items.SOUL_SAND, 0xFF444444, "metalDream"),
-    TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA, "memHUMAN"),
-    VOID(Items.OBSIDIAN, 0xFF36111F),
-    WATER(Items.WATER_BUCKET, 0xFF1111FF);
+    //HUMAN(Items.ARMOR_STAND, 0xFFFFFFFF),
+    //INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
+    NULL(Items.AIR, 0xFF998b69, new int[]{0, 0, 0, 0, 0, 0}),
+    METAL(Items.IRON_INGOT, 0xFF8c8c8c, new int[]{1, 1, 1, 0, 1, 0}),
+    //PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00),
+    POWER(Items.BLAZE_POWDER, 0xFFff9300, new int[]{1, 1, 1, 1, 1, 1}),
+    REPAIR(Items.ANVIL, 0xFF99f19d, new int[]{1, 1, 1, 1, 1, 1}),
+    SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{1, 1, 1, 0, 1, 0}),
+    STILLNESS(Items.SOUL_SAND, 0xFF444444, new int[]{1, 1, 1, 1, 1, 1}),
+    //TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA),
+    VOID(Items.OBSIDIAN, 0xFF36111F, new int[]{1, 1, 0, 0, 1, 0}),
+    WATER(Items.WATER_BUCKET, 0xFF1111FF, new int[]{1, 1, 1, 0, 1, 0});
 
     private final ItemStack item;
     private final int color;
-    private final String[] reqs;
+    private final int[] maxStatus;
 
-    Memory(Item item, int color, String... reqs) {
+
+    Memory(Item item, int color, int[] maxStatus) {
         this.item = new ItemStack(item, 1);
         this.color = color;
-        this.reqs = reqs;
+        this.maxStatus = maxStatus;
     }
 
     public String getDataName(boolean hasVoid) {
@@ -67,15 +61,6 @@ public enum Memory {
         return item;
     }
 
-    public boolean isUnlockable(Player p) {
-        if (reqs == null || reqs.length == 0) return true;
-        PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY);
-        for (String s : reqs) {
-            if (!data.getBoolean(s)) return false;
-        }
-        return true;
-    }
-
     public boolean isUnlocked(Player p) {
         return DataUtil.hasMemory(p, this);
     }
@@ -85,7 +70,7 @@ public enum Memory {
     }
 
     public void unlock(ServerPlayer p, boolean sendMessage) {
-        if (!this.isUnlocked(p) && this.isUnlockable(p)) {
+        if (!this.isUnlocked(p)) {
             Messages.sendToPlayer(GenericToClientPacket.addMemoryToast(this), p);
             String dataName = this.getDataName();
             DataUtil.unlockMemoryOnServerAndSync(p, this);
@@ -138,6 +123,10 @@ public enum Memory {
         return null;
     }
 
+    public int getMaxStatus(Target target, boolean hasVoid) {
+        return maxStatus[target.ordinal() * 2 + (hasVoid ? 1 : 0)];
+    }
+
     public static String getFurtherData(Memory m) {
         return switch (m) {
             case ANIMAL -> null;
@@ -145,18 +134,22 @@ public enum Memory {
             case CRYSTAL -> null;
             case DARKNESS -> null;
             case DEATH -> null;
-            case ELDRITCH -> null;
-            case HUMAN -> null;
+            //case ELDRITCH -> null;
+            //case HUMAN -> null;
             case NULL -> null;
             case METAL -> null;
             case POWER -> "effectDream";
             case REPAIR -> null;
             case SENTIENCE -> null;
             case STILLNESS -> "effectDream";
-            case TOOL -> null;
+            //case TOOL -> null;
             case VOID -> null;
             default -> null;
         };
+    }
+
+    public enum Target {
+        BASE, PATH, PLAYER
     }
 
 }

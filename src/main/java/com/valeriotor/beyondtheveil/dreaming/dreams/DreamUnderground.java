@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -32,21 +33,23 @@ public class DreamUnderground extends Dream {
 
     @Override
     public boolean activate(Player p, Level l) {
-        return activatePos(p, l, p.getOnPos());
+        return activateInternal(p, l, p.blockPosition());
     }
 
     @Override
     public boolean activatePlayer(Player caster, Player target, Level l) {
-        return activatePos(caster, l, target.getOnPos());
+        return activateInternal(caster, l, target.blockPosition());
     }
 
     @Override
     public boolean activatePos(Player p, Level l, BlockPos pos) {
+        return activateInternal(p, l, pos);
+    }
+
+    private boolean activateInternal(Player p, Level l, BlockPos pos) {
+
         Map<Integer, String[][]> layers = new HashMap<>();
-        //Map<String, Integer> counter = new HashMap<>();
-        //for (Block b : searchedBlocks) {
-        //    counter.put(b.getRegistryName().toString(), 0);
-        //}
+
         if (p != null) {
             boolean consumeVoid = DreamHandler.consumeVoid(p);
             int radius = consumeVoid ? 4 : 2;
@@ -67,6 +70,7 @@ public class DreamUnderground extends Dream {
             }
             Reminiscence reminiscence = new ReminiscenceUnderground(layers, searchedBlocks.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b).toString()).collect(Collectors.toSet()));
             DataUtil.addReminiscence(p, memory.getDataName(consumeVoid), reminiscence);
+
             return true;
         }
         return false;

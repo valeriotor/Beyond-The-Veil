@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
@@ -46,6 +47,10 @@ public class GenericToClientPacket {
 
     public static GenericToClientPacket syncReminiscences(CompoundTag tag) {
         return new GenericToClientPacket(MessageType.SYNC_REMINISCENCES, tag);
+    }
+
+    public static GenericToClientPacket syncMemories(CompoundTag tag) {
+        return new GenericToClientPacket(MessageType.SYNC_MEMORIES, tag);
     }
 
     public static GenericToClientPacket startAnimation(AnimationTemplate animation, int entityId, int channel) {
@@ -196,6 +201,7 @@ public class GenericToClientPacket {
                     case WAYPOINT -> ClientData.getInstance().addWaypoint(tag);
                     case WAYPOINT_REMOVE -> ClientData.getInstance().removeWaypoint(tag);
                     case SYNC_REMINISCENCES -> DataUtilClient.loadReminiscences(tag);
+                    case SYNC_MEMORIES -> ClientMethods.loadMemories(tag);
                     case START_ANIMATION -> ClientMethods.startEntityAnimation(tag);
                     case ROTATE_CAMERA -> RenderEvents.startCameraRotation(new CameraRotator(tag));
                     case MOVE -> ClientMethods.movePlayer(tag);
@@ -225,6 +231,7 @@ public class GenericToClientPacket {
         WAYPOINT,
         WAYPOINT_REMOVE,
         SYNC_REMINISCENCES,
+        SYNC_MEMORIES,
         START_ANIMATION,
         ROTATE_CAMERA,
         MOVE,

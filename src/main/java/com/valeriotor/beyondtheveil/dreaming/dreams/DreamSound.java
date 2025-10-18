@@ -23,7 +23,7 @@ public class DreamSound extends Dream {
     public boolean activate(Player p, Level l) {
         String dataName = memory.getDataName(isVoid);
         DataUtil.addReminiscence(p, dataName, new Reminiscence.SoundReminiscence(soundKey));
-        if ("void_water".equalsIgnoreCase(dataName)) {
+        if (isVoid) {
             DreamHandler.consumeVoid(p);
         }
         return true;

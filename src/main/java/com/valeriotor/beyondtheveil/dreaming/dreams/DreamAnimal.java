@@ -37,11 +37,16 @@ public class DreamAnimal extends Dream {
 
     @Override
     public boolean activatePlayer(Player caster, Player target, Level l) {
+
         return activatePos(caster, l, target.blockPosition());
     }
 
     @Override
     public boolean activatePos(Player p, Level l, BlockPos pos) {
+        return activateInternal(p, l);
+    }
+
+    private boolean activateInternal(Player p, Level l) {
         boolean consumeVoid = DreamHandler.consumeVoid(p);
         EntityType<?> type = getType(p.getItemInHand(InteractionHand.MAIN_HAND), p.getRandom(), consumeVoid);
         if (type == null) {

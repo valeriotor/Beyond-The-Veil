@@ -6,8 +6,15 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.BTVTags;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.Structures;
 import net.minecraft.tags.StructureTags;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +28,10 @@ public class DreamRegistry {
     public static final Dream VOID = new DreamVoid();
     public static final Dream WATER = new DreamWaypoint(Memory.WATER, (sl, pos, p) -> sl.dimension() == BTVDimensions.ARCHE_LEVEL ? sl.findNearestMapStructure(BTVTags.DEEP_CITY, pos, 100, false) : sl.findNearestMapStructure(StructureTags.ON_OCEAN_EXPLORER_MAPS, pos, 100, false), 0x7F16FF);
     public static final Dream DEATH = new DreamWaypoint(Memory.DEATH, (sl, pos, p) -> PlayerSavedData.getInstance(sl.getServer().overworld()).lastDeathFor(p), 0x7F16FF);
+    public static final Dream RESPAWN = new DreamWaypoint(Memory.DEATH, true, (sl, pos, p) -> PlayerSavedData.getInstance(sl.getServer().overworld()).lastRespawnFor(p), 0x7F16FF);
     public static final Dream ELDRITCH = new DreamSound(Memory.WATER, BTVSounds.WATER_DREAM.get(), true);
     public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E);
+    public static final Dream SENTIENCE_VOID = new DreamWaypoint(Memory.SENTIENCE, true, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F006E);
     public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos, p) -> sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false), 0xFFFFFF);
     //public static final Dream WATER_TEST = new DreamWaypoint(Memory.WATER, true, (sl, pos) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F16FF);
     public static final Dream METAL = new DreamUnderground(Memory.METAL, 5, Set.of(Blocks.IRON_ORE, Blocks.GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.DEEPSLATE_COPPER_ORE));
@@ -31,9 +40,13 @@ public class DreamRegistry {
     public static final Dream STILLNESS = new DreamEffect(Memory.STILLNESS);
     public static final Dream CHANGE = new DreamEffect(Memory.CHANGE);
     public static final Dream ANIMAL = new DreamAnimal();
+    public static final Dream REPAIR = new DreamRepair();
+    public static final Dream BEHEADING = new DreamBeheading();
 
     static {
         DreamRegistry.REMINISCENCE_REGISTRY.put("none", Reminiscence.EmptyReminiscence::new);
+        DreamRegistry.REMINISCENCE_REGISTRY.put("darkness_player", Reminiscence.TextReminiscence::new);
+        DreamRegistry.REMINISCENCE_REGISTRY.put("water_player", Reminiscence.TextReminiscence::new);
     }
 
     public static Dream getDreamFromMemory(Memory m, boolean isVoid) {

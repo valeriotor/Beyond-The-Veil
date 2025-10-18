@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -12,10 +13,12 @@ import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -284,6 +287,7 @@ public class MemoryRegistryGui extends Screen {
         private final List<FormattedCharSequence> brief;
         private final ItemStack sieve = new ItemStack(Registration.MEMORY_SIEVE.get());
         private final ItemStack ingredient;
+        private final List<List<FormattedCharSequence>> lines;
 
         protected MemoryPage(Memory memory) {
             super(RIGHT_PAGE_WIDTH, RIGHT_PAGE_HEIGHT);
@@ -291,6 +295,25 @@ public class MemoryRegistryGui extends Screen {
             title = Component.translatable(memory.getLocalizationKey());
             brief = Minecraft.getInstance().font.split(Component.translatable("memory." + memory.name().toLowerCase() + ".brief"), 170);
             ingredient = memory.getItem();
+            LocalPlayer player = Minecraft.getInstance().player;
+            lines = new ArrayList<>();
+            if (player != null) {
+                PlayerData.MemoryStatus status = DataUtil.getMemoryStatus(player, memory);
+                int[] values = status.getValues();
+                for (int i = 0; i < values.length; i++) {
+                    int value = values[i];
+                    if (value > 0 || (i % 2 == 0 && values[i + 1] > 0)) {
+                        if (i % 2 == 0 && values[i + 1] > 0) {
+                            lines.add(new ArrayList<>());
+                            lines.add(new ArrayList<>());
+                            lines.add(new ArrayList<>());
+                        }
+                        MutableComponent translatable = Component.translatable("memory." + memory.name().toLowerCase() + "." + i + "." + Math.max(1, value));
+                        List<FormattedCharSequence> split = Minecraft.getInstance().font.split(translatable, 300);
+                        lines.add(split);
+                    }
+                }
+            }
 
         }
 
@@ -335,7 +358,14 @@ public class MemoryRegistryGui extends Screen {
 
             poseStack.pushPose();
             poseStack.translate(20, 200, 0);
-            graphics.drawString(Minecraft.getInstance().font, "Test text", 0, 0, 0xFF896D77);
+            i = 0;
+            for (List<FormattedCharSequence> par : lines) {
+                for (FormattedCharSequence line : par) {
+                    graphics.drawString(Minecraft.getInstance().font, line, 0, i, 0xFF896D77);
+                    i += 15;
+                }
+                i += 3;
+            }
             poseStack.popPose();
 
         }

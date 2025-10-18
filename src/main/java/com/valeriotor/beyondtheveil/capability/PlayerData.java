@@ -23,7 +23,7 @@ public class PlayerData {
     private final Map<String, String> tempStrings = new HashMap<>();
     private final Map<String, CompoundTag> tags = new HashMap<>();
     private final List<Counter> counters = new ArrayList<>();
-    private final Set<Memory> memories = EnumSet.noneOf(Memory.class);
+    private final Map<Memory, MemoryStatus> memories = new EnumMap<>(Memory.class);
     private final Map<String, Reminiscence> reminiscences = new HashMap<>();
 
     public void setBoolean(String key, boolean value, boolean temporary) {
@@ -229,16 +229,19 @@ public class PlayerData {
         return counters;
     }
 
-    public boolean addMemory(Memory memory) {
-        return memories.add(memory);
+    public void addMemory(Memory memory) {
+        memories.put(memory, new MemoryStatus(memory, new int[]{1,0,0,0,0,0}));
     }
 
     public boolean hasMemory(Memory memory) {
-        return memories.contains(memory);
+        return memories.containsKey(memory) && memories.get(memory).values[0] > 0;
     }
 
-    public Set<Memory> getMemories() {
-        return memories;
+    public MemoryStatus getStatusOrAddIfAbsent(Memory memory) {
+        if (!memories.containsKey(memory)) {
+            addMemory(memory);
+        }
+        return memories.get(memory);
     }
 
     public boolean addReminiscence(String key, Reminiscence reminiscence) {
@@ -266,7 +269,7 @@ public class PlayerData {
         CompoundTag strings = new CompoundTag();
         CompoundTag counters = new CompoundTag();
         CompoundTag tags = new CompoundTag();
-        CompoundTag memories = new CompoundTag();
+        CompoundTag memories = saveMemories();
         CompoundTag reminiscences = new CompoundTag();
         for (String s : this.booleans) {
             booleans.putBoolean(s, true);
@@ -286,9 +289,6 @@ public class PlayerData {
         for (Counter c : this.counters) {
             counters.putInt(c.type.name(), c.counter);
         }
-        for (Memory memory : this.memories) {
-            memories.putBoolean(memory.getDataName(), true);
-        }
         for (Entry<String, Reminiscence> e : this.reminiscences.entrySet()) {
             reminiscences.put(e.getKey(), e.getValue().save());
         }
@@ -300,6 +300,14 @@ public class PlayerData {
         compoundTag.put("counters", counters);
         compoundTag.put("memories", memories);
         compoundTag.put("reminiscences", reminiscences);
+    }
+
+    public CompoundTag saveMemories() {
+        CompoundTag memories = new CompoundTag();
+        for (Entry<Memory, MemoryStatus> entry : this.memories.entrySet()) {
+            memories.put(entry.getKey().getDataName(), entry.getValue().saveToNBT());
+        }
+        return memories;
     }
 
     public void loadFromNBT(CompoundTag compoundTag) {
@@ -339,12 +347,7 @@ public class PlayerData {
         }
         if (compoundTag.contains("memories")) {
             CompoundTag memories = compoundTag.getCompound("memories");
-            for (String key : memories.getAllKeys()) {
-                Memory memory = Memory.getMemoryFromDataName(key);
-                if (memory != null) {
-                    this.memories.add(memory);
-                }
-            }
+            loadMemories(memories);
         }
 
         if (compoundTag.contains("reminiscences")) {
@@ -354,6 +357,18 @@ public class PlayerData {
                 if (reminiscence != null) {
                     reminiscence.load(reminiscences.getCompound(key));
                     this.reminiscences.put(key, reminiscence);
+                }
+            }
+        }
+    }
+
+    public void loadMemories(CompoundTag memories) {
+        for (String key : memories.getAllKeys()) {
+            Memory memory = Memory.getMemoryFromDataName(key);
+            if (memories.contains(key, 10)) {
+                MemoryStatus status = MemoryStatus.fromNBT(memories.getCompound(key));
+                if (memory != null) {
+                    this.memories.put(memory, status);
                 }
             }
         }
@@ -369,9 +384,47 @@ public class PlayerData {
         newStore.strings.putAll(strings);
         newStore.counters.addAll(counters);
         newStore.tags.putAll(tags);
-        newStore.memories.addAll(memories);
+        newStore.memories.putAll(memories);
         newStore.reminiscences.putAll(reminiscences);
 
+    }
+
+    public static class MemoryStatus {
+
+        private static MemoryStatus fromNBT(CompoundTag tag) {
+            Memory memory1 = Memory.getMemoryFromDataName(tag.getString("memory"));
+            int[] values1 = tag.getIntArray("values");
+            return new MemoryStatus(memory1, values1);
+        }
+
+        private final Memory memory;
+        private final int[] values;
+
+        private MemoryStatus(Memory memory) {
+            this(memory, new int[]{0, 0, 0, 0, 0, 0});
+        }
+
+        private MemoryStatus(Memory memory, int[] values) {
+            this.memory = memory;
+            this.values = values;
+        }
+
+        public void increaseTo(int value, Memory.Target target, boolean hasVoid) {
+            int i = target.ordinal() * 2 + (hasVoid ? 1 : 0);
+            int max = memory.getMaxStatus(target, hasVoid);
+            values[i] = Math.min(max, Math.max(values[i], value));
+        }
+
+        public int[] getValues() {
+            return values;
+        }
+
+        private CompoundTag saveToNBT() {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("memory", memory.getDataName());
+            tag.putIntArray("values", values);
+            return tag;
+        }
     }
 
     private static class FallBack extends PlayerData {
@@ -454,6 +507,8 @@ public class PlayerData {
         @Override
         public void copyToNewStore(PlayerData newStore) {
         }
+
+
     }
 
     public static class Counter {
