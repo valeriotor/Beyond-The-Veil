@@ -77,6 +77,16 @@ public class BloodThesisGui extends Screen {
                 blocks.add(empty());
             }
         }
+        // temporary
+        blocks.add(new RitualPicture("blood_bricks"));
+        blocks.add(new RitualPicture("coral_staff"));
+        blocks.add(new RitualPicture("bleeding_belt"));
+        blocks.add(new RitualPicture("bind_item_damage"));
+        blocks.add(new RitualPicture("bind_item_weakness"));
+        blocks.add(new RitualPicture("bind_pillar"));
+        blocks.add(new RitualPicture("pool_flebo"));
+        blocks.add(new RitualPicture("summon_wither"));
+        blocks.add(new RitualPicture("summon_living_portal"));
 
         return blocks;
     }
@@ -327,6 +337,27 @@ public class BloodThesisGui extends Screen {
             poseStack.popPose();
         }
     }
+
+    private static class RitualPicture extends Element {
+
+        private final ResourceLocation image;
+
+        protected RitualPicture(String ritual) {
+            super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
+            image = new ResourceLocation(References.MODID, "textures/gui/rituals/" + ritual + ".png");
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            if (image != null) {
+                poseStack.pushPose();
+                poseStack.translate(0, 0, 100);
+                graphics.blit(image, 0, 70, 300, 300, 0, 0, 500, 500, 500, 500);
+                poseStack.popPose();
+            }
+        }
+    }
+
 
 
     private enum TextChapter {
