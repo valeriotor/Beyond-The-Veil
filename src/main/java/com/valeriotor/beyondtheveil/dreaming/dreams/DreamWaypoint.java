@@ -1,8 +1,12 @@
 package com.valeriotor.beyondtheveil.dreaming.dreams;
 
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,6 +15,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.lang3.function.TriFunction;
+
+import java.util.Map;
 
 public class DreamWaypoint extends Dream {
 
@@ -37,10 +43,10 @@ public class DreamWaypoint extends Dream {
         boolean hasVoid = false;
         boolean flag = false;
         if (memory == Memory.DARKNESS) {
-            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 40, 1));
+            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 60, 1));
             hasVoid = DreamHandler.consumeVoid(caster);
             if (hasVoid) {
-                target.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * 40, 1));
+                PlayerTimerData.for_(target).addTimer(new PlayerTimer(20 * 60, "blinded_completely", PersistentPlayerTimer.BLIND_COMPLETELY, Map.of()));
             }
             Reminiscence r = new Reminiscence.TextReminiscence("reminiscence.blinded");
             DataUtil.addReminiscence(caster, "darkness_player", r);

@@ -99,6 +99,7 @@ public class PlayerTickEvents {
                         DataUtil.setBooleanOnServerAndSync(player, foundKey, true, false);
                         if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.SPOKE_KEEPER)) {
                             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.UNLOCKED_HAMLET, true, false);
+                            DataUtil.getMemoryStatus(player, Memory.DARKNESS).increaseTo(2, Memory.Target.BASE, false);
                         }
                     }
                 }

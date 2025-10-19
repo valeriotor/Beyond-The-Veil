@@ -17,7 +17,7 @@ public enum Memory {
     BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333, new int[]{1, 0, 0, 0, 1, 0}),
     CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, new int[]{1, 1, 1, 0, 1, 0}),
     CRYSTAL(Items.GLASS, 0xFFe6d8d8, new int[]{1, 1, 1, 0, 1, 0}),
-    DARKNESS(Items.COAL, 0xFF002233, new int[]{1, 0, 1, 0, 1, 1}),
+    DARKNESS(Items.COAL, 0xFF002233, new int[]{2, 0, 1, 0, 1, 1}),
     DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c, new int[]{1, 1, 1, 0, 1, 1}),
     //ELDRITCH(Items.ENDER_EYE, 0xFF400021),
     //TODO HEARTBREAK(Items.getItemFromBlock(BlockRegistry.BlockHeart), 0xFFAA0000, "memPOWER"),
@@ -26,12 +26,12 @@ public enum Memory {
     NULL(Items.AIR, 0xFF998b69, new int[]{0, 0, 0, 0, 0, 0}),
     METAL(Items.IRON_INGOT, 0xFF8c8c8c, new int[]{1, 1, 1, 0, 1, 0}),
     //PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00),
-    POWER(Items.BLAZE_POWDER, 0xFFff9300, new int[]{1, 1, 1, 1, 1, 1}),
-    REPAIR(Items.ANVIL, 0xFF99f19d, new int[]{1, 1, 1, 1, 1, 1}),
-    SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{1, 1, 1, 0, 1, 0}),
+    POWER(Items.BLAZE_POWDER, 0xFFff9300, new int[]{1, 1, 1, 0, 1, 0}),
+    REPAIR(Items.ANVIL, 0xFF99f19d, new int[]{1, 1, 0, 0, 1, 1}),
+    SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{2, 0, 1, 0, 1, 0}),
     STILLNESS(Items.SOUL_SAND, 0xFF444444, new int[]{1, 1, 1, 1, 1, 1}),
     //TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA),
-    VOID(Items.OBSIDIAN, 0xFF36111F, new int[]{1, 1, 0, 0, 1, 0}),
+    VOID(Items.OBSIDIAN, 0xFF36111F, new int[]{1, 0, 0, 0, 1, 0}),
     WATER(Items.WATER_BUCKET, 0xFF1111FF, new int[]{1, 1, 1, 0, 1, 0});
 
     private final ItemStack item;

@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.Fonts;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.RitualRegistry;
+import com.valeriotor.beyondtheveil.rituals.RitualTemplate;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -21,6 +23,7 @@ import net.minecraft.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BloodThesisGui extends Screen {
 
@@ -342,6 +345,37 @@ public class BloodThesisGui extends Screen {
         }
     }
 
+    private static class RitualPage extends Element {
+
+        private final String ritual;
+        private final Component title;
+        private final TextBlock text;
+
+        protected RitualPage(int chapter, int ritualIndex, String ritual) {
+            super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
+            this.ritual = ritual;
+            String title = String.format("%d.%d   ", chapter + 1, ritualIndex + 1) + I18n.get("research.thesis.ritual." + ritual + ".title");
+            this.title = Component.literal(title).withStyle(Fonts.ACADEMIC_STYLE);
+            TextUtil util = new TextUtil();
+            List<Element> elements = util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
+        }
+
+        @Override
+        public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            poseStack.pushPose();
+            poseStack.translate(0, 0, 0);
+            poseStack.scale(1.55F, 1.55F, 1);
+            graphics.drawString(Minecraft.getInstance().font, title, 0, 20, color);
+            poseStack.popPose();
+            poseStack.pushPose();
+            poseStack.translate(0, 70, 0);
+            text.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - 70, pPartialTick);
+            poseStack.popPose();
+        }
+    }
+
+
     private static class RitualPicture extends Element {
 
         private final ResourceLocation image;
@@ -356,7 +390,7 @@ public class BloodThesisGui extends Screen {
             if (image != null) {
                 poseStack.pushPose();
                 poseStack.translate(0, 0, 100);
-                graphics.blit(image, 0, 70, 300, 300, 0, 0, 500, 500, 500, 500);
+                graphics.blit(image, 0, 60, 300, 300, 0, 0, 500, 500, 500, 500);
                 poseStack.popPose();
             }
         }
@@ -368,16 +402,25 @@ public class BloodThesisGui extends Screen {
         BACKGROUND(2),
         RITUAL(3),
         RISKS(3),
-        MODIFIER(3);
+        MODIFIER(3),
+        CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT)),
+        BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO)),
+        MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL));
 
         private final int length;
+        private final List<RitualTemplate> rituals;
 
         TextChapter(int length) {
-            this.length = length;
+            this(length, List.of());
         }
 
-        private List<TextBlock> makeChapter() {
-            List<TextBlock> blocks = new ArrayList<>();
+        TextChapter(int length, List<RitualTemplate> rituals) {
+            this.length = length;
+            this.rituals = rituals;
+        }
+
+        private List<Element> makeChapter() {
+            List<Element> blocks = new ArrayList<>();
             List<Element> elements = new ArrayList<>();
             for (int i = 0; i < 1; i++) {
                 elements.add(Separators.smallSeparator(TEXT_BLOCK_WIDTH));
@@ -408,6 +451,12 @@ public class BloodThesisGui extends Screen {
                 //    newElements.addAll(elements);
                 //    elements = newElements;
                 //}
+            }
+            int i = 0;
+            for (RitualTemplate ritual : rituals) {
+                blocks.add(new RitualPage(ordinal(), i, ritual.getName()));
+                blocks.add(new RitualPicture(ritual.getName()));
+                i++;
             }
             return blocks;
         }

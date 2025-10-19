@@ -385,7 +385,11 @@ public class RenderEvents {
     @SubscribeEvent
     public static void fogEvent(ViewportEvent.RenderFog event) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+        if(ClientData.getInstance().isBlinded()) {
+            event.setFarPlaneDistance(0);
+            event.setNearPlaneDistance(0);
+            event.setCanceled(true);
+        } else if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
             event.setFarPlaneDistance(80);
             event.setNearPlaneDistance(40);
             event.setCanceled(true);
@@ -403,7 +407,11 @@ public class RenderEvents {
     @SubscribeEvent
     public static void fogColorEvent(ViewportEvent.ComputeFogColor event) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if (p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+        if(ClientData.getInstance().isBlinded()) {
+            event.setRed(0);
+            event.setGreen(0);
+            event.setBlue(0);
+        } else if (p != null && p.isUnderWater() && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
             event.setRed(0);
             event.setGreen(0);
             event.setBlue(0);

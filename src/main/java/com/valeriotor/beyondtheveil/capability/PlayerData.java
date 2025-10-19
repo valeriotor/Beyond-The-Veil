@@ -244,6 +244,10 @@ public class PlayerData {
         return memories.get(memory);
     }
 
+    public List<MemoryStatus> getStatuses() {
+        return new ArrayList<>(memories.values());
+    }
+
     public boolean addReminiscence(String key, Reminiscence reminiscence) {
         boolean returnValue = reminiscences.containsKey(key);
         reminiscences.put(key, reminiscence);
@@ -394,11 +398,14 @@ public class PlayerData {
         private static MemoryStatus fromNBT(CompoundTag tag) {
             Memory memory1 = Memory.getMemoryFromDataName(tag.getString("memory"));
             int[] values1 = tag.getIntArray("values");
-            return new MemoryStatus(memory1, values1);
+            MemoryStatus status = new MemoryStatus(memory1, values1);
+            status.changed = tag.getBoolean("changed");
+            return status;
         }
 
         private final Memory memory;
         private final int[] values;
+        private boolean changed = true;
 
         private MemoryStatus(Memory memory) {
             this(memory, new int[]{0, 0, 0, 0, 0, 0});
@@ -407,22 +414,44 @@ public class PlayerData {
         private MemoryStatus(Memory memory, int[] values) {
             this.memory = memory;
             this.values = values;
+            for (int i = 0; i < values.length; i++) {
+                int max = memory.getMaxStatus(Memory.Target.values()[i / 2], i % 2 == 1);
+                if (values[i] > max) {
+                    values[i] = max;
+                }
+            }
         }
 
         public void increaseTo(int value, Memory.Target target, boolean hasVoid) {
             int i = target.ordinal() * 2 + (hasVoid ? 1 : 0);
             int max = memory.getMaxStatus(target, hasVoid);
+            int prev = values[i];
             values[i] = Math.min(max, Math.max(values[i], value));
+            if (prev != values[i]) {
+                changed = true;
+            }
+            if (hasVoid && values[i - 1] < prev) {
+                values[i - 1] = prev;
+            }
         }
 
         public int[] getValues() {
             return values;
         }
 
+        public void setChanged(boolean changed) {
+            this.changed = changed;
+        }
+
+        public boolean isChanged() {
+            return changed;
+        }
+
         private CompoundTag saveToNBT() {
             CompoundTag tag = new CompoundTag();
             tag.putString("memory", memory.getDataName());
             tag.putIntArray("values", values);
+            tag.putBoolean("changed", changed);
             return tag;
         }
     }

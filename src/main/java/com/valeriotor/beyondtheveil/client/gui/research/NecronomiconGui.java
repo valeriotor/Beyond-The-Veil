@@ -17,10 +17,12 @@ import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -61,7 +63,7 @@ public class NecronomiconGui extends Screen {
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
     private static final ResourceLocation RESEARCH_BACKGROUND_WHITE = new ResourceLocation(References.MODID, "textures/gui/res_background_white.png");
     public static final ResourceLocation RESEARCH_HIGHLIGHT = new ResourceLocation(References.MODID, "textures/gui/res_highlight.png");
-    private static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
+    public static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
     private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed.png");
@@ -70,8 +72,9 @@ public class NecronomiconGui extends Screen {
 
     public NecronomiconGui() {
         super(Component.translatable("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
-        Map<String, ResearchStatus> map = ResearchUtil.getResearches(Minecraft.getInstance().player);
-        PlayerData data = Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
+        LocalPlayer p = Minecraft.getInstance().player;
+        Map<String, ResearchStatus> map = ResearchUtil.getResearches(p);
+        PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
         this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
         this.topY = data.getOrSetInteger(PlayerDataLib.NECRO_Y, -200, false);
         if (map.get("FIRSTDREAMS").getStage() == -1) {
@@ -85,7 +88,7 @@ public class NecronomiconGui extends Screen {
                     newClickables.add(entry.getValue().res);
                 } else {
                     clickables.add(entry.getValue().res);
-                    boolean b = entry.getValue().isHidden(Minecraft.getInstance().player);
+                    boolean b = entry.getValue().isHidden(p);
                     boolean a = b; // what's this for??
                 }
             } else if (entry.getValue().isVisible(map, data)) {
@@ -93,6 +96,14 @@ public class NecronomiconGui extends Screen {
             }
             if (entry.getValue().isUpdated()) {
                 updated.add(entry.getValue().res);
+            }
+        }
+        if (map.get("MEMORIES").isVisible(p)) {
+            for (PlayerData.MemoryStatus status : DataUtil.getMemoryStatuses(p)) {
+                if (status.isChanged()) {
+                    updated.add(map.get("MEMORIES").res);
+                    break;
+                }
             }
         }
 

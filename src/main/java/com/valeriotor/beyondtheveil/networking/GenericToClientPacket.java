@@ -175,6 +175,11 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.ADD_MEMORY_TOAST, tag);
     }
 
+    public static GenericToClientPacket blindCompletely() {
+        CompoundTag tag = new CompoundTag();
+        return new GenericToClientPacket(MessageType.BLIND_COMPLETELY, tag);
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -220,6 +225,7 @@ public class GenericToClientPacket {
                     case MODIFY_BLOOD_POOL -> ClientData.getInstance().modifyPoolData(tag);
                     case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(tag.getAllKeys().stream().map(tag::getLong).map(BlockPos::of).toList());
                     case ADD_MEMORY_TOAST -> ClientMethods.unlockMemoryToast(Memory.getMemoryFromDataName(tag.getString("memory")));
+                    case BLIND_COMPLETELY -> ClientData.getInstance().blindCompletely();
                 }
             });
         });
@@ -249,7 +255,8 @@ public class GenericToClientPacket {
         SYNC_BLOOD_POOL,
         MODIFY_BLOOD_POOL,
         CLOSEST_DEATH,
-        ADD_MEMORY_TOAST
+        ADD_MEMORY_TOAST,
+        BLIND_COMPLETELY
     }
 
 }

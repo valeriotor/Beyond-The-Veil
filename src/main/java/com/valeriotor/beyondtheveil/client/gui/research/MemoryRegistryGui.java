@@ -9,6 +9,8 @@ import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
@@ -239,6 +241,7 @@ public class MemoryRegistryGui extends Screen {
         private final Memory memory;
         private final ItemStack icon;
         private final float scaleFactor;
+        private boolean updated;
 
         protected MemoryEntry(Memory memory) {
             super(LIST_WIDTH * 95 / 100, LIST_HEIGHT / MEMORIES_PER_PAGE);
@@ -246,6 +249,7 @@ public class MemoryRegistryGui extends Screen {
             icon = new ItemStack(Registration.MEMORY_PHIAL.get());
             icon.getOrCreateTag().putString("memory", memory.getDataName());
             scaleFactor = Math.min(1, getHeight() / 40F);
+            this.updated = DataUtil.getMemoryStatus(getMinecraft().player, memory).isChanged();
         }
 
         @Override
@@ -267,6 +271,14 @@ public class MemoryRegistryGui extends Screen {
             poseStack.scale(scaleFactor * 1.75F, scaleFactor * 1.75F, 1);
             graphics.drawString(minecraft.font, memory.getTranslationComponent(), 0, 0, 0xFF697D57);
             poseStack.popPose();
+
+            if (updated) {
+                poseStack.pushPose();
+                poseStack.translate(getWidth() * 90 / 100F, getHeight() * 0.2F / 4, 0);
+                poseStack.scale(0.7F, 0.7F, 1);
+                graphics.blit(NecronomiconGui.RESEARCH_UPDATED_MARKER, 0, 0, 24, 24, 0, 0, 24, 24, 24, 24);
+                poseStack.popPose();
+            }
         }
 
         @Override
@@ -274,6 +286,11 @@ public class MemoryRegistryGui extends Screen {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 selectEntry(memory);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+                if (updated) {
+                    updated = false;
+                    Messages.sendToServer(GenericToServerPacket.readMemory(memory));
+                    DataUtil.getMemoryStatus(getMinecraft().player, memory).setChanged(false);
+                }
                 return true;
             }
             return false;
@@ -370,7 +387,6 @@ public class MemoryRegistryGui extends Screen {
 
         }
     }
-
 
 
 }

@@ -36,7 +36,12 @@ public enum PersistentPlayerTimer {
             return p.level().getDayTime() < firstTime;
         }
         return false;
-    }));
+    })),
+    BLIND_COMPLETELY(List.of((player, timer) -> {
+        if (player instanceof ServerPlayer sp && timer.getRemainingTime() % 20 == 0) {
+            Messages.sendToPlayer(GenericToClientPacket.blindCompletely(), sp);
+        }
+    }), List.of(), List.of(), List.of());
 
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;

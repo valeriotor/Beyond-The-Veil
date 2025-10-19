@@ -26,6 +26,7 @@ import java.util.List;
 public class ClientData {
 
     private static ClientData instance = new ClientData();
+    private int blindnessTimer;
 
     public static ClientData getInstance() {
         return instance;
@@ -109,6 +110,9 @@ public class ClientData {
                     }
                 }
             }
+            if (blindnessTimer > 0) {
+                blindnessTimer--;
+            }
         }
     }
 
@@ -139,6 +143,14 @@ public class ClientData {
         this.closeDeaths.clear();
         this.closeDeaths.addAll(closeDeaths);
         closestDeathTimer = 30;
+    }
+
+    public void blindCompletely() {
+        blindnessTimer = 80;
+    }
+
+    public boolean isBlinded() {
+        return blindnessTimer > 0;
     }
 
     public static class Waypoint {

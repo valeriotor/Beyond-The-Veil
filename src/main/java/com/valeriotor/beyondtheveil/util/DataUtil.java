@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -257,6 +258,10 @@ public class DataUtil {
 
     public static PlayerData.MemoryStatus getMemoryStatus(Player p, Memory memory) {
         return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getStatusOrAddIfAbsent(memory);
+    }
+
+    public static List<PlayerData.MemoryStatus> getMemoryStatuses(Player p) {
+        return p.getCapability(PlayerDataProvider.PLAYER_DATA, null).orElse(PlayerData.DUMMY).getStatuses();
     }
 
 

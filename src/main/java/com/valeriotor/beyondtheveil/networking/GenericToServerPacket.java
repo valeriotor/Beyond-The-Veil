@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
@@ -75,6 +76,12 @@ public class GenericToServerPacket {
         tag.put("triplet", colorTriplet.saveToTag(new CompoundTag()));
         tag.putUUID("entityUUID", entityUUID);
         return new GenericToServerPacket(MessageType.SPAWN_BLOOD_POOL_ENTITY, tag);
+    }
+
+    public static GenericToServerPacket readMemory(Memory memory) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("memory", memory.getDataName());
+        return new GenericToServerPacket(MessageType.READ_MEMORY, tag);
     }
 
     private final MessageType type;
@@ -162,6 +169,12 @@ public class GenericToServerPacket {
                             BloodPoolData.getInstance(player.getServer()).spawnEntity(player, player.getUUID(), ColorTriplet.fromTag(tag.getCompound("triplet")), tag.getUUID("entityUUID"));
                         }
                     }
+                    case READ_MEMORY -> {
+                        Memory memory = Memory.getMemoryFromDataName(tag.getString("memory"));
+                        if (memory != null) {
+                            DataUtil.getMemoryStatus(player, memory).setChanged(false);
+                        }
+                    }
                 }
 
             }
@@ -181,7 +194,8 @@ public class GenericToServerPacket {
         OPEN_LETTER,
         RESPAWN_NOW,
         CHOOSE_BAPTISM_OPTION,
-        SPAWN_BLOOD_POOL_ENTITY
+        SPAWN_BLOOD_POOL_ENTITY,
+        READ_MEMORY
     }
 
 }

@@ -878,11 +878,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.animal.2.1", "§oPath Sigil§r: The animal is called forth at the target area instead.");
         add("memory.animal.4.1", "§oImmortal Sigil§r: The animal is called forth next to the target human instead.");
 
-        add("memory.beheading.name", "Beheading");
-        add("memory.beheading.brief", "Beheading");
+        add("memory.beheading.name", "Decapitation");
+        add("memory.beheading.brief", "A gruesome memory – how could one forget such a thing?");
+        add("memory.beheading.0.1", "The dream... I think it fashions a copy of §omy own head§r. Or perhaps, it just retrieves one from a previous death of mine. Or could it be a future death? Whatever the method, I am frightened at the implications – should I teach my dreams to do such things?");
+        add("memory.beheading.4.1", "§oImmortal Sigil§r: Gives me a head of the target human instead. The target will not know – I hope.");
 
         add("memory.change.name", "Change");
-        add("memory.change.brief", "Change");
+        add("memory.change.brief", "Relentless, unremitting, the churning currents of Arche are the chaos that spawned all beings. Change brings life – and death, as I now know.");
         add("memory.change.0.1", "All the negative status effects ailing me are either converted to their beneficial counterpart (e.g. poison becoming regeneration), or removed.");
         add("memory.change.1.1", "↳ §lVoid§r: It is positive effects being turned into negative ones instead.");
         add("memory.change.2.1", "§oPath Sigil§r: Affects all non-human creatures within a certain range of the target area instead.");
@@ -896,10 +898,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.crystal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
 
         add("memory.darkness.name", "Darkness");
-        add("memory.darkness.brief", "Darkness");
+        add("memory.darkness.brief", "An ancient memory.");
+        add("memory.darkness.0.1", "Reminiscing points me to a direction – similar to dreams of sentience, but perceived in a different shade.");
+        add("memory.darkness.0.2", "Leads me to the Black Shores.");
+        add("memory.darkness.4.1", "§oImmortal Sigil§r: Blinds the target human.");
+        add("memory.darkness.5.1", "↳ §lVoid§r: Makes the blindness even more severe.");
 
         add("memory.death.name", "Death");
-        add("memory.death.brief", "Death");
+        add("memory.death.brief", "The act of passing on, and, in my case, of coming back to life. If only I could remember more!");
         add("memory.death.0.1", "By reminiscing, I am shown the point where I last died.");
         add("memory.death.1.1", "↳ §lVoid§r: Instead, I am shown the point where I last respawned. Life and death, intrinsically tied.");
         add("memory.death.2.1", "§oPath Sigil§r: No effect, as far as I can tell.");
@@ -907,13 +913,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.death.5.1", "↳ §lVoid§r: Instead, I am shown the point where the target last respawned.");
 
         add("memory.heartbreak.name", "Heartbreak");
-        add("memory.heartbreak.brief", "Heartbreak");
+        add("memory.heartbreak.brief", "An irrepressible memory.");
 
         add("memory.introspection.name", "Introspection");
         add("memory.introspection.brief", "Introspection");
 
         add("memory.metal.name", "Metal");
-        add("memory.metal.brief", "Metal");
+        add("memory.metal.brief", "A common memory among those experienced in mining – that of striking ore – yet this is of a different sort, as if in it the iron was felt by thought, rather than touch.");
         add("memory.metal.0.1", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can scroll through the various layers that have been probed.");
         add("memory.metal.1.1", "↳ §lVoid§r: Increases the search radius.");
         add("memory.metal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
@@ -923,29 +929,48 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.plant.brief", "Flora");
 
         add("memory.power.name", "Power");
-        add("memory.power.brief", "Power");
+        add("memory.power.brief", "Felling a fearsome foe is a cherished memory – though I should not let it go to my head.");
         add("memory.power.0.1", "Increases the power of my status effects.");
         add("memory.power.1.1", "↳ §lVoid§r: Further increases their power.");
         add("memory.power.2.1", "§oPath Sigil§r: Affects all non-human creatures within a certain range of the target area instead.");
         add("memory.power.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.repair.name", "Mending");
-        add("memory.repair.brief", "Mending");
+        add("memory.repair.brief", "The satisfaction of a job well done. Even inanimate things deserve some love.");
+        add("memory.repair.0.1", "Repairs the armor I'm wearing and the items I'm wielding in my hands.");
+        add("memory.repair.1.1", "↳ §lVoid§r: Further repairs them.");
+        add("memory.repair.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
+        add("memory.repair.5.1", "↳ §lVoid§r: The target's worn and wielded items are §ldamaged§o instead.");
 
         add("memory.sentience.name", "Sentience");
-        add("memory.sentience.brief", "Sentience");
+        add("memory.sentience.brief", "With action comes reaction, but of a thoughtful sort – non-deterministic. Is it a worthy definition, or just wishful thinking?");
+        add("memory.sentience.0.1", "When I reminisce, I should look around. Eventually, I should see it point me towards the place visited by the dream.");
+        add("memory.sentience.0.2", "When I reminisce, I should look around. Eventually, I should see it point me towards the closest village.");
+        add("memory.sentience.1.1", "↳ §lVoid§r: Points me to a place where sentience once lay, yet no longer. Is time just a fourth axis to a dream, no different from the other three?");
+        add("memory.sentience.2.1", "§oPath Sigil§r: Starts the search from the target area instead.");
+        add("memory.sentience.4.1", "§oImmortal Sigil§r: Starts the search from the target human instead.");
 
         add("memory.stillness.name", "Stillness");
-        add("memory.stillness.brief", "Stillness");
+        add("memory.stillness.brief", "The body lies motionless, but the mind swirls and slews. In sleep, daytime roles reverse: I am still, and my dreams roam free.");
+        add("memory.stillness.0.1", "Increases the duration of my status effects.");
+        add("memory.stillness.1.1", "↳ §lVoid§r: Further increases their duration.");
+        add("memory.stillness.2.1", "§oPath Sigil§r: Affects all non-human creatures within a certain range of the target area instead.");
+        add("memory.stillness.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.tool.name", "Tools");
         add("memory.tool.brief", "Tools");
 
         add("memory.void.name", "Void");
-        add("memory.void.brief", "Void");
+        add("memory.void.brief", "A memory of a memory. All I remember is... forgetting.");
+        add("memory.void.0.1", "The next time I dream, the new memory's effects may be changed – often strengthened. This may not work on all dreams.");
+        add("memory.void.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.water.name", "Water");
-        add("memory.water.brief", "Water");
+        add("memory.water.brief", "We are all born from water – so why, all of a sudden, does it feel so alien?");
+        add("memory.water.0.1", "Locates an ocean monument.");
+        add("memory.water.1.1", "↳ §lVoid§r: Hear the Ocean's voice.");
+        add("memory.water.2.1", "§oPath Sigil§r: Starts the search from the target area instead.");
+        add("memory.water.4.1", "§oImmortal Sigil§r: Encases the target in ice.");
 
     }
 
@@ -2264,6 +2289,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.thesis.ritual.title", "Performing the ritual");
         add("research.thesis.risks.title", "Risks");
         add("research.thesis.modifier.title", "Modifiers");
+
+        add("research.thesis.creation.title", "Creation Rituals");
+        add("research.thesis.ritual.coral_staff.title", "Coral Staff");
+        add("research.thesis.ritual.coral_staff.text", "The coral staff\\nwas used\\netc.");
+
+
     }
 
     private void addBloodPool() {
