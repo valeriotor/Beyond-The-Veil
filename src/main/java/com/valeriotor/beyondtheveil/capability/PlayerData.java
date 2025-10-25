@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.capability;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +30,7 @@ public class PlayerData {
     private final Map<String, Report> reports = new HashMap<>();
     private Report currentReport;
     private boolean editingReport;
+    private String previousReportName;
 
     public void setBoolean(String key, boolean value, boolean temporary) {
         if (value) {
@@ -291,12 +293,21 @@ public class PlayerData {
     }
 
     public boolean isEditingReport() {
-        return editingReport;
+        return getBoolean(PlayerDataLib.EDITING_REPORT);
     }
 
-    public void setCurrentReport(Report currentReport, boolean editing) {
+    public String getPreviousReportName() {
+        return getString(PlayerDataLib.PREVIOUS_REPORT_NAME);
+    }
+
+    public void setCurrentReport(Report currentReport, boolean editing, String previousReportName) {
         this.currentReport = currentReport;
-        this.editingReport = editing;
+        setBoolean(PlayerDataLib.EDITING_REPORT, editing, false);
+        if (previousReportName != null) {
+            setString(PlayerDataLib.PREVIOUS_REPORT_NAME, previousReportName, false);
+        } else {
+            removeString(PlayerDataLib.PREVIOUS_REPORT_NAME);
+        }
     }
 
     public void saveToNBT(CompoundTag compoundTag) {

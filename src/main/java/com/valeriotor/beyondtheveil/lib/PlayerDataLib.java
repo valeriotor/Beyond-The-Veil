@@ -94,7 +94,6 @@ public class PlayerDataLib {
     public static final Function<String, String> FOUND_WAYPOINT = s -> "found_" + s;
     public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + (ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()) == null ? "" : ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath());
     public static final Function<String, String> JOURNAL_REPORT = name -> "journal_report_" + name;
-    public static final String EDITING_JOURNAL_REPORT = "editing_journal";
     public static final String RATIONALIZED = "rationalized";
     public static final String INCISED = "incised";
     public static final String EXTRACTED_HEART = "extracted_heart";
@@ -119,6 +118,7 @@ public class PlayerDataLib {
     public static final String GRASPED_WATER = "grasped_water";
     public static final String ATE_DELICACY = "ate_delicacy";
     public static final String USED_FARMING_TECHNIQUE = "used_farming_technique";
+    public static final String EDITING_REPORT = "editing_report";
 
 
     // Booleans (Temporary)
@@ -134,6 +134,7 @@ public class PlayerDataLib {
 
     // Strings (Non-temporary)
     public static final Function<Integer, String> BOOKMARK = i -> String.format("bookmark%d", i);
+    public static final String PREVIOUS_REPORT_NAME = "previous_report_name";
 
 
     // Used to clear client-side data in one fell swoop.

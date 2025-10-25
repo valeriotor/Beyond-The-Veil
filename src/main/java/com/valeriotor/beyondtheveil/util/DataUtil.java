@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
 
@@ -299,19 +300,19 @@ public class DataUtil {
         return new HashMap<>();
     }
 
-    public static void setCurrentReport(Player p, Report report, boolean editing) {
+    public static void setCurrentReport(Player p, Report report, boolean editing, String previousReportName) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-            playerData.setCurrentReport(report, editing);
+            playerData.setCurrentReport(report, editing, previousReportName);
         });
     }
 
-    public static Tuple<Report, Boolean> getCurrentReport(Player p) {
+    public static Triple<Report, Boolean, String> getCurrentReport(Player p) {
         LazyOptional<PlayerData> c = p.getCapability(PlayerDataProvider.PLAYER_DATA, null);
         if (c.isPresent() && c.resolve().isPresent()) {
             PlayerData data = c.resolve().get();
-            return new Tuple<>(data.getCurrentReport(), data.isEditingReport());
+            return Triple.of(data.getCurrentReport(), data.isEditingReport(), data.getPreviousReportName());
         }
-        return new Tuple<>(null, false);
+        return Triple.of(null, false, null);
     }
 
 }

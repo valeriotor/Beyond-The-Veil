@@ -47,6 +47,7 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -272,10 +273,15 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         updateWidgetVisibility();
 
         if (firstOpen) {
-            Tuple<Report, Boolean> currentReport = DataUtil.getCurrentReport(Minecraft.getInstance().player);
-            if (currentReport.getA() != null) {
-                editingReport = currentReport.getB();
-                selectReport(currentReport.getA(), currentReport.getB());
+            Triple<Report, Boolean, String> currentReport = DataUtil.getCurrentReport(Minecraft.getInstance().player);
+            if (currentReport.getLeft() != null) {
+                editingReport = currentReport.getMiddle();
+                selectReport(currentReport.getLeft(), currentReport.getMiddle());
+            }
+            if (currentReport.getRight() != null) {
+                chosenReport = DataUtil.getReport(Minecraft.getInstance().player, currentReport.getRight());
+            } else {
+                chosenReport = null;
             }
             Integer orSetInteger = DataUtil.getOrSetInteger(Minecraft.getInstance().player, PlayerDataLib.OPEN_JOURNAL_PAGE, 0, true);
             setCategory(JournalCategory.values()[orSetInteger]);
@@ -621,8 +627,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     @Override
     public void onClose() {
         super.onClose();
-        Messages.sendToServer(GenericToServerPacket.setCurrentReport(reportFromList(), editingReport));
-        DataUtil.setCurrentReport(Minecraft.getInstance().player, reportFromList(), editingReport);
+        Messages.sendToServer(GenericToServerPacket.setCurrentReport(reportFromList(), editingReport, chosenReport == null ? null : chosenReport.getName()));
+        DataUtil.setCurrentReport(Minecraft.getInstance().player, reportFromList(), editingReport, chosenReport == null ? null : chosenReport.getName());
         DataUtilClient.setInt(PlayerDataLib.OPEN_JOURNAL_PAGE, selectedCategory.ordinal(), true);
     }
 

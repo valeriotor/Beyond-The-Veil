@@ -40,12 +40,15 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.DELETE_REPORT, tag);
     }
 
-    public static GenericToServerPacket setCurrentReport(Report report, boolean editing) {
+    public static GenericToServerPacket setCurrentReport(Report report, boolean editing, String previousReportName) {
         CompoundTag tag = new CompoundTag();
         if (report != null) {
             tag.put("report", report.saveToNBT());
         }
         tag.putBoolean("editing", editing);
+        if (previousReportName != null) {
+            tag.putString("previousReportName", previousReportName);
+        }
         return new GenericToServerPacket(MessageType.SET_CURRENT_REPORT, tag);
     }
 
@@ -143,17 +146,13 @@ public class GenericToServerPacket {
                         DreamHandler.dream(player, false);
                     }
                     case ADD_REPORT -> {
-                        if (tag.contains("editing")) {
-                            DataUtil.setTag(player, PlayerDataLib.EDITING_JOURNAL_REPORT, tag); // TODO
-                        } else {
-                            DataUtil.addReport(player, Report.loadFromNBT(tag));
-                        }
+                        DataUtil.addReport(player, Report.loadFromNBT(tag));
                     }
                     case DELETE_REPORT -> {
                         DataUtil.deleteReport(player, tag.getString("name"));
                     }
                     case SET_CURRENT_REPORT -> {
-                        DataUtil.setCurrentReport(player, tag.contains("report") ? Report.loadFromNBT(tag.getCompound("report")) : null, tag.getBoolean("editing"));
+                        DataUtil.setCurrentReport(player, tag.contains("report") ? Report.loadFromNBT(tag.getCompound("report")) : null, tag.getBoolean("editing"), tag.contains("previousReportName") ? tag.getString("previousReportName") : null);
                     }
                     case SEND_LETTER -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
