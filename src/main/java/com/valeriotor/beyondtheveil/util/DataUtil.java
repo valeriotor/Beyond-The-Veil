@@ -12,15 +12,15 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.util.LazyOptional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class DataUtil {
 
@@ -269,6 +269,49 @@ public class DataUtil {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.removeString(key);
         });
+    }
+
+    public static void addReport(Player p, Report report) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.addReport(report);
+        });
+    }
+
+    public static void deleteReport(Player p, String name) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.deleteReport(name);
+        });
+    }
+
+    public static Report getReport(Player p, String name) {
+        LazyOptional<PlayerData> c = p.getCapability(PlayerDataProvider.PLAYER_DATA, null);
+        if (c.isPresent() && c.resolve().isPresent()) {
+            return c.resolve().get().getReport(name);
+        }
+        return null;
+    }
+
+    public static Map<String, Report> getAllReports(Player p) {
+        LazyOptional<PlayerData> c = p.getCapability(PlayerDataProvider.PLAYER_DATA, null);
+        if (c.isPresent() && c.resolve().isPresent()) {
+            return c.resolve().get().getReports();
+        }
+        return new HashMap<>();
+    }
+
+    public static void setCurrentReport(Player p, Report report, boolean editing) {
+        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
+            playerData.setCurrentReport(report, editing);
+        });
+    }
+
+    public static Tuple<Report, Boolean> getCurrentReport(Player p) {
+        LazyOptional<PlayerData> c = p.getCapability(PlayerDataProvider.PLAYER_DATA, null);
+        if (c.isPresent() && c.resolve().isPresent()) {
+            PlayerData data = c.resolve().get();
+            return new Tuple<>(data.getCurrentReport(), data.isEditingReport());
+        }
+        return new Tuple<>(null, false);
     }
 
 }

@@ -30,7 +30,7 @@ public class DreamRegistry {
     public static final Dream DEATH = new DreamWaypoint(Memory.DEATH, (sl, pos, p) -> PlayerSavedData.getInstance(sl.getServer().overworld()).lastDeathFor(p), 0x7F16FF);
     public static final Dream RESPAWN = new DreamWaypoint(Memory.DEATH, true, (sl, pos, p) -> PlayerSavedData.getInstance(sl.getServer().overworld()).lastRespawnFor(p), 0x7F16FF);
     public static final Dream ELDRITCH = new DreamSound(Memory.WATER, BTVSounds.WATER_DREAM.get(), true);
-    public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E);
+    public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E); // Todo: make player sigil version locate player
     public static final Dream SENTIENCE_VOID = new DreamWaypoint(Memory.SENTIENCE, true, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F006E);
     public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos, p) -> sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false), 0xFFFFFF);
     //public static final Dream WATER_TEST = new DreamWaypoint(Memory.WATER, true, (sl, pos) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F16FF);

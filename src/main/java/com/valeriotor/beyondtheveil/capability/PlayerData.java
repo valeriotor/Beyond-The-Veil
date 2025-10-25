@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.capability;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
 
@@ -25,6 +26,9 @@ public class PlayerData {
     private final List<Counter> counters = new ArrayList<>();
     private final Map<Memory, MemoryStatus> memories = new EnumMap<>(Memory.class);
     private final Map<String, Reminiscence> reminiscences = new HashMap<>();
+    private final Map<String, Report> reports = new HashMap<>();
+    private Report currentReport;
+    private boolean editingReport;
 
     public void setBoolean(String key, boolean value, boolean temporary) {
         if (value) {
@@ -230,7 +234,7 @@ public class PlayerData {
     }
 
     public void addMemory(Memory memory) {
-        memories.put(memory, new MemoryStatus(memory, new int[]{1,0,0,0,0,0}));
+        memories.put(memory, new MemoryStatus(memory, new int[]{1, 0, 0, 0, 0, 0}));
     }
 
     public boolean hasMemory(Memory memory) {
@@ -266,6 +270,35 @@ public class PlayerData {
         return reminiscences;
     }
 
+    public Report addReport(Report report) {
+        return reports.put(report.getName(), report);
+    }
+
+    public Report deleteReport(String name) {
+        return reports.remove(name);
+    }
+
+    public Report getReport(String name) {
+        return reports.get(name);
+    }
+
+    public Map<String, Report> getReports() {
+        return reports;
+    }
+
+    public Report getCurrentReport() {
+        return currentReport;
+    }
+
+    public boolean isEditingReport() {
+        return editingReport;
+    }
+
+    public void setCurrentReport(Report currentReport, boolean editing) {
+        this.currentReport = currentReport;
+        this.editingReport = editing;
+    }
+
     public void saveToNBT(CompoundTag compoundTag) {
         CompoundTag booleans = new CompoundTag();
         CompoundTag ints = new CompoundTag();
@@ -275,6 +308,7 @@ public class PlayerData {
         CompoundTag tags = new CompoundTag();
         CompoundTag memories = saveMemories();
         CompoundTag reminiscences = new CompoundTag();
+        CompoundTag reports = new CompoundTag();
         for (String s : this.booleans) {
             booleans.putBoolean(s, true);
         }
@@ -296,6 +330,12 @@ public class PlayerData {
         for (Entry<String, Reminiscence> e : this.reminiscences.entrySet()) {
             reminiscences.put(e.getKey(), e.getValue().save());
         }
+        for (Entry<String, Report> e : this.reports.entrySet()) {
+            reports.put(e.getKey(), e.getValue().saveToNBT());
+        }
+        if (currentReport != null) {
+            compoundTag.put("currentReport", currentReport.saveToNBT());
+        }
         compoundTag.put("booleans", booleans);
         compoundTag.put("ints", ints);
         compoundTag.put("longs", longs);
@@ -304,6 +344,7 @@ public class PlayerData {
         compoundTag.put("counters", counters);
         compoundTag.put("memories", memories);
         compoundTag.put("reminiscences", reminiscences);
+        compoundTag.put("reports", reports);
     }
 
     public CompoundTag saveMemories() {
@@ -363,6 +404,16 @@ public class PlayerData {
                     this.reminiscences.put(key, reminiscence);
                 }
             }
+        }
+
+        CompoundTag reports = compoundTag.getCompound("reports");
+        for (String key : reports.getAllKeys()) {
+            Report report = Report.loadFromNBT(reports.getCompound(key));
+            this.reports.put(report.getName(), report);
+        }
+
+        if (compoundTag.contains("currentReport")) {
+            currentReport = Report.loadFromNBT(compoundTag.getCompound("currentReport"));
         }
     }
 

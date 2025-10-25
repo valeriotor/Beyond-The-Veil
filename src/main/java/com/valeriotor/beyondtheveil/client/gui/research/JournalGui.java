@@ -2,13 +2,13 @@ package com.valeriotor.beyondtheveil.client.gui.research;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
+import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -46,13 +47,13 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.AxisAngle4f;
-import org.joml.Quaternionf;
 
 import java.util.*;
 
 public class JournalGui extends Screen implements ClientAdvancements.Listener {
+    private boolean firstOpen;
     private int imageWidth;
     private int imageHeight;
     private float scaleFactor = 1;
@@ -90,8 +91,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private Page toolPage;
     private CraftingRegistryGui.CraftingGrid toolGrid;
     private Page ingredientPage;
-    private ScrollableList<JournalReportLine> report;
-    private CompoundTag chosenReportTag;
+    private ScrollableList<JournalReportLine> reportLineList;
+    private Report chosenReport;
     private boolean editingReport;
     private ElementHolder buttonHolder;
     private EditBox reportName;
@@ -152,24 +153,16 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         knownFluids.add(BTVFluids.SOURCE_FLUID_SOFTENER.get());
         knownFluids.addAll(toSort);
 
+        firstOpen = true;
         updateReports();
+
     }
 
     private void updateReports() {
         reports.clear();
-        Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> {
-            Set<String> allTagKeys = data.getAllTagKeys();
-            for (String key : allTagKeys) {
-                if (key.startsWith("journal_report_")) {
-                    CompoundTag tag = data.getTag(key);
-                    String name = tag.getString("name");
-                    reports.put(name, tag);
-                }
-            }
-        });
-        List<ReportEntry> reportEntryList = reports.values().stream().map(ReportEntry::new).sorted(Comparator.comparing(r -> r.name)).toList();
+        Map<String, Report> allReports = DataUtil.getAllReports(Minecraft.getInstance().player);
+        List<ReportEntry> reportEntryList = allReports.values().stream().map(ReportEntry::new).sorted(Comparator.comparing(r -> r.name)).toList();
         reportEntries = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportEntryList, REPORT_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
-
     }
 
 
@@ -211,49 +204,86 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         reportName = addRenderableWidget(new EditBox(minecraft.font, 150, 150, 120, 20, Component.literal("")));
         newButton = buttonHolder.addElement(ENTRY_LIST_BASE_LEFT_X, ENTRY_LIST_BASE_TOP_Y - 25, new TexturedButton(ENTRY_BASE_WIDTH, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.new"), pButton -> {
             editingReport = true;
-            chosenReportTag = null;
-            selectReportFromNBT(null, true);
+            chosenReport = null;
+            reportName.setValue("");
+            selectReport(null, true);
             //updateWidgetVisibility();
         }));
         editButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.edit"), pButton -> {
             editingReport = true;
-            selectReportFromNBT(chosenReportTag, true);
+            selectReport(chosenReport, true);
             //updateWidgetVisibility();
         }));
         saveButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.save"), pButton -> {
             editingReport = false;
-            CompoundTag report = saveReportToNBT();
-            chosenReportTag = report;
-            selectReportFromNBT(chosenReportTag, false);
-            GenericToServerPacket packet = GenericToServerPacket.syncJournalReport(chosenReportTag, false, false);
+            if (chosenReport != null) {
+                GenericToServerPacket packet = GenericToServerPacket.deleteJournalReport(chosenReport.getName());
+                Messages.sendToServer(packet);
+                DataUtil.deleteReport(Minecraft.getInstance().player, chosenReport.getName());
+            }
+            String currentName = reportName.getValue();
+            int i = 1;
+            while (DataUtil.getReport(Minecraft.getInstance().player, currentName) != null) {
+                if (currentName.matches(".*\\(\\d+\\)")) {
+                    boolean flag = false;
+                    while (!flag) {
+                        char c = currentName.charAt(currentName.length() - 1);
+                        currentName = currentName.substring(0, currentName.length() - 1);
+                        if (c == '(') {
+                            flag = true;
+                            if (currentName.endsWith(" ")) {
+                                currentName = currentName.substring(0, currentName.length() - 1);
+                            }
+                        }
+                    }
+                }
+                currentName += " (" + i + ")";
+                i++;
+            }
+            reportName.setValue(currentName);
+            chosenReport = reportFromList();
+            selectReport(chosenReport, false);
+            GenericToServerPacket packet = GenericToServerPacket.addJournalReport(chosenReport.saveToNBT(), false);
             Messages.sendToServer(packet);
             //updateWidgetVisibility();
-            DataUtil.setTag(Minecraft.getInstance().player, PlayerDataLib.JOURNAL_REPORT.apply(report.getString("name")), report);
+            DataUtil.addReport(Minecraft.getInstance().player, chosenReport);
             updateReports();
         }));
         deleteButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.delete"), pButton -> {
-            if (chosenReportTag != null) {
-                GenericToServerPacket packet = GenericToServerPacket.syncJournalReport(chosenReportTag, false, true);
+            if (chosenReport != null) {
+                GenericToServerPacket packet = GenericToServerPacket.deleteJournalReport(chosenReport.getName());
                 Messages.sendToServer(packet);
-                DataUtil.removeTag(Minecraft.getInstance().player, PlayerDataLib.JOURNAL_REPORT.apply(chosenReportTag.getString("name")));
+                DataUtil.deleteReport(Minecraft.getInstance().player, chosenReport.getName());
             }
-            chosenReportTag = null;
-            report = null;
+            chosenReport = null;
+            reportLineList = null;
             updateReports();
             //updateWidgetVisibility();
         }));
         cancelButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.cancel"), pButton -> {
             editingReport = false;
-            if (chosenReportTag != null) {
-                selectReportFromNBT(chosenReportTag, false);
+            if (chosenReport != null) {
+                selectReport(reportFromList(), false);
             } else {
-                report = null;
+                reportLineList = null;
             }
             //updateWidgetVisibility();
         }));
         updateWidgetVisibility();
-        setCategory(selectedCategory);
 
+        if (firstOpen) {
+            Tuple<Report, Boolean> currentReport = DataUtil.getCurrentReport(Minecraft.getInstance().player);
+            if (currentReport.getA() != null) {
+                editingReport = currentReport.getB();
+                selectReport(currentReport.getA(), currentReport.getB());
+            }
+            Integer orSetInteger = DataUtil.getOrSetInteger(Minecraft.getInstance().player, PlayerDataLib.OPEN_JOURNAL_PAGE, 0, true);
+            setCategory(JournalCategory.values()[orSetInteger]);
+            firstOpen = false;
+        } else {
+            setCategory(selectedCategory);
+
+        }
     }
 
     private List<Element> makeOverviewList() {
@@ -354,7 +384,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             toRender.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
-        if (report != null && selectedCategory == JournalCategory.JOURNAL) {
+        if (reportLineList != null && selectedCategory == JournalCategory.JOURNAL) {
             relativeMouseX = reportMouseX(pMouseX);
             relativeMouseY = reportMouseY(pMouseY);
             int REPORT_LIST_BASE_HEIGHT = 275;
@@ -365,7 +395,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pGuiGraphics.fill(-0, REPORT_LIST_BASE_HEIGHT - 2, ENTRY_LIST_BASE_WIDTH - 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
             pGuiGraphics.fill(-4, -3, 0, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
             pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
-            report.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
+            reportLineList.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
 
@@ -411,7 +441,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentPage() != null && currentPage().mouseClicked(pageMouseX(pMouseX), pageMouseY(pMouseY), pButton)) {
             return true;
         }
-        if (report != null && report.mouseClicked(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
+        if (reportLineList != null && reportLineList.mouseClicked(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
             return true;
         }
         for (int i = 0; i < bookmarks.size(); i++) {
@@ -432,7 +462,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentList() != null && currentList().mouseDragged(listMouseX(pMouseX), listMouseY(pMouseY), pButton, pDragX, pDragY)) {
             return true;
         }
-        if (report != null && report.mouseDragged(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton, pDragX, pDragY)) {
+        if (reportLineList != null && reportLineList.mouseDragged(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton, pDragX, pDragY)) {
             return true;
         }
         return super.mouseDragged(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton, pDragX, pDragY);
@@ -443,7 +473,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentList() != null && currentList().mouseReleased(listMouseX(pMouseX), listMouseY(pMouseY), pButton)) {
             return true;
         }
-        if (report != null && report.mouseReleased(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
+        if (reportLineList != null && reportLineList.mouseReleased(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
             return true;
         }
         return super.mouseReleased(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
@@ -454,7 +484,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentList() != null && currentList().mouseScrolled(listMouseX(pMouseX), listMouseY(pMouseY), pDelta)) {
             return true;
         }
-        if (report != null && report.mouseScrolled(reportMouseX(pMouseX), reportMouseY(pMouseY), pDelta)) {
+        if (reportLineList != null && reportLineList.mouseScrolled(reportMouseX(pMouseX), reportMouseY(pMouseY), pDelta)) {
             return true;
         }
         return super.mouseScrolled(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pDelta);
@@ -465,7 +495,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentList() != null && currentList().keyPressed(pKeyCode, pScanCode, pModifiers)) {
             return true;
         }
-        if (report != null && report.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+        if (reportLineList != null && reportLineList.keyPressed(pKeyCode, pScanCode, pModifiers)) {
             return true;
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
@@ -476,7 +506,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentList() != null && currentList().charTyped(pCodePoint, pModifiers)) {
             return true;
         }
-        if (report != null && report.charTyped(pCodePoint, pModifiers)) {
+        if (reportLineList != null && reportLineList.charTyped(pCodePoint, pModifiers)) {
             return true;
         }
         return super.charTyped(pCodePoint, pModifiers);
@@ -588,36 +618,42 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         return listWidth() - entryWidth();
     }*/
 
-    private CompoundTag saveReportToNBT() {
-        CompoundTag report = new CompoundTag();
-        CompoundTag saved = new CompoundTag();
-        for (int i = 0; i < this.report.rows().size(); i++) {
-            saved.put(String.valueOf(i), this.report.rows().get(i).saveToNBT());
-        }
-        report.put("saved", saved);
-        report.putString("name", reportName.getValue());
-        report.putInt("success", 0);
-        // TODO successfulness
-        return report;
+    @Override
+    public void onClose() {
+        super.onClose();
+        Messages.sendToServer(GenericToServerPacket.setCurrentReport(reportFromList(), editingReport));
+        DataUtil.setCurrentReport(Minecraft.getInstance().player, reportFromList(), editingReport);
+        DataUtilClient.setInt(PlayerDataLib.OPEN_JOURNAL_PAGE, selectedCategory.ordinal(), true);
     }
 
-    private void selectReportFromNBT(CompoundTag report, boolean editable) {
+    private CompoundTag saveReportToNBT() {
+        Report r = reportFromList();
+        return r.saveToNBT();
+    }
+
+    @NotNull
+    private Report reportFromList() {
+        Report r = new Report(reportName.getValue());
+        reportLineList.rows().forEach(row -> r.addStep(row.makeStep()));
+        return r;
+    }
+
+    private void selectReport(Report report, boolean editable) {
         List<JournalReportLine> lines = new ArrayList<>();
         if (report != null) {
-            CompoundTag saved = report.getCompound("saved");
-            saved.getAllKeys().stream().map(Integer::parseInt).sorted().forEach(key -> {
+            report.getSteps().forEach(step -> {
                 JournalReportLine line = JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable);
-                line.loadFromNBT(saved.getCompound(String.valueOf(key)));
+                line.loadFromStep(step);
                 lines.add(line);
             });
-            reportName.setValue(report.getString("name"));
+            reportName.setValue(report.getName());
         } else {
             JournalReportLine line = JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable);
             lines.add(line);
         }
-        chosenReportTag = report;
-        this.report = new EditableList<>(ENTRY_LIST_BASE_WIDTH, 275, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
-        this.report.setVariableSize(true);
+        chosenReport = report;
+        this.reportLineList = new EditableList<>(ENTRY_LIST_BASE_WIDTH, 275, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
+        this.reportLineList.setVariableSize(true);
         //updateWidgetVisibility();
     }
 
@@ -894,15 +930,13 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
 
         private final String name;
-        private final CompoundTag saved;
         private final int success;
-        private final CompoundTag report;
+        private final Report report;
 
-        protected ReportEntry(CompoundTag report) {
+        protected ReportEntry(Report report) {
             super(ENTRY_BASE_WIDTH, REPORT_BASE_HEIGHT);
-            this.name = report.getString("name");
-            this.saved = report.getCompound("saved");
-            this.success = report.getInt("success");
+            this.name = report.getName();
+            this.success = report.getSuccessful();
             this.report = report;
         }
 
@@ -912,7 +946,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
             }
-            if (this.report == chosenReportTag) {
+            if (Objects.equals(this.report, chosenReport)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x33A88C00);
             }
             graphics.drawString(minecraft.font, name, 5, 8, color);
@@ -922,7 +956,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 if (!editingReport) {
-                    selectReportFromNBT(report, false);
+                    selectReport(report, false);
                     updateWidgetVisibility();
                 }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
@@ -984,11 +1018,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     }
 
     private void updateWidgetVisibility() {
-        reportName.active = reportName.visible = (selectedCategory == JournalCategory.JOURNAL && report != null);
+        reportName.active = reportName.visible = (selectedCategory == JournalCategory.JOURNAL && reportLineList != null);
         newButton.visible = editButton.active = (selectedCategory == JournalCategory.JOURNAL);
-        editButton.visible = editButton.active = (selectedCategory == JournalCategory.JOURNAL && !editingReport && chosenReportTag != null);
+        editButton.visible = editButton.active = (selectedCategory == JournalCategory.JOURNAL && !editingReport && chosenReport != null);
         saveButton.visible = saveButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
-        deleteButton.visible = deleteButton.active = (selectedCategory == JournalCategory.JOURNAL && !editingReport && chosenReportTag != null);
+        deleteButton.visible = deleteButton.active = (selectedCategory == JournalCategory.JOURNAL && !editingReport && chosenReport != null);
         cancelButton.visible = cancelButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
     }
 

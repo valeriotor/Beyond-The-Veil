@@ -13,7 +13,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 public class BleedingBeltItem extends Item {
 
     public BleedingBeltItem() {
-        super(new Properties().durability(150));
+        super(new Properties().durability(100));
     }
 
     @Override

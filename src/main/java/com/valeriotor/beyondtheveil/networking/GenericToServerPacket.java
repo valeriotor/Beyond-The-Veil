@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
@@ -26,14 +27,26 @@ import java.util.function.Supplier;
 
 public class GenericToServerPacket {
 
-    public static GenericToServerPacket syncJournalReport(CompoundTag tag, boolean editing, boolean delete) {
+    public static GenericToServerPacket addJournalReport(CompoundTag tag, boolean editing) {
         if (editing) {
             tag.putBoolean("editing", true);
         }
-        if (delete) {
-            tag.putBoolean("delete", true);
+        return new GenericToServerPacket(MessageType.ADD_REPORT, tag);
+    }
+
+    public static GenericToServerPacket deleteJournalReport(String name) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("name", name);
+        return new GenericToServerPacket(MessageType.DELETE_REPORT, tag);
+    }
+
+    public static GenericToServerPacket setCurrentReport(Report report, boolean editing) {
+        CompoundTag tag = new CompoundTag();
+        if (report != null) {
+            tag.put("report", report.saveToNBT());
         }
-        return new GenericToServerPacket(MessageType.SYNC_REPORT, tag);
+        tag.putBoolean("editing", editing);
+        return new GenericToServerPacket(MessageType.SET_CURRENT_REPORT, tag);
     }
 
     public static GenericToServerPacket sendLetter(String exchangeName, List<Integer> chosenOptions) {
@@ -129,14 +142,18 @@ public class GenericToServerPacket {
                     case SLEEP_CHAMBER -> {
                         DreamHandler.dream(player, false);
                     }
-                    case SYNC_REPORT -> {
+                    case ADD_REPORT -> {
                         if (tag.contains("editing")) {
-                            DataUtil.setTag(player, PlayerDataLib.EDITING_JOURNAL_REPORT, tag);
-                        } else if (tag.contains("delete")) {
-                            DataUtil.removeTag(player, PlayerDataLib.JOURNAL_REPORT.apply(tag.getString("name")));
+                            DataUtil.setTag(player, PlayerDataLib.EDITING_JOURNAL_REPORT, tag); // TODO
                         } else {
-                            DataUtil.setTag(player, PlayerDataLib.JOURNAL_REPORT.apply(tag.getString("name")), tag);
+                            DataUtil.addReport(player, Report.loadFromNBT(tag));
                         }
+                    }
+                    case DELETE_REPORT -> {
+                        DataUtil.deleteReport(player, tag.getString("name"));
+                    }
+                    case SET_CURRENT_REPORT -> {
+                        DataUtil.setCurrentReport(player, tag.contains("report") ? Report.loadFromNBT(tag.getCompound("report")) : null, tag.getBoolean("editing"));
                     }
                     case SEND_LETTER -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
@@ -188,7 +205,9 @@ public class GenericToServerPacket {
         REMINISCING_START,
         REMINISCING_STOP,
         SLEEP_CHAMBER,
-        SYNC_REPORT,
+        ADD_REPORT,
+        DELETE_REPORT,
+        SET_CURRENT_REPORT,
         SEND_LETTER,
         REDEEM_ITEMS,
         OPEN_LETTER,
