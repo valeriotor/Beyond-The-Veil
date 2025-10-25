@@ -1,21 +1,10 @@
 package com.valeriotor.beyondtheveil.datagen;
 
-import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
-import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import static com.valeriotor.beyondtheveil.Registration.*;
 
@@ -89,6 +78,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(BLOOD_ZOMBIE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_WRAITH_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_CULTIST_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(SURGEON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(WEEPER_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(FLETUM_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(SHOREMAN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -169,6 +159,8 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(REPAIR_HAMMER.getId().getPath(),      mcLoc("item/handheld"), "layer0", modLoc("item/" + REPAIR_HAMMER.getId().getPath()));
         singleTexture(NAUTILUS.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + NAUTILUS.getId().getPath()));
         singleTexture(VESSEL_STONE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + VESSEL_STONE.getId().getPath()));
+        singleTexture(SURGERY_REPORT.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SURGERY_REPORT.getId().getPath()));
+        singleTexture(SURGEON_BELL.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SURGEON_BELL.getId().getPath()));
         singleTexture(SEDATIVE_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SEDATIVE_BUCKET.getId().getPath()));
         singleTexture(SOFTENER_BUCKET.getId().getPath(),    mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SOFTENER_BUCKET.getId().getPath()));
         singleTexture(COAGULANT_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + COAGULANT_BUCKET.getId().getPath()));

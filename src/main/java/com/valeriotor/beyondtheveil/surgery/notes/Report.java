@@ -17,12 +17,18 @@ public class Report {
             ReportStep reportStep = ReportStep.stepFromNBT(steps1.getCompound(s));
             r.steps.add(reportStep);
         });
+        try {
+            r.patientType = ReportPatientType.valueOf(tag.getString("patientType"));
+        } catch (IllegalArgumentException ignored) {
+
+        }
         return r;
     }
 
     private final String name;
     private final List<ReportStep> steps = new ArrayList<>();
     private int successful;
+    private ReportPatientType patientType = ReportPatientType.HUMAN;
 
 
     public Report(String name) {
@@ -49,6 +55,10 @@ public class Report {
         return new ArrayList<>(steps);
     }
 
+    public ReportPatientType getPatientType() {
+        return patientType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,6 +82,7 @@ public class Report {
             steps.put(String.valueOf(i), this.steps.get(i).saveToNBT());
         }
         tag.put("steps", steps);
+        tag.putString("patientType", patientType.name());
         return tag;
     }
 }

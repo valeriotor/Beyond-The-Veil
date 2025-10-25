@@ -2,9 +2,11 @@ package com.valeriotor.beyondtheveil.surgery.surgeon;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class BellData {
@@ -16,6 +18,35 @@ public class BellData {
     private final List<BlockPos> inputContainers = new ArrayList<>();
     private final List<BlockPos> outputContainers = new ArrayList<>();
     private BlockPos surgicalBE;
+
+
+    public List<BlockPos> inputPods() {
+        return new ArrayList<>(inputPods);
+    }
+
+    public List<BlockPos> outputPods() {
+        return new ArrayList<>(outputPods);
+    }
+
+    public List<BlockPos> inputSpots() {
+        return new ArrayList<>(inputSpots);
+    }
+
+    public List<BlockPos> outputSpots() {
+        return new ArrayList<>(outputSpots);
+    }
+
+    public List<BlockPos> inputContainers() {
+        return new ArrayList<>(inputContainers);
+    }
+
+    public List<BlockPos> outputContainers() {
+        return new ArrayList<>(outputContainers);
+    }
+
+    public BlockPos getSurgicalBE() { // TODO if this is null then surgeon progress should not start
+        return surgicalBE;
+    }
 
     public CompoundTag saveToNBT() {
         CompoundTag tag = new CompoundTag();

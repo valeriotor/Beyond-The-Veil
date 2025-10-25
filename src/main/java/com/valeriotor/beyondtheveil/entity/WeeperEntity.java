@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
@@ -293,6 +294,11 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     @Override
     public boolean isHeld() {
         return held;
+    }
+
+    @Override
+    public void setHolderType(PatientHolderType type) {
+        // TODO
     }
 
     @Override

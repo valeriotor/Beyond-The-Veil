@@ -58,5 +58,8 @@
   },
   "blood_ritual": {
     "sounds": [ "beyondtheveil:blood_ritual" ]
+  },
+  "surgeon_idle": {
+    "sounds": [ "beyondtheveil:surgeon_idle0", "beyondtheveil:surgeon_idle1" ]
   }
 }

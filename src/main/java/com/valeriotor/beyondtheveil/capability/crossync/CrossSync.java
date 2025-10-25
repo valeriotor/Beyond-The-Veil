@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -24,13 +25,7 @@ public class CrossSync {
 
     public <T extends Mob & SurgeryPatient> void setHeldPatient(T heldPatient, Player player) {
         if (heldPatient != null) {
-            CompoundTag data = new CompoundTag();
-            heldPatient.addAdditionalSaveData(data);
-            heldPatient.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
-                data.put("convalescent", c.saveToNBT(new CompoundTag()));
-            });
-            data.putShort("HurtTime", (short) 0);
-            data.putShort("DeathTime", (short) 0);
+            CompoundTag data = SurgeryUtil.heldPatientData(heldPatient);
             setHeldPatient(heldPatient.getPatientType(), data, player);
         } else {
             setHeldPatient(null, null, player);

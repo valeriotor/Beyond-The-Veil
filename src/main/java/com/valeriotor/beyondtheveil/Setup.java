@@ -25,6 +25,7 @@ public class Setup {
         event.put(BTVEntities.BLOOD_WRAITH.get(), BloodWraithEntity.prepareAttributes().build());
         event.put(BTVEntities.CRAWLER.get(), CrawlerEntity.prepareAttributes().build());
         event.put(BTVEntities.WEEPER.get(), WeeperEntity.prepareAttributes().build());
+        event.put(BTVEntities.SURGEON.get(), SurgeonEntity.prepareAttributes().build());
         event.put(BTVEntities.FLETUM.get(), FletumEntity.prepareAttributes().build());
         event.put(BTVEntities.ABOMINATION_0.get(), Abomination0Entity.prepareAttributes().build());
         event.put(BTVEntities.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());

@@ -8,11 +8,14 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
+import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
+import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
@@ -44,6 +47,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -148,6 +152,18 @@ public abstract class SurgicalBE extends BlockEntity {
 
     }
 
+    public void placePatientSurgeon(PatientType type, CompoundTag heldPatientData) {
+        entityData = heldPatientData;
+        patientStatus = new PatientStatus(type);
+        patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+        if (entityData.contains("convalescent")) {
+            patientStatus.fromConvalescentNBT(entityData.getCompound("convalescent"));
+        }
+        patientStatus.setExposedLocation(defaultLocation);
+        setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+    }
+
     private boolean handleSurgery(Player p, ItemStack in) {
         if (patientStatus == null) {
             return false;
@@ -161,15 +177,15 @@ public abstract class SurgicalBE extends BlockEntity {
                 usingItem = patientStatus.inject(p, drained, this, syringe);
             }
         } else if (i == Registration.SCALPEL.get()) {
-            usingItem = patientStatus.performIncision(p, this);
+            usingItem = patientStatus.performIncision(p, this, DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.SCALPEL.name(), 0, true));
         } else if (i == Registration.FORCEPS.get()) {
             CompoundTag forcepTag = in.getOrCreateTag();
             // replace with full compound tag of item?
             if (forcepTag.contains("contained")) {
-                usingItem = patientStatus.insert(p, forcepTag, this);
+                usingItem = patientStatus.insert(p, ItemStack.of(forcepTag.getCompound("contained")), DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.FORCEPS.name(), 0, true), () -> forcepTag.remove("contained"), this);
             }
         } else if (i == Registration.TONGS.get()) {
-            usingItem = patientStatus.extract(p, this);
+            usingItem = patientStatus.extract(p, this, DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true), stack -> ItemHandlerHelper.giveItemToPlayer(p, stack));
         } else if (i == Registration.SEWING_NEEDLE.get()) {
             usingItem = patientStatus.sewIncision();
         }

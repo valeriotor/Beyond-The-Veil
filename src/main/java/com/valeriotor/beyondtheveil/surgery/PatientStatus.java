@@ -36,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class PatientStatus {
 
@@ -228,23 +229,22 @@ public class PatientStatus {
         return exposedLocation;
     }
 
-    public boolean performIncision(Player p, SurgicalBE be) { // TODO Slightly painful, or extremely painful if not soft enough
+    public boolean performIncision(@Nullable Player p, SurgicalBE be, int currentDuration) { // TODO Slightly painful, or extremely painful if not soft enough
         if (incised) {
             return false;
         }
         OperationRegistry.IncisionEntry op = OperationRegistry.INCISION_OPERATIONS.get(this.exposedLocation);
         if (op != null && !condition.isTerminal() && op.operation().getRequirementForSuccessfulStart().test(this)) {
             Operation operation = op.operation();
-            perTickActions(p, operation, be);
+            perTickActions(operation, be);
             if (currentPain >= operation.getPainForFailure()) {
                 setCondition(operation.getConditionIfFailed());
             } else {
-                int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.SCALPEL.name(), 0, true);
                 if (currentDuration >= operation.getDuration()) {
                     incised = elaborateOperation(p, operation, be);
                     // TODO slight move head to one side animation?
                     setDirty(true);
-                    p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
+                    level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                 }
             }
             return true;
@@ -283,21 +283,20 @@ public class PatientStatus {
         }
     }
 
-    public boolean extract(Player p, SurgicalBE be) {
+    public boolean extract(@Nullable Player p, SurgicalBE be, int currentDuration, Consumer<ItemStack> itemGiver) {
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
             if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation) ) {
-                perTickActions(p, operation, be);
+                perTickActions(operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 }
                 if(currentPain < operation.getPainForFailure() || condition == PatientCondition.DEAD) {
-                    int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true);
                     if (currentDuration >= operation.getDuration() || condition == PatientCondition.DEAD) {
                         boolean wasAlreadyDead = condition == PatientCondition.DEAD;
                         boolean success = elaborateOperation(p, operation, be);
                         if (success && !wasAlreadyDead) {
-                            ItemHandlerHelper.giveItemToPlayer(p, extractionOperation.stack().apply(this));
+                            itemGiver.accept(extractionOperation.stack().apply(this));
                         } else if (wasAlreadyDead) {
                             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
                             if (operation.isPersistent()) {
@@ -305,7 +304,7 @@ public class PatientStatus {
                             }
                         }
                         setDirty(true);
-                        p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                     }
                 }
                 return condition != PatientCondition.DEAD;
@@ -314,8 +313,7 @@ public class PatientStatus {
         return false;
     }
 
-    public boolean insert(Player p, CompoundTag tag, SurgicalBE be) {
-        ItemStack heldInForceps = ItemStack.of(tag.getCompound("contained"));
+    public boolean insert(@Nullable Player p, ItemStack heldInForceps, int currentDuration, Runnable itemRemover, SurgicalBE be) {
         List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps.getItem());
         if (insertionEntries == null || insertionEntries.isEmpty() || !incised) {
             return false;
@@ -323,17 +321,15 @@ public class PatientStatus {
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
             Operation operation = insertionEntry.operation();
             if (canPerformOperation(operation)) {
-                perTickActions(p, operation, be);
+                perTickActions(operation, be);
                 if (currentPain >= operation.getPainForFailure()) {
                     setCondition(operation.getConditionIfFailed());
                 } else {
-                    int currentDuration = DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.FORCEPS.name(), 0, true);
                     if (currentDuration >= operation.getDuration()) {
                         boolean success = elaborateOperation(p, operation, be);
                         setDirty(true);
-                        tag.remove("contained");
-                        p.level().playSound(null, p.blockPosition(), BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
-
+                        itemRemover.run();
+                        level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
                     }
                 }
                 return true;
@@ -342,7 +338,7 @@ public class PatientStatus {
         return false;
     }
 
-    public boolean inject(Player p, FluidStack fluidStack, SurgicalBE be, IFluidHandlerItem syringe) {
+    public boolean inject(@Nullable Player p, FluidStack fluidStack, SurgicalBE be, IFluidHandler syringe) {
         Fluid fluid = fluidStack.getFluid();
         if (fluidStack.isEmpty()) {
             return false;
@@ -366,7 +362,7 @@ public class PatientStatus {
                     }
                 }
                 if (enoughTicks) {
-                    perTickActions(p, operation, be);
+                    perTickActions(operation, be);
                     syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     if (operation.isAdded(this)) {
                         fluidAmounts.put(fluid, newAmount);
@@ -411,19 +407,19 @@ public class PatientStatus {
     /**
      * @return whether the operation succedeed or failed
      */
-    private boolean elaborateOperation(Player player, Operation operation, SurgicalBE be) {
+    private boolean elaborateOperation(@Nullable Player player, Operation operation, SurgicalBE be) {
         //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
         //if (!canPerformOperation) return canPerformOperation;
 
         boolean success = operation.getRequirementForSuccessfulCompletion().test(this) && !condition.isTerminal() && operation.getCapacityRequirement() <= leftoverCapacity;
         String completionMessage = operation.getCompletionMessage().apply(this);
-        if (completionMessage != null) {
+        if (completionMessage != null && player != null) {
             player.sendSystemMessage(Component.translatable(completionMessage));
         }
         if (success) {
             operation.getStatusChangeOnSuccess().accept(this);
             if (operation.getSuccessSound() != null) {
-                player.level().playSound(null, player.blockPosition(), operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
+                level.playSound(null, pos, operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
             }
             leftoverCapacity -= operation.getCapacityRequirement();
             if (operation.getCapacityRequirement() > 0) {
@@ -433,8 +429,10 @@ public class PatientStatus {
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             updateTriggerData(operation);
-            for (String playerDatum : operation.getPlayerData()) {
-                DataUtil.setBooleanOnServerAndSync(player, playerDatum, true, false);
+            if (player != null) {
+                for (String playerDatum : operation.getPlayerData()) {
+                    DataUtil.setBooleanOnServerAndSync(player, playerDatum, true, false);
+                }
             }
             if (operation.isPersistent()) {
                 persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
@@ -445,7 +443,7 @@ public class PatientStatus {
                 BlockPos blockPos = be.getBlockPos();
                 Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
                 Vec3 offset = operation.getParticleOffset().yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
-                ((ServerLevel) player.level()).sendParticles(operation.getSuccessParticleType(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, operation.getSuccessParticleCount(), 0, 0, 0, 1);
+                level.sendParticles(operation.getSuccessParticleType(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, operation.getSuccessParticleCount(), 0, 0, 0, 1);
             }
             return true;
         } else {
@@ -486,14 +484,14 @@ public class PatientStatus {
                 operation.getRequirementForSuccessfulStart().test(this);
     }
 
-    private void perTickActions(Player player, Operation operation, SurgicalBE be) {
+    private void perTickActions(Operation operation, SurgicalBE be) {
         increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this), operation.getPainForFailure(), be);
         if (operation.isProgressParticles()) {
             BlockPos blockPos = be.getBlockPos();
             Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
             Vec3 base = operation.getParticleOffset();
             Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
-            ((ServerLevel) player.level()).sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 1, 0, 0, 0, 0.5);
+            level.sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 1, 0, 0, 0, 0.5);
         }
     }
 

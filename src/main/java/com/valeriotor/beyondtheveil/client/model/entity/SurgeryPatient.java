@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.model.entity;
 
+import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -16,6 +17,7 @@ public interface SurgeryPatient {
      * so they can be rendered correctly, not use server side data, and override normal behaviour as necessary
      */
     void markAsPatient();
+
     boolean isSurgeryPatient();
 
     /**
@@ -30,6 +32,8 @@ public interface SurgeryPatient {
     void setHeld(boolean held);
 
     boolean isHeld();
+
+    void setHolderType(PatientHolderType type);
 
 
 }

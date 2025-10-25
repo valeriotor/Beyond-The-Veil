@@ -364,6 +364,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         setHeld(false);
     }
 
+    @Override
     public void setHolderType(PatientHolderType type) {
         this.holderType = type;
     }

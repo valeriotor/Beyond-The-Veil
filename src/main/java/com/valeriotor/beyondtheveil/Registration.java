@@ -2,7 +2,6 @@ package com.valeriotor.beyondtheveil;
 
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
-import com.valeriotor.beyondtheveil.client.gui.pool.BloodGemGui;
 import com.valeriotor.beyondtheveil.container.*;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -306,6 +305,8 @@ public class Registration {
     public static final RegistryObject<Item> NAUTILUS = ITEMS.register("nautilus", () -> new NautilusItem(new Item.Properties()));
     public static final RegistryObject<Item> ARCHE_DIAL = ITEMS.register("arche_dial", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> VESSEL_STONE = ITEMS.register("vessel_stone", () -> new VesselStoneItem(new Item.Properties().stacksTo(1).durability(5)));
+    public static final RegistryObject<Item> SURGERY_REPORT = ITEMS.register("surgery_report", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> SURGEON_BELL = ITEMS.register("surgeon_bell", SurgeonBellItem::new);
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
@@ -352,6 +353,7 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_ZOMBIE_EGG = ITEMS.register("blood_zombie", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_ZOMBIE, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_WRAITH_EGG = ITEMS.register("blood_wraith", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_WRAITH, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLOOD_CULTIST_EGG = ITEMS.register("blood_cultist", () -> new ForgeSpawnEggItem(BTVEntities.BLOOD_CULTIST, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
+    public static final RegistryObject<Item> SURGEON_EGG = ITEMS.register("surgeon", () -> new ForgeSpawnEggItem(BTVEntities.SURGEON, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> WEEPER_EGG = ITEMS.register("weeper", () -> new ForgeSpawnEggItem(BTVEntities.WEEPER, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> FLETUM_EGG = ITEMS.register("fletum", () -> new ForgeSpawnEggItem(BTVEntities.FLETUM, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
     public static final RegistryObject<Item> SHOREMAN_EGG = ITEMS.register("shoreman", () -> new ForgeSpawnEggItem(BTVEntities.SHOREMAN, 0xF52A37, 0x589BCD, ITEM_PROPERTIES));
@@ -534,6 +536,8 @@ public class Registration {
                 output.accept(NAUTILUS.get());
                 output.accept(ARCHE_DIAL.get());
                 output.accept(VESSEL_STONE.get());
+                output.accept(SURGERY_REPORT.get());
+                output.accept(SURGEON_BELL.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());
@@ -581,6 +585,7 @@ public class Registration {
                 output.accept(BLOOD_ZOMBIE_EGG.get());
                 output.accept(BLOOD_WRAITH_EGG.get());
                 output.accept(BLOOD_CULTIST_EGG.get());
+                output.accept(SURGEON_EGG.get());
                 output.accept(WEEPER_EGG.get());
                 output.accept(FLETUM_EGG.get());
                 output.accept(SHOREMAN_EGG.get());

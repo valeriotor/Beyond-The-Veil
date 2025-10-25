@@ -152,6 +152,7 @@ public class ClientSetup {
         event.registerLayerDefinition(SandflatterModel.LAYER_LOCATION, SandflatterModel::createBodyLayer);
         event.registerLayerDefinition(JellyModel.LAYER_LOCATION, JellyModel::createBodyLayer);
         event.registerLayerDefinition(LivingPortalModel.LAYER_LOCATION, LivingPortalModel::createBodyLayer);
+        event.registerLayerDefinition(SurgeonModel.LAYER_LOCATION, SurgeonModel::createBodyLayer);
 
 
 
@@ -191,6 +192,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.JELLY.get(), JellyRenderer::new);
         event.registerEntityRenderer(BTVEntities.LIVING_PORTAL.get(), LivingPortalRenderer::new);
         event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), UmancalaFireballRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SURGEON.get(), SurgeonRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
