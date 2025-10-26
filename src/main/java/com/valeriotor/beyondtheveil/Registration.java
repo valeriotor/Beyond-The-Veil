@@ -283,7 +283,7 @@ public class Registration {
     public static final RegistryObject<Item> SIGIL_SKELLIE = ITEMS.register("sigil_skellie", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodSigilUndead("sigil_skellie", BloodMobs.BLOOD_SKELLIE);
     public static final RegistryObject<Item> SIGIL_PLAYER = ITEMS.register("sigil_player", BloodSigilPlayer::new); // new ItemBloodSigilPlayer("sigil_player");
     public static final RegistryObject<Item> SIGIL_PATHWAY = ITEMS.register("sigil_pathway", BloodSigilPathway::new); // new ItemBloodSigilPathway("sigil_pathway");
-    public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", () -> new SacrificialKnifeItem()); // new ItemSacrificialKnife("sacrificial_knife");
+    public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", SacrificialKnifeItem::new); // new ItemSacrificialKnife("sacrificial_knife");
     public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", MemoryPhialItem::new); // new ItemMemoryPhial("memory_phial");
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");

@@ -26,6 +26,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.language.I18n;
@@ -38,8 +39,10 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -102,6 +105,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private TexturedButton editButton;
     private TexturedButton deleteButton;
     private TexturedButton cancelButton;
+    private TexturedButton printButton;
     private final List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
     private static final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
@@ -270,6 +274,18 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             }
             //updateWidgetVisibility();
         }));
+        printButton = buttonHolder.addElement(300, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.print"), pButton -> {
+            GenericToServerPacket packet = GenericToServerPacket.printReport(chosenReport.getName());
+            Messages.sendToServer(packet);
+        }) {
+            @Override
+            public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+                super.render(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick);
+                if (insideBounds(relativeMouseX, relativeMouseY) && visible && !active) {
+                    graphics.renderTooltip(Minecraft.getInstance().font, Component.translatable("gui.journal.journal.need_paper"), relativeMouseX, relativeMouseY);
+                }
+            }
+        });
         updateWidgetVisibility();
 
         if (firstOpen) {
@@ -632,13 +648,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         DataUtilClient.setInt(PlayerDataLib.OPEN_JOURNAL_PAGE, selectedCategory.ordinal(), true);
     }
 
-    private CompoundTag saveReportToNBT() {
-        Report r = reportFromList();
-        return r.saveToNBT();
-    }
-
-    @NotNull
     private Report reportFromList() {
+        if (reportLineList == null) {
+            return null;
+        }
         Report r = new Report(reportName.getValue());
         reportLineList.rows().forEach(row -> r.addStep(row.makeStep()));
         return r;
@@ -1030,6 +1043,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         saveButton.visible = saveButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
         deleteButton.visible = deleteButton.active = (selectedCategory == JournalCategory.JOURNAL && !editingReport && chosenReport != null);
         cancelButton.visible = cancelButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
+        printButton.visible = (selectedCategory == JournalCategory.JOURNAL && chosenReport != null && !editingReport);
+        printButton.active = printButton.visible && Minecraft.getInstance().player.getInventory().contains(new ItemStack(Items.PAPER));
     }
 
     private class Dropdown1 extends DropdownLists.Dropdown {

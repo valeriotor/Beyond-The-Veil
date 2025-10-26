@@ -7,6 +7,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.Set;
+
 public class WateryCradleBE extends SurgicalBE {
 
 
@@ -40,6 +42,11 @@ public class WateryCradleBE extends SurgicalBE {
                 backupEntity = null;
             }
         }
+    }
+
+    @Override
+    public Set<SurgicalLocation> allowedLocations() {
+        return Set.of(SurgicalLocation.SKULL);
     }
 
     public Mob getBackupEntity() {

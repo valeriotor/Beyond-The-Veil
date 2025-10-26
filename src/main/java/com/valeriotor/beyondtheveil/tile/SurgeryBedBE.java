@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.Set;
+
 public class SurgeryBedBE extends SurgicalBE {
     public SurgeryBedBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(BTVBlockEntities.SURGERY_BED_BE.get(), pWorldPosition, pBlockState, SurgicalLocation.BACK);
@@ -42,6 +44,11 @@ public class SurgeryBedBE extends SurgicalBE {
     @Override
     public PatientStatus getPatientStatus() {
         return super.getPatientStatus();
+    }
+
+    @Override
+    public Set<SurgicalLocation> allowedLocations() {
+        return Set.of(SurgicalLocation.CHEST, SurgicalLocation.BACK);
     }
 
     @Override

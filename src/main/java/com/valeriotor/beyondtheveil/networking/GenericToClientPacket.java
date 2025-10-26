@@ -18,6 +18,9 @@ import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvent;
@@ -180,6 +183,19 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.BLIND_COMPLETELY, tag);
     }
 
+    //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
+    //    CompoundTag tag = new CompoundTag();
+    //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
+    //    tag.putDouble("x", x);
+    //    tag.putDouble("y", y);
+    //    tag.putDouble("z", z);
+    //    tag.putInt("color", color);
+    //    tag.putDouble("xSpeed", xSpeed);
+    //    tag.putDouble("ySpeed", ySpeed);
+    //    tag.putDouble("zSpeed", zSpeed);
+    //    return new GenericToClientPacket(MessageType.COLORED_PARTICLE, tag);
+    //}
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -256,7 +272,7 @@ public class GenericToClientPacket {
         MODIFY_BLOOD_POOL,
         CLOSEST_DEATH,
         ADD_MEMORY_TOAST,
-        BLIND_COMPLETELY
+        BLIND_COMPLETELY,
     }
 
 }

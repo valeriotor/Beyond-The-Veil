@@ -855,6 +855,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("sleep.parasite", "I don't feel all too well.. I can't sleep.");
 
         addDialogue();
+        addMobInteracts();
         addExchanges();
         addResearch();
         addCraftingRegistry();
@@ -866,6 +867,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         addItems();
         addArsenal();
         addMemories();
+    }
+
+    private void addMobInteracts() {
+        add("interact.surgeon.bad_report_location_cradle", "Note: this report uses positions that are not allowed on the currently bound watery cradle");
+        add("interact.surgeon.bad_report_location_bed", "Note: this report uses positions that are not allowed on the currently bound surgical bed");
+        add("interact.surgeon.bad_be_location_cradle", "Note: this cradle does not allow the positions assigned to the surgeon in the report.");
+        add("interact.surgeon.bad_be_location_bed", "Note: this bed does not allow the positions assigned to the surgeon in the report.");
     }
 
     private void addMemories() {
@@ -2487,6 +2495,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.save", "Save");
         add("gui.journal.journal.delete", "Delete");
         add("gui.journal.journal.cancel", "Cancel");
+        add("gui.journal.journal.print", "Print");
+        add("gui.journal.journal.need_paper", "Need paper in inventory!");
     }
 
     private void addSurgery() {

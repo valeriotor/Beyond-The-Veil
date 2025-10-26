@@ -4,10 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class BellData {
 
@@ -81,6 +78,35 @@ public class BellData {
     private void loadList(List<BlockPos> pos, String name, CompoundTag tag) {
         pos.clear();
         pos.addAll(Arrays.stream(tag.getLongArray(name)).mapToObj(BlockPos::of).toList());
+    }
+
+    public void addPosition(BlockPos pos, PositionType type) {
+        List<BlockPos> list = switch (type) {
+            case INPUT_PODS -> inputPods;
+            case OUTPUT_PODS -> outputPods;
+            case INPUT_SPOTS -> inputSpots;
+            case OUTPUT_SPOTS -> outputSpots;
+            case INPUT_CONTAINERS -> inputContainers;
+            case OUTPUT_CONTAINERS -> outputContainers;
+            case BE -> null;
+        };
+        if (list != null) {
+            if (list.contains(pos)) {
+                list.remove(pos);
+            } else {
+                list.add(pos);
+            }
+        } else if (type == PositionType.BE) {
+            if (Objects.equals(surgicalBE, pos)) {
+                surgicalBE = null;
+            } else {
+                surgicalBE = pos;
+            }
+        }
+    }
+
+    public enum PositionType {
+        INPUT_PODS, OUTPUT_PODS, INPUT_SPOTS, OUTPUT_SPOTS, INPUT_CONTAINERS, OUTPUT_CONTAINERS, BE
     }
 
 }

@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -36,14 +37,17 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                 inputContainers.sort(Comparator.comparingDouble(pos -> surgeon.distanceToSqr(pos.getCenter())));
                 for (BlockPos container : inputContainers) {
                     BlockEntity be = surgeon.level().getBlockEntity(container);
+                    BlockState state = surgeon.level().getBlockState(container);
                     if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()) {
                         FluidStack drain = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), 1), IFluidHandler.FluidAction.SIMULATE);
                         if (!drain.isEmpty()) {
                             if (surgeon.distanceToSqr(container.getCenter()) < 6) {
                                 FluidStack drained = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), Math.min(5, reportStep.getAmount() - tank.getFluidAmount())), IFluidHandler.FluidAction.EXECUTE);
                                 tank.fill(drained, IFluidHandler.FluidAction.EXECUTE);
+                                be.setChanged();
+                                surgeon.level().sendBlockUpdated(container, state, state, 2);
                             } else {
-                                if (surgeon.tickCount % 20 == 0) {
+                                if (surgeon.tickCount % 20 <= 1) {
                                     surgeon.getNavigation().moveTo(container.getX(), container.getY(), container.getZ(), 1);
                                 }
                             }
@@ -74,7 +78,7 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
         CompoundTag tag = new CompoundTag();
         tag.put("tank", tank.writeToNBT(new CompoundTag()));
         tag.putBoolean("startInjection", startInjection);
-        return null;
+        return tag;
     }
 
     @Override

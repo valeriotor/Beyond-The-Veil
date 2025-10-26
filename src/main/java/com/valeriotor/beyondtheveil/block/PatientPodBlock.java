@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -72,6 +73,11 @@ public class PatientPodBlock extends ThinMultiBlock1by2 implements EntityBlock {
         if (pLevel instanceof ServerLevel sl && pState.getValue(getLevelProperty()) == 0) {
             LifeEconomyData.getInstance(sl).removePod(pPos);
         }
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
+        return false;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
             return true;
         }
         if (toInsert == null) {
-            if (surgeon.tickCount % 20 == 0) {
+            if (surgeon.tickCount % 20 <= 1) {
                 List<BlockPos> inputContainers = bellData.inputContainers();
                 inputContainers.sort(Comparator.comparingDouble(pos -> surgeon.distanceToSqr(pos.getCenter())));
                 for (BlockPos container : inputContainers) {

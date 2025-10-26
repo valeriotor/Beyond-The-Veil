@@ -25,6 +25,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -199,4 +201,18 @@ public class ClientMethods {
             });
         }
     }
+
+    //public static void addColoredParticle(CompoundTag tag) {
+    //    ParticleType<?> particletype = BuiltInRegistries.PARTICLE_TYPE.byId(tag.getInt("particle"));
+    //    double x = tag.getDouble("x");
+    //    double y = tag.getDouble("y");
+    //    double z = tag.getDouble("z");
+    //    int color = tag.getInt("color");
+    //    double xSpeed = tag.getDouble("xSpeed");
+    //    double ySpeed = tag.getDouble("ySpeed");
+    //    double zSpeed = tag.getDouble("zSpeed");
+    //    Minecraft.getInstance().particleEngine.createParticle(particletype, x, y, z, xSpeed, ySpeed, zSpeed);
+    //    Minecraft.getInstance().levelRenderer.addParticle();
+//
+    //}
 }

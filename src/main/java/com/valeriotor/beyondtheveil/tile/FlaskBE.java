@@ -171,6 +171,9 @@ public class FlaskBE extends BlockEntity {
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
         if (capability == ForgeCapabilities.FLUID_HANDLER)
             return holder.cast();
+        if (capability == ForgeCapabilities.ITEM_HANDLER) {
+            return stackHolder.cast();
+        }
         return super.getCapability(capability, facing);
     }
 

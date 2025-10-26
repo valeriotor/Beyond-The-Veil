@@ -47,7 +47,7 @@ public class SurgeonCollectPatientStep extends SurgeonStep {
                         be.placePatientSurgeon(surgeon.getHeldPatientType(), surgeon.getHeldPatientData());
                         surgeon.setHeldPatient(null, new CompoundTag());
                     } else {
-                        if (surgeon.tickCount % 20 == 0) {
+                        if (surgeon.tickCount % 20 <= 1) {
                             surgeon.getNavigation().moveTo(bePos.getX(), bePos.getY(), bePos.getZ(), 1);
                         }
                     }
@@ -65,12 +65,12 @@ public class SurgeonCollectPatientStep extends SurgeonStep {
                 LifeEconomyData.PodData podData = LifeEconomyData.getInstance((ServerLevel) surgeon.level()).getPodData(inputPod);
                 if (podData != null) {
                     PatientType takenPatient = podData.getPatient();
-                    if (patientType.getTypes().contains(takenPatient)) {
+                    if (takenPatient != null && patientType.getTypes().contains(takenPatient)) {
                         if (surgeon.distanceToSqr(inputPod.getCenter()) < 6) {
                             surgeon.setHeldPatient(takenPatient, podData.getEntity());
                             podData.setPatientAndSync(null, null, (ServerLevel) surgeon.level());
                         } else {
-                            if (surgeon.tickCount % 20 == 0) {
+                            if (surgeon.tickCount % 20 <= 1) {
                                 surgeon.getNavigation().moveTo(inputPod.getX(), inputPod.getY(), inputPod.getZ(), 1);
                             }
                         }
@@ -95,7 +95,7 @@ public class SurgeonCollectPatientStep extends SurgeonStep {
                     surgeon.setHeldPatient(sp.getPatientType(), data);
                     mob.discard();
                 } else {
-                    if (surgeon.tickCount % 20 == 0) {
+                    if (surgeon.tickCount % 20 <= 1) {
                         surgeon.getNavigation().moveTo(mob.getX(), mob.getY(), mob.getZ(), 1);
                     }
                 }

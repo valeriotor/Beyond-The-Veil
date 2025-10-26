@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.networking;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
@@ -19,6 +20,9 @@ import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkEvent;
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,6 +54,13 @@ public class GenericToServerPacket {
             tag.putString("previousReportName", previousReportName);
         }
         return new GenericToServerPacket(MessageType.SET_CURRENT_REPORT, tag);
+    }
+
+    public static GenericToServerPacket printReport(String name) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("name", name);
+        return new GenericToServerPacket(MessageType.PRINT_REPORT, tag);
+
     }
 
     public static GenericToServerPacket sendLetter(String exchangeName, List<Integer> chosenOptions) {
@@ -154,6 +165,18 @@ public class GenericToServerPacket {
                     case SET_CURRENT_REPORT -> {
                         DataUtil.setCurrentReport(player, tag.contains("report") ? Report.loadFromNBT(tag.getCompound("report")) : null, tag.getBoolean("editing"), tag.contains("previousReportName") ? tag.getString("previousReportName") : null);
                     }
+                    case PRINT_REPORT -> {
+                        Report r = DataUtil.getReport(player, tag.getString("name"));
+                        if (r != null) {
+                            int slotMatchingItem = player.getInventory().findSlotMatchingItem(new ItemStack(Items.PAPER));
+                            if (slotMatchingItem >= 0) {
+                                player.getInventory().getItem(slotMatchingItem).shrink(1);
+                                ItemStack report = new ItemStack(Registration.SURGERY_REPORT.get());
+                                report.getOrCreateTag().put("report", r.saveToNBT());
+                                ItemHandlerHelper.giveItemToPlayer(player, report);
+                            }
+                        }
+                    }
                     case SEND_LETTER -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
                         List<Integer> chosenOptions = tag.getAllKeys().stream().filter(StringUtils::isNumeric).sorted(Comparator.comparingInt(Integer::valueOf)).map(tag::getInt).toList();
@@ -207,6 +230,7 @@ public class GenericToServerPacket {
         ADD_REPORT,
         DELETE_REPORT,
         SET_CURRENT_REPORT,
+        PRINT_REPORT,
         SEND_LETTER,
         REDEEM_ITEMS,
         OPEN_LETTER,

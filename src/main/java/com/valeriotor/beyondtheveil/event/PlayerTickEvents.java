@@ -9,31 +9,42 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
+import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SlugItem;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.surgery.surgeon.BellData;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.*;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import org.joml.Vector3f;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerTickEvents {
@@ -71,12 +82,51 @@ public class PlayerTickEvents {
             rainBeforeContact(event);
             decrementArcheBreath(event);
             sendOtherPlayerDeathCoords(event);
+            surgeonBellParticles(event);
         }
+    }
+
+    private static void surgeonBellParticles(TickEvent.PlayerTickEvent event) {
+
+        if (event.player instanceof ServerPlayer sp && sp.tickCount % 5 == 0) {
+            ItemStack mainHand = sp.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack offHand = sp.getItemInHand(InteractionHand.OFF_HAND);
+            ItemStack stack = mainHand.getItem() == Registration.SURGEON_BELL.get() ? mainHand : (offHand.getItem() == Registration.SURGEON_BELL.get() ? offHand : ItemStack.EMPTY);
+            if (!stack.isEmpty()) {
+                CompoundTag tag = stack.getOrCreateTag();
+                if (tag.contains("surgeon")) {
+                    UUID uuid = tag.getUUID("surgeon");
+                    RandomSource r = sp.getRandom();
+                    ServerLevel serverLevel = sp.serverLevel();
+                    Entity entity = serverLevel.getEntity(uuid);
+                    if (entity instanceof SurgeonEntity surgeon) {
+                        BellData data = surgeon.bellData;
+                        Stream.concat(Stream.concat(data.inputPods().stream(), data.inputContainers().stream()), data.inputSpots().stream()).forEach(pos -> {
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,1,0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                        });
+                        Stream.concat(Stream.concat(data.outputPods().stream(), data.outputContainers().stream()), data.outputSpots().stream()).forEach(pos -> {
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(1,0,0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                        });
+                        BlockPos surgicalBE = data.getSurgicalBE();
+                        if (surgicalBE != null) {
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,0,1), 1), false, surgicalBE.getX() + 0.5, surgicalBE.getY() + 0.5, surgicalBE.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                        }
+                        serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,1,1), 1), false, surgeon.getX() + 0.5, surgeon.getY() + 1.5, surgeon.getZ() + 0.5, 20, 2 * r(r), 2 * r(r), 2 * r(r), 0);
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    private static double r(RandomSource r) {
+        return (r.nextDouble() - 0.5) * 0.95;
     }
 
     private static void sendOtherPlayerDeathCoords(TickEvent.PlayerTickEvent event) {
         if (event.player instanceof ServerPlayer sp && sp.tickCount % 20 == 0 && sp.getServer() != null) {
-            if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get()  || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get()) {
+            if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get()) {
                 PlayerSavedData data = PlayerSavedData.getInstance(sp.getServer().overworld());
                 List<BlockPos> poss = new ArrayList<>(data.deathsInRange(sp, 40));
                 poss.addAll(data.respawnsInRange(sp, 40));
@@ -107,7 +157,8 @@ public class PlayerTickEvents {
         }
     }
 
-    /** Safety check in case something related to the playertimer (defined in DreamHandler.markEvent) goes haywire
+    /**
+     * Safety check in case something related to the playertimer (defined in DreamHandler.markEvent) goes haywire
      */
     private static void resetTimesDreamt(TickEvent.PlayerTickEvent event) {
         Player player = event.player;

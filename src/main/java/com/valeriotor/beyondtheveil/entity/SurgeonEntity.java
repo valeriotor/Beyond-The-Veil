@@ -1,44 +1,62 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
+import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.SurgeonSurgeryGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.surgery.notes.PositionStep;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
+import com.valeriotor.beyondtheveil.surgery.notes.ReportStep;
 import com.valeriotor.beyondtheveil.surgery.surgeon.BellData;
 import com.valeriotor.beyondtheveil.surgery.surgeon.SurgeonProgress;
-import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
+import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
 
-public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
+public class SurgeonEntity extends PathfinderMob implements PlayerMinion, DamageCapper {
 
     private UUID master;
     private Report report;
     private Mob heldPatientEntity;
     private List<ItemStack> stacks = new ArrayList<>();
     private SurgeonProgress progress;
+    public final BellData bellData = new BellData();
     private static final EntityDataAccessor<Integer> HELD_TYPE = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<CompoundTag> HELD_ENTITY = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.COMPOUND_TAG);
 
-    public SurgeonEntity(EntityType<? extends Mob> pEntityType, Level pLevel) {
+    public SurgeonEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -47,6 +65,13 @@ public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ATTACK_DAMAGE, 2.0D);
+    }
+
+    @Override
+    protected void registerGoals() {
+        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.goalSelector.addGoal(1, new SurgeonSurgeryGoal(this));
     }
 
     @Override
@@ -90,6 +115,7 @@ public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
         if (progress != null) {
             pCompound.put("progress", progress.saveToNBT());
         }
+        pCompound.put("bellData", bellData.saveToNBT());
     }
 
     @Override
@@ -108,6 +134,7 @@ public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
         if (pCompound.contains("progress")) {
             progress = SurgeonProgress.fromNBT(this, pCompound.getCompound("progress"));
         }
+        bellData.loadNBT(pCompound.getCompound("bellData"));
     }
 
     @Nullable
@@ -118,10 +145,6 @@ public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
 
     public Report getReport() {
         return report;
-    }
-
-    public BellData getBellData() {
-        return null;
     }
 
     public CompoundTag getHeldPatientData() {
@@ -162,11 +185,51 @@ public class SurgeonEntity extends Mob implements PlayerMinion, DamageCapper {
         stacks.add(stack);
     }
 
+    public void removeProgress() {
+        progress = null;
+    }
+
     public void newProgress() {
         progress = new SurgeonProgress(this, report);
     }
 
     public SurgeonProgress getProgress() {
         return progress;
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack held = pPlayer.getItemInHand(pHand);
+        if (held.getItem() == Registration.SURGEON_BELL.get()) {
+            if (level().isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
+            CompoundTag tag = held.getOrCreateTag();
+            if (tag.contains("surgeon") && uuid.equals(tag.getUUID("surgeon"))) {
+                tag.remove("surgeon");
+            } else {
+                tag.putUUID("surgeon", this.uuid);
+            }
+            return InteractionResult.SUCCESS;
+        } else if (held.getItem() == Registration.SURGERY_REPORT.get()) {
+            if (level().isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
+            CompoundTag tag = held.getOrCreateTag();
+            if (tag.contains("report")) {
+                removeProgress();
+                this.report = Report.loadFromNBT(tag.getCompound("report"));
+                if (bellData.getSurgicalBE() != null && level().getBlockEntity(bellData.getSurgicalBE()) instanceof SurgicalBE be) {
+                    for (ReportStep step : this.report.getSteps()) {
+                        if (step instanceof PositionStep ps && !be.allowedLocations().contains(ps.getLocation().getLocation())) {
+                            pPlayer.sendSystemMessage(Component.translatable(be instanceof SurgeryBedBE ? "interact.surgeon.bad_report_location_bed" : "interact.surgeon.bad_report_location_cradle"));
+                            break;
+                        }
+                    }
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 }

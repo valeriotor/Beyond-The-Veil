@@ -29,7 +29,7 @@ public abstract class SurgeonStep {
         BlockPos bePos = bellData.getSurgicalBE();
         if (bePos != null) {
             if (surgeon.distanceToSqr(bePos.getCenter()) > 5) {
-                if (surgeon.tickCount % 20 == 0) {
+                if (surgeon.tickCount % 20 <= 1) {
                     surgeon.getNavigation().moveTo(bePos.getX(), bePos.getY(), bePos.getZ(), 1);
                 }
             } else {

@@ -51,6 +51,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
 import java.util.UUID;
 
 public abstract class SurgicalBE extends BlockEntity {
@@ -160,6 +161,23 @@ public abstract class SurgicalBE extends BlockEntity {
             patientStatus.fromConvalescentNBT(entityData.getCompound("convalescent"));
         }
         patientStatus.setExposedLocation(defaultLocation);
+        setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+    }
+
+    public void collectPatientSurgeon(SurgeonEntity surgeon) {
+        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+        entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
+        if (color != null && !patientStatus.getCondition().isTerminal()) {
+            if (surgeon.level() instanceof ServerLevel sl) {
+                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl.getServer());
+                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), surgeon.level());
+            }
+        } else {
+            surgeon.setHeldPatient(patientStatus.getPatientType(), entityData);
+        }
+        entityData = null;
+        patientStatus = null;
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
     }
@@ -372,4 +390,6 @@ public abstract class SurgicalBE extends BlockEntity {
     public boolean hasFlebo() {
         return hasFlebo;
     }
+
+    public abstract Set<SurgicalLocation> allowedLocations();
 }

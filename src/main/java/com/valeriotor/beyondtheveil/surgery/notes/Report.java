@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery.notes;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ public class Report {
     public static Report loadFromNBT(CompoundTag tag) {
         String name = tag.getString("name");
         Report r = new Report(name);
-        CompoundTag steps1 = tag.getCompound("steps");
-        steps1.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).forEach(s -> {
-            ReportStep reportStep = ReportStep.stepFromNBT(steps1.getCompound(s));
-            r.steps.add(reportStep);
-        });
+        try {
+            ListTag steps = tag.getList("steps", Tag.TAG_COMPOUND);
+            for (int i = 0; i < steps.size(); i++) {
+                CompoundTag compound = steps.getCompound(i);
+                r.steps.add(ReportStep.stepFromNBT(compound));
+            }
+        } catch (Exception ignored) {}
         try {
             r.patientType = ReportPatientType.valueOf(tag.getString("patientType"));
         } catch (IllegalArgumentException ignored) {
@@ -77,9 +80,9 @@ public class Report {
     public CompoundTag saveToNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putString("name", name);
-        CompoundTag steps = new CompoundTag();
-        for (int i = 0; i < this.steps.size(); i++) {
-            steps.put(String.valueOf(i), this.steps.get(i).saveToNBT());
+        ListTag steps = new ListTag();
+        for (ReportStep step : this.steps) {
+            steps.add(step.saveToNBT());
         }
         tag.put("steps", steps);
         tag.putString("patientType", patientType.name());
