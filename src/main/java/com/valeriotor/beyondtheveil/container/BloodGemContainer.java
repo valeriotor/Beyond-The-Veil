@@ -28,13 +28,13 @@ public class BloodGemContainer extends AbstractContainerMenu {
 
         final int GEM_INVENTORY_X = 17;
         final int GEM_INVENTORY_Y = 5;
-        final int GEM_SLOT_X_SPACING = 31;
+        final int GEM_SLOT_X_SPACING = 32;
         final int SLOT_Y_SPACING = 18;
 
         gem.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
             gemInventory = c;
             for (int i = 0; i < c.getSlots(); i++) {
-                addSlot(new BloodGemSlot(this.gemInventory, i,  GEM_INVENTORY_X + GEM_SLOT_X_SPACING * (i / 3), GEM_INVENTORY_Y + SLOT_Y_SPACING * (i % 3)));
+                addSlot(new BloodGemSlot(this.gemInventory, i,  GEM_INVENTORY_X + GEM_SLOT_X_SPACING * (i / 3) - (i > 2 ? 1 : 0), GEM_INVENTORY_Y + SLOT_Y_SPACING * (i % 3)));
             }
         });
 
