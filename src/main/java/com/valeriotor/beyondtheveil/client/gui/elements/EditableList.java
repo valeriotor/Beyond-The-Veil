@@ -53,25 +53,25 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
     public interface EditableListElement {
 
         default void renderAdd(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
-            graphics.blit(PLUS, 4, iconY(), 0, 0, 14, 14, 14, 14);
+            graphics.blit(PLUS, 1, iconY(), 0, 0, 14, 14, 14, 14);
             if (hoveringAdd(relativeMouseX, relativeMouseY)) {
-                graphics.fill(4, iconY(), 18, iconY() + 14, 0x5559471A);
+                graphics.fill(1, iconY(), 15, iconY() + 14, 0x5559471A);
             }
         }
 
         default void renderDelete(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
-            graphics.blit(CROSS, 20, iconY(), 0, 0, 14, 14, 14, 14);
+            graphics.blit(CROSS, 16, iconY(), 0, 0, 14, 14, 14, 14);
             if (hoveringDelete(relativeMouseX, relativeMouseY)) {
-                graphics.fill(20, iconY(), 34, iconY() + 14, 0x5559471A);
+                graphics.fill(16, iconY(), 30, iconY() + 14, 0x5559471A);
             }
         }
 
         default boolean hoveringAdd(double relativeMouseX, double relativeMouseY) {
-            return relativeMouseX >= 4 && relativeMouseY >= iconY() && relativeMouseX <= 18 && relativeMouseY <= iconY() + 14;
+            return relativeMouseX >= 1 && relativeMouseY >= iconY() && relativeMouseX <= 15 && relativeMouseY <= iconY() + 14;
         }
 
         default boolean hoveringDelete(double relativeMouseX, double relativeMouseY) {
-            return relativeMouseX >= 20 && relativeMouseY >= iconY() && relativeMouseX <= 34 && relativeMouseY <= iconY() + 14;
+            return relativeMouseX >= 16 && relativeMouseY >= iconY() && relativeMouseX <= 30 && relativeMouseY <= iconY() + 14;
         }
 
         private int iconY() {

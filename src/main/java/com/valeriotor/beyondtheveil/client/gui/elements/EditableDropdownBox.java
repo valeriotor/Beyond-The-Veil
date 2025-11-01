@@ -29,14 +29,14 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     private Consumer<T> onSelect;
 
     public static <T extends Option> EditableDropdownBox<T> makeBox(T[] options, int height, int stringY, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor, boolean editable) {
-        int width = Arrays.stream(options).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 13;
+        int width = Math.min(Arrays.stream(options).map(t -> Minecraft.getInstance().font.width(t.getText())).max(Comparator.comparingInt(i -> i)).orElse(75) + 13, 120);
         return new EditableDropdownBox<>(width, height, stringY, options, backgroundColor, listFrameColor, listBackgroundColor, listBackgroundHighlightColor, editable);
     }
 
     private EditableDropdownBox(int width, int height, int stringY, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor, boolean editable) {
         super(width, height);
         this.editable = editable;
-        typeSelector = new EditBox(Minecraft.getInstance().font, 3, stringY, getWidth(), 15, options[0].getText());
+        typeSelector = new EditBox(Minecraft.getInstance().font, 3, stringY, getWidth() - 10, 15, options[0].getText());
         originalOptions = options;
         this.backgroundColor = backgroundColor;
         this.listFrameColor = listFrameColor;
@@ -232,7 +232,8 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
 
         public TypeOption(int width, T type, Font font, EditBox typeSelector, Consumer<T> optionConsumer, int frameColor, int backgroundColor, int backgroundHighlightColor) {
             super(width, 17);
-            this.line = type.getText().getString();
+
+            this.line = font.plainSubstrByWidth(type.getText().getString(), this.getWidth());
             this.type = type;
             this.font = font;
             this.typeSelector = typeSelector;
@@ -250,6 +251,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(1, 1, getWidth() - 1, getHeight() - 1, backgroundHighlightColor);
             }
+
             graphics.drawString(font, line, 3, 3, color);
         }
 

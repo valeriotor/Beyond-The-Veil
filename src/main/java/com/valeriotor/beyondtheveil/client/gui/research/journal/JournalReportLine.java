@@ -96,7 +96,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
     @Override
     public void renderIndexed(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick, int index) {
         ScrollableList.NumberedListElement.super.renderIndexed(poseStack, graphics, color, relativeMouseX, relativeMouseY, pPartialTick, index);
-        graphics.drawString(Minecraft.getInstance().font, String.format("§l%d.", index + 1), 40, 8, 0xFFE0D5B3);
+        graphics.drawString(Minecraft.getInstance().font, String.format("§l%d.", index + 1), 33, 8, 0xFFE0D5B3);
     }
 
     @Override

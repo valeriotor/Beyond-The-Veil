@@ -268,7 +268,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         cancelButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.cancel"), pButton -> {
             editingReport = false;
             if (chosenReport != null) {
-                selectReport(reportFromList(), false);
+                selectReport(chosenReport, false);
             } else {
                 reportLineList = null;
             }
