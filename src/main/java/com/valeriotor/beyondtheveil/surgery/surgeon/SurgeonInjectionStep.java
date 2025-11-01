@@ -42,6 +42,7 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                         FluidStack drain = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), 1), IFluidHandler.FluidAction.SIMULATE);
                         if (!drain.isEmpty()) {
                             if (surgeon.distanceToSqr(container.getCenter()) < 6) {
+                                surgeon.setPerformingSurgery();
                                 FluidStack drained = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), Math.min(5, reportStep.getAmount() - tank.getFluidAmount())), IFluidHandler.FluidAction.EXECUTE);
                                 tank.fill(drained, IFluidHandler.FluidAction.EXECUTE);
                                 be.setChanged();
@@ -63,6 +64,7 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
             if (be != null) {
                 PatientStatus patientStatus = be.getPatientStatus();
                 if (patientStatus != null) {
+                    surgeon.setPerformingSurgery();
                     patientStatus.inject(null, tank.drain(1, IFluidHandler.FluidAction.SIMULATE), be, tank);
                     if (tank.getFluidAmount() == 0) {
                         return true;

@@ -1,12 +1,13 @@
 package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
-import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SurgeonSurgeryGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.notes.PositionStep;
@@ -30,7 +31,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +43,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-public class SurgeonEntity extends PathfinderMob implements PlayerMinion, DamageCapper {
+public class SurgeonEntity extends PathfinderMob implements PlayerMinion, DamageCapper, AnimatedEntity {
 
     private UUID master;
     private Report report;
@@ -52,7 +52,11 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     private SurgeonProgress progress;
     public final BellData bellData = new BellData();
     private static final EntityDataAccessor<Integer> HELD_TYPE = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> PERFORMING_SURGERY = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<CompoundTag> HELD_ENTITY = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.COMPOUND_TAG);
+    private Animation mainAnimation;
+    private int performingSurgery = 0; // used for anims, server only
+    private boolean wasPerformingSurgery = false; // used for anims, client only
 
     public SurgeonEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -79,6 +83,7 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
         super.defineSynchedData();
         this.entityData.define(HELD_ENTITY, new CompoundTag());
         this.entityData.define(HELD_TYPE, -1);
+        this.entityData.define(PERFORMING_SURGERY, false);
     }
 
     @Override
@@ -158,11 +163,11 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
         return PatientType.values()[entityData.get(HELD_TYPE)];
     }
 
-    public Mob getHeldPatientEntity(Level level) {
+    public Mob getHeldPatientEntity() {
         if (entityData.get(HELD_TYPE) == -1) {
             return null;
         } else if (heldPatientEntity == null) {
-            heldPatientEntity = getHeldPatientType().getMobFunction().apply(level);
+            heldPatientEntity = getHeldPatientType().getMobFunction().apply(level());
             heldPatientEntity.readAdditionalSaveData(entityData.get(HELD_ENTITY));
             ((SurgeryPatient) heldPatientEntity).setHeld(true);
             ((SurgeryPatient) heldPatientEntity).setHolderType(PatientHolderType.SURGEON);
@@ -183,6 +188,10 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
 
     public void giveItem(ItemStack stack) {
         stacks.add(stack);
+    }
+
+    public List<ItemStack> getItems() {
+        return stacks;
     }
 
     public void removeProgress() {
@@ -231,5 +240,57 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(pPlayer, pHand);
+    }
+
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        if (channel == 0) {
+            mainAnimation = new Animation(animationTemplate);
+        }
+    }
+
+    public Animation getMainAnimation() {
+        return mainAnimation;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide) {
+            if (mainAnimation != null) {
+                mainAnimation.update();
+                if (mainAnimation.isDone()) {
+                    mainAnimation = null;
+                }
+            }
+            if (entityData.get(PERFORMING_SURGERY)) {
+                if (!wasPerformingSurgery) {
+                    wasPerformingSurgery = true;
+                    mainAnimation = new Animation(AnimationRegistry.surgeon_operate_start);
+                }
+            } else {
+                if (wasPerformingSurgery) {
+                    wasPerformingSurgery = false;
+                    mainAnimation = new Animation(AnimationRegistry.surgeon_operate_stop);
+                }
+            }
+        } else {
+            if (performingSurgery > 0) {
+                performingSurgery--;
+                if (performingSurgery == 0) {
+                    entityData.set(PERFORMING_SURGERY, false);
+                } else {
+                    entityData.set(PERFORMING_SURGERY, true);
+                }
+            }
+        }
+    }
+
+    public void setPerformingSurgery() {
+        this.performingSurgery = 10;
+    }
+
+    public boolean isPerformingSurgery() {
+        return entityData.get(PERFORMING_SURGERY);
     }
 }

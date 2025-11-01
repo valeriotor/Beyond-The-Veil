@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
+import com.valeriotor.beyondtheveil.entity.SurgeonLarvaEntity;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
@@ -153,6 +154,7 @@ public class ClientSetup {
         event.registerLayerDefinition(JellyModel.LAYER_LOCATION, JellyModel::createBodyLayer);
         event.registerLayerDefinition(LivingPortalModel.LAYER_LOCATION, LivingPortalModel::createBodyLayer);
         event.registerLayerDefinition(SurgeonModel.LAYER_LOCATION, SurgeonModel::createBodyLayer);
+        event.registerLayerDefinition(SurgeonLarvaModel.LAYER_LOCATION, SurgeonLarvaModel::createBodyLayer);
 
 
 
@@ -193,6 +195,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.LIVING_PORTAL.get(), LivingPortalRenderer::new);
         event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), UmancalaFireballRenderer::new);
         event.registerEntityRenderer(BTVEntities.SURGEON.get(), SurgeonRenderer::new);
+        event.registerEntityRenderer(BTVEntities.SURGEON_LARVA.get(), SurgeonLarvaRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

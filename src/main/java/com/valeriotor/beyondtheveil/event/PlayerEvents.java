@@ -3,43 +3,33 @@ package com.valeriotor.beyondtheveil.event;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
-import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
-import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
-import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
 import com.valeriotor.beyondtheveil.item.AntidoteCapsuleItem;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
-import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -50,7 +40,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -106,7 +95,7 @@ public class PlayerEvents {
                 CrossSyncData csData = player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                 CrossSync crossSync = csData.getCrossSync();
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
-                heldPatientEntity = transformHeldPatient(heldPatientEntity, sl);
+                heldPatientEntity = SurgeryUtil.transformHeldPatient(heldPatientEntity, sl);
                 if (heldPatientEntity != null) {
                     if (level.getBlockEntity(event.getPos()) != null && level.getBlockEntity(event.getPos()).getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
                         heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> c.setChestPos(event.getPos()));
@@ -129,32 +118,6 @@ public class PlayerEvents {
                 }
             }
         }
-    }
-
-    private static Mob transformHeldPatient(Mob heldPatient, ServerLevel sl) {
-        if (heldPatient instanceof CrawlerEntity e) {
-            LazyOptional<ConvalescentData> c = e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
-            if (c.isPresent()) {
-                ConvalescentData data = c.resolve().get();
-                TriggerData triggerData = data.getTriggerData();
-                if (triggerData != null) {
-                    EntityType<?> type = BTVEntities.getTriggerEntity(data, triggerData).getA();
-
-                    if (type == BTVEntities.CRAWLER.get()) {
-                        return heldPatient;
-                    } else {
-                        Entity o = type.create(sl);
-                        if (o instanceof Mob mob) {
-                            mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
-                                t.loadFromNBT(triggerData.saveToNBT(new CompoundTag()));
-                            });
-                            return mob;
-                        }
-                    }
-                }
-            }
-        }
-        return heldPatient;
     }
 
     public static void setBooleanEvent(Player player, String key, boolean value) {

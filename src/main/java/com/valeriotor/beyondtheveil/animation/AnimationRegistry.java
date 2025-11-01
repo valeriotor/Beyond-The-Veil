@@ -41,6 +41,9 @@ public class AnimationRegistry {
     public static AnimationTemplate deep_one_trade4;
     public static AnimationTemplate sandflatter_ambush;
     public static AnimationTemplate sandflatter_claw;
+    public static AnimationTemplate surgeon_operate_stop;
+    public static AnimationTemplate surgeon_operate_start;
+    public static AnimationTemplate surgeon_standup;
     public static AnimationTemplate weeper_explode;
     public static AnimationTemplate weeper_get_up;
     public static AnimationTemplate weeper_get_up_spineless;
@@ -79,6 +82,9 @@ public class AnimationRegistry {
         deep_one_trade4 = registerAnimation("deep_one_trade4", client, i++);
         sandflatter_ambush = registerAnimation("sandflatter_ambush", client, i++);
         sandflatter_claw = registerAnimation("sandflatter_claw", client, i++);
+        surgeon_operate_start = registerAnimation("surgeon_operate_start", client, i++);
+        surgeon_operate_stop = registerAnimation("surgeon_operate_stop", client, i++);
+        surgeon_standup = registerAnimation("surgeon_standup", client, i++);
         weeper_explode = registerAnimation("weeper_explode", client, i++);
         weeper_get_up = registerAnimation("weeper_get_up", client, i++);
         weeper_get_up_spineless = registerAnimation("weeper_get_up_spineless", client, i++);

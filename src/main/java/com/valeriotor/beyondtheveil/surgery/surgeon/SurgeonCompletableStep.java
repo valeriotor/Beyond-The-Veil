@@ -29,11 +29,15 @@ public class SurgeonCompletableStep extends SurgeonStep.SurgeonReportStep {
             PatientStatus patientStatus = be.getPatientStatus();
             if (patientStatus != null) {
                 if (reportStep.getType() == ReportStepType.EXTRACTION) {
-                    patientStatus.extract(null, be, currentDuration++, stack -> {
+                    surgeon.setPerformingSurgery();
+                    if (!patientStatus.extract(null, be, currentDuration++, stack -> {
                         surgeon.giveItem(stack);
                         finishedExtraction = true;
-                    });
+                    })) {
+                        finishedExtraction = true;
+                    }
                 } else if (reportStep.getType() == ReportStepType.INCISION) {
+                    surgeon.setPerformingSurgery();
                     patientStatus.performIncision(null, be, currentDuration++);
                     if (patientStatus.isIncised()) {
                         return true;

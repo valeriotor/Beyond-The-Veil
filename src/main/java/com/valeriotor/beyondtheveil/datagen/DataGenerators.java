@@ -25,7 +25,9 @@ public class DataGenerators {
         DataProvider.Factory<BTVBlockTags> blockTags = output -> new BTVBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper());
         BTVBlockTags blockTagsProvider = blockTags.create(event.getGenerator().getPackOutput());
         DataProvider.Factory<BTVItemTags> itemTags = output -> new BTVItemTags(output, event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper());
+        BTVItemTags itemTagsProvider = itemTags.create(event.getGenerator().getPackOutput());
         generator.addProvider(event.includeServer(), blockTagsProvider);
+        generator.addProvider(event.includeServer(), itemTagsProvider);
         //generator.addProvider(event.includeServer(), itemTags);
         DataProvider.Factory<BTVWorldGen> btvWorldGenFactory = output -> new BTVWorldGen(output, event.getLookupProvider(), Set.of(References.MODID));
         generator.addProvider(event.includeServer(), btvWorldGenFactory);

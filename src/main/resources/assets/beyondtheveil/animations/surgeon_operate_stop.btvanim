@@ -1,0 +1,8 @@
+model: surgeon
+length: 10
+start: 0: 1
+    rotx: RightUpperArm: -0.12731: immediate: absolute
+    rotx: RightLowerArm: -1.4586: immediate: absolute
+start: 2: 10
+    rotx: RightUpperArm: 0.2731: linear: absolute
+    rotx: RightLowerArm: -2.4586: linear: absolute

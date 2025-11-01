@@ -1,4 +1,4 @@
-// 1.20.1	2025-10-25T23:43:40.1269266	Item Models: beyondtheveil
+// 1.20.1	2025-11-01T14:45:34.250844	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -155,6 +155,7 @@ bdfa9c48a15d11fbb328153dca660e615d77f289 assets/beyondtheveil/models/item/slug_b
 e0a2244f5f7f30c7b5056bdbf86cc6af8eab471d assets/beyondtheveil/models/item/spine.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/surgeon.json
 c424b43ced4631f5fb50e98c5c9253f78242eb11 assets/beyondtheveil/models/item/surgeon_bell.json
+9de072b34879ed83f3ffb0678a2376067d1429cf assets/beyondtheveil/models/item/surgeon_larva.json
 cf6c1d4ac8de2c9ea93641017592929ed9450b96 assets/beyondtheveil/models/item/surgeon_summons.json
 c7cc292864dbcb24e7d745c88db2c42436a40cb3 assets/beyondtheveil/models/item/surgery_bed.json
 be373ec94776cb148367ab3fc909c16ac3687864 assets/beyondtheveil/models/item/surgery_report.json

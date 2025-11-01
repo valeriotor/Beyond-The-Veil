@@ -15,6 +15,7 @@ public class SurgeonStitchingStep extends SurgeonStep.SurgeonReportStep {
     public boolean performAction() {
         SurgicalBE be = moveToBE();
         if (be != null) {
+            surgeon.setPerformingSurgery();
             be.getPatientStatus().sewIncision();
             return true;
         }

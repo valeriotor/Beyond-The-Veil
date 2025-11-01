@@ -15,6 +15,8 @@ import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import com.valeriotor.beyondtheveil.world.structures.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
@@ -305,8 +307,9 @@ public class Registration {
     public static final RegistryObject<Item> NAUTILUS = ITEMS.register("nautilus", () -> new NautilusItem(new Item.Properties()));
     public static final RegistryObject<Item> ARCHE_DIAL = ITEMS.register("arche_dial", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> VESSEL_STONE = ITEMS.register("vessel_stone", () -> new VesselStoneItem(new Item.Properties().stacksTo(1).durability(5)));
-    public static final RegistryObject<Item> SURGERY_REPORT = ITEMS.register("surgery_report", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> SURGERY_REPORT = ITEMS.register("surgery_report", ReportSheetItem::new);
     public static final RegistryObject<Item> SURGEON_BELL = ITEMS.register("surgeon_bell", SurgeonBellItem::new);
+    public static final RegistryObject<Item> SURGEON_LARVA = ITEMS.register("surgeon_larva", SurgeonLarvaItem::new);
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
@@ -405,6 +408,8 @@ public class Registration {
     });
 
     public static final RegistryObject<RecipeSerializer<?>> GEAR_BENCH_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("gear_bench", GearBenchRecipe.Serializer::new);
+
+    public static final TagKey<Item> LARVA_FOOD = TagKey.create(Registries.ITEM, new ResourceLocation(References.MODID, "larva_food"));
 
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TAB.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(BLACK_MIRROR.get())).title(Component.translatable("creative_tab.beyondtheveil"))
             .displayItems((features, output) -> {
@@ -538,6 +543,7 @@ public class Registration {
                 output.accept(VESSEL_STONE.get());
                 output.accept(SURGERY_REPORT.get());
                 output.accept(SURGEON_BELL.get());
+                output.accept(SURGEON_LARVA.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());

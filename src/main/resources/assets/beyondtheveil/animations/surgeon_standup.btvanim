@@ -1,0 +1,20 @@
+model: surgeon
+length: 45
+start: 0: 1
+    rotz: RightFrontLowerLeg: -1.9741: immediate: absolute
+    rotz: RightMidLowerLeg: -1.9741: immediate: absolute
+    rotz: RightBackLowerLeg: -1.9741: immediate: absolute
+    rotz: LeftFrontLowerLeg: 1.9679: immediate: absolute
+    rotz: LeftMidLowerLeg: 1.9741: immediate: absolute
+    rotz: LeftBackLowerLeg: 1.9741: immediate: absolute
+    rotx: LowerBody: 1.6: immediate: absolute
+    tray: root: 10: immediate: absolute
+start: 2: 44
+    rotz: RightFrontLowerLeg: -0.7285F: linear: absolute
+    rotz: RightMidLowerLeg: -0.7285F: linear: absolute
+    rotz: RightBackLowerLeg: -0.7285F: linear: absolute
+    rotz: LeftFrontLowerLeg: 0.7285: linear: absolute
+    rotz: LeftMidLowerLeg: 0.7285: linear: absolute
+    rotz: LeftBackLowerLeg: 0.7285: linear: absolute
+    rotx: LowerBody: 0: linear: absolute
+    tray: root: 0: linear: absolute
