@@ -31,18 +31,22 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FlaskShelfBE extends BlockEntity {
@@ -50,6 +54,10 @@ public class FlaskShelfBE extends BlockEntity {
     public static final ModelProperty<List<Flask>> FLASKS_PROPERTY = new ModelProperty<>();
     public final List<Flask> flasks = new ArrayList<>();
     public final VoxelShape[][] shapes = new VoxelShape[3][3]; // Shape for each of the 3x3 shelves: [0: bottom, 1: medium, 2: top][0: left, 1: center, 2: right]
+    private final FlaskShelfFluidHandler fluidHandler = new FlaskShelfFluidHandler();
+    private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> fluidHandler);
+    private final IItemHandler stackHandler = new FlaskShelfItemHandler();
+    private final LazyOptional<IItemHandler> stackHolder = LazyOptional.of(() -> stackHandler);
 
     public static final ModelProperty<List<Flask>> FLASK_PROPERTY = new ModelProperty<>();
     public static final ModelProperty<BlockPos> POS_PROPERTY = new ModelProperty<>();
@@ -281,6 +289,16 @@ public class FlaskShelfBE extends BlockEntity {
         }
     }
 
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            return holder.cast();
+        }
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            return stackHolder.cast();
+        }
+        return super.getCapability(cap);
+    }
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
@@ -316,7 +334,7 @@ public class FlaskShelfBE extends BlockEntity {
     @Override
     public @NotNull ModelData getModelData() {
         return ModelData.builder()
-                .with(FLASK_PROPERTY, flasks)
+                .with(FLASK_PROPERTY, Collections.synchronizedList(new ArrayList<>(flasks)))
                 .with(POS_PROPERTY, getBlockPos())
                 .build();
     }
@@ -339,12 +357,7 @@ public class FlaskShelfBE extends BlockEntity {
         private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
         private ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
-            return new ItemStackHandler(4) {
-                @Override
-                public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                    return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
-                }
-            };
+            return FlaskBE.createStackHandler(size);
         }
 
         private final ItemStackHandler stackHandler;
@@ -477,6 +490,182 @@ public class FlaskShelfBE extends BlockEntity {
             temp = Double.doubleToLongBits(z);
             result = 31 * result + (int) (temp ^ (temp >>> 32));
             return result;
+        }
+    }
+
+    private class FlaskShelfFluidHandler implements IFluidHandler {
+
+        @Override
+        public int getTanks() {
+            return flasks.size();
+        }
+
+        @Override
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            return flasks.get(tank).tank.getFluid();
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return flasks.get(tank).tank.getCapacity();
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            return flasks.get(tank).tank.isFluidValid(stack);
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty()) {
+                return 0;
+            }
+            FluidStack copy = resource.copy();
+            List<Flask> matchingFlasks = flasks.stream().filter(f -> f.tank.getFluid().isFluidEqual(resource)).toList();
+            int filled = 0;
+            for (Flask matchingFlask : matchingFlasks) {
+                int newlyFilled = matchingFlask.tank.fill(copy, action);
+                filled += newlyFilled;
+                copy.setAmount(copy.getAmount() - newlyFilled);
+                if (copy.isEmpty()) {
+                    if (action.execute()) {
+                        updateClient();
+                    }
+                    return filled;
+                }
+            }
+            List<Flask> emptyFlasks = flasks.stream().filter(f -> f.tank.isEmpty()).toList();
+            for (Flask emptyFlask : emptyFlasks) {
+                int newlyFilled = emptyFlask.tank.fill(copy, action);
+                filled += newlyFilled;
+                copy.setAmount(copy.getAmount() - newlyFilled);
+                if (copy.isEmpty()) {
+                    if (action.execute()) {
+                        updateClient();
+                    }
+                    return filled;
+                }
+            }
+            if (action.execute()) {
+                updateClient();
+            }
+            return filled;
+        }
+
+        @Override
+        public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty()) {
+                return FluidStack.EMPTY;
+            }
+            FluidStack copy = resource.copy();
+            for (Flask flask : flasks) {
+                if (flask.tank.getFluid().isFluidEqual(copy)) {
+                    FluidStack drained = flask.tank.drain(copy, action);
+                    copy.shrink(drained.getAmount());
+                    if (copy.isEmpty()) {
+                        if (action.execute()) {
+                            updateClient();
+                        }
+                        return resource.copy();
+                    }
+                }
+            }
+            if (action.execute()) {
+                updateClient();
+            }
+            return new FluidStack(copy.getFluid(), resource.getAmount() - copy.getAmount());
+        }
+
+        @Override
+        public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+            if (maxDrain == 0) {
+                return FluidStack.EMPTY;
+            }
+            FluidStack resource = null;
+            for (Flask flask : flasks) {
+                if (!flask.tank.isEmpty()) {
+                    if (resource == null) {
+                        resource = flask.tank.drain(maxDrain, action);
+                        maxDrain -= resource.getAmount();
+                        if (maxDrain == 0) {
+                            if (action.execute()) {
+                                updateClient();
+                            }
+                            return resource;
+                        }
+                    } else if (resource.getFluid().isSame(flask.tank.getFluid().getFluid())) {
+                        FluidStack newResource = flask.tank.drain(maxDrain, action);
+                        resource.grow(newResource.getAmount());
+                        maxDrain -= newResource.getAmount();
+                        if (maxDrain == 0) {
+                            if (action.execute()) {
+                                updateClient();
+                            }
+                            return resource;
+                        }
+                    }
+                }
+            }
+            return resource == null ? FluidStack.EMPTY : resource;
+        }
+    }
+
+    private class FlaskShelfItemHandler implements IItemHandler {
+        @Override
+        public int getSlots() {
+            return flasks.size();
+        }
+
+        @Override
+        public @NotNull ItemStack getStackInSlot(int slot) {
+            return flasks.get(slot).stackHandler.getStackInSlot(0);
+        }
+
+        @Override
+        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            if (stack.isEmpty()) {
+                return stack;
+            }
+            ItemStack copy = stack.copy();
+            List<Flask> matchingFlasks = flasks.stream().filter(f -> ItemHandlerHelper.canItemStacksStack(f.stackHandler.getStackInSlot(0), stack)).toList();
+            for (Flask matchingFlask : matchingFlasks) {
+                copy = matchingFlask.stackHandler.insertItem(0, copy, simulate);
+                if (copy.isEmpty()) {
+                    if (!simulate) {
+                        updateClient();
+                    }
+                    return copy;
+                }
+            }
+            List<Flask> emptyFlasks = flasks.stream().filter(f -> f.stackHandler.getStackInSlot(0).isEmpty()).toList();
+            for (Flask emptyFlask : emptyFlasks) {
+                copy = emptyFlask.stackHandler.insertItem(0, copy, simulate);
+                if (copy.isEmpty()) {
+                    if (!simulate) {
+                        updateClient();
+                    }
+                    return copy;
+                }
+            }
+            if (!simulate) {
+                updateClient();
+            }
+            return copy;
+        }
+
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return flasks.get(slot).stackHandler.extractItem(0, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return flasks.get(slot).stackHandler.getSlotLimit(0);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return flasks.get(slot).stackHandler.isItemValid(0, stack);
         }
     }
 

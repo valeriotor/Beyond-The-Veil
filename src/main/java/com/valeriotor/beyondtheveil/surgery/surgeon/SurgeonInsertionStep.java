@@ -59,10 +59,13 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
                 PatientStatus status = be.getPatientStatus();
                 if (status != null) {
                     surgeon.setPerformingSurgery();
-                    status.insert(null, toInsert, currentDuration++, () -> {
+                    if (!status.insert(null, toInsert, currentDuration++, () -> {
                         done = true;
                         toInsert = null;
-                    }, be);
+                    }, be)) {
+                        return true;
+                    }
+                    ;
                 }
             }
         }

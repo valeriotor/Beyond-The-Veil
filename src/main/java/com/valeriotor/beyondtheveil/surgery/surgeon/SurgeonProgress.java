@@ -106,6 +106,7 @@ public class SurgeonProgress {
         }
         tag.putInt("currentStep", currentStep);
         tag.putBoolean("valid", valid);
+        tag.put("report", report.saveToNBT());
         return tag;
     }
 }

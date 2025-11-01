@@ -50,9 +50,8 @@ public class ItemFlaskBakedModel implements IDynamicBakedModel {
     public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
         if (side == null) {
             if (renderType == RenderType.translucent()) {
-                ItemStackHandler handler = extraData.get(FlaskBE.STACK_PROPERTY);
-                if (handler != null) {
-                    ItemStack stack = handler.getStackInSlot(0);
+                ItemStack stack = extraData.get(FlaskBE.STACK_PROPERTY);
+                if (stack != null && !stack.isEmpty()) {
                     return getQuadsFromStack(stack, state, rand);
                 }
             }

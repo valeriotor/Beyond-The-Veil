@@ -39,18 +39,13 @@ public class FlaskBE extends BlockEntity {
 
     private FluidTank tank;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
-    private ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
-        return new ItemStackHandler(4) {
-            @Override
-            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
-            }
-        };
+    public static ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
+        return new FlaskStackHandler(size);
     }
 
     private final ItemStackHandler stackHandler;
     private final LazyOptional<IItemHandler> stackHolder;
-    public static final ModelProperty<ItemStackHandler> STACK_PROPERTY = new ModelProperty<>();
+    public static final ModelProperty<ItemStack> STACK_PROPERTY = new ModelProperty<>();
 
 
     public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -206,7 +201,7 @@ public class FlaskBE extends BlockEntity {
     @Override
     public @NotNull ModelData getModelData() {
         return ModelData.builder()
-                .with(STACK_PROPERTY, stackHandler)
+                .with(STACK_PROPERTY, stackHandler.getStackInSlot(0).copy())
                 .build();
     }
 
@@ -224,6 +219,25 @@ public class FlaskBE extends BlockEntity {
         @Override
         public int fill(FluidStack resource, FluidAction action) {
             return super.fill(resource, action);
+        }
+    }
+
+    public static class FlaskStackHandler extends ItemStackHandler {
+
+        private final FlaskBlock.FlaskSize size;
+
+        public FlaskStackHandler(FlaskBlock.FlaskSize size) {
+            this.size = size;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return size.allowsItems() ? 16 : 0;
         }
     }
 

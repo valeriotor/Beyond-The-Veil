@@ -91,9 +91,9 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
     public void tick() {
         super.tick();
         if (!level().isClientSide) {
-            if (growthTicks > 0 && tickCount % 20 <= 20) {
+            if (growthTicks > 0) {
                 growthTicks--;
-                entityData.set(GROWTH, entityData.get(GROWTH) + 5);
+                entityData.set(GROWTH, entityData.get(GROWTH) + 1);
                 if (entityData.get(GROWTH) > 800) {
                     level().playSound(null, blockPosition(), BTVSounds.HEART_RIP.get(), SoundSource.NEUTRAL, 1, 1);
                     SurgeonEntity surgeon = new SurgeonEntity(BTVEntities.SURGEON.get(), level());

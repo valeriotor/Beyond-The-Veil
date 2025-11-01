@@ -41,7 +41,7 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                     if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()) {
                         FluidStack drain = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), 1), IFluidHandler.FluidAction.SIMULATE);
                         if (!drain.isEmpty()) {
-                            if (surgeon.distanceToSqr(container.getCenter()) < 6) {
+                            if (surgeon.distanceToSqr(container.getCenter()) < 10) {
                                 surgeon.setPerformingSurgery();
                                 FluidStack drained = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), Math.min(5, reportStep.getAmount() - tank.getFluidAmount())), IFluidHandler.FluidAction.EXECUTE);
                                 tank.fill(drained, IFluidHandler.FluidAction.EXECUTE);
@@ -50,6 +50,7 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                             } else {
                                 if (surgeon.tickCount % 20 <= 1) {
                                     surgeon.getNavigation().moveTo(container.getX(), container.getY(), container.getZ(), 1);
+                                    return false;
                                 }
                             }
                         }
@@ -65,8 +66,9 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                 PatientStatus patientStatus = be.getPatientStatus();
                 if (patientStatus != null) {
                     surgeon.setPerformingSurgery();
+                    int prevAmount = tank.getFluidAmount();
                     patientStatus.inject(null, tank.drain(1, IFluidHandler.FluidAction.SIMULATE), be, tank);
-                    if (tank.getFluidAmount() == 0) {
+                    if (tank.getFluidAmount() == 0 || tank.getFluidAmount() == prevAmount) {
                         return true;
                     }
                 }

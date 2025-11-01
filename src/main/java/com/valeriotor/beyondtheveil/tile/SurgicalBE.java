@@ -38,6 +38,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -49,6 +50,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -215,6 +217,14 @@ public abstract class SurgicalBE extends BlockEntity {
         if (pTag != null)
             super.load(pTag);
         loadPatient(pTag);
+    }
+
+    @Override
+    public void setLevel(@NotNull Level pLevel) {
+        super.setLevel(pLevel);
+        if (pLevel instanceof ServerLevel sl && patientStatus != null) {
+            patientStatus.setLevelAndCoords(sl, getBlockPos());
+        }
     }
 
     private void loadPatient(CompoundTag pTag) {

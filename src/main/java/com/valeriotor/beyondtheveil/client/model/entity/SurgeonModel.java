@@ -313,7 +313,7 @@ public class SurgeonModel extends AnimatedModel<SurgeonEntity> {
         this.Eye10.x = -5+offset/7;
         this.Eye12.x = 5+offset/7;
         this.Eye13.z = -1+offset/7;
-        this.Eye15.y = 6-offset/7;
+        this.Eye15.y = -0.8F-offset/7;
         this.Eye17.y = -1+offset/7;
         this.Eye18.z = -1-offset/7;
         offset = Mth.sin((ageInTicks)%50 / 7.95F)/16;
@@ -323,10 +323,10 @@ public class SurgeonModel extends AnimatedModel<SurgeonEntity> {
         this.Eye3.x = 5.0F-offset/7;
         this.Eye5.x = -5.0F-offset/7;
         this.Eye6.y = 7.0F+offset/7;
-        this.Eye7.x = 7.0F-offset/7;
+        this.Eye7.x = -5.2F-offset/7;
         this.Eye9.z = -1+offset/7;
         this.Eye11.x = 5+offset/7;
-        this.Eye16.y = 1.3F+offset/7;
+        this.Eye16.y = -0.8F+offset/7;
         this.Eye14.y = -1+offset/7;
         this.LowerBody2.yRot = offset;
         //this.LeftUpperTentacle2.xRot = 1.7756979809790308F + offset*1.5F;
