@@ -34,6 +34,7 @@ public enum BloodPoolEntityType {
         return switch (type) {
             case VILLAGER -> VILLAGER;
             case WEEPER -> WEEPER;
+            case PLAYER -> null;
         };
     }
 

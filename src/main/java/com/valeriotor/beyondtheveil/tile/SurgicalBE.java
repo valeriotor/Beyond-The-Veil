@@ -6,10 +6,10 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
-import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
-import com.valeriotor.beyondtheveil.item.HeldVillagerItem;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -19,25 +19,20 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,7 +44,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,6 +59,8 @@ public abstract class SurgicalBE extends BlockEntity {
     private boolean hasFlebo;
     private ColorTriplet color;
     private UUID fleboOwner;
+    private UUID usingPlayer; // TODO
+    private UUID lyingPlayer;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -78,8 +74,11 @@ public abstract class SurgicalBE extends BlockEntity {
         }
         if (level.isClientSide)
             return true;
-        if (entityData != null) {
-            if (in.isEmpty() && !p.isShiftKeyDown()) {
+        if (hand != InteractionHand.MAIN_HAND) { // TODO is this correct?
+            return false;
+        }
+        if (patientStatus != null) {
+            if (in.isEmpty() && !p.isShiftKeyDown() && entityData != null) {
                 //ItemStack heldVillager = new ItemStack(Registration.HELD_VILLAGER.get());
                 //heldVillager.getOrCreateTag().put("data", entityData);
                 //heldVillager.getOrCreateTag().put("status", patientStatus.saveToNBT(new CompoundTag()));
@@ -104,19 +103,19 @@ public abstract class SurgicalBE extends BlockEntity {
                         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                         return true;
                     }
-                } else {
-                    // TODO player becomes patient
                 }
 
             } else {
                 return handleSurgery(p, in);
             }
         } else {
+            boolean flag = true;
             if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
                 CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                 CrossSync crossSync = csData.getCrossSync();
                 Mob heldPatientEntity = crossSync.getHeldPatientEntity(level);
                 if (heldPatientEntity != null) {
+                    flag = false;
                     entityData = crossSync.getHeldPatientData();
                     patientStatus = new PatientStatus(crossSync.getHeldPatientType());
                     patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
@@ -133,6 +132,17 @@ public abstract class SurgicalBE extends BlockEntity {
                     setChanged();
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                 }
+            }
+            if (flag && in.isEmpty() && tryPlacePlayer((ServerPlayer) p)) {
+                lyingPlayer = p.getUUID();
+                patientStatus = new PatientStatus(PatientType.PLAYER);
+                patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+                patientStatus.setExposedLocation(defaultLocation);
+                p.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                    patientStatus.fromConvalescentNBT(c.saveToNBT(new CompoundTag()));
+                });
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
             }
             //if (in.getItem() instanceof HeldVillagerItem) {
             //    CompoundTag itemTag = in.getOrCreateTag();
@@ -155,6 +165,14 @@ public abstract class SurgicalBE extends BlockEntity {
 
     }
 
+    protected boolean tryPlacePlayer(ServerPlayer player) {
+        return false;
+    }
+
+    private void setPlayer(Player player) {
+
+    }
+
     public void placePatientSurgeon(PatientType type, CompoundTag heldPatientData) {
         entityData = heldPatientData;
         patientStatus = new PatientStatus(type);
@@ -168,9 +186,15 @@ public abstract class SurgicalBE extends BlockEntity {
     }
 
     public void collectPatientSurgeon(SurgeonEntity surgeon) {
+        if (patientStatus == null) {
+            return;
+        }
+        if (lyingPlayer != null) { // let the player stand up on their own
+            return;
+        }
         ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
-        if (color != null && !patientStatus.getCondition().isTerminal()) {
+        if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getPatientType() != PatientType.PLAYER) {
             if (surgeon.level() instanceof ServerLevel sl) {
                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl.getServer());
                 bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), surgeon.level());
@@ -258,6 +282,17 @@ public abstract class SurgicalBE extends BlockEntity {
             if (level != null && !level.isClientSide) {
                 patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
             }
+        } else if (pTag != null && pTag.contains("status")) { // then it's a player
+            entityData = null;
+            entity = null;
+            PatientType type = pTag.contains("type") ? PatientType.valueOf(pTag.getString("type")) : PatientType.VILLAGER;
+            patientStatus = new PatientStatus(type);
+            patientStatus.loadFromNBT(pTag.getCompound("status"));
+            if (level != null && !level.isClientSide) {
+                patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
+            }
+            lyingPlayer = pTag.getUUID("player");
+            SurgeryBedGui.updatePatientStatus(patientStatus);
         } else {
             entity = null;
             entityData = null;
@@ -312,6 +347,9 @@ public abstract class SurgicalBE extends BlockEntity {
             pTag.put("status", statusTag);
             pTag.putString("type", patientStatus.getPatientType().name());
         }
+        if (lyingPlayer != null) {
+            pTag.putUUID("player", lyingPlayer);
+        }
     }
 
 
@@ -349,11 +387,50 @@ public abstract class SurgicalBE extends BlockEntity {
         }
     }
 
+    public void wakePlayer(ServerPlayer player) {
+        if (player.getUUID().equals(lyingPlayer)) {
+            if (patientStatus != null) {
+                if (patientStatus.getCondition().isTerminal() || patientStatus.isIncised()) {
+                    player.kill();
+                } else {
+                    ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+                    player.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                        c.loadFromNBT(convalescentData.saveToNBT(new CompoundTag()));
+                    });
+                }
+            }
+            lyingPlayer = null;
+        }
+    }
+
     private int counter = 0;
 
     public void tickServer() {
+        if (level == null) {
+            return;
+        }
         if (patientStatus != null) {
             patientStatus.tick(false);
+            if (patientStatus.getPatientType() == PatientType.PLAYER) {
+                if (lyingPlayer == null) {
+                    patientStatus = null;
+                    setChanged();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                } else if (level instanceof ServerLevel sl) {
+                    ServerPlayer player = sl.getServer().getPlayerList().getPlayer(lyingPlayer);
+                    if (player == null) {
+                        patientStatus = null;
+                        lyingPlayer = null;
+                        setChanged();
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    } else if (player.level().dimension() != sl.dimension() || player.distanceToSqr(getBlockPos().getCenter()) > 4 || !player.isSleeping()) {
+                        wakePlayer(player);
+                        patientStatus = null;
+                        setChanged();
+                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    }
+                }
+            }
         }
         if (patientStatus != null) {
             if (patientStatus.isDirty()) {

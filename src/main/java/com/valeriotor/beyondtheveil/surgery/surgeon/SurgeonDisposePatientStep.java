@@ -46,7 +46,11 @@ public class SurgeonDisposePatientStep extends SurgeonStep {
             } else {
                 SurgicalBE be = moveToBE();
                 if (be != null) {
-                    be.collectPatientSurgeon(surgeon);
+                    if (be.getPatientStatus() != null && be.getPatientStatus().getPatientType() != PatientType.PLAYER) {
+                        be.collectPatientSurgeon(surgeon);
+                    } else {
+                        disposedPatient = true;
+                    }
                 }
             }
         } else {

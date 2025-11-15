@@ -376,7 +376,10 @@ public class PatientStatus {
                                     level.playSound(null, pos, BTVSounds.HEAD_STRETCH.get(), SoundSource.NEUTRAL, 1, 1);
                                 }
                             }
-
+                        } else if (fluid == BTVFluids.SOURCE_FLUID_SEDATIVE.get() && patientType == PatientType.PLAYER) {
+                            if (Math.floor(newAmount / 2) > Math.floor(prevAmount / 2)) {
+                                setDirty(true);
+                            }
                         }
                     }
                     operation.onConsume(this);
@@ -402,6 +405,10 @@ public class PatientStatus {
 
     public double getWaterAmount() {
         return fluidAmounts.getOrDefault(Fluids.WATER, 0D);
+    }
+
+    public double getSedativeAmount() {
+        return fluidAmounts.getOrDefault(BTVFluids.SOURCE_FLUID_SEDATIVE.get(), 0D);
     }
 
     /**

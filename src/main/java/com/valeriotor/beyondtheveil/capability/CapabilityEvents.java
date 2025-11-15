@@ -111,7 +111,7 @@ public class CapabilityEvents {
                 event.addCapability(new ResourceLocation(References.MODID, "trigger_data"), new TriggerDataProvider());
             }
         }
-        if (event.getObject() instanceof Villager || event.getObject() instanceof SurgeryPatient) {
+        if (event.getObject() instanceof Villager || event.getObject() instanceof SurgeryPatient || (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer))) {
             if (!event.getObject().getCapability(CONVALESCENT_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(References.MODID, "convalescent_data"), new ConvalescentDataProvider());
             }

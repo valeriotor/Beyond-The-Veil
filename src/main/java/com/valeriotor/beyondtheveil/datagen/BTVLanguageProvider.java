@@ -2241,6 +2241,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.killed_by_cultist.respawn", "Respawn, right here, §oright now.");
         add("gui.dream_bottle.title", "Dream Bottle");
         add("gui.blood_gem.title", "Blood Gem");
+        add("gui.surgery_bed.title", "Surgery Bed");
 
         addJournal();
         addLetterBox();
@@ -2261,6 +2262,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.smith.display_name", "Smith");
 
         add("gui.multiblock.layer", "Layer %d");
+
+        add("gui.surgery_bed.leave", "Leave operation");
+        add("gui.surgery_bed.leave_die", "Leave operation (die)");
 
         add("container.deep_chest", "Deep Chest");
     }

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.event;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -21,10 +22,12 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
+import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,13 +41,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -160,6 +162,18 @@ public class PlayerEvents {
     }
 
     @SubscribeEvent
+    public static void loggedOutEvent(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            BlockPos pos = event.getEntity().getOnPos();
+            Level l = event.getEntity().level();
+            BlockState state = l.getBlockState(pos);
+            if (state.getBlock() instanceof SurgeryBedBlock b && l.getBlockEntity(b.findCenter(pos, state)) instanceof SurgeryBedBE be) {
+                be.wakePlayer(sp);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void cloneEvent(PlayerEvent.Clone event) {
         addBaptismAttributes(event.getEntity());
     }
@@ -178,6 +192,22 @@ public class PlayerEvents {
     public static void syncBloodPool(ServerPlayer player) {
         if (player.getServer() != null) {
             Messages.sendToPlayer(GenericToClientPacket.syncBloodPool(player, BloodPoolData.getInstance(player.getServer())), player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void sleepingLocationCheckEvent(SleepingLocationCheckEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (player.level().getBlockState(event.getSleepingLocation()).getBlock() == Registration.SURGERY_BED.get()) {
+                event.setResult(Event.Result.ALLOW);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void sleepingTimeCheckEvent(SleepingTimeCheckEvent event) {
+        if (event.getSleepingLocation().isPresent() && event.getEntity().level().getBlockState(event.getSleepingLocation().get()).getBlock() == Registration.SURGERY_BED.get()) {
+            event.setResult(Event.Result.ALLOW);
         }
     }
 

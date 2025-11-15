@@ -42,7 +42,8 @@ public class GuiHelper {
         JOURNAL(() -> new JournalGui()),
         BLOOD_POOL(() -> new BloodPoolGui()),
         KILLED_BY_CULTIST(() -> new KilledByCultistGui()),
-        BLOOD_THESIS(() -> new BloodThesisGui());
+        BLOOD_THESIS(() -> new BloodThesisGui()),
+        SURGERY_BED(() -> new SurgeryBedGui());
 
         private Supplier<Screen> supplier;
 

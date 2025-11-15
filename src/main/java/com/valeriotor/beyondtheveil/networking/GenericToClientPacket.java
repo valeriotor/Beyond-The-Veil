@@ -272,7 +272,7 @@ public class GenericToClientPacket {
         MODIFY_BLOOD_POOL,
         CLOSEST_DEATH,
         ADD_MEMORY_TOAST,
-        BLIND_COMPLETELY,
+        BLIND_COMPLETELY
     }
 
 }

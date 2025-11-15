@@ -7,9 +7,11 @@ import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
@@ -21,6 +23,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
@@ -39,6 +42,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -65,6 +69,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -155,11 +160,13 @@ public class RenderEvents {
     @SubscribeEvent
     public static void computeCameraAngles(ViewportEvent.ComputeCameraAngles event) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player != null && rotator != null) {
-            //event.setYaw((float) rotator.computeYaw(event.getPartialTick()));
-            //event.setPitch((float) rotator.computeYaw(event.getPartialTick()));
+        if (player != null && player.getSleepingPos().isPresent()) {
+            BlockState state = player.level().getBlockState(player.getSleepingPos().get());
+            if (state.getBlock() instanceof SurgeryBedBlock b) {
+                Direction direction = state.getValue(SurgeryBedBlock.FACING);
+                event.setYaw(direction.toYRot() + 90.0F);
+            }
         }
-        //event.setYaw(0);
     }
 
 
@@ -223,6 +230,35 @@ public class RenderEvents {
             event.setCanceled(true);
             EntityRenderer<LivingEntity> deepOneRenderer = (EntityRenderer<LivingEntity>) Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(BTVEntities.DEEP_ONE.get());
             deepOneRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+        } else {
+            if (event instanceof RenderPlayerEvent.Pre) {
+                event.getPoseStack().pushPose();
+                if (p.getSleepingPos().isPresent()) {
+                    BlockState state = p.level().getBlockState(p.getSleepingPos().get());
+                    if (state.getBlock() instanceof SurgeryBedBlock b) {
+                        Direction direction = state.getValue(SurgeryBedBlock.FACING);
+                        float f1 = switch (direction) {
+                            case SOUTH:
+                                yield 90.0F;
+                            case WEST:
+                                yield 0.0F;
+                            case NORTH:
+                                yield 270.0F;
+                            case EAST:
+                                yield 180.0F;
+                            default:
+                                yield 0.0F;
+                        };
+                        event.getPoseStack().mulPose(Axis.YP.rotationDegrees(f1));
+                        //event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(this.getFlipDegrees(pEntityLiving)));
+                        event.getPoseStack().mulPose(Axis.YP.rotationDegrees(90.0F));
+                        event.getPoseStack().translate(1.5, 0, 0);
+                        Minecraft.getInstance().getEntityRenderDispatcher().setRenderShadow(false);
+                    }
+                }
+            } else {
+                event.getPoseStack().popPose();
+            }
         }
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
         if (crossSync != null) { // in theory this should never be null
@@ -464,11 +500,18 @@ public class RenderEvents {
     public static void renderGameOverlay(RenderGuiOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
-            ReminiscenceClient.renderReminiscence(event);
-            renderSyringeContents(event);
-            renderSurgeryOverlays(event);
-            renderBlackScreen(event);
-            renderRepairHammerOverlay(event);
+            if (event instanceof RenderGuiOverlayEvent.Pre) {
+                if (Minecraft.getInstance().screen instanceof SurgeryBedGui) {
+                    if (event.getOverlay() == VanillaGuiOverlay.SLEEP_FADE.type()) {
+                        event.setCanceled(true);
+                    }
+                }
+                ReminiscenceClient.renderReminiscence(event);
+                renderSyringeContents(event);
+                renderSurgeryOverlays(event);
+                renderBlackScreen(event);
+                renderRepairHammerOverlay(event);
+            }
         }
     }
 

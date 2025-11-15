@@ -14,7 +14,8 @@ import java.util.function.Function;
 public enum PatientType {
 
     VILLAGER(l -> new CrawlerEntity(BTVEntities.CRAWLER.get(), l), l -> new Villager(EntityType.VILLAGER, l)),
-    WEEPER(l -> new WeeperEntity(BTVEntities.WEEPER.get(), l))
+    WEEPER(l -> new WeeperEntity(BTVEntities.WEEPER.get(), l)),
+    PLAYER(l -> null)
     // ILLAGER, PILLAGER, PLAYER
     ;
 
