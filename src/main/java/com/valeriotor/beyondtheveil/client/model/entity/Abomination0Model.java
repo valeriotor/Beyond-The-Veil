@@ -16,8 +16,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 
-public class Abomination0Model extends AnimatedModel<Abomination0Entity> implements HeadedModel, VillagerHeadModel {
+public class Abomination0Model extends AnimatedModel<LivingEntity> implements HeadedModel, VillagerHeadModel {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "living_ammunition"), "main");
     private static final String name = "living_ammunition";
@@ -91,7 +92,7 @@ public class Abomination0Model extends AnimatedModel<Abomination0Entity> impleme
     }
 
     @Override
-    public void setupAnim(Abomination0Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         //body.xRot = - Mth.PI * 45 / 36;
         //legs.xRot += Mth.PI * 5 / 36;
@@ -113,7 +114,7 @@ public class Abomination0Model extends AnimatedModel<Abomination0Entity> impleme
     }
 
     @Override
-    public void prepareMobModel(Abomination0Entity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
+    public void prepareMobModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
         markDirty();
         resetParts();
         float ageInTicks = entity.tickCount + pPartialTick;
@@ -137,16 +138,24 @@ public class Abomination0Model extends AnimatedModel<Abomination0Entity> impleme
             f = 1.0F;
         }
 
-        if(entity.getExplodingAnimation() == null) {
+        if (entity instanceof Abomination0Entity e) {
+            if (e.getExplodingAnimation() == null) {
+                this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f;
+                this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f;
+                head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
+                head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
+            }
+
+            Animation explodingAnimation = e.getExplodingAnimation();
+            if (explodingAnimation != null) {
+                explodingAnimation.apply(pPartialTick);
+            }
+
+        } else {
             this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f;
             this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f;
             head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
             head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
-        }
-
-        Animation explodingAnimation = entity.getExplodingAnimation();
-        if (explodingAnimation != null) {
-            explodingAnimation.apply(pPartialTick);
         }
     }
 

@@ -16,8 +16,9 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
-public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
+public class BrokenBodyModel extends AnimatedModel<LivingEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "brokenbodylayer"), "main");
     private static final String name = "broken_body";
     private final ModelPart lower;
@@ -137,7 +138,7 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
     }
 
     @Override
-    public void prepareMobModel(LivingAmmunitionEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
+    public void prepareMobModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
         markDirty();
         resetParts();
         float ageInTicks = entity.tickCount + pPartialTick;
@@ -163,15 +164,18 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
             f = 1.0F;
         }
 
-        if (entity.getExplodingAnimation() == null) {
-            head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
-            head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
-        }
+        if (entity instanceof LivingAmmunitionEntity e) {
+
+            if (e.getExplodingAnimation() == null) {
+                head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
+                head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
+            }
 
 
-        Animation explodingAnimationBrokenBody = entity.getExplodingAnimationBrokenBody();
-        if (explodingAnimationBrokenBody != null) {
-            explodingAnimationBrokenBody.apply(pPartialTick);
+            Animation explodingAnimationBrokenBody = e.getExplodingAnimationBrokenBody();
+            if (explodingAnimationBrokenBody != null) {
+                explodingAnimationBrokenBody.apply(pPartialTick);
+            }
         }
         //lower.xRot += Mth.PI * 5 / 36;
         //upper.xRot = - Mth.PI * 45 / 36;
@@ -193,7 +197,7 @@ public class BrokenBodyModel extends AnimatedModel<LivingAmmunitionEntity> {
     }
 
     @Override
-    public void setupAnim(LivingAmmunitionEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void setupAnim(LivingEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
 
     }
 }

@@ -19,10 +19,12 @@ public class CrossSyncData {
         crossSync.saveToNBT(compoundTag);
     }
 
-    public void copyToNewStore(@NotNull CrossSyncData newStore) {
-        CompoundTag tag = new CompoundTag();
-        saveToNBT(tag);
-        newStore.loadFromNBT(tag);
+    public void copyToNewStore(@NotNull CrossSyncData newStore, boolean died) {
+        if (died) {
+            newStore.loadFromNBT(crossSync.saveToNBTForRespawn(new CompoundTag()));
+        } else {
+            newStore.loadFromNBT(crossSync.saveToNBT(new CompoundTag()));
+        }
     }
 }
 

@@ -1,10 +1,7 @@
 package com.valeriotor.beyondtheveil.capability.crossync;
 
-import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
-import com.valeriotor.beyondtheveil.dreaming.Memory;
-import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -14,14 +11,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-import java.util.Map;
-
 
 public class CrossSync {
 
     private PatientType heldPatientType;
     private CompoundTag heldPatientData;
     private Mob heldPatientEntity; // used serverside when placing the entity back in the world, clientside for rendering on shoulder
+    private PlayerTransformation transformation;
 
     public <T extends Mob & SurgeryPatient> void setHeldPatient(T heldPatient, Player player) {
         if (heldPatient != null) {
@@ -63,6 +59,15 @@ public class CrossSync {
         return heldPatientEntity;
     }
 
+    public void setTransformation(PlayerTransformation transformation, Player player) {
+        this.transformation = transformation;
+        sync(player);
+    }
+
+    public PlayerTransformation getTransformation() {
+        return transformation;
+    }
+
     public void sync(Player player) {
         if (player != null && !player.level().isClientSide) {
             Messages.sendToTrackingAndSelf(GenericToClientPacket.crossSync(player, this), player);
@@ -75,13 +80,27 @@ public class CrossSync {
         } else {
             setHeldPatient(null, null);
         }
+        if (compoundTag.contains("transformation")) {
+            setTransformation(PlayerTransformation.valueOf(compoundTag.getString("transformation")), null);
+        } else {
+            setTransformation(null, null);
+        }
     }
 
-    public void saveToNBT(CompoundTag compoundTag) {
+    public CompoundTag saveToNBT(CompoundTag compoundTag) {
+        saveToNBTForRespawn(compoundTag);
+        if (transformation != null) {
+            compoundTag.putString("transformation", transformation.name());
+        }
+        return compoundTag;
+    }
+
+    public CompoundTag saveToNBTForRespawn(CompoundTag compoundTag) {
         if (heldPatientType != null) {
             compoundTag.putString("heldPatientType", heldPatientType.name());
             compoundTag.put("heldPatientData", heldPatientData);
         }
+        return compoundTag;
     }
 
 

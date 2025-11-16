@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.BrokenBodyModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
+import com.valeriotor.beyondtheveil.entity.Abomination0Entity;
 import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -18,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class BrokenBodyLayer<T extends LivingAmmunitionEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class BrokenBodyLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation BROKEN_BODY_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/broken_body.png");
     private final BrokenBodyModel brokenBodyModel;
 
@@ -29,7 +30,7 @@ public class BrokenBodyLayer<T extends LivingAmmunitionEntity, M extends EntityM
 
     @Override
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity.isExploding()) {
+        if (true) {
             brokenBodyModel.prepareMobModel(pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
             brokenBodyModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
             renderColoredCutoutModel(brokenBodyModel, getTextureLocation(pLivingEntity), pPoseStack, pBuffer, pPackedLight, pLivingEntity, 1, 1, 1);

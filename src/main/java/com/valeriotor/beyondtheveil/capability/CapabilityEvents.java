@@ -138,7 +138,7 @@ public class CapabilityEvents {
         });
         event.getOriginal().getCapability(CROSS_SYNC_DATA).ifPresent(oldData -> {
             event.getEntity().getCapability(CROSS_SYNC_DATA).ifPresent(newData -> {
-                oldData.copyToNewStore(newData);
+                oldData.copyToNewStore(newData, event.isWasDeath());
                 newData.getCrossSync().sync(event.getEntity());
             });
         });

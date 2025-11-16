@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.gui.DreamBottleGui;
 import com.valeriotor.beyondtheveil.client.gui.DrownedGui;
 import com.valeriotor.beyondtheveil.client.gui.GearBenchGui;
@@ -20,13 +21,11 @@ import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
-import com.valeriotor.beyondtheveil.entity.SurgeonLarvaEntity;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.tile.BloodWellBE;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
@@ -36,7 +35,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -51,6 +50,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 import static com.valeriotor.beyondtheveil.Registration.ARCHE_DIAL;
 
@@ -211,9 +213,16 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(BTVBlockEntities.BLOOD_WELL_BE.get(), BloodWellBER::new);
     }
 
+    public static Map<PlayerTransformation, LivingEntityRenderer<LivingEntity, ?>> moreRenderers = new EnumMap<>(PlayerTransformation.class);
+
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.AddLayers event) {
-
+        // Hijacking this to add additional renderers
+        // TODO might not actually be necessary
+        moreRenderers.clear();
+        moreRenderers.put(PlayerTransformation.ABOMINATION_0, event.getRenderer(BTVEntities.ABOMINATION_0.get()));
+        moreRenderers.put(PlayerTransformation.ABOMINATION_1, event.getRenderer(BTVEntities.ABOMINATION_1.get()));
+        moreRenderers.put(PlayerTransformation.DEEP_ONE, event.getRenderer(BTVEntities.DEEP_ONE.get()));
     }
 
     @SubscribeEvent

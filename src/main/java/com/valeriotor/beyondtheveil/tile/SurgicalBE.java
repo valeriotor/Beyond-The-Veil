@@ -5,12 +5,14 @@ import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -29,6 +31,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -137,7 +140,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 lyingPlayer = p.getUUID();
                 patientStatus = new PatientStatus(PatientType.PLAYER);
                 patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
-                patientStatus.setExposedLocation(defaultLocation);
+                patientStatus.setExposedLocation(SurgicalLocation.CHEST);
                 p.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                     patientStatus.fromConvalescentNBT(c.saveToNBT(new CompoundTag()));
                 });
@@ -397,6 +400,13 @@ public abstract class SurgicalBE extends BlockEntity {
                     player.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                         c.loadFromNBT(convalescentData.saveToNBT(new CompoundTag()));
                     });
+                    EntityType<?> a = BTVEntities.getTriggerEntity(convalescentData, convalescentData.getTriggerData()).getA();
+                    for (PlayerTransformation value : PlayerTransformation.values()) {
+                        if (a == value.getEntityType()) {
+                            player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setTransformation(value, player));
+                            break;
+                        }
+                    }
                 }
             }
             lyingPlayer = null;

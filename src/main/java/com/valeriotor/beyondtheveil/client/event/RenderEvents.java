@@ -10,7 +10,9 @@ import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
@@ -20,6 +22,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
@@ -37,6 +40,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -72,6 +76,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -81,7 +86,9 @@ import org.joml.Matrix4f;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_DURATION;
 import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_PEAK;
@@ -215,9 +222,36 @@ public class RenderEvents {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void renderPlayer(RenderPlayerEvent event) {
         Player p = event.getEntity();
+        if (event.isCanceled()) {
+            return;
+        }
+        boolean shouldRenderAsPlayer = true;
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+        if (crossSync != null) { // in theory this should never be null
+            PlayerTransformation transformation = crossSync.getTransformation();
+            if (transformation != null) {
+                shouldRenderAsPlayer = false;
+                LivingEntityRenderer<LivingEntity, ?> entityRenderer = ClientSetup.moreRenderers.get(transformation);
+                float f = Mth.lerp(event.getPartialTick(), p.yRotO, p.getYRot());
+                event.setCanceled(true);
+                entityRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+            }
+            if (shouldRenderAsPlayer) {
+                Mob heldPatientEntity = crossSync.getHeldPatientEntity(p.level());
+                if (heldPatientEntity != null) {
+                    PoseStack poseStack = event.getPoseStack();
+                    poseStack.pushPose();
+                    float scaleFactor = 1;
+                    poseStack.scale(scaleFactor, scaleFactor, scaleFactor);
+                    poseStack.mulPose(Axis.YP.rotation((float) (Math.PI - Math.toRadians(Mth.rotLerp(event.getPartialTick(), p.yBodyRotO, p.yBodyRot)))));
+                    Minecraft.getInstance().getEntityRenderDispatcher().render(heldPatientEntity, -0.4, 1.3, 0.1, 0, event.getPartialTick(), poseStack, event.getMultiBufferSource(), event.getPackedLight());
+                    poseStack.popPose();
+                }
+            }
+        }
         if (false) {
             //Entity entity = Minecraft.getInstance().getCameraEntity();
             //double d0 = p.xOld + (p.position().x - p.xOld) * (double)event.getPartialTick();
@@ -230,7 +264,8 @@ public class RenderEvents {
             event.setCanceled(true);
             EntityRenderer<LivingEntity> deepOneRenderer = (EntityRenderer<LivingEntity>) Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(BTVEntities.DEEP_ONE.get());
             deepOneRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
-        } else {
+        }
+        if (shouldRenderAsPlayer) {
             if (event instanceof RenderPlayerEvent.Pre) {
                 event.getPoseStack().pushPose();
                 if (p.getSleepingPos().isPresent()) {
@@ -253,24 +288,16 @@ public class RenderEvents {
                         //event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(this.getFlipDegrees(pEntityLiving)));
                         event.getPoseStack().mulPose(Axis.YP.rotationDegrees(90.0F));
                         event.getPoseStack().translate(1.5, 0, 0);
+                        if (p.level().getBlockEntity(b.findCenter(p.getSleepingPos().get(), state)) instanceof SurgeryBedBE be) {
+                            if (be.getPatientStatus() != null && be.getPatientStatus().getExposedLocation() == SurgicalLocation.BACK) {
+                                event.getPoseStack().mulPose(Axis.XP.rotationDegrees(180));
+                            }
+                        }
                         Minecraft.getInstance().getEntityRenderDispatcher().setRenderShadow(false);
                     }
                 }
             } else {
                 event.getPoseStack().popPose();
-            }
-        }
-        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
-        if (crossSync != null) { // in theory this should never be null
-            Mob heldPatientEntity = crossSync.getHeldPatientEntity(p.level());
-            if (heldPatientEntity != null) {
-                PoseStack poseStack = event.getPoseStack();
-                poseStack.pushPose();
-                float scaleFactor = 1;
-                poseStack.scale(scaleFactor, scaleFactor, scaleFactor);
-                poseStack.mulPose(Axis.YP.rotation((float) (Math.PI - Math.toRadians(Mth.rotLerp(event.getPartialTick(), p.yBodyRotO, p.yBodyRot)))));
-                Minecraft.getInstance().getEntityRenderDispatcher().render(heldPatientEntity, -0.4, 1.3, 0.1, 0, event.getPartialTick(), poseStack, event.getMultiBufferSource(), event.getPackedLight());
-                poseStack.popPose();
             }
         }
     }
@@ -421,7 +448,7 @@ public class RenderEvents {
     @SubscribeEvent
     public static void fogEvent(ViewportEvent.RenderFog event) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if(ClientData.getInstance().isBlinded()) {
+        if (ClientData.getInstance().isBlinded()) {
             event.setFarPlaneDistance(0);
             event.setNearPlaneDistance(0);
             event.setCanceled(true);
@@ -443,7 +470,7 @@ public class RenderEvents {
     @SubscribeEvent
     public static void fogColorEvent(ViewportEvent.ComputeFogColor event) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if(ClientData.getInstance().isBlinded()) {
+        if (ClientData.getInstance().isBlinded()) {
             event.setRed(0);
             event.setGreen(0);
             event.setBlue(0);

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client.gui;
 
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -64,6 +65,9 @@ public class SurgeryBedGui extends Screen {
 
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (patientStatus != null) {
+            if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
+                pGuiGraphics.fill(0, 0, width, height, 0xFF1D0400);
+            }
             double currentPain = patientStatus.getCurrentPain();
             if (currentPain > 0) {
                 int color = (Math.min(100, (int) currentPain) << 24) | 0xFF0000;

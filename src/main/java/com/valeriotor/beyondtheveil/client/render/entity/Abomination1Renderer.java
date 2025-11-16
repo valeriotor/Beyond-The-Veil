@@ -7,12 +7,14 @@ import com.valeriotor.beyondtheveil.entity.Abomination1Entity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.client.renderer.entity.layers.VillagerProfessionLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 
-public class Abomination1Renderer extends MobRenderer<Abomination1Entity, Abomination1Model> {
+public class Abomination1Renderer extends LivingEntityRenderer<LivingEntity, Abomination1Model> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/abomination1.png");
 
@@ -22,7 +24,12 @@ public class Abomination1Renderer extends MobRenderer<Abomination1Entity, Abomin
     }
 
     @Override
-    public void render(Abomination1Entity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+    protected boolean shouldShowName(LivingEntity pEntity) {
+        return super.shouldShowName(pEntity) && (pEntity.shouldShowName() || pEntity.hasCustomName() && pEntity == this.entityRenderDispatcher.crosshairPickEntity);
+    }
+
+    @Override
+    public void render(LivingEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
         pPoseStack.scale(1.08F, 1.08F, 1.08F);
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
@@ -30,7 +37,7 @@ public class Abomination1Renderer extends MobRenderer<Abomination1Entity, Abomin
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Abomination1Entity pEntity) {
+    public ResourceLocation getTextureLocation(LivingEntity pEntity) {
         return TEXTURE;
     }
 }
