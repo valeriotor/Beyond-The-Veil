@@ -27,7 +27,7 @@ public class BurstRegistry {
     public static final BurstType BASE = register(new BurstType("base") {
 
         @Override
-        public List<LivingEntity> getHitEntities(Mob attacker, int extension) {
+        public List<LivingEntity> getHitEntities(LivingEntity attacker, int extension) {
             double radius = (extension + 1) * 3;
             Vec3 burstCentre = attacker.position(); //burstCentre(attacker, radius);
             AABB filter = new AABB(burstCentre.x - 10, burstCentre.y - 10, burstCentre.z - 10, burstCentre.x + 10, burstCentre.y + 10, burstCentre.z + 10);

@@ -1,7 +1,10 @@
 package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
+import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.WaypointType;
@@ -17,16 +20,15 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientData {
 
     private static ClientData instance = new ClientData();
-    private int blindnessTimer;
 
     public static ClientData getInstance() {
         return instance;
@@ -51,6 +53,8 @@ public class ClientData {
     private int contactFogLevel = 0;
     private List<BlockPos> closeDeaths = new ArrayList<>();
     private int closestDeathTimer;
+    private int blindnessTimer;
+    private Map<UUID, List<Animation>> playerAnimations = new HashMap<>();
 
     public void addWaypoint(CompoundTag tag) {
         WaypointType type = WaypointType.valueOf(tag.getString("type"));
@@ -86,7 +90,7 @@ public class ClientData {
         archeSavedData = new ArcheSavedData(tag.getCompound("data"));
     }
 
-    public void tick() {
+    public void tick(TickEvent.ClientTickEvent event) {
         if(!Minecraft.getInstance().isPaused()) {
             if (contactTimer > 0) {
                 if (contactFogLevel < 200) {
@@ -113,7 +117,35 @@ public class ClientData {
             if (blindnessTimer > 0) {
                 blindnessTimer--;
             }
+            if (event.phase == TickEvent.Phase.END) {
+                for (Iterator<Map.Entry<UUID, List<Animation>>> iterator = playerAnimations.entrySet().iterator(); iterator.hasNext(); ) {
+                    Map.Entry<UUID, List<Animation>> e = iterator.next();
+                    for (Iterator<Animation> iterator2 = e.getValue().iterator(); iterator2.hasNext(); ) {
+                        Animation animation = iterator2.next();
+                        animation.update();
+                        if (animation.isDone()) {
+                            iterator2.remove();
+                        }
+                    }
+                    if (e.getValue().isEmpty()) {
+                        iterator.remove();
+                    }
+                }
+            }
         }
+    }
+
+    public Animation getPlayerAnimation(UUID uuid, AnimatedModel<?> model) {
+        for (Animation animation : playerAnimations.getOrDefault(uuid, new ArrayList<>())) {
+            if (animation.matchesModel(model)) {
+                return animation;
+            }
+        }
+        return null;
+    }
+
+    public void startPlayerAnimation(UUID playerId, int animationId) {
+        playerAnimations.computeIfAbsent(playerId, uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.animationFromId(animationId)));
     }
 
     public void renewContact() {

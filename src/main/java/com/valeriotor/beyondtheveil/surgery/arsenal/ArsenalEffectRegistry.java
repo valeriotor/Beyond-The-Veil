@@ -73,7 +73,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType HARM_UNDEAD = register(new ArsenalEffectType("harm_undead") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             if (target.getMobType() == MobType.UNDEAD) {
                 target.hurt(target.damageSources().magic(), (float) (15 << amplifier));
             }
@@ -82,7 +82,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType HARM_ARTHROPODS = register(new ArsenalEffectType("harm_arthropods") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             if (target.getMobType() == MobType.ARTHROPOD) {
                 target.hurt(target.damageSources().magic(), (float) (15 << amplifier));
             }
@@ -91,7 +91,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType ENWEB = register(new ArsenalEffectType("enweb") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             amplifier = 0;
             Level l = target.level();
             for (int x = -amplifier; x <= amplifier; x++) {
@@ -111,7 +111,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType DAMAGE_ARMOR = register(new ArsenalEffectType("damage_armor") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             double damagePercent = 0.15 * amplifier;
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 if (slot.isArmor()) {
@@ -126,7 +126,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType KNOCK_UPWARDS = register(new ArsenalEffectType("knock_upwards") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             if (target instanceof ServerPlayer player) {
                 Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, amplifier, 0), player);
             } else {
@@ -137,7 +137,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType CREATE_SLIME = register(new ArsenalEffectType("create_slime") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             if (!(target instanceof Slime)) {
                 Slime slime = new Slime(EntityType.SLIME, target.level());
                 slime.setSize((amplifier + 2) * 2, true);
@@ -150,7 +150,7 @@ public class ArsenalEffectRegistry {
 
     public static final ArsenalEffectType EVERYONE_TARGET = register(new ArsenalEffectType("everyone_target") {
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             double d = switch (amplifier) {
                 case 0 -> 10;
                 case 1 -> 20;

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.client.animation;
 
 import com.valeriotor.beyondtheveil.client.animation.Transformer.OperatorWithStartAmount;
+import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,6 +30,10 @@ public class Animation {
                 dynamicStart = true;
             }
         }
+    }
+
+    public boolean matchesModel(AnimatedModel<?> model) {
+        return template.matchesModel(model);
     }
 
     private boolean dynamicStart() {

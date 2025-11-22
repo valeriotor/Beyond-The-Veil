@@ -2,13 +2,22 @@ package com.valeriotor.beyondtheveil.client.event;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.client.KeyBindings;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
@@ -29,6 +38,7 @@ import net.minecraftforge.fml.common.Mod;
 public class InputEvents {
 
     private static NautilusPropellerSoundInstance propellerSound;
+    private static int explosionTicks;
 
     @SubscribeEvent
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
@@ -62,14 +72,40 @@ public class InputEvents {
             }
         }
         ClientMethods.tick(event);
-        ClientData.getInstance().tick();
+        ClientData.getInstance().tick(event);
+        if (!Minecraft.getInstance().isPaused()) {
+            if (event.phase == TickEvent.Phase.END) {
+                if (explosionTicks > 0) {
+                    explosionTicks--;
+                }
+            }
+
+        }
     }
 
     @SubscribeEvent
     public static void keyInputEvent(InputEvent.Key event) {
         ReminiscenceClient.keyInputEvent(event);
+        transform(event);
     }
 
+    private static void transform(InputEvent.Key event) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (event.getKey() == KeyBindings.transform.getKey().getValue() && p != null) {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+            if (crossSync != null) {
+                PlayerTransformation transformation = crossSync.getTransformation();
+                if (transformation != null && transformation.isCanExplode() && explosionTicks == 0) {
+                    explosionTicks = 30;
+                    Messages.sendToServer(GenericToServerPacket.startPlayerExplosion());
+                }
+            }
+        }
+    }
+
+    public static int getExplosionTicks() {
+        return explosionTicks;
+    }
 
     @SubscribeEvent
     public static void mouseScrollEvent(InputEvent.MouseScrollingEvent event) {

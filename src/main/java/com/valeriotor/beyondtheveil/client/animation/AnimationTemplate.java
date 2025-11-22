@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class AnimationTemplate {
     private final String name;
     private int length;
-    private AnimatedModel model;
+    private AnimatedModel<?> model;
     public List<Transformer> transformers;
     private static final boolean DEBUG = false;
 
@@ -109,6 +109,10 @@ public class AnimationTemplate {
 
     public void markDirty() {
         model.markDirty();
+    }
+
+    public boolean matchesModel(AnimatedModel<?> model) {
+        return model == this.model;
     }
 
     record Period(int start, int end) {

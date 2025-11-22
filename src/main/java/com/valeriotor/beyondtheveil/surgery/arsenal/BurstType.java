@@ -17,6 +17,6 @@ public abstract class BurstType {
         return name;
     }
 
-    public abstract List<LivingEntity> getHitEntities(Mob attacker, int extension);
+    public abstract List<LivingEntity> getHitEntities(LivingEntity attacker, int extension);
 
 }

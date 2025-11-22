@@ -23,6 +23,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -183,6 +184,13 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.BLIND_COMPLETELY, tag);
     }
 
+    public static GenericToClientPacket startPlayerAnimation(ServerPlayer player, AnimationTemplate animation) {
+        CompoundTag tag = new CompoundTag();
+        tag.putUUID("player", player.getUUID());
+        tag.putInt("anim", AnimationRegistry.idFromAnimation(animation));
+        return new GenericToClientPacket(MessageType.START_PLAYER_ANIMATION, tag);
+    }
+
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
     //    CompoundTag tag = new CompoundTag();
     //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
@@ -242,6 +250,7 @@ public class GenericToClientPacket {
                     case CLOSEST_DEATH -> ClientData.getInstance().setClosestDeath(tag.getAllKeys().stream().map(tag::getLong).map(BlockPos::of).toList());
                     case ADD_MEMORY_TOAST -> ClientMethods.unlockMemoryToast(Memory.getMemoryFromDataName(tag.getString("memory")));
                     case BLIND_COMPLETELY -> ClientData.getInstance().blindCompletely();
+                    case START_PLAYER_ANIMATION -> ClientData.getInstance().startPlayerAnimation(tag.getUUID("player"), tag.getInt("anim"));
                 }
             });
         });
@@ -272,7 +281,8 @@ public class GenericToClientPacket {
         MODIFY_BLOOD_POOL,
         CLOSEST_DEATH,
         ADD_MEMORY_TOAST,
-        BLIND_COMPLETELY
+        BLIND_COMPLETELY,
+        START_PLAYER_ANIMATION
     }
 
 }

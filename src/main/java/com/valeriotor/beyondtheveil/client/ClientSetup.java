@@ -125,6 +125,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onRegisterKeybindings(RegisterKeyMappingsEvent event) {
         event.register(KeyBindings.reminisce);
+        event.register(KeyBindings.transform);
     }
 
 

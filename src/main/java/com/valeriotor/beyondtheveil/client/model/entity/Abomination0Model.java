@@ -5,6 +5,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.Abomination0Entity;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -17,6 +18,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class Abomination0Model extends AnimatedModel<LivingEntity> implements HeadedModel, VillagerHeadModel {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -151,11 +153,15 @@ public class Abomination0Model extends AnimatedModel<LivingEntity> implements He
                 explodingAnimation.apply(pPartialTick);
             }
 
-        } else {
+        } else if (entity instanceof Player player) {
             this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f;
             this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f;
             head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
             head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
+            Animation anim = ClientData.getInstance().getPlayerAnimation(player.getUUID(), this);
+            if (anim != null) {
+                anim.apply(pPartialTick);
+            }
         }
     }
 

@@ -30,7 +30,7 @@ public class Burst {
         return extension;
     }
 
-    public List<LivingEntity> getHitEntities(Mob attacker) {
+    public List<LivingEntity> getHitEntities(LivingEntity attacker) {
         return burstType.getHitEntities(attacker, extension);
     }
 

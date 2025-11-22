@@ -162,6 +162,14 @@ public class RenderEvents {
 
     @SubscribeEvent
     public static void renderArmEvent(RenderArmEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
+            if (crossSync.getTransformation() != null) {
+                event.setCanceled(true);
+            }
+
+        }
     }
 
     @SubscribeEvent
@@ -538,7 +546,22 @@ public class RenderEvents {
                 renderSurgeryOverlays(event);
                 renderBlackScreen(event);
                 renderRepairHammerOverlay(event);
+                renderExplosionRedScreen(event);
             }
+        }
+    }
+
+    private static void renderExplosionRedScreen(RenderGuiOverlayEvent event) {
+        int explosionTicks = InputEvents.getExplosionTicks();
+        if (explosionTicks > 0 && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+            PoseStack poseStack = event.getGuiGraphics().pose();
+            poseStack.pushPose();
+            poseStack.translate(0, 0, 10);
+            Matrix4f matrix4f = poseStack.last().pose();
+            Window window = Minecraft.getInstance().getWindow();
+            int alpha = -(explosionTicks - 30) * 100 / 300;
+            event.getGuiGraphics().fill(0, 0, window.getGuiScaledWidth(), window.getGuiScaledWidth(), alpha << 24 | 0xFF0000);
+            poseStack.popPose();
         }
     }
 

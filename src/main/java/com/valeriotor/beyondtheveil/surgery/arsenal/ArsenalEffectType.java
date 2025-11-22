@@ -23,7 +23,7 @@ public abstract class ArsenalEffectType {
         return Component.translatable("arsenal." + name);
     }
 
-    public abstract void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles);
+    public abstract void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles);
 
     public static class ArsenalStatusEffectType extends ArsenalEffectType {
 
@@ -47,7 +47,7 @@ public abstract class ArsenalEffectType {
         }
 
         @Override
-        public void doEffect(Mob attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
+        public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             amplifier = effect == MobEffects.DAMAGE_RESISTANCE ? Math.min(3, amplifier) : amplifier;
             target.addEffect(new MobEffectInstance(effect, durationArray.durationArray[duration] * 20, amplifier, false, true));
         }

@@ -30,7 +30,7 @@ public class ArsenalEffect {
         this.hideParticles = hideParticles;
     }
 
-    public void process(Mob attacker, LivingEntity target) {
+    public void process(LivingEntity attacker, LivingEntity target) {
         if (effectType != null) {
             effectType.doEffect(attacker, target, durations.size(), amplifiers.size(), hideParticles);
         }

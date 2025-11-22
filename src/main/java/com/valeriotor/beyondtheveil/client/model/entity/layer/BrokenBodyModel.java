@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client.model.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
@@ -17,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class BrokenBodyModel extends AnimatedModel<LivingEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "brokenbodylayer"), "main");
@@ -164,18 +166,20 @@ public class BrokenBodyModel extends AnimatedModel<LivingEntity> {
             f = 1.0F;
         }
 
+        Animation explodingAnimation = null;
+
         if (entity instanceof LivingAmmunitionEntity e) {
 
-            if (e.getExplodingAnimation() == null) {
-                head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
-                head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
-            }
+            explodingAnimation = e.getExplodingAnimationBrokenBody();
+        } else if (entity instanceof Player player) {
+            explodingAnimation = ClientData.getInstance().getPlayerAnimation(player.getUUID(), this);
+        }
 
-
-            Animation explodingAnimationBrokenBody = e.getExplodingAnimationBrokenBody();
-            if (explodingAnimationBrokenBody != null) {
-                explodingAnimationBrokenBody.apply(pPartialTick);
-            }
+        if (explodingAnimation != null) {
+            explodingAnimation.apply(pPartialTick);
+        } else {
+            head.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 4.5;
+            head.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 4.5;
         }
         //lower.xRot += Mth.PI * 5 / 36;
         //upper.xRot = - Mth.PI * 45 / 36;
