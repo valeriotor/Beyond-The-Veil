@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -30,6 +32,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -83,7 +86,27 @@ public class PlayerTickEvents {
             decrementArcheBreath(event);
             sendOtherPlayerDeathCoords(event);
             surgeonBellParticles(event);
+            transformationTickEvents(event);
         }
+    }
+
+    private static void transformationTickEvents(TickEvent.PlayerTickEvent event) {
+        event.player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> {
+            CrossSync crossSync = crossSyncData.getCrossSync();
+            if ((event.player.tickCount & 3) == 0 && crossSync.getTransformation() != null && event.player instanceof ServerPlayer sp) {
+                ItemStack selected = event.player.getInventory().getSelected();
+                if (!selected.isEmpty()) {
+                    if (sp.isUsingItem() && sp.getUsedItemHand() == InteractionHand.MAIN_HAND) sp.stopUsingItem();
+                    sp.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                    sp.drop(selected, false, false);
+                }
+                ItemStack offHandItem = sp.getItemInHand(InteractionHand.OFF_HAND);
+                if (!offHandItem.isEmpty()) {
+                    sp.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                    sp.drop(offHandItem, false, false);
+                }
+            }
+        });
     }
 
     private static void surgeonBellParticles(TickEvent.PlayerTickEvent event) {
