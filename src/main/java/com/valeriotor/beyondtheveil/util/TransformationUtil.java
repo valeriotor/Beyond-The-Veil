@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -40,8 +41,12 @@ public class TransformationUtil {
                     });
                 }).toTimer();
                 PlayerTimerData.for_(player).addTimer(timer);
-                Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.ammunition_explode), player);
-                Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.ammunition_explode_body), player);
+                if (crossSync.getTransformation() == PlayerTransformation.ABOMINATION_0) {
+                    Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.ammunition_explode), player);
+                    Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.ammunition_explode_body), player);
+                } else if (crossSync.getTransformation() == PlayerTransformation.ABOMINATION_1) {
+                    Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.abomination1_explode), player);
+                }
             }
         });
 

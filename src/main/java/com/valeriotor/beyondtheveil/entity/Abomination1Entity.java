@@ -28,7 +28,7 @@ public class Abomination1Entity extends LivingAmmunitionEntity{
     @Override
     public List<GenericToClientPacket> getAnimationPackets() {
         List<GenericToClientPacket> animationPackets = new ArrayList<>();
-        //animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.ammunition_explode, getId(), 0));
+        animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.abomination1_explode, getId(), 0));
         //animationPackets.add(GenericToClientPacket.startAnimation(AnimationRegistry.ammunition_explode_body, getId(), 1));
         return animationPackets;
     }

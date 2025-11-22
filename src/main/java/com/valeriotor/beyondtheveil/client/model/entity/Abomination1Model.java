@@ -2,6 +2,10 @@ package com.valeriotor.beyondtheveil.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.entity.Abomination0Entity;
 import com.valeriotor.beyondtheveil.entity.Abomination1Entity;
 import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -12,7 +16,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class Abomination1Model extends AnimatedModel<LivingEntity> implements VillagerHeadModel{
     // Made with Blockbench 4.12.2
@@ -25,6 +31,7 @@ public class Abomination1Model extends AnimatedModel<LivingEntity> implements Vi
     private static final String name = "abomination_1";
     private final ModelPart body;
     private final ModelPart main;
+    private final ModelPart abdomen;
     private final ModelPart bone;
     private final ModelPart bone3;
     private final ModelPart bone4;
@@ -45,6 +52,7 @@ public class Abomination1Model extends AnimatedModel<LivingEntity> implements Vi
         super(name);
         this.body = registerAnimatedPart(root, "body");
         this.main = registerAnimatedPart(this.body, "main");
+        this.abdomen = registerAnimatedPart(this.main, "abdomen");
         this.bone = registerAnimatedPart(this.main, "bone");
         this.bone3 = registerAnimatedPart(this.bone, "bone3");
         this.bone4 = registerAnimatedPart(this.bone, "bone4");
@@ -63,12 +71,16 @@ public class Abomination1Model extends AnimatedModel<LivingEntity> implements Vi
     }
 
     public static LayerDefinition createBodyLayer() {
+
+
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition main = body.addOrReplaceChild("main", CubeListBuilder.create().texOffs(26, 26).addBox(-4.0F, -9.0F, -3.0F, 8.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -11.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
+        PartDefinition main = body.addOrReplaceChild("main", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -11.0F, 0.0F, 0.0F, 0.0F, 0.1745F));
+
+        PartDefinition abdomen = main.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(26, 26).addBox(-4.0F, -4.5F, -3.0F, 8.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.5F, 0.0F));
 
         PartDefinition bone = main.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(0.0F, -9.0F, 0.0F));
 
@@ -108,11 +120,11 @@ public class Abomination1Model extends AnimatedModel<LivingEntity> implements Vi
 
         PartDefinition LeftLeg = legs.addOrReplaceChild("LeftLeg", CubeListBuilder.create().texOffs(0, 22).mirror().addBox(-1.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(2.0F, -12.0F, 0.0F, -0.1787F, 0.2148F, -0.0734F));
 
-        PartDefinition LeftLowerLeg = LeftLeg.addOrReplaceChild("LeftLowerLeg", CubeListBuilder.create().texOffs(0, 30).mirror().addBox(-1.0F, -1.0F, -2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 5.0F, 0.0F, 0.3054F, 0.0F, 0.0F));
+        PartDefinition LeftLowerLeg = LeftLeg.addOrReplaceChild("LeftLowerLeg", CubeListBuilder.create().texOffs(0, 30).mirror().addBox(-0.9F, -1.0F, -2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 5.0F, 0.0F, 0.3054F, 0.0F, 0.0F));
 
         PartDefinition RightLeg = legs.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -12.0F, 0.0F, 0.1965F, -0.2141F, -0.0074F));
 
-        PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create().texOffs(0, 30).addBox(-2.0F, -1.0F, -2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 5.0F, 0.0F, 0.3054F, 0.0F, 0.0F));
+        PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create().texOffs(0, 30).addBox(-2.1F, -1.0F, -2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 5.0F, 0.0F, 0.3054F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -120,6 +132,78 @@ public class Abomination1Model extends AnimatedModel<LivingEntity> implements Vi
     @Override
     public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
+    }
+
+    @Override
+    public void prepareMobModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float pPartialTick) {
+        markDirty();resetParts();
+        float ageInTicks = entity.tickCount + pPartialTick;
+        float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (24 * 1.5F)) / 15;
+        float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (13 * 1.5F)) / 45;
+        float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (17 * 1.5F)) / 45;
+        float offset4 = Mth.sin((float) Math.PI * 2 * ageInTicks / (21 * 1.5F)) / 45;
+        //head.zRot = 0.5236F + offset1;
+        main.xRot = offset2;
+        main.zRot = 0.1745F + offset3;
+        //left_arm.xRot = 0.7F;
+        //right_arm.xRot = 0.7F;
+        bone3.xRot = offset4 / 2;
+        bone6.zRot = -0.3491F + offset1 / 2;
+        bone7.zRot = 0.3491F - offset2 / 2;
+        LeftLeg.yRot = 0.2148F + offset1;
+        RightLeg.yRot = -0.2141F + offset4 * 2;
+
+        //abdomen.xScale = 1.2F;
+        //abdomen.yScale = 1.2F;
+        //abdomen.zScale = 1.2F;
+        //bone.yRot = 0.3F;
+        //bone3.xRot = 0.6F;
+        //bone6.zRot = 0;
+        //bone7.zRot = 0;
+        //bone6.x = -60;
+        //bone6.zRot = -1;
+        //bone7.x = 60;
+        //bone7.zRot = 1;
+        //abdomen.visible = false;
+        //bone3.z = 60;
+        //bone3.xRot = -1;
+        boolean flag = entity.getFallFlyingTicks() > 4;
+
+        float f = 1.0F;
+        if (flag) {
+            f = (float) entity.getDeltaMovement().lengthSqr();
+            f /= 0.2F;
+            f *= f * f;
+        }
+
+        if (f < 1.0F) {
+            f = 1.0F;
+        }
+
+        if (entity instanceof Abomination1Entity e) {
+            if (e.getExplodingAnimation() == null) {
+                this.RightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f / 1.4F;
+                this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 1.4F;
+                main.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 9.5;
+                main.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 9.5;
+            }
+
+            Animation explodingAnimation = e.getExplodingAnimation();
+            if (explodingAnimation != null) {
+                explodingAnimation.apply(pPartialTick);
+            }
+
+        } else if (entity instanceof Player player) {
+            this.RightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / f / 1.4F;
+            this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 1.4F;
+            main.zRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / f / 9.5;
+            main.xRot += Mth.cos(limbSwing * 0.5662F + 1) * 1F * limbSwingAmount / f / 9.5;
+            //main.xRot = 1;
+            Animation anim = ClientData.getInstance().getPlayerAnimation(player.getUUID(), this);
+            if (anim != null) {
+                anim.apply(pPartialTick);
+            }
+        }
     }
 
     @Override

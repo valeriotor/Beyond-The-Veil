@@ -240,9 +240,9 @@ public class RenderEvents {
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
         if (crossSync != null) { // in theory this should never be null
             PlayerTransformation transformation = crossSync.getTransformation();
-            if (transformation != null) {
+            if (transformation != null || true) {
                 shouldRenderAsPlayer = false;
-                LivingEntityRenderer<LivingEntity, ?> entityRenderer = ClientSetup.moreRenderers.get(transformation);
+                LivingEntityRenderer<LivingEntity, ?> entityRenderer = ClientSetup.moreRenderers.get(PlayerTransformation.ABOMINATION_1);
                 float f = Mth.lerp(event.getPartialTick(), p.yRotO, p.getYRot());
                 event.setCanceled(true);
                 entityRenderer.render(p, f, event.getPartialTick(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());

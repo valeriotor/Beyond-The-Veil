@@ -107,7 +107,9 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         if (level().isClientSide) {
             if (explodingAnimation != null && !explodingAnimation.isDone()) {
                 explodingAnimation.update();
-                explodingAnimationBrokenBody.update();
+                if (explodingAnimationBrokenBody != null) {
+                    explodingAnimationBrokenBody.update();
+                }
             }// else {
             //    explodingAnimation = new Animation(AnimationRegistry.ammunition_explode);
             //    explodingAnimationBrokenBody = new Animation(AnimationRegistry.ammunition_explode_body);

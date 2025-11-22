@@ -1,0 +1,28 @@
+model: abomination_1
+length: 45
+start: 10: 30
+    resx: abdomen: 1.2: linear: absolute
+    resy: abdomen: 1.2: linear: absolute
+    resz: abdomen: 1.2: linear: absolute
+    rotx: bone3: 0.6: linear: absolute
+    rotz: bone6: 0.0: linear: absolute
+    rotz: bone7: 0.0: linear: absolute
+start: 13: 16
+    roty: bone: 0.3: linear: absolute
+start: 17: 20
+    roty: bone: -0.3: linear: absolute
+start: 21: 24
+    roty: bone: 0.3: linear: absolute
+start: 25: 28
+    roty: bone: -0.3: linear: absolute
+start : 29: 30
+    roty: bone: 0: linear: absolute
+start: 30: 31
+    visi: abdomen: -1: immediate: absolute
+start: 32: 45
+    trax: bone6: -180: linear: absolute
+    trax: bone7: 180: linear: absolute
+    rotz: bone6: -2.8: linear: absolute
+    rotz: bone7: 2.8: linear: absolute
+    traz: bone3: 180: linear: absolute
+    rotx: bone3: -2.8: linear: absolute
