@@ -66,7 +66,7 @@ public class SurgeryBedGui extends Screen {
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (patientStatus != null) {
             if (patientStatus.getExposedLocation() == SurgicalLocation.BACK) {
-                pGuiGraphics.fill(0, 0, width, height, 0xFF1D0400);
+                //pGuiGraphics.fill(0, 0, width, height, 0xFF1D0400);
             }
             double currentPain = patientStatus.getCurrentPain();
             if (currentPain > 0) {

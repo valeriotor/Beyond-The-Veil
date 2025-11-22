@@ -22,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
 
     private static final ResourceLocation VILLAGER_BASE_SKIN = new ResourceLocation("textures/entity/villager/villager.png");
+    private final PatientWoundLayer woundLayer;
 
 
     public CrawlerRenderer(EntityRendererProvider.Context context) {
@@ -29,7 +30,8 @@ public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
         this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
         this.addLayer(new VillagerProfessionLayer<>(this, context.getResourceManager(), "villager"));
         this.addLayer(new CrossedArmsItemLayer<>(this, context.getItemInHandRenderer()));
-        this.addLayer(new PatientWoundLayer<>(this, context.getModelSet()));
+        woundLayer = new PatientWoundLayer(this, context.getModelSet());
+        this.addLayer(woundLayer);
     }
 
     @Override

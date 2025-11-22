@@ -14,13 +14,19 @@ import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
+import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
+import com.valeriotor.beyondtheveil.client.render.entity.CrawlerRenderer;
+import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
+import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
@@ -275,7 +281,8 @@ public class RenderEvents {
         }
         if (shouldRenderAsPlayer) {
             if (event instanceof RenderPlayerEvent.Pre) {
-                event.getPoseStack().pushPose();
+                PoseStack pose = event.getPoseStack();
+                pose.pushPose();
                 if (p.getSleepingPos().isPresent()) {
                     BlockState state = p.level().getBlockState(p.getSleepingPos().get());
                     if (state.getBlock() instanceof SurgeryBedBlock b) {
@@ -292,13 +299,44 @@ public class RenderEvents {
                             default:
                                 yield 0.0F;
                         };
-                        event.getPoseStack().mulPose(Axis.YP.rotationDegrees(f1));
+                        pose.mulPose(Axis.YP.rotationDegrees(f1));
                         //event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(this.getFlipDegrees(pEntityLiving)));
-                        event.getPoseStack().mulPose(Axis.YP.rotationDegrees(90.0F));
-                        event.getPoseStack().translate(1.5, 0, 0);
+                        pose.mulPose(Axis.YP.rotationDegrees(90.0F));
+                        pose.translate(1.75, 0, 0);
+                        //pose.mulPose(Axis.YP.rotationDegrees(90.0F));
                         if (p.level().getBlockEntity(b.findCenter(p.getSleepingPos().get(), state)) instanceof SurgeryBedBE be) {
-                            if (be.getPatientStatus() != null && be.getPatientStatus().getExposedLocation() == SurgicalLocation.BACK) {
-                                event.getPoseStack().mulPose(Axis.XP.rotationDegrees(180));
+                            PatientStatus status = be.getPatientStatus();
+                            if (status != null && status.getExposedLocation() == SurgicalLocation.BACK) {
+                                pose.mulPose(Axis.XP.rotationDegrees(180));
+                            }
+                            if (status != null) {
+                                if (status.isIncised()) {
+                                    if (status.getExposedLocation() == SurgicalLocation.CHEST) {
+                                        ChestWoundModel<CrawlerEntity> model = PatientWoundLayer.chestWoundModel;
+                                        pose.pushPose();
+                                        pose.mulPose(Axis.ZP.rotationDegrees(180));
+                                        pose.scale(-1.0F, -1.0F, 1.0F);
+                                        pose.translate(-1.23F, -1.393F, 0.095F);
+
+                                        model.setupAnim(p.tickCount + event.getPartialTick(), status);
+                                        model.renderToBuffer(pose, event.getMultiBufferSource().getBuffer(model.renderType(PatientWoundLayer.CHEST_WOUND_TEXTURE)), event.getPackedLight(), OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F, !status.getFlags().containsKey("extract_heart"));
+                                        pose.popPose();
+                                    } else {
+                                        WoundModel<CrawlerEntity> model = PatientWoundLayer.woundModel;
+                                        pose.pushPose();
+                                        pose.mulPose(Axis.ZP.rotationDegrees(180));
+                                        pose.scale(-1.0F, -1.0F, 1.0F);
+                                        //pose.translate(0, -0.15, 2);
+                                        pose.translate(-1.033F, -1.133F, 0.0F);
+                                        pose.mulPose(Axis.YP.rotationDegrees(90));
+                                        pose.scale(0.95F, 0.95F, 0.95F);
+                                        //pose.translate(0.0F, -1.501F, 0.0F);
+
+                                        model.setupAnim(p.tickCount + event.getPartialTick(), status);
+                                        model.renderToBuffer(pose, event.getMultiBufferSource().getBuffer(model.renderType(PatientWoundLayer.WOUND_TEXTURE)), event.getPackedLight(), OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F, !status.getFlags().containsKey(OperationRegistry.SPINELESS));
+                                        pose.popPose();
+                                    }
+                                }
                             }
                         }
                         Minecraft.getInstance().getEntityRenderDispatcher().setRenderShadow(false);

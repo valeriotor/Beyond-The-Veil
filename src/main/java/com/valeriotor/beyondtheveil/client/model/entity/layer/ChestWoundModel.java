@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -19,6 +20,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 
 public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityModel<T> {
@@ -46,7 +48,11 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getPatientStatus().getFlags().containsKey("great_heart")) {
+        setupAnim(ageInTicks, entity.getPatientStatus());
+    }
+
+    public void setupAnim(float ageInTicks, PatientStatus status) {
+        if (status.getFlags().containsKey("great_heart")) {
             heart.xScale = heart.yScale = heart.zScale = 1.5F;
             heart.x = -0.5F;
             ageInTicks /= 2;
@@ -69,7 +75,7 @@ public class ChestWoundModel<T extends Entity & SurgeryPatient> extends EntityMo
             offset = 1 - ((floatingModulus - 29) / 3);
         }
         offset *= 0.2F;
-        heart.y = 23.5F + (entity.getPatientStatus().getCondition() != PatientCondition.DEAD ? offset : 0);
+        heart.y = 23.5F + (status.getCondition() != PatientCondition.DEAD ? offset : 0);
     }
 
     @Override
