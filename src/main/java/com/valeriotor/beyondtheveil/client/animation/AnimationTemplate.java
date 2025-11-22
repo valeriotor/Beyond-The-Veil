@@ -14,16 +14,22 @@ import java.util.function.Function;
 
 public class AnimationTemplate {
     private final String name;
+    private final int id;
     private int length;
     private AnimatedModel<?> model;
     public List<Transformer> transformers;
     private static final boolean DEBUG = false;
 
 
-    public AnimationTemplate(String name, boolean client) {
+    public AnimationTemplate(String name, boolean client, int id) {
         this.name = name;
+        this.id = id;
         if(client)
             parseFile(name);
+    }
+
+    public int getId() {
+        return id;
     }
 
     private void parseFile(String name) {

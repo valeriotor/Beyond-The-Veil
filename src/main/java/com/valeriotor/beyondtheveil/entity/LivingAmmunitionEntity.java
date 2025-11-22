@@ -121,15 +121,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
                 double zComponent = Math.cos(Math.toRadians(getYRot()));
                 if (!wasBleeding) {
                     wasBleeding = true;
-                    for (int i = 0; i < 30; i++) {
-                        double direction = Math.random() * 2 * Math.PI;
-                        double xSpeed = -Math.sin(direction);
-                        double zSpeed = Math.cos(direction);
-                        for (int j = 0; j < 5 * (1 + bleeding); j++) {
-                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
-                            level().addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), getX(), getY() + 1, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 0, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));
-                        }
-                    }
+                    makeExplosionBleed(level(), bleeding, getX(), getY(), getZ());
                 }
                 for (int i = 0; i < 2; i++) {
                     level().addParticle(BTVParticles.BLOODSPILL.get(), getX() + xComponent / 2, getY() + 1, getZ() + zComponent / 2, xComponent * (2 + Math.random()), 1.5, zComponent * (2 + Math.random()));
@@ -176,6 +168,18 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
                     }
                     deathTimer = 15;
                 }
+            }
+        }
+    }
+
+    public static void makeExplosionBleed(Level level, int extension, double x, double y, double z) {
+        for (int i = 0; i < 30; i++) {
+            double direction = Math.random() * 2 * Math.PI;
+            double xSpeed = -Math.sin(direction);
+            double zSpeed = Math.cos(direction);
+            for (int j = 0; j < 5 * (1 + extension); j++) {
+                level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), x, y + 1, z, xSpeed * (1.5 + extension / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + extension / 3D) * (1 + Math.random()));
+                level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), x, y + 1, z, xSpeed * (1.5 + extension / 3D) * (1 + Math.random()), 0, zSpeed * (1.5 + extension / 3D) * (1 + Math.random()));
             }
         }
     }

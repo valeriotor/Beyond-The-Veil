@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
@@ -60,7 +61,7 @@ public class GenericToClientPacket {
     public static GenericToClientPacket startAnimation(AnimationTemplate animation, int entityId, int channel) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("id", entityId);
-        tag.putInt("anim", AnimationRegistry.idFromAnimation(animation));
+        tag.putInt("anim", animation.getId());
         tag.putInt("channel", channel);
         return new GenericToClientPacket(MessageType.START_ANIMATION, tag);
     }
@@ -187,8 +188,17 @@ public class GenericToClientPacket {
     public static GenericToClientPacket startPlayerAnimation(ServerPlayer player, AnimationTemplate animation) {
         CompoundTag tag = new CompoundTag();
         tag.putUUID("player", player.getUUID());
-        tag.putInt("anim", AnimationRegistry.idFromAnimation(animation));
+        tag.putInt("anim", animation.getId());
         return new GenericToClientPacket(MessageType.START_PLAYER_ANIMATION, tag);
+    }
+
+    public static GenericToClientPacket makeExplosionBlood(double x, double y, double z, int burstSize) {
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("x", x);
+        tag.putDouble("y", y);
+        tag.putDouble("z", z);
+        tag.putInt("burst", burstSize);
+        return new GenericToClientPacket(MessageType.MAKE_EXPLOSION_BLOOD, tag);
     }
 
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
@@ -251,6 +261,7 @@ public class GenericToClientPacket {
                     case ADD_MEMORY_TOAST -> ClientMethods.unlockMemoryToast(Memory.getMemoryFromDataName(tag.getString("memory")));
                     case BLIND_COMPLETELY -> ClientData.getInstance().blindCompletely();
                     case START_PLAYER_ANIMATION -> ClientData.getInstance().startPlayerAnimation(tag.getUUID("player"), tag.getInt("anim"));
+                    case MAKE_EXPLOSION_BLOOD -> LivingAmmunitionEntity.makeExplosionBleed(ClientMethods.getLevel(), tag.getInt("burst"), tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
                 }
             });
         });
@@ -282,7 +293,8 @@ public class GenericToClientPacket {
         CLOSEST_DEATH,
         ADD_MEMORY_TOAST,
         BLIND_COMPLETELY,
-        START_PLAYER_ANIMATION
+        START_PLAYER_ANIMATION,
+        MAKE_EXPLOSION_BLOOD
     }
 
 }

@@ -38,6 +38,7 @@ public class TransformationUtil {
                             }
                         }
                         player1.kill();
+                        Messages.sendToTrackingAndSelf(GenericToClientPacket.makeExplosionBlood(player1.getX(), player.getY(), player.getZ(), burst == null ? 2 : burst.getExtension()), player1);
                     });
                 }).toTimer();
                 PlayerTimerData.for_(player).addTimer(timer);

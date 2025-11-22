@@ -34,6 +34,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -200,6 +201,10 @@ public class ClientMethods {
                 c.loadMemories(tag);
             });
         }
+    }
+
+    public static Level getLevel() {
+        return Minecraft.getInstance().level;
     }
 
     //public static void addColoredParticle(CompoundTag tag) {

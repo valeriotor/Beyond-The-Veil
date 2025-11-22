@@ -93,23 +93,19 @@ public class AnimationRegistry {
     }
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {
-        if(client) {
-            AnimationTemplate anim = new AnimationTemplate(name, client);
+        if (client) {
+            AnimationTemplate anim = new AnimationTemplate(name, client, id);
             animations.add(anim);
             animationToId.put(anim, id);
             return anim;
         }
-        AnimationTemplate anim = new AnimationTemplate(name, client);
+        AnimationTemplate anim = new AnimationTemplate(name, client, id);
         animations.add(anim);
         return anim;
     }
 
     public static AnimationTemplate animationFromId(int id) {
         return animations.get(id);
-    }
-
-    public static int idFromAnimation(AnimationTemplate animation) {
-        return animationToId.get(animation);
     }
 
 
