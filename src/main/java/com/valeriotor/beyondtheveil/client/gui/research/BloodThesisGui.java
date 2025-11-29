@@ -80,16 +80,6 @@ public class BloodThesisGui extends Screen {
                 blocks.add(empty());
             }
         }
-        // temporary
-        blocks.add(new RitualPicture("blood_bricks"));
-        blocks.add(new RitualPicture("coral_staff"));
-        blocks.add(new RitualPicture("bleeding_belt"));
-        blocks.add(new RitualPicture("bind_item_damage"));
-        blocks.add(new RitualPicture("bind_item_weakness"));
-        blocks.add(new RitualPicture("bind_pillar"));
-        blocks.add(new RitualPicture("pool_flebo"));
-        blocks.add(new RitualPicture("summon_wither"));
-        blocks.add(new RitualPicture("summon_living_portal"));
 
         return blocks;
     }
@@ -366,11 +356,11 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(0, 0, 0);
             poseStack.scale(1.55F, 1.55F, 1);
-            graphics.drawString(Minecraft.getInstance().font, title, 0, 20, color);
+            graphics.drawString(Minecraft.getInstance().font, title, 0, 10, color);
             poseStack.popPose();
             poseStack.pushPose();
-            poseStack.translate(0, 70, 0);
-            text.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - 70, pPartialTick);
+            poseStack.translate(0, 55, 0);
+            text.render(poseStack, graphics, color, relativeMouseX, relativeMouseY - 55, pPartialTick);
             poseStack.popPose();
         }
     }
@@ -400,23 +390,28 @@ public class BloodThesisGui extends Screen {
 
     private enum TextChapter {
         BACKGROUND(2),
-        RITUAL(3),
-        RISKS(3),
-        MODIFIER(3),
+        RITUAL(3, List.of(), true),
+        RISKS(2, List.of(), true),
+        MODIFIER(2),
         CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT)),
         BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO)),
         MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL));
 
         private final int length;
         private final List<RitualTemplate> rituals;
+        private final boolean preamble;
 
         TextChapter(int length) {
             this(length, List.of());
         }
 
         TextChapter(int length, List<RitualTemplate> rituals) {
+            this(length, rituals, false);
+        }
+        TextChapter(int length, List<RitualTemplate> rituals, boolean preamble) {
             this.length = length;
             this.rituals = rituals;
+            this.preamble = preamble;
         }
 
         private List<Element> makeChapter() {
@@ -427,6 +422,13 @@ public class BloodThesisGui extends Screen {
             }
             elements.add(new ChapterTitle(ordinal(), Component.translatable("research.thesis." + name().toLowerCase() + ".title").withStyle(Fonts.ACADEMIC_STYLE)));
             Font f = Minecraft.getInstance().font;
+            if (preamble) {
+                TextUtil util = new TextUtil();
+                elements.addAll(util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".preamble"), TEXT_BLOCK_WIDTH, f));
+                for (int j = 0; j < 3; j++) {
+                    elements.add(Separators.smallSeparator(TEXT_BLOCK_WIDTH));
+                }
+            }
             for (int i = 0; i < length; i++) {
                 elements.add(new SectionTitle(Component.translatable("research.thesis." + name().toLowerCase() + ".section." + (i + 1)).withStyle(Fonts.ACADEMIC_STYLE)));
                 TextUtil util = new TextUtil();

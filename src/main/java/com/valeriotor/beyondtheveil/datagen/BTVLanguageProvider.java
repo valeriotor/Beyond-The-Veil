@@ -717,7 +717,6 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.unlock.addenda", "This Memory will be found in the \"%1$s\" research in Al Azif.");
 
 
-
         add("dreams.timesdreamt", "I have Dreamt %1$s/%2$s times today.");
         add("dreams.maybeinthefuture", "No effect came from this dream, and yet I still felt a tingling. Maybe it'll work in the future, under different circumstances.");
         add("dreams.lowlevel", "I need more strength.");
@@ -1312,6 +1311,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.idle.my.option", "My cozy stronghold.");
 
     }
+
     private void addShoremanDialogue() {
         addShoremanLighthouseKeeperDialogue();
         addShoremanScholarDialogue();
@@ -1454,7 +1454,6 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_carpenter.communed3.start.0", "Greetings.");
         add("dialogue.shoreman_carpenter.communed3.farewell_.option", "Farewell.");
         add("dialogue.shoreman_carpenter.communed3.let's.option", "Let's trade.");
-
 
 
         add("dialogue.shoreman_bartender.initial.start.0", "Hmph. We do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
@@ -2110,7 +2109,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.extracted_spine.text", "Extract a spine, then release the patient.");
         add("research.SPINES.stage.0", "What makes a human stand tall and straight in the face of adversity, and to always rise from every fall?\\n" +
                 "The parallels are clear, and the millennia-old syncretism of the studies of body and soul is precisely what I seek to delve into. To deprive a human of its spine – however sickening – may prove the link with its power of will. \\n" +
-                        "A spine extraction is a painful operation that requires an incision to be present.");
+                "A spine extraction is a painful operation that requires an incision to be present.");
         add("research.SPINES.stage.1", "The convalescent can no longer walk, though this does not prove much. I sadly do not have a proper way – especially with a patient so crippled – to verify their lack or presence of willpower. Not yet, at least. However, the knowledge of how to extract a spine may prove a valuable resource, along with the spines themselves.");
 
         add("research.BONE_TIARA.title", "Bone Tiara");
@@ -2297,16 +2296,126 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Subsequently, we introduce a list of known rituals from the surveyed cultures—our purpose is purely academic and made for the purpose of documentation, and we have not engaged in any of the ceremonies, nor enacted them ourselves. Chapter 5 will describe creation rituals, used in manufacturing unusual items; Chapter 6 is a report of various binding rituals, aimed at creating links across objects and entities; finally, Chapter 7 explains manifestation rituals, used in bringing life to various effects or creatures.\\n" +
                 "This work raises no ethical concerns.");
 
+        add("research.thesis.ritual.title", "Performing the Ritual");
+        add("research.thesis.ritual.preamble", "Despite the diversity of their practitioners across the world, all ritual sacrifice traditions employ the same components and maneuvers, suggesting a common origin. In this chapter, we describe the steps undertaken to enact such practice by the slayer, who may have been a priest, shaman, necromancer, or any other sort of miracle worker.");
+        add("research.thesis.ritual.section.1", "2.1 Components");
+        add("research.thesis.ritual.text.1", "The core of the ritual is the sacrifice altar: this has traditionally been used to embrace the victim, acting as both origin and destination of the blood nucleus. Living humans were placed upon the altar in order to fuel the procedure with their own lifeblood.\\n" +
+                "The second major component is the blood basin: these apparatuses were placed around the altar to host the ingredients used in the ritual. Their position relative to the altar was deemed inconsequential, as long as they were not exceedingly distant.\\n" +
+                "Finally, in order to start the ritual proper, the slayer would employ a sacrificial knife: a small curved blade, capable of inflicting precise cuts in the flesh.");
+        add("research.thesis.ritual.section.2", "2.2 Starting the ritual");
+        add("research.thesis.ritual.text.2", "Before the ritual began, two types of resources were required:\\n" +
+                "• First, the offerings described by the ritual procedure. These were placed upon the basins surrounding the altar.\\1" +
+                "• Then, the sacrifice: a mortal human that was placed upon the altar.\\n" +
+                "Once all of that was done, the practitioner cut open the victim using the sacrificial knife. This did not start the ritual yet; rather, it bound slayer and martyr, allowing the former to extend the link over the necessary blood basins.\\n" +
+                "Thus, the slayer would use the bloody knife—without ever letting it go from his or her hands—atop of each blood basin. This bound each offering contained in the basins, and had to be done in order, as prescribed by the ritual. According to reports, this would birth a veritable chain of blood, linking every ingredient.\\n" +
+                "Finally, after binding every ingredient in order, the slayer used the knife on the victim once more, thus closing the loop. This began the ritual.");
+        add("research.thesis.ritual.section.3", "2.3 Monitoring the process");
+        add("research.thesis.ritual.text.3", "After the ritual’s start, a *blood nucleus would appear*, slowly traversing from victim to offering, to the next offering, and so forth, until returning to its origin. Upon reaching an offering, the nucleus would temporarily stop, burning the ingredient, and only proceeding after this was complete. Once the nucleus has returned to the victim, the ritual ends, successfully executing the intended effects.");
 
-        add("research.thesis.ritual.title", "Performing the ritual");
         add("research.thesis.risks.title", "Risks");
+        add("research.thesis.risks.preamble", "Blood rituals were known to be perilous undertakings, with several unpredictable complications having been observed over time. There is no agreement as to the cause of this—some have proposed that the unwanted developments were due to the unnatural handling of blood, in itself an unstable substance; others claim that the blood nucleus held the victim’s remaining fragments of consciousness, and that stirring them awake would invoke retribution.\\n" +
+                "Though we can only speculate as to what the true cause may have been, we have observed common patterns in the described events, consistent across different cultures. Below, we attempt to categorize these effects, along with the suggested response.");
+        add("research.thesis.risks.section.1", "3.1 Rejecting offerings");
+        add("research.thesis.risks.text.1", "The most common unexpected event was, quite simply, an ingredient being knocked out from the basin it was standing upon. Most of the time, the object was simply dropped on the ground; at times, however, it may have been utterly destroyed. For this reason, it was generally always recommended to hold copies of each offering ready at hand.\\n" +
+                "Though the ritual could reject any offerings, so too would it lament any ones lost in this manner. This contradiction meant that if, at any point, the blood nucleus could not make progress due to a missing ingredient on the current basin, the “instability” of the ritual would have grown, leading to more problematic effects. It was thus imperative to replace any missing offerings forthwith: a basin lacking its ingredient would normally have emitted smoke, leading to easy identification.");
+        add("research.thesis.risks.section.2", "3.2 Further effects");
+        add("research.thesis.risks.text.2", "Rituals facing high instability could quickly turn into nightmares for the practitioner: various harmful events have been reported, including explosions, lightning strikes, and even the appearance of undead creatures, captivated by the ritual for obvious reasons.\\n" +
+                "The greatest risk, of course, was an abrupt end to the ritual, signifying a loss of the ingredients and a waste of a life.");
+
         add("research.thesis.modifier.title", "Modifiers");
+        add("research.thesis.modifier.section.1", "4.1 Altering the ritual");
+        add("research.thesis.modifier.text.1", "Despite the associated risks, some practitioners deviated from the rigid recipe prescribed by the ritual descriptions, revealing a small degree of flexibility within their setup. Some rituals could thus be slightly modified in order to change their effects or the process of the sacrifice itself.\\n" +
+                "To do this, additional offerings were placed on the blood basins surrounding the altar. During the linking process, after the initial cut but before the proper start of the ritual, the modifier ingredients would have to be linked first among all offerings. Below, we list some of the more common such modifiers.");
+        add("research.thesis.modifier.section.2", "4.2 Modifiers");
+        add("research.thesis.modifier.text.2", "• Reducing instability: [...] could reduce the risk of adverse effects occurring, starting from the risk of offerings being rejected in the first place.\\n" +
+                "• Returning ingredients: a diamond, used as an offering, was said to provide a chance of some other offering in the ritual not being fully burned by the blood nucleus, allowing it to be salvaged.\\n" +
+                "• Targeting locations: some rituals allowed for their effects to take place at specific locations. To do this, either a pathway sigil or immortal sigil could be used, the latter specifying the target individual’s current location (if within the same dimension).");
 
         add("research.thesis.creation.title", "Creation Rituals");
+        add("research.thesis.ritual.blood_bricks.title", "Blood Bricks");
+        add("research.thesis.ritual.blood_bricks.text", "The victims’ blood could infuse normal stone bricks with its essence, leading credence that the resulting blood bricks contained some snippet of life—some claimed that walking within a structure built from these blocks could raise the echo of their deceased fathers and mothers, though this has never been corroborated with evidence.\\n" +
+                "Most importantly, these were used in the construction of blood wells: structures said to open portal veins through the roots of the world for undead to walk through.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• Up to four stacks of stone bricks, of any size.");
         add("research.thesis.ritual.coral_staff.title", "Coral Staff");
-        add("research.thesis.ritual.coral_staff.text", "The coral staff\\nwas used\\netc.");
+        add("research.thesis.ritual.coral_staff.text", "Crafted from the sea invertebrates so resemblant of our own blood vessels, coral staffs epitomize the link between the red fluid and its ancient progenitor: water.\\n" +
+                "These objects were indeed used to build links and, in so doing, command the undead. By using them on two hearts lying on the ground, one could bind them together, making any undead attracted to the first heart eventually proceed towards the second. The second heart could also be linked to a third one, and so forth, creating an arbitrarily long chain of bindings and leading to a veritable procession of the damned.\\n" +
+                "Additionally, striking any creature with a coral staff had the effect of attracting the attention of any nearby undead towards the unfortunate victim.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A fire coral\\1" +
+                "• A Heart of the Sea\\1" +
+                "• A heart");
+        add("research.thesis.ritual.bleeding_belt.title", "Bleeding Belt");
+        add("research.thesis.ritual.bleeding_belt.text", "A belt to be worn around the waist, adorned with small thorns. Whenever harm befell the wearer, the belt would prick the skin of the stomach, drawing blood.\\n" +
+                "In so doing, the item would protect its owner from any damage, for as long as their stomach was not empty. Excessive use within a short timeframe could weaken the belt, but never irreversibly, as it would quickly repair itself on its own.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• Chains\\1" +
+                "• Two great hearts\\1" +
+                "• A cactus");
 
+        add("research.thesis.binding.title", "Binding Rituals");
+        add("research.thesis.ritual.bind_item_damage.title", "Bind item (damage)");
+        add("research.thesis.ritual.bind_item_damage.text", "This type of ritual was used by witches to gain power upon others, working as a sort of “hex” attached to arbitrary objects. The item would be bound to the one who performed the ritual; any other person possessing the item would come to much more severe harm than normal whenever struck by the bound individual.\\n" +
+                "Thus, the challenge lay in trickery: how to hand the cursed object to the detested foe, while raising nary a hint of suspicion?\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart\\1" +
+                "• The item to be bound\\1" +
+                "• A diamond sword\\1" +
+                "• A scalpel");
 
+        add("research.thesis.ritual.bind_item_weakness.title", "Bind item (weakness)");
+        add("research.thesis.ritual.bind_item_weakness.text", "The effect of this ritual is identical to the previous one, but reversed: any individual possessing the item will have its blows against the bound person become much less effective.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart\\1" +
+                "• The item to be bound\\1" +
+                "• An anvil\\1" +
+                "• A dorsal spine");
+
+        add("research.thesis.ritual.bind_pillar.title", "Bind pillar");
+        add("research.thesis.ritual.bind_pillar.text", "Offer and demand pillars are used by blood cultists to act as endpoints within their trade operations. These are known to focus on livestock, although, despite their claims to the contrary during our interviews, there is evidence indicating that this may include human lives.\\n" +
+                "Nonetheless, this ritual—also developed by the cultists—reveals an additional property of the pillars: rather than indicating a drop point for a trader, the demand pillar corresponding to the modified offer one will spawn an arbitrary creature. The particular entity is determined by the blood shard used in the ritual: such shards are obtained by repeatedly killing a certain type of creature using a sacrificial knife.\\n" +
+                "Another difference with unmodified pillars is that life exchanges performed in this manner are far from being equal trades: it may take several newborn lives as offers before a single entity is spawned around the demand pillar.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart\\1" +
+                "• An offer pillar\\1" +
+                "• A blood shard specifying the creature that shall spawn near the corresponding demand pillar");
+
+        add("research.thesis.ritual.pool_flebo.title", "Bind IV stand");
+        add("research.thesis.ritual.pool_flebo.text", "IV stands can supply patients with blood and nutrients during surgical operations, easing their pain. Yet, if the reports detailing this ritual speak true, they can be used to permanently bind the patient to the stand’s bound individual—that is, the one who performed the ritual.\\n" +
+                "This technique would rely on similar principles as the blood well does for undead: any patient fed with fluid from such a stand would vanish into thin air, and be transported to some unknown location or realm—likely far down into the depths of the world. The only one capable of recovering such patients and bringing them back to our world would be the stand’s bound human, via the use of a blood gem.\\n" +
+                "Besides the stand, the ritual requires three other items, which will dictate the location that patients will be assigned to in the form of a color code. Any dye may be used, as well as clay balls (the latter signifying “no dye”). This is done for the purpose of organizing the patients, in accordance with the blood gem’s wielder’s needs.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• Three dyes or clay balls\\1" +
+                "• The IV stand");
+
+        add("research.thesis.manifestation.title", "Manifestation Rituals");
+        add("research.thesis.ritual.summon_wither.title", "Summon Wither");
+        add("research.thesis.ritual.summon_wither.text", "Known to be terribly dangerous—their summoning has been forbidden within the walls of the Miskatonic, as well as the city of Arkham as a whole—Withers remain nonetheless a common goal among hunters, both for the challenge and the precious star animating them from their core.\\n" +
+                "This ritual was used to ease the summoning of withers, by supplementing a single wither skull with a deceased victim’s blood. However, its high instability may have made it more trouble than it was worth, and no instances of the ritual have been documented in several decades.\\n" +
+                "According to reports, the ritual could also target specific locations via appropriate modifiers.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart\\1" +
+                "• Soul sand\\1" +
+                "• A single wither skeleton skull");
+
+        add("research.thesis.ritual.summon_living_portal.title", "Summon Living Portal");
+        add("research.thesis.ritual.summon_living_portal.text", "The Nether is known to lie roughly two thirds of the way from the surface to Arché; it has thus been proposed that it may affect blood’s properties, altering its link with water. We believe this to likely play a role in the blood nucleus’s burning of the ritual offerings.\\n" +
+                "More importantly, blood’s attunement with the Nether can lead to a link being forged between it and our world: this ritual was used to create a portal and bring life to it. The resulting gateway could not be broken, and would have to be killed; for as long as it lived, it would also bring forth creatures from the Nether into the world.\\n" +
+                "We believe that this ritual could also target specific locations via appropriate modifiers.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart\\1" +
+                "• A nether star\\1" +
+                "• A blaze rod\\1" +
+                "• A ghast tear");
     }
 
     private void addBloodPool() {
