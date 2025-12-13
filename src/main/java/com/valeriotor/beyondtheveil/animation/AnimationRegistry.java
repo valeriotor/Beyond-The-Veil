@@ -17,6 +17,8 @@ public class AnimationRegistry {
     public static AnimationTemplate blood_cultist_backstab;
     public static AnimationTemplate blood_cultist_bow;
     public static AnimationTemplate blood_skeleton_swing;
+    public static AnimationTemplate blood_zombie_open_jaw_long;
+    public static AnimationTemplate blood_zombie_open_jaw_short;
     public static AnimationTemplate bonecage_crunch;
     public static AnimationTemplate cephalopodian_crunch;
     public static AnimationTemplate cephalopodian_tentacles;
@@ -59,6 +61,8 @@ public class AnimationRegistry {
         blood_cultist_backstab = registerAnimation("blood_cultist_backstab", client, i++);
         blood_cultist_bow = registerAnimation("blood_cultist_bow", client, i++);
         blood_skeleton_swing = registerAnimation("blood_skeleton_swing", client, i++);
+        blood_zombie_open_jaw_long = registerAnimation("blood_zombie_open_jaw_long", client, i++);
+        blood_zombie_open_jaw_short = registerAnimation("blood_zombie_open_jaw_short", client, i++);
         bonecage_crunch = registerAnimation("bonecage_crunch", client, i++);
         cephalopodian_crunch = registerAnimation("cephalopodian_crunch", client, i++);
         cephalopodian_tentacles = registerAnimation("cephalopodian_tentacles", client, i++);

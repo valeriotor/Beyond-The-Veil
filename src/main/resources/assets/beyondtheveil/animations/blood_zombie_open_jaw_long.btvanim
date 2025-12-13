@@ -1,0 +1,18 @@
+model: blood_zombie
+length: 140
+start: 10: 30
+    rotx: jaw: 1: linear: absolute
+start: 50: 60
+    rotx: jaw: 1.05: linear: absolute
+start: 70: 80
+    rotx: jaw: 0.95: linear: absolute
+start: 80: 90
+    rotx: jaw: 1.05: linear: absolute
+start: 90: 100
+    rotx: jaw: 0.95: linear: absolute
+start: 100: 110
+    rotx: jaw: 1.05: linear: absolute
+start: 110: 120
+    rotx: jaw: 0.95: linear: absolute
+start: 120: 130
+    rotx: jaw: 0.2618: linear: absolute

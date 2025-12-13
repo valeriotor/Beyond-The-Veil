@@ -3,13 +3,14 @@ package com.valeriotor.beyondtheveil.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.model.entity.BloodSkeletonCrawlingModel;
 import com.valeriotor.beyondtheveil.client.model.entity.BloodZombieModel;
+import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
-public class BloodZombieRenderer extends LivingEntityRenderer<LivingEntity, BloodZombieModel> {
+public class BloodZombieRenderer extends LivingEntityRenderer<BloodZombieEntity, BloodZombieModel> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(References.MODID, "textures/entity/blood_zombie.png");
 
@@ -18,17 +19,17 @@ public class BloodZombieRenderer extends LivingEntityRenderer<LivingEntity, Bloo
     }
 
     @Override
-    protected boolean shouldShowName(LivingEntity pEntity) {
+    protected boolean shouldShowName(BloodZombieEntity pEntity) {
         return super.shouldShowName(pEntity) && (pEntity.shouldShowName() || pEntity.hasCustomName() && pEntity == this.entityRenderDispatcher.crosshairPickEntity);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntity pEntity) {
+    public ResourceLocation getTextureLocation(BloodZombieEntity pEntity) {
         return TEXTURE;
     }
 
     @Override
-    protected void scale(LivingEntity pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
+    protected void scale(BloodZombieEntity pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
         pMatrixStack.scale(0.5F, 0.5F, 0.5F);
         super.scale(pLivingEntity, pMatrixStack, pPartialTickTime);
     }

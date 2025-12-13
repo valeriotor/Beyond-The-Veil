@@ -61,5 +61,11 @@
   },
   "surgeon_idle": {
     "sounds": [ "beyondtheveil:surgeon_idle0", "beyondtheveil:surgeon_idle1" ]
+  },
+  "blood_zombie_long": {
+    "sounds": [ "beyondtheveil:blood_zombie_long"]
+  },
+  "blood_zombie_short": {
+    "sounds": [ "beyondtheveil:blood_zombie_short1", "beyondtheveil:blood_zombie_short2" ]
   }
 }

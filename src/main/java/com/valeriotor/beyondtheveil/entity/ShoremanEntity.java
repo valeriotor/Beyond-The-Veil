@@ -57,7 +57,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant {
+public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant, Suspicious {
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
@@ -90,7 +90,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
         this.goalSelector.addGoal(2, new StrollThroughHamletGoal(this, 1.5D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal(this, Player.class, 10.0F));
+        this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
@@ -116,10 +116,12 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
         this.entityData.define(SUSPICIOUS_LOOK, false);
     }
 
+    @Override
     public void setSuspiciousLook(boolean value) {
         entityData.set(SUSPICIOUS_LOOK, value);
     }
 
+    @Override
     public boolean getSuspiciousLook() {
         return entityData.get(SUSPICIOUS_LOOK);
     }
@@ -171,7 +173,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant 
 
     @Override
     protected BodyRotationControl createBodyControl() {
-        return new SuspiciousBodyRotationControl(this);
+        return new SuspiciousBodyRotationControl<>(this);
     }
 
     @Override

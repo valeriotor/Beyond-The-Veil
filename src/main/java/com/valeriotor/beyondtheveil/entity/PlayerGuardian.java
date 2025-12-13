@@ -1,4 +1,5 @@
 package com.valeriotor.beyondtheveil.entity;
 
-public interface PlayerGuardian {
+public interface PlayerGuardian extends PlayerMinion {
+
 }

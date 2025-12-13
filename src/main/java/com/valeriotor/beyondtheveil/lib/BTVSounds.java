@@ -32,6 +32,8 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> SHOREMAN_DIALOGUE = registerSound("shoreman_dialogue");
     public static final RegistryObject<SoundEvent> BLOOD_RITUAL = registerSound("blood_ritual");
     public static final RegistryObject<SoundEvent> SURGEON_IDLE = registerSound("surgeon_idle");
+    public static final RegistryObject<SoundEvent> BLOOD_ZOMBIE_LONG = registerSound("blood_zombie_long");
+    public static final RegistryObject<SoundEvent> BLOOD_ZOMBIE_SHORT = registerSound("blood_zombie_short");
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);

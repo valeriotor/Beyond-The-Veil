@@ -1,20 +1,21 @@
 package com.valeriotor.beyondtheveil.entity.ai.control;
 
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
+import com.valeriotor.beyondtheveil.entity.Suspicious;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 
-public class SuspiciousBodyRotationControl extends BodyRotationControl {
+public class SuspiciousBodyRotationControl<T extends Mob & Suspicious> extends BodyRotationControl {
 
-    private final ShoremanEntity mob;
+    private final T mob;
     private static final int HEAD_STABLE_ANGLE = 15;
     private static final int DELAY_UNTIL_STARTING_TO_FACE_FORWARD = 10;
     private static final int HOW_LONG_IT_TAKES_TO_FACE_FORWARD = 10;
     private int headStableTime;
     private float lastStableYHeadRot;
 
-    public SuspiciousBodyRotationControl(ShoremanEntity mob) {
+    public SuspiciousBodyRotationControl(T mob) {
         super(mob);
         this.mob = mob;
     }
