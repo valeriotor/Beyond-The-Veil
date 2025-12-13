@@ -150,7 +150,6 @@ public class BloodZombieModel extends AnimatedModel<BloodZombieEntity> {
 
     @Override
     public void setupAnim(BloodZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        markDirty();
         resetParts();
 
         float halfRot = netHeadYaw * ((float) Math.PI / 180F) / 2;

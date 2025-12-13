@@ -37,6 +37,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(BloodZombieEntity.class, EntityDataSerializers.BOOLEAN);
     private UUID master;
     private Animation jawAnimation;
+    private boolean longSound;
 
     public BloodZombieEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -144,15 +145,16 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         return jawAnimation;
     }
 
+    @Override
+    public int getAmbientSoundInterval() {
+        this.longSound = random.nextInt(4) == 0;
+        return longSound ? 180 : 80;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return random.nextInt(3) == 0 ? BTVSounds.BLOOD_ZOMBIE_LONG.get() : BTVSounds.BLOOD_ZOMBIE_SHORT.get();
-    }
-
-    @Override
-    public int getAmbientSoundInterval() {
-        return 180;
+        return longSound ? BTVSounds.BLOOD_ZOMBIE_LONG.get() : BTVSounds.BLOOD_ZOMBIE_SHORT.get();
     }
 
     @Override
