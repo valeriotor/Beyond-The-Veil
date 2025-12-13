@@ -30,6 +30,7 @@ public class Setup {
         event.put(BTVEntities.FLETUM.get(), FletumEntity.prepareAttributes().build());
         event.put(BTVEntities.ABOMINATION_0.get(), Abomination0Entity.prepareAttributes().build());
         event.put(BTVEntities.ABOMINATION_1.get(), Abomination1Entity.prepareAttributes().build());
+        event.put(BTVEntities.ABOMINATION_2.get(), Abomination2Entity.prepareAttributes().build());
         event.put(BTVEntities.BLOOD_CULTIST.get(), BloodCultistEntity.prepareAttributes().build());
         event.put(BTVEntities.SHOREMAN.get(), ShoremanEntity.prepareAttributes().build());
         event.put(BTVEntities.CEPHALOPODIAN.get(), CephalopodianEntity.prepareAttributes().build());

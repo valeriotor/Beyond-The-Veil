@@ -47,6 +47,8 @@ public class TransformationUtil {
                     Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.ammunition_explode_body), player);
                 } else if (crossSync.getTransformation() == PlayerTransformation.ABOMINATION_1) {
                     Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.abomination1_explode), player);
+                } else if (crossSync.getTransformation() == PlayerTransformation.ABOMINATION_2) {
+                    Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(player, AnimationRegistry.abomination2_explode), player);
                 }
             }
         });

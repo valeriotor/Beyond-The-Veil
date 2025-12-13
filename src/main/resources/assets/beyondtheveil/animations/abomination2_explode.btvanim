@@ -1,0 +1,88 @@
+model: abomination_2
+length: 45
+start: 0: 10
+    tray: main_body: 17: linear: absolute
+    traz: main_body: -5: linear: absolute
+    tray: left_leg: 17: linear: absolute
+    traz: left_leg: -5: linear: absolute
+    rotx: left_leg_lower: 1.5: linear: absolute
+    tray: right_leg: 17: linear: absolute
+    traz: right_leg: -5: linear: absolute
+    rotx: right_leg_lower: 1.5: linear: absolute
+start: 8: 30
+    resx: head: 1.5: linear: absolute
+    resy: head: 1.5: linear: absolute
+    resz: head: 1.5: linear: absolute
+    resx: tendril_left_2: 0.75: linear: absolute
+    resy: tendril_left_2: 0.75: linear: absolute
+    resz: tendril_left_2: 0.75: linear: absolute
+    resx: tendril_left_1: 0.75: linear: absolute
+    resy: tendril_left_1: 0.75: linear: absolute
+    resz: tendril_left_1: 0.75: linear: absolute
+    resx: tendril_left_3: 0.75: linear: absolute
+    resy: tendril_left_3: 0.75: linear: absolute
+    resz: tendril_left_3: 0.75: linear: absolute
+    resx: tendril_right_1: 0.75: linear: absolute
+    resy: tendril_right_1: 0.75: linear: absolute
+    resz: tendril_right_1: 0.75: linear: absolute
+    resx: tendril_right_2: 0.75: linear: absolute
+    resy: tendril_right_2: 0.75: linear: absolute
+    resz: tendril_right_2: 0.75: linear: absolute
+    resx: tendril_right_3: 0.75: linear: absolute
+    resy: tendril_right_3: 0.75: linear: absolute
+    resz: tendril_right_3: 0.75: linear: absolute
+start: 13: 16
+    rotz: tendril_left_1: 0.4: linear: absolute
+    rotz: tendril_left_2: -0.4: linear: absolute
+    rotz: tendril_left_3: 0.4: linear: absolute
+    rotz: tendril_right_1: -0.4: linear: absolute
+    rotz: tendril_right_2: 0.4: linear: absolute
+    rotz: tendril_right_3: -0.4: linear: absolute
+start: 17: 20
+    rotz: tendril_left_1: -0.4: linear: absolute
+    rotz: tendril_left_2: 0.4: linear: absolute
+    rotz: tendril_left_3: -0.4: linear: absolute
+    rotz: tendril_right_1: 0.4: linear: absolute
+    rotz: tendril_right_2: -0.4: linear: absolute
+    rotz: tendril_right_3: 0.4: linear: absolute
+start: 21: 24
+    rotz: tendril_left_1: 0.4: linear: absolute
+    rotz: tendril_left_2: -0.4: linear: absolute
+    rotz: tendril_left_3: 0.4: linear: absolute
+    rotz: tendril_right_1: -0.4: linear: absolute
+    rotz: tendril_right_2: 0.4: linear: absolute
+    rotz: tendril_right_3: -0.4: linear: absolute
+start: 25: 28
+    rotz: tendril_left_1: -0.4: linear: absolute
+    rotz: tendril_left_2: 0.4: linear: absolute
+    rotz: tendril_left_3: -0.4: linear: absolute
+    rotz: tendril_right_1: 0.4: linear: absolute
+    rotz: tendril_right_2: -0.4: linear: absolute
+    rotz: tendril_right_3: 0.4: linear: absolute
+start : 29: 30
+    rotz: tendril_left_1: 0.4: linear: absolute
+    rotz: tendril_left_2: -0.4: linear: absolute
+    rotz: tendril_left_3: 0.4: linear: absolute
+    rotz: tendril_right_1: -0.4: linear: absolute
+    rotz: tendril_right_2: 0.4: linear: absolute
+    rotz: tendril_right_3: -0.4: linear: absolute
+start: 30: 31
+    visi: flesh: -1: immediate: absolute
+    visi: tendril_left_2: -1: immediate: absolute
+    visi: tendril_left_1: -1: immediate: absolute
+    visi: tendril_left_3: -1: immediate: absolute
+    visi: tendril_right_1: -1: immediate: absolute
+    visi: tendril_right_2: -1: immediate: absolute
+    visi: tendril_right_3: -1: immediate: absolute
+start: 32: 45
+    traz: eye_front_bottom: -230: linear: absolute
+    traz: eye_front_mid: -230: linear: absolute
+    tray: eye_front_mid: -130: linear: absolute
+    traz: eye_front_up: -130: linear: absolute
+    tray: eye_front_up: -230: linear: absolute
+    traz: eye_back_bottom: 230: linear: absolute
+    traz: eye_back_mid: 230: linear: absolute
+    tray: eye_back_mid: -130: linear: absolute
+    traz: eye_back_up: 130: linear: absolute
+    tray: eye_back_up: -230: linear: absolute
+    trax: eye_left: -230: linear: absolute

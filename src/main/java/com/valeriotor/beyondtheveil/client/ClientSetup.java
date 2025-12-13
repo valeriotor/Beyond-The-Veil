@@ -142,6 +142,7 @@ public class ClientSetup {
         event.registerLayerDefinition(FletumModel.LAYER_LOCATION, FletumModel::createBodyLayer);
         event.registerLayerDefinition(Abomination0Model.LAYER_LOCATION, Abomination0Model::createBodyLayer);
         event.registerLayerDefinition(Abomination1Model.LAYER_LOCATION, Abomination1Model::createBodyLayer);
+        event.registerLayerDefinition(Abomination2Model.LAYER_LOCATION, Abomination2Model::createBodyLayer);
         event.registerLayerDefinition(BloodCultistModel.LAYER_LOCATION, BloodCultistModel::createBodyLayer);
         event.registerLayerDefinition(ShoremanModel.LAYER_LOCATION, ShoremanModel::createBodyLayer);
         event.registerLayerDefinition(CephalopodianModel.LAYER_LOCATION, CephalopodianModel::createBodyLayer);
@@ -182,6 +183,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.FLETUM.get(), FletumRenderer::new);
         event.registerEntityRenderer(BTVEntities.ABOMINATION_0.get(), Abomination0Renderer::new);
         event.registerEntityRenderer(BTVEntities.ABOMINATION_1.get(), Abomination1Renderer::new);
+        event.registerEntityRenderer(BTVEntities.ABOMINATION_2.get(), Abomination2Renderer::new);
         event.registerEntityRenderer(BTVEntities.BLOOD_CULTIST.get(), BloodCultistRenderer::new);
         event.registerEntityRenderer(BTVEntities.SHOREMAN.get(), ShoremanRenderer::new);
         event.registerEntityRenderer(BTVEntities.CEPHALOPODIAN.get(), CephalopodianRenderer::new);
@@ -223,6 +225,7 @@ public class ClientSetup {
         moreRenderers.clear();
         moreRenderers.put(PlayerTransformation.ABOMINATION_0, event.getRenderer(BTVEntities.ABOMINATION_0.get()));
         moreRenderers.put(PlayerTransformation.ABOMINATION_1, event.getRenderer(BTVEntities.ABOMINATION_1.get()));
+        moreRenderers.put(PlayerTransformation.ABOMINATION_2, event.getRenderer(BTVEntities.ABOMINATION_2.get()));
         moreRenderers.put(PlayerTransformation.DEEP_ONE, event.getRenderer(BTVEntities.DEEP_ONE.get()));
     }
 

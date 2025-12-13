@@ -13,7 +13,7 @@ import java.util.function.Function;
 public enum BloodPoolEntityType {
     ABOMINATION0(BTVEntities.ABOMINATION_0.get(), 30, l -> new Abomination0Entity(BTVEntities.ABOMINATION_0.get(), l)),
     ABOMINATION1(BTVEntities.ABOMINATION_1.get(), 50, l -> new Abomination1Entity(BTVEntities.ABOMINATION_1.get(), l)),
-    ABOMINATION2(null, 70, null),
+    ABOMINATION2(BTVEntities.ABOMINATION_2.get(), 70, l -> new Abomination1Entity(BTVEntities.ABOMINATION_2.get(), l)),
     BLOOD_SKELETON(BTVEntities.BLOOD_SKELETON.get(), 70, l -> new BloodSkeletonEntity(BTVEntities.BLOOD_SKELETON.get(), l)),
     BLOOD_ZOMBIE(BTVEntities.BLOOD_ZOMBIE.get(), 50, l -> new BloodZombieEntity(BTVEntities.BLOOD_ZOMBIE.get(), l)),
     VILLAGER(EntityType.VILLAGER, 20, l -> new Villager(EntityType.VILLAGER, l)),

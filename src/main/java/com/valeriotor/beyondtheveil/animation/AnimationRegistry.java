@@ -12,6 +12,7 @@ public class AnimationRegistry {
     private static List<AnimationTemplate> animations = new ArrayList<>();
     private static Map<AnimationTemplate, Integer> animationToId = new HashMap<>();
     public static AnimationTemplate abomination1_explode;
+    public static AnimationTemplate abomination2_explode;
     public static AnimationTemplate ammunition_explode;
     public static AnimationTemplate ammunition_explode_body;
     public static AnimationTemplate blood_cultist_backstab;
@@ -56,6 +57,7 @@ public class AnimationRegistry {
         animationToId.clear();
         int i = 0;
         abomination1_explode = registerAnimation("abomination1_explode", client, i++);
+        abomination2_explode = registerAnimation("abomination2_explode", client, i++);
         ammunition_explode = registerAnimation("ammunition_explode", client, i++);
         ammunition_explode_body = registerAnimation("ammunition_explode_body", client, i++);
         blood_cultist_backstab = registerAnimation("blood_cultist_backstab", client, i++);

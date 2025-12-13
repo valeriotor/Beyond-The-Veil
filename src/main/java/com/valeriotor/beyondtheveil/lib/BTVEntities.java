@@ -27,8 +27,9 @@ public class BTVEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.MODID);
     public static final RegistryObject<EntityType<ShoremanEntity>> SHOREMAN = ENTITIES.register("shoreman", () -> EntityType.Builder.of(ShoremanEntity::new, MobCategory.CREATURE).sized(0.7F, 1.9F).clientTrackingRange(32).build("shoreman"));
     public static final RegistryObject<EntityType<BloodCultistEntity>> BLOOD_CULTIST = ENTITIES.register("blood_cultist", () -> EntityType.Builder.of(BloodCultistEntity::new, MobCategory.CREATURE).sized(0.7F, 2F).clientTrackingRange(32).build("blood_cultist"));
-    public static final RegistryObject<EntityType<Abomination1Entity>> ABOMINATION_1 = ENTITIES.register("abomination_1", () -> EntityType.Builder.of(Abomination1Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_1"));
     public static final RegistryObject<EntityType<Abomination0Entity>> ABOMINATION_0 = ENTITIES.register("abomination_0", () -> EntityType.Builder.of(Abomination0Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_0"));
+    public static final RegistryObject<EntityType<Abomination1Entity>> ABOMINATION_1 = ENTITIES.register("abomination_1", () -> EntityType.Builder.of(Abomination1Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_1"));
+    public static final RegistryObject<EntityType<Abomination2Entity>> ABOMINATION_2 = ENTITIES.register("abomination_2", () -> EntityType.Builder.of(Abomination2Entity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("abomination_2"));
     public static final RegistryObject<EntityType<FletumEntity>> FLETUM = ENTITIES.register("fletum", () -> EntityType.Builder.of(FletumEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("fletum"));
     public static final RegistryObject<EntityType<WeeperEntity>> WEEPER = ENTITIES.register("weeper", () -> EntityType.Builder.of(WeeperEntity::new, MobCategory.CREATURE).sized(0.7F, 1.8F).clientTrackingRange(32).build("weeper"));
     public static final RegistryObject<EntityType<CrawlerEntity>> CRAWLER = ENTITIES.register("crawler", () -> EntityType.Builder.of(CrawlerEntity::new, MobCategory.CREATURE).sized(1.2F, 0.7F).clientTrackingRange(32).build("crawler"));
@@ -89,7 +90,7 @@ public class BTVEntities {
             } else if (data.getUsedCapacity() <= 20) {
                 return new Tuple<>(BTVEntities.ABOMINATION_1.get(), BloodPoolEntityType.ABOMINATION1);
             } else {
-                return new Tuple<>(BTVEntities.ABOMINATION_1.get(), BloodPoolEntityType.ABOMINATION1);
+                return new Tuple<>(BTVEntities.ABOMINATION_2.get(), BloodPoolEntityType.ABOMINATION2);
             }
         }
         return null;

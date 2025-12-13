@@ -8,7 +8,8 @@ import java.util.function.Supplier;
 public enum PlayerTransformation {
     DEEP_ONE(BTVEntities.DEEP_ONE::get, false),
     ABOMINATION_0(BTVEntities.ABOMINATION_0::get, true),
-    ABOMINATION_1(BTVEntities.ABOMINATION_1::get, true);
+    ABOMINATION_1(BTVEntities.ABOMINATION_1::get, true),
+    ABOMINATION_2(BTVEntities.ABOMINATION_2::get, true);
 
     private final Supplier<EntityType<?>> entityType;
     private final boolean canExplode;
