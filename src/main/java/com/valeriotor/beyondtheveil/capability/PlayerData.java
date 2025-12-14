@@ -452,6 +452,7 @@ public class PlayerData {
         newStore.tags.putAll(tags);
         newStore.memories.putAll(memories);
         newStore.reminiscences.putAll(reminiscences);
+        newStore.reports.putAll(reports);
 
     }
 
