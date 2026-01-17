@@ -2,10 +2,13 @@ package com.valeriotor.beyondtheveil.letters;
 
 import com.google.common.collect.Iterables;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
@@ -49,11 +52,14 @@ public class Exchange {
 
     public boolean hasItems(Player player) {
         IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-        if(canSendLetter() && template.getTemplate(letters.size()).getItemsRequired() != null) {
+        if(canSendLetter() && template.getTemplate(letters.size()).getItemsRequired() != null && !template.getTemplate(letters.size()).getItemsRequired().isEmpty()) {
             for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
                 int remaining = exchangeItems.getAmount();
                 for (int i = 0; i < inventory.getSlots(); i++) {
-                    remaining -= inventory.extractItem(i, remaining, true).getCount();
+                    ItemStack stack = inventory.getStackInSlot(i);
+                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
+                        remaining -= stack.getCount();
+                    }
                 }
                 if (remaining > 0) {
                     return false;
@@ -69,7 +75,10 @@ public class Exchange {
             for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
                 int remaining = exchangeItems.getAmount();
                 for (int i = 0; i < inventory.getSlots(); i++) {
-                    remaining -= inventory.extractItem(i, remaining, false).getCount();
+                    ItemStack stack = inventory.getStackInSlot(i);
+                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
+                        remaining -= inventory.extractItem(i, remaining, false).getCount();
+                    }
                     if (remaining == 0) {
                         break;
                     }
@@ -110,6 +119,10 @@ public class Exchange {
             ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
             Letter letter = Letter.sent(template1, chosenOptions, versions.getOrDefault(template1, 0));
             letter.setOpened(true);
+            if(player instanceof ServerPlayer sp && !clientSide) {
+                template1.getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
+                template1.getUnlockedExchanges().forEach(s -> DataUtil.addExchange(sp, s));
+            }
             letters.add(letter);
             if (canReceiveLetter() && !clientSide) {
                 scheduleMail(player);

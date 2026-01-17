@@ -1003,7 +1003,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("correspondence.shoreman_scholar", "The Scholar");
         add("correspondence.blood_cult", "???");
         add("correspondence.blood_cult_2", "???");
-        add("correspondence.miskatonic_researchers_blood", "Miskatonic University");
+        add("correspondence.miskatonic_researchers_blood", "Miskatonic University – Anthropological Studies");
+        add("correspondence.arkham_sanitarium", "Arkham Sanitarium");
 
         add("exchange.scholar_offer_help.object", "My knowledge is at your disposal");
         add("exchange.scholar_offer_help.0.0.hello", "Dear Seeker,\\n");
@@ -1065,11 +1066,112 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.keeper_baptism.1.4.death", "Though I know you are not afraid of death, perhaps, for once, you should be.\\n");
         add("exchange.keeper_baptism.1.5.luck", "I wish you good luck, friend.\\n");
         add("exchange.keeper_baptism.1.6.bye", "Faithfully,\\1The Keeper.");
+
+        add("exchange.mauer_ask_thesis.object",             "Interest in Sanguis: Inter Vitam et Mortem");
+        add("exchange.mauer_ask_thesis.0.0.all",            "Dear all,\\n");
+        add("exchange.mauer_ask_thesis.0.0.colleagues",     "Dear colleagues,\\n");
+        add("exchange.mauer_ask_thesis.0.1.independent",    "I am an independent researcher, striving to understand the bonds that tie all life.\\n");
+        add("exchange.mauer_ask_thesis.0.1.surgeon",        "I am a successful surgeon, interested in the anatomy of the human body and its cultural significance across the world.\\n");
+        add("exchange.mauer_ask_thesis.0.2.hopes",          "I write in hopes that you may send me a copy of your famous treatise: §oSanguis: Inter Vitam et Mortem§r.\\n");
+        add("exchange.mauer_ask_thesis.0.3.regrettably",    "I am aware that it is, regrettably, no longer in print, but I hope you may help me nonetheless.\\n");
+        add("exchange.mauer_ask_thesis.0.3.saddened",       "I was saddened to learn that it has been taken out of circulation, and strongly object to such choice: such a celebrated work of research should not undergo censorship!\\n");
+        add("exchange.mauer_ask_thesis.0.4.best",           "Best Regards,\\1");
+        add("exchange.mauer_ask_thesis.0.4.faithfully",     "Faithfully,\\1");
+        add("exchange.mauer_ask_thesis.0.5.name",           "%s");
+        add("exchange.mauer_ask_thesis.0.5.dr_name",        "Dr. %s");
+        add("exchange.mauer_ask_thesis.0.5.seeker",         "The Seeker of Truth");
+        add("exchange.mauer_ask_thesis.1.0.dear",           "Dear %s\\n");
+        add("exchange.mauer_ask_thesis.1.1.thank",          "Thank you for your letter. Henry and I are glad to see such continued interest in our work. It is especially gratifying to see it coming from you—word has already travelled of your immortality (if these are only unfounded rumors, we sincerely apologize), and the topics discussed therein may be of particular consequence to you, just as they were to Adelina (we hope that you may one day meet her, if she returns from wherever she's gone).\\n");
+        add("exchange.mauer_ask_thesis.1.2.most",           "Most unfortunately, however, we are unable to send you the treatise. Even the famously lax ethics department of the Miskatonic was forced to cede to public opinion, riled up by Jerome's §oRebuke§r five years ago, and no version of the treatise is available for external researchers.\\n");
+        add("exchange.mauer_ask_thesis.1.3.what",           "What we §oare§r allowed to do, however, is grant you a copy of my Master's Thesis from twelve years ago (my, how time flies!), that served as the foundation for the subsequent treatise of the same name. It is a much abridged version of the full thing, yet still serves as a catalogue of several known rituals. You will find it attached to this letter.\\n");
+        add("exchange.mauer_ask_thesis.1.4.if",             "If you ever become associated with our institution, you may be able to access the full treatise, which may contain several more notions of particular relevance to immortals, such as blood covenants.\\n");
+        add("exchange.mauer_ask_thesis.1.5.all",            "All the best in your research.\\n");
+        add("exchange.mauer_ask_thesis.1.6.dr",             "Warmly,\\1Dr. Georg Ferdinand Mauer");
+
+        add("exchange.west_offer_surgeon.object",           "Surgeons for hire");
+        add("exchange.west_offer_surgeon.0.0.dear",         "Dear Dr. %s\\n");
+        add("exchange.west_offer_surgeon.0.1.word",         "Word has travelled of your interest in surgical practices. I hope your experiments are proceeding smoothly.\\n");
+        add("exchange.west_offer_surgeon.0.2.as",           "As a word of advice—coming from someone with abundant experience—I would encourage you to focus on the intellectual tasks involved in experimentation, while delegating the menial repetition of such experiments to others.\\n");
+        add("exchange.west_offer_surgeon.0.3.if",           "If this interests you, we would be glad to provide capable and precise surgeons for hire; all you would have to do is to provide them with clear instructions (I assume you are taking notes of your experiments?) and the necessary patients, ingredients, and indications on where to deposit the outcomes.\\n");
+        add("exchange.west_offer_surgeon.0.4.the",          "The hiring cost is a small (though admittedly non-negligible) one-time payment of five diamonds.\\n");
+        add("exchange.west_offer_surgeon.0.5.dr",           "Dr. H. West\\1");
+        add("exchange.west_offer_surgeon.0.6.arkham",       "Arkham Sanitarium");
+        add("exchange.west_offer_surgeon.1.0.all",          "Dear all,\\n");
+        add("exchange.west_offer_surgeon.1.0.dr",           "Dear Dr. West,\\n");
+        add("exchange.west_offer_surgeon.1.1.grateful",     "I am grateful for your advice. Indeed, I would be glad to keep close contact with your institution, in hopes of potential future collaborations.\\n");
+        add("exchange.west_offer_surgeon.1.1.tempting",     "Your offer is tempting, although the price is indeed non-negligible. Nonetheless, I accept.\\n");
+        add("exchange.west_offer_surgeon.1.2.enclose",      "I hereby enclose the five diamonds. Please inform me of any additional procedures involved in relocation, setting up the contract, and so forth.\\n");
+        add("exchange.west_offer_surgeon.1.3.best",         "Best Regards,\\1");
+        add("exchange.west_offer_surgeon.1.3.faithfully",   "Faithfully\\1");
+        add("exchange.west_offer_surgeon.1.4.name",         "%s");
+        add("exchange.west_offer_surgeon.1.4.dr_name",      "Dr. %s");
+        add("exchange.west_offer_surgeon.1.4.seeker",       "The Seeker of Truth");
+        add("exchange.west_offer_surgeon.2.0.dear",         "Dear Dr. %s\\n");
+        add("exchange.west_offer_surgeon.2.1.thank",        "Thank you for your letter. Dr. West is not currently available, but has already informed me of your exchange.\\n");
+        add("exchange.west_offer_surgeon.2.2.contract",     "Contract and relocation will not be necessary. I am enclosing the surgeon within this letter. Place it where you wish it to work.\\n");
+        add("exchange.west_offer_surgeon.2.3.please",       "Please feed it raw meat regularly. Once it is fully grown, it will leave its cocoon behind and be ready to perform operations at your behest. \\n");
+        add("exchange.west_offer_surgeon.2.4.we",           "We dearly hope the surgeon to meet your expectations, and would be glad to keep in touch. Please feel free to contact us if you need further help, or if you wish to hire additional surgeons.\\n");
+        add("exchange.west_offer_surgeon.2.5.best",         "Best Regards,\\1Nurse J. Palmer");
+
+        add("exchange.another_surgeon.object",              "Hire surgeon");
+        add("exchange.another_surgeon.0.0.all",             "Dear all,\\n");
+        add("exchange.another_surgeon.0.0.dr",              "Dear Dr. West,\\n");
+        add("exchange.another_surgeon.0.0.nurse",           "Dear Nurse Palmer,\\n");
+        add("exchange.another_surgeon.0.1.remarkable",      "Your previous surgeon has proved itself a remarkable assistant.\\n");
+        add("exchange.another_surgeon.0.1.acceptable",      "Your previous surgeon's performance was acceptable.\\n");
+        add("exchange.another_surgeon.0.1.longer",          "Your previous surgeon is no longer with us.\\n");
+        add("exchange.another_surgeon.0.2.additional",      "I would like to hire an additional one. You will find enclosed the usual fee of five diamonds.\\n");
+        add("exchange.another_surgeon.0.3.best",            "Best Regards,\\1");
+        add("exchange.another_surgeon.0.3.faithfully",      "Faithfully,\\1");
+        add("exchange.another_surgeon.0.4.name",            "%s");
+        add("exchange.another_surgeon.0.4.dr_name",         "Dr. %s");
+        add("exchange.another_surgeon.0.4.seeker",          "The Seeker of Truth");
+        add("exchange.another_surgeon.1.0.dear",            "Dear Dr. %s,\\n");
+        add("exchange.another_surgeon.1.1.thank",           "Thank you for your payment. You may find the surgeon larva enclosed.\\n");
+        add("exchange.another_surgeon.1.2.best",            "Best Regards,\\1");
+        add("exchange.another_surgeon.1.3.nurse",           "Nurse J. Palmer");
+
+        add("exchange.more_surgeons.object",                "Hire surgeon");
+        add("exchange.more_surgeons.0.0.all",               "Dear all,\\n");
+        add("exchange.more_surgeons.0.0.dr",                "Dear Dr. West,\\n");
+        add("exchange.more_surgeons.0.0.nurse",             "Dear Nurse Palmer,\\n");
+        add("exchange.more_surgeons.0.1.additional",        "I would like to hire an additional surgeon. You will find enclosed the usual fee of five diamonds.\\n");
+        add("exchange.more_surgeons.0.2.best",              "Best Regards,\\1");
+        add("exchange.more_surgeons.0.2.faithfully",        "Faithfully,\\1");
+        add("exchange.more_surgeons.0.3.name",              "%s");
+        add("exchange.more_surgeons.0.3.dr_name",           "Dr. %s");
+        add("exchange.more_surgeons.0.3.seeker",            "The Seeker of Truth");
+        add("exchange.more_surgeons.1.0.dear",              "Dear Dr. %s,\\n");
+        add("exchange.more_surgeons.1.1.thank",             "Thank you for your payment. You may find the surgeon larva enclosed.\\n");
+        add("exchange.more_surgeons.1.2.best",              "Best Regards,\\1");
+        add("exchange.more_surgeons.1.3.nurse",             "Nurse J. Palmer");
+
+        add("exchange.ask_weeper.object",                   "Research directions");
+        add("exchange.ask_weeper.0.0.dr",                   "Dear Dr. West,\\n");
+        add("exchange.ask_weeper.0.0.all",                  "Dear all,\\n");
+        add("exchange.ask_weeper.0.1.delve",                "As I delve deeper and deeper into the field, I am gaining a growing interest in your work on surgery and human anatomy.\\n");
+        add("exchange.ask_weeper.0.1.performing",           "I have been performing several successful surgical experiments, and am now looking for new research directions.\\n");
+        add("exchange.ask_weeper.0.1.grateful",             "I am grateful for your services provided so far, and wish to help out in whatever research efforts you may currently be tackling.\\n");
+        add("exchange.ask_weeper.0.2.willing",              "Would you be willing to describe to me any of your current research goals? I would be able to put my resources to the task and help where practical.\\n");
+        add("exchange.ask_weeper.0.2.unsolved",             "Do you know of any unsolved problems in the field that deserve practical inquiry? I have several subjects to test upon.\\n");
+        add("exchange.ask_weeper.0.3.best",                 "Best Regards,\\1");
+        add("exchange.ask_weeper.0.3.faithfully",           "Faithfully,\\1");
+        add("exchange.ask_weeper.0.4.name",                 "%s");
+        add("exchange.ask_weeper.0.4.dr_name",              "Dr. %s");
+        add("exchange.ask_weeper.0.4.seeker",               "The Seeker of Truth");
+        add("exchange.ask_weeper.1.0.dear",                 "Dear Dr. %s,\\n");
+        add("exchange.ask_weeper.1.1.certainly",            "Certainly. As you clearly know, here at the Arkham Sanitarium we not only provide medical services, but are also involved in research efforts, and we are always glad to see interest in our niche field.\\n");
+        add("exchange.ask_weeper.1.2.pupils",               "Some of my younger pupils have indeed made observations on the interaction between water and the human mind—we do not yet know why water displays such properties, but it appears capable of expanding a human's viewpoint beyond what the eyes can see. We thus began performing experiments, filling our patients' skulls with water until we deemed possible. This was a painful operation, requiring much sedative. To be clear, these were healthy patients, not lacking any internal organs—their spines and thus their bodies were their only bond with the physical world, while their mind would have been brought beyond it by water.\\n");
+        add("exchange.ask_weeper.1.3.sadly",                "Sadly, our initial attempts were none too successful; a swollen head, and that was all. We believe we stopped too early, but unfortunately we do not currently have the manpower nor the test-subjects/volunteers needed to pursue further experiments.\\n");
+        add("exchange.ask_weeper.1.4.cycles",               "If you have the cycles, we would be glad to see any successful experiments on your end, setting up for a collaboration. Please note that most of our findings are not suited for publication in traditional medical journals, and I would dissuade you from divulging this information.\\n");
+        add("exchange.ask_weeper.1.5.best",                 "Best,\\1,Dr. H. West");
+
     }
 
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
         add("caption.shift_right_click", "Sneak + Right Click");
+        add("caption.shift_right_click_lacrymatory", "Sneak + Right Click on Lacrymatory");
         add("caption.reminisce", "Hold %s");
         add("caption.crafting", "Go to crafting entry");
         add("caption.journal", "Go to journal entry");
@@ -1244,13 +1346,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.initial2.yes_.option", "Yes.");
 
         add("dialogue.black_mirror.rationalize.insanity.0", "You have killed before. Creatures of all sorts. Life is not holy.");
-        add("dialogue.black_mirror.rationalize.jerome.0", "Jerome was a warrior turned saint. Though tormented by regret, he still took lives – he knew it had to be done. For the greater good.");
+        add("dialogue.black_mirror.rationalize.jerome.0", "Jerome is a warrior turned saint. Though tormented by regret, he still took lives – he knew it had to be done. For the greater good.");
         add("dialogue.black_mirror.rationalize.morons.0", "Massively influential morons, then. They shaped the modern cultural zeitgeist into one embracing nihilism, or worse, cosmicism. No one will decry the sacrifice of individual lives.");
         add("dialogue.black_mirror.rationalize.no_amount.0", "Oh, great start. Want to try again?");
         add("dialogue.black_mirror.rationalize.great_minds.0", "What do the great minds of history have to say?");
         add("dialogue.black_mirror.rationalize.need.0", "Animals die all the time. Horribly.");
         add("dialogue.black_mirror.rationalize.randolph.0", "Before his disappearance in recent years, Dr. Carter espoused his pessimistic views on the insignificance of human lives. To him, it would not have mattered.");
-        add("dialogue.black_mirror.rationalize.adelina.0", "Adelina did not hide her belief in sacrifice for the greater good. Interestingly, she was said to have lived multiple lives, and that her final death was filled with regret.");
+        add("dialogue.black_mirror.rationalize.adelina.0", "Adelina does not hide her belief in sacrifice for the greater good. Interestingly, she is said to have lived multiple lives, and that in the last few years she has been tormented by with regret.");
         add("dialogue.black_mirror.rationalize.no_hesitation.0", "Of course. Human lives are fleeting in the face of eternity, yet their sacrifice, in the noble pursuit of human knowledge, will be §oimmortal§r.");
         add("dialogue.black_mirror.rationalize.madman.0", "The mad desertman wrote much on the futility of life, even his own. He passed away by willingly imbibing poison.");
         add("dialogue.black_mirror.rationalize.start.0", "Let's begin.");
@@ -1967,7 +2069,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.reminisced_metal.text", "Find a way to talk to the dream.");
         add("research.FIRSTDREAMS.stage.0", "It feels natural to dismiss dreams as a trick of the mind, when such dismissal could itself be the trick.\\nThe sensation of travelling to and from the Nether felt familiar, and yet I have no recollection of any similar journey in my life. It left me with the intense feeling of plunging down, gods know how far into stone and bedrock, only to then rise right back up. A feeling I have often experienced in dreams.\\nCould I be underestimating their import? Are they born from my daily sensations, or could they tell me something §omore§r, about the world and about myself?\\nThe desire to understand swells within me. Dreams are such simple, everyday events whose true nature I never bothered to investigate, like a shallow-looking puddle whose bottom I never chose to touch.\\nBut what if it hid an ocean?");
         add("research.FIRSTDREAMS.stage.1", "It felt wrong. I woke up shuddering, drenched in sweat. It was like diving into a pool from thousands of man-heights above, head first, eyes closed.\\n" +
-                "Yet I can make no conclusions. Was this.. §odream§r a simple reflection of my recent real life experiences, or did it have a life of its own?\\n" +
+                "Yet I can make no conclusions. Was this... §odream§r a simple reflection of my recent real life experiences, or did it have a life of its own?\\n" +
                 "Oh, what a fascinating prospect! That of a sentient dream, living and breathing as I do. I wonder, then: could I talk to it? And if so, in what tongue?\\n" +
                 "I propose to speak through my own §omemories§r: their effect on our dreams is undeniable. Most importantly, the study of human memories is a well-trodden field of research in academic circles. Past literature details the construction and usage of a memory sieve, a simple altar upon which I can place an item that evokes a certain memory, and subsequently store the result in a memory phial.\\n" +
                 "I will begin with an iron ingot: an intense memory of metal, of the first time I mined a vein and saw wealth trickle in my hands. There is so much metal underground, could the dream see it?");
@@ -1984,7 +2086,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.SLEEP_CHAMBER.title", "Sleep Chamber");
         add("research.slept_in_chamber.text", "Experiment until you can answer at least the first question.");
-        add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it. My research studies are limited by the frequency at which I can dream — a most frustrating bound.\\n" +
+        add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it. My research studies are limited by the frequency at which I can dream. A most frustrating bound.\\n" +
                 "Thankfully, there is a great body of work aimed at replicating the effects of dreaming through various techniques and devices; one must only look at Carter's \"The Gate and the Key\" to find all sorts of examples.\\n" +
                 "The method most easily within reach is through the use of a Sleep Chamber, i.e. a small room relying on water vapours to lull its tenant in a dreamlike state. One must simply open it, step inside and close the door. It is a somewhat complex contraption, and creating it will require a Gear Bench. \\n" +
                 "Once the testbed is built, I may proceed with the evaluation. Building atop of past literature, in this study I aim to answer the following questions:\\n" +
@@ -2122,7 +2224,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.WATERY_CRADLE.title", "The Watery Cradle");
         add("research.crafted_watery_cradle.text", "Craft a watery cradle.");
-        add("research.first_skull_operation.text", "Inject either of the two hormones above in a patient..");
+        add("research.first_skull_operation.text", "Inject either of the two hormones above in a patient.");
         add("research.WATERY_CRADLE.stage.0", "The mind lies deepest among the veils obscuring humanity from itself: that impenetrable mystery that, despite all miracles of modern science, has not yet been breached. My exploration of human anatomy should not stop at the worldly body, and must instead seek to explain the processes behind our very thoughts.\\n" +
                 "The surgery bed is not appropriate for such operations: the patient must be lulled into a dreamlike state, unable to conceive or realise what is happening – and, once again, water is the key. I shall build a specialised chamber for this purpose, a \"watery cradle\" of sorts, to enable injections in the skull.");
         add("research.WATERY_CRADLE.stage.1", "The cradle is built, but requires testing. This is perhaps an opportunity to prove the lack of willpower in those without a spine.\\n" +
@@ -2199,6 +2301,80 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Their antidote capsules are now widespread in their communities, and are used to treat poison or wither effects. These remedies can either be used manually or set to trigger on infection. In so doing, they cure the negative effect and, most importantly, grant immunity for roughly a minute.");
         add("research.LOCAL_MEDICINE.stage.1", "The capsules work as expected. It’s tempting to see local medicine as backwards – and it so very often is – but one must not forget these antidotes came from lengthy, vicious trial and error. In a way, the process was rigidly scientific.");
 
+        add("research.FIRST_CONTACT.title", "First Contact");
+        add("research.had_contact.text", "Contact the Deep Ones, and throw them a human heart.");
+        add("research.FIRST_CONTACT.stage.0", "Theory begets practice, and when the journey of the mind meets its limits, and dreams' feeble memories turn too hazy, so comes the time for the quest to become physical, diving in with flesh and bone.\\n" +
+                "Dagon's command is rightful. I must commit my whole body to reach the Veil; yet, the Great Dreamer lies too far down below, occulted by Father Ocean's boundless presence. Instead, my first step shall be on the surface, atop of starlit water, mirror to the cosmos.\\n" +
+                "His firstborn children are not the Shoremen, who, humans like any of us, are far down the lineage. Rather, he may have referred to the daemons described by the prospectors of Arche, foes to the old hunters such as Jerome and Adelina. These denizens of the depths – it is said – would sporadically rise to the surface, frightening to death some unfortunate sailors.\\n" +
+                "Even Adelina spoke of them in hushed tones, but what could have frightened an immortal such as her? Unless...\\n" +
+                "No. I must hold steadfast, and do as he commanded. With my canoe, I shall sail far into the deep ocean, until no land is in sight; there, in the dark of night, I will consume a slug. If his words are true, the ones from the deep shall arise, and contact will commence.  When it is asked of me, and only then, I shall offer a gift: the heart of a human, to seal our bond. \\n" +
+                "During all of this, I must hold still in the canoe, and at no point will I leave it, not even if fear were to take me. My life is at stake.\\n" +
+                "Then again, a single death is a small price to me. I always come back.");
+        add("research.FIRST_CONTACT.stage.1", "The encounter was peaceful. Or, at least, I believe so – no branch of human linguistics or semiotics could provide a definitive answer.\\n" +
+                "Yet the deed is done and the bond is sealed. I must speak to Dagon once more, but this time I shall do so from within His very own essence.\\n" +
+                "Is it time then? To retrace the steps of the old prospectors and hunters, and venture down into the abyss?\\n" +
+                "To reach Arche, from where everything is born. \\n" +
+                "The first principle of our world. ");
+
+        add("research.BLOOD_RITUALS.title", "Blood Rituals");
+        add("research.asked_thesis.text", "Send a letter to the Miskatonic.");
+        add("research.received_thesis.text", "Wait for a response from the Miskatonic.");
+        add("research.performed_ritual.text", "Perform one of the rituals.");
+        add("research.BLOOD_RITUALS.stage.0", "I see the struggle in my patients' eyes, and it pains me to no end. How would §oI§r feel in their stead? Proudly knowing themselves to be §othe§r building block in the pathway of science, yet aware that they shall not live to see the outcome; it is the tragic destiny of all those who strive to a goal greater than themselves, unachievable in their lifetime. It comes as no surprise, then, that their enthusiasm wanes in those last, fateful moments, before they gift me their heart.\\n" +
+                "It is only fair that I immortalise their sacrifice, so they may live beyond death. I must embrace their relinquished blood and put it to good use: indeed, rituals exist that exploit the red fluid to forge bindings. Could one then breach the Veil by linking the lie to the truth? The stage to the audience? Life to death?\\n" +
+                "I must send a letter to the Institute of Anthropological Studies at the Miskatonic University in Arkham. They authored the seminal work §oSanguis: Inter Vitam et Mortem§r, that recounts the practice of blood rituals throughout the world; I know the work to be no longer in print, but I hope they may make an exception.");
+        add("research.BLOOD_RITUALS.stage.1", "Georg was kind – I should treasure such connections.\\n" +
+                "The thesis itself provides a wealth of knowledge. Though the rituals described are not meant for replication, it would be a disservice to science not to investigate them further. A few lives for the sake of all of humankind is a small price to pay, especially when those lives were so short-lived anyway.");
+        add("research.BLOOD_RITUALS.stage.2", "It works! All the theatrics behind the decorated altar and solemn tone of the sacrifice may be nothing more than buffoonery at this point, but then again I do not know where the line between scientific phenomenon and traditional custom lies – I should thus adhere to the instructions as closely as possible.");
+
+        add("research.BLOOD_WELL.title", "The Blood Well");
+        add("research.built_well.text", "Build a Blood Well.");
+        add("research.spawned_undead.text", "Spawn a blood undead.");
+        add("research.BLOOD_WELL.stage.0", "When the great final threshold is irreversibly reached, once-living things sink in the ground, and their remains traverse the veins of the world until they arrive at their ancient progenitor: the waters of Arche.\n" +
+                "Blood Wells were built to access these veins directly, letting undead creatures enter them. The Well would attract such monsters – like a heart, but even stronger – and send them to a blood pool far down below, in the deepest ocean. Most importantly, such creatures would then be bound to the Well's maker, and may be summoned at their behest.\n" +
+                "I must construct one, in hopes of thinning the distance between me and Arche. I have recorded the required schematic; the heart must be placed §llast§r.");
+        add("research.BLOOD_WELL.stage.1", "The Blood Well is born, and by the Dreamer, it *reeks*; a stench reminiscent of a rotting corpse – or a thousand.\\n" +
+                "Nonetheless, I am certain the undead will not mind. In its current form, the Well should be able to embrace any zombies or skeletons, and send them far down below – though I expect most of them not to make it there intact.\\n" +
+                "I should now create a Blood Orb. This will allow me to view and summon the creatures residing in my personal blood pool, and that arrived there safely.");
+        add("research.BLOOD_WELL.stage.2", "The creature was covered in blood. It was... unrecognisable. \\n" +
+                "The Well appears to be a powerful tool, adjacent to the necromantic arts, capable of building my own undead army. More work can be done in this area: a Blood Gem, also described in Mauer's thesis, can be used to summon multiple creatures at once.\\n" +
+                "Additionally, creatures in my blood pool may be assigned to categories, for simpler management. Categories are defined by a triad of colours: I can throw dyes in the Well (one at a time), to add a colour to the right of the triad. For example, throwing blue dye, clay (symbolising colourless), and lime dye will make the assigned triad **blue, none, lime**. Throwing red afterwards will make the new triad **none, lime, red**. The default is **none, none, none**.\\n" +
+                "As useful as all of this is in terms of gaining power, the Well's true role in my quest is to get me closer to Arche. I should not forget that.");
+
+        add("research.SURGEONS.title", "Surgeons");
+        add("research.received_surgeon.text", "Hire a surgeon from the Sanitarium.");
+        add("research.placed_surgeon.text", "Place the surgeon larva in the appropriate place.");
+        add("research.grew_surgeon.text", "Grow the surgeon into an adult.");
+        add("research.SURGEONS.stage.0", "Dr. West's letter comes at a good time. It might be appropriate to start thinking of delegating my work.");
+        add("research.SURGEONS.stage.1", "Having reached adulthood, the surgeon is ready to operate. There are two important components involved in controlling the creature: (1) a surgeon bell, through which I can dictate the infrastructure that the surgeon is allowed to operate with, and (2) my own surgery notes, which will define the operations performed by it.\\n" +
+                "§lSurgeon's bell§r\\n" +
+                "The bell can be {§nbound to a surgeon§r}[caption.right_click] in order to check and edit the list of blocks it can interact with. While a surgeon is bound, I can {§nuse the bell§r}[caption.right_click] to tell it which surgical structure (e.g. a surgery bed) it can perform operations in. \\n" +
+                "I can also {§nuse§r}[caption.right_click] the bell to declare inputs:\\n" +
+                "- Use on a flask or flask shelf to add or remove it from the set of blocks it can draw liquids or solid ingredients from.\n" +
+                "- Use on a patient pod to add or remove it from the set of blocks it can take patients from.\n" +
+                "- Use on the top side of a block to add or remove it from the set of areas it can take patients from, e.g. collecting knocked out villagers from the ground.\\n" +
+                "Finally, I can {§nuse§r}[caption.shift_right_click] it to declare outputs:\\n" +
+                "- Use on a chest or other general container to add or remove it from the set of containers it can place outcome items in (such as extracted organs).\n" +
+                "- Use on a patient pod to add or remove it from the set of blocks it can put convalescent patients in.\n" +
+                "- Use on the top side of a block to add or remove it from the set of areas it can place convalescent patients in (though the surgeon will refrain from doing so if there are already too many convalescents in the area).\\n" +
+                "§lSurgery Notes§r\\n" +
+                "I can print down the notes from my journal on pieces of paper in my inventory. The surgeon will follow them exactly, only stopping if lacking ingredients or patients, or space to place the outcomes. It will, however, ignore any purely \"informational\" notes that do not describe an operation, such as lines indicating the occurrence of a complication, or additional data such as the operation's success. \\n" +
+                "The surgeon will also ignore operations marked as incomplete, i.e. incomplete incisions, insertions, or extractions. It is thus good practice to avoid giving the surgeon any surgery notes containing incomplete operations, as otherwise the result may become unpredictable.\\n" +
+                "The surgeon requires no tools.");
+
+        add("research.WEEPERS.title", "Weepers");
+        add("research.crafted_lacrymatory.text", "Craft a lacrymatory.");
+        add("research.WEEPERS.stage.0", "The injection had cataclysmic effects, not just on the head but on the entire body. It is vestigial now, acting as the creature's only anchor to our world – other than that, the patient is no longer among us.\\n" +
+                "Does he see more or less than we do? Did he cross the veil, or have I simply placed another veil between us? Oh, he is certainly fearful, lost to derealisation as he is – and he weeps, more than I ever could. Indeed, he can do nothing but weep.\\n" +
+                "...\\n" +
+                "Should... should I make the most out of this situation, and at least put his tears to good use? I know now that tears hold power, and the poor thing would not want its fate to have been in vain.\\n" +
+                "If so, I can craft a lacrymatory, which shall hold all that he weeps.");
+        add("research.WEEPERS.stage.1", "After picking him up, I can place the weeper next to the {§nlacrymatory§r}[caption.shift_right_click_lacrymatory], where he will deposit his tears. Eventually, there should be sufficiently many for me to take and use in other experiments.");
+
+        add("research.FLETUM.title", "The Fletum");
+        add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +
+                "Such a creature shall be called a Fletum. Fleti can be picked up and assigned to a lacrymatory like weepers, though they will produce fewer tears.\\n" +
+                "However, their dreamlike state may and should be leveraged, and if I find a way to focus their dreams then I might, perhaps, see their effects in the real world.");
     }
 
     private void addCraftingRegistry() {

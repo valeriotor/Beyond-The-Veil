@@ -29,7 +29,18 @@ public enum PlayerDataLib {
     stillness_memory_progress,
     //ints temporary
     open_journal_page,
-    // flags (non temporary)
+    // FLAGS (NON TEMPORARY)
+    received_cult_letter,
+    created_weeper,
+    created_fletum,
+    asked_thesis,
+    received_thesis,
+    performed_ritual,
+    built_well,
+    spawned_undead,
+    received_surgeon,
+    placed_surgeon,
+    grew_surgeon,
     thebeginning,
     didDream,
     made_bookmark,
@@ -81,6 +92,7 @@ public enum PlayerDataLib {
     public static final Function<String, String> REMINISCED = s -> String.format("reminisced_%s", s);
     public static final Function<Memory, String> MADE_MEMORY = m -> String.format("crafted_%s", m.name().toLowerCase());
     public static final Function<String, String> FOUND_WAYPOINT = s -> "found_" + s;
+    public static final Function<String, String> GEAR_BENCH_CRAFT = s -> "crafted_" + s;
     public static final Function<Fluid, String> DISCOVERED_FLUID = f -> "fluid_" + (ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()) == null ? "" : ForgeRegistries.FLUID_TYPES.get().getKey(f.getFluidType()).getPath());
     public static final Function<String, String> JOURNAL_REPORT = name -> "journal_report_" + name;
 

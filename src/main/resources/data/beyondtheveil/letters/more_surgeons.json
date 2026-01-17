@@ -1,0 +1,19 @@
+{
+  "name": "more_surgeons",
+  "correspondence": "ARKHAM_SANITARIUM",
+  "playerInitiated": true,
+  "repeatable": true,
+  "letters": [
+    {
+      "optionsPerLine": [["all", "dr", "nurse"], ["additional"], ["best", "faithfully"],["name", "dr_name", "seeker"]],
+      "itemsRequired": [{
+        "item": "minecraft:diamond",
+        "amount": 5
+      }]
+    },
+    {
+      "optionsPerLine": [["dear"], ["thank"], ["best"], ["nurse"]],
+      "itemsRedeemed": "LARVA"
+    }
+  ]
+}

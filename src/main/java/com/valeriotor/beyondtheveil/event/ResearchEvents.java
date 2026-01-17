@@ -55,9 +55,13 @@ public class ResearchEvents {
             } else if ("COMMUNION".equals(key) && stage == 1) {
                 addCommunionDialogues(d);
             } else if ("CUSTOMS".equals(key) && stage == 0) {
-                addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "wantslugs");
+                addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "wantslug");
                 DataUtil.addExchange(p, "keeper_ask_slugs");
-            } else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
+            } else if ("WATERY_CRADLE".equals(key) && stage == 2) {
+                DataUtil.addExchange(p, "west_offer_surgeon");
+            } else if ("BLOOD_RITUALS".equals(key) && stage == 0) {
+                DataUtil.addExchange(p, "mauer_ask_thesis");
+            }else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
                 boolean embraced = DataUtil.getBoolean(p, PlayerDataLib.embraced_customs.name());
                 if (!embraced || true) {
                     int total = 0;
@@ -102,7 +106,7 @@ public class ResearchEvents {
         p.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
             if (key != null) {
-                String flag = "crafted_" + key.getPath();
+                String flag = PlayerDataLib.GEAR_BENCH_CRAFT.apply(key.getPath());
                 if (!c.getBoolean(flag)) {
                     DataUtil.setBooleanOnServerAndSync(p, flag, true, false);
                 }

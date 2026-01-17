@@ -173,6 +173,8 @@ public class PlayerTickEvents {
                         if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.spoke_keeper.name())) {
                             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.unlocked_hamlet.name(), true, false);
                             DataUtil.getMemoryStatus(player, Memory.DARKNESS).increaseTo(2, Memory.Target.BASE, false);
+                        } else if (entry.getKey().equals(Memory.SENTIENCE.getDataName(false))) {
+                            DataUtil.getMemoryStatus(player, Memory.SENTIENCE).increaseTo(2, Memory.Target.BASE, false);
                         }
                     }
                 }

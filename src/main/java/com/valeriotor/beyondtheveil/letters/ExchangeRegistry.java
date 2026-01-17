@@ -18,6 +18,11 @@ public class ExchangeRegistry {
         registerExchange("scholar_offer_help");
         registerExchange("keeper_ask_slugs");
         registerExchange("keeper_baptism");
+        registerExchange("mauer_ask_thesis");
+        registerExchange("west_offer_surgeon");
+        registerExchange("another_surgeon");
+        registerExchange("more_surgeons");
+        registerExchange("ask_weeper");
     }
 
     private static void registerExchange(String name) {

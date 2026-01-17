@@ -1,0 +1,25 @@
+{
+  "name": "west_offer_surgeon",
+  "correspondence": "ARKHAM_SANITARIUM",
+  "playerInitiated": false,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["dear"], ["word"], ["as"], ["if"], ["the"], ["dr"], ["arkham"]],
+      "unlockedData": ["received_surgeon_offer"]
+    },
+    {
+      "optionsPerLine": [["all", "dr"], ["grateful", "tempting"], ["enclose"], ["best", "faithfully"],["name", "dr_name", "seeker"]],
+      "itemsRequired": [{
+        "item": "minecraft:diamond",
+        "amount": 5
+      }]
+    },
+    {
+      "optionsPerLine": [["dear"], ["thank"], ["contract"], ["please"], ["we"], ["best"]],
+      "itemsRedeemed": "LARVA",
+      "unlockedData": ["received_surgeon"],
+      "unlockedExchanges" : ["another_surgeon", "ask_weeper"]
+    }
+  ]
+}

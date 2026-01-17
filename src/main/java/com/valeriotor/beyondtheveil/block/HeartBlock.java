@@ -15,6 +15,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
@@ -169,6 +170,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                 sl.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                 sl.setBlock(pPos.below(2), Registration.BLOOD_WELL.get().defaultBlockState(), 3);
                 sl.playSound(null, pPos, BTVSounds.HEART_RIP.get(), SoundSource.BLOCKS, 1, 1);
+                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.built_well.name(), true, false);
             }
 
         }

@@ -27,8 +27,7 @@
                 {
                   "text": "research.FIRSTDREAMS.stage.3",
                   "recipes": ["beyondtheveil:memory_sieve", "beyondtheveil:memory_phial", "beyondtheveil:fume_spreader", "beyondtheveil:oniric_incense"],
-                  "memories": ["metal"],
-                  "multiblocks": ["blood_well"]
+                  "memories": ["metal"]
                 }
             ]
         },
@@ -460,6 +459,140 @@
           {
             "text": "research.LOCAL_MEDICINE.stage.1",
             "recipes": ["beyondtheveil:antidote_capsule"]
+          }
+        ]
+      },
+      {
+        "key": "FIRST_CONTACT",
+        "name": "research.FIRST_CONTACT.title",
+        "icons": [ "minecraft:prismarine_shard" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 17,10 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["BAPTISM", "CARPENTRY"],
+        "stages": [
+          {
+            "text": "research.FIRST_CONTACT.stage.0",
+            "required_research": ["had_contact"]
+          },
+          {
+            "text": "research.FIRST_CONTACT.stage.1"
+          }
+        ]
+      },
+      {
+        "key": "BLOOD_RITUALS",
+        "name": "research.BLOOD_RITUALS.title",
+        "icons": [ "beyondtheveil:blood_thesis" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 10,10 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["HEARTS"],
+        "stages": [
+          {
+            "text": "research.BLOOD_RITUALS.stage.0",
+            "required_research": ["asked_thesis","received_thesis"]
+          },
+          {
+            "text": "research.BLOOD_RITUALS.stage.1",
+            "required_research": ["performed_ritual"],
+            "recipes": ["beyondtheveil:blood_thesis"]
+          },
+          {
+            "text": "research.BLOOD_RITUALS.stage.2",
+            "recipes": ["beyondtheveil:blood_thesis"]
+          }
+        ]
+      },
+      {
+        "key": "BLOOD_WELL",
+        "name": "research.BLOOD_WELL.title",
+        "icons": [ "beyondtheveil:blood_brick" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 12,12 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BLOOD_WELL.stage.0",
+            "required_research": ["built_well"],
+            "multiblocks": ["blood_well"]
+          },
+          {
+            "text": "research.BLOOD_WELL.stage.1",
+            "required_research": ["spawned_undead"],
+            "multiblocks": ["blood_well"]
+          },
+          {
+            "text": "research.BLOOD_WELL.stage.2",
+            "multiblocks": ["blood_well"]
+          }
+        ]
+      },
+      {
+        "key": "SURGEONS",
+        "name": "research.SURGEONS.title",
+        "icons": [ "beyondtheveil:surgeon_larva" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7, 6 ],
+        "hiders": ["received_surgeon_offer"],
+        "parents": ["SURGERY"],
+        "stages": [
+          {
+            "text": "research.SURGEONS.stage.0",
+            "required_research": ["received_surgeon", "placed_surgeon", "grew_surgeon"]
+          },
+          {
+            "text": "research.SURGEONS.stage.1",
+            "recipes": ["beyondtheveil:surgeon_bell"]
+          }
+        ]
+      },
+      {
+        "key": "WEEPERS",
+        "name": "research.WEEPERS.title",
+        "icons": [ "beyondtheveil:lacrymatory" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,12 ],
+        "hiders": ["created_weeper"],
+        "parents": ["WATERY_CRADLE"],
+        "stages": [
+          {
+            "text": "research.WEEPERS.stage.0",
+            "required_research": ["crafted_lacrymatory"],
+            "recipes": ["beyondtheveil:lacrymatory"]
+          },
+          {
+            "text": "research.WEEPERS.stage.1",
+            "recipes": ["beyondtheveil:lacrymatory"]
+          }
+        ]
+      },
+      {
+        "key": "FLETUM",
+        "name": "research.FLETUM.title",
+        "icons": [ "beyondtheveil:held_fletum" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 6,14 ],
+        "hiders": ["created_fletum"],
+        "parents": ["WEEPERS"],
+        "stages": [
+          {
+            "text": "research.FLETUM.stage.0",
+            "recipes": ["beyondtheveil:lacrymatory"]
+          }
+        ]
+      },
+      {
+        "key": "BLOOD_CULT",
+        "name": "research.BLOOD_CULT.title",
+        "icons": [ "beyondtheveil:offer_pillar" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 10,8 ],
+        "hiders": ["received_cult_letter"],
+        "parents": ["HEARTS"],
+        "stages": [
+          {
+            "text": "research.BLOOD_CULT.stage.0",
+            "required_research": ["use_pillars"],
+            "recipes": ["beyondtheveil:offer_pillar", "beyondtheveil:demand_pillar"]
+          },
+          {
+            "text": "research.BLOOD_CULT.stage.1",
+            "recipes": ["beyondtheveil:offer_pillar", "beyondtheveil:demand_pillar"]
           }
         ]
       }

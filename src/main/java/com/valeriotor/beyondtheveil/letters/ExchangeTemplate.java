@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExchangeTemplate {
@@ -53,6 +54,8 @@ public class ExchangeTemplate {
         List<List<String>> optionsPerLine;
         private List<ExchangeItems> itemsRequired;
         private RedeemableItems itemsRedeemed;
+        private List<String> unlockedData;
+        private List<String> unlockedExchanges;
 
         public void setParent(ExchangeTemplate parent, int index) {
             this.parent = parent;
@@ -77,6 +80,20 @@ public class ExchangeTemplate {
 
         public List<ExchangeItems> getItemsRequired() {
             return itemsRequired;
+        }
+
+        public List<String> getUnlockedData() {
+            if (unlockedData == null) {
+                unlockedData = new ArrayList<>();
+            }
+            return unlockedData;
+        }
+
+        public List<String> getUnlockedExchanges() {
+            if (unlockedExchanges == null) {
+                unlockedExchanges = new ArrayList<>();
+            }
+            return unlockedExchanges;
         }
     }
 

@@ -129,6 +129,7 @@ public class OperationRegistry {
             //        s.setCondition(PatientCondition.STABLE);
             //    }
             //})
+            .addPlayerData(PlayerDataLib.created_weeper.name())
             .buildInjectionOperation(Fluids.WATER, 490);
 
     //private static final Operation SEDATE = new Operation.Builder("sedate") // TODO transform in SEDATE_PAIN?

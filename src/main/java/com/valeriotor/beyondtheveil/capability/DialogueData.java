@@ -34,6 +34,9 @@ public class DialogueData {
 
     public void saveToNBT(CompoundTag compoundTag) {
         for (Map.Entry<DialogueType, DialogueTemplate> entry : unlockedDialogues.entrySet()) {
+            if (entry.getValue() == null) {
+                System.out.println(entry);
+            }
             compoundTag.putString(entry.getKey().name(), entry.getValue().getID());
         }
     }

@@ -79,6 +79,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final int BOOKMARK_BASE_WIDTH = 48;
     private static final int BOOKMARK_BASE_HEIGHT = 31;
     private static final int BOOKMARK_SEPARATION = 70;
+    public static final int ARROW_WIDTH = 16;
+    public static final int ARROW_HEIGHT = 16;
     //private int entryListLeftX;
     //private int entryListTopY;
     private JournalCategory selectedCategory = JournalCategory.OVERVIEW;
@@ -128,8 +130,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
     private static final ResourceLocation MINUS = new ResourceLocation(References.MODID, "textures/gui/journal/minus.png");
     private static final ResourceLocation BUTTON = new ResourceLocation(References.MODID, "textures/gui/journal/button.png");
-    private static final ResourceLocation LEFT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/left_arrow.png");
-    private static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/right_arrow.png");
+    public static final ResourceLocation LEFT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/left_arrow.png");
+    public static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/journal/right_arrow.png");
     private static final ResourceLocation ALEMBICS_PROFILE = new ResourceLocation(References.MODID, "textures/gui/journal/alembics_profile.png");
     private final int PAGE_X = 50;
     private final int PAGE_Y = -200;
@@ -1107,8 +1109,6 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private static final int ARROW_Y = 320;
         private static final int LEFT_ARROW_X = 12;
         private static final int RIGHT_ARROW_X = 310;
-        private static final int ARROW_WIDTH = 16;
-        private static final int ARROW_HEIGHT = 16;
 
         private Page(Component title, TextBlock page, List<Element> grids) {
             super(330, 460);

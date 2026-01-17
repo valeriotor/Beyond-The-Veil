@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.entity.SurgeonLarvaEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +24,7 @@ public class SurgeonLarvaItem extends Item {
             entity.setMaster(sp);
             entity.setPos(context.getClickLocation());
             sp.level().addFreshEntity(entity);
+            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.placed_surgeon.name(), true, false);
             if (!sp.isCreative()) {
                 stack.shrink(1);
             }

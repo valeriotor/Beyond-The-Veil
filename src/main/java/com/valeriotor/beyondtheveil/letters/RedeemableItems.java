@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.function.Function;
 
 public enum RedeemableItems {
-    SLUGS(List.of(new ItemStack(Registration.SLUG.get())));
+    SLUGS(List.of(new ItemStack(Registration.SLUG.get()))),
+    THESIS(List.of(new ItemStack(Registration.BLOOD_THESIS.get()))),
+    LARVA(List.of(new ItemStack(Registration.SURGEON_LARVA.get())));
 
     private final Function<Letter, List<ItemStack>> stacks;
 

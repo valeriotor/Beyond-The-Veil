@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
@@ -21,6 +22,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,6 +30,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -197,6 +200,12 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     fletum.setPos(position().add(0, 1.5, 0));
                     level().addFreshEntity(fletum);
                     fletum.setMasterID(master);
+                    if (master != null) {
+                        ServerPlayer player = getMaster();
+                        if (player != null) {
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.created_fletum.name(), true, false);
+                        }
+                    }
                     discard();
                     level().playSound(null, getX(), getY(), getZ(), BTVSounds.HEAD_EXPLODE.get(), SoundSource.NEUTRAL, 1, 1);
                     return;

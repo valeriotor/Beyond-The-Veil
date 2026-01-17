@@ -7,7 +7,9 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -74,7 +76,9 @@ public class BloodPoolEntity {
         }
         mob.setPos(player.getX() + distX, player.getY(), player.getZ() + distZ);
         player.level().addFreshEntity(mob);
-
+        if (getType().isUndead()) {
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.spawned_undead.name(), true, false);
+        }
     }
 
     public String textDescription() {

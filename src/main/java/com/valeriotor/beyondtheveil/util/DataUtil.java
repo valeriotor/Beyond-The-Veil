@@ -92,10 +92,12 @@ public class DataUtil {
 
     public static void setBooleanOnServerAndSync(Player p, String key, boolean value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-            playerData.setBoolean(key, value, temporary);
-            Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setBoolean(value), (ServerPlayer) p);
-            if (value) {
-                ResearchUtil.markResearchAsUpdated(p, key);
+            if (playerData.getBoolean(key) != value) {
+                playerData.setBoolean(key, value, temporary);
+                Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setBoolean(value), (ServerPlayer) p);
+                if (value) {
+                    ResearchUtil.markResearchAsUpdated(p, key);
+                }
             }
             PlayerEvents.setBooleanEvent(p, key, value);
         });

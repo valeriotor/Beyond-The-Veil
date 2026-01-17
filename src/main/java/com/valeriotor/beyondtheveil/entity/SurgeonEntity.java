@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SurgeonSurgeryGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.notes.PositionStep;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
@@ -17,11 +18,13 @@ import com.valeriotor.beyondtheveil.surgery.surgeon.BellData;
 import com.valeriotor.beyondtheveil.surgery.surgeon.SurgeonProgress;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -281,6 +284,14 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
                     entityData.set(PERFORMING_SURGERY, false);
                 } else {
                     entityData.set(PERFORMING_SURGERY, true);
+                }
+            }
+            if ((tickCount & 31) == 0) {
+                if (master != null) {
+                    ServerPlayer player = getMaster();
+                    if (player != null) {
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.grew_surgeon.name(), true, false);
+                    }
                 }
             }
         }

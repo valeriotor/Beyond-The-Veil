@@ -2,7 +2,9 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -388,6 +390,10 @@ public class RitualStatus {
             level.addFreshEntity(item);
         }
         template.getOtherEffects().apply(initiator, level, altar);
+        Player player = level.getPlayerByUUID(initiator);
+        if (player != null) {
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.performed_ritual.name(), true, false);
+        }
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {

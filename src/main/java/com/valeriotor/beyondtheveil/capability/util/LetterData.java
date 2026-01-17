@@ -6,7 +6,9 @@ import com.valeriotor.beyondtheveil.event.ResearchEvents;
 import com.valeriotor.beyondtheveil.letters.Exchange;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.letters.Letter;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
@@ -78,6 +80,7 @@ public class LetterData {
                 if (clientSide || exchange.hasItems(player)) {
                     Letter sent = exchange.sendLetter(player, chosenOptions, versions, clientSide);
                     if (sent != null) {
+                        exchange.takeItems(player);
                         if(sent.getTemplate().getIndex() > 0) {
                             for (Letter received : receivedInOrder) {
                                 if (received.matches(sent.getTemplate().getParent(), sent.getTemplate().getIndex() - 1, sent.getVersion())) {
@@ -86,7 +89,6 @@ public class LetterData {
                                 }
                             }
                         }
-                        exchange.takeItems(player);
                         sentInOrder.add(sent);
                         versions.put(sent.getTemplate(), 1 + versions.getOrDefault(sent.getTemplate(), 0));
                         ResearchEvents.sendLetterEvents(player, exchange);
@@ -122,10 +124,12 @@ public class LetterData {
 
     }
 
-    public void openLetter(Player player, ExchangeTemplate template, int index, int version) {
+    public void openLetter(ServerPlayer player, ExchangeTemplate template, int index, int version) {
         for (Letter letter : receivedInOrder) {
             if (letter.matches(template, index, version)) {
                 letter.setOpened(true);
+                letter.getTemplate().getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
+                letter.getTemplate().getUnlockedExchanges().forEach(s -> DataUtil.addExchange(player, s));
                 break;
             }
         }
@@ -209,7 +213,7 @@ public class LetterData {
 
         @Override public void redeemItems(Player player, ExchangeTemplate template, int index, int version, boolean giveItems) {}
 
-        @Override public void openLetter(Player player, ExchangeTemplate template, int index, int version) {}
+        @Override public void openLetter(ServerPlayer player, ExchangeTemplate template, int index, int version) {}
     }
 
 }

@@ -79,7 +79,7 @@ public class ContactTimer extends PlayerTimer {
                     done = true;
                     heart.discard();
                     player.level().playSound(null, player.getOnPos(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL);
-                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.SHELL.get()));
+                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.VESSEL_STONE.get()));
                     DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.had_contact.name(), true, false);
                     break;
                 }

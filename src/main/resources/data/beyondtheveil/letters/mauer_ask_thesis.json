@@ -1,0 +1,17 @@
+{
+  "name": "mauer_ask_thesis",
+  "correspondence": "MISKATONIC_RESEARCHERS_BLOOD",
+  "playerInitiated": true,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["all", "colleagues"], ["independent", "surgeon"], ["hopes"], ["regrettably", "saddened"], ["best", "faithfully"],["name", "dr_name", "seeker"]],
+      "unlockedData": ["asked_thesis"]
+    },
+    {
+      "optionsPerLine": [["dear"], ["thank"], ["most"], ["what"], ["if"], ["all"], ["dr"]],
+      "itemsRedeemed": "THESIS",
+      "unlockedData": ["received_thesis"]
+    }
+  ]
+}

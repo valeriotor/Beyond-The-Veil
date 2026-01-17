@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
+import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.letters.Correspondence;
 import com.valeriotor.beyondtheveil.letters.Exchange;
@@ -18,8 +19,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -459,7 +463,8 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
 
         private final Letter letter;
         private final List<Integer> chosenOptionsInteger = new ArrayList<>();
-        private TextBlock textBlock;
+        private List<TextBlock> blocks;
+        private int currentBlock = 0;
         private LetterOptions options;
         private boolean readyToSend = false;
 
@@ -479,13 +484,28 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                 if ("name".equals(chosenOption)) {
                     localized.append(Minecraft.getInstance().player.getName().getString());
                 } else {
-                    localized.append(I18n.get(String.format("exchange.%s.%d.%d.%s", exchange, index, i, chosenOption)));
+                    String lineKey = String.format("exchange.%s.%d.%d.%s", exchange, index, i, chosenOption);
+                    String line = I18n.get(lineKey);
+
+                    if(line.startsWith("Format error")){
+                        line = I18n.get(lineKey, Minecraft.getInstance().player.getName().getString());
+                    }
+                    localized.append(line);
                 }
                 //if (i < chosenOptions.size() - 1) {
                 //    localized.append("\\n");
                 //}
             }
-            textBlock = new TextBlock(localized.toString(), LETTER_WIDTH * 9 / 10, LETTER_HEIGHT * 8 / 10, Minecraft.getInstance().font);
+            int blockWidth = LETTER_WIDTH * 9 / 10;
+            int blockHeight = LETTER_HEIGHT * 87 / 100;
+            List<Element> lines = new TextUtil().parseText(localized.toString(), blockWidth, Minecraft.getInstance().font);
+            blocks = new ArrayList<>();
+            int i = 0;
+            while (i < lines.size()) {
+                Tuple<TextBlock, Integer> tuple = TextBlock.fillBlockWithElements(lines, i, blockWidth, blockHeight, Minecraft.getInstance().font);
+                blocks.add(tuple.getA());
+                i = tuple.getB();
+            }
             if (letter.getChosenOptions().size() < letter.getTemplate().getOptionsPerLine().size()) {
                 String localizationKeyPrefix = String.format("exchange.%s.%d.%d.", exchange, index, letter.getChosenOptions().size());
                 BiConsumer<LetterOptions, Integer> listener = (letterOptions, integer) -> {
@@ -497,7 +517,13 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                         updateWidgetVisibility();
                     }
                 };
-                List<String> localizedOptions = letter.getTemplate().getOptionsPerLine().get(letter.getChosenOptions().size()).stream().map(o -> "name".equals(o) ? Minecraft.getInstance().player.getName().getString() : I18n.get(localizationKeyPrefix + o)).toList();
+                List<String> localizedOptions = letter.getTemplate().getOptionsPerLine().get(letter.getChosenOptions().size()).stream().map(o -> {
+                    String s = "name".equals(o) ? Minecraft.getInstance().player.getName().getString() : I18n.get(localizationKeyPrefix + o);
+                    if(s.startsWith("Format error")){
+                        s = I18n.get(localizationKeyPrefix + o, Minecraft.getInstance().player.getName().getString());
+                    }
+                    return s;
+                }).toList();
                 options = LetterOptions.makeOptions(localizedOptions, LETTER_WIDTH * 8 / 10, Minecraft.getInstance().font, LETTER_WIDTH * 9 / 10, 60, 10, listener);
             } else {
                 options = null;
@@ -507,10 +533,12 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         @Override
         public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             graphics.blit(PAGE, 0, 0, getWidth(), getHeight(), 0, 0, LETTER_WIDTH, LETTER_HEIGHT, LETTER_WIDTH, LETTER_HEIGHT);
-            poseStack.pushPose();
-            poseStack.translate(LETTER_WIDTH * 5F / 100, LETTER_HEIGHT * 5F / 100, 0);
-            textBlock.render(poseStack, graphics, color, relativeMouseX - LETTER_WIDTH * 5 / 100, relativeMouseY - LETTER_HEIGHT * 5 / 100, pPartialTick);
-            poseStack.popPose();
+            if (!blocks.isEmpty()) {
+                poseStack.pushPose();
+                poseStack.translate(LETTER_WIDTH * 5F / 100, LETTER_HEIGHT * 5F / 100, 0);
+                blocks.get(currentBlock).render(poseStack, graphics, color, relativeMouseX - LETTER_WIDTH * 5 / 100, relativeMouseY - LETTER_HEIGHT * 5 / 100, pPartialTick);
+                poseStack.popPose();
+            }
 
             if (options != null) {
                 poseStack.pushPose();
@@ -518,6 +546,32 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                 options.render(poseStack, graphics, 0xFFFFFF77, relativeMouseX - LETTER_WIDTH * 5 / 100, relativeMouseY - LETTER_HEIGHT * 85 / 100, pPartialTick);
                 poseStack.popPose();
             }
+            if (currentBlock < blocks.size()-1) {
+                poseStack.pushPose();
+                poseStack.translate(LETTER_WIDTH * 95D / 100, LETTER_HEIGHT * 9 / 10D, 0);
+                if (hoveringRightArrow(relativeMouseX, relativeMouseY)) {
+                    poseStack.scale(1.2F, 1.2F, 1);
+                }
+                graphics.blit(JournalGui.RIGHT_ARROW, -JournalGui.ARROW_WIDTH / 2, -JournalGui.ARROW_HEIGHT / 2, JournalGui.ARROW_WIDTH, JournalGui.ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+                poseStack.popPose();
+            }
+            if (currentBlock > 0) {
+                poseStack.pushPose();
+                poseStack.translate(LETTER_WIDTH * 5D / 100, LETTER_HEIGHT * 9 / 10D, 0);
+                if (hoveringLeftArrow(relativeMouseX, relativeMouseY)) {
+                    poseStack.scale(1.2F, 1.2F, 1);
+                }
+                graphics.blit(JournalGui.LEFT_ARROW, -JournalGui.ARROW_WIDTH / 2, -JournalGui.ARROW_HEIGHT / 2, JournalGui.ARROW_WIDTH, JournalGui.ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+                poseStack.popPose();
+            }
+        }
+
+        private boolean hoveringLeftArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > 0 && relativeMouseX < LETTER_WIDTH * 10D / 100 && relativeMouseY > LETTER_HEIGHT * 85 / 100D && relativeMouseY < LETTER_HEIGHT * 95 / 100D;
+        }
+
+        private boolean hoveringRightArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > LETTER_WIDTH * 90D / 100 && relativeMouseX < LETTER_WIDTH * 100 / 100D && relativeMouseY > LETTER_HEIGHT * 85 / 100D && relativeMouseY < LETTER_HEIGHT * 95 / 100D;
         }
 
         @Override
@@ -525,7 +579,38 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             if (options != null && options.mouseClicked(relativeMouseX - LETTER_WIDTH * 5D / 100, relativeMouseY - LETTER_HEIGHT * 85D / 100, mouseButton)) {
                 return true;
             }
+            if (hoveringLeftArrow(relativeMouseX, relativeMouseY)) {
+                currentBlock = Math.max(0, currentBlock - 1);
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+            } else if (hoveringRightArrow(relativeMouseX, relativeMouseY)) {
+                currentBlock = Math.min(blocks.size() - 1, currentBlock + 1);
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+            }
             return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+        }
+
+        @Override
+        public boolean mouseScrolled(double relativeMouseX, double relativeMouseY, double pDelta) {
+            if (options != null && options.mouseScrolled(relativeMouseX - LETTER_WIDTH * 5D / 100, relativeMouseY - LETTER_HEIGHT * 85D / 100, pDelta)) {
+                return true;
+            }
+            return super.mouseScrolled(relativeMouseX, relativeMouseY, pDelta);
+        }
+
+        @Override
+        public boolean mouseDragged(double relativeMouseX, double relativeMouseY, int pButton, double pDragX, double pDragY) {
+            if (options != null && options.mouseDragged(relativeMouseX - LETTER_WIDTH * 5D / 100, relativeMouseY - LETTER_HEIGHT * 85D / 100, pButton, pDragX, pDragY)) {
+                return true;
+            }
+            return super.mouseDragged(relativeMouseX, relativeMouseY, pButton, pDragX, pDragY);
+        }
+
+        @Override
+        public boolean mouseReleased(double relativeMouseX, double relativeMouseY, int pButton) {
+            if (options != null && options.mouseReleased(relativeMouseX - LETTER_WIDTH * 5D / 100, relativeMouseY - LETTER_HEIGHT * 85D / 100, pButton)) {
+                return true;
+            }
+            return super.mouseReleased(relativeMouseX, relativeMouseY, pButton);
         }
     }
 

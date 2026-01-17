@@ -1,0 +1,14 @@
+{
+  "name": "another_surgeon",
+  "correspondence": "ARKHAM_SANITARIUM",
+  "playerInitiated": true,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["dr", "all"], ["delve", "performing", "grateful"], ["willing", "unsolved"], ["best", "faithfully"],["name", "dr_name", "seeker"]]
+    },
+    {
+      "optionsPerLine": [["dear"], ["certainly"], ["pupils"], ["sadly"], ["cycles"], ["best"]]
+    }
+  ]
+}

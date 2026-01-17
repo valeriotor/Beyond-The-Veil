@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.research;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchData;
@@ -13,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -105,6 +107,19 @@ public class ResearchUtil {
                     }
                 }
             }
+        }
+        ResearchStatus status = researches.get("SURGERY");
+        if (status.getStage() >= 1) {
+            knownRecipes.put(Registration.FORCEPS.getId().toString(), status.res);
+            knownRecipes.put(Registration.SCALPEL.getId().toString(), status.res);
+            knownRecipes.put(Registration.SEWING_NEEDLE.getId().toString(), status.res);
+            knownRecipes.put(Registration.SYRINGE.getId().toString(), status.res);
+            knownRecipes.put(Registration.TONGS.getId().toString(), status.res);
+            knownRecipes.put(Registration.FLASK_LARGE_ITEM.getId().toString(), status.res);
+            knownRecipes.put(Registration.FLASK_ITEM_ITEM.getId().toString(), status.res);
+            knownRecipes.put(Registration.ALEMBICS_ITEM.getId().toString(), status.res);
+            knownRecipes.put(Registration.FLASK_SHELF_ITEM.getId().toString(), status.res);
+            knownRecipes.put(Registration.SURGERY_BED_ITEM.getId().toString(), status.res);
         }
         return knownRecipes;
     }
