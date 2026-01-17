@@ -65,17 +65,17 @@ public class PlayerTickEvents {
                         Messages.sendToPlayer(GenericToClientPacket.removeWaypoint(waypointType), (ServerPlayer) p);
                     }
                 }
-                Long altarLong = playerData.getLong(PlayerDataLib.SACRIFICE_ALTAR);
+                Long altarLong = playerData.getLong(PlayerDataLib.sacrifice_altar.name());
                 if (altarLong != null && altarLong != -1) {
                     BlockPos altarPos = BlockPos.of(altarLong);
                     Level level = p.level();
                     if (level.isLoaded(altarPos) && altarPos.distSqr(p.blockPosition()) < SacrificeAltarBE.MAX_PLAYER_DISTANCE_SQR && level.getBlockEntity(altarPos) instanceof SacrificeAltarBE sacrificeAltar) {
                         UUID playerInitiating = sacrificeAltar.getPlayerInitiating();
                         if (!p.getUUID().equals(playerInitiating)) {
-                            playerData.setLong(PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                            playerData.setLong(PlayerDataLib.sacrifice_altar.name(), -1, false);
                         }
                     } else {
-                        playerData.setLong(PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                        playerData.setLong(PlayerDataLib.sacrifice_altar.name(), -1, false);
                     }
                 }
             });
@@ -170,8 +170,8 @@ public class PlayerTickEvents {
                     BlockPos playerPos = player.blockPosition();
                     if (Math.abs(playerPos.getX() - rw.getPos().getX()) < 50 && Math.abs(playerPos.getZ() - rw.getPos().getZ()) < 50) {
                         DataUtil.setBooleanOnServerAndSync(player, foundKey, true, false);
-                        if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.SPOKE_KEEPER)) {
-                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.UNLOCKED_HAMLET, true, false);
+                        if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.spoke_keeper.name())) {
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.unlocked_hamlet.name(), true, false);
                             DataUtil.getMemoryStatus(player, Memory.DARKNESS).increaseTo(2, Memory.Target.BASE, false);
                         }
                     }
@@ -212,15 +212,15 @@ public class PlayerTickEvents {
             return;
         }
         if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
-                DataUtil.incrementOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, -1, TOTAL_ARCHE_BREATH, false);
+            if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.arche_breath.name(), -1, TOTAL_ARCHE_BREATH, false);
             }
         } else {
-            if (DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, TOTAL_ARCHE_BREATH, false) < 0) {
-                DataUtil.setInt(p, PlayerDataLib.ARCHE_BREATH, 0, false);
+            if (DataUtil.getOrSetInteger(p, PlayerDataLib.arche_breath.name(), TOTAL_ARCHE_BREATH, false) < 0) {
+                DataUtil.setInt(p, PlayerDataLib.arche_breath.name(), 0, false);
             }
-            if (DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, TOTAL_ARCHE_BREATH, false) < TOTAL_ARCHE_BREATH) {
-                DataUtil.incrementOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, 1, TOTAL_ARCHE_BREATH, false);
+            if (DataUtil.getOrSetInteger(p, PlayerDataLib.arche_breath.name(), TOTAL_ARCHE_BREATH, false) < TOTAL_ARCHE_BREATH) {
+                DataUtil.incrementOrSetInteger(p, PlayerDataLib.arche_breath.name(), 1, TOTAL_ARCHE_BREATH, false);
             }
         }
     }

@@ -70,7 +70,7 @@ public class BloodBasinBE extends BlockEntity {
                 }
                 updateClient();
             } else {
-                Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.sacrifice_altar.name(), -1, false);
                 if (altarLong != -1 && level.getBlockEntity(BlockPos.of(altarLong)) instanceof SacrificeAltarBE sacrificeAltar) {
                     sacrificeAltar.addBasin(getBlockPos());
                 }

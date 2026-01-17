@@ -67,8 +67,8 @@ public class MemoryUnlockEvents {
 
     public static void archeCurrentEvent(ServerPlayer player, long ticks) {
         if (ticks > 600 && ticks < ArcheSavedData.CURRENT_PEAK && !Memory.CHANGE.isUnlocked(player)) {
-            DataUtil.incrementOrSetInteger(player, PlayerDataLib.CHANGE_MEMORY_PROGRESS, 1, 1, false);
-            if (DataUtil.getInt(player, PlayerDataLib.CHANGE_MEMORY_PROGRESS) > 5000) {
+            DataUtil.incrementOrSetInteger(player, PlayerDataLib.change_memory_progress.name(), 1, 1, false);
+            if (DataUtil.getInt(player, PlayerDataLib.change_memory_progress.name()) > 5000) {
                 Memory.CHANGE.unlock(player);
             }
         }
@@ -77,8 +77,8 @@ public class MemoryUnlockEvents {
     @SubscribeEvent
     public static void anvilRepairEvent(AnvilRepairEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp && communed(sp) && !Memory.REPAIR.isUnlocked(sp)) {
-            DataUtil.incrementOrSetInteger(sp, PlayerDataLib.REPAIR_MEMORY_PROGRESS, 1, 0, false);
-            if (DataUtil.getInt(sp, PlayerDataLib.REPAIR_MEMORY_PROGRESS) >= 5) {
+            DataUtil.incrementOrSetInteger(sp, PlayerDataLib.repair_memory_progress.name(), 1, 0, false);
+            if (DataUtil.getInt(sp, PlayerDataLib.repair_memory_progress.name()) >= 5) {
                 Memory.REPAIR.unlock(sp);
             }
         }
@@ -86,8 +86,8 @@ public class MemoryUnlockEvents {
 
     public static void dreamEvent(ServerPlayer sp) {
         if (communed(sp) && !Memory.STILLNESS.isUnlocked(sp)) {
-            DataUtil.incrementOrSetInteger(sp, PlayerDataLib.STILLNESS_MEMORY_PROGRESS, 1, 0, false);
-            if (DataUtil.getInt(sp, PlayerDataLib.STILLNESS_MEMORY_PROGRESS) >= 25) {
+            DataUtil.incrementOrSetInteger(sp, PlayerDataLib.stillness_memory_progress.name(), 1, 0, false);
+            if (DataUtil.getInt(sp, PlayerDataLib.stillness_memory_progress.name()) >= 25) {
                 Memory.STILLNESS.unlock(sp);
             }
         }

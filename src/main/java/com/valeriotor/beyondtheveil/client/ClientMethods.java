@@ -170,7 +170,7 @@ public class ClientMethods {
 
     public static String necronomiconDescriptionId() {
         LocalPlayer p = Minecraft.getInstance().player;
-        if (DataUtil.getBoolean(p, PlayerDataLib.RENAMED_NECRONOMICON)) {
+        if (DataUtil.getBoolean(p, PlayerDataLib.renamed_necronomicon.name())) {
             return "item.beyondtheveil.necronomicon2";
         }
         return "item.beyondtheveil.necronomicon";

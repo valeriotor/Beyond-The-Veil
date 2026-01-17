@@ -20,7 +20,7 @@ public class DreamVoid extends Dream {
         if (DreamHandler.hasVoid(p)) {
             return false;
         }
-        DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.VOID, true, false);
+        DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.void_.name(), true, false);
         DataUtil.addReminiscence(p, Memory.VOID.getDataName(false), new Reminiscence.TextReminiscence("reminiscence.void"));
         return true;
     }
@@ -30,7 +30,7 @@ public class DreamVoid extends Dream {
         if (DreamHandler.hasVoid(target)) {
             return false;
         }
-        DataUtil.setBooleanOnServerAndSync(target, PlayerDataLib.VOID, true, false);
+        DataUtil.setBooleanOnServerAndSync(target, PlayerDataLib.void_.name(), true, false);
         DataUtil.addReminiscence(target, Memory.VOID.getDataName(false), new Reminiscence.TextReminiscence("reminiscence.void"));
         DataUtil.syncReminiscences(target);
         return true;

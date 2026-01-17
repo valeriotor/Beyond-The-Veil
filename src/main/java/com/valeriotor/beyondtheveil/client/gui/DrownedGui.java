@@ -65,9 +65,9 @@ public class DrownedGui extends AbstractContainerScreen<DrownedContainer> {
                 button.active = false;
             }
             if (value == BaptismTimer.Phase.TALK2) {
-                if(i == 0 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.SPOKE_GNAWING)) button.active = false;
+                if(i == 0 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.spoke_gnawing.name())) button.active = false;
                 //if(i == 1 && data.getBoolean(PlayerDataLib.SPOKE_OCEAN)) button.active = false;
-                if(i == 2 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.SPOKE_YOU)) button.active = false;
+                if(i == 2 && DataUtil.getBoolean(minecraft.player, PlayerDataLib.spoke_you.name())) button.active = false;
             }
         }
         this.setButtonsActive(false);

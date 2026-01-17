@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public enum JournalCategory {
 
 
-    OVERVIEW, TOOLS, INGREDIENTS, JOURNAL, ABOMINATIONS(p -> DataUtil.getBoolean(p, PlayerDataLib.HAS_ABOMINATIONS));
+    OVERVIEW, TOOLS, INGREDIENTS, JOURNAL, ABOMINATIONS(p -> DataUtil.getBoolean(p, PlayerDataLib.has_abominations.name()));
 
     private final Predicate<Player> isUnlocked;
 

@@ -60,7 +60,7 @@ public class PlayerEvents {
         if (p1 instanceof ServerPlayer p && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
             DreamHandler.dream(p);
             if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0)
-                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DIDDREAM, true, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.didDream.name(), true, false);
         }
     }
 
@@ -68,10 +68,10 @@ public class PlayerEvents {
     public static void changeDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
         Player p = event.getEntity();
 
-        if (event.getFrom() == Level.NETHER && event.getTo() == Level.OVERWORLD && !DataUtil.getBoolean(p, PlayerDataLib.THEBEGINNING)) {
+        if (event.getFrom() == Level.NETHER && event.getTo() == Level.OVERWORLD && !DataUtil.getBoolean(p, PlayerDataLib.thebeginning.name())) {
             boolean added = p.addItem(new ItemStack(Registration.NECRONOMICON.get()));
             if (added) {
-                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.THEBEGINNING, true, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.thebeginning.name(), true, false);
                 p.sendSystemMessage(Component.translatable("beginning.netherreturn"));
             }
         }
@@ -180,7 +180,7 @@ public class PlayerEvents {
 
     public static void addBaptismAttributes(Player p) {
         if (!p.level().isClientSide) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
                 map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
                 map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));

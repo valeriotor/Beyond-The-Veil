@@ -202,7 +202,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             if (currentLine < localizedNpcLines.size() && charactersAddedCounter % 3 == 0) {
                 SoundEvent sound = menu.getTemplate().getType().getSound();
                 if (sound != null) {
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 1));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 0.3F, 0.1F));
                 }
             }
         }

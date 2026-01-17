@@ -51,7 +51,7 @@ public class OperationRegistry {
             .setPainForFailure(40)
             .setSuccessParticles(true)
             .setProgressParticles(true)
-            .addPlayerData(PlayerDataLib.INCISED)
+            .addPlayerData(PlayerDataLib.incised.name())
             .buildIncisionOperation(SurgicalLocation.BACK);
 
     private static final Operation INCISE_CHEST = new Operation.Builder("incise_chest")
@@ -61,7 +61,7 @@ public class OperationRegistry {
             .setSuccessParticles(true)
             .setProgressParticles(true)
             .setParticleOffset(new Vec3(-0.1, 0, 0.15))
-            .addPlayerData(PlayerDataLib.INCISED)
+            .addPlayerData(PlayerDataLib.incised.name())
             .buildIncisionOperation(SurgicalLocation.CHEST);
 
     private static final Operation EXTRACT_HEART = new Operation.Builder("extract_heart")
@@ -76,7 +76,7 @@ public class OperationRegistry {
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
-            .addPlayerData(PlayerDataLib.EXTRACTED_HEART)
+            .addPlayerData(PlayerDataLib.extracted_heart.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, status -> {
                 if (status.getFlags().containsKey("great_heart")) {
                     return new ItemStack(Registration.GREAT_HEART.get());
@@ -97,7 +97,7 @@ public class OperationRegistry {
             .setProgressParticles(true)
             .needsSpine()
             .makeSpineless()
-            .addPlayerData(PlayerDataLib.EXTRACTED_SPINE)
+            .addPlayerData(PlayerDataLib.extracted_spine.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()));
 
     private static final Operation EXTRACT_BONE_TIARA = new Operation.Builder("extract_bone_tiara")
@@ -111,7 +111,7 @@ public class OperationRegistry {
             .setProgressParticles(true)
             .needsSpine()
             .makeSpineless()
-            .addPlayerData(PlayerDataLib.EXTRACTED_BONE_TIARA)
+            .addPlayerData(PlayerDataLib.extracted_bone_tiara.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> new ItemStack(Registration.BONE_TIARA.get()), s -> s.getString("insert_emerald_gem") == 3, true);
 
     private static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
@@ -193,7 +193,7 @@ public class OperationRegistry {
             .setSuccessParticleType(ParticleTypes.CRIT)
             .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
             .setSuccessParticleCount(5)
-            .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
+            .addPlayerData(PlayerDataLib.first_skull_operation.name())
             .buildInjectionOperation(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), 35);
 
     private static final Operation PARENTAL_HORMONES = new Operation.Builder("parental_hormones")
@@ -206,7 +206,7 @@ public class OperationRegistry {
             .setSuccessParticleType(ParticleTypes.CRIT)
             .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
             .setSuccessParticleCount(5)
-            .addPlayerData(PlayerDataLib.FIRST_SKULL_OPERATION)
+            .addPlayerData(PlayerDataLib.first_skull_operation.name())
             .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
 
     private static final Operation GREAT_HEART = new Operation.Builder("great_heart")

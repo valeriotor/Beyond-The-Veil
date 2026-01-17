@@ -49,7 +49,7 @@ public class MemoryPhialItem extends Item {
             Memory m = Memory.getMemoryFromDataName(tag.getString("memory"));
             if (m != null) {
                 DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.DRANK_MEMORY.apply(m), true, false);
-                DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.DRANK_ANY_MEMORY, true, false);
+                DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.drankmemory.name(), true, false);
             }
         }
 

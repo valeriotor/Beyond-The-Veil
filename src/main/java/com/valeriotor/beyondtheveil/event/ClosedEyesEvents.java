@@ -34,7 +34,7 @@ public class ClosedEyesEvents {
 
     @SubscribeEvent
     public static void onFillBucketEvent(FillBucketEvent event) {
-        if (event.getEntity() instanceof ServerPlayer sp && DataUtil.getBoolean(sp, PlayerDataLib.REMINISCING) && event.getTarget() != null) {
+        if (event.getEntity() instanceof ServerPlayer sp && DataUtil.getBoolean(sp, PlayerDataLib.reminiscing.name()) && event.getTarget() != null) {
             if (event.getTarget() instanceof BlockHitResult bhr && event.getEmptyBucket().getItem() == Items.BUCKET) {
                 BlockPos prePos = bhr.getBlockPos();
                 BlockState preState = event.getLevel().getBlockState(prePos);
@@ -44,16 +44,16 @@ public class ClosedEyesEvents {
                     bp.pickupBlock(level, prePos, preState);
                     event.setFilledBucket(event.getEmptyBucket().copy());
                     event.setResult(Event.Result.ALLOW);
-                    DataUtil.incrementOrSetInteger(sp, PlayerDataLib.STORED_WATER, 1, 1, false);
+                    DataUtil.incrementOrSetInteger(sp, PlayerDataLib.stored_water.name(), 1, 1, false);
                 } else {
                     Direction direction = bhr.getDirection();
                     BlockPos pos = canBlockContainWater(level, prePos, preState) ? prePos : prePos.relative(direction);
-                    if (DataUtil.getOrSetInteger(event.getEntity(), PlayerDataLib.STORED_WATER, 0, false) > 0 && placeStoredWater(event.getEntity(), level, pos, bhr)) {
-                        DataUtil.incrementOrSetInteger(event.getEntity(), PlayerDataLib.STORED_WATER, -1, 0, false);
+                    if (DataUtil.getOrSetInteger(event.getEntity(), PlayerDataLib.stored_water.name(), 0, false) > 0 && placeStoredWater(event.getEntity(), level, pos, bhr)) {
+                        DataUtil.incrementOrSetInteger(event.getEntity(), PlayerDataLib.stored_water.name(), -1, 0, false);
                         event.setFilledBucket(event.getEmptyBucket().copy());
                         event.setResult(Event.Result.ALLOW);
-                        if (!DataUtil.getBoolean(sp, PlayerDataLib.GRASPED_WATER)) {
-                            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.GRASPED_WATER, true, false);
+                        if (!DataUtil.getBoolean(sp, PlayerDataLib.grasped_water.name())) {
+                            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.grasped_water.name(), true, false);
                         }
                     }
                 }
@@ -101,7 +101,7 @@ public class ClosedEyesEvents {
     public static void endermanAngerEvent(EnderManAngerEvent event) {
         Player p = event.getPlayer();
         if (p != null) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.REMINISCING)) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.reminiscing.name())) {
                 event.setCanceled(true);
             }
         }

@@ -72,9 +72,9 @@ public class DreamHandler {
         }
         if (successes.isEmpty()) {
             boolean emptyReminiscence = false;
-            if (DataUtil.getBoolean(p, PlayerDataLib.DRANK_ANY_MEMORY)) {
-                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DRANK_ANY_MEMORY, false, false);
-                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DRANK_MEMORY_DREAM, true, false);
+            if (DataUtil.getBoolean(p, PlayerDataLib.drankmemory.name())) {
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.drankmemory.name(), false, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.drank_dream.name(), true, false);
                 emptyReminiscence = true;
             }
             ItemStack mainHandItem = p.getMainHandItem();
@@ -82,7 +82,7 @@ public class DreamHandler {
                 CompoundTag tag = mainHandItem.getOrCreateTag();
                 Memory m = Memory.getMemoryFromDataName(tag.getString("memory"));
                 if (m != null) {
-                    DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.HELD_MEMORY_DREAM, true, false);
+                    DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.held_dream.name(), true, false);
                     emptyReminiscence = true;
                 }
             }
@@ -91,7 +91,7 @@ public class DreamHandler {
             }
         } else {
             if (!bed) {
-                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.SLEPT_IN_CHAMBER, true, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.slept_in_chamber.name(), true, false);
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 1, 1, false);
                 markTimesDreamt(p, "sleep_chamber");
             }
@@ -182,7 +182,7 @@ public class DreamHandler {
                     markTimesDreamt(p, "dream_bottle");
                 }
                 
-                DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.USED_BOTTLE, true, false);
+                DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.used_bottle.name(), true, false);
             }
             DataUtil.syncReminiscences(p);
             DataUtil.syncMemories(p);
@@ -238,12 +238,12 @@ public class DreamHandler {
     }
 
     public static boolean hasVoid(Player player) {
-        return DataUtil.getBoolean(player, PlayerDataLib.VOID);
+        return DataUtil.getBoolean(player, PlayerDataLib.void_.name());
     }
 
     public static boolean consumeVoid(Player player) {
-        if (DataUtil.getBoolean(player, PlayerDataLib.VOID)) {
-            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.VOID, false, false);
+        if (DataUtil.getBoolean(player, PlayerDataLib.void_.name())) {
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.void_.name(), false, false);
             DataUtil.removeReminiscence(player, Memory.VOID.getDataName(false));
             return true;
         }

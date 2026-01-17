@@ -67,9 +67,9 @@ public class Dialogue {
     private static void unlockDataFromDialogue(ServerPlayer player, String s) {
         DataUtil.setBooleanOnServerAndSync(player, s, true, false);
         if ("spoke_keeper".equals(s) && DataUtil.getBoolean(player, "reminisced_darkness")) {
-            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.UNLOCKED_HAMLET, true, false);
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.unlocked_hamlet.name(), true, false);
         }
-        if (Objects.equals(s, PlayerDataLib.RATIONALIZED)) {
+        if (Objects.equals(s, PlayerDataLib.rationalized.name())) {
             DialogueData.for_(player).setDialogue(DialogueType.BLACK_MIRROR, DialogueRegistry.getTemplate(DialogueType.BLACK_MIRROR, "rationalize3"));
         }
     }

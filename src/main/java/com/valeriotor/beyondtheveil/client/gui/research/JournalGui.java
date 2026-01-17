@@ -299,7 +299,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             } else {
                 chosenReport = null;
             }
-            Integer orSetInteger = DataUtil.getOrSetInteger(Minecraft.getInstance().player, PlayerDataLib.OPEN_JOURNAL_PAGE, 0, true);
+            Integer orSetInteger = DataUtil.getOrSetInteger(Minecraft.getInstance().player, PlayerDataLib.open_journal_page.name(), 0, true);
             setCategory(JournalCategory.values()[orSetInteger]);
             firstOpen = false;
         } else {
@@ -645,7 +645,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         super.onClose();
         Messages.sendToServer(GenericToServerPacket.setCurrentReport(reportFromList(), editingReport, chosenReport == null ? null : chosenReport.getName()));
         DataUtil.setCurrentReport(Minecraft.getInstance().player, reportFromList(), editingReport, chosenReport == null ? null : chosenReport.getName());
-        DataUtilClient.setInt(PlayerDataLib.OPEN_JOURNAL_PAGE, selectedCategory.ordinal(), true);
+        DataUtilClient.setInt(PlayerDataLib.open_journal_page.name(), selectedCategory.ordinal(), true);
     }
 
     private Report reportFromList() {

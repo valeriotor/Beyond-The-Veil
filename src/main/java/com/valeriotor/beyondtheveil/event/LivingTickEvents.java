@@ -106,8 +106,8 @@ public class LivingTickEvents {
                 if (p.getVehicle() instanceof NautilusEntity) {
                     return;
                 }
-                if (DataUtil.getBoolean(p, PlayerDataLib.BAPTIZED)) {
-                    Integer breath = DataUtil.getOrSetInteger(p, PlayerDataLib.ARCHE_BREATH, PlayerTickEvents.TOTAL_ARCHE_BREATH, false);
+                if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
+                    Integer breath = DataUtil.getOrSetInteger(p, PlayerDataLib.arche_breath.name(), PlayerTickEvents.TOTAL_ARCHE_BREATH, false);
                     if (breath == null || breath >= 0) {
                         damage = 0;
                     } else {

@@ -20,7 +20,6 @@ import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetCarriedItemPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -128,7 +127,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
         if (pLevel instanceof ServerLevel sl && pPlacer instanceof ServerPlayer sp) {
-            boolean alreadyDone = !sp.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getBoolean(PlayerDataLib.CULTIST_KILLED);
+            boolean alreadyDone = !sp.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getBoolean(PlayerDataLib.cultist_killed.name());
             if (sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).isPresent()) {
                 boolean isAlreadyBeingBackstabbed = sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).resolve().get().hasTimer("killedByCultist");
                 if (!alreadyDone && !isAlreadyBeingBackstabbed && MathHelperBTV.checkForRing(this, sl, pPos, 4)) {

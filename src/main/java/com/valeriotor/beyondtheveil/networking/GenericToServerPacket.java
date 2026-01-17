@@ -157,14 +157,14 @@ public class GenericToServerPacket {
                         CapabilityEvents.syncCapabilities(player);
                     }
                     case REMINISCING_START -> {
-                        DataUtil.setBoolean(player, PlayerDataLib.REMINISCING, true, true);
+                        DataUtil.setBoolean(player, PlayerDataLib.reminiscing.name(), true, true);
                         Map<String, Reminiscence> reminiscences = DataUtil.getReminiscences(player);
                         for (String key : reminiscences.keySet()) {
                             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.REMINISCED.apply(key), true, false);
                         }
                     }
                     case REMINISCING_STOP -> {
-                        DataUtil.setBoolean(player, PlayerDataLib.REMINISCING, false, true);
+                        DataUtil.setBoolean(player, PlayerDataLib.reminiscing.name(), false, true);
                     }
                     case SLEEP_CHAMBER -> {
                         DreamHandler.dream(player, false);

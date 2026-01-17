@@ -58,7 +58,7 @@ public class ResearchEvents {
                 addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "wantslugs");
                 DataUtil.addExchange(p, "keeper_ask_slugs");
             } else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
-                boolean embraced = DataUtil.getBoolean(p, PlayerDataLib.EMBRACED_CUSTOMS);
+                boolean embraced = DataUtil.getBoolean(p, PlayerDataLib.embraced_customs.name());
                 if (!embraced || true) {
                     int total = 0;
                     for (Map.Entry<String, Integer> entry : SHOREMEN_CUSTOMS_RESEARCHES.entrySet()) {
@@ -66,7 +66,7 @@ public class ResearchEvents {
                         if (researchStage >= entry.getValue()) {
                             total++;
                             if (total >= 3) {
-                                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.EMBRACED_CUSTOMS, true, false);
+                                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.embraced_customs.name(), true, false);
                                 addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism");
                                 DataUtil.addExchange(p, "keeper_baptism");
                                 break;

@@ -103,8 +103,8 @@ public class CanoeEntity extends Boat {
             if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof ServerPlayer player && isInWater()) {
                 if (false && player.getRandom().nextInt(200) == 0) {
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
-                    if (!DataUtil.getBoolean(player, PlayerDataLib.RECEIVED_FISH) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
-                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.RECEIVED_FISH, true, false);
+                    if (!DataUtil.getBoolean(player, PlayerDataLib.received_fish.name()) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.received_fish.name(), true, false);
                     }
                 }
             }
@@ -124,8 +124,8 @@ public class CanoeEntity extends Boat {
             double v = Math.pow(xo - d0, 2) + Math.pow(zo - d1, 2);
             if (v > 0.05 && player.getRandom().nextInt(70) == 0) {
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
-                if (!DataUtil.getBoolean(player, PlayerDataLib.RECEIVED_FISH) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
-                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.RECEIVED_FISH, true, false);
+                if (!DataUtil.getBoolean(player, PlayerDataLib.received_fish.name()) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
+                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.received_fish.name(), true, false);
                 }
             }
         }

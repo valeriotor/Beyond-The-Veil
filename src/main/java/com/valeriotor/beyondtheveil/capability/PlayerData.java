@@ -293,7 +293,7 @@ public class PlayerData {
     }
 
     public boolean isEditingReport() {
-        return getBoolean(PlayerDataLib.EDITING_REPORT);
+        return getBoolean(PlayerDataLib.editing_report.name());
     }
 
     public String getPreviousReportName() {
@@ -302,7 +302,7 @@ public class PlayerData {
 
     public void setCurrentReport(Report currentReport, boolean editing, String previousReportName) {
         this.currentReport = currentReport;
-        setBoolean(PlayerDataLib.EDITING_REPORT, editing, false);
+        setBoolean(PlayerDataLib.editing_report.name(), editing, false);
         if (previousReportName != null) {
             setString(PlayerDataLib.PREVIOUS_REPORT_NAME, previousReportName, false);
         } else {

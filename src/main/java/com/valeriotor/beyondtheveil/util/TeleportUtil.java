@@ -24,7 +24,7 @@ public class TeleportUtil {
             ServerLevel archeLevel = server.getLevel(BTVDimensions.ARCHE_LEVEL);
             if (archeLevel != null) {
                 if (player.getCapability(PlayerDataProvider.PLAYER_DATA, null).isPresent()) {
-                    Long posLong = player.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve().get().getLong(PlayerDataLib.VEIN_POS);
+                    Long posLong = player.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve().get().getLong(PlayerDataLib.vein_pos.name());
                     if (posLong == null) {
                         BlockPos posToSearchFrom = new BlockPos(player.getRandom().nextInt(-500000, 500000), 70, player.getRandom().nextInt(-500000, 500000));
                         BlockPos nearestVein = archeLevel.findNearestMapStructure(BTVTags.DEEP_VEIN, posToSearchFrom, 200, false);
@@ -32,7 +32,7 @@ public class TeleportUtil {
                             nearestVein = posToSearchFrom; // TODO and we generate a vein there...
                         }
                         posLong = nearestVein.asLong();
-                        DataUtil.setLong(player, PlayerDataLib.VEIN_POS, posLong, false);
+                        DataUtil.setLong(player, PlayerDataLib.vein_pos.name(), posLong, false);
                     }
                     BlockPos toTeleport = BlockPos.of(posLong);
                     player.changeDimension(archeLevel, new ITeleporter() {

@@ -115,7 +115,7 @@ public class SacrificeAltarBE extends BlockEntity {
                 playerInitiating = player.getUUID();
                 patientStatus.setInRitual(true);
                 updateClient();
-                playerData.get().setLong(PlayerDataLib.SACRIFICE_ALTAR, getBlockPos().asLong(), false);
+                playerData.get().setLong(PlayerDataLib.sacrifice_altar.name(), getBlockPos().asLong(), false);
             }
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
@@ -126,7 +126,7 @@ public class SacrificeAltarBE extends BlockEntity {
                 playerInitiating = null;
                 basinsToBeUsed.clear();
                 updateClient();
-                playerData.get().setLong(PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                playerData.get().setLong(PlayerDataLib.sacrifice_altar.name(), -1, false);
             }
         }
     }
@@ -347,7 +347,7 @@ public class SacrificeAltarBE extends BlockEntity {
                 if (playerInitiating != null) {
                     Player player = sl.getPlayerByUUID(playerInitiating);
                     if (player != null) {
-                        Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.SACRIFICE_ALTAR, -1, false);
+                        Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.sacrifice_altar.name(), -1, false);
                         if (altarLong == -1 || !BlockPos.of(altarLong).equals(getBlockPos()) || getBlockPos().distSqr(player.blockPosition()) >= MAX_PLAYER_DISTANCE_SQR || player.getMainHandItem().getItem() != Registration.SACRIFICIAL_KNIFE.get())
                             breakChain();
                         else {

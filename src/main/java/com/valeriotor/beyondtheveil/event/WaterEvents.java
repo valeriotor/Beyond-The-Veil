@@ -31,7 +31,7 @@ public class WaterEvents {
         Player p = event.player;
         if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
             p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-                if (playerData.getBoolean(PlayerDataLib.BAPTIZED)) {
+                if (playerData.getBoolean(PlayerDataLib.baptized.name())) {
                     FluidState fluidstate = p.level().getFluidState(p.blockPosition());
                     if ((p.isInWater() || (p.isInFluidType(fluidstate) && fluidstate.getFluidType() != net.minecraftforge.common.ForgeMod.LAVA_TYPE.get())) && p.isAffectedByFluids() && !p.canStandOnFluid(fluidstate)) {
                         p.setAirSupply(p.getMaxAirSupply());

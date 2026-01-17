@@ -126,7 +126,7 @@ public class BaptismTimer extends PlayerTimer {
                 player.level().setBlock(player.getOnPos().above(i), Blocks.WATER.defaultBlockState(), 3);
             }
         }
-        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.BAPTIZED, true, false);
+        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.baptized.name(), true, false);
         PlayerEvents.addBaptismAttributes(player);
     }
 

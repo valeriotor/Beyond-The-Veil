@@ -43,9 +43,9 @@ public class SlugItem extends Item {
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof ServerPlayer sp) {
             if (ResearchUtil.getResearchStage(sp, "CUSTOMS") == 0) {
-                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ATE_SLUG, true, false);
+                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ate_slug.name(), true, false);
             }
-            boolean baptized = DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED);
+            boolean baptized = DataUtil.getBoolean(sp, PlayerDataLib.baptized.name());
             if (!baptized) {
                 sp.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10));
                 sp.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 10, 1));
@@ -69,7 +69,7 @@ public class SlugItem extends Item {
     }
 
     private static boolean checkBaptism(ServerPlayer sp) {
-        if (ResearchUtil.getResearchStage(sp, "BAPTISM") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.BAPTIZED)) {
+        if (ResearchUtil.getResearchStage(sp, "BAPTISM") < 1 || DataUtil.getBoolean(sp, PlayerDataLib.baptized.name())) {
             return false;
         }
         if (sp.level().getBlockState(sp.getOnPos()).canBeReplaced()) {
@@ -135,7 +135,7 @@ public class SlugItem extends Item {
     }
 
     public static boolean hasResearchForContact(ServerPlayer sp) {
-        return ResearchUtil.getResearchStage(sp, "CUSTOMS") >= 1 && !DataUtil.getBoolean(sp, PlayerDataLib.HAD_CONTACT); // TODO change customs to first contact
+        return ResearchUtil.getResearchStage(sp, "CUSTOMS") >= 1 && !DataUtil.getBoolean(sp, PlayerDataLib.had_contact.name()); // TODO change customs to first contact
     }
 
 }

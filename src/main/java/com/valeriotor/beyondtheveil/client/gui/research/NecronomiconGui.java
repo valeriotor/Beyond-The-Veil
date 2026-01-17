@@ -75,13 +75,13 @@ public class NecronomiconGui extends Screen {
         LocalPlayer p = Minecraft.getInstance().player;
         Map<String, ResearchStatus> map = ResearchUtil.getResearches(p);
         PlayerData data = p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get();
-        this.topX = data.getOrSetInteger(PlayerDataLib.NECRO_X, -400, false);
-        this.topY = data.getOrSetInteger(PlayerDataLib.NECRO_Y, -200, false);
+        this.topX = data.getOrSetInteger(PlayerDataLib.necro_x.name(), -400, false);
+        this.topY = data.getOrSetInteger(PlayerDataLib.necro_y.name(), -200, false);
         if (map.get("FIRSTDREAMS").getStage() == -1) {
             this.topX = -400;
             this.topY = -200;
         }
-        this.factor = data.getOrSetInteger(PlayerDataLib.NECRO_FACTOR, 3, false);
+        this.factor = data.getOrSetInteger(PlayerDataLib.necro_fac.name(), 3, false);
         for (Entry<String, ResearchStatus> entry : map.entrySet()) {
             if (entry.getValue().isKnown(map, data)) {
                 if (entry.getValue().getStage() == -1) {
@@ -113,7 +113,7 @@ public class NecronomiconGui extends Screen {
             }
         }
         this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (ConfigLib.connectionGreen << 8) | ConfigLib.connectionBlue;
-        showBookmarkHint = !data.getBoolean(PlayerDataLib.MADE_BOOKMARK) && map.get("SLEEP_CHAMBER").getStage() >= 1; // TODO this should be SLEEP_CHAMBER, change if otherwise
+        showBookmarkHint = !data.getBoolean(PlayerDataLib.made_bookmark.name()) && map.get("SLEEP_CHAMBER").getStage() >= 1; // TODO this should be SLEEP_CHAMBER, change if otherwise
     }
 
     @Override
@@ -402,7 +402,7 @@ public class NecronomiconGui extends Screen {
                     DataUtilClient.setStringAndSync(PlayerDataLib.BOOKMARK.apply(bookmarks.size()-1), res.getKey(), false);
                     minecraft.player.playSound(SoundEvents.BOOK_PUT, 1, 1);
                     if (showBookmarkHint) {
-                        DataUtilClient.setBooleanAndSync(PlayerDataLib.MADE_BOOKMARK, true, false);
+                        DataUtilClient.setBooleanAndSync(PlayerDataLib.made_bookmark.name(), true, false);
                         showBookmarkHint = false;
                         firstBookmarkMadeCounter = 80;
                     }
@@ -452,8 +452,8 @@ public class NecronomiconGui extends Screen {
     }
 
     private void savePositionData() {
-        DataUtilClient.setIntAndSync(PlayerDataLib.NECRO_X, this.topX, false);
-        DataUtilClient.setIntAndSync(PlayerDataLib.NECRO_Y, this.topY, false);
-        DataUtilClient.setIntAndSync(PlayerDataLib.NECRO_FACTOR, this.factor, false);
+        DataUtilClient.setIntAndSync(PlayerDataLib.necro_x.name(), this.topX, false);
+        DataUtilClient.setIntAndSync(PlayerDataLib.necro_y.name(), this.topY, false);
+        DataUtilClient.setIntAndSync(PlayerDataLib.necro_fac.name(), this.factor, false);
     }
 }

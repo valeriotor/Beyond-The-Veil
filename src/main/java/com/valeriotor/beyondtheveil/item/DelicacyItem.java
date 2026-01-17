@@ -15,8 +15,8 @@ public class DelicacyItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity) {
-        if (pLivingEntity instanceof ServerPlayer sp && !DataUtil.getBoolean(sp, PlayerDataLib.ATE_DELICACY)) {
-            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ATE_DELICACY, true, false);
+        if (pLivingEntity instanceof ServerPlayer sp && !DataUtil.getBoolean(sp, PlayerDataLib.ate_delicacy.name())) {
+            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ate_delicacy.name(), true, false);
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
     }

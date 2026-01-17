@@ -36,8 +36,8 @@ public class AntidoteCapsuleItem extends Item {
         stack.shrink(1);
         sp.addEffect(new MobEffectInstance(BTVEffects.IMMUNITY.get(), 40 * 20));
         sp.level().playSound(null, sp.getOnPos(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS);
-        if (!DataUtil.getBoolean(sp, PlayerDataLib.USED_ANTIDOTE)) {
-            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.USED_ANTIDOTE, true, false);
+        if (!DataUtil.getBoolean(sp, PlayerDataLib.used_antidote.name())) {
+            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.used_antidote.name(), true, false);
         }
     }
 }

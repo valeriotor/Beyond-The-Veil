@@ -50,10 +50,10 @@ public class IdolBlock extends Block {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (DataUtil.getBoolean(pPlayer, PlayerDataLib.MUST_COMMUNE) && !DataUtil.getBoolean(pPlayer, PlayerDataLib.COMMUNED)) {
+        if (DataUtil.getBoolean(pPlayer, PlayerDataLib.must_commune.name()) && !DataUtil.getBoolean(pPlayer, PlayerDataLib.communed.name())) {
             if (pPlayer instanceof ServerPlayer sp) {
                 Messages.sendToPlayer(GenericToClientPacket.blackScreen(180, BTVSounds.WATER_DREAM_SHORT.get()), sp);
-                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.COMMUNED, true, false);
+                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.communed.name(), true, false);
             }
             return InteractionResult.SUCCESS;
         }

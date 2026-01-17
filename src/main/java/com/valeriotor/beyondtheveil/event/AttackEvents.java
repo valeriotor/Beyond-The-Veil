@@ -45,7 +45,7 @@ public class AttackEvents {
             playerDamageEvent(event, player);
         }
         if (source instanceof Player player) {
-            if (DataUtil.getBoolean(player, PlayerDataLib.BAPTIZED)) {
+            if (DataUtil.getBoolean(player, PlayerDataLib.baptized.name())) {
                 if (player.isInWater()) {
                     event.setAmount(event.getAmount() * 2);
                 } else if (player.isInWaterOrRain()) {
@@ -70,7 +70,7 @@ public class AttackEvents {
                 event.setCanceled(true);
             }
         });
-        if (DataUtil.getBoolean(player, PlayerDataLib.BAPTIZED)) {
+        if (DataUtil.getBoolean(player, PlayerDataLib.baptized.name())) {
             if (player.isInWater()) {
                 event.setAmount(event.getAmount() * 0.7F);
             } else if (player.isInWaterOrRain()) {

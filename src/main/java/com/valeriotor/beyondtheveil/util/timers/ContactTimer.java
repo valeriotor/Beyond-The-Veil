@@ -74,13 +74,13 @@ public class ContactTimer extends PlayerTimer {
                 Messages.sendToPlayer(GenericToClientPacket.shakeCamera(), (ServerPlayer) player);
             }
             if (time > 379) {
-                List<ItemEntity> tears = player.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(player.position(), 3, 3, 3), e -> e.getItem().getItem() == Items.GHAST_TEAR);
-                for (ItemEntity tear : tears) {
+                List<ItemEntity> hearts = player.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(player.position(), 3, 3, 3), e -> e.getItem().getItem() == Registration.HEART_ITEM.get());
+                for (ItemEntity heart : hearts) {
                     done = true;
-                    tear.discard();
+                    heart.discard();
                     player.level().playSound(null, player.getOnPos(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL);
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.SHELL.get()));
-                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.HAD_CONTACT, true, false);
+                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.had_contact.name(), true, false);
                     break;
                 }
             }
