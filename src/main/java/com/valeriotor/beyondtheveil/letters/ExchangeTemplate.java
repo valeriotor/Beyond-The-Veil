@@ -2,8 +2,11 @@ package com.valeriotor.beyondtheveil.letters;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -94,6 +97,41 @@ public class ExchangeTemplate {
                 unlockedExchanges = new ArrayList<>();
             }
             return unlockedExchanges;
+        }
+
+        public void takeItems(Player player) {
+            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+            for (ExchangeTemplate.ExchangeItems exchangeItems : getItemsRequired()) {
+                int remaining = exchangeItems.getAmount();
+                for (int i = 0; i < inventory.getSlots(); i++) {
+                    ItemStack stack = inventory.getStackInSlot(i);
+                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
+                        remaining -= inventory.extractItem(i, remaining, false).getCount();
+                    }
+                    if (remaining == 0) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        public boolean hasItems(Player player) {
+            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+            if (getItemsRequired() != null && !getItemsRequired().isEmpty()) {
+                for (ExchangeTemplate.ExchangeItems exchangeItems : getItemsRequired()) {
+                    int remaining = exchangeItems.getAmount();
+                    for (int i = 0; i < inventory.getSlots(); i++) {
+                        ItemStack stack = inventory.getStackInSlot(i);
+                        if (stack.getItem() == exchangeItems.getItem().getItem()) {
+                            remaining -= stack.getCount();
+                        }
+                    }
+                    if (remaining > 0) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

@@ -3,8 +3,8 @@
     {
       "type": "ttf",
       "file": "beyondtheveil:ttf/garamond.ttf",
-      "oversample": 5,
-      "size": 15
+      "oversample": 9,
+      "size": 16
     }
   ]
 }

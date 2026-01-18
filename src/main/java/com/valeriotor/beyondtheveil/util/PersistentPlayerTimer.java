@@ -21,8 +21,8 @@ import static com.valeriotor.beyondtheveil.capability.util.LetterDataProvider.LE
 public enum PersistentPlayerTimer {
     LETTER((p, t) -> {
         p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
-            c.receiveLetter(t.getAdditionalData("exchange"));
-            p.getCapability(LETTER_DATA).ifPresent(data -> Messages.sendToPlayer(GenericToClientPacket.syncLetterData(data.saveToNBT(new CompoundTag())), (ServerPlayer) p));
+            c.receiveLetter(p, t.getAdditionalData("exchange"));
+            Messages.sendToPlayer(GenericToClientPacket.syncLetterData(c.saveToNBT(new CompoundTag())), (ServerPlayer) p);
         });
     }),
     DREAMT(List.of(), List.of((p, t) -> {

@@ -110,7 +110,7 @@ public class GearBenchContainer extends AbstractContainerMenu {
                         } while (!stack.isEmpty() && stack.getCount() < getCarried().getMaxStackSize() - getCarried().getCount());
                         return ItemStack.EMPTY;
                     }
-                    slot.onTake(pPlayer, stack);
+                    slot.onTake(pPlayer, itemStack);
                     stack = slot.getItem();
                 }while(!stack.isEmpty());
                 return ItemStack.EMPTY;

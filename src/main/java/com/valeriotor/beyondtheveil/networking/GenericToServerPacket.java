@@ -81,19 +81,17 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.SEND_LETTER, tag);
     }
 
-    public static GenericToServerPacket redeemItems(String exchangeName, int index, int version) {
+    public static GenericToServerPacket redeemItems(String exchangeName, int index) {
         CompoundTag tag = new CompoundTag();
         tag.putString("name", exchangeName);
         tag.putInt("index", index);
-        tag.putInt("version", version);
         return new GenericToServerPacket(MessageType.REDEEM_ITEMS, tag);
     }
 
-    public static GenericToServerPacket openLetter(String exchangeName, int index, int version) {
+    public static GenericToServerPacket openLetter(String exchangeName, int index) {
         CompoundTag tag = new CompoundTag();
         tag.putString("name", exchangeName);
         tag.putInt("index", index);
-        tag.putInt("version", version);
         return new GenericToServerPacket(MessageType.OPEN_LETTER, tag);
     }
 
@@ -198,14 +196,12 @@ public class GenericToServerPacket {
                     case REDEEM_ITEMS -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
                         int index = tag.getInt("index");
-                        int version = tag.getInt("version");
-                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.redeemItems(player, template, index, version, true));
+                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.redeemItems(player, template, index, false));
                     }
                     case OPEN_LETTER -> {
                         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("name"));
                         int index = tag.getInt("index");
-                        int version = tag.getInt("version");
-                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.openLetter(player, template, index, version));
+                        player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> c.openLetter(player, template));
                     }
                     case RESPAWN_NOW -> HeartBlock.respawnNow(player);
                     case CHOOSE_BAPTISM_OPTION -> {

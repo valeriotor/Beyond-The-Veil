@@ -162,7 +162,7 @@ public class PlayerTickEvents {
 
     private static void checkDiscoveredWaypoint(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if ((player.tickCount & 15) == 0) {
+        if ((player.tickCount & 15) == 0 && player instanceof ServerPlayer sp) {
             Map<String, Reminiscence> reminiscences = DataUtil.getReminiscences(player);
             for (Map.Entry<String, Reminiscence> entry : reminiscences.entrySet()) {
                 String foundKey = PlayerDataLib.FOUND_WAYPOINT.apply(entry.getKey());
@@ -170,11 +170,15 @@ public class PlayerTickEvents {
                     BlockPos playerPos = player.blockPosition();
                     if (Math.abs(playerPos.getX() - rw.getPos().getX()) < 50 && Math.abs(playerPos.getZ() - rw.getPos().getZ()) < 50) {
                         DataUtil.setBooleanOnServerAndSync(player, foundKey, true, false);
-                        if (entry.getKey().equals(Memory.DARKNESS.getDataName(false)) && DataUtil.getBoolean(player, PlayerDataLib.spoke_keeper.name())) {
-                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.unlocked_hamlet.name(), true, false);
+                        if (entry.getKey().equals(Memory.DARKNESS.getDataName(false))) {
+                            if (DataUtil.getBoolean(player, PlayerDataLib.spoke_keeper.name())) {
+                                DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.unlocked_hamlet.name(), true, false);
+                            }
                             DataUtil.getMemoryStatus(player, Memory.DARKNESS).increaseTo(2, Memory.Target.BASE, false);
+                            DataUtil.syncMemories(sp);
                         } else if (entry.getKey().equals(Memory.SENTIENCE.getDataName(false))) {
                             DataUtil.getMemoryStatus(player, Memory.SENTIENCE).increaseTo(2, Memory.Target.BASE, false);
+                            DataUtil.syncMemories(sp);
                         }
                     }
                 }

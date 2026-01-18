@@ -17,26 +17,42 @@ import java.util.*;
 
 public class Exchange {
 
-    private ExchangeTemplate template;
-    private List<Letter> letters = new ArrayList<>();
+    private final ExchangeTemplate template;
+    private final int version;
+    private boolean active = true;
+    private final List<Letter> letters = new ArrayList<>();
 
     public static Exchange fromNBT(CompoundTag tag) {
         ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("template"));
+        int version = tag.getInt("version");
         if (template != null) {
-            Exchange e = new Exchange(template);
+            Exchange e = new Exchange(template, version);
+            boolean active = tag.getBoolean("active");
+            if (!active) {
+                e.setInactive();
+            }
             CompoundTag letters1 = tag.getCompound("letters");
-            letters1.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Letter.fromNBT(letters1.getCompound(s))).filter(Objects::nonNull).forEach(l -> e.letters.add(l));
+            letters1.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Letter.fromNBT(letters1.getCompound(s), template)).filter(Objects::nonNull).forEach(e.letters::add);
             return e;
         }
         return null;
     }
 
-    public Exchange(ExchangeTemplate template) {
+    public Exchange(ExchangeTemplate template, int version) {
         this.template = template;
+        this.version = version;
+    }
+
+    public List<Letter> getLetters() {
+        return letters;
     }
 
     public ExchangeTemplate getTemplate() {
         return template;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public ExchangeTemplate.LetterTemplate nextLetterTemplate() {
@@ -48,44 +64,6 @@ public class Exchange {
 
     public String getName() {
         return template.getName();
-    }
-
-    public boolean hasItems(Player player) {
-        IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-        if(canSendLetter() && template.getTemplate(letters.size()).getItemsRequired() != null && !template.getTemplate(letters.size()).getItemsRequired().isEmpty()) {
-            for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
-                int remaining = exchangeItems.getAmount();
-                for (int i = 0; i < inventory.getSlots(); i++) {
-                    ItemStack stack = inventory.getStackInSlot(i);
-                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
-                        remaining -= stack.getCount();
-                    }
-                }
-                if (remaining > 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void takeItems(Player player) {
-        IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-        if(canSendLetter()) {
-            for (ExchangeTemplate.ExchangeItems exchangeItems : template.getTemplate(letters.size()).getItemsRequired()) {
-                int remaining = exchangeItems.getAmount();
-                for (int i = 0; i < inventory.getSlots(); i++) {
-                    ItemStack stack = inventory.getStackInSlot(i);
-                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
-                        remaining -= inventory.extractItem(i, remaining, false).getCount();
-                    }
-                    if (remaining == 0) {
-                        break;
-                    }
-                }
-            }
-        }
-
     }
 
     public boolean canSendLetter() {
@@ -111,15 +89,26 @@ public class Exchange {
     }
 
     public boolean isFinished() {
-        return letters.size() >= template.numberOfLetters();
+        return letters.size() >= template.numberOfLetters() && !letters.get(letters.size()-1).canRedeem();
     }
 
-    public Letter sendLetter(Player player, List<Integer> chosenOptions, Map<ExchangeTemplate.LetterTemplate, Integer> versions, boolean clientSide) {
-        if (canSendLetter()) {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setInactive() {
+        active = false;
+    }
+
+    /**
+     * @param clientSide needed for downstream effects: scheduling next letter's playertimer, adding capability data and more exchanges
+     */
+    public Letter sendLetter(Player player, List<Integer> chosenOptions, boolean clientSide, int currentGlobalIndex) {
+        if (canSendLetter() && template.getTemplate(letters.size()).hasItems(player)) {
             ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
-            Letter letter = Letter.sent(template1, chosenOptions, versions.getOrDefault(template1, 0));
+            Letter letter = Letter.sent(template1, chosenOptions, currentGlobalIndex);
             letter.setOpened(true);
-            if(player instanceof ServerPlayer sp && !clientSide) {
+            if (player instanceof ServerPlayer sp && !clientSide) {
                 template1.getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
                 template1.getUnlockedExchanges().forEach(s -> DataUtil.addExchange(sp, s));
             }
@@ -132,10 +121,10 @@ public class Exchange {
         return null;
     }
 
-    public Letter receiveLetter(Map<ExchangeTemplate.LetterTemplate, Integer> versions) {
+    public Letter receiveLetter(int currentGlobalIndex) {
         if (canReceiveLetter()) {
             ExchangeTemplate.LetterTemplate template1 = template.getTemplate(letters.size());
-            Letter received = Letter.received(template1, versions.getOrDefault(template1, 0));
+            Letter received = Letter.received(template1, currentGlobalIndex);
             letters.add(received);
             if (canSendLetter()) {
                 received.setCanReply(true);
@@ -156,6 +145,8 @@ public class Exchange {
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
     }
 
+    /** Client-side only. Updates the last letter to be redeemed, so it doesn't show the button in the gui anymore
+     */
     public void markRedeemed(Player player) {
         if (!letters.isEmpty() && isNextLetterFromPlayer() && Iterables.getLast(letters).canRedeem()) {
             Iterables.getLast(letters).redeem(player, null, false);
@@ -173,6 +164,8 @@ public class Exchange {
             letters.put(String.valueOf(i), this.letters.get(i).saveToNBT(new CompoundTag()));
         }
         tag.put("letters", letters);
+        tag.putInt("version", version);
+        tag.putBoolean("active", active);
         return tag;
     }
 

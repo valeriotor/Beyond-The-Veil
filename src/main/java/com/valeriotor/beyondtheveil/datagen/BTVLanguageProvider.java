@@ -999,6 +999,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("correspondence.from", "From: ");
         add("correspondence.awaits", "§4Awaits reply");
         add("correspondence.redeem", "§4Redeem items");
+        add("correspondence.no_items", "Items required");
         add("correspondence.shoreman_lighthouse_keeper", "Lighthouse Keeper");
         add("correspondence.shoreman_scholar", "The Scholar");
         add("correspondence.blood_cult", "???");
@@ -1164,7 +1165,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.ask_weeper.1.2.pupils",               "Some of my younger pupils have indeed made observations on the interaction between water and the human mind—we do not yet know why water displays such properties, but it appears capable of expanding a human's viewpoint beyond what the eyes can see. We thus began performing experiments, filling our patients' skulls with water until we deemed possible. This was a painful operation, requiring much sedative. To be clear, these were healthy patients, not lacking any internal organs—their spines and thus their bodies were their only bond with the physical world, while their mind would have been brought beyond it by water.\\n");
         add("exchange.ask_weeper.1.3.sadly",                "Sadly, our initial attempts were none too successful; a swollen head, and that was all. We believe we stopped too early, but unfortunately we do not currently have the manpower nor the test-subjects/volunteers needed to pursue further experiments.\\n");
         add("exchange.ask_weeper.1.4.cycles",               "If you have the cycles, we would be glad to see any successful experiments on your end, setting up for a collaboration. Please note that most of our findings are not suited for publication in traditional medical journals, and I would dissuade you from divulging this information.\\n");
-        add("exchange.ask_weeper.1.5.best",                 "Best,\\1,Dr. H. West");
+        add("exchange.ask_weeper.1.5.best",                 "Best,\\1Dr. H. West");
 
     }
 
@@ -2330,10 +2331,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BLOOD_WELL.title", "The Blood Well");
         add("research.built_well.text", "Build a Blood Well.");
         add("research.spawned_undead.text", "Spawn a blood undead.");
-        add("research.BLOOD_WELL.stage.0", "When the great final threshold is irreversibly reached, once-living things sink in the ground, and their remains traverse the veins of the world until they arrive at their ancient progenitor: the waters of Arche.\n" +
-                "Blood Wells were built to access these veins directly, letting undead creatures enter them. The Well would attract such monsters – like a heart, but even stronger – and send them to a blood pool far down below, in the deepest ocean. Most importantly, such creatures would then be bound to the Well's maker, and may be summoned at their behest.\n" +
+        add("research.BLOOD_WELL.stage.0", "When the great final threshold is irreversibly reached, once-living things sink in the ground, and their remains traverse the veins of the world until they arrive at their ancient progenitor: the waters of Arche.\\n" +
+                "Blood Wells were built to access these veins directly, letting undead creatures enter them. The Well would attract such monsters – like a heart, but even stronger – and send them to a blood pool far down below, in the deepest ocean. Most importantly, such creatures would then be bound to the Well's maker, and may be summoned at their behest.\\n" +
                 "I must construct one, in hopes of thinning the distance between me and Arche. I have recorded the required schematic; the heart must be placed §llast§r.");
-        add("research.BLOOD_WELL.stage.1", "The Blood Well is born, and by the Dreamer, it *reeks*; a stench reminiscent of a rotting corpse – or a thousand.\\n" +
+        add("research.BLOOD_WELL.stage.1", "The Blood Well is born, and by the Dreamer, it §oreeks§r; a stench reminiscent of a rotting corpse – or a thousand.\\n" +
                 "Nonetheless, I am certain the undead will not mind. In its current form, the Well should be able to embrace any zombies or skeletons, and send them far down below – though I expect most of them not to make it there intact.\\n" +
                 "I should now create a Blood Orb. This will allow me to view and summon the creatures residing in my personal blood pool, and that arrived there safely.");
         add("research.BLOOD_WELL.stage.2", "The creature was covered in blood. It was... unrecognisable. \\n" +
@@ -2348,14 +2349,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.SURGEONS.stage.0", "Dr. West's letter comes at a good time. It might be appropriate to start thinking of delegating my work.");
         add("research.SURGEONS.stage.1", "Having reached adulthood, the surgeon is ready to operate. There are two important components involved in controlling the creature: (1) a surgeon bell, through which I can dictate the infrastructure that the surgeon is allowed to operate with, and (2) my own surgery notes, which will define the operations performed by it.\\n" +
                 "§lSurgeon's bell§r\\n" +
-                "The bell can be {§nbound to a surgeon§r}[caption.right_click] in order to check and edit the list of blocks it can interact with. While a surgeon is bound, I can {§nuse the bell§r}[caption.right_click] to tell it which surgical structure (e.g. a surgery bed) it can perform operations in. \\n" +
-                "I can also {§nuse§r}[caption.right_click] the bell to declare inputs:\\n" +
-                "- Use on a flask or flask shelf to add or remove it from the set of blocks it can draw liquids or solid ingredients from.\n" +
-                "- Use on a patient pod to add or remove it from the set of blocks it can take patients from.\n" +
+                "The bell can be {§nbound to a surgeon§r}[caption:right_click] in order to check and edit the list of blocks it can interact with. While a surgeon is bound, I can {§nuse the bell§r}[caption:right_click] to tell it which surgical structure (e.g. a surgery bed) it can perform operations in. \\n" +
+                "I can also {§nuse§r}[caption:right_click] the bell to declare inputs:\\n" +
+                "- Use on a flask or flask shelf to add or remove it from the set of blocks it can draw liquids or solid ingredients from.\\n" +
+                "- Use on a patient pod to add or remove it from the set of blocks it can take patients from.\\n" +
                 "- Use on the top side of a block to add or remove it from the set of areas it can take patients from, e.g. collecting knocked out villagers from the ground.\\n" +
-                "Finally, I can {§nuse§r}[caption.shift_right_click] it to declare outputs:\\n" +
-                "- Use on a chest or other general container to add or remove it from the set of containers it can place outcome items in (such as extracted organs).\n" +
-                "- Use on a patient pod to add or remove it from the set of blocks it can put convalescent patients in.\n" +
+                "Finally, I can {§nuse§r}[caption:shift_right_click] it to declare outputs:\\n" +
+                "- Use on a chest or other general container to add or remove it from the set of containers it can place outcome items in (such as extracted organs).\\n" +
+                "- Use on a patient pod to add or remove it from the set of blocks it can put convalescent patients in.\\n" +
                 "- Use on the top side of a block to add or remove it from the set of areas it can place convalescent patients in (though the surgeon will refrain from doing so if there are already too many convalescents in the area).\\n" +
                 "§lSurgery Notes§r\\n" +
                 "I can print down the notes from my journal on pieces of paper in my inventory. The surgeon will follow them exactly, only stopping if lacking ingredients or patients, or space to place the outcomes. It will, however, ignore any purely \"informational\" notes that do not describe an operation, such as lines indicating the occurrence of a complication, or additional data such as the operation's success. \\n" +
@@ -2369,7 +2370,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "...\\n" +
                 "Should... should I make the most out of this situation, and at least put his tears to good use? I know now that tears hold power, and the poor thing would not want its fate to have been in vain.\\n" +
                 "If so, I can craft a lacrymatory, which shall hold all that he weeps.");
-        add("research.WEEPERS.stage.1", "After picking him up, I can place the weeper next to the {§nlacrymatory§r}[caption.shift_right_click_lacrymatory], where he will deposit his tears. Eventually, there should be sufficiently many for me to take and use in other experiments.");
+        add("research.WEEPERS.stage.1", "After picking him up, I can place the weeper next to the {§nlacrymatory§r}[caption:shift_right_click_lacrymatory], where he will deposit his tears. Eventually, there should be sufficiently many for me to take and use in other experiments.");
 
         add("research.FLETUM.title", "The Fletum");
         add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +

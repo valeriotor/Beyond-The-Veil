@@ -13,7 +13,8 @@
     },
     {
       "optionsPerLine": [["dear"], ["thank"], ["best"], ["nurse"]],
-      "itemsRedeemed": "LARVA"
+      "itemsRedeemed": "LARVA",
+      "unlockedExchanges" : ["ask_weeper"]
     }
   ]
 }

@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
+import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.toasts.MemoryToast;
@@ -110,6 +111,9 @@ public class ClientMethods {
         if (Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
                 c.loadFromNBT(tag.getCompound("data"));
+                if (Minecraft.getInstance().screen instanceof LetterBoxGui gui) {
+                    gui.serverSync();
+                }
             });
         }
     }

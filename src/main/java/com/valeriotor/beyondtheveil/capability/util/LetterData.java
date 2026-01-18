@@ -1,17 +1,19 @@
 package com.valeriotor.beyondtheveil.capability.util;
 
-import com.valeriotor.beyondtheveil.capability.DialogueData;
-import com.valeriotor.beyondtheveil.capability.DialogueDataProvider;
 import com.valeriotor.beyondtheveil.event.ResearchEvents;
 import com.valeriotor.beyondtheveil.letters.Exchange;
+import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.letters.Letter;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class LetterData {
     // IMPORTANT: THERE MUST ALWAYS BE AT MOST ONE EXCHANGE PER TEMPLATE
@@ -20,125 +22,127 @@ public class LetterData {
     }
 
     private static final LetterData DUMMY = new Dummy();
-    private final List<Exchange> exchanges = new ArrayList<>();
-    private final List<Letter> receivedInOrder = new ArrayList<>();
-    private final List<Letter> sentInOrder = new ArrayList<>();
-    private final Map<ExchangeTemplate.LetterTemplate, Integer> versions = new HashMap<>();
+    private final Map<ExchangeTemplate, Exchange> activeExchanges = new HashMap<>(); // an exchange remains active until the last letter is opened and any items redeemed
+    private final Map<ExchangeTemplate, Set<Exchange>> allExchanges = new HashMap<>();
+    private final List<Letter> receivedInOrder = new ArrayList<>(); // just for caching, refilled on reload from allExchanges
+    private final List<Letter> sentInOrder = new ArrayList<>(); // just for caching, refilled on reload from allExchanges
 
 
     public boolean addExchange(Player player, ExchangeTemplate template) {
         if (template == null) {
             return false;
         }
-        for (Exchange exchange : exchanges) {
-            if (exchange.getName().equals(template.getName())) {
-                return false;
-            }
+        // Cannot start an exchange that is already in progress, or an exchange that has already happened and is not repeatable
+        if ((!allExchanges.getOrDefault(template, new HashSet<>()).isEmpty() && !template.isRepeatable()) || activeExchanges.containsKey(template)) {
+            return false;
         }
-        Exchange exchange = new Exchange(template);
-        if (exchange.canReceiveLetter()) {
+        int versionNumber = allExchanges.getOrDefault(template, new HashSet<>()).stream().mapToInt(Exchange::getVersion).max().orElse(0) + 1;
+        Exchange exchange = new Exchange(template, versionNumber);
+        if (exchange.canReceiveLetter() && !player.level().isClientSide) {
             exchange.scheduleMail(player);
         }
-        exchanges.add(exchange);
+        allExchanges.computeIfAbsent(template, template1 -> new HashSet<>()).add(exchange);
+        activeExchanges.put(template, exchange);
         return true;
     }
 
+    /** Needed when the player starts a dialogue with the NPC in person, and shouldn't communicate anymore
+     * TODO make it also stop already started exchanges? "interrupted" boolean variable
+     *
+     * @param player
+     * @param templateName
+     */
     public void removeUnstartedExchange(Player player, String templateName) {
-        Iterator<Exchange> iterator = exchanges.iterator();
-        while (iterator.hasNext()) {
-            Exchange exchange = iterator.next();
-            if (Objects.equals(exchange.getName(), templateName)) {
-                if (exchange.canSendLetter() && exchange.noLettersSent()) {
-                    iterator.remove();
-                    return;
-                }
+        ExchangeTemplate template = ExchangeRegistry.byName(templateName);
+        if (template != null) {
+            Exchange exchange = activeExchanges.get(template);
+            if (exchange != null) {
+                exchange.setInactive();
+                activeExchanges.remove(template);
             }
         }
     }
 
-    public void receiveLetter(String exchangeName) {
-        for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext(); ) {
-            Exchange exchange = iterator.next();
-            if (exchange.getName().equals(exchangeName)) {
-                // relies on the fact that only one exchange per template can exist at a given time
-                Letter received = exchange.receiveLetter(versions);
+    /** Server-side only!
+     */
+    public void receiveLetter(Player player, String exchangeName) {
+        ExchangeTemplate template = ExchangeRegistry.byName(exchangeName);
+        if (template != null) {
+            Exchange exchange = activeExchanges.get(template);
+            if (exchange != null) {
+                Letter received = exchange.receiveLetter(receivedInOrder.size());
                 if (received != null) {
                     receivedInOrder.add(received);
-                    versions.put(received.getTemplate(), 1 + versions.getOrDefault(received.getTemplate(), 0));
                 }
-                terminateExchange(iterator, exchange);
-                break;
             }
         }
     }
 
+    /** Client- and server-side (client first). Client-side needed for snappy gui update
+     */
     public void sendLetter(Player player, ExchangeTemplate template, List<Integer> chosenOptions, boolean clientSide) {
-        for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext(); ) {
-            Exchange exchange = iterator.next();
-            if (exchange.getTemplate() == template) {
-                // relies on the fact that only one exchange per template can exist at a given time
-                if (clientSide || exchange.hasItems(player)) {
-                    Letter sent = exchange.sendLetter(player, chosenOptions, versions, clientSide);
-                    if (sent != null) {
-                        exchange.takeItems(player);
-                        if(sent.getTemplate().getIndex() > 0) {
-                            for (Letter received : receivedInOrder) {
-                                if (received.matches(sent.getTemplate().getParent(), sent.getTemplate().getIndex() - 1, sent.getVersion())) {
-                                    received.setCanReply(false);
-                                    break;
-                                }
-                            }
-                        }
-                        sentInOrder.add(sent);
-                        versions.put(sent.getTemplate(), 1 + versions.getOrDefault(sent.getTemplate(), 0));
-                        ResearchEvents.sendLetterEvents(player, exchange);
-                    }
-                    terminateExchange(iterator, exchange);
+        Exchange exchange = activeExchanges.get(template);
+        if (exchange != null) {
+            Letter sent = exchange.sendLetter(player, chosenOptions, clientSide, sentInOrder.size());
+            if (sent != null) {
+                if (!clientSide) {
+                    sent.getTemplate().takeItems(player);
                 }
-                break;
+                int indexWithinExchange = sent.getTemplate().getIndex();
+                if (indexWithinExchange > 0) {
+                    exchange.getLetters().get(indexWithinExchange - 1).setCanReply(false);
+                }
+                sentInOrder.add(sent);
+                ResearchEvents.sendLetterEvents(player, exchange);
+                tryTerminateExchange(player, exchange);
             }
         }
     }
 
-    public void redeemItems(Player player, ExchangeTemplate template, int index, int version, boolean giveItems) {
-        for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext(); ) {
-            Exchange exchange = iterator.next();
-            if (exchange.getTemplate() == template) {
+    /** Client- and server-side, for snappy gui update.
+     *
+     */
+    public void redeemItems(Player player, ExchangeTemplate template, int index, boolean clientSide) {
+        Exchange exchange = activeExchanges.get(template);
+        if (exchange != null) {
+            if (clientSide) {
                 exchange.markRedeemed(player);
-                break;
-            }
-        }
-        Letter previous = null;
-        for (Letter letter : sentInOrder) {
-            if (letter.matches(template, index - 1, version)) {
-                previous = letter;
-                break;
-            }
-        }
-        for (Letter letter : receivedInOrder) {
-            if (letter.matches(template, index, version)) {
-                letter.redeem(player, previous, true);
-                break;
-            }
-        }
-
-    }
-
-    public void openLetter(ServerPlayer player, ExchangeTemplate template, int index, int version) {
-        for (Letter letter : receivedInOrder) {
-            if (letter.matches(template, index, version)) {
-                letter.setOpened(true);
-                letter.getTemplate().getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
-                letter.getTemplate().getUnlockedExchanges().forEach(s -> DataUtil.addExchange(player, s));
-                break;
+                tryTerminateExchange(player, exchange);
+            } else {
+                List<Letter> letters = exchange.getLetters();
+                if (!letters.isEmpty()) {
+                    Letter previous = letters.size() >= 2 ? letters.get(letters.size() - 2) : null;
+                    letters.get(letters.size() - 1).redeem(player, previous, true);
+                    tryTerminateExchange(player, exchange);
+                }
             }
         }
     }
 
+    public void openLetter(ServerPlayer player, ExchangeTemplate template) {
+        Exchange exchange = activeExchanges.get(template);
+        if (exchange != null) {
+            List<Letter> letters = exchange.getLetters();
+            if (!letters.isEmpty()) {
+                Letter letter = letters.get(letters.size() - 1);
+                if (!letter.isOpened()) {
+                    letter.setOpened(true);
+                    letter.getTemplate().getUnlockedData().forEach(s -> DataUtil.setBooleanOnServerAndSync(player, s, true, false));
+                    letter.getTemplate().getUnlockedExchanges().forEach(s -> DataUtil.addExchange(player, s));
+                    tryTerminateExchange(player, exchange);
+                }
+            }
+        }
+    }
 
-    private static void terminateExchange(Iterator<Exchange> iterator, Exchange exchange) {
-        if (exchange.isFinished() && exchange.getTemplate().isRepeatable()) {
-            iterator.remove();
+
+    private void tryTerminateExchange(Player player, Exchange exchange) {
+        if (exchange.isFinished()) {
+            activeExchanges.remove(exchange.getTemplate());
+            exchange.setInactive();
+            if (exchange.getTemplate().isRepeatable()) {
+                addExchange(player, exchange.getTemplate());
+            }
         }
     }
 
@@ -150,26 +154,19 @@ public class LetterData {
         return sentInOrder;
     }
 
-    public List<Exchange> getExchanges() {
-        return exchanges;
+    public Map<ExchangeTemplate, Exchange> getActiveExchanges() {
+        return activeExchanges;
     }
 
     public CompoundTag saveToNBT(CompoundTag compoundTag) {
-        CompoundTag receivedLetters = new CompoundTag();
-        CompoundTag sentLetters = new CompoundTag();
-        CompoundTag exchanges1 = new CompoundTag();
-        for (int i = 0; i < receivedInOrder.size(); i++) {
-            receivedLetters.put(String.valueOf(i), receivedInOrder.get(i).saveToNBT(new CompoundTag()));
+        ListTag exchanges = new ListTag();
+        int i = 0;
+        for (Entry<ExchangeTemplate, Set<Exchange>> entry : allExchanges.entrySet()) {
+            for (Exchange exchange : entry.getValue()) {
+                exchanges.addTag(i++, exchange.saveToNBT(new CompoundTag()));
+            }
         }
-        for (int i = 0; i < sentInOrder.size(); i++) {
-            sentLetters.put(String.valueOf(i), sentInOrder.get(i).saveToNBT(new CompoundTag()));
-        }
-        for (int i = 0; i < exchanges.size(); i++) {
-            exchanges1.put(String.valueOf(i), exchanges.get(i).saveToNBT(new CompoundTag()));
-        }
-        compoundTag.put("received", receivedLetters);
-        compoundTag.put("sent", sentLetters);
-        compoundTag.put("exchanges", exchanges1);
+        compoundTag.put("exchanges", exchanges);
         return compoundTag;
     }
 
@@ -177,31 +174,35 @@ public class LetterData {
         // NOTE: here the letters in exchanges and those in sent/receivedInOrder will no longer be the same objects, but that should be fine
         receivedInOrder.clear();
         sentInOrder.clear();
-        exchanges.clear();
-        CompoundTag received = compoundTag.getCompound("received");
-        received.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Letter.fromNBT(received.getCompound(s))).filter(Objects::nonNull).forEach(receivedInOrder::add);
-        CompoundTag sent = compoundTag.getCompound("sent");
-        sent.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Letter.fromNBT(sent.getCompound(s))).filter(Objects::nonNull).forEach(sentInOrder::add);
-        CompoundTag exchanges = compoundTag.getCompound("exchanges");
-        exchanges.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Exchange.fromNBT(exchanges.getCompound(s))).filter(Objects::nonNull).forEach(this.exchanges::add);
-
-        versions.clear();
-        for (Letter letter : receivedInOrder) {
-            versions.put(letter.getTemplate(), 1 + versions.getOrDefault(letter.getTemplate(), 0));
+        allExchanges.clear();
+        activeExchanges.clear();
+        ListTag exchanges = compoundTag.getList("exchanges", Tag.TAG_COMPOUND);
+        for (int i = 0; i < exchanges.size(); i++) {
+            Exchange exchange = Exchange.fromNBT(exchanges.getCompound(i));
+            if (exchange != null) {
+                allExchanges.computeIfAbsent(exchange.getTemplate(), template -> new HashSet<>()).add(exchange);
+                if (exchange.isActive()) {
+                    activeExchanges.put(exchange.getTemplate(), exchange);
+                }
+                for (Letter letter : exchange.getLetters()) {
+                    boolean p = exchange.getTemplate().isPlayerInitiated();
+                    int index = letter.getTemplate().getIndex();
+                    boolean isFromPlayer = (p && index % 2 == 0) || (!p && index % 2 == 1);
+                    if (isFromPlayer) {
+                        sentInOrder.add(letter);
+                    } else {
+                        receivedInOrder.add(letter);
+                    }
+                }
+            }
         }
-        for (Letter letter : sentInOrder) {
-            versions.put(letter.getTemplate(), 1 + versions.getOrDefault(letter.getTemplate(), 0));
-        }
-
+        receivedInOrder.sort(Comparator.comparingInt(Letter::getGlobalIndex));
+        sentInOrder.sort(Comparator.comparingInt(Letter::getGlobalIndex));
     }
 
     public void copyToNewStore(LetterData newStore) {
-        newStore.receivedInOrder.clear();
-        newStore.sentInOrder.clear();
-        newStore.exchanges.clear();
-        newStore.receivedInOrder.addAll(receivedInOrder);
-        newStore.sentInOrder.addAll(sentInOrder);
-        newStore.exchanges.addAll(exchanges);
+        CompoundTag tag = saveToNBT(new CompoundTag());
+        newStore.loadFromNBT(tag);
     }
 
     private static class Dummy extends LetterData {
@@ -209,11 +210,11 @@ public class LetterData {
 
         @Override public void sendLetter(Player player, ExchangeTemplate template, List<Integer> chosenOptions, boolean clientSide) {}
 
-        @Override public void receiveLetter(String exchangeName) {}
+        @Override public void receiveLetter(Player player, String exchangeName) {}
 
-        @Override public void redeemItems(Player player, ExchangeTemplate template, int index, int version, boolean giveItems) {}
+        @Override public void redeemItems(Player player, ExchangeTemplate template, int index, boolean clientSide) {}
 
-        @Override public void openLetter(ServerPlayer player, ExchangeTemplate template, int index, int version) {}
+        @Override public void openLetter(ServerPlayer player, ExchangeTemplate template) {}
     }
 
 }
