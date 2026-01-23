@@ -8,7 +8,6 @@ import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.gui.elements.MultiblockGrid;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
-import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -30,16 +29,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ResearchPageGui extends Screen {
     private final int ARROW_WIDTH = 16;
@@ -68,6 +64,8 @@ public class ResearchPageGui extends Screen {
     private int pageBottomY;
     //private List<? extends Recipe<? extends Container>> selectedRecipeGroup;
     private RecipeType selectedRecipeType;
+    private int stageButtonX;
+    private int[] stageButtonYs = new int[0];
     private int recipeGroupX;
     private int[] recipeGroupYs = new int[0];
     private int gridX, gridY, gridY2;//, recipePageWidth, recipePageHeight;
@@ -85,6 +83,12 @@ public class ResearchPageGui extends Screen {
     public static final ResourceLocation RIGHT_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/right_arrow.png");
     private static final ResourceLocation SELECTION1 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_1.png");
     private static final ResourceLocation SELECTION2 = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_selection_2.png");
+    private static final ResourceLocation[] STAGES = new ResourceLocation[]{new ResourceLocation(References.MODID, "textures/gui/research/stage_1.png"),
+            new ResourceLocation(References.MODID, "textures/gui/research/stage_2.png"),
+            new ResourceLocation(References.MODID, "textures/gui/research/stage_3.png"),
+            new ResourceLocation(References.MODID, "textures/gui/research/stage_4.png"),
+            new ResourceLocation(References.MODID, "textures/gui/research/stage_5.png"),
+            new ResourceLocation(References.MODID, "textures/gui/research/stage_6.png")};
     //private static final ResourceLocation RECIPE_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/research_page_recipe_background.png");
     //public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
     private int middleSpace;
@@ -97,6 +101,7 @@ public class ResearchPageGui extends Screen {
     private final List<RecipeType> recipeTypes = new ArrayList<>();
     private CraftingRegistryGui.CraftingGrid currentGrid;
     private int currentRecipeIndex;
+    private int currentStage;
     private ItemStack memoryIngredient;
     private MultiblockGrid currentMultiblock;
     private float scaleFactor;
@@ -107,6 +112,7 @@ public class ResearchPageGui extends Screen {
     public ResearchPageGui(ResearchStatus status) {
         super(Component.translatable(status.res.getName()));
         this.status = status;
+        currentStage = status.getStage();
         title = Component.translatable(status.res.getName()).getString();
     }
 
@@ -157,7 +163,7 @@ public class ResearchPageGui extends Screen {
         //recipes.clear();
         //shownRecipe = null;
         Object[] format = getFormatting();
-        Research.SubResearch stage = this.status.res.getStages()[this.status.getStage()];
+        Research.SubResearch stage = this.status.res.getStages()[currentStage];
         String epigraph = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey(), getFormatting()) : null;
         String epigraphSource = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey() + ".source", getFormatting()) : null;
         String localized = I18n.get(stage.getTextKey(), getFormatting());
@@ -182,11 +188,14 @@ public class ResearchPageGui extends Screen {
         Button b = Button.builder(Component.translatable("gui.research_page.complete"), button -> {
             resetRecipe(); // TODO test
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
+            currentStage = status.getStage();
             init();
         }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 100, 120, 20).build();
         progress = addRenderableWidget(b);
-        if (!status.canProgressStage(minecraft.player)) {
-            progress.visible = false;
+        if (currentStage < status.getStage()) {
+            progress.visible = progress.active = false;
+        } else if (!status.canProgressStage(minecraft.player)) {
+            progress.visible = progress.active = false;
             String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
             if (reqs != null) {
                 for (String req : reqs) {
@@ -242,11 +251,16 @@ public class ResearchPageGui extends Screen {
         }
 
         recipeGroupX = pageLeftX + 1420 * blackPageWidth / 1511;
+        stageButtonX = pageLeftX + 111 * blackPageWidth / 1511;
 
         recipeGroupYs = new int[recipeTypes.size()];
+        stageButtonYs = new int[status.getStage() + 1];
 
         for (int i = 0; i < recipeGroupYs.length; i++) {
             recipeGroupYs[i] = pageTopY + (270 + 95 * i) * blackPageHeight / 1082;
+        }
+        for (int i = 0; i < stageButtonYs.length; i++) {
+            stageButtonYs[i] = pageTopY + (270 + 65 * i) * blackPageHeight / 1082;
         }
 
         //recipePageX = pageLeftX + 130 * blackPageWidth / 1511;
@@ -306,6 +320,12 @@ public class ResearchPageGui extends Screen {
             RecipeType recipeType = recipeTypes.get(i);
             renderSelection(pose, guiGraphics, mouseX, mouseY, i, recipeType);
         }
+        if (status.getStage() > 0) {
+            int hoveredStageButton = hoveredStageButton(mouseX, mouseY);
+            for (int i = 0; i < status.getStage() + 1; i++) {
+                renderStageButton(pose, guiGraphics, mouseX, mouseY, i, hoveredStageButton);
+            }
+        }
         //renderSelection(pose, guiGraphics, mouseX, mouseY, gearBenchIndex, 2);
 
         if (currentGrid != null) {
@@ -358,7 +378,10 @@ public class ResearchPageGui extends Screen {
         //    guiGraphics.blit(RECIPE_BACKGROUND, recipePageX, recipePageY, recipePageWidth, recipePageHeight, 0, 0, 1200, 900, 1200, 900);
         //    pose.popPose();
         //}
-
+        //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", mouseX, mouseY), 0, 0, 0xFFFFFFFF);
+        //for (int i = 0; i < status.getStage() + 1; i++) {
+        //    guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", stageButtonX, stageButtonYs[i]), 0, (i + 1) * 20, 0xFFFFFFFF);
+        //}
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -417,13 +440,13 @@ public class ResearchPageGui extends Screen {
         int underlineTopY = height / 2 - blackPageHeight * 38 / 100;
         pose.translate(width / 2D, underlineTopY, 0);
         pose.scale(scaleFactor, scaleFactor, 1);
-        guiGraphics.fill(- titleWidth / 2, 0, titleWidth / 2, 0 + 3, 0x7F344234);
-        guiGraphics.fill(- titleWidth / 2, 0 + 1, titleWidth / 2, 0 + 2, 0xFF344234);
+        guiGraphics.fill(-titleWidth / 2, 0, titleWidth / 2, 0 + 3, 0x7F344234);
+        guiGraphics.fill(-titleWidth / 2, 0 + 1, titleWidth / 2, 0 + 2, 0xFF344234);
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        guiGraphics.blit(UNDERLINING_LEFT, - titleWidth / 2 - 20, 0, 20, 16, 0, 0, 20, 16, 20, 16);
-        guiGraphics.blit(UNDERLINING_RIGHT, + titleWidth / 2, 0, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_LEFT, -titleWidth / 2 - 20, 0, 20, 16, 0, 0, 20, 16, 20, 16);
+        guiGraphics.blit(UNDERLINING_RIGHT, +titleWidth / 2, 0, 20, 16, 0, 0, 20, 16, 20, 16);
         pose.popPose();
     }
 
@@ -492,16 +515,43 @@ public class ResearchPageGui extends Screen {
         pose.popPose();
     }
 
+    private void renderStageButton(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, int i, int hoveredStageButton) {
+        if (i < stageButtonYs.length) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            pose.pushPose();
+            pose.translate(stageButtonX, stageButtonYs[i], 0);
+            float factor = 1.2F * blackPageWidth / 1511 * (hoveredStageButton == i ? 1.5F : 1);
+            pose.scale(factor, factor, 1);
+            guiGraphics.blit(STAGES[i], -16, -16, 0, 0, 32, 32, 32, 32);
+            pose.popPose();
+        }
+
+    }
+
     private RecipeType hoveredSelection(double mouseX, double mouseY) {
-        if (mouseX < recipeGroupX - 16 || mouseX > recipeGroupX + 16) {
+        if (mouseX < recipeGroupX - 16 * scaleFactor || mouseX > recipeGroupX + 16 * scaleFactor) {
             return null;
         }
         for (int i = 0; i < recipeTypes.size(); i++) {
-            if (mouseY >= recipeGroupYs[i] - 16 && mouseY <= recipeGroupYs[i] + 16) {
+            if (mouseY >= recipeGroupYs[i] - 16 * scaleFactor && mouseY <= recipeGroupYs[i] + 16 * scaleFactor) {
                 return recipeTypes.get(i);
             }
         }
         return null;
+    }
+
+    private int hoveredStageButton(double mouseX, double mouseY) {
+        //mouseX /= scaleFactor;
+        if (mouseX < stageButtonX - 12 * scaleFactor || mouseX > stageButtonX + 12 * scaleFactor || status.getStage() < 1) {
+            return -1;
+        }
+        for (int i = 0; i < status.getStage() + 1; i++) {
+            if (mouseY >= stageButtonYs[i] - 12 * scaleFactor && mouseY <= stageButtonYs[i] + 12 * scaleFactor) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     //@Override
@@ -544,25 +594,31 @@ public class ResearchPageGui extends Screen {
         } else if (currentMultiblock != null && currentMultiblock.mouseClicked((int) ((mouseX - width / 2) / scaleFactor) + currentMultiblock.getWidth() / 2D, mouseY - gridY2, mouseButton)) {
             return true;
         } else {
-            RecipeType recipeType = hoveredSelection(mouseX, mouseY);
-            if (recipeType != null) {
-                if (recipeType != selectedRecipeType) {
-                    selectedRecipeType = recipeType;
-                    currentRecipeIndex = 0;
-                    memoryIngredient = null;
-                    currentGrid = null;
-                    currentMultiblock = null;
-                    if (recipeType.grid) {
-                        makeGrid();
-                    } else if (recipeType == RecipeType.MEMORY) {
-                        makeMemory();
+            int hoveredStageButton = hoveredStageButton(mouseX, mouseY);
+            if (hoveredStageButton != -1) {
+                currentStage = hoveredStageButton;
+                init();
+            } else {
+                RecipeType recipeType = hoveredSelection(mouseX, mouseY);
+                if (recipeType != null) {
+                    if (recipeType != selectedRecipeType) {
+                        selectedRecipeType = recipeType;
+                        currentRecipeIndex = 0;
+                        memoryIngredient = null;
+                        currentGrid = null;
+                        currentMultiblock = null;
+                        if (recipeType.grid) {
+                            makeGrid();
+                        } else if (recipeType == RecipeType.MEMORY) {
+                            makeMemory();
+                        } else {
+                            makeMultiblock();
+                        }
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                     } else {
-                        makeMultiblock();
+                        resetRecipe();
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                     }
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
-                } else {
-                    resetRecipe();
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                 }
             }
         }
