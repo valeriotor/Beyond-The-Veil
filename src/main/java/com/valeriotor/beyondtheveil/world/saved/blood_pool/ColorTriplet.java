@@ -41,6 +41,14 @@ public record ColorTriplet(DyeColor first, DyeColor second, DyeColor third) impl
         }
     }
 
+    public ColorTriplet addToRight(Item newItem) {
+        DyeColor newColor = null;
+        if (newItem instanceof DyeItem dye) {
+            newColor = dye.getDyeColor();
+        }
+        return new ColorTriplet(second, third, newColor);
+    }
+
     public CompoundTag saveToTag(CompoundTag tag) {
         if (first != null) {
             tag.putString("first", first.name());

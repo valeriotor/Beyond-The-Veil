@@ -37,6 +37,7 @@ public enum PlayerDataLib {
     received_thesis,
     performed_ritual,
     built_well,
+    obtained_undead,
     spawned_undead,
     received_surgeon,
     placed_surgeon,

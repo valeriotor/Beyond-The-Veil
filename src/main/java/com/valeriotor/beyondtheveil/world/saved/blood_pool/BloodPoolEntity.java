@@ -38,17 +38,27 @@ public class BloodPoolEntity {
 
     private final BloodPoolEntityType type;
 
-    private BloodPoolEntity(BloodPoolEntityType type, CompoundTag entityData) {
+    public BloodPoolEntity(BloodPoolEntityType type, CompoundTag entityData) {
         this.type = type;
         this.entityData = entityData;
-        convalescentData.loadFromNBT(entityData.getCompound("convalescent"));
+        if (!entityData.contains("Health")) {
+            entityData.putFloat("Health", type.getMaxHealth());
+        }
+        if (entityData.contains("convalescent")) {
+            convalescentData.loadFromNBT(entityData.getCompound("convalescent"));
+        }
         uuid = UUID.randomUUID();
     }
 
     public BloodPoolEntity(CompoundTag tag) {
         type = BloodPoolEntityType.valueOf(tag.getString("type"));
         entityData = tag.getCompound("entityData");
-        convalescentData.loadFromNBT(entityData.getCompound("convalescent"));
+        if (!entityData.contains("Health")) {
+            entityData.putFloat("Health", type.getMaxHealth());
+        }
+        if (entityData.contains("convalescent")) {
+            convalescentData.loadFromNBT(entityData.getCompound("convalescent"));
+        }
         if (tag.contains("uuid")) {
             uuid = tag.getUUID("uuid");
         } else {
