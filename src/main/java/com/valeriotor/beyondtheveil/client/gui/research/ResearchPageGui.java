@@ -724,7 +724,7 @@ public class ResearchPageGui extends Screen {
     }
 
     private Object[] getFormatting() {
-        if (status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2)
+        if (status.res.getKey().equals("FIRSTDREAMS") && currentStage == 2)
             return new Object[]{DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.held_dream.name()) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.drank_dream.name()) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName())) ? "§aV§r" : " "};
         return new Object[0];
     }
