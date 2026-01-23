@@ -211,6 +211,7 @@ public class ResearchPageGui extends Screen {
         gearBenchRecipes.clear();
         craftingRecipes.clear();
         memories.clear();
+        multiblocks.clear();
 
 
         String[] recipes = status.res.getStages()[status.getStage()].getRecipes();
@@ -663,7 +664,7 @@ public class ResearchPageGui extends Screen {
                 currentRecipeIndex = currentRecipeIndex - 1;
                 if (selectedRecipeType.grid) {
                     makeGrid();
-                } else {
+                } else if(selectedRecipeType == RecipeType.MEMORY) {
                     makeMemory();
                 }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
@@ -682,7 +683,7 @@ public class ResearchPageGui extends Screen {
                 currentRecipeIndex = currentRecipeIndex + 1;
                 if (selectedRecipeType.grid) {
                     makeGrid();
-                } else {
+                } else if(selectedRecipeType == RecipeType.MEMORY) {
                     makeMemory();
                 }
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
