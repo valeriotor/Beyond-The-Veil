@@ -275,7 +275,7 @@ public class PatientStatus {
                 didFinalAnimation = true;
                 setDirty(true);
             }
-            if (exposedLocation == SurgicalLocation.CHEST && incised && !flags.containsKey("extract_heart")) {
+            if (exposedLocation == SurgicalLocation.CHEST && incised && !flags.containsKey("extract_heart") && patientType != PatientType.WEEPER) {
                 if ((!flags.containsKey("great_heart") && (counter & 31) == 0) || (counter & 63) == 0) {
                     level.playSound(null, pos, BTVSounds.HEARTBEAT.get(), SoundSource.BLOCKS, 1, 1);
                 }

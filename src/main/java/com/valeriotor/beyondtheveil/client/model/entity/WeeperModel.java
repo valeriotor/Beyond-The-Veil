@@ -3,11 +3,14 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 // Paste this class into your mod and generate all required imports
 
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -45,6 +48,10 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
     private final ModelPart left_leg1;
     private final ModelPart right_leg2;
     private final ModelPart left_leg2;
+    private final ModelPart back_wound;
+    private final ModelPart spine;
+    private final ModelPart chest_wound;
+    private final ModelPart heart;
 
     public WeeperModel(ModelPart root) {
         super(name);
@@ -71,6 +78,10 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         this.left_leg1 = registerAnimatedPart("left_leg1", legs.getChild("left_leg1"));
         this.right_leg2 = registerAnimatedPart("right_leg2", right_leg1.getChild("right_leg2"));
         this.left_leg2 = registerAnimatedPart("left_leg2", left_leg1.getChild("left_leg2"));
+        this.back_wound = registerAnimatedPart(upper_body_2, "back_wound");
+        this.spine = registerAnimatedPart(back_wound, "spine");
+        this.chest_wound = registerAnimatedPart(upper_body_2, "chest_wound");
+        this.heart = registerAnimatedPart(chest_wound, "heart");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -134,6 +145,20 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         PartDefinition right_leg1 = legs.addOrReplaceChild("right_leg1", CubeListBuilder.create().texOffs(1, 1).addBox(-0.5F, -2.2309F, -0.5565F, 1.0F, 8.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 0.0F, -0.75F, -0.3927F, 0.0F, 0.0F));
 
         PartDefinition right_leg2 = right_leg1.addOrReplaceChild("right_leg2", CubeListBuilder.create().texOffs(1, 1).addBox(-0.49F, 0.0F, -0.5F, 1.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 5.2691F, -0.0565F, 0.6545F, 0.0F, 0.0F));
+
+        PartDefinition back_wound = upper_body_2.addOrReplaceChild("back_wound", CubeListBuilder.create().texOffs(56, 0).addBox(-2.0F, -3.0F, 0.01F, 4.0F, 7.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.0F, 2.0F));
+
+        PartDefinition spine = back_wound.addOrReplaceChild("spine", CubeListBuilder.create().texOffs(60, 62).addBox(-0.5F, -2.25F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.15F))
+                .texOffs(60, 62).addBox(-0.5F, -1.25F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.15F))
+                .texOffs(60, 62).addBox(-0.5F, -0.25F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.15F))
+                .texOffs(60, 62).addBox(-0.5F, 0.75F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.15F))
+                .texOffs(60, 62).addBox(-0.5F, 1.75F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.15F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition chest_wound = upper_body_2.addOrReplaceChild("chest_wound", CubeListBuilder.create().texOffs(60, 60).addBox(-1.0F, -2.0F, -0.01F, 2.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 58).addBox(-0.25F, -2.0F, -0.26F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 58).addBox(-0.25F, -0.5F, -0.26F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -4.0F, -2.0F));
+
+        PartDefinition heart = chest_wound.addOrReplaceChild("heart", CubeListBuilder.create().texOffs(48, 50).addBox(-1.0F, -5.0F, -1.01F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-1.2F)), PartPose.offset(-0.75F, 2.0F, -0.5F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -237,6 +262,8 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
         blob8.z = 2.25F - offset9;
         blob9.z = 1.75F + offset1;
 
+        PatientStatus status = entity.getPatientStatus();
+        chest_wound.visible = back_wound.visible = heart.visible = spine.visible = false;
         if (!entity.isHeld() && !entity.isSurgeryPatient()) {
 
 
@@ -313,7 +340,7 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
                     legs.z = 5;
                 }
             } else {
-                SurgicalLocation exposedLocation = entity.getPatientStatus().getExposedLocation();
+                SurgicalLocation exposedLocation = status.getExposedLocation();
                 if (exposedLocation == SurgicalLocation.BACK) {
                     float offset13 = Mth.sin((float) Math.PI * 2 * ageInTicks / (90F)) / 16;
                     body.xRot = (float) 1.2;
@@ -342,6 +369,12 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
                     legs.y = 22;
                     //body.z = 5;
                     //legs.z = 5;
+                    if (status.isIncised()) {
+                        back_wound.visible = true;
+                        if (!status.getFlags().containsKey(OperationRegistry.SPINELESS)) {
+                            spine.visible = true;
+                        }
+                    }
 
                 } else if (exposedLocation == SurgicalLocation.CHEST) {
 
@@ -355,6 +388,13 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
                     left_leg2.xRot = 0.35F;
                     body.y = 18.7F;
                     legs.y = 18.7F;
+
+                    if (status.isIncised()) {
+                        chest_wound.visible = true;
+                        if (!status.getFlags().containsKey("extract_heart")) {
+                            heart.visible = true;
+                        }
+                    }
                 } else if (exposedLocation == SurgicalLocation.SKULL) {
                     body.xRot = (float) 1.5;
                     upper_body_1.xRot = (float) 0;
@@ -396,6 +436,7 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        RenderSystem.enableBlend();
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         legs.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }

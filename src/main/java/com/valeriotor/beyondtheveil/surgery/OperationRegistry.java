@@ -71,12 +71,19 @@ public class OperationRegistry {
             .setCompletionMessage(s -> s.hasString("soften_too_much") ? "surgery.extract_heart.too_soft" : null)
             .addAllowedLocation(SurgicalLocation.CHEST)
             .setSuccessSound(BTVSounds.HEART_RIP.get())
-            .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
+            .setStatusChangeOnSuccess(s -> {
+                if(s.getPatientType() != PatientType.WEEPER) {
+                    s.setCondition(PatientCondition.DEAD);
+                }
+            })
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
             .addPlayerData(PlayerDataLib.extracted_heart.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, status -> {
+                if (status.getPatientType() == PatientType.WEEPER) {
+                    return new ItemStack(Items.COAL);
+                }
                 if (status.getFlags().containsKey("great_heart")) {
                     return new ItemStack(Registration.GREAT_HEART.get());
                 } else {

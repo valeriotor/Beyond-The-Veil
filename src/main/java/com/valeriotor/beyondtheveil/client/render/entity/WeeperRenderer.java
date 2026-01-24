@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.render.entity;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
@@ -9,10 +10,12 @@ import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class WeeperRenderer extends LivingEntityRenderer<WeeperEntity, WeeperModel> {
 
@@ -42,5 +45,11 @@ public class WeeperRenderer extends LivingEntityRenderer<WeeperEntity, WeeperMod
     @Override
     public ResourceLocation getTextureLocation(WeeperEntity pEntity) {
         return TEXTURE;
+    }
+
+    @Nullable
+    @Override
+    protected RenderType getRenderType(WeeperEntity pLivingEntity, boolean pBodyVisible, boolean pTranslucent, boolean pGlowing) {
+        return RenderType.entityTranslucent(TEXTURE);
     }
 }
