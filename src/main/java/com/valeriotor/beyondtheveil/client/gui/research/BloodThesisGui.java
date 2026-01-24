@@ -370,9 +370,10 @@ public class BloodThesisGui extends Screen {
 
         private final ResourceLocation image;
 
-        protected RitualPicture(String ritual) {
+        protected RitualPicture(RitualTemplate ritual) {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
-            image = new ResourceLocation(References.MODID, "textures/gui/rituals/" + ritual + ".png");
+            image = new ResourceLocation(References.MODID, "textures/gui/rituals/" + ritual.getName() + ".png");
+
         }
 
         @Override
@@ -393,7 +394,7 @@ public class BloodThesisGui extends Screen {
         RITUAL(3, List.of(), true),
         RISKS(2, List.of(), true),
         MODIFIER(2),
-        CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT)),
+        CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT, RitualRegistry.LIVING_IRON, RitualRegistry.VESSEL_STONE, RitualRegistry.BLOOD_ORB, RitualRegistry.BLOOD_GEM, RitualRegistry.VEIN_MINER)),
         BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO)),
         MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL));
 
@@ -430,7 +431,9 @@ public class BloodThesisGui extends Screen {
                 }
             }
             for (int i = 0; i < length; i++) {
-                elements.add(new SectionTitle(Component.translatable("research.thesis." + name().toLowerCase() + ".section." + (i + 1)).withStyle(Fonts.ACADEMIC_STYLE)));
+                if(rituals.isEmpty()) {
+                    elements.add(new SectionTitle(Component.translatable("research.thesis." + name().toLowerCase() + ".section." + (i + 1)).withStyle(Fonts.ACADEMIC_STYLE)));
+                }
                 TextUtil util = new TextUtil();
                 elements.addAll(util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".text." + (i + 1)), TEXT_BLOCK_WIDTH, f));
                 if (i < length - 1) {
@@ -457,7 +460,7 @@ public class BloodThesisGui extends Screen {
             int i = 0;
             for (RitualTemplate ritual : rituals) {
                 blocks.add(new RitualPage(ordinal(), i, ritual.getName()));
-                blocks.add(new RitualPicture(ritual.getName()));
+                blocks.add(new RitualPicture(ritual));
                 i++;
             }
             return blocks;

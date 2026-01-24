@@ -2509,6 +2509,8 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• Targeting locations: some rituals allowed for their effects to take place at specific locations. To do this, either a pathway sigil or immortal sigil could be used, the latter specifying the target individual’s current location (if within the same dimension).");
 
         add("research.thesis.creation.title", "Creation Rituals");
+        add("research.thesis.creation.text.1", "Creation rituals involved the construction of items infused with blood’s properties. Thus, objects created in such a manner were able to create and utilize bindings, or heal and harm their wielder, or grant life and bring death to creatures. \\n" +
+                "We have collected several such rituals, making this our largest chapter.");
         add("research.thesis.ritual.blood_bricks.title", "Blood Bricks");
         add("research.thesis.ritual.blood_bricks.text", "The victims’ blood could infuse normal stone bricks with its essence, leading credence that the resulting blood bricks contained some snippet of life—some claimed that walking within a structure built from these blocks could raise the echo of their deceased fathers and mothers, though this has never been corroborated with evidence.\\n" +
                 "Most importantly, these were used in the construction of blood wells: structures said to open portal veins through the roots of the world for undead to walk through.\\n" +
@@ -2521,9 +2523,9 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Additionally, striking any creature with a coral staff had the effect of attracting the attention of any nearby undead towards the unfortunate victim.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A fire coral\\1" +
-                "• A Heart of the Sea\\1" +
-                "• A heart");
+                "• A fire coral.\\1" +
+                "• A Heart of the Sea.\\1" +
+                "• A heart.");
         add("research.thesis.ritual.bleeding_belt.title", "Bleeding Belt");
         add("research.thesis.ritual.bleeding_belt.text", "A belt to be worn around the waist, adorned with small thorns. Whenever harm befell the wearer, the belt would prick the skin of the stomach, drawing blood.\\n" +
                 "In so doing, the item would protect its owner from any damage, for as long as their stomach was not empty. Excessive use within a short timeframe could weaken the belt, but never irreversibly, as it would quickly repair itself on its own.\\n" +
@@ -2532,26 +2534,66 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• Chains\\1" +
                 "• Two great hearts\\1" +
                 "• A cactus");
+        add("research.thesis.ritual.living_iron.title", "Living Iron");
+        add("research.thesis.ritual.living_iron.text", "Our findings reveal several attempts throughout history at granting life to objects via blood rituals. These tended to be crude experiments driven by trial and error, which predated more refined approaches such as the thaumaturgical art of golemancy.\\n" +
+                "Here we describe the creation of living iron—one of the few successful attempts at animating inanimate objects. The resulting item was a simple, parasitical lifeform. It could not grow or feed on its own, and thus needed to attach itself to the spine of a living creature; according to our research, human beings were often used as the host, and their spine would be covered by iron until they could no longer walk.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• Up to three stacks of raw iron, of any size. One living iron will be created for every four chunks of raw material.");
+        add("research.thesis.ritual.vessel_stone.title", "Vessel Stone");
+        add("research.thesis.ritual.vessel_stone.text", "Vessel stones have become widely known in recent years due to their usage by Arché prospectors and hunters: their serendipitous discovery within the blood corals of the deepest ocean proved to be a way out of Arché for what would have otherwise been a suicide mission for the brave hunters. However, unbeknownst to them, vessel stones had already been discovered by ancient peoples, and even been replicated via blood rituals.\\n" +
+                "We describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A block of emerald.\\1" +
+                "• An empty bladder.\\1" +
+                "• A chorus fruit.");
+        add("research.thesis.ritual.blood_orb.title", "Blood Orb");
+        add("research.thesis.ritual.blood_orb.text", "Blood orbs were used in conjunction with blood wells or bound IV stands as sorts of scrying stones: they would enable the user to view the undead creatures or convalescent patients that were bound to their blood pools, and even summon them back to the surface.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A heart of the sea.\\1" +
+                "• An egg.");
+        add("research.thesis.ritual.blood_gem.title", "Blood Gem");
+        add("research.thesis.ritual.blood_gem.text", "Blood gems were similar to blood orbs, in that they allowed people to interact with the creatures bound to the user’s blood pool. However, they were not used to view the bound entities; instead, they could only summon them, but were able to do so for multiple entities at a time.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A diamond.\\1" +
+                "• A nether quartz.");
+        add("research.thesis.ritual.vein_miner.title", "Vein Miner");
+        add("research.thesis.ritual.vein_miner.text", "A belt to be worn around the waist, adorned with small thorns. Whenever harm befell the wearer, the belt would prick the skin of the stomach, drawing blood.\\n" +
+                "In so doing, the item would protect its owner from any damage, for as long as their stomach was not empty. Excessive use within a short timeframe could weaken the belt, but never irreversibly, as it would quickly repair itself on its own.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A diamond pickaxe.\\1" +
+                "• An empty bladder.");
 
         add("research.thesis.binding.title", "Binding Rituals");
+        add("research.thesis.binding.text.1", "Binding rituals were used to create connections between objects or creatures. Oftentimes, this involved enhancing an item to act as either the nexus or an endpoint of a connection; for example, binding an object to its owner, or creating an object to bind creatures to its owner. \\n" +
+                "We observe a great variety of shapes that these connections can take; so far, we have gathered four such rituals. In future work, we plan to extend this chapter, including new rituals such as those among immortal humans.");
         add("research.thesis.ritual.bind_item_damage.title", "Bind item (damage)");
         add("research.thesis.ritual.bind_item_damage.text", "This type of ritual was used by witches to gain power upon others, working as a sort of “hex” attached to arbitrary objects. The item would be bound to the one who performed the ritual; any other person possessing the item would come to much more severe harm than normal whenever struck by the bound individual.\\n" +
                 "Thus, the challenge lay in trickery: how to hand the cursed object to the detested foe, while raising nary a hint of suspicion?\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A heart\\1" +
-                "• The item to be bound\\1" +
-                "• A diamond sword\\1" +
-                "• A scalpel");
+                "• A heart.\\1" +
+                "• The item to be bound.\\1" +
+                "• A diamond sword.\\1" +
+                "• A scalpel.");
 
         add("research.thesis.ritual.bind_item_weakness.title", "Bind item (weakness)");
         add("research.thesis.ritual.bind_item_weakness.text", "The effect of this ritual is identical to the previous one, but reversed: any individual possessing the item will have its blows against the bound person become much less effective.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A heart\\1" +
-                "• The item to be bound\\1" +
-                "• An anvil\\1" +
-                "• A dorsal spine");
+                "• A heart.\\1" +
+                "• The item to be bound.\\1" +
+                "• An anvil.\\1" +
+                "• A dorsal spine.");
 
         add("research.thesis.ritual.bind_pillar.title", "Bind pillar");
         add("research.thesis.ritual.bind_pillar.text", "Offer and demand pillars are used by blood cultists to act as endpoints within their trade operations. These are known to focus on livestock, although, despite their claims to the contrary during our interviews, there is evidence indicating that this may include human lives.\\n" +
@@ -2559,9 +2601,9 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Another difference with unmodified pillars is that life exchanges performed in this manner are far from being equal trades: it may take several newborn lives as offers before a single entity is spawned around the demand pillar.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A heart\\1" +
-                "• An offer pillar\\1" +
-                "• A blood shard specifying the creature that shall spawn near the corresponding demand pillar");
+                "• A heart.\\1" +
+                "• An offer pillar.\\1" +
+                "• A blood shard specifying the creature that shall spawn near the corresponding demand pillar.");
 
         add("research.thesis.ritual.pool_flebo.title", "Bind IV stand");
         add("research.thesis.ritual.pool_flebo.text", "IV stands can supply patients with blood and nutrients during surgical operations, easing their pain. Yet, if the reports detailing this ritual speak true, they can be used to permanently bind the patient to the stand’s bound individual—that is, the one who performed the ritual.\\n" +
@@ -2569,19 +2611,20 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Besides the stand, the ritual requires three other items, which will dictate the location that patients will be assigned to in the form of a color code. Any dye may be used, as well as clay balls (the latter signifying “no dye”). This is done for the purpose of organizing the patients, in accordance with the blood gem’s wielder’s needs.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• Three dyes or clay balls\\1" +
-                "• The IV stand");
+                "• Three dyes or clay balls.\\1" +
+                "• The IV stand.");
 
         add("research.thesis.manifestation.title", "Manifestation Rituals");
+        add("research.thesis.manifestation.text.1", "Manifestation rituals leveraged blood’s ability to grant life to creatures, after bringing death to the ritual victim. However, only a few such rituals are known to have existed; in this work, we have gathered two.");
         add("research.thesis.ritual.summon_wither.title", "Summon Wither");
         add("research.thesis.ritual.summon_wither.text", "Known to be terribly dangerous—their summoning has been forbidden within the walls of the Miskatonic, as well as the city of Arkham as a whole—Withers remain nonetheless a common goal among hunters, both for the challenge and the precious star animating them from their core.\\n" +
                 "This ritual was used to ease the summoning of withers, by supplementing a single wither skull with a deceased victim’s blood. However, its high instability may have made it more trouble than it was worth, and no instances of the ritual have been documented in several decades.\\n" +
                 "According to reports, the ritual could also target specific locations via appropriate modifiers.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A heart\\1" +
-                "• Soul sand\\1" +
-                "• A single wither skeleton skull");
+                "• A heart.\\1" +
+                "• Soul sand.\\1" +
+                "• A single wither skeleton skull.");
 
         add("research.thesis.ritual.summon_living_portal.title", "Summon Living Portal");
         add("research.thesis.ritual.summon_living_portal.text", "The Nether is known to lie roughly two thirds of the way from the surface to Arché; it has thus been proposed that it may affect blood’s properties, altering its link with water. We believe this to likely play a role in the blood nucleus’s burning of the ritual offerings.\\n" +
@@ -2589,10 +2632,10 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "We believe that this ritual could also target specific locations via appropriate modifiers.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
-                "• A heart\\1" +
-                "• A nether star\\1" +
-                "• A blaze rod\\1" +
-                "• A ghast tear");
+                "• A heart.\\1" +
+                "• A nether star.\\1" +
+                "• A blaze rod.\\1" +
+                "• A ghast tear.");
     }
 
     private void addBloodPool() {

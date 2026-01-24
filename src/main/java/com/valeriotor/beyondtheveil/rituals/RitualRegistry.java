@@ -48,6 +48,31 @@ public class RitualRegistry {
             .setOutputs(List.of(new ItemStack(Registration.BLEEDING_BELT.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
+    public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 10, 9)
+            .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 3))
+            .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 4))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate VESSEL_STONE = new RitualTemplate.RitualTemplateBuilder("vessel_stone", 10, 10, 9)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.EMERALD_BLOCK, Registration.EMPTY_BLADDER.get(), Items.CHORUS_FRUIT))
+            .setOutputs(List.of(new ItemStack(Registration.VESSEL_STONE.get())))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BLOOD_ORB = new RitualTemplate.RitualTemplateBuilder("blood_orb", 10, 10, 9)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.HEART_OF_THE_SEA, Items.EGG))
+            .setOutputs(List.of(new ItemStack(Registration.BLOOD_ORB.get())))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BLOOD_GEM = new RitualTemplate.RitualTemplateBuilder("blood_gem", 10, 10, 9)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.DIAMOND, Items.QUARTZ))
+            .setOutputs(List.of(new ItemStack(Registration.BLOOD_GEM.get())))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate VEIN_MINER = new RitualTemplate.RitualTemplateBuilder("vein_miner", 10, 10, 9)
+            .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.DIAMOND_PICKAXE, Registration.EMPTY_BLADDER.get()))
+            .setOutputs(List.of(new ItemStack(Registration.VEIN_MINER.get())))
+            .toTemplate(TEMPLATES, BY_NAME);
+
     public static final RitualTemplate BIND_ITEM_DAMAGE = new RitualTemplate.RitualTemplateBuilder("bind_item_damage", 100, 12, 9)
             .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.DIAMOND_SWORD, Registration.SCALPEL.get()))
             .setOutputs((stacks, player) -> {
@@ -230,10 +255,37 @@ public class RitualRegistry {
     }
 
     private static List<ItemStack> byNumber(List<ItemStack> input, Item outputItem, int max) {
+        return byNumber(input, null, outputItem, max);
+    }
+    private static List<ItemStack> byNumber(List<ItemStack> input, Item matchItem, Item outputItem, int max) {
         List<ItemStack> output = new ArrayList<>();
         for (int i = 0; i < input.size() && i < max; i++) {
             ItemStack s = input.get(i);
-            output.add(new ItemStack(outputItem, s.getCount()));
+            if (matchItem == null || s.getItem() == matchItem) {
+                output.add(new ItemStack(outputItem, s.getCount()));
+            } else {
+                max++;
+            }
+        }
+        return output;
+    }
+
+    private static List<ItemStack> byNumberScaled(List<ItemStack> input, Item matchItem, Item outputItem, int max, int divisor) {
+        List<ItemStack> output = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < input.size() && i < max; i++) {
+            ItemStack s = input.get(i);
+            if (matchItem == null || s.getItem() == matchItem) {
+                count += s.getCount();
+            } else {
+                max++;
+            }
+        }
+        count /= divisor;
+        while (count > 0) {
+            int takeAway = Math.min(64, count);
+            count -= takeAway;
+            output.add(new ItemStack(outputItem, takeAway));
         }
         return output;
     }
