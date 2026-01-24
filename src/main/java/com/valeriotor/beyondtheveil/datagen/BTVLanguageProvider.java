@@ -2713,6 +2713,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.storage", "Storage");
         add("gui.journal.overview.holding", "Holding patients");
         add("gui.journal.overview.surgery", "Surgery");
+        add("gui.journal.overview.abominations", "Abominations");
+        add("gui.journal.overview.what_is", "What is an abomination?");
+        add("gui.journal.overview.capacity", "Capacity");
+        add("gui.journal.overview.modifiers", "Modifiers");
+        add("gui.journal.overview.triggering", "Triggering & Targeting");
+        add("gui.journal.overview.priorities", "Targeting Priorities");
+        add("gui.journal.overview.weepers", "Weepers");
         add("gui.journal.overview.patients.text", "The primary resource in a surgeon’s studies is none other than the patients themselves: humans, such as the villagers scattered across the world (though I shall abstain from using shoremen).\\n" +
                 "Understandably, it should not be expected for the patients to join the experiments willingly. They must be coerced and, sadly, this implies the use of force. I can use a {§nblackjack§r}[caption:journal.blackjack] to temporarily knock out a villager. I can then pick up and carry any incapacitated villagers lying on the ground. If necessary, I can set down any villager I’m carrying and it will hopefully get back up soon.");
         add("gui.journal.overview.starting.text", "Any patient I’m currently carrying may be {§nplaced§r}[caption:right_click] atop a surgery bed.\\n" +
@@ -2741,6 +2748,32 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Injections may be painful depending on the fluid type and quantity.");
         add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.tools.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
         add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.tools.sewing_needle]. Stitching is painless and instantaneous.");
+        add("gui.journal.overview.what_is.text", "It is known that certain ingredients – both liquid and solid – are capable of radically altering the shape of a human when entering the body. Abominations are the product of injecting or inserting these ingredients in the back of humans with an intact spine. \\n" +
+                "These creatures are not so dissimilar from creepers, in that their primary mode of offense is via detonation of their own body. Unlike creepers, however, the resulting blast is not damaging by itself; rather, it is the abomination’s blood that, striking either friend or foe, may result in a variety of effects.\\n" +
+                "Thus, an abomination blood can cover the enemy in webbing, or afflict them with poison, or force spasms in their hands until they drop their weapons; likewise, they may also heal their master, or camouflage me, or make my visage fearsome to my foes.\\n" +
+                "All of this is dictated by the ingredients that are used in operations. Any ingredient that requires capacity can be used to create an abomination; this includes both solids (added via insertions) and liquids (via injections). One must first make sure that there is sufficient space (i.e. capacity) in the patient’s back to accommodate all these ingredients.\\n" +
+                "Used correctly, abominations can prove themselves a powerful weapon: a true living arsenal, with the possibility of mixing and matching different abominations to swarm the enemy. They synergise especially well with blood gems, allowing me to summon multiple at a time from different categories.");
+        add("gui.journal.overview.capacity.text", "Capacity determines how many (and which) ingredients can be used when creating an abomination, and thus which effects and modifiers can be applied.\\n" +
+                "Some ingredients are capable of increasing the available capacity, and are thus essential to create abominations. It is likely that only very few such ingredients exist, limiting the maximum possible capacity on a given individual.\\n" +
+                "When adding an ingredient that requires capacity, it must be made sure that there is enough to satisfy the need; if the available capacity ever drops below zero, the patient will die.");
+        add("gui.journal.overview.modifiers.text", "There are two types of modifiers: potency and burst. The former increase the strength of the individual effects applied to the abomination; the latter increase the size of the burst.\\n" +
+                "Multiple potency modifiers can be added at any point of the operation, and can generally be applied multiple times. The first instance of a certain potency modifier will increase the strength of the first effect ingredient that has been or that will be applied to the soon-to-be abomination; the second instance will increase the strength of the second effect ingredient; and so forth.\\n" +
+                "For example, assume we are creating an abomination with a “create webbing” effect and an “apply poison” effect, added in that order. If we want to improve the potency of the webbing twice and of the poison once, we can add potency modifier “liquid glowstone” twice and potency modifier “diamond powder” once, at any point during the operation (assuming sufficient capacity). The first application of the liquid glowstone and diamond powder will improve the webbing’s potency; the second application of the liquid glowstone will improve the poison’s potency.\\n" +
+                "Burst modifiers are only applied once, and are independent of the effect ingredients that are used.");
+        add("gui.journal.overview.triggering.text", "An abomination can be made to act on the occurrence of certain events, and move towards certain targets; the former are known as triggering instructions, and are dictated by injection of serum GS121; the latter are targeting instructions, dictated by serum SA245. Both of them can be one of five options, determined by the amount x of the respective serum injected:\\n" +
+                "- Hostile creatures nearby (1 ≤ x < 5 mb).\\1" +
+                "- Immortal humans (other than the abomination’s master) nearby (5 ≤ x < 10 mb).\\1" +
+                "- Abomination’s master nearby (10 ≤ x < 15 mb).\\1" +
+                "- Entity attacking the abomination (15 ≤ x < 20 mb).\\1" +
+                "- Entity attacking the abomination’s master (20 ≤ x < 25 mb).\\1" +
+                "- Entity attacked by the abomination’s master (25 ≤ x < 30 mb).\\n" +
+                "If no serum SA245 is injected, the default targeting instruction is “hostile creatures nearby”. If no serum GS121 is injected, the default triggering will be the same as the targeting instruction.\\n" +
+                "The ability to specify triggering and targeting separately gives me more control on how the abominations must act. \\n" +
+                "For example, if there are three abominations around me, each with “Entity attacked by the abomination’s master” triggering instruction and “Hostile creatures nearby” targeting instruction, I can simply hit any creatures (including one of the abominations themselves, if I want) to tell each of them to attack the closest hostile creature.\\n" +
+                "An abomination’s burst will only affect an ally (i.e. its master and its master’s other minions) if the target of the explosion was an ally; it will only affect creatures other than allies if the target of the explosion was not an ally.");
+        add("gui.journal.overview.priorities.text", "An abomination can be assigned to a certain “mutual exclusion (mutex) category” defined by a single dye color; this is done via cheap liquid dyes. Two abominations assigned to the same mutex will not target the same creature at the same time, though they may target two different creatures, or the same creature at different times (e.g. after one abomination has exploded).\\n" +
+                "This can be useful when I wish to apply a certain effect before another one, for example vulnerability before harming. In this case, I can give two different abominations the “lime” mutex; then, I would make sure that the vulnerability abomination attacks first. I could do this by summoning the vulnerability abomination first, or somehow triggering it first; however, the simplest way is simply to give the harming abomination lower priority, which will make sure it attacks afterwards. Deciding priorities is done via injection of serum PP456; the higher the amount, the lower the priority (no injection means highest).");
+        add("gui.journal.overview.weepers.text", "Weepers have an intrinsic capacity of 15, and may thus be used as abominations. However, their capacity cannot be increased further.");
 
         add("gui.journal.tools.forceps.title", "Forceps");
         add("gui.journal.tools.forceps.text", "A tool necessary for insertions. Can pick up a (single) item when used on a flask containing a solid ingredient.\\nForceps with an item inside may be applied on an incised patient on a surgery bed.");
@@ -2798,7 +2831,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.gunpowder_bladder.text", "Dropped by creepers and similarly explosive creatures when slain in a precise, surgical manner. Entities possessing this bladder may turn explosive when set on fire.");
 
         add("gui.journal.ingredients.living_iron.title", "Living Iron");
-        add("gui.journal.ingredients.living_iron.text", "Living Iron");
+        add("gui.journal.ingredients.living_iron.text", "An animated chunk of metal, yet not strong enough to survive on its own. It must be attached to the spine of an individual, and then left to grow on the host as they roam unaware.\\n" +
+                "Eventually the patient will drop on the ground, unable to move anymore. That will be the right time to extract its spine, hopefully acquiring a greater amount of iron than was used in the creation of the living metal.");
 
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
         add("gui.journal.ingredients.empty_bladder.text", "Empty Bladder");
@@ -2806,8 +2840,33 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.parental_hormones.title", "Parental Hormones");
         add("gui.journal.ingredients.parental_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then try to breed any nearby eligible pair of animals using items from the container, if available (e.g. wheat for cows, seeds for chickens).");
 
-        add("gui.journal.ingredients.obedience_hormones.title", "Order Hormones");
+        add("gui.journal.ingredients.obedience_hormones.title", "Obedience Hormones");
         add("gui.journal.ingredients.obedience_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then pick up any items within a certain range and put them in the container it was assigned to.");
+
+        add("gui.journal.ingredients.vasoconstrictor.title", "Vasoconstrictor");
+        add("gui.journal.ingredients.vasoconstrictor.text", "Results in a tightening of the blood vessels within the host creature, and thus an increase in space for other ingredients.");
+
+        add("gui.journal.ingredients.tears.title", "Tears");
+        add("gui.journal.ingredients.tears.text", "As the mind weeps away, so does it begin to detest the body; the host creature will no longer deny extraneous agents from entering it.");
+
+        add("gui.journal.ingredients.liquid_glowstone.title", "Liquid Glowstone");
+        add("gui.journal.ingredients.liquid_glowstone.text", "Not unlike its powdery counterpart, this substance can increase the potency of abomination ingredients. Inserting it as a liquid rather than solid does wonders in reducing the pain inflicted on the patient.");
+
+        add("gui.journal.ingredients.diamond_powder.title", "Diamond Powder");
+        add("gui.journal.ingredients.diamond_powder.text", "Diamonds grounded into not-so-fine dust. Very painful for the patient.");
+
+        add("gui.journal.ingredients.liquid_gold.title", "Liquid Gold");
+        add("gui.journal.ingredients.liquid_gold.text", "Terribly heavy – and blazing hot to the touch. Quite painful to inject, but does not require much capacity.");
+
+        add("gui.journal.ingredients.organochloride.title", "Organochloride");
+        add("gui.journal.ingredients.organochloride.text", "A strong pesticide, detested by all arthropods. Sometimes found in Arche.");
+
+        add("gui.journal.ingredients.pheromones.title", "Pheromones");
+        add("gui.journal.ingredients.pheromones.text", "Producing a strong yet amiable smell, it immediately alerts nearby creatures; however, attraction may quickly sour, as it turns to envy and then hatred: the victim will soon be targeted by several foes.");
+
+        add("gui.journal.ingredients.wart_serums.title", "Wart Serums");
+        add("gui.journal.ingredients.wart_serums.text", "These liquids are produced via combining classical potion ingredients with base serum A00B3. They mimic the effects of normal potions as abomination ingredients.\\n" +
+                "Interestingly, these may also be injected in the chest rather than back. In doing so, they will not turn patients into explosive abominations, but rather apply those effects to the patients themselves (for an extended period of time compared to normal potions). They will still require capacity, and may also still be affected by potency modifiers, as normal.");
 
 
         add("gui.journal.journal.type.none", "Select Type");

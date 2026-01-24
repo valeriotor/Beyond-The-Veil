@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.recipes;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
@@ -17,6 +18,27 @@ public class AlembicsRecipeRegistry {
 
     public static void registerRecipes() {
         registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.NETHER_WART), Fluids.WATER, 20, BTVFluids.FLUID_WART_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SUGAR), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.NAUTILUS_SHELL), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SUGAR_CANE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.OBSIDIAN), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.BLAZE_POWDER), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.GLISTERING_MELON_SLICE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_HEAL_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.WITHER_SKELETON_SKULL), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_HARM_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.RABBIT_FOOT), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_JUMP_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.FERMENTED_SPIDER_EYE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_CONFUSION_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.GHAST_TEAR), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_REGENERATION_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.TURTLE_HELMET), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.MAGMA_CREAM), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.PUFFERFISH), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get());
+        //registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.NETHER_WART), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get()); TODO CHROMATOSPHORE GLAND
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Registration.DARK_SAND.get()), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_BLINDNESS_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.GOLDEN_CARROT), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.ROTTEN_FLESH), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_HUNGER_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.TURTLE_EGG), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WEAKNESS_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SPIDER_EYE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_POISON_SERUM.getA().get());
+        registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.WITHER_ROSE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WITHER_SERUM.getA().get());
     }
 
     private static void registerRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {

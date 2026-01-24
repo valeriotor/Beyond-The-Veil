@@ -40,10 +40,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -55,6 +57,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private boolean firstOpen;
@@ -136,6 +139,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private final int PAGE_X = 50;
     private final int PAGE_Y = -200;
     private Component mainTitle;
+    private boolean abominationsUnlocked;
 
     //private final ScrollableList overview;
     public JournalGui() {
@@ -332,6 +336,18 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         list.add(new Dropdown2("storage"));
         list.add(new Dropdown2("holding"));
         list.add(new Dropdown2("surgery"));
+        if (abominationsUnlocked) {
+            list.add(new Dropdown1("abominations"));
+            list.add(new Dropdown2("what_is"));
+            list.add(new Dropdown2("capacity"));
+            list.add(new Dropdown2("modifiers"));
+            list.add(new Dropdown2("triggering"));
+            list.add(new Dropdown2("priorities"));
+            if (ResearchUtil.getResearchStage(Minecraft.getInstance().player, "WEEPERS") >= 0) {
+                list.add(new Dropdown2("weepers"));
+
+            }
+        }
         return list;
     }
 
@@ -364,6 +380,34 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             entries.add(new FluidItemEntry(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), "obedience_hormones", JournalCategory.INGREDIENTS));
             entries.add(new FluidItemEntry(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), "parental_hormones", JournalCategory.INGREDIENTS));
         }
+        if (abominationsUnlocked) {
+            entries.add(new FluidItemEntry(BTVFluids.FLUID_GS121_SERUM.getA().get(), "gs121_serum", JournalCategory.INGREDIENTS));
+            entries.add(new FluidItemEntry(BTVFluids.FLUID_GS121_SERUM.getA().get(), "gs121_serum", JournalCategory.INGREDIENTS));
+            List<Fluid> wartSerums = Stream.of(BTVFluids.FLUID_WART_SERUM,
+                    BTVFluids.FLUID_MOVEMENT_SPEED_SERUM,
+                    BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM,
+                    BTVFluids.FLUID_DIG_SPEED_SERUM,
+                    BTVFluids.FLUID_DIG_SLOWDOWN_SERUM,
+                    BTVFluids.FLUID_DAMAGE_BOOST_SERUM,
+                    BTVFluids.FLUID_HEAL_SERUM,
+                    BTVFluids.FLUID_HARM_SERUM,
+                    BTVFluids.FLUID_JUMP_SERUM,
+                    BTVFluids.FLUID_CONFUSION_SERUM,
+                    BTVFluids.FLUID_REGENERATION_SERUM,
+                    BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM,
+                    BTVFluids.FLUID_FIRE_RESISTANCE_SERUM,
+                    BTVFluids.FLUID_WATER_BREATHING_SERUM,
+                    BTVFluids.FLUID_INVISIBILITY_SERUM,
+                    BTVFluids.FLUID_BLINDNESS_SERUM,
+                    BTVFluids.FLUID_NIGHT_VISION_SERUM,
+                    BTVFluids.FLUID_HUNGER_SERUM,
+                    BTVFluids.FLUID_WEAKNESS_SERUM,
+                    BTVFluids.FLUID_POISON_SERUM,
+                    BTVFluids.FLUID_WITHER_SERUM).map(f -> (Fluid) f.getA().get()).toList();
+            entries.add(new FluidItemEntry(wartSerums, "wart_serums", JournalCategory.INGREDIENTS));
+        }
+        // TODO 24-01-2026 unlock fluids when taken with syringe or bucket
+        // TODO I guess use playerdatalib.discoveredfluid?
         for (Item knownIngredient : knownIngredients) {
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(knownIngredient);
             if (key != null) {
@@ -722,11 +766,18 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     public void onSelectedTabChanged(@Nullable Advancement pAdvancement) {
     }
 
+    private final Set<Item> unblockAbominations = Set.of(Registration.EMPTY_BLADDER.get());
+
     @Override
     public void onUpdateAdvancementProgress(Advancement pAdvancement, AdvancementProgress pProgress) {
         String s = pAdvancement.getId().toString();
         if (s.startsWith(References.MODID + ":ingredients/")) {
-            ForgeRegistries.ITEMS.getHolder(new ResourceLocation(References.MODID, s.substring(s.indexOf('/') + 1))).ifPresent(h -> knownIngredients.add(h.get()));
+            ForgeRegistries.ITEMS.getHolder(new ResourceLocation(References.MODID, s.substring(s.indexOf('/') + 1))).ifPresent(h -> {
+                knownIngredients.add(h.get());
+                if (unblockAbominations.contains(h.get())) {
+                    abominationsUnlocked = true;
+                }
+            });
         }
     }
 
@@ -878,7 +929,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         protected AlembicRecipeDisplay(int width, int height, AlembicsRecipeRegistry.AlembicRecipe recipe) {
             super(width, height);
-            input1 = ForgeHooksClient.getFluidSprites(minecraft.level, minecraft.player.getOnPos(), Fluids.WATER.defaultFluidState())[0];//minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input1()).getStillTexture());
+            input1 = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input1()).getStillTexture());
             input2 = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input2()).getStillTexture());
             stack = recipe.stack().copy();
             output = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.output()).getStillTexture());

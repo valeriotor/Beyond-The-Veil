@@ -253,6 +253,9 @@ public class OperationRegistry {
     private static final Operation INJECT_WEAKNESS_SERUM_FLUID = makeArsenalInjection("inject_weakness_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.WEAKNESS).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 80);
     private static final Operation INJECT_POISON_SERUM_FLUID = makeArsenalInjection("inject_poison_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.POISON).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 80);
     private static final Operation INJECT_WITHER_SERUM_FLUID = makeArsenalInjection("inject_wither_serum_fluid", 0.9, 90, 4, ArsenalEffectRegistry.WITHER).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 80);
+    private static final Operation INJECT_LIQUID_GOLD_FLUID = makeArsenalInjection("inject_liquid_gold_fluid", 0.9, 90, 4, ArsenalEffectRegistry.SINK).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 80);
+    private static final Operation INJECT_ORGANOCHLORIDE_FLUID = makeArsenalInjection("inject_organochloride_fluid", 0.9, 90, 4, ArsenalEffectRegistry.HARM_ARTHROPODS).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 80);
+    private static final Operation INJECT_PHEROMONES_FLUID = makeArsenalInjection("inject_pheromones_fluid", 0.9, 90, 4, ArsenalEffectRegistry.EVERYONE_TARGET).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 80);
 
     private static final Operation INSERT_EMPTY_BLADDER = new Operation.Builder("insert_empty_bladder")
             .addAllowedLocation(SurgicalLocation.BACK)
