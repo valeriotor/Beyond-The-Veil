@@ -234,12 +234,15 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 if (tickCount >= 5) {
                     if (tickCount >= 300) {
                         getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
-                            if (!c.getFlags().containsKey(OperationRegistry.SPINELESS)) {
+                            if (!c.getFlags().containsKey(OperationRegistry.SPINELESS) && !c.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);
                                 if (villager != null) {
                                     villager.setVillagerData(getVillagerData());
                                     villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c1 -> {
                                         c1.loadFromNBT(c.saveToNBT(new CompoundTag()));
+                                        if (c1.getFlags().containsKey("insert_living_iron") && c1.getFlags().get("insert_living_iron") > 0) {
+                                            c1.setCounter("spreading_iron", 2000);
+                                        }
                                     });
                                     //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
                                     //villager.setTradeOffers(source.getOffers().createTag());

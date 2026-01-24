@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> {
     public static final ResourceLocation WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound.png");
+    public static final ResourceLocation IRON_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound_iron.png");
     public static final ResourceLocation CHEST_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound.png");
     public static WoundModel<CrawlerEntity> woundModel;
     public static ChestWoundModel<CrawlerEntity> chestWoundModel;
@@ -51,8 +52,13 @@ public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> 
 
     @Override
     protected @NotNull ResourceLocation getTextureLocation(CrawlerEntity pEntity) {
-        if (pEntity.isSurgeryPatient() && pEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
-            return CHEST_WOUND_TEXTURE;
+        if (pEntity.isSurgeryPatient()) {
+            if (pEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
+                return CHEST_WOUND_TEXTURE;
+            }
+            if (pEntity.getPatientStatus().getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
+                return IRON_WOUND_TEXTURE;
+            }
         }
         return WOUND_TEXTURE;
     }

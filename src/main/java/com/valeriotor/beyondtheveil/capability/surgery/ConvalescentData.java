@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.capability.surgery;
 
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.item.BlackjackItem;
+import com.valeriotor.beyondtheveil.surgery.Operation;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -8,6 +11,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
@@ -123,6 +127,13 @@ public class ConvalescentData {
 
     public void tick(LivingEntity entity) {
         counters.replaceAll((k, v) -> Math.max(0, v - 1));
+        if (counters.containsKey("spreading_iron") && counters.get("spreading_iron") == 0) {
+            counters.remove("spreading_iron");
+            flags.put(OperationRegistry.IRON_SPINE, 1);
+            if (entity instanceof Villager villager) {
+                BlackjackItem.knockDownVillager(villager);
+            }
+        }
         if (flags.containsKey("great_heart")) {
             if (entity.tickCount % 40 == 0) {
                 entity.heal(1);

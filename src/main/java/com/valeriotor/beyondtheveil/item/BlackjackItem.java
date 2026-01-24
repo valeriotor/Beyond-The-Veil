@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.Nullable;
 
 public class BlackjackItem extends Item {
 
@@ -30,22 +31,29 @@ public class BlackjackItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
             if (pInteractionTarget instanceof Villager villager) {
                 Level l = pInteractionTarget.level();
-                LazyOptional<ConvalescentData> villagerCapability = villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
-                CompoundTag convalescentData = villagerCapability.isPresent() ? villagerCapability.resolve().get().saveToNBT(new CompoundTag()) : null;
-                CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);
-                if (crawler != null) {
-                    crawler.setData(villager);
-                    crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {
-                        if (convalescentData != null) {
-                            crawlerCap.loadFromNBT(convalescentData);
-                        }
-                    });
-                    return InteractionResult.SUCCESS;
-                }
+                InteractionResult success = knockDownVillager(villager);
+                if (success != null) return success;
             }
 
         }
         return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+    }
+
+    @Nullable
+    public static InteractionResult knockDownVillager(Villager villager) {
+        LazyOptional<ConvalescentData> villagerCapability = villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
+        CompoundTag convalescentData = villagerCapability.isPresent() ? villagerCapability.resolve().get().saveToNBT(new CompoundTag()) : null;
+        CrawlerEntity crawler = villager.convertTo(BTVEntities.CRAWLER.get(), false);
+        if (crawler != null) {
+            crawler.setData(villager);
+            crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {
+                if (convalescentData != null) {
+                    crawlerCap.loadFromNBT(convalescentData);
+                }
+            });
+            return InteractionResult.SUCCESS;
+        }
+        return null;
     }
 
     @Override

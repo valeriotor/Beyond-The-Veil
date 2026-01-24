@@ -11,14 +11,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -44,6 +42,7 @@ public class OperationRegistry {
     static final Map<SurgicalLocation, OperationRegistry.IncisionEntry> INCISION_OPERATIONS = new HashMap<>();
 
     public static final String SPINELESS = "spineless";
+    public static final String IRON_SPINE = "iron_spine";
 
     private static final Operation INCISE_BACK = new Operation.Builder("incise_back")
             .setPainPerTick(0.54)
@@ -98,7 +97,7 @@ public class OperationRegistry {
             .needsSpine()
             .makeSpineless()
             .addPlayerData(PlayerDataLib.extracted_spine.name())
-            .buildExtractionOperation(EXTRACTION_OPERATIONS, new ItemStack(Registration.SPINE.get()));
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> s.getFlags().containsKey(IRON_SPINE) ? new ItemStack(Items.IRON_INGOT, new Random().nextInt(10, 13)) : new ItemStack(Registration.SPINE.get()), s-> true, false);
 
     private static final Operation EXTRACT_BONE_TIARA = new Operation.Builder("extract_bone_tiara")
             .setPainPerTick(0.4)
@@ -295,6 +294,16 @@ public class OperationRegistry {
             .setMaximumTimesAllowed(3)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.EMERALD_GEM.get());
+
+    private static final Operation INSERT_LIVING_IRON = new Operation.Builder("insert_living_iron")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(0.35)
+            .setDuration(90)
+            .setPainForFailure(120)
+            .setPersistent(true)
+            .setMaximumTimesAllowed(1)
+            .setProgressParticles(true)
+            .buildInsertionOperation(Registration.LIVING_IRON.get());
 
     private static Operation.Builder makeArsenalInsertion(String name, int duration, double pain, double painForFailure, int capacity, ArsenalEffectType effect) {
         return new Operation.Builder(name)
