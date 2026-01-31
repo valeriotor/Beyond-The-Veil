@@ -4,6 +4,8 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionDefendMasterTargetGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
@@ -49,7 +51,8 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 12));
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+        this.targetSelector.addGoal(2, (new MinionDefendMasterTargetGoal<>(this, false)));
+        this.targetSelector.addGoal(1, (new MinionHelpMasterTargetGoal<>(this, false)));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
     }
 
