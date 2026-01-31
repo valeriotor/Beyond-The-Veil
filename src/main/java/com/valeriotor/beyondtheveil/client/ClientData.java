@@ -2,11 +2,13 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
@@ -183,6 +185,18 @@ public class ClientData {
 
     public boolean isBlinded() {
         return blindnessTimer > 0;
+    }
+
+    public void syncBindingData(CompoundTag tag) {
+        if (Minecraft.getInstance().player != null) {
+            Minecraft.getInstance().player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
+                if (tag.contains("data")) {
+                    c.setBindingData(new BindingData(tag.getCompound("data")));
+                } else {
+                    c.setBindingData(null);
+                }
+            });
+        }
     }
 
     public static class Waypoint {

@@ -75,7 +75,7 @@ public class PlayerTimerData {
 
     public void copyToNewStore(PlayerTimerData newStore) {
         newStore.playerTimers.clear();
-        newStore.playerTimers.addAll(playerTimers);
+        newStore.playerTimers.addAll(playerTimers.stream().filter(PlayerTimer::copyOnPlayerClone).toList());
     }
 
     private static class Dummy extends PlayerTimerData {

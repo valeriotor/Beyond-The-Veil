@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
@@ -47,6 +48,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -208,6 +210,13 @@ public class PlayerEvents {
     public static void sleepingTimeCheckEvent(SleepingTimeCheckEvent event) {
         if (event.getSleepingLocation().isPresent() && event.getEntity().level().getBlockState(event.getSleepingLocation().get()).getBlock() == Registration.SURGERY_BED.get()) {
             event.setResult(Event.Result.ALLOW);
+        }
+    }
+
+    @SubscribeEvent
+    public static void placeBlockEvent(BlockEvent.EntityPlaceEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            BindingEvents.placeBlock(event, sp);
         }
     }
 

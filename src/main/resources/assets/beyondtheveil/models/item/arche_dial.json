@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "item/arche_dial0"
+    "layer0": "beyondtheveil:item/arche_dial0"
   },
   "overrides": [
     { "predicate": { "time": 0.0 }, "model": "beyondtheveil:item/arche_dial0" },

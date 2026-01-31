@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
@@ -201,6 +202,14 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.MAKE_EXPLOSION_BLOOD, tag);
     }
 
+    public static GenericToClientPacket syncBindingData(BindingData data) {
+        CompoundTag tag = new CompoundTag();
+        if (data != null) {
+            tag.put("data", data.saveToNBT(new CompoundTag()));
+        }
+        return new GenericToClientPacket(MessageType.SYNC_BINDING_DATA, tag);
+    }
+
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
     //    CompoundTag tag = new CompoundTag();
     //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
@@ -262,6 +271,7 @@ public class GenericToClientPacket {
                     case BLIND_COMPLETELY -> ClientData.getInstance().blindCompletely();
                     case START_PLAYER_ANIMATION -> ClientData.getInstance().startPlayerAnimation(tag.getUUID("player"), tag.getInt("anim"));
                     case MAKE_EXPLOSION_BLOOD -> LivingAmmunitionEntity.makeExplosionBleed(ClientMethods.getLevel(), tag.getInt("burst"), tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
+                    case SYNC_BINDING_DATA -> ClientData.getInstance().syncBindingData(tag);
                 }
             });
         });
@@ -294,7 +304,8 @@ public class GenericToClientPacket {
         ADD_MEMORY_TOAST,
         BLIND_COMPLETELY,
         START_PLAYER_ANIMATION,
-        MAKE_EXPLOSION_BLOOD
+        MAKE_EXPLOSION_BLOOD,
+        SYNC_BINDING_DATA
     }
 
 }

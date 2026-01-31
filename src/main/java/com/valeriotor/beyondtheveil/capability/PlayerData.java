@@ -4,6 +4,8 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.DreamRegistry;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.CounterType;
 import net.minecraft.nbt.CompoundTag;
@@ -28,6 +30,7 @@ public class PlayerData {
     private final Map<Memory, MemoryStatus> memories = new EnumMap<>(Memory.class);
     private final Map<String, Reminiscence> reminiscences = new HashMap<>();
     private final Map<String, Report> reports = new HashMap<>();
+    private BindingData bindingData;
     private Report currentReport;
     private boolean editingReport;
     private String previousReportName;
@@ -310,6 +313,18 @@ public class PlayerData {
         }
     }
 
+    public void bind(Binding binding) {
+        bindingData = new BindingData(binding);
+    }
+
+    public void setBindingData(BindingData bindingData) {
+        this.bindingData = bindingData;
+    }
+
+    public BindingData getBindingData() {
+        return bindingData;
+    }
+
     public void saveToNBT(CompoundTag compoundTag) {
         CompoundTag booleans = new CompoundTag();
         CompoundTag ints = new CompoundTag();
@@ -346,6 +361,9 @@ public class PlayerData {
         }
         if (currentReport != null) {
             compoundTag.put("currentReport", currentReport.saveToNBT());
+        }
+        if (bindingData != null) {
+            compoundTag.put("bindingData", bindingData.saveToNBT(new CompoundTag()));
         }
         compoundTag.put("booleans", booleans);
         compoundTag.put("ints", ints);
@@ -415,6 +433,10 @@ public class PlayerData {
                     this.reminiscences.put(key, reminiscence);
                 }
             }
+        }
+
+        if (compoundTag.contains("bindingData")) {
+            bindingData = new BindingData(compoundTag.getCompound("bindingData"));
         }
 
         CompoundTag reports = compoundTag.getCompound("reports");

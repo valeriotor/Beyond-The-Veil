@@ -146,6 +146,10 @@ public class PlayerTimer {
         return timer < 0;
     }
 
+    public boolean copyOnPlayerClone() {
+        return true;
+    }
+
     public static class Builder {
         private final String id;
         private final int timer;

@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -315,6 +316,36 @@ public class DataUtil {
             return Triple.of(data.getCurrentReport(), data.isEditingReport(), data.getPreviousReportName());
         }
         return Triple.of(null, false, null);
+    }
+
+    public static BindingData getBindingData(Player p) {
+        LazyOptional<PlayerData> c = p.getCapability(PlayerDataProvider.PLAYER_DATA, null);
+        if (c.isPresent() && c.resolve().isPresent()) {
+            return c.resolve().get().getBindingData();
+        }
+        return null;
+    }
+
+    public static int getBindingEnergy(Player p) {
+        BindingData data = getBindingData(p);
+        if (data != null) {
+            return data.getEnergy();
+        }
+        return 0;
+    }
+
+    public static boolean decreaseBindingEnergy(Player p, int amount) {
+        BindingData data = getBindingData(p);
+        if (data != null && data.getEnergy() >= amount) {
+            data.setEnergy(data.getEnergy() - amount);
+            return true;
+        }
+        return false;
+    }
+
+    public static void syncBindingData(ServerPlayer p) {
+        BindingData bindingData = getBindingData(p);
+        Messages.sendToPlayer(GenericToClientPacket.syncBindingData(bindingData), (ServerPlayer) p);
     }
 
 }

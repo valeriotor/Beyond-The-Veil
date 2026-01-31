@@ -310,6 +310,7 @@ public class Registration {
     public static final RegistryObject<Item> SURGERY_REPORT = ITEMS.register("surgery_report", ReportSheetItem::new);
     public static final RegistryObject<Item> SURGEON_BELL = ITEMS.register("surgeon_bell", SurgeonBellItem::new);
     public static final RegistryObject<Item> SURGEON_LARVA = ITEMS.register("surgeon_larva", SurgeonLarvaItem::new);
+    public static final RegistryObject<Item> BLOOD_FIST = ITEMS.register("blood_fist", BloodFistItem::new);
     public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
     public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
     public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
@@ -553,6 +554,7 @@ public class Registration {
                 output.accept(SURGERY_REPORT.get());
                 output.accept(SURGEON_BELL.get());
                 output.accept(SURGEON_LARVA.get());
+                output.accept(BLOOD_FIST.get());
                 output.accept(PLUCKED_EYE.get());
                 output.accept(SHELL.get());
                 output.accept(TINY_SKULL.get());

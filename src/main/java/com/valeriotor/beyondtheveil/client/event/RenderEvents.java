@@ -26,6 +26,8 @@ import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -34,16 +36,14 @@ import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -75,6 +75,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -616,6 +617,8 @@ public class RenderEvents {
 
     }
 
+    private static final VoxelShape OVERWORLD_BINDING_OUTLINE = Shapes.box(0, 0, 0, 1, 1, 1);
+
     @SubscribeEvent
     public static void renderWorldLastEvent(RenderLevelStageEvent event) {
         LocalPlayer p = Minecraft.getInstance().player;
@@ -634,6 +637,24 @@ public class RenderEvents {
                     EntityRenderDispatcher erd = Minecraft.getInstance().getEntityRenderDispatcher();
                     erd.render(heldPatientEntity, -0.4, 0, 0.1, 0, partialTick, poseStack, bufferSource, erd.getPackedLightCoords(p, partialTick));
                     poseStack.popPose();
+                }
+            }
+        }
+        if (p != null) {
+            BindingData data = DataUtil.getBindingData(p);
+            if (data != null) {
+                if (data.getBinding() == Binding.OVERWORLD) {
+                    BlockPos overworldPos1 = data.getOverworldPos1();
+                    BlockPos overworldPos2 = data.getOverworldPos2();
+                    VertexConsumer vertexconsumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
+                    Camera camera = event.getCamera();
+                    Vec3 position = camera.getPosition();
+                    if (overworldPos1 != null) {
+                        LevelRenderer.renderLineBox(event.getPoseStack(), vertexconsumer, overworldPos1.getX() - position.x, overworldPos1.getY() - position.y, overworldPos1.getZ() - position.z, overworldPos1.getX() - position.x + 1, overworldPos1.getY() - position.y + 1, overworldPos1.getZ() - position.z + 1, 1, 0, 0, 1, 1, 0, 0);
+                    }
+                    if (overworldPos2 != null) {
+                        LevelRenderer.renderLineBox(event.getPoseStack(), vertexconsumer, overworldPos2.getX() - position.x, overworldPos2.getY() - position.y, overworldPos2.getZ() - position.z, overworldPos2.getX() - position.x + 1, overworldPos2.getY() - position.y + 1, overworldPos2.getZ() - position.z + 1, 0, 1, 0, 1, 0, 1, 0);
+                    }
                 }
             }
         }

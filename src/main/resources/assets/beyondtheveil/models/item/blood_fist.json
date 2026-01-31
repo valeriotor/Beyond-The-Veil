@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/scalpel_base"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/blood_fist_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/blood_fist_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/blood_fist_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/blood_fist_held"},
+    "head":  {"parent": "beyondtheveil:item/blood_fist_held"},
+    "gui": {"parent": "beyondtheveil:item/blood_fist_base"},
+    "ground":  {"parent": "beyondtheveil:item/blood_fist_held"},
+    "fixed": {"parent": "beyondtheveil:item/blood_fist_held"}
+  },
+  "loader": "forge:separate_transforms"
+}
