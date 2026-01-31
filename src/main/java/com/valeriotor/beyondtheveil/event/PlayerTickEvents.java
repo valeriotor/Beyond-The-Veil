@@ -17,6 +17,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import com.valeriotor.beyondtheveil.surgery.surgeon.BellData;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.*;
@@ -87,6 +88,9 @@ public class PlayerTickEvents {
             sendOtherPlayerDeathCoords(event);
             surgeonBellParticles(event);
             transformationTickEvents(event);
+            if (p instanceof ServerPlayer sp) {
+                BindingEvents.playerTickEvent(event, sp);
+            }
         }
     }
 

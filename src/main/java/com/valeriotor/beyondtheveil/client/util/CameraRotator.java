@@ -31,6 +31,18 @@ public class CameraRotator {
         }
     }
 
+    public int getTime() {
+        return time;
+    }
+
+    public float getYaw() {
+        return yaw;
+    }
+
+    public float getPitch() {
+        return pitch;
+    }
+
     public boolean update() {
         counter++;
         return counter >= time;

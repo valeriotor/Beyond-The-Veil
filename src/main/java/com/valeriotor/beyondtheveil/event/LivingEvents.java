@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.level.BlockEvent;
@@ -308,6 +310,20 @@ public class LivingEvents {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void entityJoinLevelEvent(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            BindingEvents.joinLevelEvent(event);
+        }
+    }
+
+    @SubscribeEvent
+    public static void livingJumpEvent(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            BindingEvents.jump(event, serverPlayer);
         }
     }
 

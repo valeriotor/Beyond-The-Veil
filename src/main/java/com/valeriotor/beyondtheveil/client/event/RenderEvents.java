@@ -128,7 +128,16 @@ public class RenderEvents {
     }
 
     public static void startCameraRotation(CameraRotator newRotator) {
-        rotator = newRotator;
+        if (newRotator.getTime() == 0) {
+            LocalPlayer p = Minecraft.getInstance().player;
+            if (p != null) {
+                p.setYHeadRot(newRotator.getYaw());
+                p.setYRot(newRotator.getYaw());
+                p.setXRot(newRotator.getPitch());
+            }
+        } else {
+            rotator = newRotator;
+        }
     }
 
     public static void shakeCamera(int duration) {

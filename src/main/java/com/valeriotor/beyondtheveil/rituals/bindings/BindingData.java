@@ -10,6 +10,7 @@ public class BindingData {
     private int energy;
     private BlockPos overworldPos1;
     private BlockPos overworldPos2;
+    private boolean blockBreakingMode;
 
     public BindingData(@NotNull Binding binding) {
         this.binding = binding;
@@ -35,6 +36,14 @@ public class BindingData {
         return energy;
     }
 
+    public boolean drainEnergy(int amount) {
+        if (energy >= amount) {
+            energy -= amount;
+            return true;
+        }
+        return false;
+    }
+
     public Binding getBinding() {
         return binding;
     }
@@ -53,6 +62,14 @@ public class BindingData {
 
     public void setOverworldPos2(BlockPos overworldPos2) {
         this.overworldPos2 = overworldPos2;
+    }
+
+    public boolean isBlockBreakingMode() {
+        return blockBreakingMode;
+    }
+
+    public void setBlockBreakingMode(boolean blockBreakingMode) {
+        this.blockBreakingMode = blockBreakingMode;
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {

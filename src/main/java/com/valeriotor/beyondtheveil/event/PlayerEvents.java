@@ -143,8 +143,11 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void deathEvent(LivingDeathEvent event) {
-        if (event.getEntity() instanceof ServerPlayer sp && sp.getServer() != null) {
-            PlayerSavedData.getInstance(sp.getServer().overworld()).death(sp);
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            BindingEvents.playerDeathEvent(event, sp);
+            if (sp.getServer() != null && !event.isCanceled()) {
+                PlayerSavedData.getInstance(sp.getServer().overworld()).death(sp);
+            }
         }
     }
 

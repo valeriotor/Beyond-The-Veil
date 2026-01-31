@@ -475,7 +475,7 @@ public class PlayerData {
         newStore.memories.putAll(memories);
         newStore.reminiscences.putAll(reminiscences);
         newStore.reports.putAll(reports);
-
+        newStore.setBindingData(bindingData);
     }
 
     public static class MemoryStatus {

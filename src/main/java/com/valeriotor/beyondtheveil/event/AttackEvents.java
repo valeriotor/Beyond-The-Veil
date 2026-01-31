@@ -9,7 +9,9 @@ import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -67,6 +69,10 @@ public class AttackEvents {
     private static void playerDamageEvent(LivingDamageEvent event, ServerPlayer player) {
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> {
             if (c.hasTimer("baptism")) {
+                event.setCanceled(true);
+            }
+            PlayerTimer rechargeEndBinding = c.getTimer("recharge_end_binding");
+            if (rechargeEndBinding != null && rechargeEndBinding.getRemainingTime() > 10 * 60 * 20 - 100) {
                 event.setCanceled(true);
             }
         });
@@ -145,6 +151,10 @@ public class AttackEvents {
         }
         if (event.getSource().getEntity() instanceof Player player && player.getVehicle() instanceof NautilusEntity) {
             event.setCanceled(true);
+        }
+
+        if (event.getSource().getEntity() instanceof ServerPlayer sp) {
+            BindingEvents.playerAttackEvent(event, sp);
         }
 
     }

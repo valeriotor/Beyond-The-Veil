@@ -41,7 +41,8 @@ public enum PersistentPlayerTimer {
         if (player instanceof ServerPlayer sp && timer.getRemainingTime() % 20 == 0) {
             Messages.sendToPlayer(GenericToClientPacket.blindCompletely(), sp);
         }
-    }), List.of(), List.of(), List.of());
+    }), List.of(), List.of(), List.of()),
+    RECHARGE_END_BINDING((p,t) -> {});
 
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;
