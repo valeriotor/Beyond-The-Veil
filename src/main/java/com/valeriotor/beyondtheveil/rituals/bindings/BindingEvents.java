@@ -12,6 +12,8 @@ import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.PlaceBlocksTimer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -92,6 +94,8 @@ public class BindingEvents {
                 if (pPlayer.isFallFlying()) {
                     return true;
                 }
+            } else if (data.getBinding() == Binding.ARCHE) {
+                return true;
             }
             if (!pLevel.isClientSide) {
                 if (data.getBinding() == Binding.OVERWORLD) {
@@ -105,11 +109,62 @@ public class BindingEvents {
     }
 
     public static void usingFist(Level pLevel, ServerPlayer sp) {
-        if (sp.isFallFlying()) {
-            BindingData data = DataUtil.getBindingData(sp);
-            if (data != null && data.getBinding() == Binding.END && sp.tickCount % 3 == 0) {
+        BindingData data = DataUtil.getBindingData(sp);
+        if (data != null) {
+            if (data.getBinding() == Binding.END && sp.tickCount % 3 == 0 && sp.isFallFlying()) {
                 Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, 0.5, 0, false, false, false), sp);
+            } else if (data.getBinding() == Binding.ARCHE && sp.tickCount % 3 == 0) {
+                List<Entity> entities = sp.level().getEntities(sp, AABB.ofSize(sp.position(), 30, 20, 30), e -> e instanceof LivingEntity);
+                if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get()) {
+                    for (Entity entity : entities) {
+                        moveEntityWithCenter(entity, sp, !sp.isShiftKeyDown(), false);
+                    }
+                } else {
+                    if (sp.isShiftKeyDown()) {
+                        for (Entity entity : entities) {
+                            moveEntityWithCenter(entity, sp, true, true);
+                        }
+
+                    } else {
+                        double x = -Math.sin(sp.getYRot() * Math.PI / 180);
+                        double z = Math.cos(sp.getYRot() * Math.PI / 180);
+                        for (Entity entity : entities) {
+                            moveEntity(entity, x, z, 1);
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private static void moveEntityWithCenter(Entity entity, ServerPlayer center, boolean away, boolean perpendicular) {
+        double x = entity.getX() - center.getX();
+        double z = entity.getZ() - center.getZ();
+        double sqrt = Math.sqrt(x * x + z * z);
+        x /= sqrt;
+        z /= sqrt;
+        if (away) {
+            x = -x;
+            z = -z;
+        }
+        if (perpendicular) {
+            double tmp = x;
+            x = -z;
+            z = tmp;
+        }
+        moveEntity(entity, x, z, away || perpendicular ? 0.5 : 1);
+    }
+
+    private static void moveEntity(Entity entity, double x, double z, double pitch) {
+        if (entity instanceof ServerPlayer sp) {
+            Messages.sendToPlayer(GenericToClientPacket.movePlayer(x, 0, z, false, false, false), sp);
+        } else if(entity instanceof LivingEntity l){
+            l.setDeltaMovement(l.getDeltaMovement().add(x, 0, z));
+        }
+        if (entity.level() instanceof ServerLevel sl) {
+            sl.sendParticles(ParticleTypes.DRIPPING_WATER, entity.getX(), entity.getY(), entity.getZ(), 20, 1, 1, 1, 1);
+            sl.sendParticles(ParticleTypes.BUBBLE, entity.getX(), entity.getY(), entity.getZ(), 10, 1, 1, 1, 1);
+            sl.playSound(null, entity.blockPosition(), SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE, SoundSource.PLAYERS, 1, 1);
         }
     }
 
@@ -201,7 +256,7 @@ public class BindingEvents {
     }
 
     public static void jump(LivingEvent.LivingJumpEvent event, ServerPlayer sp) {
-        //sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().setBindingData(new BindingData(Binding.NETHER));
+        //sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().setBindingData(new BindingData(Binding.ARCHE));
         BindingData data = DataUtil.getBindingData(sp);
         if (data != null && data.getBinding() == Binding.END && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
             Level l = sp.level();
