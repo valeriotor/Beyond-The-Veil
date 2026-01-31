@@ -31,8 +31,11 @@ public class ArsenalEffect {
     }
 
     public void process(LivingEntity attacker, LivingEntity target) {
+        process(attacker, target, false);
+    }
+    public void process(LivingEntity attacker, LivingEntity target, boolean netherBinding) {
         if (effectType != null) {
-            effectType.doEffect(attacker, target, durations.size(), amplifiers.size(), hideParticles);
+            effectType.doEffect(attacker, target, durations.size(), amplifiers.size() + (netherBinding ? 1 : 0), hideParticles);
         }
     }
 

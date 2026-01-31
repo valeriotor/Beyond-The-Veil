@@ -95,7 +95,7 @@ public abstract class SurgicalBE extends BlockEntity {
                         if (color != null && !patientStatus.getCondition().isTerminal()) {
                             if (p instanceof ServerPlayer sp && sp.getServer() != null) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
-                                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), sp.serverLevel());
+                                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sp.serverLevel());
                             }
                         } else {
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
@@ -200,7 +200,7 @@ public abstract class SurgicalBE extends BlockEntity {
         if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getPatientType() != PatientType.PLAYER) {
             if (surgeon.level() instanceof ServerLevel sl) {
                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl.getServer());
-                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData()), surgeon.level());
+                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), surgeon.level());
             }
         } else {
             surgeon.setHeldPatient(patientStatus.getPatientType(), entityData);

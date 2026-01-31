@@ -17,6 +17,8 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -241,10 +243,18 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     List<ArsenalEffect> effects = data.getEffects();
                     if (burst != null) {
                         List<LivingEntity> hitEntities = burst.getHitEntities(this);
+                        ServerPlayer sp = getMaster();
+                        boolean powerup = false;
+                        if (sp != null) {
+                            BindingData bindingData = DataUtil.getBindingData(sp);
+                            if (bindingData != null && bindingData.getBinding() == Binding.NETHER) {
+                                powerup = true;
+                            }
+                        }
                         for (LivingEntity hitEntity : hitEntities) {
                             if (hitEntity != this) {
                                 for (ArsenalEffect arsenalEffect : effects) {
-                                    arsenalEffect.process(this, hitEntity);
+                                    arsenalEffect.process(this, hitEntity, powerup);
                                 }
                             }
                         }

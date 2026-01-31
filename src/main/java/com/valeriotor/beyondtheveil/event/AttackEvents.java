@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.DamageCapper;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -63,6 +64,8 @@ public class AttackEvents {
         if (entity instanceof ServerPlayer player) {
             bleedingBeltEvent(event, player);
         }
+        BindingEvents.minionDamageEvent(event);
+        BindingEvents.playerDamageEvent(event);
 
     }
 

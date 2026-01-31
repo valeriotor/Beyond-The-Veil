@@ -14,8 +14,9 @@ public interface PlayerMinion {
     default ServerPlayer getMaster() {
         if (this instanceof LivingEntity entity) {
             MinecraftServer server = entity.getServer();
-            if (server != null) {
-                return server.getPlayerList().getPlayer(getMasterID());
+            UUID masterID = getMasterID();
+            if (server != null && masterID != null) {
+                return server.getPlayerList().getPlayer(masterID);
             }
         }
         return null;

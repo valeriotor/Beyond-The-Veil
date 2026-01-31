@@ -92,7 +92,6 @@ public class ArsenalEffectRegistry {
     public static final ArsenalEffectType ENWEB = register(new ArsenalEffectType("enweb") {
         @Override
         public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
-            amplifier = 0;
             Level l = target.level();
             for (int x = -amplifier; x <= amplifier; x++) {
                 for (int z = -amplifier; z <= amplifier; z++) {

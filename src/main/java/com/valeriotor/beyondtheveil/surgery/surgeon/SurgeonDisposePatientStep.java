@@ -100,7 +100,7 @@ public class SurgeonDisposePatientStep extends SurgeonStep {
             if (surgeon.distanceToSqr(outputSpot.getCenter()) < 6) {
                 Mob mob = surgeon.getHeldPatientEntity();
                 if (mob != null) {
-                    mob = SurgeryUtil.transformHeldPatient(mob, (ServerLevel) surgeon.level());
+                    mob = SurgeryUtil.transformHeldPatient(mob, (ServerLevel) surgeon.level(), surgeon.getMasterID());
                     mob.setPos(outputSpot.getCenter().add(0,1,0));
                     surgeon.level().addFreshEntity(mob);
                     if (mob instanceof WeeperEntity weeper) {

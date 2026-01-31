@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
-import net.minecraftforge.common.ForgeHooks;
 
 import java.util.UUID;
 
@@ -23,9 +22,10 @@ public class BloodPoolEntity {
     private final ConvalescentData convalescentData = new ConvalescentData();
     private final UUID uuid;
 
-    public static BloodPoolEntity fromPatient(PatientType patientType, CompoundTag entityData, ConvalescentData convalescentData, TriggerData triggerData) {
+    public static BloodPoolEntity fromPatient(PatientType patientType, CompoundTag entityData, ConvalescentData convalescentData, TriggerData triggerData, UUID fleboOwner) {
         BloodPoolEntityType bloodPoolEntityType;
         if (patientType == PatientType.VILLAGER && triggerData != null) {
+            triggerData.setMaster(fleboOwner);
             bloodPoolEntityType = BTVEntities.getTriggerEntity(convalescentData, triggerData).getB();
         } else {
             bloodPoolEntityType = BloodPoolEntityType.fromPatientType(patientType);

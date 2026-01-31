@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -14,9 +15,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -24,19 +28,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.level.BlockEvent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class BindingEvents {
 
@@ -44,6 +53,7 @@ public class BindingEvents {
 
     public static InteractionResult useFistOnBlock(UseOnContext pContext) {
         if (pContext.getPlayer() instanceof ServerPlayer sp) {
+            Level level = sp.level();
             BindingData data = DataUtil.getBindingData(sp);
             BlockPos clickedPos = pContext.getClickedPos();
             BlockPos posInFront = clickedPos.relative(pContext.getClickedFace());
@@ -60,6 +70,13 @@ public class BindingEvents {
                             data.setOverworldPos2(null);
                         }
                         DataUtil.syncBindingData(sp);
+                    }
+                } else if (data.getBinding() == Binding.NETHER) {
+                    if (BaseFireBlock.canBePlacedAt(level, posInFront, pContext.getHorizontalDirection())) {
+                        level.playSound(null, posInFront, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+                        BlockState blockstate1 = BaseFireBlock.getState(level, posInFront);
+                        level.setBlock(posInFront, blockstate1, 11);
+                        level.gameEvent(sp, GameEvent.BLOCK_PLACE, clickedPos);
                     }
                 }
             }
@@ -90,8 +107,8 @@ public class BindingEvents {
     public static void usingFist(Level pLevel, ServerPlayer sp) {
         if (sp.isFallFlying()) {
             BindingData data = DataUtil.getBindingData(sp);
-            if (data != null && data.getBinding() == Binding.END) {
-                sp.setDeltaMovement(sp.getDeltaMovement().add(0, 1, 0));
+            if (data != null && data.getBinding() == Binding.END && sp.tickCount % 3 == 0) {
+                Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, 0.5, 0, false, false, false), sp);
             }
         }
     }
@@ -163,7 +180,7 @@ public class BindingEvents {
                 }
             } else if (data.getBinding() == Binding.END) {
                 PlayerTimerData playerTimerData = PlayerTimerData.for_(sp);
-                if (sp.isShiftKeyDown() && l.getBlockState(sp.blockPosition().below()).entityCanStandOn(l, sp.blockPosition().below(), sp) && !playerTimerData.hasTimer("recharge_end_binding_jump")) {
+                if (sp.isShiftKeyDown() && l.getBlockState(sp.blockPosition().below()).entityCanStandOn(l, sp.blockPosition().below(), sp) && !playerTimerData.hasTimer("recharge_end_binding_jump") && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
                     for (int y = sp.getBlockY() - 2; y > l.getMinBuildHeight(); y--) {
                         BlockPos pos = sp.blockPosition().atY(y);
                         BlockPos pos1 = pos.below();
@@ -173,6 +190,7 @@ public class BindingEvents {
                                 sp.teleportTo(sp.getX(), pos1.getY(), sp.getZ());
                                 playerTimerData.addTimer(new PlayerTimer(3, "recharge_end_binding_jump", null, new HashMap<>()));
                                 sp.level().playSound(null, sp.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1, 1);
+                                sp.serverLevel().broadcastEntityEvent(sp, (byte) 46);
                             }
                             break;
                         }
@@ -183,6 +201,7 @@ public class BindingEvents {
     }
 
     public static void jump(LivingEvent.LivingJumpEvent event, ServerPlayer sp) {
+        //sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().setBindingData(new BindingData(Binding.NETHER));
         BindingData data = DataUtil.getBindingData(sp);
         if (data != null && data.getBinding() == Binding.END && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
             Level l = sp.level();
@@ -195,6 +214,7 @@ public class BindingEvents {
                         sp.teleportTo(sp.getX(), pos1.getY(), sp.getZ());
                         sp.setDeltaMovement(0, 0, 0);
                         sp.level().playSound(null, sp.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1, 1);
+                        sp.serverLevel().broadcastEntityEvent(sp, (byte) 46);
                     }
                     break;
                 }
@@ -205,21 +225,45 @@ public class BindingEvents {
     public static void playerAttackEvent(LivingAttackEvent event, ServerPlayer sp) {
         BindingData data = DataUtil.getBindingData(sp);
         LivingEntity attacked = event.getEntity();
-        if (data != null && sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get()) {
-            if (data.getBinding() == Binding.OVERWORLD) {
-                ItemStack stack = sp.getItemInHand(InteractionHand.MAIN_HAND);
-                double percentage = (double) stack.getDamageValue() / stack.getMaxDamage();
-                percentage -= 0.005;
-                stack.setDamageValue((int) Math.max(0, percentage * stack.getMaxDamage() - 2));
-            } else if (data.getBinding() == Binding.END) {
-                double angle = attacked.getYRot() * Math.PI / 180;
-                angle += Math.PI;
-                double x = -Math.sin(angle) * 2.4;
-                double z = Math.cos(angle) * 2.4;
-                sp.teleportTo(attacked.getX() + x, attacked.getY(), attacked.getZ() + z);
-                Messages.sendToPlayer(GenericToClientPacket.rotateCamera((float) ((angle + Math.PI) * 180 / Math.PI), 0, 0), sp);
+        if (data != null) {
+            if (sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get()) {
+                if (data.getBinding() == Binding.OVERWORLD) {
+                    ItemStack stack = sp.getItemInHand(InteractionHand.MAIN_HAND);
+                    double percentage = (double) stack.getDamageValue() / stack.getMaxDamage();
+                    percentage -= 0.005;
+                    stack.setDamageValue((int) Math.max(0, percentage * stack.getMaxDamage() - 2));
+                } else if (data.getBinding() == Binding.NETHER) {
+                    if (attacked.getMaxHealth() <= 80 && data.isInstantKill()) {
+                        float requiredPlayerHealth = attacked.getMaxHealth() / 60.0F * 10 + 7;
+                        if (sp.getHealth() > requiredPlayerHealth + 1 && data.drainEnergy((int) (requiredPlayerHealth * 2) + 2)) {
+                            sp.setHealth(sp.getHealth() - requiredPlayerHealth);
+                            attacked.kill();
+                            PlayerTimerData.for_(sp).addTimer(new PlayerTimer(4, "no_nether_binding_instakill", null, new HashMap<>()));
+                        }
+                    }
+                } else if (data.getBinding() == Binding.END) {
+                    double angle = attacked.getYRot() * Math.PI / 180;
+                    angle += Math.PI;
+                    double x = -Math.sin(angle) * 2.4;
+                    double z = Math.cos(angle) * 2.4;
+                    sp.teleportTo(attacked.getX() + x, attacked.getY(), attacked.getZ() + z);
+                    Messages.sendToPlayer(GenericToClientPacket.rotateCamera((float) ((angle + Math.PI) * 180 / Math.PI), 0, 0), sp);
+                }
+            }
+            if (data.getBinding() == Binding.NETHER && !attacked.isDeadOrDying()) {
+                if (Math.random() < 0.4) {
+                    List<Entity> entities = attacked.level().getEntities(((Entity) null), AABB.ofSize(attacked.position(), 50, 50, 50), e -> (e instanceof Mob));
+                    for (Entity entity : entities) {
+                        if (entity instanceof Mob mob && Objects.equals(mob.getTarget(), sp)) {
+                            if (Math.random() < 0.5) {
+                                mob.setTarget(attacked);
+                            }
+                        }
+                    }
+                }
             }
         }
+
     }
 
     public static void joinLevelEvent(EntityJoinLevelEvent event) {
@@ -258,4 +302,40 @@ public class BindingEvents {
         }
     }
 
+    public static void livingDeathEvent(LivingDeathEvent event) {
+        AABB aabb = event.getEntity().getBoundingBox().inflate(40);
+        List<Player> nearbyPlayers = event.getEntity().level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(e -> {
+            if (e instanceof ServerPlayer sp) {
+                BindingData data = DataUtil.getBindingData(sp);
+                if (data != null && data.getBinding() == Binding.NETHER && !PlayerTimerData.for_(sp).hasTimer("no_nether_binding_instakill")) {
+                    return true;
+                }
+            }
+            return false;
+        }), event.getEntity(), aabb);
+        nearbyPlayers.forEach(p -> p.heal(2));
+
+    }
+
+    public static void minionDamageEvent(LivingDamageEvent event) {
+        if (event.getSource() instanceof PlayerMinion minion) {
+            ServerPlayer sp = minion.getMaster();
+            BindingData data = DataUtil.getBindingData(sp);
+            if (data != null && data.getBinding() == Binding.NETHER) {
+                LivingEntity attacked = event.getEntity();
+                attacked.setHealth(attacked.getHealth() - event.getAmount() * 0.3F);
+                event.setAmount(event.getAmount() * 1.5F);
+                sp.heal(1);
+            }
+        }
+    }
+
+    public static void playerDamageEvent(LivingDamageEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp && event.getSource().is(DamageTypeTags.IS_FIRE)) {
+            BindingData data = DataUtil.getBindingData(sp);
+            if (data != null && data.getBinding() == Binding.NETHER) {
+                sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount()));
+            }
+        }
+    }
 }

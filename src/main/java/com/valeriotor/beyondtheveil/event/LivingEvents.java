@@ -311,6 +311,7 @@ public class LivingEvents {
                 }
             }
         }
+        BindingEvents.livingDeathEvent(event);
     }
 
     @SubscribeEvent

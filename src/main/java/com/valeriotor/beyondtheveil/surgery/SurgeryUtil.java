@@ -14,6 +14,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.common.util.LazyOptional;
 
+import java.util.UUID;
+
 public class SurgeryUtil {
 
     public static CompoundTag heldPatientData(Mob mob) {
@@ -28,13 +30,14 @@ public class SurgeryUtil {
     }
 
 
-    public static Mob transformHeldPatient(Mob heldPatient, ServerLevel sl) {
+    public static Mob transformHeldPatient(Mob heldPatient, ServerLevel sl, UUID masterId) {
         if (heldPatient instanceof CrawlerEntity e) {
             LazyOptional<ConvalescentData> c = e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
             if (c.isPresent()) {
                 ConvalescentData data = c.resolve().get();
                 TriggerData triggerData = data.getTriggerData();
                 if (triggerData != null) {
+                    triggerData.setMaster(masterId);
                     EntityType<?> type = BTVEntities.getTriggerEntity(data, triggerData).getA();
 
                     if (type == BTVEntities.CRAWLER.get()) {

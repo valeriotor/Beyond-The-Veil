@@ -11,10 +11,12 @@ public class BindingData {
     private BlockPos overworldPos1;
     private BlockPos overworldPos2;
     private boolean blockBreakingMode;
+    private boolean instantKill;
 
     public BindingData(@NotNull Binding binding) {
         this.binding = binding;
         energy = 10000;
+        instantKill = binding == Binding.NETHER;
     }
 
     public BindingData(CompoundTag nbt) {
@@ -26,6 +28,7 @@ public class BindingData {
         if (nbt.contains("overworldPos2")) {
             overworldPos2 = BlockPos.of(nbt.getLong("overworldPos2"));
         }
+        instantKill = nbt.getBoolean("instantKill");
     }
 
     public void setEnergy(int energy) {
@@ -72,6 +75,16 @@ public class BindingData {
         this.blockBreakingMode = blockBreakingMode;
     }
 
+    public boolean isInstantKill() {
+        return instantKill;
+    }
+
+    public void setInstantKill(boolean instantKill) {
+        if (binding == Binding.NETHER) {
+            this.instantKill = instantKill;
+        }
+    }
+
     public CompoundTag saveToNBT(CompoundTag tag) {
         tag.putString("binding", binding.name());
         tag.putInt("energy", energy);
@@ -81,6 +94,7 @@ public class BindingData {
         if (overworldPos2 != null) {
             tag.putLong("overworldPos2", overworldPos2.asLong());
         }
+        tag.putBoolean("instantKill", instantKill);
         return tag;
     }
 

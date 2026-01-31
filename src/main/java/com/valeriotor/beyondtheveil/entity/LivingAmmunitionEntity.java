@@ -4,17 +4,22 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -25,17 +30,20 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import org.slf4j.Logger;
 
 import java.util.List;
+import java.util.UUID;
 
-public abstract class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity {
+public abstract class LivingAmmunitionEntity extends PathfinderMob implements VillagerDataHolder, AnimatedEntity, AmmunitionEntity, PlayerMinion {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.VILLAGER_DATA);
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(LivingAmmunitionEntity.class, EntityDataSerializers.INT);
     private boolean wasBleeding = false;
     private int attackTimer = -1;
     private int deathTimer = -1;
+    private UUID masterId;
 
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
@@ -71,6 +79,9 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         super.addAdditionalSaveData(pCompound);
         VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.getVillagerData()).resultOrPartial(LOGGER::error).ifPresent((p_204072_) -> pCompound.put("VillagerData", p_204072_));
         pCompound.putInt("deathTimer", deathTimer);
+        if (masterId != null) {
+            pCompound.putUUID("masterId", masterId);
+        }
     }
 
     @Override
@@ -82,6 +93,9 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         }
         if (pCompound.contains("deathTimer")) {
             deathTimer = pCompound.getInt("deathTimer");
+        }
+        if (pCompound.contains("masterId")) {
+            masterId = pCompound.getUUID("masterId");
         }
 
     }
@@ -155,10 +169,18 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
                     List<ArsenalEffect> effects = data.getEffects();
                     if (burst != null) {
                         List<LivingEntity> hitEntities = burst.getHitEntities(this);
+                        ServerPlayer sp = getMaster();
+                        boolean powerup = false;
+                        if (sp != null) {
+                            BindingData bindingData = DataUtil.getBindingData(sp);
+                            if (bindingData != null && bindingData.getBinding() == Binding.NETHER) {
+                                powerup = true;
+                            }
+                        }
                         for (LivingEntity hitEntity : hitEntities) {
                             if (hitEntity != this) {
                                 for (ArsenalEffect arsenalEffect : effects) {
-                                    arsenalEffect.process(this, hitEntity);
+                                    arsenalEffect.process(this, hitEntity, powerup);
                                 }
                             }
                         }
@@ -216,5 +238,20 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
     @Override
     public boolean bursting() {
         return attackTimer >= 0;
+    }
+
+    @Override
+    public UUID getMasterID() {
+        LazyOptional<TriggerData> cap = getCapability(TriggerDataProvider.TRIGGER_DATA);
+        if (cap.isPresent()) {
+            TriggerData triggerData = cap.resolve().get();
+            return triggerData.getMaster();
+        }
+        return null;
+    }
+
+    @Override
+    public void setMasterID(UUID uuid) {
+
     }
 }
