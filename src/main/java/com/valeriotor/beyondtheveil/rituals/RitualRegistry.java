@@ -1,26 +1,21 @@
 package com.valeriotor.beyondtheveil.rituals;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Streams;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.LivingPortalEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
-import com.valeriotor.beyondtheveil.tile.FleboBE;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -290,9 +285,9 @@ public class RitualRegistry {
         return output;
     }
 
-    public static RitualTemplate findMatch(List<Item> nonModifierItems) {
+    public static RitualTemplate findMatch(List<Item> nonModifierItems, PatientType patientType) {
         for (RitualTemplate template : TEMPLATES) {
-            if (template.matches(nonModifierItems)) {
+            if (template.matches(nonModifierItems, patientType)) {
                 return template;
             }
         }

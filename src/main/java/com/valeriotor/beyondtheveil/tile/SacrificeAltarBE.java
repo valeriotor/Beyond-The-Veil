@@ -119,7 +119,8 @@ public class SacrificeAltarBE extends BlockEntity {
             }
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
-                ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed);
+                // TODO check that patientstatus is not null?
+                ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed, patientStatus.getPatientType());
                 if (ritualStatus == null) {
                     killVictim();
                 }
@@ -279,7 +280,7 @@ public class SacrificeAltarBE extends BlockEntity {
             Vec3 prev = getCenterPos();
             if (ritualStatus != null || playerInitiating != null) {
                 for (int i = 0; i < 3; i++) {
-                    level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
+                    level.addAlwaysVisibleParticle(patientStatus != null && patientStatus.getPatientType() == PatientType.WEEPER ? BTVParticles.TEARSPILL.get() : BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
                 }
                 if (ritualStatus != null || true) {
                     ClientMethods.playRitualSound(getBlockPos());
@@ -326,7 +327,7 @@ public class SacrificeAltarBE extends BlockEntity {
                 double currDist = j / PER_BLOCK + (1 / PER_BLOCK / 10 * (rescaledCounter % 10));
                 double percent = currDist / (dist);//
                 double sinOffset = Math.sin(percent * Math.PI) / 6 * Math.sin(rescaledCounter * 2 * Math.PI / (80D));
-                level.addAlwaysVisibleParticle(BTVParticles.BLOODSPILL.get(), prev.x() + distX * percent + Math.random() * 0.125 - 0.0625, prev.y() + distY * percent + 0.75 + Math.random() * 0.125 - 0.0625 + sinOffset, prev.z() + distZ * percent + Math.random() * 0.125 - 0.0625, 0, 0, 0);
+                level.addAlwaysVisibleParticle(patientStatus != null && patientStatus.getPatientType() == PatientType.WEEPER ? BTVParticles.TEARSPILL.get() : BTVParticles.BLOODSPILL.get(), prev.x() + distX * percent + Math.random() * 0.125 - 0.0625, prev.y() + distY * percent + 0.75 + Math.random() * 0.125 - 0.0625 + sinOffset, prev.z() + distZ * percent + Math.random() * 0.125 - 0.0625, 0, 0, 0);
             }
             prev = curr;
         }
@@ -395,7 +396,7 @@ public class SacrificeAltarBE extends BlockEntity {
         Vec3 end = currentHop == ritualStatus.getAltars().size() ? centerPos : ritualStatus.getAltars().get(currentHop).getCenter();
         double distanceRatio = progressUntilNextHop / ritualStatus.getDistances()[currentHop];
         Vec3 orbPos = new Vec3(start.x + (end.x - start.x) * distanceRatio, start.y + (end.y - start.y) * distanceRatio, start.z + (end.z - start.z) * distanceRatio);
-        sl.sendParticles(BTVParticles.BLOODSPILL.get(), orbPos.x, orbPos.y + 0.75, orbPos.z, 50, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, 0);
+        sl.sendParticles(patientStatus != null && patientStatus.getPatientType() == PatientType.WEEPER ? BTVParticles.TEARSPILL.get() : BTVParticles.BLOODSPILL.get(), orbPos.x, orbPos.y + 0.75, orbPos.z, 50, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, 0);
         sl.sendParticles(ParticleTypes.SMOKE, orbPos.x, orbPos.y + 0.75, orbPos.z, 25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, (Math.random() - 0.5) * 0.25, 0);
 
     }
@@ -411,7 +412,7 @@ public class SacrificeAltarBE extends BlockEntity {
         if (patientStatus != null && patientStatus.getCondition() != PatientCondition.DEAD && level instanceof ServerLevel sl) {
             patientStatus.setCondition(PatientCondition.DEAD);
             Vec3 centerPos = getCenterPos();
-            sl.sendParticles(BTVParticles.BLOODSPILL.get(), centerPos.x, centerPos.y - 0.2, centerPos.z, 100, (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25, 1);
+            sl.sendParticles(patientStatus != null && patientStatus.getPatientType() == PatientType.WEEPER ? BTVParticles.TEARSPILL.get() : BTVParticles.BLOODSPILL.get(), centerPos.x, centerPos.y - 0.2, centerPos.z, 100, (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25, 1);
         }
     }
 

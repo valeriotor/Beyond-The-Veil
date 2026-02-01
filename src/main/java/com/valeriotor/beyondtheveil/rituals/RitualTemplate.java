@@ -1,17 +1,13 @@
 package com.valeriotor.beyondtheveil.rituals;
 
-import com.google.common.collect.Lists;
-import com.valeriotor.beyondtheveil.util.ItemSet;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class RitualTemplate {
@@ -23,6 +19,8 @@ public class RitualTemplate {
     private final BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs;
     private final AdditionalRitualEffect otherEffects;
     private final Predicate<List<Item>> match;
+    private final PatientType patientType;
+
 
     private RitualTemplate(RitualTemplateBuilder builder) {
         this.name = builder.name;
@@ -32,6 +30,7 @@ public class RitualTemplate {
         this.outputs = builder.outputs;
         this.otherEffects = builder.otherEffects;
         match = builder.match;
+        this.patientType = builder.patientType;
     }
 
     public String getName() {
@@ -58,8 +57,8 @@ public class RitualTemplate {
         return secondaryInstabilityRate;
     }
 
-    public boolean matches(List<Item> input) {
-        return match.test(input);
+    public boolean matches(List<Item> input, PatientType patientType) {
+        return patientType == this.patientType && match.test(input);
     }
 
     public static class RitualTemplateBuilder {
@@ -71,6 +70,7 @@ public class RitualTemplate {
         private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
         private Predicate<List<Item>> match;
+        private PatientType patientType = PatientType.VILLAGER;
 
         public RitualTemplateBuilder(String name, int startingPrimaryInstability, int primaryInstabilityRate, int secondaryInstabilityRate) {
             this.name = name;
@@ -96,6 +96,11 @@ public class RitualTemplate {
 
         public RitualTemplateBuilder setOtherEffects(AdditionalRitualEffect otherEffects) {
             this.otherEffects = otherEffects;
+            return this;
+        }
+
+        public RitualTemplateBuilder weeper() {
+            this.patientType = PatientType.WEEPER;
             return this;
         }
 

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.rituals;
 import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
@@ -16,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
@@ -25,7 +25,6 @@ import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
@@ -56,7 +55,7 @@ public class RitualStatus {
     private int counter;
     private boolean deleteVictim;
 
-    public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars) {
+    public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars, PatientType patientType) {
         List<Item> items = new ArrayList<>();
         for (BlockPos altar : altars) {
             if (level.getBlockEntity(altar) instanceof BloodBasinBE bloodBasinBE) {
@@ -78,7 +77,7 @@ public class RitualStatus {
                 nonModifierItems.add(item);
             }
         }
-        RitualTemplate template = RitualRegistry.findMatch(nonModifierItems);
+        RitualTemplate template = RitualRegistry.findMatch(nonModifierItems, patientType);
         if (template == null) {
             return null;
         }

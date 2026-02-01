@@ -389,6 +389,14 @@ public class WeeperModel extends AnimatedModel<WeeperEntity> {
                     body.y = 18.7F;
                     legs.y = 18.7F;
 
+                    if (!entity.getPatientStatus().isDead() && entity.getPatientStatus().isInRitual() && entity.isStartedRitualAnimation()) {
+                        upper_body_1.xRot = 1;
+                        upper_body_1.yRot = Mth.cos(ageInTicks * 2 * Mth.PI / 20) / 10;
+                    }
+                    if (entity.getRitualAnimation() != null) {
+                        entity.getRitualAnimation().apply(pa);
+                    }
+
                     if (status.isIncised()) {
                         chest_wound.visible = true;
                         if (!status.getFlags().containsKey("extract_heart")) {

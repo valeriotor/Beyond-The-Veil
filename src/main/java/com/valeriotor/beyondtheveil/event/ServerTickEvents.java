@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
+import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,6 +39,9 @@ public class ServerTickEvents {
         }
         if (event.level instanceof ServerLevel sl) {
             LifeEconomyData.getInstance(sl).tick();
+            if (event.phase == TickEvent.Phase.END) {
+                PlayerSavedData.getInstance(sl).tick(sl);
+            }
         }
     }
 

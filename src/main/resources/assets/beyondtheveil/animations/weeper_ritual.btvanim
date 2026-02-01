@@ -1,0 +1,15 @@
+model: weeper
+length: 10
+start: 0: 1
+    rotx: body: 1.5: immediate: absolute
+    rotx: upper_body_1: 0: immediate: absolute
+    rotx: left_arm2: 1.4: immediate: absolute
+    rotx: right_arm2: 1.4: immediate: absolute
+    rotx: head1: -0.35: immediate: absolute
+    rotx: legs: 1.85: immediate: absolute
+    rotx: right_leg2: 0.35: immediate: absolute
+    rotx: left_leg2: 0.35: immediate: absolute
+    tray: body: 18.7: immediate: absolute
+    tray: legs: 18.7: immediate: absolute
+start: 1: 9
+    rotx: upper_body_1: 1: quadratic: absolute

@@ -612,7 +612,11 @@ public class PatientStatus {
         if (condition == PatientCondition.DEAD && this.condition != PatientCondition.DEAD) {
             countdownTicks = 5;
             if (level != null) {
-                level.playSound(null, pos, SoundEvents.VILLAGER_DEATH, SoundSource.NEUTRAL, 1, 1);
+                if (patientType == PatientType.VILLAGER) {
+                    level.playSound(null, pos, SoundEvents.VILLAGER_DEATH, SoundSource.NEUTRAL, 1, 1);
+                } else {
+                    level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.NEUTRAL, 1, 1);
+                }
             }
             // TODO play sound, show particles, animations, something
         } else if (condition == PatientCondition.BLEEDING) {

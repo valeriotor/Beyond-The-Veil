@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.PlaceBlocksTimer;
+import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -80,6 +81,10 @@ public class BindingEvents {
                         level.setBlock(posInFront, blockstate1, 11);
                         level.gameEvent(sp, GameEvent.BLOCK_PLACE, clickedPos);
                     }
+                } else if (data.getBinding() == Binding.ARCHE) {
+                    if (level instanceof ServerLevel sl) {
+                        PlayerSavedData.getInstance(sl).addArcheBindingNode(sp, posInFront);
+                    }
                 }
             }
         }
@@ -114,22 +119,26 @@ public class BindingEvents {
             if (data.getBinding() == Binding.END && sp.tickCount % 3 == 0 && sp.isFallFlying()) {
                 Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, 0.5, 0, false, false, false), sp);
             } else if (data.getBinding() == Binding.ARCHE && sp.tickCount % 3 == 0) {
-                List<Entity> entities = sp.level().getEntities(sp, AABB.ofSize(sp.position(), 30, 20, 30), e -> e instanceof LivingEntity);
+                List<Entity> entities = sp.level().getEntities(sp, AABB.ofSize(sp.position(), 30, 20, 30), e -> {
+                    if (!(e instanceof LivingEntity)) return false;
+                    if (!(e instanceof PlayerMinion minion)) return true;
+                    return !Objects.equals(minion.getMasterID(), sp.getUUID());
+                });
                 if (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get()) {
                     for (Entity entity : entities) {
-                        moveEntityWithCenter(entity, sp, !sp.isShiftKeyDown(), false);
+                        moveEntityWithCenter(entity, sp.position(), sp.isShiftKeyDown(), false, true);
                     }
                 } else {
                     if (sp.isShiftKeyDown()) {
                         for (Entity entity : entities) {
-                            moveEntityWithCenter(entity, sp, true, true);
+                            moveEntityWithCenter(entity, sp.position(), true, true, true);
                         }
 
                     } else {
                         double x = -Math.sin(sp.getYRot() * Math.PI / 180);
                         double z = Math.cos(sp.getYRot() * Math.PI / 180);
                         for (Entity entity : entities) {
-                            moveEntity(entity, x, z, 1);
+                            moveEntity(entity, x, z, 1, true);
                         }
                     }
                 }
@@ -137,13 +146,13 @@ public class BindingEvents {
         }
     }
 
-    private static void moveEntityWithCenter(Entity entity, ServerPlayer center, boolean away, boolean perpendicular) {
-        double x = entity.getX() - center.getX();
-        double z = entity.getZ() - center.getZ();
+    public static void moveEntityWithCenter(Entity entity, Vec3 center, boolean away, boolean perpendicular, boolean playSound) {
+        double x = entity.getX() - center.x();
+        double z = entity.getZ() - center.z();
         double sqrt = Math.sqrt(x * x + z * z);
         x /= sqrt;
         z /= sqrt;
-        if (away) {
+        if (!away) {
             x = -x;
             z = -z;
         }
@@ -152,10 +161,10 @@ public class BindingEvents {
             x = -z;
             z = tmp;
         }
-        moveEntity(entity, x, z, away || perpendicular ? 0.5 : 1);
+        moveEntity(entity, x, z, !away || perpendicular ? 0.5F : 1, playSound);
     }
 
-    private static void moveEntity(Entity entity, double x, double z, double pitch) {
+    private static void moveEntity(Entity entity, double x, double z, float pitch, boolean playSound) {
         if (entity instanceof ServerPlayer sp) {
             Messages.sendToPlayer(GenericToClientPacket.movePlayer(x, 0, z, false, false, false), sp);
         } else if(entity instanceof LivingEntity l){
@@ -164,7 +173,7 @@ public class BindingEvents {
         if (entity.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.DRIPPING_WATER, entity.getX(), entity.getY(), entity.getZ(), 20, 1, 1, 1, 1);
             sl.sendParticles(ParticleTypes.BUBBLE, entity.getX(), entity.getY(), entity.getZ(), 10, 1, 1, 1, 1);
-            sl.playSound(null, entity.blockPosition(), SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE, SoundSource.PLAYERS, 1, 1);
+            sl.playSound(null, entity.blockPosition(), SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE, SoundSource.PLAYERS, 1, pitch);
         }
     }
 

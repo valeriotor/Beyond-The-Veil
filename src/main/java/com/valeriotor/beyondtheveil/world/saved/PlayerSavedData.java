@@ -1,7 +1,10 @@
 package com.valeriotor.beyondtheveil.world.saved;
 
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -9,9 +12,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +27,7 @@ public class PlayerSavedData extends SavedData {
 
     private final Map<UUID, BloodPoint> deaths = new HashMap<>();
     private final Map<UUID, BloodPoint> respawns = new HashMap<>();
+    private final Map<UUID, List<ArcheBindingNode>> archieBindingNodes = new HashMap<>();
 
 
     public static PlayerSavedData getInstance(ServerLevel sl) {
@@ -84,11 +91,11 @@ public class PlayerSavedData extends SavedData {
     }
 
     public List<BlockPos> deathsInRange(ServerPlayer sp, double range) {
-        return deaths.values().stream().filter(d -> Objects.equals(d.dimension(), sp.level().dimension())).map(d -> new BlockPos(d.x, d.y, d.z)).filter(pos ->  sp.blockPosition().distSqr(pos) < range * range).toList();
+        return deaths.values().stream().filter(d -> Objects.equals(d.dimension(), sp.level().dimension())).map(d -> new BlockPos(d.x, d.y, d.z)).filter(pos -> sp.blockPosition().distSqr(pos) < range * range).toList();
     }
 
     public List<BlockPos> respawnsInRange(ServerPlayer sp, double range) {
-        return respawns.values().stream().filter(d -> Objects.equals(d.dimension(), sp.level().dimension())).map(d -> new BlockPos(d.x, d.y, d.z)).filter(pos ->  sp.blockPosition().distSqr(pos) < range * range).toList();
+        return respawns.values().stream().filter(d -> Objects.equals(d.dimension(), sp.level().dimension())).map(d -> new BlockPos(d.x, d.y, d.z)).filter(pos -> sp.blockPosition().distSqr(pos) < range * range).toList();
     }
 
     public Triple<UUID, BlockPos, Boolean> closestBloodPointExcluding(ServerPlayer sp) {
@@ -137,6 +144,38 @@ public class PlayerSavedData extends SavedData {
         return null;
     }
 
+    public void tick(ServerLevel sl) {
+        for (Map.Entry<UUID, List<ArcheBindingNode>> entry : archieBindingNodes.entrySet()) {
+            for (Iterator<ArcheBindingNode> iterator = entry.getValue().iterator(); iterator.hasNext(); ) {
+                ArcheBindingNode archeBindingNode = iterator.next();
+                sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, archeBindingNode.pos.getX() + 0.5, archeBindingNode.pos.getY() + 0.5, archeBindingNode.pos.getZ() + 0.5, 20, 0.3, 0.3, 0.3, 0.05);
+                if (archeBindingNode.timer % 5 == 0) {
+                    List<Entity> entities = sl.getEntities(((Entity) null), AABB.ofSize(archeBindingNode.pos.getCenter(), 30, 20, 30), e -> {
+                        if (!(e instanceof LivingEntity)) return false;
+                        if(Objects.equals(e.getUUID(), entry.getKey())) return false;
+                        if (!(e instanceof PlayerMinion minion)) return true;
+                        return !Objects.equals(minion.getMasterID(), entry.getKey());
+                    });
+                    boolean playSound = true;
+                    for (Entity entity : entities) {
+                        BindingEvents.moveEntityWithCenter(entity, archeBindingNode.pos.getCenter(), archeBindingNode.away, false, playSound && Math.random() < 0.015);
+                        playSound = false;
+                    }
+                }
+                if (archeBindingNode.tick()) {
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    public void addArcheBindingNode(ServerPlayer sp, BlockPos pos) {
+        List<ArcheBindingNode> archeBindingNodes = archieBindingNodes.computeIfAbsent(sp.getUUID(), uuid -> new ArrayList<>());
+        if (archeBindingNodes.size() < 3) {
+            archeBindingNodes.add(new ArcheBindingNode(pos, sp.isShiftKeyDown(), 20 * 60));
+        }
+    }
+
 
     private record BloodPoint(int x, int y, int z, ResourceKey<Level> dimension) {
 
@@ -152,6 +191,32 @@ public class PlayerSavedData extends SavedData {
         private static BloodPoint fromNBT(CompoundTag tag) {
             return new BloodPoint(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"), ResourceKey.create(Registries.DIMENSION, new ResourceLocation(tag.getString("dimension"))));
         }
+    }
+
+    private static final class ArcheBindingNode {
+        private final BlockPos pos;
+        private final boolean away;
+        private int timer;
+
+        private ArcheBindingNode(BlockPos pos, boolean away, int startTimer) {
+            this.pos = pos;
+            this.away = away;
+            this.timer = startTimer;
+        }
+
+        public BlockPos pos() {
+            return pos;
+        }
+
+        public boolean away() {
+            return away;
+        }
+
+        public boolean tick() {
+            timer--;
+            return timer <= 0;
+        }
 
     }
+
 }

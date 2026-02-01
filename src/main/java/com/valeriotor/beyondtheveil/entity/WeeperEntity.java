@@ -70,6 +70,8 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     private UUID master;
     private int ticksToFletum = -1;
     private boolean inPod;
+    private Animation ritualAnimation;
+    private boolean startedRitualAnimation;
 
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
@@ -169,6 +171,20 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     standUpAnimation = null;
                 }
             }
+            if(isSurgeryPatient()) {
+                if (ritualAnimation == null) {
+                    if (patientStatus.isInRitual() && !startedRitualAnimation) {
+                        ritualAnimation = new Animation(AnimationRegistry.weeper_ritual);
+                        startedRitualAnimation = true;
+                    }
+                } else {
+                    if (ritualAnimation.isDone()) {
+                        ritualAnimation = null;
+                    } else {
+                        ritualAnimation.update();
+                    }
+                }
+            }
             int bleeding = entityData.get(DATA_BLEEDING);
             if (bleeding >= 0) {
                 double xComponent = -Math.sin(Math.toRadians(getYRot()));
@@ -217,6 +233,13 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                 entityData.set(DATA_TARGETING, false);
             } else if(getNavigation().isInProgress()){
                 entityData.set(DATA_TARGETING, true);
+            }
+            if (!isSurgeryPatient()) {
+                getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                    if (c.getCondition().isTerminal()) {
+                        kill();
+                    }
+                });
             }
             if (deathTimer >= 0) {
                 getNavigation().stop();
@@ -403,5 +426,13 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     @Override
     public int getAmbientSoundInterval() {
         return 140;
+    }
+
+    public boolean isStartedRitualAnimation() {
+        return startedRitualAnimation;
+    }
+
+    public Animation getRitualAnimation() {
+        return ritualAnimation;
     }
 }
