@@ -150,7 +150,7 @@ public class PlayerSavedData extends SavedData {
                 ArcheBindingNode archeBindingNode = iterator.next();
                 sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, archeBindingNode.pos.getX() + 0.5, archeBindingNode.pos.getY() + 0.5, archeBindingNode.pos.getZ() + 0.5, 20, 0.3, 0.3, 0.3, 0.05);
                 if (archeBindingNode.timer % 5 == 0) {
-                    List<Entity> entities = sl.getEntities(((Entity) null), AABB.ofSize(archeBindingNode.pos.getCenter(), 30, 20, 30), e -> {
+                    List<Entity> entities = sl.getEntities(((Entity) null), AABB.ofSize(archeBindingNode.pos.getCenter(), 16, 12, 16), e -> {
                         if (!(e instanceof LivingEntity)) return false;
                         if(Objects.equals(e.getUUID(), entry.getKey())) return false;
                         if (!(e instanceof PlayerMinion minion)) return true;
@@ -158,7 +158,7 @@ public class PlayerSavedData extends SavedData {
                     });
                     boolean playSound = true;
                     for (Entity entity : entities) {
-                        BindingEvents.moveEntityWithCenter(entity, archeBindingNode.pos.getCenter(), archeBindingNode.away, false, playSound && Math.random() < 0.015);
+                        BindingEvents.moveEntityWithCenter(entity, archeBindingNode.pos.getCenter(), archeBindingNode.away, false, playSound && Math.random() < 0.25);
                         playSound = false;
                     }
                 }

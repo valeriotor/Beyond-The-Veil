@@ -173,7 +173,9 @@ public class BindingEvents {
         if (entity.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.DRIPPING_WATER, entity.getX(), entity.getY(), entity.getZ(), 20, 1, 1, 1, 1);
             sl.sendParticles(ParticleTypes.BUBBLE, entity.getX(), entity.getY(), entity.getZ(), 10, 1, 1, 1, 1);
-            sl.playSound(null, entity.blockPosition(), SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE, SoundSource.PLAYERS, 1, pitch);
+            if (playSound) {
+                sl.playSound(null, entity.blockPosition(), SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE, SoundSource.PLAYERS, 1, pitch);
+            }
         }
     }
 
