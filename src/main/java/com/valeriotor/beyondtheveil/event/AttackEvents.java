@@ -25,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +36,13 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttackEvents {
+
+    @SubscribeEvent
+    public static void livingHurtEvent(LivingHurtEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            BindingEvents.playerHurtEvent(event, sp);
+        }
+    }
 
     @SubscribeEvent
     public static void livingDamageEvent(LivingDamageEvent event) {

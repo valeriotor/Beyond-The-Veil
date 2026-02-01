@@ -1,8 +1,6 @@
 package com.valeriotor.beyondtheveil.rituals.bindings;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.PlayerData;
-import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -10,6 +8,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import com.valeriotor.beyondtheveil.util.VanillaUtils;
 import com.valeriotor.beyondtheveil.util.timers.PlaceBlocksTimer;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.core.BlockPos;
@@ -33,17 +32,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.level.BlockEvent;
 
 import java.util.HashMap;
@@ -167,7 +161,7 @@ public class BindingEvents {
     private static void moveEntity(Entity entity, double x, double z, float pitch, boolean playSound) {
         if (entity instanceof ServerPlayer sp) {
             Messages.sendToPlayer(GenericToClientPacket.movePlayer(x, 0, z, false, false, false), sp);
-        } else if(entity instanceof LivingEntity l){
+        } else if (entity instanceof LivingEntity l) {
             l.setDeltaMovement(l.getDeltaMovement().add(x, 0, z));
         }
         if (entity.level() instanceof ServerLevel sl) {
@@ -269,6 +263,7 @@ public class BindingEvents {
     public static void jump(LivingEvent.LivingJumpEvent event, ServerPlayer sp) {
         //sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().setBindingData(new BindingData(Binding.ARCHE));
         BindingData data = DataUtil.getBindingData(sp);
+        //data.setSelectedType(BindingData.ArcheDamageType.values()[(data.getSelectedType() == null ? 0 : ((data.getSelectedType().ordinal() + 1) % BindingData.ArcheDamageType.values().length))]);
         if (data != null && data.getBinding() == Binding.END && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
             Level l = sp.level();
             for (int y = sp.getBlockY() + 2; y < l.getMaxBuildHeight(); y++) {
@@ -314,6 +309,13 @@ public class BindingEvents {
                     double z = Math.cos(angle) * 2.4;
                     sp.teleportTo(attacked.getX() + x, attacked.getY(), attacked.getZ() + z);
                     Messages.sendToPlayer(GenericToClientPacket.rotateCamera((float) ((angle + Math.PI) * 180 / Math.PI), 0, 0), sp);
+                } else if (data.getBinding() == Binding.ARCHE) {
+                    if (Math.random() < 0.2) {
+                        ItemStack mainHandItem = attacked.getMainHandItem();
+                        if (!mainHandItem.isEmpty()) {
+                            VanillaUtils.dropItem(attacked);
+                        }
+                    }
                 }
             }
             if (data.getBinding() == Binding.NETHER && !attacked.isDeadOrDying()) {
@@ -397,10 +399,29 @@ public class BindingEvents {
     }
 
     public static void playerDamageEvent(LivingDamageEvent event) {
-        if (event.getEntity() instanceof ServerPlayer sp && event.getSource().is(DamageTypeTags.IS_FIRE)) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
             BindingData data = DataUtil.getBindingData(sp);
-            if (data != null && data.getBinding() == Binding.NETHER) {
-                sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount()));
+            if (data != null) {
+                if (data.getBinding() == Binding.NETHER && event.getSource().is(DamageTypeTags.IS_FIRE)) {
+                    sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount()));
+                }
+            }
+        }
+    }
+
+    public static void playerHurtEvent(LivingHurtEvent event, ServerPlayer sp) {
+        BindingData data = DataUtil.getBindingData(sp);
+        if (data != null) {
+            if (data.getBinding() == Binding.ARCHE) {
+                int resistance = data.checkArcheResistance(event.getSource());
+                if (resistance > 0) {
+                    if (data.drainEnergy((int) (event.getAmount() * 2))) {
+                        event.setCanceled(true);
+                        sp.heal(event.getAmount());
+                    }
+                } else if (resistance < 0) {
+                    event.setAmount(event.getAmount() * 2);
+                }
             }
         }
     }

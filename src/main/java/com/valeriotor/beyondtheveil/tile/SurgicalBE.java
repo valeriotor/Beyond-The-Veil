@@ -95,7 +95,10 @@ public abstract class SurgicalBE extends BlockEntity {
                         if (color != null && !patientStatus.getCondition().isTerminal()) {
                             if (p instanceof ServerPlayer sp && sp.getServer() != null) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
-                                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sp.serverLevel());
+                                int fleboMultiplier = getFleboMultiplier();
+                                for (int i = 0; i < fleboMultiplier; i++) {
+                                    bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sp.serverLevel());
+                                }
                             }
                         } else {
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
@@ -200,7 +203,10 @@ public abstract class SurgicalBE extends BlockEntity {
         if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getPatientType() != PatientType.PLAYER) {
             if (surgeon.level() instanceof ServerLevel sl) {
                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl.getServer());
-                bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), surgeon.level());
+                int fleboMultiplier = getFleboMultiplier();
+                for (int i = 0; i < fleboMultiplier; i++) {
+                    bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), surgeon.level());
+                }
             }
         } else {
             surgeon.setHeldPatient(patientStatus.getPatientType(), entityData);
@@ -489,4 +495,10 @@ public abstract class SurgicalBE extends BlockEntity {
     }
 
     public abstract Set<SurgicalLocation> allowedLocations();
+
+    private int getFleboMultiplier() {
+        int multiplier = 1;
+        // TODO arche *= 2
+        return multiplier;
+    }
 }
