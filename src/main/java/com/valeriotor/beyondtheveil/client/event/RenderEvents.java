@@ -188,11 +188,17 @@ public class RenderEvents {
     @SubscribeEvent
     public static void computeCameraAngles(ViewportEvent.ComputeCameraAngles event) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player != null && player.getSleepingPos().isPresent()) {
-            BlockState state = player.level().getBlockState(player.getSleepingPos().get());
-            if (state.getBlock() instanceof SurgeryBedBlock b) {
-                Direction direction = state.getValue(SurgeryBedBlock.FACING);
-                event.setYaw(direction.toYRot() + 90.0F);
+        Camera camera = event.getCamera();
+        if (player != null) {
+            if (player.getSleepingPos().isPresent()) {
+                BlockState state = player.level().getBlockState(player.getSleepingPos().get());
+                if (state.getBlock() instanceof SurgeryBedBlock b) {
+                    Direction direction = state.getValue(SurgeryBedBlock.FACING);
+                    event.setYaw(direction.toYRot() + 90.0F);
+                }
+            }
+            if (player.getVehicle() instanceof NautilusEntity && camera.isDetached()) {
+                camera.move(-camera.getMaxZoom(4), 0, 0);
             }
         }
     }
