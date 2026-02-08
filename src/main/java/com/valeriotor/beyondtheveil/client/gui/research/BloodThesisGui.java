@@ -41,6 +41,7 @@ public class BloodThesisGui extends Screen {
     private float scaleFactor = 1;
     private List<Element> pages;
     private int index;
+    private float zoom = 1;
 
 
     public BloodThesisGui() {
@@ -108,6 +109,10 @@ public class BloodThesisGui extends Screen {
         pose.pushPose();
         pose.translate(width / 2F, height / 2F, 0);
         pose.scale(scaleFactor, scaleFactor, 1);
+        pose.scale(zoom, zoom, 1);
+        if (zoom > 1) {
+            pose.translate(width / 2D - pMouseX, height / 2D - pMouseY, 0);
+        }
         if (leftElement != null) {
             pose.pushPose();
             pose.translate(-BACKGROUND_BASE_WIDTH / 2F, -BACKGROUND_BASE_HEIGHT / 2F, 0);
@@ -168,6 +173,16 @@ public class BloodThesisGui extends Screen {
             index++;
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 2));
         }
+    }
+
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (pDelta > 0) {
+            zoom = Math.min(2.5F, zoom + 0.25F);
+        } else if (pDelta < 0) {
+            zoom = Math.max(1, zoom - 0.25F);
+        }
+        return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
 
     private static class TitlePage extends Element {
