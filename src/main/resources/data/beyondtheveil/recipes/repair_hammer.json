@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "CCCC",
+    "CSSC",
+    " SS ",
+    " SS "
+  ],
+  "result": {
+    "item": "beyondtheveil:repair_hammer"
+  },
+  "show_notification": true
+}

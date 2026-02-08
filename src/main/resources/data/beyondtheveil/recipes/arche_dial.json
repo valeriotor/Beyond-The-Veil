@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "GGGG",
+    "DQQD",
+    "DQQD",
+    "GGGG"
+  ],
+  "result": {
+    "item": "beyondtheveil:arche_dial"
+  },
+  "show_notification": true
+}

@@ -4,12 +4,16 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.DeepChestBE;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.saved.ArcheSavedData;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
@@ -19,7 +23,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
@@ -32,7 +35,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 import java.awt.Point;
 import java.util.*;
@@ -154,6 +156,12 @@ public class DeepCityPiece extends TemplateStructurePiece {
         for (int i = 0; i < corridors.length; i++) {
             if (corridors[i]) {
                 processCorridor(pLevel, pBox, new BlockPos(centerPos.getX(), pPos.getY() + DOOR_HEIGHT, centerPos.getZ()), Direction.from2DDataValue(i));
+            }
+        }
+        if (Objects.equals("altar", templateName)) {
+            ServerLevel sl = pLevel.getLevel();
+            if (sl != null && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
+                ArcheSavedData.getInstance(sl).addAltar(centerPos);
             }
         }
     }

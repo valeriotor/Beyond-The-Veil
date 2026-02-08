@@ -5,12 +5,9 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.BlockUtil;
-import net.minecraft.CrashReport;
-import net.minecraft.CrashReportCategory;
-import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -302,14 +299,14 @@ public class NautilusEntity extends Entity {
         tickLevers();
 
         if (level().dimension() == BTVDimensions.ARCHE_LEVEL && level().isClientSide) {
-            float currentIntensity = ClientData.getInstance().archeSavedData.getCurrentIntensity();
+            float currentIntensity = ClientData.getInstance().archeCycleData.getCurrentIntensity();
             if (currentIntensity > 0) {
                 double y = currentIntensity > 0.5 && tickCount % 10 == 0 ? (random.nextFloat() - 0.5) * (currentIntensity - 0.5) * 2 : 0;
                 //this.move(MoverType.SELF, new Vec3(-2 * Mth.square(currentIntensity), y, 0));
             }
         }
         if (level() instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL && !(getFirstPassenger() instanceof Player)) {
-            ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+            ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
             long ticks = arche.ticksInCycle();
             if (ticks >= 20 * 10) {
                 float currentIntensity = arche.getCurrentIntensity();

@@ -5,8 +5,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
-import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -66,7 +65,7 @@ public class MemoryUnlockEvents {
     }
 
     public static void archeCurrentEvent(ServerPlayer player, long ticks) {
-        if (ticks > 600 && ticks < ArcheSavedData.CURRENT_PEAK && !Memory.CHANGE.isUnlocked(player)) {
+        if (ticks > 600 && ticks < ArcheCycleData.CURRENT_PEAK && !Memory.CHANGE.isUnlocked(player)) {
             DataUtil.incrementOrSetInteger(player, PlayerDataLib.change_memory_progress.name(), 1, 1, false);
             if (DataUtil.getInt(player, PlayerDataLib.change_memory_progress.name()) > 5000) {
                 Memory.CHANGE.unlock(player);

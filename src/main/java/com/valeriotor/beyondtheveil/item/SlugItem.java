@@ -100,7 +100,7 @@ public class SlugItem extends Item {
             if (!l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN)) {
                 return false;
             }
-            if (l.getDayTime() < 16000 || l.getDayTime() > 20000) {
+            if (l.getDayTime() % 24000 < 16000 || l.getDayTime() % 24000 > 20000) {
                 sp.sendSystemMessage(Component.translatable("contact.error.night"));
                 return false;
             }

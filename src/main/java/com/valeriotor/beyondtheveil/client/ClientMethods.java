@@ -18,7 +18,7 @@ import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -26,8 +26,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -184,7 +182,7 @@ public class ClientMethods {
         if (event.getEntity() != Minecraft.getInstance().player) {
             return;
         }
-        ArcheSavedData data = ClientData.getInstance().archeSavedData;
+        ArcheCycleData data = ClientData.getInstance().archeCycleData;
         long ticks = data.ticksInCycle();
         if (ticks > 20 * 20) {
             LivingTickEvents.doArcheMovement(data.getCurrentIntensity(), Minecraft.getInstance().player);

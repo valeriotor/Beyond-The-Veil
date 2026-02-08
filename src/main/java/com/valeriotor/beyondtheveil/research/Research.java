@@ -160,6 +160,7 @@ public class Research {
         String[] recipes;
         String[] memories;
         String[] multiblocks;
+        boolean pamphlet;
 
         public boolean meetsRequirements(Player p) {
             return this.meetsRequirements(p.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY));
@@ -206,6 +207,10 @@ public class Research {
                 this.multiblocks = new String[0];
             }
             return Arrays.stream(this.multiblocks).map(MultiblockRegistry::getMultiblock).toList();
+        }
+
+        public boolean isPamphlet() {
+            return pamphlet;
         }
 
         @Override

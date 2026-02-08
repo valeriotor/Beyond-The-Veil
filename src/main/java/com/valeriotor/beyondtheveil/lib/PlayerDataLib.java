@@ -30,6 +30,8 @@ public enum PlayerDataLib {
     //ints temporary
     open_journal_page,
     // FLAGS (NON TEMPORARY)
+    entered_arche,
+    spoke_to_dagon,
     received_cult_letter,
     created_weeper,
     created_fletum,

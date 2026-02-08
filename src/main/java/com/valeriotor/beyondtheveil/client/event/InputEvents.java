@@ -1,10 +1,7 @@
 package com.valeriotor.beyondtheveil.client.event;
 
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -15,16 +12,13 @@ import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.InBedChatScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -54,7 +48,7 @@ public class InputEvents {
                     }
             }
             if (player.level().dimension() == BTVDimensions.ARCHE_LEVEL && !Minecraft.getInstance().isPaused()) {
-                ClientData.getInstance().archeSavedData.tick(false);
+                ClientData.getInstance().archeCycleData.tick(false);
             }
             if (Minecraft.getInstance().screen instanceof SurgeryBedGui) {
                 player.attackAnim = 0;

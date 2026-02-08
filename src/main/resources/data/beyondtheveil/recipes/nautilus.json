@@ -1,0 +1,29 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "E": {
+      "item": "beyondtheveil:gear"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "CCCC",
+    "G EI",
+    "IIEI",
+    "CCCC"
+  ],
+  "result": {
+    "item": "beyondtheveil:nautilus"
+  },
+  "show_notification": true
+}

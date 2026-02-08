@@ -3,8 +3,7 @@ package com.valeriotor.beyondtheveil.event;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
-import com.valeriotor.beyondtheveil.tile.HeartBE;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
@@ -30,7 +29,7 @@ public class ServerTickEvents {
     public static void levelTickEvent(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             if (event.level.dimension() == BTVDimensions.ARCHE_LEVEL && event.level instanceof ServerLevel sl) {
-                ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+                ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
                 arche.tick(true);
                 if ((arche.getCycle() & 31) == 0) {
                     Messages.sendToDimension(GenericToClientPacket.syncArcheData(arche), BTVDimensions.ARCHE_LEVEL);

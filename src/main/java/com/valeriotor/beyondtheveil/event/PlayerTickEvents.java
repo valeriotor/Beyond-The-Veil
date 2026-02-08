@@ -79,6 +79,9 @@ public class PlayerTickEvents {
                         playerData.setLong(PlayerDataLib.sacrifice_altar.name(), -1, false);
                     }
                 }
+                if (p.getVehicle() instanceof NautilusEntity && p.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+                    DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.entered_arche.name(), true, false);
+                }
             });
             checkDiscoveredWaypoint(event);
             p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
@@ -209,7 +212,7 @@ public class PlayerTickEvents {
         Player player = event.player;
         Level l = player.level();
         if (!l.isClientSide && player instanceof ServerPlayer sp && SlugItem.hasResearchForContact(sp) && sp.getVehicle() instanceof CanoeEntity) {
-            long t = l.getDayTime();
+            long t = l.getDayTime() % 24000;
             if (t >= 16000 && t < 20000 && l.getBiome(sp.getOnPos()).is(BiomeTags.IS_OCEAN) && !l.isRaining()) {
                 ((ServerLevel) l).setWeatherParameters(0, 3000, true, true);
             }
@@ -218,7 +221,7 @@ public class PlayerTickEvents {
 
     private static void decrementArcheBreath(TickEvent.PlayerTickEvent event) {
         Player p = event.player;
-        if (p.isDeadOrDying() || p.getVehicle() instanceof NautilusEntity) {
+        if (p.isDeadOrDying()) {
             return;
         }
         if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {

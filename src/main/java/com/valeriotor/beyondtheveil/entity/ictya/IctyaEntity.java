@@ -1,29 +1,24 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
-import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.entity.DamageCapper;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.entity.ai.control.SmoothSwimmingNoFloatMoveControl;
-import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -234,7 +229,7 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
 
     public static boolean checkIctyaSpawnRules(EntityType<? extends IctyaEntity> e, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
         if (pLevel instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
-            ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+            ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
             float currentIntensity = arche.getCurrentIntensity();
             if (currentIntensity > 0) {
                 return false;

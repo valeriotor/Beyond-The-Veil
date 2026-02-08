@@ -595,6 +595,33 @@
             "recipes": ["beyondtheveil:offer_pillar", "beyondtheveil:demand_pillar"]
           }
         ]
+      },
+      {
+        "key": "NEW_DEPTHS",
+        "name": "research.NEW_DEPTHS.title",
+        "icons": [ "minecraft:dark_prismarine" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,14 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["BLOOD_WELL", "FIRST_CONTACT"],
+        "stages": [
+          {
+            "text": "research.NEW_DEPTHS.stage.0",
+            "required_research": ["entered_arche"],
+            "recipes": ["beyondtheveil:nautilus", "beyondtheveil:repair_hammer", "beyondtheveil:arche_dial"],
+            "pamphlet": true
+          },
+          {
+            "text": "research.NEW_DEPTHS.stage.1",
+            "required_research": ["spoke_to_dagon"],
+            "recipes":  ["beyondtheveil:nautilus", "beyondtheveil:repair_hammer", "beyondtheveil:arche_dial"],
+            "pamphlet":  true
+          },
+          {
+            "text": "research.NEW_DEPTHS.stage.2",
+            "recipes":  ["beyondtheveil:nautilus", "beyondtheveil:repair_hammer", "beyondtheveil:arche_dial"],
+            "pamphlet":  true
+          }
+        ]
       }
 	]
 }

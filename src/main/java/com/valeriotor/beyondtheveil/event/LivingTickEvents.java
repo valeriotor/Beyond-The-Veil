@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -12,7 +11,7 @@ import com.valeriotor.beyondtheveil.entity.ictya.JellyEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -131,7 +130,7 @@ public class LivingTickEvents {
         }
         if (e.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
             if (e.level() instanceof ServerLevel sl) {
-                ArcheSavedData arche = sl.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+                ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
                 long ticks = arche.ticksInCycle();
                 if (ticks < 20 * 10) {
                     return;
@@ -142,7 +141,7 @@ public class LivingTickEvents {
                 if (e instanceof ServerPlayer sp) {
                     MemoryUnlockEvents.archeCurrentEvent(sp, ticks);
                 }
-                if (ticks % 20 == 0) {
+                if (ticks % 20 == 0 && !e.level().isClientSide && e.isUnderWater()) {
                     if (e instanceof Player p && p.getVehicle() instanceof NautilusEntity nautilus) {
                         //nautilus.setDamage(nautilus.getDamage() + NautilusEntity.TOTAL_HEALTH * currentIntensity / 20);
                         nautilus.hurt(e.damageSources().fellOutOfWorld(), NautilusEntity.TOTAL_HEALTH / 45F * currentIntensity);

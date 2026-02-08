@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.world.dimension;
 
-import com.valeriotor.beyondtheveil.client.ClientData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -9,24 +8,23 @@ import net.minecraft.world.level.saveddata.SavedData;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ArcheSavedData extends SavedData {
+public class ArcheCycleData extends SavedData {
 
     public static final long TICKS_PER_CYCLE = 16383;
     public static final long CURRENT_DURATION = 20 * 178;
     public static final long CURRENT_START = TICKS_PER_CYCLE - CURRENT_DURATION;
     public static final int CURRENT_PEAK = 110 * 20;
     private long cycle = 0;
-    private Set<BlockPos> altars = new HashSet<>();
 
-    public static ArcheSavedData getInstance(ServerLevel serverLevel) {
-        return serverLevel.getDataStorage().computeIfAbsent(ArcheSavedData::new, ArcheSavedData::new, "arche");
+    public static ArcheCycleData getInstance(ServerLevel serverLevel) {
+        return serverLevel.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
     }
 
 
-    public ArcheSavedData() {
+    public ArcheCycleData() {
     }
 
-    public ArcheSavedData(CompoundTag tag) {
+    public ArcheCycleData(CompoundTag tag) {
         cycle = tag.getLong("cycle");
     }
 
@@ -37,7 +35,7 @@ public class ArcheSavedData extends SavedData {
     }
 
     public void tick(boolean dirty) {
-        cycle = CURRENT_START - 200;
+        //cycle = CURRENT_START - 200;
         cycle++;
         if (dirty) {
             setDirty();
@@ -68,9 +66,5 @@ public class ArcheSavedData extends SavedData {
             return 0;
         }
         return ticks <= CURRENT_PEAK - 1 ? (ticks % (CURRENT_PEAK)) / (float) (CURRENT_PEAK) : (CURRENT_DURATION - ticks) / (float) (CURRENT_DURATION - CURRENT_PEAK);
-    }
-
-    public void addAltar(BlockPos pos) {
-        altars.add(pos);
     }
 }

@@ -26,7 +26,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
@@ -106,12 +106,12 @@ public class ClientSetup {
                 @Override
                 public float unclampedCall(ItemStack pStack, @Nullable ClientLevel pLevel, @Nullable LivingEntity pEntity, int pSeed) {
                     if (pLevel != null && pLevel.dimension() == BTVDimensions.ARCHE_LEVEL) {
-                        ArcheSavedData data = ClientData.getInstance().archeSavedData;
+                        ArcheCycleData data = ClientData.getInstance().archeCycleData;
                         if (data.getCurrentIntensity() > 0) {
                             return 0.9F;
                         }
                         float moduloTicks = data.getModuloTicks();
-                        float l = moduloTicks / ((ArcheSavedData.CURRENT_START));
+                        float l = moduloTicks / ((ArcheCycleData.CURRENT_START));
                         return l * 9 / 10;
                     }
                     return 0;

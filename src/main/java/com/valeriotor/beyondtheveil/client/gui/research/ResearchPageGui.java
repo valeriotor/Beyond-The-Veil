@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.client.Fonts;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.gui.elements.MultiblockGrid;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
@@ -74,6 +75,7 @@ public class ResearchPageGui extends Screen {
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
     private final ItemStack memorySieve = new ItemStack(Registration.MEMORY_SIEVE.get());
     private final ItemStack bricks = new ItemStack(Blocks.BRICKS);
+    private final ItemStack thesis = new ItemStack(Registration.BLOOD_THESIS.get());
 
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research_background.png");
     private static final ResourceLocation FRAME = new ResourceLocation(References.MODID, "textures/gui/research_frame.png");
@@ -89,6 +91,9 @@ public class ResearchPageGui extends Screen {
             new ResourceLocation(References.MODID, "textures/gui/research/stage_4.png"),
             new ResourceLocation(References.MODID, "textures/gui/research/stage_5.png"),
             new ResourceLocation(References.MODID, "textures/gui/research/stage_6.png")};
+    private static final ResourceLocation PAMPHLET_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/pamphlet/background.png");
+    private static final ResourceLocation EN_CAPTIONS = new ResourceLocation(References.MODID, "textures/gui/pamphlet/en_captions.png");
+    private static final ResourceLocation EN_TITLES = new ResourceLocation(References.MODID, "textures/gui/pamphlet/en_titles.png");
     //private static final ResourceLocation RECIPE_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/research_page_recipe_background.png");
     //public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
     private int middleSpace;
@@ -107,6 +112,11 @@ public class ResearchPageGui extends Screen {
     private float scaleFactor;
     private int imageWidth;
     private int imageHeight;
+    private int pamphletZoom = 1;
+    private int pamphletWidth;
+    private int pamphletHeight;
+    private int pamphletX;
+    private int pamphletY;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -238,6 +248,9 @@ public class ResearchPageGui extends Screen {
         multiblocks.sort(Comparator.comparing(m -> m.getTranslationComponent().getString()));
 
         recipeTypes.clear();
+        if (status.res.getStages()[status.getStage()].isPamphlet()) {
+            recipeTypes.add(RecipeType.PAMPHLET);
+        }
         if (!craftingRecipes.isEmpty()) {
             recipeTypes.add(RecipeType.CRAFTING_TABLE);
         }
@@ -273,6 +286,17 @@ public class ResearchPageGui extends Screen {
         gridY = pageTopY + 230 * blackPageHeight / 1082;
         gridY2 = pageTopY + 100 * blackPageHeight / 1082;
 
+        pamphletWidth = width * 4 / 5;
+        pamphletHeight = pamphletWidth * 3 / 4;
+        pamphletX = width / 10;
+        pamphletY = (height - pamphletHeight) / 2;
+        if (pamphletHeight > height * 4 / 5) {
+            pamphletHeight = height * 4 / 5;
+            pamphletWidth = pamphletHeight * 4 / 3;
+            pamphletY = height / 10;
+            pamphletX = (width - pamphletWidth) / 2;
+        }
+
     }
 
     //private void makeRecipes(String[] recipes) {
@@ -294,8 +318,34 @@ public class ResearchPageGui extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+
         PoseStack pose = guiGraphics.pose();
         guiGraphics.fill(0, 0, width, height, 0xFF000000);
+        if (selectedRecipeType == RecipeType.PAMPHLET) {
+            pose.pushPose();
+            pose.translate(width / 2D, height / 2D, 0);
+            float zoom = switch (pamphletZoom) {
+                case 1 -> 1F;
+                case 2 -> 1.25F;
+                case 3 -> 1.5F;
+                case 4 -> 1.75F;
+                case 5 -> 2F;
+                case 6 -> 2.25F;
+                default -> 2.5F;
+            };
+            pose.scale(zoom, zoom, 1);
+            if (pamphletZoom > 1) {
+                pose.translate(width / 2D - mouseX, height / 2D - mouseY, 0);
+            }
+            guiGraphics.blit(PAMPHLET_BACKGROUND, pamphletX - width / 2, pamphletY - height / 2, pamphletWidth, pamphletHeight, 0, 0, 1600, 1200, 1600, 1200);
+            RenderSystem.enableBlend();
+            guiGraphics.blit(EN_CAPTIONS, pamphletX - width / 2, pamphletY - height / 2, pamphletWidth, pamphletHeight, 0, 0, 1600, 1200, 1600, 1200);
+            //pose.translate(0, 0, -0.001);
+            //guiGraphics.drawString(Minecraft.getInstance().font, Component.literal("No mortal (nor immortal!) human may").withStyle(Fonts.ACADEMIC_STYLE), 242, 283, 0xFF161410, false);
+            guiGraphics.blit(EN_TITLES, pamphletX - width / 2, pamphletY - height / 2, pamphletWidth, pamphletHeight, 0, 0, 1600, 1200, 1600, 1200);
+            pose.popPose();
+            return;
+        }
         //RenderSystem.setShaderColor(1, 1, 1, 1);
         if (width < 2560 && height < 1440) {
             guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
@@ -311,6 +361,7 @@ public class ResearchPageGui extends Screen {
         int frameWidth = (pageRightX - pageLeftX) * 1511 / 1421;
         int frameHeight = (pageBottomY - pageTopY) * 1082 / 992;
         guiGraphics.blit(FRAME, frameLeftX, frameTopY, frameWidth, frameHeight, 0, 0, 1511, 1082, 1511, 1082);
+
 
         renderMainPage(pose, guiGraphics, mouseX, mouseY, partialTicks);
 
@@ -479,6 +530,7 @@ public class ResearchPageGui extends Screen {
             case GEAR_BENCH -> gearBenchRecipes.size();
             case MEMORY -> memories.size();
             case MULTIBLOCK -> multiblocks.size();
+            case PAMPHLET -> 1;
         };
     }
 
@@ -488,6 +540,7 @@ public class ResearchPageGui extends Screen {
             case GEAR_BENCH -> gearBench;
             case MEMORY -> memorySieve;
             case MULTIBLOCK -> bricks;
+            case PAMPHLET -> thesis;
         };
     }
 
@@ -580,9 +633,22 @@ public class ResearchPageGui extends Screen {
         currentMultiblock = new MultiblockGrid(width1, 300, schematic);
     }
 
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (pDelta > 0) {
+            pamphletZoom = Math.min(7, pamphletZoom + 1);
+        } else if (pDelta < 0) {
+            pamphletZoom = Math.max(1, pamphletZoom - 1);
+        }
+        return super.mouseScrolled(pMouseX, pMouseY, pDelta);
+    }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        if (selectedRecipeType == RecipeType.PAMPHLET) {
+            resetRecipe();
+            return true;
+        }
         if (super.mouseClicked(mouseX, mouseY, mouseButton))
             return true;
         //int a = this.hoveringRecipeKey(mouseX, mouseY);
@@ -612,7 +678,7 @@ public class ResearchPageGui extends Screen {
                             makeGrid();
                         } else if (recipeType == RecipeType.MEMORY) {
                             makeMemory();
-                        } else {
+                        } else if (recipeType == RecipeType.MULTIBLOCK) {
                             makeMultiblock();
                         }
                         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
@@ -763,7 +829,7 @@ public class ResearchPageGui extends Screen {
     //}
 
     private enum RecipeType {
-        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false);
+        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false), PAMPHLET(false);
 
         private final boolean grid;
 

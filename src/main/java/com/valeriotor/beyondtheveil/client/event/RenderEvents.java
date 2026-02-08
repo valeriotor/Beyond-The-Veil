@@ -17,7 +17,6 @@ import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
-import com.valeriotor.beyondtheveil.client.render.entity.CrawlerRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
@@ -93,12 +92,10 @@ import org.joml.Matrix4f;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_DURATION;
-import static com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData.CURRENT_PEAK;
+import static com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData.CURRENT_DURATION;
+import static com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData.CURRENT_PEAK;
 import static net.minecraft.client.renderer.LevelRenderer.getLightColor;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -367,7 +364,7 @@ public class RenderEvents {
         if (mc.level == null || mc.level.dimension() != BTVDimensions.ARCHE_LEVEL) {
             return;
         }
-        long ticks = ClientData.getInstance().archeSavedData.ticksInCycle();
+        long ticks = ClientData.getInstance().archeCycleData.ticksInCycle();
         if (ticks < 0) {
             return;
         }

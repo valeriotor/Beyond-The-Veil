@@ -99,6 +99,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.pillar.connected", "Connected");
         add("tooltip.sigil.player", "Bound to %1$s.");
         add("tooltip.sigil.area", "Bound to x: %1$s, y: %2$s, z: %3$s.");
+        add("tooltip.repair_hammer.1", "§eUsed to repair Nautilus (left-click) or pick it up (right-click).");
+        add("tooltip.repair_hammer.2", "§lOnly works from outside.§r");
 
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");
@@ -1569,7 +1571,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_bartender.communed1.outsider.0", "A desert man, but he... he was not kind.\nI hope for our friendship to be stronger.");
         add("dialogue.shoreman_bartender.communed1.it.option", "It shall be.");
         add("dialogue.shoreman_bartender.communed1.it_.option", "It is an honour indeed. Cheers to that!");
-        add("dialogue.shoreman_bartender.communed1.so.option", "So the Dreamer was really aware of me?.");
+        add("dialogue.shoreman_bartender.communed1.so.option", "So the Dreamer was really aware of me?");
         add("dialogue.shoreman_bartender.communed1.even.option", "Even within such a small community, you still have and accept a divide of thought. Surprising, yet beautiful.");
         add("dialogue.shoreman_bartender.communed1.i_.option", "I hope so too.");
         add("dialogue.shoreman_bartender.communed1.yes,.option", "Yes, he does listen. If he didn't, would that not make us irrelevant?");
@@ -2310,7 +2312,8 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Even Adelina spoke of them in hushed tones, but what could have frightened an immortal such as her? Unless...\\n" +
                 "No. I must hold steadfast, and do as he commanded. With my canoe, I shall sail far into the deep ocean, until no land is in sight; there, in the dark of night, I will consume a slug. If his words are true, the ones from the deep shall arise, and contact will commence.  When it is asked of me, and only then, I shall offer a gift: the heart of a human, to seal our bond. \\n" +
                 "During all of this, I must hold still in the canoe, and at no point will I leave it, not even if fear were to take me. My life is at stake.\\n" +
-                "Then again, a single death is a small price to me. I always come back.");
+                "Then again, a single death is a small price to me. I always come back.\\n" +
+                "Right?");
         add("research.FIRST_CONTACT.stage.1", "The encounter was peaceful. Or, at least, I believe so – no branch of human linguistics or semiotics could provide a definitive answer.\\n" +
                 "Yet the deed is done and the bond is sealed. I must speak to Dagon once more, but this time I shall do so from within His very own essence.\\n" +
                 "Is it time then? To retrace the steps of the old prospectors and hunters, and venture down into the abyss?\\n" +
@@ -2376,6 +2379,24 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +
                 "Such a creature shall be called a Fletum. Fleti can be picked up and assigned to a lacrymatory like weepers, though they will produce fewer tears.\\n" +
                 "However, their dreamlike state may and should be leveraged, and if I find a way to focus their dreams then I might, perhaps, see their effects in the real world.");
+
+        add("research.NEW_DEPTHS.title", "Deep Down Below");
+        add("research.entered_arche.text", "Create the Nautilus and enter Arche.");
+        add("research.spoke_to_dagon.text", "Speak to Father Ocean.");
+        add("research.NEW_DEPTHS.epigraph", "§oIn my conceit, I no longer cherished the lives of mortals; yet, face to face with the sublime, I saw my hypocrisy.\\0" +
+                "The ocean predates the world, and so too will it outlive it.\\0" +
+                "Even I am nought to eternity.§r\\1");
+        add("research.NEW_DEPTHS.epigraph.source", "From §oReflections of an Immortal§r, published last year. In it, Adelina looks back to her journeys in Arche, three decades prior.\\n");
+        add("research.NEW_DEPTHS.stage.0", "Thirty-seven years have gone by since the first expeditions to Arche began, and thirty-one since the last ones ended. Incited by both secular and religious bodies, they were justified as necessary, holy purges against \"abominable monsters\" threatening our peace  – the Deep Ones, clearly – yet I now see the truth of their origin: they were merely perpetuating the violence that had begun in the black shores, against this new enemy that had risen to the shoremen's protection. \\n" +
+                "We shall continue their journey, but not their legacy: our mission will be one of peace, to mend bonds between humanity and Dagon.\\n" +
+                "The old hunters' knowledge will come useful, however: fliers were affixed across towns, acting as instruction manuals for prospective explorers. We will include here a copy of such a pamphlet, together with the schematics for building the recommended equipment.\\n" +
+                "Importantly, some things shall differ from the old missions: first, owing to Mauer's kindness, we know how to create Vessel Stones via Blood Rituals, and thus won't have to procure any from official sources.\\n" +
+                "Second, whereas a normal human would immediately collapse under the immense pressures of Arche's waters, I believe that, having undergone baptism, our body may withstand them for a short duration. Leaving the Nautilus may be possible (and sometimes necessary), though we should be careful not to do so for an extended period, and certainly not during a current.\\n" +
+                "So: our goal is to speak to Dagon, but for now let's simply enter His realm and gauge its dangers. It may be accessed via a blood well: just as life is pushed upwards through the arteries of the world, so too do deceased things descend through its veins. One must thus enter the well §owith rotten flesh in one hand and coal in the other§r, and so be transported down below. Just like the dead. Ahh, what an omen.");
+        add("research.NEW_DEPTHS.stage.1", "The old hunters' quest converged on the cities inhabited by the Deep Ones, and so too shall ours. Unlike them, our search shall be guided by dreams of water: just as they bring us to an ocean monument when performed on the surface world, so will they show us the way to a deep city when performed in Arche. I... §oknow§r they will.\\n" +
+                "If no hostilities arise with the city's denizens, we shall then head towards the colossal altar dominating the city, and there, §oat the very top§r, consume a slug to enter communion with Father Ocean once more. He will guide us to Truth.");
+        add("research.NEW_DEPTHS.stage.2", "");
+
     }
 
     private void addCraftingRegistry() {

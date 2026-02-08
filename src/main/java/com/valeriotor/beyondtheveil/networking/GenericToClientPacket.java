@@ -1,6 +1,5 @@
 package com.valeriotor.beyondtheveil.networking;
 
-import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -15,14 +14,10 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
-import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -118,7 +113,7 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.STOP_CROSS_SYNC, tag);
     }
 
-    public static GenericToClientPacket syncArcheData(ArcheSavedData data) {
+    public static GenericToClientPacket syncArcheData(ArcheCycleData data) {
         CompoundTag tag = new CompoundTag();
         tag.put("data", data.save(new CompoundTag()));
         return new GenericToClientPacket(MessageType.SYNC_ARCHE_DATA, tag);

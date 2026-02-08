@@ -10,7 +10,7 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.WaypointType;
-import com.valeriotor.beyondtheveil.world.dimension.ArcheSavedData;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -49,7 +49,7 @@ public class ClientData {
     //}
 
     public final List<Waypoint> waypoints = new ArrayList<>();
-    public ArcheSavedData archeSavedData = new ArcheSavedData();
+    public ArcheCycleData archeCycleData = new ArcheCycleData();
     private BloodPoolData bloodPoolData = new BloodPoolData();
     private int contactTimer = 0;
     private int contactFogLevel = 0;
@@ -89,7 +89,7 @@ public class ClientData {
     }
 
     public void syncArcheData(CompoundTag tag) {
-        archeSavedData = new ArcheSavedData(tag.getCompound("data"));
+        archeCycleData = new ArcheCycleData(tag.getCompound("data"));
     }
 
     public void tick(TickEvent.ClientTickEvent event) {
