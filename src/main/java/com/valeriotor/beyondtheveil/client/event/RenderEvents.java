@@ -42,6 +42,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -297,28 +298,12 @@ public class RenderEvents {
         }
         if (shouldRenderAsPlayer) {
             if (event instanceof RenderPlayerEvent.Pre) {
-                PoseStack pose = event.getPoseStack();
-                pose.pushPose();
                 if (p.getSleepingPos().isPresent()) {
                     BlockState state = p.level().getBlockState(p.getSleepingPos().get());
                     if (state.getBlock() instanceof SurgeryBedBlock b) {
-                        Direction direction = state.getValue(SurgeryBedBlock.FACING);
-                        float f1 = switch (direction) {
-                            case SOUTH:
-                                yield 90.0F;
-                            case WEST:
-                                yield 0.0F;
-                            case NORTH:
-                                yield 270.0F;
-                            case EAST:
-                                yield 180.0F;
-                            default:
-                                yield 0.0F;
-                        };
-                        pose.mulPose(Axis.YP.rotationDegrees(f1));
-                        //event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(this.getFlipDegrees(pEntityLiving)));
-                        pose.mulPose(Axis.YP.rotationDegrees(90.0F));
-                        pose.translate(1.75, 0, 0);
+                        PoseStack pose = event.getPoseStack();
+                        pose.pushPose();
+                        rotatePlayerPatientXZPlane(pose, state);
                         //pose.mulPose(Axis.YP.rotationDegrees(90.0F));
                         if (p.level().getBlockEntity(b.findCenter(p.getSleepingPos().get(), state)) instanceof SurgeryBedBE be) {
                             PatientStatus status = be.getPatientStatus();
@@ -355,13 +340,47 @@ public class RenderEvents {
                                 }
                             }
                         }
-                        Minecraft.getInstance().getEntityRenderDispatcher().setRenderShadow(false);
+                        //Minecraft.getInstance().getEntityRenderDispatcher().setRenderShadow(false);
+                        event.getPoseStack().popPose();
                     }
                 }
-            } else {
-                event.getPoseStack().popPose();
             }
         }
+    }
+
+    public static void rotatePlayerPatient(AbstractClientPlayer p, PoseStack pose) {
+        if (p.getSleepingPos().isPresent()) {
+            BlockState state = p.level().getBlockState(p.getSleepingPos().get());
+            if (state.getBlock() instanceof SurgeryBedBlock b) {
+                rotatePlayerPatientXZPlane(pose, state);
+
+                if (p.level().getBlockEntity(b.findCenter(p.getSleepingPos().get(), state)) instanceof SurgeryBedBE be) {
+                    PatientStatus status = be.getPatientStatus();
+                    if (status != null && status.getExposedLocation() == SurgicalLocation.BACK) {
+                        pose.mulPose(Axis.XP.rotationDegrees(180));
+                    }
+                }
+            }
+        }
+    }
+
+    private static void rotatePlayerPatientXZPlane(PoseStack pose, BlockState state) {
+        Direction direction = state.getValue(SurgeryBedBlock.FACING);
+        float f1 = switch (direction) {
+            case SOUTH:
+                yield 90.0F;
+            case WEST:
+                yield 0.0F;
+            case NORTH:
+                yield 270.0F;
+            case EAST:
+                yield 180.0F;
+            default:
+                yield 0.0F;
+        };
+        pose.mulPose(Axis.YP.rotationDegrees(f1));
+        pose.mulPose(Axis.YP.rotationDegrees(90.0F));
+        pose.translate(1.75, 0, 0);
     }
 
     @SubscribeEvent

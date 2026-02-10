@@ -5,7 +5,8 @@
   "refmap": "beyondtheveil.refmap.json",
   "mixins": [],
   "client": [
-    "client.HumanoidModelMixin"
+    "client.HumanoidModelMixin",
+    "client.PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
