@@ -133,6 +133,10 @@ public class ClientData {
                         iterator.remove();
                     }
                 }
+                // TEST LocalPlayer p = Minecraft.getInstance().player;
+                // TEST if (p != null && (!playerAnimations.containsKey(p.getUUID()) || playerAnimations.get(p.getUUID()).isEmpty())) {
+                // TEST     playerAnimations.computeIfAbsent(p.getUUID(), uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.player_default_test));
+                // TEST }
             }
         }
     }

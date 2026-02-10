@@ -306,7 +306,7 @@ public class Registration {
     public static final RegistryObject<Item> REPAIR_HAMMER = ITEMS.register("repair_hammer", () -> new RepairHammerItem(1, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> NAUTILUS = ITEMS.register("nautilus", () -> new NautilusItem(new Item.Properties()));
     public static final RegistryObject<Item> ARCHE_DIAL = ITEMS.register("arche_dial", () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> VESSEL_STONE = ITEMS.register("vessel_stone", () -> new VesselStoneItem(new Item.Properties().stacksTo(1).durability(5)));
+    public static final RegistryObject<Item> VESSEL_STONE = ITEMS.register("vessel_stone", () -> new VesselStoneItem(new Item.Properties().stacksTo(1).durability(3)));
     public static final RegistryObject<Item> SURGERY_REPORT = ITEMS.register("surgery_report", ReportSheetItem::new);
     public static final RegistryObject<Item> SURGEON_BELL = ITEMS.register("surgeon_bell", SurgeonBellItem::new);
     public static final RegistryObject<Item> SURGEON_LARVA = ITEMS.register("surgeon_larva", SurgeonLarvaItem::new);

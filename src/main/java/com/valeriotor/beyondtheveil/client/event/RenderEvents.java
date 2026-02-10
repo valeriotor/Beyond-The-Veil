@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
+import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
@@ -255,6 +256,8 @@ public class RenderEvents {
         if (event.isCanceled()) {
             return;
         }
+        AnimatedModel.playerModel.resetParts();
+        AnimatedModel.playerSlimModel.resetParts();
         boolean shouldRenderAsPlayer = true;
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
         if (crossSync != null) { // in theory this should never be null

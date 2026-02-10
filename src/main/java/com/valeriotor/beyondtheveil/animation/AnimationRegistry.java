@@ -1,6 +1,11 @@
 package com.valeriotor.beyondtheveil.animation;
 
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.model.entity.wrapper.PlayerDefaultModelWrapper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +48,7 @@ public class AnimationRegistry {
     public static AnimationTemplate deep_one_trade2;
     public static AnimationTemplate deep_one_trade3;
     public static AnimationTemplate deep_one_trade4;
+    public static AnimationTemplate player_default_test;
     public static AnimationTemplate sandflatter_ambush;
     public static AnimationTemplate sandflatter_claw;
     public static AnimationTemplate surgeon_operate_stop;
@@ -54,6 +60,7 @@ public class AnimationRegistry {
     public static AnimationTemplate weeper_ritual;
 
     public static void loadAnimations(boolean client) {
+        initWrappers();
         animations.clear();
         animationToId.clear();
         int i = 0;
@@ -89,6 +96,7 @@ public class AnimationRegistry {
         deep_one_trade2 = registerAnimation("deep_one_trade2", client, i++);
         deep_one_trade3 = registerAnimation("deep_one_trade3", client, i++);
         deep_one_trade4 = registerAnimation("deep_one_trade4", client, i++);
+        player_default_test = registerAnimation("wrapped/player_default_test", client, i++);
         sandflatter_ambush = registerAnimation("sandflatter_ambush", client, i++);
         sandflatter_claw = registerAnimation("sandflatter_claw", client, i++);
         surgeon_operate_start = registerAnimation("surgeon_operate_start", client, i++);
@@ -98,6 +106,17 @@ public class AnimationRegistry {
         weeper_get_up = registerAnimation("weeper_get_up", client, i++);
         weeper_get_up_spineless = registerAnimation("weeper_get_up_spineless", client, i++);
         weeper_ritual = registerAnimation("weeper_ritual", client, i++);
+    }
+
+    private static void initWrappers() {
+        EntityRenderer<? extends Player> playerDefault = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("default");
+        EntityRenderer<? extends Player> playerSlim = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("slim");
+        if (playerDefault instanceof PlayerRenderer renderer) {
+            new PlayerDefaultModelWrapper("player", renderer.getModel());
+        }
+        if (playerSlim instanceof PlayerRenderer renderer) {
+            new PlayerDefaultModelWrapper("player_slim", renderer.getModel());
+        }
     }
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {

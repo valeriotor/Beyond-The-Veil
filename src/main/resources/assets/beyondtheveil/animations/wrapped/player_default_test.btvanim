@@ -1,0 +1,6 @@
+model: player_slim
+length: 45
+start: 10: 30
+    resx: body: 2.2: linear: absolute
+    resy: body: 2.2: linear: absolute
+    resz: body: 2.2: linear: absolute

@@ -1,18 +1,18 @@
 package com.valeriotor.beyondtheveil.client.model.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.world.entity.LivingEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<T> {
 
     private static final Map<String, AnimatedModel<? extends LivingEntity>> REGISTRY = new HashMap<>();
+    public static AnimatedModel<?> playerModel;
+    public static AnimatedModel<?> playerSlimModel;
     private boolean dirty;
 
     public static AnimatedModel<? extends LivingEntity> getModel(String name) {
@@ -24,6 +24,11 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
 
     protected AnimatedModel(String name) {
         REGISTRY.put(name, this);
+        if (Objects.equals(name, "player")) {
+            playerModel = this;
+        } else if (Objects.equals(name, "player_slim")) {
+            playerSlimModel = this;
+        }
     }
 
     public ModelPart getPart(String name) {
@@ -53,7 +58,7 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
         dirty = true;
     }
 
-    protected void resetParts() {
+    public void resetParts() {
         if (dirty) {
             for (ModelPartAndDefaultPose defaultPartPose : defaultPartPoses) {
                 defaultPartPose.part().loadPose(defaultPartPose.pose());

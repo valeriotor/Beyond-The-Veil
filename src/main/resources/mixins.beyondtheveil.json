@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.valeriotor.beyondtheveil.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "beyondtheveil.refmap.json",
+  "mixins": [],
+  "client": [
+    "client.HumanoidModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7"
+}
