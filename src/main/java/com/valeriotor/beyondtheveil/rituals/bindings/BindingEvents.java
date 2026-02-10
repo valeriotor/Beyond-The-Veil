@@ -388,12 +388,15 @@ public class BindingEvents {
     public static void minionDamageEvent(LivingDamageEvent event) {
         if (event.getSource().getEntity() instanceof PlayerMinion minion) {
             ServerPlayer sp = minion.getMaster();
-            BindingData data = DataUtil.getBindingData(sp);
-            if (data != null && data.getBinding() == Binding.NETHER) {
-                LivingEntity attacked = event.getEntity();
-                attacked.setHealth(attacked.getHealth() - event.getAmount() * 0.3F);
-                event.setAmount(event.getAmount() * 1.5F);
-                sp.heal(1);
+            if (sp != null) {
+                BindingData data = DataUtil.getBindingData(sp);
+                if (data != null && data.getBinding() == Binding.NETHER) {
+                    LivingEntity attacked = event.getEntity();
+                    attacked.setHealth(attacked.getHealth() - event.getAmount() * 0.3F);
+                    event.setAmount(event.getAmount() * 1.5F);
+                    sp.heal(1);
+                }
+
             }
         }
     }
