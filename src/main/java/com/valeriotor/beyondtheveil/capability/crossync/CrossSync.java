@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.capability.crossync;
 
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.event.PlayerEvents;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -18,6 +19,7 @@ public class CrossSync {
     private CompoundTag heldPatientData;
     private Mob heldPatientEntity; // used serverside when placing the entity back in the world, clientside for rendering on shoulder
     private PlayerTransformation transformation;
+    private boolean crawling;
 
     public <T extends Mob & SurgeryPatient> void setHeldPatient(T heldPatient, Player player) {
         if (heldPatient != null) {
@@ -68,6 +70,18 @@ public class CrossSync {
         return transformation;
     }
 
+    public void setCrawling(boolean crawling, Player player) {
+        if (crawling != this.crawling) {
+            PlayerEvents.addCrawlingAttributes(player);
+            this.crawling = crawling;
+            sync(player);
+        }
+    }
+
+    public boolean isCrawling() {
+        return crawling;
+    }
+
     public void sync(Player player) {
         if (player != null && !player.level().isClientSide) {
             Messages.sendToTrackingAndSelf(GenericToClientPacket.crossSync(player, this), player);
@@ -85,6 +99,7 @@ public class CrossSync {
         } else {
             setTransformation(null, null);
         }
+        crawling = compoundTag.getBoolean("crawling");
     }
 
     public CompoundTag saveToNBT(CompoundTag compoundTag) {
@@ -92,6 +107,7 @@ public class CrossSync {
         if (transformation != null) {
             compoundTag.putString("transformation", transformation.name());
         }
+        compoundTag.putBoolean("crawling", crawling);
         return compoundTag;
     }
 

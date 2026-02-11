@@ -9,8 +9,11 @@ import net.minecraft.world.entity.player.Player;
 
 public class PlayerDefaultModelWrapper extends AnimatedModel<Player> {
 
+    private final PlayerModel<?> model;
+
     public PlayerDefaultModelWrapper(String name, PlayerModel<?> model) {
         super(name);
+        this.model = model;
         registerAnimatedPart("head", model.head);
         registerAnimatedPart("hat", model.hat);
         registerAnimatedPart("body", model.body);
@@ -18,6 +21,10 @@ public class PlayerDefaultModelWrapper extends AnimatedModel<Player> {
         registerAnimatedPart("leftArm", model.leftArm);
         registerAnimatedPart("rightLeg", model.rightLeg);
         registerAnimatedPart("leftLeg", model.leftLeg);
+    }
+
+    public PlayerModel<?> getModel() {
+        return model;
     }
 
     @Override

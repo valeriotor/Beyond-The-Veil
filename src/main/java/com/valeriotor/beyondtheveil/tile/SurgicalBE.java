@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
@@ -406,6 +407,9 @@ public abstract class SurgicalBE extends BlockEntity {
                     player.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                         c.loadFromNBT(convalescentData.saveToNBT(new CompoundTag()));
                     });
+                    if (convalescentData.getFlags().containsKey(OperationRegistry.SPINELESS) || convalescentData.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
+                        player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setCrawling(true, player));
+                    }
                     EntityType<?> a = BTVEntities.getTriggerEntity(convalescentData, convalescentData.getTriggerData()).getA();
                     for (PlayerTransformation value : PlayerTransformation.values()) {
                         if (a == value.getEntityType()) {

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.capability.surgery;
 
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.item.BlackjackItem;
 import com.valeriotor.beyondtheveil.surgery.Operation;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
@@ -137,6 +139,11 @@ public class ConvalescentData {
         if (flags.containsKey("great_heart")) {
             if (entity.tickCount % 40 == 0) {
                 entity.heal(1);
+            }
+        }
+        if (entity instanceof Player p) {
+            if (flags.containsKey(OperationRegistry.SPINELESS) || flags.containsKey(OperationRegistry.IRON_SPINE)) {
+                p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setCrawling(true, p));
             }
         }
     }

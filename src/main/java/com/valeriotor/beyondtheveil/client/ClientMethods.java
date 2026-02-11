@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
@@ -10,6 +11,7 @@ import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
 import com.valeriotor.beyondtheveil.client.gui.SleepChamberGui;
 import com.valeriotor.beyondtheveil.client.sounds.SurgerySoundInstance;
 import com.valeriotor.beyondtheveil.client.toasts.MemoryToast;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.event.LivingTickEvents;
@@ -31,6 +33,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -207,6 +210,17 @@ public class ClientMethods {
 
     public static Level getLevel() {
         return Minecraft.getInstance().level;
+    }
+
+    public static void cancelJump(Player player) {
+        LocalPlayer mainPlayer = Minecraft.getInstance().player;
+        if (mainPlayer == player) {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
+            if (crossSync != null && crossSync.isCrawling()) {
+                player.setDeltaMovement(player.getDeltaMovement().multiply(1, 0.3, 1));
+            }
+
+        }
     }
 
     //public static void addColoredParticle(CompoundTag tag) {

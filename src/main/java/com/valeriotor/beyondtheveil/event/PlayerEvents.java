@@ -161,6 +161,7 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void loggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         addBaptismAttributes(event.getEntity());
+        addCrawlingAttributes(event.getEntity());
         if (event.getEntity() instanceof ServerPlayer sp) {
             syncBloodPool(sp);
         }
@@ -191,6 +192,18 @@ public class PlayerEvents {
                 map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
                 p.getAttributes().addTransientAttributeModifiers(map);
             }
+        }
+    }
+
+    public static void addCrawlingAttributes(Player p) {
+        if (!p.level().isClientSide) {
+            p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                if (c.getCrossSync().isCrawling()) {
+                    Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_BASE));
+                    p.getAttributes().addTransientAttributeModifiers(map);
+                }
+            });
         }
     }
 

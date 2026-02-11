@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
@@ -41,6 +42,7 @@ import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
@@ -381,6 +383,62 @@ public class RenderEvents {
         pose.mulPose(Axis.YP.rotationDegrees(f1));
         pose.mulPose(Axis.YP.rotationDegrees(90.0F));
         pose.translate(1.75, 0, 0);
+    }
+
+    public static void rotatePlayerCrawling(AbstractClientPlayer p, PoseStack pose, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+        if (crossSync != null && crossSync.isCrawling()) {
+            pose.translate(0, 0.11, 0);
+            pose.mulPose(Axis.YN.rotation((float) Math.toRadians(pRotationYaw)));
+            pose.mulPose(Axis.XP.rotation((float) Math.toRadians(90)));
+            pose.mulPose(Axis.YP.rotation((float) Math.toRadians(pRotationYaw)));
+            pose.translate(0, -1, 0);
+        }
+    }
+
+    public static void animatePlayerCrawling(Player player, PlayerModel<?> model, float limbSwing, float limbSwingAmount, float ageInTicks) {
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
+        if (crossSync != null && crossSync.isCrawling()) {
+            limbSwingAmount *= 2;
+            limbSwingAmount = Math.min(limbSwingAmount, 1);
+            float yRot = -Mth.cos(limbSwing * 0.6662F) * limbSwingAmount * 0.3F;
+
+            // NO CROUCHING
+            model.body.xRot = 0.0F;
+            model.rightLeg.z = 0.0F;
+            model.leftLeg.z = 0.0F;
+            model.rightLeg.y = 12.0F;
+            model.leftLeg.y = 12.0F;
+            model.head.y = 0.0F;
+            model.body.y = 0.0F;
+            model.leftArm.y = 2.0F;
+            model.rightArm.y = 2.0F;
+
+            // CRAWL ANIM
+            model.head.yRot = yRot;
+            model.body.yRot = yRot;
+            model.leftLeg.yRot = yRot;
+            model.rightLeg.yRot = yRot;
+            model.leftLeg.xRot = 0;
+            model.rightLeg.xRot = 0;
+            model.leftLeg.zRot = -0.1F + Mth.cos(limbSwing * 0.6662F + Mth.PI / 2) * limbSwingAmount * 0.1F;
+            model.rightLeg.zRot = 0.1F + Mth.cos(limbSwing * 0.6662F + Mth.PI / 2) * limbSwingAmount * 0.1F;
+            model.leftArm.xRot = Mth.PI;
+            model.rightArm.xRot = Mth.PI;
+            float v = limbSwing * 0.6662F % (2 * Mth.PI);
+            if (v < Mth.PI) {
+                model.leftArm.xRot += limbSwingAmount * Mth.cos(limbSwing * 0.6662F + Mth.PI / 2);
+            } else {
+                model.rightArm.xRot -= limbSwingAmount * Mth.cos(limbSwing * 0.6662F + Mth.PI / 2);
+            }
+            model.leftArm.zRot = Mth.PI / 6 + Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+            model.rightArm.zRot = - Mth.PI / 6 - Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+            model.leftPants.copyFrom(model.leftLeg);
+            model.rightPants.copyFrom(model.rightLeg);
+            model.leftSleeve.copyFrom(model.leftArm);
+            model.rightSleeve.copyFrom(model.rightArm);
+            model.head.xRot -= 1.4;
+        }
     }
 
     @SubscribeEvent

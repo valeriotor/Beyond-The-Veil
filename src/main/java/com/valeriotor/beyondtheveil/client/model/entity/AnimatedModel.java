@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.model.entity;
 
+import com.valeriotor.beyondtheveil.client.model.entity.wrapper.PlayerDefaultModelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,8 +12,8 @@ import java.util.*;
 public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<T> {
 
     private static final Map<String, AnimatedModel<? extends LivingEntity>> REGISTRY = new HashMap<>();
-    public static AnimatedModel<?> playerModel;
-    public static AnimatedModel<?> playerSlimModel;
+    public static PlayerDefaultModelWrapper playerModel;
+    public static PlayerDefaultModelWrapper playerSlimModel;
     private boolean dirty;
 
     public static AnimatedModel<? extends LivingEntity> getModel(String name) {
@@ -24,10 +25,12 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
 
     protected AnimatedModel(String name) {
         REGISTRY.put(name, this);
-        if (Objects.equals(name, "player")) {
-            playerModel = this;
-        } else if (Objects.equals(name, "player_slim")) {
-            playerSlimModel = this;
+        if(this instanceof PlayerDefaultModelWrapper wrapper) {
+            if (Objects.equals(name, "player")) {
+                playerModel = wrapper;
+            } else if (Objects.equals(name, "player_slim")) {
+                playerSlimModel = wrapper;
+            }
         }
     }
 

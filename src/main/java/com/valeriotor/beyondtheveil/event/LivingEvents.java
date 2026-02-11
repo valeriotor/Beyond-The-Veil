@@ -1,8 +1,13 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.AdelineEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
@@ -15,6 +20,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.VanillaUtils;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
@@ -325,6 +331,10 @@ public class LivingEvents {
     public static void livingJumpEvent(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             BindingEvents.jump(event, serverPlayer);
+        }
+        if (event.getEntity() instanceof Player p && p.level().isClientSide) {
+            ClientMethods.cancelJump(p);
+
         }
     }
 
