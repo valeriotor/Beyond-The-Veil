@@ -33,18 +33,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public class ClientMethods {
 
@@ -220,6 +224,13 @@ public class ClientMethods {
                 player.setDeltaMovement(player.getDeltaMovement().multiply(1, 0.3, 1));
             }
 
+        }
+    }
+
+    public static void setCrawlingPlayerSize(BiConsumer<EntityDimensions, Float> updater, Player p) {
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+        if (crossSync != null && crossSync.isCrawling()) {
+            updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
         }
     }
 

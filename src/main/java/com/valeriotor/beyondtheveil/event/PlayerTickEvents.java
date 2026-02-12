@@ -95,6 +95,9 @@ public class PlayerTickEvents {
                 BindingEvents.playerTickEvent(event, sp);
             }
         }
+        if (event.player.tickCount == 3) {
+            event.player.refreshDimensions();
+        }
     }
 
     private static void transformationTickEvents(TickEvent.PlayerTickEvent event) {

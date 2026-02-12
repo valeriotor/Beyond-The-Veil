@@ -3,7 +3,7 @@
   "package": "com.valeriotor.beyondtheveil.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "beyondtheveil.refmap.json",
-  "mixins": [],
+  "mixins": ["PlayerMixin"],
   "client": [
     "client.HumanoidModelMixin",
     "client.PlayerRendererMixin"

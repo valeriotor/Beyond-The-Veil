@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
@@ -34,6 +35,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -52,6 +54,8 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.function.BiConsumer;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEvents {
@@ -200,7 +204,7 @@ public class PlayerEvents {
             p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 if (c.getCrossSync().isCrawling()) {
                     Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_BASE));
+                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL));
                     p.getAttributes().addTransientAttributeModifiers(map);
                 }
             });
@@ -233,6 +237,20 @@ public class PlayerEvents {
     public static void placeBlockEvent(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
             BindingEvents.placeBlock(event, sp);
+        }
+    }
+
+    public static void sizeEvent(BiConsumer<EntityDimensions, Float> updater, Object entity) {
+        if (entity instanceof Player p && p.isAddedToWorld()) {
+            if (!p.level().isClientSide) {
+                p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                    if (c.getCrossSync().isCrawling()) {
+                        updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+                    }
+                });
+            } else {
+                ClientMethods.setCrawlingPlayerSize(updater, p);
+            }
         }
     }
 

@@ -1,11 +1,13 @@
 package com.valeriotor.beyondtheveil.client.util;
 
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CrossSyncHolder {
@@ -19,6 +21,9 @@ public class CrossSyncHolder {
             holder.put(uuid, new CrossSync());
         }
         holder.get(uuid).loadFromNBT(crossSyncTag);
+        if (Minecraft.getInstance().player != null && Objects.equals(uuid, Minecraft.getInstance().player.getUUID())) {
+            Minecraft.getInstance().player.refreshDimensions();
+        }
     }
 
     public static void stopCrossSync(CompoundTag tag) {

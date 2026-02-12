@@ -24,4 +24,9 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         RenderEvents.rotatePlayerCrawling(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
     }
 
+    @Inject(method = "setupRotations", at = @At("RETURN"))
+    protected void rotateAfter(AbstractClientPlayer pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks, CallbackInfo info) {
+        RenderEvents.rotatePlayerCrawlingPost(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
+    }
+
 }

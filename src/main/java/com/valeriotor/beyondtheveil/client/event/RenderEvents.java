@@ -396,7 +396,19 @@ public class RenderEvents {
         }
     }
 
-    public static void animatePlayerCrawling(Player player, PlayerModel<?> model, float limbSwing, float limbSwingAmount, float ageInTicks) {
+    public static void rotatePlayerCrawlingPost(AbstractClientPlayer p, PoseStack pose, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
+        float f = p.getSwimAmount(pPartialTicks);
+        if (f > 0.0F) {
+            if (p.isVisuallySwimming()) {
+                pose.translate(0.0F, 1.0F, -0.3F);
+            }
+            float f3 = p.isInWater() || p.isInFluidType((fluidType, height) -> p.canSwimInFluidType(fluidType)) ? -90.0F - p.getXRot() : -90.0F;
+            float f4 = Mth.lerp(f, 0.0F, f3);
+            pose.mulPose(Axis.XP.rotationDegrees(-f4));
+        }
+    }
+
+    public static void animatePlayerCrawling(Player player, PlayerModel<?> model, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
         if (crossSync != null && crossSync.isCrawling()) {
             limbSwingAmount *= 2;
@@ -415,6 +427,7 @@ public class RenderEvents {
             model.rightArm.y = 2.0F;
 
             // CRAWL ANIM
+            model.head.xRot = headPitch * ((float)Math.PI / 180F);
             model.head.yRot = yRot;
             model.body.yRot = yRot;
             model.leftLeg.yRot = yRot;
@@ -432,7 +445,7 @@ public class RenderEvents {
                 model.rightArm.xRot -= limbSwingAmount * Mth.cos(limbSwing * 0.6662F + Mth.PI / 2);
             }
             model.leftArm.zRot = Mth.PI / 6 + Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
-            model.rightArm.zRot = - Mth.PI / 6 - Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+            model.rightArm.zRot = -Mth.PI / 6 - Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
             model.leftPants.copyFrom(model.leftLeg);
             model.rightPants.copyFrom(model.rightLeg);
             model.leftSleeve.copyFrom(model.leftArm);

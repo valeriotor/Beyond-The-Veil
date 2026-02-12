@@ -72,8 +72,9 @@ public class CrossSync {
 
     public void setCrawling(boolean crawling, Player player) {
         if (crawling != this.crawling) {
-            PlayerEvents.addCrawlingAttributes(player);
             this.crawling = crawling;
+            PlayerEvents.addCrawlingAttributes(player);
+            player.refreshDimensions();
             sync(player);
         }
     }

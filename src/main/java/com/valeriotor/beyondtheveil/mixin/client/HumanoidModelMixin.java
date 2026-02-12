@@ -25,13 +25,13 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
     private void animateModel(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
         if (entityIn instanceof Player p) {
             if (slim) {
-                RenderEvents.animatePlayerCrawling(p, AnimatedModel.playerSlimModel.getModel(), limbSwing, limbSwingAmount, ageInTicks);
+                RenderEvents.animatePlayerCrawling(p, AnimatedModel.playerSlimModel.getModel(), limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 Animation playerSlimAnimation = ClientData.getInstance().getPlayerAnimation(p.getUUID(), AnimatedModel.playerSlimModel);
                 if (playerSlimAnimation != null) {
                     playerSlimAnimation.apply((float) (ageInTicks - Math.floor(ageInTicks)));
                 }
             } else {
-                RenderEvents.animatePlayerCrawling(p, AnimatedModel.playerModel.getModel(), limbSwing, limbSwingAmount, ageInTicks);
+                RenderEvents.animatePlayerCrawling(p, AnimatedModel.playerModel.getModel(), limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 Animation playerAnimation = ClientData.getInstance().getPlayerAnimation(p.getUUID(), AnimatedModel.playerModel);
                 if (playerAnimation != null) {
                     playerAnimation.apply((float) (ageInTicks - Math.floor(ageInTicks)));
