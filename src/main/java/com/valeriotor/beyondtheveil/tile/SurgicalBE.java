@@ -65,6 +65,7 @@ public abstract class SurgicalBE extends BlockEntity {
     private UUID fleboOwner;
     private UUID usingPlayer; // TODO
     private UUID lyingPlayer;
+    private boolean playerComplete;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -302,7 +303,10 @@ public abstract class SurgicalBE extends BlockEntity {
                 patientStatus.setLevelAndCoords((ServerLevel) level, getBlockPos());
             }
             lyingPlayer = pTag.getUUID("player");
-            SurgeryBedGui.updatePatientStatus(patientStatus);
+            playerComplete = pTag.getBoolean("playerComplete");
+            if (level != null && level.isClientSide) {
+                SurgeryBedGui.updatePatientStatus(patientStatus, playerComplete); // TODO this code could be called server side, right?
+            }
         } else {
             entity = null;
             entityData = null;
@@ -341,6 +345,18 @@ public abstract class SurgicalBE extends BlockEntity {
         return patientStatus;
     }
 
+    public void markPlayerComplete() {
+        playerComplete = true;
+        if (level != null) {
+            setChanged();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        }
+    }
+
+    public boolean isPlayerComplete() {
+        return playerComplete;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
@@ -359,6 +375,7 @@ public abstract class SurgicalBE extends BlockEntity {
         }
         if (lyingPlayer != null) {
             pTag.putUUID("player", lyingPlayer);
+            pTag.putBoolean("playerComplete", playerComplete);
         }
     }
 
@@ -428,6 +445,9 @@ public abstract class SurgicalBE extends BlockEntity {
     public void tickServer() {
         if (level == null) {
             return;
+        }
+        if (lyingPlayer == null) {
+            playerComplete = false;
         }
         if (patientStatus != null) {
             patientStatus.tick(false);

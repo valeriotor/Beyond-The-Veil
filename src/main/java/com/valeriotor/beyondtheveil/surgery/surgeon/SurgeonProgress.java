@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.surgery.surgeon;
 
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.notes.*;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.core.BlockPos;
@@ -83,14 +84,21 @@ public class SurgeonProgress {
             return false;
         }
         BlockEntity be = surgeon.level().getBlockEntity(surgicalBE);
-        if (!(be instanceof SurgicalBE be1) || ((currentStep > 0 && currentStep < steps.size() - 1 && be1.getPatientStatus() == null))) {
+        if (be instanceof SurgicalBE be1 && ((currentStep <= 0 || currentStep >= steps.size() - 1 || be1.getPatientStatus() != null))) {
+            if (((SurgicalBE) be).isPlayerComplete()) {
+                return false;
+            }
+            SurgeonStep step = steps.get(currentStep);
+            if (step.performAction()) {
+                currentStep++;
+            }
+            if (isFinished() && be1.getPatientStatus() != null && be1.getPatientStatus().getPatientType() == PatientType.PLAYER) {
+                be1.markPlayerComplete();
+            }
+            return true;
+        } else {
             return false;
         }
-        SurgeonStep step = steps.get(currentStep);
-        if (step.performAction()) {
-            currentStep++;
-        }
-        return true;
     }
 
     public boolean isFinished() {

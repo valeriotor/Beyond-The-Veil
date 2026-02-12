@@ -7,7 +7,6 @@ import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
@@ -20,10 +19,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class SurgeryBedGui extends Screen {
 
-    public static void updatePatientStatus(PatientStatus status) {
+    public static void updatePatientStatus(PatientStatus status, boolean playerComplete) {
         if (Minecraft.getInstance().screen instanceof SurgeryBedGui gui) {
             gui.patientStatus = status;
-            gui.leaveBedButton.setMessage(gui.leaveButtonText());
+            gui.leaveBedButton.setMessage(gui.leaveButtonText(playerComplete));
         }
     }
 
@@ -48,7 +47,7 @@ public class SurgeryBedGui extends Screen {
             }
 
         }
-        this.leaveBedButton = Button.builder(leaveButtonText(), (p_96074_) -> {
+        this.leaveBedButton = Button.builder(leaveButtonText(false), (p_96074_) -> {
             this.onClose();
         }).bounds(this.width / 2 - 100, this.height - 40, 200, 20).build();
         this.addRenderableWidget(this.leaveBedButton);
@@ -56,9 +55,11 @@ public class SurgeryBedGui extends Screen {
     }
 
     @NotNull
-    private Component leaveButtonText() {
+    private Component leaveButtonText(boolean playerComplete) {
         if (patientStatus != null && (patientStatus.isIncised() || patientStatus.getCondition().isTerminal())) {
             return Component.translatable("gui.surgery_bed.leave_die");
+        } else if (playerComplete) {
+            return Component.translatable("gui.surgery_bed.leave_complete");
         }
         return Component.translatable("gui.surgery_bed.leave");
     }

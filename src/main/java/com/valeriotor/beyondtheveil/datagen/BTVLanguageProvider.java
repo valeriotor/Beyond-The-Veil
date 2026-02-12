@@ -2462,6 +2462,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.surgery_bed.leave", "Leave operation");
         add("gui.surgery_bed.leave_die", "Leave operation (die)");
+        add("gui.surgery_bed.leave_complete", "Leave (operation completed)");
 
         add("container.deep_chest", "Deep Chest");
     }
