@@ -243,6 +243,17 @@ public class HamletPieces {
             //    }
             //}
             for (BlockPos blockPos : blocks) {
+                int firstFreeHeight = blockPos.getY();
+                for (int i = 0; i < 5; i++) {
+                    if (pLevel.getBlockState(blockPos.atY(firstFreeHeight)).getBlock() == Blocks.AIR) {
+                        firstFreeHeight--;
+                    } else if (pLevel.getBlockState(blockPos.atY(firstFreeHeight + 2)).getBlock() != Blocks.AIR) {
+                        firstFreeHeight++;
+                    } else {
+                        break;
+                    }
+                }
+                blockPos = blockPos.atY(firstFreeHeight);
                 BlockState state = pLevel.getBlockState(blockPos);
                 BlockState outputState;
                 if (state.getBlock() == Blocks.WATER || state.getBlock() == Registration.DAMP_WOOD.get()) {
@@ -306,7 +317,7 @@ public class HamletPieces {
             BlockPos offsetCenterPos = centerPos.offset(new BlockPos(0, 0, 0).rotate(rotation));
             layoutQuadrant(pContext, rand, manager, numbersPerType, weightedBuildings, offsetCenterPos, allPieces, rotation);
         }
-        allPieces.add(new HamletBuildingPiece(manager, "idol", Rotation.NONE, centerPos.offset(-4, 0, -4), centerPos));
+        allPieces.add(new HamletBuildingPiece(manager, "idol", Rotation.NONE, centerPos.offset(-4, 0, -4).atY(pContext.chunkGenerator().getFirstFreeHeight(centerPos.getX(), centerPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, pContext.heightAccessor(), pContext.randomState()) - 1), centerPos));
         //return layoutQuadrant(rand, manager, numbersPerType, weightedBuildings, centerPos);
         return allPieces;
     }
@@ -469,19 +480,23 @@ public class HamletPieces {
                         case COUNTERCLOCKWISE_90 -> piece.width - (piece.type.depth - 8 + piece.getXOffset());
                     };
 
+                    int height = -1;
                     for (int k = 0; k < doorToStreetDist + 1; k++) {
                         int toPlaceX = x + ((piece.rotation == Rotation.NONE || piece.rotation == Rotation.CLOCKWISE_180) ? 0 : (piece.rotation == Rotation.COUNTERCLOCKWISE_90 ? -k - 1 : k + 1));
                         int toPlaceZ = z + ((piece.rotation == Rotation.CLOCKWISE_90 || piece.rotation == Rotation.COUNTERCLOCKWISE_90) ? 0 : (piece.rotation == Rotation.NONE ? -k - 1 : k + 1));
-                        streetBlocks.add(makeStreetBlockPos(context, centerPos, toPlaceX, toPlaceZ, rotation));
+                        BlockPos pos = makeStreetBlockPos(context, centerPos, toPlaceX, toPlaceZ, rotation, height);
+                        streetBlocks.add(pos);
+                        height = pos.getY();
                         Direction rotated = piece.rotation.rotate(Direction.EAST);
-                        streetBlocks.add(makeStreetBlockPos(context, centerPos, toPlaceX + rotated.getStepX(), toPlaceZ + rotated.getStepZ(), rotation));
+                        streetBlocks.add(makeStreetBlockPos(context, centerPos, toPlaceX + rotated.getStepX(), toPlaceZ + rotated.getStepZ(), rotation, height));
                     }
 
                     int currentStreetNode = getGridElement(streetGrid, z, x);
                     if (currentStreetNode == 0) {
                         setGridElement(streetGrid, z, x, 2);
-                        streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation));
+                        streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation, -1));
                     }
+                    int yCache = -1, yCacheDuration = -1;
                     while (currentStreetNode == 0 || currentStreetNode == 1) {
                         int valLeft = getGridElement(grid, z, x - 1);
                         int valUp = getGridElement(grid, z - 1, x);
@@ -497,71 +512,54 @@ public class HamletPieces {
                         }
 
                         if (direction == 0) {
-                            //int firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
 
+                            BlockPos pos;
+                            if (yCacheDuration > 0) {
+                                pos = makeStreetBlockPos(context, centerPos, x, z + 1, rotation, yCache);
+                                yCacheDuration--;
+                            } else {
+                                pos = makeStreetBlockPos(context, centerPos, x, z + 1, rotation, -1);
+                                yCache = pos.getY();
+                                yCacheDuration = 12;
+                            }
                             if (getGridElement(streetGrid, z + 1, x) == 0) {
                                 setGridElement(streetGrid, z + 1, x, 1);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z + 1, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x, firstFreeHeight, z + 1).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x, z + 1, rotation));
+                                streetBlocks.add(pos);
                             }
-                            //if (getGridElement(streetGrid, z - 1, x) == 0) {
-                            //    setGridElement(streetGrid, z - 1, x, 1);
-                            //    streetBlocks.add(new Tuple<>(new BlockPos(x, 0, z - 1), Registration.DAMP_WOOD.get().defaultBlockState()));
-                            //}
-                            //streetGrid[z][x] |= 1;
                             x -= 1;
                             currentStreetNode = getGridElement(streetGrid, z, x);
-                            //firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
                             if (currentStreetNode == 0) {
                                 setGridElement(streetGrid, z, x, 2);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x, firstFreeHeight, z).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x, z, rotation));
+                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation, pos.getY()));
                             }
                             if (getGridElement(streetGrid, z + 1, x) == 0) {
                                 setGridElement(streetGrid, z + 1, x, 1);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z + 1, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x, firstFreeHeight, z + 1).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x, z + 1, rotation));
+                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z + 1, rotation, pos.getY()));
                             }
-                            //if (getGridElement(streetGrid, z - 1, x) == 0) {
-                            //    setGridElement(streetGrid, z - 1, x, 1);
-                            //    streetBlocks.add(new Tuple<>(new BlockPos(x, 0, z - 1), Registration.DAMP_WOOD.get().defaultBlockState()));
-                            //}
                         } else if (direction == 1) {
-                            //int firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-
-                            //streetGrid[z][x] |= 4;
-                            //z -= 1;
-                            //currentStreetNode = getGridElement(streetGrid, z, x);
-                            //if (z >= 0) {
-                            //    streetGrid[z][x] |= 8;
-                            //}
+                            BlockPos pos;
+                            if (yCacheDuration > 0) {
+                                pos = makeStreetBlockPos(context, centerPos, x + 1, z, rotation, yCache);
+                                yCacheDuration--;
+                            } else {
+                                pos = makeStreetBlockPos(context, centerPos, x + 1, z, rotation, -1);
+                                yCache = pos.getY();
+                                yCacheDuration = 12;
+                            }
                             if (getGridElement(streetGrid, z, x + 1) == 0) {
                                 setGridElement(streetGrid, z, x + 1, 1);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x + 1, z, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x + 1, firstFreeHeight, z).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x + 1, z, rotation));
+                                streetBlocks.add(pos);
                             }
-                            //if (getGridElement(streetGrid, z, x - 1) == 0) {
-                            //    setGridElement(streetGrid, z, x - 1, 1);
-                            //    streetBlocks.add(new Tuple<>(new BlockPos(x - 1, 0, z), Registration.DAMP_WOOD.get().defaultBlockState()));
-                            //}
-                            //streetGrid[z][x] |= 1;
                             z -= 1;
                             currentStreetNode = getGridElement(streetGrid, z, x);
-                            //firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
                             if (currentStreetNode == 0) {
                                 setGridElement(streetGrid, z, x, 2);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x, firstFreeHeight, z).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x, z, rotation));
+                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x, z, rotation, pos.getY()));
                             }
                             if (getGridElement(streetGrid, z, x + 1) == 0) {
                                 setGridElement(streetGrid, z, x + 1, 1);
-                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x + 1, z, rotation));
-                                //streetBlocks.add(centerPos.offset(new BlockPos(x + 1, firstFreeHeight, z).rotate(rotation)).atY(firstFreeHeight-1));//makeStreetBlockPos(context, centerPos, x + 1, z, rotation));
+                                streetBlocks.add(makeStreetBlockPos(context, centerPos, x + 1, z, rotation, pos.getY()));
                             }
-                            //if (getGridElement(streetGrid, z, x - 1) == 0) {
-                            //    setGridElement(streetGrid, z, x - 1, 1);
-                            //    streetBlocks.add(new Tuple<>(new BlockPos(x - 1, 0, z), Registration.DAMP_WOOD.get().defaultBlockState()));
-                            //}
                         } else if (direction == -1) {
                             currentStreetNode = -1;
                         }
@@ -588,11 +586,14 @@ public class HamletPieces {
         }
     }
 
-    private static BlockPos makeStreetBlockPos(Structure.GenerationContext context, BlockPos centerPos, int offsetX, int offsetZ, Rotation rotation) {
+    private static BlockPos makeStreetBlockPos(Structure.GenerationContext context, BlockPos centerPos, int offsetX, int offsetZ, Rotation rotation, int height) {
+        System.out.println("make");
         BlockPos offset = new BlockPos(offsetX, 0, offsetZ).rotate(rotation);
         BlockPos finalPos = centerPos.offset(offset);
-        int firstFreeHeight = context.chunkGenerator().getFirstFreeHeight(finalPos.getX(), finalPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        return finalPos.atY(firstFreeHeight - 1);
+        if (height == -1) {
+            height = context.chunkGenerator().getFirstFreeHeight(finalPos.getX(), finalPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 1;
+        }
+        return finalPos.atY(height);
     }
 
 
