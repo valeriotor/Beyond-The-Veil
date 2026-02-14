@@ -47,9 +47,6 @@ public class InputEvents {
                         Minecraft.getInstance().getSoundManager().play(propellerSound);
                     }
             }
-            if (player.level().dimension() == BTVDimensions.ARCHE_LEVEL && !Minecraft.getInstance().isPaused()) {
-                ClientData.getInstance().archeCycleData.tick(false);
-            }
             if (Minecraft.getInstance().screen instanceof SurgeryBedGui) {
                 player.attackAnim = 0;
             }

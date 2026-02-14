@@ -27,6 +27,8 @@ import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
@@ -168,6 +170,10 @@ public class PlayerEvents {
         addCrawlingAttributes(event.getEntity());
         if (event.getEntity() instanceof ServerPlayer sp) {
             syncBloodPool(sp);
+            if(sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+                ArcheCycleData arche = sp.serverLevel().getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                Messages.sendToPlayer(GenericToClientPacket.syncArcheData(arche), sp);
+            }
         }
     }
 
@@ -251,6 +257,14 @@ public class PlayerEvents {
             } else {
                 ClientMethods.setCrawlingPlayerSize(updater, p);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void playerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (event.getTo() == BTVDimensions.ARCHE_LEVEL && event.getEntity() instanceof ServerPlayer sp) {
+            ArcheCycleData arche = sp.serverLevel().getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+            Messages.sendToPlayer(GenericToClientPacket.syncArcheData(arche), sp);
         }
     }
 

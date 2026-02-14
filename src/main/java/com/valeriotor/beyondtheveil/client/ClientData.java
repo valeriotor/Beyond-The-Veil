@@ -6,11 +6,15 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
+import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
+import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -41,6 +45,7 @@ public class ClientData {
         instance = new ClientData();
         // any data that should survive after recreating player
         instance.bloodPoolData = old.bloodPoolData;
+        instance.archeCycleData = old.archeCycleData;
     }
 
     //@SubscribeEvent
@@ -50,6 +55,7 @@ public class ClientData {
 
     public final List<Waypoint> waypoints = new ArrayList<>();
     public ArcheCycleData archeCycleData = new ArcheCycleData();
+    public CurrentSoundInstance newestCurrentSoundInstance = null;
     private BloodPoolData bloodPoolData = new BloodPoolData();
     private int contactTimer = 0;
     private int contactFogLevel = 0;
@@ -90,6 +96,45 @@ public class ClientData {
 
     public void syncArcheData(CompoundTag tag) {
         archeCycleData = new ArcheCycleData(tag.getCompound("data"));
+    }
+
+    public void tickArcheCycleData() {
+        if (archeCycleData != null) {
+            archeCycleData.tick(false);
+            long ticksInCycle = archeCycleData.ticksInCycle();
+            /*if (ticksInCycle % 200 <= 0) {
+                int soundIndex = (int) archeCycleTicksToSoundIndex(ticksInCycle);
+                if(soundIndex < BTVSounds.CURRENTS_LIST.size()) {
+                    if (newestCurrentSoundInstance != null) {
+                        Minecraft.getInstance().getSoundManager().stop(newestCurrentSoundInstance);
+                        newestCurrentSoundInstance = null;
+                    }
+                    if (ticksInCycle % 200 == 0) {
+                        boolean slowStart = newestCurrentSoundInstance == null && soundIndex > 0 || true;
+                        newestCurrentSoundInstance = new CurrentSoundInstance(BTVSounds.CURRENTS_LIST.get(soundIndex).get(), slowStart, soundIndex);
+                        Minecraft.getInstance().getSoundManager().play(newestCurrentSoundInstance);
+
+                    }
+                    //CurrentSoundInstance old = newestCurrentSoundInstance;
+                    //if (old != null) {
+                        //Minecraft.getInstance().getSoundManager().stop(old);
+                    //}
+                }
+            }*/
+            if (ticksInCycle % 200 == 0) {
+                int soundIndex = (int) archeCycleTicksToSoundIndex(ticksInCycle);
+                if(soundIndex < BTVSounds.CURRENTS_LIST.size()) {
+                    boolean slowStart = newestCurrentSoundInstance == null && soundIndex > 0;
+                    //CurrentSoundInstance old = newestCurrentSoundInstance;
+                    newestCurrentSoundInstance = new CurrentSoundInstance(BTVSounds.CURRENTS_LIST.get(soundIndex).get(), slowStart, soundIndex);
+                    Minecraft.getInstance().getSoundManager().play(newestCurrentSoundInstance);
+                }
+            }
+        }
+    }
+
+    private long archeCycleTicksToSoundIndex(long ticks) {
+        return ticks / 20 / 10;
     }
 
     public void tick(TickEvent.ClientTickEvent event) {
@@ -137,6 +182,9 @@ public class ClientData {
                 // TEST if (p != null && (!playerAnimations.containsKey(p.getUUID()) || playerAnimations.get(p.getUUID()).isEmpty())) {
                 // TEST     playerAnimations.computeIfAbsent(p.getUUID(), uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.player_default_test));
                 // TEST }
+            }
+            if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level().dimension() == BTVDimensions.ARCHE_LEVEL && event.phase == TickEvent.Phase.END) {
+                tickArcheCycleData();
             }
         }
     }

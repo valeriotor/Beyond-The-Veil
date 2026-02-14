@@ -195,7 +195,7 @@ public class ClientMethods {
             LivingTickEvents.doArcheMovement(data.getCurrentIntensity(), Minecraft.getInstance().player);
         }
         if (ticks == 0) {
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(BTVSounds.CURRENTS.get(), 1, 1));
+            //Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(BTVSounds.CURRENTS.get(), 1, 1));
         }
     }
 

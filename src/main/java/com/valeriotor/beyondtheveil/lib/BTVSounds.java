@@ -7,6 +7,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class BTVSounds {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, References.MODID);
@@ -26,7 +30,6 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> HEARTBEAT = registerSound("heartbeat");
     public static final RegistryObject<SoundEvent> HEART_RIP = registerSound("heart_rip");
     public static final RegistryObject<SoundEvent> SPINE_RIP = registerSound("spine_rip");
-    public static final RegistryObject<SoundEvent> CURRENTS = registerSound("currents");
     public static final RegistryObject<SoundEvent> SUBMARINE_CRASH = registerSound("submarine_crash");
     public static final RegistryObject<SoundEvent> PROPELLER = registerSound("propeller");
     public static final RegistryObject<SoundEvent> SHOREMAN_DIALOGUE = registerSound("shoreman_dialogue");
@@ -34,6 +37,7 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> SURGEON_IDLE = registerSound("surgeon_idle");
     public static final RegistryObject<SoundEvent> BLOOD_ZOMBIE_LONG = registerSound("blood_zombie_long");
     public static final RegistryObject<SoundEvent> BLOOD_ZOMBIE_SHORT = registerSound("blood_zombie_short");
+    public static final List<RegistryObject<SoundEvent>> CURRENTS_LIST = registerCurrents();
 
     public static void init(IEventBus bus) {
         SOUNDS.register(bus);
@@ -41,6 +45,14 @@ public class BTVSounds {
 
     private static RegistryObject<SoundEvent> registerSound(String name) {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(References.MODID, name)));
+    }
+
+    private static List<RegistryObject<SoundEvent>> registerCurrents() {
+        List<RegistryObject<SoundEvent>> currents = new ArrayList<>();
+        for (int i = 0; i < 18; i++) {
+            currents.add(registerSound("currents" + i));
+        }
+        return Collections.unmodifiableList(currents);
     }
 
 }

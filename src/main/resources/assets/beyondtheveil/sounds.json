@@ -67,5 +67,59 @@
   },
   "blood_zombie_short": {
     "sounds": [ "beyondtheveil:blood_zombie_short1", "beyondtheveil:blood_zombie_short2" ]
+  },
+  "currents0": {
+    "sounds": [ "beyondtheveil:currents0" ]
+  },
+  "currents1": {
+    "sounds": [ "beyondtheveil:currents1" ]
+  },
+  "currents2": {
+    "sounds": [ "beyondtheveil:currents2" ]
+  },
+  "currents3": {
+    "sounds": [ "beyondtheveil:currents3" ]
+  },
+  "currents4": {
+    "sounds": [ "beyondtheveil:currents4" ]
+  },
+  "currents5": {
+    "sounds": [ "beyondtheveil:currents5" ]
+  },
+  "currents6": {
+    "sounds": [ "beyondtheveil:currents6" ]
+  },
+  "currents7": {
+    "sounds": [ "beyondtheveil:currents7" ]
+  },
+  "currents8": {
+    "sounds": [ "beyondtheveil:currents8" ]
+  },
+  "currents9": {
+    "sounds": [ "beyondtheveil:currents9" ]
+  },
+  "currents10": {
+    "sounds": [ "beyondtheveil:currents10" ]
+  },
+  "currents11": {
+    "sounds": [ "beyondtheveil:currents11" ]
+  },
+  "currents12": {
+    "sounds": [ "beyondtheveil:currents12" ]
+  },
+  "currents13": {
+    "sounds": [ "beyondtheveil:currents13" ]
+  },
+  "currents14": {
+    "sounds": [ "beyondtheveil:currents14" ]
+  },
+  "currents15": {
+    "sounds": [ "beyondtheveil:currents15" ]
+  },
+  "currents16": {
+    "sounds": [ "beyondtheveil:currents16" ]
+  },
+  "currents17": {
+    "sounds": [ "beyondtheveil:currents17" ]
   }
 }

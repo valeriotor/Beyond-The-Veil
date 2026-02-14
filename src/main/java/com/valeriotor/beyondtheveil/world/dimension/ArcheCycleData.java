@@ -47,7 +47,7 @@ public class ArcheCycleData extends SavedData {
     }
 
     public long getModuloTicks() {
-        return cycle &= TICKS_PER_CYCLE;
+        return cycle & TICKS_PER_CYCLE;
     }
 
     public long ticksInCycle() {
