@@ -11,6 +11,8 @@ import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -129,6 +131,7 @@ public class SurgeonDisposePatientStep extends SurgeonStep {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
                     if (iItemHandler.insertItem(i, surgeon.getItems().get(0), true).getCount() < surgeon.getItems().get(0).getCount()) {
                         if (surgeon.distanceToSqr(container.getCenter()) < 6) {
+                            surgeon.level().playSound(null, surgeon.blockPosition(), SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 1, 1);
                             ItemStack remainder = iItemHandler.insertItem(i, surgeon.getItems().get(0), false);
                             if (remainder.isEmpty()) {
                                 surgeon.getItems().remove(0);
