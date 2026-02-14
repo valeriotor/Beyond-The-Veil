@@ -50,7 +50,7 @@ public class PatientPodBE extends BlockEntity {
                     return true;
                 }
             } else {
-                if (heldEntity == null) {
+                if (heldEntity == null && !crossSync.isCrawling()) {
                     crossSync.setHeldPatient(podData.getPatient(), podData.getEntity(), p);
                     podData.setPatient(null, null);
                     sync();
