@@ -307,7 +307,7 @@ public class NecronomiconGui extends Screen {
             int pupilY = (int) (pupilYOffset + (pupilNextYOffset - pupilYOffset) * (counterMod32 + partialTicks) / 4);
 
             poseStack.pushPose();
-            poseStack.translate(width - 142 + 64, height - 142 + 64, 0);
+            poseStack.translate(width - 142 + 64, height - 142 + 64, 200);
             if (mouseX > width - 142 && mouseY > height - 142) {
                 poseStack.scale(1.1F, 1.1F, 0);
             }
