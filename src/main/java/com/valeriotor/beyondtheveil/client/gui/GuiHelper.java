@@ -4,16 +4,15 @@ import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.gui.research.BloodThesisGui;
 import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
 import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class GuiHelper {
 
@@ -25,7 +24,16 @@ public class GuiHelper {
     }
 
     public static void openClientSideGui(GuiType type) {
-        Minecraft.getInstance().setScreen(type.supplier.get());
+        Screen screen = switch (type) {
+            case NECRONOMICON -> new NecronomiconGui();
+            case JOURNAL -> new JournalGui();
+            case BLOOD_POOL -> new BloodPoolGui();
+            case KILLED_BY_CULTIST -> new KilledByCultistGui();
+            case BLOOD_THESIS -> new BloodThesisGui();
+            case SURGERY_BED -> new SurgeryBedGui();
+            case DAGON -> new DagonCommunionGui();
+        };
+        Minecraft.getInstance().setScreen(screen);
 //        Minecraft.getInstance().pushGuiLayer(type.supplier.get());
     }
 
@@ -35,21 +43,6 @@ public class GuiHelper {
         //    strings.set(i, strings.get(i).concat(" "));
         //}
         return strings;
-    }
-
-    public enum GuiType {
-        NECRONOMICON(() -> new NecronomiconGui()),
-        JOURNAL(() -> new JournalGui()),
-        BLOOD_POOL(() -> new BloodPoolGui()),
-        KILLED_BY_CULTIST(() -> new KilledByCultistGui()),
-        BLOOD_THESIS(() -> new BloodThesisGui()),
-        SURGERY_BED(() -> new SurgeryBedGui());
-
-        private Supplier<Screen> supplier;
-
-        GuiType(Supplier<Screen> supplier) {
-            this.supplier = supplier;
-        }
     }
 
 

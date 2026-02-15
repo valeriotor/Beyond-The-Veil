@@ -42,5 +42,10 @@ public class ArcheSavedData extends SavedData {
 
     public void addAltar(BlockPos pos) {
         altars.add(pos);
+        setDirty();
+    }
+
+    public Set<BlockPos> getAltars() {
+        return altars;
     }
 }

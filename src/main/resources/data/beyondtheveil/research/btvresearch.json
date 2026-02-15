@@ -605,6 +605,7 @@
         "parents": ["BLOOD_WELL", "FIRST_CONTACT"],
         "stages": [
           {
+            "epigraph": "research.NEW_DEPTHS.epigraph",
             "text": "research.NEW_DEPTHS.stage.0",
             "required_research": ["entered_arche"],
             "recipes": ["beyondtheveil:nautilus", "beyondtheveil:repair_hammer", "beyondtheveil:arche_dial"],

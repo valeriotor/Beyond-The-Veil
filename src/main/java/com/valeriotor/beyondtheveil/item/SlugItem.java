@@ -1,14 +1,21 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import com.valeriotor.beyondtheveil.util.timers.ContactTimer;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.saved.ArcheSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -31,7 +38,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.Tags;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 public class SlugItem extends Item {
 
@@ -63,6 +72,9 @@ public class SlugItem extends Item {
                         c.addTimer(new ContactTimer());
                     }
                 });
+            } else if (checkDagon(sp)) {
+                Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.DAGON), sp);
+                PlayerTimerData.for_(sp).addTimer(new PlayerTimer(10000, "dagon_communion", null, new HashMap<>()));
             }
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
@@ -136,6 +148,19 @@ public class SlugItem extends Item {
 
     public static boolean hasResearchForContact(ServerPlayer sp) {
         return ResearchUtil.getResearchStage(sp, "CUSTOMS") >= 1 && !DataUtil.getBoolean(sp, PlayerDataLib.had_contact.name()); // TODO change customs to first contact
+    }
+
+    private static boolean checkDagon(ServerPlayer sp) {
+        if (ResearchUtil.getResearchStage(sp, "NEW_DEPTHS") == 1 && sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            ArcheSavedData instance = ArcheSavedData.getInstance(sp.serverLevel());
+            Set<BlockPos> altars = instance.getAltars();
+            for (BlockPos altar : altars) {
+                if (Math.abs(sp.getX() - altar.getX()) < 8 && Math.abs(sp.getZ() - altar.getZ()) < 8 && Math.abs(sp.getY() - 79) < 8) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -4,7 +4,6 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
-import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
@@ -17,6 +16,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.BloodWellBE;
 import com.valeriotor.beyondtheveil.tile.HeartBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockRegistry;
@@ -159,7 +159,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
                                 }
                             })
                             .addFinalActions((p,c) -> {
-                                Messages.sendToPlayer(GenericToClientPacket.openGui(GuiHelper.GuiType.KILLED_BY_CULTIST), (ServerPlayer) p);
+                                Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.KILLED_BY_CULTIST), (ServerPlayer) p);
                                 p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_DEATH, SoundSource.PLAYERS, 1, 1);
                             }) // TODO this might not work on dedicated servers, test
                             .toTimer();

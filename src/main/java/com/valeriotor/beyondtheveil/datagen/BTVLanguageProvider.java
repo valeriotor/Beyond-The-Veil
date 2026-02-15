@@ -100,7 +100,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.sigil.player", "Bound to %1$s.");
         add("tooltip.sigil.area", "Bound to x: %1$s, y: %2$s, z: %3$s.");
         add("tooltip.repair_hammer.1", "§eUsed to repair Nautilus (left-click) or pick it up (right-click).");
-        add("tooltip.repair_hammer.2", "§lOnly works from outside.§r");
+        add("tooltip.repair_hammer.2", "§e§lOnly works from outside.§r");
 
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");
@@ -1258,7 +1258,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("dialogue.blood_cultist.immortal.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
         add("dialogue.blood_cultist.immortal.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
-        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who was said to have lived a thousand lives – she was immortal, just like you.");
+        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who was said to have lived a thousand lives – she is immortal, just like you.");
         add("dialogue.blood_cultist.immortal.start.0", "Extraordinary – you are immortal.");
         add("dialogue.blood_cultist.immortal.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
         add("dialogue.blood_cultist.immortal.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods, that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
@@ -1759,7 +1759,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.pray.1", "And, of course, though the Veil remains silent, the Ocean does not – and to Him, and to His children, we do speak.");
         add("dialogue.shoreman_scholar.discuss.accept.0", "I am not surprised. He still holds a lot of love in his heart, despite all he's gone through.");
         add("dialogue.shoreman_scholar.discuss.groundtruth.0", "Does there have to be? How can you seek a single truth when every living thing has its own perspective of the universe? There are as many truths as there are beating hearts, else the world would not be so divided.");
-        add("dialogue.shoreman_scholar.discuss.adelina.0", "Adelina, who had lived a thousand lives. Deemed a \"Saint\" like her betrothed, yet ruthless, cold-blooded – after all, a single life meant so little to her.");
+        add("dialogue.shoreman_scholar.discuss.adelina.0", "Adelina, who has lived a thousand lives. Deemed a \"Saint\" like her betrothed, yet ruthless, cold-blooded – after all, a single life means so little to her.");
         add("dialogue.shoreman_scholar.discuss.understand.0", "Neither do I. I shall enquire into any similar occurrences, among the shoremen and the world at large, and shall let you know of any findings. You did well to tell me.");
         add("dialogue.shoreman_scholar.discuss.veil.0", "One could start pondering the ways in which a given nomenclature alters the frame through which we envision things, and how referring to a \"Dreamer\" may make the object more human and sympathetic than an abstract \"Veil\" – but yes, essentially they are one and the same.");
         add("dialogue.shoreman_scholar.discuss.slugs.0", "Slugs are little reminders of what life is like at the bottom of the sea; amorphous, inchoate, mirroring the turmoils of currents in those depths.\nThey are our means of communion, through which we speak to the ocean.");
@@ -2389,13 +2389,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.NEW_DEPTHS.epigraph.source", "From §oReflections of an Immortal§r, published last year. In it, Adelina looks back to her journeys in Arche, three decades prior.\\n");
         add("research.NEW_DEPTHS.stage.0", "Thirty-seven years have gone by since the first expeditions to Arche began, and thirty-one since the last ones ended. Incited by both secular and religious bodies, they were justified as necessary, holy purges against \"abominable monsters\" threatening our peace  – the Deep Ones, clearly – yet I now see the truth of their origin: they were merely perpetuating the violence that had begun in the black shores, against this new enemy that had risen to the shoremen's protection. \\n" +
                 "We shall continue their journey, but not their legacy: our mission will be one of peace, to mend bonds between humanity and Dagon.\\n" +
-                "The old hunters' knowledge will come useful, however: fliers were affixed across towns, acting as instruction manuals for prospective explorers. We will include here a copy of such a pamphlet, together with the schematics for building the recommended equipment.\\n" +
+                "The old hunters' knowledge will come useful, however: fliers were affixed across towns, acting as instruction manuals for prospective explorers. We include here a copy of such a pamphlet, together with the schematics for building the recommended equipment.\\n" +
                 "Importantly, some things shall differ from the old missions: first, owing to Mauer's kindness, we know how to create Vessel Stones via Blood Rituals, and thus won't have to procure any from official sources.\\n" +
                 "Second, whereas a normal human would immediately collapse under the immense pressures of Arche's waters, I believe that, having undergone baptism, our body may withstand them for a short duration. Leaving the Nautilus may be possible (and sometimes necessary), though we should be careful not to do so for an extended period, and certainly not during a current.\\n" +
-                "So: our goal is to speak to Dagon, but for now let's simply enter His realm and gauge its dangers. It may be accessed via a blood well: just as life is pushed upwards through the arteries of the world, so too do deceased things descend through its veins. One must thus enter the well §owith rotten flesh in one hand and coal in the other§r, and so be transported down below. Just like the dead. Ahh, what an omen.");
+                "So: our goal is to speak to Dagon, but for now let's just enter His realm and gauge its dangers. It may be accessed via a blood well: just as life is pushed upwards through the arteries of the world, so too do deceased things descend through its veins. One must thus enter the well §owith rotten flesh in one hand and coal in the other§r, and so be transported down below. Just like the dead. Ahh, what an omen.");
         add("research.NEW_DEPTHS.stage.1", "The old hunters' quest converged on the cities inhabited by the Deep Ones, and so too shall ours. Unlike them, our search shall be guided by dreams of water: just as they bring us to an ocean monument when performed on the surface world, so will they show us the way to a deep city when performed in Arche. I... §oknow§r they will.\\n" +
                 "If no hostilities arise with the city's denizens, we shall then head towards the colossal altar dominating the city, and there, §oat the very top§r, consume a slug to enter communion with Father Ocean once more. He will guide us to Truth.");
-        add("research.NEW_DEPTHS.stage.2", "");
+        add("research.NEW_DEPTHS.stage.2", "I do not understand. Such kindness and magnanimity when he first spoke to me in my baptism, replaced with vicious indifference in the maelstrom of the deepest Ocean.\\n" +
+                "He spoke yet did not listen; to hear Dagon from within his own body... did it reveal its true nature, or just another facet of something entirely unpredictable, inscrutable by our scientific means, indescribable by our human criteria, unconstrained by our axioms?");
 
     }
 
@@ -2439,6 +2440,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dream_bottle.title", "Dream Bottle");
         add("gui.blood_gem.title", "Blood Gem");
         add("gui.surgery_bed.title", "Surgery Bed");
+        add("gui.dagon.title", "Communion");
 
         addJournal();
         addLetterBox();
@@ -2446,6 +2448,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addOverlays();
         addBloodPool();
         addBloodThesis();
+        addDagon();
 
 
         add("gui.dialogue.bartender.display_name", "Bartender");
@@ -2465,6 +2468,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.surgery_bed.leave_complete", "Leave (operation completed)");
 
         add("container.deep_chest", "Deep Chest");
+    }
+
+    private void addDagon() {
+        add("gui.dagon.0", "Hearken me, o fleeting children!");
+        add("gui.dagon.1", "Ye are born of mine own blood, that ichor traversing all concreteness.");
+        add("gui.dagon.2", "And now ye dive, to speak to the heart!");
+        add("gui.dagon.3", "But do not squander what little time ye have.");
+        add("gui.dagon.4", "Ye will die, ultimately, like all of thy kin.");
+        add("gui.dagon.5", "Humanity shall forget thee,");
+        add("gui.dagon.6", "and I shall forget humanity.");
+        add("gui.dagon.7", "Now depart, and see it manifest.");
+        add("gui.dagon.8", "Slay he who keeps the lighthouse, and embrace that snippet of Truth.");
     }
 
     private void addBloodThesis() {

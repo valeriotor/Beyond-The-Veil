@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.util;
 import com.valeriotor.beyondtheveil.util.timers.BaptismTimer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class PlayerTimer {
         this.additionalData = builder.additionalData;
     }
 
-    public PlayerTimer(int timer, String id, PersistentPlayerTimer persistence, Map<String, String> additionalData) {
+    public PlayerTimer(int timer, String id, @Nullable PersistentPlayerTimer persistence, Map<String, String> additionalData) {
         this.timer = timer;
         this.id = id;
         this.continuousActions = persistence != null ? persistence.getContinuousActions() : List.of();

@@ -121,5 +121,11 @@
   },
   "currents17": {
     "sounds": [ "beyondtheveil:currents17" ]
+  },
+  "dagon_tension": {
+    "sounds": [ "beyondtheveil:dagon_tension" ]
+  },
+  "dagon_thump": {
+    "sounds": [ "beyondtheveil:dagon_thump" ]
   }
 }

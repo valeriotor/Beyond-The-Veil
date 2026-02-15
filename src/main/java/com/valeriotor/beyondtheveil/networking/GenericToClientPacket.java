@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.LivingAmmunitionEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
@@ -136,7 +137,7 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.HIDE_OVERLAY_MESSAGE, new CompoundTag());
     }
 
-    public static GenericToClientPacket openGui(GuiHelper.GuiType type) {
+    public static GenericToClientPacket openGui(GuiType type) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("id", type.ordinal());
         return new GenericToClientPacket(MessageType.OPEN_GUI, tag);

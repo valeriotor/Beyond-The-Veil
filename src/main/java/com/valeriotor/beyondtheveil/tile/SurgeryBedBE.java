@@ -1,12 +1,12 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
-import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -70,7 +70,7 @@ public class SurgeryBedBE extends SurgicalBE {
             player.stopRiding();
         }
 
-        Messages.sendToPlayer(GenericToClientPacket.openGui(GuiHelper.GuiType.SURGERY_BED), player);
+        Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.SURGERY_BED), player);
 
         player.setPose(Pose.SLEEPING);
         BlockPos pos = getBlockPos();

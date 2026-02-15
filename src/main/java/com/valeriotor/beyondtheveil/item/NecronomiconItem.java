@@ -2,15 +2,10 @@ package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
-import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
-import com.valeriotor.beyondtheveil.lib.References;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
-import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -29,7 +24,7 @@ public class NecronomiconItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (pLevel.isClientSide()) {
             pPlayer.playSound(SoundEvents.BOOK_PAGE_TURN, 1, 1);
-            GuiHelper.openClientSideGui(GuiHelper.GuiType.NECRONOMICON);
+            GuiHelper.openClientSideGui(GuiType.NECRONOMICON);
         } /*else {
             DataUtil.setBooleanOnServerAndSync(pPlayer, "thebeginning", true, false);
             ResearchUtil.getResearch(pPlayer, "FIRSTDREAMS");

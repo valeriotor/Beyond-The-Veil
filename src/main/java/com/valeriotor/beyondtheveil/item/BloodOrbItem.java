@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.util.GuiType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,7 +20,7 @@ public class BloodOrbItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (pLevel.isClientSide()) {
             pPlayer.playSound(SoundEvents.MUD_PLACE, 1, 1);
-            GuiHelper.openClientSideGui(GuiHelper.GuiType.BLOOD_POOL);
+            GuiHelper.openClientSideGui(GuiType.BLOOD_POOL);
         }
         return super.use(pLevel, pPlayer, pUsedHand);
     }

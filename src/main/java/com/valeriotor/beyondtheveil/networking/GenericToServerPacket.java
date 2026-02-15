@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
@@ -122,6 +123,10 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.START_PLAYER_EXPLOSION, new CompoundTag());
     }
 
+    public static GenericToServerPacket finishDagonQuest() {
+        return new GenericToServerPacket(MessageType.FINISH_DAGON_QUEST, new CompoundTag());
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -223,6 +228,11 @@ public class GenericToServerPacket {
                             DataUtil.getMemoryStatus(player, memory).setChanged(false);
                         }
                     }
+                    case FINISH_DAGON_QUEST -> {
+                        if (PlayerTimerData.for_(player).hasTimer("dagon_communion") && ResearchUtil.getResearchStage(player, "NEW_DEPTHS") == 1) {
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.spoke_to_dagon.name(), true, false);
+                        }
+                    }
                     case START_PLAYER_EXPLOSION -> {
                         TransformationUtil.startExplodingPlayer(player);
                     }
@@ -250,6 +260,7 @@ public class GenericToServerPacket {
         CHOOSE_BAPTISM_OPTION,
         SPAWN_BLOOD_POOL_ENTITY,
         READ_MEMORY,
+        FINISH_DAGON_QUEST,
         START_PLAYER_EXPLOSION
     }
 
