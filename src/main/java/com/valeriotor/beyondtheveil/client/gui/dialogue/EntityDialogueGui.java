@@ -46,6 +46,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     private List<String> localizedNpcLines = new ArrayList<>();
     private List<String> displayedLines = new ArrayList<>();
     private Set<Character> storedFormattings = new HashSet<>();
+    private EntityDialogueBox dialogueBox;
     private final ResourceLocation texture;
 
 
@@ -94,6 +95,8 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
         //this.npcLines.clear();
         String npcLine = menu.getNpcLine();
+        npcLine = "]]]]In concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.\nIn concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.\nIn concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.";
+        dialogueBox = new EntityDialogueBox((int) (textWidth * 100 / 100), 75, npcLine);
         while (npcLine.startsWith("|")) {
             npcLine = npcLine.substring(1);
             pauseTicks += 5;
@@ -101,7 +104,6 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         if (npcLine.contains("I said")) {
             npcLine = "]]" + npcLine;
         }
-        //npcLine = "In concealing — or eradicating — their existence, the church||| of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.";
         //npcLine = "Oh. A traveller.||| \nWelcome.";
         //this.npcLines.addAll(minecraft.font.split(FormattedText.of(npcLine), (int) (textWidth / scaleFactor)));
 
@@ -191,6 +193,9 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             displayedLines.clear();
             init();
         }
+        if (dialogueBox != null) {
+            dialogueBox.tick();
+        }
         if (pauseTicks > 0) {
             pauseTicks--;
         } else {
@@ -202,7 +207,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             if (currentLine < localizedNpcLines.size() && charactersAddedCounter % 3 == 0) {
                 SoundEvent sound = menu.getTemplate().getType().getSound();
                 if (sound != null) {
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 0.3F, 0.2F));
+                    //Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 0.3F, 0.2F));
                 }
             }
         }
@@ -302,9 +307,15 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         tryAddCharacter();
 
         int yOffset = 0;
-        for (String npcLine : displayedLines) {
-            guiGraphics.drawString(minecraft.font, npcLine, (int) (-imageWidth * TEXT_WIDTH_RATIO / 2), (int) (-imageHeight * TEXT_HEIGHT_RATIO) + yOffset, 0xFFFFFFFF);
-            yOffset += 15;
+        //for (String npcLine : displayedLines) {
+        //    guiGraphics.drawString(minecraft.font, npcLine, (int) (-imageWidth * TEXT_WIDTH_RATIO / 2), (int) (-imageHeight * TEXT_HEIGHT_RATIO) + yOffset, 0xFFFFFFFF);
+        //    yOffset += 15;
+        //}
+        if (dialogueBox != null) {
+            pose.pushPose();
+            pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -135, 0);
+            dialogueBox.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX, pMouseY, pPartialTick);
+            pose.popPose();
         }
 
         if (options != null && shouldShowOptions()) {
@@ -349,6 +360,11 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (dialogueBox != null) {
+            if (dialogueBox.mouseScrolled((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 135 * scaleFactor) / scaleFactor), pDelta)) {
+                return true;
+            }
+        }
         if (options != null) {
             return options.mouseScrolled((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pDelta);
         }
