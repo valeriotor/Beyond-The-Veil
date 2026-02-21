@@ -4,8 +4,10 @@ import com.google.common.math.DoubleMath;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.TextLine;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -13,11 +15,12 @@ import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class EntityDialogueBox extends ScrollableList<TextLine> {
 
     private static final double DOT_PAUSE = 10.5;
-    private static final double COMMA_PAUSE = 4.7;
+    private static final double COMMA_PAUSE = 5.7;
     private static final double DASH_PAUSE = 5.7;
     private static final double SLASH_PAUSE = 7.7;
     private double ppc = 0.5;
@@ -73,11 +76,6 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
         }
         progress = newProgress;
         makeNewLine();
-
-        // current = 0.4
-        // pause = 0.2
-        // new = 0.9
-        // must add char for 0.8, i.e. current + pause + PPC - ppcfloor(current)
     }
 
     private void addCharacter(int characterIndex) {
@@ -91,7 +89,15 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
             if (characterIndex >= line.length()) {
                 characterIndex = 0;
                 makeNewLine();
-                rows().add(new TextLine(FormattedCharSequence.EMPTY, new ArrayList<>(), Minecraft.getInstance().font));
+                if(currentLineIndex + 1 < lines.size()) {
+                    boolean adjustRow = getCurrentFirstRow() == getMaxFirstRow();
+                    List<TextLine> rows = new ArrayList<>(rows());
+                    rows.add(new TextLine(FormattedCharSequence.EMPTY, new ArrayList<>(), Minecraft.getInstance().font));
+                    changeElements(rows);
+                    if (adjustRow) {
+                        setCurrentFirstRow(getMaxFirstRow());
+                    }
+                }
                 nextAddCharacter += ppc;
                 prevLineSize += line.length();
                 currentLineIndex++;
@@ -122,8 +128,9 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
                     skipped++;
                     characterIndex++;
                 } else {
-                    if (c == '.' || c == '!' || c == '?') {
-                        if (characterIndex + 1 >= line.length() || line.charAt(characterIndex + 1) != '.') {
+                    Set<Character> strongPunctuation = Set.of('.', '!', '?', ':');
+                    if (strongPunctuation.contains(c)) {
+                        if (characterIndex + 1 >= line.length() || !strongPunctuation.contains(line.charAt(characterIndex + 1))) {
                             nextAddCharacter += DOT_PAUSE;
                         }
                     } else if (c == ',') {
@@ -132,6 +139,9 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
                         nextAddCharacter += DASH_PAUSE;
                     }
                     finished = true;
+                    if (nextAddCharacterIndex % 5 == 0) {
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(BTVSounds.SHOREMAN_DIALOGUE.get(), 0.3F));
+                    }
                 }
                 currentLine.append(c);
                 nextAddCharacter += ppc;
@@ -149,5 +159,9 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
             rows.set(rows.size() - 1, newTextLine);
         }
         changeElements(rows);
+    }
+
+    public boolean isFinished() {
+        return currentLineIndex >= lines.size();
     }
 }
