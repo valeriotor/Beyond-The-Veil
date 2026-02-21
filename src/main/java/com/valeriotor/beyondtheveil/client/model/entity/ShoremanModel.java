@@ -80,7 +80,7 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
             this.LeftEye.x = 1.75F;
             this.RightEye.x = -2.0F;
         }
-        this.head.xRot = pHeadPitch * ((float) Math.PI / 180F);
+        this.head.xRot = 0;
         this.head.zRot = 0.0F;
 
         this.RightLeg.xRot = Mth.cos(pLimbSwing * 0.6662F) * 1.4F * pLimbSwingAmount * 0.5F;
@@ -102,7 +102,11 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
         if (dialogueAnimation != null) {
             dialogueAnimation.apply(partialTicks);
         }
-        head.xRot += Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
+        if (pEntity.getFinishDialogueAnimation() != null) {
+            pEntity.getFinishDialogueAnimation().apply(partialTicks);
+            pEntity.stopDialogueAnimation();
+        }
+        head.xRot += pHeadPitch * ((float) Math.PI / 180F) + Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
         body.y = 24 + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;
         arms.xRot = -0.7854F + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.03F;
     }

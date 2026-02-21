@@ -74,6 +74,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
     private Animation dialogueAnimation;
     private int countdownTillDialogueAnimation = -1;
     private int talkingTicks;
+    private Animation finishDialogueAnimation;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -373,7 +374,9 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
         if (start && getProfession() != ShoremanProfession.LIGHTHOUSE_KEEPER) {
             countdownTillDialogueAnimation = 45;
         } else {
-            dialogueAnimation = null;
+            if (dialogueAnimation != null) {
+                finishDialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue_reset);
+            }
             countdownTillDialogueAnimation = -1;
         }
     }
@@ -387,6 +390,12 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
                 if (countdownTillDialogueAnimation == 0) {
                     dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue1);
                 }
+                if (finishDialogueAnimation != null) {
+                    finishDialogueAnimation.update();
+                    if (finishDialogueAnimation.isDone()) {
+                        finishDialogueAnimation = null;
+                    }
+                }
             } else if (dialogueAnimation != null) {
                 dialogueAnimation.update();
                 if (dialogueAnimation.isDone()) {
@@ -394,7 +403,13 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
                         dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue2);
                     } else if (dialogueAnimation.getTemplate() == AnimationRegistry.shoreman_dialogue2) {
                         countdownTillDialogueAnimation = 30;
+                        dialogueAnimation = null;
                     }
+                }
+            } else if (finishDialogueAnimation != null) {
+                finishDialogueAnimation.update();
+                if (finishDialogueAnimation.isDone()) {
+                    finishDialogueAnimation = null;
                 }
             }
         } else {
@@ -410,8 +425,16 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
         return talkingTicks;
     }
 
+    public void stopDialogueAnimation() {
+        this.dialogueAnimation = null;
+    }
+
     public Animation getDialogueAnimation() {
         return dialogueAnimation;
+    }
+
+    public Animation getFinishDialogueAnimation() {
+        return finishDialogueAnimation;
     }
 
     public enum ShoremanProfession {

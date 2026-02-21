@@ -53,6 +53,7 @@ public class AnimationRegistry {
     public static AnimationTemplate sandflatter_claw;
     public static AnimationTemplate shoreman_dialogue1;
     public static AnimationTemplate shoreman_dialogue2;
+    public static AnimationTemplate shoreman_dialogue_reset;
     public static AnimationTemplate surgeon_operate_stop;
     public static AnimationTemplate surgeon_operate_start;
     public static AnimationTemplate surgeon_standup;
@@ -103,6 +104,7 @@ public class AnimationRegistry {
         sandflatter_claw = registerAnimation("sandflatter_claw", client, i++);
         shoreman_dialogue1 = registerAnimation("shoreman/dialogue1", client, i++);
         shoreman_dialogue2 = registerAnimation("shoreman/dialogue2", client, i++);
+        shoreman_dialogue_reset = registerAnimation("shoreman/dialogue_reset", client, i++);
         surgeon_operate_start = registerAnimation("surgeon_operate_start", client, i++);
         surgeon_operate_stop = registerAnimation("surgeon_operate_stop", client, i++);
         surgeon_standup = registerAnimation("surgeon_standup", client, i++);

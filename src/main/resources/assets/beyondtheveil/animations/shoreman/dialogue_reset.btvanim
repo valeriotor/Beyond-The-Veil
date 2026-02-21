@@ -1,0 +1,11 @@
+model: shoreman
+length: 31
+start: 0: 30
+    roty: head: 0: linear: dynamic
+    rotx: head: 0: linear: dynamic
+    rotz: head: 0: linear: dynamic
+    trax: LeftEye: 1.75: linear: dynamic
+    trax: RightEye: -2.0: linear: dynamic
+    tray: LeftEye: -3.75: linear: dynamic
+    tray: RightEye: -3.75: linear: dynamic
+
