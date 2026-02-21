@@ -1921,11 +1921,11 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addShoremanLighthouseKeeperDialogue() {
-        add("dialogue.shoreman_lighthouse_keeper.initial.start.0", "Oh. A traveller. \nWelcome.");
+        add("dialogue.shoreman_lighthouse_keeper.initial.start.0", "Oh. A traveller.||| \nWelcome.");
         add("dialogue.shoreman_lighthouse_keeper.initial.start.1", "How did you stumble upon our hamlet, may I ask? Was it chance? Or did you seek us?");
         add("dialogue.shoreman_lighthouse_keeper.initial.mere_chance.option", "Mere chance.");
         add("dialogue.shoreman_lighthouse_keeper.initial.hard_to_believe.option", "As hard as it is to believe, I was guided here by a dream.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.dream.0", "A.. dream? A dream of what?");
+        add("dialogue.shoreman_lighthouse_keeper.initial.dream.0", "A... dream? A dream of what?");
         add("dialogue.shoreman_lighthouse_keeper.initial.darkness.option", "Darkness.");
         add("dialogue.shoreman_lighthouse_keeper.initial.guess_chance.option", "I didn't know it would lead me here, so I guess it was chance.");
         add("dialogue.shoreman_lighthouse_keeper.initial.precursor.0", "The precursor of light. Rising up from the ocean to blind the eyes of man.\nBut no, do not worry. Here, atop the lighthouse, you can see §oeverything§r.");
@@ -1939,16 +1939,16 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.initial.asunder.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed 'saints' and 'hunters', blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
         add("dialogue.shoreman_lighthouse_keeper.initial.him.0", "Him? Yes, we chose to portray him in a most striking visage. Amorphous, almost shapeless. Inscrutable.\nAnd, indeed, striking he was, inviting the most violent and ruinous attention.");
         add("dialogue.shoreman_lighthouse_keeper.initial.him.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed 'saints' and 'hunters', blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.not_aware.option", "I.. was not aware. Our church speaks of \"sinners\", and of \"inhuman eretics\". I did not imagine..");
+        add("dialogue.shoreman_lighthouse_keeper.initial.not_aware.option", "I... was not aware. Our church speaks of \"sinners\", and of \"inhuman heretics\". I did not imagine..");
         add("dialogue.shoreman_lighthouse_keeper.initial.just_humans.0", "We are just §ohumans§r!  But §o§lyou§r were fearful of us venerating a different god, and all that he represents.\nBecause §owe§r worship the Veil, that great final threshold all dreams go through. The clouding of thoughts, the fog in the night, the blindness of man and the prejudice driving you towards unspeakable acts.");
         add("dialogue.shoreman_lighthouse_keeper.initial.just_humans.1", "And it lives deep down below, at the bottom of the sea. Hiding all sorts of truths, that filter of infinity in the emptiness of the §ovoid§r.\nYour ancestors could not tolerate its existence, because it would have shattered all your beliefs.");
         add("dialogue.shoreman_lighthouse_keeper.initial.not_forefathers.option", "I am not my forefathers.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.beg.0", "Then §oplease§r, I beg of you..\n§oLet no further harm come upon my people.§r");
+        add("dialogue.shoreman_lighthouse_keeper.initial.beg.0", "Then §oplease§r, I beg of you...\n§oLet no further harm come upon my people.§r");
         add("dialogue.shoreman_lighthouse_keeper.initial.no_fear.option", "You must not fear me.");
         add("dialogue.shoreman_lighthouse_keeper.initial.mankind.option", "My mission is for all of mankind, and that includes §oyou§r.");
         add("dialogue.shoreman_lighthouse_keeper.initial.groundless.option", "Your accusations are groundless. There are no records of any such \"crusades\". I cannot trust your words.");
 
-        add("dialogue.shoreman_lighthouse_keeper.initial1.start.0", "§oPlease§r.. I beg of you..\n§oLet no further harm come upon my people.§r");
+        add("dialogue.shoreman_lighthouse_keeper.initial1.start.0", "§oPlease§r... I beg of you...\n§oLet no further harm come upon my people.§r");
         add("dialogue.shoreman_lighthouse_keeper.initial1.i.option", "I cannot trust you.");
         add("dialogue.shoreman_lighthouse_keeper.initial1.do.option", "Do not fear.");
 

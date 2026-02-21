@@ -591,7 +591,7 @@
   "dialogue.shoreman_lighthouse_keeper.initial.precursor.1": "Tell me then, traveller. What revelations do you hope to uncover?",
   "dialogue.shoreman_lighthouse_keeper.initial.so_much.0": "I see. There has to be so much you must have seen in your endless journeys. I can only envy you, stuck as I am, tending this lighthouse.",
   "dialogue.shoreman_lighthouse_keeper.initial.so_much.1": "Yet, I am left to wonder, what does an explorer like you think of our humble hamlet? Out of all the beauties you must have admired, what is it that strikes you most?",
-  "dialogue.shoreman_lighthouse_keeper.initial.start.0": "Oh. A traveller. \nWelcome.",
+  "dialogue.shoreman_lighthouse_keeper.initial.start.0": "Oh. A traveller.||| \nWelcome.",
   "dialogue.shoreman_lighthouse_keeper.initial.start.1": "How did you stumble upon our hamlet, may I ask? Was it chance? Or did you seek us?",
   "dialogue.shoreman_lighthouse_keeper.initial.still_exploring.option": "I do not know. I am still exploring, the world and myself.",
   "dialogue.shoreman_lighthouse_keeper.initial.unique_architecture.option": "The unique architecture, how everything fits upon the water on which it's built.",

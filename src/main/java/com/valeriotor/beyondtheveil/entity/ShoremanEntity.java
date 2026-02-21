@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
@@ -57,7 +59,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant, Suspicious {
+public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, Merchant, Suspicious {
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
@@ -69,6 +71,9 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant,
     private BlockPos spawnPoint;
     private Player tradingPlayer;
     protected MerchantOffers offers;
+    private Animation dialogueAnimation;
+    private int countdownTillDialogueAnimation = -1;
+    private int talkingTicks;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -184,6 +189,7 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant,
     @Override
     public void setTalkingPlayer(Player player) {
         talkingPlayer = player;
+        animationFromServer(player != null);
     }
 
     private void startTalking(ServerPlayer player) {
@@ -360,6 +366,52 @@ public class ShoremanEntity extends PathfinderMob implements Talkable, Merchant,
     @Override
     public boolean isClientSide() {
         return level().isClientSide();
+    }
+
+    @Override
+    public void toggleDialogueAnimation(boolean start) {
+        if (start && getProfession() != ShoremanProfession.LIGHTHOUSE_KEEPER) {
+            countdownTillDialogueAnimation = 45;
+        } else {
+            dialogueAnimation = null;
+            countdownTillDialogueAnimation = -1;
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide) {
+            if (countdownTillDialogueAnimation >= 0) {
+                countdownTillDialogueAnimation--;
+                if (countdownTillDialogueAnimation == 0) {
+                    dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue1);
+                }
+            } else if (dialogueAnimation != null) {
+                dialogueAnimation.update();
+                if (dialogueAnimation.isDone()) {
+                    if (dialogueAnimation.getTemplate() == AnimationRegistry.shoreman_dialogue1) {
+                        dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue2);
+                    } else if (dialogueAnimation.getTemplate() == AnimationRegistry.shoreman_dialogue2) {
+                        countdownTillDialogueAnimation = 30;
+                    }
+                }
+            }
+        } else {
+            if (isTalking()) {
+                talkingTicks++;
+            } else {
+                talkingTicks = 0;
+            }
+        }
+    }
+
+    public int getTalkingTicks() {
+        return talkingTicks;
+    }
+
+    public Animation getDialogueAnimation() {
+        return dialogueAnimation;
     }
 
     public enum ShoremanProfession {

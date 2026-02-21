@@ -206,6 +206,13 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.SYNC_BINDING_DATA, tag);
     }
 
+    public static GenericToClientPacket dialogueAnimation(int entityId, boolean start) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("id", entityId);
+        tag.putBoolean("start", start);
+        return new GenericToClientPacket(MessageType.DIALOGUE_ANIMATION, tag);
+    }
+
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
     //    CompoundTag tag = new CompoundTag();
     //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
@@ -268,6 +275,7 @@ public class GenericToClientPacket {
                     case START_PLAYER_ANIMATION -> ClientData.getInstance().startPlayerAnimation(tag.getUUID("player"), tag.getInt("anim"));
                     case MAKE_EXPLOSION_BLOOD -> LivingAmmunitionEntity.makeExplosionBleed(ClientMethods.getLevel(), tag.getInt("burst"), tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
                     case SYNC_BINDING_DATA -> ClientData.getInstance().syncBindingData(tag);
+                    case DIALOGUE_ANIMATION -> ClientMethods.dialogueAnimation(tag);
                 }
             });
         });
@@ -301,7 +309,8 @@ public class GenericToClientPacket {
         BLIND_COMPLETELY,
         START_PLAYER_ANIMATION,
         MAKE_EXPLOSION_BLOOD,
-        SYNC_BINDING_DATA
+        SYNC_BINDING_DATA,
+        DIALOGUE_ANIMATION
     }
 
 }

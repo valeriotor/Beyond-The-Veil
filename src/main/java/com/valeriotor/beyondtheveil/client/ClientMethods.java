@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.client.toasts.MemoryToast;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
+import com.valeriotor.beyondtheveil.entity.AnimatedTalkable;
 import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
@@ -64,6 +65,16 @@ public class ClientMethods {
         if (level != null) {
             if (level.getEntity(entityId) instanceof AnimatedEntity animatedEntity) {
                 animatedEntity.startAnimation(template, channel);
+            }
+        }
+    }
+
+    public static void dialogueAnimation(CompoundTag tag) {
+        int entityId = tag.getInt("id");
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level != null) {
+            if (level.getEntity(entityId) instanceof AnimatedTalkable talkable) {
+                talkable.toggleDialogueAnimation(tag.getBoolean("start"));
             }
         }
     }

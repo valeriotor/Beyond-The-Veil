@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -22,17 +23,18 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
     private final ModelPart arms;
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
+    private float partialTicks;
 
     public ShoremanModel(ModelPart root) {
         super(name);
-        this.body = root.getChild("body");
-        this.head = this.body.getChild("head");
-        this.nose = this.head.getChild("nose");
-        this.LeftEye = this.head.getChild("LeftEye");
-        this.RightEye = this.head.getChild("RightEye");
-        this.arms = this.body.getChild("arms");
-        this.RightLeg = this.body.getChild("RightLeg");
-        this.LeftLeg = this.body.getChild("LeftLeg");
+        this.body = registerAnimatedPart(root, "body");
+        this.head = registerAnimatedPart(this.body, "head");
+        this.nose = registerAnimatedPart(this.head, "nose");
+        this.LeftEye = registerAnimatedPart(this.head, "LeftEye");
+        this.RightEye = registerAnimatedPart(this.head, "RightEye");
+        this.arms = registerAnimatedPart(this.body, "arms");
+        this.RightLeg = registerAnimatedPart(this.body, "RightLeg");
+        this.LeftLeg = registerAnimatedPart(this.body, "LeftLeg");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -63,6 +65,7 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
 
 
     public void setupAnim(ShoremanEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+        resetParts();
         float halfRot = pNetHeadYaw * ((float) Math.PI / 180F) / 2;
         this.head.yRot = halfRot;
         if (pEntity.getProfession() != ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && pNetHeadYaw != 0) {
@@ -77,13 +80,37 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
             this.LeftEye.x = 1.75F;
             this.RightEye.x = -2.0F;
         }
-        this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
+        this.head.xRot = pHeadPitch * ((float) Math.PI / 180F);
         this.head.zRot = 0.0F;
 
         this.RightLeg.xRot = Mth.cos(pLimbSwing * 0.6662F) * 1.4F * pLimbSwingAmount * 0.5F;
-        this.LeftLeg.xRot = Mth.cos(pLimbSwing * 0.6662F + (float)Math.PI) * 1.4F * pLimbSwingAmount * 0.5F;
-        this.RightLeg.yRot = 0.0F;
-        this.LeftLeg.yRot = 0.0F;
+        this.LeftLeg.xRot = Mth.cos(pLimbSwing * 0.6662F + (float) Math.PI) * 1.4F * pLimbSwingAmount * 0.5F;
+        //this.RightLeg.yRot = 0.0F;
+        //this.LeftLeg.yRot = 0.0F;
+        //this.head.yRot = 0.5F;
+        //this.head.xRot = 0.25F;
+        //this.head.zRot = -0.125F;
+        //this.LeftEye.x = 1.75F + 0.25F;
+        //this.RightEye.x = -2.0F + 0.125F;
+        //this.LeftEye.y = -3.75F - 0.25F;
+        //this.RightEye.y = -3.75F - 0.25F;
+        //this.LeftEye.x = 1.75F - 0.125F;
+        //this.RightEye.x = -2.0F - 0.25F;
+        //this.LeftEye.y = -3.75F - 0.325F;
+        //this.RightEye.y = -3.75F - 0.325F;
+        Animation dialogueAnimation = pEntity.getDialogueAnimation();
+        if (dialogueAnimation != null) {
+            dialogueAnimation.apply(partialTicks);
+        }
+        head.xRot += Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
+        body.y = 24 + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;
+        arms.xRot = -0.7854F + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.03F;
+    }
+
+    @Override
+    public void prepareMobModel(ShoremanEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
+        partialTicks = pPartialTick;
     }
 
     @Override

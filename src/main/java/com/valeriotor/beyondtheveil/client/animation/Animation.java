@@ -48,6 +48,10 @@ public class Animation {
         return flag;
     }
 
+    public AnimationTemplate getTemplate() {
+        return template;
+    }
+
     public boolean isDone() {
         return ticks >= template.getLength();
     }

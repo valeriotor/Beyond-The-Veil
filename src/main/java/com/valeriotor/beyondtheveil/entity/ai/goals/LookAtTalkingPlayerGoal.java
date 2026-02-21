@@ -18,6 +18,11 @@ public class LookAtTalkingPlayerGoal<T extends PathfinderMob & Talkable> extends
 
     public boolean canUse() {
         if (this.villager.isTalking()) {
+            if (villager instanceof ShoremanEntity shoreman && shoreman.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER) {
+                if (shoreman.getTalkingTicks() < 35) {
+                    return false;
+                }
+            }
             this.lookAt = this.villager.getTalkingPlayer();
             return true;
         } else {

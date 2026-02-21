@@ -1,0 +1,29 @@
+model: shoreman
+length: 600
+start: 120: 160
+    roty: head: 0.5: linear: absolute
+    rotx: head: 0.25: linear: absolute
+    trax: LeftEye: 2.0: linear: absolute
+    trax: RightEye: -1.875: linear: absolute
+    tray: LeftEye: -4.0: linear: absolute
+    tray: RightEye: -4.0: linear: absolute
+start: 190: 220
+    trax: LeftEye: 1.625: linear: absolute
+    trax: RightEye: -2.25: linear: absolute
+    tray: LeftEye: -3.625: linear: absolute
+    tray: RightEye: -3.625: linear: absolute
+start: 190: 250
+    rotz: head: -0.125: linear: absolute
+start: 270: 300
+    tray: LeftEye: -4.075: linear: absolute
+    tray: RightEye: -4.075: linear: absolute
+start: 280: 315:
+    roty: head: 0.25: linear: absolute
+start: 320: 350
+    trax: LeftEye: 1.85: linear: absolute
+    trax: RightEye: -1.9325: linear: absolute
+    tray: LeftEye: -4.0: linear: absolute
+    tray: RightEye: -4.0: linear: absolute
+start: 500: 540:
+    roty: head: -0.5: linear: absolute
+    rotz: head: 0: linear: absolute
