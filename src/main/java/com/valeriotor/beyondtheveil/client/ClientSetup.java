@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.client.gui.LetterBoxGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.DrownedDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.EntityDialogueGui;
+import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanCultistDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodGemGui;
 import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
 import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
@@ -67,6 +68,7 @@ public class ClientSetup {
             MenuScreens.register(Registration.BLOOD_GEM_CONTAINER.get(), BloodGemGui::new);
             MenuScreens.register(Registration.DROWNED_CONTAINER.get(), DrownedGui::new);
             MenuScreens.register(Registration.SHOREMAN_DIALOGUE_MENU.get(), EntityDialogueGui::new);
+            MenuScreens.register(Registration.DOUBLE_DIALOGUE_MENU.get(), ShoremanCultistDialogueGui::new);
             MenuScreens.register(Registration.MIRROR_DIALOGUE_MENU.get(), MirrorDialogueGui::new);
             MenuScreens.register(Registration.DROWNED_DIALOGUE_MENU.get(), DrownedDialogueGui::new);
             ItemBlockRenderTypes.setRenderLayer(Registration.DAMP_CANOPY.get(), RenderType.cutout());

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.container.*;
+import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
@@ -388,6 +389,7 @@ public class Registration {
     public static final RegistryObject<MenuType<DreamBottleContainer>> DREAM_BOTTLE_CONTAINER = MENUS.register(DREAM_BOTTLE.getId().getPath(), () -> IForgeMenuType.create((windowId, inv, data) -> new DreamBottleContainer(windowId, inv, inv.player)));
     public static final RegistryObject<MenuType<DrownedContainer>> DROWNED_CONTAINER = MENUS.register("drowned", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedContainer(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<EntityDialogueMenu>> SHOREMAN_DIALOGUE_MENU = MENUS.register("shoreman_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new EntityDialogueMenu(windowId, inv, inv.player, data)));
+    public static final RegistryObject<MenuType<DoubleDialogueMenu>> DOUBLE_DIALOGUE_MENU = MENUS.register("double_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new DoubleDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<MirrorDialogueMenu>> MIRROR_DIALOGUE_MENU = MENUS.register("mirror_dialogue", () -> IForgeMenuType.create((windowId, inv, data) -> new MirrorDialogueMenu(windowId, inv, inv.player, data)));
     public static final RegistryObject<MenuType<DrownedDialogueMenu>> DROWNED_DIALOGUE_MENU = MENUS.register("drowned_dialogue_menu", () -> IForgeMenuType.create((windowId, inv, data) -> new DrownedDialogueMenu(windowId, inv, inv.player, data)));
 

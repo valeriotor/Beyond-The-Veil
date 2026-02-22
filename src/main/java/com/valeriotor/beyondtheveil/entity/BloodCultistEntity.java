@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
+import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
@@ -89,10 +90,11 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
             setTalkingPlayer(player);
-            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
-                b.writeUtf(dialogueType.name());
-                b.writeUtf(template.getID());
-            });
+            //NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
+            //    b.writeUtf(dialogueType.name());
+            //    b.writeUtf(template.getID());
+            //});
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DoubleDialogueMenu(pContainerId, this), Component.translatable("gui.dialogue.blood_cultist.display_name")));
 
         }
         //OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));

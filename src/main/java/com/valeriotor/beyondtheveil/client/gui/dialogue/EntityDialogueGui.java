@@ -87,7 +87,6 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         }
         int textWidth = (int) (imageWidth * TEXT_WIDTH_RATIO);
 
-        //this.npcLines.clear();
         String npcLine = menu.getNpcLine();
         dialogueBox = new EntityDialogueBox((int) (textWidth * 100 / 100), 75, npcLine);
 

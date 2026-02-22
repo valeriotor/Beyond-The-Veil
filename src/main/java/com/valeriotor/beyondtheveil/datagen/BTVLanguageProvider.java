@@ -1189,6 +1189,24 @@ public class BTVLanguageProvider extends LanguageProvider {
         addMirrorDialogue();
         addShoremanDialogue();
         addBloodCultistDialogue();
+        addShoremanCultistDialogue();
+    }
+
+    private void addShoremanCultistDialogue() {
+        add("dialogue.shoreman_cultist.do_not.option", "The Keeper must die, but on his own terms. §oDo not§r take his life, or you too shall meet your end.");
+        add("dialogue.shoreman_cultist.go_ahead.option", "If he must die, then it matters not in what manner – the dead do not regret. Go ahead.");
+        add("dialogue.shoreman_cultist.0", "What?! What is this??");
+        add("dialogue.shoreman_cultist.1", "Your friend betrays you. We wish to see the colour of your guts.");
+        add("dialogue.shoreman_cultist.2", "No! I know I must die, but please, do not let me bleed like a pig!");
+        add("dialogue.shoreman_cultist.3", "Ohhh, you wish you bled like a pig, yet your blood is older, and paler!");
+        add("dialogue.shoreman_cultist.4", "You lie!");
+        add("dialogue.shoreman_cultist.5", "You are the misbegotten child of earth and water. Tell us, §owas §oit §oyour §omother §oor §ofather §owho §owore §oscale §ofor §ocloth?");
+        add("dialogue.shoreman_cultist.6", "||||[[[[....]]my mother[[[[....\n|||....]]]was §ohuman.");
+        add("dialogue.shoreman_cultist.7", "Then Father Ocean shall embrace your remains.");
+        add("dialogue.shoreman_cultist.do_not.0", "|||Just as I embraced life,||| so too shall I embrace death.");
+        add("dialogue.shoreman_cultist.do_not.1", "NO!!!!!!!!");
+        add("dialogue.shoreman_cultist.go_ahead.0", "NO!!!!!!!!");
+        add("dialogue.shoreman_cultist.bastard", "THE BASTARD BLED WHITE!");
     }
 
     private void addDrownedDialogue() {

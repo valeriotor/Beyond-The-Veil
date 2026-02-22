@@ -12,6 +12,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +35,28 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
     private double nextAddCharacter = 0;
     private int nextAddCharacterIndex = 0;
 
-    protected EntityDialogueBox(int width, int height, String localizedText) {
-        super(width, height, new ArrayList<>(), 15, 5);
+    @NotNull
+    private static List<String> splitLines(int width, String localizedText) {
+        List<String> lines = new ArrayList<>();
         String[] firstSplit = localizedText.split("\n");
         for (String s : firstSplit) {
             Minecraft.getInstance().font.getSplitter().splitLines(s, width * 95 / 100, Style.EMPTY, true, (pStyle, pCurrentPos, pContentWidth) -> {
                 lines.add(s.substring(pCurrentPos, pContentWidth));
             });
         }
+        return lines;
     }
 
-    @Override
+    protected EntityDialogueBox(int width, int height, String localizedText) {
+        this(width, height, splitLines(width, localizedText));
+    }
+
+    protected EntityDialogueBox(int width, int height, List<String> lines) {
+        super(width, height, new ArrayList<>(), 15, 5);
+        this.lines.addAll(lines);
+    }
+
+        @Override
     public void tick() {
         super.tick();
         double newProgress = DoubleMath.isMathematicalInteger(progress) ? progress + 1 : Math.ceil(progress);
@@ -163,5 +175,9 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
 
     public boolean isFinished() {
         return currentLineIndex >= lines.size();
+    }
+
+    public List<String> getLines() {
+        return lines;
     }
 }
