@@ -126,6 +126,7 @@ public class HamletPieces {
                             shoreman.setPos(spawnPos);
                             shoreman.setSpawnAndVillageCenter(new BlockPos((int) spawnPos.x, (int) spawnPos.y, (int) spawnPos.z), villageCenter);
                             pLevel.addFreshEntity(shoreman);
+                            //TODO test this pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                         }
                         break;
                     }
@@ -587,7 +588,6 @@ public class HamletPieces {
     }
 
     private static BlockPos makeStreetBlockPos(Structure.GenerationContext context, BlockPos centerPos, int offsetX, int offsetZ, Rotation rotation, int height) {
-        System.out.println("make");
         BlockPos offset = new BlockPos(offsetX, 0, offsetZ).rotate(rotation);
         BlockPos finalPos = centerPos.offset(offset);
         if (height == -1) {
