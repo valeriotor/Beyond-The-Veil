@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.language.I18n;
@@ -30,6 +31,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     private static final int TOTAL_FADEOUT = 50;
     private static final double TIME_BEFORE_FADEOUT = 20D;
     private static final float TEXT_WIDTH_RATIO = 0.9F;
+    private static final int TICKS_TO_START = 50;
     private float scaleFactor = 1;
     private DialogueOptions options;
     private int branch;
@@ -38,6 +40,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     private EntityDialogueBox cultistBox;
     private int exchangeIndex = 0;
     private int fadeoutTicks = 0;
+    private int startTicks = 0;
 
     public ShoremanCultistDialogueGui(DoubleDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -91,21 +94,24 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     @Override
     protected void containerTick() {
         super.containerTick();
-        shoremanBox.tick();
-        cultistBox.tick();
-        fadeoutTicks++;
-        if (exchangeIndex % 2 == 0 && shoremanBox.isFinished() && exchangeIndex < 7) {
-            exchangeIndex++;
-            fadeoutTicks = 0;
-            cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist." + exchangeIndex));
-        } else if (exchangeIndex % 2 == 1 && cultistBox.isFinished() && exchangeIndex < 7) {
-            exchangeIndex++;
-            fadeoutTicks = 0;
-            shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist." + exchangeIndex));
-        } else if (exchangeIndex == 11 && cultistBox.isFinished()) {
-            exchangeIndex++;
-            fadeoutTicks = 0;
-            shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.do_not.1"));
+        startTicks++;
+        if(startTicks > TICKS_TO_START) {
+            shoremanBox.tick();
+            cultistBox.tick();
+            fadeoutTicks++;
+            if (exchangeIndex % 2 == 0 && shoremanBox.isFinished() && exchangeIndex < 7) {
+                exchangeIndex++;
+                fadeoutTicks = 0;
+                cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist." + exchangeIndex));
+            } else if (exchangeIndex % 2 == 1 && cultistBox.isFinished() && exchangeIndex < 7) {
+                exchangeIndex++;
+                fadeoutTicks = 0;
+                shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist." + exchangeIndex));
+            } else if (exchangeIndex == 11 && cultistBox.isFinished()) {
+                exchangeIndex++;
+                fadeoutTicks = 0;
+                shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.do_not.1"));
+            }
         }
     }
 
@@ -114,7 +120,9 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         //this.renderBackground(guiGraphics);
         //super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
         //this.renderTooltip(guiGraphics, pMouseX, pMouseY);
-        renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
+        if(startTicks > TICKS_TO_START) {
+            renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
+        }
     }
 
     @Override

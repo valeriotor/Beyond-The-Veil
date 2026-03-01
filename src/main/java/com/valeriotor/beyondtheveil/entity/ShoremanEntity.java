@@ -94,7 +94,8 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
-        this.goalSelector.addGoal(2, new StrollThroughHamletGoal(this, 1.5D));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, BloodCultistEntity.class, 10, 1.0D, 1.2D, c -> this.getVehicle() != c));
+        this.goalSelector.addGoal(3, new StrollThroughHamletGoal(this, 1.5D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -481,7 +482,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
 
         @Override
         public boolean canUse() {
-            if (this.keeper.getRandom().nextFloat() >= 0.02) {
+            if (this.keeper.getRandom().nextFloat() >= 0.02 || this.keeper.isTalking()) {
                 return false;
             }
             return true;

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.entity.ai.goals;
 
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -23,7 +24,7 @@ public class TalkToPlayerGoal<T extends PathfinderMob & Talkable> extends Goal {
     public boolean canUse() {
         if (!this.mob.isAlive()) {
             return false;
-        } else if (!this.mob.onGround()) {
+        } else if (!this.mob.onGround() && !(this.mob.getVehicle() instanceof BloodCultistEntity)) {
             return false;
         } else if (this.mob.hurtMarked) {
             return false;

@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +25,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -59,6 +62,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     private int bowing;
     private BlockPos podPos;
     private int leaving;
+    private boolean inBackStabPosition = false;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -90,11 +94,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
             setTalkingPlayer(player);
-            //NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
-            //    b.writeUtf(dialogueType.name());
-            //    b.writeUtf(template.getID());
-            //});
-            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DoubleDialogueMenu(pContainerId, this), Component.translatable("gui.dialogue.blood_cultist.display_name")));
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
+                b.writeUtf(dialogueType.name());
+                b.writeUtf(template.getID());
+            });
 
         }
         //OptionalInt optionalint = player.openMenu(new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new ShoremanDialogueMenu(pContainerId, pPlayerInventory, player, this, null), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")));
@@ -128,11 +131,23 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
             if (entityData.get(KILLING_ENTITY_ID) != -1) {
                 Entity entity = level().getEntity(entityData.get(KILLING_ENTITY_ID));
                 if (entity != null) {
-                    lookAt(entity, 360, 360);
+                    if (entity instanceof ShoremanEntity) {
+                        //lookAt(entity, 360, 360);
+                    } else {
+                        lookAt(entity, 360, 360);
+                    }
                     yBodyRot = getYRot();
                     if (!didBackStabAnimation) {
-                        backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab);
-                        didBackStabAnimation = true;
+                        if(entity instanceof ShoremanEntity) {
+                            if(tickCount > 10) {
+                                backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab_keeper_1);
+                                didBackStabAnimation = true;
+                                inBackStabPosition = true;
+                            }
+                        } else {
+                            backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab);
+                            didBackStabAnimation = true;
+                        }
                     }
                 }
             }
@@ -168,6 +183,13 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                     discard();
                 }
             }
+            if (killingEntity instanceof ShoremanEntity && getTalkingPlayer() != null) {
+                getNavigation().stop();
+                lookAt(getTalkingPlayer(), 360, 360);
+                if (tickCount == 1) {
+                    doParticles();
+                }
+            }
         }
     }
 
@@ -181,6 +203,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                 }
             }
         }
+    }
+
+    public boolean isInBackStabPosition() {
+        return inBackStabPosition;
     }
 
     public Animation getBackStabAnimation() {
@@ -226,7 +252,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         if (this.hasPassenger(pPassenger)) {
             float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
 
-            Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
+            Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
             pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
             /*pPassenger.setYRot(pPassenger.getYRot() + this.deltaRotation);
             pPassenger.setYHeadRot(pPassenger.getYHeadRot() + this.deltaRotation);
@@ -302,5 +328,25 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     public void setLeaving(int leaving) {
         this.leaving = leaving;
+    }
+
+    public static void startKeeperKill(ShoremanEntity keeper) {
+        if (keeper.getTalkingPlayer() instanceof ServerPlayer sp) {
+            BloodCultistEntity cultist = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), keeper.level());
+            Vec3 lookAngle = keeper.getLookAngle();
+            lookAngle = lookAngle.add(0, -lookAngle.y, 0);
+            Vec3 cultistPos = keeper.position();//.add(lookAngle.normalize().reverse().multiply(1.1, 0, 1.1));
+            cultist.setPos(cultistPos);
+            cultist.lookAt(sp, 360, 360);
+            keeper.level().addFreshEntity(cultist);
+            keeper.startRiding(cultist, true);
+            cultist.setKillingEntity(keeper);
+            cultist.setTalkingPlayer(sp);
+            cultist.lookAt(sp, 360, 360);
+            NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DoubleDialogueMenu(pContainerId, cultist), Component.translatable("gui.dialogue.blood_cultist.display_name")));
+            sp.serverLevel().playSound(null, sp.getOnPos(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
+            //sp.serverLevel().playSound(null, keeper.blockPosition(), BTVSounds.SHOREMAN_CULTIST_TENSION.get(), SoundSource.NEUTRAL, 1, 1);
+            keeper.setTalkingPlayer(sp);
+        }
     }
 }

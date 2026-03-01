@@ -118,6 +118,15 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
             pEntity.getBackStabAnimation().apply(pPartialTick);
         } else if (pEntity.getBowingAnimation() != null) {
             pEntity.getBowingAnimation().apply(pPartialTick);
+        } else if (pEntity.isInBackStabPosition()) {
+            right_arm.xRot = -1.5F;
+            right_lower_arm.zRot = 1.5F;
+            knife.visible = true;
+            right_arm.yRot = 0.25F;
+            knife.zRot = -1.5F;
+            knife.y = 1F;
+            head.zRot = 0.4F;
+            markDirty();
         }
     }
 

@@ -127,5 +127,8 @@
   },
   "dagon_thump": {
     "sounds": [ "beyondtheveil:dagon_thump" ]
+  },
+  "shoreman_cultist_tension": {
+    "sounds": [ "beyondtheveil:shoreman_cultist_tension" ]
   }
 }

@@ -29,6 +29,9 @@ public class BloodCultistRenderer extends LivingEntityRenderer<BloodCultistEntit
 
     @Override
     public void render(BloodCultistEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+        if ((!pEntity.getPassengers().isEmpty() && pEntity.tickCount < 10) || pEntity.tickCount < 2) {
+            return;
+        }
         pPoseStack.pushPose();
         final float FACTOR = 1.2F;
         pPoseStack.scale(FACTOR, FACTOR, FACTOR);

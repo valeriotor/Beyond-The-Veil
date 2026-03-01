@@ -35,6 +35,6 @@ public class CultistKillGoal extends Goal {
 
     @Override
     public void stop() {
-        cultist.setKillingEntity(null);
+        //cultist.setKillingEntity(null); TODO check in tick() whether the distance is too big, then set it to null?
     }
 }

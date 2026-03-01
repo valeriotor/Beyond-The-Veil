@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -98,13 +99,24 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
         //this.RightEye.x = -2.0F - 0.25F;
         //this.LeftEye.y = -3.75F - 0.325F;
         //this.RightEye.y = -3.75F - 0.325F;
-        Animation dialogueAnimation = pEntity.getDialogueAnimation();
-        if (dialogueAnimation != null) {
-            dialogueAnimation.apply(partialTicks);
-        }
-        if (pEntity.getFinishDialogueAnimation() != null) {
-            pEntity.getFinishDialogueAnimation().apply(partialTicks);
-            pEntity.stopDialogueAnimation();
+        if (pEntity.getVehicle() instanceof BloodCultistEntity) {
+            head.zRot = -0.3F;
+            head.xRot = -0.05F;
+            LeftEye.x = 1.6F;
+            RightEye.x = -2.25F;
+            LeftEye.y = -4.125F;
+            RightEye.y = -4.125F;
+            markDirty();
+        } else {
+            Animation dialogueAnimation = pEntity.getDialogueAnimation();
+            if (dialogueAnimation != null) {
+                dialogueAnimation.apply(partialTicks);
+            }
+            if (pEntity.getFinishDialogueAnimation() != null) {
+                pEntity.getFinishDialogueAnimation().apply(partialTicks);
+                pEntity.stopDialogueAnimation();
+            }
+
         }
         head.xRot += pHeadPitch * ((float) Math.PI / 180F) + Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
         body.y = 24 + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;

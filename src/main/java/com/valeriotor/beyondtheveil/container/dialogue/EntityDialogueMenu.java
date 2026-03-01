@@ -71,6 +71,11 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     private void additionalEndEffects() {
         if (this.npc instanceof BloodCultistEntity bc && template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal")) {
             bc.bowAndLeave();
+        } else if (this.npc instanceof ShoremanEntity e) {
+            ShoremanEntity.ShoremanProfession profession = e.getProfession();
+            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && (true || template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3"))) {
+                BloodCultistEntity.startKeeperKill(e);
+            }
         }
     }
 
@@ -104,6 +109,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
         return npc.getTalkingPlayer() == pPlayer && !dialogue.isFinished();
     }
 
+    @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
         this.npc.setTalkingPlayer((Player) null);
