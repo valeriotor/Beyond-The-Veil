@@ -1,13 +1,17 @@
 package com.valeriotor.beyondtheveil.container.dialogue;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.util.ClientTalkable;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -33,7 +37,7 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return npc.getTalkingPlayer() == pPlayer;
+        return npc.getTalkingPlayer() == pPlayer && npc instanceof LivingEntity e && e.isAlive();
     }
 
     public void removed(Player pPlayer) {
@@ -42,6 +46,17 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
     }
 
     public void chooseOptionOnServer(ServerPlayer player, int optionIndex) {
+        // TODO eh I guess all handled client side?
+    }
 
+    public void killKeeper() {
+        if (npc instanceof BloodCultistEntity cultist) {
+            if (cultist.getKillingEntity() instanceof ShoremanEntity shoreman) {
+                shoreman.sendAnimation(AnimationRegistry.shoreman_keeper_death_cultist, 0);
+                shoreman.aboutToDie();
+            }
+            cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper, 0);
+            cultist.finalCutscene();
+        }
     }
 }

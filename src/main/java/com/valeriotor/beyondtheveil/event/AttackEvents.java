@@ -4,9 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
-import com.valeriotor.beyondtheveil.entity.DamageCapper;
-import com.valeriotor.beyondtheveil.entity.NautilusEntity;
-import com.valeriotor.beyondtheveil.entity.PlayerMinion;
+import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -167,7 +165,11 @@ public class AttackEvents {
         if (event.getSource().getEntity() instanceof ServerPlayer sp) {
             BindingEvents.playerAttackEvent(event, sp);
         }
-
+        if (event.getEntity() instanceof ShoremanEntity e && e.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && !e.isAboutToDie() && e.isInFinalCutscene()) {
+            event.setCanceled(true);
+        }if (event.getEntity() instanceof BloodCultistEntity e && e.getKillingEntity() != null && e.getKillingEntity().isAlive()) {
+            event.setCanceled(true);
+        }
     }
 
 }

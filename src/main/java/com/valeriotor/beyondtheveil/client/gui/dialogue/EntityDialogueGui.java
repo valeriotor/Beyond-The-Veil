@@ -30,7 +30,7 @@ import java.util.function.BiConsumer;
 public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMenu> {
 
     private static final ResourceLocation SHOREMAN_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
-    private static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
+    public static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
     private static final float TEXT_WIDTH_RATIO = 0.9F;
     private static final float TEXT_HEIGHT_RATIO = 0.85F;
     private float scaleFactor = 1;

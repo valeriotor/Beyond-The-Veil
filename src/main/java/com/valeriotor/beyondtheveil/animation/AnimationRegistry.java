@@ -23,6 +23,7 @@ public class AnimationRegistry {
     public static AnimationTemplate blood_cultist_backstab;
     public static AnimationTemplate blood_cultist_backstab_keeper_1;
     public static AnimationTemplate blood_cultist_bow;
+    public static AnimationTemplate blood_cultist_kill_keeper;
     public static AnimationTemplate blood_skeleton_swing;
     public static AnimationTemplate blood_zombie_open_jaw_long;
     public static AnimationTemplate blood_zombie_open_jaw_short;
@@ -55,6 +56,7 @@ public class AnimationRegistry {
     public static AnimationTemplate shoreman_dialogue1;
     public static AnimationTemplate shoreman_dialogue2;
     public static AnimationTemplate shoreman_dialogue_reset;
+    public static AnimationTemplate shoreman_keeper_death_cultist;
     public static AnimationTemplate surgeon_operate_stop;
     public static AnimationTemplate surgeon_operate_start;
     public static AnimationTemplate surgeon_standup;
@@ -75,6 +77,7 @@ public class AnimationRegistry {
         blood_cultist_backstab = registerAnimation("blood_cultist_backstab", client, i++);
         blood_cultist_backstab_keeper_1 = registerAnimation("blood_cultist_backstab_keeper_1", client, i++);
         blood_cultist_bow = registerAnimation("blood_cultist_bow", client, i++);
+        blood_cultist_kill_keeper = registerAnimation("blood_cultist_kill_keeper", client, i++);
         blood_skeleton_swing = registerAnimation("blood_skeleton_swing", client, i++);
         blood_zombie_open_jaw_long = registerAnimation("blood_zombie_open_jaw_long", client, i++);
         blood_zombie_open_jaw_short = registerAnimation("blood_zombie_open_jaw_short", client, i++);
@@ -107,6 +110,7 @@ public class AnimationRegistry {
         shoreman_dialogue1 = registerAnimation("shoreman/dialogue1", client, i++);
         shoreman_dialogue2 = registerAnimation("shoreman/dialogue2", client, i++);
         shoreman_dialogue_reset = registerAnimation("shoreman/dialogue_reset", client, i++);
+        shoreman_keeper_death_cultist = registerAnimation("shoreman/keeper_death_cultist", client, i++);
         surgeon_operate_start = registerAnimation("surgeon_operate_start", client, i++);
         surgeon_operate_stop = registerAnimation("surgeon_operate_stop", client, i++);
         surgeon_standup = registerAnimation("surgeon_standup", client, i++);

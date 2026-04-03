@@ -106,6 +106,9 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
             RightEye.x = -2.25F;
             LeftEye.y = -4.125F;
             RightEye.y = -4.125F;
+            if (pEntity.getDeathAnimation() != null) {
+                pEntity.getDeathAnimation().apply(partialTicks);
+            }
             markDirty();
         } else {
             Animation dialogueAnimation = pEntity.getDialogueAnimation();

@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
 import net.minecraft.client.Minecraft;
@@ -41,6 +42,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     private int exchangeIndex = 0;
     private int fadeoutTicks = 0;
     private int startTicks = 0;
+    private int deathTicks = -1;
 
     public ShoremanCultistDialogueGui(DoubleDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -95,7 +97,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     protected void containerTick() {
         super.containerTick();
         startTicks++;
-        if(startTicks > TICKS_TO_START) {
+        if (startTicks > TICKS_TO_START && deathTicks == -1) {
             shoremanBox.tick();
             cultistBox.tick();
             fadeoutTicks++;
@@ -111,6 +113,17 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
                 exchangeIndex++;
                 fadeoutTicks = 0;
                 shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.do_not.1"));
+            } else if ((exchangeIndex == 12 || exchangeIndex == 20) && shoremanBox.isFinished()) {
+                Messages.sendToServer(GenericToServerPacket.killKeeper());
+                exchangeIndex = 99;
+                deathTicks = 0;
+                cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 90 / 100), 75, I18n.get("dialogue.shoreman_cultist.bastard"));
+            }
+        }
+        if (deathTicks >= 0) {
+            deathTicks++;
+            if (deathTicks >= 70) {
+                cultistBox.tick();
             }
         }
     }
@@ -120,7 +133,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         //this.renderBackground(guiGraphics);
         //super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
         //this.renderTooltip(guiGraphics, pMouseX, pMouseY);
-        if(startTicks > TICKS_TO_START) {
+        if (startTicks > TICKS_TO_START) {
             renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
         }
     }
@@ -133,10 +146,16 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         pose.scale(scaleFactor, scaleFactor, 1);
         //guiGraphics.blit(TEXTURE, (int) (-imageWidth * scaleFactor / 2), (int) (-imageHeight * scaleFactor), 0, 0, this.imageWidth, this.imageHeight);
         RenderSystem.enableBlend();
-        guiGraphics.blit(TEXTURE, (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
+        if (exchangeIndex != 99) {
+            guiGraphics.blit(TEXTURE, (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
+        } else if (deathTicks < 112) {
+            double factor = 0.5 + Math.min(1, (deathTicks + pPartialTick) / 5D) / 2;
+            double size = factor * 512;
+            guiGraphics.blit(EntityDialogueGui.BLOOD_CULTIST_TEXTURE, (int) (factor * (imageWidth / 2 - size)), (int) (-imageHeight), (int) size, 166, 0, 0, 512, 166, 512, 166);
+        }
         RenderSystem.disableBlend();
 
-        if (shoremanBox != null && (exchangeIndex % 2 == 0 || fadeoutTicks < TOTAL_FADEOUT)) {
+        if (shoremanBox != null && (exchangeIndex % 2 == 0 || fadeoutTicks < TOTAL_FADEOUT) && exchangeIndex != 99) {
             pose.pushPose();
             pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -135, 0);
             int alpha = 0xFF;
@@ -148,9 +167,14 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
             pose.popPose();
         }
 
-        if (cultistBox != null) {
+        if (cultistBox != null && deathTicks < 112 && (deathTicks < 0 || deathTicks > 70)) {
             pose.pushPose();
-            pose.translate(imageWidth * (1 - TEXT_WIDTH_RATIO) / 2, -135, 0);
+            if (deathTicks < 0) {
+                pose.translate(imageWidth * (1 - TEXT_WIDTH_RATIO) / 2, -135, 0);
+            } else {
+                pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -135, 0);
+                pose.scale(3.6F, 3.6F, 1);
+            }
             int alpha = 0xFF;
             if (exchangeIndex % 2 == 0) {
                 double fadeLevel = Mth.clamp((TOTAL_FADEOUT + TIME_BEFORE_FADEOUT - fadeoutTicks) / TOTAL_FADEOUT, 0, 1);

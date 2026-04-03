@@ -1,0 +1,13 @@
+model: shoreman
+length: 25
+start: 0: 1:
+    rotz: head: -0.3: immediate: absolute
+    rotx: head: -0.05: immediate: absolute
+    trax: LeftEye: 1.6: immediate: absolute
+    trax: RightEye: -2.25: immediate: absolute
+    tray: LeftEye: -4.125: immediate: absolute
+    tray: RightEye: -4.125: immediate: absolute
+start: 1: 4:
+    roty: body: 0.7: linear: absolute
+    roty: head: 0.4: linear: absolute
+    rotx: head: -0.7: linear: absolute

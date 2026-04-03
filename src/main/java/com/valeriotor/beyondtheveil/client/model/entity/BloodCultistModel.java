@@ -118,6 +118,8 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
             pEntity.getBackStabAnimation().apply(pPartialTick);
         } else if (pEntity.getBowingAnimation() != null) {
             pEntity.getBowingAnimation().apply(pPartialTick);
+        } else if (pEntity.getKillAnimation() != null) {
+            pEntity.getKillAnimation().apply(pPartialTick);
         } else if (pEntity.isInBackStabPosition()) {
             right_arm.xRot = -1.5F;
             right_lower_arm.zRot = 1.5F;
@@ -125,7 +127,52 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
             right_arm.yRot = 0.25F;
             knife.zRot = -1.5F;
             knife.y = 1F;
-            head.zRot = 0.4F;
+            head.zRot = 0.4F + Mth.cos((pEntity.tickCount + pPartialTick) / 37) * 0.1F;
+            head.yRot = Mth.cos((pEntity.tickCount + pPartialTick) / 30) * 0.14F;
+
+            //body.yRot = 0.35F;
+            //right_arm.yRot = 1.6F;
+            //left_arm.yRot = -0.5F;
+            //left_lower_arm.zRot = -1.3F;
+            //head.zRot = 0.4F;
+            //head.yRot = 0;
+
+            //body.yRot = 0.17F;
+            //head.yRot = -0.13F;
+            //head.xRot = -0.02F;
+
+            //left_arm.yRot = -2.95F;
+            //left_arm.zRot = -1.95F;
+            //left_arm.xRot = 0.4F;
+            //right_arm.yRot = 2.95F;
+            //right_arm.zRot = 1.95F;
+            //right_arm.xRot = 0.4F;
+
+            //right_arm.xRot = 2F;
+            //left_arm.xRot = 2F;
+
+            //right_arm.zRot = 1F;
+
+            //right_arm.xRot = 0F;
+            //left_arm.xRot = 0F;
+
+            //knife.x = -15F;
+            //knife.z = 15F;
+            //knife.yRot = 1.35F;
+            ////knife.y = 0F;
+
+            //knife.z = 7F;
+            //knife.x = -13F;
+            //knife.y = -2F;
+
+            //knife.y = -6F;
+            //knife.x = -20F;
+            //knife.z = 4F;
+
+            //knife.visible = false;
+            //left_arm.yRot = left_arm.xRot = left_arm.zRot = 0;
+            //right_arm.yRot = right_arm.xRot = right_arm.zRot = 0;
+            ////body.xRot = -1F;
             markDirty();
         }
     }

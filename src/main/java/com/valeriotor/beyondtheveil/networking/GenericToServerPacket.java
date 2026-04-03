@@ -3,13 +3,10 @@ package com.valeriotor.beyondtheveil.networking;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
-import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
-import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
@@ -17,8 +14,6 @@ import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
-import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
-import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -29,7 +24,6 @@ import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -125,6 +119,10 @@ public class GenericToServerPacket {
 
     public static GenericToServerPacket finishDagonQuest() {
         return new GenericToServerPacket(MessageType.FINISH_DAGON_QUEST, new CompoundTag());
+    }
+
+    public static GenericToServerPacket killKeeper() {
+        return new GenericToServerPacket(MessageType.KILL_KEEPER, new CompoundTag());
     }
 
     private final MessageType type;
@@ -236,6 +234,11 @@ public class GenericToServerPacket {
                     case START_PLAYER_EXPLOSION -> {
                         TransformationUtil.startExplodingPlayer(player);
                     }
+                    case KILL_KEEPER -> {
+                        if (player.containerMenu instanceof DoubleDialogueMenu menu) {
+                            menu.killKeeper();
+                        }
+                    }
                 }
 
             }
@@ -261,7 +264,8 @@ public class GenericToServerPacket {
         SPAWN_BLOOD_POOL_ENTITY,
         READ_MEMORY,
         FINISH_DAGON_QUEST,
-        START_PLAYER_EXPLOSION
+        START_PLAYER_EXPLOSION,
+        KILL_KEEPER
     }
 
 }

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entity;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -47,7 +48,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BloodCultistEntity extends PathfinderMob implements Talkable {
+public class BloodCultistEntity extends PathfinderMob implements Talkable, AnimatedEntity {
 
     private LivingEntity killingEntity;
     private Player talkingPlayer;
@@ -63,6 +64,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
     private BlockPos podPos;
     private int leaving;
     private boolean inBackStabPosition = false;
+    private Animation killAnimation;
+    private int finalCutsceneTicks = -1;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -168,6 +171,19 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                     bowingAnimation = null;
                 }
             }
+            if (killAnimation != null) {
+                killAnimation.update();
+                if (killAnimation.isDone()) {
+                    killAnimation = null;
+                }
+                if (false) {
+                    //for (int i = 0; i < 10; i++) {
+                    //    level().addParticle(BTVParticles.TEARSPILL.get(), getX() + xComponent / 2, getY() + 1.65, getZ() + zComponent / 2, xComponent * (2 + Math.random()) / 2, 0.5 / 2, zComponent * (2 + Math.random()) / 2);
+                    //}
+                }
+            } else {
+                //killAnimation = new Animation(AnimationRegistry.blood_cultist_kill_keeper);
+            }
         } else {
             if (bowing > 0) {
                 bowing--;
@@ -190,6 +206,13 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
                     doParticles();
                 }
             }
+            if (finalCutsceneTicks >= 0) {
+                finalCutsceneTicks++;
+                if (finalCutsceneTicks >= 195) {
+                    kill();
+                    finalCutsceneTicks = -1;
+                }
+            }
         }
     }
 
@@ -205,6 +228,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
         }
     }
 
+    public void killKeeperAnimationServer() {
+
+    }
+
     public boolean isInBackStabPosition() {
         return inBackStabPosition;
     }
@@ -215,6 +242,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
 
     public Animation getBowingAnimation() {
         return bowingAnimation;
+    }
+
+    public Animation getKillAnimation() {
+        return killAnimation;
     }
 
     public CrawlerEntity getHeldVillager() {
@@ -340,6 +371,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
             cultist.lookAt(sp, 360, 360);
             keeper.level().addFreshEntity(cultist);
             keeper.startRiding(cultist, true);
+            keeper.inFinalCutscene();
             cultist.setKillingEntity(keeper);
             cultist.setTalkingPlayer(sp);
             cultist.lookAt(sp, 360, 360);
@@ -348,5 +380,16 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable {
             //sp.serverLevel().playSound(null, keeper.blockPosition(), BTVSounds.SHOREMAN_CULTIST_TENSION.get(), SoundSource.NEUTRAL, 1, 1);
             keeper.setTalkingPlayer(sp);
         }
+    }
+
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        switch (channel) {
+            case 0: killAnimation = new Animation(animationTemplate);
+        }
+    }
+
+    public void finalCutscene() {
+        finalCutsceneTicks = 0;
     }
 }

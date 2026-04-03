@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
@@ -17,6 +18,7 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.item.DrinkItem;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -59,7 +61,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, Merchant, Suspicious {
+public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, AnimatedTalkable, Merchant, Suspicious {
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
@@ -75,6 +77,9 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
     private int countdownTillDialogueAnimation = -1;
     private int talkingTicks;
     private Animation finishDialogueAnimation;
+    private Animation deathAnimation;
+    private int aboutToDieCountdown = -1;
+    private boolean inFinalCutscene;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -161,6 +166,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
             }
         }
     }
+
     public void setProfession(ShoremanProfession profession) {
         setProfession(profession.ordinal());
     }
@@ -252,7 +258,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
             pCompound.putDouble("lighthouseKeeperStandZ", lighthouseKeeperStand.z);
             pCompound.putInt("lighthouseKeeperDirection", lighthouseKeeperDirection.ordinal());
         }
-        if(villageCenter != null) {
+        if (villageCenter != null) {
             pCompound.putLong("villageCenter", villageCenter.asLong());
             pCompound.putLong("spawnPoint", spawnPoint.asLong());
         }
@@ -314,16 +320,16 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
     protected void addOffersFromItemListings(MerchantOffers pGivenMerchantOffers, VillagerTrades.ItemListing[] pNewTrades, int pMaxNumbers) {
         Set<Integer> set = Sets.newHashSet();
         if (pNewTrades.length > pMaxNumbers) {
-            while(set.size() < pMaxNumbers) {
+            while (set.size() < pMaxNumbers) {
                 set.add(this.random.nextInt(pNewTrades.length));
             }
         } else {
-            for(int i = 0; i < pNewTrades.length; ++i) {
+            for (int i = 0; i < pNewTrades.length; ++i) {
                 set.add(i);
             }
         }
 
-        for(Integer integer : set) {
+        for (Integer integer : set) {
             VillagerTrades.ItemListing villagertrades$itemlisting = pNewTrades[integer];
             MerchantOffer merchantoffer = villagertrades$itemlisting.getOffer(this, this.random);
             if (merchantoffer != null) {
@@ -413,11 +419,30 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
                     finishDialogueAnimation = null;
                 }
             }
+            if (deathAnimation != null) {
+                deathAnimation.update();
+                if (deathAnimation.isDone()) {
+                    deathAnimation = null;
+                }
+            }
+            if (aboutToDieCountdown > 0) {
+                double xComponent = -Math.sin(Math.toRadians(50.3 + yHeadRot));
+                double zComponent = Math.cos(Math.toRadians(50.3 + yHeadRot));
+                for (int i = 0; i < 10; i++) {
+                    level().addParticle(BTVParticles.TEARSPILL.get(), getX() + xComponent / 2, getY() + 1.65, getZ() + zComponent / 2, xComponent * (2 + Math.random()) / 2, 0.5 / 2, zComponent * (2 + Math.random()) / 2);
+                }
+            }
         } else {
             if (isTalking()) {
                 talkingTicks++;
             } else {
                 talkingTicks = 0;
+            }
+            if (aboutToDieCountdown > 0) {
+                aboutToDieCountdown--;
+                if (aboutToDieCountdown == 0) {
+                    kill();
+                }
             }
         }
     }
@@ -436,6 +461,34 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedTalkable, M
 
     public Animation getFinishDialogueAnimation() {
         return finishDialogueAnimation;
+    }
+
+    public Animation getDeathAnimation() {
+        return deathAnimation;
+    }
+
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        if (channel == 0) {
+            deathAnimation = new Animation(animationTemplate);
+            aboutToDieCountdown = 500;
+        }
+    }
+
+    public boolean isAboutToDie() {
+        return aboutToDieCountdown >= 0;
+    }
+
+    public void aboutToDie() {
+        aboutToDieCountdown = 25;
+    }
+
+    public void inFinalCutscene() {
+        inFinalCutscene = true;
+    }
+
+    public boolean isInFinalCutscene() {
+        return inFinalCutscene;
     }
 
     public enum ShoremanProfession {
