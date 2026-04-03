@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.animation;
 
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.model.entity.wrapper.PlayerDefaultModelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -66,7 +67,9 @@ public class AnimationRegistry {
     public static AnimationTemplate weeper_ritual;
 
     public static void loadAnimations(boolean client) {
-        initWrappers();
+        if (client) {
+            AnimatedModel.initWrappers();
+        }
         animations.clear();
         animationToId.clear();
         int i = 0;
@@ -120,16 +123,7 @@ public class AnimationRegistry {
         weeper_ritual = registerAnimation("weeper_ritual", client, i++);
     }
 
-    private static void initWrappers() {
-        EntityRenderer<? extends Player> playerDefault = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("default");
-        EntityRenderer<? extends Player> playerSlim = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("slim");
-        if (playerDefault instanceof PlayerRenderer renderer) {
-            new PlayerDefaultModelWrapper("player", renderer.getModel());
-        }
-        if (playerSlim instanceof PlayerRenderer renderer) {
-            new PlayerDefaultModelWrapper("player_slim", renderer.getModel());
-        }
-    }
+
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {
         if (client) {

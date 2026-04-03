@@ -5,7 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
 
@@ -14,6 +17,16 @@ public abstract class AnimatedModel<T extends LivingEntity> extends EntityModel<
     private static final Map<String, AnimatedModel<? extends LivingEntity>> REGISTRY = new HashMap<>();
     public static PlayerDefaultModelWrapper playerModel;
     public static PlayerDefaultModelWrapper playerSlimModel;
+    public static void initWrappers() {
+        EntityRenderer<? extends Player> playerDefault = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("default");
+        EntityRenderer<? extends Player> playerSlim = Minecraft.getInstance().getEntityRenderDispatcher().playerRenderers.get("slim");
+        if (playerDefault instanceof PlayerRenderer renderer) {
+            new PlayerDefaultModelWrapper("player", renderer.getModel());
+        }
+        if (playerSlim instanceof PlayerRenderer renderer) {
+            new PlayerDefaultModelWrapper("player_slim", renderer.getModel());
+        }
+    }
     private boolean dirty;
 
     public static AnimatedModel<? extends LivingEntity> getModel(String name) {
