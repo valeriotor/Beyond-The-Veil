@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
+import com.valeriotor.beyondtheveil.client.render.entity.player.RenderPlayerUtils;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
@@ -50,6 +51,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -62,6 +64,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -111,6 +114,7 @@ public class RenderEvents {
     private static CameraRotator rotator;
     private static int shakeDuration;
     private static int blackScreenDuration = -1;
+    private static double partialTick;
 
     static {
         for (int i = 0; i < 32; ++i) {
@@ -185,12 +189,21 @@ public class RenderEvents {
             if (crossSync.getTransformation() != null) {
                 event.setCanceled(true);
             }
-
+            //event.setCanceled(true);
+            //event.getPoseStack().translate(0, 0, 0);
+            ////event.getPoseStack().mulPose(Axis.ZP.rotation((float) ((player.tickCount + partialTick) / 20D)));
+            //PlayerRenderer playerrenderer = (PlayerRenderer)Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
+            //if (event.getArm() == HumanoidArm.RIGHT) {
+            //    playerrenderer.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, playerrenderer.getModel().leftArm, playerrenderer.getModel().leftSleeve);
+            //} else {
+            //    playerrenderer.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, playerrenderer.getModel().rightArm, playerrenderer.getModel().rightSleeve);
+            //}
         }
     }
 
     @SubscribeEvent
     public static void computeCameraAngles(ViewportEvent.ComputeCameraAngles event) {
+        partialTick = event.getPartialTick();
         LocalPlayer player = Minecraft.getInstance().player;
         Camera camera = event.getCamera();
         if (player != null) {
@@ -731,6 +744,9 @@ public class RenderEvents {
     public static void renderWorldLastEvent(RenderLevelStageEvent event) {
         LocalPlayer p = Minecraft.getInstance().player;
         if (p != null && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+            if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL) {
+                RenderPlayerUtils.renderArms(event.getPoseStack(), event.getCamera(), event.getPartialTick(), Minecraft.getInstance().renderBuffers().bufferSource());
+            }
             float partialTick = Minecraft.getInstance().getPartialTick();
             CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
             if (crossSync != null && event.getStage() == RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
