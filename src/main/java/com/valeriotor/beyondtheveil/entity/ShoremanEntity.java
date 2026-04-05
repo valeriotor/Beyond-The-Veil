@@ -6,6 +6,9 @@ import com.google.common.collect.Sets;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -80,6 +83,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     private Animation deathAnimation;
     private int aboutToDieCountdown = -1;
     private boolean inFinalCutscene;
+    private final Set<PlayerTransformation> monstrousTransformations = Set.of(PlayerTransformation.ABOMINATION_0, PlayerTransformation.ABOMINATION_1, PlayerTransformation.ABOMINATION_2);
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -100,6 +104,14 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
         this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, BloodCultistEntity.class, 10, 1.0D, 1.2D, c -> this.getVehicle() != c));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 10, 1.0D, 1.2D, e -> {
+            if (e instanceof Player p && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && this.getProfession() != ShoremanProfession.LIGHTHOUSE_KEEPER) {
+                CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
+                PlayerTransformation transformation = csData.getCrossSync().getTransformation();
+                return transformation != null && monstrousTransformations.contains(transformation); // null check cause set.of doesn't admit nulls...
+            }
+            return false;
+        }));
         this.goalSelector.addGoal(3, new StrollThroughHamletGoal(this, 1.5D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 10.0F));
@@ -201,6 +213,12 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     }
 
     private void startTalking(ServerPlayer player) {
+        if (getProfession() != ShoremanProfession.LIGHTHOUSE_KEEPER && player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent()) {
+            PlayerTransformation transformation = player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get().getCrossSync().getTransformation();
+            if (transformation != null && monstrousTransformations.contains(transformation)) { // null check cause set.of doesn't admit nulls...
+                return;
+            }
+        }
         DialogueType dialogueType = getProfession().toType();
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
