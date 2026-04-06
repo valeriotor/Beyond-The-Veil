@@ -21,6 +21,12 @@ public class PlayerDefaultModelWrapper extends AnimatedModel<Player> {
         registerAnimatedPart("leftArm", model.leftArm);
         registerAnimatedPart("rightLeg", model.rightLeg);
         registerAnimatedPart("leftLeg", model.leftLeg);
+        registerAnimatedPart("leftSleeve", model.leftSleeve);
+        registerAnimatedPart("rightSleeve", model.rightSleeve);
+        registerAnimatedPart("leftPants", model.leftPants);
+        registerAnimatedPart("rightPants", model.rightPants);
+        registerAnimatedPart("jacket", model.jacket);
+        //registerAnimatedPart("cloak", model.cloak);
     }
 
     public PlayerModel<?> getModel() {

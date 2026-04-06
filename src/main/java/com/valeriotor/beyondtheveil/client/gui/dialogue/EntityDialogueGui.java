@@ -131,6 +131,9 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+        if (true) {
+            return;
+        }
         int relX = (this.width - this.imageWidth) / 2;
         int relY = this.height - this.imageHeight;
         PoseStack pose = guiGraphics.pose();

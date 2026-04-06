@@ -189,7 +189,9 @@ public class RenderEvents {
             if (crossSync.getTransformation() != null) {
                 event.setCanceled(true);
             }
-            //event.setCanceled(true);
+            if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
+                event.setCanceled(true);
+            }
             //event.getPoseStack().translate(0, 0, 0);
             ////event.getPoseStack().mulPose(Axis.ZP.rotation((float) ((player.tickCount + partialTick) / 20D)));
             //PlayerRenderer playerrenderer = (PlayerRenderer)Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);

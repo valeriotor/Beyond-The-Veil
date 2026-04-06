@@ -4,8 +4,15 @@ import com.google.common.base.MoreObjects;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.client.ClientData;
+import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
+import com.valeriotor.beyondtheveil.client.model.entity.wrapper.PlayerDefaultModelWrapper;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,9 +30,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 
+import java.util.List;
+
 public class RenderPlayerUtils {
 
     public static void renderArms(PoseStack pPoseStack, Camera pActiveRenderInfo, float pPartialTicks, MultiBufferSource.BufferSource source) {
+        if (ClientData.getInstance().getFirstPersonAnimations().isEmpty() || Minecraft.getInstance().player == null) {
+            return;
+        }
+        ClientData.getInstance().toggleThirdPersonAnimations(false);
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(Minecraft.getInstance().player);
+        if (crossSync != null && crossSync.getTransformation() != null) {
+            return;
+        }
         RenderSystem.clear(256, Minecraft.ON_OSX);
         Minecraft mc = Minecraft.getInstance();
         GameRenderer gr = mc.gameRenderer;
@@ -53,6 +70,7 @@ public class RenderPlayerUtils {
         //if (mc.options.bobView().get()) {
         //    gr.bobView(pPoseStack, pPartialTicks);
         //}
+        ClientData.getInstance().toggleThirdPersonAnimations(true);
     }
 
     private static void renderHandsWithItems(float pPartialTicks, PoseStack pPoseStack, MultiBufferSource.BufferSource pBuffer, LocalPlayer pPlayerEntity, int pCombinedLight) {
@@ -115,15 +133,58 @@ public class RenderPlayerUtils {
             pPoseStack.mulPose(Axis.YP.rotationDegrees(f * -135.0F));
             pPoseStack.translate(f * 5.6F, 0.0F, 0.0F);
             PlayerRenderer playerrenderer = (PlayerRenderer) mc.getEntityRenderDispatcher().getRenderer(abstractclientplayer);
+
+            String modelName = abstractclientplayer.getModelName();
+            PlayerDefaultModelWrapper model = "slim".equals(modelName) ? AnimatedModel.playerSlimModel : AnimatedModel.playerModel;
+            model.markDirty();
+            model.resetParts();
+            Animation firstPersonAnimation = ClientData.getInstance().getFirstPersonAnimations(model);
             if (flag) {
-                pPoseStack.mulPose(Axis.XP.rotation(5.7F));
-                pPoseStack.translate(0, 0.25, 0);
+                //pPoseStack.mulPose(Axis.XP.rotation(5.7F));
+                //pPoseStack.translate(0, 0.25, 0);
+                if (firstPersonAnimation != null) {
+                    firstPersonAnimation.apply(mc.getPartialTick());
+                }
+                //playerrenderer.getModel().rightArm.yRot = -0.5F;
+                //playerrenderer.getModel().rightArm.xRot = -0.655F;
+                //playerrenderer.getModel().rightArm.zRot = -0.3F;
+                //playerrenderer.getModel().rightArm.y = 0.8F;
+
+                //playerrenderer.getModel().rightArm.xRot = -0.855F;
+                //playerrenderer.getModel().rightArm.xRot = -0.38F;
+                //playerrenderer.getModel().rightArm.zRot = 0.48F;
+                //playerrenderer.getModel().rightArm.y = 6.8F;
+                //playerrenderer.getModel().rightArm.zRot = 0.18F;
+                //playerrenderer.getModel().rightArm.xRot = -0.58F;
+
+                //playerrenderer.getModel().rightArm.zRot = 0.88F;
+                playerrenderer.getModel().rightArm.translateAndRotate(pPoseStack);
                 playerrenderer.renderHand(pPoseStack, pBuffer, pCombinedLight, abstractclientplayer, playerrenderer.getModel().rightArm, playerrenderer.getModel().rightSleeve);
             } else {
-                pPoseStack.mulPose(Axis.XP.rotation(5.7F));
-                pPoseStack.translate(0, 0.25, 0);
+                //pPoseStack.mulPose(Axis.XP.rotation(5.7F));
+                //pPoseStack.translate(0, 0.25, 0);
+                if (firstPersonAnimation != null) {
+                    firstPersonAnimation.apply(mc.getPartialTick());
+                }
+                //playerrenderer.getModel().leftArm.yRot = 0.5F;
+                //playerrenderer.getModel().leftArm.xRot = -0.655F;
+                //playerrenderer.getModel().leftArm.zRot = 0.3F;
+                //playerrenderer.getModel().leftArm.y = 0.8F;
+
+                //playerrenderer.getModel().leftArm.xRot = -0.455F;
+                //playerrenderer.getModel().leftArm.xRot = -1.18F;
+                //playerrenderer.getModel().leftArm.zRot = -0.68F;
+                //playerrenderer.getModel().leftArm.y = 5.8F;
+                //playerrenderer.getModel().leftArm.z = -7.8F;
+                //playerrenderer.getModel().leftArm.zRot = -0.28F;
+                //playerrenderer.getModel().leftArm.xRot = -0.78F;
+                //playerrenderer.getModel().leftArm.z = -4.8F;
+
+                //playerrenderer.getModel().leftArm.zRot = -0.88F;
+                playerrenderer.getModel().leftArm.translateAndRotate(pPoseStack);
                 playerrenderer.renderHand(pPoseStack, pBuffer, pCombinedLight, abstractclientplayer, playerrenderer.getModel().leftArm, playerrenderer.getModel().leftSleeve);
             }
+            model.resetParts();
         }
 
     }

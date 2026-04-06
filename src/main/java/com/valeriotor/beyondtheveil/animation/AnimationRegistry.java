@@ -16,7 +16,7 @@ import java.util.Map;
 public class AnimationRegistry {
 
     private static List<AnimationTemplate> animations = new ArrayList<>();
-    private static Map<AnimationTemplate, Integer> animationToId = new HashMap<>();
+    private static Map<String, AnimationTemplate> animationsByName = new HashMap<>();
     public static AnimationTemplate abomination1_explode;
     public static AnimationTemplate abomination2_explode;
     public static AnimationTemplate ammunition_explode;
@@ -52,6 +52,10 @@ public class AnimationRegistry {
     public static AnimationTemplate deep_one_trade3;
     public static AnimationTemplate deep_one_trade4;
     public static AnimationTemplate player_default_test;
+    public static AnimationTemplate player_kill_cultist_fp;
+    public static AnimationTemplate player_kill_cultist_tp;
+    public static AnimationTemplate player_slim_kill_cultist_fp;
+    public static AnimationTemplate player_slim_kill_cultist_tp;
     public static AnimationTemplate sandflatter_ambush;
     public static AnimationTemplate sandflatter_claw;
     public static AnimationTemplate shoreman_dialogue1;
@@ -71,7 +75,6 @@ public class AnimationRegistry {
             AnimatedModel.initWrappers();
         }
         animations.clear();
-        animationToId.clear();
         int i = 0;
         abomination1_explode = registerAnimation("abomination1_explode", client, i++);
         abomination2_explode = registerAnimation("abomination2_explode", client, i++);
@@ -108,6 +111,10 @@ public class AnimationRegistry {
         deep_one_trade3 = registerAnimation("deep_one_trade3", client, i++);
         deep_one_trade4 = registerAnimation("deep_one_trade4", client, i++);
         player_default_test = registerAnimation("wrapped/player_default_test", client, i++);
+        player_kill_cultist_fp = registerAnimation("wrapped/player_kill_cultist_fp", client, i++);
+        player_kill_cultist_tp = registerAnimation("wrapped/player_kill_cultist_tp", client, i++);
+        player_slim_kill_cultist_fp = registerAnimation("wrapped/player_slim_kill_cultist_fp", client, i++);
+        player_slim_kill_cultist_tp = registerAnimation("wrapped/player_slim_kill_cultist_tp", client, i++);
         sandflatter_ambush = registerAnimation("sandflatter_ambush", client, i++);
         sandflatter_claw = registerAnimation("sandflatter_claw", client, i++);
         shoreman_dialogue1 = registerAnimation("shoreman/dialogue1", client, i++);
@@ -126,19 +133,18 @@ public class AnimationRegistry {
 
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {
-        if (client) {
-            AnimationTemplate anim = new AnimationTemplate(name, client, id);
-            animations.add(anim);
-            animationToId.put(anim, id);
-            return anim;
-        }
         AnimationTemplate anim = new AnimationTemplate(name, client, id);
         animations.add(anim);
+        animationsByName.put(name, anim);
         return anim;
     }
 
     public static AnimationTemplate animationFromId(int id) {
         return animations.get(id);
+    }
+
+    public static AnimationTemplate animationFromName(String name) {
+        return animationsByName.get(name);
     }
 
 

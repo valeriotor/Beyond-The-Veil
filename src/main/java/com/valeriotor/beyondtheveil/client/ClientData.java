@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
@@ -35,6 +36,7 @@ import java.util.*;
 public class ClientData {
 
     private static ClientData instance = new ClientData();
+    private boolean thirdPersonAnimOn;
 
     public static ClientData getInstance() {
         return instance;
@@ -62,7 +64,8 @@ public class ClientData {
     private List<BlockPos> closeDeaths = new ArrayList<>();
     private int closestDeathTimer;
     private int blindnessTimer;
-    private Map<UUID, List<Animation>> playerAnimations = new HashMap<>();
+    private final Map<UUID, List<Animation>> playerAnimations = new HashMap<>();
+    private final List<Animation> firstPersonAnimations = new ArrayList<>();
 
     public void addWaypoint(CompoundTag tag) {
         WaypointType type = WaypointType.valueOf(tag.getString("type"));
@@ -178,6 +181,13 @@ public class ClientData {
                         iterator.remove();
                     }
                 }
+                for (Iterator<Animation> iterator = firstPersonAnimations.iterator(); iterator.hasNext(); ) {
+                    Animation firstPersonAnimation = iterator.next();
+                    firstPersonAnimation.update();
+                    if (firstPersonAnimation.isDone()) {
+                        iterator.remove();
+                    }
+                }
                 // TEST LocalPlayer p = Minecraft.getInstance().player;
                 // TEST if (p != null && (!playerAnimations.containsKey(p.getUUID()) || playerAnimations.get(p.getUUID()).isEmpty())) {
                 // TEST     playerAnimations.computeIfAbsent(p.getUUID(), uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.player_default_test));
@@ -189,7 +199,27 @@ public class ClientData {
         }
     }
 
+    public void toggleThirdPersonAnimations(boolean on) {
+        thirdPersonAnimOn = on;
+    }
+
+    public List<Animation> getFirstPersonAnimations() {
+        return firstPersonAnimations;
+    }
+
+    public Animation getFirstPersonAnimations(AnimatedModel<?> model) {
+        for (Animation firstPersonAnimation : firstPersonAnimations) {
+            if (firstPersonAnimation.matchesModel(model)) {
+                return firstPersonAnimation;
+            }
+        }
+        return null;
+    }
+
     public Animation getPlayerAnimation(UUID uuid, AnimatedModel<?> model) {
+        if (!thirdPersonAnimOn) {
+            return null;
+        }
         for (Animation animation : playerAnimations.getOrDefault(uuid, new ArrayList<>())) {
             if (animation.matchesModel(model)) {
                 return animation;
@@ -199,7 +229,16 @@ public class ClientData {
     }
 
     public void startPlayerAnimation(UUID playerId, int animationId) {
-        playerAnimations.computeIfAbsent(playerId, uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.animationFromId(animationId)));
+        AnimationTemplate template = AnimationRegistry.animationFromId(animationId);
+        playerAnimations.computeIfAbsent(playerId, uuid -> new ArrayList<>()).add(new Animation(template));
+        LocalPlayer p = Minecraft.getInstance().player;
+        String name = template.getName();
+        if (name.endsWith("_tp") && p != null && p.getUUID().equals(playerId)) {
+            AnimationTemplate firstPersonVersion = AnimationRegistry.animationFromName(name.substring(0, name.length() - 2) + "fp");
+            if (firstPersonVersion != null) {
+                firstPersonAnimations.add(new Animation(firstPersonVersion));
+            }
+        }
     }
 
     public void renewContact() {

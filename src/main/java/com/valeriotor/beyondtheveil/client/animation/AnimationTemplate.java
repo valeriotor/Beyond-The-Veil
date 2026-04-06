@@ -32,6 +32,10 @@ public class AnimationTemplate {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void parseFile(String name) {
         try {
             List<String> lines = Resources.readLines(BeyondTheVeil.class.getResource(String.format("/assets/beyondtheveil/animations/%s.btvanim", name)), Charsets.UTF_8);
