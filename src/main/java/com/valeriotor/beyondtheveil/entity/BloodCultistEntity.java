@@ -16,6 +16,8 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -56,6 +58,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     private static final EntityDataAccessor<String> HELD_VILLAGER_TYPE = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> KILLING_ENTITY_ID = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> BOWING = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> BEING_KILLED_BY_PLAYER = SynchedEntityData.defineId(BloodCultistEntity.class, EntityDataSerializers.BOOLEAN);
     private Animation backStabAnimation;
     private Animation bowingAnimation;
     private boolean didBackStabAnimation;
@@ -121,6 +124,11 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     public void tick() {
         super.tick();
         if (level().isClientSide) {
+            if (finalCutsceneTicks == -1 && entityData.get(BEING_KILLED_BY_PLAYER)) {
+                finalCutsceneTicks = 112;
+            } else if (finalCutsceneTicks >= 112) {
+                finalCutsceneTicks++;
+            }
             if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
                 heldVillager = new CrawlerEntity(BTVEntities.CRAWLER.get(), level());
                 heldVillager.setHolderType(PatientHolderType.CULTIST);
@@ -141,8 +149,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     }
                     yBodyRot = getYRot();
                     if (!didBackStabAnimation) {
-                        if(entity instanceof ShoremanEntity) {
-                            if(tickCount > 10) {
+                        if (entity instanceof ShoremanEntity) {
+                            if (tickCount > 10) {
                                 backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab_keeper_1);
                                 didBackStabAnimation = true;
                                 inBackStabPosition = true;
@@ -208,6 +216,15 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
             }
             if (finalCutsceneTicks >= 0) {
                 finalCutsceneTicks++;
+                if (talkingPlayer instanceof ServerPlayer sp && finalCutsceneTicks >= 112) {
+                    if (finalCutsceneTicks == 112) {
+                        talkingPlayer.startRiding(this);
+                        Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_slim_kill_cultist_tp), sp);
+                        entityData.set(BEING_KILLED_BY_PLAYER, true);
+                    }
+                    //this.positionRider(sp);
+                    //sp.connection.teleport(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                }
                 if (finalCutsceneTicks >= 195) {
                     kill();
                     finalCutsceneTicks = -1;
@@ -281,10 +298,32 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     @Override
     protected void positionRider(Entity pPassenger, MoveFunction pCallback) {
         if (this.hasPassenger(pPassenger)) {
-            float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
+            if (!entityData.get(BEING_KILLED_BY_PLAYER)) {
+                float f1 = (float) ((this.isRemoved() ? (double) 0.01F : this.getPassengersRidingOffset()) + pPassenger.getMyRidingOffset());
 
-            Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
-            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+                Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
+                pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+            } else {
+                final double BASE_DISTANCE = 0.6;
+                final double EXTENSION_DISTANCE = 0.6;
+                double x = 0;
+                if (finalCutsceneTicks < 114) {
+                    x = BASE_DISTANCE;
+                } else if (finalCutsceneTicks < 122) {
+                    x = (finalCutsceneTicks - 114) * EXTENSION_DISTANCE / 8 + BASE_DISTANCE;
+                } else if (finalCutsceneTicks < 145) {
+                    x = BASE_DISTANCE + EXTENSION_DISTANCE;
+                } else if (finalCutsceneTicks < 155) {
+                    x = -(finalCutsceneTicks - 145) * EXTENSION_DISTANCE / 10 + BASE_DISTANCE + EXTENSION_DISTANCE;
+                } else {
+                    x = BASE_DISTANCE;
+                }
+                Vec3 vec3 = (new Vec3(2*x, 0, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
+                pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+                //if (pPassenger instanceof ServerPlayer sp) {
+                //    sp.connection.teleport(sp.getX(), sp.getY(), sp.getZ(), sp.getYRot(), sp.getXRot());
+                //}
+            }
             /*pPassenger.setYRot(pPassenger.getYRot() + this.deltaRotation);
             pPassenger.setYHeadRot(pPassenger.getYHeadRot() + this.deltaRotation);
             this.clampRotation(pPassenger);
@@ -315,6 +354,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         this.entityData.define(HELD_VILLAGER_TYPE, "null");
         this.entityData.define(KILLING_ENTITY_ID, -1);
         this.entityData.define(BOWING, false);
+        this.entityData.define(BEING_KILLED_BY_PLAYER, false);
     }
 
     @Override
@@ -385,7 +425,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         switch (channel) {
-            case 0: killAnimation = new Animation(animationTemplate);
+            case 0:
+                killAnimation = new Animation(animationTemplate);
         }
         if (animationTemplate == AnimationRegistry.blood_cultist_kill_keeper_spare_cultist || animationTemplate == AnimationRegistry.blood_cultist_kill_keeper) {
             inBackStabPosition = false;
