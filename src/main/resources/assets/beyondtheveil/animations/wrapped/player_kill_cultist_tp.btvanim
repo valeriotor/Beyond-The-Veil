@@ -1,6 +1,55 @@
 model: player
-length: 45
-start: 10: 30
-    resx: body: 2.2: linear: absolute
-    resy: body: 2.2: linear: absolute
-    resz: body: 2.2: linear: absolute
+length: 75
+start: 0: 7
+    roty: rightArm: -0.5: linear: absolute
+    roty: rightSleeve: -0.5: linear: absolute
+    rotx: rightArm: -1.655: linear: absolute
+    rotx: rightSleeve: -1.655: linear: absolute
+    rotz: rightArm: -0.3: linear: absolute
+    rotz: rightSleeve: -0.3: linear: absolute
+    roty: leftArm: 0.5: linear: absolute
+    roty: leftSleeve: 0.5: linear: absolute
+    rotx: leftArm: -1.655: linear: absolute
+    rotx: leftSleeve: -1.655: linear: absolute
+    rotz: leftArm: 0.3: linear: absolute
+    rotz: leftSleeve: 0.3: linear: absolute
+start: 8: 9:
+    roty: rightArm: -0.7: linear: absolute
+    roty: rightSleeve: -0.7: linear: absolute
+    roty: leftArm: 0.3: linear: absolute
+    roty: leftSleeve: 0.3: linear: absolute
+start: 9: 12:
+    roty: leftArm: 0.7: linear: absolute
+    roty: leftSleeve: 0.7: linear: absolute
+    roty: rightArm: -0.3: linear: absolute
+    roty: rightSleeve: -0.3: linear: absolute
+start: 12: 15:
+    roty: rightArm: -0.7: linear: absolute
+    roty: rightSleeve: -0.7: linear: absolute
+    roty: leftArm: 0.3: linear: absolute
+    roty: leftSleeve: 0.3: linear: absolute
+start: 15: 18:
+    roty: leftArm: 0.7: linear: absolute
+    roty: leftSleeve: 0.7: linear: absolute
+    roty: rightArm: -0.3: linear: absolute
+    roty: rightSleeve: -0.3: linear: absolute
+start: 18: 21:
+    roty: rightArm: -0.7: linear: absolute
+    roty: rightSleeve: -0.7: linear: absolute
+    roty: leftArm: 0.3: linear: absolute
+    roty: leftSleeve: 0.3: linear: absolute
+start: 22: 29:
+    rotx: rightArm: -2.38: linear: absolute
+    rotx: rightSleeve: -2.38: linear: absolute
+    rotx: leftArm: -2.38: linear: absolute
+    rotx: leftSleeve: -2.38: linear: absolute
+start: 40: 45
+    rotx: rightArm: -1.88: linear: absolute
+    rotx: rightSleeve: -1.88: linear: absolute
+    rotx: leftArm: -1.88: linear: absolute
+    rotx: leftSleeve: -1.88: linear: absolute
+start: 54: 57:
+    rotx: rightArm: -2.38: linear: absolute
+    rotx: rightSleeve: -2.38: linear: absolute
+    rotx: leftArm: -2.38: linear: absolute
+    rotx: leftSleeve: -2.38: linear: absolute

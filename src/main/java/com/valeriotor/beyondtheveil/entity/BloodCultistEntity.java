@@ -220,6 +220,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     if (finalCutsceneTicks == 112) {
                         talkingPlayer.startRiding(this);
                         Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_slim_kill_cultist_tp), sp);
+                        Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_kill_cultist_tp), sp);
                         entityData.set(BEING_KILLED_BY_PLAYER, true);
                     }
                     //this.positionRider(sp);
