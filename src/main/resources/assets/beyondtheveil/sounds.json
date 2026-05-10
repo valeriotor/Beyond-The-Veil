@@ -130,5 +130,11 @@
   },
   "shoreman_cultist_tension": {
     "sounds": [ "beyondtheveil:shoreman_cultist_tension" ]
+  },
+  "kill_keeper": {
+    "sounds": [ "beyondtheveil:kill_keeper" ]
+  },
+  "kill_cultist": {
+    "sounds": [ "beyondtheveil:kill_cultist" ]
   }
 }

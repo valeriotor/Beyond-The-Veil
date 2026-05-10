@@ -39,6 +39,8 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> BLOOD_ZOMBIE_SHORT = registerSound("blood_zombie_short");
     public static final RegistryObject<SoundEvent> DAGON_TENSION = registerSound("dagon_tension");
     public static final RegistryObject<SoundEvent> DAGON_THUMP = registerSound("dagon_thump");
+    public static final RegistryObject<SoundEvent> KILL_KEEPER = registerSound("kill_keeper");
+    public static final RegistryObject<SoundEvent> KILL_CULTIST = registerSound("kill_cultist");
     public static final RegistryObject<SoundEvent> SHOREMAN_CULTIST_TENSION = registerSound("shoreman_cultist_tension");
     public static final List<RegistryObject<SoundEvent>> CURRENTS_LIST = registerCurrents();
 

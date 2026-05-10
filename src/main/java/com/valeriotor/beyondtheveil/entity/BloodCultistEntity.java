@@ -225,6 +225,13 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     //this.positionRider(sp);
                     //sp.connection.teleport(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
                 }
+                if(finalCutsceneTicks == 1) {
+                    level().playSound(null, blockPosition(), BTVSounds.KILL_KEEPER.get(), SoundSource.NEUTRAL, 1, 1);
+                } else if (finalCutsceneTicks == 112) {
+                    level().playSound(null, blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
+                } else if (finalCutsceneTicks == 150) {
+                    level().playSound(null, blockPosition(), BTVSounds.KILL_CULTIST.get(), SoundSource.NEUTRAL, 1, 1);
+                }
                 if (finalCutsceneTicks >= 195) {
                     kill();
                     finalCutsceneTicks = -1;
@@ -318,7 +325,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                 } else {
                     x = BASE_DISTANCE;
                 }
-                Vec3 vec3 = (new Vec3(2*x, 0, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
+                Vec3 vec3 = (new Vec3(1.75*x, 0, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F) * (pPassenger instanceof ShoremanEntity ? 1.35F : 1));
                 pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
                 //if (pPassenger instanceof ServerPlayer sp) {
                 //    sp.connection.teleport(sp.getX(), sp.getY(), sp.getZ(), sp.getYRot(), sp.getXRot());
