@@ -225,9 +225,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     //this.positionRider(sp);
                     //sp.connection.teleport(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
                 }
-                if(finalCutsceneTicks == 1) {
-                    level().playSound(null, blockPosition(), BTVSounds.KILL_KEEPER.get(), SoundSource.NEUTRAL, 1, 1);
-                } else if (finalCutsceneTicks == 112) {
+                if (finalCutsceneTicks == 112) {
                     level().playSound(null, blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
                 } else if (finalCutsceneTicks == 150) {
                     level().playSound(null, blockPosition(), BTVSounds.KILL_CULTIST.get(), SoundSource.NEUTRAL, 1, 1);
