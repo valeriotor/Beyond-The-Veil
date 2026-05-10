@@ -61,7 +61,7 @@ public class PlayerTickEvents {
         if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
             Player p = event.player;
             if (p.tickCount % 100 == 0) {
-                Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation((ServerPlayer) p, AnimationRegistry.player_slim_kill_cultist_tp), p);
+                //Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation((ServerPlayer) p, AnimationRegistry.player_slim_kill_cultist_tp), p);
             }
             p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
                 List<CounterType> counterTypes = playerData.tickCounters();

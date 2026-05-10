@@ -387,6 +387,9 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         switch (channel) {
             case 0: killAnimation = new Animation(animationTemplate);
         }
+        if (animationTemplate == AnimationRegistry.blood_cultist_kill_keeper_spare_cultist || animationTemplate == AnimationRegistry.blood_cultist_kill_keeper) {
+            inBackStabPosition = false;
+        }
     }
 
     public void finalCutscene() {

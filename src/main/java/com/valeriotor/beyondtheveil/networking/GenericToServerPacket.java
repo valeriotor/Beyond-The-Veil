@@ -121,8 +121,14 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.FINISH_DAGON_QUEST, new CompoundTag());
     }
 
-    public static GenericToServerPacket killKeeper() {
-        return new GenericToServerPacket(MessageType.KILL_KEEPER, new CompoundTag());
+    public static GenericToServerPacket killKeeper(boolean killCultist) {
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("killCultist", killCultist);
+        return new GenericToServerPacket(MessageType.KILL_KEEPER, tag);
+    }
+
+    public static GenericToServerPacket spareCultist() {
+        return new GenericToServerPacket(MessageType.SPARE_CULTIST, new CompoundTag());
     }
 
     private final MessageType type;
@@ -236,7 +242,12 @@ public class GenericToServerPacket {
                     }
                     case KILL_KEEPER -> {
                         if (player.containerMenu instanceof DoubleDialogueMenu menu) {
-                            menu.killKeeper();
+                            menu.killKeeper(tag.getBoolean("killCultist"));
+                        }
+                    }
+                    case SPARE_CULTIST -> {
+                        if (player.containerMenu instanceof DoubleDialogueMenu menu) {
+                            menu.spareCultist();
                         }
                     }
                 }
@@ -265,7 +276,8 @@ public class GenericToServerPacket {
         READ_MEMORY,
         FINISH_DAGON_QUEST,
         START_PLAYER_EXPLOSION,
-        KILL_KEEPER
+        KILL_KEEPER,
+        SPARE_CULTIST,
     }
 
 }

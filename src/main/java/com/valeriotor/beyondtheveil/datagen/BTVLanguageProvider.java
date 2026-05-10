@@ -1207,6 +1207,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_cultist.do_not.1", "NO!!!!!!!!");
         add("dialogue.shoreman_cultist.go_ahead.0", "NO!!!!!!!!");
         add("dialogue.shoreman_cultist.bastard", "THE BASTARD BLED WHITE!");
+        add("dialogue.shoreman_cultist.laugh", "HAHAHA!||\nWell, friend – now you have breached the lie| – is that not what you wanted?");
     }
 
     private void addDrownedDialogue() {

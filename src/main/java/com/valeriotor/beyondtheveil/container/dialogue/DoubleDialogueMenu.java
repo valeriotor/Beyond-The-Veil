@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class DoubleDialogueMenu extends AbstractContainerMenu {
     private final Talkable npc;
+    private boolean bowing = false;
 
     public DoubleDialogueMenu(int pContainerId, Inventory playerInventory, Player player, FriendlyByteBuf byteBuf) {
         this(pContainerId, new ClientTalkable(player));
@@ -37,7 +38,7 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return npc.getTalkingPlayer() == pPlayer && npc instanceof LivingEntity e && e.isAlive();
+        return npc.getTalkingPlayer() == pPlayer && npc instanceof LivingEntity e && e.isAlive() && !bowing;
     }
 
     public void removed(Player pPlayer) {
@@ -49,14 +50,25 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
         // TODO eh I guess all handled client side?
     }
 
-    public void killKeeper() {
+    public void killKeeper(boolean killCultist) {
         if (npc instanceof BloodCultistEntity cultist) {
             if (cultist.getKillingEntity() instanceof ShoremanEntity shoreman) {
                 shoreman.sendAnimation(AnimationRegistry.shoreman_keeper_death_cultist, 0);
                 shoreman.aboutToDie();
             }
-            cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper, 0);
-            cultist.finalCutscene();
+            if (killCultist) {
+                cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper, 0);
+                cultist.finalCutscene();
+            } else {
+                cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper_spare_cultist, 0);
+            }
+        }
+    }
+
+    public void spareCultist() {
+        if (npc instanceof BloodCultistEntity cultist) {
+            cultist.bowAndLeave();
+            bowing = true;
         }
     }
 }

@@ -43,6 +43,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     private int fadeoutTicks = 0;
     private int startTicks = 0;
     private int deathTicks = -1;
+    private int bowTicks = -1;
 
     public ShoremanCultistDialogueGui(DoubleDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -114,16 +115,32 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
                 fadeoutTicks = 0;
                 shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.do_not.1"));
             } else if ((exchangeIndex == 12 || exchangeIndex == 20) && shoremanBox.isFinished()) {
-                Messages.sendToServer(GenericToServerPacket.killKeeper());
-                exchangeIndex = 99;
+                Messages.sendToServer(GenericToServerPacket.killKeeper(exchangeIndex == 12));
+                exchangeIndex = exchangeIndex == 12 ? 99 : 90;
                 deathTicks = 0;
                 cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 90 / 100), 75, I18n.get("dialogue.shoreman_cultist.bastard"));
             }
         }
         if (deathTicks >= 0) {
-            deathTicks++;
+            if (deathTicks < 111 || exchangeIndex == 99) {
+                deathTicks++;
+                if (exchangeIndex == 90 && deathTicks == 111) {
+                    exchangeIndex = 91;
+                    cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 90 / 100), 75, I18n.get("dialogue.shoreman_cultist.laugh"));
+                }
+            }
             if (deathTicks >= 70) {
                 cultistBox.tick();
+                if (cultistBox.isFinished() && exchangeIndex == 91 && bowTicks == -1) {
+                    bowTicks = 0;
+                }
+            }
+        }
+        if (bowTicks >= 0) {
+            if (bowTicks >= 20) {
+                Messages.sendToServer(GenericToServerPacket.spareCultist());
+            } else {
+                bowTicks++;
             }
         }
     }
@@ -146,7 +163,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         pose.scale(scaleFactor, scaleFactor, 1);
         //guiGraphics.blit(TEXTURE, (int) (-imageWidth * scaleFactor / 2), (int) (-imageHeight * scaleFactor), 0, 0, this.imageWidth, this.imageHeight);
         RenderSystem.enableBlend();
-        if (exchangeIndex != 99) {
+        if (exchangeIndex < 90) {
             guiGraphics.blit(TEXTURE, (int) (-imageWidth / 2), (int) (-imageHeight), 512, 166, 0, 0, 512, 166, 512, 166);
         } else if (deathTicks < 112) {
             double factor = 0.5 + Math.min(1, (deathTicks + pPartialTick) / 5D) / 2;
@@ -155,7 +172,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         }
         RenderSystem.disableBlend();
 
-        if (shoremanBox != null && (exchangeIndex % 2 == 0 || fadeoutTicks < TOTAL_FADEOUT) && exchangeIndex != 99) {
+        if (shoremanBox != null && (exchangeIndex % 2 == 0 || fadeoutTicks < TOTAL_FADEOUT) && exchangeIndex < 90) {
             pose.pushPose();
             pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -135, 0);
             int alpha = 0xFF;
@@ -173,10 +190,12 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
                 pose.translate(imageWidth * (1 - TEXT_WIDTH_RATIO) / 2, -135, 0);
             } else {
                 pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -135, 0);
-                pose.scale(3.6F, 3.6F, 1);
+                if (exchangeIndex != 91) {
+                    pose.scale(3.6F, 3.6F, 1);
+                }
             }
             int alpha = 0xFF;
-            if (exchangeIndex % 2 == 0) {
+            if (exchangeIndex % 2 == 0 && exchangeIndex < 90) {
                 double fadeLevel = Mth.clamp((TOTAL_FADEOUT + TIME_BEFORE_FADEOUT - fadeoutTicks) / TOTAL_FADEOUT, 0, 1);
                 alpha = (int) Math.min(0x10 + 0xEF * fadeLevel, 255);
             }
