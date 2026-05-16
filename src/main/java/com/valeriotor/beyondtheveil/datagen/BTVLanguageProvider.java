@@ -2945,6 +2945,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.cancel", "Cancel");
         add("gui.journal.journal.print", "Print");
         add("gui.journal.journal.need_paper", "Need paper in inventory!");
+        add("gui.journal.journal.successful", "Success");
+        add("gui.journal.journal.partially_successful", "Partial Success");
+        add("gui.journal.journal.failed", "Failure");
     }
 
     private void addSurgery() {

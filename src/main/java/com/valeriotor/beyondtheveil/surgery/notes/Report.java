@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.surgery.notes;
 
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -30,7 +31,8 @@ public class Report {
 
     private final String name;
     private final List<ReportStep> steps = new ArrayList<>();
-    private int successful;
+    private Successfulness successful;
+    private SurgicalLocation location;
     private ReportPatientType patientType = ReportPatientType.HUMAN;
 
 
@@ -46,11 +48,11 @@ public class Report {
         steps.add(step);
     }
 
-    public void setSuccessful(int successful) {
+    public void setSuccessful(Successfulness successful) {
         this.successful = successful;
     }
 
-    public int getSuccessful() {
+    public Successfulness getSuccessful() {
         return successful;
     }
 
@@ -60,6 +62,14 @@ public class Report {
 
     public ReportPatientType getPatientType() {
         return patientType;
+    }
+
+    public void setLocation(SurgicalLocation location) {
+        this.location = location;
+    }
+
+    public SurgicalLocation getLocation() {
+        return location;
     }
 
     @Override
@@ -87,5 +97,9 @@ public class Report {
         tag.put("steps", steps);
         tag.putString("patientType", patientType.name());
         return tag;
+    }
+
+    public enum Successfulness {
+        SUCCESS, PARTIAL_SUCCESS, FAILED, IN_PROGRESS;
     }
 }

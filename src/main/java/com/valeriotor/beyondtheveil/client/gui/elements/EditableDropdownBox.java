@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends Element {
 
     private final boolean editable;
+    public boolean visible;
     private T chosen;
     private final EditBox typeSelector;
     private final T[] originalOptions;
@@ -36,6 +37,7 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
     private EditableDropdownBox(int width, int height, int stringY, T[] options, int backgroundColor, int listFrameColor, int listBackgroundColor, int listBackgroundHighlightColor, boolean editable) {
         super(width, height);
         this.editable = editable;
+        this.visible = true;
         typeSelector = new EditBox(Minecraft.getInstance().font, 3, stringY, getWidth() - 10, 15, options[0].getText());
         originalOptions = options;
         this.backgroundColor = backgroundColor;
@@ -68,6 +70,9 @@ public class EditableDropdownBox<T extends EditableDropdownBox.Option> extends E
 
     @Override
     public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+        if (!this.visible) {
+            return;
+        }
         graphics.fill(0, 0, getWidth(), getHeight(), backgroundColor);
         if (insideBounds(relativeMouseX, relativeMouseY)) {
             graphics.fill(0, 0, getWidth(), getHeight(), 0x0AFFFFFF);

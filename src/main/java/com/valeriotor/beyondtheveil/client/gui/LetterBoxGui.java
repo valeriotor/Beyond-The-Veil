@@ -404,24 +404,11 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             this.letter = letter;
             this.received = received;
             String correspondence1 = Component.translatable(received ? "correspondence.from" : "correspondence.to").getString() + Component.translatable("correspondence." + letter.getTemplate().getParent().getCorrespondence().name().toLowerCase()).getString();
-            StringBuilder correspondenceBuilder = cutString(correspondence1);
+            StringBuilder correspondenceBuilder = GuiHelper.cutString(correspondence1, getWidth() - 62);
             correspondence = correspondenceBuilder.toString();
             objectFull = Component.translatable("exchange." + letter.getTemplate().getParent().getName() + ".object").getString();
-            StringBuilder objectBuilder = cutString(objectFull);
+            StringBuilder objectBuilder = GuiHelper.cutString(objectFull, getWidth() - 62);
             object = objectBuilder.toString();
-        }
-
-        @NotNull
-        private StringBuilder cutString(String object1) {
-            StringBuilder objectBuilder = new StringBuilder();
-            for (char c : object1.toCharArray()) {
-                objectBuilder.append(c);
-                if (Minecraft.getInstance().font.width(objectBuilder.toString()) > getWidth() - 62) {
-                    objectBuilder.append("...");
-                    break;
-                }
-            }
-            return objectBuilder;
         }
 
         @Override

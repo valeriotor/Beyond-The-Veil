@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.research.ResearchProvider;
+import com.valeriotor.beyondtheveil.client.gui.GuiHelper;
 import com.valeriotor.beyondtheveil.client.gui.elements.*;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalCategory;
 import com.valeriotor.beyondtheveil.client.gui.research.journal.JournalReportLine;
@@ -17,6 +18,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
+import com.valeriotor.beyondtheveil.surgery.notes.ReportStepType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -111,10 +113,15 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private TexturedButton deleteButton;
     private TexturedButton cancelButton;
     private TexturedButton printButton;
+    private EditableDropdownBox<Successfulness> successfulnessBox;
     private final List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
     private static final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
     private static final ResourceLocation REPORT_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/report_entry.png");
+    private static final ResourceLocation TICK = new ResourceLocation(References.MODID, "textures/gui/journal/tick.png");
+    private static final ResourceLocation TILDE = new ResourceLocation(References.MODID, "textures/gui/journal/tilde.png");
+    private static final ResourceLocation CROSS = new ResourceLocation(References.MODID, "textures/gui/journal/cross.png");
+    private static final ResourceLocation QUESTION_MARK = new ResourceLocation(References.MODID, "textures/gui/journal/question_mark.png");
     // 2530x1517 -> 843x505
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/journal/background.png");
     // 144x93 -> 48x31
@@ -211,22 +218,23 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             removeWidget(reportName);
         }
 
+        successfulnessBox = EditableDropdownBox.makeBox(Arrays.stream(Report.Successfulness.values()).map(Successfulness::new).toArray(Successfulness[]::new), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, false);
         buttonHolder = ElementHolder.makeHolder(width, height);
         reportName = addRenderableWidget(new EditBox(minecraft.font, 150, 150, 120, 20, Component.literal("")));
         newButton = buttonHolder.addElement(ENTRY_LIST_BASE_LEFT_X, ENTRY_LIST_BASE_TOP_Y - 25, new TexturedButton(ENTRY_BASE_WIDTH, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.new"), pButton -> {
-            editingReport = true;
+            setEditingReport(true);
             chosenReport = null;
             reportName.setValue("");
             selectReport(null, true);
             //updateWidgetVisibility();
         }));
         editButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.edit"), pButton -> {
-            editingReport = true;
+            setEditingReport(true);
             selectReport(chosenReport, true);
             //updateWidgetVisibility();
         }));
         saveButton = buttonHolder.addElement(70, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.save"), pButton -> {
-            editingReport = false;
+            setEditingReport(false);
             if (chosenReport != null) {
                 GenericToServerPacket packet = GenericToServerPacket.deleteJournalReport(chosenReport.getName());
                 Messages.sendToServer(packet);
@@ -272,7 +280,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             //updateWidgetVisibility();
         }));
         cancelButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.cancel"), pButton -> {
-            editingReport = false;
+            setEditingReport(false);
             if (chosenReport != null) {
                 selectReport(chosenReport, false);
             } else {
@@ -297,7 +305,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (firstOpen) {
             Triple<Report, Boolean, String> currentReport = DataUtil.getCurrentReport(Minecraft.getInstance().player);
             if (currentReport.getLeft() != null) {
-                editingReport = currentReport.getMiddle();
+                setEditingReport(currentReport.getMiddle());
                 selectReport(currentReport.getLeft(), currentReport.getMiddle());
             }
             if (currentReport.getRight() != null) {
@@ -312,6 +320,12 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             setCategory(selectedCategory);
 
         }
+    }
+
+    private void setEditingReport(boolean val) {
+        editingReport = val;
+        reportName.moveCursorToStart();
+        reportName.setEditable(val);
     }
 
     private List<Element> makeOverviewList() {
@@ -438,6 +452,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
         }
         buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
+        pose.pushPose();
+        pose.translate(30, ENTRY_LIST_BASE_TOP_Y - 30, 0);
+        successfulnessBox.render(pose, pGuiGraphics, 0xFFFFFFFF, pMouseX - 370, pMouseY - (ENTRY_LIST_BASE_TOP_Y - 25), pPartialTick);
+        pose.popPose();
         ScrollableList<? extends Element> toRender = currentList();
         int relativeMouseX = listMouseX(pMouseX);
         int relativeMouseY = listMouseY(pMouseY);
@@ -480,8 +498,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
 
         pose.popPose();
-        pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
-        pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pageMouseX(pMouseX), pageMouseY(pMouseY)), 0, 15, 0xFFFFFFFF);
+        //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
+        //pGuiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pageMouseX(pMouseX), pageMouseY(pMouseY)), 0, 15, 0xFFFFFFFF);
     }
 
     private void renderPage(PoseStack pose, GuiGraphics graphics, double scaledMouseX, double scaledMouseY, float pPartialTick) {
@@ -712,6 +730,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 lines.add(line);
             });
             reportName.setValue(report.getName());
+            reportName.moveCursorToStart();
         } else {
             JournalReportLine line = JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable);
             lines.add(line);
@@ -1002,13 +1021,32 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
 
         private final String name;
+        private final String nameFull;
+        private final Component successfulText;
         private final int success;
         private final Report report;
+        private final float successfulTextX;
+        private final ResourceLocation icon;
 
         protected ReportEntry(Report report) {
             super(ENTRY_BASE_WIDTH, REPORT_BASE_HEIGHT);
-            this.name = report.getName();
-            this.success = report.getSuccessful();
+            this.nameFull = report.getName();
+            this.name = GuiHelper.cutString(nameFull, getWidth() * 4 / 5).toString();
+            this.success = Minecraft.getInstance().player.getRandom().nextInt(3);//report.getSuccessful();
+            successfulText = switch (success) {
+                case 0 -> Component.translatable("gui.journal.journal.successful");
+                case 1 -> Component.translatable("gui.journal.journal.partially_successful");
+                case 2 -> Component.translatable("gui.journal.journal.failed");
+                default -> Component.translatable("gui.journal.journal.partially_successful");
+            };
+            successfulTextX = getWidth() - 24 - Minecraft.getInstance().font.width(successfulText) * 0.7F;
+            icon = switch (success) {
+                case 0 -> TICK;
+                case 1 -> TILDE;
+                case 2 -> CROSS;
+                case 3 -> QUESTION_MARK;
+                default -> TILDE;
+            };
             this.report = report;
         }
 
@@ -1021,7 +1059,23 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             if (Objects.equals(this.report, chosenReport)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x33A88C00);
             }
-            graphics.drawString(minecraft.font, name, 5, 8, color);
+            int successfulnessColor = switch (success) {
+                case 0 -> 0xFF36D500;
+                case 1 -> 0xFFFFD800;
+                case 2 -> 0xFFEF0000;
+                default -> 0xFFFFD800;
+            };
+            poseStack.pushPose();
+            poseStack.translate(successfulTextX, 22, 0);
+            poseStack.scale(0.7F, 0.7F, 1);
+            graphics.drawString(minecraft.font, successfulText, 1110, 0, successfulnessColor);
+            poseStack.popPose();
+            RenderSystem.enableBlend();
+            graphics.blit(icon, getWidth() - 22, 18, 12, 12, 0, 0, 20, 20, 20, 20);
+            poseStack.pushPose();
+            poseStack.scale(1.5F, 1.5F, 1);
+            graphics.drawString(minecraft.font, name, 5, 8, 0xFFFFDD87);
+            poseStack.popPose();
         }
 
         @Override
@@ -1098,6 +1152,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         cancelButton.visible = cancelButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
         printButton.visible = (selectedCategory == JournalCategory.JOURNAL && chosenReport != null && !editingReport);
         printButton.active = printButton.visible && Minecraft.getInstance().player.getInventory().contains(new ItemStack(Items.PAPER));
+        successfulnessBox.visible = selectedCategory == JournalCategory.JOURNAL && chosenReport != null;
+        //successfulnessBox
     }
 
     private class Dropdown1 extends DropdownLists.Dropdown {
@@ -1241,6 +1297,19 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 return true;
             }
             return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+        }
+    }
+
+    private record Successfulness(@NotNull Report.Successfulness successfulness) implements EditableDropdownBox.Option {
+
+        @Override
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.type." + successfulness.name().toLowerCase());
+        }
+
+        @Override
+        public String getId() {
+            return successfulness.name();
         }
     }
 

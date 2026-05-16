@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -43,6 +44,19 @@ public class GuiHelper {
         //    strings.set(i, strings.get(i).concat(" "));
         //}
         return strings;
+    }
+
+    @NotNull
+    public static StringBuilder cutString(String object1, int width) {
+        StringBuilder objectBuilder = new StringBuilder();
+        for (char c : object1.toCharArray()) {
+            objectBuilder.append(c);
+            if (Minecraft.getInstance().font.width(objectBuilder.toString()) > width) {
+                objectBuilder.append("...");
+                break;
+            }
+        }
+        return objectBuilder;
     }
 
 
