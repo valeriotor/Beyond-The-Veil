@@ -5,9 +5,11 @@ import com.valeriotor.beyondtheveil.client.model.entity.ShoremanModel;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -52,4 +54,10 @@ public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, Shore
         return TEXTURES.get(pEntity.getProfession());
     }
 
+    @Nullable
+    @Override
+    protected RenderType getRenderType(ShoremanEntity pLivingEntity, boolean pBodyVisible, boolean pTranslucent, boolean pGlowing) {
+        //return super.getRenderType(pLivingEntity, pBodyVisible, pTranslucent, pGlowing);
+        return RenderType.entityTranslucent(getTextureLocation(pLivingEntity));
+    }
 }
