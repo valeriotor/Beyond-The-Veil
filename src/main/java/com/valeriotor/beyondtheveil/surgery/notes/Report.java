@@ -23,6 +23,11 @@ public class Report {
         } catch (Exception ignored) {}
         try {
             r.patientType = ReportPatientType.valueOf(tag.getString("patientType"));
+            if (tag.contains("success")) {
+                r.successful = Successfulness.valueOf(tag.getString("success"));
+            } else {
+                r.successful = Successfulness.IN_PROGRESS;
+            }
         } catch (IllegalArgumentException ignored) {
 
         }
@@ -58,6 +63,10 @@ public class Report {
 
     public List<ReportStep> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    public void setPatientType(ReportPatientType patientType) {
+        this.patientType = patientType;
     }
 
     public ReportPatientType getPatientType() {
@@ -96,6 +105,9 @@ public class Report {
         }
         tag.put("steps", steps);
         tag.putString("patientType", patientType.name());
+        if (successful != null) {
+            tag.putString("success", successful.name());
+        }
         return tag;
     }
 

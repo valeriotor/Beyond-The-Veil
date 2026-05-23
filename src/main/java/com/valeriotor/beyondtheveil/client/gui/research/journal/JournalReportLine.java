@@ -6,7 +6,6 @@ import com.valeriotor.beyondtheveil.client.gui.elements.EditableList;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
-import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.surgery.notes.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -72,7 +71,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         int lastX = lastBox.x + lastBox.box.getWidth() + 1;
         graphics.fill(52, 0, lastX, 1, 0xFF352E1C);
         graphics.fill(52, getHeight() - 1, lastX, getHeight(), 0xFF352E1C);
-        graphics.fill(52, 0, 53, getHeight(), 0xFF352E1C);
+        graphics.fill(51, 0, 52, getHeight(), 0xFF352E1C);
         //graphics.fill(getWidth() - 53 - 1, 0, lastX, getHeight(), 0xFF352E1C);
         for (Box box : boxes) {
             poseStack.pushPose();
@@ -248,6 +247,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         boxes.add(first);
         switch (type.type) {
             case POSITION -> boxes.add(new Box(first.x + first.box.getWidth() + 1, locationBox()));
+            case COMPLICATION -> boxes.add(new Box(first.x + first.box.getWidth() + 1, complicationBox()));
             case EXTRACTION, INCISION -> boxes.add(new Box(first.x + first.box.getWidth() + 1, completenessBox()));
             case INJECTION -> {
                 int quantityBoxWidth = 50;
@@ -304,7 +304,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         try {
             ReportStepType type = ReportStepType.valueOf(boxes.get(0).box.getChosen().getId());
             return switch (type) {
-                case NONE, STITCHING, PAIN, DEATH -> new ReportStep.SimpleStep(type);
+                case NONE, STITCHING, DEATH -> new ReportStep.SimpleStep(type);
                 case POSITION -> new PositionStep(ReportLocationType.valueOf(boxes.get(1).box.getChosen().getId()));
                 case EXTRACTION, INCISION ->
                         new ReportStep.CompletableStep(type, Objects.equals(boxes.get(1).box.getChosen().getId(), "complete"));
@@ -325,6 +325,7 @@ public class JournalReportLine extends Element implements EditableList.EditableL
                         yield new InsertionStep(complete, null);
                     }
                 }
+                case COMPLICATION -> new ComplicationStep(ReportComplication.valueOf(boxes.get(1).box.getChosen().getId()));
             };
         } catch (Exception e) {
             return new ReportStep.SimpleStep(ReportStepType.NONE);
@@ -343,6 +344,11 @@ public class JournalReportLine extends Element implements EditableList.EditableL
                 case POSITION -> {
                     EditableDropdownBox<Location> box = locationBox();
                     box.selectChosen(new Location(((PositionStep) step).getLocation()));
+                    boxes.add(new Box(first.x + first.box.getWidth() + 1, box));
+                }
+                case COMPLICATION -> {
+                    EditableDropdownBox<Complication> box = complicationBox();
+                    box.selectChosen(new Complication(((ComplicationStep) step).getComplication()));
                     boxes.add(new Box(first.x + first.box.getWidth() + 1, box));
                 }
                 case EXTRACTION, INCISION -> {
@@ -417,6 +423,11 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         return standardBox(Arrays.stream(ReportLocationType.values()).map(Location::new).toArray(Location[]::new), editable);
     }
 
+    @NotNull
+    private EditableDropdownBox<Complication> complicationBox() {
+        return standardBox(Arrays.stream(ReportComplication.values()).map(Complication::new).toArray(Complication[]::new), editable);
+    }
+
     private static <T extends EditableDropdownBox.Option> EditableDropdownBox<T> standardBox(T[] values, boolean editable) {
         return EditableDropdownBox.makeBox(values, 23, 8, 0xFF8D734F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, editable);
     }
@@ -444,6 +455,19 @@ public class JournalReportLine extends Element implements EditableList.EditableL
         @Override
         public String getId() {
             return location.name();
+        }
+    }
+
+    private record Complication(@NotNull ReportComplication complication) implements EditableDropdownBox.Option {
+
+        @Override
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.complication." + complication.name().toLowerCase());
+        }
+
+        @Override
+        public String getId() {
+            return complication.name();
         }
     }
 

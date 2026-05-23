@@ -4,7 +4,7 @@ import com.valeriotor.beyondtheveil.client.gui.elements.EditableDropdownBox;
 import net.minecraft.network.chat.Component;
 
 public enum ReportStepType implements EditableDropdownBox.Option {
-    NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, PAIN, DEATH;
+    NONE, POSITION, EXTRACTION, INCISION, INJECTION, INSERTION, STITCHING, COMPLICATION, DEATH;
 
     @Override
     public Component getText() {

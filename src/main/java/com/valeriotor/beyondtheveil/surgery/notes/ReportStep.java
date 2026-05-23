@@ -16,8 +16,9 @@ public abstract class ReportStep {
 
     private static ReportStep stepFromType(ReportStepType type, CompoundTag tag) {
         return switch (type) {
-            case NONE, DEATH, PAIN, STITCHING -> new SimpleStep(type);
+            case NONE, DEATH, STITCHING -> new SimpleStep(type);
             case POSITION -> PositionStep.fromNBT(tag);
+            case COMPLICATION -> ComplicationStep.fromNBT(tag);
             case EXTRACTION, INCISION -> new CompletableStep(type, tag);
             case INJECTION -> new InjectionStep(tag);
             case INSERTION -> new InsertionStep(tag);

@@ -18,7 +18,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
-import com.valeriotor.beyondtheveil.surgery.notes.ReportStepType;
+import com.valeriotor.beyondtheveil.surgery.notes.ReportPatientType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -28,7 +28,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.language.I18n;
@@ -41,16 +40,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -86,6 +80,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private static final int BOOKMARK_SEPARATION = 70;
     public static final int ARROW_WIDTH = 16;
     public static final int ARROW_HEIGHT = 16;
+    public static final int SUCCESSFUL_BOX_X = 35;
+    public static final int SUCCESSFUL_BOX_Y = ENTRY_LIST_BASE_TOP_Y - 33;
     //private int entryListLeftX;
     //private int entryListTopY;
     private JournalCategory selectedCategory = JournalCategory.OVERVIEW;
@@ -114,6 +110,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private TexturedButton cancelButton;
     private TexturedButton printButton;
     private EditableDropdownBox<Successfulness> successfulnessBox;
+    private EditableDropdownBox<PatientType> patientBox;
     private final List<JournalBookmark> bookmarks = new ArrayList<>();
     // 1022x177 -> 340x59
     private static final ResourceLocation ITEM_ENTRY = new ResourceLocation(References.MODID, "textures/gui/journal/item_entry.png");
@@ -177,10 +174,12 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     }
 
     private void updateReports() {
+        int currentFirstRow = reportEntries == null ? 0 : reportEntries.getCurrentFirstRow();
         reports.clear();
         Map<String, Report> allReports = DataUtil.getAllReports(Minecraft.getInstance().player);
-        List<ReportEntry> reportEntryList = allReports.values().stream().map(ReportEntry::new).sorted(Comparator.comparing(r -> r.name)).toList();
+        List<ReportEntry> reportEntryList = allReports.values().stream().map(ReportEntry::new).sorted(Comparator.comparing(r -> r.name.toLowerCase())).toList();
         reportEntries = new ScrollableList<>(ENTRY_LIST_BASE_WIDTH, ENTRY_LIST_BASE_HEIGHT, reportEntryList, REPORT_BASE_HEIGHT, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH);
+        reportEntries.setCurrentFirstRow(currentFirstRow);
     }
 
 
@@ -218,7 +217,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             removeWidget(reportName);
         }
 
-        successfulnessBox = EditableDropdownBox.makeBox(Arrays.stream(Report.Successfulness.values()).map(Successfulness::new).toArray(Successfulness[]::new), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, false);
+        successfulnessBox = EditableDropdownBox.makeBox(Arrays.stream(Report.Successfulness.values()).map(Successfulness::new).toArray(Successfulness[]::new), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, false, 150, 40);
+        patientBox = EditableDropdownBox.makeBox(Arrays.stream(ReportPatientType.values()).map(PatientType::new).toArray(PatientType[]::new), 23, 8, 0xFF7D633F, 0xFFAAAAAA, 0xFF352E1C, 0xFF554E3C, false, 150, 40);
         buttonHolder = ElementHolder.makeHolder(width, height);
         reportName = addRenderableWidget(new EditBox(minecraft.font, 150, 150, 120, 20, Component.literal("")));
         newButton = buttonHolder.addElement(ENTRY_LIST_BASE_LEFT_X, ENTRY_LIST_BASE_TOP_Y - 25, new TexturedButton(ENTRY_BASE_WIDTH, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.new"), pButton -> {
@@ -452,10 +452,37 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
         }
         buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) scaledMouseX(pMouseX), (int) scaledMouseY(pMouseY), pPartialTick);
-        pose.pushPose();
-        pose.translate(30, ENTRY_LIST_BASE_TOP_Y - 30, 0);
-        successfulnessBox.render(pose, pGuiGraphics, 0xFFFFFFFF, pMouseX - 370, pMouseY - (ENTRY_LIST_BASE_TOP_Y - 25), pPartialTick);
-        pose.popPose();
+
+        if(successfulnessBox.visible) {
+            pose.pushPose();
+            pGuiGraphics.fill(REPORT_BASE_LEFT_X, SUCCESSFUL_BOX_Y-4, REPORT_BASE_LEFT_X+ENTRY_LIST_BASE_WIDTH - 2, SUCCESSFUL_BOX_Y + successfulnessBox.getHeight() + 3, 0x21111111);
+            pGuiGraphics.fill(REPORT_BASE_LEFT_X-4, SUCCESSFUL_BOX_Y-4, REPORT_BASE_LEFT_X + 0, SUCCESSFUL_BOX_Y + successfulnessBox.getHeight() + 3, 0x51111111);
+            pGuiGraphics.fill(REPORT_BASE_LEFT_X+ENTRY_LIST_BASE_WIDTH - 2, SUCCESSFUL_BOX_Y-4, REPORT_BASE_LEFT_X+ENTRY_LIST_BASE_WIDTH + 2, SUCCESSFUL_BOX_Y + successfulnessBox.getHeight() + 3, 0x51111111);
+            pGuiGraphics.fill(REPORT_BASE_LEFT_X-4, SUCCESSFUL_BOX_Y-8, REPORT_BASE_LEFT_X+ENTRY_LIST_BASE_WIDTH + 2, SUCCESSFUL_BOX_Y -4 , 0x51111111);
+            pGuiGraphics.fill(REPORT_BASE_LEFT_X-4, SUCCESSFUL_BOX_Y + successfulnessBox.getHeight() + 3, REPORT_BASE_LEFT_X+ENTRY_LIST_BASE_WIDTH + 2, SUCCESSFUL_BOX_Y + successfulnessBox.getHeight() + 7, 0x51111111);
+            pose.translate(SUCCESSFUL_BOX_X, SUCCESSFUL_BOX_Y, 0);
+            //pGuiGraphics.fill(0, -2, successfulnessBox.getWidth(), 0, 0xFF352E1C);
+            pose.pushPose();
+            pose.scale(1.01F, 1.02F, 1);
+            pGuiGraphics.fill(-2, -2, successfulnessBox.getWidth() + 1, successfulnessBox.getHeight() + 1, 0xFF352E1C);
+            pose.popPose();
+            //pGuiGraphics.fill(1, 0, 2, successfulnessBox.getHeight(), 0xFF352E1C);
+            successfulnessBox.render(pose, pGuiGraphics, 0xFFFFFFFF, successfulnessMouseX(pMouseX), successfulnessMouseY(pMouseY), pPartialTick);
+            pose.pushPose();
+            pose.translate(successfulnessBox.getWidth() - 20, 7, 0);
+            pose.scale(0.9F, 0.9F, 1);
+            RenderSystem.enableBlend();
+            pGuiGraphics.blit(getIcon(successfulnessBox.getChosen().successfulness()), 0, 0, 12, 12, 0, 0, 20, 20, 20, 20);
+            pose.popPose();
+            pose.popPose();
+            if(patientBox.visible) {
+                pose.pushPose();
+                pose.translate(REPORT_BASE_LEFT_X + ENTRY_LIST_BASE_WIDTH - 2 - patientBox.getWidth(), SUCCESSFUL_BOX_Y, 0);
+                pGuiGraphics.fill(-2, -2, patientBox.getWidth() + 1, patientBox.getHeight() + 1, 0xFF352E1C);
+                patientBox.render(pose, pGuiGraphics, 0xFFFFFFFF, patientTypeMouseX(pMouseX), successfulnessMouseY(pMouseY), pPartialTick);
+                pose.popPose();
+            }
+        }
         ScrollableList<? extends Element> toRender = currentList();
         int relativeMouseX = listMouseX(pMouseX);
         int relativeMouseY = listMouseY(pMouseY);
@@ -476,11 +503,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             int REPORT_LIST_BASE_HEIGHT = 275;
             pose.pushPose();
             pose.translate(REPORT_BASE_LEFT_X, REPORT_BASE_TOP_Y, 0);
-            pGuiGraphics.fill(-4, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 2, 0x11111111);
+            pGuiGraphics.fill(-4, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 5, 0x11111111);
             pGuiGraphics.fill(-0, -3, ENTRY_LIST_BASE_WIDTH - 2, 0, 0x44111111);
-            pGuiGraphics.fill(-0, REPORT_LIST_BASE_HEIGHT - 2, ENTRY_LIST_BASE_WIDTH - 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
-            pGuiGraphics.fill(-4, -3, 0, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
-            pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 2, 0x44111111);
+            pGuiGraphics.fill(-0, REPORT_LIST_BASE_HEIGHT + 1, ENTRY_LIST_BASE_WIDTH - 2, REPORT_LIST_BASE_HEIGHT + 5, 0x44111111);
+            pGuiGraphics.fill(-4, -3, 0, REPORT_LIST_BASE_HEIGHT + 5, 0x44111111);
+            pGuiGraphics.fill(ENTRY_LIST_BASE_WIDTH - 2, -3, ENTRY_LIST_BASE_WIDTH + 2, REPORT_LIST_BASE_HEIGHT + 5, 0x44111111);
             reportLineList.render(pose, pGuiGraphics, 0xFFFFFFFF, relativeMouseX, relativeMouseY, pPartialTick);
             pose.popPose();
         }
@@ -527,6 +554,12 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (currentPage() != null && currentPage().mouseClicked(pageMouseX(pMouseX), pageMouseY(pMouseY), pButton)) {
             return true;
         }
+        if (successfulnessBox.visible && successfulnessBox.mouseClicked(successfulnessMouseX(pMouseX), successfulnessMouseY(pMouseY), pButton)) {
+            return true;
+        }
+        if (patientBox.visible && patientBox.mouseClicked(patientTypeMouseX(pMouseX), successfulnessMouseY(pMouseY), pButton)) {
+            return true;
+        }
         if (reportLineList != null && reportLineList.mouseClicked(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
             return true;
         }
@@ -540,6 +573,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             updateWidgetVisibility();
             return true;
         }
+
         return super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
     }
 
@@ -630,6 +664,17 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         return (int) ((pMouseY - height / 2 - REPORT_BASE_TOP_Y * scaleFactor) / scaleFactor);
     }
 
+    private int successfulnessMouseX(double pMouseX) {
+        return (int) ((pMouseX - width / 2 - SUCCESSFUL_BOX_X * scaleFactor) / scaleFactor);
+    }
+    private int patientTypeMouseX(double pMouseX) {
+        return (int) ((pMouseX - width / 2 - (REPORT_BASE_LEFT_X + ENTRY_LIST_BASE_WIDTH - 2 - patientBox.getWidth()) * scaleFactor) / scaleFactor);
+    }
+
+    private int successfulnessMouseY(double pMouseY) {
+        return (int) ((pMouseY - height / 2 - SUCCESSFUL_BOX_Y * scaleFactor) / scaleFactor);
+    }
+
     @Nullable
     private ScrollableList<? extends Element> currentList() {
         return switch (selectedCategory) {
@@ -718,6 +763,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
         Report r = new Report(reportName.getValue());
         reportLineList.rows().forEach(row -> r.addStep(row.makeStep()));
+        r.setSuccessful(successfulnessBox.getChosen().successfulness());
+        r.setPatientType(patientBox.getChosen().patientType());
         return r;
     }
 
@@ -738,6 +785,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         chosenReport = report;
         this.reportLineList = new EditableList<>(ENTRY_LIST_BASE_WIDTH, 275, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
         this.reportLineList.setVariableSize(true);
+        successfulnessBox.selectChosen(new Successfulness(report != null && report.getSuccessful() != null ? report.getSuccessful() : Report.Successfulness.IN_PROGRESS));
+        patientBox.selectChosen(new PatientType(report != null && report.getPatientType() != null ? report.getPatientType() : ReportPatientType.HUMAN));
         //updateWidgetVisibility();
     }
 
@@ -798,6 +847,27 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 }
             });
         }
+    }
+
+    @NotNull
+    private static ResourceLocation getIcon(Report.Successfulness success) {
+        return switch (success) {
+            case SUCCESS -> TICK;
+            case PARTIAL_SUCCESS -> TILDE;
+            case FAILED -> CROSS;
+            case IN_PROGRESS -> QUESTION_MARK;
+            default -> TILDE;
+        };
+    }
+
+    public static int getSuccessfulnessColor(Report.Successfulness success) {
+        return switch (success) {
+            case SUCCESS -> 0xFF36D500;
+            case PARTIAL_SUCCESS -> 0xFFFFD800;
+            case FAILED -> 0xFFEF0000;
+            case IN_PROGRESS -> 0xFFFFFFFF;
+            default -> 0xFFFFD800;
+        };
     }
 
     private abstract class ItemEntry extends Element {
@@ -1023,7 +1093,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private final String name;
         private final String nameFull;
         private final Component successfulText;
-        private final int success;
+        private final Report.Successfulness success;
         private final Report report;
         private final float successfulTextX;
         private final ResourceLocation icon;
@@ -1032,23 +1102,20 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             super(ENTRY_BASE_WIDTH, REPORT_BASE_HEIGHT);
             this.nameFull = report.getName();
             this.name = GuiHelper.cutString(nameFull, getWidth() * 4 / 5).toString();
-            this.success = Minecraft.getInstance().player.getRandom().nextInt(3);//report.getSuccessful();
+            this.success = report.getSuccessful() != null ? report.getSuccessful() : Report.Successfulness.IN_PROGRESS;
             successfulText = switch (success) {
-                case 0 -> Component.translatable("gui.journal.journal.successful");
-                case 1 -> Component.translatable("gui.journal.journal.partially_successful");
-                case 2 -> Component.translatable("gui.journal.journal.failed");
-                default -> Component.translatable("gui.journal.journal.partially_successful");
+                case SUCCESS -> Component.translatable("gui.journal.journal.type.successful");
+                case PARTIAL_SUCCESS -> Component.translatable("gui.journal.journal.type.partially_successful");
+                case FAILED -> Component.translatable("gui.journal.journal.type.failed");
+                case IN_PROGRESS -> Component.translatable("gui.journal.journal.type.in_progress");
+                default -> Component.translatable("gui.journal.journal.type.partially_successful");
             };
             successfulTextX = getWidth() - 24 - Minecraft.getInstance().font.width(successfulText) * 0.7F;
-            icon = switch (success) {
-                case 0 -> TICK;
-                case 1 -> TILDE;
-                case 2 -> CROSS;
-                case 3 -> QUESTION_MARK;
-                default -> TILDE;
-            };
+            icon = getIcon(success);
             this.report = report;
         }
+
+
 
         @Override
         public void render(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
@@ -1059,12 +1126,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             if (Objects.equals(this.report, chosenReport)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x33A88C00);
             }
-            int successfulnessColor = switch (success) {
-                case 0 -> 0xFF36D500;
-                case 1 -> 0xFFFFD800;
-                case 2 -> 0xFFEF0000;
-                default -> 0xFFFFD800;
-            };
+            int successfulnessColor = getSuccessfulnessColor(success);
             poseStack.pushPose();
             poseStack.translate(successfulTextX, 22, 0);
             poseStack.scale(0.7F, 0.7F, 1);
@@ -1152,8 +1214,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         cancelButton.visible = cancelButton.active = (selectedCategory == JournalCategory.JOURNAL && editingReport);
         printButton.visible = (selectedCategory == JournalCategory.JOURNAL && chosenReport != null && !editingReport);
         printButton.active = printButton.visible && Minecraft.getInstance().player.getInventory().contains(new ItemStack(Items.PAPER));
-        successfulnessBox.visible = selectedCategory == JournalCategory.JOURNAL && chosenReport != null;
-        //successfulnessBox
+        successfulnessBox.visible = selectedCategory == JournalCategory.JOURNAL && (chosenReport != null || editingReport);
+        successfulnessBox.editable = successfulnessBox.visible && editingReport;
+        patientBox.visible = selectedCategory == JournalCategory.JOURNAL && (chosenReport != null || editingReport) && ResearchUtil.isResearchComplete(Minecraft.getInstance().player, "WEEPERS");
+        patientBox.editable = patientBox.visible && editingReport;
     }
 
     private class Dropdown1 extends DropdownLists.Dropdown {
@@ -1310,6 +1374,19 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         @Override
         public String getId() {
             return successfulness.name();
+        }
+    }
+
+    private record PatientType(@NotNull ReportPatientType patientType) implements EditableDropdownBox.Option {
+
+        @Override
+        public Component getText() {
+            return Component.translatable("gui.journal.journal.type." + patientType.name().toLowerCase());
+        }
+
+        @Override
+        public String getId() {
+            return patientType.name();
         }
     }
 

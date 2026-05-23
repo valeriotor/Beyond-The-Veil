@@ -2932,10 +2932,17 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.type.injection", "Injection");
         add("gui.journal.journal.type.insertion", "Insertion");
         add("gui.journal.journal.type.stitching", "Stitching");
-        add("gui.journal.journal.type.pain", "Pain");
+        add("gui.journal.journal.type.complication", "Complication");
         add("gui.journal.journal.type.death", "Death");
         add("gui.journal.journal.completeness.complete", "Completed");
         add("gui.journal.journal.completeness.incomplete", "Not completed");
+        add("gui.journal.journal.location.none", "None");
+        add("gui.journal.journal.location.back", "Back");
+        add("gui.journal.journal.location.chest", "Chest");
+        add("gui.journal.journal.location.skull", "Skull");
+        add("gui.journal.journal.complication.pain", "Pain");
+        add("gui.journal.journal.complication.hardness", "Hardness");
+        add("gui.journal.journal.complication.bleeding", "Bleeding");
         add("gui.journal.journal.ingredient.none", "Select Ingredient");
         add("gui.journal.journal.fluid.none", "Select Fluid");
         add("gui.journal.journal.new", "New Report");
@@ -2945,9 +2952,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.journal.cancel", "Cancel");
         add("gui.journal.journal.print", "Print");
         add("gui.journal.journal.need_paper", "Need paper in inventory!");
-        add("gui.journal.journal.successful", "Success");
-        add("gui.journal.journal.partially_successful", "Partial Success");
-        add("gui.journal.journal.failed", "Failure");
+        add("gui.journal.journal.type.success", "§2Success");
+        add("gui.journal.journal.type.partial_success", "§ePartial Success");
+        add("gui.journal.journal.type.failed", "§4Failure");
+        add("gui.journal.journal.type.in_progress", "In Progress");
+        add("gui.journal.journal.type.human", "Human");
+        add("gui.journal.journal.type.weeper", "Weeper");
     }
 
     private void addSurgery() {
