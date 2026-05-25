@@ -103,7 +103,7 @@ public class GenericToClientPacket {
         CompoundTag tag = new CompoundTag();
         tag.putString("id", sender.getUUID().toString());
         CompoundTag crossSyncTag = new CompoundTag();
-        data.saveToNBT(crossSyncTag);
+        data.saveToNBTForSync(crossSyncTag);
         tag.put("cross_sync", crossSyncTag);
         return new GenericToClientPacket(MessageType.CROSS_SYNC, tag);
     }

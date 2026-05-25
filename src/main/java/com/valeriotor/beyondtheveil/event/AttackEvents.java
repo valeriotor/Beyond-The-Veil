@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -164,6 +165,11 @@ public class AttackEvents {
 
         if (event.getSource().getEntity() instanceof ServerPlayer sp) {
             BindingEvents.playerAttackEvent(event, sp);
+            sp.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                if (c.getCrossSync().isDreamFocus()) {
+                    event.setCanceled(true);
+                }
+            });
         }
         if (event.getEntity() instanceof ShoremanEntity e && e.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && !e.isAboutToDie() && e.isInFinalCutscene()) {
             event.setCanceled(true);

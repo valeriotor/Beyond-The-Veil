@@ -2,13 +2,16 @@ package com.valeriotor.beyondtheveil.client;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.block.DreamFocusBlock;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
 import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -26,6 +29,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,6 +41,7 @@ public class ClientData {
 
     private static ClientData instance = new ClientData();
     private boolean thirdPersonAnimOn;
+    private int dreamFocusTime;
 
     public static ClientData getInstance() {
         return instance;
@@ -150,14 +155,14 @@ public class ClientData {
             } else if (contactFogLevel > 0) {
                 contactFogLevel--;
             }
+            LocalPlayer p = Minecraft.getInstance().player;
             if (closestDeathTimer > 0) {
                 closestDeathTimer--;
             } else {
-                LocalPlayer player = Minecraft.getInstance().player;
                 ClientLevel l = Minecraft.getInstance().level;
-                if (l != null && player != null && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get())) {
+                if (l != null && p != null && (p.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.SIGIL_PLAYER.get() || p.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.SIGIL_PLAYER.get())) {
                     for (BlockPos closeDeath : closeDeaths) {
-                        RandomSource r = player.getRandom();
+                        RandomSource r = p.getRandom();
                         for (int i = 0; i < 20; i++) {
                             l.addParticle(BTVParticles.BLOODSPILL.get(), closeDeath.getX() + r.nextDouble(), closeDeath.getY() + i / 10D, closeDeath.getZ() + r.nextDouble(), r.nextDouble() - 0.5, r.nextDouble() - 0.5, r.nextDouble() - 0.5);
                         }
@@ -193,10 +198,30 @@ public class ClientData {
                 // TEST     playerAnimations.computeIfAbsent(p.getUUID(), uuid -> new ArrayList<>()).add(new Animation(AnimationRegistry.player_default_test));
                 // TEST }
             }
-            if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level().dimension() == BTVDimensions.ARCHE_LEVEL && event.phase == TickEvent.Phase.END) {
+            if (p != null && p.level().dimension() == BTVDimensions.ARCHE_LEVEL && event.phase == TickEvent.Phase.END) {
                 tickArcheCycleData();
             }
+            if (p != null && event.phase == TickEvent.Phase.END) {
+                CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+                if (crossSync != null) {
+                    if (crossSync.isDreamFocus()) {
+                        if (dreamFocusTime <= 0) {
+                            dreamFocusTime = DreamFocusBlock.DREAM_FOCUS_TIME;
+                        } else {
+                            dreamFocusTime--;
+                        }
+                        Vec3 lookAngle = p.getLookAngle().scale(0.1);
+                        p.setDeltaMovement(lookAngle.x, lookAngle.y, lookAngle.z);
+                    } else if (dreamFocusTime > 0) {
+                        dreamFocusTime = 0;
+                    }
+                }
+            }
         }
+    }
+
+    public int getDreamFocusTime() {
+        return dreamFocusTime;
     }
 
     public void toggleThirdPersonAnimations(boolean on) {

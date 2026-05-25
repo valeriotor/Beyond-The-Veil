@@ -25,10 +25,12 @@ import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -240,8 +242,15 @@ public class ClientMethods {
 
     public static void setCrawlingPlayerSize(BiConsumer<EntityDimensions, Float> updater, Player p) {
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
-        if (crossSync != null && crossSync.isCrawling()) {
+        if (crossSync != null && (crossSync.isCrawling() || crossSync.isDreamFocus())) {
             updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+        }
+    }
+
+    public static void colorParticle(ParticleOptions particle, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, int r, int g, int b) {
+        Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+        if (p != null) {
+            p.setColor(r / 255F, g / 255F, b / 255F);
         }
     }
 

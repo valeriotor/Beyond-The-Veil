@@ -20,6 +20,7 @@ public class CrossSync {
     private Mob heldPatientEntity; // used serverside when placing the entity back in the world, clientside for rendering on shoulder
     private PlayerTransformation transformation;
     private boolean crawling;
+    private boolean dreamFocus = false;
 
     public <T extends Mob & SurgeryPatient> void setHeldPatient(T heldPatient, Player player) {
         if (heldPatient != null) {
@@ -83,6 +84,18 @@ public class CrossSync {
         return crawling;
     }
 
+    public void setDreamFocus(Player player, boolean value) {
+        if (value != this.dreamFocus) {
+            this.dreamFocus = value;
+            player.refreshDimensions();
+            sync(player);
+        }
+    }
+
+    public boolean isDreamFocus() {
+        return dreamFocus;
+    }
+
     public void sync(Player player) {
         if (player != null && !player.level().isClientSide) {
             Messages.sendToTrackingAndSelf(GenericToClientPacket.crossSync(player, this), player);
@@ -101,6 +114,15 @@ public class CrossSync {
             setTransformation(null, null);
         }
         crawling = compoundTag.getBoolean("crawling");
+        if (compoundTag.contains("dreamFocus")) {
+            dreamFocus = compoundTag.getBoolean("dreamFocus");
+        }
+    }
+
+    public CompoundTag saveToNBTForSync(CompoundTag compoundTag) {
+        saveToNBT(compoundTag);
+        compoundTag.putBoolean("dreamFocus", dreamFocus);
+        return compoundTag;
     }
 
     public CompoundTag saveToNBT(CompoundTag compoundTag) {

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.DreamFocusBlock;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
@@ -58,6 +59,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -186,7 +188,7 @@ public class RenderEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
-            if (crossSync.getTransformation() != null) {
+            if (crossSync.getTransformation() != null || crossSync.isDreamFocus()) {
                 event.setCanceled(true);
             }
             if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
@@ -279,6 +281,11 @@ public class RenderEvents {
         boolean shouldRenderAsPlayer = true;
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
         if (crossSync != null) { // in theory this should never be null
+            if (crossSync.isDreamFocus()) {
+                p.level().addParticle(ParticleTypes.CRIT, p.getX(), p.getY(), p.getZ(), 0, 0, 0);
+                event.setCanceled(true);
+                return;
+            }
             PlayerTransformation transformation = crossSync.getTransformation();
             if (transformation != null) {
                 shouldRenderAsPlayer = false;
@@ -709,7 +716,28 @@ public class RenderEvents {
                 renderBlackScreen(event);
                 renderRepairHammerOverlay(event);
                 renderExplosionRedScreen(event);
+                renderDreamFocusBar(event);
             }
+        }
+    }
+
+    private static final ResourceLocation DREAM_FOCUS_OVERLAY = new ResourceLocation(References.MODID, "textures/gui/overlay/focus_overlay.png");
+    private static void renderDreamFocusBar(RenderGuiOverlayEvent event) {
+        int dreamFocusTime = ClientData.getInstance().getDreamFocusTime();
+        if (dreamFocusTime > 0) {
+            GuiGraphics gg = event.getGuiGraphics();
+            PoseStack pose = gg.pose();
+            pose.pushPose();
+            int width = gg.guiWidth();
+            int height = gg.guiHeight();
+            final int BAR_WIDTH = 128;
+            final int BAR_HEIGHT = BAR_WIDTH / 4;
+            final int TOP_Y = height - 52;
+            final int LEFT_X = width / 2 - BAR_WIDTH / 2;
+            final float SIZE_MULTIPLIER = 1.5F;
+            float percentage = (dreamFocusTime - event.getPartialTick()) / ((float) DreamFocusBlock.DREAM_FOCUS_TIME);
+            gg.blit(DREAM_FOCUS_OVERLAY, LEFT_X, TOP_Y, (int) (BAR_WIDTH * percentage), BAR_HEIGHT, 0, 0, Mth.floor(128 * percentage), 32, 128, 32);
+            pose.popPose();
         }
     }
 

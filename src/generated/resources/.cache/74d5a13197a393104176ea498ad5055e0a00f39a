@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-01T14:45:34.250844	Item Models: beyondtheveil
+// 1.20.1	2026-05-25T18:44:41.3023801	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -67,6 +67,7 @@ f28908195af75136fb87b0d04364ba11484cadd9 assets/beyondtheveil/models/item/demand
 38e2752a12f212fb2efcc7bad6b5b14e8e568528 assets/beyondtheveil/models/item/dig_slowdown_serum_bucket.json
 43faa7b9a5d1145e976f7031cc16ee2c257efa48 assets/beyondtheveil/models/item/dig_speed_serum_bucket.json
 d975ca696a098842e78f732633f34013a2f62cbd assets/beyondtheveil/models/item/dream_bottle.json
+bae841fb7de2094632f8ef70f30be487f4569dbb assets/beyondtheveil/models/item/dream_focus.json
 c7e7287af3d98f5938834d5dde704d0bb829ec39 assets/beyondtheveil/models/item/drink_ale.json
 91275cc20a480ac4499660c801d91e8516adad0f assets/beyondtheveil/models/item/drink_empty.json
 010307fd51b57ffad95e8d41fddfb8fae5e4fa03 assets/beyondtheveil/models/item/drink_mead.json

@@ -28,6 +28,7 @@ public class BTVBlockEntities {
     public static final RegistryObject<BlockEntityType<BloodWellBE>> BLOOD_WELL_BE = BLOCK_ENTITIES.register(Registration.BLOOD_WELL.getId().getPath(), () -> BlockEntityType.Builder.of(BloodWellBE::new, Registration.BLOOD_WELL.get()).build(null));
     public static final RegistryObject<BlockEntityType<FleboBE>> FLEBO_BE = BLOCK_ENTITIES.register(Registration.FLEBO.getId().getPath(), () -> BlockEntityType.Builder.of(FleboBE::new, Registration.FLEBO.get()).build(null));
     public static final RegistryObject<BlockEntityType<DeepChestBE>> DEEP_CHEST_BE = BLOCK_ENTITIES.register(Registration.DEEP_CHEST.getId().getPath(), () -> BlockEntityType.Builder.of(DeepChestBE::new, Registration.DEEP_CHEST.get()).build(null));
+    public static final RegistryObject<BlockEntityType<DreamFocusBE>> DREAM_FOCUS_BE = BLOCK_ENTITIES.register(Registration.DREAM_FOCUS.getId().getPath(), () -> BlockEntityType.Builder.of(DreamFocusBE::new, Registration.DREAM_FOCUS.get()).build(null));
 
     public static void init(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);

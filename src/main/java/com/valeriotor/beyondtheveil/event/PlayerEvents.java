@@ -250,7 +250,9 @@ public class PlayerEvents {
         if (entity instanceof Player p && p.isAddedToWorld()) {
             if (!p.level().isClientSide) {
                 p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
-                    if (c.getCrossSync().isCrawling()) {
+                    if (c.getCrossSync().isDreamFocus()) {
+                        updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+                    } else if (c.getCrossSync().isCrawling()) {
                         updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
                     }
                 });

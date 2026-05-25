@@ -94,6 +94,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerPatientPod();
         registerLetterBox();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
+        registerSolidAndTranslucentBlock("dream_focus", mcLoc("block/quartz_block_side"), DREAM_FOCUS.get());
         registerFlaskShelf();
         registerFlasks();
         registerThinMultiBlock("surgery_bed", "flask_shelf_empty", SURGERY_BED.get()); // TODO change empty thing to match texture

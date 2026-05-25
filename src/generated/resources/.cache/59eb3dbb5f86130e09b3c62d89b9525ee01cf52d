@@ -1,4 +1,4 @@
-// 1.20.1	2025-09-28T20:43:49.4782381	Loot Tables
+// 1.20.1	2026-05-25T18:44:41.3044662	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -26,6 +26,7 @@ bf80f6456e9f92085375467c43062807c015f595 data/beyondtheveil/loot_tables/blocks/d
 35831b693a6b01a5a3bc80d661102fc8fab51c72 data/beyondtheveil/loot_tables/blocks/dark_sand.json
 c941ce032f908fa4ab0f6fc014ecfb2db563fa45 data/beyondtheveil/loot_tables/blocks/deep_chest.json
 a1192ff7ac47fbb6ce108b6ac2444ba076ec81bc data/beyondtheveil/loot_tables/blocks/demand_pillar.json
+ff1ee91c4458f572a7a2dfaafe09fe6cd3a46080 data/beyondtheveil/loot_tables/blocks/dream_focus.json
 489efed5ab4543e85081a286640f6c4f9cc2a72e data/beyondtheveil/loot_tables/blocks/elder_brick.json
 01b079e5938bd46171f587e344cb27803bbcc723 data/beyondtheveil/loot_tables/blocks/elder_brick_slab.json
 dc3f3218acf3b8a1b041d63ec5db200631716114 data/beyondtheveil/loot_tables/blocks/elder_brick_stairs.json
