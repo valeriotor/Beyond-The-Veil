@@ -247,6 +247,10 @@ public class ClientMethods {
         }
     }
 
+    public static void colorParticle(ParticleOptions particle, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, int rgb) {
+        colorParticle(particle, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, rgb >> 16, ((rgb >> 8) & 255), rgb & 255);
+    }
+
     public static void colorParticle(ParticleOptions particle, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, int r, int g, int b) {
         Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
         if (p != null) {

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.lib;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.entity.*;
+import com.valeriotor.beyondtheveil.entity.dream_focus.DreamFocusItemEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.*;
 import com.valeriotor.beyondtheveil.entity.projectile.UmancalaFireball;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -54,6 +55,7 @@ public class BTVEntities {
     public static final RegistryObject<EntityType<LivingPortalEntity>> LIVING_PORTAL = ENTITIES.register("living_portal", () -> EntityType.Builder.of(LivingPortalEntity::new, MobCategory.MISC).sized(1.5F, 1.5F).clientTrackingRange(32).build("living_portal"));
     public static final RegistryObject<EntityType<CanoeEntity>> CANOE = ENTITIES.register("canoe", () -> EntityType.Builder.of((EntityType<CanoeEntity> pEntityType, Level pLevel) -> new CanoeEntity(pLevel), MobCategory.MISC).sized(1.5F, 0.5F).clientTrackingRange(32).build("canoe"));
     public static final RegistryObject<EntityType<UmancalaFireball>> UMANCALA_FIREBALL = ENTITIES.register("umancala_fireball", () -> EntityType.Builder.of((EntityType<UmancalaFireball> pEntityType, Level pLevel) -> new UmancalaFireball(pEntityType, pLevel), MobCategory.MISC).sized(1.5F, 1.5F).clientTrackingRange(32).build("umancala_fireball"));
+    public static final RegistryObject<EntityType<DreamFocusItemEntity>> DREAM_FOCUS_ITEM = ENTITIES.register("dream_focus_item", () -> EntityType.Builder.of((EntityType<DreamFocusItemEntity> pEntityType, Level pLevel) -> new DreamFocusItemEntity(pEntityType, pLevel), MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(32).build("dream_focus_item"));
 
     public static void init(IEventBus bus) {
         ENTITIES.register(bus);

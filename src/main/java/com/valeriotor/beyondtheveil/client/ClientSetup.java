@@ -36,6 +36,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -203,6 +204,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.UMANCALA_FIREBALL.get(), UmancalaFireballRenderer::new);
         event.registerEntityRenderer(BTVEntities.SURGEON.get(), SurgeonRenderer::new);
         event.registerEntityRenderer(BTVEntities.SURGEON_LARVA.get(), SurgeonLarvaRenderer::new);
+        event.registerEntityRenderer(BTVEntities.DREAM_FOCUS_ITEM.get(), ItemEntityRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);
