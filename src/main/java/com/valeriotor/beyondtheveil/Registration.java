@@ -140,6 +140,7 @@ public class Registration {
     public static final RegistryObject<PillarBlock> DEMAND_PILLAR = BLOCKS.register("demand_pillar", () -> new PillarBlock(BRICK_PROPERTIES, false)); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<PillarBlock> OFFER_PILLAR = BLOCKS.register("offer_pillar", () -> new PillarBlock(BRICK_PROPERTIES, true)); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<Block> DREAM_FOCUS = BLOCKS.register("dream_focus", () -> new DreamFocusBlock.DreamFocusItemBlock(BRICK_PROPERTIES)); // new BlockDreamFocus(BlockNames.DREAMFOCUS);
+    public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new DreamFocusBlock.DreamFocusFluidBlock(BRICK_PROPERTIES)); // new BlockDreamFocus(BlockNames.DREAMFOCUS);
     //public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
     //public static final RegistryObject<Block> DREAM_FOCUS_VILLAGERS = BLOCKS.register("dream_focus_villagers", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
     //public static final RegistryObject<Block> CURTAIN = BLOCKS.register("curtain", () -> new Block(BRICK_PROPERTIES)); // new BlockCurtain(BlockNames.CURTAIN);
@@ -225,6 +226,7 @@ public class Registration {
     public static final RegistryObject<Item> DEMAND_PILLAR_ITEM = fromBlock(DEMAND_PILLAR, new Item.Properties().stacksTo(1));
     public static final RegistryObject<Item> OFFER_PILLAR_ITEM = fromBlock(OFFER_PILLAR, new Item.Properties().stacksTo(1));
     public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
+    public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
     //public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
     //public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
     //public static final RegistryObject<Item> DREAM_FOCUS_VILLAGERS_ITEM = fromBlock(DREAM_FOCUS_VILLAGERS);
@@ -432,6 +434,7 @@ public class Registration {
                 output.accept(DEMAND_PILLAR.get());
                 output.accept(OFFER_PILLAR.get());
                 output.accept(DREAM_FOCUS.get());
+                output.accept(DREAM_FOCUS_FLUIDS.get());
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());

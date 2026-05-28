@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.block.DreamFocusBlock;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.entity.dream_focus.DreamFocusFluidEntity;
 import com.valeriotor.beyondtheveil.entity.dream_focus.DreamFocusItemEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
@@ -21,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,7 +48,7 @@ public class DreamFocusBE extends BlockEntity {
     private int counter = 0;
 
     public DreamFocusBE(BlockPos pPos, BlockState pBlockState, DreamFocusBlock.FocusType type) {
-        super(BTVBlockEntities.DREAM_FOCUS_BE.get(), pPos, pBlockState);
+        super(type == DreamFocusBlock.FocusType.FLUID ? BTVBlockEntities.DREAM_FOCUS_FLUID_BE.get() : BTVBlockEntities.DREAM_FOCUS_BE.get(), pPos, pBlockState);
         this.type = type;
     }
 
@@ -100,21 +102,38 @@ public class DreamFocusBE extends BlockEntity {
                                 IItemHandler srcHandler = src.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
                                 for (int i = 0; i < srcHandler.getSlots(); i++) {
                                     ItemStack extracted = srcHandler.extractItem(i, 64, false);
-                                    DreamFocusItemEntity item = new DreamFocusItemEntity(BTVEntities.DREAM_FOCUS_ITEM.get(), level, extracted, points, worldPosition);
-                                    item.setParticleColor(color.getTextColor());
-                                    item.setPos(startPos.getCenter());
-                                    level.addFreshEntity(item);
+                                    if (!extracted.isEmpty()) {
+                                        DreamFocusItemEntity item = new DreamFocusItemEntity(BTVEntities.DREAM_FOCUS_ITEM.get(), level, extracted, points, worldPosition);
+                                        item.setParticleColor(color.getTextColor());
+                                        item.setPos(startPos.getCenter());
+                                        level.addFreshEntity(item);
+                                        break;
+                                    }
                                 }
                             }
                         } else if (type == DreamFocusBlock.FocusType.FLUID) {
                             BlockEntity src = level.getBlockEntity(drainPos);
+                            BlockState state = level.getBlockState(drainPos);
                             if (src == null || !src.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()) {
                                 BlockPos drainPos2 = type.getDrainPos2(worldPosition, getBlockState());
                                 src = level.getBlockEntity(drainPos2);
+                                state = level.getBlockState(drainPos2);
                             }
                             if (src != null && src.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()) {
                                 IFluidHandler srcHandler = src.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get();
                                 FluidStack drained = srcHandler.drain(fletiToMb(fleti), IFluidHandler.FluidAction.EXECUTE);
+                                src.setChanged();
+                                level.sendBlockUpdated(drainPos, state, state, 2);
+                                if (!drained.isEmpty()) {
+                                    DreamFocusFluidEntity fluidEntity = new DreamFocusFluidEntity(BTVEntities.DREAM_FOCUS_FLUID.get(), level, drained, points, worldPosition);
+                                    fluidEntity.setParticleColor(color.getTextColor());
+                                    fluidEntity.setPos(startPos.getCenter());
+                                    level.addFreshEntity(fluidEntity);
+                                }
+                                //DreamFocusItemEntity fluidEntity = new DreamFocusItemEntity(BTVEntities.DREAM_FOCUS_ITEM.get(), level, new ItemStack(Items.BOOK), points, worldPosition);
+                                //fluidEntity.setParticleColor(color.getTextColor());
+                                //fluidEntity.setPos(startPos.getCenter());
+                                //level.addFreshEntity(fluidEntity);
                             }
                         }
                     }
@@ -135,7 +154,7 @@ public class DreamFocusBE extends BlockEntity {
     }
 
     public void tickClient() {
-        if (showPath) {
+        if (showPath && counter++ % 2 == 0) {
             for (int i = 0; i < points.size(); i++) {
                 if (i % 2 == 0) {
                     Vec3 vec3 = points.get(i);

@@ -22,6 +22,7 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
     private List<Vec3> points;
     private int pointCounter = 0;
     private BlockPos focusPos;
+    private boolean toBeRemoved;
 
     public DreamFocusItemEntity(EntityType<? extends DreamFocusItemEntity> pEntityType, Level pLevel) {
         this(pEntityType, pLevel, ItemStack.EMPTY, List.of(), null);
@@ -43,7 +44,14 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
     public void tick() {
         super.tick();
         if (!level().isClientSide) {
-            moveToNextPoint(points, pointCounter++);
+            if (!moveToNextPoint(points, pointCounter++)) {
+                toBeRemoved = true;
+            }
+            if (toBeRemoved) {
+                ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), getItem());
+                level().addFreshEntity(item);
+                discard();
+            }
         } else {
             ClientMethods.colorParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0,0,0, entityData.get(COLOR));
         }

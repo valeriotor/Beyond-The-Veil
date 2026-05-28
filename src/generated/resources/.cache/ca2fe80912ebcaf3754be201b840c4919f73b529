@@ -1,4 +1,4 @@
-// 1.20.1	2026-05-25T18:44:41.3055263	Block States: beyondtheveil
+// 1.20.1	2026-05-28T23:48:35.1718428	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
@@ -27,7 +27,8 @@ ff08e7c92a9b3f4d41c1261c8a94bf2960f9a1a0 assets/beyondtheveil/blockstates/damp_w
 28d44d7251b6660d331717c142e54f13392c11e7 assets/beyondtheveil/blockstates/dark_sand.json
 7397c86a4520b25978aab0f9d38eda02fe94766e assets/beyondtheveil/blockstates/deep_chest.json
 8fd02314c50d8e708feabca30b79ce48ea2f03aa assets/beyondtheveil/blockstates/demand_pillar.json
-b79e415172d1c5a4e5043ecab3b1b9f05b7ad5a0 assets/beyondtheveil/blockstates/dream_focus.json
+4d8bd7df9cb5a2f2e227d3ecab6209788c9181c2 assets/beyondtheveil/blockstates/dream_focus.json
+c6e472d4005ede8fd860523d696746bdefda1b8d assets/beyondtheveil/blockstates/dream_focus_fluids.json
 38970edc57d7c87d9b1b6bc7eb821a71b0551893 assets/beyondtheveil/blockstates/elder_brick.json
 116e4213a62f1be74325adb9a0e95efa4693ff32 assets/beyondtheveil/blockstates/elder_brick_slab.json
 d6e671b7602eefe6f1fba7581fc660981bfabcf5 assets/beyondtheveil/blockstates/elder_brick_stairs.json
@@ -93,6 +94,7 @@ d8d301426c8361ddd15c98833b9b8493aa543ca9 assets/beyondtheveil/models/block/damp_
 32b68e0542edc05f3c99f02083a691be27a53ee4 assets/beyondtheveil/models/block/dark_glass.json
 dff5cb42e5abefd4e83c700a5c0904521b3885d4 assets/beyondtheveil/models/block/dark_sand.json
 8ae4c38c86d9897e86cbfb8913c3da4ef7f0e76b assets/beyondtheveil/models/block/dream_focus.json
+1c8ce8fba3906a38fccc0364eba88eb9c762b04b assets/beyondtheveil/models/block/dream_focus_fluids.json
 fbbb8162ea6121c36cc11590ea17e7b68763fb6c assets/beyondtheveil/models/block/elder_brick.json
 6acb2494fb6b5b0e1d83fd9509c82c3d724a8222 assets/beyondtheveil/models/block/elder_brick_slab.json
 82752eb36c94cab8366233e7a0f632d37e810a14 assets/beyondtheveil/models/block/elder_brick_slab_top.json

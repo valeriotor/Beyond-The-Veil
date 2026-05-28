@@ -290,7 +290,7 @@ public class FlaskShelfBE extends BlockEntity {
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction facing) {
         if (cap == ForgeCapabilities.FLUID_HANDLER) {
             return holder.cast();
         }

@@ -205,6 +205,7 @@ public class ClientSetup {
         event.registerEntityRenderer(BTVEntities.SURGEON.get(), SurgeonRenderer::new);
         event.registerEntityRenderer(BTVEntities.SURGEON_LARVA.get(), SurgeonLarvaRenderer::new);
         event.registerEntityRenderer(BTVEntities.DREAM_FOCUS_ITEM.get(), ItemEntityRenderer::new);
+        event.registerEntityRenderer(BTVEntities.DREAM_FOCUS_FLUID.get(), DreamFocusFluidRenderer::new);
 
         event.registerBlockEntityRenderer(BTVBlockEntities.HEART_BE.get(), HeartBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.MEMORY_SIEVE_BE.get(), MemorySieveBER::new);

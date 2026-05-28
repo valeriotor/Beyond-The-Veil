@@ -9,9 +9,11 @@ import com.valeriotor.beyondtheveil.entity.FletumEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.tile.DreamFocusBE;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +63,8 @@ public abstract class DreamFocusBlock extends Block implements EntityBlock, Dyab
                     CrossSyncData cs = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     cs.getCrossSync().setDreamFocus(p, true);
                     BlockPos startPos = type.getStartPos(pos, state);
-                    sp.connection.teleport(startPos.getX() + 0.5, startPos.getY() + 0.5, startPos.getZ() + 0.5, state.getValue(FACING).toYRot(), 0);
+                    Tuple<Float, Float> startRot = type.getStartRot(pos, state);
+                    sp.connection.teleport(startPos.getX() + 0.5, startPos.getY() + 0.5, startPos.getZ() + 0.5, startRot.getA(), startRot.getB());
 
                     PlayerTimer.Builder builder = new PlayerTimer.Builder("dream_focus", DREAM_FOCUS_TIME)
                             //.addContinuousAction((player, playerTimer) -> ((ServerPlayer)player).connection.teleport())
@@ -156,7 +159,7 @@ public abstract class DreamFocusBlock extends Block implements EntityBlock, Dyab
         ITEM((l, pos) -> {
             AABB bbox = new AABB(pos.getX() + 0.3, pos.getY() + 1, pos.getZ() + 0.3, pos.getX() + 0.7, pos.getY() + 2, pos.getZ() + 0.7);
             return l.getEntities(EntityTypeTest.forClass(FletumEntity.class), bbox, f -> true).isEmpty() ? 0 : 1;
-        }, (pos, state) -> pos.relative(state.getValue(FACING)), (pos, state) -> pos.relative(state.getValue(FACING).getOpposite())),
+        }, (pos, state) -> pos.relative(state.getValue(FACING)), (pos, state) -> new Tuple<>(state.getValue(FACING).toYRot(), 0F), (pos, state) -> pos.relative(state.getValue(FACING).getOpposite())),
         FLUID((l, pos) -> {
             int a = 0;
             for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -165,20 +168,22 @@ public abstract class DreamFocusBlock extends Block implements EntityBlock, Dyab
                 if (!l.getEntities(EntityTypeTest.forClass(FletumEntity.class), bbox, f -> true).isEmpty()) a++;
             }
             return a;
-        }, (pos, state) -> pos.relative(Direction.DOWN), (pos, state) -> pos.relative(Direction.UP), (pos, state) -> pos.relative(Direction.UP, 2));
+        }, (pos, state) -> pos.relative(Direction.DOWN), (pos, state) -> new Tuple<>(0F, 90F), (pos, state) -> pos.relative(Direction.UP), (pos, state) -> pos.relative(Direction.UP, 2));
 
         private final BiFunction<Level, BlockPos, Integer> fletumCounter;
         private final BiFunction<BlockPos, BlockState, BlockPos> startPos;
+        private final BiFunction<BlockPos, BlockState, Tuple<Float, Float>> startRot;
         private final BiFunction<BlockPos, BlockState, BlockPos> drainPos;
         private final BiFunction<BlockPos, BlockState, BlockPos> drainPos2;
 
-        FocusType(BiFunction<Level, BlockPos, Integer> fletumCounter, BiFunction<BlockPos, BlockState, BlockPos> startPos, BiFunction<BlockPos, BlockState, BlockPos> drainPos) {
-            this(fletumCounter, startPos, drainPos, drainPos);
+        FocusType(BiFunction<Level, BlockPos, Integer> fletumCounter, BiFunction<BlockPos, BlockState, BlockPos> startPos, BiFunction<BlockPos, BlockState, Tuple<Float, Float>> startRot, BiFunction<BlockPos, BlockState, BlockPos> drainPos) {
+            this(fletumCounter, startPos, startRot, drainPos, drainPos);
         }
 
-        FocusType(BiFunction<Level, BlockPos, Integer> fletumCounter, BiFunction<BlockPos, BlockState, BlockPos> startPos, BiFunction<BlockPos, BlockState, BlockPos> drainPos, BiFunction<BlockPos, BlockState, BlockPos> drainPos2) {
+        FocusType(BiFunction<Level, BlockPos, Integer> fletumCounter, BiFunction<BlockPos, BlockState, BlockPos> startPos, BiFunction<BlockPos, BlockState, Tuple<Float, Float>> startRot, BiFunction<BlockPos, BlockState, BlockPos> drainPos, BiFunction<BlockPos, BlockState, BlockPos> drainPos2) {
             this.fletumCounter = fletumCounter;
             this.startPos = startPos;
+            this.startRot = startRot;
             this.drainPos = drainPos;
             this.drainPos2 = drainPos2;
         }
@@ -189,6 +194,10 @@ public abstract class DreamFocusBlock extends Block implements EntityBlock, Dyab
 
         public BlockPos getStartPos(BlockPos pos, BlockState state) {
             return startPos.apply(pos, state);
+        }
+
+        public Tuple<Float, Float> getStartRot(BlockPos pos, BlockState state) {
+            return startRot.apply(pos, state);
         }
 
         public BlockPos getDrainPos(BlockPos pos, BlockState state) {
