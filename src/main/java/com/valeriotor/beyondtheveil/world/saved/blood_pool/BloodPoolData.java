@@ -111,7 +111,7 @@ public class BloodPoolData extends SavedData {
         if (list.isEmpty()) {
             return Optional.empty();
         }
-        Optional<BloodPoolEntity> remove = Optional.of(list.remove(0));
+        Optional<BloodPoolEntity> remove = Optional.of(list.get(0));
         if (level instanceof ServerLevel sl && sl.getPlayerByUUID(playerId) instanceof ServerPlayer sp) {
             CompoundTag tag = new CompoundTag();
             tag.putString("UUID", playerId.toString());

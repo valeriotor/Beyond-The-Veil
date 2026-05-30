@@ -106,6 +106,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.OFFER_PILLAR.get());
         dropSelf(Registration.DREAM_FOCUS.get());
         dropSelf(Registration.DREAM_FOCUS_FLUIDS.get());
+        dropSelf(Registration.CURTAIN.get());
 
     }
 

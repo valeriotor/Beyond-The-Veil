@@ -1,0 +1,24 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "beyondtheveil:block/curtain",
+		"particle": "beyondtheveil:block/curtain"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 7.75],
+			"to": [16, 16, 8.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east": {"uv": [1.5, 0, 2, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 0.5, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 0.5], "texture": "#0"},
+				"down": {"uv": [0, 1.5, 16, 2], "texture": "#0"}
+			}
+		}
+	]
+}

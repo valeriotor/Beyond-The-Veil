@@ -143,7 +143,7 @@ public class Registration {
     public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new DreamFocusBlock.DreamFocusFluidBlock(BRICK_PROPERTIES)); // new BlockDreamFocus(BlockNames.DREAMFOCUS);
     //public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
     //public static final RegistryObject<Block> DREAM_FOCUS_VILLAGERS = BLOCKS.register("dream_focus_villagers", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
-    //public static final RegistryObject<Block> CURTAIN = BLOCKS.register("curtain", () -> new Block(BRICK_PROPERTIES)); // new BlockCurtain(BlockNames.CURTAIN);
+    public static final RegistryObject<Block> CURTAIN = BLOCKS.register("curtain", () -> new CurtainBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().pushReaction(PushReaction.DESTROY))); // new BlockCurtain(BlockNames.CURTAIN);
     //public static final RegistryObject<Block> MEGYDREA = BLOCKS.register("megydrea", () -> new Block(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
     //public static final RegistryObject<Block> THICK_ALGAE = BLOCKS.register("thick_algae", () -> new Block(BRICK_PROPERTIES)); // new BlockThickAlgae(BlockNames.THICK_ALGAE);
     //public static final RegistryObject<Block> ARCHE_PORTAL = BLOCKS.register("arche_portal", () -> new Block(BRICK_PROPERTIES)); // new BlockArchePortal(BlockNames.ARCHE_PORTAL);
@@ -226,6 +226,7 @@ public class Registration {
     public static final RegistryObject<Item> DEMAND_PILLAR_ITEM = fromBlock(DEMAND_PILLAR, new Item.Properties().stacksTo(1));
     public static final RegistryObject<Item> OFFER_PILLAR_ITEM = fromBlock(OFFER_PILLAR, new Item.Properties().stacksTo(1));
     public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
+    public static final RegistryObject<Item> CURTAIN_ITEM = fromBlock(CURTAIN);
     public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
     //public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
     //public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
@@ -262,7 +263,7 @@ public class Registration {
 
     public static final RegistryObject<Item> WOLF_MEDALLION = ITEMS.register("wolf_medallion", () -> new Item(ITEM_PROPERTIES)); // new ItemWolfMedallion("wolf_medallion");
     public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new Item(ITEM_PROPERTIES)); // new ItemTablet("tablet");
-    public static final RegistryObject<Item> BRONZE_SPHERE= ITEMS.register("bronze_sphere", () -> new Item(ITEM_PROPERTIES)); // new ItemBronzeSphere("bronze_sphere");
+    public static final RegistryObject<Item> BRONZE_SPHERE = ITEMS.register("bronze_sphere", () -> new Item(ITEM_PROPERTIES)); // new ItemBronzeSphere("bronze_sphere");
     public static final RegistryObject<Item> REDSTONE_WEED_SEEDS = ITEMS.register("redstone_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass, BlockNames.REDSTONEWEED);
     public static final RegistryObject<Item> GHOST_WEED_SEEDS = ITEMS.register("ghost_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass, BlockNames.GHOSTWEED);
     public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
@@ -435,6 +436,7 @@ public class Registration {
                 output.accept(OFFER_PILLAR.get());
                 output.accept(DREAM_FOCUS.get());
                 output.accept(DREAM_FOCUS_FLUIDS.get());
+                output.accept(CURTAIN.get());
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());
@@ -603,6 +605,15 @@ public class Registration {
                 output.accept(PARENTAL_HORMONES_FLUID_BUCKET.get());
                 output.accept(GROWTH_STIMULANT_FLUID_BUCKET.get());
                 output.accept(TEARS_FLUID_BUCKET.get());
+                output.accept(DIAMOND_POWDER_FLUID_BUCKET.get());
+                output.accept(GS121_SERUM_FLUID_BUCKET.get());
+                output.accept(LIQUID_GLOWSTONE_FLUID_BUCKET.get());
+                output.accept(LIQUID_GOLD_FLUID_BUCKET.get());
+                output.accept(ORGANOCHLORIDE_FLUID_BUCKET.get());
+                output.accept(PHEROMONES_FLUID_BUCKET.get());
+                output.accept(SA245_SERUM_FLUID_BUCKET.get());
+                output.accept(VASOCONSTRICTOR_FLUID_BUCKET.get());
+                output.accept(WART_SERUM_FLUID_BUCKET.get());
 
                 output.accept(DEEP_ONE_EGG.get());
                 output.accept(BLOOD_SKELETON_EGG.get());
@@ -624,7 +635,7 @@ public class Registration {
                 output.accept(UMANCALA_EGG.get());
                 output.accept(SANDFLATTER_EGG.get());
 
-    }).build());
+            }).build());
 
     private static <B extends Block> RegistryObject<Item> fromBlock(RegistryObject<B> blockObject) {
         return ITEMS.register(blockObject.getId().getPath(), () -> new BlockItem(blockObject.get(), ITEM_PROPERTIES));

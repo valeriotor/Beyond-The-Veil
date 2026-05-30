@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -85,6 +86,7 @@ public class BTVBlockStates extends BlockStateProvider {
         //simpleBlock(FLASK_MEDIUM.get(), new ExistingModelFile(modLoc("block/flask_medium"), models().existingFileHelper));
         //simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));
         //horizontalBlock(FLASK_SHELF.get(), new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper));
+        horizontalBlock(CURTAIN.get(), new ExistingModelFile(modLoc("block/" + CURTAIN.getId().getPath()), models().existingFileHelper));
 
 
         registerCanopy();
@@ -317,7 +319,11 @@ public class BTVBlockStates extends BlockStateProvider {
 
         getVariantBuilder(block)
                 .forAllStates(state -> {
-                    return ConfiguredModel.builder().modelFile(builder).build();
+                    ConfiguredModel.Builder<?> builder1 = ConfiguredModel.builder().modelFile(builder);
+                    if (state.hasProperty(HorizontalDirectionalBlock.FACING)) {
+                        builder1.rotationY(((int) (state.getValue(HorizontalDirectionalBlock.FACING).toYRot()) % 360)); // Rotates 'modelFile' on the Y axis depending on the property
+                    }
+                    return builder1.build();
                 });
     }
 

@@ -420,6 +420,9 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                     graphics.renderTooltip(Minecraft.getInstance().font, Component.literal(objectFull), relativeMouseX, relativeMouseY);
                 }
             }
+            if (shownLetter != null && shownLetter.letter == letter) {
+                graphics.fill(0, 0, getWidth(), getHeight(), 0x88202553);
+            }
 
             poseStack.pushPose();
             poseStack.translate(28, 28, 0);

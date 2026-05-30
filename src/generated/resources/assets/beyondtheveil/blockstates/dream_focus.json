@@ -1,16 +1,19 @@
 {
   "variants": {
     "facing=east": {
-      "model": "beyondtheveil:block/dream_focus"
+      "model": "beyondtheveil:block/dream_focus",
+      "y": 270
     },
     "facing=north": {
-      "model": "beyondtheveil:block/dream_focus"
+      "model": "beyondtheveil:block/dream_focus",
+      "y": 180
     },
     "facing=south": {
       "model": "beyondtheveil:block/dream_focus"
     },
     "facing=west": {
-      "model": "beyondtheveil:block/dream_focus"
+      "model": "beyondtheveil:block/dream_focus",
+      "y": 90
     }
   }
 }

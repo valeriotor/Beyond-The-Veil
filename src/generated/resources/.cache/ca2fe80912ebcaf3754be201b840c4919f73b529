@@ -1,4 +1,4 @@
-// 1.20.1	2026-05-28T23:48:35.1718428	Block States: beyondtheveil
+// 1.20.1	2026-05-30T02:08:16.2023295	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 758ac36f2805f60b36c1ef7d924719071da7e618 assets/beyondtheveil/blockstates/arena.json
@@ -15,6 +15,7 @@ df0f532f98e9545f6c238d2bef17f13f1eb0b6c2 assets/beyondtheveil/blockstates/blood_
 cfd2320c85c8cbd741f1406651d473cd79e3bee8 assets/beyondtheveil/blockstates/blood_well.json
 7ba1b2d5377d469bb91a6bf76ed82f7e06b36a42 assets/beyondtheveil/blockstates/blue_bricks.json
 e5a33b4a2db42195222fa1709b3d9533ac41e453 assets/beyondtheveil/blockstates/coagulant_block.json
+edda9c8ce8c98e0278fdd50064fd52164d79c07f assets/beyondtheveil/blockstates/curtain.json
 89b17e1f64943bba05684ad7c8d852db1fce996e assets/beyondtheveil/blockstates/damp_canopy.json
 71bc5ca4ac10c6ff140338a5d693ee91243f1299 assets/beyondtheveil/blockstates/damp_filled_canopy.json
 40f3f9c6d1eec060b56d04216cb4548936e4f440 assets/beyondtheveil/blockstates/damp_log.json
@@ -27,7 +28,7 @@ ff08e7c92a9b3f4d41c1261c8a94bf2960f9a1a0 assets/beyondtheveil/blockstates/damp_w
 28d44d7251b6660d331717c142e54f13392c11e7 assets/beyondtheveil/blockstates/dark_sand.json
 7397c86a4520b25978aab0f9d38eda02fe94766e assets/beyondtheveil/blockstates/deep_chest.json
 8fd02314c50d8e708feabca30b79ce48ea2f03aa assets/beyondtheveil/blockstates/demand_pillar.json
-4d8bd7df9cb5a2f2e227d3ecab6209788c9181c2 assets/beyondtheveil/blockstates/dream_focus.json
+c7ad19eb669fe250c59c264e5cbc739dc7c19a3b assets/beyondtheveil/blockstates/dream_focus.json
 c6e472d4005ede8fd860523d696746bdefda1b8d assets/beyondtheveil/blockstates/dream_focus_fluids.json
 38970edc57d7c87d9b1b6bc7eb821a71b0551893 assets/beyondtheveil/blockstates/elder_brick.json
 116e4213a62f1be74325adb9a0e95efa4693ff32 assets/beyondtheveil/blockstates/elder_brick_slab.json

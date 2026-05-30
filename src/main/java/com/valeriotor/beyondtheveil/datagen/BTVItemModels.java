@@ -71,6 +71,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(DEMAND_PILLAR_ITEM.getId().getPath(), modLoc("block/demand_pillar"));
         withExistingParent(OFFER_PILLAR_ITEM.getId().getPath(), modLoc("block/offer_pillar"));
         withExistingParent(DREAM_FOCUS_ITEM.getId().getPath(), modLoc("block/dream_focus"));
+        withExistingParent(CURTAIN_ITEM.getId().getPath(), modLoc("block/curtain"));
         withExistingParent(DREAM_FOCUS_FLUIDS_ITEM.getId().getPath(), modLoc("block/dream_focus_fluids"));
         withExistingParent(DARK_GLASS_ITEM.getId().getPath(), modLoc("block/dark_glass"));
         withExistingParent(ARENA_ITEM.getId().getPath(), modLoc("block/arena"));
@@ -192,7 +193,15 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + PARENTAL_HORMONES_FLUID_BUCKET.getId().getPath()));
         singleTexture(GROWTH_STIMULANT_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + GROWTH_STIMULANT_FLUID_BUCKET.getId().getPath()));
         singleTexture(TEARS_FLUID_BUCKET.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + TEARS_FLUID_BUCKET.getId().getPath()));
-
+        singleTexture(DIAMOND_POWDER_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + DIAMOND_POWDER_FLUID_BUCKET.getId().getPath()));
+        singleTexture(GS121_SERUM_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + GS121_SERUM_FLUID_BUCKET.getId().getPath()));
+        singleTexture(LIQUID_GLOWSTONE_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + LIQUID_GLOWSTONE_FLUID_BUCKET.getId().getPath()));
+        singleTexture(LIQUID_GOLD_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + LIQUID_GOLD_FLUID_BUCKET.getId().getPath()));
+        singleTexture(ORGANOCHLORIDE_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + ORGANOCHLORIDE_FLUID_BUCKET.getId().getPath()));
+        singleTexture(PHEROMONES_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + PHEROMONES_FLUID_BUCKET.getId().getPath()));
+        singleTexture(SA245_SERUM_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + SA245_SERUM_FLUID_BUCKET.getId().getPath()));
+        singleTexture(VASOCONSTRICTOR_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + VASOCONSTRICTOR_FLUID_BUCKET.getId().getPath()));
+        singleTexture(WART_SERUM_FLUID_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/buckets/" + WART_SERUM_FLUID_BUCKET.getId().getPath()));
         //registerForceps();
 
         for (int i = 0; i < 10; i++) {

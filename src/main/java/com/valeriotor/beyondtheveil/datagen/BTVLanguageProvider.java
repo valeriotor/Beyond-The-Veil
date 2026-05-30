@@ -1,6 +1,9 @@
 package com.valeriotor.beyondtheveil.datagen;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.GearBenchBlock;
+import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -38,7 +41,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(ONIRIC_INCENSE.get(), "Oniric Incense");
         add(SLUG_CATCHER.get(), "Slug Catcher");
         add(SLUG.get(), "Slug");
-        add(CANOE.get(), "Canoe");
+        add(Registration.CANOE.get(), "Canoe");
         add(RUM.get(), "Cup of Rum");
         add(WINE.get(), "Cup of Wine");
         add(ALE.get(), "Cup of Ale");
@@ -866,8 +869,43 @@ public class BTVLanguageProvider extends LanguageProvider {
         addCommonCaptions();
         addContact();
         addItems();
-        addArsenal();
+        addArsenalAndEffects();
         addMemories();
+        addEntities();
+    }
+
+    private void addEntities() {
+        add(BTVEntities.SHOREMAN.get(), "Shoreman");
+        add(BTVEntities.BLOOD_CULTIST.get(), "Blood Cultist");
+        add(BTVEntities.ABOMINATION_0.get(), "Abomination (Tier 1)");
+        add(BTVEntities.ABOMINATION_1.get(), "Abomination (Tier 2)");
+        add(BTVEntities.ABOMINATION_2.get(), "Abomination (Tier 3)");
+        add(BTVEntities.FLETUM.get(), "Fletum");
+        add(BTVEntities.WEEPER.get(), "Weeper");
+        add(BTVEntities.CRAWLER.get(), "Villager");
+        add(BTVEntities.NAUTILUS.get(), "Nautilus");
+        //add(BTVEntities.BLOOD_WRAITH.get(), "Blood_wraith");
+        add(BTVEntities.BLOOD_ZOMBIE.get(), "Blood Zombie");
+        add(BTVEntities.BLOOD_SKELETON.get(), "Blood Skeleton");
+        add(BTVEntities.SURGEON.get(), "Surgeon");
+        add(BTVEntities.SURGEON_LARVA.get(), "Surgeon Larva");
+        add(BTVEntities.DEEP_ONE.get(), "Deep One");
+        add(BTVEntities.CEPHALOPODIAN.get(), "Cephalopodian");
+        add(BTVEntities.ANGLER.get(), "Angler");
+        add(BTVEntities.SEA_SNAKE.get(), "Sea Snake");
+        add(BTVEntities.SEPIID.get(), "Sepiid");
+        add(BTVEntities.ADELINE.get(), "Adeline");
+        add(BTVEntities.BONECAGE.get(), "Bonecage");
+        add(BTVEntities.MAN_O_WAR.get(), "Man o' war");
+        add(BTVEntities.OCTID.get(), "Octid");
+        add(BTVEntities.UMANCALA.get(), "Umancala");
+        add(BTVEntities.SANDFLATTER.get(), "Sandflatter");
+        add(BTVEntities.JELLY.get(), "Jelly");
+        add(BTVEntities.LIVING_PORTAL.get(), "Living Portal");
+        add(BTVEntities.CANOE.get(), "Canoe");
+        add(BTVEntities.UMANCALA_FIREBALL.get(), "Umancala Fireball");
+        add(BTVEntities.DREAM_FOCUS_ITEM.get(), "Dream Focus Item");
+        add(BTVEntities.DREAM_FOCUS_FLUID.get(), "Dream Focus Fluid");
     }
 
     private void addMobInteracts() {
@@ -1749,7 +1787,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.eye.1", "That is, of course, only my interpretation, from one pupil to another.\nI wonder, if I may ask, where did you first encounter this symbol?");
         add("dialogue.shoreman_scholar.discuss.plight.0", "Deleted from the annals, oh the shame on those who wrote them!\nYes, our people were slain by yours, and some of us are old enough to remember it. Crusades, inquisitions, persecutions, witch hunts – whatever you want to call them, we were the monsters they hunted. We... normal men.");
         add("dialogue.shoreman_scholar.discuss.plight.1", "So how can one blame us when we mistrust outsiders? Were a whole people to come and take your family, how could you not be suspicious of anyone from that same population!");
-        add("dialogue.shoreman_scholar.discuss.sentience.0", "\"We\" is all living creatures, so confident in our role as kings of the universe that we believe to have exclusive claim on sentience. The Great Dreamer is sentient, that is certain – but he does not §olive§r. He is more than that.");
+        add("dialogue.shoreman_scholar.discuss.sentience.0", "\"We\" is all living creatures, so confident in our role as kings of the universe that we believe to have exclusive claim on sentience. The Great Dreamer is sentient, that is certain... but he does not §olive§r. He is more than that.");
         add("dialogue.shoreman_scholar.discuss.sorry.0", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.immortal.0", "We saw it in our dreams. We knew that, had you not come in peace, we would have had no escape – even if we killed you.\nAnd we remember, for we had faced one such as you before.");
         add("dialogue.shoreman_scholar.discuss.chains.0", "Blood rituals are a staple practice among many peoples of the world, often involving sacrifice of mortal men and women to obtain boons. It has also been studied by academia, though not extensively, and always at a safe distance.");
@@ -2161,15 +2199,20 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.WATER_DREAMS.title", "Dreams of Water");
         add("research.reminisced_void_water.text", "Dream of Void, then Water.");
+        add("research.WATER_DREAMS.epigraph", "§oThe deep sea\\0" +
+                "Lies beneath all worlds,\\0" +
+                "An ocean\\0" +
+                "Strewn across the stars§r\\1");
+        add("research.WATER_DREAMS.epigraph.source", "Old Shoreman saying\\n");
         add("research.WATER_DREAMS.stage.0", "Our mind stands atop the small, sinking isle of what it sees and feels, besieged on all fronts by the endless waves of the unknown.\\n" +
                 "Now the tide rises, the illusion shatters, and what we thought we knew is submerged once more.\\n" +
-                "Lies. Some perpetrated by thousand year old institutions, busy polishing unearned offerings; others encouraged by our own — perhaps merciful — minds, and the wishful thinking clouding our thoughts.\\n" +
+                "Lies. Some perpetrated by millennia-old institutions, busy polishing unearned offerings; others encouraged by our own (perhaps merciful) minds, and the wishful thinking clouding our thoughts.\\n" +
                 "But we know dreams can show us more than meets the eye. Fix our lapses in judgement, grant us a new perspective. Breach our preconceived notions, this veil obscuring the unknown.\\n" +
                 "The shoremen were right. I must dream of Water, a memory so intense I may forget to breathe.\\n" +
                 "But first I must bolster it with Void, to still its descent, and give myself time to… listen.\\n" +
                 "...\\n" +
                 "Merciful Gods, please,\\1" +
-                "don't let me drown.");
+                "§odon't let me drown.");
         add("research.WATER_DREAMS.stage.1", "Gracious Gods, do not let my mind crumble as I write this.\\n" +
                 "My dream dived in, my body forgotten atop the shore. The mind knew no longer our material world. \\n" +
                 "I sped down, relentless, unremitting, as I became engulfed in the rumble of water, sweetly scented in the color of nothing. It was the fusion of the senses, a synesthesia of the soul.\\n" +
@@ -2972,7 +3015,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("surgery.status.target_type", "Target: ");
     }
 
-    private void addArsenal() {
+    private void addArsenalAndEffects() {
         add("arsenal.harm_undead", "Harm Undead");
         add("arsenal.harm_arthropods", "Harm Arthropods");
         add("arsenal.enweb", "Enweb");
@@ -2980,6 +3023,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("arsenal.knock_upwards", "Knock Upwards");
         add("arsenal.create_slime", "Create Slime");
         add("arsenal.everyone_target", "Attract Attackers");
+
+        add(BTVEffects.FOLLY.get(), "Folly");
     }
 
 }

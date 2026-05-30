@@ -264,6 +264,19 @@ public class OperationRegistry {
     private static final Operation INJECT_ORGANOCHLORIDE_FLUID = makeArsenalInjection("inject_organochloride_fluid", 0.9, 90, 4, ArsenalEffectRegistry.HARM_ARTHROPODS).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 80);
     private static final Operation INJECT_PHEROMONES_FLUID = makeArsenalInjection("inject_pheromones_fluid", 0.9, 90, 4, ArsenalEffectRegistry.EVERYONE_TARGET).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 80);
 
+    private static final Operation INJECT_VASOCONSTRICTOR_FLUID = new Operation.Builder("inject_vasoconstrictor_fluid")
+            .addAllowedLocation(SurgicalLocation.BACK)
+            .setPainPerTick(1.2)
+            .setPersistent(true)
+            .setPainForFailure(60)
+            .setSuccessParticles(true)
+            .setParticleOffset(new Vec3(0, 0, 1))
+            .setSuccessParticleType(ParticleTypes.CRIT)
+            .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
+            .setSuccessParticleCount(5)
+            .setCapacityRequirement(-10)
+            .buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
+
     private static final Operation INSERT_EMPTY_BLADDER = new Operation.Builder("insert_empty_bladder")
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(1.2)
