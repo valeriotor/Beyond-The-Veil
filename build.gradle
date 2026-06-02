@@ -191,8 +191,8 @@ dependencies {
 
 mixin {
     // MixinGradle Settings
-    add sourceSets.main, 'mixins.beyondtheveil.refmap.json'
-    config 'mixins.beyondtheveil.json'
+    add sourceSets.main, 'beyondtheveil.refmap.json'
+    config 'beyondtheveil.mixins.json'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
