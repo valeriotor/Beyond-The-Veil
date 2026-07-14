@@ -578,6 +578,19 @@
         ]
       },
       {
+        "key": "BLOOD_FIST",
+        "name": "research.BLOOD_FIST.title",
+        "icons": [ "beyondtheveil:blood_fist" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,12 ],
+        "hiders": ["did_binding"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BLOOD_FIST.stage.0"
+          }
+        ]
+      },
+      {
         "key": "BLOOD_CULT",
         "name": "research.BLOOD_CULT.title",
         "icons": [ "beyondtheveil:offer_pillar" ],
@@ -621,6 +634,28 @@
             "text": "research.NEW_DEPTHS.stage.2",
             "recipes":  ["beyondtheveil:nautilus", "beyondtheveil:repair_hammer", "beyondtheveil:arche_dial"],
             "pamphlet":  true
+          }
+        ]
+      },
+      {
+        "key": "SNIPPET_OF_TRUTH",
+        "name": "research.SNIPPET_OF_TRUTH.title",
+        "icons": [ "beyondtheveil:necronomicon" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,16 ],
+        "hiders": ["COMMUNION"],
+        "parents": ["NEW_DEPTHS"],
+        "stages": [
+          {
+            "epigraph": "research.SNIPPET_OF_TRUTH.epigraph",
+            "text": "research.SNIPPET_OF_TRUTH.stage.0",
+            "required_research": ["slew_keeper"]
+          },
+          {
+            "text": "research.SNIPPET_OF_TRUTH.stage.1",
+            "required_research": ["met_mirror"]
+          },
+          {
+            "text": "research.SNIPPET_OF_TRUTH.stage.2"
           }
         ]
       }

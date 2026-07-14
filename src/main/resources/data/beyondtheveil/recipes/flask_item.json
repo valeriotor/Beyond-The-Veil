@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "W": {
+      "tag": "minecraft:wooden_buttons"
+    }
+  },
+  "pattern": [
+    "WWWW",
+    "G  G",
+    "G  G",
+    "WWWW"
+  ],
+  "result": {
+    "item": "beyondtheveil:flask_item"
+  },
+  "show_notification": true
+}

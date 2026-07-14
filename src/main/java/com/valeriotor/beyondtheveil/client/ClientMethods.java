@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.client.Minecraft;
@@ -143,7 +144,7 @@ public class ClientMethods {
 
     public static void playRitualSound(BlockPos pos) {
         if (Minecraft.getInstance().player != null) {
-            if(Minecraft.getInstance().player.distanceToSqr(pos.getCenter()) < 900) {
+            if (Minecraft.getInstance().player.distanceToSqr(pos.getCenter()) < 900) {
                 if (bloodRitualSoundInstance == null) {
                     bloodRitualSoundInstance = new SimpleSoundInstance(BTVSounds.BLOOD_RITUAL.get().getLocation(), SoundSource.BLOCKS, 1, 1, Minecraft.getInstance().player.getRandom(), true, 0, SoundInstance.Attenuation.LINEAR, pos.getX(), pos.getY(), pos.getZ(), false);
                     Minecraft.getInstance().getSoundManager().play(bloodRitualSoundInstance);
@@ -183,6 +184,11 @@ public class ClientMethods {
             if (item == Registration.ANTIDOTE_CAPSULE.get()) {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key + "2")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key + "1")));
+            } else if (item == Registration.FLASK_LARGE_ITEM.get()) {
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_large")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_medium")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_small")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_item")));
             } else {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key)));
             }

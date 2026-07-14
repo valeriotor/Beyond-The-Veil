@@ -81,7 +81,9 @@ public enum PlayerDataLib {
     editing_report,
     reminiscing,
     sacrifice_altar,
-    waypoint_ocean;
+    waypoint_ocean,
+    met_mirror,
+    did_binding;
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";

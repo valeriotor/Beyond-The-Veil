@@ -2193,7 +2193,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.EMPTY_DREAMS.title", "Empty Dreams");
         add("research.reminisced_void_metal.text", "Dream of Void, then Metal.");
         add("research.EMPTY_DREAMS.stage.0", "A memory of a dream I cannot remember, older yet than darkness, predating reality (or that which we call so). He would then live (exist) down there, deceitful (with or without intent), waiting (outside of time), dreaming.\\n" +
-                "Where lies the lie? Were my eyelids sewn shut at birth, dogmas drawn in their insides to see nothing else? Or am I too quick to dismiss the old adages, their wisdom shown in their persistence, in their supremacy over the heretical folks whom they… they…\\n" +
+                "Where lies the lie? Were my eyelids sewn shut at birth, dogmas drawn in their insides to see nothing else? Or am I too quick to dismiss the old adages, their wisdom shown in their persistence, in their supremacy over the heretical folks whom they... they...\\n" +
                 "No. I must be rigorous. An empty dream, one I cannot reminisce, at the tip of my mind but barely outside its grasp. Yet my next dream might, and learn that it must slow down its descent, stay still within the Void, the Veil, the Dreamer.");
         add("research.EMPTY_DREAMS.stage.1", "It worked.");
 
@@ -2209,7 +2209,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Lies. Some perpetrated by millennia-old institutions, busy polishing unearned offerings; others encouraged by our own (perhaps merciful) minds, and the wishful thinking clouding our thoughts.\\n" +
                 "But we know dreams can show us more than meets the eye. Fix our lapses in judgement, grant us a new perspective. Breach our preconceived notions, this veil obscuring the unknown.\\n" +
                 "The shoremen were right. I must dream of Water, a memory so intense I may forget to breathe.\\n" +
-                "But first I must bolster it with Void, to still its descent, and give myself time to… listen.\\n" +
+                "But first I must bolster it with Void, to still its descent, and give myself time to... listen.\\n" +
                 "...\\n" +
                 "Merciful Gods, please,\\1" +
                 "§odon't let me drown.");
@@ -2342,11 +2342,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BAPTISM.stage.0", "After having reached a certain stage of their life, shoremen appear to undergo a secret rite to speak with the Ocean. They are still tightlipped about its details, but as I embrace more and more of their customs they may become willing to reveal them.");
         add("research.BAPTISM.stage.1", "The keeper’s words were ominous, but I must proceed, just as I did for communion.\\n" +
                 "I must dig a hole three blocks deep, but only one wide, open at the top and surrounded in dark sand elsewhere. I must fill it completely with §ostill§r water, for each of its three empty blocks.\\n" +
-                "Then, I must sink to its bottom and devour a slug… and wait for what comes next.\\n" +
+                "Then, I must sink to its bottom and devour a slug... and wait for what comes next.\\n" +
                 "Merciful God, please,\\1" +
                 "don’t let me drown.");
         add("research.BAPTISM.stage.2", "His voice was calm, placid, yet assertive, authoritative. His instructions were clear: I must make contact with His children, and so I shall.\\n" +
-                "But… what else did I awaken? There was a convergence of thoughts, centered upon me.\\n" +
+                "But... what else did I awaken? There was a convergence of thoughts, centered upon me.\\n" +
                 "Oh, what did I do?");
 
         add("research.DREAM_BOTTLE.title", "Dream Bottle");
@@ -2442,6 +2442,11 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Such a creature shall be called a Fletum. Fleti can be picked up and assigned to a lacrymatory like weepers, though they will produce fewer tears.\\n" +
                 "However, their dreamlike state may and should be leveraged, and if I find a way to focus their dreams then I might, perhaps, see their effects in the real world.");
 
+        add("research.BLOOD_FIST.title", "Blood Fist");
+        add("research.BLOOD_FIST.stage.0", "A tool used to focus the powers bestowed by worldly bindings. It is created from the heart of a still-living patient: the insertions of a silk gland, a marrow gland and a gunpowder bladder in the chest of a patient will let the subsequent extraction produce the blood fist. No capacity is needed.\\n" +
+                "These ingredients can be respectively obtained by killing spiders, skeletons, and creepers, all with the surgical precision of a scalpel.\\n" +
+                "The usage of the fist itself depends on the binding, and may have different effects when wielded in the main or off-hand. It is likely related to the witch hands used in infusions by practitioners of witchcraft.\\n");
+
         add("research.NEW_DEPTHS.title", "Deep Down Below");
         add("research.entered_arche.text", "Create the Nautilus and enter Arche.");
         add("research.spoke_to_dagon.text", "Speak to Father Ocean.");
@@ -2472,9 +2477,47 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.");
         add(SLEEP_CHAMBER.get().getDescriptionId() + ".crafting", "A complex device known to mimic the dream state induced by sleeping.\\1To use it, I must open its door, walk inside and close it while enclosed within.");
         add(SEAWEED_STEW.get().getDescriptionId() + ".crafting", "A simple but honest recipe; it can be served both hot and cold. Seaweed itself is a staple of Shore cuisine.");
-        add(KELP_COD_BUNDLE.get().getDescriptionId() + ".crafting", "Bread is not widespread in Shore cuisine, but these sorts of bundles are a common “food on the go” alternative. The different textures match better than expected.");
+        add(KELP_COD_BUNDLE.get().getDescriptionId() + ".crafting", "Bread is not widespread in Shore cuisine, but these sorts of bundles are a common \"food on the go\" alternative. The different textures match better than expected.");
         add(TROPICAL_DELIGHT.get().getDescriptionId() + ".crafting", "Its festive look and hefty portions often accompany celebrations in Shore culture, making for a sophisticated recipe for special occasions. It is a very filling dish, prepared with exotic fish coupled with various herbs and spices.");
         add(ANTIDOTE_CAPSULE.get().getDescriptionId() + ".crafting", "Used to treat or prevent poison and wither effects. When affected by either ailment, the capsule will be applied automatically if held in the hotbar. It can also be used manually. Doing so will grant immunity for a certain length of time.");
+        add(ALEMBICS.get().getDescriptionId() + ".crafting", "Via the mixing and matching of liquids and solids, this device can create something entirely new... yet analogies to the ancient waters of Arche would constitute foolish ambitions: it cannot create life.\\1" +
+                "The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\1" +
+                "A fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\1" +
+                "A given input item may be sufficient for a certain amount of output fluid. #GIVE EXAMPLE");
+        add(ARCHE_DIAL.get().getDescriptionId() + ".crafting", "Arche’s currents are chaos spawning order, amorphous matter breeding life – and, lying at this intersection, does it surprise us or not that they act with such predictable patterns?\\1" +
+                "Arche dials were designed with the purpose of measuring the present state of Arche’s waters, eventually revealing that the cyclical currents occurred on strict timing intervals.\\1" +
+                "The number of gleaming blue slots describes the amount of time left before the next current cycle begins. When it approaches zero, I should start looking for shelter in the form of air pockets.");
+        add(BLACK_MIRROR.get().getDescriptionId() + ".crafting", "By definition, a mirror’s reflection ought to be sharp and faultless, an immaculate representation of my worldly body.\\1" +
+                "Yet, this one is not: the shape I see in its black stone is faint and blurred. Distorted. Inhuman.\\1" +
+                "That is my goal: unconstrained by my physical form, the mirror becomes the little stronghold of my mind, and the blemishes on my reflection lead my focus away from the world my body touches and feels... back to the one my soul thinks and dreams. The only one I know is real.");
+        add(BLACK_MIRROR.get().getDescriptionId() + ".crafting2", "The mirror is evil. Do not trust it. Do not trust what it says. The truths it shall utter will be incomplete. Do not trust it.");
+        add(BLACK_MIRROR.get().getDescriptionId() + ".crafting3", "By definition, a mirror’s reflection ought to be sharp and faultless, an immaculate representation of our worldly body.\\1" +
+                "Yet, this one is not: the shape we see in its black stone is faint and blurred. Distorted. Inhuman.\\1" +
+                "That is our goal: unconstrained by our physical form, the mirror acts as the little stronghold of our mind, and all the blemishes on our reflection lead us away from the world our body touches and feels... back to the one our soul thinks and dreams. The only one we know is real.");
+        add(DREAM_BOTTLE.get().getDescriptionId() + ".crafting", "A Shoreman device; in the past, they filled it with tears. When {§nopened§r}[caption:shift_right_click], up to four memory phials can be inserted. {§nDrinking§r}[caption:right_click] from it will then consume all the contained phials to dream of up to four memories at once.\\1" +
+                "However, it can only be used once per day.");
+        add(DREAM_BOTTLE.get().getDescriptionId() + ".crafting2", "A Shoreman device; in the past, they filled it with tears. When {§nopened§r}[caption:shift_right_click], up to four memory phials can be inserted. {§nDrinking§r}[caption:right_click] from it will then consume all the contained phials to dream of up to four memories at once.\\1" +
+                "Normally, it can only be used once per day. However, filling it with tears overcomes this flaw, allowing me to use it as many times as I want as long as there is sufficient liquid.");
+        add(EMERALD_GEM.get().getDescriptionId() + ".crafting", "A small jewel. Used in surgical insertion procedures.");
+        add(FLASK_LARGE.get().getDescriptionId() + ".crafting", "Used for storing liquids or items for the purpose of surgical procedures. More information is in the surgeon’s journal.");
+        add(JOURNAL.get().getDescriptionId() + ".crafting", "The repository of all my knowledge pertaining to surgical operations. This includes an overview of the procedures, required infrastructure and ingredients, as well as handwritten notes of my own experiments");
+        add(LETTER_BOX.get().getDescriptionId() + ".crafting", "Used to send and receive correspondence – but I never manage to catch the mailman!");
+        add(NAUTILUS.get().getDescriptionId() + ".crafting", "A portable submarine used by the old expeditioners. It can be {§ndeployed§r}[caption:right_click] easily, though its large size and bulky movement make it best suited for large bodies of water like the depths of Arche, and pretty much useless for tight ones such as rivers.");
+        add(REPAIR_HAMMER.get().getDescriptionId() + ".crafting", "Used to repair the Nautilus §ofrom outside§r. {§nStriking§r}[caption:left_click] the submarine with it will slowly restore its frame.");
+        add(FORCEPS.get().getDescriptionId() + ".crafting", "A tool for surgical insertions. More information is in the surgeon’s journal.");
+        add(SCALPEL.get().getDescriptionId() + ".crafting", "A tool for surgical incisions. More information is in the surgeon’s journal.");
+        add(SEWING_NEEDLE.get().getDescriptionId() + ".crafting", "A tool for surgical sewing. More information is in the surgeon’s journal.");
+        add(SURGERY_BED.get().getDescriptionId() + ".crafting", "A wooden bed to hold patients awaiting operations on the chest or back. More information is in the surgeon’s journal.");
+        add(SYRINGE.get().getDescriptionId() + ".crafting", "A tool for surgical injections. More information is in the surgeon’s journal.");
+        add(TONGS.get().getDescriptionId() + ".crafting", "A tool for surgical extractions. More information is in the surgeon’s journal.");
+        add(WATERY_CRADLE.get().getDescriptionId() + ".crafting", "A device to hold patients awaiting operations on the skull. More information is in the surgeon’s journal.");
+        add(CANOE.get().getDescriptionId() + ".crafting", "A Shoreman design. Not dissimilar in speed and manoeuvrability from the boats I’m used to build, yet its distinct look acts almost as a coat of arms: an insignia designating the rider as a friend of the Shore – for better or worse, depending on the observer.");
+        add(DAMP_WOOD.get().getDescriptionId() + ".crafting", "The wood in the Shoremen’s hamlet is soggy and brittle; there is scarcely a reason to use it, other than to imitate their design.\\1" +
+                "The wood itself can be bought from the Shoreman carpenters, or (according to them) by using their water grasping technique to place water on a normal wooden log.");
+        add(GEAR_BENCH.get().getDescriptionId() + ".crafting", "An advanced crafting station.");
+        add(GEAR.get().getDescriptionId() + ".crafting", "An ordinary component in several mechanical crafts.");
+        //add(SAMPLE_TUBE.get().getDescriptionId() + ".crafting", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\1" +
+                //"The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
     }
 
     private void addReminiscence() {
@@ -2593,7 +2636,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Though we can only speculate as to what the true cause may have been, we have observed common patterns in the described events, consistent across different cultures. Below, we attempt to categorize these effects, along with the suggested response.");
         add("research.thesis.risks.section.1", "3.1 Rejecting offerings");
         add("research.thesis.risks.text.1", "The most common unexpected event was, quite simply, an ingredient being knocked out from the basin it was standing upon. Most of the time, the object was simply dropped on the ground; at times, however, it may have been utterly destroyed. For this reason, it was generally always recommended to hold copies of each offering ready at hand.\\n" +
-                "Though the ritual could reject any offerings, so too would it lament any ones lost in this manner. This contradiction meant that if, at any point, the blood nucleus could not make progress due to a missing ingredient on the current basin, the “instability” of the ritual would have grown, leading to more problematic effects. It was thus imperative to replace any missing offerings forthwith: a basin lacking its ingredient would normally have emitted smoke, leading to easy identification.");
+                "Though the ritual could reject any offerings, so too would it lament any ones lost in this manner. This contradiction meant that if, at any point, the blood nucleus could not make progress due to a missing ingredient on the current basin, the \"instability\" of the ritual would have grown, leading to more problematic effects. It was thus imperative to replace any missing offerings forthwith: a basin lacking its ingredient would normally have emitted smoke, leading to easy identification.");
         add("research.thesis.risks.section.2", "3.2 Further effects");
         add("research.thesis.risks.text.2", "Rituals facing high instability could quickly turn into nightmares for the practitioner: various harmful events have been reported, including explosions, lightning strikes, and even the appearance of undead creatures, captivated by the ritual for obvious reasons.\\n" +
                 "The greatest risk, of course, was an abrupt end to the ritual, signifying a loss of the ingredients and a waste of a life.");
@@ -2676,7 +2719,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.thesis.binding.text.1", "Binding rituals were used to create connections between objects or creatures. Oftentimes, this involved enhancing an item to act as either the nexus or an endpoint of a connection; for example, binding an object to its owner, or creating an object to bind creatures to its owner. \\n" +
                 "We observe a great variety of shapes that these connections can take; so far, we have gathered four such rituals. In future work, we plan to extend this chapter, including new rituals such as those among immortal humans.");
         add("research.thesis.ritual.bind_item_damage.title", "Bind item (damage)");
-        add("research.thesis.ritual.bind_item_damage.text", "This type of ritual was used by witches to gain power upon others, working as a sort of “hex” attached to arbitrary objects. The item would be bound to the one who performed the ritual; any other person possessing the item would come to much more severe harm than normal whenever struck by the bound individual.\\n" +
+        add("research.thesis.ritual.bind_item_damage.text", "This type of ritual was used by witches to gain power upon others, working as a sort of \"hex\" attached to arbitrary objects. The item would be bound to the one who performed the ritual; any other person possessing the item would come to much more severe harm than normal whenever struck by the bound individual.\\n" +
                 "Thus, the challenge lay in trickery: how to hand the cursed object to the detested foe, while raising nary a hint of suspicion?\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
@@ -2707,11 +2750,26 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.thesis.ritual.pool_flebo.title", "Bind IV stand");
         add("research.thesis.ritual.pool_flebo.text", "IV stands can supply patients with blood and nutrients during surgical operations, easing their pain. Yet, if the reports detailing this ritual speak true, they can be used to permanently bind the patient to the stand’s bound individual—that is, the one who performed the ritual.\\n" +
                 "This technique would rely on similar principles as the blood well does for undead: any patient fed with fluid from such a stand would vanish into thin air, and be transported to some unknown location or realm—likely far down into the depths of the world. The only one capable of recovering such patients and bringing them back to our world would be the stand’s bound human, via the use of a blood gem.\\n" +
-                "Besides the stand, the ritual requires three other items, which will dictate the location that patients will be assigned to in the form of a color code. Any dye may be used, as well as clay balls (the latter signifying “no dye”). This is done for the purpose of organizing the patients, in accordance with the blood gem’s wielder’s needs.\\n" +
+                "Besides the stand, the ritual requires three other items, which will dictate the location that patients will be assigned to in the form of a color code. Any dye may be used, as well as clay balls (the latter signifying \"no dye\"). This is done for the purpose of organizing the patients, in accordance with the blood gem’s wielder’s needs.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
                 "• Three dyes or clay balls.\\1" +
                 "• The IV stand.");
+
+        add("research.thesis.ritual.binding_overworld.title", "Binding of the Overworld");
+        add("research.thesis.ritual.binding_overworld.text", "The Binding of the Overworld is the first of the three known world bindings. These rituals were used to attune the slayers to a particular dimension’s energy, thereby bestowing upon them superhuman abilities–most of which required a Blood Fist to be performed, and whose energy would have to be replenished after prolonged use.\\n" +
+                "This particular binding attuned the user to the earthly, living world. The bound individual was able to more easily place large amounts of materials on the ground at once, as well as destroy objects in front or below by simply walking into them. Additionally, they could repair their clothes and gear by lending any life force in excess.\\n" +
+                "Finally, they would partake in any bestowal of life, finding healing in any nearby births of creatures.");
+
+        add("research.thesis.ritual.binding_nether.title", "Binding of the Nether");
+        add("research.thesis.ritual.binding_nether.text", "The Binding of the Nether is the second known world binding. Where the Overworld is attuned to life, the Nether is to death. Individuals with this binding would find healing in nearby deaths of creatures, and satiation in flames–which they were also known to spread. They were also able to swiftly dispatch weak or weakened creatures, albeit at a cost in health.\\n" +
+                "Finally, the binding was also associated with control, and the mindless creatures serving bound users (such as blood undead) would benefit from increased strength.\n");
+
+        add("research.thesis.ritual.binding_end.title", "Binding of the End");
+        add("research.thesis.ritual.binding_end.text", "The Binding of the End is the third and last known world binding. As is known (and well studied by institutions such as the Miskatonic), this dimension has different spatiotemporal properties from most others, and its residents are capable of manipulating this idiosyncrasy; this is reflected in the binding.\\n" +
+                "Individuals attuned to the End were capable of teleporting large vertical distances with ease, as well as confuse melee opponents by quickly changing position. They were also known to be able to occasionally avoid death via a massive spatiotemporal leap, often being found alive in another state or province instead of falling dead where they stood.\\n" +
+                "Additionally, they were able to divert attention from themselves onto other creatures when under attack. Finally, it was common among practitioners bound to the End to utilize Elytras (a wing design developed by an unknown End civilization), which they could reportedly fly more easily after undergoing the binding.");
+
 
         add("research.thesis.manifestation.title", "Manifestation Rituals");
         add("research.thesis.manifestation.text.1", "Manifestation rituals leveraged blood’s ability to grant life to creatures, after bringing death to the ritual victim. However, only a few such rituals are known to have existed; in this work, we have gathered two.");
@@ -2857,7 +2915,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "When adding an ingredient that requires capacity, it must be made sure that there is enough to satisfy the need; if the available capacity ever drops below zero, the patient will die.");
         add("gui.journal.overview.modifiers.text", "There are two types of modifiers: potency and burst. The former increase the strength of the individual effects applied to the abomination; the latter increase the size of the burst.\\n" +
                 "Multiple potency modifiers can be added at any point of the operation, and can generally be applied multiple times. The first instance of a certain potency modifier will increase the strength of the first effect ingredient that has been or that will be applied to the soon-to-be abomination; the second instance will increase the strength of the second effect ingredient; and so forth.\\n" +
-                "For example, assume we are creating an abomination with a “create webbing” effect and an “apply poison” effect, added in that order. If we want to improve the potency of the webbing twice and of the poison once, we can add potency modifier “liquid glowstone” twice and potency modifier “diamond powder” once, at any point during the operation (assuming sufficient capacity). The first application of the liquid glowstone and diamond powder will improve the webbing’s potency; the second application of the liquid glowstone will improve the poison’s potency.\\n" +
+                "For example, assume we are creating an abomination with a \"create webbing\" effect and an \"apply poison\" effect, added in that order. If we want to improve the potency of the webbing twice and of the poison once, we can add potency modifier \"liquid glowstone\" twice and potency modifier \"diamond powder\" once, at any point during the operation (assuming sufficient capacity). The first application of the liquid glowstone and diamond powder will improve the webbing’s potency; the second application of the liquid glowstone will improve the poison’s potency.\\n" +
                 "Burst modifiers are only applied once, and are independent of the effect ingredients that are used.");
         add("gui.journal.overview.triggering.text", "An abomination can be made to act on the occurrence of certain events, and move towards certain targets; the former are known as triggering instructions, and are dictated by injection of serum GS121; the latter are targeting instructions, dictated by serum SA245. Both of them can be one of five options, determined by the amount x of the respective serum injected:\\n" +
                 "- Hostile creatures nearby (1 ≤ x < 5 mb).\\1" +
@@ -2866,12 +2924,12 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "- Entity attacking the abomination (15 ≤ x < 20 mb).\\1" +
                 "- Entity attacking the abomination’s master (20 ≤ x < 25 mb).\\1" +
                 "- Entity attacked by the abomination’s master (25 ≤ x < 30 mb).\\n" +
-                "If no serum SA245 is injected, the default targeting instruction is “hostile creatures nearby”. If no serum GS121 is injected, the default triggering will be the same as the targeting instruction.\\n" +
+                "If no serum SA245 is injected, the default targeting instruction is \"hostile creatures nearby\". If no serum GS121 is injected, the default triggering will be the same as the targeting instruction.\\n" +
                 "The ability to specify triggering and targeting separately gives me more control on how the abominations must act. \\n" +
-                "For example, if there are three abominations around me, each with “Entity attacked by the abomination’s master” triggering instruction and “Hostile creatures nearby” targeting instruction, I can simply hit any creatures (including one of the abominations themselves, if I want) to tell each of them to attack the closest hostile creature.\\n" +
+                "For example, if there are three abominations around me, each with \"Entity attacked by the abomination’s master\" triggering instruction and \"Hostile creatures nearby\" targeting instruction, I can simply hit any creatures (including one of the abominations themselves, if I want) to tell each of them to attack the closest hostile creature.\\n" +
                 "An abomination’s burst will only affect an ally (i.e. its master and its master’s other minions) if the target of the explosion was an ally; it will only affect creatures other than allies if the target of the explosion was not an ally.");
-        add("gui.journal.overview.priorities.text", "An abomination can be assigned to a certain “mutual exclusion (mutex) category” defined by a single dye color; this is done via cheap liquid dyes. Two abominations assigned to the same mutex will not target the same creature at the same time, though they may target two different creatures, or the same creature at different times (e.g. after one abomination has exploded).\\n" +
-                "This can be useful when I wish to apply a certain effect before another one, for example vulnerability before harming. In this case, I can give two different abominations the “lime” mutex; then, I would make sure that the vulnerability abomination attacks first. I could do this by summoning the vulnerability abomination first, or somehow triggering it first; however, the simplest way is simply to give the harming abomination lower priority, which will make sure it attacks afterwards. Deciding priorities is done via injection of serum PP456; the higher the amount, the lower the priority (no injection means highest).");
+        add("gui.journal.overview.priorities.text", "An abomination can be assigned to a certain \"mutual exclusion (mutex) category\" defined by a single dye color; this is done via cheap liquid dyes. Two abominations assigned to the same mutex will not target the same creature at the same time, though they may target two different creatures, or the same creature at different times (e.g. after one abomination has exploded).\\n" +
+                "This can be useful when I wish to apply a certain effect before another one, for example vulnerability before harming. In this case, I can give two different abominations the \"lime\" mutex; then, I would make sure that the vulnerability abomination attacks first. I could do this by summoning the vulnerability abomination first, or somehow triggering it first; however, the simplest way is simply to give the harming abomination lower priority, which will make sure it attacks afterwards. Deciding priorities is done via injection of serum PP456; the higher the amount, the lower the priority (no injection means highest).");
         add("gui.journal.overview.weepers.text", "Weepers have an intrinsic capacity of 15, and may thus be used as abominations. However, their capacity cannot be increased further.");
 
         add("gui.journal.tools.forceps.title", "Forceps");
@@ -2934,7 +2992,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Eventually the patient will drop on the ground, unable to move anymore. That will be the right time to extract its spine, hopefully acquiring a greater amount of iron than was used in the creation of the living metal.");
 
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
-        add("gui.journal.ingredients.empty_bladder.text", "Empty Bladder");
+        add("gui.journal.ingredients.empty_bladder.text", "A small sac, capable of holding other ingredients within itself. Occasionally dropped by monsters when slain with a scalpel.");
 
         add("gui.journal.ingredients.parental_hormones.title", "Parental Hormones");
         add("gui.journal.ingredients.parental_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then try to breed any nearby eligible pair of animals using items from the container, if available (e.g. wheat for cows, seeds for chickens).");
@@ -2967,6 +3025,24 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.wart_serums.text", "These liquids are produced via combining classical potion ingredients with base serum A00B3. They mimic the effects of normal potions as abomination ingredients.\\n" +
                 "Interestingly, these may also be injected in the chest rather than back. In doing so, they will not turn patients into explosive abominations, but rather apply those effects to the patients themselves (for an extended period of time compared to normal potions). They will still require capacity, and may also still be affected by potency modifiers, as normal.");
 
+        add("gui.journal.ingredients.emerald_gem.title", "Emerald Gem");
+        add("gui.journal.ingredients.emerald_gem.text", "A small trinket, used to create jewelry from within patients’ bodies.");
+
+        add("gui.journal.ingredients.swollen_growth.title", "Swollen Growth");
+        add("gui.journal.ingredients.swollen_growth.text", "A large abnormal excrescence. We have much less control over our bodies than we believe.\n" +
+                "Dropped by some creatures in Arche.");
+
+        add("gui.journal.ingredients.periosteum_growth.title", "Periosteum Growth");
+        add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There's a certain unease at seeing your true self beneath that curtain of flesh.");
+
+        add("gui.journal.ingredients.chromatosphore_gland.title", "Chromatosphore Gland");
+        add("gui.journal.ingredients.chromatosphore_gland.text", "Used for mimicry. The need to veil your true self is present even in nature.");
+
+        add("gui.journal.ingredients.osteoclast_gland.title", "Osteoclast Gland");
+        add("gui.journal.ingredients.osteoclast_gland.text", "Destroys bony formations. Very harmful against undead, from skellies to withers.");
+
+        add("gui.journal.ingredients.slime_heart.title", "Slime Heart");
+        add("gui.journal.ingredients.slime_heart.text", "Not truly a \"heart\", but a sort of reproductive organ: it is through this that dying slimes will divide and conquer.");
 
         add("gui.journal.journal.type.none", "Select Type");
         add("gui.journal.journal.type.position", "Position");
