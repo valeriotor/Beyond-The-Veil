@@ -1,0 +1,21 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "   G",
+    "  G ",
+    " G  ",
+    "G   "
+  ],
+  "result": {
+    "count": 4,
+    "item": "beyondtheveil:sample_tube"
+  },
+  "show_notification": true
+}

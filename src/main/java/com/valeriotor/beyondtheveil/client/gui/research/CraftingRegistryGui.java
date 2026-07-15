@@ -552,6 +552,7 @@ public class CraftingRegistryGui extends Screen {
                 float outputY = pY + side * 21 / 2F;
                 poseStack.translate(outputX, outputY, 0);
                 graphics.renderItem(output, -8, -8);
+                graphics.renderItemDecorations(Minecraft.getInstance().font, output, -8, -8);
                 poseStack.popPose();
                 if (relativeMouseX >= outputX - 8 && relativeMouseX <= outputX + 8 && relativeMouseY >= outputY - 8 && relativeMouseY <= outputY + 8) {
                     graphics.renderTooltip(Minecraft.getInstance().font, output.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.NORMAL), output.getTooltipImage(), relativeMouseX, relativeMouseY);

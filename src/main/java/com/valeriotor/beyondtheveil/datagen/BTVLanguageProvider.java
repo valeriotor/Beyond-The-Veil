@@ -96,6 +96,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
 
+        add("tooltip.sample_tube.stored", "Contains 100mB of %1$s.");
         add("tooltip.memory_phial.stored", "This phial stores %1$s.");
         add("tooltip.memory_phial.empty", "This phial is empty.");
         add("tooltip.pillar.bound", "Bound entity: ");
@@ -1213,6 +1214,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("caption.right_click", "Right Click");
         add("caption.shift_right_click", "Sneak + Right Click");
         add("caption.shift_right_click_lacrymatory", "Sneak + Right Click on Lacrymatory");
+        add("caption.shift_right_click_air", "Sneak + Right Click in the air or water");
         add("caption.reminisce", "Hold %s");
         add("caption.crafting", "Go to crafting entry");
         add("caption.journal", "Go to journal entry");
@@ -2516,8 +2518,8 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "The wood itself can be bought from the Shoreman carpenters, or (according to them) by using their water grasping technique to place water on a normal wooden log.");
         add(GEAR_BENCH.get().getDescriptionId() + ".crafting", "An advanced crafting station.");
         add(GEAR.get().getDescriptionId() + ".crafting", "An ordinary component in several mechanical crafts.");
-        //add(SAMPLE_TUBE.get().getDescriptionId() + ".crafting", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\1" +
-                //"The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
+        add(SAMPLE_TUBE.get().getDescriptionId() + ".crafting", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\1" +
+                "The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
     }
 
     private void addReminiscence() {
@@ -2946,6 +2948,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.tools.tongs.title", "Tongs");
         add("gui.journal.tools.tongs.text", "A tool necessary for extractions. Needs an open incision first.");
+
+        add("gui.journal.tools.sample_tube.title", "Sample Tube");
+        add("gui.journal.tools.sample_tube.text", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\n" +
+                "The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
 
         add("gui.journal.tools.flasks.title", "Fluid flasks");
         add("gui.journal.tools.flasks.text", "Flasks come in various shapes and sizes. They are used to store fluids of all sorts, and are necessary for syringes to be filled.\\nFlasks may be placed on the ground or, more compactly, on a flask shelf.");

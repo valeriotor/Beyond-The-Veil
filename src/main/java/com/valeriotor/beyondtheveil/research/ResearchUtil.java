@@ -120,6 +120,7 @@ public class ResearchUtil {
             knownRecipes.put(Registration.ALEMBICS_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.FLASK_SHELF_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.SURGERY_BED_ITEM.getId().toString(), status.res);
+            knownRecipes.put(Registration.SAMPLE_TUBE.getId().toString(), status.res);
         }
         return knownRecipes;
     }

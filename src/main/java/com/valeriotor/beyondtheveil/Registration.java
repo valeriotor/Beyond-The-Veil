@@ -292,6 +292,7 @@ public class Registration {
     public static final RegistryObject<Item> SIGIL_PATHWAY = ITEMS.register("sigil_pathway", BloodSigilPathway::new); // new ItemBloodSigilPathway("sigil_pathway");
     public static final RegistryObject<Item> SACRIFICIAL_KNIFE = ITEMS.register("sacrificial_knife", SacrificialKnifeItem::new); // new ItemSacrificialKnife("sacrificial_knife");
     public static final RegistryObject<Item> MEMORY_PHIAL = ITEMS.register("memory_phial", MemoryPhialItem::new); // new ItemMemoryPhial("memory_phial");
+    public static final RegistryObject<Item> SAMPLE_TUBE = ITEMS.register("sample_tube", SampleTubeItem::new); // new ItemMemoryPhial("memory_phial");
     public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", NecronomiconItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> BLOOD_ORB = ITEMS.register("blood_orb", BloodOrbItem::new); // new ItemNecronomicon("necronomicon");
@@ -540,6 +541,7 @@ public class Registration {
                 output.accept(SIGIL_PATHWAY.get());
                 output.accept(SACRIFICIAL_KNIFE.get());
                 output.accept(MEMORY_PHIAL.get());
+                output.accept(SAMPLE_TUBE.get());
                 output.accept(NECRONOMICON.get());
                 output.accept(JOURNAL.get());
                 output.accept(BLOOD_ORB.get());

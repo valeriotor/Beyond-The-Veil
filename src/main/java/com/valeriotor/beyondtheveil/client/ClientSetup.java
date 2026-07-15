@@ -23,6 +23,7 @@ import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
+import com.valeriotor.beyondtheveil.item.SampleTubeItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
@@ -104,6 +105,7 @@ public class ClientSetup {
             blockColors.register((pState, pLevel, pPos, pTintIndex) -> 0x287082, Registration.MEMORY_SIEVE.get());
             ItemColors itemColors = Minecraft.getInstance().getItemColors();
             itemColors.register(new MemoryPhialItem.MemoryPhialColor(), Registration.MEMORY_PHIAL.get());
+            itemColors.register(new SampleTubeItem.SampleTubeColor(), Registration.SAMPLE_TUBE.get());
 
             ItemProperties.register(ARCHE_DIAL.get(), new ResourceLocation("time"), new ClampedItemPropertyFunction() {
                 @Override

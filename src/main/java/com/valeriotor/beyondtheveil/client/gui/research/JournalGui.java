@@ -372,6 +372,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new StacksItemEntry(Registration.SEWING_NEEDLE.get(), "sewing_needle", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SYRINGE.get(), "syringe", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.TONGS.get(), "tongs", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.SAMPLE_TUBE.get(), "sample_tube", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(List.of(Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get()), "flasks", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.FLASK_ITEM_ITEM.get(), "item_flask", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.ALEMBICS_ITEM.get(), "alembics", JournalCategory.TOOLS));

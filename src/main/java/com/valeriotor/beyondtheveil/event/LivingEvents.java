@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.AdelineEntity;
+import com.valeriotor.beyondtheveil.item.SampleTubeItem;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -316,6 +317,7 @@ public class LivingEvents {
                     }
                 }
             }
+            SampleTubeItem.livingDeathEvent(event, player);
         }
         BindingEvents.livingDeathEvent(event);
     }

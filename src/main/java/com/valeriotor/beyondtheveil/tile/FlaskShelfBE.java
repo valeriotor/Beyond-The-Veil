@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.block.FlaskShelfBlock;
+import com.valeriotor.beyondtheveil.item.SampleTubeItem;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -152,12 +154,45 @@ public class FlaskShelfBE extends BlockEntity {
 
     public InteractionResult interact(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+        if (itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent() || itemStack.getItem() == Registration.SAMPLE_TUBE.get()) {
             if (itemStack.getItem() != Registration.SYRINGE.get()) {
                 if (!pLevel.isClientSide) {
                     Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                     if (lookedAtFlask != null) {
-                        lookedAtFlask.holder.map(handler -> FluidUtil.interactWithFluidHandler(pPlayer, pHand, handler)).orElse(false);
+                        if (itemStack.getItem() == Registration.SAMPLE_TUBE.get()) {
+                            FluidStack fluidStack = SampleTubeItem.getFluid(itemStack);
+                            if (fluidStack.isEmpty()) {
+                                lookedAtFlask.holder.ifPresent(h -> {
+                                    if (h.drain(100, IFluidHandler.FluidAction.SIMULATE).getAmount() == 100) {
+                                        Fluid fluid = h.drain(100, IFluidHandler.FluidAction.EXECUTE).getFluid();
+                                        if (itemStack.getCount() == 1) {
+                                            SampleTubeItem.setFluid(itemStack, fluid);
+                                        } else {
+                                            itemStack.shrink(1);
+                                            ItemStack newStack = new ItemStack(Registration.SAMPLE_TUBE.get());
+                                            SampleTubeItem.setFluid(newStack, fluid);
+                                            ItemHandlerHelper.giveItemToPlayer(pPlayer, newStack);
+                                        }
+                                    }
+                                });
+                            } else {
+                                lookedAtFlask.holder.ifPresent(h -> {
+                                    if (h.fill(fluidStack, IFluidHandler.FluidAction.SIMULATE) == 100) {
+                                        h.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                                        if (itemStack.getCount() == 1) {
+                                            SampleTubeItem.setFluid(itemStack, null);
+                                        } else {
+                                            itemStack.shrink(1);
+                                            ItemStack newStack = new ItemStack(Registration.SAMPLE_TUBE.get());
+                                            SampleTubeItem.setFluid(newStack, null);
+                                            ItemHandlerHelper.giveItemToPlayer(pPlayer, newStack);
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            lookedAtFlask.holder.map(handler -> FluidUtil.interactWithFluidHandler(pPlayer, pHand, handler)).orElse(false);
+                        }
                         updateClient();
                     }
                 }
