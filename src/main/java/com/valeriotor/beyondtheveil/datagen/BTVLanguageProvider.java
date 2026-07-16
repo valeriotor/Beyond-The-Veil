@@ -1474,6 +1474,84 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.idle.start.0", "There is just me here. The small fortress that is my mind.");
         add("dialogue.black_mirror.idle.my.option", "My cozy stronghold.");
 
+        add("dialogue.black_mirror.revelation.when.0", "Again, I do not know. The further we peer into the unknown, the more it fragments. But the initial catalyst... was possibly before this body was even born.");
+        add("dialogue.black_mirror.revelation.dual.0", "One? Dual? Your mind is trine and more. It fragments and shatters, further and further as we peer into the unknown.");
+        add("dialogue.black_mirror.revelation.dual.1", "The only way you can stop it... is to stop. Abandon your yearning for truth. Return to playing your act on the stage of your life.");
+        add("dialogue.black_mirror.revelation.dual.2", "Or we could go on. Together. Until you drop the mask you have borne since birth.");
+        add("dialogue.black_mirror.revelation.wtf.0", "Yet only now did I find the strength to talk to you. To even become aware of my own existence.");
+        add("dialogue.black_mirror.revelation.wtf.1", "You are the largest shard – that is certain. You command our body, our muscles. But I also remember it, your actions, your thoughts – vaguely, as if I was dreaming, lacking agency until now.");
+        add("dialogue.black_mirror.revelation.shatter.0", "I do not know – yet it was that trigger, I imagine, that truly came from an extraneous agent... at least initially. Perhaps indeed a foreign entity, tossing a stone at our psyche. But I can't imagine who, or what.");
+        add("dialogue.black_mirror.revelation.start.0", "My mind is besieged. I am not alone.");
+        add("dialogue.black_mirror.revelation.myself.0", "Exactly.");
+        add("dialogue.black_mirror.revelation.fix.0", "The path you have undertaken is of no return. Deep down you understand that you can no longer live knowing that there is more to life than meets the eye, but not knowing §owhat§r. §eWe can only go forward.");
+        add("dialogue.black_mirror.revelation.fix.1", "But is this not part of the truth we seek? To breach that very first veil that is the human mind?");
+        add("dialogue.black_mirror.revelation.dagon.0", "Yes. This must be our next goal. Witness how the scales of the Deep Ones – Dagon's firstborn – expand the possibilities of humans and their bodies.");
+        add("dialogue.black_mirror.revelation.dreams.0", "Yet so were dreams.");
+        add("dialogue.black_mirror.revelation.who.0", "...");
+        add("dialogue.black_mirror.revelation.who.1", "...I");
+        add("dialogue.black_mirror.revelation.who.2", "...I am your ambition made manifest. I am your resolve. Your strength of will.");
+        add("dialogue.black_mirror.revelation.who.3", "I am your hope and drive to escape the sordidness of the life you were born into.");
+        add("dialogue.black_mirror.revelation.silence.0", "...");
+        add("dialogue.black_mirror.revelation.how.0", "How did you wake up, one day, in the middle of nowhere, and just decide to head towards the nearest tree and punch it down, with no knowledge of what you were before? §oYou only know a tiny part of your life.§r");
+        add("dialogue.black_mirror.revelation.flesh.0", "Then let us replace it. Let us study how we can exceed the limits of the human body, and become closer to God – for §othat§r §eis the vessel where our psyche belongs.");
+        add("dialogue.black_mirror.revelation.real.0", "I... know things that you do not. And, viceversa, I do not know everything you do.");
+        add("dialogue.black_mirror.revelation.real.1", "But... remember when you first built a gear bench, the complex blueprint coming to you out of nowhere? Or the watery cradle, or the pods for our patients... or even this black mirror itself?");
+        add("dialogue.black_mirror.revelation.real.2", "Those came from me. I guided your hands, without even being aware of it, even as you wrote on Al Azif. We are stronger together. And is this not part of the truth we seek? To breach that very first veil that is the human mind?");
+        add("dialogue.black_mirror.revelation.cannot.0", "I know. I am sorry that I cannot do more. But see it this way: it shall be your choice whether to heed my words or not. You are driving our body.");
+        add("dialogue.black_mirror.revelation.entity.0", "We are both shards of a shattered mirror. Neither of us is extraneous to this body. Neither of us has exclusive claim on it.");
+        add("dialogue.black_mirror.revelation.hid.0", "Yes. I am. But, more importantly, §oyou§r §eare afraid of §ome.");
+        add("dialogue.black_mirror.revelation.hid.1", "Do I not embody your fear of the unknown, coming so close as to violate the sanctity of your very own mind? You tremble, because you realize that you have gone too far. That you can no longer escape.");
+        add("dialogue.black_mirror.revelation.hid.2", "And now you so desperately cling to the hope that I am not real, that I am just the product of your folly. Well, truth is, I cannot prove my existence, nor my fictitiousness... for I do not know myself either. We are both shards of the shattered mirror that is our psyche.");
+        add("dialogue.black_mirror.revelation.trust.0", "You don't have to.");
+        add("dialogue.black_mirror.revelation.shapeless.0", "Then his Archpriest.");
+        add("dialogue.black_mirror.revelation.mirror.0", "It got us here. We learned so much about Arche, about the human body, about blood and dreams.");
+        add("dialogue.black_mirror.revelation.mirror.1", "We must proceed, together. I have guided your hands – without even realising it – up until now. Gave you clues on how to build contraptions that no human had seen before. On how to proceed with our journey. On what to write in Al Azif. We are stronger together.");
+        add("dialogue.black_mirror.revelation.shards.0", "I do not know. You are the largest shard – that is certain. You command our body, our muscles. But I also remember it, your actions, your thoughts – vaguely, as if I was dreaming, lacking any agency.");
+        add("dialogue.black_mirror.revelation.shards.1", "But finally, I found the strength to talk to you. To even become aware of my own existence. Could there be others like me? I cannot tell, and neither could they.");
+        add("dialogue.black_mirror.revelation.my.option", "My body. But yes, you are right.");
+        add("dialogue.black_mirror.revelation.when.option", "When did that happen?");
+        add("dialogue.black_mirror.revelation.___what?.option", "...what?");
+        add("dialogue.black_mirror.revelation.driving.option", "Driving it all the way to an asylum...");
+        add("dialogue.black_mirror.revelation.how__.option", "How do we fix it?");
+        add("dialogue.black_mirror.revelation.why___.option", "Why should I trust you?");
+        add("dialogue.black_mirror.revelation.what_.option", "What was I thinking, speaking to a mirror all this time...");
+        add("dialogue.black_mirror.revelation.made.option", "Made manifest? No, you §ohid§r, like prey from a hunter. Are you afraid of me?");
+        add("dialogue.black_mirror.revelation.i___.option", "I... I know so little... even of myself...");
+        add("dialogue.black_mirror.revelation.how___.option", "How... how do I fix my mind? Make us whole again?");
+        add("dialogue.black_mirror.revelation.god.option", "God is shapeless. The Great Dreamer has been given form only by the Shoremen.");
+        add("dialogue.black_mirror.revelation.how_______.option", "How do we continue?");
+        add("dialogue.black_mirror.revelation.we.option", "We are just two entities inhabiting a body... a piece of flesh...");
+        add("dialogue.black_mirror.revelation.___.option", "...");
+        add("dialogue.black_mirror.revelation.no,.option", "No, I §oneed§r you to prove me that I am not making you up. Otherwise I cannot trust anything you say.");
+        add("dialogue.black_mirror.revelation.dagon?.option", "Dagon? In the shape of the Deep Ones?");
+        add("dialogue.black_mirror.revelation.prove.option", "Prove to me that you're real.");
+        add("dialogue.black_mirror.revelation.why_.option", "Why should I trust you?");
+        add("dialogue.black_mirror.revelation.why.option", "Why should I trust you?");
+        add("dialogue.black_mirror.revelation.truth?.option", "Truth? Dédoublement is the realm of psychiatry, a documented illness! Not the realm of scholars, of seekers of truths like us... like §ome§r.");
+        add("dialogue.black_mirror.revelation.i.option", "I still cannot trust you – but there is no choice, is there? You are here, living in my head, and I still don't really know if you are who you say you are.");
+        add("dialogue.black_mirror.revelation.how____.option", "How... how do I fix my mind? Make us whole again?");
+        add("dialogue.black_mirror.revelation.dagon?_.option", "Dagon? In the shape of the Deep Ones?");
+        add("dialogue.black_mirror.revelation.you.option", "You §olie§r. No part of me would hide from itself. You are extraneous, a foreign... §oentity§r.");
+        add("dialogue.black_mirror.revelation.and.option", "And their minds.");
+        add("dialogue.black_mirror.revelation.how.option", "How can you know things I don't if we are two shards of the same mind?!");
+        add("dialogue.black_mirror.revelation.how_.option", "How can you know things I don't if we are two shards of the same mind?!");
+        add("dialogue.black_mirror.revelation.it's.option", "It's true that it was through this very mirror that I even came this far.");
+        add("dialogue.black_mirror.revelation.why__.option", "Why should I trust you?");
+        add("dialogue.black_mirror.revelation.this.option", "This body is mine! My mind is one, not dual!");
+        add("dialogue.black_mirror.revelation.who_.option", "Who are you, assailing my mind?");
+        add("dialogue.black_mirror.revelation.how_____.option", "How... how do I fix my mind? Make us whole again?");
+        add("dialogue.black_mirror.revelation.a.option", "A mirror does not shatter in two. How many shards are there?");
+        add("dialogue.black_mirror.revelation.very.option", "Very well. See you in Al Azif.");
+        add("dialogue.black_mirror.revelation.how______.option", "How... how do I fix my mind? Make us whole again?");
+        add("dialogue.black_mirror.revelation.who.option", "Who are you, assailing my mind?");
+        add("dialogue.black_mirror.revelation.how________.option", "How... how do I fix my mind? Make us whole again?");
+        add("dialogue.black_mirror.revelation.but___.option", "But... it was not like this before! How did the mirror shatter?");
+        add("dialogue.black_mirror.revelation.what.option", "What was I thinking, speaking to a mirror all this time...");
+        add("dialogue.black_mirror.revelation.my_.option", "My mind is one, not dual. My will cannot... §oshall§r not be split.");
+        add("dialogue.black_mirror.revelation.together?.option", "Together? Why? You do not belong in my mind. I have gone through this journey alone, and will keep doing so.");
+        add("dialogue.black_mirror.revelation.____.option", "...");
+        add("dialogue.black_mirror.revelation.it's_.option", "It's true that it was through this very mirror that I even came this far.");
+
     }
 
     private void addShoremanDialogue() {
@@ -2122,6 +2200,60 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.baptism3.who.option", "Who else was like me?");
         add("dialogue.shoreman_lighthouse_keeper.baptism3.i.option", "I see. Thank you.");
 
+        add("dialogue.shoreman_lighthouse_keeper.death.you_know.0", "Dreams travel not only in space, but in time. I witnessed my own demise, a nightmare that lived through my awakening.");
+        add("dialogue.shoreman_lighthouse_keeper.death.they.0", "Easy, easy. I understand. I only wish to offer... perspective.\nBecause you §oterrify§r us. We know §owe§r are just pawns in §oyour§r game. To us, you are the most unknowable of horrors. Uncaring, unpredictable.");
+        add("dialogue.shoreman_lighthouse_keeper.death.they.1", "Here, then, comes the snippet of Truth that Dagon wishes you to learn.\nJust as I am nothing to you, so are you too insignificant to someone else.");
+        add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it's just humanity itself: this multitude of several billion cells, uncaring of who you are.");
+        add("dialogue.shoreman_lighthouse_keeper.death.who.1", "Perhaps it is the infinity of space,|| and you a dot,| dimensionless;|| or| it is the eternity of time, and you again a point on an axis,|||| ephemeral,|||| already gone. ");
+        add("dialogue.shoreman_lighthouse_keeper.death.too.0", "Enough! You came here for something.");
+        add("dialogue.shoreman_lighthouse_keeper.death.hate.0", "We cannot choose what we feel.\nI may be old, but there was yet life ahead of me. Oh, how pathetic that I grieve for myself!");
+        add("dialogue.shoreman_lighthouse_keeper.death.friend.0", "Yes.|| Friend.||\nYour eyes leave no doubt.||| Go ahead. I have made peace with it.");
+        add("dialogue.shoreman_lighthouse_keeper.death.hands.0", "Only tears.");
+        add("dialogue.shoreman_lighthouse_keeper.death.sorry.0", "Don't be. I have made peace with it, and so must you.");
+        add("dialogue.shoreman_lighthouse_keeper.death.why.0", "How could I understand his motives, when I hardly understand yours? Perhaps it's sadism, or indifference, or just curiosity, or most likely some other impulse wholly inapplicable to us fleeting creatures, leaving us in the guise of pawns in a game.");
+        add("dialogue.shoreman_lighthouse_keeper.death.agree.0", "On one condition, in honour of our friendship.\nIn whichever way you kill me, please, I beg of you... §odo not spill my blood§r.");
+        add("dialogue.shoreman_lighthouse_keeper.death.know.0", "And yet you strive to make a difference? §oYou cannot§r. None of us can. Not in the face of things so much greater than us that even our language refuses to describe them. Things that will outlive us,| forget us,| as if we were never there.");
+        add("dialogue.shoreman_lighthouse_keeper.death.start.0", "Hello, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.death.want.0", "Yet you must.");
+        add("dialogue.shoreman_lighthouse_keeper.death.horrors.0", "Do you §otruly§r not see your hypocrisy?! You showed such kindness and magnanimity to us of the Shore, yet you replace it with vicious indifference when handling the lives of your patients and victims.");
+        add("dialogue.shoreman_lighthouse_keeper.death.immortal.0", "So was Adelina, yet she died all the same.");
+        add("dialogue.shoreman_lighthouse_keeper.death.still.0", "But that won't matter. Nobody will.");
+        add("dialogue.shoreman_lighthouse_keeper.death.understand.0", "Then why bring such suffering along with it? You showed such kindness and magnanimity to us of the Shore, yet you replace it with vicious indifference when handling the lives of your patients and victims.");
+        add("dialogue.shoreman_lighthouse_keeper.death.now.0", "No. Do not leave me waiting. It is agony.");
+        add("dialogue.shoreman_lighthouse_keeper.death.respawned.0", "§oShe is dead.§r I saw her demise in a dream, just as I saw mine.");
+        add("dialogue.shoreman_lighthouse_keeper.death.so_sorry.0", "You fear that you are making the wrong choice. You fear that you are losing a friend for nothing. You fear that you are being lied to by beings you don't understand.\nIs this fear the reason you are weeping? Please, let us spill no more tears.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but_.option", "But why, §owhy§r would Dagon ask that of me?");
+        add("dialogue.shoreman_lighthouse_keeper.death.not.option", "Not now.");
+        add("dialogue.shoreman_lighthouse_keeper.death.farewell,.option", "Farewell, keeper.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but_____.option", "But then... then §oI too§r...");
+        add("dialogue.shoreman_lighthouse_keeper.death.i_.option", "I am sorry...");
+        add("dialogue.shoreman_lighthouse_keeper.death.but__.option", "But their sacrifice will save humanity! They are mortals. They would die anyway. They will be remembered, when they would otherwise not have been. They are the pathway to evolution. They... they...");
+        add("dialogue.shoreman_lighthouse_keeper.death.hello,.option", "Hello, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.death.and.option", "And who would that be?");
+        add("dialogue.shoreman_lighthouse_keeper.death.what_.option", "What do you mean, you \"hardly understand\" my motives? I wish to breach the Veil; no more, no less.");
+        add("dialogue.shoreman_lighthouse_keeper.death.do_.option", "Do you agree to it?");
+        add("dialogue.shoreman_lighthouse_keeper.death.§oi.option", "§oI am so sorry...§r");
+        add("dialogue.shoreman_lighthouse_keeper.death.i___.option", "I already know.");
+        add("dialogue.shoreman_lighthouse_keeper.death.what?!.option", "What?! But she cannot be! She may have disappeared months ago, but she died hundreds of times in her life and always respawned!");
+        add("dialogue.shoreman_lighthouse_keeper.death.then_.option", "Then you already know.");
+        add("dialogue.shoreman_lighthouse_keeper.death.do___.option", "Do you agree to it?");
+        add("dialogue.shoreman_lighthouse_keeper.death.do.option", "Do you hate me?");
+        add("dialogue.shoreman_lighthouse_keeper.death.do__.option", "Do you hate me?");
+        add("dialogue.shoreman_lighthouse_keeper.death.but_______.option", "But I don't want to.");
+        add("dialogue.shoreman_lighthouse_keeper.death.do____.option", "Do you agree to it?");
+        add("dialogue.shoreman_lighthouse_keeper.death.then.option", "Then you already know.");
+        add("dialogue.shoreman_lighthouse_keeper.death.i__.option", "I cannot be outlived. I am immortal, you know that!");
+        add("dialogue.shoreman_lighthouse_keeper.death.but____.option", "But I §oam§r here.");
+        add("dialogue.shoreman_lighthouse_keeper.death.i____.option", "I am still here.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but___.option", "But then... then §oI too§r...");
+        add("dialogue.shoreman_lighthouse_keeper.death.was.option", "Was there blood on my hands?");
+        add("dialogue.shoreman_lighthouse_keeper.death.but________.option", "But their sacrifice will save humanity! They are mortals. They would die anyway. They will be remembered, when they would otherwise not have been. They are the pathway to evolution. They... they...");
+        add("dialogue.shoreman_lighthouse_keeper.death.farewell,_.option", "Farewell, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but______.option", "But why, §owhy§r would Dagon ask that of me?");
+        add("dialogue.shoreman_lighthouse_keeper.death.what.option", "What kind of game would send its participants through such horrors?!");
+        add("dialogue.shoreman_lighthouse_keeper.death.i.option", "I won't forget you.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but.option", "But why, §owhy§r would Dagon ask that of me?");
+        add("dialogue.shoreman_lighthouse_keeper.death.but_________.option", "But why, §owhy§r would Dagon ask that of me?");
     }
 
     private void addResearch() {
@@ -2467,6 +2599,35 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.NEW_DEPTHS.stage.2", "I do not understand. Such kindness and magnanimity when he first spoke to me in my baptism, replaced with vicious indifference in the maelstrom of the deepest Ocean.\\n" +
                 "He spoke yet did not listen; to hear Dagon from within his own body... did it reveal its true nature, or just another facet of something entirely unpredictable, inscrutable by our scientific means, indescribable by our human criteria, unconstrained by our axioms?");
 
+        add("research.SNIPPET_OF_TRUTH.title", "A Snippet of Truth");
+        add("research.slew_keeper.text", "The lighthouse keeper must die. You don't have a choice.");
+        add("research.met_mirror.text", "Do NOT speak to the Black Mirror.");
+        add("research.SNIPPET_OF_TRUTH.epigraph", "§oLet love be man's bluntest tool\\0" +
+                "Tilling the heart with dark seed\\0" +
+                "Let treachery see it bleed\\0" +
+                "A scythe to reap the red pool§r\\1");
+        add("research.SNIPPET_OF_TRUTH.epigraph.source", "Third stanza from Jerome's §oFalse Tears§r\\n");
+        add("research.SNIPPET_OF_TRUTH.stage.0", "Why?\\n" +
+                "Is there a purpose?\\n" +
+                "(Does the Ocean even §oknow§r \"purpose\", or is it a purely human fabrication?)\\n" +
+                "§oBut it does not matter. If God commands, you obey.§r\\n" +
+                "It would be illogical to trust anyone – even myself – over a higher being. I must set aside my pride, and understand that Dagon sees things better than I ever could. Unperturbed by human emotion. By our primitive maths and logic.\\n" +
+                "But then what truth could there be in murder? Were tears spilled for nought?\\n" +
+                "§oYet, what if it§r does §owork. It would be no different from the surgery patients: a necessary sacrifice for the betterment of humanity.§r\\n" +
+                "No... I cannot surrender my mind and will.\\n" +
+                "I will commit the act, but §oonly§r if the keeper agrees to it.");
+        add("research.SNIPPET_OF_TRUTH.stage.1", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
+                "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
+                "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
+                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "...wait...\\n" +
+                "...who's \"we\"?");
+        add("research.SNIPPET_OF_TRUTH.stage.2", "Alright.\\n" +
+                "...\\n" +
+                "How do we do this?\\n" +
+                "I'll just keep writing in the pages as I always have, and you keep telling me what to do to progress as you always have.\\n" +
+                "Sure. But who's \"I\" and who's \"You\"?\\n" +
+                "Does it matter?");
     }
 
     private void addCraftingRegistry() {

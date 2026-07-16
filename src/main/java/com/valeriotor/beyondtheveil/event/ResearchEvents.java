@@ -33,6 +33,7 @@ import java.util.Set;
 public class ResearchEvents {
 
     private static final Map<String, Integer> SHOREMEN_CUSTOMS_RESEARCHES = Map.of("FARMING_TECHNIQUES", 1, "DELICACIES", 1, "CARPENTRY", 1, "GRASPING_WATER", 1, "DREAM_BOTTLE", 1, "LOCAL_MEDICINE", 1);
+
     public static void progressResearchEvent(Player p, ResearchStatus status) {
         if (!p.level().isClientSide && p instanceof ServerPlayer sp) {
             status.getSubresearch().getMemories().forEach(m -> m.unlock(sp));
@@ -61,9 +62,9 @@ public class ResearchEvents {
                 DataUtil.addExchange(p, "west_offer_surgeon");
             } else if ("BLOOD_RITUALS".equals(key) && stage == 0) {
                 DataUtil.addExchange(p, "mauer_ask_thesis");
-            }else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
+            } else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
                 boolean embraced = DataUtil.getBoolean(p, PlayerDataLib.embraced_customs.name());
-                if (!embraced || true) {
+                if (!embraced) {// || true) { TODO why was "|| true" here??
                     int total = 0;
                     for (Map.Entry<String, Integer> entry : SHOREMEN_CUSTOMS_RESEARCHES.entrySet()) {
                         int researchStage = ResearchUtil.getResearchStage(p, entry.getKey());
@@ -78,6 +79,10 @@ public class ResearchEvents {
                         }
                     }
                 }
+            } else if ("SNIPPET_OF_TRUTH".equals(key) && stage == 0) {
+                addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death");
+            } else if ("SNIPPET_OF_TRUTH".equals(key) && stage == 1) {
+                addDialogue(d, DialogueType.BLACK_MIRROR, "revelation");
             }
         });
         if ("BONE_TIARA".equals(key) && stage == 0) {

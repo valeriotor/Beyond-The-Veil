@@ -15,6 +15,7 @@ import java.util.List;
 
 public class AloneDialogueMenu extends AbstractContainerMenu {
     private final DialogueTemplate template;
+    private final DataSlot counter;
     private final DataSlot branch;
     private final DataSlot indexInBranch;
     private final Dialogue dialogue;
@@ -23,8 +24,10 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
     public AloneDialogueMenu(MenuType<?> type, int pContainerId, Inventory playerInventory, Player player, DialogueTemplate template) {
         super(type, pContainerId);
         this.template = template;
+        this.counter = DataSlot.standalone();
         this.branch = DataSlot.standalone(); // TODO consider making it an array of two ints? In case they don't get sent together otherwise
         this.indexInBranch = DataSlot.standalone();
+        addDataSlot(this.counter);
         addDataSlot(this.branch);
         addDataSlot(this.indexInBranch);
         if (!player.level().isClientSide) {
@@ -42,6 +45,7 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
         if (!dialogue.isFinished()) {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
+            this.counter.set(counter.get() + 1);
             broadcastChanges();
         } else {
             onDialogueFinish(player);
@@ -62,6 +66,10 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
 
     public List<DialogueBranch.DialogueOption> getDialogueOptions(PlayerData data) {
         return allBranches.get(branch.get()).getDialogueOptions(data, template, indexInBranch.get());
+    }
+
+    public int getCounter() {
+        return counter.get();
     }
 
     public int getBranch() {

@@ -73,7 +73,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
             bc.bowAndLeave();
         } else if (this.npc instanceof ShoremanEntity e) {
             ShoremanEntity.ShoremanProfession profession = e.getProfession();
-            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && (false && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3"))) {
+            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
                 BloodCultistEntity.startKeeperKill(e);
             }
         }

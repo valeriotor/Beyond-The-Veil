@@ -1,0 +1,553 @@
+{
+  "id": "revelation",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "trust": {
+      "id": "trust",
+      "dialogueOptions": [
+        {
+          "id": "prove",
+          "branchLength": 3,
+          "endingNodeID": "real",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how______",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how_______",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "hid": {
+      "id": "hid",
+      "dialogueOptions": [
+        {
+          "id": "how____",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "no,",
+          "branchLength": 3,
+          "endingNodeID": "real",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "mirror": {
+      "id": "mirror",
+      "dialogueOptions": [
+        {
+          "id": "how",
+          "branchLength": 1,
+          "endingNodeID": "how",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "dagon": {
+      "id": "dagon",
+      "dialogueOptions": [
+        {
+          "id": "and",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "i",
+          "branchLength": 1,
+          "endingNodeID": "cannot",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "myself": {
+      "id": "myself",
+      "dialogueOptions": [
+        {
+          "id": "we",
+          "branchLength": 1,
+          "endingNodeID": "flesh",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "who_",
+          "branchLength": 4,
+          "endingNodeID": "who",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "____",
+          "branchLength": 1,
+          "endingNodeID": "silence",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "wtf": {
+      "id": "wtf",
+      "dialogueOptions": [
+        {
+          "id": "how________",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "why___",
+          "branchLength": 1,
+          "endingNodeID": "trust",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "dreams": {
+      "id": "dreams",
+      "dialogueOptions": [
+        {
+          "id": "what",
+          "branchLength": 2,
+          "endingNodeID": "mirror",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "it\u0027s",
+          "branchLength": 2,
+          "endingNodeID": "mirror",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "real": {
+      "id": "real",
+      "dialogueOptions": [
+        {
+          "id": "how_",
+          "branchLength": 1,
+          "endingNodeID": "how",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "shatter": {
+      "id": "shatter",
+      "dialogueOptions": [
+        {
+          "id": "when",
+          "branchLength": 1,
+          "endingNodeID": "when",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how__",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "why__",
+          "branchLength": 1,
+          "endingNodeID": "trust",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "when": {
+      "id": "when",
+      "dialogueOptions": [
+        {
+          "id": "___what?",
+          "branchLength": 2,
+          "endingNodeID": "wtf",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "shapeless": {
+      "id": "shapeless",
+      "dialogueOptions": [
+        {
+          "id": "dagon?_",
+          "branchLength": 1,
+          "endingNodeID": "dagon",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "how": {
+      "id": "how",
+      "dialogueOptions": [
+        {
+          "id": "i___",
+          "branchLength": 1,
+          "endingNodeID": "myself",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "shards": {
+      "id": "shards",
+      "dialogueOptions": [
+        {
+          "id": "how_____",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "why_",
+          "branchLength": 1,
+          "endingNodeID": "trust",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "dual": {
+      "id": "dual",
+      "dialogueOptions": [
+        {
+          "id": "together?",
+          "branchLength": 3,
+          "endingNodeID": "real",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "how___",
+          "branchLength": 2,
+          "endingNodeID": "fix",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "why",
+          "branchLength": 1,
+          "endingNodeID": "trust",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "fix": {
+      "id": "fix",
+      "dialogueOptions": [
+        {
+          "id": "truth?",
+          "branchLength": 1,
+          "endingNodeID": "dreams",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what_",
+          "branchLength": 2,
+          "endingNodeID": "mirror",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "it\u0027s_",
+          "branchLength": 2,
+          "endingNodeID": "mirror",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "cannot": {
+      "id": "cannot",
+      "dialogueOptions": [
+        {
+          "id": "my",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "driving",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "very",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "flesh": {
+      "id": "flesh",
+      "dialogueOptions": [
+        {
+          "id": "god",
+          "branchLength": 1,
+          "endingNodeID": "shapeless",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "dagon?",
+          "branchLength": 1,
+          "endingNodeID": "dagon",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "silence": {
+      "id": "silence",
+      "dialogueOptions": [
+        {
+          "id": "who",
+          "branchLength": 4,
+          "endingNodeID": "who",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "___",
+          "branchLength": 1,
+          "endingNodeID": "silence",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "entity": {
+      "id": "entity",
+      "dialogueOptions": [
+        {
+          "id": "this",
+          "branchLength": 3,
+          "endingNodeID": "dual",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "a",
+          "branchLength": 2,
+          "endingNodeID": "shards",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "but___",
+          "branchLength": 1,
+          "endingNodeID": "shatter",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "who": {
+      "id": "who",
+      "dialogueOptions": [
+        {
+          "id": "my_",
+          "branchLength": 3,
+          "endingNodeID": "dual",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you",
+          "branchLength": 1,
+          "endingNodeID": "entity",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "made",
+          "branchLength": 3,
+          "endingNodeID": "hid",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "black_mirror",
+  "dialogueUnlocks": [],
+  "dataUnlocks": ["met_mirror"]
+}

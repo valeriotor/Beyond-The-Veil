@@ -27,6 +27,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism2");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death");
 
         registerDialogue(DialogueType.SHOREMAN_BARTENDER, "initial");
         registerDialogue(DialogueType.SHOREMAN_BARTENDER, "communed1");
@@ -68,6 +69,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLACK_MIRROR, "rationalize3");
         registerDialogue(DialogueType.BLACK_MIRROR, "after_weep");
         registerDialogue(DialogueType.BLACK_MIRROR, "idle");
+        registerDialogue(DialogueType.BLACK_MIRROR, "revelation");
 
         registerDialogue(DialogueType.BLOOD_CULTIST, "initial");
         registerDialogue(DialogueType.BLOOD_CULTIST, "immortal");

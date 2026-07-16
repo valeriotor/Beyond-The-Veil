@@ -53,6 +53,7 @@ public enum PlayerDataLib {
     held_dream,
     slept_in_chamber,
     spoke_keeper,
+    slew_keeper,
     unlocked_hamlet,
     must_commune,
     communed,
@@ -83,7 +84,8 @@ public enum PlayerDataLib {
     sacrifice_altar,
     waypoint_ocean,
     met_mirror,
-    did_binding;
+    did_binding,
+    received_revelation;
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";

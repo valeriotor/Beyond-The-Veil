@@ -41,6 +41,7 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     private static final float TEXT_TO_IMAGE_RATIO = 2.5F;
     private DialogueOptions options;
     private boolean optionChosen = false;
+    private int counter;
 
     public MirrorDialogueGui(MirrorDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -52,7 +53,8 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     protected void containerTick() {
         totalTicks++;
-        if (menu.getBranch() != branch || menu.getIndexInBranch() != indexInBranch) {
+        if (menu.getBranch() != branch || menu.getIndexInBranch() != indexInBranch || menu.getCounter() != counter) {
+            counter = menu.getCounter(); // TODO this fix should also be applied to the other dialogue types
             branch = menu.getBranch();
             indexInBranch = menu.getIndexInBranch();
             String line = "§e" + menu.getLine();

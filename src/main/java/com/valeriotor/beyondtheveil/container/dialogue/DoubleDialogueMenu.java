@@ -10,6 +10,8 @@ import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -65,6 +67,9 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
                 cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper_spare_cultist, 0);
             }
             cultist.level().playSound(null, cultist.blockPosition(), BTVSounds.KILL_KEEPER.get(), SoundSource.NEUTRAL, 1, 1);
+            if (npc.getTalkingPlayer() != null) {
+                DataUtil.setBooleanOnServerAndSync(npc.getTalkingPlayer(), PlayerDataLib.slew_keeper.name(), true, false);
+            }
         }
     }
 

@@ -642,7 +642,7 @@
         "name": "research.SNIPPET_OF_TRUTH.title",
         "icons": [ "beyondtheveil:necronomicon" ],
         "category": "BEYOND_THE_VEIL", "location": [ 14,16 ],
-        "hiders": ["COMMUNION"],
+        "hiders": ["NEW_DEPTHS"],
         "parents": ["NEW_DEPTHS"],
         "stages": [
           {
