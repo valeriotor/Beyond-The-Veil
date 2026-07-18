@@ -136,5 +136,8 @@
   },
   "kill_cultist": {
     "sounds": [ "beyondtheveil:kill_cultist" ]
+  },
+  "keeper_suffocate": {
+    "sounds": [ "beyondtheveil:keeper_suffocate" ]
   }
 }

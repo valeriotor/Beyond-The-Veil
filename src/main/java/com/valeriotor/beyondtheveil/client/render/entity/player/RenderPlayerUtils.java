@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -145,6 +146,27 @@ public class RenderPlayerUtils {
                 if (firstPersonAnimation != null) {
                     firstPersonAnimation.apply(mc.getPartialTick());
                 }
+                PlayerRenderer pr = playerrenderer;
+                PlayerModel<AbstractClientPlayer> m = pr.getModel();
+                ModelPart r = m.rightArm;
+                ModelPart l = m.leftArm;
+                //r.xScale = 2.1F;
+                //r.yScale = 2.4F;
+                //r.zScale = 2.1F;
+                //l.xScale = 1.6F;
+                //l.yScale = 1.8F;
+                //l.zScale = 1.6F;
+                //l.yRot= -0.5F;
+                //r.xRot= -0.7F;
+                //r.yRot= -0.25F;
+                //r.zRot= -0.75F;
+                //r.x= 0.7F;
+                //r.y= 3.4F;
+                //r.z= 15.4F;
+                //l.xRot= 0F;
+                //l.zRot= 0.85F;
+                //l.y= 2.4F;
+                //l.z= -2.4F;
                 //playerrenderer.getModel().rightArm.yRot = -0.5F;
                 //playerrenderer.getModel().rightArm.xRot = -0.655F;
                 //playerrenderer.getModel().rightArm.zRot = -0.3F;

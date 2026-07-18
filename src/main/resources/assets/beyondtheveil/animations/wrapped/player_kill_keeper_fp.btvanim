@@ -1,0 +1,13 @@
+model: player
+length: 75
+start: 0: 7
+    roty: rightArm: -0.5: linear: absolute
+    rotx: rightArm: -0.655: linear: absolute
+    rotz: rightArm: -0.3: linear: absolute
+    tray: rightArm: 0.8: linear: absolute
+    roty: leftArm: 0.5: linear: absolute
+    rotx: leftArm: -0.655: linear: absolute
+    rotz: leftArm: 0.3: linear: absolute
+    tray: leftArm: 0.8: linear: absolute
+start: 60: 65
+    roty: rightArm: 0.5: linear: absolute

@@ -1,0 +1,17 @@
+model: player
+length: 75
+start: 0: 7
+    roty: rightArm: -0.5: linear: absolute
+    roty: rightSleeve: -0.5: linear: absolute
+    rotx: rightArm: -1.655: linear: absolute
+    rotx: rightSleeve: -1.655: linear: absolute
+    rotz: rightArm: -0.3: linear: absolute
+    rotz: rightSleeve: -0.3: linear: absolute
+    roty: leftArm: 0.5: linear: absolute
+    roty: leftSleeve: 0.5: linear: absolute
+    rotx: leftArm: -1.655: linear: absolute
+    rotx: leftSleeve: -1.655: linear: absolute
+    rotz: leftArm: 0.3: linear: absolute
+    rotz: leftSleeve: 0.3: linear: absolute
+start: 60: 65
+    roty: rightArm: 0.5: linear: absolute

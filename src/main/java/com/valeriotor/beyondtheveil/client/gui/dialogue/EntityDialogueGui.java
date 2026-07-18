@@ -16,11 +16,13 @@ import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +35,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     public static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
     private static final float TEXT_WIDTH_RATIO = 0.9F;
     private static final float TEXT_HEIGHT_RATIO = 0.85F;
+    private final float startYRot;
     private float scaleFactor = 1;
     private DialogueOptions options;
     private int branch;
@@ -42,6 +45,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     private int totalTicks = 0;
     private EntityDialogueBox dialogueBox;
     private final ResourceLocation texture;
+    private int counterKillKeeper;
 
 
     public EntityDialogueGui(EntityDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -54,6 +58,12 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             case BLOOD_CULTIST -> BLOOD_CULTIST_TEXTURE;
             default -> SHOREMAN_TEXTURE;
         };
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            startYRot = p.getYRot();
+        } else {
+            startYRot = 0;
+        }
         /*pMenu.addSlotListener(new ContainerListener() {
             @Override
             public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
@@ -131,6 +141,17 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (menu.isHide()) {
+            counterKillKeeper++;
+            if (counterKillKeeper >= 8) {
+                //p.setYRot(startYRot + 4F * Mth.sin(2 * Mth.PI * ((counterKillKeeper - 8) + pPartialTick) / (0.2F)));
+            }
+            return;
+        }
+        //p.setYHeadRot((0 - p.getYHeadRot()) * -0.99F);
+        //p.setYRot((0 - p.getYRot()) * -0.99F);
+        p.setXRot((0 - p.getXRot()) * -0.99F);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = this.height - this.imageHeight;
         PoseStack pose = guiGraphics.pose();

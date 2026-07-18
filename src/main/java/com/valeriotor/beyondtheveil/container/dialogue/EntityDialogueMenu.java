@@ -8,9 +8,12 @@ import com.valeriotor.beyondtheveil.dialogue.*;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -26,7 +29,9 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     private final DataSlot branch;
     private final DataSlot indexInBranch;
     private final Dialogue dialogue;
+    private final DataSlot hide;
     private final List<DialogueBranch> allBranches;
+    private boolean stayValid;
 
     public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, FriendlyByteBuf byteBuf) {
         this(pContainerId, playerInventory, player, new ClientTalkable(player), DialogueRegistry.getTemplate(DialogueType.valueOf(byteBuf.readUtf()), byteBuf.readUtf()));
@@ -38,8 +43,10 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
         this.template = template;
         this.branch = DataSlot.standalone(); // TODO consider making it an array of two ints? In case they don't get sent together otherwise
         this.indexInBranch = DataSlot.standalone();
+        this.hide = DataSlot.standalone();
         addDataSlot(this.branch);
         addDataSlot(this.indexInBranch);
+        addDataSlot(this.hide);
         if (!player.level().isClientSide) {
             dialogue = new Dialogue(template);
         } else {
@@ -73,8 +80,14 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
             bc.bowAndLeave();
         } else if (this.npc instanceof ShoremanEntity e) {
             ShoremanEntity.ShoremanProfession profession = e.getProfession();
-            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
-                BloodCultistEntity.startKeeperKill(e);
+            if (true || profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
+                if (DataUtil.getBoolean(e.getTalkingPlayer(), PlayerDataLib.bound_cult.name())) {
+                    BloodCultistEntity.startKeeperKill(e);
+                } else {
+                    e.startKeeperDeath();
+                    stayValid = true;
+                    setHide(true);
+                }
             }
         }
     }
@@ -106,7 +119,12 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return npc.getTalkingPlayer() == pPlayer && !dialogue.isFinished();
+        if (npc instanceof LivingEntity e) {
+            if (e.isDeadOrDying()) {
+                return false;
+            }
+        }
+        return npc.getTalkingPlayer() == pPlayer && (stayValid || !dialogue.isFinished());
     }
 
     @Override
@@ -115,6 +133,12 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
         this.npc.setTalkingPlayer((Player) null);
     }
 
+    public boolean isHide() {
+        return hide.get() == 1;
+    }
 
+    private void setHide(boolean hide) {
+        this.hide.set(hide ? 1 : 0);
+    }
 
 }

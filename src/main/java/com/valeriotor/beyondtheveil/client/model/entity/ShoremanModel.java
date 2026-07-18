@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 
 public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(References.MODID, "shoreman"), "main");
@@ -107,11 +108,8 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
             RightEye.x = -2.25F;
             LeftEye.y = -4.125F;
             RightEye.y = -4.125F;
-            if (pEntity.getDeathAnimation() != null) {
-                pEntity.getDeathAnimation().apply(partialTicks);
-            }
             markDirty();
-        } else {
+        } else if (pEntity.getPassengers().isEmpty() || !(pEntity.getFirstPassenger() instanceof Player)){
             Animation dialogueAnimation = pEntity.getDialogueAnimation();
             if (dialogueAnimation != null) {
                 dialogueAnimation.apply(partialTicks);
@@ -121,6 +119,10 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
                 pEntity.stopDialogueAnimation();
             }
 
+        }
+
+        if (pEntity.getDeathAnimation() != null) {
+            pEntity.getDeathAnimation().apply(partialTicks);
         }
         head.xRot += pHeadPitch * ((float) Math.PI / 180F) + Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
         body.y = 24 + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;

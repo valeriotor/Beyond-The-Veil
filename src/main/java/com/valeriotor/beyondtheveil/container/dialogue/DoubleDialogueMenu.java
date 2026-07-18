@@ -3,9 +3,6 @@ package com.valeriotor.beyondtheveil.container.dialogue;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.util.ClientTalkable;
-import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
-import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
-import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
@@ -58,7 +55,7 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
         if (npc instanceof BloodCultistEntity cultist) {
             if (cultist.getKillingEntity() instanceof ShoremanEntity shoreman) {
                 shoreman.sendAnimation(AnimationRegistry.shoreman_keeper_death_cultist, 0);
-                shoreman.aboutToDie();
+                shoreman.aboutToDieByCultist();
             }
             if (killCultist) {
                 cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper, 0);

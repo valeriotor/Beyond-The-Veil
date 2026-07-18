@@ -1,0 +1,84 @@
+model: player_slim
+length: 185
+start: 0: 7
+    resx: rightArm: 2.1: immediate: absolute
+    resy: rightArm: 2.4: immediate: absolute
+    resz: rightArm: 2.1: immediate: absolute
+    resx: leftArm: 2.1: immediate: absolute
+    resy: leftArm: 2.4: immediate: absolute
+    resz: leftArm: 2.1: immediate: absolute
+    roty: rightArm: -0.25: linear: absolute
+    roty: leftArm: 0.25: linear: absolute
+    rotx: rightArm: -0.2: linear: absolute
+    rotx: leftArm: -0.2: linear: absolute
+    rotz: rightArm: -0.75: linear: absolute
+    rotz: leftArm: 0.75: linear: absolute
+    tray: rightArm: 3.4: immediate: absolute
+    tray: leftArm: 3.4: immediate: absolute
+    traz: rightArm: 15.4: immediate: absolute
+    traz: leftArm: 15.4: immediate: absolute
+    trax: rightArm: 0.7: immediate: absolute
+    trax: leftArm: 0.7: immediate: absolute
+start: 8: 14
+    rotx: leftArm: -0.08: linear
+    rotx: rightArm: 0.08: linear
+    roty: leftArm: 0.2: linear
+    roty: rightArm: -0.2: linear
+start: 15: 20
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 21: 25
+    rotx: leftArm: -0.16: linear
+    rotx: rightArm: 0.16: linear
+    roty: leftArm: 0.04: linear
+    roty: rightArm: -0.04: linear
+start: 26: 29
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 30: 33
+    rotx: leftArm: -0.16: linear
+    rotx: rightArm: 0.16: linear
+    roty: leftArm: 0.04: linear
+    roty: rightArm: -0.04: linear
+start: 34: 37
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 38: 41
+    rotx: leftArm: -0.16: linear
+    rotx: rightArm: 0.16: linear
+    roty: leftArm: 0.04: linear
+    roty: rightArm: -0.04: linear
+start: 42: 45
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 46: 49
+    rotx: leftArm: -0.16: linear
+    rotx: rightArm: 0.16: linear
+    roty: leftArm: 0.04: linear
+    roty: rightArm: -0.04: linear
+start: 50: 53
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 54: 57
+    rotx: leftArm: -0.16: linear
+    rotx: rightArm: 0.16: linear
+    roty: leftArm: 0.04: linear
+    roty: rightArm: -0.04: linear
+start: 58: 61
+    rotx: leftArm: 0.16: linear
+    rotx: rightArm: -0.16: linear
+    roty: leftArm: -0.04: linear
+    roty: rightArm: 0.04: linear
+start: 62: 65
+    rotx: rightArm: -0.35: linear
+    rotx: leftArm: 0.35: linear

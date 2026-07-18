@@ -1,6 +1,43 @@
 model: player
-length: 45
-start: 10: 30
-    resx: body: 2.2: linear: absolute
-    resy: body: 2.2: linear: absolute
-    resz: body: 2.2: linear: absolute
+length: 75
+start: 0: 7
+    roty: rightArm: -0.5: linear: absolute
+    rotx: rightArm: -0.655: linear: absolute
+    rotz: rightArm: -0.3: linear: absolute
+    tray: rightArm: 0.8: linear: absolute
+    roty: leftArm: 0.5: linear: absolute
+    rotx: leftArm: -0.655: linear: absolute
+    rotz: leftArm: 0.3: linear: absolute
+    tray: leftArm: 0.8: linear: absolute
+start: 8: 9:
+    rotx: rightArm: -0.955: linear: absolute
+    rotx: leftArm: -0.355: linear: absolute
+start: 9: 12:
+    rotx: leftArm: -0.955: linear: absolute
+    rotx: rightArm: -0.355: linear: absolute
+start: 12: 15:
+    rotx: rightArm: -0.955: linear: absolute
+    rotx: leftArm: -0.355: linear: absolute
+start: 15: 18:
+    rotx: leftArm: -0.955: linear: absolute
+    rotx: rightArm: -0.355: linear: absolute
+start: 18: 21:
+    rotx: rightArm: -0.955: linear: absolute
+    rotx: leftArm: -0.355: linear: absolute
+start: 22: 29:
+    rotx: rightArm: -0.38: linear: absolute
+    rotz: rightArm: 0.48: linear: absolute
+    tray: rightArm: 6.8: linear: absolute
+    rotx: leftArm: -1.18: linear: absolute
+    rotz: leftArm: -0.68: linear: absolute
+    tray: leftArm: 5.8: linear: absolute
+    traz: leftArm: -7.8: linear: absolute
+start: 40: 45
+    rotz: rightArm: 0.18: linear: absolute
+    rotx: rightArm: -0.58: linear: absolute
+    rotz: leftArm: -0.28: linear: absolute
+    rotx: leftArm: -0.78: linear: absolute
+    traz: leftArm: -4.8: linear: absolute
+start: 54: 57:
+    rotz: leftArm: -0.88: linear: absolute
+    rotz: rightArm: 0.88: linear: absolute

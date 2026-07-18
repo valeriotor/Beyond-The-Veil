@@ -85,7 +85,8 @@ public enum PlayerDataLib {
     waypoint_ocean,
     met_mirror,
     did_binding,
-    received_revelation;
+    received_revelation,
+    bound_cult;
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";

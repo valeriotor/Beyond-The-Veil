@@ -1,4 +1,4 @@
-model: player
+model: player_slim
 length: 75
 start: 0: 7
     roty: rightArm: -0.5: linear: absolute

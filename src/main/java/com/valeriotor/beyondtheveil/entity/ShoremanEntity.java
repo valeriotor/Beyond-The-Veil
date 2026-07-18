@@ -22,6 +22,9 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.item.DrinkItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -34,6 +37,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -81,9 +86,10 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     private int talkingTicks;
     private Animation finishDialogueAnimation;
     private Animation deathAnimation;
-    private int aboutToDieCountdown = -1;
+    private int aboutToDieByCultistCountdown = -1;
     private boolean inFinalCutscene;
     private final Set<PlayerTransformation> monstrousTransformations = Set.of(PlayerTransformation.ABOMINATION_0, PlayerTransformation.ABOMINATION_1, PlayerTransformation.ABOMINATION_2);
+    private int aboutToDieByPlayerCountdown = -1;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -443,7 +449,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
                     deathAnimation = null;
                 }
             }
-            if (aboutToDieCountdown > 0) {
+            if (aboutToDieByCultistCountdown > 0) {
                 double xComponent = -Math.sin(Math.toRadians(50.3 + yHeadRot));
                 double zComponent = Math.cos(Math.toRadians(50.3 + yHeadRot));
                 for (int i = 0; i < 10; i++) {
@@ -456,10 +462,19 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             } else {
                 talkingTicks = 0;
             }
-            if (aboutToDieCountdown > 0) {
-                aboutToDieCountdown--;
-                if (aboutToDieCountdown == 0) {
+            if (aboutToDieByCultistCountdown > 0) {
+                aboutToDieByCultistCountdown--;
+                if (aboutToDieByCultistCountdown == 0) {
                     kill();
+                }
+            } else if (aboutToDieByPlayerCountdown > 0) {
+                aboutToDieByPlayerCountdown--;
+                if (aboutToDieByPlayerCountdown == 0) {
+                    kill();
+                } else if (aboutToDieByPlayerCountdown == 120) {
+                    level().playSound(null, blockPosition(), BTVSounds.SPINE_RIP.get(), SoundSource.NEUTRAL, 0.7F, 1);
+                } else if (aboutToDieByPlayerCountdown == 100) {
+                    level().playSound(null, blockPosition(), BTVSounds.KEEPER_SUFFOCATE.get(), SoundSource.NEUTRAL, 1, 1);
                 }
             }
         }
@@ -489,16 +504,18 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         if (channel == 0) {
             deathAnimation = new Animation(animationTemplate);
-            aboutToDieCountdown = 500;
+            if (animationTemplate == AnimationRegistry.shoreman_keeper_death_cultist) {
+                aboutToDieByCultistCountdown = 500;
+            }
         }
     }
 
     public boolean isAboutToDie() {
-        return aboutToDieCountdown >= 0;
+        return aboutToDieByCultistCountdown >= 0;
     }
 
-    public void aboutToDie() {
-        aboutToDieCountdown = 25;
+    public void aboutToDieByCultist() {
+        aboutToDieByCultistCountdown = 25;
     }
 
     public void inFinalCutscene() {
@@ -507,6 +524,40 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
 
     public boolean isInFinalCutscene() {
         return inFinalCutscene;
+    }
+
+    public void startKeeperDeath() {
+        Player p = getTalkingPlayer();
+        if (p instanceof ServerPlayer sp) {
+            sp.serverLevel().playSound(null, sp.getOnPos(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
+            inFinalCutscene();
+            p.startRiding(this);
+            //Messages.sendToPlayer(GenericToClientPacket.killKeeper(), sp);
+            if (sp.containerMenu instanceof EntityDialogueMenu menu) {
+
+            }
+            Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_kill_keeper_tp), p);
+            Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_slim_kill_keeper_tp), p);
+            sendAnimation(AnimationRegistry.shoreman_keeper_death_player, 0);
+            aboutToDieByPlayerCountdown = 180;
+        }
+    }
+
+    @Override
+    protected void positionRider(Entity pPassenger, MoveFunction pCallback) {
+        super.positionRider(pPassenger, pCallback);
+        if (hasPassenger(pPassenger)) {
+            final double BASE_DISTANCE = 0.75;
+            final double EXTENSION_DISTANCE = 0.6;
+            double x = BASE_DISTANCE;
+            Vec3 vec3 = (new Vec3(1.75*x, 0, 0.0D)).yRot(-this.getYHeadRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+            pCallback.accept(pPassenger, this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+        }
+    }
+
+    @Override
+    public boolean shouldRiderSit() {
+        return false;
     }
 
     public enum ShoremanProfession {

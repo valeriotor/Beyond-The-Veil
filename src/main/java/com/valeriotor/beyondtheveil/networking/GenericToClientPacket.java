@@ -213,6 +213,10 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.DIALOGUE_ANIMATION, tag);
     }
 
+    public static GenericToClientPacket killKeeper() {
+        return new GenericToClientPacket(MessageType.KILL_KEEPER, new CompoundTag());
+    }
+
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
     //    CompoundTag tag = new CompoundTag();
     //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
@@ -224,9 +228,10 @@ public class GenericToClientPacket {
     //    tag.putDouble("ySpeed", ySpeed);
     //    tag.putDouble("zSpeed", zSpeed);
     //    return new GenericToClientPacket(MessageType.COLORED_PARTICLE, tag);
-    //}
 
+    //}
     private final MessageType type;
+
     private final CompoundTag tag;
 
     public GenericToClientPacket(MessageType type, CompoundTag tag) {
@@ -310,7 +315,8 @@ public class GenericToClientPacket {
         START_PLAYER_ANIMATION,
         MAKE_EXPLOSION_BLOOD,
         SYNC_BINDING_DATA,
-        DIALOGUE_ANIMATION
+        DIALOGUE_ANIMATION,
+        KILL_KEEPER
     }
 
 }

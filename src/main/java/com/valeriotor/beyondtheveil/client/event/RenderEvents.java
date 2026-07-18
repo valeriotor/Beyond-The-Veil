@@ -188,7 +188,7 @@ public class RenderEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
-            if (crossSync.getTransformation() != null || crossSync.isDreamFocus()) {
+            if (crossSync != null && (crossSync.getTransformation() != null || crossSync.isDreamFocus())) {
                 event.setCanceled(true);
             }
             if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
@@ -202,6 +202,20 @@ public class RenderEvents {
             //} else {
             //    playerrenderer.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, playerrenderer.getModel().rightArm, playerrenderer.getModel().rightSleeve);
             //}
+        }
+    }
+
+    @SubscribeEvent
+    public static void renderHandEvent(RenderHandEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
+            if (crossSync != null && (crossSync.getTransformation() != null || crossSync.isDreamFocus())) {
+                event.setCanceled(true);
+            }
+            if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
+                event.setCanceled(true);
+            }
         }
     }
 

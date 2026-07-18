@@ -42,6 +42,7 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> KILL_KEEPER = registerSound("kill_keeper");
     public static final RegistryObject<SoundEvent> KILL_CULTIST = registerSound("kill_cultist");
     public static final RegistryObject<SoundEvent> SHOREMAN_CULTIST_TENSION = registerSound("shoreman_cultist_tension");
+    public static final RegistryObject<SoundEvent> KEEPER_SUFFOCATE = registerSound("keeper_suffocate");
     public static final List<RegistryObject<SoundEvent>> CURRENTS_LIST = registerCurrents();
 
     public static void init(IEventBus bus) {

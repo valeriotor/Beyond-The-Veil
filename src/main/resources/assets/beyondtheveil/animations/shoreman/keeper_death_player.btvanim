@@ -1,0 +1,52 @@
+model: shoreman
+length: 185
+start: 0: 5
+    rotx: head: -0.35: linear: absolute
+    roty: head: 0.1: linear: absolute
+    trax: LeftEye: 0.2
+    trax: RightEye: 0.2
+    tray: LeftEye: 0.2
+    tray: RightEye: 0.2
+start: 8: 14
+    rotz: head: 0.1
+    roty: body: 0.1
+start: 15: 20
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 21: 25
+    rotz: head: 0.2
+    roty: body: 0.2
+start: 26: 29
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 30: 33
+    rotz: head: 0.2
+    roty: body: 0.2
+start: 34: 37
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 38: 41
+    rotz: head: 0.2
+    roty: body: 0.2
+start: 42: 45
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 46: 49
+    rotz: head: 0.2
+    roty: body: 0.2
+start: 50: 53
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 54: 57
+    rotz: head: 0.2
+    roty: body: 0.2
+start: 58: 61
+    rotz: head: -0.2
+    roty: body: -0.2
+start: 62: 64:
+    rotz: head: -1.1: linear
+start: 82: 120:
+    trax: LeftEye: -0.5: linear
+    trax: RightEye: -0.5: linear
+    tray: LeftEye: -0.625: linear
+    tray: RightEye: -0.625: linear
