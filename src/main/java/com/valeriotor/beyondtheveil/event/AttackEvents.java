@@ -173,7 +173,8 @@ public class AttackEvents {
         }
         if (event.getEntity() instanceof ShoremanEntity e && e.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && !e.isAboutToDie() && e.isInFinalCutscene()) {
             event.setCanceled(true);
-        }if (event.getEntity() instanceof BloodCultistEntity e && e.getKillingEntity() != null && e.getKillingEntity().isAlive()) {
+        }
+        if (event.getEntity() instanceof BloodCultistEntity e && e.getKillingEntity() != null && e.getKillingEntity().isAlive()) {
             event.setCanceled(true);
         }
     }

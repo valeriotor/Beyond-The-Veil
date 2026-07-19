@@ -129,41 +129,48 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
         if (pLevel instanceof ServerLevel sl && pPlacer instanceof ServerPlayer sp) {
-            boolean alreadyDone = !sp.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getBoolean(PlayerDataLib.cultist_killed.name());
+            boolean alreadyDone = !sp.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getBoolean(PlayerDataLib.met_cult.name());
             if (sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).isPresent()) {
                 boolean isAlreadyBeingBackstabbed = sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).resolve().get().hasTimer("killedByCultist");
                 if (!alreadyDone && !isAlreadyBeingBackstabbed && MathHelperBTV.checkForRing(this, sl, pPos, 4)) {
-                    DialogueData.for_(sp).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal"));
+                    DialogueData dialogueData = DialogueData.for_(sp);
                     BloodCultistEntity cultist = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), sl);
                     Vec3 lookAngle = sp.getLookAngle();
                     Vec3 cultistPos = sp.position().add(lookAngle.normalize().reverse().multiply(1.1, 0, 1.1));
                     cultist.setPos(cultistPos);
                     cultist.lookAt(sp, 360, 360);
-                    cultist.setKillingEntity(sp);
-                    sl.addFreshEntity(cultist);
-                    sp.startRiding(cultist, true);
-                    Messages.sendToPlayer(GenericToClientPacket.hideOverlayMessage(), sp);
-                    Messages.sendToPlayer(GenericToClientPacket.rotateCamera(sp.getYRot(), (float) -45, 15), sp);
-                    PlayerTimer timer = new PlayerTimer.Builder("killedByCultist", 30)
-                            .addContinuousAction((p, c) -> {
-                                if(c.getRemainingTime() % 2 == 0 && c.getRemainingTime() < 20) {
-                                    p.setHealth(Mth.clamp(c.getRemainingTime(), 1, Math.max(1, p.getHealth())));
-                                    p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);
-                                    if (p.level() instanceof ServerLevel serverLevel) {
-                                        double xComponent = -Math.sin(Math.toRadians(p.getYRot()));
-                                        double zComponent = Math.cos(Math.toRadians(p.getYRot()));
-                                        serverLevel.sendParticles(BTVParticles.BLOODSPILL.get(), p.getX() + xComponent, p.getY(), p.getZ() + zComponent, 5, 1, 0, 0, 1);
+                    if (dialogueData.getDialogue(DialogueType.BLOOD_CULTIST).getID().equals("immortal2")) {
+                        sl.addFreshEntity(cultist);
+                        sp.startRiding(cultist, true);
+                        respawnNow(sp);
+                    } else {
+                        dialogueData.setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal"));
+                        cultist.setKillingEntity(sp);
+                        sl.addFreshEntity(cultist);
+                        sp.startRiding(cultist, true);
+                        Messages.sendToPlayer(GenericToClientPacket.hideOverlayMessage(), sp);
+                        Messages.sendToPlayer(GenericToClientPacket.rotateCamera(sp.getYRot(), (float) -45, 15), sp);
+                        PlayerTimer timer = new PlayerTimer.Builder("killedByCultist", 30)
+                                .addContinuousAction((p, c) -> {
+                                    if (c.getRemainingTime() % 2 == 0 && c.getRemainingTime() < 20) {
+                                        p.setHealth(Mth.clamp(c.getRemainingTime(), 1, Math.max(1, p.getHealth())));
+                                        p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);
+                                        if (p.level() instanceof ServerLevel serverLevel) {
+                                            double xComponent = -Math.sin(Math.toRadians(p.getYRot()));
+                                            double zComponent = Math.cos(Math.toRadians(p.getYRot()));
+                                            serverLevel.sendParticles(BTVParticles.BLOODSPILL.get(), p.getX() + xComponent, p.getY(), p.getZ() + zComponent, 5, 1, 0, 0, 1);
+                                        }
+                                    } else if (c.getRemainingTime() == 29) {
+                                        p.level().playSound(null, p.getOnPos(), SoundEvents.TRIDENT_RETURN, SoundSource.PLAYERS, 1, 1);
                                     }
-                                } else if (c.getRemainingTime() == 29) {
-                                    p.level().playSound(null, p.getOnPos(), SoundEvents.TRIDENT_RETURN, SoundSource.PLAYERS, 1, 1);
-                                }
-                            })
-                            .addFinalActions((p,c) -> {
-                                Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.KILLED_BY_CULTIST), (ServerPlayer) p);
-                                p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_DEATH, SoundSource.PLAYERS, 1, 1);
-                            }) // TODO this might not work on dedicated servers, test
-                            .toTimer();
-                    sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
+                                })
+                                .addFinalActions((p, c) -> {
+                                    Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.KILLED_BY_CULTIST), (ServerPlayer) p);
+                                    p.level().playSound(null, p.getOnPos(), SoundEvents.PLAYER_DEATH, SoundSource.PLAYERS, 1, 1);
+                                }) // TODO this might not work on dedicated servers, test
+                                .toTimer();
+                        sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
+                    }
                 }
 
             }
@@ -181,17 +188,22 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
     }
 
     public static void respawnNow(ServerPlayer sp) {
-        BloodCultistEntity bloodCultist = null;
-        if (sp.getVehicle() instanceof BloodCultistEntity bc) {
-            bloodCultist = bc;
-            double xComponent = -Math.sin(Math.toRadians(bc.getYRot())) * 1.2;
-            double zComponent = Math.cos(Math.toRadians(bc.getYRot())) * 1.2;
-            sp.dismountTo(sp.getX() + xComponent, sp.getY(), sp.getZ() + zComponent);
-        } else {
-            List<BloodCultistEntity> candidates = sp.level().getEntities(EntityTypeTest.forClass(BloodCultistEntity.class), AABB.ofSize(sp.position(), 4, 4, 4), bc -> bc.getKillingEntity() == sp);
-            if (!candidates.isEmpty()) {
-                bloodCultist = candidates.get(0);
+        respawnNow(sp, null);
+    }
+    public static void respawnNow(ServerPlayer sp, BloodCultistEntity bloodCultist) {
+        if (bloodCultist == null) {
+            if (sp.getVehicle() instanceof BloodCultistEntity bc) {
+                bloodCultist = bc;
+                double xComponent = -Math.sin(Math.toRadians(bc.getYRot())) * 1.2;
+                double zComponent = Math.cos(Math.toRadians(bc.getYRot())) * 1.2;
+                sp.dismountTo(sp.getX() + xComponent, sp.getY(), sp.getZ() + zComponent);
+            } else {
+                List<BloodCultistEntity> candidates = sp.level().getEntities(EntityTypeTest.forClass(BloodCultistEntity.class), AABB.ofSize(sp.position(), 4, 4, 4), bc -> bc.getKillingEntity() == sp);
+                if (!candidates.isEmpty()) {
+                    bloodCultist = candidates.get(0);
+                }
             }
+
         }
         if (bloodCultist != null) {
             if (!sp.getItemInHand(InteractionHand.MAIN_HAND).getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_DAMAGE)) {

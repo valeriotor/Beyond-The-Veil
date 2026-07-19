@@ -593,9 +593,9 @@
       {
         "key": "BLOOD_CULT",
         "name": "research.BLOOD_CULT.title",
-        "icons": [ "beyondtheveil:offer_pillar" ],
+        "icons": [ "beyondtheveil:sacrificial_knife" ],
         "category": "BEYOND_THE_VEIL", "location": [ 10,8 ],
-        "hiders": ["received_cult_letter"],
+        "hiders": ["met_cult"],
         "parents": ["HEARTS"],
         "stages": [
           {

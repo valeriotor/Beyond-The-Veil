@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +47,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     private EntityDialogueBox dialogueBox;
     private final ResourceLocation texture;
     private int counterKillKeeper;
+    private Entity entity;
 
 
     public EntityDialogueGui(EntityDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -85,6 +87,10 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             return;
         }
 
+        if (minecraft.level != null) {
+            entity = minecraft.level.getEntity(menu.getEntityId());
+        }
+
         // Gui should occupy between 60% and 80% of the screen width
         if (imageWidth > width * 4F / 5) {
             scaleFactor = width * 4F / 5 / imageWidth;
@@ -99,6 +105,12 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
         String npcLine = menu.getNpcLine();
         dialogueBox = new EntityDialogueBox((int) (textWidth * 100 / 100), 75, npcLine);
+        DialogueTemplate t = menu.getTemplate();
+        if (t.getType() == DialogueType.BLOOD_CULTIST && ("immortal".equals(t.getID()) || "immortal2".equals(t.getID()))) {
+            if (Objects.equals(menu.getBranchTemplate().getEndingNodeID(), "offer") && menu.getIndexInBranch() == 2) {
+                dialogueBox.setIgnorePause(true);
+            }
+        }
 
         Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
         if (resolve.isPresent()) {
@@ -142,16 +154,19 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if (menu.isHide()) {
-            counterKillKeeper++;
-            if (counterKillKeeper >= 8) {
-                //p.setYRot(startYRot + 4F * Mth.sin(2 * Mth.PI * ((counterKillKeeper - 8) + pPartialTick) / (0.2F)));
-            }
-            return;
+        if (entity != null && p != null) {
+            double d0 = entity.getX() - p.getX();
+            double d1 = entity.getY() - p.getY();
+            double d2 = entity.getZ() - p.getZ();
+            double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+            p.setYRot(Mth.wrapDegrees(p.getYRot()));
+            float xRot = (float) -(Mth.atan2(d1, d3) * (double) (180F / (float) Math.PI)) + 10;
+            float yRot = Mth.wrapDegrees((float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F);
+            p.setXRot(xRot + (p.getXRot() - xRot) * 0.99F);
+            p.setYRot(yRot + (p.getYRot() - yRot) * 0.99F);
         }
         //p.setYHeadRot((0 - p.getYHeadRot()) * -0.99F);
         //p.setYRot((0 - p.getYRot()) * -0.99F);
-        p.setXRot((0 - p.getXRot()) * -0.99F);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = this.height - this.imageHeight;
         PoseStack pose = guiGraphics.pose();

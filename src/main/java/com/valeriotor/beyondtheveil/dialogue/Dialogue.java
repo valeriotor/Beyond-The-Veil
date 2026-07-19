@@ -57,8 +57,10 @@ public class Dialogue {
                         capability.setDialogue(split[0], split[1]);
                     }
                 }
-                for (String dataUnlock : template.getDataUnlocks()) {
-                    DataUtil.setBooleanOnServerAndSync(player, dataUnlock, true, false);
+                if(!currentBranch.stopsDataUnlock()) {
+                    for (String dataUnlock : template.getDataUnlocks()) {
+                        DataUtil.setBooleanOnServerAndSync(player, dataUnlock, true, false);
+                    }
                 }
             }
         });

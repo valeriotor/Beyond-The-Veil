@@ -68,7 +68,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     private int leaving;
     private boolean inBackStabPosition = false;
     private Animation killAnimation;
-    private int finalCutsceneTicks = -1;
+    private int killCutsceneTicks = -1;
 
 
     public BloodCultistEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -98,11 +98,12 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     public void startTalking(ServerPlayer player) {
         DialogueType dialogueType = DialogueType.BLOOD_CULTIST;
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
-        if (template != null) {
+        if (template != null && bowing == 0 && leaving == 0) {
             setTalkingPlayer(player);
-            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template, getId()), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
                 b.writeUtf(dialogueType.name());
                 b.writeUtf(template.getID());
+                b.writeInt(getId());
             });
 
         }
@@ -124,10 +125,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            if (finalCutsceneTicks == -1 && entityData.get(BEING_KILLED_BY_PLAYER)) {
-                finalCutsceneTicks = 112;
-            } else if (finalCutsceneTicks >= 112) {
-                finalCutsceneTicks++;
+            if (killCutsceneTicks == -1 && entityData.get(BEING_KILLED_BY_PLAYER)) {
+                killCutsceneTicks = 112;
+            } else if (killCutsceneTicks >= 112) {
+                killCutsceneTicks++;
             }
             if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
                 heldVillager = new CrawlerEntity(BTVEntities.CRAWLER.get(), level());
@@ -214,10 +215,10 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     doParticles();
                 }
             }
-            if (finalCutsceneTicks >= 0) {
-                finalCutsceneTicks++;
-                if (talkingPlayer instanceof ServerPlayer sp && finalCutsceneTicks >= 112) {
-                    if (finalCutsceneTicks == 112) {
+            if (killCutsceneTicks >= 0) {
+                killCutsceneTicks++;
+                if (talkingPlayer instanceof ServerPlayer sp && killCutsceneTicks >= 112) {
+                    if (killCutsceneTicks == 112) {
                         talkingPlayer.startRiding(this);
                         Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_slim_kill_cultist_tp), sp);
                         Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_kill_cultist_tp), sp);
@@ -226,14 +227,14 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     //this.positionRider(sp);
                     //sp.connection.teleport(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
                 }
-                if (finalCutsceneTicks == 112) {
+                if (killCutsceneTicks == 112) {
                     level().playSound(null, blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
-                } else if (finalCutsceneTicks == 150) {
+                } else if (killCutsceneTicks == 150) {
                     level().playSound(null, blockPosition(), BTVSounds.KILL_CULTIST.get(), SoundSource.NEUTRAL, 1, 1);
                 }
-                if (finalCutsceneTicks >= 195) {
+                if (killCutsceneTicks >= 195) {
                     kill();
-                    finalCutsceneTicks = -1;
+                    killCutsceneTicks = -1;
                 }
             }
         }
@@ -313,14 +314,14 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                 final double BASE_DISTANCE = 0.6;
                 final double EXTENSION_DISTANCE = 0.6;
                 double x = 0;
-                if (finalCutsceneTicks < 114) {
+                if (killCutsceneTicks < 114) {
                     x = BASE_DISTANCE;
-                } else if (finalCutsceneTicks < 122) {
-                    x = (finalCutsceneTicks - 114) * EXTENSION_DISTANCE / 8 + BASE_DISTANCE;
-                } else if (finalCutsceneTicks < 145) {
+                } else if (killCutsceneTicks < 122) {
+                    x = (killCutsceneTicks - 114) * EXTENSION_DISTANCE / 8 + BASE_DISTANCE;
+                } else if (killCutsceneTicks < 145) {
                     x = BASE_DISTANCE + EXTENSION_DISTANCE;
-                } else if (finalCutsceneTicks < 155) {
-                    x = -(finalCutsceneTicks - 145) * EXTENSION_DISTANCE / 10 + BASE_DISTANCE + EXTENSION_DISTANCE;
+                } else if (killCutsceneTicks < 155) {
+                    x = -(killCutsceneTicks - 145) * EXTENSION_DISTANCE / 10 + BASE_DISTANCE + EXTENSION_DISTANCE;
                 } else {
                     x = BASE_DISTANCE;
                 }
@@ -439,7 +440,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         }
     }
 
-    public void finalCutscene() {
-        finalCutsceneTicks = 0;
+    public void killCutscene(boolean includeKeeperDeath) {
+        killCutsceneTicks = includeKeeperDeath ? 0 : 111;
     }
 }

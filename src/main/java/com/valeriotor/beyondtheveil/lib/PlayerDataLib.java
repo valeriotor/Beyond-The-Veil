@@ -32,7 +32,6 @@ public enum PlayerDataLib {
     // FLAGS (NON TEMPORARY)
     entered_arche,
     spoke_to_dagon,
-    received_cult_letter,
     created_weeper,
     created_fletum,
     asked_thesis,
@@ -86,7 +85,8 @@ public enum PlayerDataLib {
     met_mirror,
     did_binding,
     received_revelation,
-    bound_cult;
+    bound_cult,
+    met_cult;
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";

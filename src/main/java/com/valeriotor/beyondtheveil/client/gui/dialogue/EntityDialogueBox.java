@@ -34,6 +34,7 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
     private double pause = 0;
     private double nextAddCharacter = 0;
     private int nextAddCharacterIndex = 0;
+    private boolean ignorePause;
 
     @NotNull
     private static List<String> splitLines(int width, String localizedText) {
@@ -56,7 +57,7 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
         this.lines.addAll(lines);
     }
 
-        @Override
+    @Override
     public void tick() {
         super.tick();
         double newProgress = DoubleMath.isMathematicalInteger(progress) ? progress + 1 : Math.ceil(progress);
@@ -101,7 +102,7 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
             if (characterIndex >= line.length()) {
                 characterIndex = 0;
                 makeNewLine();
-                if(currentLineIndex + 1 < lines.size()) {
+                if (currentLineIndex + 1 < lines.size()) {
                     boolean adjustRow = getCurrentFirstRow() == getMaxFirstRow();
                     List<TextLine> rows = new ArrayList<>(rows());
                     rows.add(new TextLine(FormattedCharSequence.EMPTY, new ArrayList<>(), Minecraft.getInstance().font));
@@ -140,15 +141,17 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
                     skipped++;
                     characterIndex++;
                 } else {
-                    Set<Character> strongPunctuation = Set.of('.', '!', '?', ':');
-                    if (strongPunctuation.contains(c)) {
-                        if (characterIndex + 1 >= line.length() || !strongPunctuation.contains(line.charAt(characterIndex + 1))) {
-                            nextAddCharacter += DOT_PAUSE;
+                    if (!ignorePause) {
+                        Set<Character> strongPunctuation = Set.of('.', '!', '?', ':');
+                        if (strongPunctuation.contains(c)) {
+                            if (characterIndex + 1 >= line.length() || !strongPunctuation.contains(line.charAt(characterIndex + 1))) {
+                                nextAddCharacter += DOT_PAUSE;
+                            }
+                        } else if (c == ',') {
+                            nextAddCharacter += COMMA_PAUSE;
+                        } else if (characterIndex + 1 < line.length() && (line.charAt(characterIndex + 1) == '–' || line.charAt(characterIndex + 1) == '—')) {
+                            nextAddCharacter += DASH_PAUSE;
                         }
-                    } else if (c == ',') {
-                        nextAddCharacter += COMMA_PAUSE;
-                    } else if (characterIndex + 1 < line.length() && (line.charAt(characterIndex + 1) == '–' || line.charAt(characterIndex + 1) == '—')) {
-                        nextAddCharacter += DASH_PAUSE;
                     }
                     finished = true;
                     if (nextAddCharacterIndex % 5 == 0) {
@@ -179,5 +182,9 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
 
     public List<String> getLines() {
         return lines;
+    }
+
+    public void setIgnorePause(boolean ignorePause) {
+        this.ignorePause = ignorePause;
     }
 }

@@ -1,0 +1,62 @@
+model: blood_cultist
+length: 85
+start: 0: 1:
+    visi: knife: 1: immediate: absolute
+    rotz: knife: -1.5: immediate: absolute
+    tray: knife: 1: immediate: absolute
+    rotz: head: 0.4: immediate: absolute
+    roty: body: 0.17: immediate: absolute
+    roty: head: -0.13: immediate: absolute
+    rotx: head: -0.02: immediate: absolute
+    rotx: upper_body: -0.125: immediate: absolute
+    roty: left_arm: -2.95: immediate: absolute
+    rotx: left_arm: 0.4: immediate: absolute
+    roty: right_arm: 2.95: immediate: absolute
+    rotx: right_arm: 0.4: immediate: absolute
+    rotz: right_lower_arm: 1.45: immediate: absolute
+    rotz: left_arm: -1.85: immediate: absolute
+    rotz: right_arm: 1.85: immediate: absolute
+start: 1: 9:
+    rotz: right_lower_arm: 1.5: linear: absolute
+    rotz: left_lower_arm: -1.5: linear: absolute
+    rotx: upper_body: 0: linear: absolute
+    rotx: right_arm: 2: linear: absolute
+    rotx: left_arm: 2: linear: absolute
+    rotx: body: 0.5: linear: absolute
+    rotz: right_arm: 1: linear: absolute
+start: 9: 10:
+    roty: body: -0.1: linear: absolute
+start: 10: 13:
+    roty: body: 0.1: linear: absolute
+start: 13: 16:
+    roty: body: -0.1: linear: absolute
+start: 16: 19:
+    roty: body: 0.1: linear: absolute
+start: 19: 22:
+    roty: body: 0: linear: absolute
+start: 22: 29:
+    rotx: body: 0: linear: absolute
+    rotx: right_arm: 0: linear: absolute
+    rotx: left_arm: 0: linear: absolute
+    trax: knife: -15: linear: absolute
+    traz: knife: 15: linear: absolute
+    roty: knife: 1.35: linear: absolute
+start: 30: 40:
+    rotx: body: -0.2: linear: absolute
+start: 40: 43:
+    traz: knife: 7: linear: absolute
+    trax: knife: -13: linear: absolute
+    tray: knife: -2: linear: absolute
+start: 54: 57:
+    tray: knife: -6: linear: absolute
+    trax: knife: -20: linear: absolute
+    traz: knife: 4: linear: absolute
+start: 64: 69:
+    visi: knife: -1: immediate: absolute
+start: 74: 84
+    rotx: left_arm: 0: linear: absolute
+    roty: left_arm: 0: linear: absolute
+    rotz: left_arm: 0: linear: absolute
+    rotx: right_arm: 0: linear: absolute
+    roty: right_arm: 0: linear: absolute
+    rotz: right_arm: 0: linear: absolute

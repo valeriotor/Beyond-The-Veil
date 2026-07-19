@@ -59,7 +59,7 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
             }
             if (killCultist) {
                 cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper, 0);
-                cultist.finalCutscene();
+                cultist.killCutscene(true);
             } else {
                 cultist.sendAnimation(AnimationRegistry.blood_cultist_kill_keeper_spare_cultist, 0);
             }

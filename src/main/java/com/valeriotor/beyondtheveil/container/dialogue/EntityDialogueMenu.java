@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.container.dialogue;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.client.util.ClientTalkable;
@@ -21,11 +23,13 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Objects;
 
 public class EntityDialogueMenu extends AbstractContainerMenu {
 
     private final Talkable npc;
     private final DialogueTemplate template;
+    private final int entityId;
     private final DataSlot branch;
     private final DataSlot indexInBranch;
     private final Dialogue dialogue;
@@ -34,13 +38,14 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     private boolean stayValid;
 
     public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, FriendlyByteBuf byteBuf) {
-        this(pContainerId, playerInventory, player, new ClientTalkable(player), DialogueRegistry.getTemplate(DialogueType.valueOf(byteBuf.readUtf()), byteBuf.readUtf()));
+        this(pContainerId, playerInventory, player, new ClientTalkable(player), DialogueRegistry.getTemplate(DialogueType.valueOf(byteBuf.readUtf()), byteBuf.readUtf()), byteBuf.readInt());
     }
 
-    public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, Talkable talkable, DialogueTemplate template) {
+    public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, Talkable talkable, DialogueTemplate template, int entityId) {
         super(Registration.SHOREMAN_DIALOGUE_MENU.get(), pContainerId);
         this.npc = talkable;
         this.template = template;
+        this.entityId = entityId;
         this.branch = DataSlot.standalone(); // TODO consider making it an array of two ints? In case they don't get sent together otherwise
         this.indexInBranch = DataSlot.standalone();
         this.hide = DataSlot.standalone();
@@ -76,11 +81,21 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     }
 
     private void additionalEndEffects() {
-        if (this.npc instanceof BloodCultistEntity bc && template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal")) {
-            bc.bowAndLeave();
+        if (this.npc instanceof BloodCultistEntity bc && (template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2"))) {
+            if (Objects.equals(dialogue.getCurrentBranch().getBranchID(), "§omadman_§r")) {
+                DialogueData.for_(bc.getTalkingPlayer()).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2"));
+                bc.sendAnimation(AnimationRegistry.blood_cultist_killed_by_player, 0);
+                bc.killCutscene(false);
+                bc.setKillingEntity(null);
+                stayValid = true;
+                setHide(true);
+            } else {
+                bc.bowAndLeave();
+                //DialogueData.for_(bc.getTalkingPlayer()).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal"));
+            }
         } else if (this.npc instanceof ShoremanEntity e) {
             ShoremanEntity.ShoremanProfession profession = e.getProfession();
-            if (true || profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
+            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
                 if (DataUtil.getBoolean(e.getTalkingPlayer(), PlayerDataLib.bound_cult.name())) {
                     BloodCultistEntity.startKeeperKill(e);
                 } else {
@@ -106,6 +121,10 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
 
     public int getBranch() {
         return branch.get();
+    }
+
+    public DialogueBranch getBranchTemplate() {
+        return allBranches.get(branch.get());
     }
 
     public int getIndexInBranch() {
@@ -141,4 +160,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
         this.hide.set(hide ? 1 : 0);
     }
 
+    public int getEntityId() {
+        return entityId;
+    }
 }

@@ -1208,6 +1208,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.ask_weeper.1.4.cycles",               "If you have the cycles, we would be glad to see any successful experiments on your end, setting up for a collaboration. Please note that most of our findings are not suited for publication in traditional medical journals, and I would dissuade you from divulging this information.\\n");
         add("exchange.ask_weeper.1.5.best",                 "Best,\\1Dr. H. West");
 
+        add("exchange.blood_cult.0.0.red", "Red chains bind all beings – living and dead – and so too does knowledge travel atop this network of flesh and blood.");
+        add("exchange.blood_cult.0.1.word", "Word of your research – and of you – has reached us, and we would humbly request to ask some questions – in person.");
+        add("exchange.blood_cult.0.2.partnership", "If so, we would be open to a partnership. We are a merchant guild – of sorts – and the resources we handle would be of great aid to your work.");
+        add("exchange.blood_cult.0.3.hearts", "If you wish to proceed, place twelve hearts in an empty square – four on each side – the link shall be formed – we shall know.");
     }
 
     private void addCommonCaptions() {
@@ -1301,7 +1305,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addBloodCultistDialogue() {
         add("gui.dialogue.blood_cultist.display_name", "Blood Cultist");
 
-        add("dialogue.blood_cultist.initial.killed.0", "What worth is mercy when in the way of progress? Nothing – and the curiosity of ones like you – and us – is what drives the world forward.\nWe will meet once you have something to offer to – and something from demand from – our humble association.");
+        add("dialogue.blood_cultist.initial.killed.0", "What worth is mercy when in the way of progress? Nothing – and the curiosity of ones like you – and us – is what drives the world forward.\nWe will meet once you have something to offer to – and something to demand from – our humble association.");
         add("dialogue.blood_cultist.initial.due_course.0", "All in due course.");
         add("dialogue.blood_cultist.initial.respawn.0", "Shhh, do not tell – we know already!  We must wait, and play the act anew – once you have something to demand from – and something to offer to – our humble association.");
         add("dialogue.blood_cultist.initial.start.0", "The chains binding us lie yet unseen – but worry not: all is linked, all is connected, and new life is born from each death – and you know death all too well, do you not?");
@@ -1317,7 +1321,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("dialogue.blood_cultist.immortal.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
         add("dialogue.blood_cultist.immortal.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
-        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who was said to have lived a thousand lives – she is immortal, just like you.");
+        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
         add("dialogue.blood_cultist.immortal.start.0", "Extraordinary – you are immortal.");
         add("dialogue.blood_cultist.immortal.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
         add("dialogue.blood_cultist.immortal.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods, that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
@@ -1354,6 +1358,50 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal.i'll.option", "I'll think about it.");
         add("dialogue.blood_cultist.immortal.hm-hm_.option", "Hm-hm. Alright, tell me.");
         add("dialogue.blood_cultist.immortal.hm-hm___.option", "Hm-hm. Alright, tell me what you want.");
+
+        add("dialogue.blood_cultist.immortal2.they.0", "I speak of a plurality – for life is born in union.");
+        add("dialogue.blood_cultist.immortal2.demand.0", "We are fascinated by the relation between life and death, between birth and passing – and what we ask in return is a §onewborn§r.\nIt does not have to be a human – any animal, from cat to horse, will do fine. Build two pillars: any baby born near to the first will signal us to bring a human near to the second.");
+        add("dialogue.blood_cultist.immortal2.demand.1", "That, then, is our trade. A newly born life in exchange for one soon to expire – at your hands, if you choose to.");
+        add("dialogue.blood_cultist.immortal2.offer.0", "We are an aggregation of scholars – and merchants – bound by a common fascination of the links chaining us all – brother and sister – man and beast – life and death.");
+        add("dialogue.blood_cultist.immortal2.offer.1", "We wish to understand these relations – they are born and manifested in blood – and have devoted ourselves to studying – just as you have – so that we may understand that insurmountable threshold that is death.");
+        add("dialogue.blood_cultist.immortal2.offer.2", "§o* The cultist's voice changes slightly at every pause. *");
+        add("dialogue.blood_cultist.immortal2.embrace.0", "I am – my sibling is not. Pierced by their own knife.");
+        add("dialogue.blood_cultist.immortal2.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
+        add("dialogue.blood_cultist.immortal2.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
+        add("dialogue.blood_cultist.immortal2.start.0", "No knife to the throat this time – I come here meaning no harm.");
+        add("dialogue.blood_cultist.immortal2.deceiver.0", "Do not grieve – we celebrate the crossing of the threshold, and are ever ready for it.");
+        add("dialogue.blood_cultist.immortal2.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
+        add("dialogue.blood_cultist.immortal2.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
+        add("dialogue.blood_cultist.immortal2.horrible.0", "You are now playing in the economy of lives, dear – just like we are – and for the betterment of all humanity, it must continue.\nIf you wish to proceed, simply build the two pillars. We will be there to celebrate the beginning of our partnership.");
+        add("dialogue.blood_cultist.immortal2.answer.0", "In our letter we spoke of a partnership – we share a mutual interest – and though we seldom make offers to those outside our aggregation – for safety, of course – you have caught our attention like no one before – bar, perhaps, a single exception.");
+        add("dialogue.blood_cultist.immortal2.study.0", "You have struck us, yes – undying as you are – like no one has ever done before – bar, perhaps, a single exception.");
+        add("dialogue.blood_cultist.immortal2.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
+        add("dialogue.blood_cultist.immortal2.witnesses.0", "We are bound – our hearts beat in tune.");
+        add("dialogue.blood_cultist.immortal2.who's.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal2.i.option", "I am sorry – it was self-defence.");
+        add("dialogue.blood_cultist.immortal2.hm-hm_.option", "Hm-hm. Alright, tell me.");
+        add("dialogue.blood_cultist.immortal2.and_.option", "And what do you demand in return?");
+        add("dialogue.blood_cultist.immortal2.alas,.option", "Alas, I'm forgetful. But you are right, I also wish I could.");
+        add("dialogue.blood_cultist.immortal2.i'll.option", "I'll think about it.");
+        add("dialogue.blood_cultist.immortal2.tell.option", "Tell me why you have contacted me.");
+        add("dialogue.blood_cultist.immortal2.their?.option", "\"Their\"? Do you speak of a man or a woman?");
+        add("dialogue.blood_cultist.immortal2.thanks,.option", "Thanks, I guess, but please tell me what you want.");
+        add("dialogue.blood_cultist.immortal2.hm-hm___.option", "Hm-hm. Alright, tell me what you want.");
+        add("dialogue.blood_cultist.immortal2.you.option", "You have not answered my question.");
+        add("dialogue.blood_cultist.immortal2.tell_.option", "Tell me why you have contacted me.");
+        add("dialogue.blood_cultist.immortal2.who's_.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal2.you___.option", "You... are alive?");
+        add("dialogue.blood_cultist.immortal2.this.option", "This is all so horrible.");
+        add("dialogue.blood_cultist.immortal2.hm-hm__.option", "Hm-hm. Alright, tell me what you want.");
+        add("dialogue.blood_cultist.immortal2.how.option", "How do you know?! I left no witnesses.");
+        add("dialogue.blood_cultist.immortal2.hm-hm____.option", "Hm-hm. Alright, tell me what you want.");
+        add("dialogue.blood_cultist.immortal2.§othat's§r.option", "§oThat's§r your trade? It is horrifying.");
+        add("dialogue.blood_cultist.immortal2.tell__.option", "Tell me why you have contacted me.");
+        add("dialogue.blood_cultist.immortal2.no.option", "No way.");
+        add("dialogue.blood_cultist.immortal2.then.option", "Then tell me, what do you demand in return?");
+        add("dialogue.blood_cultist.immortal2.and.option", "And you wish to study §ome§r?");
+        add("dialogue.blood_cultist.immortal2.i'm.option", "I'm not \"undying\". I just come back after death.");
+
 
     }
 
@@ -2204,7 +2252,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.they.0", "Easy, easy. I understand. I only wish to offer... perspective.\nBecause you §oterrify§r us. We know §owe§r are just pawns in §oyour§r game. To us, you are the most unknowable of horrors. Uncaring, unpredictable.");
         add("dialogue.shoreman_lighthouse_keeper.death.they.1", "Here, then, comes the snippet of Truth that Dagon wishes you to learn.\nJust as I am nothing to you, so are you too insignificant to someone else.");
         add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it's just humanity itself: this multitude of several billion cells, uncaring of who you are.");
-        add("dialogue.shoreman_lighthouse_keeper.death.who.1", "Perhaps it is the infinity of space,|| and you a dot,| dimensionless;|| or| it is the eternity of time, and you again a point on an axis,|||| ephemeral,|||| already gone. ");
+        add("dialogue.shoreman_lighthouse_keeper.death.who.1", "Perhaps it is the infinity of space,|| and you a dot,| dimensionless;| or it is the eternity of time, and you again a point on an axis,||| ephemeral,||| already gone.");
         add("dialogue.shoreman_lighthouse_keeper.death.too.0", "Enough! You came here for something.");
         add("dialogue.shoreman_lighthouse_keeper.death.hate.0", "We cannot choose what we feel.\nI may be old, but there was yet life ahead of me. Oh, how pathetic that I grieve for myself!");
         add("dialogue.shoreman_lighthouse_keeper.death.friend.0", "Yes.|| Friend.||\nYour eyes leave no doubt.||| Go ahead. I have made peace with it.");
@@ -2515,6 +2563,15 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Is it time then? To retrace the steps of the old prospectors and hunters, and venture down into the abyss?\\n" +
                 "To reach Arche, from where everything is born. \\n" +
                 "The first principle of our world. ");
+
+        add("research.BLOOD_CULT.title", "Blood Rituals");
+        add("research.use_pillars.text", "Use the pillars... or don't.");
+        add("research.BLOOD_CULT.stage.0", "In talking to the cult, I felt light nausea – not due to the deplorability of their philosophy or their trade proposal, but rather due to the abrupt shift in perspective, the violent turning upside down of my role. I am the researcher, so why do I, all of a sudden, feel like the experiment? A brief dialogue, and yet an irksome sensation settles in already – am I being studied?\\n" +
+                "Regardless, their offer is tempting. I must build two pillars: offer and demand. After placing one of them down, I can bind the other to it, and place it elsewhere. Breaking either pillar breaks the link, and the two objects must be bound again as before.\\n" +
+                "Whenever a baby creature – including livestock such as pigs or cows – is born next to the offer pillar, it will be taken by the cult. Then, a trader should appear next to the demand pillar carrying a prospective patient, and place it in the nearest empty patient pod (if available).\\n" +
+                "I should try it. If they're observing me, then I want to observe them too; maybe it is by making deals with them that I can assert my power.\\n" +
+                "Yet, this might have consequences. To seal the deal is to bind us.");
+        add("research.BLOOD_CULT.stage.1", "The pillars work, and the trade has started. I hope that I will not regret it – I may not be in danger, but what of those dear to me? I may claim infinite lives, but most others cannot.");
 
         add("research.BLOOD_RITUALS.title", "Blood Rituals");
         add("research.asked_thesis.text", "Send a letter to the Miskatonic.");

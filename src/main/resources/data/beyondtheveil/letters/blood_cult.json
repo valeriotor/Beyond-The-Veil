@@ -1,0 +1,11 @@
+{
+  "name": "blood_cult",
+  "correspondence": "BLOOD_CULT",
+  "playerInitiated": false,
+  "repeatable": false,
+  "letters": [
+    {
+      "optionsPerLine": [["red"], ["word"], ["partnership"], ["hearts"]]
+    }
+  ]
+}

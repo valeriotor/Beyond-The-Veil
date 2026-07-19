@@ -1,5 +1,5 @@
 {
-  "id": "immortal",
+  "id": "immortal2",
   "startingBranch": {
     "id": "first",
     "branchLength": 1,
@@ -65,7 +65,7 @@
       "id": "embrace",
       "dialogueOptions": [
         {
-          "id": "§oyou",
+          "id": "i",
           "branchLength": 1,
           "endingNodeID": "deceiver",
           "unlockedData": [],
@@ -75,9 +75,19 @@
           "endsDialogue": false
         },
         {
-          "id": "i",
-          "branchLength": 3,
-          "endingNodeID": "offer",
+          "id": "how",
+          "branchLength": 1,
+          "endingNodeID": "witnesses",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "their?",
+          "branchLength": 1,
+          "endingNodeID": "they",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -113,17 +123,6 @@
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
-        },
-        {
-          "id": "§omadman_§r",
-          "branchLength": 0,
-          "endingNodeID": "end",
-          "unlockedData": [],
-          "mustHaveData": [],
-          "mustNotHaveData": [],
-          "stopsDialogueUnlock": true,
-          "stopsDataUnlock": true,
-          "endsDialogue": true
         }
       ]
     },
@@ -141,7 +140,7 @@
           "endsDialogue": false
         },
         {
-          "id": "and__",
+          "id": "and_",
           "branchLength": 2,
           "endingNodeID": "demand",
           "unlockedData": [],
@@ -156,19 +155,9 @@
       "id": "start",
       "dialogueOptions": [
         {
-          "id": "and_",
+          "id": "you___",
           "branchLength": 1,
           "endingNodeID": "embrace",
-          "unlockedData": [],
-          "mustHaveData": [],
-          "mustNotHaveData": [],
-          "stopsDialogueUnlock": false,
-          "endsDialogue": false
-        },
-        {
-          "id": "§odeceiver!§r",
-          "branchLength": 1,
-          "endingNodeID": "deceiver",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
@@ -274,7 +263,7 @@
           "id": "i\u0027ll",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": ["met_cult"],
+          "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
@@ -284,7 +273,7 @@
           "id": "no",
           "branchLength": 0,
           "endingNodeID": "end",
-          "unlockedData": ["met_cult"],
+          "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
@@ -299,6 +288,36 @@
           "id": "then",
           "branchLength": 2,
           "endingNodeID": "demand",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "they": {
+      "id": "they",
+      "dialogueOptions": [
+        {
+          "id": "tell_",
+          "branchLength": 3,
+          "endingNodeID": "offer",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "witnesses": {
+      "id": "witnesses",
+      "dialogueOptions": [
+        {
+          "id": "tell__",
+          "branchLength": 3,
+          "endingNodeID": "offer",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],

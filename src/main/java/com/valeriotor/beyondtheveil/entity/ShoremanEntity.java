@@ -229,9 +229,10 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
             setTalkingPlayer(player);
-            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template, getId()), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
                 b.writeUtf(dialogueType.name());
                 b.writeUtf(template.getID());
+                b.writeInt(getId());
             });
 
         }

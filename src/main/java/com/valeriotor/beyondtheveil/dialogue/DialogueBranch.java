@@ -18,6 +18,7 @@ public class DialogueBranch {
     private List<String> mustHaveData = new ArrayList<>();
     private List<String> mustNotHaveData = new ArrayList<>();
     private boolean stopsDialogueUnlock = false;
+    private boolean stopsDataUnlock = false;
     private boolean endsDialogue = false;
 
     public String getBranchID() {
@@ -64,6 +65,11 @@ public class DialogueBranch {
     public boolean stopsDialogueUnlock() {
         return this.stopsDialogueUnlock;
     }
+
+    public boolean stopsDataUnlock() {
+        return stopsDataUnlock;
+    }
+
     public boolean endsDialogue() {
         return this.endsDialogue;
     }

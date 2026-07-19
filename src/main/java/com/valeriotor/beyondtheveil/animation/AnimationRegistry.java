@@ -26,6 +26,7 @@ public class AnimationRegistry {
     public static AnimationTemplate blood_cultist_bow;
     public static AnimationTemplate blood_cultist_kill_keeper;
     public static AnimationTemplate blood_cultist_kill_keeper_spare_cultist;
+    public static AnimationTemplate blood_cultist_killed_by_player;
     public static AnimationTemplate blood_skeleton_swing;
     public static AnimationTemplate blood_zombie_open_jaw_long;
     public static AnimationTemplate blood_zombie_open_jaw_short;
@@ -91,6 +92,7 @@ public class AnimationRegistry {
         blood_cultist_bow = registerAnimation("blood_cultist_bow", client, i++);
         blood_cultist_kill_keeper = registerAnimation("blood_cultist_kill_keeper", client, i++);
         blood_cultist_kill_keeper_spare_cultist = registerAnimation("blood_cultist_kill_keeper_spare_cultist", client, i++);
+        blood_cultist_killed_by_player = registerAnimation("blood_cultist_killed_by_player", client, i++);
         blood_skeleton_swing = registerAnimation("blood_skeleton_swing", client, i++);
         blood_zombie_open_jaw_long = registerAnimation("blood_zombie_open_jaw_long", client, i++);
         blood_zombie_open_jaw_short = registerAnimation("blood_zombie_open_jaw_short", client, i++);
