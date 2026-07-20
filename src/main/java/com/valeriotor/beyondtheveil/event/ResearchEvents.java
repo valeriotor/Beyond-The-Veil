@@ -91,6 +91,13 @@ public class ResearchEvents {
             DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DISCOVERED_FLUID.apply(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get()), true, false);
             DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DISCOVERED_FLUID.apply(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get()), true, false);
         }
+        if ("HEARTS".equals(key) || "SPINES".equals(key)) {
+            if (ResearchUtil.isResearchComplete(p, "HEARTS") && ResearchUtil.isResearchComplete(p, "SPINES")) {
+                p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+                    c.addExchange(p, ExchangeRegistry.byName("blood_cult"));
+                });
+            }
+        }
     }
 
     private static void addCommunionDialogues(DialogueData d) {

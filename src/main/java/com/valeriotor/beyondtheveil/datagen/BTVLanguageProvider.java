@@ -1208,10 +1208,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.ask_weeper.1.4.cycles",               "If you have the cycles, we would be glad to see any successful experiments on your end, setting up for a collaboration. Please note that most of our findings are not suited for publication in traditional medical journals, and I would dissuade you from divulging this information.\\n");
         add("exchange.ask_weeper.1.5.best",                 "Best,\\1Dr. H. West");
 
-        add("exchange.blood_cult.0.0.red", "Red chains bind all beings – living and dead – and so too does knowledge travel atop this network of flesh and blood.");
-        add("exchange.blood_cult.0.1.word", "Word of your research – and of you – has reached us, and we would humbly request to ask some questions – in person.");
-        add("exchange.blood_cult.0.2.partnership", "If so, we would be open to a partnership. We are a merchant guild – of sorts – and the resources we handle would be of great aid to your work.");
-        add("exchange.blood_cult.0.3.hearts", "If you wish to proceed, place twelve hearts in an empty square – four on each side – the link shall be formed – we shall know.");
+        add("exchange.blood_cult.object",                   "An offer");
+        add("exchange.blood_cult.0.0.red",                  "Red chains bind all beings – living and dead – and so too does knowledge travel atop this network of flesh and blood.\\n");
+        add("exchange.blood_cult.0.1.word",                 "Word of your research – and of you – has reached us, and we would humbly request to ask some questions – in person.\\n");
+        add("exchange.blood_cult.0.2.partnership",          "If so, we would be open to a partnership. We are a merchant guild – of sorts – and the resources we handle would be of great aid to your work.\\n");
+        add("exchange.blood_cult.0.3.hearts",               "If you wish to proceed, place twelve hearts in an empty square – four on each side – the link shall be formed – we shall know.");
     }
 
     private void addCommonCaptions() {

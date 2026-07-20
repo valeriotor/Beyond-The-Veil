@@ -23,6 +23,8 @@ public class ExchangeRegistry {
         registerExchange("another_surgeon");
         registerExchange("more_surgeons");
         registerExchange("ask_weeper");
+        registerExchange("ask_weeper");
+        registerExchange("blood_cult");
     }
 
     private static void registerExchange(String name) {
