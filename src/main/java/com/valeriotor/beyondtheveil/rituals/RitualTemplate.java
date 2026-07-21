@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -14,8 +15,10 @@ public class RitualTemplate {
 
     private final String name;
     private final int startingPrimaryInstability;
-    private final int primaryInstabilityRate;
-    private final int secondaryInstabilityRate;
+    private final double primaryInstabilityRateTemplate;
+    private final double secondaryInstabilityRateTemplate;
+    private final double secondarySeverityRateTemplate;
+    private final int frequencyRate = 0;
     private final BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs;
     private final AdditionalRitualEffect otherEffects;
     private final Predicate<List<Item>> match;
@@ -25,8 +28,9 @@ public class RitualTemplate {
     private RitualTemplate(RitualTemplateBuilder builder) {
         this.name = builder.name;
         this.startingPrimaryInstability = builder.startingPrimaryInstability;
-        this.primaryInstabilityRate = builder.primaryInstabilityRate;
-        this.secondaryInstabilityRate = builder.secondaryInstabilityRate;
+        this.primaryInstabilityRateTemplate = builder.primaryInstabilityRateTemplate;
+        this.secondaryInstabilityRateTemplate = builder.secondaryInstabilityRateTemplate;
+        this.secondarySeverityRateTemplate = builder.secondarySeverityRateTemplate;
         this.outputs = builder.outputs;
         this.otherEffects = builder.otherEffects;
         match = builder.match;
@@ -45,16 +49,20 @@ public class RitualTemplate {
         return otherEffects;
     }
 
-    public int getStartingPrimaryInstability() {
-        return startingPrimaryInstability;
+    public double getPrimaryInstabilityRateTemplate() {
+        return primaryInstabilityRateTemplate;
     }
 
-    public int getPrimaryInstabilityRate() {
-        return primaryInstabilityRate;
+    public double getSecondaryInstabilityRateTemplate() {
+        return secondaryInstabilityRateTemplate;
     }
 
-    public int getSecondaryInstabilityRate() {
-        return secondaryInstabilityRate;
+    public double getSecondarySeverityRateTemplate() {
+        return secondarySeverityRateTemplate;
+    }
+
+    public int getFrequencyRate() {
+        return frequencyRate;
     }
 
     public boolean matches(List<Item> input, PatientType patientType) {
@@ -65,18 +73,20 @@ public class RitualTemplate {
 
         private final String name;
         private final int startingPrimaryInstability;
-        private final int primaryInstabilityRate;
-        private final int secondaryInstabilityRate;
+        private final double primaryInstabilityRateTemplate;
+        private final double secondaryInstabilityRateTemplate;
+        private final double secondarySeverityRateTemplate;
         private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
         private Predicate<List<Item>> match;
         private PatientType patientType = PatientType.VILLAGER;
 
-        public RitualTemplateBuilder(String name, int startingPrimaryInstability, int primaryInstabilityRate, int secondaryInstabilityRate) {
+        public RitualTemplateBuilder(String name, int startingPrimaryInstability, double primaryInstabilityRateTemplate, double secondaryInstabilityRateTemplate, double secondarySeverityRateTemplate) {
             this.name = name;
             this.startingPrimaryInstability = startingPrimaryInstability;
-            this.primaryInstabilityRate = primaryInstabilityRate;
-            this.secondaryInstabilityRate = secondaryInstabilityRate;
+            this.primaryInstabilityRateTemplate = primaryInstabilityRateTemplate;
+            this.secondaryInstabilityRateTemplate = secondaryInstabilityRateTemplate;
+            this.secondarySeverityRateTemplate = secondarySeverityRateTemplate;
         }
 
         public RitualTemplateBuilder setMatch(Predicate<List<Item>> input) {

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
@@ -37,8 +38,17 @@ public class RitualStatus {
     public static final double STEP_SIZE = 0.025; // per tick
     private int numberOfModifiers;
 
-    private int primaryInstability;
-    private int secondaryInstability;
+    private double primaryInstability; // when this reaches 1000, do an effect
+    //private int primaryInstabilityIncreaseRateMin;
+    private final double primaryInstabilityIncreaseRateTemplate; // the initial change rate of primary instability. It can't go below this. Increases are defined in relation to it
+    private double primaryInstabilityIncreaseRate; // the change rate for primary instability. Increases when basins lack items, especially if they're stalling progress. Decreases slightly over time, but mainly when major accidents occur
+    private double secondaryInstability; // when this reaches 1000, do an effect
+    private final double secondaryInstabilityIncreaseRateTemplate; // the "template" change rate of secondary instability. Increases are defined in relation to it
+    private double secondaryInstabilityIncreaseRate; // the change rate for secondary instability
+    private double secondaryInstabilitySeverity; // which tier of effects should be chosen
+    private final double secondaryInstabilitySeverityIncreaseRateTemplate; //
+    private int frequency;
+    private int respitePeriod;
     private int currentHop;
     private double progressUntilNextHop; // In block distance
     private final RitualTemplate template;
@@ -51,7 +61,6 @@ public class RitualStatus {
     private int itemBurnCounter = -1;
     private final UUID initiator;
     private List<Item> startItems = new ArrayList<>();
-    private int respitePeriod;
     private int counter;
     private boolean deleteVictim;
 
@@ -101,11 +110,19 @@ public class RitualStatus {
 
         distances = new double[altars.size() + 1];
         computeDistances(startPos, altars);
+        primaryInstabilityIncreaseRateTemplate = template.getPrimaryInstabilityRateTemplate();
+        primaryInstabilityIncreaseRate = primaryInstabilityIncreaseRateTemplate;
+        secondaryInstabilityIncreaseRateTemplate = template.getSecondaryInstabilityRateTemplate();
+        secondaryInstabilityIncreaseRate = secondaryInstabilityIncreaseRateTemplate / 2;
+        secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate();
 
     }
 
     public RitualStatus(CompoundTag tag) {
         template = RitualRegistry.byName(tag.getString("template"));
+        primaryInstabilityIncreaseRateTemplate = template.getPrimaryInstabilityRateTemplate();
+        secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate();
+        secondaryInstabilityIncreaseRateTemplate = template.getSecondaryInstabilityRateTemplate();
         long[] altars = tag.getLongArray("altars");
         this.startPos = BlockPos.of(tag.getLong("startPos"));
         this.altars = new ArrayList<>();
@@ -173,7 +190,6 @@ public class RitualStatus {
         if (currentHop >= distances.length) {
             return true;
         }
-        primaryInstability += template.getPrimaryInstabilityRate();
         secondaryInstability = Math.max(secondaryInstability - 1, 0);
         if (currentHop >= altars.size() || level.getBlockEntity(altars.get(currentHop)) instanceof BloodBasinBE) {
             counter++;
@@ -181,6 +197,7 @@ public class RitualStatus {
             if (progressUntilNextHop <= distances[currentHop]) {
                 progressUntilNextHop += STEP_SIZE;
             }
+            boolean stalling = false;
             if (progressUntilNextHop > distances[currentHop]) {
                 // TODO wait for a bit, process instability
                 boolean success = true;
@@ -189,8 +206,7 @@ public class RitualStatus {
                         ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
                         if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers)) { // change to template.match(burnedItems + leftItems)? but we just want that one item... so no. Just tell the player that is has to be either the same item or an identical one
                             success = false;
-                            secondaryInstability += template.getSecondaryInstabilityRate();
-                            doInstabilityEffects(true, level);
+                            stalling = true;
                         }
                         if (success) {
                             if (itemBurnCounter == -1) {
@@ -222,42 +238,56 @@ public class RitualStatus {
                     progressUntilNextHop = 0;
                 }
             }
-            if (counter % 8 == 0) {
-                doInstabilityEffects(false, level);
-            }
-            for (int i = currentHop; i < altars.size(); i++) {
-                BlockPos blockPos = altars.get(i);
-                if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
-                    ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                    if (heldItem.getItem() != startItems.get(i - numberOfModifiers)) {
-                        Vec3 center = blockPos.getCenter();
-                        level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
-                    }
-                }
-            }
+            doActionsForAllMissingItems(level);
+            increaseInstabilities(level, stalling);
         } else {
             earlyStop = true;
         }
         return false;
     }
 
-    private void doInstabilityEffects(boolean onlySecondary, ServerLevel level) {
-        if (respitePeriod > 0) {
-            respitePeriod--;
-        } else {
-            if(!onlySecondary) {
-                WeightedEntry.Wrapper<PrimaryInstabilityEffect>[] primaryEffects = Arrays.stream(PrimaryInstabilityEffect.values()).filter(effect -> primaryInstability > effect.minimum).map(effect -> WeightedEntry.wrap(effect, effect.weight)).toArray(WeightedEntry.Wrapper[]::new);
-                Optional<WeightedEntry.Wrapper<PrimaryInstabilityEffect>> primaryEffect = WeightedRandomList.create(primaryEffects).getRandom(level.getRandom());
-                primaryEffect.ifPresent(e -> this.doPrimaryInstabilityEffect(e.getData(), level));
+    private void increaseInstabilities(ServerLevel level, boolean stalling) {
+        // the increase for general item missing to primary instability increase rate is handled by doActionsForAllMissingItems already
+        if (counter % 10 == 0) {
+            primaryInstability += primaryInstabilityIncreaseRate;
+            if (primaryInstability >= 1000) {
+                doPrimaryInstabilityEffect(level);
+                primaryInstability = 0;
             }
-            WeightedEntry.Wrapper<SecondaryInstabilityEffect>[] secondaryEffects = Arrays.stream(SecondaryInstabilityEffect.values()).filter(effect -> secondaryInstability > effect.minimum).map(effect -> WeightedEntry.wrap(effect, effect.weight)).toArray(WeightedEntry.Wrapper[]::new);
-            Optional<WeightedEntry.Wrapper<SecondaryInstabilityEffect>> secondaryEffect = WeightedRandomList.create(secondaryEffects).getRandom(level.getRandom());
-            secondaryEffect.ifPresent(e -> this.doSecondaryInstabilityEffect(e.getData(), level));
-
+            secondaryInstability += secondaryInstabilityIncreaseRate;
+            if (secondaryInstability >= 600) {
+                doSecondaryInstabilityEffect(level);
+                secondaryInstability = 0;
+            }
+            if (stalling) {
+                primaryInstabilityIncreaseRate = Math.min(150, primaryInstabilityIncreaseRate + primaryInstabilityIncreaseRateTemplate / 5);
+                secondaryInstabilityIncreaseRate = Math.min(150, secondaryInstabilityIncreaseRate + secondaryInstabilityIncreaseRateTemplate / 5);
+                secondaryInstabilitySeverity += secondaryInstabilitySeverityIncreaseRateTemplate;
+            }
+            if (counter % 50 == 0) {
+                primaryInstabilityIncreaseRate = Math.max(primaryInstabilityIncreaseRateTemplate, primaryInstabilityIncreaseRate - 1);
+            }
         }
     }
 
-    private void doSecondaryInstabilityEffect(SecondaryInstabilityEffect effect, ServerLevel level) {
+    private void doPrimaryInstabilityEffect(ServerLevel level) {
+        WeightedEntry.Wrapper<PrimaryInstabilityEffect>[] primaryEffects = Arrays.stream(PrimaryInstabilityEffect.values()).map(effect -> WeightedEntry.wrap(effect, effect.weight)).toArray(WeightedEntry.Wrapper[]::new);
+        Optional<WeightedEntry.Wrapper<PrimaryInstabilityEffect>> primaryEffect = WeightedRandomList.create(primaryEffects).getRandom(level.getRandom());
+        primaryEffect.ifPresent(e -> this.doPrimaryInstabilityEffect(e.getData(), level));
+    }
+
+    private void doSecondaryInstabilityEffect(ServerLevel level) {
+        List<WeightedEntry.Wrapper<SecondaryInstabilityEffectRedone>> effectPool = new ArrayList<>();
+        for (SecondaryInstabilityEffectRedone value : SecondaryInstabilityEffectRedone.values()) {
+            if (value.tier < secondaryInstabilitySeverity) {
+                effectPool.add(WeightedEntry.wrap(value, value.weight));
+            }
+        }
+        Optional<WeightedEntry.Wrapper<SecondaryInstabilityEffectRedone>> secondaryEffect = WeightedRandomList.create(effectPool).getRandom(level.getRandom());
+        secondaryEffect.ifPresent(e -> this.doSecondaryInstabilityEffect(e.getData(), level));
+    }
+
+    private void doSecondaryInstabilityEffect(SecondaryInstabilityEffectRedone effect, ServerLevel level) {
         switch (effect) {
 
             case ZOMBIE -> {
@@ -288,35 +318,33 @@ public class RitualStatus {
                 Mob zombie = new BloodZombieEntity(BTVEntities.BLOOD_ZOMBIE.get(), level);
                 zombie.setPos(startPos.getCenter().add(0, 1, 0));
                 level.addFreshEntity(zombie);
+                level.playSound(null, startPos, BTVSounds.HEART_RIP.get(), SoundSource.HOSTILE);
             }
-            case EXPLOSION -> {
+            case SMALL_EXPLOSION, MEDIUM_EXPLOSION, LARGE_EXPLOSION -> {
                 BlockPos blockPos = randomUpcomingAltarPos(level.getRandom());
                 if (blockPos != null) {
                     Vec3 center = blockPos.getCenter();
-                    level.explode(null, center.x, center.y, center.z, 3, Level.ExplosionInteraction.NONE);
+                    int radius = effect == SecondaryInstabilityEffectRedone.SMALL_EXPLOSION ? 1 : (effect == SecondaryInstabilityEffectRedone.MEDIUM_EXPLOSION ? 2 : 4);
+                    level.explode(null, center.x, center.y+1, center.z, radius, Level.ExplosionInteraction.TNT);
                 }
             }
-            case LIGHTNING -> {
-                BlockPos blockPos = randomUpcomingAltarPos(level.getRandom());
-                if (blockPos != null) {
-                    LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-                    if (bolt != null) {
-                        bolt.moveTo(Vec3.atBottomCenterOf(blockPos));
-                        level.addFreshEntity(bolt);
+            case LIGHTNING, MULTIPLE_LIGHTNING -> {
+                for (int i = 0; i < (effect == SecondaryInstabilityEffectRedone.LIGHTNING ? 1 : 5); i++) {
+                    BlockPos blockPos = randomUpcomingAltarPos(level.getRandom());
+                    if (blockPos != null) {
+                        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+                        if (bolt != null) {
+                            bolt.moveTo(Vec3.atBottomCenterOf(blockPos));
+                            level.addFreshEntity(bolt);
+                        }
                     }
                 }
             }
-            case NONE -> {
-            }
         }
-
-        if (secondaryInstability > 1000) {
-            secondaryInstability -= effect.reduction;
-        }
-        respitePeriod += 15;
-        if (effect != SecondaryInstabilityEffect.NONE) {
-            primaryInstability += 100;
-        }
+        secondaryInstabilityIncreaseRate = Math.max(secondaryInstabilityIncreaseRateTemplate / 2, secondaryInstabilityIncreaseRate - secondaryInstabilityIncreaseRateTemplate);
+        primaryInstabilityIncreaseRate = Math.max(primaryInstabilityIncreaseRateTemplate, primaryInstabilityIncreaseRate - primaryInstabilityIncreaseRateTemplate);
+        secondaryInstabilitySeverity += secondaryInstabilitySeverityIncreaseRateTemplate * 10;
+        //respitePeriod += 15;
     }
 
     private void makeMob(Mob mob, ServerLevel level) {
@@ -357,12 +385,8 @@ public class RitualStatus {
                     }
                 }
             }
-            case NONE -> {
-            }
         }
-        if (primaryInstability > 1000) {
-            primaryInstability -= effect.reduction;
-        }
+        primaryInstabilityIncreaseRate = Math.max(primaryInstabilityIncreaseRateTemplate, primaryInstabilityIncreaseRate - primaryInstabilityIncreaseRateTemplate / 2);
     }
 
     private BlockPos randomUpcomingAltarPos(RandomSource randomSource) {
@@ -432,11 +456,12 @@ public class RitualStatus {
     }
 
     private enum PrimaryInstabilityEffect {
-        PUSH_ITEM(1000, 6), // sfx and small explosion particles
-        BURN_ITEM(2000, 15), // fire
-        NONE(0, 1000, 600);
+        PUSH_ITEM(1000, 15), // sfx and small explosion particles
+        BURN_ITEM(2000, 5), // fire
+        ;
 
         private final int minimum;
+
         private final int weight;
         private final int reduction;
 
@@ -449,30 +474,51 @@ public class RitualStatus {
             this.weight = weight;
             this.reduction = reduction;
         }
+
     }
 
-    private enum SecondaryInstabilityEffect {
-        ZOMBIE(1000, 2),
-        SKELETON(1200, 2),
-        BLOOD_ZOMBIE(4500, 15),
-        EXPLOSION(2000, 4),
-        LIGHTNING(1500, 2),
-        NONE(1200, 200, 100);
+    private enum SecondaryInstabilityEffectRedone {
+        SMALL_FIRE(0, 10),
+        SMALL_EXPLOSION(0, 10),
+        ZOMBIE(0, 10),
+        SKELETON(1, 12),
+        MEDIUM_FIRE(1, 20),
+        MEDIUM_EXPLOSION(1, 20),
+        LIGHTNING(1, 20),
+        LARGE_EXPLOSION(2, 40),
+        LARGE_FIRE(2, 40),
+        MULTIPLE_LIGHTNING(2, 40),
+        BLOOD_ZOMBIE(3, 30);
 
-        private final int minimum;
+        private final int tier;
+
         private final int weight;
-        private final int reduction;
 
-        SecondaryInstabilityEffect(int minimum, int weight) {
-            this(minimum, weight, minimum / 2);
+        SecondaryInstabilityEffectRedone(int tier, int weight) {
+            this.tier = tier;
+            this.weight = weight;
         }
 
-        SecondaryInstabilityEffect(int minimum, int weight, int reduction) {
-            this.minimum = minimum;
-            this.weight = weight;
-            this.reduction = reduction;
+        public int getTier() {
+            return tier;
         }
     }
 
+    private void doActionsForAllMissingItems(ServerLevel level) {
+        for (int i = currentHop; i < altars.size(); i++) {
+            BlockPos blockPos = altars.get(i);
+            if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
+                ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
+                if (heldItem.getItem() != startItems.get(i - numberOfModifiers)) {
+                    Vec3 center = blockPos.getCenter();
+                    level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
+                    if (counter % 5 == 0) {
+                        primaryInstabilityIncreaseRate += primaryInstabilityIncreaseRateTemplate / 10;
+                        secondaryInstabilityIncreaseRate += secondaryInstabilityIncreaseRateTemplate / 10;
+                    }
+                }
+            }
+        }
+    }
 
 }
