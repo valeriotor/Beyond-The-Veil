@@ -124,6 +124,6 @@ public class LivingPortalEntity extends Mob implements DamageCapper {
 
     @Override
     public float getDamageCap() {
-        return 10;
+        return 100;
     }
 }

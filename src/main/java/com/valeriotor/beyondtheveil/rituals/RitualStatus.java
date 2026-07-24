@@ -110,11 +110,13 @@ public class RitualStatus {
 
         distances = new double[altars.size() + 1];
         computeDistances(startPos, altars);
+        primaryInstability = template.getStartingPrimaryInstability();
         primaryInstabilityIncreaseRateTemplate = template.getPrimaryInstabilityRateTemplate();
         primaryInstabilityIncreaseRate = primaryInstabilityIncreaseRateTemplate;
         secondaryInstabilityIncreaseRateTemplate = template.getSecondaryInstabilityRateTemplate();
-        secondaryInstabilityIncreaseRate = secondaryInstabilityIncreaseRateTemplate / 2;
+        secondaryInstabilityIncreaseRate = secondaryInstabilityIncreaseRateTemplate;
         secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate();
+        secondaryInstabilitySeverity = template.getStartingSecondarySeverity();
 
     }
 
@@ -256,7 +258,7 @@ public class RitualStatus {
             }
             secondaryInstability += secondaryInstabilityIncreaseRate;
             if (secondaryInstability >= 600) {
-                doSecondaryInstabilityEffect(level);
+                doSecondaryInstabilityEffect(level, false);
                 secondaryInstability = 0;
             }
             if (stalling) {
@@ -276,11 +278,13 @@ public class RitualStatus {
         primaryEffect.ifPresent(e -> this.doPrimaryInstabilityEffect(e.getData(), level));
     }
 
-    private void doSecondaryInstabilityEffect(ServerLevel level) {
+    private void doSecondaryInstabilityEffect(ServerLevel level, boolean forbidExplosions) {
         List<WeightedEntry.Wrapper<SecondaryInstabilityEffectRedone>> effectPool = new ArrayList<>();
         for (SecondaryInstabilityEffectRedone value : SecondaryInstabilityEffectRedone.values()) {
-            if (value.tier < secondaryInstabilitySeverity) {
-                effectPool.add(WeightedEntry.wrap(value, value.weight));
+            if (value.tier <= secondaryInstabilitySeverity) {
+                if (!forbidExplosions || !value.name().toLowerCase().contains("explosion")) {
+                    effectPool.add(WeightedEntry.wrap(value, value.weight));
+                }
             }
         }
         Optional<WeightedEntry.Wrapper<SecondaryInstabilityEffectRedone>> secondaryEffect = WeightedRandomList.create(effectPool).getRandom(level.getRandom());
@@ -324,7 +328,7 @@ public class RitualStatus {
                 BlockPos blockPos = randomUpcomingAltarPos(level.getRandom());
                 if (blockPos != null) {
                     Vec3 center = blockPos.getCenter();
-                    int radius = effect == SecondaryInstabilityEffectRedone.SMALL_EXPLOSION ? 1 : (effect == SecondaryInstabilityEffectRedone.MEDIUM_EXPLOSION ? 2 : 4);
+                    int radius = effect == SecondaryInstabilityEffectRedone.SMALL_EXPLOSION ? 1 : (effect == SecondaryInstabilityEffectRedone.MEDIUM_EXPLOSION ? 2 : 3);
                     level.explode(null, center.x, center.y+1, center.z, radius, Level.ExplosionInteraction.TNT);
                 }
             }
@@ -356,6 +360,11 @@ public class RitualStatus {
     }
 
     private void doPrimaryInstabilityEffect(PrimaryInstabilityEffect effect, ServerLevel level) {
+        if (effect == PrimaryInstabilityEffect.BURN_ITEM && secondaryInstabilitySeverity < 1) {
+            effect = PrimaryInstabilityEffect.PUSH_ITEM;
+        } else if (effect == PrimaryInstabilityEffect.PUSH_ITEM && secondaryInstabilitySeverity > 2) {
+            effect = PrimaryInstabilityEffect.BURN_ITEM;
+        }
         switch (effect) {
 
             case PUSH_ITEM -> {
@@ -387,6 +396,9 @@ public class RitualStatus {
             }
         }
         primaryInstabilityIncreaseRate = Math.max(primaryInstabilityIncreaseRateTemplate, primaryInstabilityIncreaseRate - primaryInstabilityIncreaseRateTemplate / 2);
+        if (level.random.nextDouble() < secondaryInstabilityIncreaseRateTemplate / 100) {
+            doSecondaryInstabilityEffect(level, true);
+        }
     }
 
     private BlockPos randomUpcomingAltarPos(RandomSource randomSource) {
@@ -485,7 +497,7 @@ public class RitualStatus {
         MEDIUM_FIRE(1, 20),
         MEDIUM_EXPLOSION(1, 20),
         LIGHTNING(1, 20),
-        LARGE_EXPLOSION(2, 40),
+        LARGE_EXPLOSION(2, 15),
         LARGE_FIRE(2, 40),
         MULTIPLE_LIGHTNING(2, 40),
         BLOOD_ZOMBIE(3, 30);
