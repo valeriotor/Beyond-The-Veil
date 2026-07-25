@@ -355,7 +355,7 @@ public class BloodThesisGui extends Screen {
             String title = String.format("%d.%d   ", chapter + 1, ritualIndex + 1) + I18n.get("research.thesis.ritual." + ritual + ".title");
             this.title = Component.literal(title).withStyle(Fonts.ACADEMIC_STYLE);
             TextUtil util = new TextUtil();
-            List<Element> elements = util.parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            List<Element> elements = util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
             this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
             text.setDropShadow(false);
         }
