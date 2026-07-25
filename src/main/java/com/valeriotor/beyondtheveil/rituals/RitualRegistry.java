@@ -32,7 +32,7 @@ public class RitualRegistry {
 
     private static final List<RitualTemplate> TEMPLATES = new ArrayList<>();
     private static final Map<String, RitualTemplate> BY_NAME = new HashMap<>();
-    public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS);
+    public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS, Items.RAW_IRON);
 
     public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 100, 1, 0, 0, 0) // negligible
             .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
@@ -50,7 +50,7 @@ public class RitualRegistry {
             .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 1, 1, 0, 0) // negligible
-            .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 3))
+            .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 4))
             .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 4))
             .toTemplate(TEMPLATES, BY_NAME);
 
@@ -332,7 +332,7 @@ public class RitualRegistry {
         }
         count /= divisor;
         while (count > 0) {
-            int takeAway = Math.min(64, count);
+            int takeAway = Math.min(outputItem.getMaxStackSize(), count);
             count -= takeAway;
             output.add(new ItemStack(outputItem, takeAway));
         }
