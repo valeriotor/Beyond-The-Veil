@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -210,8 +211,9 @@ public class RitualRegistry {
         return ((player, level, altarPos) -> {
             if (level != null) {
                 Player p = level.getPlayerByUUID(player);
-                if (p != null) {
+                if (p instanceof ServerPlayer sp) {
                     p.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> data.setBindingData(new BindingData(binding)));
+                    DataUtil.syncBindingData(sp);
                 }
             }
         });

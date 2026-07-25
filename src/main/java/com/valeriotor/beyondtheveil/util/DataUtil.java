@@ -335,9 +335,15 @@ public class DataUtil {
     }
 
     public static boolean decreaseBindingEnergy(Player p, int amount) {
+        return decreaseBindingEnergy(p, amount, true);
+    }
+    public static boolean decreaseBindingEnergy(Player p, int amount, boolean sync) {
         BindingData data = getBindingData(p);
         if (data != null && data.getEnergy() >= amount) {
             data.setEnergy(data.getEnergy() - amount);
+            if (p instanceof ServerPlayer sp && sync) {
+                syncBindingData(sp);
+            }
             return true;
         }
         return false;

@@ -726,6 +726,7 @@ public class RenderEvents {
                 }
                 ReminiscenceClient.renderReminiscence(event);
                 renderSyringeContents(event);
+                renderBindingEnergy(event);
                 renderSurgeryOverlays(event);
                 renderBlackScreen(event);
                 renderRepairHammerOverlay(event);
@@ -736,6 +737,7 @@ public class RenderEvents {
     }
 
     private static final ResourceLocation DREAM_FOCUS_OVERLAY = new ResourceLocation(References.MODID, "textures/gui/overlay/focus_overlay.png");
+
     private static void renderDreamFocusBar(RenderGuiOverlayEvent event) {
         int dreamFocusTime = ClientData.getInstance().getDreamFocusTime();
         if (dreamFocusTime > 0) {
@@ -754,7 +756,6 @@ public class RenderEvents {
             pose.popPose();
         }
     }
-
     private static void renderExplosionRedScreen(RenderGuiOverlayEvent event) {
         int explosionTicks = InputEvents.getExplosionTicks();
         if (explosionTicks > 0 && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
@@ -862,6 +863,8 @@ public class RenderEvents {
     }
 
     private static final ResourceLocation SYRINGE_TANK_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/overlay/syringe_tank.png");
+    private static final ResourceLocation BINDING_ENERGY_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/overlay/binding_energy.png");
+    private static final ResourceLocation BLOOD_TEXTURE = new ResourceLocation(References.MODID, "textures/block/blood.png");
 
     private static void renderSyringeContents(RenderGuiOverlayEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
@@ -877,7 +880,7 @@ public class RenderEvents {
         int height = guiGraphics.guiHeight();
         final int TOP_Y = height / 20;
         final int LEFT_X = width / 40;
-        final float SIZE_MULTIPLIER = 1.5F;
+        final float SIZE_MULTIPLIER = 1.25F;
         guiGraphics.blit(SYRINGE_TANK_TEXTURE, LEFT_X, TOP_Y, (int) (44 * SIZE_MULTIPLIER), (int) (142 * SIZE_MULTIPLIER), (float) 0, (float) 0, (int) (44 * SIZE_MULTIPLIER), (int) (142 * SIZE_MULTIPLIER), (int) (44 * SIZE_MULTIPLIER), (int) (142 * SIZE_MULTIPLIER));
         IFluidHandlerItem syringe = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
         FluidStack fluidInTank = syringe.getFluidInTank(0);
@@ -921,6 +924,59 @@ public class RenderEvents {
             float currentBaseX = LEFT_X + 35 * SIZE_MULTIPLIER;
             float currentBaseY = TOP_Y + (133 - 32 * (i + 1)) * SIZE_MULTIPLIER;
             guiGraphics.fill((int) currentBaseX, (int) currentBaseY, (int) (currentBaseX + 3 * SIZE_MULTIPLIER), (int) (currentBaseY + 1 * SIZE_MULTIPLIER), 0xFF000000);
+        }
+    }
+
+    private static void renderBindingEnergy(RenderGuiOverlayEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || !(event instanceof RenderGuiOverlayEvent.Pre)) {
+            return;
+        }
+        ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (itemStack.getItem() != Registration.BLOOD_FIST.get()) {
+            return;
+        }
+        BindingData data = DataUtil.getBindingData(player);
+        if (data != null) {
+            GuiGraphics guiGraphics = event.getGuiGraphics();
+            PoseStack pose = guiGraphics.pose();
+            int width = guiGraphics.guiWidth();
+            int height = guiGraphics.guiHeight();
+            final float SIZE_MULTIPLIER = 0.65F;
+            final float TOP_Y = (int) (height / 2 - 172 * SIZE_MULTIPLIER / 2);
+            final float LEFT_X = width / 60F;
+            pose.pushPose();
+            pose.translate(LEFT_X, TOP_Y, 0);
+            guiGraphics.blit(BINDING_ENERGY_TEXTURE, 0, 0, (int) (50 * SIZE_MULTIPLIER), (int) (172 * SIZE_MULTIPLIER), (float) 0, (float) 0, (int) (50 * SIZE_MULTIPLIER), (int) (172 * SIZE_MULTIPLIER), (int) (50 * SIZE_MULTIPLIER), (int) (172 * SIZE_MULTIPLIER));
+            pose.popPose();
+            float amountFilled = Math.min(1, data.getEnergy() / 10000F);
+            final float X_BASE_OFFSET = 5.5F; // WITHOUT MULTIPLIER
+            final int Y_BASE_OFFSET = 162;
+            final float TANK_HEIGHT = 153.8F;
+            float currentBaseX = LEFT_X + X_BASE_OFFSET * SIZE_MULTIPLIER;
+            float currentBaseY = TOP_Y + Y_BASE_OFFSET * SIZE_MULTIPLIER;
+            float bloodHeight = TANK_HEIGHT * amountFilled * SIZE_MULTIPLIER;
+            pose.pushPose();
+            pose.translate(currentBaseX - 0.4, currentBaseY - bloodHeight + 2, 0);
+            float pVOffset = 48 * (1 - amountFilled);
+            float pVHeight = 48 * amountFilled;
+            //guiGraphics.blit(BLOOD_TEXTURE, 0, 0, (int) (40 * SIZE_MULTIPLIER), (int) bloodHeight, 0, pVOffset, 15, (int) pVHeight, 48, 48);
+            float pMinU = 0;
+            float pMaxU = (15F) / (float)48;
+            float pMinV = (pVOffset + 0.0F) / (float)48;
+            float pMaxV = (pVOffset + (float)pVHeight) / (float)48;
+            RenderSystem.setShaderTexture(0, BLOOD_TEXTURE);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            Matrix4f matrix4f = pose.last().pose();
+            BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferbuilder.vertex(matrix4f, (float)0, (float)0, (float)0).uv(pMinU, pMinV).endVertex();
+            bufferbuilder.vertex(matrix4f, (float)0, (float)bloodHeight, (float)0).uv(pMinU, pMaxV).endVertex();
+            final float TANK_WIDTH = 39.4F;
+            bufferbuilder.vertex(matrix4f, (float)(TANK_WIDTH * SIZE_MULTIPLIER), (float)bloodHeight, (float)0).uv(pMaxU, pMaxV).endVertex();
+            bufferbuilder.vertex(matrix4f, (float)(TANK_WIDTH * SIZE_MULTIPLIER), (float)0, (float)0).uv(pMaxU, pMinV).endVertex();
+            BufferUploader.drawWithShader(bufferbuilder.end());
+            pose.popPose();
         }
     }
 

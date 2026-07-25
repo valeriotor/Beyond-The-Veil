@@ -1,5 +1,9 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingCosts;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -39,6 +43,11 @@ public class PlaceBlocksTimer extends PlayerTimer {
 
     @Override
     public boolean update(Player player) {
+        BindingData bindingData = DataUtil.getBindingData(player);
+        if (bindingData == null || bindingData.getEnergy() < BindingCosts.OVERWORLD_BUILD) {
+            done = true;
+            return super.update(player);
+        }
         if (!(x == pos1.getX() && y == pos1.getY() && z == pos1.getZ())) {
             BlockPos pos = new BlockPos(x, y, z);
             BlockState state = player.level().getBlockState(pos);
@@ -50,6 +59,7 @@ public class PlaceBlocksTimer extends PlayerTimer {
                     } else {
                         player.level().setBlock(pos, Block.byItem(stack.getItem()).defaultBlockState(), 3);
                         stack.shrink(1);
+                        DataUtil.decreaseBindingEnergy(player, BindingCosts.OVERWORLD_BUILD);
                         break;
                     }
                 }

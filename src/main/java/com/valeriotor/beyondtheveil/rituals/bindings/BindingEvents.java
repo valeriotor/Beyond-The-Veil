@@ -69,14 +69,14 @@ public class BindingEvents {
                         DataUtil.syncBindingData(sp);
                     }
                 } else if (data.getBinding() == Binding.NETHER) {
-                    if (BaseFireBlock.canBePlacedAt(level, posInFront, pContext.getHorizontalDirection())) {
+                    if (BaseFireBlock.canBePlacedAt(level, posInFront, pContext.getHorizontalDirection()) && DataUtil.decreaseBindingEnergy(sp, BindingCosts.NETHER_CREATE_FIRE)) {
                         level.playSound(null, posInFront, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
                         BlockState blockstate1 = BaseFireBlock.getState(level, posInFront);
                         level.setBlock(posInFront, blockstate1, 11);
                         level.gameEvent(sp, GameEvent.BLOCK_PLACE, clickedPos);
                     }
                 } else if (data.getBinding() == Binding.ARCHE) {
-                    if (level instanceof ServerLevel sl) {
+                    if (level instanceof ServerLevel sl && DataUtil.decreaseBindingEnergy(sp, BindingCosts.ARCHE_NODE)) {
                         PlayerSavedData.getInstance(sl).addArcheBindingNode(sp, posInFront);
                     }
                 }
@@ -110,9 +110,9 @@ public class BindingEvents {
     public static void usingFist(Level pLevel, ServerPlayer sp) {
         BindingData data = DataUtil.getBindingData(sp);
         if (data != null) {
-            if (data.getBinding() == Binding.END && sp.tickCount % 3 == 0 && sp.isFallFlying()) {
+            if (data.getBinding() == Binding.END && sp.tickCount % 3 == 0 && sp.isFallFlying() && DataUtil.decreaseBindingEnergy(sp, BindingCosts.END_FLY)) {
                 Messages.sendToPlayer(GenericToClientPacket.movePlayer(0, 0.5, 0, false, false, false), sp);
-            } else if (data.getBinding() == Binding.ARCHE && sp.tickCount % 3 == 0) {
+            } else if (data.getBinding() == Binding.ARCHE && sp.tickCount % 3 == 0 && DataUtil.decreaseBindingEnergy(sp, BindingCosts.ARCHE_MOVE)) {
                 List<Entity> entities = sp.level().getEntities(sp, AABB.ofSize(sp.position(), 30, 20, 30), e -> {
                     if (!(e instanceof LivingEntity)) return false;
                     if (!(e instanceof PlayerMinion minion)) return true;
@@ -204,14 +204,16 @@ public class BindingEvents {
         if (data != null) {
             Level l = sp.level();
             if (data.getBinding() == Binding.OVERWORLD) {
-                if (data.isBlockBreakingMode() && sp.tickCount % 3 == 0) {
+                if (data.isBlockBreakingMode() && sp.tickCount % 3 == 0 && data.getEnergy() >= BindingCosts.OVERWORLD_BREAK) {
                     if (sp.isShiftKeyDown()) {
                         for (int x = -1; x <= 1; x++) {
                             for (int z = -1; z <= 1; z++) {
                                 BlockPos pos = sp.blockPosition().offset(x, -1, z);
                                 BlockState state = l.getBlockState(pos);
                                 if (state.getBlock().defaultDestroyTime() < 40 && state.getBlock().defaultDestroyTime() >= 0) {
-                                    l.destroyBlock(pos, true, sp);
+                                    if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_BREAK))
+                                        l.destroyBlock(pos, true, sp);
+                                    else return;
                                 }
                             }
                         }
@@ -224,29 +226,59 @@ public class BindingEvents {
                         for (int y = 0; y < 3; y++) {
                             for (int i = -1; i <= 1; i++) {
                                 if (lowX) {
-                                    l.destroyBlock(new BlockPos(sp.getBlockX() - 1, sp.getBlockY() + y, sp.getBlockZ() + i), true, sp);
+                                    BlockPos pos = new BlockPos(sp.getBlockX() - 1, sp.getBlockY() + y, sp.getBlockZ() + i);
+                                    if (l.destroyBlock(pos, true, sp)) {
+                                        DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_BREAK, false);
+                                        if(data.getEnergy() < BindingCosts.OVERWORLD_BREAK) {
+                                            DataUtil.syncBindingData(sp);
+                                            return;
+                                        }
+                                    }
                                 } else if (highX) {
-                                    l.destroyBlock(new BlockPos(sp.getBlockX() + 1, sp.getBlockY() + y, sp.getBlockZ() + i), true, sp);
+                                    BlockPos pos = new BlockPos(sp.getBlockX() + 1, sp.getBlockY() + y, sp.getBlockZ() + i);
+                                    if (l.destroyBlock(pos, true, sp)) {
+                                        DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_BREAK, false);
+                                        if(data.getEnergy() < BindingCosts.OVERWORLD_BREAK) {
+                                            DataUtil.syncBindingData(sp);
+                                            return;
+                                        }
+                                    }
                                 }
+
                                 if (lowZ) {
-                                    l.destroyBlock(new BlockPos(sp.getBlockX() + i, sp.getBlockY() + y, sp.getBlockZ() - 1), true, sp);
+                                    BlockPos pos = new BlockPos(sp.getBlockX() + i, sp.getBlockY() + y, sp.getBlockZ() - 1);
+                                    if (l.destroyBlock(pos, true, sp)) {
+                                        DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_BREAK, false);
+                                        if(data.getEnergy() < BindingCosts.OVERWORLD_BREAK) {
+                                            DataUtil.syncBindingData(sp);
+                                            return;
+                                        }
+                                    }
                                 } else if (highZ) {
-                                    l.destroyBlock(new BlockPos(sp.getBlockX() + i, sp.getBlockY() + y, sp.getBlockZ() + 1), true, sp);
+                                    BlockPos pos = new BlockPos(sp.getBlockX() + i, sp.getBlockY() + y, sp.getBlockZ() + 1);
+                                    if (l.destroyBlock(pos, true, sp)) {
+                                        DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_BREAK, false);
+                                        if(data.getEnergy() < BindingCosts.OVERWORLD_BREAK) {
+                                            DataUtil.syncBindingData(sp);
+                                            return;
+                                        }
+                                    }
                                 }
                             }
                         }
+                        DataUtil.syncBindingData(sp);
                     }
 
                 }
             } else if (data.getBinding() == Binding.END) {
                 PlayerTimerData playerTimerData = PlayerTimerData.for_(sp);
-                if (sp.isShiftKeyDown() && l.getBlockState(sp.blockPosition().below()).entityCanStandOn(l, sp.blockPosition().below(), sp) && !playerTimerData.hasTimer("recharge_end_binding_jump") && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
+                if (sp.isShiftKeyDown() && data.getEnergy() >= BindingCosts.END_VERTICAL_TP && l.getBlockState(sp.blockPosition().below()).entityCanStandOn(l, sp.blockPosition().below(), sp) && !playerTimerData.hasTimer("recharge_end_binding_jump") && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
                     for (int y = sp.getBlockY() - 2; y > l.getMinBuildHeight(); y--) {
                         BlockPos pos = sp.blockPosition().atY(y);
                         BlockPos pos1 = pos.below();
                         BlockPos pos2 = pos1.below();
                         if (l.getBlockState(pos2).entityCanStandOn(l, pos2, sp) && !l.getBlockState(pos1).isSuffocating(l, pos1) && !l.getBlockState(pos).isSuffocating(l, pos)) {
-                            if (data.drainEnergy(25)) {
+                            if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.END_VERTICAL_TP)) {
                                 sp.teleportTo(sp.getX(), pos1.getY(), sp.getZ());
                                 playerTimerData.addTimer(new PlayerTimer(3, "recharge_end_binding_jump", null, new HashMap<>()));
                                 sp.level().playSound(null, sp.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1, 1);
@@ -264,14 +296,14 @@ public class BindingEvents {
         //sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().setBindingData(new BindingData(Binding.ARCHE));
         BindingData data = DataUtil.getBindingData(sp);
         //data.setSelectedType(BindingData.ArcheDamageType.values()[(data.getSelectedType() == null ? 0 : ((data.getSelectedType().ordinal() + 1) % BindingData.ArcheDamageType.values().length))]);
-        if (data != null && data.getBinding() == Binding.END && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
+        if (data != null && data.getBinding() == Binding.END && data.getEnergy() >= BindingCosts.END_VERTICAL_TP && (sp.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Registration.BLOOD_FIST.get() || sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get())) {
             Level l = sp.level();
             for (int y = sp.getBlockY() + 2; y < l.getMaxBuildHeight(); y++) {
                 BlockPos pos = sp.blockPosition().atY(y);
                 BlockPos pos1 = pos.above();
                 BlockPos pos2 = pos1.above();
                 if (l.getBlockState(pos).entityCanStandOn(l, pos, sp) && !l.getBlockState(pos1).isSuffocating(l, pos1) && !l.getBlockState(pos2).isSuffocating(l, pos2)) {
-                    if (data.drainEnergy(25)) {
+                    if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.END_VERTICAL_TP)) {
                         sp.teleportTo(sp.getX(), pos1.getY(), sp.getZ());
                         sp.setDeltaMovement(0, 0, 0);
                         sp.level().playSound(null, sp.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1, 1);
@@ -289,30 +321,34 @@ public class BindingEvents {
         if (data != null) {
             if (sp.getItemInHand(InteractionHand.OFF_HAND).getItem() == Registration.BLOOD_FIST.get()) {
                 if (data.getBinding() == Binding.OVERWORLD) {
-                    ItemStack stack = sp.getItemInHand(InteractionHand.MAIN_HAND);
-                    double percentage = (double) stack.getDamageValue() / stack.getMaxDamage();
-                    percentage -= 0.005;
-                    stack.setDamageValue((int) Math.max(0, percentage * stack.getMaxDamage() - 2));
+                    if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.OVERWORLD_REPAIR)) {
+                        ItemStack stack = sp.getItemInHand(InteractionHand.MAIN_HAND);
+                        double percentage = (double) stack.getDamageValue() / stack.getMaxDamage();
+                        percentage -= 0.005;
+                        stack.setDamageValue((int) Math.max(0, percentage * stack.getMaxDamage() - 2));
+                    }
                 } else if (data.getBinding() == Binding.NETHER) {
                     if (attacked.getMaxHealth() <= 80 && data.isInstantKill()) {
                         float requiredPlayerHealth = attacked.getMaxHealth() / 60.0F * 10 + 7;
-                        if (sp.getHealth() > requiredPlayerHealth + 1 && data.drainEnergy((int) (requiredPlayerHealth * 2) + 2)) {
+                        if (sp.getHealth() > requiredPlayerHealth + 1 && DataUtil.decreaseBindingEnergy(sp, BindingCosts.NETHER_ATTACK.apply(requiredPlayerHealth))) {
                             sp.setHealth(sp.getHealth() - requiredPlayerHealth);
                             attacked.kill();
                             PlayerTimerData.for_(sp).addTimer(new PlayerTimer(4, "no_nether_binding_instakill", null, new HashMap<>()));
                         }
                     }
                 } else if (data.getBinding() == Binding.END) {
-                    double angle = attacked.getYRot() * Math.PI / 180;
-                    angle += Math.PI;
-                    double x = -Math.sin(angle) * 2.4;
-                    double z = Math.cos(angle) * 2.4;
-                    sp.teleportTo(attacked.getX() + x, attacked.getY(), attacked.getZ() + z);
-                    Messages.sendToPlayer(GenericToClientPacket.rotateCamera((float) ((angle + Math.PI) * 180 / Math.PI), 0, 0), sp);
+                    if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.END_ATTACK)) {
+                        double angle = attacked.getYRot() * Math.PI / 180;
+                        angle += Math.PI;
+                        double x = -Math.sin(angle) * 2.4;
+                        double z = Math.cos(angle) * 2.4;
+                        sp.teleportTo(attacked.getX() + x, attacked.getY(), attacked.getZ() + z);
+                        Messages.sendToPlayer(GenericToClientPacket.rotateCamera((float) ((angle + Math.PI) * 180 / Math.PI), 0, 0), sp);
+                    }
                 } else if (data.getBinding() == Binding.ARCHE) {
                     if (Math.random() < 0.2) {
                         ItemStack mainHandItem = attacked.getMainHandItem();
-                        if (!mainHandItem.isEmpty()) {
+                        if (!mainHandItem.isEmpty() && DataUtil.decreaseBindingEnergy(sp, BindingCosts.ARCHE_ATTACK)) {
                             VanillaUtils.dropItem(attacked);
                         }
                     }
@@ -323,7 +359,7 @@ public class BindingEvents {
                     List<Entity> entities = attacked.level().getEntities(((Entity) null), AABB.ofSize(attacked.position(), 50, 50, 50), e -> (e instanceof Mob));
                     for (Entity entity : entities) {
                         if (entity instanceof Mob mob && Objects.equals(mob.getTarget(), sp)) {
-                            if (Math.random() < 0.5) {
+                            if (Math.random() < 0.5 && DataUtil.decreaseBindingEnergy(sp, BindingCosts.NETHER_TARGET)) {
                                 mob.setTarget(attacked);
                             }
                         }
@@ -349,13 +385,17 @@ public class BindingEvents {
                 }
                 return false;
             }), l, aabb);
-            nearbyPlayers.forEach(p -> p.heal(2));
+            nearbyPlayers.forEach(p -> {
+                if (DataUtil.decreaseBindingEnergy(p, BindingCosts.OVERWORLD_HEAL)) {
+                    p.heal(2);
+                }
+            });
         }
     }
 
     public static void playerDeathEvent(LivingDeathEvent event, ServerPlayer sp) {
         BindingData data = DataUtil.getBindingData(sp);
-        if (data != null && data.getBinding() == Binding.END && data.drainEnergy(0)) {
+        if (data != null && data.getBinding() == Binding.END && DataUtil.decreaseBindingEnergy(sp, BindingCosts.END_SURVIVE)) {
             PlayerTimerData playerTimerData = PlayerTimerData.for_(sp);
             if (!playerTimerData.hasTimer("recharge_end_binding")) {
                 playerTimerData.addTimer(new PlayerTimer(END_DEATH_RECHARGE_TIMER, "recharge_end_binding", PersistentPlayerTimer.RECHARGE_END_BINDING, new HashMap<>()));
@@ -375,7 +415,7 @@ public class BindingEvents {
         List<Player> nearbyPlayers = event.getEntity().level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(e -> {
             if (e instanceof ServerPlayer sp) {
                 BindingData data = DataUtil.getBindingData(sp);
-                if (data != null && data.getBinding() == Binding.NETHER && !PlayerTimerData.for_(sp).hasTimer("no_nether_binding_instakill")) {
+                if (data != null && data.getBinding() == Binding.NETHER && !PlayerTimerData.for_(sp).hasTimer("no_nether_binding_instakill") && DataUtil.decreaseBindingEnergy(sp, BindingCosts.NETHER_HEAL)) {
                     return true;
                 }
             }
@@ -405,7 +445,7 @@ public class BindingEvents {
         if (event.getEntity() instanceof ServerPlayer sp) {
             BindingData data = DataUtil.getBindingData(sp);
             if (data != null) {
-                if (data.getBinding() == Binding.NETHER && event.getSource().is(DamageTypeTags.IS_FIRE)) {
+                if (data.getBinding() == Binding.NETHER && event.getSource().is(DamageTypeTags.IS_FIRE) && DataUtil.decreaseBindingEnergy(sp, BindingCosts.NETHER_FEED)) {
                     sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount() * 3));
                 }
             }
@@ -418,7 +458,7 @@ public class BindingEvents {
             if (data.getBinding() == Binding.ARCHE) {
                 int resistance = data.checkArcheResistance(event.getSource());
                 if (resistance > 0) {
-                    if (data.drainEnergy((int) (event.getAmount() * 2))) {
+                    if (DataUtil.decreaseBindingEnergy(sp, BindingCosts.ARCHE_HEAL.apply(event.getAmount()))) {
                         event.setCanceled(true);
                         sp.heal(event.getAmount());
                     }
