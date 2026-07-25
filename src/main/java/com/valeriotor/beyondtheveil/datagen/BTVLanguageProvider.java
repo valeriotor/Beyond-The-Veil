@@ -2977,19 +2977,37 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• Three dyes or clay balls.\\1" +
                 "• The IV stand.");
 
-        add("research.thesis.ritual.binding_overworld.title", "Binding of the Overworld");
-        add("research.thesis.ritual.binding_overworld.text", "The Binding of the Overworld is the first of the three known world bindings. These rituals were used to attune the slayers to a particular dimension’s energy, thereby bestowing upon them superhuman abilities–most of which required a Blood Fist to be performed, and whose energy would have to be replenished after prolonged use.\\n" +
+        add("research.thesis.ritual.bind_overworld.title", "Binding of the Overworld");
+        add("research.thesis.ritual.bind_overworld.text", "The Binding of the Overworld is the first of the three known world bindings. These rituals were used to attune the slayers to a particular dimension’s energy, thereby bestowing upon them superhuman abilities–most of which required a Blood Fist to be performed, and whose energy would have to be replenished after prolonged use.\\n" +
                 "This particular binding attuned the user to the earthly, living world. The bound individual was able to more easily place large amounts of materials on the ground at once, as well as destroy objects in front or below by simply walking into them. Additionally, they could repair their clothes and gear by lending any life force in excess.\\n" +
-                "Finally, they would partake in any bestowal of life, finding healing in any nearby births of creatures.");
+                "Finally, they would partake in any bestowal of life, finding healing in any nearby births of creatures.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A block of prismarine.\\1" +
+                "• A phial containing a memory of sentience.\\1" +
+                "• A Totem of Undying.");
 
-        add("research.thesis.ritual.binding_nether.title", "Binding of the Nether");
-        add("research.thesis.ritual.binding_nether.text", "The Binding of the Nether is the second known world binding. Where the Overworld is attuned to life, the Nether is to death. Individuals with this binding would find healing in nearby deaths of creatures, and satiation in flames–which they were also known to spread. They were also able to swiftly dispatch weak or weakened creatures, albeit at a cost in health.\\n" +
-                "Finally, the binding was also associated with control, and the mindless creatures serving bound users (such as blood undead) would benefit from increased strength.\n");
+        add("research.thesis.ritual.bind_nether.title", "Binding of the Nether");
+        add("research.thesis.ritual.bind_nether.text", "The Binding of the Nether is the second known world binding. Where the Overworld is attuned to life, the Nether is to death. Individuals with this binding would find healing in nearby deaths of creatures, and satiation in flames–which they were also known to spread. They were also able to swiftly dispatch weak or weakened creatures, albeit at a cost in health.\\n" +
+                "Finally, the binding was also associated with control, and the mindless creatures serving bound users (such as blood undead) would benefit from increased strength.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A blaze rod.\\1" +
+                "• A phial containing a memory of power.\\1" +
+                "• A Totem of Undying.");
 
-        add("research.thesis.ritual.binding_end.title", "Binding of the End");
-        add("research.thesis.ritual.binding_end.text", "The Binding of the End is the third and last known world binding. As is known (and well studied by institutions such as the Miskatonic), this dimension has different spatiotemporal properties from most others, and its residents are capable of manipulating this idiosyncrasy; this is reflected in the binding.\\n" +
-                "Individuals attuned to the End were capable of teleporting large vertical distances with ease, as well as confuse melee opponents by quickly changing position. They were also known to be able to occasionally avoid death via a massive spatiotemporal leap, often being found alive in another state or province instead of falling dead where they stood.\\n" +
-                "Additionally, they were able to divert attention from themselves onto other creatures when under attack. Finally, it was common among practitioners bound to the End to utilize Elytras (a wing design developed by an unknown End civilization), which they could reportedly fly more easily after undergoing the binding.");
+        add("research.thesis.ritual.bind_end.title", "Binding of the End");
+        add("research.thesis.ritual.bind_end.text", "The Binding of the End is the third and last known world binding. As is known, this dimension has different spatiotemporal properties from most others, and its residents are capable of manipulating this idiosyncrasy.\\n" +
+                "Individuals attuned to the End were capable of teleporting vertical distances with ease, and confuse melee opponents by quickly changing position. They were also known to be able to occasionally avoid death via a massive spatiotemporal leap, often being found alive in another state or province instead of falling dead where they stood.\\n" +
+                "Additionally, they were able to divert attention from themselves onto other creatures when under attack. Finally, it was common among practitioners bound to the End to utilize Elytras (a wing design developed by an unknown End civilization), which they could reportedly fly more easily after undergoing the binding.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A chorus fruit.\\1" +
+                "• A phial containing a memory of void.\\1" +
+                "• A Totem of Undying.");
 
 
         add("research.thesis.manifestation.title", "Manifestation Rituals");

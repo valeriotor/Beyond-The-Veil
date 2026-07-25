@@ -19,6 +19,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 
 import java.util.ArrayList;
@@ -85,15 +86,6 @@ public class BloodThesisGui extends Screen {
         return blocks;
     }
 
-    private TextBlock centered(String key, int index) {
-        Font f = minecraft.font;
-        return new TextBlock(new TextUtil().alignCenter().parseText(I18n.get("research.thesis." + key + "." + index), TEXT_BLOCK_WIDTH, f), TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, f);
-    }
-
-    private TextBlock m(String key, int index) {
-        return new TextBlock(I18n.get("research.thesis." + key + "." + index), TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, minecraft.font);
-    }
-
     private TextBlock empty() {
         return new TextBlock("", TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, minecraft.font);
     }
@@ -121,7 +113,7 @@ public class BloodThesisGui extends Screen {
             IntIntPair leftPageMouse = leftPageMouse(pMouseX, pMouseY);
             leftElement.render(pose, pGuiGraphics, 0xFF000000, leftPageMouse.firstInt(), leftPageMouse.secondInt(), pPartialTick);
             pose.popPose();
-            pGuiGraphics.blit(BACKGROUND, -BACKGROUND_BASE_WIDTH / 2, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
+            //pGuiGraphics.blit(BACKGROUND, -BACKGROUND_BASE_WIDTH / 2, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
         }
         if (rightElement != null) {
             pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
@@ -133,7 +125,7 @@ public class BloodThesisGui extends Screen {
             RenderSystem.enableBlend();
             rightElement.render(pose, pGuiGraphics, 0xFF000000, rightPageMouse.firstInt(), rightPageMouse.secondInt(), pPartialTick);
             pose.popPose();
-            pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
+            //pGuiGraphics.blit(BACKGROUND, BACKGROUND_BASE_WIDTH / 2 - PAGE_WIDTH, -BACKGROUND_BASE_HEIGHT / 2, PAGE_WIDTH, PAGE_HEIGHT, 0, 0, PAGE_WIDTH, PAGE_HEIGHT, PAGE_WIDTH, PAGE_HEIGHT);
         }
         pose.popPose();
     }
@@ -220,22 +212,22 @@ public class BloodThesisGui extends Screen {
             Font f = Minecraft.getInstance().font;
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH - 109, 31, 0);
-            graphics.drawString(f, institute1, 0, 0, color);
-            graphics.drawString(f, institute2, 0, 15, color);
+            graphics.drawString(f, institute1, 0, 0, color, false);
+            graphics.drawString(f, institute2, 0, 15, color, false);
             poseStack.popPose();
 
             int y = 127;
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
             poseStack.scale(2, 2, 1);
-            graphics.drawCenteredString(f, title1, 0, 0, color);
+            drawCenteredStringWithoutShadow(graphics, f, title1, 0, 0, color);
             poseStack.popPose();
 
             y += 30;
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
             poseStack.scale(1.75F, 1.75F, 1);
-            graphics.drawCenteredString(f, title2, 0, 0, color);
+            drawCenteredStringWithoutShadow(graphics, f, title2, 0, 0, color);
             poseStack.popPose();
 
 
@@ -243,8 +235,8 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
             poseStack.scale(1.35F, 1.35F, 1);
-            graphics.drawCenteredString(f, thesis, 0, 0, color);
-            graphics.drawCenteredString(f, author, 0, 50, color);
+            drawCenteredStringWithoutShadow(graphics, f, thesis, 0, 0, color);
+            drawCenteredStringWithoutShadow(graphics, f, author, 0, 50, color);
             poseStack.popPose();
 
 
@@ -252,7 +244,7 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, y, 0);
             poseStack.scale(1F, 1F, 1);
-            graphics.drawCenteredString(f, supervisor, 0, 0, color);
+            drawCenteredStringWithoutShadow(graphics, f, supervisor, 0, 0, color);
             poseStack.popPose();
             poseStack.popPose();
 
@@ -278,6 +270,7 @@ public class BloodThesisGui extends Screen {
             String text = I18n.get("research.thesis.abstract");
             List<Element> elements = new TextUtil().setStyle(Fonts.ACADEMIC_STYLE).alignCenter().parseText(text, TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
             this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
+            this.text.setDropShadow(false);
             //Minecraft.getInstance().font.getSplitter().splitLines(text, TEXT_BLOCK_WIDTH, Fonts.ACADEMIC_STYLE, false, (pStyle, pCurrentPos, pContentWidth) -> {
             //    lines.add(Component.literal(text.substring(pCurrentPos, pContentWidth)).withStyle(pStyle));
             //});
@@ -290,7 +283,7 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(TEXT_BLOCK_WIDTH / 2F, startY, 0);
             poseStack.scale(1.45F, 1.45F, 1);
-            graphics.drawCenteredString(Minecraft.getInstance().font, title, 0, 0, color);
+            drawCenteredStringWithoutShadow(graphics, Minecraft.getInstance().font, title, 0, 0, color);
             poseStack.popPose();
             poseStack.pushPose();
             int newY = startY + 30;
@@ -321,12 +314,12 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             //poseStack.translate(TEXT_BLOCK_WIDTH / 2D, 0, 0);
             poseStack.scale(1.25F, 1.25F, 1);
-            graphics.drawString(Minecraft.getInstance().font, chapter, 0, 0, color);
+            graphics.drawString(Minecraft.getInstance().font, chapter, 0, 0, color, false);
             poseStack.popPose();
             poseStack.pushPose();
             poseStack.translate(0, 25, 0);
             poseStack.scale(1.75F, 1.75F, 1);
-            graphics.drawString(Minecraft.getInstance().font, localized, 0, 0, color);
+            graphics.drawString(Minecraft.getInstance().font, localized, 0, 0, color, false);
             poseStack.popPose();
         }
     }
@@ -345,7 +338,7 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             //poseStack.translate(TEXT_BLOCK_WIDTH / 2D, 0, 0);
             poseStack.scale(1.25F, 1.25F, 1);
-            graphics.drawString(Minecraft.getInstance().font, localized, 0, 0, color);
+            graphics.drawString(Minecraft.getInstance().font, localized, 0, 0, color, false);
             poseStack.popPose();
         }
     }
@@ -362,8 +355,9 @@ public class BloodThesisGui extends Screen {
             String title = String.format("%d.%d   ", chapter + 1, ritualIndex + 1) + I18n.get("research.thesis.ritual." + ritual + ".title");
             this.title = Component.literal(title).withStyle(Fonts.ACADEMIC_STYLE);
             TextUtil util = new TextUtil();
-            List<Element> elements = util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            List<Element> elements = util.parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
             this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
+            text.setDropShadow(false);
         }
 
         @Override
@@ -371,7 +365,7 @@ public class BloodThesisGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(0, 0, 0);
             poseStack.scale(1.55F, 1.55F, 1);
-            graphics.drawString(Minecraft.getInstance().font, title, 0, 10, color);
+            graphics.drawString(Minecraft.getInstance().font, title, 0, 10, color, false);
             poseStack.popPose();
             poseStack.pushPose();
             poseStack.translate(0, 55, 0);
@@ -410,7 +404,7 @@ public class BloodThesisGui extends Screen {
         RISKS(2, List.of(), true),
         MODIFIER(2),
         CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT, RitualRegistry.LIVING_IRON, RitualRegistry.VESSEL_STONE, RitualRegistry.BLOOD_ORB, RitualRegistry.BLOOD_GEM, RitualRegistry.VEIN_MINER)),
-        BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO)),
+        BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO, RitualRegistry.BIND_OVERWORLD, RitualRegistry.BIND_NETHER, RitualRegistry.BIND_END)),
         MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL));
 
         private final int length;
@@ -461,6 +455,7 @@ public class BloodThesisGui extends Screen {
             int index = 0;
             while (index < elements.size()) {
                 Tuple<TextBlock, Integer> tuple = TextBlock.fillBlockWithElements(elements, index, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, f);
+                tuple.getA().setDropShadow(false);
                 blocks.add(tuple.getA());
                 index = tuple.getB();
                 //if (index < elements.size()) {
@@ -481,5 +476,10 @@ public class BloodThesisGui extends Screen {
             return blocks;
         }
 
+    }
+
+    private static void drawCenteredStringWithoutShadow(GuiGraphics graphics, Font pFont, Component pText, int pX, int pY, int pColor) {
+        FormattedCharSequence formattedcharsequence = pText.getVisualOrderText();
+        graphics.drawString(pFont, formattedcharsequence, pX - pFont.width(formattedcharsequence) / 2, pY, pColor, false);
     }
 }

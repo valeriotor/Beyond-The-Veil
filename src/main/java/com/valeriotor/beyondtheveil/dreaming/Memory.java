@@ -16,7 +16,7 @@ public enum Memory {
     ANIMAL(Registration.HEART_ITEM.get(), 0xFF401b00, new int[]{1, 0, 1, 0, 1, 0}),
     BEHEADING(Items.WITHER_SKELETON_SKULL, 0xFF333333, new int[]{1, 0, 0, 0, 1, 0}),
     CHANGE(Items.HEART_OF_THE_SEA, 0xFF4dff00, new int[]{1, 1, 1, 0, 1, 0}),
-    CRYSTAL(Items.GLASS, 0xFFe6d8d8, new int[]{1, 1, 1, 0, 1, 0}),
+    CRYSTAL(Items.EMERALD, 0xFFe6d8d8, new int[]{1, 1, 1, 0, 1, 0}),
     DARKNESS(Items.COAL, 0xFF002233, new int[]{2, 0, 1, 0, 1, 1}),
     DEATH(Items.ROTTEN_FLESH, 0xFF2a2a2c, new int[]{1, 1, 1, 0, 1, 1}),
     //ELDRITCH(Items.ENDER_EYE, 0xFF400021),

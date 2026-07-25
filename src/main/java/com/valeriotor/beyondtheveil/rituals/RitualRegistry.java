@@ -2,10 +2,15 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.google.common.collect.Streams;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.LivingPortalEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
@@ -15,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -121,11 +127,11 @@ public class RitualRegistry {
                 }
                 List<Item> allowed = Streams.concat(Arrays.stream(DyeColor.values()).map(pColor -> (Item) DyeItem.byColor(pColor)), Stream.of(Items.CLAY_BALL)).toList();
                 for (int i = 0; i < 3; i++) {
-                    if (!allowed.contains(input.get(i))) {
+                    if (!allowed.contains(input.get(i).getItem())) {
                         return false;
                     }
                 }
-                return input.get(3) == Registration.FLEBO_ITEM.get();
+                return input.get(3).getItem() == Registration.FLEBO_ITEM.get();
             })
             .setOutputs((stacks, player) -> {
                 if (stacks.size() == 4) {
@@ -178,15 +184,47 @@ public class RitualRegistry {
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
 
+    public static final RitualTemplate BIND_OVERWORLD = new RitualTemplate.RitualTemplateBuilder("bind_overworld", 300, 20, 25, 0.04, 0)
+            .setMatch(input -> exactWithMemory(input, Memory.SENTIENCE, Registration.HEART_ITEM.get(), Items.PRISMARINE, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
+            .setOtherEffects(bindingRitualEffect(Binding.OVERWORLD))
+            .toTemplate(TEMPLATES, BY_NAME);
 
-    private static boolean oneOrMore(List<Item> input, List<Item> prefix, ItemSet repeatable, int maxLength) { // TODO add startIndex to match when some are already burned... or maybe just feed again the burned items...?
+    public static final RitualTemplate BIND_NETHER = new RitualTemplate.RitualTemplateBuilder("bind_nether", 300, 20, 25, 0.04, 0)
+            .setMatch(input -> exactWithMemory(input, Memory.POWER, Registration.HEART_ITEM.get(), Items.BLAZE_ROD, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
+            .setOtherEffects(bindingRitualEffect(Binding.NETHER))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BIND_END = new RitualTemplate.RitualTemplateBuilder("bind_end", 300, 20, 25, 0.04, 0)
+            .setMatch(input -> exactWithMemory(input, Memory.VOID, Registration.HEART_ITEM.get(), Items.CHORUS_FRUIT, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
+            .setOtherEffects(bindingRitualEffect(Binding.END))
+            .toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate BIND_ARCHE = new RitualTemplate.RitualTemplateBuilder("bind_arche", 300, 20, 25, 0.04, 0)
+            .setMatch(input -> exactWithMemory(input, Memory.SENTIENCE, Registration.HEART_ITEM.get(), Items.PRISMARINE, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
+            .setOtherEffects(bindingRitualEffect(Binding.ARCHE))
+            .weeper()
+            .toTemplate(TEMPLATES, BY_NAME);
+
+
+    private static RitualTemplate.AdditionalRitualEffect bindingRitualEffect(Binding binding) {
+        return ((player, level, altarPos) -> {
+            if (level != null) {
+                Player p = level.getPlayerByUUID(player);
+                if (p != null) {
+                    p.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> data.setBindingData(new BindingData(binding)));
+                }
+            }
+        });
+    }
+
+    private static boolean oneOrMore(List<ItemStack> input, List<Item> prefix, ItemSet repeatable, int maxLength) { // TODO add startIndex to match when some are already burned... or maybe just feed again the burned items...?
         input = skipModifiers(input);
         if (input.isEmpty() || input.size() > maxLength) {
             return false;
         }
         int reached = 0;
         for (Item item : prefix) {
-            if (!Objects.equals(item, input.get(reached))) {
+            if (!Objects.equals(item, input.get(reached).getItem())) {
                 return false;
             }
             reached++;
@@ -196,20 +234,36 @@ public class RitualRegistry {
         }
 
         for (int i = reached; i < input.size(); i++) {
-            if (!repeatable.match(input.get(i))) {
+            if (!repeatable.match(input.get(i).getItem())) {
                 return false;
             }
         }
         return true;
     }
 
-    private static boolean exact(List<Item> input, Item... ingredients) {
+    private static boolean exactWithMemory(List<ItemStack> input, Memory memory, Item... ingredients) {
+        boolean exact = exact(input, ingredients);
+        if (exact) {
+            for (ItemStack stack : input) {
+                if (stack.getItem() == Registration.MEMORY_PHIAL.get()) {
+                    CompoundTag tag = stack.getOrCreateTag();
+                    Memory m = Memory.getMemoryFromDataName(tag.getString("memory"));
+                    if (m != memory) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    private static boolean exact(List<ItemStack> input, Item... ingredients) {
         input = skipModifiers(input);
         if (input.size() != ingredients.length) {
             return false;
         }
         for (int i = 0; i < input.size(); i++) {
-            Item item = input.get(i);
+            Item item = input.get(i).getItem();
             Item ingredient = ingredients[i];
             if (item != ingredient) {
                 return false;
@@ -218,16 +272,16 @@ public class RitualRegistry {
         return true;
     }
 
-    private static boolean exactWithWildcard(List<Item> input, int wildcardIndex, Item... ingredients) {
+    private static boolean exactWithWildcard(List<ItemStack> input, int wildcardIndex, Item... ingredients) {
         input = skipModifiers(input);
         if (input.size() != ingredients.length) {
             return false;
         }
         for (int i = 0; i < input.size(); i++) {
-            if (i == wildcardIndex && input.get(i) != Items.AIR) {
+            if (i == wildcardIndex && input.get(i).getItem() != Items.AIR) {
                 continue;
             }
-            Item item = input.get(i);
+            Item item = input.get(i).getItem();
             Item ingredient = ingredients[i];
             if (item != ingredient) {
                 return false;
@@ -237,9 +291,9 @@ public class RitualRegistry {
     }
 
     @NotNull
-    private static List<Item> skipModifiers(List<Item> input) {
+    private static List<ItemStack> skipModifiers(List<ItemStack> input) {
         for (int i = 0; i < input.size(); i++) {
-            if (!RitualModifierRegistry.isModifier(input.get(i))) {
+            if (!RitualModifierRegistry.isModifier(input.get(i).getItem())) {
                 input = input.subList(i, input.size());
                 break;
             } else if (i == input.size() - 1) {
@@ -285,7 +339,7 @@ public class RitualRegistry {
         return output;
     }
 
-    public static RitualTemplate findMatch(List<Item> nonModifierItems, PatientType patientType) {
+    public static RitualTemplate findMatch(List<ItemStack> nonModifierItems, PatientType patientType) {
         for (RitualTemplate template : TEMPLATES) {
             if (template.matches(nonModifierItems, patientType)) {
                 return template;

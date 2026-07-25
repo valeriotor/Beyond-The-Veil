@@ -9,6 +9,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public class RitualTemplate {
@@ -21,7 +22,7 @@ public class RitualTemplate {
     private final int frequencyRate = 0;
     private final BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs;
     private final AdditionalRitualEffect otherEffects;
-    private final Predicate<List<Item>> match;
+    private final Predicate<List<ItemStack>> match;
     private final PatientType patientType;
     private final double startingSecondarySeverity;
 
@@ -75,7 +76,7 @@ public class RitualTemplate {
         return frequencyRate;
     }
 
-    public boolean matches(List<Item> input, PatientType patientType) {
+    public boolean matches(List<ItemStack> input, PatientType patientType) {
         return patientType == this.patientType && match.test(input);
     }
 
@@ -89,7 +90,7 @@ public class RitualTemplate {
         private final double startingSecondarySeverity;
         private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
-        private Predicate<List<Item>> match;
+        private Predicate<List<ItemStack>> match;
         private PatientType patientType = PatientType.VILLAGER;
 
         public RitualTemplateBuilder(String name, int startingPrimaryInstability, double primaryInstabilityRateTemplate, double secondaryInstabilityRateTemplate, double secondarySeverityRateTemplate, double startingSecondarySeverity) {
@@ -101,7 +102,7 @@ public class RitualTemplate {
             this.startingSecondarySeverity = startingSecondarySeverity;
         }
 
-        public RitualTemplateBuilder setMatch(Predicate<List<Item>> input) {
+        public RitualTemplateBuilder setMatch(Predicate<List<ItemStack>> input) {
             match = input;
             return this;
         }

@@ -406,7 +406,7 @@ public class BindingEvents {
             BindingData data = DataUtil.getBindingData(sp);
             if (data != null) {
                 if (data.getBinding() == Binding.NETHER && event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                    sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount()));
+                    sp.getFoodData().setFoodLevel((int) Math.min(20, sp.getFoodData().getFoodLevel() + event.getAmount() * 3));
                 }
             }
         }

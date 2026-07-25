@@ -15,6 +15,7 @@ public class TextLine extends Element{
     private final List<Property> properties;
     private final Alignment alignRight;
     private int start;
+    private boolean dropShadow = true;
 
     public TextLine(FormattedCharSequence text, List<Property> properties, Font font) {
         this(text, properties, font, Alignment.LEFT, font.width(text));
@@ -46,7 +47,7 @@ public class TextLine extends Element{
             poseStack.translate(start, 0, 0);
             relativeMouseX -= start;
         }
-        guiGraphics.drawString(mc.font, text, 0, 0, color);
+        guiGraphics.drawString(mc.font, text, 0, 0, color, dropShadow);
         if (relativeMouseY >= 0 && relativeMouseY < 15) {
             for (Property property : properties) {
                 if (relativeMouseX >= property.getXStart() && relativeMouseX < property.getXEnd()) {
@@ -77,5 +78,9 @@ public class TextLine extends Element{
             }
         }
         return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
+    }
+
+    public void setDropShadow(boolean dropShadow) {
+        this.dropShadow = dropShadow;
     }
 }

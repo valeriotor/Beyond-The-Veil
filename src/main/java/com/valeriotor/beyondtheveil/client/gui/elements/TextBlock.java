@@ -66,4 +66,12 @@ public class TextBlock extends Element{
         }
         return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
     }
+
+    public void setDropShadow(boolean dropShadow) {
+        for (Element line : lines) {
+            if (line instanceof TextLine l) {
+                l.setDropShadow(dropShadow);
+            }
+        }
+    }
 }

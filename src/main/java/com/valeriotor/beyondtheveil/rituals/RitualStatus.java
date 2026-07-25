@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.rituals;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
+import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -9,9 +11,7 @@ import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -24,7 +24,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -60,26 +59,26 @@ public class RitualStatus {
     private final List<ItemStack> burnedIngredients = new ArrayList<>();
     private int itemBurnCounter = -1;
     private final UUID initiator;
-    private List<Item> startItems = new ArrayList<>();
+    private List<ItemStack> startItems = new ArrayList<>();
     private int counter;
     private boolean deleteVictim;
 
     public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars, PatientType patientType) {
-        List<Item> items = new ArrayList<>();
+        List<ItemStack> items = new ArrayList<>();
         for (BlockPos altar : altars) {
             if (level.getBlockEntity(altar) instanceof BloodBasinBE bloodBasinBE) {
                 ItemStack stackInSlot = bloodBasinBE.getStackHandler().getStackInSlot(0);
                 if (!stackInSlot.isEmpty()) {
-                    items.add(stackInSlot.getItem());
+                    items.add(stackInSlot);
                 }
             } else {
                 return null;
             }
         }
-        List<Item> nonModifierItems = new ArrayList<>();
+        List<ItemStack> nonModifierItems = new ArrayList<>();
         boolean flag = false;
-        for (Item item : items) {
-            if (!RitualModifierRegistry.isModifier(item)) {
+        for (ItemStack item : items) {
+            if (!RitualModifierRegistry.isModifier(item.getItem())) {
                 flag = true;
             }
             if (flag) {
@@ -93,15 +92,15 @@ public class RitualStatus {
         return new RitualStatus(template, startPos, altars, initiator, items);
     }
 
-    private RitualStatus(RitualTemplate template, BlockPos startPos, List<BlockPos> altars, UUID initiator, List<Item> startItems) {
+    private RitualStatus(RitualTemplate template, BlockPos startPos, List<BlockPos> altars, UUID initiator, List<ItemStack> startItems) {
         this.template = template;
         this.startPos = startPos;
         this.altars = new ArrayList<>(altars);
         this.initiator = initiator;
         this.startItems = startItems;
         numberOfModifiers = 0;
-        for (Item startItem : startItems) {
-            if (RitualModifierRegistry.isModifier(startItem)) {
+        for (ItemStack startItem : startItems) {
+            if (RitualModifierRegistry.isModifier(startItem.getItem())) {
                 numberOfModifiers++;
             } else {
                 break;
@@ -147,9 +146,9 @@ public class RitualStatus {
         for (int i = 0; i < burnedIngredients.size(); i++) {
             this.burnedIngredients.add(ItemStack.of(burnedIngredients.getCompound(i)));
         }
-        ListTag startItems = tag.getList("startItems", Tag.TAG_STRING);
+        ListTag startItems = tag.getList("startItems", Tag.TAG_COMPOUND);
         for (int i = 0; i < startItems.size(); i++) {
-            this.startItems.add(BuiltInRegistries.ITEM.get(new ResourceLocation(startItems.getString(i))));
+            this.startItems.add(ItemStack.of(startItems.getCompound(i)));
         }
 
         numberOfModifiers = tag.getInt("numberOfModifiers");
@@ -211,7 +210,7 @@ public class RitualStatus {
                 if (currentHop < distances.length - 1 && currentHop > numberOfModifiers - 1) {
                     if (level.getBlockEntity(altars.get(currentHop)) instanceof BloodBasinBE bloodBasin) {
                         ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers)) { // change to template.match(burnedItems + leftItems)? but we just want that one item... so no. Just tell the player that is has to be either the same item or an identical one
+                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, currentHop)) {
                             success = false;
                             stalling = true;
                         }
@@ -262,7 +261,7 @@ public class RitualStatus {
                 primaryInstability = 0;
             }
             secondaryInstability += secondaryInstabilityIncreaseRate;
-            if (secondaryInstability >= 600) {
+            if (secondaryInstability >= 700) {
                 doSecondaryInstabilityEffect(level, false);
                 secondaryInstability = 0;
             }
@@ -370,6 +369,9 @@ public class RitualStatus {
         } else if (effect == PrimaryInstabilityEffect.PUSH_ITEM && secondaryInstabilitySeverity > 2) {
             effect = PrimaryInstabilityEffect.BURN_ITEM;
         }
+        if (level.random.nextDouble() < secondaryInstabilityIncreaseRateTemplate / 100) {
+            doSecondaryInstabilityEffect(level, true);
+        }
         switch (effect) {
 
             case PUSH_ITEM -> {
@@ -401,9 +403,7 @@ public class RitualStatus {
             }
         }
         primaryInstabilityIncreaseRate = Math.max(primaryInstabilityIncreaseRateTemplate, primaryInstabilityIncreaseRate - primaryInstabilityIncreaseRateTemplate / 2);
-        if (level.random.nextDouble() < secondaryInstabilityIncreaseRateTemplate / 100) {
-            doSecondaryInstabilityEffect(level, true);
-        }
+
     }
 
     private BlockPos randomUpcomingAltarPos(RandomSource randomSource) {
@@ -460,8 +460,8 @@ public class RitualStatus {
 
         ListTag startItems = new ListTag();
         for (int i = 0; i < this.startItems.size(); i++) {
-            Item startItem = this.startItems.get(i);
-            startItems.add(i, StringTag.valueOf(BuiltInRegistries.ITEM.getKey(startItem).toString()));
+            ItemStack startItem = this.startItems.get(i);
+            startItems.add(i, startItem.save(new CompoundTag()));
         }
         tag.put("startItems", startItems);
 
@@ -483,19 +483,15 @@ public class RitualStatus {
         BURN_ITEM(2000, 5), // fire
         ;
 
-        private final int minimum;
 
         private final int weight;
-        private final int reduction;
 
         PrimaryInstabilityEffect(int minimum, int weight) {
             this(minimum, weight, minimum / 2);
         }
 
         PrimaryInstabilityEffect(int minimum, int weight, int reduction) {
-            this.minimum = minimum;
             this.weight = weight;
-            this.reduction = reduction;
         }
 
     }
@@ -532,7 +528,7 @@ public class RitualStatus {
             BlockPos blockPos = altars.get(i);
             if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
                 ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                if (heldItem.getItem() != startItems.get(i - numberOfModifiers)) {
+                if (heldItem.getItem() != startItems.get(i - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, i)) {
                     Vec3 center = blockPos.getCenter();
                     level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
                     if (counter % 5 == 0) {
@@ -542,6 +538,10 @@ public class RitualStatus {
                 }
             }
         }
+    }
+
+    private boolean memoryDoesNotMatch(ItemStack heldItem, int i) {
+        return heldItem.getItem() == Registration.MEMORY_PHIAL.get() && MemoryPhialItem.fromStack(heldItem) != MemoryPhialItem.fromStack(startItems.get(i - numberOfModifiers));
     }
 
 }
