@@ -25,6 +25,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
@@ -210,7 +211,7 @@ public class RitualStatus {
                 if (currentHop < distances.length - 1 && currentHop > numberOfModifiers - 1) {
                     if (level.getBlockEntity(altars.get(currentHop)) instanceof BloodBasinBE bloodBasin) {
                         ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, currentHop)) {
+                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, currentHop) || rottenFleshIsInsufficient(heldItem, currentHop)) {
                             success = false;
                             stalling = true;
                         }
@@ -434,6 +435,9 @@ public class RitualStatus {
         if (player != null) {
             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.performed_ritual.name(), true, false);
         }
+        if (Objects.equals(template.getName(), "summon_energy_zombie")) {
+            deleteVictim = true;
+        }
     }
 
     public CompoundTag saveToNBT(CompoundTag tag) {
@@ -528,7 +532,7 @@ public class RitualStatus {
             BlockPos blockPos = altars.get(i);
             if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
                 ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                if (heldItem.getItem() != startItems.get(i - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, i)) {
+                if (heldItem.getItem() != startItems.get(i - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, i) || rottenFleshIsInsufficient(heldItem, i)) {
                     Vec3 center = blockPos.getCenter();
                     level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
                     if (counter % 5 == 0) {
@@ -542,6 +546,10 @@ public class RitualStatus {
 
     private boolean memoryDoesNotMatch(ItemStack heldItem, int i) {
         return heldItem.getItem() == Registration.MEMORY_PHIAL.get() && MemoryPhialItem.fromStack(heldItem) != MemoryPhialItem.fromStack(startItems.get(i - numberOfModifiers));
+    }
+
+    private boolean rottenFleshIsInsufficient(ItemStack heldItem, int i) {
+        return heldItem.getItem() == Items.ROTTEN_FLESH && heldItem.getCount() < 20 && template.getName().equals("summon_energy_zombie");
     }
 
 }

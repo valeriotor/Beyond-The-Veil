@@ -373,6 +373,10 @@ public class SacrificeAltarBE extends BlockEntity {
                 if (ritualStatus.tick(sl)) {
                     ritualStatus.terminationEffects(sl, centerPos);
                     killVictim();
+                    if (ritualStatus.isDeleteVictim()) {
+                        entityData = null;
+                        patientStatus = null;
+                    }
                     ritualStatus = null;
                     updateClient();
                 } else if (ritualStatus.isEarlyStop()) {

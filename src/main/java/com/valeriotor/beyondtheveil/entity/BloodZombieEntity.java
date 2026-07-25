@@ -8,13 +8,20 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.MinionDefendMasterTargetGoal
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingCosts;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -25,12 +32,16 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuardian, AnimatedEntity {
@@ -40,6 +51,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     private UUID master;
     private Animation jawAnimation;
     private boolean longSound;
+    private boolean replenishesBindingEnergy;
 
     public BloodZombieEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -51,9 +63,13 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 12));
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-        this.targetSelector.addGoal(2, (new MinionDefendMasterTargetGoal<>(this, false)));
-        this.targetSelector.addGoal(1, (new MinionHelpMasterTargetGoal<>(this, false)));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+        this.targetSelector.addGoal(1, new MinionHelpMasterTargetGoal<>(this, false));
+        this.targetSelector.addGoal(2, new MinionDefendMasterTargetGoal<>(this, false));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, l -> !Objects.equals(l.getUUID(), master)));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -71,6 +87,23 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         super.defineSynchedData();
         this.entityData.define(SUSPICIOUS_LOOK, false);
         this.entityData.define(DATA_TARGETING, false);
+    }
+
+    @Override
+    public void die(DamageSource pDamageSource) {
+        super.die(pDamageSource);
+        if (replenishesBindingEnergy && pDamageSource.getEntity() instanceof ServerPlayer sp) {
+            BindingData data = DataUtil.getBindingData(sp);
+            if (data != null) {
+                data.fillEnergy(BindingCosts.ZOMBIE_FILL_AMOUNT);
+                DataUtil.syncBindingData(sp);
+                sp.serverLevel().playSound(null, blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.HOSTILE);
+            }
+        }
+    }
+
+    public void setReplenishesBindingEnergy(boolean replenishesBindingEnergy) {
+        this.replenishesBindingEnergy = replenishesBindingEnergy;
     }
 
     public boolean isTargeting() {
@@ -115,6 +148,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         if (master != null) {
             pCompound.putString("master", master.toString());
         }
+        pCompound.putBoolean("replenishesBindingEnergy", replenishesBindingEnergy);
     }
 
     @Override
@@ -123,6 +157,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         if (pCompound.contains("master")) {
             master = UUID.fromString(pCompound.getString("master"));
         }
+        replenishesBindingEnergy = pCompound.getBoolean("replenishesBindingEnergy");
     }
 
     @Override

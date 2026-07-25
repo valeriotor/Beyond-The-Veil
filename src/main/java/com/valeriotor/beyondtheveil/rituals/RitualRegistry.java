@@ -4,9 +4,11 @@ import com.google.common.collect.Streams;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.entity.BloodZombieEntity;
 import com.valeriotor.beyondtheveil.entity.LivingPortalEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -14,6 +16,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.ItemSet;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +36,7 @@ public class RitualRegistry {
 
     private static final List<RitualTemplate> TEMPLATES = new ArrayList<>();
     private static final Map<String, RitualTemplate> BY_NAME = new HashMap<>();
-    public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS, Items.RAW_IRON);
+    public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS, Items.RAW_IRON, Items.ROTTEN_FLESH);
 
     public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 100, 1, 0, 0, 0) // negligible
             .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
@@ -181,6 +184,27 @@ public class RitualRegistry {
                         livingPortal.moveTo(vec3.add(0, 2, 0));
                         level.addFreshEntity(livingPortal);
                         level.playSound(null, new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z), SoundEvents.WITHER_SPAWN, SoundSource.NEUTRAL);
+                    }
+                }
+            }).toTemplate(TEMPLATES, BY_NAME);
+
+    public static final RitualTemplate SUMMON_ENERGY_ZOMBIE = new RitualTemplate.RitualTemplateBuilder("summon_energy_zombie", 300, 30, 65, 0.04, 0.5) // high
+            .setMatch(input -> {
+                boolean exact = exact(input, Registration.HEART_ITEM.get(), Registration.SPINE.get(), Items.ROTTEN_FLESH);
+                if (exact) {
+                    input = skipModifiers(input);
+                    return input.get(2).getCount() >= 20;
+                }
+                return false;
+            })
+            .setOtherEffects((player, level, vec3) -> {
+                if (level != null) {
+                    BloodZombieEntity zombie = BTVEntities.BLOOD_ZOMBIE.get().create(level);
+                    if (zombie != null) {
+                        zombie.moveTo(vec3.add(0, 0, 0));
+                        zombie.setReplenishesBindingEnergy(true);
+                        level.addFreshEntity(zombie);
+                        level.playSound(null, BlockPos.containing(vec3), BTVSounds.HEART_RIP.get(), SoundSource.HOSTILE);
                     }
                 }
             }).toTemplate(TEMPLATES, BY_NAME);

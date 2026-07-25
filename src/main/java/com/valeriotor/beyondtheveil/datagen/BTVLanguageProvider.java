@@ -3032,6 +3032,15 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• A nether star.\\1" +
                 "• A blaze rod.\\1" +
                 "• A ghast tear.");
+
+        add("research.thesis.ritual.summon_energy_zombie.title", "Replenish Energy");
+        add("research.thesis.ritual.summon_energy_zombie.text", "The previously described world bindings would infuse the user with a certain amount of the chosen dimension's energy, but utilizing the imparted powers would deplete it. In order to replenish it, bound individuals engaged in necromancy: they would infuse the sacrificial victim instead, raising it from the dead and then slaying it once more.\\n" +
+                "It is unclear exactly what form the resuscitated individual would take; to the best of our knowledge, it is generally described as some form of zombie.\\n" +
+                "\\n" +
+                "Ingredients:\\n" +
+                "• A heart.\\1" +
+                "• A spine.\\1" +
+                "• At least twenty rotten flesh.");
     }
 
     private void addBloodPool() {

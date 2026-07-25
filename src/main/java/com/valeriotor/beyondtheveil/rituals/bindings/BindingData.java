@@ -49,6 +49,10 @@ public class BindingData {
         return energy;
     }
 
+    public void fillEnergy(int amount) {
+        energy = Math.min(BindingCosts.MAX_ENERGY, energy + amount);
+    }
+
     public boolean drainEnergy(int amount) {
         if (energy >= amount) {
             energy -= amount;

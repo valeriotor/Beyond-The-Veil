@@ -405,7 +405,7 @@ public class BloodThesisGui extends Screen {
         MODIFIER(2),
         CREATION(1, List.of(RitualRegistry.BLOOD_BRICKS, RitualRegistry.CORAL_STAFF, RitualRegistry.BLEEDING_BELT, RitualRegistry.LIVING_IRON, RitualRegistry.VESSEL_STONE, RitualRegistry.BLOOD_ORB, RitualRegistry.BLOOD_GEM, RitualRegistry.VEIN_MINER)),
         BINDING(1, List.of(RitualRegistry.BIND_ITEM_DAMAGE, RitualRegistry.BIND_ITEM_WEAKNESS, RitualRegistry.BIND_PILLAR, RitualRegistry.POOL_FLEBO, RitualRegistry.BIND_OVERWORLD, RitualRegistry.BIND_NETHER, RitualRegistry.BIND_END)),
-        MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL));
+        MANIFESTATION(1, List.of(RitualRegistry.SUMMON_WITHER, RitualRegistry.SUMMON_LIVING_PORTAL, RitualRegistry.SUMMON_ENERGY_ZOMBIE));
 
         private final int length;
         private final List<RitualTemplate> rituals;

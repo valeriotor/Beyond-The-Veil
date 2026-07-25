@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 public class BindingCosts {
 
+    public static final int MAX_ENERGY = 10000;
+    public static final int ZOMBIE_FILL_AMOUNT = 6000;
     public static final int OVERWORLD_BREAK = 2; // per block
     public static final int OVERWORLD_HEAL = 5;
     public static final int OVERWORLD_REPAIR = 40;
