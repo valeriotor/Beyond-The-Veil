@@ -125,6 +125,11 @@ public class RitualStatus {
         primaryInstabilityIncreaseRateTemplate = template.getPrimaryInstabilityRateTemplate();
         secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate();
         secondaryInstabilityIncreaseRateTemplate = template.getSecondaryInstabilityRateTemplate();
+        primaryInstability = tag.getDouble("primaryInstability");
+        primaryInstabilityIncreaseRate = tag.getDouble("primaryInstabilityIncreaseRate");
+        secondaryInstability = tag.getDouble("secondaryInstability");
+        secondaryInstabilityIncreaseRate = tag.getDouble("secondaryInstabilityIncreaseRate");
+        secondaryInstabilitySeverity = tag.getDouble("secondaryInstabilitySeverity");
         long[] altars = tag.getLongArray("altars");
         this.startPos = BlockPos.of(tag.getLong("startPos"));
         this.altars = new ArrayList<>();
@@ -463,6 +468,12 @@ public class RitualStatus {
         tag.putInt("numberOfModifiers", numberOfModifiers);
         tag.putInt("itemBurnCounter", itemBurnCounter);
         tag.putString("initiator", initiator.toString());
+
+        tag.putDouble("primaryInstability", primaryInstability);
+        tag.putDouble("primaryInstabilityIncreaseRate", primaryInstabilityIncreaseRate);
+        tag.putDouble("secondaryInstability", secondaryInstability);
+        tag.putDouble("secondaryInstabilityIncreaseRate", secondaryInstabilityIncreaseRate);
+        tag.putDouble("secondaryInstabilitySeverity", secondaryInstabilitySeverity);
 
         return tag;
     }
