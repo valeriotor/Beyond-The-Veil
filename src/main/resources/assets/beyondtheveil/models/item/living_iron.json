@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
-  "base": {"parent": "beyondtheveil:item/living_iron_base"},
+  "base": {"parent": "beyondtheveil:item/living_iron_held"},
   "perspectives": {
     "thirdperson_lefthand":  {"parent": "beyondtheveil:item/living_iron_held"},
     "thirdperson_righthand": {"parent": "beyondtheveil:item/living_iron_held"},

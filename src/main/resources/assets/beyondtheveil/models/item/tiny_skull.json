@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
-  "base": {"parent": "beyondtheveil:item/tiny_skull_base"},
+  "base": {"parent": "beyondtheveil:item/tiny_skull_held"},
   "perspectives": {
     "thirdperson_lefthand":  {"parent": "beyondtheveil:item/tiny_skull_held"},
     "thirdperson_righthand": {"parent": "beyondtheveil:item/tiny_skull_held"},
