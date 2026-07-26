@@ -378,11 +378,12 @@ public class BloodThesisGui extends Screen {
     private static class RitualPicture extends Element {
 
         private final ResourceLocation image;
+        private final Component instability;
 
         protected RitualPicture(RitualTemplate ritual) {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
             image = new ResourceLocation(References.MODID, "textures/gui/rituals/" + ritual.getName() + ".png");
-
+            instability = Component.translatable("research.thesis.instability", Component.translatable("research.thesis.instability." + ritual.getThesisInstability().name().toLowerCase())).withStyle(Fonts.ACADEMIC_STYLE);
         }
 
         @Override
@@ -391,6 +392,10 @@ public class BloodThesisGui extends Screen {
                 poseStack.pushPose();
                 poseStack.translate(0, 0, 100);
                 graphics.blit(image, 0, 60, 300, 300, 0, 0, 500, 500, 500, 500);
+                poseStack.popPose();
+                poseStack.pushPose();
+                poseStack.translate(150, 380, 0);
+                drawCenteredStringWithoutShadow(graphics, Minecraft.getInstance().font, instability, 0, 0, 0xFF000000);
                 poseStack.popPose();
             }
         }

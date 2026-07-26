@@ -32,53 +32,55 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static com.valeriotor.beyondtheveil.rituals.RitualTemplate.Instability.*;
+
 public class RitualRegistry {
 
     private static final List<RitualTemplate> TEMPLATES = new ArrayList<>();
     private static final Map<String, RitualTemplate> BY_NAME = new HashMap<>();
     public static final Set<Item> MULTIPLE_ALLOWED = Set.of(Items.STONE_BRICKS, Items.RAW_IRON, Items.ROTTEN_FLESH);
 
-    public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 100, 1, 0, 0, 0) // negligible
+    public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 100, 1, 0, 0, 0, NEGLIGIBLE)
             .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
             .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 3)))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 20, 10, 0.03, 0) // low
+    public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 20, 10, 0.03, 0, LOW)
             .setMatch(input -> exact(input, Items.FIRE_CORAL, Items.HEART_OF_THE_SEA, Registration.HEART_ITEM.get()))
             .setOutputs(List.of(new ItemStack(Registration.CORAL_STAFF.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BLEEDING_BELT = new RitualTemplate.RitualTemplateBuilder("bleeding_belt", 5, 20, 40, 0.03, 1.1) // medium
+    public static final RitualTemplate BLEEDING_BELT = new RitualTemplate.RitualTemplateBuilder("bleeding_belt", 5, 20, 40, 0.03, 1.1, MEDIUM)
             .setMatch(input -> exact(input, Items.CHAIN, Registration.GREAT_HEART.get(), Registration.GREAT_HEART.get(), Items.CACTUS))
             .setOutputs(List.of(new ItemStack(Registration.BLEEDING_BELT.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 1, 1, 0, 0) // negligible
+    public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 1, 1, 0, 0, NEGLIGIBLE)
             .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 4))
             .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 4))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate VESSEL_STONE = new RitualTemplate.RitualTemplateBuilder("vessel_stone", 5, 20, 10, 0.03, 0) // low
+    public static final RitualTemplate VESSEL_STONE = new RitualTemplate.RitualTemplateBuilder("vessel_stone", 5, 20, 10, 0.03, 0, LOW)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.EMERALD_BLOCK, Registration.EMPTY_BLADDER.get(), Items.CHORUS_FRUIT))
             .setOutputs(List.of(new ItemStack(Registration.VESSEL_STONE.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BLOOD_ORB = new RitualTemplate.RitualTemplateBuilder("blood_orb", 5, 20, 10, 0.03, 0) // low
+    public static final RitualTemplate BLOOD_ORB = new RitualTemplate.RitualTemplateBuilder("blood_orb", 5, 20, 10, 0.03, 0, LOW)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.HEART_OF_THE_SEA, Items.EGG))
             .setOutputs(List.of(new ItemStack(Registration.BLOOD_ORB.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BLOOD_GEM = new RitualTemplate.RitualTemplateBuilder("blood_gem", 5, 20, 10, 0.03, 0) // low
+    public static final RitualTemplate BLOOD_GEM = new RitualTemplate.RitualTemplateBuilder("blood_gem", 5, 20, 10, 0.03, 0, LOW)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.DIAMOND, Items.QUARTZ))
             .setOutputs(List.of(new ItemStack(Registration.BLOOD_GEM.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate VEIN_MINER = new RitualTemplate.RitualTemplateBuilder("vein_miner", 5, 20, 40, 0.03, 1.1) // medium
+    public static final RitualTemplate VEIN_MINER = new RitualTemplate.RitualTemplateBuilder("vein_miner", 5, 20, 40, 0.03, 1.1, MEDIUM)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.DIAMOND_PICKAXE, Registration.EMPTY_BLADDER.get()))
             .setOutputs(List.of(new ItemStack(Registration.VEIN_MINER.get())))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_ITEM_DAMAGE = new RitualTemplate.RitualTemplateBuilder("bind_item_damage", 50, 20, 30, 0.03, 0) // medium
+    public static final RitualTemplate BIND_ITEM_DAMAGE = new RitualTemplate.RitualTemplateBuilder("bind_item_damage", 50, 20, 30, 0.03, 0, MEDIUM)
             .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.DIAMOND_SWORD, Registration.SCALPEL.get()))
             .setOutputs((stacks, player) -> {
                 if (stacks.size() == 4) {
@@ -89,7 +91,7 @@ public class RitualRegistry {
                 return List.of();
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_ITEM_WEAKNESS = new RitualTemplate.RitualTemplateBuilder("bind_item_weakness", 50, 20, 30, 0.03, 0) // medium
+    public static final RitualTemplate BIND_ITEM_WEAKNESS = new RitualTemplate.RitualTemplateBuilder("bind_item_weakness", 50, 20, 30, 0.03, 0, MEDIUM)
             .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.ANVIL, Registration.SPINE.get()))
             .setOutputs((stacks, player) -> {
                 if (stacks.size() == 4) {
@@ -100,7 +102,7 @@ public class RitualRegistry {
                 return List.of();
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 50, 40, 10, 0, 0) // low
+    public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 50, 40, 10, 0, 0, LOW)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Registration.OFFER_PILLAR_ITEM.get(), Registration.BLOOD_SHARD.get()))
             .setOutputs((stacks, player) -> {
                 ItemStack stack = new ItemStack(Registration.OFFER_PILLAR.get());
@@ -123,7 +125,7 @@ public class RitualRegistry {
                 return List.of(stack);
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 50, 20, 10, 0, 0) // low
+    public static final RitualTemplate POOL_FLEBO = new RitualTemplate.RitualTemplateBuilder("pool_flebo", 50, 20, 10, 0, 0, LOW)
             .setMatch(input -> {
                 input = skipModifiers(input);
                 if (input.size() != 4) {
@@ -162,7 +164,7 @@ public class RitualRegistry {
             })
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate SUMMON_WITHER = new RitualTemplate.RitualTemplateBuilder("summon_wither", 300, 20, 25, 0.04, 0) // medium
+    public static final RitualTemplate SUMMON_WITHER = new RitualTemplate.RitualTemplateBuilder("summon_wither", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.SOUL_SAND, Items.WITHER_SKELETON_SKULL))
             .setOtherEffects((player, level, vec3) -> {
                 if (level != null) {
@@ -175,7 +177,7 @@ public class RitualRegistry {
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate SUMMON_LIVING_PORTAL = new RitualTemplate.RitualTemplateBuilder("summon_living_portal", 300, 40, 65, 0.04, 0.4) // high
+    public static final RitualTemplate SUMMON_LIVING_PORTAL = new RitualTemplate.RitualTemplateBuilder("summon_living_portal", 300, 40, 65, 0.04, 0.4, HIGH)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.NETHER_STAR, Items.BLAZE_ROD, Items.GHAST_TEAR))
             .setOtherEffects((player, level, vec3) -> {
                 if (level != null) {
@@ -188,7 +190,7 @@ public class RitualRegistry {
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate SUMMON_ENERGY_ZOMBIE = new RitualTemplate.RitualTemplateBuilder("summon_energy_zombie", 300, 30, 65, 0.04, 0.5) // high
+    public static final RitualTemplate SUMMON_ENERGY_ZOMBIE = new RitualTemplate.RitualTemplateBuilder("summon_energy_zombie", 300, 30, 65, 0.04, 0.5, HIGH)
             .setMatch(input -> {
                 boolean exact = exact(input, Registration.HEART_ITEM.get(), Registration.SPINE.get(), Items.ROTTEN_FLESH);
                 if (exact) {
@@ -209,22 +211,22 @@ public class RitualRegistry {
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_OVERWORLD = new RitualTemplate.RitualTemplateBuilder("bind_overworld", 300, 20, 25, 0.04, 0)
+    public static final RitualTemplate BIND_OVERWORLD = new RitualTemplate.RitualTemplateBuilder("bind_overworld", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exactWithMemory(input, Memory.SENTIENCE, Registration.HEART_ITEM.get(), Items.PRISMARINE, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
             .setOtherEffects(bindingRitualEffect(Binding.OVERWORLD))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_NETHER = new RitualTemplate.RitualTemplateBuilder("bind_nether", 300, 20, 25, 0.04, 0)
+    public static final RitualTemplate BIND_NETHER = new RitualTemplate.RitualTemplateBuilder("bind_nether", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exactWithMemory(input, Memory.POWER, Registration.HEART_ITEM.get(), Items.BLAZE_ROD, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
             .setOtherEffects(bindingRitualEffect(Binding.NETHER))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_END = new RitualTemplate.RitualTemplateBuilder("bind_end", 300, 20, 25, 0.04, 0)
+    public static final RitualTemplate BIND_END = new RitualTemplate.RitualTemplateBuilder("bind_end", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exactWithMemory(input, Memory.VOID, Registration.HEART_ITEM.get(), Items.CHORUS_FRUIT, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
             .setOtherEffects(bindingRitualEffect(Binding.END))
             .toTemplate(TEMPLATES, BY_NAME);
 
-    public static final RitualTemplate BIND_ARCHE = new RitualTemplate.RitualTemplateBuilder("bind_arche", 300, 20, 25, 0.04, 0)
+    public static final RitualTemplate BIND_ARCHE = new RitualTemplate.RitualTemplateBuilder("bind_arche", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exactWithMemory(input, Memory.SENTIENCE, Registration.HEART_ITEM.get(), Items.PRISMARINE, Registration.MEMORY_PHIAL.get(), Items.TOTEM_OF_UNDYING))
             .setOtherEffects(bindingRitualEffect(Binding.ARCHE))
             .weeper()

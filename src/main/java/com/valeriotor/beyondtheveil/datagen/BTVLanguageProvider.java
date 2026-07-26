@@ -2871,9 +2871,17 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• Returning ingredients: a diamond, used as an offering, was said to provide a chance of some other offering in the ritual not being fully burned by the blood nucleus, allowing it to be salvaged.\\n" +
                 "• Targeting locations: some rituals allowed for their effects to take place at specific locations. To do this, either a pathway sigil or immortal sigil could be used, the latter specifying the target individual’s current location (if within the same dimension).");
 
+        add("research.thesis.instability", "Instability: %1$s");
+        add("research.thesis.instability.negligible", "§2Negligible");
+        add("research.thesis.instability.low", "§9Low");
+        add("research.thesis.instability.medium", "§4Medium");
+        add("research.thesis.instability.high", "§5High");
+
+
         add("research.thesis.creation.title", "Creation Rituals");
         add("research.thesis.creation.text.1", "Creation rituals involved the construction of items infused with blood’s properties. Thus, objects created in such a manner were able to create and utilize bindings, or heal and harm their wielder, or grant life and bring death to creatures. \\n" +
                 "We have collected several such rituals, making this our largest chapter.");
+
         add("research.thesis.ritual.blood_bricks.title", "Blood Bricks");
         add("research.thesis.ritual.blood_bricks.text", "The victims’ blood could infuse normal stone bricks with its essence, leading credence that the resulting blood bricks contained some snippet of life—some claimed that walking within a structure built from these blocks could raise the echo of their deceased fathers and mothers, though this has never been corroborated with evidence.\\n" +
                 "Most importantly, these were used in the construction of blood wells: structures said to open portal veins through the roots of the world for undead to walk through.\\n" +
@@ -2936,9 +2944,11 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• A diamond pickaxe.\\1" +
                 "• An empty bladder.");
 
+
         add("research.thesis.binding.title", "Binding Rituals");
         add("research.thesis.binding.text.1", "Binding rituals were used to create connections between objects or creatures. Oftentimes, this involved enhancing an item to act as either the nexus or an endpoint of a connection; for example, binding an object to its owner, or creating an object to bind creatures to its owner. \\n" +
                 "We observe a great variety of shapes that these connections can take; so far, we have gathered four such rituals. In future work, we plan to extend this chapter, including new rituals such as those among immortal humans.");
+
         add("research.thesis.ritual.bind_item_damage.title", "Bind item (damage)");
         add("research.thesis.ritual.bind_item_damage.text", "This type of ritual was used by witches to gain power upon others, working as a sort of \"hex\" attached to arbitrary objects. The item would be bound to the one who performed the ritual; any other person possessing the item would come to much more severe harm than normal whenever struck by the bound individual.\\n" +
                 "Thus, the challenge lay in trickery: how to hand the cursed object to the detested foe, while raising nary a hint of suspicion?\\n" +
@@ -3012,6 +3022,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.thesis.manifestation.title", "Manifestation Rituals");
         add("research.thesis.manifestation.text.1", "Manifestation rituals leveraged blood’s ability to grant life to creatures, after bringing death to the ritual victim. However, only a few such rituals are known to have existed; in this work, we have gathered two.");
+
         add("research.thesis.ritual.summon_wither.title", "Summon Wither");
         add("research.thesis.ritual.summon_wither.text", "Known to be terribly dangerous—their summoning has been forbidden within the walls of the Miskatonic, as well as the city of Arkham as a whole—Withers remain nonetheless a common goal among hunters, both for the challenge and the precious star animating them from their core.\\n" +
                 "This ritual was used to ease the summoning of withers, by supplementing a single wither skull with a deceased victim’s blood. However, its high instability may have made it more trouble than it was worth, and no instances of the ritual have been documented in several decades.\\n" +

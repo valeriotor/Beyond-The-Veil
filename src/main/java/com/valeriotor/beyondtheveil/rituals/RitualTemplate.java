@@ -2,14 +2,11 @@ package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public class RitualTemplate {
@@ -25,6 +22,7 @@ public class RitualTemplate {
     private final Predicate<List<ItemStack>> match;
     private final PatientType patientType;
     private final double startingSecondarySeverity;
+    private final Instability thesisInstability;
 
 
     private RitualTemplate(RitualTemplateBuilder builder) {
@@ -38,6 +36,7 @@ public class RitualTemplate {
         this.otherEffects = builder.otherEffects;
         match = builder.match;
         this.patientType = builder.patientType;
+        this.thesisInstability = builder.thesisInstability;
     }
 
     public String getName() {
@@ -72,8 +71,8 @@ public class RitualTemplate {
         return secondarySeverityRateTemplate;
     }
 
-    public int getFrequencyRate() {
-        return frequencyRate;
+    public Instability getThesisInstability() {
+        return thesisInstability;
     }
 
     public boolean matches(List<ItemStack> input, PatientType patientType) {
@@ -88,18 +87,20 @@ public class RitualTemplate {
         private final double secondaryInstabilityRateTemplate;
         private final double secondarySeverityRateTemplate;
         private final double startingSecondarySeverity;
+        public final Instability thesisInstability;
         private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
         private Predicate<List<ItemStack>> match;
         private PatientType patientType = PatientType.VILLAGER;
 
-        public RitualTemplateBuilder(String name, int startingPrimaryInstability, double primaryInstabilityRateTemplate, double secondaryInstabilityRateTemplate, double secondarySeverityRateTemplate, double startingSecondarySeverity) {
+        public RitualTemplateBuilder(String name, int startingPrimaryInstability, double primaryInstabilityRateTemplate, double secondaryInstabilityRateTemplate, double secondarySeverityRateTemplate, double startingSecondarySeverity, Instability thesisInstability) {
             this.name = name;
             this.startingPrimaryInstability = startingPrimaryInstability;
             this.primaryInstabilityRateTemplate = primaryInstabilityRateTemplate;
             this.secondaryInstabilityRateTemplate = secondaryInstabilityRateTemplate;
             this.secondarySeverityRateTemplate = secondarySeverityRateTemplate;
             this.startingSecondarySeverity = startingSecondarySeverity;
+            this.thesisInstability = thesisInstability;
         }
 
         public RitualTemplateBuilder setMatch(Predicate<List<ItemStack>> input) {
@@ -141,6 +142,8 @@ public class RitualTemplate {
         void apply(UUID player, ServerLevel level, Vec3 altarPos);
     }
 
-
+    public enum Instability {
+        NEGLIGIBLE, LOW, MEDIUM, HIGH
+    }
 
 }
