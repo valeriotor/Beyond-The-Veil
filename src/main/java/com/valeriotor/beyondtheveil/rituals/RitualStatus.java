@@ -11,11 +11,15 @@ import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.EntityType;
@@ -31,6 +35,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RitualStatus {
@@ -40,13 +45,13 @@ public class RitualStatus {
 
     private double primaryInstability; // when this reaches 1000, do an effect
     //private int primaryInstabilityIncreaseRateMin;
-    private final double primaryInstabilityIncreaseRateTemplate; // the initial change rate of primary instability. It can't go below this. Increases are defined in relation to it
+    private double primaryInstabilityIncreaseRateTemplate; // the initial change rate of primary instability. It can't go below this. Increases are defined in relation to it
     private double primaryInstabilityIncreaseRate; // the change rate for primary instability. Increases when basins lack items, especially if they're stalling progress. Decreases slightly over time, but mainly when major accidents occur
     private double secondaryInstability; // when this reaches 1000, do an effect
-    private final double secondaryInstabilityIncreaseRateTemplate; // the "template" change rate of secondary instability. Increases are defined in relation to it
+    private double secondaryInstabilityIncreaseRateTemplate; // the "template" change rate of secondary instability. Increases are defined in relation to it
     private double secondaryInstabilityIncreaseRate; // the change rate for secondary instability
     private double secondaryInstabilitySeverity; // which tier of effects should be chosen
-    private final double secondaryInstabilitySeverityIncreaseRateTemplate; //
+    private double secondaryInstabilitySeverityIncreaseRateTemplate; //
     private int frequency;
     private int respitePeriod;
     private int currentHop;
@@ -63,6 +68,9 @@ public class RitualStatus {
     private List<ItemStack> startItems = new ArrayList<>();
     private int counter;
     private boolean deleteVictim;
+    private Function<ServerLevel, Tuple<Vec3, ResourceKey<Level>>> targetPosition;
+    private double saveItemChance = 0.0;
+    private boolean decreasedInstability;
 
     public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars, PatientType patientType) {
         List<ItemStack> items = new ArrayList<>();
@@ -117,7 +125,6 @@ public class RitualStatus {
         secondaryInstabilityIncreaseRate = secondaryInstabilityIncreaseRateTemplate;
         secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate();
         secondaryInstabilitySeverity = template.getStartingSecondarySeverity();
-
     }
 
     public RitualStatus(CompoundTag tag) {
@@ -130,6 +137,7 @@ public class RitualStatus {
         secondaryInstability = tag.getDouble("secondaryInstability");
         secondaryInstabilityIncreaseRate = tag.getDouble("secondaryInstabilityIncreaseRate");
         secondaryInstabilitySeverity = tag.getDouble("secondaryInstabilitySeverity");
+        decreasedInstability = tag.getBoolean("decreasedInstability");
         long[] altars = tag.getLongArray("altars");
         this.startPos = BlockPos.of(tag.getLong("startPos"));
         this.altars = new ArrayList<>();
@@ -157,6 +165,10 @@ public class RitualStatus {
         progressUntilNextHop = tag.getDouble("progressUntilNextHop");
         itemBurnCounter = tag.getInt("itemBurnCounter");
         initiator = UUID.fromString(tag.getString("initiator"));
+
+        for (ItemStack burnedModifier : this.burnedModifiers) {
+            RitualModifierRegistry.modifierEffect(this, burnedModifier);
+        }
     }
 
     private void computeDistances(BlockPos startPos, List<BlockPos> altars) {
@@ -208,10 +220,10 @@ public class RitualStatus {
             if (progressUntilNextHop > distances[currentHop]) {
                 // TODO wait for a bit, process instability
                 boolean success = true;
-                if (currentHop < distances.length - 1 && currentHop > numberOfModifiers - 1) {
+                if (currentHop < distances.length - 1) {
                     if (level.getBlockEntity(altars.get(currentHop)) instanceof BloodBasinBE bloodBasin) {
                         ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                        if (heldItem.getItem() != startItems.get(currentHop - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, currentHop) || rottenFleshIsInsufficient(heldItem, currentHop)) {
+                        if (heldItem.getItem() != startItems.get(currentHop).getItem() || memoryDoesNotMatch(heldItem, currentHop) || rottenFleshIsInsufficient(heldItem, currentHop)) {
                             success = false;
                             stalling = true;
                         }
@@ -236,9 +248,11 @@ public class RitualStatus {
                     } else {
                         if (level.getBlockEntity(altars.get(currentHop - 1)) instanceof BloodBasinBE bloodBasin) {
                             if (currentHop - 1 > numberOfModifiers - 1) {
-                                burnedIngredients.add(bloodBasin.removeItem());
+                                burnedIngredients.add(level.random.nextDouble() < saveItemChance ? bloodBasin.getStackHandler().getStackInSlot(0) : bloodBasin.removeItem());
                             } else {
-                                burnedModifiers.add(bloodBasin.removeItem());
+                                ItemStack stack = level.random.nextDouble() < saveItemChance ? bloodBasin.getStackHandler().getStackInSlot(0) : bloodBasin.removeItem();
+                                burnedModifiers.add(stack);
+                                RitualModifierRegistry.modifierEffect(this, stack);
                             }
                         }
                     }
@@ -334,7 +348,7 @@ public class RitualStatus {
                 if (blockPos != null) {
                     Vec3 center = blockPos.getCenter();
                     int radius = effect == SecondaryInstabilityEffectRedone.SMALL_EXPLOSION ? 1 : (effect == SecondaryInstabilityEffectRedone.MEDIUM_EXPLOSION ? 2 : 3);
-                    level.explode(null, center.x, center.y+1, center.z, radius, Level.ExplosionInteraction.TNT);
+                    level.explode(null, center.x, center.y + 1, center.z, radius, Level.ExplosionInteraction.TNT);
                 }
             }
             case LIGHTNING, MULTIPLE_LIGHTNING -> {
@@ -430,7 +444,16 @@ public class RitualStatus {
             ItemEntity item = new ItemEntity(level, altar.x, altar.y, altar.z, outputStack);
             level.addFreshEntity(item);
         }
-        template.getOtherEffects().apply(initiator, level, altar);
+        Vec3 target = altar;
+        ResourceKey<Level> dimension = level.dimension();
+        if (targetPosition != null) {
+            Tuple<Vec3, ResourceKey<Level>> apply = targetPosition.apply(level);
+            if (apply != null) {
+                target = apply.getA();
+                dimension = apply.getB();
+            }
+        }
+        template.getOtherEffects().apply(initiator, level, target, dimension);
         Player player = level.getPlayerByUUID(initiator);
         if (player != null) {
             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.performed_ritual.name(), true, false);
@@ -478,6 +501,7 @@ public class RitualStatus {
         tag.putDouble("secondaryInstability", secondaryInstability);
         tag.putDouble("secondaryInstabilityIncreaseRate", secondaryInstabilityIncreaseRate);
         tag.putDouble("secondaryInstabilitySeverity", secondaryInstabilitySeverity);
+        tag.putBoolean("decreasedInstability", decreasedInstability);
 
         return tag;
     }
@@ -532,7 +556,7 @@ public class RitualStatus {
             BlockPos blockPos = altars.get(i);
             if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
                 ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                if (heldItem.getItem() != startItems.get(i - numberOfModifiers).getItem() || memoryDoesNotMatch(heldItem, i) || rottenFleshIsInsufficient(heldItem, i)) {
+                if (heldItem.getItem() != startItems.get(i).getItem() || memoryDoesNotMatch(heldItem, i) || rottenFleshIsInsufficient(heldItem, i)) {
                     Vec3 center = blockPos.getCenter();
                     level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
                     if (counter % 5 == 0) {
@@ -545,11 +569,29 @@ public class RitualStatus {
     }
 
     private boolean memoryDoesNotMatch(ItemStack heldItem, int i) {
-        return heldItem.getItem() == Registration.MEMORY_PHIAL.get() && MemoryPhialItem.fromStack(heldItem) != MemoryPhialItem.fromStack(startItems.get(i - numberOfModifiers));
+        return heldItem.getItem() == Registration.MEMORY_PHIAL.get() && MemoryPhialItem.fromStack(heldItem) != MemoryPhialItem.fromStack(startItems.get(i));
     }
 
     private boolean rottenFleshIsInsufficient(ItemStack heldItem, int i) {
         return heldItem.getItem() == Items.ROTTEN_FLESH && heldItem.getCount() < 20 && template.getName().equals("summon_energy_zombie");
     }
 
+    public void increaseSaveItemChance(double amount) {
+        saveItemChance += amount;
+    }
+
+    public void setTargetPosition(Function<ServerLevel, Tuple<Vec3, ResourceKey<Level>>> targetPosition) {
+        this.targetPosition = targetPosition;
+    }
+
+    public void decreaseInstabilityRate() {
+        if (!decreasedInstability) {
+            primaryInstabilityIncreaseRateTemplate = template.getPrimaryInstabilityRateTemplate() * 0.4;
+            secondaryInstabilityIncreaseRateTemplate = template.getSecondaryInstabilityRateTemplate() * 0.4;
+            secondaryInstabilitySeverityIncreaseRateTemplate = template.getSecondarySeverityRateTemplate() * 0.4;
+            primaryInstabilityIncreaseRate = Math.min(primaryInstabilityIncreaseRate, primaryInstabilityIncreaseRateTemplate / 2);
+            secondaryInstability = Math.min(secondaryInstabilityIncreaseRate, secondaryInstabilitySeverityIncreaseRateTemplate / 2);
+            decreasedInstability = true;
+        }
+    }
 }

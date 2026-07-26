@@ -1,11 +1,16 @@
 package com.valeriotor.beyondtheveil.rituals;
 
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
@@ -89,7 +94,7 @@ public class RitualTemplate {
         private final double startingSecondarySeverity;
         public final Instability thesisInstability;
         private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
-        private AdditionalRitualEffect otherEffects = (player, level, vec3) -> {};
+        private AdditionalRitualEffect otherEffects = (player, level, vec3, dimension) -> {};
         private Predicate<List<ItemStack>> match;
         private PatientType patientType = PatientType.VILLAGER;
 
@@ -139,7 +144,7 @@ public class RitualTemplate {
 
     @FunctionalInterface
     interface AdditionalRitualEffect {
-        void apply(UUID player, ServerLevel level, Vec3 altarPos);
+        void apply(UUID player, ServerLevel level, Vec3 targetPos, ResourceKey<Level> dimension); // target pos is either altar or whatever is targeted by modifier sigils
     }
 
     public enum Instability {

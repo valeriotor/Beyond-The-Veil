@@ -19,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -166,26 +167,46 @@ public class RitualRegistry {
 
     public static final RitualTemplate SUMMON_WITHER = new RitualTemplate.RitualTemplateBuilder("summon_wither", 300, 20, 25, 0.04, 0, MEDIUM)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.SOUL_SAND, Items.WITHER_SKELETON_SKULL))
-            .setOtherEffects((player, level, vec3) -> {
+            .setOtherEffects((player, level, vec3, dimension) -> {
                 if (level != null) {
-                    WitherBoss witherboss = EntityType.WITHER.create(level);
-                    if (witherboss != null) {
-                        witherboss.moveTo(vec3.add(0, 3, 0));
-                        witherboss.makeInvulnerable();
-                        level.addFreshEntity(witherboss);
+                    if (!level.dimension().equals(dimension)) {
+                        ServerLevel level1 = level.getServer().getLevel(dimension);
+                        if (level1 != null) {
+                            level = level1;
+                        } else {
+                            return;
+                        }
+                    }
+                    if (true || level.isLoaded(BlockPos.containing(vec3))) { // If this ever causes issues we remove the "true ||"
+                        WitherBoss witherboss = EntityType.WITHER.create(level);
+                        if (witherboss != null) {
+                            witherboss.moveTo(vec3.add(0, 3, 0));
+                            witherboss.makeInvulnerable();
+                            level.addFreshEntity(witherboss);
+                        }
                     }
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate SUMMON_LIVING_PORTAL = new RitualTemplate.RitualTemplateBuilder("summon_living_portal", 300, 40, 65, 0.04, 0.4, HIGH)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Items.NETHER_STAR, Items.BLAZE_ROD, Items.GHAST_TEAR))
-            .setOtherEffects((player, level, vec3) -> {
+            .setOtherEffects((player, level, vec3, dimension) -> {
                 if (level != null) {
-                    LivingPortalEntity livingPortal = BTVEntities.LIVING_PORTAL.get().create(level);
-                    if (livingPortal != null) {
-                        livingPortal.moveTo(vec3.add(0, 2, 0));
-                        level.addFreshEntity(livingPortal);
-                        level.playSound(null, new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z), SoundEvents.WITHER_SPAWN, SoundSource.NEUTRAL);
+                    if (!level.dimension().equals(dimension)) {
+                        ServerLevel level1 = level.getServer().getLevel(dimension);
+                        if (level1 != null) {
+                            level = level1;
+                        } else {
+                            return;
+                        }
+                    }
+                    if (true || level.isLoaded(BlockPos.containing(vec3))) {
+                        LivingPortalEntity livingPortal = BTVEntities.LIVING_PORTAL.get().create(level);
+                        if (livingPortal != null) {
+                            livingPortal.moveTo(vec3.add(0, 2, 0));
+                            level.addFreshEntity(livingPortal);
+                            level.playSound(null, new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z), SoundEvents.WITHER_SPAWN, SoundSource.NEUTRAL);
+                        }
                     }
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
@@ -199,14 +220,24 @@ public class RitualRegistry {
                 }
                 return false;
             })
-            .setOtherEffects((player, level, vec3) -> {
+            .setOtherEffects((player, level, vec3, dimension) -> {
                 if (level != null) {
-                    BloodZombieEntity zombie = BTVEntities.BLOOD_ZOMBIE.get().create(level);
-                    if (zombie != null) {
-                        zombie.moveTo(vec3.add(0, 0, 0));
-                        zombie.setReplenishesBindingEnergy(true);
-                        level.addFreshEntity(zombie);
-                        level.playSound(null, BlockPos.containing(vec3), BTVSounds.HEART_RIP.get(), SoundSource.HOSTILE);
+                    if (!level.dimension().equals(dimension)) {
+                        ServerLevel level1 = level.getServer().getLevel(dimension);
+                        if (level1 != null) {
+                            level = level1;
+                        } else {
+                            return;
+                        }
+                    }
+                    if (true || level.isLoaded(BlockPos.containing(vec3))) {
+                        BloodZombieEntity zombie = BTVEntities.BLOOD_ZOMBIE.get().create(level);
+                        if (zombie != null) {
+                            zombie.moveTo(vec3.add(0, 0, 0));
+                            zombie.setReplenishesBindingEnergy(true);
+                            level.addFreshEntity(zombie);
+                            level.playSound(null, BlockPos.containing(vec3), BTVSounds.HEART_RIP.get(), SoundSource.HOSTILE);
+                        }
                     }
                 }
             }).toTemplate(TEMPLATES, BY_NAME);
@@ -234,7 +265,7 @@ public class RitualRegistry {
 
 
     private static RitualTemplate.AdditionalRitualEffect bindingRitualEffect(Binding binding) {
-        return ((player, level, altarPos) -> {
+        return ((player, level, altarPos, dimension) -> {
             if (level != null) {
                 Player p = level.getPlayerByUUID(player);
                 if (p instanceof ServerPlayer sp) {
@@ -285,6 +316,7 @@ public class RitualRegistry {
         }
         return false;
     }
+
     private static boolean exact(List<ItemStack> input, Item... ingredients) {
         input = skipModifiers(input);
         if (input.size() != ingredients.length) {
@@ -334,6 +366,7 @@ public class RitualRegistry {
     private static List<ItemStack> byNumber(List<ItemStack> input, Item outputItem, int max) {
         return byNumber(input, null, outputItem, max);
     }
+
     private static List<ItemStack> byNumber(List<ItemStack> input, Item matchItem, Item outputItem, int max) {
         List<ItemStack> output = new ArrayList<>();
         for (int i = 0; i < input.size() && i < max; i++) {

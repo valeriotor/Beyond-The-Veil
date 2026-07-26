@@ -71,7 +71,7 @@ public class BloodSigilPathway  extends Item {
         CompoundTag tag = pStack.getTag();
         if (tag != null && tag.contains("area")) {
             BlockPos area = BlockPos.of(tag.getLong("area"));
-            ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(tag.getString("dimension")));
+            //ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(tag.getString("dimension")));
             pTooltipComponents.add(Component.translatable("tooltip.sigil.area", area.getX(), area.getY(), area.getZ()));
             if (tag.contains("biomeName") && tag.contains("biomeNamespace")) {
                 pTooltipComponents.add(Component.translatable("biome." + tag.getString("biomeNamespace") + "." + tag.getString("biomeName")));
