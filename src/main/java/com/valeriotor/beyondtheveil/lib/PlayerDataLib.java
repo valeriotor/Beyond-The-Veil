@@ -86,7 +86,12 @@ public enum PlayerDataLib {
     did_binding,
     received_revelation,
     bound_cult,
-    met_cult;
+    met_cult,
+    binding_overworld,
+    binding_nether,
+    binding_end,
+    binding_arche
+    ;
 
     // Longs
     public static final String WATERTPDEST = "watertpdest";

@@ -139,5 +139,11 @@
   },
   "keeper_suffocate": {
     "sounds": [ "beyondtheveil:keeper_suffocate" ]
+  },
+  "activate": {
+    "sounds": [ "beyondtheveil:activate" ]
+  },
+  "deactivate": {
+    "sounds": [ "beyondtheveil:deactivate" ]
   }
 }

@@ -12,9 +12,13 @@ import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
+import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.multiblocks.MultiblockSchematic;
 import net.minecraft.client.Minecraft;
@@ -22,6 +26,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -29,6 +34,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -76,6 +82,7 @@ public class ResearchPageGui extends Screen {
     private final ItemStack memorySieve = new ItemStack(Registration.MEMORY_SIEVE.get());
     private final ItemStack bricks = new ItemStack(Blocks.BRICKS);
     private final ItemStack thesis = new ItemStack(Registration.BLOOD_THESIS.get());
+    private final ItemStack fist = new ItemStack(Registration.BLOOD_FIST.get());
 
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research_background.png");
     private static final ResourceLocation FRAME = new ResourceLocation(References.MODID, "textures/gui/research_frame.png");
@@ -96,6 +103,7 @@ public class ResearchPageGui extends Screen {
     private static final ResourceLocation EN_TITLES = new ResourceLocation(References.MODID, "textures/gui/pamphlet/en_titles.png");
     //private static final ResourceLocation RECIPE_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/research/research_page_recipe_background.png");
     //public static final ResourceLocation CIRCLE = new ResourceLocation(References.MODID, "textures/gui/recipe_circle.png");
+    private static final Set<String> BINDING_RESEARCHES = Set.of("BINDING_OVERWORLD", "BINDING_NETHER", "BINDING_END", "BINDING_ARCHE");
     private int middleSpace;
     private int blackPageHeight;
     private int blackPageWidth;
@@ -117,6 +125,7 @@ public class ResearchPageGui extends Screen {
     private int pamphletHeight;
     private int pamphletX;
     private int pamphletY;
+    private final List<Tuple<Button, Component>> bindingButtons = new ArrayList<>();
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -251,6 +260,9 @@ public class ResearchPageGui extends Screen {
         if (status.res.getStages()[status.getStage()].isPamphlet()) {
             recipeTypes.add(RecipeType.PAMPHLET);
         }
+        if (BINDING_RESEARCHES.contains(status.res.getKey())) {
+            recipeTypes.add(RecipeType.BINDING_POWERS);
+        }
         if (!craftingRecipes.isEmpty()) {
             recipeTypes.add(RecipeType.CRAFTING_TABLE);
         }
@@ -297,6 +309,7 @@ public class ResearchPageGui extends Screen {
             pamphletX = (width - pamphletWidth) / 2;
         }
 
+        buildBindingButtons();
     }
 
     //private void makeRecipes(String[] recipes) {
@@ -346,7 +359,7 @@ public class ResearchPageGui extends Screen {
             pose.popPose();
             return;
         }
-        //RenderSystem.setShaderColor(1, 1, 1, 1);
+
         if (width < 2560 && height < 1440) {
             guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
         } else {
@@ -421,6 +434,13 @@ public class ResearchPageGui extends Screen {
             //pose.scale(scaleFactor, scaleFactor, 1);
             currentMultiblock.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - width / 2) / scaleFactor) + currentMultiblock.getWidth() / 2, (int) ((mouseY - gridY2) / scaleFactor), partialTicks);
             pose.popPose();
+        } else if (selectedRecipeType == RecipeType.BINDING_POWERS) {
+            for (Tuple<Button, Component> bindingButton : bindingButtons) {
+                Button b = bindingButton.getA();
+                int x = b.getX() + b.getWidth() + 10;
+                int y = b.getY() + 5;
+                guiGraphics.drawString(font, bindingButton.getB(), x, y, 0xFFFFFFFF);
+            }
         }
 
         //if (selectedRecipeGroup != null) {
@@ -531,6 +551,7 @@ public class ResearchPageGui extends Screen {
             case MEMORY -> memories.size();
             case MULTIBLOCK -> multiblocks.size();
             case PAMPHLET -> 1;
+            case BINDING_POWERS -> 1;
         };
     }
 
@@ -541,6 +562,7 @@ public class ResearchPageGui extends Screen {
             case MEMORY -> memorySieve;
             case MULTIBLOCK -> bricks;
             case PAMPHLET -> thesis;
+            case BINDING_POWERS -> fist;
         };
     }
 
@@ -580,7 +602,6 @@ public class ResearchPageGui extends Screen {
             guiGraphics.blit(STAGES[i], -16, -16, 0, 0, 32, 32, 32, 32);
             pose.popPose();
         }
-
     }
 
     private RecipeType hoveredSelection(double mouseX, double mouseY) {
@@ -681,6 +702,7 @@ public class ResearchPageGui extends Screen {
                         } else if (recipeType == RecipeType.MULTIBLOCK) {
                             makeMultiblock();
                         }
+                        toggleBindingButtons();
                         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
                     } else {
                         resetRecipe();
@@ -717,6 +739,7 @@ public class ResearchPageGui extends Screen {
         currentGrid = null;
         memoryIngredient = null;
         currentMultiblock = null;
+        toggleBindingButtons();
     }
 
     private void leftArrowClick() {
@@ -797,39 +820,91 @@ public class ResearchPageGui extends Screen {
     }
 
 
-    //private int hoveringRecipeKey(int mouseX, int mouseY) {
-    //    mouseX -= this.width / 2;
-    //    mouseY -= this.height / 2;
-    //    if(this.mc.gameSettings.guiScale == 3 || this.mc.gameSettings.guiScale == 0) {
-    //        mouseX = mouseX * 4 / 3;
-    //        mouseY = mouseY * 4 / 3;
-    //    }
-    //    if(mouseY > 125 && mouseY < 141 && mouseX >= -160) {
-    //        int a = (mouseX + 160) / 25;
-    //        if(a < 6 && a < recipes.size() && a >= 0)
-    //            return a;
-    //    }
-    //    return -1;
-    //}
+    private void buildBindingButtons() {
+        String n = this.status.res.getKey();
+        bindingButtons.clear();
+        if (BINDING_RESEARCHES.contains(n)) {
+            Binding binding = Binding.valueOf(n.substring(8));
+            int y = 230;
+            for (BindingData.PowerToggles value : BindingData.PowerToggles.values()) {
+                if (value.getBinding() == binding) {
+                    powerButton(value, width / 2 - 200, y);
+                    y += 35;
+                }
+            }
+            if (binding == Binding.ARCHE) {
+                y += 40;
+                BindingData.ArcheDamageType[] values = BindingData.ArcheDamageType.values();
+                for (int i = 0; i < values.length; i++) {
+                    BindingData.ArcheDamageType archeDamageType = values[i];
+                    archeButton(archeDamageType, width / 2 + (i % 2 == 0 ? -200 : 50), y);
+                    if (i % 2 == 1) {
+                        y += 35;
+                    }
+                }
+            }
+        }
+        toggleBindingButtons();
+    }
 
-    //@Override
-    //public RenderItem getItemRender() {
-    //    return this.itemRender;
-    //}
-//
-    //@Override
-    //public void renderTooltip(ItemStack stack, int x, int y) {
-    //    this.renderToolTip(stack, x, y);
-    //}
-//
-    //@Override
-    //public void updateScreen() {
-    //    if(this.shownRecipe != null)
-    //        this.shownRecipe.update();
-    //}
+    private void powerButton(BindingData.PowerToggles power, int x, int y) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            BindingData data = DataUtil.getBindingData(p);
+            if (data != null && data.getBinding() == power.getBinding()) {
+                Component activeText = Component.translatable("research.binding_power_enabled");
+                Component inactiveText = Component.translatable("research.binding_power_disabled");
+                Button button = Button.builder(data.isPowerEnabled(power) ? activeText : inactiveText, b -> {
+                    data.setPowerEnabled(power, !data.isPowerEnabled(power));
+                    b.setMessage(data.isPowerEnabled(power) ? activeText : inactiveText);
+                    Messages.sendToServer(GenericToServerPacket.toggleBindingPower(power, data.isPowerEnabled(power)));
+                }).bounds(x, y, 70, 20).build();
+                bindingButtons.add(new Tuple<>(button, Component.translatable("research.binding_power." + power.name().toLowerCase())));
+                addRenderableWidget(button);
+            }
+        }
+    }
+
+    private void archeButton(BindingData.ArcheDamageType damageType, int x, int y) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            BindingData data = DataUtil.getBindingData(p);
+            if (data != null && data.getBinding() == Binding.ARCHE) {
+                Component text;
+                if (data.getSelectedType() == null) {
+                    text = Component.translatable("research.arche_damage_not_chosen");
+                } else if (data.getSelectedType() == damageType) {
+                    text = Component.translatable("research.arche_damage_chosen");
+                } else {
+                    text = Component.translatable("research.arche_damage_double");
+                }
+                Button button = Button.builder(text, b -> {
+                    BindingData.ArcheDamageType toSet;
+                    if (data.getSelectedType() == damageType) {
+                        toSet = null;
+                    } else {
+                        toSet = damageType;
+                    }
+                    data.setSelectedType(toSet);
+                    Messages.sendToServer(GenericToServerPacket.setArcheDamageType(toSet));
+                    clearWidgets();
+                    init();
+                }).bounds(x, y, 70, 20).build();
+                bindingButtons.add(new Tuple<>(button, Component.translatable("research.binding_power.arche_damage." + damageType.name().toLowerCase())));
+                addRenderableWidget(button);
+            }
+        }
+    }
+
+    private void toggleBindingButtons() {
+        for (Tuple<Button, Component> bindingButton : bindingButtons) {
+            bindingButton.getA().active = selectedRecipeType == RecipeType.BINDING_POWERS;
+            bindingButton.getA().visible = selectedRecipeType == RecipeType.BINDING_POWERS;
+        }
+    }
 
     private enum RecipeType {
-        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false), PAMPHLET(false);
+        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false), PAMPHLET(false), BINDING_POWERS(false);
 
         private final boolean grid;
 

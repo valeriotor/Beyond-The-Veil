@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -129,6 +130,20 @@ public class GenericToServerPacket {
 
     public static GenericToServerPacket spareCultist() {
         return new GenericToServerPacket(MessageType.SPARE_CULTIST, new CompoundTag());
+    }
+
+    public static GenericToServerPacket toggleBindingPower(BindingData.PowerToggles power, boolean value) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("power", power.name());
+        tag.putBoolean("enabled", value);
+        return new GenericToServerPacket(MessageType.TOGGLE_BINDING_POWER, tag);
+    }
+
+    public static GenericToServerPacket setArcheDamageType(BindingData.ArcheDamageType damageType) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("type", damageType == null ? "null" : damageType.name());
+        return new GenericToServerPacket(MessageType.SET_ARCHE_DAMAGE_TYPE, tag);
+
     }
 
     private final MessageType type;
@@ -250,6 +265,30 @@ public class GenericToServerPacket {
                             menu.spareCultist();
                         }
                     }
+                    case TOGGLE_BINDING_POWER -> {
+                        BindingData bindingData = DataUtil.getBindingData(player);
+                        if (bindingData != null) {
+                            try {
+                                bindingData.setPowerEnabled(BindingData.PowerToggles.valueOf(tag.getString("power")), tag.getBoolean("enabled"));
+                            } catch (IllegalArgumentException e) {
+                                // yeah ok malicious could clients could crash the server otherwise
+                            }
+                        }
+                    }
+                    case SET_ARCHE_DAMAGE_TYPE -> {
+                        BindingData bindingData = DataUtil.getBindingData(player);
+                        if (bindingData != null) {
+                            String damageType = tag.getString("type");
+                            if (damageType.equals("null")) {
+                                bindingData.setSelectedType(null);
+                            } else {
+                                try {
+                                    bindingData.setSelectedType(BindingData.ArcheDamageType.valueOf(damageType));
+                                } catch (IllegalArgumentException e) {
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -278,6 +317,8 @@ public class GenericToServerPacket {
         START_PLAYER_EXPLOSION,
         KILL_KEEPER,
         SPARE_CULTIST,
+        TOGGLE_BINDING_POWER,
+        SET_ARCHE_DAMAGE_TYPE,
     }
 
 }

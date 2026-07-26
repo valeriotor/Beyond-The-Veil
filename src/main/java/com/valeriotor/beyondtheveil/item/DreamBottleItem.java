@@ -52,7 +52,7 @@ public class DreamBottleItem extends Item {
             if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer sp) {
                 inHand.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(c -> {
                     if (c.getFluidInTank(0).getAmount() > 0) {
-                        DataUtil.setBooleanOnServerAndSyncIfDifferent(sp, PlayerDataLib.filled_bottle.name(), true, false);
+                        DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.filled_bottle.name(), true, false);
                     }
                 });
                 NetworkHooks.openScreen(sp, new SimpleMenuProvider(DreamBottleContainer::new, Component.translatable("gui.dream_bottle.title")));

@@ -528,7 +528,7 @@ public class RitualStatus {
         SMALL_FIRE(0, 10),
         SMALL_EXPLOSION(0, 10),
         ZOMBIE(0, 10),
-        SKELETON(1, 12),
+        SKELETON(1, 20),
         MEDIUM_FIRE(1, 20),
         MEDIUM_EXPLOSION(1, 20),
         LIGHTNING(1, 20),

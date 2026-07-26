@@ -300,7 +300,7 @@ public class NecronomiconGui extends Screen {
 
     private void drawEye(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         PoseStack poseStack = guiGraphics.pose();
-        if (!updated.isEmpty()) {
+        if (!updated.isEmpty() || !newClickables.isEmpty()) {
 
             int counterMod32 = counter & 31;
             int pupilX = (int) (pupilXOffset + (pupilNextXOffset - pupilXOffset) * (counterMod32 + partialTicks) / 4);
@@ -338,17 +338,31 @@ public class NecronomiconGui extends Screen {
         if (super.mouseClicked(pMouseX, pMouseY, pButton)) {
             return true;
         }
-        if ((!updated.isEmpty()) && (pMouseX > width - 142 && pMouseY > height - 142)) {
-            if (highlightIterator == null || !highlightIterator.hasNext()) {
-                highlightIterator = updated.iterator();
+        if (pMouseX > width - 142 && pMouseY > height - 142) {
+            if (!updated.isEmpty()) {
+                if (highlightIterator == null || !highlightIterator.hasNext()) {
+                    highlightIterator = updated.iterator();
+                }
+                highlightedMarkedResearch = highlightIterator.next();
+                highlightCounter = counter;
+                highlightOriginX = topX;
+                highlightOriginY = topY;
+                //topX = highlightedMarkedResearch.getX()*15*factor - width/2;
+                //topY = highlightedMarkedResearch.getY()*15*factor - height/2;
+                return true;
             }
-            highlightedMarkedResearch = highlightIterator.next();
-            highlightCounter = counter;
-            highlightOriginX = topX;
-            highlightOriginY = topY;
-            //topX = highlightedMarkedResearch.getX()*15*factor - width/2;
-            //topY = highlightedMarkedResearch.getY()*15*factor - height/2;
-            return true;
+            if (!newClickables.isEmpty()) {
+                if (highlightIterator == null || !highlightIterator.hasNext()) {
+                    highlightIterator = newClickables.iterator();
+                }
+                highlightedMarkedResearch = highlightIterator.next();
+                highlightCounter = counter;
+                highlightOriginX = topX;
+                highlightOriginY = topY;
+                //topX = highlightedMarkedResearch.getX()*15*factor - width/2;
+                //topY = highlightedMarkedResearch.getY()*15*factor - height/2;
+                return true;
+            }
         }
         Research bookmark = getHoveredBookmark(pMouseX, pMouseY);
         if (bookmark != null) {

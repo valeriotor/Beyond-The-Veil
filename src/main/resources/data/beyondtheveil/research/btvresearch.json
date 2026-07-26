@@ -581,12 +581,64 @@
         "key": "BLOOD_FIST",
         "name": "research.BLOOD_FIST.title",
         "icons": [ "beyondtheveil:blood_fist" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 9,12 ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,12 ],
         "hiders": ["did_binding"],
         "parents": ["BLOOD_RITUALS"],
         "stages": [
           {
             "text": "research.BLOOD_FIST.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "BINDING_OVERWORLD",
+        "name": "research.BINDING_OVERWORLD.title",
+        "icons": [ "minecraft:grass" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 8,12 ],
+        "hiders": ["binding_overworld"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BINDING_OVERWORLD.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "BINDING_NETHER",
+        "name": "research.BINDING_NETHER.title",
+        "icons": [ "minecraft:netherrack" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,12 ],
+        "hiders": ["binding_nether"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BINDING_NETHER.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "BINDING_END",
+        "name": "research.BINDING_END.title",
+        "icons": [ "minecraft:chorus_fruit" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 10,12 ],
+        "hiders": ["binding_end"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BINDING_END.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "BINDING_ARCHE",
+        "name": "research.BINDING_ARCHE.title",
+        "icons": [ "beyondtheveil:shell" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 11,12 ],
+        "hiders": ["binding_arche"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BINDING_ARCHE.stage.0"
           }
         ]
       },

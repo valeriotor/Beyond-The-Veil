@@ -1217,6 +1217,8 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
+        add("caption.right_click_block", "Right Click on a block");
+        add("caption.right_click_air", "Right Click in the air or water");
         add("caption.shift_right_click", "Sneak + Right Click");
         add("caption.shift_right_click_lacrymatory", "Sneak + Right Click on Lacrymatory");
         add("caption.shift_right_click_air", "Sneak + Right Click in the air or water");
@@ -2306,6 +2308,36 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addResearch() {
+        add("research.binding_power_enabled", "Enabled");
+        add("research.binding_power_disabled", "Disabled");
+        add("research.binding_power.overworld_break", "Using fist activates block breaking mode.");
+        add("research.binding_power.overworld_heal", "Birth of creatures heals me.");
+        add("research.binding_power.overworld_repair", "Repair tools on attack.");
+        add("research.binding_power.overworld_build", "Using fist on blocks places building frame corners.");
+        add("research.binding_power.nether_attack", "Attacking instant kills weak foes at the cost of my health.");
+        add("research.binding_power.nether_heal", "Dying creatures heal me.");
+        add("research.binding_power.nether_feed", "Fire damage feeds me.");
+        add("research.binding_power.nether_create_fire", "Using fist on blocks creates fire.");
+        add("research.binding_power.nether_target", "Striking foes attracts other creatures' attacks.");
+        add("research.binding_power.end_fly", "Using the fist while flying with the elytra shoots me upwards.");
+        add("research.binding_power.end_attack", "Striking foes teleports me around them.");
+        add("research.binding_power.end_vertical_tp", "Jumping or sneaking teleports me up or down.");
+        add("research.binding_power.end_survive", "I can survive death by teleporting a huge distance.");
+        add("research.binding_power.arche_attack", "Striking foes makes them drop their handheld items.");
+        add("research.binding_power.arche_move", "Using the fist moves foes towards, away from, or around me.");
+        add("research.binding_power.arche_node", "Using the fist on a block creates a node.");
+        add("research.binding_power.arche_damage.fire", "Fire");
+        add("research.binding_power.arche_damage.explosion", "Explosion");
+        add("research.binding_power.arche_damage.fall", "Fall");
+        add("research.binding_power.arche_damage.drowning", "Drowning");
+        add("research.binding_power.arche_damage.freezing", "Freezing");
+        add("research.binding_power.arche_damage.magic", "Magic");
+        add("research.binding_power.arche_damage.wither", "Wither");
+        add("research.arche_damage_chosen", "Heal");
+        add("research.arche_damage_not_chosen", "Default");
+        add("research.arche_damage_double", "2x Damage");
+
+
         add("research.FIRSTDREAMS.title", "The Language of Dreams");
         add("research.didDream.text", "I must sleep. I must Dream.");
         add("research.crafted_metal.text", "Create a memory of metal.");
@@ -2637,7 +2669,36 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BLOOD_FIST.title", "Blood Fist");
         add("research.BLOOD_FIST.stage.0", "A tool used to focus the powers bestowed by worldly bindings. It is created from the heart of a still-living patient: the insertions of a silk gland, a marrow gland and a gunpowder bladder in the chest of a patient will let the subsequent extraction produce the blood fist. No capacity is needed.\\n" +
                 "These ingredients can be respectively obtained by killing spiders, skeletons, and creepers, all with the surgical precision of a scalpel.\\n" +
-                "The usage of the fist itself depends on the binding, and may have different effects when wielded in the main or off-hand. It is likely related to the witch hands used in infusions by practitioners of witchcraft.\\n");
+                "The usage of the fist itself depends on the binding, and may have different effects when wielded in the main or off-hand. It is likely related to the witch hands used in infusions by practitioners of witchcraft. Wielding it will also show me the remaining energy for my chosen binding.\\n");
+
+        add("research.BINDING_OVERWORLD.title", "Binding of the Overworld");
+        add("research.BINDING_OVERWORLD.stage.0", "The Overworld encompasses nearly the entirety of the human experience, and only a lucky few adventurers venture into other dimensions. To be bound to the overworld is to be bound to the earthly, physical, living energy that has surrounded us since birth. It means being able to more easily shape the materials surrounding us, and to be in tune with vital energies.\\n" +
+                "{§nUsing§r}[caption:right_click_block] the blood fist on a location can be used to set the corners of a given frame. The first use places the first corner, the second use the second one, and the third use removes both. Once the two corners are set, I can place a block in either of them: doing so will fill as many blocks between the two corners as possible given the amount of blocks of the same type I have in my inventory.\\n" +
+                "I can also {§nuse it§r}[caption:right_click_air] to more easily break blocks: doing so will set me in a \"breaking mode\", destroying any blocks in my way (or below me, if I sneak) until I deactivate it again in the same way.\\n" +
+                "The binding lets me mold the tools I wield as well: striking a foe while wielding a blood fist in my off-hand will slowly repair the tool in my main hand.\\n" +
+                "Finally, the nearby birth of any sort of creature – that is not undead – will slightly heal me.");
+
+        add("research.BINDING_NETHER.title", "Binding of the Nether");
+        add("research.BINDING_NETHER.stage.0", "The Nether is associated with fire, death, and several other aspects of our lives that we so dread; it is no wonder then that, according to the myths of several cultures, the Nether is seen as the final destination of our none-too-beloved dead ones.\\n" +
+                "Interestingly, the binding of the Nether is also linked to §ocontrol§r, as made clear by the infernal infusion used by witches in ages past. Any of the creatures I command – such as blood undead or abominations – will be made more powerful thanks to this binding. Additionally, striking a foe has a chance of making nearby creatures also target it.\\n" +
+                "{§nUsing§r}[caption:right_click] the blood fist on the ground can start a fire. Also, any fire damage I incur will feed me and saturate my hunger – though I will still take damage.\\n" +
+                "The binding's association with death may let me inflict it upon enemies more easily: attacking a creature while wielding the blood fist in my off-hand can – assuming the creature is not too strong – instantaneously kill it, at a large cost of my own health and vitality.\\n" +
+                "Finally, the death of any creatures around me (besides ones killed in the above manner) will heal me slightly.");
+
+        add("research.BINDING_END.title", "Binding of the End");
+        add("research.BINDING_END.stage.0", "The End is a limbo, associated with neither life nor death. The civilisations that once inhabited it remain a mystery, despite their constructions and relics reaching us. This binding is associated with their otherwordly powers, and ability to manipulate – to an extent – the space-time continuum.\\n" +
+                "Jumping or sneaking while wielding the blood fist in either my main or off-hand will teleport me to the first available space above or below me, respectively.\\n" +
+                "Attacking enemies while wielding the blood fist in my off-hand will quickly reposition me behind them, hopefully disorienting my adversary.\\n" +
+                "This binding can also prevent me from crossing the great threshold: fatal damage will not kill me, and I will instead be teleported to a remote location (hopefully a less dangerous one). This power takes a long time to recharge, however.\\n" +
+                "Last but not least (yet far from most), the binding has given me a better understanding of End artifacts, and in particular the Elytra: {§nusing§r}[caption:right_click] the blood fist while soaring it will shoot me upwards in the air, effectively resulting in true flight.");
+
+        add("research.BINDING_ARCHE.title", "Binding of Arche");
+        add("research.BINDING_ARCHE.stage.0", "The binding of Arche escaped Georg's investigations. It makes sense, after all, for a thesis on the properties of blood to forgo bindings forged in tears.\\n" +
+                "Arche is associated with chaos and change, and the energies of its ever churning currents are captured by this binding. {§nUsing§r}[caption:right_click_air] the blood fist allows me to move the creatures surrounding me: towards me or, if sneaking, away from me. Wielding the fist in my off-hand changes this slightly: the creatures will be moved in the direction I am facing or, if sneaking, around me in a clockwise fashion.\\n" +
+                "I can also {§nuse§r}[caption:right_click_block] the fist on the ground: in so doing, I will create a \"current node\": this will attract nearby creatures (or, if made while sneaking, push them away) and will last for roughly a minute.\\n" +
+                "If lucky, I am also able to move my enemies' wielded items: striking enemies has a certain chance of forcing them to drop whatever they are holding.\\n" +
+                "The binding is also associated to adaptability: if I want, I can choose a damage type out of a certain selection, and whenever I would be damaged by it I get healed instead; however, every other unselected damage type will instead hurt me twofold.\\n" +
+                "Finally, the binding strengthens my connection to my blood pool: whenever creatures would be added to it (whether via a Blood Well or a bound IV Stand), twice as many creatures are instead added to it.");
 
         add("research.NEW_DEPTHS.title", "Deep Down Below");
         add("research.entered_arche.text", "Create the Nautilus and enter Arche.");

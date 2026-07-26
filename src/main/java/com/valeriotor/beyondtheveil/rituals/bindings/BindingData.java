@@ -7,6 +7,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class BindingData {
@@ -19,6 +21,7 @@ public class BindingData {
     private boolean blockBreakingMode;
     private boolean instantKill;
     private ArcheDamageType selectedType;
+    private Map<PowerToggles, Boolean> enabledPowers = new EnumMap<>(PowerToggles.class);
 
     public BindingData(@NotNull Binding binding) {
         this.binding = binding;
@@ -38,6 +41,11 @@ public class BindingData {
         instantKill = nbt.getBoolean("instantKill");
         if (nbt.contains("selectedType")) {
             selectedType = ArcheDamageType.valueOf(nbt.getString("selectedType"));
+        }
+        blockBreakingMode = nbt.getBoolean("blockBreakingMode");
+        CompoundTag enabledPowersTag = nbt.getCompound("enabledPowers");
+        for (String key : enabledPowersTag.getAllKeys()) {
+            enabledPowers.put(PowerToggles.valueOf(key), enabledPowersTag.getBoolean(key));
         }
     }
 
@@ -122,6 +130,22 @@ public class BindingData {
         return selectedType;
     }
 
+    public boolean isPowerEnabled(PowerToggles power) {
+        return enabledPowers.getOrDefault(power, true);
+    }
+
+    public void setPowerEnabled(PowerToggles power, boolean enabled) {
+        enabledPowers.put(power, enabled);
+        if (!enabled) {
+            if (power == PowerToggles.OVERWORLD_BREAK) {
+                setBlockBreakingMode(false);
+            } else if (power == PowerToggles.OVERWORLD_BUILD) {
+                overworldPos1 = null;
+                overworldPos2 = null;
+            }
+        }
+    }
+
     public CompoundTag saveToNBT(CompoundTag tag) {
         tag.putString("binding", binding.name());
         tag.putInt("energy", energy);
@@ -135,6 +159,10 @@ public class BindingData {
         if (selectedType != null) {
             tag.putString("selectedType", selectedType.name());
         }
+        tag.putBoolean("blockBreakingMode", blockBreakingMode);
+        CompoundTag enabledPowersTag = new CompoundTag();
+        this.enabledPowers.forEach((powerToggles, enabled) -> enabledPowersTag.putBoolean(powerToggles.name(), enabled));
+        tag.put("enabledPowers", enabledPowersTag);
         return tag;
     }
 
@@ -158,5 +186,33 @@ public class BindingData {
         }
     }
 
+    public enum PowerToggles {
+        OVERWORLD_BUILD(Binding.OVERWORLD),
+        OVERWORLD_BREAK(Binding.OVERWORLD),
+        OVERWORLD_HEAL(Binding.OVERWORLD),
+        OVERWORLD_REPAIR(Binding.OVERWORLD),
+        NETHER_ATTACK(Binding.NETHER),
+        NETHER_HEAL(Binding.NETHER),
+        NETHER_FEED(Binding.NETHER),
+        NETHER_CREATE_FIRE(Binding.NETHER),
+        NETHER_TARGET(Binding.NETHER),
+        END_FLY(Binding.END),
+        END_ATTACK(Binding.END),
+        END_VERTICAL_TP(Binding.END),
+        END_SURVIVE(Binding.END),
+        ARCHE_ATTACK(Binding.ARCHE),
+        ARCHE_MOVE(Binding.ARCHE),
+        ARCHE_NODE(Binding.ARCHE);
+
+        private final Binding binding;
+
+        PowerToggles(Binding binding) {
+            this.binding = binding;
+        }
+
+        public Binding getBinding() {
+            return binding;
+        }
+    }
 
 }

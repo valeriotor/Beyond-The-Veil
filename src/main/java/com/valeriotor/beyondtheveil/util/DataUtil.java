@@ -104,19 +104,6 @@ public class DataUtil {
         });
     }
 
-    public static void setBooleanOnServerAndSyncIfDifferent(Player p, String key, boolean value, boolean temporary) {
-        p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
-            if(playerData.getBoolean(key) != value) {
-                playerData.setBoolean(key, value, temporary);
-                Messages.sendToPlayer(SyncPlayerDataPacket.toClient(key).setBoolean(value), (ServerPlayer) p);
-                if (value) {
-                    ResearchUtil.markResearchAsUpdated(p, key);
-                }
-                PlayerEvents.setBooleanEvent(p, key, value);
-            }
-        });
-    }
-
     public static void setStringOnServerAndSync(Player p, String key, String value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             playerData.setString(key, value, temporary);

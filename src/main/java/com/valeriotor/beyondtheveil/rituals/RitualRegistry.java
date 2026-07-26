@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.entity.LivingPortalEntity;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -271,6 +272,14 @@ public class RitualRegistry {
                 if (p instanceof ServerPlayer sp) {
                     p.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> data.setBindingData(new BindingData(binding)));
                     DataUtil.syncBindingData(sp);
+                    DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.did_binding.name(), true, false);
+                    PlayerDataLib bindingName = switch (binding) {
+                        case OVERWORLD -> PlayerDataLib.binding_overworld;
+                        case NETHER -> PlayerDataLib.binding_nether;
+                        case END -> PlayerDataLib.binding_end;
+                        case ARCHE -> PlayerDataLib.binding_arche;
+                    };
+                    DataUtil.setBooleanOnServerAndSync(p, bindingName.name(), true, false);
                 }
             }
         });

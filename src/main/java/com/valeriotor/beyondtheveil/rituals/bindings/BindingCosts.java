@@ -10,7 +10,7 @@ public class BindingCosts {
     public static final int OVERWORLD_HEAL = 5;
     public static final int OVERWORLD_REPAIR = 40;
     public static final int OVERWORLD_BUILD = 1;
-    public static final Function<Float, Integer> NETHER_ATTACK = requiredPlayerHealth -> (int) (requiredPlayerHealth * 20);
+    public static final Function<Float, Integer> NETHER_ATTACK = requiredPlayerHealth -> (int) (requiredPlayerHealth * 40);
     public static final int NETHER_HEAL = 20;
     public static final int NETHER_FEED = 5;
     public static final int NETHER_CREATE_FIRE = 1;

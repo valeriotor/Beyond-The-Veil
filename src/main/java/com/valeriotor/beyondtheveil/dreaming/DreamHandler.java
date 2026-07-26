@@ -182,7 +182,7 @@ public class DreamHandler {
                     markTimesDreamt(p, "dream_bottle");
                 }
                 
-                DataUtil.setBooleanOnServerAndSyncIfDifferent(p, PlayerDataLib.used_bottle.name(), true, false);
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.used_bottle.name(), true, false);
             }
             DataUtil.syncReminiscences(p);
             DataUtil.syncMemories(p);
