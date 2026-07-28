@@ -3,10 +3,8 @@ package com.valeriotor.beyondtheveil.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
-import com.valeriotor.beyondtheveil.tile.HeartBE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -20,9 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fluids.IFluidTank;
@@ -44,12 +40,12 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
 
     @Override
     public void render(FlaskBE flask, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay) {
-        FlaskBlock.FlaskSize size = ((FlaskBlock) flask.getBlockState().getBlock()).size;
+        FlaskBlock.FlaskShape size = ((FlaskBlock) flask.getBlockState().getBlock()).shape;
         if (flask.hasLevel())
             renderFlask(Direction.NORTH, flask.getTank(), flask.getStackHandler(), flask.getLevel(), flask.getBlockPos(), partialTicks, pPoseStack, buffers, pPackedLight, overlay, size, itemRenderer);
     }
 
-    public static void renderFlask(Direction direction, IFluidTank tank, ItemStackHandler stackHandler, Level level, BlockPos pos, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskSize size, ItemRenderer itemRenderer) {
+    public static void renderFlask(Direction direction, IFluidTank tank, ItemStackHandler stackHandler, Level level, BlockPos pos, float partialTicks, PoseStack pPoseStack, MultiBufferSource buffers, int pPackedLight, int overlay, FlaskBlock.FlaskShape size, ItemRenderer itemRenderer) {
 
         //if(size == FlaskBlock.FlaskSize.LARGE) {
         //    for (int i = 0; i < 6; i++) {
@@ -136,7 +132,7 @@ public class FlaskBER implements BlockEntityRenderer<FlaskBE> {
             buffer.vertex(model, maxX, maxHeight, minX).color(1, 1, 1, 1F).uv(stillSprite.getU(0), stillSprite.getV(4)).overlayCoords(overlay).uv2(0xFFFFFF).normal(0, 0, -1)/*.lightmap(upLMa, upLMb)*/.endVertex();
 
             pPoseStack.popPose();
-        } else if (size == FlaskBlock.FlaskSize.ITEM && false) {
+        } else if (size == FlaskBlock.FlaskShape.ITEM && false) {
             if (Minecraft.getInstance().player != null) {
                 float ticks = Minecraft.getInstance().player.tickCount + partialTicks;
                 TRANSFORMS[0][0] = 0.425;

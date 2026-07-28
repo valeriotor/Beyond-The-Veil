@@ -284,7 +284,8 @@ public class FlaskShelfBE extends BlockEntity {
     public boolean intersects(Level pLevel, BlockPos selectedShelfPos, BlockHitResult pHit, FlaskBlock flaskBlock) {
         Vec3 locRelativeToSelectedBlock = pHit.getLocation().subtract(selectedShelfPos.getX(), selectedShelfPos.getY(), selectedShelfPos.getZ());
         VoxelShape shape = pLevel.getBlockState(selectedShelfPos).getShape(pLevel, selectedShelfPos);
-        FlaskBlock.FlaskSize size = flaskBlock == Registration.FLASK_SMALL.get() ? FlaskBlock.FlaskSize.SMALL : (flaskBlock == Registration.FLASK_MEDIUM.get() ? FlaskBlock.FlaskSize.MEDIUM : FlaskBlock.FlaskSize.LARGE);
+        FlaskBlock.FlaskShape size = flaskBlock.shape;
+
         AABB newFlaskAABB = getAABB(size, locRelativeToSelectedBlock.x, locRelativeToSelectedBlock.y, locRelativeToSelectedBlock.z);
         boolean intersects = false;
         for (AABB box : shape.toAabbs()) {
@@ -299,7 +300,7 @@ public class FlaskShelfBE extends BlockEntity {
     /**
      * Coordinates should be relative to selectedShelfPos
      */
-    private AABB getAABB(FlaskBlock.FlaskSize size, double x, double y, double z) {
+    private AABB getAABB(FlaskBlock.FlaskShape size, double x, double y, double z) {
         double[] array = size.getSimpleShape();
         x -= 0.5;
         z -= 0.5;
@@ -387,18 +388,18 @@ public class FlaskShelfBE extends BlockEntity {
         // flask type
         // fill level
         private final double x, y, z;
-        private final FlaskBlock.FlaskSize size;
+        private final FlaskBlock.FlaskShape size;
         private FluidTank tank;
         private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
-        private ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
+        private ItemStackHandler createStackHandler(FlaskBlock.FlaskShape size) {
             return FlaskBE.createStackHandler(size);
         }
 
         private final ItemStackHandler stackHandler;
         private final LazyOptional<IItemHandler> stackHolder;
 
-        Flask(double x, double y, double z, FlaskBlock.FlaskSize size) {
+        Flask(double x, double y, double z, FlaskBlock.FlaskShape size) {
             this.x = x;
             this.y = y;
             this.z = z;
@@ -412,7 +413,7 @@ public class FlaskShelfBE extends BlockEntity {
             this.x = x;
             this.y = y;
             this.z = z;
-            this.size = flaskBlock.size;
+            this.size = flaskBlock.shape;
             this.tank = FlaskBE.getTankByFlaskType(size);
             stackHandler = createStackHandler(size);
             stackHolder = LazyOptional.of(() -> stackHandler);
@@ -429,9 +430,12 @@ public class FlaskShelfBE extends BlockEntity {
             this.x = tag.getDouble("x");
             this.y = tag.getDouble("y");
             this.z = tag.getDouble("z");
-            this.size = FlaskBlock.FlaskSize.values()[tag.getInt("size")];
+            this.size = FlaskBlock.FlaskShape.values()[tag.getInt("size")];
             this.tank = FlaskBE.getTankByFlaskType(size);
             tank.readFromNBT(tag.getCompound("tank"));
+            if (tank.getFluidAmount() > tank.getCapacity()) {
+                tank.setFluid(new FluidStack(tank.getFluid(), tank.getCapacity()));
+            }
             stackHandler = createStackHandler(size);
             stackHolder = LazyOptional.of(() -> stackHandler);
             if (tag.contains("stack")) {
@@ -459,7 +463,7 @@ public class FlaskShelfBE extends BlockEntity {
             return flask;
         }
 
-        public FlaskBlock.FlaskSize getSize() {
+        public FlaskBlock.FlaskShape getSize() {
             return size;
         }
 
@@ -490,9 +494,12 @@ public class FlaskShelfBE extends BlockEntity {
             //    case LARGE -> new double[][] {FlaskBlock.LARGE1, FlaskBlock.LARGE2, FlaskBlock.LARGE3, FlaskBlock.LARGE4, FlaskBlock.LARGE5, FlaskBlock.LARGE6};
             //};
             double[][] arrays = switch (size) {
-                case SMALL -> new double[][]{FlaskBlock.SMALL_SIMPLE};
-                case MEDIUM -> new double[][]{FlaskBlock.MEDIUM_SIMPLE};
-                case LARGE -> new double[][]{FlaskBlock.LARGE_SIMPLE};
+                case FLASK_SMALL -> new double[][]{FlaskBlock.SMALL_SIMPLE};
+                case FLASK_MEDIUM -> new double[][]{FlaskBlock.MEDIUM_SIMPLE};
+                case FLASK_LARGE -> new double[][]{FlaskBlock.LARGE_SIMPLE};
+                case JAR_SMALL -> new double[][]{FlaskBlock.JAR_SMALL_SIMPLE};
+                case JAR_MEDIUM -> new double[][]{FlaskBlock.JAR_MEDIUM_SIMPLE};
+                case JAR_LARGE -> new double[][]{FlaskBlock.JAR_LARGE_SIMPLE};
                 case ITEM -> new double[][]{FlaskBlock.ITEM_SIMPLE};
             };
             VoxelShape shape = Shapes.empty();

@@ -57,7 +57,15 @@ public class BTVBlockTags extends BlockTagsProvider {
                 .add(DREAM_FOCUS.get())
                 .add(DREAM_FOCUS_FLUIDS.get())
                 .add(OFFER_PILLAR.get())
-                .add(DEMAND_PILLAR.get());
+                .add(DEMAND_PILLAR.get())
+                .add(FLASK_LARGE.get())
+                .add(FLASK_MEDIUM.get())
+                .add(FLASK_SMALL.get())
+                .add(JAR_LARGE.get())
+                .add(JAR_MEDIUM.get())
+                .add(JAR_SMALL.get())
+                .add(FLASK_ITEM.get())
+        ;
         tag(BlockTags.WOODEN_FENCES)
                 .add(DAMP_WOOD_FENCE.get());
     }

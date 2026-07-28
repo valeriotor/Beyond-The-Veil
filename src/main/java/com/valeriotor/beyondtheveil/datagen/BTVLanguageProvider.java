@@ -105,6 +105,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.sigil.area", "Bound to x: %1$s, y: %2$s, z: %3$s.");
         add("tooltip.repair_hammer.1", "§eUsed to repair Nautilus (left-click) or pick it up (right-click).");
         add("tooltip.repair_hammer.2", "§e§lOnly works from outside.§r");
+        add("tooltip.flask.contained_empty", "Contained: 0/%1$s mB");
+        add("tooltip.flask.contained", "Contained: %1$s/%2$s mB of %3$s");
 
         add("interact.idol.notyet", "Nothing happens. For some reason, I feel relieved.");
         add("interact.idol.moreslugs", "More slugs must be consumed to commune.");

@@ -188,7 +188,9 @@ public class ClientMethods {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_large")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_medium")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_small")));
-                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_item")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_large")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_medium")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_small")));
             } else {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key)));
             }

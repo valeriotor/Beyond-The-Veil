@@ -12,9 +12,9 @@
   },
   "pattern": [
     "    ",
-    " WW ",
-    "G  G",
-    " GG "
+    " W  ",
+    "G G ",
+    " G  "
   ],
   "result": {
     "item": "beyondtheveil:flask_medium"

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "color=0": {
+      "model": "beyondtheveil:block/jar_medium"
+    },
+    "color=1": {
+      "model": "beyondtheveil:block/jar_medium_wrong"
+    },
+    "color=2": {
+      "model": "beyondtheveil:block/jar_medium_selected"
+    }
+  }
+}

@@ -132,7 +132,7 @@ public class AlembicsBE extends BlockEntity {
 
     public boolean interactServer(Player player, InteractionHand hand, int hit) {
         ItemStack held = player.getItemInHand(hand);
-        if (Block.byItem(held.getItem()) instanceof FlaskBlock flaskBlock && flaskBlock.size.getCapacity() > 0) {
+        if (Block.byItem(held.getItem()) instanceof FlaskBlock flaskBlock && flaskBlock.shape.getCapacity() > 0) {
             if (heldFlask == null) {
                 Direction facing = getBlockState().getValue(AlembicsBlock.FACING);
                 double x = worldPosition.getX() + (facing.getAxis() == Direction.Axis.X ? 0.5 : (facing == Direction.SOUTH ? 26 * 0.0625 : -10 * 0.0625));

@@ -24,6 +24,13 @@
     "beyondtheveil:dream_focus",
     "beyondtheveil:dream_focus_fluids",
     "beyondtheveil:offer_pillar",
-    "beyondtheveil:demand_pillar"
+    "beyondtheveil:demand_pillar",
+    "beyondtheveil:flask_large",
+    "beyondtheveil:flask_medium",
+    "beyondtheveil:flask_small",
+    "beyondtheveil:jar_large",
+    "beyondtheveil:jar_medium",
+    "beyondtheveil:jar_small",
+    "beyondtheveil:flask_item"
   ]
 }

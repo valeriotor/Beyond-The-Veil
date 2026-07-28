@@ -11,13 +11,13 @@
     }
   },
   "pattern": [
-    " W  ",
-    "G G ",
-    "G G ",
-    " G  "
+    "    ",
+    "    ",
+    " WW ",
+    " GG "
   ],
   "result": {
-    "item": "beyondtheveil:flask_large"
+    "item": "beyondtheveil:jar_small"
   },
   "show_notification": true
 }

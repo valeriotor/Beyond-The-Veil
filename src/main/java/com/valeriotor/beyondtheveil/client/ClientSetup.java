@@ -92,6 +92,9 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_LARGE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_MEDIUM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SMALL.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.JAR_LARGE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.JAR_MEDIUM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.JAR_SMALL.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_ITEM.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.FLASK_SHELF.get(), type -> type != null && (type.equals(RenderType.solid()) || type.equals(RenderType.translucent())));
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_KELP.get(), RenderType.cutout());

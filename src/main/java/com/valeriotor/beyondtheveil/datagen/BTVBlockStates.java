@@ -359,16 +359,19 @@ public class BTVBlockStates extends BlockStateProvider {
     }
 
     private void registerFlasks() {
-        registerFlask("large", FLASK_LARGE.get());
-        registerFlask("medium", FLASK_MEDIUM.get());
-        registerFlask("small", FLASK_SMALL.get());
+        registerFlask("flask_large", FLASK_LARGE.get());
+        registerFlask("flask_medium", FLASK_MEDIUM.get());
+        registerFlask("flask_small", FLASK_SMALL.get());
+        registerFlask("jar_large", JAR_LARGE.get());
+        registerFlask("jar_medium", JAR_MEDIUM.get());
+        registerFlask("jar_small", JAR_SMALL.get());
         registerItemFlask("item", FLASK_ITEM.get());
     }
 
     private void registerFlask(String name, Block block) {
-        ExistingModelFile base = new ExistingModelFile(modLoc("block/flask_" + name), models().existingFileHelper);
-        ExistingModelFile wrong = new ExistingModelFile(modLoc("block/flask_" + name + "_wrong"), models().existingFileHelper);
-        ExistingModelFile selected = new ExistingModelFile(modLoc("block/flask_" + name + "_selected"), models().existingFileHelper);
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/" + name), models().existingFileHelper);
+        ExistingModelFile wrong = new ExistingModelFile(modLoc("block/" + name + "_wrong"), models().existingFileHelper);
+        ExistingModelFile selected = new ExistingModelFile(modLoc("block/" + name + "_selected"), models().existingFileHelper);
         getVariantBuilder(block).forAllStates(state -> {
             ModelFile file = switch (state.getValue(FlaskBlock.COLOR)) {
                 case 0 -> base;

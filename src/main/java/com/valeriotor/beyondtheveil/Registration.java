@@ -25,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
@@ -81,6 +82,7 @@ public class Registration {
     public static final BlockBehaviour.Properties DAMP_CANOPY_PROPERTIES = BlockBehaviour.Properties.of().strength(2f).sound(SoundType.WOOD).noOcclusion().requiresCorrectToolForDrops();
     public static final BlockBehaviour.Properties DARK_SAND_PROPERTIES = BlockBehaviour.Properties.of().strength(3f).sound(SoundType.SAND);
     public static final BlockBehaviour.Properties BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties FLASK_PROPERTIES = BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).strength(0.3F).sound(SoundType.GLASS).noOcclusion();
     public static final BlockBehaviour.Properties ELDER_BRICK_PROPERTIES = BlockBehaviour.Properties.of().strength(3.0F, 7.0F).requiresCorrectToolForDrops();
 
     public static final RegistryObject<Block> DAMP_STONE = BLOCKS.register("damp_stone", () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -156,10 +158,13 @@ public class Registration {
     public static final RegistryObject<BlackSeagrassBlock> BLACK_SEAGRASS = BLOCKS.register("black_seagrass", () -> new BlackSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<BlackTallSeagrassBlock> BLACK_TALL_SEAGRASS = BLOCKS.register("black_tall_seagrass", () -> new BlackTallSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
 
-    public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.LARGE)); // TODO GLASS PROPERTIES
-    public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.MEDIUM)); // TODO GLASS PROPERTIES
-    public static final RegistryObject<Block> FLASK_SMALL = BLOCKS.register("flask_small", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.SMALL)); // TODO GLASS PROPERTIES
-    public static final RegistryObject<Block> FLASK_ITEM = BLOCKS.register("flask_item", () -> new FlaskBlock(BRICK_PROPERTIES, FlaskBlock.FlaskSize.ITEM)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.FLASK_LARGE)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.FLASK_MEDIUM)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_SMALL = BLOCKS.register("flask_small", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.FLASK_SMALL)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> JAR_LARGE = BLOCKS.register("jar_large", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.JAR_LARGE)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> JAR_MEDIUM = BLOCKS.register("jar_medium", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.JAR_MEDIUM)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> JAR_SMALL = BLOCKS.register("jar_small", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.JAR_SMALL)); // TODO GLASS PROPERTIES
+    public static final RegistryObject<Block> FLASK_ITEM = BLOCKS.register("flask_item", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.ITEM)); // TODO GLASS PROPERTIES
 
     public static final RegistryObject<LiquidBlock> SEDATIVE_BLOCK = BLOCKS.register("sedative_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SEDATIVE, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> SOFTENER_BLOCK = BLOCKS.register("softener_block", () -> new LiquidBlock(BTVFluids.SOURCE_FLUID_SOFTENER, BlockBehaviour.Properties.copy(Blocks.WATER)));
@@ -242,6 +247,9 @@ public class Registration {
     public static final RegistryObject<Item> FLASK_LARGE_ITEM = fromBlock(FLASK_LARGE);
     public static final RegistryObject<Item> FLASK_MEDIUM_ITEM = fromBlock(FLASK_MEDIUM);
     public static final RegistryObject<Item> FLASK_SMALL_ITEM = fromBlock(FLASK_SMALL);
+    public static final RegistryObject<Item> JAR_LARGE_ITEM = fromBlock(JAR_LARGE);
+    public static final RegistryObject<Item> JAR_MEDIUM_ITEM = fromBlock(JAR_MEDIUM);
+    public static final RegistryObject<Item> JAR_SMALL_ITEM = fromBlock(JAR_SMALL);
     public static final RegistryObject<Item> FLASK_ITEM_ITEM = fromBlock(FLASK_ITEM);
     public static final RegistryObject<Item> BLACK_KELP_ITEM = fromBlock(BLACK_KELP);
     public static final RegistryObject<Item> BLACK_SEAGRASS_ITEM = fromBlock(BLACK_SEAGRASS);
@@ -441,6 +449,9 @@ public class Registration {
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());
+                output.accept(JAR_LARGE.get());
+                output.accept(JAR_MEDIUM.get());
+                output.accept(JAR_SMALL.get());
                 output.accept(FLASK_ITEM.get());
 
                 output.accept(DAMP_STONE.get());

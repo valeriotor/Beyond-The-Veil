@@ -39,7 +39,7 @@ public class FlaskBE extends BlockEntity {
 
     private FluidTank tank;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
-    public static ItemStackHandler createStackHandler(FlaskBlock.FlaskSize size) {
+    public static ItemStackHandler createStackHandler(FlaskBlock.FlaskShape size) {
         return new FlaskStackHandler(size);
     }
 
@@ -50,13 +50,13 @@ public class FlaskBE extends BlockEntity {
 
     public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
         super(BTVBlockEntities.FLASK_BE.get(), pWorldPosition, pBlockState);
-        FlaskBlock.FlaskSize size = ((FlaskBlock) pBlockState.getBlock()).size;
+        FlaskBlock.FlaskShape size = ((FlaskBlock) pBlockState.getBlock()).shape;
         tank = getTankByFlaskType(size);
         stackHandler = createStackHandler(size);
         stackHolder = LazyOptional.of(() -> stackHandler);
     }
 
-    public static FluidTank getTankByFlaskType(FlaskBlock.FlaskSize size) {
+    public static FluidTank getTankByFlaskType(FlaskBlock.FlaskShape size) {
         return new FluidTank(size.getCapacity());
     }
 
@@ -224,9 +224,9 @@ public class FlaskBE extends BlockEntity {
 
     public static class FlaskStackHandler extends ItemStackHandler {
 
-        private final FlaskBlock.FlaskSize size;
+        private final FlaskBlock.FlaskShape size;
 
-        public FlaskStackHandler(FlaskBlock.FlaskSize size) {
+        public FlaskStackHandler(FlaskBlock.FlaskShape size) {
             this.size = size;
         }
 

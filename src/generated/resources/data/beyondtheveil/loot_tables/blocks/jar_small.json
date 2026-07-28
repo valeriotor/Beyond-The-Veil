@@ -38,11 +38,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "beyondtheveil:flask_small"
+          "name": "beyondtheveil:jar_small"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "beyondtheveil:blocks/flask_small"
+  "random_sequence": "beyondtheveil:blocks/jar_small"
 }

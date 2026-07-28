@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "color=0": {
+      "model": "beyondtheveil:block/jar_large"
+    },
+    "color=1": {
+      "model": "beyondtheveil:block/jar_large_wrong"
+    },
+    "color=2": {
+      "model": "beyondtheveil:block/jar_large_selected"
+    }
+  }
+}
