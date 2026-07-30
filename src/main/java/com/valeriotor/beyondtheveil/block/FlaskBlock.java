@@ -253,7 +253,7 @@ public class FlaskBlock extends Block implements EntityBlock {
     public enum FlaskShape {
         FLASK_SMALL(250, new double[]{6.75 * a, 0, 6.75 * a, 9.25 * a, 5.5 * a, 9.25 * a}, a / 4, 4.5 * a, 7 * a, 9 * a, false),
         FLASK_MEDIUM(700, new double[]{6 * a, 0, 6 * a, 10 * a, 10 * a, 10 * a}, a / 2, 6.5 * a, 6.5 * a, 9.5 * a, false),
-        FLASK_LARGE(1500, new double[]{5.5 * a, 0, 5.5 * a, 13.25 * a, 10.5 * a, 13.25 * a}, a / 2, 8.5 * a, 6 * a, 10 * a, false),
+        FLASK_LARGE(1500, new double[]{5.5 * a, 0, 5.5 * a, 13.25 * a, 10.5 * a, 13.25 * a}, a / 2, 8.25 * a, 6 * a, 10 * a, false),
         JAR_SMALL(300, new double[]{6.75 * a, 0, 6.75 * a, 9.25 * a, 5.5 * a, 9.25 * a}, a / 4, 4.5 * a, 7 * a, 9 * a, false),
         JAR_MEDIUM(750, new double[]{5.5 * a, 0, 5.5 * a, 10.5 * a, 8 * a, 10.5 * a}, a / 2, 6.5 * a, 6 * a, 10 * a, false),
         JAR_LARGE(2000, new double[]{4.5 * a, 0, 4.5 * a, 11.5 * a, 10.5 * a, 11.5 * a}, a / 2, 8.5 * a, 5 * a, 11 * a, false),
