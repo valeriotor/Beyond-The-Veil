@@ -21,6 +21,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.layer.*;
 import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
 import com.valeriotor.beyondtheveil.client.render.blockentity.*;
 import com.valeriotor.beyondtheveil.client.render.entity.*;
+import com.valeriotor.beyondtheveil.client.render.entity.player.ScaledPlayerRenderer;
 import com.valeriotor.beyondtheveil.client.research.ResearchRegistryClient;
 import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.item.SampleTubeItem;
@@ -167,6 +168,7 @@ public class ClientSetup {
         event.registerLayerDefinition(LivingPortalModel.LAYER_LOCATION, LivingPortalModel::createBodyLayer);
         event.registerLayerDefinition(SurgeonModel.LAYER_LOCATION, SurgeonModel::createBodyLayer);
         event.registerLayerDefinition(SurgeonLarvaModel.LAYER_LOCATION, SurgeonLarvaModel::createBodyLayer);
+        event.registerLayerDefinition(ScaledPlayerModel.LAYER_LOCATION, ScaledPlayerModel::createBodyLayer);
 
 
 
@@ -237,6 +239,7 @@ public class ClientSetup {
         moreRenderers.put(PlayerTransformation.ABOMINATION_1, event.getRenderer(BTVEntities.ABOMINATION_1.get()));
         moreRenderers.put(PlayerTransformation.ABOMINATION_2, event.getRenderer(BTVEntities.ABOMINATION_2.get()));
         moreRenderers.put(PlayerTransformation.DEEP_ONE, event.getRenderer(BTVEntities.DEEP_ONE.get()));
+        moreRenderers.put(PlayerTransformation.SCALED, new ScaledPlayerRenderer(event.getContext()));
     }
 
     @SubscribeEvent

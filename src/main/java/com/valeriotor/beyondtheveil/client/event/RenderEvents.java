@@ -22,6 +22,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.client.render.entity.player.RenderPlayerUtils;
+import com.valeriotor.beyondtheveil.client.render.entity.player.ScaledPlayerRenderer;
 import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
@@ -190,6 +191,11 @@ public class RenderEvents {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
             if (crossSync != null && (crossSync.getTransformation() != null || crossSync.isDreamFocus())) {
                 event.setCanceled(true);
+                if (crossSync.getTransformation() == PlayerTransformation.SCALED) {
+                    if (ClientSetup.moreRenderers.get(PlayerTransformation.SCALED) instanceof ScaledPlayerRenderer spc) {
+                        spc.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, event.getArm() == HumanoidArm.RIGHT ? spc.getModel().rightArm : spc.getModel().leftArm);
+                    }
+                }
             }
             if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
                 event.setCanceled(true);
@@ -211,7 +217,9 @@ public class RenderEvents {
         if (player != null) {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
             if (crossSync != null && (crossSync.getTransformation() != null || crossSync.isDreamFocus())) {
-                event.setCanceled(true);
+                if (crossSync.getTransformation() != PlayerTransformation.SCALED) {
+                    event.setCanceled(true);
+                }
             }
             if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
                 event.setCanceled(true);
