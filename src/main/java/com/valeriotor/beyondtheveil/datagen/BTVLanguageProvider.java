@@ -3361,8 +3361,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.periosteum_growth.title", "Periosteum Growth");
         add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There's a certain unease at seeing your true self beneath that curtain of flesh.");
 
-        add("gui.journal.ingredients.chromatosphore_gland.title", "Chromatosphore Gland");
-        add("gui.journal.ingredients.chromatosphore_gland.text", "Used for mimicry. The need to veil your true self is present even in nature.");
+        add("gui.journal.ingredients.chromatophore_gland.title", "Chromatophore Gland");
+        add("gui.journal.ingredients.chromatophore_gland.text", "Used for mimicry. The need to veil your true self is present even in nature.");
 
         add("gui.journal.ingredients.osteoclast_gland.title", "Osteoclast Gland");
         add("gui.journal.ingredients.osteoclast_gland.text", "Destroys bony formations. Very harmful against undead, from skellies to withers.");
