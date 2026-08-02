@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_swollen_growth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:swollen_growth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_swollen_growth"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

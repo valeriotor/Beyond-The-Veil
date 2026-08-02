@@ -32,6 +32,12 @@ public class BTVAdvancements implements ForgeAdvancementProvider.AdvancementGene
         Advancement.Builder.recipeAdvancement().addCriterion("has_gunpowder_bladder", has(Registration.GUNPOWDER_BLADDER.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/gunpowder_bladder"), existingFileHelper);
         Advancement.Builder.recipeAdvancement().addCriterion("has_living_iron", has(Registration.LIVING_IRON.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/living_iron"), existingFileHelper);
         Advancement.Builder.recipeAdvancement().addCriterion("has_empty_bladder", has(Registration.EMPTY_BLADDER.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/empty_bladder"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_swollen_growth", has(Registration.SWOLLEN_GROWTH.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/swollen_growth"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_periosteum_growth", has(Registration.PERIOSTEUM_GROWTH.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/periosteum_growth"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_chromatophore_gland", has(Registration.CHROMATOPHORE_GLAND.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/chromatophore_gland"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_osteoclast_gland", has(Registration.OSTEOCLAST_GLAND.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/osteoclast_gland"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_slime_heart", has(Registration.SLIME_HEART.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/slime_heart"), existingFileHelper);
+        Advancement.Builder.recipeAdvancement().addCriterion("has_scales", has(Registration.SCALES.get())).save(saver, new ResourceLocation(References.MODID, "ingredients/scales"), existingFileHelper);
 
         // Impossible triggers, unlock is hardcoded
         Advancement.Builder.recipeAdvancement().addCriterion("has_emerald_gem", new ImpossibleTrigger.TriggerInstance()).save(saver, new ResourceLocation(References.MODID, "ingredients/emerald_gem"), existingFileHelper);

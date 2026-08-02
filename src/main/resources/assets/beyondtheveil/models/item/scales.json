@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/scales_held"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/scales_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/scales_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/scales_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/scales_held"},
+    "head":  {"parent": "beyondtheveil:item/scales_held"},
+    "gui": {"parent": "beyondtheveil:item/scales_base"},
+    "ground":  {"parent": "beyondtheveil:item/scales_held"},
+    "fixed": {"parent": "beyondtheveil:item/scales_held"}
+  },
+  "loader": "forge:separate_transforms"
+}

@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_periosteum_growth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:periosteum_growth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_periosteum_growth"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

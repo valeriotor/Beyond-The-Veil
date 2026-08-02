@@ -341,6 +341,7 @@ public class Registration {
     public static final RegistryObject<Item> CHROMATOPHORE_GLAND = ITEMS.register("chromatophore_gland", SurgeryIngredient::new);
     public static final RegistryObject<Item> OSTEOCLAST_GLAND = ITEMS.register("osteoclast_gland", SurgeryIngredient::new);
     public static final RegistryObject<Item> SLIME_HEART = ITEMS.register("slime_heart", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SCALES = ITEMS.register("scales", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -598,6 +599,7 @@ public class Registration {
                 output.accept(CHROMATOPHORE_GLAND.get());
                 output.accept(OSTEOCLAST_GLAND.get());
                 output.accept(SLIME_HEART.get());
+                output.accept(SCALES.get());
 
 
                 output.accept(SEDATIVE_BUCKET.get());

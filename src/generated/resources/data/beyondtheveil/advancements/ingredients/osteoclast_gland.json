@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_osteoclast_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:osteoclast_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_osteoclast_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

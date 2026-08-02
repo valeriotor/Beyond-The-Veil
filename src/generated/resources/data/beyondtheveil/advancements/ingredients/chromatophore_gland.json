@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "has_chromatophore_gland": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "beyondtheveil:chromatophore_gland"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_chromatophore_gland"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
