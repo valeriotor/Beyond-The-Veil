@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "head":  {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "gui": {"parent": "beyondtheveil:item/osteoclast_gland_base"},
+    "ground":  {"parent": "beyondtheveil:item/osteoclast_gland_held"},
+    "fixed": {"parent": "beyondtheveil:item/osteoclast_gland_held"}
+  },
+  "loader": "forge:separate_transforms"
+}

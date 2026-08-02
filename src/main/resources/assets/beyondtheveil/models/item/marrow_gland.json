@@ -1,57 +1,15 @@
 {
-	"credit": "Made with Blockbench",
-	"parent": "block/block",
-	"textures": {
-		"0": "beyondtheveil:item/marrow_gland",
-		"particle": "beyondtheveil:item/marrow_gland"
-	},
-	"elements": [
-		{
-			"from": [5, 4, 6],
-			"to": [11, 9, 12],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [7, 4, 6]},
-			"faces": {
-				"north": {"uv": [0, 0, 6, 5], "texture": "#0"},
-				"east": {"uv": [0, 0, 6, 5], "texture": "#0"},
-				"south": {"uv": [0, 0, 6, 5], "texture": "#0"},
-				"west": {"uv": [0, 0, 6, 5], "texture": "#0"},
-				"up": {"uv": [0, 0, 6, 6], "texture": "#0"},
-				"down": {"uv": [0, 0, 6, 6], "texture": "#0"}
-			}
-		},
-		{
-			"from": [6, 5, 13],
-			"to": [10, 8, 15],
-			"rotation": {"angle": 45, "axis": "x", "origin": [7, 8, 13]},
-			"faces": {
-				"north": {"uv": [0, 0, 4, 3], "rotation": 180, "texture": "#0"},
-				"east": {"uv": [0, 0, 3, 2], "rotation": 270, "texture": "#0"},
-				"south": {"uv": [0, 0, 4, 3], "texture": "#0"},
-				"west": {"uv": [0, 0, 3, 2], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [0, 0, 4, 2], "rotation": 180, "texture": "#0"},
-				"down": {"uv": [0, 0, 4, 2], "texture": "#0"}
-			}
-		},
-		{
-			"from": [4, 6, 4],
-			"to": [12, 12, 7],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [7, 6, 1]},
-			"faces": {
-				"north": {"uv": [8, 10, 16, 16], "texture": "#0"},
-				"east": {"uv": [13, 10, 16, 16], "texture": "#0"},
-				"south": {"uv": [8, 10, 16, 16], "texture": "#0"},
-				"west": {"uv": [13, 10, 16, 16], "texture": "#0"},
-				"up": {"uv": [8, 13, 16, 16], "texture": "#0"},
-				"down": {"uv": [8, 13, 16, 16], "texture": "#0"}
-			}
-		}
-	],
-	"groups": [
-		{
-			"name": "group",
-			"origin": [7, 4, 0],
-			"color": 0,
-			"children": [0, 1, 2]
-		}
-	]
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/marrow_gland_held"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "head":  {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "gui": {"parent": "beyondtheveil:item/marrow_gland_base"},
+    "ground":  {"parent": "beyondtheveil:item/marrow_gland_held"},
+    "fixed": {"parent": "beyondtheveil:item/marrow_gland_held"}
+  },
+  "loader": "forge:separate_transforms"
 }

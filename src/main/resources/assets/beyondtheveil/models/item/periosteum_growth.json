@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/periosteum_growth_held"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "head":  {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "gui": {"parent": "beyondtheveil:item/periosteum_growth_base"},
+    "ground":  {"parent": "beyondtheveil:item/periosteum_growth_held"},
+    "fixed": {"parent": "beyondtheveil:item/periosteum_growth_held"}
+  },
+  "loader": "forge:separate_transforms"
+}
