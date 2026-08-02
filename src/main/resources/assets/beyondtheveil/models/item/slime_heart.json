@@ -1,0 +1,15 @@
+{
+  "parent": "item/generated",
+  "base": {"parent": "beyondtheveil:item/slime_heart_held"},
+  "perspectives": {
+    "thirdperson_lefthand":  {"parent": "beyondtheveil:item/slime_heart_held"},
+    "thirdperson_righthand": {"parent": "beyondtheveil:item/slime_heart_held"},
+    "firstperson_lefthand":  {"parent": "beyondtheveil:item/slime_heart_held"},
+    "firstperson_righthand": {"parent": "beyondtheveil:item/slime_heart_held"},
+    "head":  {"parent": "beyondtheveil:item/slime_heart_held"},
+    "gui": {"parent": "beyondtheveil:item/slime_heart_base"},
+    "ground":  {"parent": "beyondtheveil:item/slime_heart_held"},
+    "fixed": {"parent": "beyondtheveil:item/slime_heart_held"}
+  },
+  "loader": "forge:separate_transforms"
+}

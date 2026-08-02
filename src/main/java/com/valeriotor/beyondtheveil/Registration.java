@@ -325,22 +325,22 @@ public class Registration {
     public static final RegistryObject<Item> SURGEON_BELL = ITEMS.register("surgeon_bell", SurgeonBellItem::new);
     public static final RegistryObject<Item> SURGEON_LARVA = ITEMS.register("surgeon_larva", SurgeonLarvaItem::new);
     public static final RegistryObject<Item> BLOOD_FIST = ITEMS.register("blood_fist", BloodFistItem::new);
-    public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new); // folly
-    public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new); // vulnerability
-    public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new); // terror
-    public static final RegistryObject<Item> ACID_GLAND = ITEMS.register("acid_gland", SurgeryIngredient::new); // damage armor
-    public static final RegistryObject<Item> FERTILIZER_GLAND = ITEMS.register("fertilizer_gland", SurgeryIngredient::new); // fertilize below
-    public static final RegistryObject<Item> MARROW_GLAND = ITEMS.register("marrow_gland", SurgeryIngredient::new); // drop bone meal; part of blood fist
-    public static final RegistryObject<Item> SILK_GLAND = ITEMS.register("silk_gland", SurgeryIngredient::new); // create web; part of blood fist
-    public static final RegistryObject<Item> GUNPOWDER_BLADDER = ITEMS.register("gunpowder_bladder", SurgeryIngredient::new); // make explosive; part of blood fist
-    public static final RegistryObject<Item> LIVING_IRON = ITEMS.register("living_iron", SurgeryIngredient::new); // iron spine;
-    public static final RegistryObject<Item> EMPTY_BLADDER = ITEMS.register("empty_bladder", SurgeryIngredient::new); // increase capacity
-    public static final RegistryObject<Item> EMERALD_GEM = ITEMS.register("emerald_gem", SurgeryIngredient::new); // used in crafting
-    public static final RegistryObject<Item> SWOLLEN_GROWTH = ITEMS.register("swollen_growth", SurgeryIngredient::new); // used in crafting
-    public static final RegistryObject<Item> PERIOSTEUM_GROWTH = ITEMS.register("periosteum_growth", SurgeryIngredient::new); // used in crafting
-    public static final RegistryObject<Item> CHROMATOPHORE_GLAND = ITEMS.register("chromatophore_gland", SurgeryIngredient::new); // used in crafting
-    public static final RegistryObject<Item> OSTEOCLAST_GLAND = ITEMS.register("osteoclast_gland", SurgeryIngredient::new); // used in crafting
-    //public static final RegistryObject<Item> SLIME_HEART = ITEMS.register("slime_heart", SurgeryIngredient::new); // used in crafting
+    public static final RegistryObject<Item> PLUCKED_EYE = ITEMS.register("plucked_eye", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SHELL = ITEMS.register("shell", SurgeryIngredient::new);
+    public static final RegistryObject<Item> TINY_SKULL = ITEMS.register("tiny_skull", SurgeryIngredient::new);
+    public static final RegistryObject<Item> ACID_GLAND = ITEMS.register("acid_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> FERTILIZER_GLAND = ITEMS.register("fertilizer_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> MARROW_GLAND = ITEMS.register("marrow_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SILK_GLAND = ITEMS.register("silk_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> GUNPOWDER_BLADDER = ITEMS.register("gunpowder_bladder", SurgeryIngredient::new);
+    public static final RegistryObject<Item> LIVING_IRON = ITEMS.register("living_iron", SurgeryIngredient::new);
+    public static final RegistryObject<Item> EMPTY_BLADDER = ITEMS.register("empty_bladder", SurgeryIngredient::new);
+    public static final RegistryObject<Item> EMERALD_GEM = ITEMS.register("emerald_gem", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SWOLLEN_GROWTH = ITEMS.register("swollen_growth", SurgeryIngredient::new);
+    public static final RegistryObject<Item> PERIOSTEUM_GROWTH = ITEMS.register("periosteum_growth", SurgeryIngredient::new);
+    public static final RegistryObject<Item> CHROMATOPHORE_GLAND = ITEMS.register("chromatophore_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> OSTEOCLAST_GLAND = ITEMS.register("osteoclast_gland", SurgeryIngredient::new);
+    public static final RegistryObject<Item> SLIME_HEART = ITEMS.register("slime_heart", SurgeryIngredient::new);
 
     public static final RegistryObject<Item> SEDATIVE_BUCKET = ITEMS.register("sedative_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SEDATIVE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SOFTENER_BUCKET = ITEMS.register("softener_bucket", () -> new BucketItem(BTVFluids.SOURCE_FLUID_SOFTENER, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
@@ -597,7 +597,7 @@ public class Registration {
                 output.accept(PERIOSTEUM_GROWTH.get());
                 output.accept(CHROMATOPHORE_GLAND.get());
                 output.accept(OSTEOCLAST_GLAND.get());
-                //output.accept(SLIME_HEART.get());
+                output.accept(SLIME_HEART.get());
 
 
                 output.accept(SEDATIVE_BUCKET.get());
