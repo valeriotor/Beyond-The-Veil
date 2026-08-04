@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "beyondtheveil:block/ghost_weed_stage0"
+    },
+    "age=1": {
+      "model": "beyondtheveil:block/ghost_weed_stage1"
+    },
+    "age=2": {
+      "model": "beyondtheveil:block/ghost_weed_stage2"
+    },
+    "age=3": {
+      "model": "beyondtheveil:block/ghost_weed_stage3"
+    },
+    "age=4": {
+      "model": "beyondtheveil:block/ghost_weed_stage4"
+    },
+    "age=5": {
+      "model": "beyondtheveil:block/ghost_weed_stage5"
+    },
+    "age=6": {
+      "model": "beyondtheveil:block/ghost_weed_stage6"
+    },
+    "age=7": {
+      "model": "beyondtheveil:block/ghost_weed_stage7"
+    }
+  }
+}

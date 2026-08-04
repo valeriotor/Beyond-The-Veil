@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.datagen;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
@@ -7,6 +8,7 @@ import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -87,6 +89,8 @@ public class BTVBlockStates extends BlockStateProvider {
         //simpleBlock(FLASK_SMALL.get(), new ExistingModelFile(modLoc("block/flask_small"), models().existingFileHelper));
         //horizontalBlock(FLASK_SHELF.get(), new ExistingModelFile(modLoc("block/flask_shelf"), models().existingFileHelper));
         horizontalBlock(CURTAIN.get(), new ExistingModelFile(modLoc("block/" + CURTAIN.getId().getPath()), models().existingFileHelper));
+        simpleBlock(REDSTONE_GRASS.get(), new ExistingModelFile(mcLoc("block/grass_block"), models().existingFileHelper));
+        simpleBlock(GHOST_GRASS.get(), new ExistingModelFile(mcLoc("block/grass_block"), models().existingFileHelper));
 
 
         registerCanopy();
@@ -105,6 +109,10 @@ public class BTVBlockStates extends BlockStateProvider {
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
         registerBlackTallSeagrass();
         registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
+
+        registerWeed("grass_weed", Registration.GRASS_WEED.get());
+        registerWeed("redstone_weed", Registration.REDSTONE_WEED.get());
+        registerWeed("ghost_weed", Registration.GHOST_WEED.get());
     }
 
     private void registerSmoothStoneSlab(SlabBlock block, ResourceLocation side, ResourceLocation top) {
@@ -517,6 +525,13 @@ public class BTVBlockStates extends BlockStateProvider {
         ExistingModelFile top = new ExistingModelFile(modLoc("block/black_tall_seagrass_top"), models().existingFileHelper);
         getVariantBuilder(BLACK_TALL_SEAGRASS.get()).forAllStates(state -> {
             return ConfiguredModel.builder().modelFile(state.getValue(BlackTallSeagrassBlock.HALF) == DoubleBlockHalf.LOWER ? bottom : top).build();
+        });
+    }
+
+    private void registerWeed(String modelName, CropBlock weed) {
+        getVariantBuilder(weed).forAllStates(state -> {
+            int age = state.getValue(CropBlock.AGE);
+            return ConfiguredModel.builder().modelFile(models().crop(modelName + "_stage" + age, modLoc("block/crops/" + modelName + "/stage" + age)).renderType("cutout")).build();
         });
     }
 

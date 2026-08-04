@@ -52,9 +52,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(WOLF_MEDALLION.get(), "Wolf Medallion");
         add(TABLET.get(), "Tablet");
         add(BRONZE_SPHERE.get(), "Bronze Sphere");
-        add(REDSTONE_WEED_SEEDS.get(), "Redstone Grass Seeds");
-        add(GHOST_WEED_SEEDS.get(), "Ghost Grass Seeds");
-        add(VANILLA_WEED_SEEDS.get(), "Vanilla Grass Seeds");
+        add(REDSTONE_WEED_SEEDS.get(), "Redstone Weed Seeds");
+        add(GHOST_WEED_SEEDS.get(), "Ghost Weed Seeds");
+        add(GRASS_WEED_SEEDS.get(), "Grass Weed Seeds");
         add(BLACKJACK.get(), "Blackjack");
         add(SPINE.get(), "Spine");
         add(HELD_VILLAGER.get(), "Villager");

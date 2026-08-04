@@ -3,26 +3,25 @@ package com.valeriotor.beyondtheveil.datagen;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.DynamicLoot;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
-import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
-import net.minecraft.world.level.storage.loot.functions.SetContainerContents;
-import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -117,6 +116,18 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.DREAM_FOCUS.get());
         dropSelf(Registration.DREAM_FOCUS_FLUIDS.get());
         dropSelf(Registration.CURTAIN.get());
+        LootItemCondition.Builder lootitemcondition$ghost_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.GHOST_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        LootItemCondition.Builder lootitemcondition$redstone_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.REDSTONE_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        LootItemCondition.Builder lootitemcondition$grass_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.GRASS_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+        add(Registration.GHOST_WEED.get(), this.applyExplosionDecay(Registration.GHOST_WEED.get(), LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(Registration.GHOST_WEED_SEEDS.get()))).withPool(LootPool.lootPool().when(lootitemcondition$ghost_weed).add(LootItem.lootTableItem(Registration.GHOST_WEED_SEEDS.get()).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
+        add(Registration.REDSTONE_WEED.get(), this.applyExplosionDecay(Registration.REDSTONE_WEED.get(), LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(Registration.REDSTONE_WEED_SEEDS.get()))).withPool(LootPool.lootPool().when(lootitemcondition$redstone_weed).add(LootItem.lootTableItem(Registration.REDSTONE_WEED_SEEDS.get()).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
+        add(Registration.GRASS_WEED.get(), this.applyExplosionDecay(Registration.GRASS_WEED.get(), LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(Registration.GRASS_WEED_SEEDS.get()))).withPool(LootPool.lootPool().when(lootitemcondition$grass_weed).add(LootItem.lootTableItem(Registration.GRASS_WEED_SEEDS.get()).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
+        this.add(Registration.REDSTONE_GRASS.get(), (p_249779_) -> {
+            return this.createSingleItemTableWithSilkTouch(p_249779_, Blocks.DIRT);
+        });
+        this.add(Registration.GHOST_GRASS.get(), (p_249779_) -> {
+            return this.createSingleItemTableWithSilkTouch(p_249779_, Blocks.DIRT);
+        });
 
     }
 

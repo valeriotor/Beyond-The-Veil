@@ -157,6 +157,11 @@ public class Registration {
     public static final RegistryObject<GrowingPlantBodyBlock> BLACK_KELP_PLANT = BLOCKS.register("black_kelp_plant", () -> new BlackKelpPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).noCollission().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<BlackSeagrassBlock> BLACK_SEAGRASS = BLOCKS.register("black_seagrass", () -> new BlackSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
     public static final RegistryObject<BlackTallSeagrassBlock> BLACK_TALL_SEAGRASS = BLOCKS.register("black_tall_seagrass", () -> new BlackTallSeagrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY))); // new BlockMemorySieve(Material.ROCK, BlockNames.MEMORY_S
+    public static final RegistryObject<CropBlock> GHOST_WEED = BLOCKS.register("ghost_weed", () -> new DreamWeedBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<CropBlock> REDSTONE_WEED = BLOCKS.register("redstone_weed", () -> new DreamWeedBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<CropBlock> GRASS_WEED = BLOCKS.register("grass_weed", () -> new DreamWeedBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<Block> REDSTONE_GRASS = BLOCKS.register("redstone_grass", () -> new RedstoneGrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
+    public static final RegistryObject<Block> GHOST_GRASS = BLOCKS.register("ghost_grass", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.GRASS).randomTicks().noCollission().strength(0.6F).sound(SoundType.GRASS)));
 
     public static final RegistryObject<Block> FLASK_LARGE = BLOCKS.register("flask_large", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.FLASK_LARGE)); // TODO GLASS PROPERTIES
     public static final RegistryObject<Block> FLASK_MEDIUM = BLOCKS.register("flask_medium", () -> new FlaskBlock(FLASK_PROPERTIES, FlaskBlock.FlaskShape.FLASK_MEDIUM)); // TODO GLASS PROPERTIES
@@ -252,6 +257,11 @@ public class Registration {
     public static final RegistryObject<Item> JAR_SMALL_ITEM = fromBlock(JAR_SMALL);
     public static final RegistryObject<Item> FLASK_ITEM_ITEM = fromBlock(FLASK_ITEM);
     public static final RegistryObject<Item> BLACK_KELP_ITEM = fromBlock(BLACK_KELP);
+    public static final RegistryObject<Item> REDSTONE_GRASS_ITEM = fromBlock(REDSTONE_GRASS);
+    public static final RegistryObject<Item> GHOST_GRASS_ITEM = fromBlock(GHOST_GRASS);
+    public static final RegistryObject<Item> GHOST_WEED_SEEDS = ITEMS.register("ghost_weed_seeds", () -> new DreamSeedsItem(GHOST_WEED.get(), ITEM_PROPERTIES));
+    public static final RegistryObject<Item> REDSTONE_WEED_SEEDS = ITEMS.register("redstone_weed_seeds", () -> new DreamSeedsItem(REDSTONE_WEED.get(), ITEM_PROPERTIES));
+    public static final RegistryObject<Item> GRASS_WEED_SEEDS = ITEMS.register("grass_weed_seeds", () -> new DreamSeedsItem(GRASS_WEED.get(), ITEM_PROPERTIES));
     public static final RegistryObject<Item> BLACK_SEAGRASS_ITEM = fromBlock(BLACK_SEAGRASS);
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
@@ -272,9 +282,6 @@ public class Registration {
     public static final RegistryObject<Item> WOLF_MEDALLION = ITEMS.register("wolf_medallion", () -> new Item(ITEM_PROPERTIES)); // new ItemWolfMedallion("wolf_medallion");
     public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new Item(ITEM_PROPERTIES)); // new ItemTablet("tablet");
     public static final RegistryObject<Item> BRONZE_SPHERE = ITEMS.register("bronze_sphere", () -> new Item(ITEM_PROPERTIES)); // new ItemBronzeSphere("bronze_sphere");
-    public static final RegistryObject<Item> REDSTONE_WEED_SEEDS = ITEMS.register("redstone_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantRedstoneWeed, BlockRegistry.BlockRedstoneGrass, BlockNames.REDSTONEWEED);
-    public static final RegistryObject<Item> GHOST_WEED_SEEDS = ITEMS.register("ghost_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantGhostWeed, BlockRegistry.BlockGhostGrass, BlockNames.GHOSTWEED);
-    public static final RegistryObject<Item> VANILLA_WEED_SEEDS = ITEMS.register("vanilla_weed_seeds", () -> new Item(ITEM_PROPERTIES)); // new ItemSpecialGrassSeeds(BlockRegistry.PlantVanillaWeed, Blocks.GRASS, BlockNames.VANILLAWEED);
     public static final RegistryObject<Item> BLACKJACK = ITEMS.register("blackjack", BlackjackItem::new); // new ItemBlackjack("blackjack");
     public static final RegistryObject<Item> SPINE = ITEMS.register("spine", () -> new Item(ITEM_PROPERTIES)); // new ModItem("spine");
     public static final RegistryObject<BloodShardItem> BLOOD_SHARD = ITEMS.register("blood_shard", BloodShardItem::new); // new ItemHeldVillager("held_villager");
@@ -532,7 +539,9 @@ public class Registration {
                 output.accept(BRONZE_SPHERE.get());
                 output.accept(REDSTONE_WEED_SEEDS.get());
                 output.accept(GHOST_WEED_SEEDS.get());
-                output.accept(VANILLA_WEED_SEEDS.get());
+                output.accept(GRASS_WEED_SEEDS.get());
+                output.accept(REDSTONE_GRASS.get());
+                output.accept(GHOST_GRASS.get());
                 output.accept(BLACKJACK.get());
                 output.accept(SPINE.get());
                 output.accept(BLOOD_SHARD.get());

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "beyondtheveil:item/vanilla_weed_seeds"
+    "layer0": "beyondtheveil:item/grass_weed_seeds"
   }
 }

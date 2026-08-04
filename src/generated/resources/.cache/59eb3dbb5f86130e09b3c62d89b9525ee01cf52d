@@ -1,4 +1,4 @@
-// 1.20.1	2026-07-29T01:49:51.8789843	Loot Tables
+// 1.20.1	2026-08-04T23:46:11.7430668	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
@@ -47,6 +47,9 @@ adcc96a33a085d8224464cd1eca58c0b9c52b7cf data/beyondtheveil/loot_tables/blocks/f
 1e5b9ed6489cdf8238e4ec810aff4bcc4ad4bc69 data/beyondtheveil/loot_tables/blocks/flebo.json
 c02c9973efb981ceee82bb9bccca4add85ab750b data/beyondtheveil/loot_tables/blocks/fume_spreader.json
 f642da10eefbc3f4ef7d9fb5ddbd4762d911050a data/beyondtheveil/loot_tables/blocks/gear_bench.json
+19b5b2c02867d6bef3b78c10717c6cb3ba8f5dfd data/beyondtheveil/loot_tables/blocks/ghost_grass.json
+00fb3bdf7266903c5a15000e95a6a640daab36c6 data/beyondtheveil/loot_tables/blocks/ghost_weed.json
+4bb10f77d076bf2127dcff02814d9c557fc837f0 data/beyondtheveil/loot_tables/blocks/grass_weed.json
 a6c220a48d38dfe713353cfbfd1c147977af23f5 data/beyondtheveil/loot_tables/blocks/heart.json
 b400ee15aca5836bf4776f630eaf5d9f7eb3a595 data/beyondtheveil/loot_tables/blocks/idol.json
 403b133fc6351f31c6aa2848c0317a72ee33083b data/beyondtheveil/loot_tables/blocks/jar_large.json
@@ -58,6 +61,8 @@ b65bd581bf8f0e50a899f93121df7d61a2012b3f data/beyondtheveil/loot_tables/blocks/l
 7291bf55b5646990818d32d7e3807a4517a4b410 data/beyondtheveil/loot_tables/blocks/memory_sieve.json
 670e780d90dc28ab2b208a678c9735693c1a52bb data/beyondtheveil/loot_tables/blocks/offer_pillar.json
 ff17b12edddc174ced130de2d50678d9ed95eca8 data/beyondtheveil/loot_tables/blocks/patient_pod.json
+c5e7cd1a9e0f56122ea23e2e3b8afb168c757bcd data/beyondtheveil/loot_tables/blocks/redstone_grass.json
+1278a7fdc43ced5bcd3edabb8137de4d54ffc5b2 data/beyondtheveil/loot_tables/blocks/redstone_weed.json
 c431cde79772ae0252ee37e1d90a634ed8b7a54b data/beyondtheveil/loot_tables/blocks/sacrifice_altar.json
 fef3f62bd204f94d7f14fe96d15d286dc35df8a2 data/beyondtheveil/loot_tables/blocks/sleep_chamber.json
 e0294830ff18d46ba4eb2c93376446aaa712ca17 data/beyondtheveil/loot_tables/blocks/slug_bait.json

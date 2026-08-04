@@ -36,15 +36,22 @@ import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
@@ -103,14 +110,22 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_SEAGRASS.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.BLACK_TALL_SEAGRASS.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.DARK_GLASS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(Registration.GHOST_GRASS.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.REDSTONE_GRASS.get(), RenderType.cutout());
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();
             BlockColors blockColors = Minecraft.getInstance().getBlockColors();
             blockColors.register((pState, pLevel, pPos, pTintIndex) -> 0x287082, Registration.MEMORY_SIEVE.get());
+            blockColors.register((pState, pLevel, pPos, pTintIndex) -> {
+                return pLevel != null && pPos != null ? BiomeColors.getAverageGrassColor(pLevel, pPos) : GrassColor.getDefaultColor();
+            }, Registration.GHOST_GRASS.get(), Registration.REDSTONE_GRASS.get());
             ItemColors itemColors = Minecraft.getInstance().getItemColors();
             itemColors.register(new MemoryPhialItem.MemoryPhialColor(), Registration.MEMORY_PHIAL.get());
             itemColors.register(new SampleTubeItem.SampleTubeColor(), Registration.SAMPLE_TUBE.get());
-
+            itemColors.register((p_92687_, p_92688_) -> {
+                BlockState blockstate = ((BlockItem)p_92687_.getItem()).getBlock().defaultBlockState();
+                return blockColors.getColor(blockstate, (BlockAndTintGetter)null, (BlockPos)null, p_92688_);
+            }, Registration.GHOST_GRASS.get(), Registration.REDSTONE_GRASS.get());
             ItemProperties.register(ARCHE_DIAL.get(), new ResourceLocation("time"), new ClampedItemPropertyFunction() {
                 @Override
                 public float unclampedCall(ItemStack pStack, @Nullable ClientLevel pLevel, @Nullable LivingEntity pEntity, int pSeed) {

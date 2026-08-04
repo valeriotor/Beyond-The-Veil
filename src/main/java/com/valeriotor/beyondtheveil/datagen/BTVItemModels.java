@@ -79,6 +79,8 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(DARK_GLASS_ITEM.getId().getPath(), modLoc("block/dark_glass"));
         withExistingParent(ARENA_ITEM.getId().getPath(), modLoc("block/arena"));
         withExistingParent(DEEP_CHEST_ITEM.getId().getPath(), modLoc("block/deep_chest"));
+        withExistingParent(REDSTONE_GRASS_ITEM.getId().getPath(), mcLoc("block/grass_block"));
+        withExistingParent(GHOST_GRASS_ITEM.getId().getPath(), mcLoc("block/grass_block"));
         withExistingParent(DEEP_ONE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_SKELETON_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(BLOOD_ZOMBIE_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -117,9 +119,9 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(WOLF_MEDALLION.getId().getPath(),     mcLoc("item/generated"), "layer0", modLoc("item/" + WOLF_MEDALLION.getId().getPath()));
         singleTexture(TABLET.getId().getPath(),             mcLoc("item/generated"), "layer0", modLoc("item/" + TABLET.getId().getPath()));
         singleTexture(BRONZE_SPHERE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + BRONZE_SPHERE.getId().getPath()));
-        singleTexture(REDSTONE_WEED_SEEDS.getId().getPath(),mcLoc("item/generated"), "layer0", modLoc("item/" + REDSTONE_WEED_SEEDS.getId().getPath()));
         singleTexture(GHOST_WEED_SEEDS.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/" + GHOST_WEED_SEEDS.getId().getPath()));
-        singleTexture(VANILLA_WEED_SEEDS.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/" + VANILLA_WEED_SEEDS.getId().getPath()));
+        singleTexture(REDSTONE_WEED_SEEDS.getId().getPath(),mcLoc("item/generated"), "layer0", modLoc("item/" + REDSTONE_WEED_SEEDS.getId().getPath()));
+        singleTexture(GRASS_WEED_SEEDS.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/" + GRASS_WEED_SEEDS.getId().getPath()));
         singleTexture(BLACKJACK.getId().getPath(),          mcLoc("item/generated"), "layer0", modLoc("item/" + BLACKJACK.getId().getPath()));
         singleTexture(SPINE.getId().getPath(),              mcLoc("item/generated"), "layer0", modLoc("item/" + SPINE.getId().getPath()));
         singleTexture(BLOOD_SHARD.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + BLOOD_SHARD.getId().getPath()));

@@ -1,4 +1,4 @@
-// 1.20.1	2026-07-29T00:06:28.53557	Item Models: beyondtheveil
+// 1.20.1	2026-08-04T23:25:00.1024578	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -100,7 +100,9 @@ fefb78ef0675b982fe81d9a5129dc5f9260697e7 assets/beyondtheveil/models/item/flute.
 083d22a80392338f75c7c8b62a81d6fd9ef36433 assets/beyondtheveil/models/item/fume_spreader.json
 800afa480393a73a18480653f7dd59a7531e03f9 assets/beyondtheveil/models/item/gear.json
 e15b3ef784b9e79f8bad74285882149961338b79 assets/beyondtheveil/models/item/gear_bench.json
+bbd15cd1634de5cce6760b9eddde9feb613dda76 assets/beyondtheveil/models/item/ghost_grass.json
 7c35da873379996c15bea48adab362b083b294a5 assets/beyondtheveil/models/item/ghost_weed_seeds.json
+1ac376933d6e6086600ef7d2639686208f96530d assets/beyondtheveil/models/item/grass_weed_seeds.json
 a14a8d60e580d3347a1c5a72ec3eb6a56b67e53c assets/beyondtheveil/models/item/great_heart.json
 f8aac20f5a2b84312fc581a52406915cd94d88a4 assets/beyondtheveil/models/item/growth_stimulant_bucket.json
 202a01b9a5fb59621e8a4a6160f26dd4b898b74b assets/beyondtheveil/models/item/gs121_serum_bucket.json
@@ -142,6 +144,7 @@ ddc62887706a7471a412f64d15c7d914b58c2a6a assets/beyondtheveil/models/item/oniric
 f313e66ad3f824fe0d3c54898d9af1b36280f241 assets/beyondtheveil/models/item/patient_pod.json
 52e5f566a0126838a5c4f0f2afa41b7653aa381b assets/beyondtheveil/models/item/pheromones_bucket.json
 ede31eabe5683c8a5227cae1246b3a4cbf96daba assets/beyondtheveil/models/item/poison_serum_bucket.json
+bbd15cd1634de5cce6760b9eddde9feb613dda76 assets/beyondtheveil/models/item/redstone_grass.json
 94ce6fca09854e80fa502ed726428248847aada2 assets/beyondtheveil/models/item/redstone_weed_seeds.json
 df0283fabdc13496409d7c67bdfacf73282c7e0f assets/beyondtheveil/models/item/regeneration_serum_bucket.json
 37dd46c18f5fd5393bd248cd974f5ecc37ab409a assets/beyondtheveil/models/item/repair_hammer.json
@@ -178,7 +181,6 @@ c293a59f72019d4d3687fafa3d82d0f56640f785 assets/beyondtheveil/models/item/tablet
 b088b4c481c87ac877a2e6c26a41994b6f42f983 assets/beyondtheveil/models/item/tears_bucket.json
 ec628dfabce89c6c634572a9935eac35a4c896e1 assets/beyondtheveil/models/item/tropical_delight.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/umancala.json
-1ae74006754a206b30b97d8e838d021b90966f60 assets/beyondtheveil/models/item/vanilla_weed_seeds.json
 b07bf344cb7ec5c4b4900b798a13b3c9b0ee092d assets/beyondtheveil/models/item/vasoconstrictor_bucket.json
 14e9c309c0664d10efc343541e82f6c0474e2408 assets/beyondtheveil/models/item/vein_miner.json
 c6e7ab35f0e7f4cd7a7e9600b5feca59502453de assets/beyondtheveil/models/item/vein_stone.json
