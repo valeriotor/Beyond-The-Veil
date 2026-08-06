@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=east,level=0": {
+      "model": "beyondtheveil:block/arboreal_generator_lower"
+    },
+    "facing=east,level=1": {
+      "model": "beyondtheveil:block/arboreal_generator_upper"
+    },
+    "facing=north,level=0": {
+      "model": "beyondtheveil:block/arboreal_generator_lower"
+    },
+    "facing=north,level=1": {
+      "model": "beyondtheveil:block/arboreal_generator_upper"
+    },
+    "facing=south,level=0": {
+      "model": "beyondtheveil:block/arboreal_generator_lower"
+    },
+    "facing=south,level=1": {
+      "model": "beyondtheveil:block/arboreal_generator_upper"
+    },
+    "facing=west,level=0": {
+      "model": "beyondtheveil:block/arboreal_generator_lower"
+    },
+    "facing=west,level=1": {
+      "model": "beyondtheveil:block/arboreal_generator_upper"
+    }
+  }
+}

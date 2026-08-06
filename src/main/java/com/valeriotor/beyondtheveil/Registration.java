@@ -146,6 +146,8 @@ public class Registration {
     //public static final RegistryObject<Block> DREAM_FOCUS_FLUIDS = BLOCKS.register("dream_focus_fluids", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusFluids(BlockNames.DREAMFOCUSFLUIDS);
     //public static final RegistryObject<Block> DREAM_FOCUS_VILLAGERS = BLOCKS.register("dream_focus_villagers", () -> new Block(BRICK_PROPERTIES)); // new BlockDreamFocusVillagers(BlockNames.DREAMFOCUSVILLAGERS);
     public static final RegistryObject<Block> CURTAIN = BLOCKS.register("curtain", () -> new CurtainBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().pushReaction(PushReaction.DESTROY))); // new BlockCurtain(BlockNames.CURTAIN);
+    public static final RegistryObject<ThinMultiBlock1by2> ARBOREAL_GENERATOR = BLOCKS.register("arboreal_generator", () -> new ArborealGeneratorBlock(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
+    public static final RegistryObject<Block> SAPLING_SHRUB = BLOCKS.register("sapling_shrub", () -> new SaplingShrubBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMegydrea(BlockNames.MEGYDREA);
     //public static final RegistryObject<Block> MEGYDREA = BLOCKS.register("megydrea", () -> new Block(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
     //public static final RegistryObject<Block> THICK_ALGAE = BLOCKS.register("thick_algae", () -> new Block(BRICK_PROPERTIES)); // new BlockThickAlgae(BlockNames.THICK_ALGAE);
     //public static final RegistryObject<Block> ARCHE_PORTAL = BLOCKS.register("arche_portal", () -> new Block(BRICK_PROPERTIES)); // new BlockArchePortal(BlockNames.ARCHE_PORTAL);
@@ -237,6 +239,8 @@ public class Registration {
     public static final RegistryObject<Item> OFFER_PILLAR_ITEM = fromBlock(OFFER_PILLAR, new Item.Properties().stacksTo(1));
     public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
     public static final RegistryObject<Item> CURTAIN_ITEM = fromBlock(CURTAIN);
+    public static final RegistryObject<Item> ARBOREAL_GENERATOR_ITEM = fromBlock(ARBOREAL_GENERATOR);
+    public static final RegistryObject<Item> SAPLING_SHRUB_ITEM = fromBlock(SAPLING_SHRUB);
     public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
     //public static final RegistryObject<Item> DREAM_FOCUS_ITEM = fromBlock(DREAM_FOCUS);
     //public static final RegistryObject<Item> DREAM_FOCUS_FLUIDS_ITEM = fromBlock(DREAM_FOCUS_FLUIDS);
@@ -459,6 +463,8 @@ public class Registration {
                 output.accept(DREAM_FOCUS.get());
                 output.accept(DREAM_FOCUS_FLUIDS.get());
                 output.accept(CURTAIN.get());
+                output.accept(ARBOREAL_GENERATOR.get());
+                output.accept(SAPLING_SHRUB.get());
                 output.accept(FLASK_LARGE.get());
                 output.accept(FLASK_MEDIUM.get());
                 output.accept(FLASK_SMALL.get());

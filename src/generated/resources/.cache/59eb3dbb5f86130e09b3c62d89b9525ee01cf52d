@@ -1,6 +1,7 @@
-// 1.20.1	2026-08-04T23:46:11.7430668	Loot Tables
+// 1.20.1	2026-08-06T01:40:48.3776864	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
+1507d9fa4732435ba035899271dcaa6627c50d86 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
 ecf58c87024973db8453793df745feeda191a1ae data/beyondtheveil/loot_tables/blocks/arena.json
 326f66af7c810752260514b476c79724d58201d1 data/beyondtheveil/loot_tables/blocks/black_kelp.json
 d1c255bbbfc828b2418cd4f92a122b2cf3d9c896 data/beyondtheveil/loot_tables/blocks/black_kelp_plant.json
@@ -64,6 +65,7 @@ ff17b12edddc174ced130de2d50678d9ed95eca8 data/beyondtheveil/loot_tables/blocks/p
 c5e7cd1a9e0f56122ea23e2e3b8afb168c757bcd data/beyondtheveil/loot_tables/blocks/redstone_grass.json
 1278a7fdc43ced5bcd3edabb8137de4d54ffc5b2 data/beyondtheveil/loot_tables/blocks/redstone_weed.json
 c431cde79772ae0252ee37e1d90a634ed8b7a54b data/beyondtheveil/loot_tables/blocks/sacrifice_altar.json
+3f27970b2922af0c536ff7743fcd7c8994a04362 data/beyondtheveil/loot_tables/blocks/sapling_shrub.json
 fef3f62bd204f94d7f14fe96d15d286dc35df8a2 data/beyondtheveil/loot_tables/blocks/sleep_chamber.json
 e0294830ff18d46ba4eb2c93376446aaa712ca17 data/beyondtheveil/loot_tables/blocks/slug_bait.json
 d362adec3b7ca47a7b09a2bd38eb2b74f1fcba2a data/beyondtheveil/loot_tables/blocks/surgery_bed.json

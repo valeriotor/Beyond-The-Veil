@@ -4,7 +4,9 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.*;
 import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -91,7 +93,7 @@ public class BTVBlockStates extends BlockStateProvider {
         horizontalBlock(CURTAIN.get(), new ExistingModelFile(modLoc("block/" + CURTAIN.getId().getPath()), models().existingFileHelper));
         simpleBlock(REDSTONE_GRASS.get(), new ExistingModelFile(mcLoc("block/grass_block"), models().existingFileHelper));
         simpleBlock(GHOST_GRASS.get(), new ExistingModelFile(mcLoc("block/grass_block"), models().existingFileHelper));
-
+        simpleBlock(SAPLING_SHRUB.get(), ConfiguredModel.builder().modelFile(models().cross(SAPLING_SHRUB.getId().getPath(), modLoc("block/sapling_shrub")).renderType("cutout")).build());
 
         registerCanopy();
         registerFumeSpreader();
@@ -109,6 +111,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
         registerBlackTallSeagrass();
         registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
+        registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
         registerWeed("redstone_weed", Registration.REDSTONE_WEED.get());
@@ -268,7 +271,6 @@ public class BTVBlockStates extends BlockStateProvider {
     }
 
     private void registerPatientPod() {
-        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + "flask_shelf_empty"), models().existingFileHelper);
         ExistingModelFile patientPodSolidLower = new ExistingModelFile(modLoc("block/patient_pod_lower_solid"), models().existingFileHelper);
         ExistingModelFile patientPodSolidUpper = new ExistingModelFile(modLoc("block/patient_pod_upper_solid"), models().existingFileHelper);
         ExistingModelFile patientPodTranslucent = new ExistingModelFile(modLoc("block/patient_pod_translucent"), models().existingFileHelper);
@@ -473,6 +475,17 @@ public class BTVBlockStates extends BlockStateProvider {
                             .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90 + 90 * rotationOffset) % 360))
                             .build();
                 });
+    }
+
+    private void registerThin1By2(String modelName, ThinMultiBlock1by2 block) {
+        ExistingModelFile lower = new ExistingModelFile(modLoc("block/" + modelName + "_lower"), models().existingFileHelper);
+        ExistingModelFile upper = new ExistingModelFile(modLoc("block/" + modelName + "_upper"), models().existingFileHelper);
+
+        getVariantBuilder(block)
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(block.getLevelProperty()) == 0 ? lower : upper)
+                        .build());
+
     }
 
     private void registerFullMultiBlock(String modelName, String emptyModelName, FullMultiBlock block) {

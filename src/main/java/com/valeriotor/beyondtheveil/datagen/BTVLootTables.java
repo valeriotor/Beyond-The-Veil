@@ -63,6 +63,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.PATIENT_POD.get());
         dropSelf(Registration.FLASK_SHELF.get());
         dropSelf(Registration.FLEBO.get());
+        dropSelf(Registration.ARBOREAL_GENERATOR.get());
         dropSelf(Registration.SURGERY_BED.get());
         dropSelf(Registration.ALEMBICS.get());
         dropSelf(Registration.LACRYMATORY.get());
@@ -128,6 +129,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         this.add(Registration.GHOST_GRASS.get(), (p_249779_) -> {
             return this.createSingleItemTableWithSilkTouch(p_249779_, Blocks.DIRT);
         });
+        add(Registration.SAPLING_SHRUB.get(), noDrop());
 
     }
 

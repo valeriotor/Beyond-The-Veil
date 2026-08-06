@@ -1,4 +1,4 @@
-// 1.20.1	2026-08-04T23:25:00.1024578	Item Models: beyondtheveil
+// 1.20.1	2026-08-06T01:40:48.3734343	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -154,6 +154,7 @@ df0283fabdc13496409d7c67bdfacf73282c7e0f assets/beyondtheveil/models/item/regene
 3b91ab14247232d6ab7625a9753a38e5638bd194 assets/beyondtheveil/models/item/sacrificial_knife.json
 4903ac5575c172cfefefceea38b4acd03075dbca assets/beyondtheveil/models/item/sample_tube.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/sandflatter.json
+40b9f752d1b61383ec5a54fc7b64825fd8ebc8d3 assets/beyondtheveil/models/item/sapling_shrub.json
 7256416779291b06305f29f251554f9086e32696 assets/beyondtheveil/models/item/seaweed_stew.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/sea_snake.json
 de3a9251229d896b13d5cbea687f93278a311966 assets/beyondtheveil/models/item/sedative_bucket.json
