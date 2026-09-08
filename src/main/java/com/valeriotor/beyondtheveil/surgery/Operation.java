@@ -39,6 +39,7 @@ public class Operation {
     private final boolean persistent;
     private final boolean eraseFluid;
     private final boolean requiresIncision;
+    private final boolean wantsSoften;
     private final int duration;
     private final ToDoubleFunction<PatientStatus> painPerTick;
     private final double painForFailure;
@@ -75,6 +76,7 @@ public class Operation {
         this.persistent = b.persistent;
         this.eraseFluid = b.eraseFluid;
         this.requiresIncision = b.requiresIncision;
+        this.wantsSoften = b.wantsSoften;
         this.duration = b.duration;
         this.painPerTick = b.painPerTick;
         this.painForFailure = b.painForFailure;
@@ -154,6 +156,10 @@ public class Operation {
 
     public boolean isRequiresIncision() {
         return requiresIncision;
+    }
+
+    public boolean isWantsSoften() {
+        return wantsSoften;
     }
 
     public int getDuration() {
@@ -257,6 +263,7 @@ public class Operation {
         private boolean updateClientOnSuccess = false; // TODO include these if necessary
         private boolean updateClientOnFailure = false;
         private boolean requiresIncision = false;
+        private boolean wantsSoften = false;
         private int duration;
         private ToDoubleFunction<PatientStatus> painPerTick = s -> 0;
         private double painForFailure = Integer.MAX_VALUE;
@@ -451,6 +458,11 @@ public class Operation {
 
         public Builder setRequiresIncision(boolean requiresIncision) {
             this.requiresIncision = requiresIncision;
+            return this;
+        }
+
+        public Builder wantsSoften(boolean wantsSoften) {
+            this.wantsSoften = wantsSoften;
             return this;
         }
 

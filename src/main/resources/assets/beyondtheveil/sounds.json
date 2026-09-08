@@ -145,5 +145,8 @@
   },
   "deactivate": {
     "sounds": [ "beyondtheveil:deactivate" ]
+  },
+  "hardness": {
+    "sounds": [ "beyondtheveil:hardness" ]
   }
 }

@@ -77,6 +77,7 @@ public class OperationRegistry {
                 }
             })
             .setPersistent(true)
+            .wantsSoften(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
             .addPlayerData(PlayerDataLib.extracted_heart.name())
@@ -96,7 +97,7 @@ public class OperationRegistry {
             .setDuration(180)
             .setPainForFailure(50)
             .addAllowedLocation(SurgicalLocation.BACK)
-            // TODO .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
+            .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
             .setSuccessSound(BTVSounds.SPINE_RIP.get())
             .setPersistent(true)
             .setRequiresIncision(true)
@@ -111,7 +112,7 @@ public class OperationRegistry {
             .setDuration(180)
             .setPainForFailure(50)
             .addAllowedLocation(SurgicalLocation.BACK)
-            // TODO .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
+            .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING))
             .setPersistent(true)
             .setRequiresIncision(true)
             .setProgressParticles(true)
@@ -307,6 +308,7 @@ public class OperationRegistry {
     private static final Operation INSERT_EMERALD_GEM = new Operation.Builder("insert_emerald_gem")
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(s -> s.hasString("soften") ? 0.4 : 4)
+            .wantsSoften(true)
             .setDuration(80)
             .setPainForFailure(150)
             .setStatusChangeOnSuccess(s -> {
@@ -354,5 +356,4 @@ public class OperationRegistry {
                 .setCapacityRequirement(capacity)
                 .setArsenalEffect(effect);
     }
-
 }

@@ -11,6 +11,8 @@ import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -24,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
@@ -57,6 +60,7 @@ public class PatientStatus {
     private int currentMissingPainThreshold; // from 0 to MISSING_PAIN_THRESHOLDS.length
     private int ticksSinceLastAddedPain;
     private int counter;
+    private int hardnessCounter;
     private boolean didFinalAnimation;
     private int countdownTicks = 0;
     private final Map<Fluid, Double> fluidAmounts = new HashMap<>();
@@ -241,7 +245,7 @@ public class PatientStatus {
                 setCondition(operation.getConditionIfFailed());
             } else {
                 if (currentDuration >= operation.getDuration()) {
-                    incised = elaborateOperation(p, operation, be);
+                    incised = elaborateOperation(p, operation, be, false);
                     // TODO slight move head to one side animation?
                     setDirty(true);
                     level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
@@ -257,13 +261,16 @@ public class PatientStatus {
             return false;
         }
         incised = false;
+        if (condition == PatientCondition.BLEEDING) {
+            setCondition(PatientCondition.DEAD);
+        }
         setDirty(true);
         return true;
     }
 
-    // TODO maybe a patient in pain left alone for too long should start bleeding or dying
-    public void tick(boolean clientSide) {
+    public void tick(boolean clientSide, BlockEntity be) {
         counter++;
+        hardnessCounter++;
         if (!clientSide) {
             ticksSinceLastAddedPain = Math.max(0, ticksSinceLastAddedPain - 1);
             if (currentMissingPainThreshold > 0 && ticksSinceLastAddedPain == 0) {
@@ -280,6 +287,9 @@ public class PatientStatus {
                     level.playSound(null, pos, BTVSounds.HEARTBEAT.get(), SoundSource.BLOCKS, 1, 1);
                 }
             }
+            if (condition == PatientCondition.BLEEDING) {
+                makeParticles(new Vec3(-0.1, 0, 0.15), be, BTVParticles.BLOODSPILL.get(), 1, 0.5);
+            }
         }
     }
 
@@ -294,7 +304,7 @@ public class PatientStatus {
                 if(currentPain < operation.getPainForFailure() || condition == PatientCondition.DEAD) {
                     if (currentDuration >= operation.getDuration() || condition == PatientCondition.DEAD) {
                         boolean wasAlreadyDead = condition == PatientCondition.DEAD;
-                        boolean success = elaborateOperation(p, operation, be);
+                        boolean success = elaborateOperation(p, operation, be, false);
                         if (success && !wasAlreadyDead) {
                             itemGiver.accept(extractionOperation.stack().apply(this));
                         } else if (wasAlreadyDead) {
@@ -326,7 +336,7 @@ public class PatientStatus {
                     setCondition(operation.getConditionIfFailed());
                 } else {
                     if (currentDuration >= operation.getDuration()) {
-                        boolean success = elaborateOperation(p, operation, be);
+                        boolean success = elaborateOperation(p, operation, be, false);
                         setDirty(true);
                         itemRemover.run();
                         level.playSound(null, pos, BTVSounds.INCISION.get(), SoundSource.BLOCKS, 1, 1);
@@ -387,7 +397,7 @@ public class PatientStatus {
                         setCondition(operation.getConditionIfFailed());
                     } else if (newAmount > injectionEntry.amount()) {
                         setDirty(true);
-                        elaborateOperation(p, operation, be);
+                        elaborateOperation(p, operation, be, true);
                         if (operation.isEraseFluid()) {
                             fluidAmounts.put(fluid, 0D);
                         }
@@ -414,9 +424,13 @@ public class PatientStatus {
     /**
      * @return whether the operation succedeed or failed
      */
-    private boolean elaborateOperation(@Nullable Player player, Operation operation, SurgicalBE be) {
+    private boolean elaborateOperation(@Nullable Player player, Operation operation, SurgicalBE be, boolean injection) {
         //boolean canPerformOperation = canPerformOperation(operation); should be checked upstream
         //if (!canPerformOperation) return canPerformOperation;
+        if (!injection && condition == PatientCondition.BLEEDING) {
+            setCondition(PatientCondition.DEAD);
+            return false;
+        }
 
         boolean success = operation.getRequirementForSuccessfulCompletion().test(this) && !condition.isTerminal() && operation.getCapacityRequirement() <= leftoverCapacity;
         String completionMessage = operation.getCompletionMessage().apply(this);
@@ -493,13 +507,24 @@ public class PatientStatus {
 
     private void perTickActions(Operation operation, SurgicalBE be) {
         increaseCurrentPain(operation.getPainPerTick().applyAsDouble(this), operation.getPainForFailure(), be);
-        if (operation.isProgressParticles()) {
-            BlockPos blockPos = be.getBlockPos();
-            Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-            Vec3 base = operation.getParticleOffset();
-            Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
-            level.sendParticles(BTVParticles.BLOODSPILL.get(), blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, 1, 0, 0, 0, 0.5);
+        boolean progressParticles = operation.isProgressParticles();
+        boolean hardness = operation.isWantsSoften() && !isSoftened();
+        if (progressParticles || hardness) {
+            makeParticles(operation.getParticleOffset(), be, hardness ? ParticleTypes.SMOKE : BTVParticles.BLOODSPILL.get(), hardness ? 5 : 1, hardness ? 0.1 : 0.5);
         }
+        if (hardness) {
+            if (hardnessCounter > 30) {
+                hardnessCounter = 0;
+                level.playSound(null, pos, BTVSounds.HARDNESS.get(), SoundSource.PLAYERS, 1, 1);
+            }
+        }
+    }
+
+    private void makeParticles(Vec3 base, BlockEntity be, ParticleOptions particleOptions, int particleCount, double speed) {
+        BlockPos blockPos = be.getBlockPos();
+        Direction rotation = be.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        Vec3 offset = base.yRot((float) ((-rotation.get2DDataValue() - 1) * Math.PI / 2));
+        level.sendParticles(particleOptions, blockPos.getX() + 0.5 + offset.x, blockPos.getY() + 1.2 + offset.y, blockPos.getZ() + 0.5 + offset.z, particleCount, 0, 0, 0, speed);
     }
 
     private void increaseCurrentPain(double amount, double amountForFailure, SurgicalBE be) {
@@ -644,6 +669,10 @@ public class PatientStatus {
 
     public double getCurrentPain() {
         return currentPain;
+    }
+
+    public boolean isSoftened() {
+        return hasString("soften");
     }
 
     public int getCurrentAbsolutePainThreshold() {

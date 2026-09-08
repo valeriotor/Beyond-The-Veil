@@ -340,7 +340,7 @@ public class SacrificeAltarBE extends BlockEntity {
         if (this.level instanceof ServerLevel sl) {
             if (patientStatus != null) {
                 patientStatus.setLevelAndCoords(sl, getBlockPos());
-                patientStatus.tick(false);
+                patientStatus.tick(false, this);
                 if (patientStatus.isDirty()) {
                     updateClient();
                 }

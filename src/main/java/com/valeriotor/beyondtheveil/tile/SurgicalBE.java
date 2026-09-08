@@ -14,10 +14,7 @@ import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
-import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
-import com.valeriotor.beyondtheveil.surgery.PatientStatus;
-import com.valeriotor.beyondtheveil.surgery.PatientType;
-import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
@@ -91,7 +88,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 if (p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).isPresent() && p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
-                    if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised()) {
+                    if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised() && patientStatus.getCondition() != PatientCondition.BLEEDING) {
                         ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
                         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
                         if (color != null && !patientStatus.getCondition().isTerminal()) {
@@ -202,6 +199,9 @@ public abstract class SurgicalBE extends BlockEntity {
         }
         if (lyingPlayer != null) { // let the player stand up on their own
             return;
+        }
+        if (patientStatus.isIncised() || patientStatus.getCondition() == PatientCondition.BLEEDING) {
+            patientStatus.setCondition(PatientCondition.DEAD);
         }
         ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
@@ -420,7 +420,7 @@ public abstract class SurgicalBE extends BlockEntity {
     public void wakePlayer(ServerPlayer player) {
         if (player.getUUID().equals(lyingPlayer)) {
             if (patientStatus != null) {
-                if (patientStatus.getCondition().isTerminal() || patientStatus.isIncised()) {
+                if (patientStatus.getCondition().isTerminal() || patientStatus.isIncised() || patientStatus.getCondition() == PatientCondition.BLEEDING) {
                     player.kill();
                 } else {
                     ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
@@ -453,7 +453,7 @@ public abstract class SurgicalBE extends BlockEntity {
             playerComplete = false;
         }
         if (patientStatus != null) {
-            patientStatus.tick(false);
+            patientStatus.tick(false, this);
             if (patientStatus.getPatientType() == PatientType.PLAYER) {
                 if (lyingPlayer == null) {
                     patientStatus = null;
