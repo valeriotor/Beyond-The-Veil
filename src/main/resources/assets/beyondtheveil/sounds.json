@@ -148,5 +148,11 @@
   },
   "hardness": {
     "sounds": [ "beyondtheveil:hardness" ]
+  },
+  "metamorphosis": {
+    "sounds": [ "beyondtheveil:metamorphosis" ]
+  },
+  "deep_one_snarl": {
+    "sounds": [ "beyondtheveil:deep_one_snarl" ]
   }
 }

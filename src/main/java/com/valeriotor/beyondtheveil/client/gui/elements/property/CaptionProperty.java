@@ -14,6 +14,8 @@ public class CaptionProperty extends Property {
         caption = "caption." + caption;
         if (caption.equals("caption.reminisce")) {
             this.caption = Component.translatable(caption, KeyBindings.reminisce.getTranslatedKeyMessage().getString());
+        } else if (caption.equals("caption.transform")) {
+            this.caption = Component.translatable(caption, KeyBindings.transform.getTranslatedKeyMessage().getString());
         } else {
             this.caption = Component.translatable(caption);
         }

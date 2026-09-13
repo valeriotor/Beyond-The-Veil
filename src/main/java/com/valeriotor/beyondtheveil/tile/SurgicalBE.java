@@ -8,14 +8,18 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.gui.SurgeryBedGui;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntity;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
@@ -48,6 +52,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 
@@ -91,7 +96,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised() && patientStatus.getCondition() != PatientCondition.BLEEDING) {
                         ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
                         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
-                        if (color != null && !patientStatus.getCondition().isTerminal()) {
+                        if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getFlags().getOrDefault("insert_scales_chest", 0) < 3) {
                             if (p instanceof ServerPlayer sp && sp.getServer() != null) {
                                 BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
                                 int fleboMultiplier = getFleboMultiplier();
@@ -430,16 +435,23 @@ public abstract class SurgicalBE extends BlockEntity {
                     if (convalescentData.getFlags().containsKey(OperationRegistry.SPINELESS) || convalescentData.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                         player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setCrawling(true, player));
                     }
-                    EntityType<?> a = BTVEntities.getTriggerEntity(convalescentData, convalescentData.getTriggerData()).getA();
-                    for (PlayerTransformation value : PlayerTransformation.values()) {
-                        if (a == value.getEntityType()) {
-                            player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setTransformation(value, player));
-                            break;
+                    if (patientStatus.getFlags().getOrDefault("insert_scales_chest", 0) >= 3) {
+                        player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setTransformation(PlayerTransformation.SCALED, player));
+                        PlayerTimerData.for_(player).addTimer(new PlayerTimer(1000, "scaled_kill", PersistentPlayerTimer.SCALED_KILL, new HashMap<>()));
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.scaled_player.name(), true);
+                    } else {
+                        EntityType<?> a = BTVEntities.getTriggerEntity(convalescentData, convalescentData.getTriggerData()).getA();
+                        for (PlayerTransformation value : PlayerTransformation.values()) {
+                            if (a == value.getEntityType()) {
+                                player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setTransformation(value, player));
+                                break;
+                            }
                         }
                     }
                 }
             }
             lyingPlayer = null;
+            // TODO shouldn't we do patientStatus = null here?
         }
     }
 

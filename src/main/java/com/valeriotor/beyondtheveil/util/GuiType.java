@@ -18,6 +18,7 @@ public enum GuiType {
     KILLED_BY_CULTIST,
     BLOOD_THESIS,
     SURGERY_BED,
-    DAGON;
+    DAGON,
+    METAMORPHOSIS
 
 }

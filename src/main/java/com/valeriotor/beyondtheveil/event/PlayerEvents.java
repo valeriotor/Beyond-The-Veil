@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
@@ -27,6 +28,7 @@ import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
@@ -153,6 +155,9 @@ public class PlayerEvents {
             BindingEvents.playerDeathEvent(event, sp);
             if (sp.getServer() != null && !event.isCanceled()) {
                 PlayerSavedData.getInstance(sp.getServer().overworld()).death(sp);
+            }
+            if (PlayerTimerData.for_(sp).hasTimer("scaled_kill")) {
+                DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.scaled_player_death.name(), true);
             }
         }
     }

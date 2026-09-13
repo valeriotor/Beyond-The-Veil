@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -52,7 +53,7 @@ public class Operation {
     private final ParticleOptions successParticleType;
     private final int successParticleCount;
     private final SoundEvent successSound;
-    private final List<String> playerData;
+    private final List<Tuple<Predicate<PatientStatus>, String>> playerData;
     private ArsenalEffectType arsenalEffect;
     private boolean increaseArsenalEffectAmplifier;
     private boolean increaseArsenalEffectDuration;
@@ -242,7 +243,7 @@ public class Operation {
         return targetType;
     }
 
-    public List<String> getPlayerData() {
+    public List<Tuple<Predicate<PatientStatus>, String>> getPlayerData() {
         return playerData;
     }
 
@@ -287,7 +288,7 @@ public class Operation {
         private DyeColor mutex;
         private TargetingType triggerType;
         private TargetingType targetType;
-        private List<String> playerData = new ArrayList<>();
+        private List<Tuple<Predicate<PatientStatus>, String>> playerData = new ArrayList<>();
 
         public Builder(String name) {
             this.name = name;
@@ -497,7 +498,14 @@ public class Operation {
         }
 
         public Builder addPlayerData(String data) {
-            playerData.add(data);
+            playerData.add(new Tuple<>(s -> true, data));
+            return this;
+        }
+
+        /** Predicate check happens AFTER flags have been added
+         */
+        public Builder addPlayerData(Predicate<PatientStatus> predicate, String data) {
+            playerData.add(new Tuple<>(predicate, data));
             return this;
         }
 

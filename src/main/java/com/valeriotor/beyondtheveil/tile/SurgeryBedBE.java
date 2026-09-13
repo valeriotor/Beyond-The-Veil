@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -66,6 +67,11 @@ public class SurgeryBedBE extends SurgicalBE {
 
     @Override
     protected boolean tryPlacePlayer(ServerPlayer player) {
+        if (player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent()) {
+            if (player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get().getCrossSync().getTransformation() != null) {
+                return false;
+            }
+        }
         if (player.isPassenger()) {
             player.stopRiding();
         }

@@ -304,6 +304,7 @@ public class OperationRegistry {
     private static final Operation INSERT_TINY_SKULL = makeArsenalInsertion("insert_tiny_skull", 110, 0.9, 65, 7, ArsenalEffectRegistry.TERROR).buildInsertionOperation(Registration.TINY_SKULL.get());
     private static final Operation INSERT_ACID_GLAND = makeArsenalInsertion("insert_acid_gland", 60, 0.9, 80, 12, ArsenalEffectRegistry.DAMAGE_ARMOR).buildInsertionOperation(Registration.ACID_GLAND.get());
     private static final Operation INSERT_SILK_GLAND = makeArsenalInsertion("insert_silk_gland", 60, 0.9, 120, 4, ArsenalEffectRegistry.ENWEB).buildInsertionOperation(Registration.SILK_GLAND.get());
+    private static final Operation INSERT_SCALES_BACK = makeArsenalInsertion("insert_scales_back", 100, 1.8, 120, 12, ArsenalEffectRegistry.DROP_ITEM).buildInsertionOperation(Registration.SCALES.get());
 
     private static final Operation INSERT_EMERALD_GEM = new Operation.Builder("insert_emerald_gem")
             .addAllowedLocation(SurgicalLocation.BACK)
@@ -329,6 +330,17 @@ public class OperationRegistry {
             .setMaximumTimesAllowed(1)
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.LIVING_IRON.get());
+
+    private static final Operation INSERT_SCALES_CHEST = new Operation.Builder("insert_scales_chest")
+            .addAllowedLocation(SurgicalLocation.CHEST)
+            .setPainPerTick(0.35)
+            .setDuration(80)
+            .setPainForFailure(100)
+            .setPersistent(true)
+            .setMaximumTimesAllowed(3)
+            .setProgressParticles(true)
+            .addPlayerData(s -> s.getFlags().getOrDefault("insert_scales_chest", 0) >= 3, PlayerDataLib.scaled_crawler.name())
+            .buildInsertionOperation(Registration.SCALES.get());
 
     private static Operation.Builder makeArsenalInsertion(String name, int duration, double pain, double painForFailure, int capacity, ArsenalEffectType effect) {
         return new Operation.Builder(name)

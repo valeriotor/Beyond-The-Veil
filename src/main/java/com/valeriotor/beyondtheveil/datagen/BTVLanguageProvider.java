@@ -1219,11 +1219,13 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addCommonCaptions() {
         add("caption.right_click", "Right Click");
+        add("caption.right_click_bare_hands", "Right Click with bare hands");
         add("caption.right_click_block", "Right Click on a block");
         add("caption.right_click_air", "Right Click in the air or water");
         add("caption.shift_right_click", "Sneak + Right Click");
         add("caption.shift_right_click_lacrymatory", "Sneak + Right Click on Lacrymatory");
         add("caption.shift_right_click_air", "Sneak + Right Click in the air or water");
+        add("caption.transform", "Press %s");
         add("caption.reminisce", "Hold %s");
         add("caption.crafting", "Go to crafting entry");
         add("caption.journal", "Go to journal entry");
@@ -2749,6 +2751,43 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "I'll just keep writing in the pages as I always have, and you keep telling me what to do to progress as you always have.\\n" +
                 "Sure. But who's \"I\" and who's \"You\"?\\n" +
                 "Does it matter?");
+
+        add("research.METAMORPHOSIS.title", "Metamorphosis");
+        add("research.scaled_crawler.text", "Insert scales into the chest of a human patient, and witness the outcome.");
+        add("research.scaled_crawler_death.text", "Witness the outcome of the procedure.");
+        add("research.scaled_player.text", "Make a surgeon perform the operation on us, and survive the outcome.");
+        add("research.scaled_player_death.text", "It's killing us! We can't stop it!");
+        add("research.metamorphosis.text", "I... I am sorry. Please, let us pray to Dagon for forgiveness. Make pilgrimage to His altar in Arche, and consume a slug.");
+        add("research.METAMORPHOSIS.epigraph", "§oAt the brink of evolution\\0" +
+                "Mankind stands at a crossroads\\0" +
+                "To degrade into beasts\\0" +
+                "Or transcend as angels?§r\\1");
+        add("research.METAMORPHOSIS.epigraph.source", "From §oMusings of Saint Jerome§r\\n");
+        add("research.METAMORPHOSIS.stage.0", "Arche is change: the first principle mutating into the world, churning currents becoming our blood, chaos crystallised into order.\\n" +
+                "And so too have we faced change: the epiphany of our coexistence, of the truths of the Shore, of dreams, and beyond the veil of our feeble recollection we catch glimpses of further shifts, stretching into a forgotten past.\\n" +
+                "Let us embrace change, then. Let us mold the human body, to be reborn in the shape of the sea.\\n" +
+                "So that it may outlive its humanity.");
+        add("research.METAMORPHOSIS.stage.1", "No, no! The patient died, almost immediately, and no surgery can withstand the test of death!\\n" +
+                "Yet §owe§r can. Our patients may surrender themselves to oblivion, but we shall not – for there is none awaiting us. We could resist the scales: heal ourselves, fortify our mind and body against them, and even if we fail then our body will be born anew on resurrection, soft and candid and scaleless as it used to be.\\n" +
+                "Yes. We should be the first to undergo true metamorphosis, for we have nothing to fear.\\n" +
+                "Let us take note of our experiment and hand those notes to a surgeon. Then let us {§nlie on the surgery bed§r}[caption:right_click_bare_hands] and make that surgeon perform that operation upon §oour body§r.");
+        add("research.METAMORPHOSIS.stage.2", "Death can heal a broken heart, a torn spine, or any other malady we may have subjected our patients to... but these immortal scales are fixed on us, accompanying us across the threshold and back again, disfiguring us into a mockery of our ambition.\\n" +
+                "Permanently.\\n" +
+                "...\\n" +
+                "Is this what we wanted?\\n" +
+                "Oh, what have we done?!");
+        add("research.METAMORPHOSIS.stage.3", "As our teeth sunk into the slug, the slime oozed upon our hands... then our arms... then our body.\\n" +
+                "...\\n" +
+                "To whoever is unfortunate enough to come into possession of these writings.\\n" +
+                "Stop reading for a moment. Look at your skin. Take a second to admire it. Your own, beautiful, candid skin.\\n" +
+                "Now imagine. Imagine it turning blue. Slowly losing its colour. Imagine then seeing it crack and break like dried stone. Imagine seeing it replaced, supplanted by hard scales, surrounded by greenish mucus. \\n" +
+                "Slimy, sticky, smelly, this horror is none other than yourself. Your head thrown forwards, your jaw opening three-ways, your spine bursting into a dorsal fin.\\n" +
+                "A blessing. An exquisite horror.\\n" +
+                "This is our new form. Reborn in the shape of the sea; and yet, not ready to wholly relinquish our humanity – we are able to {§ntransform back and forth§r}[caption:transform]. For now.\\n" +
+                "Though there are downsides to this form (such as its reluctance to hold most non-marine objects) its strength is impressive, especially when in water. It can even withstand the pressures of Arche (though currents still pose a threat).\\n" +
+                "And so, it becomes both a tool for our future research in Arche, and the most glorious human achievement in and of itself: mankind's victory upon its physical limitations, and the frailty of our bodies. I must spread this news in the research community, so that the results may be reproduced and bring a wave of progress like never before.\\n" +
+                "But all of that can wait. We must first adjust, and recover from all that our mind and body went through. Bliss and sorrow. Fortune and tragedy. Peace and pain.\\n" +
+                "Let us rest for a while. We earned it, friend.");
     }
 
     private void addCraftingRegistry() {
@@ -2830,6 +2869,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.blood_gem.title", "Blood Gem");
         add("gui.surgery_bed.title", "Surgery Bed");
         add("gui.dagon.title", "Communion");
+        add("gui.metamorphosis.title", "Metamorphosis");
 
         addJournal();
         addLetterBox();

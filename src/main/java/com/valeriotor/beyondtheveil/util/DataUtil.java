@@ -91,6 +91,10 @@ public class DataUtil {
         });
     }
 
+    public static void setBooleanOnServerAndSync(Player p, String key, boolean value) {
+        setBooleanOnServerAndSync(p, key, value, false);
+    }
+
     public static void setBooleanOnServerAndSync(Player p, String key, boolean value, boolean temporary) {
         p.getCapability(PlayerDataProvider.PLAYER_DATA, null).ifPresent(playerData -> {
             if (playerData.getBoolean(key) != value) {

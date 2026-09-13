@@ -33,6 +33,7 @@ public class GuiHelper {
             case BLOOD_THESIS -> new BloodThesisGui();
             case SURGERY_BED -> new SurgeryBedGui();
             case DAGON -> new DagonCommunionGui();
+            case METAMORPHOSIS -> new MetamorphosisGui();
         };
         Minecraft.getInstance().setScreen(screen);
 //        Minecraft.getInstance().pushGuiLayer(type.supplier.get());

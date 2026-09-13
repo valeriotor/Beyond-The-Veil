@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.CrawlerModel;
 import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
 
     private static final ResourceLocation VILLAGER_BASE_SKIN = new ResourceLocation("textures/entity/villager/villager.png");
+    private static final ResourceLocation SCALED_SKIN = new ResourceLocation(References.MODID, "textures/entity/scaled_crawler.png");
     private final PatientWoundLayer woundLayer;
 
 
@@ -48,6 +50,9 @@ public class CrawlerRenderer extends MobRenderer<CrawlerEntity, CrawlerModel> {
 
     @Override
     public ResourceLocation getTextureLocation(CrawlerEntity pEntity) {
+        if (pEntity.isScaled()) {
+            return SCALED_SKIN;
+        }
         return VILLAGER_BASE_SKIN;
     }
 }

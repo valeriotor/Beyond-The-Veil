@@ -156,6 +156,12 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 			} else if (ritualAnimation != null) {
 				ritualAnimation.apply(pPartialTick);
 			}
+		} else {
+			if (entity.isScaled()) {
+				final int TICKS_HEAD_FALL = 50;
+				float xRot = (TICKS_HEAD_FALL - entity.tickCount - pPartialTick) * -1.3526F / TICKS_HEAD_FALL;
+				head.xRot = Mth.clamp(xRot, -1.3526F, 0);
+			}
 		}
 
 	}

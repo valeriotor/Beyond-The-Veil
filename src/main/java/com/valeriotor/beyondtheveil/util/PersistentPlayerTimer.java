@@ -7,6 +7,9 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,7 +45,19 @@ public enum PersistentPlayerTimer {
             Messages.sendToPlayer(GenericToClientPacket.blindCompletely(), sp);
         }
     }), List.of(), List.of(), List.of()),
-    RECHARGE_END_BINDING((p,t) -> {});
+    RECHARGE_END_BINDING((p,t) -> {}),
+    SCALED_KILL(
+        List.of((p, t) -> { // continuous action
+        if (t.getRemainingTime() % 100 == 0) {
+            if (p instanceof ServerPlayer sp) {
+                sp.indicateDamage(0, 0);
+                sp.serverLevel().playSound(null, sp.blockPosition(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS);
+            }
+            p.setHealth(t.getRemainingTime() / 100F * 2);
+        }}),
+        List.of((p,t) -> p.kill()), // final action
+        List.of((p,t) -> DataUtil.getBoolean(p, PlayerDataLib.scaled_player_death.name())), // early interrupt
+        List.of());
 
     private final List<BiConsumer<Player, PlayerTimer>> continuousActions;
     private final List<BiConsumer<Player, PlayerTimer>> finalActions;

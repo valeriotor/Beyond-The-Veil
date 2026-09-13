@@ -270,7 +270,7 @@ public class Registration {
 
     public static final RegistryObject<Item> ONIRIC_INCENSE = ITEMS.register("oniric_incense", () -> new Item(ITEM_PROPERTIES));
     public static final RegistryObject<Item> SLUG_CATCHER = ITEMS.register("slug_catcher", SlugCatcherItem::new);
-    public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new SlugItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build())));
+    public static final RegistryObject<Item> SLUG = ITEMS.register("slug", () -> new SlugItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).alwaysEat().build())));
     public static final RegistryObject<Item> SEAWEED_STEW = ITEMS.register("seaweed_stew", () -> new DelicacyItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(1.4F).build())));
     public static final RegistryObject<Item> KELP_COD_BUNDLE = ITEMS.register("kelp_cod_bundle", () -> new DelicacyItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationMod(1.5F).build())));
     public static final RegistryObject<Item> TROPICAL_DELIGHT = ITEMS.register("tropical_delight", () -> new DelicacyItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(10).saturationMod(1F).build())));

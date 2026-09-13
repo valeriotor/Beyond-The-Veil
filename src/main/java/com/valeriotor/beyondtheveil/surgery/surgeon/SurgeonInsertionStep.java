@@ -42,7 +42,7 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
                         IItemHandler iItemHandler = be.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
                         for (int i = 0; i < iItemHandler.getSlots(); i++) {
                             if (iItemHandler.getStackInSlot(i).getItem() == reportStep.getIngredient()) {
-                                if (surgeon.distanceToSqr(container.getCenter()) < 6) {
+                                if (surgeon.distanceToSqr(container.getCenter()) < 10) {
                                     toInsert = iItemHandler.extractItem(i, 1, false);
                                 } else {
                                     surgeon.getNavigation().moveTo(container.getX(), container.getY(), container.getZ(), 1);

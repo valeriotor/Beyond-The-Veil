@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -109,16 +110,29 @@ public class PlayerTickEvents {
         event.player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> {
             CrossSync crossSync = crossSyncData.getCrossSync();
             if ((event.player.tickCount & 3) == 0 && crossSync.getTransformation() != null && event.player instanceof ServerPlayer sp) {
-                ItemStack selected = event.player.getInventory().getSelected();
-                if (!selected.isEmpty()) {
-                    if (sp.isUsingItem() && sp.getUsedItemHand() == InteractionHand.MAIN_HAND) sp.stopUsingItem();
-                    sp.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                    sp.drop(selected, false, false);
-                }
-                ItemStack offHandItem = sp.getItemInHand(InteractionHand.OFF_HAND);
-                if (!offHandItem.isEmpty()) {
-                    sp.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-                    sp.drop(offHandItem, false, false);
+                for (EquipmentSlot value : EquipmentSlot.values()) {
+                    ItemStack itemBySlot = sp.getItemBySlot(value);
+                    if (value.isArmor()) {
+                        if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE || crossSync.getTransformation() == PlayerTransformation.SCALED) {
+                            if (!itemBySlot.isEmpty()) {
+                                sp.setItemSlot(value, ItemStack.EMPTY);
+                                sp.drop(itemBySlot, false, false);
+                            }
+                        }
+                    } else {
+                        if (crossSync.getTransformation() != PlayerTransformation.SCALED) {
+                            if (!itemBySlot.isEmpty()) {
+                                if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE && true) {
+                                    continue;
+                                }
+                                if (sp.isUsingItem() && ((sp.getUsedItemHand() == InteractionHand.MAIN_HAND && value == EquipmentSlot.MAINHAND) || (sp.getUsedItemHand() == InteractionHand.OFF_HAND && value == EquipmentSlot.OFFHAND))) {
+                                    sp.stopUsingItem();
+                                }
+                                sp.setItemSlot(value, ItemStack.EMPTY);
+                                sp.drop(itemBySlot, false, false);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -140,16 +154,16 @@ public class PlayerTickEvents {
                     if (entity instanceof SurgeonEntity surgeon) {
                         BellData data = surgeon.bellData;
                         Stream.concat(Stream.concat(data.inputPods().stream(), data.inputContainers().stream()), data.inputSpots().stream()).forEach(pos -> {
-                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,1,0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0, 1, 0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
                         });
                         Stream.concat(Stream.concat(data.outputPods().stream(), data.outputContainers().stream()), data.outputSpots().stream()).forEach(pos -> {
-                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(1,0,0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(1, 0, 0), 1), false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
                         });
                         BlockPos surgicalBE = data.getSurgicalBE();
                         if (surgicalBE != null) {
-                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,0,1), 1), false, surgicalBE.getX() + 0.5, surgicalBE.getY() + 0.5, surgicalBE.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
+                            serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0, 0, 1), 1), false, surgicalBE.getX() + 0.5, surgicalBE.getY() + 0.5, surgicalBE.getZ() + 0.5, 20, r(r), r(r), r(r), 0);
                         }
-                        serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0,1,1), 1), false, surgeon.getX() + 0.5, surgeon.getY() + 1.5, surgeon.getZ() + 0.5, 20, 2 * r(r), 2 * r(r), 2 * r(r), 0);
+                        serverLevel.sendParticles(sp, new DustParticleOptions(new Vector3f(0, 1, 1), 1), false, surgeon.getX() + 0.5, surgeon.getY() + 1.5, surgeon.getZ() + 0.5, 20, 2 * r(r), 2 * r(r), 2 * r(r), 0);
                     }
 
                 }

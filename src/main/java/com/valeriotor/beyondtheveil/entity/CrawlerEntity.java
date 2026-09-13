@@ -12,15 +12,18 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -41,11 +44,13 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.Set;
+import java.util.UUID;
 
-public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, SurgeryPatient {
+public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, SurgeryPatient, PlayerMinion {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.VILLAGER_DATA);
     private static final EntityDataAccessor<Boolean> DATA_CRAWLING = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_SCALED = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
     private int startCrawl = -20;
     private boolean surgeryPatient = false;
     @Nullable
@@ -60,6 +65,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private boolean startedRitualAnimation;
     private boolean held;
     private PatientHolderType holderType;
+    private UUID master;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -141,6 +147,9 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
         pCompound.putInt("Xp", this.villagerXp);
         pCompound.putBoolean("held", held);
+        if (master != null) {
+            pCompound.putUUID("master", master);
+        }
     }
 
     @Override
@@ -164,6 +173,9 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         }
         if (pCompound.contains("held")) {
             held = pCompound.getBoolean("held");
+        }
+        if (pCompound.contains("master")) {
+            master = pCompound.getUUID("master");
         }
 
     }
@@ -196,6 +208,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         super.defineSynchedData();
         this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
         this.entityData.define(DATA_CRAWLING, false);
+        this.entityData.define(DATA_SCALED, false);
     }
 
     public int getCrawling() {
@@ -236,7 +249,18 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 }
             } else {
                 if (tickCount >= 5) {
-                    if (tickCount >= 300) {
+                    if (tickCount > 100) {
+                        getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                            if (c.getFlags().getOrDefault("insert_scales_chest", 0) == 3) {
+                                kill();
+                                ServerPlayer m = getMaster();
+                                if (m != null) {
+                                    DataUtil.setBooleanOnServerAndSync(m, PlayerDataLib.scaled_crawler_death.name(), true);
+                                }
+                            }
+                        });
+                    }
+                    if (tickCount >= 300 * 20) {
                         getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                             if (!c.getFlags().containsKey(OperationRegistry.SPINELESS) && !c.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);
@@ -324,6 +348,15 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             }
             // TODO do pain animations
         }
+        if (!level().isClientSide) {
+            getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                if (c.getFlags().getOrDefault("insert_scales_chest", 0) == 3) {
+                    setScaled(true);
+                } else {
+                    setScaled(false);
+                }
+            });
+        }
     }
 
     public boolean isStartedRitualAnimation() {
@@ -390,6 +423,34 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
     public Animation getRitualAnimation() {
         return ritualAnimation;
+    }
+
+    public void setScaled(boolean scaled) {
+        entityData.set(DATA_SCALED, scaled);
+    }
+
+    public boolean isScaled() {
+        if (isSurgeryPatient()) {
+            if (getPatientStatus() != null) {
+                return getPatientStatus().getFlags().getOrDefault("insert_scales_chest", 0) >= 3;
+            }
+        }
+        if (getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().isPresent()) {
+            if (getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve().get().getFlags().getOrDefault("insert_scales_chest", 0) >= 3) {
+                return true;
+            }
+        }
+        return entityData.get(DATA_SCALED);
+    }
+
+    @Override
+    public UUID getMasterID() {
+        return master;
+    }
+
+    @Override
+    public void setMasterID(UUID uuid) {
+        master = uuid;
     }
 
     private static class CrawlerMoveControl extends MoveControl {

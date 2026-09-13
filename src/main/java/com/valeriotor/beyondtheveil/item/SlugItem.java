@@ -1,9 +1,12 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -20,6 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -75,6 +79,17 @@ public class SlugItem extends Item {
             } else if (checkDagon(sp)) {
                 Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.DAGON), sp);
                 PlayerTimerData.for_(sp).addTimer(new PlayerTimer(10000, "dagon_communion", null, new HashMap<>()));
+            } else if (checkDagon2(sp)) {
+                Messages.sendToPlayer(GenericToClientPacket.openGui(GuiType.METAMORPHOSIS), sp);
+                PlayerTimerData.for_(sp).addTimer(new PlayerTimer.Builder("dagon_communion", 350).addContinuousAction((p,t) -> {
+                    if (t.getRemainingTime() == 340) {
+                        p.level().playSound(null, p.blockPosition(), BTVSounds.METAMORPHOSIS.get(), SoundSource.PLAYERS, 0.4F, 0.5F);
+                    } else if (t.getRemainingTime() == 100) {
+                        p.level().playSound(null, p.blockPosition(), BTVSounds.DEEP_ONE_SNARL.get(), SoundSource.PLAYERS);
+                        p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> c.getCrossSync().setTransformation(PlayerTransformation.DEEP_ONE, p));
+                        DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.metamorphosis.name(), true);
+                    }
+                }).toTimer());
             }
         }
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
@@ -152,12 +167,24 @@ public class SlugItem extends Item {
 
     private static boolean checkDagon(ServerPlayer sp) {
         if (ResearchUtil.getResearchStage(sp, "NEW_DEPTHS") == 1 && sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
-            ArcheSavedData instance = ArcheSavedData.getInstance(sp.serverLevel());
-            Set<BlockPos> altars = instance.getAltars();
-            for (BlockPos altar : altars) {
-                if (Math.abs(sp.getX() - altar.getX()) < 8 && Math.abs(sp.getZ() - altar.getZ()) < 8 && Math.abs(sp.getY() - 79) < 8) {
-                    return true;
-                }
+            if (checkAltars(sp)) return true;
+        }
+        return false;
+    }
+
+    private static boolean checkDagon2(ServerPlayer sp) {
+        if (ResearchUtil.getResearchStage(sp, "METAMORPHOSIS") == 2 && sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+            if (checkAltars(sp)) return true;
+        }
+        return false;
+    }
+
+    private static boolean checkAltars(ServerPlayer sp) {
+        ArcheSavedData instance = ArcheSavedData.getInstance(sp.serverLevel());
+        Set<BlockPos> altars = instance.getAltars();
+        for (BlockPos altar : altars) {
+            if (Math.abs(sp.getX() - altar.getX()) < 8 && Math.abs(sp.getZ() - altar.getZ()) < 8 && Math.abs(sp.getY() - 79) < 8) {
+                return true;
             }
         }
         return false;

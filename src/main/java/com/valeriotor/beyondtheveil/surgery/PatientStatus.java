@@ -22,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +41,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class PatientStatus {
 
@@ -450,13 +452,15 @@ public class PatientStatus {
             // TODO entityChange (and setDirty?)
             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
             updateTriggerData(operation);
-            if (player != null) {
-                for (String playerDatum : operation.getPlayerData()) {
-                    DataUtil.setBooleanOnServerAndSync(player, playerDatum, true, false);
-                }
-            }
             if (operation.isPersistent()) {
                 persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
+            }
+            if (player != null) {
+                for (Tuple<Predicate<PatientStatus>, String> playerDatum : operation.getPlayerData()) {
+                    if (playerDatum.getA().test(this)) {
+                        DataUtil.setBooleanOnServerAndSync(player, playerDatum.getB(), true, false);
+                    }
+                }
             }
             if (operation.isSuccessParticles()) {
                 //level().addAlwaysVisibleParticle(BTVParticles.TEARSPILL.get(), getX(), getY() + 1.5, getZ(), xSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()), 1.5, zSpeed * (1.5 + bleeding / 3D) * (1 + Math.random()));

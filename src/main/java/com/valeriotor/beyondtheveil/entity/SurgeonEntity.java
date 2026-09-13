@@ -260,6 +260,9 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     public void tick() {
         super.tick();
         if (level().isClientSide) {
+            if (entityData.get(HELD_TYPE) == -1) {
+                heldPatientEntity = null;
+            }
             if (mainAnimation != null) {
                 mainAnimation.update();
                 if (mainAnimation.isDone()) {

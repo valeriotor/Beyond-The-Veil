@@ -139,6 +139,9 @@ public class CrossSync {
             compoundTag.putString("heldPatientType", heldPatientType.name());
             compoundTag.put("heldPatientData", heldPatientData);
         }
+        if (transformation != null && transformation.isPersistsOnDeath()) {
+            compoundTag.putString("transformation", transformation.name());
+        }
         return compoundTag;
     }
 

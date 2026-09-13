@@ -710,6 +710,32 @@
             "text": "research.SNIPPET_OF_TRUTH.stage.2"
           }
         ]
+      },
+      {
+        "key": "METAMORPHOSIS",
+        "name": "research.METAMORPHOSIS.title",
+        "icons": [ "beyondtheveil:scales" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,18 ],
+        "hiders": ["SNIPPET_OF_TRUTH"],
+        "parents": ["SNIPPET_OF_TRUTH"],
+        "stages": [
+          {
+            "epigraph": "research.METAMORPHOSIS.epigraph",
+            "text": "research.METAMORPHOSIS.stage.0",
+            "required_research": ["scaled_crawler", "scaled_crawler_death"]
+          },
+          {
+            "text": "research.METAMORPHOSIS.stage.1",
+            "required_research": ["scaled_player", "scaled_player_death"]
+          },
+          {
+            "text": "research.METAMORPHOSIS.stage.2",
+            "required_research": ["metamorphosis"]
+          },
+          {
+            "text": "research.METAMORPHOSIS.stage.3"
+          }
+        ]
       }
 	]
 }

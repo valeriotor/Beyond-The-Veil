@@ -90,7 +90,12 @@ public enum PlayerDataLib {
     binding_overworld,
     binding_nether,
     binding_end,
-    binding_arche
+    binding_arche,
+    scaled_crawler,
+    scaled_crawler_death,
+    scaled_player,
+    scaled_player_death,
+    metamorphosis
     ;
 
     // Longs
