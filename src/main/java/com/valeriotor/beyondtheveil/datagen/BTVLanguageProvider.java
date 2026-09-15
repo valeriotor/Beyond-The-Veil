@@ -875,6 +875,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         addArsenalAndEffects();
         addMemories();
         addEntities();
+        addMiscellaneous();
+    }
+
+    private void addMiscellaneous() {
+        add("message.transformation.cooldown", "The transformation requires %1$s seconds of cooldown.");
     }
 
     private void addEntities() {

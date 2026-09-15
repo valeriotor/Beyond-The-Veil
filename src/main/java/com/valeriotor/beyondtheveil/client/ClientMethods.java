@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
@@ -38,14 +39,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -248,10 +247,14 @@ public class ClientMethods {
         }
     }
 
-    public static void setCrawlingPlayerSize(BiConsumer<EntityDimensions, Float> updater, Player p) {
+    public static void setPlayerSize(BiConsumer<EntityDimensions, Float> updater, Player p) {
         CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
-        if (crossSync != null && (crossSync.isCrawling() || crossSync.isDreamFocus())) {
-            updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+        if (crossSync != null) {
+            if (crossSync.isCrawling() || crossSync.isDreamFocus()) {
+                updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+            } else if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                updater.accept(EntityDimensions.fixed(0.9F, 3F), 2.8F);
+            }
         }
     }
 
@@ -263,6 +266,16 @@ public class ClientMethods {
         Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
         if (p != null) {
             p.setColor(r / 255F, g / 255F, b / 255F);
+        }
+    }
+
+    public static void deepOneJump(Player p) {
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+        if (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+            p.setDeltaMovement(p.getDeltaMovement().add(0, 0.6, 0));
+            if (p.isSprinting()) {
+                p.setDeltaMovement(p.getDeltaMovement().multiply(3.2, 1, 3.2));
+            }
         }
     }
 

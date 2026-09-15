@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -336,7 +337,7 @@ public class LivingEvents {
         }
         if (event.getEntity() instanceof Player p && p.level().isClientSide) {
             ClientMethods.cancelJump(p);
-
+            ClientMethods.deepOneJump(p);
         }
     }
 

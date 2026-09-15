@@ -48,6 +48,7 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> HARDNESS = registerSound("hardness");
     public static final RegistryObject<SoundEvent> METAMORPHOSIS = registerSound("metamorphosis");
     public static final RegistryObject<SoundEvent> DEEP_ONE_SNARL = registerSound("deep_one_snarl");
+    public static final RegistryObject<SoundEvent> DEEP_ONE_TRANSFORM = registerSound("deep_one_transform");
     public static final List<RegistryObject<SoundEvent>> CURRENTS_LIST = registerCurrents();
 
     public static void init(IEventBus bus) {

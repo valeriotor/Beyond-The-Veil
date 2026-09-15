@@ -154,5 +154,8 @@
   },
   "deep_one_snarl": {
     "sounds": [ "beyondtheveil:deep_one_snarl" ]
+  },
+  "deep_one_transform": {
+    "sounds": [ "beyondtheveil:deep_one_transform" ]
   }
 }

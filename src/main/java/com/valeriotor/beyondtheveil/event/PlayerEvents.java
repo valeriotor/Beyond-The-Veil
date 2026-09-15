@@ -1,12 +1,11 @@
 package com.valeriotor.beyondtheveil.event;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -27,8 +26,8 @@ import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import com.valeriotor.beyondtheveil.tile.LacrymatoryBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.util.AttributeSets;
 import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
@@ -41,15 +40,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -171,8 +166,11 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void loggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        addBaptismAttributes(event.getEntity());
-        addCrawlingAttributes(event.getEntity());
+        AttributeSets.addBaptismAttributes(event.getEntity());
+        AttributeSets.addCrawlingAttributes(event.getEntity());
+        event.getEntity().getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+            c.getCrossSync().applyAttributes(event.getEntity());
+        });
         if (event.getEntity() instanceof ServerPlayer sp) {
             syncBloodPool(sp);
             if(sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
@@ -196,30 +194,7 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void cloneEvent(PlayerEvent.Clone event) {
-        addBaptismAttributes(event.getEntity());
-    }
-
-    public static void addBaptismAttributes(Player p) {
-        if (!p.level().isClientSide) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
-                Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
-                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
-                p.getAttributes().addTransientAttributeModifiers(map);
-            }
-        }
-    }
-
-    public static void addCrawlingAttributes(Player p) {
-        if (!p.level().isClientSide) {
-            p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
-                if (c.getCrossSync().isCrawling()) {
-                    Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL));
-                    p.getAttributes().addTransientAttributeModifiers(map);
-                }
-            });
-        }
+        AttributeSets.addBaptismAttributes(event.getEntity());
     }
 
     public static void syncBloodPool(ServerPlayer player) {
@@ -259,10 +234,12 @@ public class PlayerEvents {
                         updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
                     } else if (c.getCrossSync().isCrawling()) {
                         updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
+                    } else if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE) {
+                        updater.accept(EntityDimensions.fixed(0.9F, 3F), 2.8F);
                     }
                 });
             } else {
-                ClientMethods.setCrawlingPlayerSize(updater, p);
+                ClientMethods.setPlayerSize(updater, p);
             }
         }
     }

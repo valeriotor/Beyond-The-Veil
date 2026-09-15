@@ -46,6 +46,7 @@ public enum PersistentPlayerTimer {
         }
     }), List.of(), List.of(), List.of()),
     RECHARGE_END_BINDING((p,t) -> {}),
+    TRANSFORM_COOLDOWN((p,t) -> {}),
     SCALED_KILL(
         List.of((p, t) -> { // continuous action
         if (t.getRemainingTime() % 100 == 0) {

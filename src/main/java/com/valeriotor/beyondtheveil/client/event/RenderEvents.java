@@ -242,6 +242,10 @@ public class RenderEvents {
             }
             if (player.getVehicle() instanceof NautilusEntity && camera.isDetached()) {
                 camera.move(-camera.getMaxZoom(4), 0, 0);
+            } else {
+                if (CrossSyncHolder.getCrossSync(player) != null && CrossSyncHolder.getCrossSync(player).getTransformation() == PlayerTransformation.DEEP_ONE && camera.isDetached()) {
+                    camera.move(-camera.getMaxZoom(1), 0, 0);
+                }
             }
         }
     }

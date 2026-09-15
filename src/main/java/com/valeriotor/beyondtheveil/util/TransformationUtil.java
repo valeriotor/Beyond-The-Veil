@@ -7,16 +7,25 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
 import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class TransformationUtil {
+
+    private static final int TRANSFORM_COOLDOWN = 200;
 
     public static void startExplodingPlayer(ServerPlayer player) {
         player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
@@ -53,6 +62,27 @@ public class TransformationUtil {
             }
         });
 
+    }
+
+    public static void transform(ServerPlayer player) {
+        if (DataUtil.getBoolean(player, PlayerDataLib.metamorphosis.name())) {
+            player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                CrossSync crossSync = c.getCrossSync();
+                PlayerTimerData playerTimerData = PlayerTimerData.for_(player);
+                if (!playerTimerData.hasTimer("transform_cooldown")) {
+                    if (crossSync.getTransformation() == null || crossSync.getTransformation() == PlayerTransformation.SCALED) {
+                        crossSync.setTransformation(PlayerTransformation.DEEP_ONE, player);
+                        player.level().playSound(null, player.blockPosition(), BTVSounds.DEEP_ONE_TRANSFORM.get(), SoundSource.PLAYERS);
+                        playerTimerData.addTimer(new PlayerTimer(TRANSFORM_COOLDOWN, "transform_cooldown", PersistentPlayerTimer.TRANSFORM_COOLDOWN, new HashMap<>()));
+                    } else if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                        crossSync.setTransformation(null, player);
+                        playerTimerData.addTimer(new PlayerTimer(TRANSFORM_COOLDOWN, "transform_cooldown", PersistentPlayerTimer.TRANSFORM_COOLDOWN, new HashMap<>()));
+                    }
+                } else {
+                    player.sendSystemMessage(Component.translatable("message.transformation.cooldown", playerTimerData.getTimer("transform_cooldown").getRemainingTime() / 20 + 1));
+                }
+            });
+        }
     }
 
 }

@@ -2,11 +2,11 @@ package com.valeriotor.beyondtheveil.capability.crossync;
 
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
-import com.valeriotor.beyondtheveil.event.PlayerEvents;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
+import com.valeriotor.beyondtheveil.util.AttributeSets;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -64,6 +64,7 @@ public class CrossSync {
 
     public void setTransformation(PlayerTransformation transformation, Player player) {
         this.transformation = transformation;
+        applyAttributes(player);
         sync(player);
     }
 
@@ -74,7 +75,7 @@ public class CrossSync {
     public void setCrawling(boolean crawling, Player player) {
         if (crawling != this.crawling) {
             this.crawling = crawling;
-            PlayerEvents.addCrawlingAttributes(player);
+            AttributeSets.addCrawlingAttributes(player);
             player.refreshDimensions();
             sync(player);
         }
@@ -99,6 +100,13 @@ public class CrossSync {
     public void sync(Player player) {
         if (player != null && !player.level().isClientSide) {
             Messages.sendToTrackingAndSelf(GenericToClientPacket.crossSync(player, this), player);
+        }
+    }
+
+    public void applyAttributes(Player player) {
+        if (player != null) {
+            AttributeSets.applyDeepOneAttributes(player, transformation == PlayerTransformation.DEEP_ONE);
+            player.refreshDimensions();
         }
     }
 

@@ -140,9 +140,9 @@ public class CapabilityEvents {
             event.getEntity().getCapability(CROSS_SYNC_DATA).ifPresent(newData -> {
                 oldData.copyToNewStore(newData, event.isWasDeath());
                 newData.getCrossSync().sync(event.getEntity());
+                newData.getCrossSync().applyAttributes(event.getEntity());
             });
         });
-        // TODO we probably will want to do this for crosssync as well
 
         event.getOriginal().getCapability(DIALOGUE_DATA).ifPresent(oldData -> {
             event.getEntity().getCapability(DIALOGUE_DATA).ifPresent(oldData::copyToNewStore);

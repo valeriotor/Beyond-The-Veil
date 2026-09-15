@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -10,11 +11,15 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
+import com.valeriotor.beyondtheveil.util.AttributeSets;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -70,6 +75,16 @@ public class AttackEvents {
         }
         if (entity instanceof ServerPlayer player) {
             bleedingBeltEvent(event, player);
+            player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE) {
+                    event.setAmount(event.getAmount() * 2 / 5); // first a 60% damage reduction
+                    if (player.isInWater()) { // then a damage cap
+                        event.setAmount(Math.min(event.getAmount(), AttributeSets.MAX_DEEP_ONE_DAMAGE_IN_WATER));
+                    } else {
+                        event.setAmount(Math.min(event.getAmount(), AttributeSets.MAX_DEEP_ONE_DAMAGE));
+                    }
+                }
+            });
         }
         BindingEvents.minionDamageEvent(event);
         BindingEvents.playerDamageEvent(event);
@@ -176,6 +191,13 @@ public class AttackEvents {
         }
         if (event.getEntity() instanceof BloodCultistEntity e && e.getKillingEntity() != null && e.getKillingEntity().isAlive()) {
             event.setCanceled(true);
+        }
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            sp.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE && event.getSource().is(DamageTypeTags.IS_FALL)) {
+                    event.setCanceled(true);
+                }
+            });
         }
     }
 

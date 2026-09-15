@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
 import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -20,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.InBedChatScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -33,6 +35,7 @@ public class InputEvents {
 
     private static NautilusPropellerSoundInstance propellerSound;
     private static int explosionTicks;
+    private static int transformationTicks;
 
     @SubscribeEvent
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
@@ -69,6 +72,9 @@ public class InputEvents {
                 if (explosionTicks > 0) {
                     explosionTicks--;
                 }
+                if (transformationTicks > 0) {
+                    transformationTicks--;
+                }
             }
 
         }
@@ -82,13 +88,18 @@ public class InputEvents {
 
     private static void transform(InputEvent.Key event) {
         LocalPlayer p = Minecraft.getInstance().player;
-        if (event.getKey() == KeyBindings.transform.getKey().getValue() && p != null) {
+        if (event.getKey() == KeyBindings.transform.getKey().getValue() && p != null && Minecraft.getInstance().screen == null) {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
             if (crossSync != null) {
                 PlayerTransformation transformation = crossSync.getTransformation();
                 if (transformation != null && transformation.isCanExplode() && explosionTicks == 0) {
                     explosionTicks = 30;
                     Messages.sendToServer(GenericToServerPacket.startPlayerExplosion());
+                } else if (transformation == null || transformation == PlayerTransformation.SCALED || transformation == PlayerTransformation.DEEP_ONE) {
+                    if (transformationTicks <= 0) {
+                        Messages.sendToServer(GenericToServerPacket.transform());
+                        transformationTicks = 10;
+                    }
                 }
             }
         }

@@ -118,6 +118,10 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.START_PLAYER_EXPLOSION, new CompoundTag());
     }
 
+    public static GenericToServerPacket transform() {
+        return new GenericToServerPacket(MessageType.TRANSFORM, new CompoundTag());
+    }
+
     public static GenericToServerPacket finishDagonQuest() {
         return new GenericToServerPacket(MessageType.FINISH_DAGON_QUEST, new CompoundTag());
     }
@@ -255,6 +259,10 @@ public class GenericToServerPacket {
                     case START_PLAYER_EXPLOSION -> {
                         TransformationUtil.startExplodingPlayer(player);
                     }
+                    case TRANSFORM -> {
+                        TransformationUtil.transform(player);
+
+                    }
                     case KILL_KEEPER -> {
                         if (player.containerMenu instanceof DoubleDialogueMenu menu) {
                             menu.killKeeper(tag.getBoolean("killCultist"));
@@ -315,6 +323,7 @@ public class GenericToServerPacket {
         READ_MEMORY,
         FINISH_DAGON_QUEST,
         START_PLAYER_EXPLOSION,
+        TRANSFORM,
         KILL_KEEPER,
         SPARE_CULTIST,
         TOGGLE_BINDING_POWER,

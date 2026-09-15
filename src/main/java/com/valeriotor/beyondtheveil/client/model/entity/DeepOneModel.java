@@ -17,6 +17,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class DeepOneModel extends AnimatedModel<LivingEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -230,9 +231,9 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
 
         PartDefinition cube_r34 = dorsal_fin_1.addOrReplaceChild("cube_r34", CubeListBuilder.create().texOffs(27, 63).addBox(0.0F, -10.0F, 0.0F, 1.0F, 10.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0036F, 0.0F, 0.0F));
 
-        PartDefinition right_leg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(232, 50).addBox(-5.0F, -2.2686F, -4.4217F, 6.0F, 20.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 2.1719F, 14.2152F, -1.0036F, 0.0F, 0.0F));
+        PartDefinition right_leg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(232, 50).addBox(-9.0F, -2.2686F, -4.4217F, 6.0F, 20.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 2.1719F, 14.2152F, -1.0036F, 0.0F, 0.0F));
 
-        PartDefinition right_leg2 = right_leg.addOrReplaceChild("right_leg2", CubeListBuilder.create().texOffs(238, 76).addBox(-2.0F, -1.3686F, -2.1622F, 4.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 17.0F, -1.0F, 1.7453F, 0.0F, 0.0F));
+        PartDefinition right_leg2 = right_leg.addOrReplaceChild("right_leg2", CubeListBuilder.create().texOffs(238, 76).addBox(-2.0F, -1.3686F, -2.1622F, 4.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-6.0F, 17.0F, -1.0F, 1.7453F, 0.0F, 0.0F));
 
         PartDefinition right_foot = right_leg2.addOrReplaceChild("right_foot", CubeListBuilder.create().texOffs(232, 95).addBox(-1.5F, -2.3686F, -4.6622F, 3.0F, 3.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, -0.5F));
 
@@ -247,9 +248,9 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
 
         PartDefinition cube_r38 = right_foot_base.addOrReplaceChild("cube_r38", CubeListBuilder.create().texOffs(244, 114).addBox(-0.5F, -0.45F, -4.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.201F, -1.0F, 1.616F, 0.0F, 0.5236F, 0.0F));
 
-        PartDefinition left_leg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(232, 50).addBox(-5.0F, -2.2686F, -4.4217F, 6.0F, 20.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(8.0F, 2.1719F, 14.2152F, -1.0036F, 0.0F, 0.0F));
+        PartDefinition left_leg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(232, 50).addBox(3.0F, -2.2686F, -4.4217F, 6.0F, 20.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 2.1719F, 14.2152F, -1.0036F, 0.0F, 0.0F));
 
-        PartDefinition left_leg2 = left_leg.addOrReplaceChild("left_leg2", CubeListBuilder.create().texOffs(238, 76).addBox(-2.0F, -1.3686F, -2.1622F, 4.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 17.0F, -1.0F, 1.7453F, 0.0F, 0.0F));
+        PartDefinition left_leg2 = left_leg.addOrReplaceChild("left_leg2", CubeListBuilder.create().texOffs(238, 76).addBox(-2.0F, -1.3686F, -2.1622F, 4.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(6.0F, 17.0F, -1.0F, 1.7453F, 0.0F, 0.0F));
 
         PartDefinition left_foot = left_leg2.addOrReplaceChild("left_foot", CubeListBuilder.create().texOffs(232, 95).addBox(-1.5F, -2.3686F, -4.6622F, 3.0F, 3.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, -0.5F));
 
@@ -275,6 +276,8 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
             if (entity.isVisuallySwimming()) {
                 this.neck.xRot = this.rotlerpRad(this.swimAmount, this.neck.xRot, (-(float) Math.PI / 3F));
                 main_body.yRot = Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 1.75F;
+                left_leg.yRot = Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 1.75F;
+                right_leg.yRot = Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 1.75F;
                 neck.yRot = Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 3.75F;
                 left_arm.xRot = -0.7F - Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 0.95F;
                 right_arm.xRot = -0.7F + Mth.cos(limbSwing * 0.2662F) * limbSwingAmount / 0.95F;
@@ -366,6 +369,40 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                 deepOne.getMainAnimation().apply(pPartialTick);
             } else if (deepOne.getAttackAnimation() != null) {
                 deepOne.getAttackAnimation().apply(pPartialTick);
+            }
+        } else if (entity instanceof Player p) {
+            if (!entity.isVisuallySwimming()) {
+                float offset1 = Mth.sin((float) Math.PI * 2 * ageInTicks / (80)) / 30;
+                float offset2 = Mth.sin((float) Math.PI * 2 * ageInTicks / (80)) / 20;
+                float offset3 = Mth.sin((float) Math.PI * 2 * ageInTicks / (80)) / 20;
+                main_body.xRot = offset1;
+                left_arm.xRot = offset2;
+                right_arm.xRot = offset3;
+                float f = 2.2F;
+                if (!p.isSprinting()) {
+                    this.right_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f;
+                    this.left_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f;
+                    this.left_arm.xRot += Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 2;
+                    this.right_arm.xRot += Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f / 2;
+                } else {
+                    main_body.xRot = 82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
+                    neck.xRot = -82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
+                    lower_jaw.xRot = 85F * Mth.PI / 180;
+                    this.left_leg.xRot = (-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
+                    this.left_leg2.xRot = (1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F;
+                    this.right_leg.xRot = (-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F;
+                    this.right_leg2.xRot = (1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F;
+
+                    this.left_arm.xRot = (-120 - 0) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-120 + 0) * Mth.PI / 180 / 2;
+                    this.left_arm.yRot = -30.79F * Mth.PI / 180;
+                    this.left_arm.zRot = (-8 - 31) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2;
+                    this.left_arm2.xRot = Math.max(-1.0908F, -1.0908F + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (140) * Mth.PI / 180 / 2);
+                    this.right_arm.xRot = (-120 - 0) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-120 + 0) * Mth.PI / 180 / 2;
+                    this.right_arm.yRot = 30.79F * Mth.PI / 180;
+                    this.right_arm.zRot = -(-8 - 31) * Mth.PI / 180 / 2 - Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2;
+                    this.main_body.zRot = Mth.cos(limbSwing * 0.7662F + Mth.PI) * limbSwingAmount * 0.25F;
+                    this.head.zRot = 0.25F;
+                }
             }
         }
     }

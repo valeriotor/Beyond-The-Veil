@@ -2065,6 +2065,7 @@
   "memory.water.name": "Water",
   "message.dream_bottle.other_dimension": "The target area is in another dimension.",
   "message.dream_bottle.player_not_found": "Target not found.",
+  "message.transformation.cooldown": "The transformation requires %1$s seconds of cooldown.",
   "message.vessel_stone.in_water": "The vessel stone may not be used while in water.",
   "message.vessel_stone.not_in_arche": "The vessel stone must be used while in Arche.",
   "mirror.abouttoenter.first.end": "(End)",
