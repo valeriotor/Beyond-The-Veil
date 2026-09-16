@@ -6,7 +6,9 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.EntityModel;
@@ -16,6 +18,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -379,11 +382,82 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                 left_arm.xRot = offset2;
                 right_arm.xRot = offset3;
                 float f = 2.2F;
-                if (!p.isSprinting()) {
+                CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+                if (crossSync != null) {
+                    float sprintTicks = (float) crossSync.getSprintTicks(p, pPartialTick);
+                    float nonSprintTicks = CrossSync.MAX_SPRINT_TICKS - (float) crossSync.getSprintTicks(p, pPartialTick);
+                    right_leg.xRot = (-1.0036F + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f) * nonSprintTicks +
+                        ((-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F) * sprintTicks; // full sprint
+                    left_leg.xRot = (-1.0036F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f) * nonSprintTicks +
+                        ((-1.0036F - 0.436F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-1.0036F + 0.436F) / 2 * 1.7F) * sprintTicks;
+                    left_arm.xRot = (offset2 + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 2) * nonSprintTicks +
+                        ((-120) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-120) * Mth.PI / 180 / 2) * sprintTicks;
+                    right_arm.xRot = (offset3 + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f / 2) * nonSprintTicks +
+                        ((-120) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-120) * Mth.PI / 180 / 2) * sprintTicks;
+                    right_leg.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_leg.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_arm.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    right_arm.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    // only no sprint
+                    main_body.yRot = Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI * 2F)) * 0.2F * (p.getMainArm() == HumanoidArm.RIGHT ? 1 : -1) * nonSprintTicks +
+                            0 * sprintTicks;
+                    // only full sprint
+                    main_body.xRot = 0 * nonSprintTicks +
+                            (82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15) * sprintTicks;
+                    neck.xRot = 0 * nonSprintTicks +
+                            (-82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15) * sprintTicks;
+                    lower_jaw.xRot = 0 * nonSprintTicks +
+                            (85F * Mth.PI / 180) * sprintTicks;
+                    left_leg2.xRot = 1.7453F * nonSprintTicks +
+                            ((1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F) * sprintTicks;
+                    right_leg2.xRot = 1.7453F * nonSprintTicks +
+                            ((1.7453F + 2.13F) / 2 + Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (1.7453F - 2.13F) / 2 * 1.7F) * sprintTicks;
+                    left_arm.yRot = 0 * nonSprintTicks +
+                            (-30.79F * Mth.PI / 180) * sprintTicks;
+                    left_arm.zRot = -0.5672F * nonSprintTicks +
+                            ((-8 - 31) * Mth.PI / 180 / 2 + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2) * sprintTicks;
+                    left_arm2.xRot = -1.0908F * nonSprintTicks +
+                            (Math.max(-1.0908F, -1.0908F + Mth.cos(limbSwing * 0.5662F) * limbSwingAmount * (140) * Mth.PI / 180 / 2)) * sprintTicks;
+                    right_arm.yRot = 0 * nonSprintTicks +
+                            (30.79F * Mth.PI / 180) * sprintTicks;
+                    right_arm.zRot = 0.5672F * nonSprintTicks +
+                            (-(-8 - 31) * Mth.PI / 180 / 2 - Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2) * sprintTicks;
+                    main_body.zRot = 0 * nonSprintTicks +
+                            (Mth.cos(limbSwing * 0.7662F + Mth.PI) * limbSwingAmount * 0.25F) * sprintTicks;
+                    head.zRot = 0 * nonSprintTicks +
+                            (0.25F) * sprintTicks;
+                    main_body.yRot /= CrossSync.MAX_SPRINT_TICKS;
+                    main_body.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    neck.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    lower_jaw.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_leg2.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    right_leg2.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_arm.yRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_arm.zRot /= CrossSync.MAX_SPRINT_TICKS;
+                    left_arm2.xRot /= CrossSync.MAX_SPRINT_TICKS;
+                    right_arm.yRot /= CrossSync.MAX_SPRINT_TICKS;
+                    right_arm.zRot /= CrossSync.MAX_SPRINT_TICKS;
+                    main_body.zRot /= CrossSync.MAX_SPRINT_TICKS;
+                    head.zRot /= CrossSync.MAX_SPRINT_TICKS;
+                    float val = -Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI)) * 1.2F ;
+                    if (p.getMainArm() == HumanoidArm.RIGHT) {
+                        this.right_arm.xRot += val;
+                    } else {
+                        this.left_arm.xRot += val;
+                    }
+                }
+                /*if (!p.isSprinting()) {
                     this.right_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f;
                     this.left_leg.xRot = -1.0036F + Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f;
                     this.left_arm.xRot += Mth.cos(limbSwing * 0.8662F) * 1F * limbSwingAmount / f / 2;
                     this.right_arm.xRot += Mth.cos(limbSwing * 0.8662F + (float) Math.PI) * 1F * limbSwingAmount / f / 2;
+                    main_body.yRot = Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI * 2F)) * 0.2F * (p.getMainArm() == HumanoidArm.RIGHT ? 1 : -1);
+                    float val = -Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI)) * 1.2F ;
+                    if (p.getMainArm() == HumanoidArm.RIGHT) {
+                        this.right_arm.xRot += val;
+                    } else {
+                        this.left_arm.xRot += val;
+                    }
                 } else {
                     main_body.xRot = 82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
                     neck.xRot = -82.5F * Mth.PI / 180 + Mth.sin(limbSwing * 0.5662F) * limbSwingAmount / 15;
@@ -402,7 +476,9 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
                     this.right_arm.zRot = -(-8 - 31) * Mth.PI / 180 / 2 - Mth.cos(limbSwing * 0.5662F + Mth.PI) * limbSwingAmount * (-8 + 31) * Mth.PI / 180 / 2;
                     this.main_body.zRot = Mth.cos(limbSwing * 0.7662F + Mth.PI) * limbSwingAmount * 0.25F;
                     this.head.zRot = 0.25F;
-                }
+                    right_arm.xRot += Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI * 2F)) * 1.2;
+                    left_arm.xRot += Mth.sin(Mth.sqrt(attackTime) * ((float) Math.PI * 2F)) * 1.2;
+                }*/
             }
         }
     }

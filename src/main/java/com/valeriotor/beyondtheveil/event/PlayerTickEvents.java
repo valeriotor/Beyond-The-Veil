@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
@@ -99,6 +100,13 @@ public class PlayerTickEvents {
             transformationTickEvents(event);
             if (p instanceof ServerPlayer sp) {
                 BindingEvents.playerTickEvent(event, sp);
+            }
+        }
+
+        if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.CLIENT) {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(event.player);
+            if (crossSync != null) {
+                crossSync.tickClient(event.player);
             }
         }
         if (event.player.tickCount == 3) {

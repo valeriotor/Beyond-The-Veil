@@ -253,7 +253,7 @@ public class ClientMethods {
             if (crossSync.isCrawling() || crossSync.isDreamFocus()) {
                 updater.accept(EntityDimensions.fixed(0.2F, 0.2F), 0.3F);
             } else if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
-                updater.accept(EntityDimensions.fixed(0.9F, 3F), 2.8F);
+                updater.accept(EntityDimensions.fixed(0.9F, 3F), p.isSprinting() ? 1.8F : 2.8F);
             }
         }
     }

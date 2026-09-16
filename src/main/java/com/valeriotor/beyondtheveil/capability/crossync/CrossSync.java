@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.surgery.SurgeryUtil;
 import com.valeriotor.beyondtheveil.util.AttributeSets;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -21,6 +22,8 @@ public class CrossSync {
     private PlayerTransformation transformation;
     private boolean crawling;
     private boolean dreamFocus = false;
+    public static final int MAX_SPRINT_TICKS = 5;
+    private int sprintTicks = 0;
 
     public <T extends Mob & SurgeryPatient> void setHeldPatient(T heldPatient, Player player) {
         if (heldPatient != null) {
@@ -108,6 +111,22 @@ public class CrossSync {
             AttributeSets.applyDeepOneAttributes(player, transformation == PlayerTransformation.DEEP_ONE);
             player.refreshDimensions();
         }
+    }
+
+    public void tickClient(Player player) {
+        int old = sprintTicks;
+        if (player.isSprinting()) {
+            sprintTicks = Math.min(MAX_SPRINT_TICKS, sprintTicks + 1);
+        } else {
+            sprintTicks = Math.max(0, sprintTicks - 1);
+        }
+        if (sprintTicks != old) {
+            player.refreshDimensions();
+        }
+    }
+
+    public double getSprintTicks(Player player, float partialTicks) {
+        return Mth.clamp(sprintTicks + (player.isSprinting() ? partialTicks : -partialTicks), 0, MAX_SPRINT_TICKS);
     }
 
     public void loadFromNBT(CompoundTag compoundTag) {
