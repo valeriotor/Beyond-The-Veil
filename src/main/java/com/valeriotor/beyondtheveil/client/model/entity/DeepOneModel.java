@@ -37,11 +37,11 @@ public class DeepOneModel extends AnimatedModel<LivingEntity> {
     private final ModelPart forehead2;
     private final ModelPart forehead3;
     private final ModelPart lower_jaw;
-    private final ModelPart right_arm;
-    private final ModelPart right_arm2;
+    public final ModelPart right_arm;
+    public final ModelPart right_arm2;
     private final ModelPart right_hand;
-    private final ModelPart left_arm;
-    private final ModelPart left_arm2;
+    public final ModelPart left_arm;
+    public final ModelPart left_arm2;
     private final ModelPart left_hand;
     private final ModelPart right_leg;
     private final ModelPart right_leg2;

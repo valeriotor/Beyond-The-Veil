@@ -1,14 +1,22 @@
 package com.valeriotor.beyondtheveil.client.render.entity;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.client.model.entity.DeepOneModel;
+import com.valeriotor.beyondtheveil.client.model.entity.ScaledPlayerModel;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.DeepOneEntity;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -90,5 +98,29 @@ public class DeepOneRenderer extends LivingEntityRenderer<LivingEntity, DeepOneM
             }
         }
         return super.getRenderType(pLivingEntity, pBodyVisible, pTranslucent, pGlowing);
+    }
+
+    public void renderHand(PoseStack pPoseStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm) {
+        RenderSystem.setShaderTexture(0, getTextureLocation(pPlayer));
+        DeepOneModel playermodel = this.getModel();
+        //this.setModelProperties(pPlayer);
+        playermodel.attackTime = 0.0F;
+        //playermodel.crouching = false;
+        //playermodel.swimAmount = 0.0F;
+        playermodel.setupAnim(pPlayer, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+        //pRendererArm.zRot = (pPlayer.tickCount / 20F) % (2 * Mth.PI);
+        CrossSync crossSync = CrossSyncHolder.getCrossSync(pPlayer);
+        if (crossSync != null) {
+            double sprintTicks = crossSync.getSprintTicks(pPlayer, Minecraft.getInstance().getPartialTick());
+            pRendererArm.y = (float) ((-15F * sprintTicks + (5F * (CrossSync.MAX_SPRINT_TICKS - sprintTicks))) / CrossSync.MAX_SPRINT_TICKS);
+        }
+        pRendererArm.xRot = 5.12F;
+        pRendererArm.yRot = 0.83F * (pRendererArm == playermodel.right_arm2 ? 1 : -1);
+        pRendererArm.zRot = 5.7F * (pRendererArm == playermodel.right_arm2 ? 1 : -1);
+        pRendererArm.x = -1;
+        pRendererArm.z = 15F;
+        pRendererArm.render(pPoseStack, pBuffer.getBuffer(RenderType.entityTranslucent(getTextureLocation(pPlayer))), pCombinedLight, OverlayTexture.NO_OVERLAY);
+        //pRendererArmwear.xRot = 0.0F;
+        //pRendererArmwear.render(pPoseStack, pBuffer.getBuffer(RenderType.entityTranslucent(pPlayer.getSkinTextureLocation())), pCombinedLight, OverlayTexture.NO_OVERLAY);
     }
 }

@@ -20,6 +20,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.client.reminiscence.ReminiscenceClient;
+import com.valeriotor.beyondtheveil.client.render.entity.DeepOneRenderer;
 import com.valeriotor.beyondtheveil.client.render.entity.layer.PatientWoundLayer;
 import com.valeriotor.beyondtheveil.client.render.entity.player.RenderPlayerUtils;
 import com.valeriotor.beyondtheveil.client.render.entity.player.ScaledPlayerRenderer;
@@ -195,6 +196,10 @@ public class RenderEvents {
                     if (ClientSetup.moreRenderers.get(PlayerTransformation.SCALED) instanceof ScaledPlayerRenderer spc) {
                         spc.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, event.getArm() == HumanoidArm.RIGHT ? spc.getModel().rightArm : spc.getModel().leftArm);
                     }
+                } else if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                    if (ClientSetup.moreRenderers.get(PlayerTransformation.DEEP_ONE) instanceof DeepOneRenderer dor) {
+                        dor.renderHand(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, event.getArm() == HumanoidArm.RIGHT ? dor.getModel().right_arm2 : dor.getModel().left_arm2);
+                    }
                 }
             }
             if (!ClientData.getInstance().getFirstPersonAnimations().isEmpty()) {
@@ -217,7 +222,7 @@ public class RenderEvents {
         if (player != null) {
             CrossSync crossSync = CrossSyncHolder.getCrossSync(player);
             if (crossSync != null && (crossSync.getTransformation() != null || crossSync.isDreamFocus())) {
-                if (crossSync.getTransformation() != PlayerTransformation.SCALED) {
+                if (crossSync.getTransformation() != PlayerTransformation.SCALED && crossSync.getTransformation() != PlayerTransformation.DEEP_ONE) {
                     event.setCanceled(true);
                 }
             }
