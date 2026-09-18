@@ -16,6 +16,7 @@ import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
@@ -435,7 +436,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     if (convalescentData.getFlags().containsKey(OperationRegistry.SPINELESS) || convalescentData.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                         player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setCrawling(true, player));
                     }
-                    if (patientStatus.getFlags().getOrDefault("insert_scales_chest", 0) >= 3) {
+                    if (patientStatus.getFlags().getOrDefault("insert_scales_chest", 0) >= 3 && !DataUtil.getBoolean(player, PlayerDataLib.metamorphosis.name())) {
                         player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> crossSyncData.getCrossSync().setTransformation(PlayerTransformation.SCALED, player));
                         PlayerTimerData.for_(player).addTimer(new PlayerTimer(1000, "scaled_kill", PersistentPlayerTimer.SCALED_KILL, new HashMap<>()));
                         DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.scaled_player.name(), true);
