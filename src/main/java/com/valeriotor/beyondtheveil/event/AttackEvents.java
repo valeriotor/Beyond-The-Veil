@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,9 +53,9 @@ public class AttackEvents {
     public static void livingDamageEvent(LivingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         Entity source = event.getSource().getEntity();
-        if (entity.hasEffect(BTVEffects.VULNERABILITY.get())) {
-            MobEffectInstance effect = entity.getEffect(BTVEffects.VULNERABILITY.get());
-            event.setAmount(event.getAmount() * (2 + effect.getAmplifier()));
+        MobEffectInstance vulnerability = entity.getEffect(BTVEffects.VULNERABILITY.get());
+        if (vulnerability != null) {
+            event.setAmount(event.getAmount() * (2 + vulnerability.getAmplifier()));
         }
         if (entity instanceof ServerPlayer player) {
             playerDamageEvent(event, player);
@@ -69,8 +70,12 @@ public class AttackEvents {
             }
         }
         if (entity instanceof DamageCapper dc) {
-            if (event.getAmount() > dc.getDamageCap()) {
-                event.setAmount(dc.getDamageCap());
+            float damageCap = dc.getDamageCap();
+            if (vulnerability != null) {
+                damageCap *= vulnerability.getAmplifier() * 1.15F + 1;
+            }
+            if (event.getAmount() > damageCap) {
+                event.setAmount(damageCap);
             }
         }
         if (entity instanceof ServerPlayer player) {
@@ -78,11 +83,14 @@ public class AttackEvents {
             player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE) {
                     event.setAmount(event.getAmount() * 2 / 5); // first a 60% damage reduction
-                    if (player.isInWater()) { // then a damage cap
-                        event.setAmount(Math.min(event.getAmount(), AttributeSets.MAX_DEEP_ONE_DAMAGE_IN_WATER));
-                    } else {
-                        event.setAmount(Math.min(event.getAmount(), AttributeSets.MAX_DEEP_ONE_DAMAGE));
+                    float damageCap = AttributeSets.MAX_DEEP_ONE_DAMAGE; // then a damage cap
+                    if (player.isInWater()) {
+                        damageCap = AttributeSets.MAX_DEEP_ONE_DAMAGE_IN_WATER;
                     }
+                    if (vulnerability != null) {
+                        damageCap *= vulnerability.getAmplifier() * 1.5F + 1;
+                    }
+                    event.setAmount(Math.min(event.getAmount(), damageCap));
                 }
             });
         }
