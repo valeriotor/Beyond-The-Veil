@@ -1,5 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
@@ -20,6 +22,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -32,6 +38,7 @@ import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingTickEvents {
@@ -57,7 +64,7 @@ public class LivingTickEvents {
         convalescentCounters(event);
         doProcession(event);
         doArcheDrownDamage(event);
-
+        applyConvalescentAttributes(event.getEntity());
     }
 
     private static void convalescentCounters(LivingEvent.LivingTickEvent event) {
@@ -202,6 +209,27 @@ public class LivingTickEvents {
             double y = intensity > 0.5 && entity.tickCount % 2 == 0 ? (entity.level().getRandom().nextFloat() - 0.5) * (intensity - 0.5) * 2 : 0;
             entity.move(MoverType.SELF, new Vec3(-2*Mth.square(intensity), y, 0));
 //            entity.setDeltaMovement(currentMovement.x - intensity * 0.08F, currentMovement.y, currentMovement.z);
+        }
+    }
+
+    private static final UUID GREAT_HEART_HEALTH = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f8");
+
+    /**
+     * It seems the best way is to check every few ticks...
+     */
+    public static void applyConvalescentAttributes(LivingEntity e) {
+        if (e.tickCount % 20 == 0) {
+            e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                if (c.getFlags().getOrDefault("great_heart", 0) > 0) {
+                    AttributeMap attributes = e.getAttributes();
+                    if (!attributes.hasModifier(Attributes.MAX_HEALTH, GREAT_HEART_HEALTH)) {
+                        Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+                        map.put(Attributes.MAX_HEALTH, new AttributeModifier(GREAT_HEART_HEALTH, "great_heart_health", 20, AttributeModifier.Operation.ADDITION));
+                        attributes.addTransientAttributeModifiers(map);
+                    }
+                    e.heal(1);
+                }
+            });
         }
     }
 }

@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
+import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -272,6 +273,8 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                                             c1.setCounter("spreading_iron", 2000);
                                         }
                                     });
+                                    LivingTickEvents.applyConvalescentAttributes(villager);
+                                    villager.setHealth(getHealth());
                                     //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
                                     //villager.setTradeOffers(source.getOffers().createTag());
                                     //villager.setVillagerXp(source.getVillagerXp());

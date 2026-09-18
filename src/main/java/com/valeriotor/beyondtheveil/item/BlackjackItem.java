@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
+import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.util.TeleportUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -51,6 +52,10 @@ public class BlackjackItem extends Item {
                     crawlerCap.loadFromNBT(convalescentData);
                 }
             });
+            if (!villager.level().isClientSide) {
+                LivingTickEvents.applyConvalescentAttributes(crawler);
+                crawler.setHealth(villager.getHealth());
+            }
             return InteractionResult.SUCCESS;
         }
         return null;

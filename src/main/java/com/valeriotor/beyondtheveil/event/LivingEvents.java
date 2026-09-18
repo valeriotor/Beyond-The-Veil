@@ -328,6 +328,9 @@ public class LivingEvents {
         if (!(event.getEntity() instanceof Player)) {
             BindingEvents.joinLevelEvent(event);
         }
+        if (event.getEntity() instanceof LivingEntity e) {
+            LivingTickEvents.applyConvalescentAttributes(e);
+        }
     }
 
     @SubscribeEvent
