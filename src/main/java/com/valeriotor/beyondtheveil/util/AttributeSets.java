@@ -66,8 +66,10 @@ public class AttributeSets {
                 map.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(DEEP_ONE_BLOCK_REACH, "deep_one_block_reach", 1, AttributeModifier.Operation.ADDITION));
                 if (add) {
                     p.getAttributes().addTransientAttributeModifiers(map);
+                    p.heal(30);
                 } else {
                     p.getAttributes().removeAttributeModifiers(map);
+                    p.setHealth(Math.min(p.getHealth(), p.getMaxHealth()));
                 }
             });
         }
