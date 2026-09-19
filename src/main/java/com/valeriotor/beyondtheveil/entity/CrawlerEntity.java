@@ -6,13 +6,13 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentPickUpItemGoal;
-import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
@@ -57,7 +57,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     @Nullable
     private Tag gossips;
     @Nullable
-    private CompoundTag tradeOffers;
+    private MerchantOffers tradeOffers;
     private int villagerXp;
     private PatientStatus patientStatus;
     private Animation painAnimation;
@@ -79,7 +79,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public void setData(Villager source) {
         setVillagerData(source.getVillagerData());
         setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
-        setTradeOffers(source.getOffers().createTag());
+        setTradeOffers(source.getOffers());
         setVillagerXp(source.getVillagerXp());
     }
 
@@ -138,8 +138,8 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         VillagerData.CODEC.encodeStart(NbtOps.INSTANCE, this.getVillagerData()).resultOrPartial(LOGGER::error).ifPresent((p_204072_) -> {
             pCompound.put("VillagerData", p_204072_);
         });
-        if (this.tradeOffers != null) {
-            pCompound.put("Offers", this.tradeOffers);
+        if (tradeOffers != null && !tradeOffers.isEmpty()) {
+            pCompound.put("Offers", tradeOffers.createTag());
         }
 
         if (this.gossips != null) {
@@ -162,7 +162,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         }
 
         if (pCompound.contains("Offers", 10)) {
-            this.tradeOffers = pCompound.getCompound("Offers");
+            this.tradeOffers = new MerchantOffers(pCompound.getCompound("Offers"));
         }
 
         if (pCompound.contains("Gossips", 10)) {
@@ -220,7 +220,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         this.gossips = pGossips;
     }
 
-    public void setTradeOffers(CompoundTag pTradeOffers) {
+    public void setTradeOffers(MerchantOffers pTradeOffers) {
         this.tradeOffers = pTradeOffers;
     }
 
@@ -269,12 +269,13 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                                     villager.setVillagerData(getVillagerData());
                                     villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c1 -> {
                                         c1.loadFromNBT(c.saveToNBT(new CompoundTag()));
-                                        if (c1.getFlags().containsKey("insert_living_iron") && c1.getFlags().get("insert_living_iron") > 0) {
+                                        if (c1.getFlags().getOrDefault(OperationRegistry.INSERT_LIVING_IRON_BACK.getName(), 0) > 0) {
                                             c1.setCounter("spreading_iron", 2000);
                                         }
                                     });
-                                    LivingTickEvents.applyConvalescentAttributes(villager);
+                                    ConvalescentData.applyConvalescentAttributes(villager);
                                     villager.setHealth(getHealth());
+                                    villager.setOffers(tradeOffers);
                                     //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
                                     //villager.setTradeOffers(source.getOffers().createTag());
                                     //villager.setVillagerXp(source.getVillagerXp());

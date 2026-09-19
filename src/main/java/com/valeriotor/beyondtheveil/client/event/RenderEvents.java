@@ -1050,6 +1050,10 @@ public class RenderEvents {
                                 gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.capacity") + patientStatus.getLeftoverCapacity(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
+                            if (patientStatus.isSoftened()) {
+                                gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.softened"), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                pY += 15;
+                            }
                             for (String s : triggerDataDescription(patientStatus.getTriggerData())) {
                                 gg.drawString(Minecraft.getInstance().font, s, X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;

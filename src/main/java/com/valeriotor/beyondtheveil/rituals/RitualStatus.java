@@ -6,6 +6,8 @@ import com.valeriotor.beyondtheveil.item.MemoryPhialItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.BloodBasinBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -70,9 +72,11 @@ public class RitualStatus {
     private boolean deleteVictim;
     private Function<ServerLevel, Tuple<Vec3, ResourceKey<Level>>> targetPosition;
     private double saveItemChance = 0.0;
+    private boolean emeraldGem;
     private boolean decreasedInstability;
 
-    public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars, PatientType patientType) {
+    public static RitualStatus startRitual(ServerLevel level, UUID initiator, BlockPos startPos, List<BlockPos> altars, PatientStatus patientStatus) {
+        PatientType patientType = patientStatus.getPatientType();
         List<ItemStack> items = new ArrayList<>();
         for (BlockPos altar : altars) {
             if (level.getBlockEntity(altar) instanceof BloodBasinBE bloodBasinBE) {
@@ -98,7 +102,12 @@ public class RitualStatus {
         if (template == null) {
             return null;
         }
-        return new RitualStatus(template, startPos, altars, initiator, items);
+        RitualStatus ritualStatus = new RitualStatus(template, startPos, altars, initiator, items);
+        if (patientStatus.getFlags().getOrDefault(OperationRegistry.INSERT_EMERALD_GEM_CHEST.getName(), 0) > 0) {
+            ritualStatus.emeraldGem = true;
+            ritualStatus.saveItemChance += 0.3;
+        }
+        return ritualStatus;
     }
 
     private RitualStatus(RitualTemplate template, BlockPos startPos, List<BlockPos> altars, UUID initiator, List<ItemStack> startItems) {
@@ -138,6 +147,10 @@ public class RitualStatus {
         secondaryInstabilityIncreaseRate = tag.getDouble("secondaryInstabilityIncreaseRate");
         secondaryInstabilitySeverity = tag.getDouble("secondaryInstabilitySeverity");
         decreasedInstability = tag.getBoolean("decreasedInstability");
+        emeraldGem = tag.getBoolean("emeraldGem");
+        if (emeraldGem) {
+            saveItemChance += 0.3;
+        }
         long[] altars = tag.getLongArray("altars");
         this.startPos = BlockPos.of(tag.getLong("startPos"));
         this.altars = new ArrayList<>();
@@ -502,6 +515,7 @@ public class RitualStatus {
         tag.putDouble("secondaryInstabilityIncreaseRate", secondaryInstabilityIncreaseRate);
         tag.putDouble("secondaryInstabilitySeverity", secondaryInstabilitySeverity);
         tag.putBoolean("decreasedInstability", decreasedInstability);
+        tag.putBoolean("emeraldGem", emeraldGem);
 
         return tag;
     }

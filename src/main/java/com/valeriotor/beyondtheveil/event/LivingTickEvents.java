@@ -1,8 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
@@ -22,10 +21,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -64,7 +59,6 @@ public class LivingTickEvents {
         convalescentCounters(event);
         doProcession(event);
         doArcheDrownDamage(event);
-        applyConvalescentAttributes(event.getEntity());
     }
 
     private static void convalescentCounters(LivingEvent.LivingTickEvent event) {
@@ -212,24 +206,4 @@ public class LivingTickEvents {
         }
     }
 
-    private static final UUID GREAT_HEART_HEALTH = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f8");
-
-    /**
-     * It seems the best way is to check every few ticks...
-     */
-    public static void applyConvalescentAttributes(LivingEntity e) {
-        if (e.tickCount % 20 == 0) {
-            e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
-                if (c.getFlags().getOrDefault("great_heart", 0) > 0) {
-                    AttributeMap attributes = e.getAttributes();
-                    if (!attributes.hasModifier(Attributes.MAX_HEALTH, GREAT_HEART_HEALTH)) {
-                        Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                        map.put(Attributes.MAX_HEALTH, new AttributeModifier(GREAT_HEART_HEALTH, "great_heart_health", 20, AttributeModifier.Operation.ADDITION));
-                        attributes.addTransientAttributeModifiers(map);
-                    }
-                    e.heal(1);
-                }
-            });
-        }
-    }
 }

@@ -1,14 +1,11 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
-import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
-import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
+import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.ProcessionDataProvider;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
-import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.AdelineEntity;
 import com.valeriotor.beyondtheveil.item.SampleTubeItem;
@@ -17,26 +14,27 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MathHelperBTV;
 import com.valeriotor.beyondtheveil.util.VanillaUtils;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -116,7 +114,7 @@ public class LivingEvents {
 
     @SubscribeEvent
     public static void targetEvent(LivingChangeTargetEvent event) {
-        // TODO test this
+        //TODO test this
         LivingEntity entity = event.getEntity();
         if (entity.hasEffect(BTVEffects.FOLLY.get())) {
             event.setNewTarget(null);
@@ -128,6 +126,25 @@ public class LivingEvents {
             });
             if (event.getNewTarget() instanceof AdelineEntity adeline && adeline.distanceToSqr(entity) > 100) {
                 event.setNewTarget(null);
+            }
+            if (event.getNewTarget() != null) {
+                event.getNewTarget().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                    if (c.getFlags().getOrDefault(OperationRegistry.INSERT_PERIOSTEUM_GROWTH_CHEST.getName(), 0) > 0) {
+                        if (event.getEntity() instanceof Creeper) {
+                            event.setNewTarget(null);
+                        }
+                    }
+                    if (c.getFlags().getOrDefault(OperationRegistry.INSERT_OSTEOCLAST_GLAND_CHEST.getName(), 0) > 0) {
+                        if (event.getEntity().getMobType() == MobType.UNDEAD) {
+                            event.setNewTarget(null);
+                        }
+                    }
+                    if (c.getFlags().getOrDefault(OperationRegistry.INSERT_SLIME_HEART_CHEST.getName(), 0) > 0) {
+                        if (event.getEntity() instanceof Slime || event.getEntity() instanceof MagmaCube) {
+                            event.setNewTarget(null);
+                        }
+                    }
+                });
             }
         }
     }
@@ -293,12 +310,13 @@ public class LivingEvents {
 
     @SubscribeEvent
     public static void livingDeathEvent(LivingDeathEvent event) {
+        LivingEntity e = event.getEntity();
         if (event.getSource().getEntity() instanceof ServerPlayer player) {
             ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
             if (stack.getItem() == Registration.SACRIFICIAL_KNIFE.get()) {
                 CompoundTag tag = stack.getOrCreateTag();
                 String type = tag.getString("type");
-                ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+                ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(e.getType());
                 if (key != null) {
                     String path = key.getPath();
                     if (type.equals(path)) {
@@ -321,6 +339,23 @@ public class LivingEvents {
             SampleTubeItem.livingDeathEvent(event, player);
         }
         BindingEvents.livingDeathEvent(event);
+        if (!e.level().isClientSide) { // actually haven't checked whether this check is necessary
+            e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                if (c.getFlags().getOrDefault(OperationRegistry.INSERT_TINY_SKULL_CHEST.getName(), 0) > 0) {
+                    ItemEntity item;
+                    if (e instanceof Player player) {
+                        ItemStack head = new ItemStack(Items.PLAYER_HEAD);
+                        CompoundTag compoundtag = new CompoundTag();
+                        NbtUtils.writeGameProfile(compoundtag, player.getGameProfile());
+                        head.getOrCreateTag().put("SkullOwner", compoundtag);
+                        item = new ItemEntity(player.level(), e.getX(), e.getY(), e.getZ(), head);
+                    } else {
+                        item = new ItemEntity(e.level(), e.getX(), e.getY(), e.getZ(), new ItemStack(Items.SKELETON_SKULL));
+                    }
+                    e.level().addFreshEntity(item);
+                }
+            });
+        }
     }
 
     @SubscribeEvent
@@ -329,7 +364,7 @@ public class LivingEvents {
             BindingEvents.joinLevelEvent(event);
         }
         if (event.getEntity() instanceof LivingEntity e) {
-            LivingTickEvents.applyConvalescentAttributes(e);
+            ConvalescentData.applyConvalescentAttributes(e);
         }
     }
 

@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.util.AttributeSets;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -25,9 +26,14 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -37,6 +43,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.List;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -53,6 +60,11 @@ public class AttackEvents {
     public static void livingDamageEvent(LivingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         Entity source = event.getSource().getEntity();
+        entity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+            if (c.getFlags().getOrDefault(OperationRegistry.INSERT_SHELL_CHEST.getName(), 0) > 0) {
+                event.setAmount(event.getAmount() * 0.65F);
+            }
+        });
         MobEffectInstance vulnerability = entity.getEffect(BTVEffects.VULNERABILITY.get());
         if (vulnerability != null) {
             event.setAmount(event.getAmount() * (2 + vulnerability.getAmplifier()));
@@ -173,9 +185,24 @@ public class AttackEvents {
     public static void livingAttackEvent(LivingAttackEvent event) {
         if (event.getEntity().level() instanceof ServerLevel sl) {
             event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                Item item = c.swollenGrowthItem(event.getEntity());
+                if (item != null) {
+                    ItemEntity e = new ItemEntity(sl, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), new ItemStack(item));
+                    sl.addFreshEntity(e);
+                }
                 c.setCounter("memory_hormones", 80);
                 int taken = c.takeXP();
-                ExperienceOrb.award(sl, event.getEntity().position(), taken);
+                if (taken > 0) {
+                    ExperienceOrb.award(sl, event.getEntity().position(), taken);
+                }
+                int acidGlands = c.getFlags().getOrDefault(OperationRegistry.INSERT_ACID_GLAND_CHEST.getName(), 0);
+                if (acidGlands > 0) {
+                    if (event.getSource().getEntity() instanceof LivingEntity e) {
+                        if (e.getRandom().nextInt(3) < acidGlands) {
+                            e.hurt(e.damageSources().thorns(event.getEntity()), 3 * acidGlands);
+                        }
+                    }
+                }
             });
         }
         if (event.getEntity() instanceof Player player && player.getVehicle() instanceof NautilusEntity nautilus) {
@@ -204,6 +231,16 @@ public class AttackEvents {
             sp.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE && event.getSource().is(DamageTypeTags.IS_FALL)) {
                     event.setCanceled(true);
+                }
+            });
+        }
+        if (!event.isCanceled()) {
+            event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                if (c.getFlags().getOrDefault(OperationRegistry.INSERT_SLIME_HEART_CHEST.getName(), 0) > 0 && event.getSource().getEntity() instanceof LivingEntity attacker) {
+                    List<Entity> entities = event.getEntity().level().getEntities(event.getEntity(), AABB.ofSize(event.getEntity().position(), 30, 10, 30), e -> e instanceof Slime);
+                    for (Entity entity : entities) {
+                        ((Slime) entity).setTarget(attacker);
+                    }
                 }
             });
         }

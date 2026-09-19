@@ -6,7 +6,6 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
-import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
@@ -78,7 +77,7 @@ public class BloodPoolEntity {
         mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
             t.loadFromNBT(convalescentData.getTriggerData().saveToNBT(new CompoundTag()));
         });
-        LivingTickEvents.applyConvalescentAttributes(mob);
+        ConvalescentData.applyConvalescentAttributes(mob);
         if (entityData.contains("Health")) {
             mob.setHealth(entityData.getFloat("Health"));
         }

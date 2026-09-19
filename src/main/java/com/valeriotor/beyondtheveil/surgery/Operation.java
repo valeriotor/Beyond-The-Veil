@@ -549,6 +549,7 @@ public class Operation {
             Operation op = buildOperation();
             OperationRegistry.INSERTION_OPERATIONS.computeIfAbsent(item, k -> new ArrayList<>()).add(new OperationRegistry.InsertionEntry(op, item));
             OperationRegistry.OPERATIONS_BY_NAME.put(op.getName(), op);
+            OperationRegistry.INSERTION_OPERATION_TO_ITEM.put(op.getName(), item);
             return op;
         }
 

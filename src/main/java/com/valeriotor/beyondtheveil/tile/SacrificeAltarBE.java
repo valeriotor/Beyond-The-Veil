@@ -15,10 +15,7 @@ import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.rituals.RitualStatus;
-import com.valeriotor.beyondtheveil.surgery.PatientCondition;
-import com.valeriotor.beyondtheveil.surgery.PatientStatus;
-import com.valeriotor.beyondtheveil.surgery.PatientType;
-import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
+import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -122,7 +119,7 @@ public class SacrificeAltarBE extends BlockEntity {
         } else if (playerInitiating.equals(player.getUUID())) {
             if (playerData.isPresent() && ritualStatus == null) {
                 // TODO check that patientstatus is not null?
-                ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed, patientStatus.getPatientType());
+                ritualStatus = RitualStatus.startRitual((ServerLevel) level, playerInitiating, getBlockPos(), basinsToBeUsed, patientStatus);
                 if (ritualStatus == null) {
                     killVictim();
                 }

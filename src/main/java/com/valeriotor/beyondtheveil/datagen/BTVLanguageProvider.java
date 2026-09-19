@@ -87,6 +87,22 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(BLACK_MIRROR.get(), "Black Mirror");
         add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
         add(PLUCKED_EYE.get(), "Plucked Eye");
+        add(SHELL.get(), "Shell");
+        add(TINY_SKULL.get(), "Tiny Skull");
+        add(ACID_GLAND.get(), "Acid Gland");
+        add(FERTILIZER_GLAND.get(), "Fertilizer Gland");
+        add(MARROW_GLAND.get(), "Marrow Gland");
+        add(SILK_GLAND.get(), "Silk Gland");
+        add(GUNPOWDER_BLADDER.get(), "Gunpowder Bladder");
+        add(LIVING_IRON.get(), "Living Iron");
+        add(EMPTY_BLADDER.get(), "Empty Bladder");
+        add(EMERALD_GEM.get(), "Emerald Gem");
+        add(SWOLLEN_GROWTH.get(), "Swollen Growth");
+        add(PERIOSTEUM_GROWTH.get(), "Periosteum Growth");
+        add(CHROMATOPHORE_GLAND.get(), "Chromatophore Gland");
+        add(OSTEOCLAST_GLAND.get(), "Osteoclast Gland");
+        add(SLIME_HEART.get(), "Slime Heart");
+        add(SCALES.get(), "Scales");
 
         add("fluid_type.beyondtheveil.sedative_fluid", "Sedative");
         add("fluid_type.beyondtheveil.coagulant_fluid", "Coagulant");
@@ -3453,6 +3469,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addSurgery() {
         add("surgery.status.status", "Status: ");
         add("surgery.status.capacity", "Capacity: ");
+        add("surgery.status.softened", "Softened");
         add("surgery.status.arsenal", "Burst Effect: ");
         add("surgery.status.arsenal_amplifier", "Amplifier: ");
         add("surgery.status.arsenal_duration", "Extender: ");
