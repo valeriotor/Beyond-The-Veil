@@ -275,7 +275,9 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                                     });
                                     ConvalescentData.applyConvalescentAttributes(villager);
                                     villager.setHealth(getHealth());
-                                    villager.setOffers(tradeOffers);
+                                    if (tradeOffers != null) {
+                                        villager.setOffers(tradeOffers);
+                                    }
                                     //villager.setGossips(source.getGossips().store(NbtOps.INSTANCE).copy()); // TODO this was previously getValue() instead of copy(), check if it works
                                     //villager.setTradeOffers(source.getOffers().createTag());
                                     //villager.setVillagerXp(source.getVillagerXp());
