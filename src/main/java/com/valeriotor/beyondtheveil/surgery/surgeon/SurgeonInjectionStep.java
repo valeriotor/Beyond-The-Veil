@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.surgery.notes.ReportStep;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -31,22 +32,26 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
 
     @Override
     public boolean performAction() {
+        stalled = false;
         if (!startInjection) {
             if (tank.getFluidAmount() < reportStep.getAmount()) {
                 List<BlockPos> inputContainers = bellData.inputContainers();
                 inputContainers.sort(Comparator.comparingDouble(pos -> surgeon.distanceToSqr(pos.getCenter())));
+                boolean atLeastOne = false;
                 for (BlockPos container : inputContainers) {
                     BlockEntity be = surgeon.level().getBlockEntity(container);
                     BlockState state = surgeon.level().getBlockState(container);
                     if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()) {
                         FluidStack drain = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), 1), IFluidHandler.FluidAction.SIMULATE);
                         if (!drain.isEmpty()) {
+                            atLeastOne = true;
                             if (surgeon.distanceToSqr(container.getCenter()) < 10) {
                                 surgeon.setPerformingSurgery();
                                 FluidStack drained = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().drain(new FluidStack(reportStep.getFluid(), Math.min(5, reportStep.getAmount() - tank.getFluidAmount())), IFluidHandler.FluidAction.EXECUTE);
                                 tank.fill(drained, IFluidHandler.FluidAction.EXECUTE);
                                 be.setChanged();
                                 surgeon.level().sendBlockUpdated(container, state, state, 2);
+                                return false;
                             } else {
                                 if (surgeon.tickCount % 20 <= 1) {
                                     surgeon.getNavigation().moveTo(container.getX(), container.getY(), container.getZ(), 1);
@@ -55,7 +60,9 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
                             }
                         }
                     }
-
+                }
+                if (!atLeastOne) {
+                    stalled = true;
                 }
             } else {
                 startInjection = true;
@@ -75,6 +82,11 @@ public class SurgeonInjectionStep extends SurgeonStep.SurgeonReportStep {
             }
         }
         return false;
+    }
+
+    @Override
+    public Component stallReason() {
+        return Component.translatable("hover.surgeon.stalled_injection", Component.translatable(reportStep.getFluid().getFluidType().getDescriptionId()));
     }
 
     @Override

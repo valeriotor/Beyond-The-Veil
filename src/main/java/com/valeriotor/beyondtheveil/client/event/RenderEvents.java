@@ -28,6 +28,7 @@ import com.valeriotor.beyondtheveil.client.util.CameraRotator;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
+import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -747,6 +748,7 @@ public class RenderEvents {
                 renderSurgeryOverlays(event);
                 renderBlackScreen(event);
                 renderRepairHammerOverlay(event);
+                renderSurgeonStallOverlay(event);
                 renderExplosionRedScreen(event);
                 renderDreamFocusBar(event);
             }
@@ -1111,6 +1113,25 @@ public class RenderEvents {
                 int pY = gg.guiHeight() / 2;
                 //gg.drawString(Minecraft.getInstance().font, Component.literal(String.format("Integrity: %.2f%%", 100 - 100 * nautilus.getDamage() / NautilusEntity.TOTAL_HEALTH)), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                 gg.drawString(Minecraft.getInstance().font, Component.translatable("overlay.repair_hammer.submarine", 100 - 100 * nautilus.getDamage() / NautilusEntity.TOTAL_HEALTH), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+            }
+        }
+    }
+
+    private static void renderSurgeonStallOverlay(RenderGuiOverlayEvent event) {
+
+        LocalPlayer player = Minecraft.getInstance().player;
+        GuiGraphics gg = event.getGuiGraphics();
+        if (player == null || !(event instanceof RenderGuiOverlayEvent.Pre)) {
+            return;
+        }
+        Item mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
+        final int X_OFFSET = gg.guiWidth() / 2 + 10;
+        HitResult hitResult = Minecraft.getInstance().hitResult;
+        if (mainHandItem == Registration.SURGEON_BELL.get() && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
+            if (hitResult instanceof EntityHitResult ehr && ehr.getEntity() instanceof SurgeonEntity surgeon && surgeon.isStalled()) {
+                int pY = gg.guiHeight() / 2;
+                //gg.drawString(Minecraft.getInstance().font, Component.literal(String.format("Integrity: %.2f%%", 100 - 100 * nautilus.getDamage() / NautilusEntity.TOTAL_HEALTH)), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                gg.drawString(Minecraft.getInstance().font, surgeon.getStallReason(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
             }
         }
     }

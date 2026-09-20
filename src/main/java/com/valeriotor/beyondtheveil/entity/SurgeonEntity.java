@@ -57,6 +57,8 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     private static final EntityDataAccessor<Integer> HELD_TYPE = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> PERFORMING_SURGERY = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<CompoundTag> HELD_ENTITY = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> STALLED = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Component> STALL_REASON = SynchedEntityData.defineId(SurgeonEntity.class, EntityDataSerializers.COMPONENT);
     private Animation mainAnimation;
     private int performingSurgery = 0; // used for anims, server only
     private boolean wasPerformingSurgery = false; // used for anims, client only
@@ -87,6 +89,8 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
         this.entityData.define(HELD_ENTITY, new CompoundTag());
         this.entityData.define(HELD_TYPE, -1);
         this.entityData.define(PERFORMING_SURGERY, false);
+        this.entityData.define(STALLED, false);
+        this.entityData.define(STALL_REASON, Component.empty());
     }
 
     @Override
@@ -297,6 +301,12 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
                     }
                 }
             }
+            if (progress != null) {
+                entityData.set(STALLED, progress.isStalled());
+                entityData.set(STALL_REASON, progress.stallReason());
+            } else {
+                entityData.set(STALLED, false);
+            }
         }
     }
 
@@ -306,5 +316,13 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
 
     public boolean isPerformingSurgery() {
         return entityData.get(PERFORMING_SURGERY);
+    }
+
+    public boolean isStalled() {
+        return entityData.get(STALLED);
+    }
+
+    public Component getStallReason() {
+        return entityData.get(STALL_REASON);
     }
 }

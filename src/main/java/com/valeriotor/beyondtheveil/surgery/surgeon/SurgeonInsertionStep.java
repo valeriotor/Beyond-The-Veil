@@ -7,8 +7,10 @@ import com.valeriotor.beyondtheveil.surgery.notes.ReportStep;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
@@ -34,16 +36,20 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
         }
         if (toInsert == null) {
             if (surgeon.tickCount % 20 <= 1) {
+                stalled = false;
                 List<BlockPos> inputContainers = bellData.inputContainers();
                 inputContainers.sort(Comparator.comparingDouble(pos -> surgeon.distanceToSqr(pos.getCenter())));
                 for (BlockPos container : inputContainers) {
                     BlockEntity be = surgeon.level().getBlockEntity(container);
+                    BlockState state = surgeon.level().getBlockState(container);
                     if (be != null && be.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
                         IItemHandler iItemHandler = be.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
                         for (int i = 0; i < iItemHandler.getSlots(); i++) {
                             if (iItemHandler.getStackInSlot(i).getItem() == reportStep.getIngredient()) {
                                 if (surgeon.distanceToSqr(container.getCenter()) < 10) {
                                     toInsert = iItemHandler.extractItem(i, 1, false);
+                                    be.setChanged();
+                                    surgeon.level().sendBlockUpdated(container, state, state, 2);
                                 } else {
                                     surgeon.getNavigation().moveTo(container.getX(), container.getY(), container.getZ(), 1);
                                 }
@@ -52,8 +58,10 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
                         }
                     }
                 }
+                stalled = true;
             }
         } else {
+            stalled = false;
             SurgicalBE be = moveToBE();
             if (be != null) {
                 PatientStatus status = be.getPatientStatus();
@@ -70,6 +78,11 @@ public class SurgeonInsertionStep extends SurgeonStep.SurgeonReportStep {
             }
         }
         return false;
+    }
+
+    @Override
+    public Component stallReason() {
+        return Component.translatable("hover.surgeon.stalled_insertion", Component.translatable(reportStep.getIngredient().getDescriptionId()));
     }
 
     @Override

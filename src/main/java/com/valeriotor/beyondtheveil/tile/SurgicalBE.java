@@ -18,6 +18,7 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.*;
+import com.valeriotor.beyondtheveil.surgery.surgeon.SurgeonProgress;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
@@ -28,6 +29,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -54,6 +56,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -69,6 +72,8 @@ public abstract class SurgicalBE extends BlockEntity {
     private UUID usingPlayer; // TODO
     private UUID lyingPlayer;
     private boolean playerComplete;
+    private boolean stalled;
+    private Component stallReason;
 
 
     public SurgicalBE(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, SurgicalLocation defaultLocation) {
@@ -313,8 +318,14 @@ public abstract class SurgicalBE extends BlockEntity {
             }
             lyingPlayer = pTag.getUUID("player");
             playerComplete = pTag.getBoolean("playerComplete");
+            stalled = pTag.getBoolean("stalled");
+            if (pTag.contains("stallReason")) {
+                stallReason = Component.Serializer.fromJson(pTag.getString("stallReason"));
+            } else {
+                stallReason = null;
+            }
             if (level != null && level.isClientSide) {
-                SurgeryBedGui.updatePatientStatus(patientStatus, playerComplete); // TODO this code could be called server side, right?
+                SurgeryBedGui.updatePatientStatus(patientStatus, playerComplete, stalled, stallReason); // TODO this code could be called server side, right?
             }
         } else {
             entity = null;
@@ -354,6 +365,17 @@ public abstract class SurgicalBE extends BlockEntity {
         return patientStatus;
     }
 
+    public void markStalled(boolean stalled, Component stallReason) {
+        if (stalled != this.stalled) { // slightly brittle: we assume that for two different stalls there's an in-between period without a stall
+            this.stalled = stalled;
+            this.stallReason = stallReason;
+            if (level != null) {
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+            }
+        }
+    }
+
     public void markPlayerComplete() {
         playerComplete = true;
         if (level != null) {
@@ -385,6 +407,10 @@ public abstract class SurgicalBE extends BlockEntity {
         if (lyingPlayer != null) {
             pTag.putUUID("player", lyingPlayer);
             pTag.putBoolean("playerComplete", playerComplete);
+            pTag.putBoolean("stalled", stalled);
+            if (stallReason != null && !Objects.equals(stallReason, SurgeonProgress.EMPTY_COMPONENT)) {
+                pTag.putString("stallReason", Component.Serializer.toJson(stallReason));
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.surgery.notes.ReportStep;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +14,7 @@ public abstract class SurgeonStep {
 
     @NotNull protected final SurgeonEntity surgeon;
     @NotNull protected final BellData bellData;
+    protected boolean stalled = false;
 
     protected SurgeonStep(@NotNull SurgeonEntity surgeon, @NotNull BellData bellData) {
         this.surgeon = surgeon;
@@ -44,6 +46,13 @@ public abstract class SurgeonStep {
         return null;
     }
 
+    public boolean isStalled() {
+        return stalled;
+    }
+
+    public Component stallReason() {
+        return Component.empty();
+    }
 
     public static abstract class SurgeonReportStep extends SurgeonStep {
 

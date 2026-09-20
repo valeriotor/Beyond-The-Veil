@@ -937,6 +937,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("interact.surgeon.bad_report_location_bed", "Note: this report uses positions that are not allowed on the currently bound surgical bed");
         add("interact.surgeon.bad_be_location_cradle", "Note: this cradle does not allow the positions assigned to the surgeon in the report.");
         add("interact.surgeon.bad_be_location_bed", "Note: this bed does not allow the positions assigned to the surgeon in the report.");
+        add("hover.surgeon.stalled_insertion", "The surgeon can't start the insertion due to a lack of %1$s.");
+        add("hover.surgeon.stalled_injection", "The surgeon can't progress the injection due to a lack of %1$s.");
     }
 
     private void addMemories() {

@@ -19,15 +19,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class SurgeryBedGui extends Screen {
 
-    public static void updatePatientStatus(PatientStatus status, boolean playerComplete) {
+    public static void updatePatientStatus(PatientStatus status, boolean playerComplete, boolean stalled, Component stallReason) {
         if (Minecraft.getInstance().screen instanceof SurgeryBedGui gui) {
             gui.patientStatus = status;
             gui.leaveBedButton.setMessage(gui.leaveButtonText(playerComplete));
+            gui.stalled = stalled;
+            gui.stallReason = stallReason;
         }
     }
 
     private Button leaveBedButton;
     private PatientStatus patientStatus;
+    private boolean stalled;
+    private Component stallReason;
 
     public SurgeryBedGui() {
         super(Component.translatable("gui.surgery_bed.title"));
@@ -84,6 +88,9 @@ public class SurgeryBedGui extends Screen {
                     int color = (int) (220.0F * opacity) << 24 | 1052704;
                     pGuiGraphics.fill(RenderType.guiOverlay(), 0, 0, width, height, color);
                 }
+            }
+            if (stalled && stallReason != null) {
+                pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, stallReason, width / 2, height - 60, 0xFFFFFF55);
             }
         }
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);

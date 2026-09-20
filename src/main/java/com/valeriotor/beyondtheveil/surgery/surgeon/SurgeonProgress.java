@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.ArrayList;
@@ -86,12 +87,13 @@ public class SurgeonProgress {
         BlockEntity be = surgeon.level().getBlockEntity(surgicalBE);
         if (be instanceof SurgicalBE be1 && ((currentStep <= 0 || currentStep >= steps.size() - 1 || be1.getPatientStatus() != null))) {
             if (((SurgicalBE) be).isPlayerComplete()) {
-                return false;
+                return false; // is this ever even called?
             }
             SurgeonStep step = steps.get(currentStep);
             if (step.performAction()) {
                 currentStep++;
             }
+            be1.markStalled(isStalled(), stallReason());
             if (isFinished() && be1.getPatientStatus() != null && be1.getPatientStatus().getPatientType() == PatientType.PLAYER) {
                 be1.markPlayerComplete();
             }
@@ -103,6 +105,22 @@ public class SurgeonProgress {
 
     public boolean isFinished() {
         return currentStep == steps.size();
+    }
+
+    public boolean isStalled() {
+        if (currentStep < steps.size()) {
+            return steps.get(currentStep).isStalled();
+        }
+        return false;
+    }
+
+    public static final Component EMPTY_COMPONENT = Component.empty();
+
+    public Component stallReason() {
+        if (isStalled()) {
+            return steps.get(currentStep).stallReason();
+        }
+        return EMPTY_COMPONENT; // Using a static final empty component just so we're sure the set method doesn't see the new value as not equal to the old one. Idk Component::equals implementation
     }
 
     public CompoundTag saveToNBT() {
