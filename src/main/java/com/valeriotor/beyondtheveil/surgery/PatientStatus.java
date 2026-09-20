@@ -569,7 +569,11 @@ public class PatientStatus {
 
         if (missing != currentMissingPainThreshold) {
             if (missing > currentMissingPainThreshold && level != null && !condition.isTerminal()) {
-                level.playSound(null, pos, SoundEvents.VILLAGER_HURT, SoundSource.NEUTRAL, 1, 1);
+                if (patientType == PatientType.VILLAGER) {
+                    level.playSound(null, pos, SoundEvents.VILLAGER_HURT, SoundSource.NEUTRAL, 1, 1);
+                } else if (patientType == PatientType.PLAYER){
+                    level.playSound(null, pos, SoundEvents.PLAYER_HURT, SoundSource.NEUTRAL, 1, 1);
+                }
             }
             currentMissingPainThreshold = missing;
             setDirty(true);
