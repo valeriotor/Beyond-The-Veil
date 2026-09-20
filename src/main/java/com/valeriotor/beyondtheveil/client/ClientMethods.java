@@ -41,12 +41,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,7 @@ public class ClientMethods {
     private static SoundInstance bloodRitualSoundInstance;
     private static int bloodRitualSoundTicks;
     private static int hideOverlayMessageTicks = 0;
+    private static boolean revelationRing;
 
     public static void startEntityAnimation(CompoundTag tag) {
         AnimationTemplate template = AnimationRegistry.animationFromId(tag.getInt("anim"));
@@ -164,7 +169,29 @@ public class ClientMethods {
                 stopRitual();
             }
         }
+        checkRevelationRing();
+    }
 
+    private static void checkRevelationRing() {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            Optional<ICuriosItemHandler> curiosItemHandler = CuriosApi.getCuriosInventory(player).resolve();
+            if (curiosItemHandler.isPresent()) {
+                ICuriosItemHandler inv = curiosItemHandler.get();
+                Optional<ICurioStacksHandler> ring = inv.getStacksHandler("ring");
+                if (ring.isPresent()) {
+                    ICurioStacksHandler slot = ring.get();
+                    ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                    revelationRing = stackInSlot.getItem() == Registration.REVELATION_RING.get();
+                    return;
+                }
+            }
+        }
+        revelationRing = false;
+    }
+
+    public static boolean isRevelationRing() {
+        return revelationRing;
     }
 
     private static void stopRitual() {

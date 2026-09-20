@@ -6,7 +6,8 @@
   "mixins": ["PlayerMixin", "CreeperMixin"],
   "client": [
     "client.HumanoidModelMixin",
-    "client.PlayerRendererMixin"
+    "client.PlayerRendererMixin",
+    "client.EntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

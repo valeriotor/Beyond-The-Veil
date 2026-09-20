@@ -294,14 +294,14 @@ public class Registration {
     public static final RegistryObject<Item> HELD_FLETUM = ITEMS.register("held_fletum", FletumItem::new); // new ItemHeldFletum("held_fletum");
     public static final RegistryObject<Item> HELD_SHOGGOTH = ITEMS.register("held_shoggoth", () -> new Item(ITEM_PROPERTIES)); // new ItemHeldShoggoth("held_shoggoth");
     public static final RegistryObject<Item> SURGERY_TOOLS = ITEMS.register("surgery_tools", () -> new Item(ITEM_PROPERTIES)); // new ModItem("surgery_tools");
-    public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(ITEM_PROPERTIES)); // new ItemBoneTiara("bone_tiara");
+    public static final RegistryObject<BoneTiaraItem> BONE_TIARA = ITEMS.register("bone_tiara", () -> new BoneTiaraItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> BLEEDING_BELT = ITEMS.register("bleeding_belt", BleedingBeltItem::new); // new ItemBleedingBelt("bleeding_belt");
     public static final RegistryObject<Item> DREAM_BOTTLE = ITEMS.register("dream_bottle", DreamBottleItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> BLOOD_GEM = ITEMS.register("blood_gem", BloodGemItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> BLOOD_THESIS = ITEMS.register("blood_thesis", BloodThesisItem::new); // new ItemDreamBottle("dream_bottle");
     public static final RegistryObject<Item> SHOGGOTH_MAP = ITEMS.register("shoggoth_map", () -> new Item(ITEM_PROPERTIES)); // new ModItem("shoggoth_map").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_COVENANT = ITEMS.register("blood_covenant", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCovenant("blood_covenant").setMaxStackSize(1);
-    public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new Item(ITEM_PROPERTIES)); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
+    public static final RegistryObject<Item> REVELATION_RING = ITEMS.register("revelation_ring", () -> new RevelationRingItem(new Item.Properties().stacksTo(1))); // new ItemRevelationRing("revelation_ring").setMaxStackSize(1);
     public static final RegistryObject<Item> AZACNO_CHARM = ITEMS.register("azacno_charm", () -> new Item(ITEM_PROPERTIES)); // new ItemAzacnoCharm("azacno_charm").setMaxStackSize(1);
     public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", () -> new Item(ITEM_PROPERTIES)); // new ItemBloodCrown("blood_crown").setMaxStackSize(1);
     public static final RegistryObject<Item> CORAL_STAFF = ITEMS.register("coral_staff", CoralStaffItem::new); // new ItemCoralStaff("coral_staff");
