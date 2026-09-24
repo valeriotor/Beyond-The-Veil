@@ -2,7 +2,6 @@ package com.valeriotor.beyondtheveil.surgery;
 
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
-import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -23,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -33,8 +33,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -70,6 +68,7 @@ public class PatientStatus {
     private Map<String, Integer> flags = new HashMap<>(); // Integer value is to check how many times we applied the flag
     private Map<String, Integer> persistentFlags = new HashMap<>(); // Integer value is to check how many times we applied the flag
     private List<ArsenalEffectType> arsenalEffects = new ArrayList<>();
+    private List<String> chestEffects = new ArrayList<>();
     private Map<String, Integer> arsenalEffectAmplifiers = new HashMap<>();
     private Map<String, Integer> arsenalEffectDurations = new HashMap<>();
     private BurstType burst = BurstRegistry.BASE;
@@ -162,6 +161,8 @@ public class PatientStatus {
     private List<ArsenalEffect> makeEffects() {
         HashMap<String, Integer> amplifiersCopy = new HashMap<>(arsenalEffectAmplifiers);
         HashMap<String, Integer> durationsCopy = new HashMap<>(arsenalEffectDurations);
+        amplifiersCopy.entrySet().removeIf(e -> e.getValue() == 0); // shouldn't happen but can't be bothered to prove it (e.g. when deserializing convalescent nbt)
+        durationsCopy.entrySet().removeIf(e -> e.getValue() == 0);
         List<ArsenalEffect> effects = new ArrayList<>();
         for (ArsenalEffectType arsenalEffect : arsenalEffects) {
             Set<String> chosenAmplifiers = new HashSet<>();
@@ -187,6 +188,31 @@ public class PatientStatus {
             effects.add(new ArsenalEffect(arsenalEffect, chosenAmplifiers, chosenDurations, true));
         }
         return effects;
+    }
+
+    @NotNull
+    public Map<MobEffect, Integer> makeChestEffects() {
+        HashMap<String, Integer> amplifiersCopy = new HashMap<>(arsenalEffectAmplifiers);
+        amplifiersCopy.entrySet().removeIf(e -> e.getValue() == 0);
+        Map<MobEffect, Integer> effectToAmplifier = new HashMap<>();
+        for (String effectName : chestEffects) {
+            MobEffect effect = OperationRegistry.getChestEffectInjection(effectName);
+            if (effect == null) {
+                continue;
+            }
+            Set<String> chosenAmplifiers = new HashSet<>();
+            for (Map.Entry<String, Integer> entry : amplifiersCopy.entrySet()) {
+                chosenAmplifiers.add(entry.getKey());
+            }
+            for (String chosenAmplifier : chosenAmplifiers) {
+                amplifiersCopy.put(chosenAmplifier, amplifiersCopy.get(chosenAmplifier) - 1);
+                if (amplifiersCopy.get(chosenAmplifier) == 0) {
+                    amplifiersCopy.remove(chosenAmplifier);
+                }
+            }
+            effectToAmplifier.put(effect, chosenAmplifiers.size());
+        }
+        return effectToAmplifier;
     }
 
     public void fromConvalescentNBT(CompoundTag convalescent) {
@@ -454,6 +480,10 @@ public class PatientStatus {
             updateTriggerData(operation);
             if (operation.isPersistent()) {
                 persistentFlags.put(operation.getName(), persistentFlags.getOrDefault(operation.getName(), 0) + 1);
+                MobEffect chestArsenalInjection = OperationRegistry.getChestEffectInjection(operation.getName());
+                if (chestArsenalInjection != null) {
+                    chestEffects.add(operation.getName()); // add to a list just to keep them in order! (for the amplifier calculation)
+                }
             }
             if (player != null) {
                 for (Tuple<Predicate<PatientStatus>, String> playerDatum : operation.getPlayerData()) {
@@ -750,6 +780,14 @@ public class PatientStatus {
             tag.putString("targetType", targetType.name());
         }
 
+        if (!chestEffects.isEmpty()) {
+            ListTag chestEffects = new ListTag();
+            for (String chestEffect : this.chestEffects) {
+                chestEffects.add(StringTag.valueOf(chestEffect));
+            }
+            tag.put("chestEffects", chestEffects);
+        }
+
         return tag;
     }
 
@@ -815,6 +853,16 @@ public class PatientStatus {
         }
         didFinalAnimation = tag.getBoolean("didFinalAnimation");
         this.triggerDataCache = null;
+
+        chestEffects.clear();
+        if (tag.contains("chestEffects", Tag.TAG_LIST)) {
+            ListTag chestEffects1 = tag.getList("chestEffects", Tag.TAG_STRING);
+            for (Tag tag1 : chestEffects1) {
+                if (tag1 instanceof StringTag stringTag) {
+                    chestEffects.add(stringTag.getAsString());
+                }
+            }
+        }
     }
 
     public void setDirty(boolean dirty) {

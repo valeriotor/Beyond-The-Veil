@@ -66,11 +66,11 @@ public class LivingTickEvents {
     }
 
     private static void pickupXP(LivingEvent.LivingTickEvent event) {
-        if (event.getEntity() instanceof Mob villager && villager.tickCount % 10 == 0) {
-            villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+        if (event.getEntity() instanceof Mob mob && mob.tickCount % 10 == 0) {
+            mob.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                 if (c.getFlags().containsKey("memory_hormones") && c.getCounter("memory_hormones") == 0) {
-                    AABB aabb = new AABB(villager.getX() - 3, villager.getY() - 3, villager.getZ() - 3, villager.getX() + 3, villager.getY() + 3, villager.getZ() + 3);
-                    List<ExperienceOrb> entities = villager.level().getEntities(EntityTypeTest.forClass(ExperienceOrb.class), aabb, e -> true);
+                    AABB aabb = new AABB(mob.getX() - 3, mob.getY() - 3, mob.getZ() - 3, mob.getX() + 3, mob.getY() + 3, mob.getZ() + 3);
+                    List<ExperienceOrb> entities = mob.level().getEntities(EntityTypeTest.forClass(ExperienceOrb.class), aabb, e -> true);
                     for (ExperienceOrb orb : entities) {
                         int value = orb.value;
                         CompoundTag helperTag = new CompoundTag();

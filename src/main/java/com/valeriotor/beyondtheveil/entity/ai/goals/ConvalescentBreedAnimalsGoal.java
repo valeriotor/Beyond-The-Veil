@@ -3,13 +3,13 @@ package com.valeriotor.beyondtheveil.entity.ai.goals;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -39,7 +39,7 @@ public class ConvalescentBreedAnimalsGoal<T extends Mob & SurgeryPatient> extend
         LazyOptional<ConvalescentData> cap = entity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
         if (cap.isPresent()) {
             ConvalescentData data = cap.resolve().get();
-            if (data.getFlags().getOrDefault("parental_hormones", 0) > 0 && data.getChestPos() != null) {
+            if (data.getFlags().getOrDefault(OperationRegistry.PARENTAL_HORMONES_SKULL.getName(), 0) > 0 && data.getChestPos() != null) {
                 return true;
             }
         }

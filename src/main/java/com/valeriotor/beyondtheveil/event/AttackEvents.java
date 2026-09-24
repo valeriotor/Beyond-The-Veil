@@ -190,10 +190,12 @@ public class AttackEvents {
                     ItemEntity e = new ItemEntity(sl, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), new ItemStack(item));
                     sl.addFreshEntity(e);
                 }
-                c.setCounter("memory_hormones", 80);
-                int taken = c.takeXP();
-                if (taken > 0) {
-                    ExperienceOrb.award(sl, event.getEntity().position(), taken);
+                if (c.getFlags().getOrDefault(OperationRegistry.MEMORY_HORMONES.getName(), 0) > 0) {
+                    c.setCounter("memory_hormones", 80);
+                    int taken = c.takeXP();
+                    if (taken > 0) {
+                        ExperienceOrb.award(sl, event.getEntity().position(), taken);
+                    }
                 }
                 int acidGlands = c.getFlags().getOrDefault(OperationRegistry.INSERT_ACID_GLAND_CHEST.getName(), 0);
                 if (acidGlands > 0) {

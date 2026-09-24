@@ -16,7 +16,6 @@ import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.surgery.surgeon.SurgeonProgress;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -100,15 +99,11 @@ public abstract class SurgicalBE extends BlockEntity {
                     CrossSyncData csData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get();
                     CrossSync crossSync = csData.getCrossSync();
                     if ((crossSync.getHeldPatientData() == null || color != null) && !patientStatus.isIncised() && patientStatus.getCondition() != PatientCondition.BLEEDING) {
-                        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+                        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity(), patientStatus.makeChestEffects());
                         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
                         if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getFlags().getOrDefault("insert_scales_chest", 0) < 3) {
                             if (p instanceof ServerPlayer sp && sp.getServer() != null) {
-                                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sp.getServer());
-                                int fleboMultiplier = getFleboMultiplier();
-                                for (int i = 0; i < fleboMultiplier; i++) {
-                                    bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sp.serverLevel());
-                                }
+                                addToBloodPool(convalescentData, sp.serverLevel());
                             }
                         } else {
                             if (crossSync.isCrawling()) {
@@ -214,15 +209,11 @@ public abstract class SurgicalBE extends BlockEntity {
         if (patientStatus.isIncised() || patientStatus.getCondition() == PatientCondition.BLEEDING) {
             patientStatus.setCondition(PatientCondition.DEAD);
         }
-        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+        ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity(), patientStatus.makeChestEffects());
         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
         if (color != null && !patientStatus.getCondition().isTerminal() && patientStatus.getPatientType() != PatientType.PLAYER) {
             if (surgeon.level() instanceof ServerLevel sl) {
-                BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl.getServer());
-                int fleboMultiplier = getFleboMultiplier();
-                for (int i = 0; i < fleboMultiplier; i++) {
-                    bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), surgeon.level());
-                }
+                addToBloodPool(convalescentData, sl);
             }
         } else {
             surgeon.setHeldPatient(patientStatus.getPatientType(), entityData);
@@ -231,6 +222,21 @@ public abstract class SurgicalBE extends BlockEntity {
         patientStatus = null;
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+    }
+
+    private void addToBloodPool(ConvalescentData convalescentData, ServerLevel sl) {
+        BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl);
+        int fleboMultiplier = getFleboMultiplier(bloodPoolData, convalescentData);
+        convalescentData.getFlags().put("was_added_to_blood_pool", 1);
+        entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
+        //if (convalescentData.getFlags().containsKey(OperationRegistry.VASOCONSTRICTOR_CHEST.getName()) || convalescentData.getFlags().containsKey(OperationRegistry.ORGANOCHLORIDE_SKULL.getName())) {
+        //    convalescentData.getFlags().remove(OperationRegistry.VASOCONSTRICTOR_CHEST.getName());
+        //    convalescentData.getFlags().remove(OperationRegistry.ORGANOCHLORIDE_SKULL.getName());
+        //    entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
+        //}
+        for (int i = 0; i < fleboMultiplier; i++) {
+            bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl);
+        }
     }
 
     private boolean handleSurgery(Player p, ItemStack in) {
@@ -455,7 +461,7 @@ public abstract class SurgicalBE extends BlockEntity {
                 if (patientStatus.getCondition().isTerminal() || patientStatus.isIncised() || patientStatus.getCondition() == PatientCondition.BLEEDING) {
                     player.kill();
                 } else {
-                    ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity());
+                    ConvalescentData convalescentData = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity(), patientStatus.makeChestEffects());
                     player.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                         c.loadFromNBT(convalescentData.saveToNBT(new CompoundTag()));
                     });
@@ -517,7 +523,7 @@ public abstract class SurgicalBE extends BlockEntity {
         if (patientStatus != null) {
             if (patientStatus.isDirty()) {
                 if (patientStatus.isExploded()) {
-                    CompoundTag tag = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity()).saveToNBT(new CompoundTag());
+                    CompoundTag tag = ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity(), patientStatus.makeChestEffects()).saveToNBT(new CompoundTag());
                     patientStatus = new PatientStatus(PatientType.WEEPER);
                     patientStatus.setExposedLocation(defaultLocation);
                     patientStatus.fromConvalescentNBT(tag);
@@ -562,9 +568,17 @@ public abstract class SurgicalBE extends BlockEntity {
 
     public abstract Set<SurgicalLocation> allowedLocations();
 
-    private int getFleboMultiplier() {
+    private int getFleboMultiplier(BloodPoolData bloodPoolData, ConvalescentData convalescentData) {
         int multiplier = 1;
-        // TODO arche *= 2
+        if (convalescentData.getFlags().getOrDefault(OperationRegistry.VASOCONSTRICTOR_CHEST.getName(), 0) > 0 && patientStatus.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_SKULL.getName(), 0) > 0) {
+            multiplier++;
+        }
+        if (fleboOwner != null && bloodPoolData.isArchePlayer(fleboOwner)) {
+            multiplier *= 2;
+        }
+        if (convalescentData.getFlags().containsKey("was_added_to_blood_pool")) {
+            multiplier = 1;
+        }
         return multiplier;
     }
 }

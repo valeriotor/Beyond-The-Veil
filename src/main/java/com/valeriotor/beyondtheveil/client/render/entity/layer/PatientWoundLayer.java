@@ -2,7 +2,6 @@ package com.valeriotor.beyondtheveil.client.render.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.model.entity.CrawlerModel;
-import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.ChestWoundModel;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.WoundModel;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
@@ -10,21 +9,19 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> {
     public static final ResourceLocation WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound.png");
     public static final ResourceLocation IRON_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound_iron.png");
     public static final ResourceLocation CHEST_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound.png");
+    public static final ResourceLocation CHEST_WOUND_DIAMOND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound_diamond.png");
     public static WoundModel<CrawlerEntity> woundModel;
     public static ChestWoundModel<CrawlerEntity> chestWoundModel;
 
@@ -54,6 +51,9 @@ public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> 
     protected @NotNull ResourceLocation getTextureLocation(CrawlerEntity pEntity) {
         if (pEntity.isSurgeryPatient()) {
             if (pEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
+                if (pEntity.getPatientStatus().getFlags().getOrDefault(OperationRegistry.DIAMOND_POWDER_CHEST.getName(), 0) > 0) {
+                    return CHEST_WOUND_DIAMOND_TEXTURE;
+                }
                 return CHEST_WOUND_TEXTURE;
             }
             if (pEntity.getPatientStatus().getFlags().containsKey(OperationRegistry.IRON_SPINE)) {

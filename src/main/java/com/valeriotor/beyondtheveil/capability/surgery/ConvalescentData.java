@@ -5,26 +5,29 @@ import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
-import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.item.BlackjackItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
-import com.valeriotor.beyondtheveil.surgery.Operation;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -33,24 +36,27 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.*;
 
 public class ConvalescentData {
 
-    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity, int usedCapacity) {
+    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity, int usedCapacity, Map<MobEffect, Integer> chestEffects) {
         ConvalescentData data = new ConvalescentData();
         data.setFlags(flags);
         data.setCondition(condition);
         data.setTriggerData(triggerData);
         data.setCapacity(capacity);
         data.setUsedCapacity(usedCapacity);
+        data.chestEffects.putAll(chestEffects);
         return data;
     }
 
     private PatientCondition condition = PatientCondition.STABLE;
     private final Map<String, Integer> flags = new HashMap<>(); // the int value stands for how many times it was applied in the procedure
     private final Map<String, Integer> counters = new HashMap<>(); // populated lazily. Keys are the flags, values are any integer counter that may be of use
+    private final Map<MobEffect, Integer> chestEffects = new HashMap<>(); //TODO
     private TriggerData triggerData;
     private int capacity;
     private int usedCapacity;
@@ -169,9 +175,7 @@ public class ConvalescentData {
         return null;
     }
 
-    private static final UUID GREAT_HEART_HEALTH = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f8");
 
-    private static final UUID LIVING_IRON_SLOW = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f9");
     public void tick(LivingEntity entity) { // only called server side
         counters.replaceAll((k, v) -> Math.max(0, v - 1));
         if (counters.containsKey("spreading_iron") && counters.get("spreading_iron") == 0) {
@@ -179,6 +183,49 @@ public class ConvalescentData {
             flags.put(OperationRegistry.IRON_SPINE, 1);
             if (entity instanceof Villager villager) {
                 BlackjackItem.knockDownVillager(villager);
+            }
+        }
+
+        if (entity.tickCount % 20 == 0) {
+            for (Map.Entry<MobEffect, Integer> e : chestEffects.entrySet()) {
+                String name = OperationRegistry.getNameForChestEffectInjection(e.getKey());
+                if (name != null && !counters.containsKey(name)) {
+                    counters.put(name, e.getKey() == MobEffects.HARM || e.getKey() == MobEffects.HEAL ? 20 * 20 : 20 * 1200);
+                    flags.remove(name);
+                }
+            }
+        }
+        for (Iterator<Map.Entry<String, Integer>> iterator = counters.entrySet().iterator(); iterator.hasNext(); ) {
+            Map.Entry<String, Integer> e = iterator.next();
+            MobEffect effect = OperationRegistry.getChestEffectInjection(e.getKey());
+            if (e.getValue() % 20 == 1) {
+                if (effect != null) {
+                    entity.addEffect(new MobEffectInstance(effect, 15 * 20, chestEffects.getOrDefault(effect, 0)));
+                }
+            } else if (e.getValue() == 0) {
+                if (effect != null) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        if (entity.tickCount % 400 == 0 && flags.getOrDefault(OperationRegistry.MEMORY_HORMONES_CHEST_BACK.getName(), 0) > 0) {
+            if (entity instanceof ServerPlayer sp) {
+                sp.giveExperiencePoints(1);
+            } else {
+                collectedXP++;
+            }
+        }
+        if (entity.tickCount % 200 == 0 && flags.getOrDefault(OperationRegistry.PHEROMONES_CHEST.getName(), 0) > 0) {
+            List<Entity> entities = entity.level().getEntities((Entity) null, AABB.ofSize(entity.position(), 25, 20, 25), e -> e instanceof Monster);
+            if (!entities.isEmpty()) {
+                for (int i = 0; i < 5; i++) {
+                    Entity monster = entities.get(entity.getRandom().nextInt(entities.size()));
+                    if (monster instanceof Monster m) {
+                        m.setTarget(entity);
+                    }
+                }
+
             }
         }
         if (flags.getOrDefault(OperationRegistry.GREAT_HEART.getName(), 0) > 0) {
@@ -223,6 +270,9 @@ public class ConvalescentData {
         }
         applyConvalescentAttributes(entity);
     }
+    private static final UUID GREAT_HEART_HEALTH = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f8");
+    private static final UUID LIVING_IRON_SLOW = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417f9");
+    private static final UUID GREAT_SPINE_KNOCKBACK_RESISTANCE = UUID.fromString("8c498269-ccf0-4e93-9fb8-c4a5eda417fa");
 
     /**
      * It seems the best way is to check every few ticks...
@@ -235,6 +285,15 @@ public class ConvalescentData {
                     if (!attributes.hasModifier(Attributes.MAX_HEALTH, GREAT_HEART_HEALTH)) {
                         Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
                         map.put(Attributes.MAX_HEALTH, new AttributeModifier(GREAT_HEART_HEALTH, "great_heart_health", 20, AttributeModifier.Operation.ADDITION));
+                        attributes.addTransientAttributeModifiers(map);
+                    }
+                    //e.heal(1);
+                }
+                if (c.getFlags().getOrDefault(OperationRegistry.GREAT_SPINE.getName(), 0) > 0) {
+                    AttributeMap attributes = e.getAttributes();
+                    if (!attributes.hasModifier(Attributes.KNOCKBACK_RESISTANCE, GREAT_SPINE_KNOCKBACK_RESISTANCE)) {
+                        Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+                        map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(GREAT_SPINE_KNOCKBACK_RESISTANCE, "great_spine_knockback_resistance", 1, AttributeModifier.Operation.ADDITION));
                         attributes.addTransientAttributeModifiers(map);
                     }
                     //e.heal(1);
@@ -278,6 +337,11 @@ public class ConvalescentData {
             tag.putLong("chestPos", chestPos.asLong());
         }
         tag.put("heldStack", heldStack.save(new CompoundTag()));
+        CompoundTag chestEffectsTag = new CompoundTag();
+        for (Map.Entry<MobEffect, Integer> entry : chestEffects.entrySet()) {
+            chestEffectsTag.putInt(OperationRegistry.getNameForChestEffectInjection(entry.getKey()), entry.getValue());
+        }
+        tag.put("chestEffects", chestEffectsTag);
         return tag;
     }
 
@@ -305,6 +369,13 @@ public class ConvalescentData {
         }
         if (tag.contains("heldStack")) {
             heldStack = ItemStack.of(tag.getCompound("heldStack"));
+        }
+        chestEffects.clear();
+        if (tag.contains("chestEffects", Tag.TAG_COMPOUND)) {
+            CompoundTag chestEffects1 = tag.getCompound("chestEffects");
+            for (String effectKey : chestEffects1.getAllKeys()) {
+                chestEffects.put(OperationRegistry.getChestEffectInjection(effectKey), chestEffects1.getInt(effectKey));
+            }
         }
     }
 }

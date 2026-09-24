@@ -3,6 +3,9 @@ package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,13 +30,14 @@ public class BloodPoolData extends SavedData {
         return server.overworld().getDataStorage().computeIfAbsent(BloodPoolData::load, BloodPoolData::create, "bloodPoolData");
     }
 
-    public static BloodPoolData load(CompoundTag tag) {
+    public static BloodPoolData load(CompoundTag mainTag) {
         BloodPoolData bloodPoolData = create();
-        for (String key : tag.getAllKeys()) {
+        CompoundTag playerToPoolTag = mainTag.getCompound("playerToPoolTag");
+        for (String key : playerToPoolTag.getAllKeys()) {
             UUID uuid = UUID.fromString(key);
             Map<ColorTriplet, List<BloodPoolEntity>> map = new HashMap<>();
             bloodPoolData.pools.put(uuid, map);
-            CompoundTag forPlayer = tag.getCompound(key);
+            CompoundTag forPlayer = playerToPoolTag.getCompound(key);
             for (String tripletKey : forPlayer.getAllKeys()) {
                 CompoundTag forTriplet = forPlayer.getCompound(tripletKey);
                 ColorTriplet triplet = ColorTriplet.fromTag(forTriplet);
@@ -49,6 +53,12 @@ public class BloodPoolData extends SavedData {
                 map.put(triplet, entities);
             }
         }
+        if (mainTag.contains("archePlayerTag", Tag.TAG_COMPOUND)) {
+            CompoundTag archePlayerTag = mainTag.getCompound("archePlayerTag");
+            for (String uuid : archePlayerTag.getAllKeys()) {
+                bloodPoolData.archePlayers.put(UUID.fromString(uuid), new BloodPoolPlayerData(archePlayerTag.getCompound(uuid)));
+            }
+        }
         return bloodPoolData;
     }
 
@@ -58,16 +68,34 @@ public class BloodPoolData extends SavedData {
     }
 
     private final Map<UUID, Map<ColorTriplet, List<BloodPoolEntity>>> pools = new HashMap<>();
+    private final Map<UUID, BloodPoolPlayerData> archePlayers = new HashMap<>();
+
+    public void setArchePlayer(UUID playerId, boolean arche) {
+        archePlayers.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche = arche;
+    }
+
+    public boolean isArchePlayer(UUID playerId) {
+        return archePlayers.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche;
+    }
 
 
     @Override
     public CompoundTag save(CompoundTag tag) {
+        CompoundTag playerToPoolTag = new CompoundTag();
         for (UUID uuid : pools.keySet()) {
-            forPlayer(uuid, tag);
+            forPlayer(uuid, playerToPoolTag);
         }
+        tag.put("playerToPoolTag", playerToPoolTag);
+        CompoundTag archePlayerTag = new CompoundTag();
+        for (Map.Entry<UUID, BloodPoolPlayerData> e : archePlayers.entrySet()) {
+            archePlayerTag.put(e.getKey().toString(), e.getValue().save(new CompoundTag()));
+        }
+        tag.put("archePlayerTag", archePlayerTag);
         return tag;
     }
 
+    /** This is for data that gets synced to client
+     */
     public void forPlayer(UUID uuid, CompoundTag tag) {
         CompoundTag forPlayer = new CompoundTag();
         for (Map.Entry<ColorTriplet, List<BloodPoolEntity>> entry2 : pools.computeIfAbsent(uuid, uuid1 -> new HashMap<>()).entrySet()) {
@@ -176,6 +204,27 @@ public class BloodPoolData extends SavedData {
     public enum PoolModification {
         ADD, TAKE_FIRST, TAKE_UUID
     }
+
+    private static class BloodPoolPlayerData {
+        private boolean arche;
+        private int level;
+
+        private BloodPoolPlayerData() {
+
+        }
+
+        private BloodPoolPlayerData(CompoundTag tag) {
+            arche = tag.getBoolean("arche");
+            level = tag.getInt("level");
+        }
+
+        private CompoundTag save(CompoundTag tag) {
+            tag.putBoolean("arche", arche);
+            tag.putInt("level", level);
+            return tag;
+        }
+    }
+
 
 
 }

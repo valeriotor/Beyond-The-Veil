@@ -144,6 +144,11 @@ public class LivingEvents {
                             event.setNewTarget(null);
                         }
                     }
+                    if (c.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_CHEST.getName(), 0) > 0) {
+                        if (event.getEntity().getMobType() == MobType.ARTHROPOD) {
+                            event.setNewTarget(null);
+                        }
+                    }
                 });
             }
         }
@@ -232,7 +237,42 @@ public class LivingEvents {
     public static void babyEntitySpawnEvent(BabyEntitySpawnEvent event) {
         AgeableMob child = event.getChild();
         if (child != null && child.level() instanceof ServerLevel sl) {
-            BlockPos pos = event.getParentA().getOnPos();
+            Mob parentA = event.getParentA();
+            Mob parentB = event.getParentB();
+            boolean extraChild = false;
+            if (event.getCausedByPlayer() instanceof ServerPlayer sp) {
+                Optional<ConvalescentData> cap = sp.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).resolve();
+                if (cap.isPresent()) {
+                    ConvalescentData c = cap.get();
+                    String op = OperationRegistry.PARENTAL_HORMONES_CHEST_BACK.getName();
+                    if (c.getFlags().getOrDefault(op, 0) > 0 && c.getCounter(op) == 0) {
+                        c.setCounter(op, 3);
+                        extraChild = true;
+                    }
+                }
+            } else {
+                if (ServerTickEvents.isPoweredParent(parentA) || ServerTickEvents.isPoweredParent(parentB)) {
+                    extraChild = true;
+                    ServerTickEvents.removeCouple(parentA, parentB);
+                }
+            }
+            if (extraChild) {
+                Entity newBaby = event.getChild().getType().create(sl);
+                if (newBaby instanceof AgeableMob newChild) {
+                    final net.minecraftforge.event.entity.living.BabyEntitySpawnEvent event2 = new net.minecraftforge.event.entity.living.BabyEntitySpawnEvent(parentA, parentB, newChild);
+                    final boolean cancelled = net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event2);
+                    newChild = event2.getChild();
+                    if (newChild != null && !cancelled) {
+                        newChild.setBaby(true);
+                        newChild.moveTo(parentA.getX(), parentA.getY(), parentA.getZ(), 0.0F, 0.0F);
+                        sl.addFreshEntityWithPassengers(newChild);
+                    }
+                }
+
+            }
+
+
+            BlockPos pos = parentA.getOnPos();
             LifeEconomyData instance = LifeEconomyData.getInstance(sl);
             List<LifeEconomyData.PillarData> activePillarsInChunk = instance.getActivePillarsInChunk(pos);
             Optional<LifeEconomyData.PillarData> min = activePillarsInChunk.stream()
@@ -354,6 +394,10 @@ public class LivingEvents {
                     }
                     e.level().addFreshEntity(item);
                 }
+                if (c.getFlags().getOrDefault(OperationRegistry.LIQUID_GOLD_CHEST.getName(), 0) > 0) {
+                    ItemEntity item = new ItemEntity(e.level(), e.getX(), e.getY(), e.getZ(), new ItemStack(Items.GOLD_INGOT, 8));
+                    e.level().addFreshEntity(item);
+                }
             });
         }
     }
@@ -378,6 +422,8 @@ public class LivingEvents {
             ClientMethods.deepOneJump(p);
         }
     }
+
+
 
 
 }

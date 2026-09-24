@@ -8,14 +8,21 @@ import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Mob;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ServerTickEvents {
 
     static long counter = 0;
+    private static final Map<UUID, Integer> mobsBredByAVillagerWithParentalHormonesInChestOrBack = new HashMap<>(); // descriptive names ftw
 
     @SubscribeEvent
     public static void tickEvent(TickEvent.ServerTickEvent event) {
@@ -23,6 +30,8 @@ public class ServerTickEvents {
         if ((counter & 255) == 0) {
             //HeartBE.cleanDamned();
         }
+        mobsBredByAVillagerWithParentalHormonesInChestOrBack.replaceAll((uuid, integer) -> Math.max(0, integer - 1));
+        mobsBredByAVillagerWithParentalHormonesInChestOrBack.entrySet().removeIf(e -> e.getValue() == 0);
     }
 
     @SubscribeEvent
@@ -42,6 +51,19 @@ public class ServerTickEvents {
                 PlayerSavedData.getInstance(sl).tick(sl);
             }
         }
+    }
+
+    public static void parentalVillagerPoweredBreed(AgeableMob parent) {
+        mobsBredByAVillagerWithParentalHormonesInChestOrBack.put(parent.getUUID(), 300);
+    }
+
+    public static boolean isPoweredParent(Mob mob) {
+        return mobsBredByAVillagerWithParentalHormonesInChestOrBack.containsKey(mob.getUUID());
+    }
+
+    public static void removeCouple(Mob parentA, Mob parentB) {
+        mobsBredByAVillagerWithParentalHormonesInChestOrBack.remove(parentA.getUUID());
+        mobsBredByAVillagerWithParentalHormonesInChestOrBack.remove(parentB.getUUID());
     }
 
 }
