@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -26,9 +25,9 @@ import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
 import com.valeriotor.beyondtheveil.util.*;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +45,6 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3f;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +97,7 @@ public class PlayerTickEvents {
             surgeonBellParticles(event);
             transformationTickEvents(event);
             if (p instanceof ServerPlayer sp) {
+                bloodPoolEvents(sp);
                 BindingEvents.playerTickEvent(event, sp);
             }
         }
@@ -111,6 +110,12 @@ public class PlayerTickEvents {
         }
         if (event.player.tickCount == 3) {
             event.player.refreshDimensions();
+        }
+    }
+
+    private static void bloodPoolEvents(ServerPlayer player) {
+        if (player.tickCount % 10 == 0) {
+            BloodPoolData.getInstance(player.serverLevel()).everyTenTicks(player);
         }
     }
 

@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,6 +69,15 @@ public class BloodPoolData extends SavedData {
     private final Map<UUID, Map<ColorTriplet, List<BloodPoolEntity>>> pools = new HashMap<>();
     private final Map<UUID, BloodPoolPlayerData> playerMetaData = new HashMap<>();
 
+    public void everyTenTicks(ServerPlayer player) {
+        BloodPoolPlayerData metadata = playerMetaData.computeIfAbsent(player.getUUID(), uuid -> new BloodPoolPlayerData());
+        if (metadata.levelIncreasedMessage) {
+            metadata.levelIncreasedMessage = false;
+            player.sendSystemMessage(Component.translatable("gui.blood_pool.levelup"));
+
+        }
+    }
+
     public void setArchePlayer(UUID playerId, boolean arche) {
         playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche = arche;
     }
@@ -76,18 +86,24 @@ public class BloodPoolData extends SavedData {
         return playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche;
     }
 
+    private static final List<Tuple<Integer, Integer>> MULTIPLIER_THRESHOLDS = List.of(
+            new Tuple<>(30, 2),
+            new Tuple<>(100, 3),
+            new Tuple<>(200, 4),
+            new Tuple<>(350, 5)
+            );
+
     public int getBaseMultiplier(UUID playerId) {
         BloodPoolPlayerData bloodPoolPlayerData = playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData());
-        if (bloodPoolPlayerData.totalAdditions >= 5 * 4 / 2 * 30) {
-            return 5;
-        } else if (bloodPoolPlayerData.totalAdditions >= 4 * 3 / 2 * 30) {
-            return 4;
-        } else if (bloodPoolPlayerData.totalAdditions >= 3 * 2 / 2 * 30) {
-            return 3;
-        } else if (bloodPoolPlayerData.totalAdditions >= 30) {
-            return 2;
+        int returnValue = 1;
+        for (Tuple<Integer, Integer> threshold : MULTIPLIER_THRESHOLDS) {
+            if (bloodPoolPlayerData.totalAdditions > threshold.getA()) {
+                returnValue = threshold.getB();
+            } else {
+                break;
+            }
         }
-        return 1;
+        return returnValue;
     }
 
     @Override
@@ -135,7 +151,13 @@ public class BloodPoolData extends SavedData {
                 tag.put("entity", entity.save());
                 Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
                 if (increaseAdditions) {
-                    playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).totalAdditions++;
+                    BloodPoolPlayerData metadata = playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData());
+                    for (Tuple<Integer, Integer> multiplierThreshold : MULTIPLIER_THRESHOLDS) {
+                        if (metadata.totalAdditions == multiplierThreshold.getA()) {
+                            metadata.levelIncreasedMessage = true;
+                        }
+                    }
+                    metadata.totalAdditions++;
                 }
             }
             setDirty();
@@ -223,6 +245,7 @@ public class BloodPoolData extends SavedData {
     private static class BloodPoolPlayerData {
         private boolean arche;
         private int totalAdditions;
+        private boolean levelIncreasedMessage;
 
         private BloodPoolPlayerData() {
 
@@ -231,11 +254,13 @@ public class BloodPoolData extends SavedData {
         private BloodPoolPlayerData(CompoundTag tag) {
             arche = tag.getBoolean("arche");
             totalAdditions = tag.getInt("level");
+            levelIncreasedMessage = tag.getBoolean("levelIncreasedMessage");
         }
 
         private CompoundTag save(CompoundTag tag) {
             tag.putBoolean("arche", arche);
             tag.putInt("level", totalAdditions);
+            tag.putBoolean("levelIncreasedMessage", levelIncreasedMessage);
             return tag;
         }
     }

@@ -3183,6 +3183,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addBloodPool() {
         add("gui.blood_pool.health", "Health: ");
         add("gui.blood_pool.spawn", "Spawn");
+        add("gui.blood_pool.levelup", "My connection to my Blood Pool has improved. Bound IV stands may transmit multiple patients.");
     }
 
     private void addOverlays() {
@@ -3311,7 +3312,8 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "- Entity attacked by the abomination’s master (25 ≤ x < 30 mb).\\n" +
                 "If no serum SA245 is injected, the default targeting instruction is \"hostile creatures nearby\". If no serum GS121 is injected, the default triggering will be the same as the targeting instruction.\\n" +
                 "The ability to specify triggering and targeting separately gives me more control on how the abominations must act. \\n" +
-                "For example, if there are three abominations around me, each with \"Entity attacked by the abomination’s master\" triggering instruction and \"Hostile creatures nearby\" targeting instruction, I can simply hit any creatures (including one of the abominations themselves, if I want) to tell each of them to attack the closest hostile creature.\\n" +
+                "For example, an abomination with \"entity attacking abomination\" triggering instruction and \"master nearby\" targeting instruction will be triggered whenever it is struck (including by me) and will move towards me to explore; this can be useful to apply buffs to myself, as I only need to hit it once.\\n" +
+                "Instead, if there are three abominations around me, each with \"entity attacked by the abomination’s master\" triggering instruction and \"hostile creatures nearby\" targeting instruction, I can simply hit any creatures (including one of the abominations themselves, if I want) to tell each of them to attack whichever hostile creature is closest to it.\\n" +
                 "An abomination’s burst will only affect an ally (i.e. its master and its master’s other minions) if the target of the explosion was an ally; it will only affect creatures other than allies if the target of the explosion was not an ally.");
         add("gui.journal.overview.priorities.text", "An abomination can be assigned to a certain \"mutual exclusion (mutex) category\" defined by a single dye color; this is done via cheap liquid dyes. Two abominations assigned to the same mutex will not target the same creature at the same time, though they may target two different creatures, or the same creature at different times (e.g. after one abomination has exploded).\\n" +
                 "This can be useful when I wish to apply a certain effect before another one, for example vulnerability before harming. In this case, I can give two different abominations the \"lime\" mutex; then, I would make sure that the vulnerability abomination attacks first. I could do this by summoning the vulnerability abomination first, or somehow triggering it first; however, the simplest way is simply to give the harming abomination lower priority, which will make sure it attacks afterwards. Deciding priorities is done via injection of serum PP456; the higher the amount, the lower the priority (no injection means highest).");
@@ -3490,7 +3492,22 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("arsenal.create_slime", "Create Slime");
         add("arsenal.everyone_target", "Attract Attackers");
 
+        add("target_type.hostile_nearby", "Hostiles nearby");
+        add("target_type.player_nearby", "Immortals nearby");
+        add("target_type.master_nearby", "Master nearby");
+        add("target_type.was_hit", "Hitting entity");
+        add("target_type.master_was_hit", "Master's attacker");
+        add("target_type.master_attacked", "Attacked by Master");
+
         add(BTVEffects.FOLLY.get(), "Folly");
+        add(BTVEffects.VULNERABILITY.get(), "Vulnerability");
+        add(BTVEffects.DISROBE.get(), "Disrobe");
+        add(BTVEffects.DROP_ITEM.get(), "Drop Item");
+        add(BTVEffects.TERROR.get(), "Terror");
+        add(BTVEffects.FEARSOME.get(), "Fearsome");
+        add(BTVEffects.SINK.get(), "Sink");
+        add(BTVEffects.CAMOUFLAGE.get(), "Camouflage");
+        add(BTVEffects.IMMUNITY.get(), "Immunity");
     }
 
 }

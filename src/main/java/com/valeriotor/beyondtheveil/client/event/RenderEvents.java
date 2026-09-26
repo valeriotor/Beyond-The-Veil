@@ -1082,10 +1082,10 @@ public class RenderEvents {
             lines.add(I18n.get("surgery.status.mutex") + data.getMutex().getName());
         }
         if (data.getTriggerType() != null) {
-            lines.add(I18n.get("surgery.status.trigger_type") + I18n.get("target_type." + data.getTriggerType().name()));
+            lines.add(I18n.get("surgery.status.trigger_type") + I18n.get("target_type." + data.getTriggerType().name().toLowerCase()));
         }
         if (data.getTargetType() != null) {
-            lines.add(I18n.get("surgery.status.target_type") + I18n.get("target_type." + data.getTargetType().name()));
+            lines.add(I18n.get("surgery.status.target_type") + I18n.get("target_type." + data.getTargetType().name().toLowerCase()));
         }
         return lines;
     }

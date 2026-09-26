@@ -227,6 +227,7 @@ public abstract class SurgicalBE extends BlockEntity {
     private void addToBloodPool(ConvalescentData convalescentData, ServerLevel sl) {
         BloodPoolData bloodPoolData = BloodPoolData.getInstance(sl);
         int fleboMultiplier = getFleboMultiplier(bloodPoolData, convalescentData);
+        boolean was_added_to_blood_pool = convalescentData.getFlags().getOrDefault("was_added_to_blood_pool", 0) > 0;
         convalescentData.getFlags().put("was_added_to_blood_pool", 1);
         entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
         //if (convalescentData.getFlags().containsKey(OperationRegistry.VASOCONSTRICTOR_CHEST.getName()) || convalescentData.getFlags().containsKey(OperationRegistry.ORGANOCHLORIDE_SKULL.getName())) {
@@ -235,7 +236,8 @@ public abstract class SurgicalBE extends BlockEntity {
         //    entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
         //}
         for (int i = 0; i < fleboMultiplier; i++) {
-            bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl, true);
+            boolean increaseAdditions = !was_added_to_blood_pool && convalescentData.getFlags().size() > 0;
+            bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl, increaseAdditions);
         }
     }
 

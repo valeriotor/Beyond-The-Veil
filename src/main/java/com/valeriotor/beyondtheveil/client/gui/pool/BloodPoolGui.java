@@ -342,9 +342,6 @@ public class BloodPoolGui extends Screen {
             List<Element> lines = new TextUtil().parseText(description, (int) ((TEXT_BLOCK_WIDTH - 15) * 92 / 100 / SCALE), Minecraft.getInstance().font);
             lines.removeIf(e -> e instanceof Separators.Separator);
             Element element = lines.get(0);
-            for (int i = 0; i < 50; i++) {
-                //lines.add(element);
-            }
             this.lines = new ScrollableList<>((int) ((TEXT_BLOCK_WIDTH - 15) / SCALE), (int) ((TEXT_BLOCK_HEIGHT - 15) / SCALE), lines, 15, TEXT_BLOCK_HEIGHT * 5 / 100);
         }
 
