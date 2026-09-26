@@ -153,7 +153,9 @@ public class GenericToClientPacket {
 
     public static GenericToClientPacket syncBloodPool(Player sender, BloodPoolData data) {
         CompoundTag compoundTag = new CompoundTag();
-        data.forPlayer(sender.getUUID(), compoundTag);
+        CompoundTag playerToPoolTag = new CompoundTag();
+        data.forPlayer(sender.getUUID(), playerToPoolTag);
+        compoundTag.put("playerToPoolTag", playerToPoolTag);
         CompoundTag poolTag = new CompoundTag();
         poolTag.put("pool", compoundTag);
         return new GenericToClientPacket(MessageType.SYNC_BLOOD_POOL, poolTag);

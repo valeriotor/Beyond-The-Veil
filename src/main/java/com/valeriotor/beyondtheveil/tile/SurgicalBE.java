@@ -517,6 +517,13 @@ public abstract class SurgicalBE extends BlockEntity {
                         setChanged();
                         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                     }
+                    if (patientStatus != null && player != null) {
+                        if (patientStatus.getCondition().isTerminal()) {
+                            player.kill();
+                            player.setHealth(0);
+                            player.kill();
+                        }
+                    }
                 }
             }
         }

@@ -404,8 +404,10 @@ public class PatientStatus {
                     syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     if (operation.isAdded(this)) {
                         fluidAmounts.put(fluid, newAmount);
-                        if (fluid == Fluids.WATER && exposedLocation == SurgicalLocation.SKULL) {
-                            if (Math.floor(newAmount / 5) > Math.floor(prevAmount / 5)) {
+                        if ((fluid == Fluids.WATER || fluid == BTVFluids.FLUID_TEARS.getA().get()) && exposedLocation == SurgicalLocation.SKULL) {
+                            double na = fluid == Fluids.WATER ? newAmount : newAmount * 5;
+                            double pa = fluid == Fluids.WATER ? prevAmount : prevAmount * 5;
+                            if (Math.floor(na / 5) > Math.floor(pa / 5)) {
                                 setDirty(true);
                             }
                             if (!condition.isTerminal()) {
@@ -441,8 +443,10 @@ public class PatientStatus {
         return true;
     }
 
-    public double getWaterAmount() {
-        return fluidAmounts.getOrDefault(Fluids.WATER, 0D);
+    /** Only called when location is skull
+     */
+    public double getHeadFillAmount() {
+        return Math.max(fluidAmounts.getOrDefault(Fluids.WATER, 0D), 16 * fluidAmounts.getOrDefault(BTVFluids.FLUID_TEARS.getA().get(), 0D));
     }
 
     public double getSedativeAmount() {
@@ -763,11 +767,11 @@ public class PatientStatus {
 
         CompoundTag amplifiersTag = new CompoundTag();
         tag.put("amplifiers", amplifiersTag);
-        arsenalEffectAmplifiers.forEach(tag::putInt);
+        arsenalEffectAmplifiers.forEach(amplifiersTag::putInt);
 
         CompoundTag durationsTag = new CompoundTag();
         tag.put("durations", durationsTag);
-        arsenalEffectDurations.forEach(tag::putInt);
+        arsenalEffectDurations.forEach(durationsTag::putInt);
 
         tag.putInt("burstExtension", burstExtension);
         if (mutex != null) {

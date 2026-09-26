@@ -103,13 +103,13 @@ public class OperationRegistry {
                     return new ItemStack(Registration.BLOOD_FIST.get());
                 }
                 if (status.getFlags().getOrDefault("great_heart", 0) > 0) {
-                    if (status.getFlags().getOrDefault("inject_diamond_powder_chest", 0) > 0) {
+                    if (status.getFlags().getOrDefault("diamond_powder_chest", 0) > 0) {
                         return new ItemStack(Items.DIAMOND, 6);
                     }
                     return new ItemStack(Registration.GREAT_HEART.get());
                 }
 
-                if (status.getFlags().getOrDefault("inject_diamond_powder_chest", 0) > 0) {
+                if (status.getFlags().getOrDefault("diamond_powder_chest", 0) > 0) {
                     return new ItemStack(Items.DIAMOND, 3);
                 }
                 return new ItemStack(Registration.HEART.get());
@@ -152,7 +152,7 @@ public class OperationRegistry {
 
     public static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
-            .setPainPerTick(s -> s.getWaterAmount() < 420 ? 0.47 : 0)
+            .setPainPerTick(s -> s.getHeadFillAmount() < 420 ? 0.47 : 0)
             .setPainForFailure(50)
             .setStatusChangeOnSuccess(PatientStatus::explode)
             // TODO .setEntityChange(s -> new WeeperEntity())
@@ -380,18 +380,7 @@ public class OperationRegistry {
             .setCapacityRequirement(-10)
             .buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
 
-    public static final Operation GREAT_SPINE = new Operation.Builder("great_spine")
-            .addAllowedLocation(SurgicalLocation.BACK)
-            .setPainForFailure(125)
-            .setPainPerTick(2.5)
-            .setPersistent(true)
-            .setSuccessParticles(true)
-            .setSuccessParticleType(BTVParticles.BLOODSPILL.get())
-            .setSuccessParticleCount(5)
-            .setParticleOffset(new Vec3(-0.1, 0, 0.15))
-            .setSuccessSound(BTVSounds.HEART_RIP.get())
-            .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
-            .buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
+    public static final Operation GREAT_SPINE = makeBasicInjection("great_spine", 3.5, 90, 0, true, SurgicalLocation.BACK).buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
 
 
     public static final Operation INJECT_MOVEMENT_SPEED_SERUM_BACK = makeArsenalInjection("inject_movement_speed_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SPEED).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 60);

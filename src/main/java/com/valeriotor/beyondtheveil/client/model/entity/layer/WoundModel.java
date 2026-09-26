@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.client.model.EntityModel;
@@ -57,7 +58,7 @@ public class WoundModel<T extends Entity & SurgeryPatient> extends EntityModel<T
     }
 
     public void setupAnim(float ageInTicks, PatientStatus status) {
-        if (status.getFlags().containsKey("great_spine")) {
+        if (status.getFlags().getOrDefault(OperationRegistry.GREAT_SPINE.getName(), 0) > 0) {
             spine.xScale = spine.yScale = spine.zScale = 1.25F;
             spine.y = 25;
             spine.z = 1;

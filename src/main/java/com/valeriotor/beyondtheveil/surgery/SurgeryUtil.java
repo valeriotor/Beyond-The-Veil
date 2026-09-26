@@ -35,6 +35,9 @@ public class SurgeryUtil {
             LazyOptional<ConvalescentData> c = e.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
             if (c.isPresent()) {
                 ConvalescentData data = c.resolve().get();
+                if (data.getCondition().isTerminal()) {
+                    return heldPatient;
+                }
                 TriggerData triggerData = data.getTriggerData();
                 if (triggerData != null) {
                     triggerData.setMaster(masterId);

@@ -130,7 +130,7 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 				head.xRot = -0.54104F;
 				arms.xRot = -2.7F;
 				nose.visible = false;
-				double waterAmount = entity.getPatientStatus().getWaterAmount();
+				double waterAmount = entity.getPatientStatus().getHeadFillAmount();
 				float rescale = (float) (waterAmount / 2250);
 				if (waterAmount > 100) {
 					rescale += Mth.sin((float) Math.PI * 2 * ageInTicks / (12 * 1.5F)) / 150;

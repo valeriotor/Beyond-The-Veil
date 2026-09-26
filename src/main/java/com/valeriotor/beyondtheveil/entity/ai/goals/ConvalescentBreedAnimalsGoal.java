@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.entity.ai.goals;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
+import com.valeriotor.beyondtheveil.event.ServerTickEvents;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
@@ -63,6 +64,7 @@ public class ConvalescentBreedAnimalsGoal<T extends Mob & SurgeryPatient> extend
                             target1.setInLove(null);
                             heldStack.setCount(heldStack.getCount() - 1);
                             reachedTarget1 = true;
+                            ServerTickEvents.parentalVillagerPoweredBreed(target1);
                         }
                     } else {
                         entity.getNavigation().moveTo(target2, 1);
@@ -70,6 +72,7 @@ public class ConvalescentBreedAnimalsGoal<T extends Mob & SurgeryPatient> extend
                             target2.setInLove(null);
                             heldStack.setCount(heldStack.getCount() - 1);
                             reachedTarget2 = true;
+                            ServerTickEvents.parentalVillagerPoweredBreed(target2);
                         }
                     }
                 } else {
