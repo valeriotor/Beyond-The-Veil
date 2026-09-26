@@ -307,9 +307,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             if (currentReport.getLeft() != null) {
                 setEditingReport(currentReport.getMiddle());
                 selectReport(currentReport.getLeft(), currentReport.getMiddle());
-            }
-            if (currentReport.getRight() != null) {
-                chosenReport = DataUtil.getReport(Minecraft.getInstance().player, currentReport.getRight());
+            } else if (currentReport.getRight() != null) {
+                selectReport(DataUtil.getReport(Minecraft.getInstance().player, currentReport.getRight()), false);
             } else {
                 chosenReport = null;
             }
@@ -1128,11 +1127,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x33A88C00);
             }
             int successfulnessColor = getSuccessfulnessColor(success);
-            poseStack.pushPose();
-            poseStack.translate(successfulTextX, 22, 0);
-            poseStack.scale(0.7F, 0.7F, 1);
-            graphics.drawString(minecraft.font, successfulText, 1110, 0, successfulnessColor);
-            poseStack.popPose();
+            //poseStack.pushPose();
+            //poseStack.translate(successfulTextX, 22, 0);
+            //poseStack.scale(0.7F, 0.7F, 1);
+            //graphics.drawString(minecraft.font, successfulText, 1110, 0, successfulnessColor);
+            //poseStack.popPose();
             RenderSystem.enableBlend();
             graphics.blit(icon, getWidth() - 22, 18, 12, 12, 0, 0, 20, 20, 20, 20);
             poseStack.pushPose();
