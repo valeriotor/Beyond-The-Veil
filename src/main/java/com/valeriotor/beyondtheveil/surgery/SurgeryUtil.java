@@ -48,7 +48,7 @@ public class SurgeryUtil {
                     } else {
                         Entity o = type.create(sl);
                         if (o instanceof Mob mob) {
-                            mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
+                            mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> { // if we are here then the trigger data was not inherited from the convalescent data because the creature *does not* have convalescent data (e.g. abominations)
                                 t.loadFromNBT(triggerData.saveToNBT(new CompoundTag()));
                             });
                             return mob;

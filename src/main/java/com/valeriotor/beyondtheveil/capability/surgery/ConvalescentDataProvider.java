@@ -19,10 +19,11 @@ public class ConvalescentDataProvider  implements ICapabilityProvider, INBTSeria
 
     private ConvalescentData convalescentData = null;
     private final LazyOptional<ConvalescentData> opt = LazyOptional.of(this::getConvalescentData);
+    private boolean weeper;
 
     private ConvalescentData getConvalescentData() {
         if (convalescentData == null) {
-            convalescentData = new ConvalescentData();
+            convalescentData = new ConvalescentData(weeper);
         }
         return convalescentData;
     }
@@ -46,5 +47,10 @@ public class ConvalescentDataProvider  implements ICapabilityProvider, INBTSeria
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         getConvalescentData().loadFromNBT(nbt);
+    }
+
+    public ConvalescentDataProvider setWeeper(boolean weeper) {
+        this.weeper = weeper;
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.capability.crossync;
 
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -59,6 +60,9 @@ public class CrossSync {
             heldPatientEntity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                 if (heldPatientData.contains("convalescent")) {
                     c.loadFromNBT(heldPatientData.getCompound("convalescent"));
+                    heldPatientEntity.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
+                        t.loadFromNBT(c.getTriggerData().saveToNBT(new CompoundTag()));
+                    });
                 }
             });
         }

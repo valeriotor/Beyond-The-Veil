@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.capability.util.*;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.entity.AmmunitionEntity;
+import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.*;
 import net.minecraft.nbt.CompoundTag;
@@ -113,7 +114,7 @@ public class CapabilityEvents {
         }
         if (event.getObject() instanceof Villager || event.getObject() instanceof SurgeryPatient || (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer))) {
             if (!event.getObject().getCapability(CONVALESCENT_DATA).isPresent()) {
-                event.addCapability(new ResourceLocation(References.MODID, "convalescent_data"), new ConvalescentDataProvider());
+                event.addCapability(new ResourceLocation(References.MODID, "convalescent_data"), new ConvalescentDataProvider().setWeeper(event.getObject() instanceof WeeperEntity));
             }
         }
         if (event.getObject() instanceof Mob mob && mob.getMobType() == MobType.UNDEAD) {

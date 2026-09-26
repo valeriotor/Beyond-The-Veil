@@ -9,6 +9,8 @@ import com.valeriotor.beyondtheveil.item.BlackjackItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientCondition;
+import com.valeriotor.beyondtheveil.surgery.PatientStatus;
+import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -42,14 +44,14 @@ import java.util.*;
 
 public class ConvalescentData {
 
-    public static ConvalescentData of(PatientCondition condition, Map<String, Integer> flags, TriggerData triggerData, int capacity, int usedCapacity, Map<MobEffect, Integer> chestEffects) {
-        ConvalescentData data = new ConvalescentData();
-        data.setFlags(flags);
-        data.setCondition(condition);
-        data.setTriggerData(triggerData);
-        data.setCapacity(capacity);
-        data.setUsedCapacity(usedCapacity);
-        data.chestEffects.putAll(chestEffects);
+    public static ConvalescentData of(PatientStatus status) {
+        ConvalescentData data = new ConvalescentData(status.getPatientType() == PatientType.WEEPER);
+        data.setCondition(status.getCondition());
+        data.setFlags(status.getPersistentFlags());
+        data.setTriggerData(status.getTriggerData());
+        data.setCapacity(status.getLeftoverCapacity());
+        data.setUsedCapacity(status.getUsedCapacity());
+        data.chestEffects.putAll(status.makeChestEffects());
         return data;
     }
 
@@ -63,6 +65,16 @@ public class ConvalescentData {
     private int collectedXP = 0;
     private BlockPos chestPos;
     private ItemStack heldStack = ItemStack.EMPTY;
+
+    public ConvalescentData() {
+
+    }
+
+    public ConvalescentData(boolean weeper) {
+        if (weeper) {
+            capacity = 15; // only on first creation
+        }
+    }
 
     public TriggerData getTriggerData() {
         if (triggerData != null) {
@@ -362,7 +374,9 @@ public class ConvalescentData {
             triggerData = new TriggerData();
             triggerData.loadFromNBT(tag.getCompound("triggerData"));
         }
-        capacity = tag.getInt("capacity");
+        if (tag.contains("capacity")) { // if check so that it doesn't overwrite weeper base capacity with 0
+            capacity = tag.getInt("capacity");
+        }
         usedCapacity = tag.getInt("usedCapacity");
         if (tag.contains("chestPos")) {
             chestPos = BlockPos.of(tag.getLong("chestPos"));

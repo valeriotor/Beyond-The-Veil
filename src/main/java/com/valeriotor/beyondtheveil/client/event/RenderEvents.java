@@ -1048,7 +1048,7 @@ public class RenderEvents {
                             int pY = gg.guiHeight() / 2;
                             gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.status") + patientStatus.getCondition().toString(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                             pY += 15;
-                            if (patientStatus.getLeftoverCapacity() > 0) {
+                            if (patientStatus.getLeftoverCapacity() > 0 && patientStatus.getExposedLocation() != SurgicalLocation.SKULL) {
                                 gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.capacity") + patientStatus.getLeftoverCapacity(), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
@@ -1056,9 +1056,11 @@ public class RenderEvents {
                                 gg.drawString(Minecraft.getInstance().font, I18n.get("surgery.status.softened"), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                                 pY += 15;
                             }
-                            for (String s : triggerDataDescription(patientStatus.getTriggerData())) {
-                                gg.drawString(Minecraft.getInstance().font, s, X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
-                                pY += 15;
+                            if (patientStatus.getExposedLocation() != SurgicalLocation.SKULL) {
+                                for (String s : triggerDataDescription(patientStatus.getTriggerData())) {
+                                    gg.drawString(Minecraft.getInstance().font, s, X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                                    pY += 15;
+                                }
                             }
 
                         }

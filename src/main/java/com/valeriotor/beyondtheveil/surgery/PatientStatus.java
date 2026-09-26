@@ -477,9 +477,13 @@ public class PatientStatus {
             if (operation.getSuccessSound() != null) {
                 level.playSound(null, pos, operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
             }
-            leftoverCapacity -= operation.getCapacityRequirement();
-            if (operation.getCapacityRequirement() > 0) {
-                usedCapacity += operation.getCapacityRequirement();
+
+            int capacityRequirement = operation.getCapacityRequirement();
+            if (capacityRequirement >= 0 || patientType != PatientType.WEEPER) {
+                leftoverCapacity -= capacityRequirement;
+            }
+            if (capacityRequirement > 0) {
+                usedCapacity += capacityRequirement;
             }
 
             // TODO entityChange (and setDirty?)
@@ -736,9 +740,9 @@ public class PatientStatus {
         tag.putString("condition", condition.name());
         tag.putBoolean("inRitual", inRitual);
         tag.putDouble("current_pain", currentPain);
-        tag.putInt("leftover_capacity", leftoverCapacity);
+        tag.putInt("leftoverCapacity", leftoverCapacity);
         tag.putInt("usedCapacity", usedCapacity);
-        tag.putString("exposed_location", exposedLocation.name());
+        tag.putString("exposedLocation", exposedLocation.name());
         tag.putBoolean("incised", incised);
         //tag.putInt("absolute_threshold", currentAbsolutePainThreshold);
         tag.putInt("missing_threshold", currentMissingPainThreshold);
@@ -807,9 +811,11 @@ public class PatientStatus {
         condition = PatientCondition.valueOf(tag.getString("condition"));
         inRitual = tag.getBoolean("inRitual");
         currentPain = tag.getDouble("current_pain");
-        leftoverCapacity = tag.getInt("leftover_capacity");
+        if (tag.contains("leftoverCapacity")) {
+            leftoverCapacity = tag.getInt("leftoverCapacity");
+        }
         usedCapacity = tag.getInt("usedCapacity");
-        exposedLocation = SurgicalLocation.valueOf(tag.getString("exposed_location"));
+        exposedLocation = SurgicalLocation.valueOf(tag.getString("exposedLocation"));
         incised = tag.getBoolean("incised");
         currentMissingPainThreshold = tag.getInt("missing_threshold"); // needs to be synced to client, even if we don't care about persistence
         updateAbsolutePainThreshold();

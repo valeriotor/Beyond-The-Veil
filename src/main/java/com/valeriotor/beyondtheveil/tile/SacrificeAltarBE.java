@@ -69,7 +69,7 @@ public class SacrificeAltarBE extends BlockEntity {
                     CrossSync crossSync = csData.getCrossSync();
                     if (crossSync.getHeldPatientData() == null) {
                         if(!crossSync.isCrawling()) {
-                            entityData.put("convalescent", ConvalescentData.of(patientStatus.getCondition(), patientStatus.getPersistentFlags(), patientStatus.getTriggerData(), patientStatus.getLeftoverCapacity(), patientStatus.getUsedCapacity(), patientStatus.makeChestEffects()).saveToNBT(new CompoundTag()));
+                            entityData.put("convalescent", ConvalescentData.of(patientStatus).saveToNBT(new CompoundTag()));
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);
                             entityData = null;
                             patientStatus = null;
