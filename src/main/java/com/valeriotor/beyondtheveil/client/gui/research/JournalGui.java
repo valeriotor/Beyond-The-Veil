@@ -898,7 +898,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             poseStack.popPose();
 
             poseStack.pushPose();
-            poseStack.translate(56 + 140, getHeight() / 5F - 4, 0);
+            poseStack.translate(56, getHeight() / 5F - 10, 0);
             //poseStack.scale(2.5F, 2.5F, 1);
             //poseStack.scale(scaleFactor, scaleFactor, 1);
             renderTitle(graphics);
@@ -920,7 +920,12 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         protected abstract void renderIcon(GuiGraphics graphics);
 
         protected void renderTitle(GuiGraphics graphics) {
-            graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
+            PoseStack poseStack = graphics.pose();
+            poseStack.pushPose();
+            poseStack.scale(1.5F, 1.5F, 1);
+            graphics.drawString(minecraft.font, Component.translatable(titleKey), 5, 8, 0xFFFFDD87);
+            poseStack.popPose();
+            //graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
         }
 
         private void selectEntry() {
