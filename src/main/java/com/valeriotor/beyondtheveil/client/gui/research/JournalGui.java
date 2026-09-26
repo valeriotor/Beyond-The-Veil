@@ -930,8 +930,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         private void selectEntry() {
             String translateKey = textKey;
-            TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
-            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), textBlock, getGridElements());
+            //TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
+            List<Element> gridElements = getGridElements();
+            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), I18n.get(translateKey), gridElements.isEmpty() ? 345 : 185, gridElements);
             openItemPage(page);
         }
 
@@ -1268,8 +1269,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
-                TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
-                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), textBlock, new ArrayList<>());
+                //TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
+                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), I18n.get("gui.journal.overview." + id + ".text"), 345, new ArrayList<>());
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             }
@@ -1279,22 +1280,46 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     private final class Page extends Element {
         private final Component title;
-        private final TextBlock page;
+        private final int textHeight;
+        private int currentPageIndex = 0;
+        private final List<TextBlock> pages;
         private final List<Element> grids;
         private int selectedGrid = 0;
         private static final int ARROW_Y = 320;
         private static final int LEFT_ARROW_X = 12;
         private static final int RIGHT_ARROW_X = 310;
+        private static final int LEFT_SMALL_ARROW_X = 12;
+        private static final int RIGHT_SMALL_ARROW_X = 290;
 
-        private Page(Component title, TextBlock page, List<Element> grids) {
+        private Page(Component title, String localized, int height, List<Element> grids) {
             super(330, 460);
+            textHeight = height;
             this.title = title;
-            this.page = page;
+            this.pages = makePages(localized);
             this.grids = grids;
+        }
+
+        private List<TextBlock> makePages(String localized) {
+            List<TextBlock> blocks = new ArrayList<>();
+            final int blockWidth = 300;
+            List<Element> lines = new TextUtil().parseText(localized.toString(), blockWidth, Minecraft.getInstance().font);
+            int i = 0;
+            while (i < lines.size()) {
+                Tuple<TextBlock, Integer> tuple = TextBlock.fillBlockWithElements(lines, i, blockWidth, textHeight, Minecraft.getInstance().font);
+                blocks.add(tuple.getA());
+                i = tuple.getB();
+            }
+            return blocks;
         }
 
         @Override
         public void render(PoseStack pose, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
+            final int BOTTOM_OFFSET = 60;
+            graphics.fill(-15, 30, 315, textHeight+BOTTOM_OFFSET, 0x11000000);
+            graphics.fill(-15, 30, 315, 31, 0x33DDDDDD);
+            graphics.fill(-15, 30, -14, textHeight+BOTTOM_OFFSET, 0x33DDDDDD);
+            graphics.fill(314, 30, 315, textHeight+BOTTOM_OFFSET, 0x22000000);
+            graphics.fill(-15, textHeight+BOTTOM_OFFSET, 315, 1+textHeight+BOTTOM_OFFSET, 0x22000000);
             pose.pushPose();
             pose.translate(150, 0, 0);
             pose.scale(2.55F, 2.55F, 1);
@@ -1310,8 +1335,16 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
             pose.pushPose();
             pose.translate(0, 40, 0);
-            page.render(pose, graphics, 0xFFFFFFFF, (int) (relativeMouseX), (int) (relativeMouseY - 40), pPartialTick);
+            pages.get(currentPageIndex).render(pose, graphics, 0xFFFFFFFF, (int) (relativeMouseX), (int) (relativeMouseY - 40), pPartialTick);
             pose.popPose();
+            if (pages.size() > 1) {
+                if (currentPageIndex > 0) {
+                    renderSmallArrow(pose, graphics, relativeMouseX, relativeMouseY, true);
+                }
+                if (currentPageIndex < pages.size() - 1) {
+                    renderSmallArrow(pose, graphics, relativeMouseX, relativeMouseY, false);
+                }
+            }
             if (grids.size() > 1) {
                 if (counter > 0) {
                     renderArrow(pose, graphics, relativeMouseX, relativeMouseY, true);
@@ -1333,6 +1366,19 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         }
 
+        private void renderSmallArrow(PoseStack pose, GuiGraphics graphics, int relativeMouseX, int relativeMouseY, boolean left) {
+            pose.pushPose();
+            pose.translate(left ? LEFT_SMALL_ARROW_X : RIGHT_SMALL_ARROW_X, getSmallArrowY(), 0);
+            pose.scale(1F, 1F, 1);
+            if ((hoveringLeftSmallArrow(relativeMouseX, relativeMouseY) && left) || ((hoveringRightSmallArrow(relativeMouseX, relativeMouseY) && !left))) {
+                pose.scale((float) 1.5F, 1.5F, 1);
+            }
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            graphics.blit(left ? LEFT_ARROW : RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+            pose.popPose();
+        }
+
         private void renderArrow(PoseStack pose, GuiGraphics graphics, int relativeMouseX, int relativeMouseY, boolean left) {
             pose.pushPose();
             pose.translate(left ? LEFT_ARROW_X : RIGHT_ARROW_X, ARROW_Y, 0);
@@ -1346,6 +1392,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             pose.popPose();
         }
 
+        private boolean hoveringLeftSmallArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > LEFT_SMALL_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < LEFT_SMALL_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > getSmallArrowY() - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < getSmallArrowY() + 1.5 * ARROW_HEIGHT / 2D;
+        }
+
+        private boolean hoveringRightSmallArrow(double relativeMouseX, double relativeMouseY) {
+            return relativeMouseX > RIGHT_SMALL_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < RIGHT_SMALL_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > getSmallArrowY() - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < getSmallArrowY() + 1.5 * ARROW_HEIGHT / 2D;
+        }
+
         private boolean hoveringLeftArrow(double relativeMouseX, double relativeMouseY) {
             return relativeMouseX > LEFT_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < LEFT_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > ARROW_Y - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < ARROW_Y + 1.5 * ARROW_HEIGHT / 2D;
         }
@@ -1354,15 +1408,29 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             return relativeMouseX > RIGHT_ARROW_X - 1.5 * ARROW_WIDTH / 2D && relativeMouseX < RIGHT_ARROW_X + 1.5 * ARROW_WIDTH / 2D && relativeMouseY > ARROW_Y - 1.5 * ARROW_HEIGHT / 2D && relativeMouseY < ARROW_Y + 1.5 * ARROW_HEIGHT / 2D;
         }
 
+        private int getSmallArrowY() {
+            return textHeight + 45;
+        }
+
         @Override
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (hoveringLeftArrow(relativeMouseX, relativeMouseY) && counter > 0) {
                 counter--;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             } else if (hoveringRightArrow(relativeMouseX, relativeMouseY) && counter < grids.size() - 1) {
                 counter++;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
-            } else if (page.mouseClicked(relativeMouseX, relativeMouseY - 40, mouseButton)) {
+            } else if (hoveringLeftSmallArrow(relativeMouseX, relativeMouseY) && currentPageIndex > 0) {
+                currentPageIndex--;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+                return true;
+            } else if (hoveringRightSmallArrow(relativeMouseX, relativeMouseY) && currentPageIndex < pages.size() - 1) {
+                currentPageIndex++;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+                return true;
+            } else if (pages.get(currentPageIndex).mouseClicked(relativeMouseX, relativeMouseY - 40, mouseButton)) {
                 return true;
             }
             return super.mouseClicked(relativeMouseX, relativeMouseY, mouseButton);
