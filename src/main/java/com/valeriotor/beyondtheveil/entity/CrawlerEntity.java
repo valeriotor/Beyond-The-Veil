@@ -67,6 +67,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private boolean held;
     private PatientHolderType holderType;
     private UUID master;
+    private int getUpCounter;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -151,6 +152,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         if (master != null) {
             pCompound.putUUID("master", master);
         }
+        pCompound.putInt("getUpCounter", getUpCounter);
     }
 
     @Override
@@ -178,6 +180,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         if (pCompound.contains("master")) {
             master = pCompound.getUUID("master");
         }
+        getUpCounter = pCompound.getInt("getUpCounter");
 
     }
 
@@ -243,6 +246,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public void tick() {
         if (!isSurgeryPatient()) {
             super.tick();
+            getUpCounter++;
             if (level().isClientSide) {
                 boolean crawl = entityData.get(DATA_CRAWLING);
                 if (crawl && getCrawling() < 1) {
@@ -261,7 +265,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                             }
                         });
                     }
-                    if (tickCount >= 300 * 20) {
+                    if (getUpCounter >= 300 * 20) {
                         getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                             if (!c.getFlags().containsKey(OperationRegistry.SPINELESS) && !c.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);

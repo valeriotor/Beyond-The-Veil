@@ -88,6 +88,7 @@ public class BloodPoolEntity {
         if (mob instanceof PlayerMinion minion) {
             minion.setMaster(player);
         }
+        mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(c -> c.setMaster(player.getUUID()));
         mob.setPos(player.getX() + distX, player.getY(), player.getZ() + distZ);
         player.level().addFreshEntity(mob);
         if (getType().isUndead()) {

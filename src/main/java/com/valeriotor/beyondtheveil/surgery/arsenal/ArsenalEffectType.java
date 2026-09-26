@@ -49,7 +49,7 @@ public abstract class ArsenalEffectType {
         @Override
         public void doEffect(LivingEntity attacker, LivingEntity target, int duration, int amplifier, boolean hideParticles) {
             amplifier = effect == MobEffects.DAMAGE_RESISTANCE ? Math.min(3, amplifier) : amplifier;
-            target.addEffect(new MobEffectInstance(effect, durationArray.durationArray[duration] * 20, amplifier, false, true));
+            target.addEffect(new MobEffectInstance(effect, effect.isInstantenous() ? 1 : durationArray.durationArray[duration] * 20, 2 * amplifier, false, true));
         }
 
         public enum DurationArray {

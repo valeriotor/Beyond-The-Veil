@@ -91,7 +91,7 @@ public class BloodWellBE extends BlockEntity {
                         success = level.getRandom().nextInt(5) == 0;
                     }
                     if (success) {
-                        bloodPoolData.addEntity(creator, triplet, new BloodPoolEntity(type, new CompoundTag()), sl);
+                        bloodPoolData.addEntity(creator, triplet, new BloodPoolEntity(type, new CompoundTag()), sl, false);
                     }
                     mob.discard();
                 }

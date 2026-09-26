@@ -32,7 +32,7 @@ public abstract class VillagerMixin extends AgeableMob {
     @Inject(method = "canBreed", at = @At("RETURN"), cancellable = true)
     public void canBreed(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (MixinUtils.villagerHasPheromones(this)) {
-            boolean b = this.foodLevel + this.countFoodPointsInInventory() >= 12 && !this.isSleeping() && this.getAge() >= 0 && this.getAge() <= 5000;
+            boolean b = this.foodLevel + this.countFoodPointsInInventory() >= 12 && !this.isSleeping() && this.getAge() >= 0 && this.getAge() <= 5300;
             callbackInfoReturnable.setReturnValue(b);
         }
     }

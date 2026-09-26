@@ -235,7 +235,7 @@ public abstract class SurgicalBE extends BlockEntity {
         //    entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
         //}
         for (int i = 0; i < fleboMultiplier; i++) {
-            bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl);
+            bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl, true);
         }
     }
 
@@ -576,15 +576,24 @@ public abstract class SurgicalBE extends BlockEntity {
     public abstract Set<SurgicalLocation> allowedLocations();
 
     private int getFleboMultiplier(BloodPoolData bloodPoolData, ConvalescentData convalescentData) {
+        if (convalescentData.getFlags().containsKey("was_added_to_blood_pool")) {
+            return 1;
+        }
         int multiplier = 1;
+        if (fleboOwner != null) {
+            multiplier = bloodPoolData.getBaseMultiplier(fleboOwner);
+        }
         if (convalescentData.getFlags().getOrDefault(OperationRegistry.VASOCONSTRICTOR_CHEST.getName(), 0) > 0 && patientStatus.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_SKULL.getName(), 0) > 0) {
             multiplier++;
         }
         if (fleboOwner != null && bloodPoolData.isArchePlayer(fleboOwner)) {
             multiplier *= 2;
         }
-        if (convalescentData.getFlags().containsKey("was_added_to_blood_pool")) {
-            multiplier = 1;
+        if (convalescentData.getFlags().getOrDefault(OperationRegistry.IRON_SPINE, 0) > 0) {
+            multiplier = Math.min(6, multiplier);
+        }
+        if (convalescentData.getFlags().getOrDefault(OperationRegistry.DIAMOND_POWDER_CHEST.getName(), 0) > 0) {
+            multiplier = Math.min(4, multiplier);
         }
         return multiplier;
     }

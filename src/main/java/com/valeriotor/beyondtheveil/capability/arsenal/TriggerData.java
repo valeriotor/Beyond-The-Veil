@@ -184,6 +184,8 @@ public class TriggerData {
 
         if (triggerType != null) {
             tag.putString("triggerType", triggerType.name());
+        }
+        if (targetType != null) {
             tag.putString("targetType", targetType.name());
         }
 
@@ -235,11 +237,12 @@ public class TriggerData {
 
         if (tag.contains("triggerType")) {
             String triggerType1 = tag.getString("triggerType");
-            String targetType1 = tag.getString("targetType");
             triggerType = TargetingType.valueOf(triggerType1);
+        }
+        if (tag.contains("targetType")) {
+            String targetType1 = tag.getString("targetType");
             targetType = TargetingType.valueOf(targetType1);
         }
-
         if (tag.contains("mutex")) {
             mutex = DyeColor.byId(tag.getInt("mutex"));
         }

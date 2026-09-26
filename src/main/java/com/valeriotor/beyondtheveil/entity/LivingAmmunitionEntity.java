@@ -64,7 +64,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         //this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-        this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
+        //this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
     }
 
@@ -252,6 +252,6 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
 
     @Override
     public void setMasterID(UUID uuid) {
-
+        masterId = uuid;
     }
 }

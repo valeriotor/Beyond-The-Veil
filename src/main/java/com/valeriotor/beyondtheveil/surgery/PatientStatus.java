@@ -82,6 +82,7 @@ public class PatientStatus {
     private boolean exploded;
     private int ticksSinceLastInjection; // To slow down weeper creation
     private boolean inRitual;
+    private boolean independentTriggerType;
 
     public PatientStatus(PatientType patientType) {
         this.patientType = patientType;
@@ -233,6 +234,8 @@ public class PatientStatus {
             burstExtension = triggerData.getBurst().getExtension();
         }
         mutex = triggerData.getMutex();
+        triggerType = triggerData.getTriggerType();
+        targetType = triggerData.getTargetType();
         setCondition(data.getCondition());
         leftoverCapacity = data.getCapacity();
         usedCapacity = data.getUsedCapacity();
@@ -520,9 +523,13 @@ public class PatientStatus {
         }
         if (operation.getTargetType() != null) {
             this.targetType = operation.getTargetType();
+            if (!independentTriggerType) {
+                this.triggerType = this.targetType;
+            }
         }
         if (operation.getTriggerType() != null) {
             this.triggerType = operation.getTriggerType();
+            independentTriggerType = true;
         }
         if (operation.getIncreaseArsenalEffectAmplifier()) {
             arsenalEffectAmplifiers.put(operation.getName(), arsenalEffectAmplifiers.getOrDefault(operation.getName(), 0) + 1);
@@ -791,6 +798,7 @@ public class PatientStatus {
             }
             tag.put("chestEffects", chestEffects);
         }
+        tag.putBoolean("independentTriggerType", independentTriggerType);
 
         return tag;
     }
@@ -867,6 +875,7 @@ public class PatientStatus {
                 }
             }
         }
+        independentTriggerType = tag.getBoolean("independentTriggerType");
     }
 
     public void setDirty(boolean dirty) {

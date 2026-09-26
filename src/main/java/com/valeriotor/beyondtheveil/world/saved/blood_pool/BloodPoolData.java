@@ -3,8 +3,6 @@ package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -56,7 +54,7 @@ public class BloodPoolData extends SavedData {
         if (mainTag.contains("archePlayerTag", Tag.TAG_COMPOUND)) {
             CompoundTag archePlayerTag = mainTag.getCompound("archePlayerTag");
             for (String uuid : archePlayerTag.getAllKeys()) {
-                bloodPoolData.archePlayers.put(UUID.fromString(uuid), new BloodPoolPlayerData(archePlayerTag.getCompound(uuid)));
+                bloodPoolData.playerMetaData.put(UUID.fromString(uuid), new BloodPoolPlayerData(archePlayerTag.getCompound(uuid)));
             }
         }
         return bloodPoolData;
@@ -68,16 +66,29 @@ public class BloodPoolData extends SavedData {
     }
 
     private final Map<UUID, Map<ColorTriplet, List<BloodPoolEntity>>> pools = new HashMap<>();
-    private final Map<UUID, BloodPoolPlayerData> archePlayers = new HashMap<>();
+    private final Map<UUID, BloodPoolPlayerData> playerMetaData = new HashMap<>();
 
     public void setArchePlayer(UUID playerId, boolean arche) {
-        archePlayers.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche = arche;
+        playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche = arche;
     }
 
     public boolean isArchePlayer(UUID playerId) {
-        return archePlayers.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche;
+        return playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).arche;
     }
 
+    public int getBaseMultiplier(UUID playerId) {
+        BloodPoolPlayerData bloodPoolPlayerData = playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData());
+        if (bloodPoolPlayerData.totalAdditions >= 5 * 4 / 2 * 30) {
+            return 5;
+        } else if (bloodPoolPlayerData.totalAdditions >= 4 * 3 / 2 * 30) {
+            return 4;
+        } else if (bloodPoolPlayerData.totalAdditions >= 3 * 2 / 2 * 30) {
+            return 3;
+        } else if (bloodPoolPlayerData.totalAdditions >= 30) {
+            return 2;
+        }
+        return 1;
+    }
 
     @Override
     public CompoundTag save(CompoundTag tag) {
@@ -87,7 +98,7 @@ public class BloodPoolData extends SavedData {
         }
         tag.put("playerToPoolTag", playerToPoolTag);
         CompoundTag archePlayerTag = new CompoundTag();
-        for (Map.Entry<UUID, BloodPoolPlayerData> e : archePlayers.entrySet()) {
+        for (Map.Entry<UUID, BloodPoolPlayerData> e : playerMetaData.entrySet()) {
             archePlayerTag.put(e.getKey().toString(), e.getValue().save(new CompoundTag()));
         }
         tag.put("archePlayerTag", archePlayerTag);
@@ -111,7 +122,7 @@ public class BloodPoolData extends SavedData {
         tag.put(uuid.toString(), forPlayer);
     }
 
-    public boolean addEntity(UUID playerId, ColorTriplet triplet, BloodPoolEntity entity, Level level) {
+    public boolean addEntity(UUID playerId, ColorTriplet triplet, BloodPoolEntity entity, Level level, boolean increaseAdditions) {
         Map<ColorTriplet, List<BloodPoolEntity>> map = pools.computeIfAbsent(playerId, id -> new HashMap<>());
         List<BloodPoolEntity> entities = map.computeIfAbsent(triplet, t -> new LinkedList<>());
         if (entities.size() < MAX_ENTITIES_PER_ROW) {
@@ -123,6 +134,9 @@ public class BloodPoolData extends SavedData {
                 tag.put("color", triplet.saveToTag(new CompoundTag()));
                 tag.put("entity", entity.save());
                 Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
+                if (increaseAdditions) {
+                    playerMetaData.computeIfAbsent(playerId, uuid -> new BloodPoolPlayerData()).totalAdditions++;
+                }
             }
             setDirty();
             return true;
@@ -151,6 +165,7 @@ public class BloodPoolData extends SavedData {
         return remove;
     }
 
+    /** Only called client side */
     public void modifyPool(Level level, CompoundTag tag) {
         String modification = tag.getString("modification");
         PoolModification poolModification = PoolModification.valueOf(modification);
@@ -158,7 +173,7 @@ public class BloodPoolData extends SavedData {
         ColorTriplet color = ColorTriplet.fromTag(tag.getCompound("color"));
         if (poolModification == PoolModification.ADD) {
             BloodPoolEntity entity = new BloodPoolEntity(tag.getCompound("entity"));
-            addEntity(uuid, color, entity, level);
+            addEntity(uuid, color, entity, level, false);
         } else if (poolModification == PoolModification.TAKE_FIRST) {
             takeFirst(uuid, color, level);
         } else if (poolModification == PoolModification.TAKE_UUID) {
@@ -207,7 +222,7 @@ public class BloodPoolData extends SavedData {
 
     private static class BloodPoolPlayerData {
         private boolean arche;
-        private int level;
+        private int totalAdditions;
 
         private BloodPoolPlayerData() {
 
@@ -215,12 +230,12 @@ public class BloodPoolData extends SavedData {
 
         private BloodPoolPlayerData(CompoundTag tag) {
             arche = tag.getBoolean("arche");
-            level = tag.getInt("level");
+            totalAdditions = tag.getInt("level");
         }
 
         private CompoundTag save(CompoundTag tag) {
             tag.putBoolean("arche", arche);
-            tag.putInt("level", level);
+            tag.putInt("level", totalAdditions);
             return tag;
         }
     }

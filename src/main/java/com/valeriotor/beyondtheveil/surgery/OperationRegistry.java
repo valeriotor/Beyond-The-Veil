@@ -413,6 +413,10 @@ public class OperationRegistry {
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
             .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 80);
 
+    public static final Operation LIQUID_GLOWSTONE_BACK = makeBasicInjection("liquid_glowstone_back", 1.5, 90, 5, true, SurgicalLocation.BACK)
+            .setIncreaseArsenalEffectAmplifier(true)
+            .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 110);
+
 
 
     /**************************************** CHEST & BACK INSERTIONS ****************************************/

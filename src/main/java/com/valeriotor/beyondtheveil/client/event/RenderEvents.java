@@ -1073,7 +1073,7 @@ public class RenderEvents {
         for (ArsenalEffect arsenalEffect : data.getEffects()) {
             lines.add(arsenalEffect.getEffectType().getDisplayName().getString());
             lines.add("-   " + I18n.get("surgery.status.arsenal_amplifier") + arsenalEffect.getAmplifier());
-            lines.add("-   " + I18n.get("surgery.status.arsenal_duration") + arsenalEffect.getAmplifier());
+            lines.add("-   " + I18n.get("surgery.status.arsenal_duration") + arsenalEffect.getDuration());
         }
         if (data.getBurst() != null && data.getBurst().getExtension() > 0) {
             lines.add(I18n.get("surgery.status.burst_extension") + data.getBurst().getExtension());
