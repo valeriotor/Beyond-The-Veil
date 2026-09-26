@@ -63,6 +63,16 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
     }
 
     @Override
+    public void orderToFollow(boolean follow) {
+
+    }
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return false;
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         if (master != null) {

@@ -463,6 +463,16 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         master = uuid;
     }
 
+    @Override
+    public void orderToFollow(boolean follow) {
+
+    }
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return false;
+    }
+
     private static class CrawlerMoveControl extends MoveControl {
         public CrawlerMoveControl(CrawlerEntity pMob) {
             super(pMob);

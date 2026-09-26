@@ -4,9 +4,13 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.ClientSetup;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionDefendMasterTargetGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -18,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.UUID;
@@ -26,6 +31,7 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
 
     private Animation attackAnimation;
     private UUID masterId;
+    private boolean isFollowing;
 
     public BloodSkeletonEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -35,10 +41,11 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
     protected void registerGoals() {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.targetSelector.addGoal(2, (new MinionDefendMasterTargetGoal<>(this, false)));
         this.targetSelector.addGoal(1, (new MinionHelpMasterTargetGoal<>(this, false)));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+        this.goalSelector.addGoal(3, new MinionFollowMasterGoal<>(this, 1.2D, 10.0F, 2.0F, false));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -76,6 +83,7 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
         if (masterId != null) {
             pCompound.putString("master", masterId.toString());
         }
+        pCompound.putBoolean("isFollowing", isFollowing);
     }
 
     @Override
@@ -84,6 +92,7 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
         if (pCompound.contains("master")) {
             masterId = UUID.fromString(pCompound.getString("master"));
         }
+        isFollowing = pCompound.getBoolean("isFollowing");
     }
 
     @Override
@@ -94,5 +103,24 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
     @Override
     public void setMasterID(UUID uuid) {
         masterId = uuid;
+    }
+
+    @Override
+    public void orderToFollow(boolean follow) {
+        isFollowing = follow;
+    }
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return isFollowing;
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack held = pPlayer.getItemInHand(pHand);
+        if (toggleFollow(pPlayer, held)) {
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 }

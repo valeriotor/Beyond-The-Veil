@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
@@ -16,10 +17,13 @@ import com.valeriotor.beyondtheveil.surgery.arsenal.Burst;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -28,6 +32,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.npc.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
@@ -44,6 +50,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
     private int attackTimer = -1;
     private int deathTimer = -1;
     private UUID masterId;
+    private boolean isFollowing;
 
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
@@ -66,6 +73,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         //this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
+        this.goalSelector.addGoal(3, new MinionFollowMasterGoal<>(this, 1.8D, 10.0F, 2.0F, false));
     }
 
     @Override
@@ -82,6 +90,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         if (masterId != null) {
             pCompound.putUUID("masterId", masterId);
         }
+        pCompound.putBoolean("isFollowing", isFollowing);
     }
 
     @Override
@@ -97,8 +106,20 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         if (pCompound.contains("masterId")) {
             masterId = pCompound.getUUID("masterId");
         }
-
+        isFollowing = pCompound.getBoolean("isFollowing");
     }
+
+    @Override
+    public void orderToFollow(boolean follow) {
+        isFollowing = follow;
+    }
+
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return isFollowing;
+    }
+
 
     @Override
     protected void defineSynchedData() {
@@ -253,5 +274,14 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
     @Override
     public void setMasterID(UUID uuid) {
         masterId = uuid;
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack held = pPlayer.getItemInHand(pHand);
+        if (toggleFollow(pPlayer, held)) {
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 }

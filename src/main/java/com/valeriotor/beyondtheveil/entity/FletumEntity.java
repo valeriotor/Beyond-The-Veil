@@ -68,6 +68,7 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Weeping
         if (master != null) {
             pCompound.putString("master", master.toString());
         }
+
     }
 
     @Override
@@ -79,6 +80,7 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Weeping
         if (pCompound.contains("master")) {
             master = UUID.fromString(pCompound.getString("master"));
         }
+
     }
 
     @Override
@@ -104,6 +106,16 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Weeping
     @Override
     public void setMasterID(UUID uuid) {
         master = uuid;
+    }
+
+    @Override
+    public void orderToFollow(boolean follow) {
+
+    }
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return false;
     }
 
     @Nullable

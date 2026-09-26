@@ -1,10 +1,6 @@
 package com.valeriotor.beyondtheveil.surgery.arsenal;
 
-import com.valeriotor.beyondtheveil.entity.Minion;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
+import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -31,9 +27,9 @@ public class BurstRegistry {
             double radius = (extension + 1) * 3;
             Vec3 burstCentre = attacker.position(); //burstCentre(attacker, radius);
             AABB filter = new AABB(burstCentre.x - 10, burstCentre.y - 10, burstCentre.z - 10, burstCentre.x + 10, burstCentre.y + 10, burstCentre.z + 10);
-            Player master = attacker instanceof Minion ? ((Minion) attacker).getMaster() : null;
+            Player master = attacker instanceof PlayerMinion ? ((PlayerMinion) attacker).getMaster() : null;
             // TODO Maybe add e.hasLineOfSight(attacker)
-            return attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> (e.getX() - burstCentre.x) * (e.getX() - burstCentre.x) + (e.getZ() - burstCentre.z) * (e.getZ() - burstCentre.z) < 4 * radius * radius && e.getY() - burstCentre.y < radius * 3 && e != attacker && e != master && (!(e instanceof Minion) || ((Minion) e).getMaster() != master));
+            return attacker.level().getEntities(EntityTypeTest.forClass(LivingEntity.class), filter, e -> (e.getX() - burstCentre.x) * (e.getX() - burstCentre.x) + (e.getZ() - burstCentre.z) * (e.getZ() - burstCentre.z) < 4 * radius * radius && e.getY() - burstCentre.y < radius * 3 && e != attacker && e != master && (!(e instanceof PlayerMinion) || ((PlayerMinion) e).getMaster() != master));
         }
 
         private Vec3 burstCentre(Mob attacker, double radius) {

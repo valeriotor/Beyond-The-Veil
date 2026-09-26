@@ -7,6 +7,8 @@ import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHurtByTargetGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.SurgeonSurgeryGoal;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -62,6 +64,7 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     private Animation mainAnimation;
     private int performingSurgery = 0; // used for anims, server only
     private boolean wasPerformingSurgery = false; // used for anims, client only
+    private boolean isFollowing;
 
     public SurgeonEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -79,8 +82,9 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     @Override
     protected void registerGoals() {
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-        this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.goalSelector.addGoal(0, new MinionHurtByTargetGoal<>(this));
         this.goalSelector.addGoal(1, new SurgeonSurgeryGoal(this));
+        this.goalSelector.addGoal(0, new MinionFollowMasterGoal<>(this, 1.8D, 10.0F, 2.0F, false));
     }
 
     @Override
@@ -128,6 +132,7 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
             pCompound.put("progress", progress.saveToNBT());
         }
         pCompound.put("bellData", bellData.saveToNBT());
+        pCompound.putBoolean("isFollowing", isFollowing);
     }
 
     @Override
@@ -147,6 +152,18 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
             progress = SurgeonProgress.fromNBT(this, pCompound.getCompound("progress"));
         }
         bellData.loadNBT(pCompound.getCompound("bellData"));
+        isFollowing = pCompound.getBoolean("isFollowing");
+    }
+
+    @Override
+    public void orderToFollow(boolean follow) {
+        isFollowing = follow;
+    }
+
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return isFollowing;
     }
 
     @Nullable
@@ -244,6 +261,8 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
                     }
                 }
             }
+            return InteractionResult.SUCCESS;
+        } else if (toggleFollow(pPlayer, held)) {
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(pPlayer, pHand);

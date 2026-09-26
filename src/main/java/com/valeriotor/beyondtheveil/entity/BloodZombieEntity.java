@@ -4,9 +4,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
-import com.valeriotor.beyondtheveil.entity.ai.goals.MinionDefendMasterTargetGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.*;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingCosts;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
@@ -14,6 +12,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,6 +20,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,6 +38,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,6 +54,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     private Animation jawAnimation;
     private boolean longSound;
     private boolean replenishesBindingEnergy;
+    private boolean isFollowing;
 
     public BloodZombieEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
@@ -66,10 +69,11 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
         this.targetSelector.addGoal(1, new MinionHelpMasterTargetGoal<>(this, false));
         this.targetSelector.addGoal(2, new MinionDefendMasterTargetGoal<>(this, false));
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(3, new MinionHurtByTargetGoal<>(this));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, l -> !Objects.equals(l.getUUID(), master)));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.goalSelector.addGoal(3, new MinionFollowMasterGoal<>(this, 1.2D, 10.0F, 2.0F, false));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -149,6 +153,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
             pCompound.putString("master", master.toString());
         }
         pCompound.putBoolean("replenishesBindingEnergy", replenishesBindingEnergy);
+        pCompound.putBoolean("isFollowing", isFollowing);
     }
 
     @Override
@@ -158,6 +163,17 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
             master = UUID.fromString(pCompound.getString("master"));
         }
         replenishesBindingEnergy = pCompound.getBoolean("replenishesBindingEnergy");
+        isFollowing = pCompound.getBoolean("isFollowing");
+    }
+
+    @Override
+    public void orderToFollow(boolean follow) {
+        isFollowing = follow;
+    }
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return isFollowing;
     }
 
     @Override
@@ -173,7 +189,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         } else {
             if (getTarget() == null) {
                 entityData.set(DATA_TARGETING, false);
-            } else if(getNavigation().isInProgress()){
+            } else if (getNavigation().isInProgress()) {
                 entityData.set(DATA_TARGETING, true);
             }
         }
@@ -198,12 +214,21 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     @Override
     public void playSound(@NotNull SoundEvent pSound, float pVolume, float pPitch) {
         if (!this.isSilent() && !level().isClientSide) {
-            this.level().playSound((Player)null, this.getX(), this.getY(), this.getZ(), pSound, this.getSoundSource(), pVolume, pPitch);
+            this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), pSound, this.getSoundSource(), pVolume, pPitch);
             if (pSound == BTVSounds.BLOOD_ZOMBIE_LONG.get()) {
                 sendAnimation(AnimationRegistry.blood_zombie_open_jaw_long, 0);
             } else if (pSound == BTVSounds.BLOOD_ZOMBIE_SHORT.get()) {
                 sendAnimation(AnimationRegistry.blood_zombie_open_jaw_short, 0);
             }
         }
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack held = pPlayer.getItemInHand(pHand);
+        if (toggleFollow(pPlayer, held)) {
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 }

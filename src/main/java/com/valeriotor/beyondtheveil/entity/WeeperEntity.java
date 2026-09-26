@@ -380,6 +380,18 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     }
 
     @Override
+    public void orderToFollow(boolean follow) {
+
+    }
+
+
+    @Override
+    public boolean isOrderedToFollow() {
+        return false;
+    }
+
+
+    @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
         if (pPlayer.isShiftKeyDown() && pPlayer.getItemInHand(pHand).isEmpty() && pHand == InteractionHand.MAIN_HAND && (pPlayer.getUUID().equals(master) || pPlayer.isCreative())) {
             if (!level().isClientSide) {
