@@ -527,6 +527,23 @@
         ]
       },
       {
+        "key": "BOUND_IV_STAND",
+        "name": "research.BOUND_IV_STAND.title",
+        "icons": [ "beyondtheveil:flebo" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 12,10 ],
+        "hiders": ["BLOOD_WELL", "bound_flebo"],
+        "parents": ["BLOOD_WELL"],
+        "stages": [
+          {
+            "text": "research.BOUND_IV_STAND.stage.0",
+            "required_research": ["upgraded_pool"]
+          },
+          {
+            "text": "research.BOUND_IV_STAND.stage.1"
+          }
+        ]
+      },
+      {
         "key": "SURGEONS",
         "name": "research.SURGEONS.title",
         "icons": [ "beyondtheveil:surgeon_larva" ],
@@ -560,6 +577,23 @@
           {
             "text": "research.WEEPERS.stage.1",
             "recipes": ["beyondtheveil:lacrymatory"]
+          }
+        ]
+      },
+      {
+        "key": "REVELATION_RING",
+        "name": "research.REVELATION_RING.title",
+        "icons": [ "beyondtheveil:revelation_ring" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,14 ],
+        "hiders": ["WEEPERS"],
+        "parents": ["WEEPERS"],
+        "stages": [
+          {
+            "text": "research.REVELATION_RING.stage.0",
+            "required_research": ["extracted_revelation_ring"]
+          },
+          {
+            "text": "research.REVELATION_RING.stage.1"
           }
         ]
       },

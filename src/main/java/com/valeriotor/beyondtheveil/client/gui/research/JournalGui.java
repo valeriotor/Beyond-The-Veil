@@ -17,6 +17,9 @@ import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.AlembicsRecipeRegistry;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.surgery.Operation;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
+import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.surgery.notes.Report;
 import com.valeriotor.beyondtheveil.surgery.notes.ReportPatientType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -98,7 +101,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private Page toolPage;
     private CraftingRegistryGui.CraftingGrid toolGrid;
     private Page ingredientPage;
-    private ScrollableList<JournalReportLine> reportLineList;
+    private EditableList<JournalReportLine> reportLineList;
     private Report chosenReport;
     private boolean editingReport;
     private ElementHolder buttonHolder;
@@ -163,11 +166,17 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             }
         }
         toSort.sort(Comparator.comparing(f -> new FluidStack(f, 1000).getDisplayName().getString()));
-        knownFluids.add(BTVFluids.SOURCE_FLUID_SEDATIVE.get());
-        knownFluids.add(BTVFluids.SOURCE_FLUID_COAGULANT.get());
-        knownFluids.add(BTVFluids.SOURCE_FLUID_SOFTENER.get());
-        knownFluids.addAll(toSort);
 
+        knownFluids.addAll(toSort);
+        if (!knownFluids.contains(BTVFluids.SOURCE_FLUID_SEDATIVE.get())) {
+            knownFluids.add(BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        }
+        if (!knownFluids.contains(BTVFluids.SOURCE_FLUID_COAGULANT.get())) {
+            knownFluids.add(BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        }
+        if (!knownFluids.contains(BTVFluids.SOURCE_FLUID_SOFTENER.get())) {
+            knownFluids.add(BTVFluids.SOURCE_FLUID_SOFTENER.get());
+        }
         firstOpen = true;
         updateReports();
 
@@ -323,6 +332,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
     private void setEditingReport(boolean val) {
         editingReport = val;
+        if (reportLineList != null) {
+            reportLineList.setEditable(val);
+        }
         reportName.moveCursorToStart();
         reportName.setEditable(val);
     }
@@ -394,31 +406,45 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             entries.add(new FluidItemEntry(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), "obedience_hormones", JournalCategory.INGREDIENTS));
             entries.add(new FluidItemEntry(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), "parental_hormones", JournalCategory.INGREDIENTS));
         }
+        List<Fluid> wartSerums = Stream.of(BTVFluids.FLUID_WART_SERUM,
+                BTVFluids.FLUID_MOVEMENT_SPEED_SERUM,
+                BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM,
+                BTVFluids.FLUID_DIG_SPEED_SERUM,
+                BTVFluids.FLUID_DIG_SLOWDOWN_SERUM,
+                BTVFluids.FLUID_DAMAGE_BOOST_SERUM,
+                BTVFluids.FLUID_HEAL_SERUM,
+                BTVFluids.FLUID_HARM_SERUM,
+                BTVFluids.FLUID_JUMP_SERUM,
+                BTVFluids.FLUID_CONFUSION_SERUM,
+                BTVFluids.FLUID_REGENERATION_SERUM,
+                BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM,
+                BTVFluids.FLUID_FIRE_RESISTANCE_SERUM,
+                BTVFluids.FLUID_WATER_BREATHING_SERUM,
+                BTVFluids.FLUID_INVISIBILITY_SERUM,
+                BTVFluids.FLUID_BLINDNESS_SERUM,
+                BTVFluids.FLUID_NIGHT_VISION_SERUM,
+                BTVFluids.FLUID_HUNGER_SERUM,
+                BTVFluids.FLUID_WEAKNESS_SERUM,
+                BTVFluids.FLUID_POISON_SERUM,
+                BTVFluids.FLUID_WITHER_SERUM).map(f -> (Fluid) f.getA().get()).toList();
         if (abominationsUnlocked) {
             entries.add(new FluidItemEntry(BTVFluids.FLUID_GS121_SERUM.getA().get(), "gs121_serum", JournalCategory.INGREDIENTS));
-            entries.add(new FluidItemEntry(BTVFluids.FLUID_GS121_SERUM.getA().get(), "gs121_serum", JournalCategory.INGREDIENTS));
-            List<Fluid> wartSerums = Stream.of(BTVFluids.FLUID_WART_SERUM,
-                    BTVFluids.FLUID_MOVEMENT_SPEED_SERUM,
-                    BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM,
-                    BTVFluids.FLUID_DIG_SPEED_SERUM,
-                    BTVFluids.FLUID_DIG_SLOWDOWN_SERUM,
-                    BTVFluids.FLUID_DAMAGE_BOOST_SERUM,
-                    BTVFluids.FLUID_HEAL_SERUM,
-                    BTVFluids.FLUID_HARM_SERUM,
-                    BTVFluids.FLUID_JUMP_SERUM,
-                    BTVFluids.FLUID_CONFUSION_SERUM,
-                    BTVFluids.FLUID_REGENERATION_SERUM,
-                    BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM,
-                    BTVFluids.FLUID_FIRE_RESISTANCE_SERUM,
-                    BTVFluids.FLUID_WATER_BREATHING_SERUM,
-                    BTVFluids.FLUID_INVISIBILITY_SERUM,
-                    BTVFluids.FLUID_BLINDNESS_SERUM,
-                    BTVFluids.FLUID_NIGHT_VISION_SERUM,
-                    BTVFluids.FLUID_HUNGER_SERUM,
-                    BTVFluids.FLUID_WEAKNESS_SERUM,
-                    BTVFluids.FLUID_POISON_SERUM,
-                    BTVFluids.FLUID_WITHER_SERUM).map(f -> (Fluid) f.getA().get()).toList();
+            entries.add(new FluidItemEntry(BTVFluids.FLUID_SA245_SERUM.getA().get(), "sa245_serum", JournalCategory.INGREDIENTS));
             entries.add(new FluidItemEntry(wartSerums, "wart_serums", JournalCategory.INGREDIENTS));
+        }
+        Set<Fluid> entriesSoFar = new HashSet<>();
+        for (ItemEntry entry : entries) {
+            if (entry instanceof FluidItemEntry e) {
+                entriesSoFar.addAll(e.fluids);
+            }
+        }
+        for (Fluid knownFluid : knownFluids) {
+            if (!entriesSoFar.contains(knownFluid)) {
+                ResourceLocation key = ForgeRegistries.FLUIDS.getKey(knownFluid);
+                if (key != null) {
+                    entries.add(new FluidItemEntry(knownFluid, key.getPath().replace("_fluid_source", ""), JournalCategory.INGREDIENTS));
+                }
+            }
         }
         // TODO 24-01-2026 unlock fluids when taken with syringe or bucket
         // TODO I guess use playerdatalib.discoveredfluid?
@@ -785,6 +811,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         chosenReport = report;
         this.reportLineList = new EditableList<>(ENTRY_LIST_BASE_WIDTH, 275, lines, DROPDOWN_BASE_HEIGHT + 4, ENTRY_LIST_BASE_WIDTH - ENTRY_BASE_WIDTH, () -> JournalReportLine.makeReportLine(ENTRY_BASE_WIDTH, DROPDOWN_BASE_HEIGHT + 4, knownIngredients, knownFluids, editable));
         this.reportLineList.setVariableSize(true);
+        this.reportLineList.setEditable(editable);
         successfulnessBox.selectChosen(new Successfulness(report != null && report.getSuccessful() != null ? report.getSuccessful() : Report.Successfulness.IN_PROGRESS));
         patientBox.selectChosen(new PatientType(report != null && report.getPatientType() != null ? report.getPatientType() : ReportPatientType.HUMAN));
         //updateWidgetVisibility();
@@ -873,9 +900,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
     private abstract class ItemEntry extends Element {
 
 
-        private final String name;
+        protected final String name;
         private final String titleKey;
         private final String textKey;
+        protected int capacityRequirement;
 
         protected ItemEntry(String name, JournalCategory category) {
             super(ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
@@ -922,9 +950,28 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         protected void renderTitle(GuiGraphics graphics) {
             PoseStack poseStack = graphics.pose();
             poseStack.pushPose();
-            poseStack.scale(1.5F, 1.5F, 1);
-            graphics.drawString(minecraft.font, Component.translatable(titleKey), 5, 8, 0xFFFFDD87);
+            poseStack.translate(5, 12, 0);
+            poseStack.scale(1.65F, 1.65F, 1);
+            graphics.drawString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFDD87);
             poseStack.popPose();
+
+            // aaand subtitles
+            if (capacityRequirement != 0) {
+                poseStack.pushPose();
+                poseStack.translate(5, 42, 0);
+                poseStack.scale(1F, 1F, 1);
+                if (capacityRequirement < 0) {
+                    graphics.drawString(minecraft.font, Component.translatable("gui.journal.capacity_increase", -capacityRequirement), 0, 0, 0xFF99DD66);
+                } else if (capacityRequirement > 0) {
+                    if (capacityRequirement == 99) {
+                        graphics.drawString(minecraft.font, Component.translatable("gui.journal.capacity_need_varies"), 0, 0, 0xFFDD9966);
+                    } else {
+                        graphics.drawString(minecraft.font, Component.translatable("gui.journal.capacity_need", capacityRequirement), 0, 0, 0xFFDD9966);
+                    }
+                }
+                //graphics.drawString(minecraft.font, Component.translatable("gui.journal." + (capacityRequirement < 0 ? "capacity_increase" : (capacityRequirement == 99 ? "capacity_need_varies" : "capacity_need")), "§c" + Math.abs(capacityRequirement)), 0, 0, 0xFFCCCCCC);
+                poseStack.popPose();
+            }
             //graphics.drawCenteredString(minecraft.font, Component.translatable(titleKey), 0, 0, 0xFFFFFFFF);
         }
 
@@ -932,7 +979,25 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             String translateKey = textKey;
             //TextBlock textBlock = new TextBlock(I18n.get(translateKey), 300, 285, Minecraft.getInstance().font);
             List<Element> gridElements = getGridElements();
-            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), I18n.get(translateKey), gridElements.isEmpty() ? 345 : 185, gridElements);
+            String localized = I18n.get(translateKey);
+            if (name.equals("organochloride") && DataUtil.getBoolean(minecraft.player, PlayerDataLib.player_surgery.name())) {
+                localized += I18n.get(translateKey + ".player");
+            }
+            if (name.equals("plucked_eye") || name.equals("tears") || name.equals("gs121_serum") || name.equals("sa245_serum")) {
+                if (ResearchUtil.getResearchStage(minecraft.player, "REVELATION_RING") >= 0) {
+                    localized += I18n.get(translateKey + ".ring");
+                }
+            } else if (name.equals("marrow_gland") || name.equals("silk_gland") || name.equals("gunpowder_bladder")) {
+                if (ResearchUtil.getResearchStage(minecraft.player, "BLOOD_FIST") >= 0) {
+                    localized += I18n.get("gui.journal.ingredients.blood_fist_creation");
+                }
+            } else if (name.equals("organochloride") || name.equals("vasoconstrictor")) {
+                if (ResearchUtil.getResearchStage(minecraft.player, "BOUND_IV_STAND") >= 1) {
+                    localized += I18n.get(translateKey + ".bound_flebo");
+                }
+            }
+
+            Page page = new Page(Component.literal("§l" + Component.translatable(titleKey).getString()), localized, gridElements.isEmpty() ? 345 : 185, gridElements);
             openItemPage(page);
         }
 
@@ -946,6 +1011,18 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         protected StacksItemEntry(Item item, String name, JournalCategory category) {
             this(List.of(item), name, category);
+            List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.insertionsForItem(item);
+            if (insertionEntries != null) {
+                for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
+                    Operation op = insertionEntry.operation();
+                    if (op.getAllowedLocations().contains(SurgicalLocation.BACK)) {
+                        if (op.getCapacityRequirement() != 0) {
+                            capacityRequirement = op.getCapacityRequirement();
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -976,7 +1053,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private final float red;
         private final float green;
         private final float blue;
-        private final List<AlembicsRecipeRegistry.AlembicRecipe> recipes = new ArrayList<>();
+        private final List<Tuple<AlembicsRecipeRegistry.AlembicRecipe, Integer>> recipes = new ArrayList<>();
+        private final List<Fluid> fluids;
 
         protected FluidItemEntry(Fluid fluid, String name, JournalCategory category) {
             this(List.of(fluid), name, category);
@@ -985,14 +1063,39 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         protected FluidItemEntry(List<Fluid> fluids, String name, JournalCategory category) {
             super(name, category);
+            this.fluids = fluids;
             int color = IClientFluidTypeExtensions.of(fluids.get(0)).getTintColor();
             red = ((color >> 16) & 255) / 255F;
             green = ((color >> 8) & 255) / 255F;
             blue = (color & 255) / 255F;
+            if (fluids.size() == 1) {
+                capacityRequirement = fluidCapacityRequirement(fluids.get(0));
+            } else if (name.equals("wart_serums")) {
+                capacityRequirement = 99;
+            }
             for (Fluid fluid : fluids) {
                 List<AlembicsRecipeRegistry.AlembicRecipe> alembicRecipes = AlembicsRecipeRegistry.knownRecipes(fluid, knownIngredients);
-                recipes.addAll(alembicRecipes);
+                int capacityRequirement1 = fluidCapacityRequirement(fluid);
+                for (AlembicsRecipeRegistry.AlembicRecipe alembicRecipe : alembicRecipes) {
+                    recipes.add(new Tuple<>(alembicRecipe, capacityRequirement1));
+                }
             }
+        }
+
+        private int fluidCapacityRequirement(Fluid fluid) {
+            List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.injectionsForFluid(fluid);
+            if (injectionEntries != null) {
+                for (OperationRegistry.InjectionEntry injectionEntry : injectionEntries) {
+                    Operation op = injectionEntry.operation();
+                    if (op.getAllowedLocations().contains(SurgicalLocation.BACK)) {
+                        int capacityRequirement = op.getCapacityRequirement();
+                        if (capacityRequirement != 0) {
+                            return capacityRequirement;
+                        }
+                    }
+                }
+            }
+            return 0;
         }
 
         @Override
@@ -1006,7 +1109,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         @Override
         protected List<Element> getGridElements() {
-            return recipes.stream().map(r -> (Element) new AlembicRecipeDisplay(ENTRY_BASE_WIDTH, 100, r)).toList();
+            return recipes.stream().map(r -> (Element) new AlembicRecipeDisplay(ENTRY_BASE_WIDTH, 100, r.getA(), r.getB(), name.equals("wart_serums"))).toList();
         }
     }
 
@@ -1018,11 +1121,12 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private final TextureAtlasSprite input2;
         private final Component input2Name;
         private final TextureAtlasSprite output;
+        private final int capacityRequirement;
         private final Component outputName;
         private static final ItemStack ALEMBICS = new ItemStack(Registration.ALEMBICS.get());
         private static final ItemStack FLASK = new ItemStack(Registration.FLASK_LARGE.get());
 
-        protected AlembicRecipeDisplay(int width, int height, AlembicsRecipeRegistry.AlembicRecipe recipe) {
+        protected AlembicRecipeDisplay(int width, int height, AlembicsRecipeRegistry.AlembicRecipe recipe, int capacityRequirement, boolean showCapacityRequirement) {
             super(width, height);
             input1 = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input1()).getStillTexture());
             input2 = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(recipe.input2()).getStillTexture());
@@ -1033,6 +1137,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             stackName = recipe.stack().getItem().getDescription();
             input2Name = recipe.input2().getFluidType().getDescription();
             outputName = recipe.output().getFluidType().getDescription();
+            if (showCapacityRequirement) {
+                this.capacityRequirement = capacityRequirement;
+            } else {
+                this.capacityRequirement = 0;
+            }
         }
 
         @Override
@@ -1089,6 +1198,13 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 graphics.renderTooltip(minecraft.font, stackName, relativeMouseX, relativeMouseY);
             }
             //poseStack.popPose();
+            if (capacityRequirement != 0) {
+                poseStack.pushPose();
+                poseStack.translate(75, 90, 0);
+                poseStack.scale(0.9F, 0.9F, 1);
+                graphics.drawCenteredString(minecraft.font, Component.translatable("gui.journal.capacity_need_both", capacityRequirement), 0, 0, 0xFFDD9966);
+                poseStack.popPose();
+            }
         }
     }
 

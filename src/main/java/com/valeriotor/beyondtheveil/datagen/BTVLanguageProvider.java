@@ -107,7 +107,40 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("fluid_type.beyondtheveil.sedative_fluid", "Sedative");
         add("fluid_type.beyondtheveil.coagulant_fluid", "Coagulant");
         add("fluid_type.beyondtheveil.softener_fluid", "Softener");
-        add("fluid_type.beyondtheveil.liquid_blaze_powder_fluid", "Serum X49B8 - Strength");
+        add("fluid_type.beyondtheveil.movement_speed_serum_fluid", "Speed Serum");
+        add("fluid_type.beyondtheveil.movement_slowdown_serum_fluid", "Slowness Serum");
+        add("fluid_type.beyondtheveil.dig_speed_serum_fluid", "Haste Serum");
+        add("fluid_type.beyondtheveil.dig_slowdown_serum_fluid", "Mining Fatigue Serum");
+        add("fluid_type.beyondtheveil.damage_boost_serum_fluid", "Strength Serum");
+        add("fluid_type.beyondtheveil.heal_serum_fluid", "Healing Serum");
+        add("fluid_type.beyondtheveil.harm_serum_fluid", "Harming Serum");
+        add("fluid_type.beyondtheveil.jump_serum_fluid", "Jump Boost Serum");
+        add("fluid_type.beyondtheveil.confusion_serum_fluid", "Nausea Serum");
+        add("fluid_type.beyondtheveil.regeneration_serum_fluid", "Regeneration Serum");
+        add("fluid_type.beyondtheveil.damage_resistance_serum_fluid", "Resistance Serum");
+        add("fluid_type.beyondtheveil.fire_resistance_serum_fluid", "Fire Resistance Serum");
+        add("fluid_type.beyondtheveil.water_breathing_serum_fluid", "Water Breathing Serum");
+        add("fluid_type.beyondtheveil.invisibility_serum_fluid", "Invisibility Serum");
+        add("fluid_type.beyondtheveil.blindness_serum_fluid", "Blindness Serum");
+        add("fluid_type.beyondtheveil.night_vision_serum_fluid", "Night Vision Serum");
+        add("fluid_type.beyondtheveil.hunger_serum_fluid", "Hunger Serum");
+        add("fluid_type.beyondtheveil.weakness_serum_fluid", "Weakness Serum");
+        add("fluid_type.beyondtheveil.poison_serum_fluid", "Poison Serum");
+        add("fluid_type.beyondtheveil.wither_serum_fluid", "Wither Serum");
+        add("fluid_type.beyondtheveil.memory_hormones_fluid", "Memory Hormones");
+        add("fluid_type.beyondtheveil.obedience_hormones_fluid", "Obedience Hormones");
+        add("fluid_type.beyondtheveil.parental_hormones_fluid", "Parental Hormones");
+        add("fluid_type.beyondtheveil.growth_stimulant_fluid", "Growth Stimulant");
+        add("fluid_type.beyondtheveil.tears_fluid", "Tears");
+        add("fluid_type.beyondtheveil.diamond_powder_fluid", "Diamond Powder");
+        add("fluid_type.beyondtheveil.gs121_serum_fluid", "GS121 Serum (Triggering)");
+        add("fluid_type.beyondtheveil.liquid_glowstone_fluid", "Liquid Glowstone");
+        add("fluid_type.beyondtheveil.liquid_gold_fluid", "Liquid Gold");
+        add("fluid_type.beyondtheveil.organochloride_fluid", "Organochloride");
+        add("fluid_type.beyondtheveil.pheromones_fluid", "Pheromones");
+        add("fluid_type.beyondtheveil.sa245_serum_fluid", "SA245 Serum (Targeting)");
+        add("fluid_type.beyondtheveil.vasoconstrictor_fluid", "Vasoconstrictor");
+        add("fluid_type.beyondtheveil.wart_serum_fluid", "Wart Serum");
 
 
         add(GearBenchBlock.GUI_GEAR_BENCH, "Gear Bench");
@@ -146,6 +179,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addMiscellaneous() {
         add("message.transformation.cooldown", "The transformation requires %1$s seconds of cooldown.");
+        add("message.transformation.sleep", "I can't sleep while non-human.");
     }
 
     private void addEntities() {
@@ -1910,6 +1944,16 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Additionally, creatures in my blood pool may be assigned to categories, for simpler management. Categories are defined by a triad of colours: I can throw dyes in the Well (one at a time), to add a colour to the right of the triad. For example, throwing blue dye, clay (symbolising colourless), and lime dye will make the assigned triad §lblue§r, §lnone§r, §llime§r. Throwing red afterwards will make the new triad §lnone§r, §llime§r, §lred§r. The default is §lnone§r, §lnone§r, §lnone§r.\\n" +
                 "As useful as all of this is in terms of gaining power, the Well's true role in my quest is to get me closer to Arche. I should not forget that.");
 
+        add("research.BOUND_IV_STAND.title", "Bound IV stands");
+        add("research.upgraded_pool.text", "");
+        add("research.BOUND_IV_STAND.stage.0", "According to Mauer’s work, the IV stands I bind to a color combination will send an adjacent patient to my blood pool after the surgery’s completion.\\n" +
+                        "This is especially useful with abominations: whereas wizards are known to craft spells and witches used to brew potions, my arsenal will consist of living bombs, to be summoned on my command via blood gems to burst next to me or my foes.\\n" +
+                        "Yet, each such burst costs a human life! That is a terrible price to pay for a single strike, and I do not see a way around this. I can only hope that, via sufficient practice, better methods come to mind.");
+        add("research.BOUND_IV_STAND.stage.1", "Via the sending of numerous patients to my blood pool, the vein connecting the overworld to this little pocket of mine has, somehow, widened. The result is that for every patient that is sent, more than one arrives.\n" +
+                "This is extraordinary. I am creating life. Or, well, the vein is, as is the purpose of blood. Yet I cannot guess at the underlying mechanism: is the patient being cloned? Is it being split or is a new amalgam being shaped in its image? Or did the clone always exist, somewhere, somewhen, and it is merely being plucked from there? And what happens when my body goes down these veins?! Could this mean that... no, I have seen no evidence of it.\\n" +
+                "Nonetheless, this is useful in its improved efficiency of my procedures: multiple abomination bursts may come at the cost of a single human life (well, more than one dies, but it only costs me one).\\n" +
+                "I can research ways to push this further. Pesticides, such as those used to kill spiders, can thin the outer layers of blood vessels; injecting such a fluid into the skull of a patient, together with some vasoconstrictor, may further increase the effect of this phenomenon as it travels deep down.");
+
         add("research.SURGEONS.title", "Surgeons");
         add("research.received_surgeon.text", "Hire a surgeon from the Sanitarium.");
         add("research.placed_surgeon.text", "Place the surgeon larva in the appropriate place.");
@@ -1939,6 +1983,12 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Should... should I make the most out of this situation, and at least put his tears to good use? I know now that tears hold power, and the poor thing would not want its fate to have been in vain.\\n" +
                 "If so, I can craft a lacrymatory, which shall hold all that he weeps.");
         add("research.WEEPERS.stage.1", "After picking him up, I can place the weeper next to the {§nlacrymatory§r}[caption:shift_right_click_lacrymatory], where he will deposit his tears. Eventually, there should be sufficiently many for me to take and use in other experiments.");
+
+        add("research.REVELATION_RING.title", "Weepers");
+        add("research.extracted_revelation_ring.text", "Create a ring of revelation.");
+        add("research.REVELATION_RING.stage.0", "Tears clear our eyes and let us see things as they truly are.\\n" +
+                "I picture a ring, resting on my fingers after being torn from a patient's chest. It is made via the insertion of an eye, and the injection of tears as well as the two targeting serums: GS121 and SA245. Finally, the heart must be extracted.");
+        add("research.REVELATION_RING.stage.1", "The ring allows me to see invisible creatures. It is the first step in widening our vision through the use of tears – as long as they are someone else's.");
 
         add("research.FLETUM.title", "The Fletum");
         add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +
@@ -2605,87 +2655,137 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.tools.watery_cradle.title", "Watery Cradle");
         add("gui.journal.tools.watery_cradle.text", "A masterwork of engineering, capable of setting the enclosed patient in a trance and allowing for operations on the brain.\\nOnly injections may be performed in the watery cradle.");
 
+        add("gui.journal.capacity_need", "-%1$s capacity (Back)");
+        add("gui.journal.capacity_need_both", "-%1$s capacity (Back or Chest)");
+        add("gui.journal.capacity_need_varies", "Varying capacity");
+        add("gui.journal.capacity_increase", "+%1$s capacity");
 
         add("gui.journal.ingredients.plucked_eye.title", "Plucked Eye");
-        add("gui.journal.ingredients.plucked_eye.text", "To look at yourself from the inside, escaping all veils of skin and bone – it drives one to madness.\\n§oAdds:§r §lfolly§r.\\n§oRequires:§r 1 capacity.");
+        add("gui.journal.ingredients.plucked_eye.text", "To look at yourself from the inside, escaping all veils of skin and bone – it drives one to madness.\\n" +
+                "Inserting the eye into a patient’s back will apply §lfolly§r to its abomination burst, at a cost in capacity.");
+        add("gui.journal.ingredients.plucked_eye.text.ring", " Additionally, inserting an eye into the chest is a step in the Ring of Revelation’s creation.");
 
         add("gui.journal.ingredients.shell.title", "Shell");
-        add("gui.journal.ingredients.shell.text", "A shell of some crustacean or mollusk. It is a lethal reminder of our lack of any such protection, of our defenselessness.\\n§oAdds:§r §lvulnerability§r.\\n§oRequires:§r 1 capacity.");
+        add("gui.journal.ingredients.shell.text", "A shell of some crustacean or mollusk. It is a lethal reminder of our lack of any such protection, of our defenselessness.\\n" +
+                "Inserting the shell into a patient’s back will apply §lvulnerability§r to its abomination burst, at a cost in capacity. Inserting it into the chest will instead give damage resistance to the patient itself.");
 
         add("gui.journal.ingredients.tiny_skull.title", "Tiny Skull");
-        add("gui.journal.ingredients.tiny_skull.text", "No fight. No flight. Such creatures know only fright.\\n§oAdds:§r §lterror§r.\\n§oRequires:§r 1 capacity.");
+        add("gui.journal.ingredients.tiny_skull.text", "No fight. No flight. Such creatures know only fright.\\n" +
+                "Inserting the skull into a patient’s back will apply §lterror§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will make the patient drop a skull on death.");
 
         add("gui.journal.ingredients.acid_gland.title", "Acid Gland");
-        add("gui.journal.ingredients.acid_gland.text", "Produces a highly corrosive substance, melting through armor.\\n§oAdds:§r §larmor damage§r.\\n§oRequires:§r 1 capacity.");
+        add("gui.journal.ingredients.acid_gland.text", "Produces a highly corrosive substance, melting through armor.\\n" +
+                "Inserting the skull into a patient’s back will apply §larmor damage§r to its abomination burst, at a cost in capacity. Inserting it into the chest will make anyone attacking the patient receive a small amount of damage.");
 
         add("gui.journal.ingredients.fertilizer_gland.title", "Fertilizer Gland");
-        add("gui.journal.ingredients.fertilizer_gland.text", "Convalescents possessing this gland will fertilize the soil where they tread.");
+        add("gui.journal.ingredients.fertilizer_gland.text", "Patients possessing this gland, either in the chest or back, will fertilize the soil where they tread.");
 
         add("gui.journal.ingredients.marrow_gland.title", "Marrow Gland");
-        add("gui.journal.ingredients.marrow_gland.text", "This gland continuously produces marrow, resulting in bone meal being regularly dropped by the convalescent.");
+        add("gui.journal.ingredients.marrow_gland.text", "This gland continuously produces marrow, resulting in bone meal being regularly dropped by a patient into whose back it was inserted.");
 
         add("gui.journal.ingredients.silk_gland.title", "Silk Gland");
-        add("gui.journal.ingredients.silk_gland.text", "Spiders and similar creatures use these to build their homes – and snare their targets.\\n§oAdds:§r §lenweb§r.\\n§oRequires:§r 1 capacity.");
+        add("gui.journal.ingredients.silk_gland.text", "Spiders and similar creatures use these to build their homes – and snare their targets.\\n" +
+                "Inserting the gland into a patient’s back will apply §lenweb§r to its abomination burst, at a cost in capacity.");
 
         add("gui.journal.ingredients.gunpowder_bladder.title", "Gunpowder Bladder");
         add("gui.journal.ingredients.gunpowder_bladder.text", "Dropped by creepers and similarly explosive creatures when slain in a precise, surgical manner. Entities possessing this bladder may turn explosive when set on fire.");
 
+        add("gui.journal.ingredients.blood_fist_creation", " Inserting into the chest instead is a step in the creation of a blood fist.");
+
         add("gui.journal.ingredients.living_iron.title", "Living Iron");
         add("gui.journal.ingredients.living_iron.text", "An animated chunk of metal, yet not strong enough to survive on its own. It must be attached to the spine of an individual, and then left to grow on the host as they roam unaware.\\n" +
-                "Eventually the patient will drop on the ground, unable to move anymore. That will be the right time to extract its spine, hopefully acquiring a greater amount of iron than was used in the creation of the living metal.");
+                "Eventually the patient will drop on the ground, unable to move anymore. That will be the right time to extract its spine, hopefully acquiring a greater amount of iron than was used in the creation of the living metal.\\n" +
+                "If inserted into the chest instead, the iron’s growing weight will slow the patient to a crawl, effectively leaving them standing but unable to walk.");
 
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
-        add("gui.journal.ingredients.empty_bladder.text", "A small sac, capable of holding other ingredients within itself. Occasionally dropped by monsters when slain with a scalpel.");
+        add("gui.journal.ingredients.empty_bladder.text", "A small sac, capable of holding other ingredients within itself. Occasionally dropped by monsters when slain with a scalpel.\\n" +
+                "Increases capacity when inserted into the chest or back.");
+
+        add("gui.journal.ingredients.memory_hormones.title", "Memory Hormones");
+        add("gui.journal.ingredients.memory_hormones.text", "When injected into the skull, these hormones make the patient able to collect nearby experience and store it in their mind, just like I do. The difference is that, whenever they are struck, they will drop all experience stored in this manner, leaving it free for the taking.\\n" +
+                "If they are instead injected into the chest or back, these hormones allow the patient to (slowly) generate experience passively. If I want to steal it from them, however, the skull injection will still be necessary for the patient to drop it.");
 
         add("gui.journal.ingredients.parental_hormones.title", "Parental Hormones");
-        add("gui.journal.ingredients.parental_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then try to breed any nearby eligible pair of animals using items from the container, if available (e.g. wheat for cows, seeds for chickens).");
+        add("gui.journal.ingredients.parental_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then try to breed any nearby eligible pair of animals using items from the container, if available (e.g. wheat for cows, seeds for chickens).\\n" +
+                "The hormones may also be injected into the chest or back; in doing so, whenever the patient breeds animals, the parents will produce an additional child.");
 
         add("gui.journal.ingredients.obedience_hormones.title", "Obedience Hormones");
-        add("gui.journal.ingredients.obedience_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then pick up any items within a certain range and put them in the container it was assigned to.");
+        add("gui.journal.ingredients.obedience_hormones.text", "Can be injected into the skull. A spineless patient affected by such hormones may be placed on a chest or other container. It will then pick up any items within a certain range and put them in the container it was assigned to.\\n" +
+                "I do not know of any effects when injected in the chest or back.");
+
+        add("gui.journal.ingredients.growth_stimulant.title", "Growth Stimulant");
+        add("gui.journal.ingredients.growth_stimulant.text", "A powerful hormone that dictates cell growth and multiplication. Injecting it into the chest will increase the size of the heart: the patient will benefit from increased health and healing. The heart can also be extracted: the organ may be thus consumed for fast healing. Injecting the stimulant in the back instead will grow the spine: these increases the patient’s knockback resistance, but may also be extracted for a large quantity of bone meal.\\n" +
+                "Injecting it into the skull will just kill the patient. This is not the way to expand people’s minds.");
+
+        add("gui.journal.ingredients.gs121_serum.title", "GS121 Serum (Triggering)");
+        add("gui.journal.ingredients.gs121_serum.text", "Also known as the “triggering serum”, injecting this in small quantities in a patient’s back or skull will alter the triggering behaviour of the abomination.");
+        add("gui.journal.ingredients.gs121_serum.text.ring", " Injecting it into the chest is a step in the crafting of the Ring of Revelation.");
+
+        add("gui.journal.ingredients.sa245_serum.title", "SA245 Serum (Targeting)");
+        add("gui.journal.ingredients.sa245_serum.text", "Also known as the “triggering serum”, injecting this in small quantities in a patient’s back or skull will alter the targeting behaviour of the abomination.");
+        add("gui.journal.ingredients.sa245_serum.text.ring", " Injecting it into the chest is a step in the crafting of the Ring of Revelation.");
 
         add("gui.journal.ingredients.vasoconstrictor.title", "Vasoconstrictor");
-        add("gui.journal.ingredients.vasoconstrictor.text", "Results in a tightening of the blood vessels within the host creature, and thus an increase in space for other ingredients.");
+        add("gui.journal.ingredients.vasoconstrictor.text", "Results in a tightening of the blood vessels within the host creature, and thus an increase in space for other ingredients. Injecting this fluid into the back or chest will increase capacity.");
+        add("gui.journal.ingredients.vasoconstrictor.text.bound_flebo", "\\nInjecting it into the skull together with organochloride may lead to additional clones of the patient being sent to my blood pool via bound IV stands.");
 
         add("gui.journal.ingredients.tears.title", "Tears");
-        add("gui.journal.ingredients.tears.text", "As the mind weeps away, so does it begin to detest the body; the host creature will no longer deny extraneous agents from entering it.");
+        add("gui.journal.ingredients.tears.text", "As the mind weeps away, so does it begin to detest the body; the host creature will no longer deny extraneous agents from entering it.\\n" +
+                "Within surgery, they can be injected in either the chest or back to increase capacity.");
+        add("gui.journal.ingredients.tears.text.ring", " They are also one of the steps in creating a Ring of Revelation.");
 
         add("gui.journal.ingredients.liquid_glowstone.title", "Liquid Glowstone");
-        add("gui.journal.ingredients.liquid_glowstone.text", "Not unlike its powdery counterpart, this substance can increase the potency of abomination ingredients. Inserting it as a liquid rather than solid does wonders in reducing the pain inflicted on the patient.");
+        add("gui.journal.ingredients.liquid_glowstone.text", "Not unlike its powdery counterpart, this substance can increase the potency of effects. Doing so as a liquid rather than solid does wonders in reducing the pain inflicted on the patient.\\n" +
+                "This fluid can be injected into a patient’s back to amplify the potency of an abomination effect, at a cost in capacity.");
 
         add("gui.journal.ingredients.diamond_powder.title", "Diamond Powder");
-        add("gui.journal.ingredients.diamond_powder.text", "Diamonds grounded into not-so-fine dust. Very painful for the patient.");
+        add("gui.journal.ingredients.diamond_powder.text", "Diamonds grounded into not-so-fine dust. Very painful for the patient.  It can be injected into a patient’s back to amplify the potency of an abomination effect, at a cost in capacity. It can also be injected into the chest: doing so will cover the heart in its particles, and a subsequent extraction may result in the obtaining of diamonds.\\n" +
+                "However, it is too sharp for skull injections.");
 
         add("gui.journal.ingredients.liquid_gold.title", "Liquid Gold");
-        add("gui.journal.ingredients.liquid_gold.text", "Terribly heavy – and blazing hot to the touch. Quite painful to inject, but does not require much capacity.");
+        add("gui.journal.ingredients.liquid_gold.text", "Terribly heavy – and blazing hot to the touch. Quite painful to inject. Injecting this fluid into a patient’s back will apply §lsink§r to its abomination burst, at a cost in capacity. It may also be injected in the chest: doing so will make the patient drop gold on death, but this is not efficient in comparison to the amount that was used to distill it.");
 
         add("gui.journal.ingredients.organochloride.title", "Organochloride");
-        add("gui.journal.ingredients.organochloride.text", "A strong pesticide, detested by all arthropods. Sometimes found in Arche.");
+        add("gui.journal.ingredients.organochloride.text", "A strong pesticide, detested by all arthropods. Sometimes found in Arche. Injecting this fluid into a patient’s back will apply §lharm arthropods§r to its abomination burst, at a cost in capacity.");
+        add("gui.journal.ingredients.organochloride.text.player", "\\nInjecting it into the chest instead will stop arthropods from targeting the patient.");
+        add("gui.journal.ingredients.organochloride.text.bound_flebo", "\\nInjecting it into the skull together with vasoconstrictor may lead to additional clones of the patient being sent to my blood pool via bound IV stands.");
 
         add("gui.journal.ingredients.pheromones.title", "Pheromones");
-        add("gui.journal.ingredients.pheromones.text", "Producing a strong yet amiable smell, it immediately alerts nearby creatures; however, attraction may quickly sour, as it turns to envy and then hatred: the victim will soon be targeted by several foes.");
+        add("gui.journal.ingredients.pheromones.text", "Producing a strong yet amiable smell, it immediately alerts nearby creatures; however, attraction may quickly sour, as it turns to envy and then hatred: the victim will soon be targeted by several foes.\\n" +
+                "Injecting this fluid into a patient’s back will apply §lattract targets§r to its abomination burst, at a cost in capacity. Injecting it into the chest instead will make the patient periodically draw attention to itself, by making a small number of nearby entities target it.\\n" +
+                "Finally, injecting this fluid into the skull will make the patient more willing to mate. They’ll still need food, of course, but after mating they’ll be willing to do so again much sooner.");
 
         add("gui.journal.ingredients.wart_serums.title", "Wart Serums");
-        add("gui.journal.ingredients.wart_serums.text", "These liquids are produced via combining classical potion ingredients with base serum A00B3. They mimic the effects of normal potions as abomination ingredients.\\n" +
-                "Interestingly, these may also be injected in the chest rather than back. In doing so, they will not turn patients into explosive abominations, but rather apply those effects to the patients themselves (for an extended period of time compared to normal potions). They will still require capacity, and may also still be affected by potency modifiers, as normal.");
+        add("gui.journal.ingredients.wart_serums.text", "These liquids are produced via combining classical potion ingredients with base serum A00B3. When injected into the back, they apply their §lcorresponding potion effect§r to the abomination burst, at a cost in capacity.\\n" +
+                "Interestingly, these serums may also be injected in the chest rather than back. In doing so, they will not apply those effects to the abomination bursts, but rather to the patients themselves (for an extended period of time compared to normal potions). They will still require capacity, and may also still be affected by potency modifiers, as normal.");
 
         add("gui.journal.ingredients.emerald_gem.title", "Emerald Gem");
-        add("gui.journal.ingredients.emerald_gem.text", "A small trinket, used to create jewelry from within patients’ bodies.");
+        add("gui.journal.ingredients.emerald_gem.text", "A small trinket, used to create jewelry from within patients’ bodies.\\n" +
+                "Can be inserted in the back to create a bone tiara, though its sharp edges require new softening every time. When inserted into the chest instead, it can increase the chance of saving offerings if the patient is used in a blood ritual.");
 
         add("gui.journal.ingredients.swollen_growth.title", "Swollen Growth");
-        add("gui.journal.ingredients.swollen_growth.text", "A large abnormal excrescence. We have much less control over our bodies than we believe.\n" +
-                "Dropped by some creatures in Arche.");
+        add("gui.journal.ingredients.swollen_growth.text", "A large abnormal excrescence. We have much less control over our bodies than we believe. It is dropped by some creatures in Arche.\\n" +
+                "Inserting the gland into a patient’s back will apply §ldisrobe§r to its abomination burst, at a cost in capacity. Inserting into the chest instead produces a peculiar effect: the patient will progressively grow an item within its body, said item being any of the solid ingredients that have been inserted into its chest (including the swollen growth itself). After some time, the tumor will have fully grown (visible by dripping blood) and hitting the patient will make the item drop. However, the patient can only survive this process a few times before perishing.");
 
         add("gui.journal.ingredients.periosteum_growth.title", "Periosteum Growth");
-        add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There's a certain unease at seeing your true self beneath that curtain of flesh.");
+        add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There's a certain unease at seeing your true self beneath that curtain of flesh.\\n" +
+                "Inserting the gland into a patient’s back will apply §lfearsome§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will make any creepers approaching the patient flee away in terror.");
 
         add("gui.journal.ingredients.chromatophore_gland.title", "Chromatophore Gland");
-        add("gui.journal.ingredients.chromatophore_gland.text", "Used for mimicry. The need to veil your true self is present even in nature.");
+        add("gui.journal.ingredients.chromatophore_gland.text", "Used for mimicry. The need to veil your true self is present even in nature.\\n" +
+                "Inserting the gland into a patient’s back will apply §lcamouflage§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will slightly lower the distance at which the patient can be targeted by hostile creatures.");
 
         add("gui.journal.ingredients.osteoclast_gland.title", "Osteoclast Gland");
-        add("gui.journal.ingredients.osteoclast_gland.text", "Destroys bony formations. Very harmful against undead, from skellies to withers.");
+        add("gui.journal.ingredients.osteoclast_gland.text", "Destroys bony formations. Very harmful against undead, from skellies to withers.\\n" +
+                "Inserting the gland into a patient’s back will apply §lharm undead§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will stop undead from targeting the patient – villagers will no longer need to fear zombie attacks.");
 
         add("gui.journal.ingredients.slime_heart.title", "Slime Heart");
-        add("gui.journal.ingredients.slime_heart.text", "Not truly a \"heart\", but a sort of reproductive organ: it is through this that dying slimes will divide and conquer.");
+        add("gui.journal.ingredients.slime_heart.text", "Not truly a \"heart\", but a sort of reproductive organ: it is through this that dying slimes will divide and conquer.\\n" +
+                "Inserting the gland into a patient’s back will apply §lcreate slimes§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will make nearby slimes protect the patient from aggressors.");
+
+        add("gui.journal.ingredients.scales.title", "Scales");
+        add("gui.journal.ingredients.scales.text", "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them into the chest instead will have catastrophic effects.");
+
 
         add("gui.journal.journal.type.none", "Select Type");
         add("gui.journal.journal.type.position", "Position");

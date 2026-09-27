@@ -155,6 +155,7 @@ public class RitualRegistry {
                             return List.of();
                         }
                     }
+
                     ColorTriplet colorTriplet = new ColorTriplet(dyes.get(0), dyes.get(1), dyes.get(2));
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("pool", true);
@@ -163,6 +164,13 @@ public class RitualRegistry {
                     return List.of(flebo);
                 }
                 return List.of();
+            })
+            .setOtherEffects((player, level, targetPos, dimension) -> {
+                if (level != null) {
+                    if (level.getPlayerByUUID(player) instanceof ServerPlayer sp) {
+                        DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.bound_flebo.name(), true);
+                    }
+                }
             })
             .toTemplate(TEMPLATES, BY_NAME);
 

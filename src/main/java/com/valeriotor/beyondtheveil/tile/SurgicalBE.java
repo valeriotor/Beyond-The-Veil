@@ -34,6 +34,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -520,6 +521,9 @@ public abstract class SurgicalBE extends BlockEntity {
                         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                     }
                     if (patientStatus != null && player != null) {
+                        if (patientStatus.isPlayerSurgery()) {
+                            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.player_surgery.name(), true);
+                        }
                         if (patientStatus.getCondition().isTerminal()) {
                             player.kill();
                             player.setHealth(0);
@@ -585,8 +589,8 @@ public abstract class SurgicalBE extends BlockEntity {
         if (fleboOwner != null) {
             multiplier = bloodPoolData.getBaseMultiplier(fleboOwner);
         }
-        if (convalescentData.getFlags().getOrDefault(OperationRegistry.VASOCONSTRICTOR_CHEST.getName(), 0) > 0 && patientStatus.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_SKULL.getName(), 0) > 0) {
-            multiplier++;
+        if (convalescentData.getFlags().getOrDefault(OperationRegistry.VASOCONSTRICTOR_SKULL.getName(), 0) > 0 && patientStatus.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_SKULL.getName(), 0) > 0) {
+            multiplier = Mth.ceil(multiplier * 1.5);
         }
         if (fleboOwner != null && bloodPoolData.isArchePlayer(fleboOwner)) {
             multiplier *= 2;

@@ -14,6 +14,7 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
     private static final ResourceLocation PLUS = new ResourceLocation(References.MODID, "textures/gui/plus.png");
     private static final ResourceLocation CROSS = new ResourceLocation(References.MODID, "textures/gui/cross.png");
     private final Supplier<T> newElement;
+    private boolean editable;
 
 
     public EditableList(int width, int height, List<T> rows, int rowHeight, int scrollbarWidth, Supplier<T> newElement) {
@@ -36,11 +37,11 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
     @Override
     protected boolean clickElement(int element, double relativeMouseX, double relativeMouseY, int mouseButton) {
         T e = rows().get(element);
-        if (e.hoveringAdd(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
+        if (editable && e.hoveringAdd(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
             List<T> newList = new ArrayList<>(rows());
             newList.add(element + 1, newElement.get());
             changeElements(newList);
-        } else if (rows().size() > 1 && e.hoveringDelete(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
+        } else if (editable && rows().size() > 1 && e.hoveringDelete(relativeMouseX, relativeMouseY - relativeYForElement(element))) {
             List<T> newList = new ArrayList<>(rows());
             newList.remove(element);
             changeElements(newList);
@@ -50,7 +51,11 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
         return true;
     }
 
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
     public interface EditableListElement {
+
 
         default void renderAdd(PoseStack poseStack, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY) {
             graphics.blit(PLUS, 1, iconY(), 0, 0, 14, 14, 14, 14);
@@ -81,5 +86,4 @@ public class EditableList<T extends Element & EditableList.EditableListElement> 
         int getHeight();
 
     }
-
 }

@@ -252,4 +252,18 @@ public class PlayerEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void playerSleepInBedEvent(PlayerSleepInBedEvent event) {
+        Player p = event.getEntity();
+        if (!p.level().isClientSide) {
+            p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
+                CrossSync crossSync = c.getCrossSync();
+                if (crossSync.getTransformation() != null) {
+                    event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
+                    p.sendSystemMessage(Component.translatable("message.transformation.sleep"));
+                }
+            });
+        }
+    }
+
 }

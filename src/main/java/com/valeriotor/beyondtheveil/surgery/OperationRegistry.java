@@ -51,6 +51,14 @@ public class OperationRegistry {
         return INSERTION_OPERATION_TO_ITEM.get(operationName);
     }
 
+    public static List<InjectionEntry> injectionsForFluid(Fluid fluid) {
+        return INJECTION_OPERATIONS.get(fluid);
+    }
+
+    public static List<InsertionEntry> insertionsForItem(Item item) {
+        return INSERTION_OPERATIONS.get(item);
+    }
+
     public static final String SPINELESS = "spineless";
     public static final String IRON_SPINE = "iron_spine";
 
@@ -94,10 +102,6 @@ public class OperationRegistry {
             .buildExtractionOperation(EXTRACTION_OPERATIONS, status -> {
                 if (status.getPatientType() == PatientType.WEEPER) {
                     return new ItemStack(Items.COAL);
-                }
-                if (status.getFlags().getOrDefault("triggering_serum_chest", 0) > 0 && status.getFlags().getOrDefault("targeting_serum_chest", 0) > 0
-                        && status.getFlags().getOrDefault("tears_chest_back", 0) > 0 && status.getFlags().getOrDefault("insert_plucked_eye_chest", 0) > 0) {
-                    return new ItemStack(Registration.REVELATION_RING.get());
                 }
                 if (status.getFlags().containsKey("insert_marrow_gland_chest") && status.getFlags().containsKey("insert_silk_gland_chest") && status.getFlags().containsKey("insert_gunpowder_bladder_chest")) {
                     return new ItemStack(Registration.BLOOD_FIST.get());
@@ -149,6 +153,27 @@ public class OperationRegistry {
             .makeSpineless()
             .addPlayerData(PlayerDataLib.extracted_bone_tiara.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> new ItemStack(Registration.BONE_TIARA.get()), s -> s.getString("insert_emerald_gem_back") == 3, true);
+
+    public static final Operation EXTRACT_RING_OF_REVELATION = new Operation.Builder("extract_ring_of_revelation")
+            .setPainPerTick(s -> s.hasString("soften") ? 0.4 : 4)
+            .setDuration(180)
+            .setPainForFailure(50)
+            .setRequirementForSuccessfulCompletion(s -> !s.hasString("soften_too_much"))
+            .setCompletionMessage(s -> s.hasString("soften_too_much") ? "surgery.extract_heart.too_soft" : null)
+            .addAllowedLocation(SurgicalLocation.CHEST)
+            .setSuccessSound(BTVSounds.HEART_RIP.get())
+            .setStatusChangeOnSuccess(s -> {
+                if (s.getPatientType() != PatientType.WEEPER) {
+                    s.setCondition(PatientCondition.DEAD);
+                }
+            })
+            .setPersistent(true)
+            .wantsSoften(true)
+            .setRequiresIncision(true)
+            .setProgressParticles(true)
+            .addPlayerData(PlayerDataLib.extracted_revelation_ring.name())
+            .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> new ItemStack(Registration.REVELATION_RING.get()), s -> s.getPatientType() != PatientType.WEEPER && s.getFlags().getOrDefault("triggering_serum_chest", 0) > 0 && s.getFlags().getOrDefault("targeting_serum_chest", 0) > 0
+                    && s.getFlags().getOrDefault("tears_chest_back", 0) > 0 && s.getFlags().getOrDefault("insert_plucked_eye_chest", 0) > 0, true);
 
     public static final Operation FILL_BRAIN = new Operation.Builder("fill_brain")
             .addAllowedLocation(SurgicalLocation.SKULL)
@@ -262,6 +287,7 @@ public class OperationRegistry {
             .setStatusChangeOnSuccess(PatientStatus::explode)
             .addPlayerData(PlayerDataLib.created_weeper.name())
             .buildInjectionOperation(BTVFluids.FLUID_TEARS.getA().get(), 30);
+    public static final Operation VASOCONSTRICTOR_SKULL = makeBasicInjection("vasoconstrictor_skull", 2.9, 70, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 64); // Code in SurgicalBE::getFleboMultiplier
 
 
     /**************************************** BACK & SKULL INJECTIONS ****************************************/
@@ -312,6 +338,8 @@ public class OperationRegistry {
     public static final Operation TEARS_CHEST_BACK = makeBasicInjection("tears_chest_back", 1.1, 110, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
             .buildInjectionOperation(BTVFluids.FLUID_TEARS.getA().get(), 45);
 
+    public static final Operation VASOCONSTRICTOR_CHEST_BACK = makeBasicInjection("vasoconstrictor_chest_back", 2.5, 60, -10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
+
     /**************************************** CHEST INJECTIONS ****************************************/
     public static final Operation GREAT_HEART = new Operation.Builder("great_heart")
             .addAllowedLocation(SurgicalLocation.CHEST)
@@ -326,11 +354,10 @@ public class OperationRegistry {
             .buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 70);
 
     public static final Operation LIQUID_GOLD_CHEST = makeBasicInjection("liquid_gold_chest", 1.5, 110, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 60);
-    public static final Operation VASOCONSTRICTOR_CHEST = makeBasicInjection("vasoconstrictor_chest", 2.5, 110, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
     public static final Operation ORGANOCHLORIDE_CHEST = makeBasicInjection("organochloride_chest", 0.9, 130, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 60); // Code in LivingEvents::targetEvent
     public static final Operation PHEROMONES_CHEST = makeBasicInjection("pheromones_chest", 0.9, 130, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 60); // Code in ConvalescentData::tick
 
-    public static final Operation DIAMOND_POWDER_CHEST = makeBasicInjection("diamond_powder_chest", 2.5, 90, 5, true, SurgicalLocation.CHEST)
+    public static final Operation DIAMOND_POWDER_CHEST = makeBasicInjection("diamond_powder_chest", 2.5, 90, 3, true, SurgicalLocation.CHEST)
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
@@ -367,19 +394,6 @@ public class OperationRegistry {
 
     /**************************************** BACK INJECTIONS ****************************************/
 
-    public static final Operation INJECT_VASOCONSTRICTOR_FLUID = new Operation.Builder("inject_vasoconstrictor_fluid")
-            .addAllowedLocation(SurgicalLocation.BACK)
-            .setPainPerTick(1.2)
-            .setPersistent(true)
-            .setPainForFailure(60)
-            .setSuccessParticles(true)
-            .setParticleOffset(new Vec3(0, 0, 1))
-            .setSuccessParticleType(ParticleTypes.CRIT)
-            .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
-            .setSuccessParticleCount(5)
-            .setCapacityRequirement(-10)
-            .buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
-
     public static final Operation GREAT_SPINE = makeBasicInjection("great_spine", 3.5, 90, 0, true, SurgicalLocation.BACK).buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
 
 
@@ -407,13 +421,13 @@ public class OperationRegistry {
     public static final Operation INJECT_ORGANOCHLORIDE_BACK = makeArsenalInjection("inject_organochloride_back", 0.9, 90, 6, ArsenalEffectRegistry.HARM_ARTHROPODS).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 80);
     public static final Operation INJECT_PHEROMONES_BACK = makeArsenalInjection("inject_pheromones_back", 0.9, 90, 11, ArsenalEffectRegistry.EVERYONE_TARGET).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 80);
 
-    public static final Operation DIAMOND_POWDER_BACK = makeBasicInjection("diamond_powder_back", 2.5, 90, 5, true, SurgicalLocation.BACK)
+    public static final Operation DIAMOND_POWDER_BACK = makeBasicInjection("diamond_powder_back", 2.5, 90, 3, true, SurgicalLocation.BACK)
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
             .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 80);
 
-    public static final Operation LIQUID_GLOWSTONE_BACK = makeBasicInjection("liquid_glowstone_back", 1.5, 90, 5, true, SurgicalLocation.BACK)
+    public static final Operation LIQUID_GLOWSTONE_BACK = makeBasicInjection("liquid_glowstone_back", 1.5, 90, 4, true, SurgicalLocation.BACK)
             .setIncreaseArsenalEffectAmplifier(true)
             .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 110);
 

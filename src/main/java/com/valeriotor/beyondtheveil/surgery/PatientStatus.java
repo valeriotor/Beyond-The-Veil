@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.arsenal.*;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -83,6 +84,7 @@ public class PatientStatus {
     private int ticksSinceLastInjection; // To slow down weeper creation
     private boolean inRitual;
     private boolean independentTriggerType;
+    private boolean playerSurgery;
 
     public PatientStatus(PatientType patientType) {
         this.patientType = patientType;
@@ -473,6 +475,12 @@ public class PatientStatus {
             player.sendSystemMessage(Component.translatable(completionMessage));
         }
         if (success) {
+            if (patientType == PatientType.PLAYER) {
+                if (player != null) {
+                    DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.player_surgery.name(), true); // this updates the surgeon (i.e. a player performed a surgery on another player)
+                }
+                playerSurgery = true; // this is used by the surgicalBE (that has access to the patient player) to update their data as well
+            }
             operation.getStatusChangeOnSuccess().accept(this);
             if (operation.getSuccessSound() != null) {
                 level.playSound(null, pos, operation.getSuccessSound(), SoundSource.BLOCKS, 1, 1);
@@ -906,5 +914,9 @@ public class PatientStatus {
 
     public boolean didFinalAnimation() {
         return didFinalAnimation;
+    }
+
+    public boolean isPlayerSurgery() {
+        return playerSurgery;
     }
 }

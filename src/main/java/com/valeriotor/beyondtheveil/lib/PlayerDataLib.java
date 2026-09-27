@@ -62,6 +62,7 @@ public enum PlayerDataLib {
     extracted_heart,
     extracted_spine,
     extracted_bone_tiara,
+    extracted_revelation_ring,
     ate_slug,
     first_skull_operation,
     cultist_killed,
@@ -86,6 +87,8 @@ public enum PlayerDataLib {
     did_binding,
     received_revelation,
     bound_cult,
+    bound_flebo,
+    upgraded_pool,
     met_cult,
     binding_overworld,
     binding_nether,
@@ -95,7 +98,8 @@ public enum PlayerDataLib {
     scaled_crawler_death,
     scaled_player,
     scaled_player_death,
-    metamorphosis
+    metamorphosis,
+    player_surgery
     ;
 
     // Longs

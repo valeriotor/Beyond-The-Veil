@@ -1,7 +1,9 @@
 package com.valeriotor.beyondtheveil.world.saved.blood_pool;
 
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -74,7 +76,7 @@ public class BloodPoolData extends SavedData {
         if (metadata.levelIncreasedMessage) {
             metadata.levelIncreasedMessage = false;
             player.sendSystemMessage(Component.translatable("gui.blood_pool.levelup"));
-
+            DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.upgraded_pool.name(), true);
         }
     }
 
@@ -87,8 +89,8 @@ public class BloodPoolData extends SavedData {
     }
 
     private static final List<Tuple<Integer, Integer>> MULTIPLIER_THRESHOLDS = List.of(
-            new Tuple<>(30, 2),
-            new Tuple<>(100, 3),
+            new Tuple<>(10, 2),
+            new Tuple<>(60, 3),
             new Tuple<>(200, 4),
             new Tuple<>(350, 5)
             );
