@@ -338,7 +338,7 @@ public class OperationRegistry {
     public static final Operation TEARS_CHEST_BACK = makeBasicInjection("tears_chest_back", 1.1, 110, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
             .buildInjectionOperation(BTVFluids.FLUID_TEARS.getA().get(), 45);
 
-    public static final Operation VASOCONSTRICTOR_CHEST_BACK = makeBasicInjection("vasoconstrictor_chest_back", 2.5, 60, -10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
+    public static final Operation VASOCONSTRICTOR_CHEST_BACK = makeBasicInjection("vasoconstrictor_chest_back", 2.5, 60, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
 
     /**************************************** CHEST INJECTIONS ****************************************/
     public static final Operation GREAT_HEART = new Operation.Builder("great_heart")
