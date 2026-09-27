@@ -534,6 +534,7 @@ public class OperationRegistry {
             .setPainPerTick(s -> s.hasString("soften") ? 1.2 : 5)
             .buildInsertionOperation(Registration.EMERALD_GEM.get()); // code in ConvalescentData::tick
 
+    public static final Operation INSERT_CHROMATOPHORE_GLAND_CHEST = makeBasicInsertion("insert_chromatophore_gland_chest", 100, 0.1, 140, SurgicalLocation.CHEST).buildInsertionOperation(Registration.CHROMATOPHORE_GLAND.get());
 
     /**************************************** HELPER METHODS ****************************************/
 

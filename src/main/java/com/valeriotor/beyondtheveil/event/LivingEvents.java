@@ -31,6 +31,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.MagmaCube;
@@ -147,6 +150,15 @@ public class LivingEvents {
                     if (c.getFlags().getOrDefault(OperationRegistry.ORGANOCHLORIDE_CHEST.getName(), 0) > 0) {
                         if (event.getEntity().getMobType() == MobType.ARTHROPOD) {
                             event.setNewTarget(null);
+                        }
+                    }
+                    if (event.getNewTarget() != null && c.getFlags().getOrDefault(OperationRegistry.INSERT_CHROMATOPHORE_GLAND_CHEST.getName(), 0) > 0) {
+                        AttributeInstance attribute = entity.getAttribute(Attributes.FOLLOW_RANGE);
+                        if (attribute != null) {
+                            double followRange = attribute.getValue();
+                            if (event.getNewTarget().distanceToSqr(entity) > followRange * followRange / 3) { // divide range by square root of 3 -> -42% range
+                                event.setNewTarget(null);
+                            }
                         }
                     }
                 });
