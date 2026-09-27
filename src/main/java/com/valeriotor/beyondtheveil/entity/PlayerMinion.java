@@ -35,7 +35,7 @@ public interface PlayerMinion {
 
     default boolean toggleFollow(Player player, ItemStack stack) {
         if (stack.isEmpty() && player != null) {
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide && player.getUUID().equals(getMasterID())) {
                 orderToFollow(!isOrderedToFollow());
                 player.sendSystemMessage(Component.translatable("interact.minion." + (isOrderedToFollow() ? "follow" : "stop_follow")));
             }
