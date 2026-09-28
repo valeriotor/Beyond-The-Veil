@@ -55,7 +55,7 @@ public class PatientStatus {
     // TODO condition is copied to Convalescent capability
     private PatientCondition condition = PatientCondition.STABLE;
     private int leftoverCapacity;
-    private int usedCapacity;
+    private int usedAbominationCapacity;
     private double currentPain;
     private int currentAbsolutePainThreshold; // from 0 to ABSOLUTE_PAIN_THRESHOLDS.length
     private int currentMissingPainThreshold; // from 0 to MISSING_PAIN_THRESHOLDS.length
@@ -98,8 +98,8 @@ public class PatientStatus {
         return leftoverCapacity;
     }
 
-    public int getUsedCapacity() {
-        return usedCapacity;
+    public int getUsedAbominationCapacity() {
+        return usedAbominationCapacity;
     }
 
     public List<ArsenalEffectType> getArsenalEffects() {
@@ -240,7 +240,7 @@ public class PatientStatus {
         targetType = triggerData.getTargetType();
         setCondition(data.getCondition());
         leftoverCapacity = data.getCapacity();
-        usedCapacity = data.getUsedCapacity();
+        usedAbominationCapacity = data.getUsedAbominationCapacity();
         this.triggerDataCache = null;
     }
 
@@ -490,8 +490,8 @@ public class PatientStatus {
             if (capacityRequirement >= 0 || patientType != PatientType.WEEPER) {
                 leftoverCapacity -= capacityRequirement;
             }
-            if (capacityRequirement > 0) {
-                usedCapacity += capacityRequirement;
+            if (capacityRequirement > 0 && exposedLocation == SurgicalLocation.BACK) {
+                usedAbominationCapacity += capacityRequirement;
             }
 
             // TODO entityChange (and setDirty?)
@@ -749,7 +749,7 @@ public class PatientStatus {
         tag.putBoolean("inRitual", inRitual);
         tag.putDouble("current_pain", currentPain);
         tag.putInt("leftoverCapacity", leftoverCapacity);
-        tag.putInt("usedCapacity", usedCapacity);
+        tag.putInt("usedCapacity", usedAbominationCapacity);
         tag.putString("exposedLocation", exposedLocation.name());
         tag.putBoolean("incised", incised);
         //tag.putInt("absolute_threshold", currentAbsolutePainThreshold);
@@ -822,7 +822,7 @@ public class PatientStatus {
         if (tag.contains("leftoverCapacity")) {
             leftoverCapacity = tag.getInt("leftoverCapacity");
         }
-        usedCapacity = tag.getInt("usedCapacity");
+        usedAbominationCapacity = tag.getInt("usedCapacity");
         exposedLocation = SurgicalLocation.valueOf(tag.getString("exposedLocation"));
         incised = tag.getBoolean("incised");
         currentMissingPainThreshold = tag.getInt("missing_threshold"); // needs to be synced to client, even if we don't care about persistence

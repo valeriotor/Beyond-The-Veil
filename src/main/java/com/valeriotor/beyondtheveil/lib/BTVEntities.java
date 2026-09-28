@@ -87,11 +87,11 @@ public class BTVEntities {
 
     public static Tuple<EntityType<?>, BloodPoolEntityType> getTriggerEntity(ConvalescentData data, TriggerData triggerData) {
         if (triggerData != null) {
-            if (data.getUsedCapacity() == 0) {
+            if (data.getUsedAbominationCapacity() == 0) {
                 return new Tuple<>(BTVEntities.CRAWLER.get(), BloodPoolEntityType.VILLAGER);
-            } else if (data.getUsedCapacity() <= 10) {
+            } else if (data.getUsedAbominationCapacity() <= 10) {
                 return new Tuple<>(BTVEntities.ABOMINATION_0.get(), BloodPoolEntityType.ABOMINATION0);
-            } else if (data.getUsedCapacity() <= 20) {
+            } else if (data.getUsedAbominationCapacity() <= 20) {
                 return new Tuple<>(BTVEntities.ABOMINATION_1.get(), BloodPoolEntityType.ABOMINATION1);
             } else {
                 return new Tuple<>(BTVEntities.ABOMINATION_2.get(), BloodPoolEntityType.ABOMINATION2);

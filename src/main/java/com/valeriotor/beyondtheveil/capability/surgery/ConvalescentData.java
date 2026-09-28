@@ -50,7 +50,7 @@ public class ConvalescentData {
         data.setFlags(status.getPersistentFlags());
         data.setTriggerData(status.getTriggerData());
         data.setCapacity(status.getLeftoverCapacity());
-        data.setUsedCapacity(status.getUsedCapacity());
+        data.setUsedAbominationCapacity(status.getUsedAbominationCapacity());
         data.chestEffects.putAll(status.makeChestEffects());
         return data;
     }
@@ -61,7 +61,7 @@ public class ConvalescentData {
     private final Map<MobEffect, Integer> chestEffects = new HashMap<>(); //TODO
     private TriggerData triggerData;
     private int capacity;
-    private int usedCapacity;
+    private int usedAbominationCapacity;
     private int collectedXP = 0;
     private BlockPos chestPos;
     private ItemStack heldStack = ItemStack.EMPTY;
@@ -91,12 +91,12 @@ public class ConvalescentData {
         return capacity;
     }
 
-    public void setUsedCapacity(int usedCapacity) {
-        this.usedCapacity = usedCapacity;
+    public void setUsedAbominationCapacity(int usedAbominationCapacity) {
+        this.usedAbominationCapacity = usedAbominationCapacity;
     }
 
-    public int getUsedCapacity() {
-        return usedCapacity;
+    public int getUsedAbominationCapacity() {
+        return usedAbominationCapacity;
     }
 
     public void setTriggerData(TriggerData triggerData) {
@@ -344,7 +344,7 @@ public class ConvalescentData {
             tag.put("triggerData", triggerData.saveToNBT(new CompoundTag()));
         }
         tag.putInt("capacity", capacity);
-        tag.putInt("usedCapacity", usedCapacity);
+        tag.putInt("usedCapacity", usedAbominationCapacity);
         if (chestPos != null) {
             tag.putLong("chestPos", chestPos.asLong());
         }
@@ -377,7 +377,7 @@ public class ConvalescentData {
         if (tag.contains("capacity")) { // if check so that it doesn't overwrite weeper base capacity with 0
             capacity = tag.getInt("capacity");
         }
-        usedCapacity = tag.getInt("usedCapacity");
+        usedAbominationCapacity = tag.getInt("usedCapacity");
         if (tag.contains("chestPos")) {
             chestPos = BlockPos.of(tag.getLong("chestPos"));
         }
