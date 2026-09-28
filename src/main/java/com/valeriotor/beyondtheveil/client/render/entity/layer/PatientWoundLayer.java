@@ -22,6 +22,7 @@ public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> 
     public static final ResourceLocation IRON_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/wound_iron.png");
     public static final ResourceLocation CHEST_WOUND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound.png");
     public static final ResourceLocation CHEST_WOUND_DIAMOND_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound_diamond.png");
+    public static final ResourceLocation CHEST_WOUND_RING_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/chest_wound_ring.png");
     public static WoundModel<CrawlerEntity> woundModel;
     public static ChestWoundModel<CrawlerEntity> chestWoundModel;
 
@@ -49,14 +50,19 @@ public class PatientWoundLayer extends RenderLayer<CrawlerEntity, CrawlerModel> 
 
     @Override
     protected @NotNull ResourceLocation getTextureLocation(CrawlerEntity pEntity) {
-        if (pEntity.isSurgeryPatient()) {
-            if (pEntity.getPatientStatus().getExposedLocation() == SurgicalLocation.CHEST) {
-                if (pEntity.getPatientStatus().getFlags().getOrDefault(OperationRegistry.DIAMOND_POWDER_CHEST.getName(), 0) > 0) {
+        if (pEntity.isSurgeryPatient() && pEntity.getPatientStatus() != null) {
+            PatientStatus s = pEntity.getPatientStatus();
+            if (s.getExposedLocation() == SurgicalLocation.CHEST) {
+                if (s.getFlags().getOrDefault(OperationRegistry.DIAMOND_POWDER_CHEST.getName(), 0) > 0) {
                     return CHEST_WOUND_DIAMOND_TEXTURE;
+                }
+                if (s.getFlags().getOrDefault("triggering_serum_chest", 0) > 0 && s.getFlags().getOrDefault("targeting_serum_chest", 0) > 0
+                        && s.getFlags().getOrDefault("tears_chest_back", 0) > 0 && s.getFlags().getOrDefault("insert_plucked_eye_chest", 0) > 0) {
+                    return CHEST_WOUND_RING_TEXTURE;
                 }
                 return CHEST_WOUND_TEXTURE;
             }
-            if (pEntity.getPatientStatus().getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
+            if (s.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                 return IRON_WOUND_TEXTURE;
             }
         }

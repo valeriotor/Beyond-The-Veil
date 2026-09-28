@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "C": {
+      "item": "minecraft:bucket"
+    },
+    "B": {
+      "item": "minecraft:brick"
+    }
+  },
+  "pattern": [
+    " BB ",
+    "BCCB",
+    "BCCB",
+    " BB "
+  ],
+  "result": {
+    "item": "beyondtheveil:lacrymatory"
+  },
+  "show_notification": true
+}

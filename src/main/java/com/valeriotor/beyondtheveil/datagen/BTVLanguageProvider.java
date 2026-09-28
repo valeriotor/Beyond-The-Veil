@@ -1950,9 +1950,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BOUND_IV_STAND.stage.0", "According to Mauer’s work, the IV stands I bind to a color combination will send an adjacent patient to my blood pool after the surgery’s completion.\\n" +
                         "This is especially useful with abominations: whereas wizards are known to craft spells and witches used to brew potions, my arsenal will consist of living bombs, to be summoned on my command via blood gems to burst next to me or my foes.\\n" +
                         "Yet, each such burst costs a human life! That is a terrible price to pay for a single strike, and I do not see a way around this. I can only hope that, via sufficient practice, better methods come to mind.");
-        add("research.BOUND_IV_STAND.stage.1", "Via the sending of numerous patients to my blood pool, the vein connecting the overworld to this little pocket of mine has, somehow, widened. The result is that for every patient that is sent, more than one arrives.\n" +
+        add("research.BOUND_IV_STAND.stage.1", "Via the sending of numerous patients to my blood pool, the vein connecting the overworld to this little pocket of mine has, somehow, widened. The result is that for every patient that is sent, more than one arrives.\\n" +
                 "This is extraordinary. I am creating life. Or, well, the vein is, as is the purpose of blood. Yet I cannot guess at the underlying mechanism: is the patient being cloned? Is it being split or is a new amalgam being shaped in its image? Or did the clone always exist, somewhere, somewhen, and it is merely being plucked from there? And what happens when my body goes down these veins?! Could this mean that... no, I have seen no evidence of it.\\n" +
-                "Nonetheless, this is useful in its improved efficiency of my procedures: multiple abomination bursts may come at the cost of a single human life (well, more than one dies, but it only costs me one).\\n" +
+                "Nonetheless, this is useful in its improved efficiency of my procedures: multiple abomination bursts may come at the cost of a single human life (well, more than one dies, but it only costs §ome§r one).\\n" +
                 "I can research ways to push this further. Pesticides, such as those used to kill spiders, can thin the outer layers of blood vessels; injecting such a fluid into the skull of a patient, together with some vasoconstrictor, may further increase the effect of this phenomenon as it travels deep down.");
 
         add("research.SURGEONS.title", "Surgeons");
@@ -2196,6 +2196,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.surgery_bed.title", "Surgery Bed");
         add("gui.dagon.title", "Communion");
         add("gui.metamorphosis.title", "Metamorphosis");
+        add("gui.research_page.complete", "Progress");
 
         addJournal();
         addLetterBox();

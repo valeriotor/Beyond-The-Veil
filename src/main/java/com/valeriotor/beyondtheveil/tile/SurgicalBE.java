@@ -237,7 +237,7 @@ public abstract class SurgicalBE extends BlockEntity {
         //    entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
         //}
         for (int i = 0; i < fleboMultiplier; i++) {
-            boolean increaseAdditions = !was_added_to_blood_pool && convalescentData.getFlags().size() > 0;
+            boolean increaseAdditions = !was_added_to_blood_pool && convalescentData.getFlags().size() > 1;
             bloodPoolData.addEntity(fleboOwner, color, BloodPoolEntity.fromPatient(patientStatus.getPatientType(), entityData, convalescentData, convalescentData.getTriggerData(), fleboOwner), sl, increaseAdditions);
         }
     }

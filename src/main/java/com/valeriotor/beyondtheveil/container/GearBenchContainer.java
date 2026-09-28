@@ -154,7 +154,7 @@ public class GearBenchContainer extends AbstractContainerMenu {
                 IItemHandler cap = lazyCap.orElse(null);
                 for (int i = 0; i < 16; i++) {
                     Item item = cap.extractItem(i, 1, false).getItem();
-                    if (item instanceof BucketItem) {
+                    if (item instanceof BucketItem && item != Items.BUCKET) {
                         cap.insertItem(i, new ItemStack(Items.BUCKET), false);
                     }
                 }
