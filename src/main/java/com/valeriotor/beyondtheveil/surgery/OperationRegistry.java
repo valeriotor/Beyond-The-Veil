@@ -361,6 +361,8 @@ public class OperationRegistry {
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
+            .setMaximumTimesAllowed(-1)
+            .setEraseFluid(true)
             .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 80);
 
     public static final Operation TRIGGERING_SERUM_CHEST = makeBasicInjection("triggering_serum_chest", 1.1, 110, 0, true, SurgicalLocation.CHEST)
@@ -425,11 +427,10 @@ public class OperationRegistry {
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
+            .setMaximumTimesAllowed(-1)
+            .setEraseFluid(true)
             .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 80);
 
-    public static final Operation LIQUID_GLOWSTONE_BACK = makeBasicInjection("liquid_glowstone_back", 1.5, 90, 4, true, SurgicalLocation.BACK)
-            .setIncreaseArsenalEffectAmplifier(true)
-            .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 110);
 
 
 
@@ -447,6 +448,11 @@ public class OperationRegistry {
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.EMPTY_BLADDER.get());
 
+    public static final Operation LIQUID_GLOWSTONE_BACK_CHEST = makeBasicInjection("liquid_glowstone_back_chest", 1.5, 90, 4, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
+            .setIncreaseArsenalEffectAmplifier(true)
+            .setMaximumTimesAllowed(-1)
+            .setEraseFluid(true)
+            .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 110);
 
     /**************************************** BACK INSERTIONS ****************************************/
 

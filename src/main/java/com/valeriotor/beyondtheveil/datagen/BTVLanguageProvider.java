@@ -2737,10 +2737,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.ingredients.liquid_glowstone.title", "Liquid Glowstone");
         add("gui.journal.ingredients.liquid_glowstone.text", "Not unlike its powdery counterpart, this substance can increase the potency of effects. Doing so as a liquid rather than solid does wonders in reducing the pain inflicted on the patient.\\n" +
-                "This fluid can be injected into a patient’s back to amplify the potency of an abomination effect, at a cost in capacity.");
+                "This fluid can be injected into a patient’s back or chest to amplify the potency of an abomination effect, at a cost in capacity.");
 
         add("gui.journal.ingredients.diamond_powder.title", "Diamond Powder");
-        add("gui.journal.ingredients.diamond_powder.text", "Diamonds grounded into not-so-fine dust. Very painful for the patient.  It can be injected into a patient’s back to amplify the potency of an abomination effect, at a cost in capacity. It can also be injected into the chest: doing so will cover the heart in its particles, and a subsequent extraction may result in the obtaining of diamonds.\\n" +
+        add("gui.journal.ingredients.diamond_powder.text", "Diamonds grounded into not-so-fine dust. Very painful for the patient.  It can be injected into a patient’s back or chest to amplify the potency of an effect, at a cost in capacity. Additionally, if injected in the chest it will cover the heart in its particles, and a subsequent extraction may result in the obtaining of diamonds.\\n" +
                 "However, it is too sharp for skull injections.");
 
         add("gui.journal.ingredients.liquid_gold.title", "Liquid Gold");

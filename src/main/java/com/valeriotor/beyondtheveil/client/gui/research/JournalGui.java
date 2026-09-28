@@ -966,7 +966,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                     if (capacityRequirement == 99) {
                         graphics.drawString(minecraft.font, Component.translatable("gui.journal.capacity_need_varies"), 0, 0, 0xFFDD9966);
                     } else {
-                        graphics.drawString(minecraft.font, Component.translatable("gui.journal.capacity_need", capacityRequirement), 0, 0, 0xFFDD9966);
+                        boolean both = this instanceof FluidItemEntry f && (f.fluids.get(0) == BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get() || f.fluids.get(0) == BTVFluids.FLUID_DIAMOND_POWDER.getA().get());
+                        graphics.drawString(minecraft.font, Component.translatable(both ? "gui.journal.capacity_need_both" : "gui.journal.capacity_need", capacityRequirement), 0, 0, 0xFFDD9966);
                     }
                 }
                 //graphics.drawString(minecraft.font, Component.translatable("gui.journal." + (capacityRequirement < 0 ? "capacity_increase" : (capacityRequirement == 99 ? "capacity_need_varies" : "capacity_need")), "§c" + Math.abs(capacityRequirement)), 0, 0, 0xFFCCCCCC);

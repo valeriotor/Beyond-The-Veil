@@ -212,7 +212,7 @@ public class ConvalescentData {
             MobEffect effect = OperationRegistry.getChestEffectInjection(e.getKey());
             if (e.getValue() % 20 == 1) {
                 if (effect != null) {
-                    entity.addEffect(new MobEffectInstance(effect, 15 * 20, chestEffects.getOrDefault(effect, 0)));
+                    entity.addEffect(new MobEffectInstance(effect, 15 * 20, chestEffects.getOrDefault(effect, 0), false, !(entity instanceof Player)));
                 }
             } else if (e.getValue() == 0) {
                 if (effect != null) {
