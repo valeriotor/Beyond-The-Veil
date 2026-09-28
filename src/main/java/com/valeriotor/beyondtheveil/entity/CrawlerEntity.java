@@ -116,7 +116,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 //pPlayer.setItemSlot(EquipmentSlot.MAINHAND, heldVillager);
                 //discard();
                 pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> {
-                    if (!data.getCrossSync().isCrawling()) {
+                    if (data.getCrossSync().canHoldPatient()) {
                         data.getCrossSync().setHeldPatient(this, pPlayer);
                         discard();
                     }

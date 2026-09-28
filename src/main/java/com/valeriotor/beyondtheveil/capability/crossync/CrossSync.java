@@ -92,6 +92,10 @@ public class CrossSync {
         return crawling;
     }
 
+    public boolean canHoldPatient() {
+        return !crawling && transformation == null;
+    }
+
     public void setDreamFocus(Player player, boolean value) {
         if (value != this.dreamFocus) {
             this.dreamFocus = value;

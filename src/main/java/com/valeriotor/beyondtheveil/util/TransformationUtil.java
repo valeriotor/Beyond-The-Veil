@@ -69,7 +69,11 @@ public class TransformationUtil {
             player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 CrossSync crossSync = c.getCrossSync();
                 PlayerTimerData playerTimerData = PlayerTimerData.for_(player);
-                if (!playerTimerData.hasTimer("transform_cooldown")) {
+                if (playerTimerData.hasTimer("transform_cooldown")) {
+                    player.sendSystemMessage(Component.translatable("message.transformation.cooldown", playerTimerData.getTimer("transform_cooldown").getRemainingTime() / 20 + 1));
+                } else if (crossSync.getHeldPatientEntity(player.level()) != null) {
+                    player.sendSystemMessage(Component.translatable("message.transformation.holding"));
+                } else {
                     if (crossSync.getTransformation() == null || crossSync.getTransformation() == PlayerTransformation.SCALED) {
                         crossSync.setTransformation(PlayerTransformation.DEEP_ONE, player);
                         player.level().playSound(null, player.blockPosition(), BTVSounds.DEEP_ONE_TRANSFORM.get(), SoundSource.PLAYERS);
@@ -78,8 +82,6 @@ public class TransformationUtil {
                         crossSync.setTransformation(null, player);
                         playerTimerData.addTimer(new PlayerTimer(TRANSFORM_COOLDOWN, "transform_cooldown", PersistentPlayerTimer.TRANSFORM_COOLDOWN, new HashMap<>()));
                     }
-                } else {
-                    player.sendSystemMessage(Component.translatable("message.transformation.cooldown", playerTimerData.getTimer("transform_cooldown").getRemainingTime() / 20 + 1));
                 }
             });
         }

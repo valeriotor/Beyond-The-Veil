@@ -27,7 +27,7 @@ public class BlackjackItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
-            if (pInteractionTarget instanceof Villager villager) {
+            if (pInteractionTarget instanceof Villager villager && !villager.isBaby()) {
                 Level l = pInteractionTarget.level();
                 InteractionResult success = knockDownVillager(villager);
                 if (success != null) return success;

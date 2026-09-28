@@ -179,6 +179,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     private void addMiscellaneous() {
         add("message.transformation.cooldown", "The transformation requires %1$s seconds of cooldown.");
+        add("message.transformation.holding", "I cannot transform while carrying a patient.");
         add("message.transformation.sleep", "I can't sleep while non-human.");
     }
 

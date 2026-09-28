@@ -107,7 +107,7 @@ public abstract class SurgicalBE extends BlockEntity {
                                 addToBloodPool(convalescentData, sp.serverLevel());
                             }
                         } else {
-                            if (crossSync.isCrawling()) {
+                            if (!crossSync.canHoldPatient()) {
                                 return true;
                             }
                             crossSync.setHeldPatient(patientStatus.getPatientType(), entityData, p);

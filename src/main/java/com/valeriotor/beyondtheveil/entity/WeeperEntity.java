@@ -397,7 +397,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
             if (!level().isClientSide) {
                 setLacrymatoryPos(null);
                 pPlayer.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(data -> {
-                    if (!data.getCrossSync().isCrawling()) {
+                    if (data.getCrossSync().canHoldPatient()) {
                         data.getCrossSync().setHeldPatient(this, pPlayer);
                         discard();
                     }
