@@ -2543,7 +2543,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.fundamentals", "Fundamentals");
         add("gui.journal.overview.patients", "Obtaining patients");
         add("gui.journal.overview.starting", "Starting the operation");
-        add("gui.journal.overview.managing", "Managing pain");
+        add("gui.journal.overview.managing", "Managing complications");
         add("gui.journal.overview.concluding", "Concluding the operation");
         add("gui.journal.overview.journal", "Journal");
         add("gui.journal.overview.ingredients", "Ingredients");
@@ -2556,10 +2556,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.insertion", "Insertion");
         add("gui.journal.overview.stitching", "Stitching");
         add("gui.journal.overview.infrastructure", "Infrastructure");
-        add("gui.journal.overview.distillation", "Distillation");
-        add("gui.journal.overview.storage", "Storage");
-        add("gui.journal.overview.holding", "Holding patients");
-        add("gui.journal.overview.surgery", "Surgery");
+        //add("gui.journal.overview.distillation", "Distillation");
+        //add("gui.journal.overview.storage", "Storage");
+        //add("gui.journal.overview.holding", "Holding patients");
+        //add("gui.journal.overview.surgery", "Surgery");
         add("gui.journal.overview.abominations", "Abominations");
         add("gui.journal.overview.what_is", "What is an abomination?");
         add("gui.journal.overview.capacity", "Capacity");
@@ -2568,7 +2568,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.overview.priorities", "Targeting Priorities");
         add("gui.journal.overview.weepers", "Weepers");
         add("gui.journal.overview.patients.text", "The primary resource in a surgeon’s studies is none other than the patients themselves: humans, such as the villagers scattered across the world (though I shall abstain from using shoremen).\\n" +
-                "Understandably, it should not be expected for the patients to join the experiments willingly. They must be coerced and, sadly, this implies the use of force. I can use a {§nblackjack§r}[caption:journal.blackjack] to temporarily knock out a villager. I can then pick up and carry any incapacitated villagers lying on the ground. If necessary, I can set down any villager I’m carrying and it will hopefully get back up soon.");
+                "Understandably, it should not be expected for the patients to join the experiments willingly. They must be coerced and, sadly, this implies the use of force. I can use a {§nblackjack§r}[link:journal.tools.blackjack] to temporarily knock out a villager. I can then pick up and carry any incapacitated villagers lying on the ground. If necessary, I can set down any villager I’m carrying and it will hopefully get back up soon.");
         add("gui.journal.overview.starting.text", "Any patient I’m currently carrying may be {§nplaced§r}[caption:right_click] atop a surgery bed.\\n" +
                 "This allows the surgeon to perform operations on either the §lChest§r or the §lBack§r. One may {§nswitch§r}[caption:shift_right_click] the patient’s position to allow for surgeries on either location, though only when there is no currently open incision. \\n" +
                 "All operation types can be performed on the surgery bed.");
@@ -2576,13 +2576,16 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Operations performed in the watery cradle target the §lSkull§r, and only injections may be executed.\\n" +
                 "The surgery bed, on the other hand, allows the surgeon to perform operations on either the §lChest§r or the §lBack§r. One may {§nswitch§r}[caption:shift_right_click] the patient’s position to allow for surgeries on either location, though only when there is no currently open incision. \\n" +
                 "All operation types can be performed on the surgery bed.");
-        add("gui.journal.overview.managing.text", "Sedation is paramount in any successful surgery. Aside from the ethical concerns, patients in severe pain will indubitably thrash and flail about, virtually ensuring grave injuries and death when using surgery tools upon them.\\n" +
-                "It is thus imperative to inject sufficient quantities of sedative during an operation. Doing so while the patient is already calm will help prevent subsequent pain. For example, injecting sufficient sedative before starting an incision will prevent patients from acting out and injuring themselves with the scalpel.\\n" +
-                "If the patient is in pain, injecting sedative will calm them down. It is wise to stop an operation such as an incision at the first sign of pain to prevent it going awry, and only continuing it after the patient has calmed down and has been sedated enough to prevent further pain.\\n" +
-                "Finally, it should be noted that excessive quantities of sedative pose a high risk, and may result in the patient’s death.");
+        add("gui.journal.overview.managing.text", "Various complications may arise during a surgeon's work, with patient suffering being by far the most common: sedation is thus paramount in any successful surgery. Aside from the ethical concerns, patients in severe pain will indubitably thrash and flail about, virtually ensuring grave injuries and death when using surgery tools upon them.\\n" +
+                "It is thus imperative to inject sufficient quantities of {§nsedative§r}[link:journal.ingredients.sedative] during an operation. Doing so while the patient is already calm will help prevent subsequent pain. For example, injecting sufficient sedative before starting an incision will prevent patients from acting out and injuring themselves with the scalpel.\\n" +
+                "If the patient is in pain, injecting sedative will calm them down. It is wise to stop an operation such as an incision at the first signs of pain to prevent it going awry, and only continuing it after the patient has calmed down and has been sedated enough to prevent further pain.\\n" +
+                "Another somewhat common complication is the scraping of tools and ingredients against organs, and a general hardness of the body. This is signaled by a shrill grinding sound and black smoke. In such cases, the patient is likely to experience §oextreme§r pain and the operation should thus be stopped immediately. To enable an operation that results in scraping I must first inject a good dose of {§nsoftener§r}[link:journal.ingredients.softener], and only then resume.\\n" +
+                "Finally, some operations may result in the patient's bleeding after they are completed, well visible by the blood specks leaking out. This makes it risky to perform any further operation – including stitching – and should thus be treated with {§ncoagulant§r}[link:journal.ingredients.coagulant] before the surgery continues.");
         add("gui.journal.overview.concluding.text", "The success of an operation depends on the desired outcome. Although a premature death will most likely make any further operations impossible, it may be tolerated as long as the necessary results (such as an organ’s extraction) have already been obtained. The death of a patient is certainly a loss, but not a tragedy.\\n" +
                 "Of course, there are times when we seek the patient’s survival. In general, most patients will exit the surgery either (i) alive and well, (ii) crippled (potentially for life), or (iii) deceased.");
-        //TODO add("gui.journal.overview.journal.text", ...
+        add("gui.journal.overview.journal.text", "Replicability stands at the very foundations of modern science, and in the solemn pursuit of knowledge one must always, without fail, value the credibility and correctness of results over the selfish chase for fame.\\n" +
+                "It is thus quintessential – for my very own reputation as a researcher – that I take note of my experiments, and document the processes that led to each outcome. I can do so in this journal: I may create a new report for each surgical procedure and describe which operations I performed and what result was obtained – whether successful or not. For the sake of accuracy, I should be as precise as possible, e.g. detailing the patient's position, the complications observed in the process, the exact types and amounts of ingredients utilised, and so forth.\\n" +
+                "The value of taking notes entails at least two aspects: on one end, it is in my future self's best interest not to leave the complex steps involved in successful procedures at the mercy of my own forgetfulness, especially for what concerns the iterative optimisation of the used ingredients over multiple attempts of the same surgery; on the other, it will enable the sharing of knowledge among my peers, and possibly even the delegation of my work to hired surgeons.");
         add("gui.journal.overview.fluids.text", "Liquid ingredients, such as {§nsedative§r}[link:journal.ingredients.sedative], {§ncoagulant§r}[link:journal.ingredients.coagulant], and several others, can be injected into patients to achieve various results. This requires a {§nsyringe§r}[link:journal.tools.syringe], and does not require an incision on the patient.\\n" +
                 "Such fluids may be stored in liquid flasks ({§nsmall§r}[link:journal.tools.flasks], {§nmedium§r}[link:journal.tools.flasks] and {§nlarge§r}[link:journal.tools.flasks]), and are often produced with the help of {§nalembics§r}[link:journal.tools.alembics].");
         add("gui.journal.overview.solids.text", "Solid ingredients may be inserted in the patient. This requires {§nforceps§r}[link:journal.tools.forceps], and can only be done when the incision is open.\\n" +
@@ -2595,6 +2598,12 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Injections may be painful depending on the fluid type and quantity.");
         add("gui.journal.overview.insertion.text", "Insertions can be performed either on the back or the chest, and always require an incision to be present. They are performed with {§nforceps§r}[link:journal.tools.forceps], after they have been used to grab a solid ingredient. Interrupting an insertion resets progress.");
         add("gui.journal.overview.stitching.text", "Stitching is used to sew the incision made through a scalpel. It is performed with {§nthread and needle§r}[link:journal.tools.sewing_needle]. Stitching is painless and instantaneous.");
+        add("gui.journal.overview.infrastructure.text", "Several components should be ever-present in the laboratory of a professional surgeon.\\n" +
+                "Many injection operations require elaborate fluids not commonly found in nature, and a distillation process must be carried out to obtain them. This is performed via {§nAlembics§r}[link:journal.tools.alembics]: a device capable of mixing liquid and solid ingredients to produce new ones.\\n" +
+                "The large quantity of surgical ingredients – both solid and liquid – that need to be used during operations necessitate proper storage: for this, one can use {§nliquid§r}[link:journal.tools.flasks] and {§nitem flasks/jars§r}[link:journal.tools.item_flask]. Additionally, these can (and probably should) be kept much more compactly on a {§nflask shelf§r}[link:journal.tools.flask_shelf].\\n" +
+                "However, the main resource to be used in our experiments is to be kept separately, as it consists of none other than living humans. They may either be left free to wander or, as a safer and more compact solution, be held within {§npatient pods§r}[link:journal.tools.patient_pod].");
+        add("gui.journal.overview.infrastructure.text.1", "\\nFinally, the platforms upon which the patients are kept during the surgeries themselves: {§nsurgery beds§r}[link:journal.tools.surgery_bed].");
+        add("gui.journal.overview.infrastructure.text.2", "\\nFinally, the platforms upon which the patients are kept during the surgeries themselves: {§nsurgery beds§r}[link:journal.tools.surgery_bed] and {§nwatery cradles§r}[link:journal.tools.watery_cradle].");
         add("gui.journal.overview.what_is.text", "It is known that certain ingredients – both liquid and solid – are capable of radically altering the shape of a human when entering the body. Abominations are the product of injecting or inserting these ingredients in the back of humans with an intact spine. \\n" +
                 "These creatures are not so dissimilar from creepers, in that their primary mode of offense is via detonation of their own body. Unlike creepers, however, the resulting blast is not damaging by itself; rather, it is the abomination’s blood that, striking either friend or foe, may result in a variety of effects.\\n" +
                 "Thus, an abomination blood can cover the enemy in webbing, or afflict them with poison, or force spasms in their hands until they drop their weapons; likewise, they may also heal their master, or camouflage me, or make my visage fearsome to my foes.\\n" +
@@ -2638,12 +2647,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.tools.tongs.title", "Tongs");
         add("gui.journal.tools.tongs.text", "A tool necessary for extractions. Needs an open incision first.");
 
+        add("gui.journal.tools.blackjack.title", "Blackjack");
+        add("gui.journal.tools.blackjack.text", "Used to {§nknock out§r}[caption:shift_right_click] villagers. Can also be used on other creatures to stun them.");
+
         add("gui.journal.tools.sample_tube.title", "Sample Tube");
         add("gui.journal.tools.sample_tube.text", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\n" +
                 "The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
 
-        add("gui.journal.tools.flasks.title", "Fluid flasks");
+        add("gui.journal.tools.flasks.title", "Fluid flasks & Jars");
         add("gui.journal.tools.flasks.text", "Flasks come in various shapes and sizes. They are used to store fluids of all sorts, and are necessary for syringes to be filled.\\nFlasks may be placed on the ground or, more compactly, on a flask shelf.");
+
+        add("gui.journal.tools.item_flask.title", "Item Jars");
+        add("gui.journal.tools.item_flask.text", "Similar to their liquid counterpart, but used to store solid items instead (generally up to sixteen). They may also be placed on flask shelves");
 
         add("gui.journal.tools.alembics.title", "Alembics");
         add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\nA given input item may be sufficient for a certain amount of output fluid.");
@@ -2656,6 +2671,9 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.tools.watery_cradle.title", "Watery Cradle");
         add("gui.journal.tools.watery_cradle.text", "A masterwork of engineering, capable of setting the enclosed patient in a trance and allowing for operations on the brain.\\nOnly injections may be performed in the watery cradle.");
+
+        add("gui.journal.tools.patient_pod.title", "Patient Pod");
+        add("gui.journal.tools.patient_pod.text", "An intricate construct meant to host patients: both those awaiting surgery and the convalescents who have received it.");
 
         add("gui.journal.capacity_need", "-%1$s capacity (Back)");
         add("gui.journal.capacity_need_both", "-%1$s capacity (Back or Chest)");
@@ -2702,6 +2720,17 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
         add("gui.journal.ingredients.empty_bladder.text", "A small sac, capable of holding other ingredients within itself. Occasionally dropped by monsters when slain with a scalpel.\\n" +
                 "Increases capacity when inserted into the chest or back.");
+
+        add("gui.journal.ingredients.sedative.title", "Sedative");
+        add("gui.journal.ingredients.sedative.text", "Sedative is the single most important ingredient in surgery, as it is the one method of managing patient pain. Injecting a sufficient amount before each operation is generally a good idea.\\n" +
+                "However, it should also be be noted that excessive quantities of sedative may themselves pose a high risk, and may result in the patient’s death (or at least not waking up).");
+
+        add("gui.journal.ingredients.softener.title", "Softener");
+        add("gui.journal.ingredients.softener.text", "Softener is used to enable certain types of operations; unsoftened tissue will produce a shrill sound and black smoke during such operations. A sufficient quantity of this fluid must therefore be injected.\\n" +
+                "However, it should also be be noted that excessive quantities of softener may themselves pose a high risk, and softening the organs too much might make them mushy, killing the patient.");
+
+        add("gui.journal.ingredients.coagulant.title", "Coagulant");
+        add("gui.journal.ingredients.coagulant.text", "Coagulant can stop the bleeding of patients. This complication is not risky by itself, but it makes further operations virtually impossible until treated.");
 
         add("gui.journal.ingredients.memory_hormones.title", "Memory Hormones");
         add("gui.journal.ingredients.memory_hormones.text", "When injected into the skull, these hormones make the patient able to collect nearby experience and store it in their mind, just like I do. The difference is that, whenever they are struck, they will drop all experience stored in this manner, leaving it free for the taking.\\n" +

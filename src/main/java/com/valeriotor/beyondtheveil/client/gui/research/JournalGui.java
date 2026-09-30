@@ -200,8 +200,8 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         //entryListWidth = 343;
         //entryListHeight = 357;
 
-        if (imageHeight > height * 99 / 100) {
-            scaleFactor = height * 99F / 100 / imageHeight;
+        if (imageHeight > height * 95 / 100) {
+            scaleFactor = height * 95F / 100 / imageHeight;
         }
         if (imageWidth > width * 95 / 100) {
             scaleFactor = Math.min(width * 95F / 100 / imageWidth, scaleFactor);
@@ -346,6 +346,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         list.add(new Dropdown2("starting"));
         list.add(new Dropdown2("managing"));
         list.add(new Dropdown2("concluding"));
+        list.add(new Dropdown2("infrastructure"));
         list.add(new Dropdown2("journal"));
         list.add(new Dropdown1("ingredients"));
         list.add(new Dropdown2("fluids"));
@@ -356,11 +357,10 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         list.add(new Dropdown2("injection"));
         list.add(new Dropdown2("insertion"));
         list.add(new Dropdown2("stitching"));
-        list.add(new Dropdown1("infrastructure"));
-        list.add(new Dropdown2("distillation"));
-        list.add(new Dropdown2("storage"));
-        list.add(new Dropdown2("holding"));
-        list.add(new Dropdown2("surgery"));
+        //list.add(new Dropdown2("distillation"));
+        //list.add(new Dropdown2("storage"));
+        //list.add(new Dropdown2("holding"));
+        //list.add(new Dropdown2("surgery"));
         if (abominationsUnlocked) {
             list.add(new Dropdown1("abominations"));
             list.add(new Dropdown2("what_is"));
@@ -383,12 +383,14 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new StacksItemEntry(Registration.SEWING_NEEDLE.get(), "sewing_needle", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SYRINGE.get(), "syringe", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.TONGS.get(), "tongs", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.BLACKJACK.get(), "blackjack", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SAMPLE_TUBE.get(), "sample_tube", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(List.of(Registration.FLASK_LARGE_ITEM.get(), Registration.FLASK_MEDIUM_ITEM.get(), Registration.FLASK_SMALL_ITEM.get(), Registration.JAR_LARGE_ITEM.get(), Registration.JAR_MEDIUM_ITEM.get(), Registration.JAR_SMALL_ITEM.get()), "flasks", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.FLASK_ITEM_ITEM.get(), "item_flask", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.ALEMBICS_ITEM.get(), "alembics", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.FLASK_SHELF_ITEM.get(), "flask_shelf", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SURGERY_BED_ITEM.get(), "surgery_bed", JournalCategory.TOOLS));
+        entries.add(new StacksItemEntry(Registration.PATIENT_POD_ITEM.get(), "patient_pod", JournalCategory.TOOLS));
         Minecraft.getInstance().player.getCapability(ResearchProvider.RESEARCH).ifPresent(c -> {
             if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
                 entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));
@@ -1387,7 +1389,16 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 //TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
-                overviewPage = new Page(Component.literal("§l" + Component.translatable("gui.journal.overview." + id).getString()), I18n.get("gui.journal.overview." + id + ".text"), 345, new ArrayList<>());
+                String title = Component.translatable("gui.journal.overview." + id).getString();
+                String text = I18n.get("gui.journal.overview." + id + ".text");
+                if (id.equals("infrastructure")) {
+                    if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
+                        text += Component.translatable("gui.journal.overview.infrastructure.text.2").getString();
+                    } else {
+                        text += Component.translatable("gui.journal.overview.infrastructure.text.1").getString();
+                    }
+                }
+                overviewPage = new Page(Component.literal("§l" + title), text, 345, new ArrayList<>());
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
                 return true;
             }
@@ -1409,7 +1420,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private static final int RIGHT_SMALL_ARROW_X = 290;
 
         private Page(Component title, String localized, int height, List<Element> grids) {
-            super(330, 460);
+            super(340, 460);
             textHeight = height;
             this.title = title;
             this.pages = makePages(localized);
@@ -1418,7 +1429,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
 
         private List<TextBlock> makePages(String localized) {
             List<TextBlock> blocks = new ArrayList<>();
-            final int blockWidth = 300;
+            final int blockWidth = 310;
             List<Element> lines = new TextUtil().parseText(localized.toString(), blockWidth, Minecraft.getInstance().font);
             int i = 0;
             while (i < lines.size()) {
@@ -1432,11 +1443,11 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         @Override
         public void render(PoseStack pose, GuiGraphics graphics, int color, int relativeMouseX, int relativeMouseY, float pPartialTick) {
             final int BOTTOM_OFFSET = 60;
-            graphics.fill(-15, 30, 315, textHeight+BOTTOM_OFFSET, 0x11000000);
-            graphics.fill(-15, 30, 315, 31, 0x33DDDDDD);
+            graphics.fill(-15, 30, 320, textHeight+BOTTOM_OFFSET, 0x11000000);
+            graphics.fill(-15, 30, 320, 31, 0x33DDDDDD);
             graphics.fill(-15, 30, -14, textHeight+BOTTOM_OFFSET, 0x33DDDDDD);
-            graphics.fill(314, 30, 315, textHeight+BOTTOM_OFFSET, 0x22000000);
-            graphics.fill(-15, textHeight+BOTTOM_OFFSET, 315, 1+textHeight+BOTTOM_OFFSET, 0x22000000);
+            graphics.fill(319, 30, 320, textHeight+BOTTOM_OFFSET, 0x22000000);
+            graphics.fill(-15, textHeight+BOTTOM_OFFSET, 320, 1+textHeight+BOTTOM_OFFSET, 0x22000000);
             pose.pushPose();
             pose.translate(150, 0, 0);
             pose.scale(2.55F, 2.55F, 1);
